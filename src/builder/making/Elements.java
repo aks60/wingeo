@@ -1,7 +1,6 @@
 package builder.making;
 
-import builder.making.*;
-import builder.ICom5t;
+import builder.model1.Com5t;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eElemdet;
@@ -13,13 +12,10 @@ import java.util.List;
 import builder.Wincalc;
 import builder.param.ElementDet;
 import builder.param.ElementVar;
-import builder.IElem5e;
-import builder.model1.UPar;
-import common.UCom;
+import builder.model1.ElemSimple;
 import dataset.Query;
 import domain.eSysprof;
 import enums.Type;
-import enums.UseColor;
 
 /**
  * Составы.
@@ -39,15 +35,15 @@ public class Elements extends Cal5e {
     @Override
     public void calc() {
         super.calc();
-        LinkedList<IElem5e> listElem = winc.listElem.filter(Type.FRAME_SIDE,
+        LinkedList<ElemSimple> listElem = winc.listElem.filter(Type.FRAME_SIDE,
                 Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA, Type.GLASS, Type.MOSKITKA); //список элементов конструкции
         try {
             //Цикл по списку элементов конструкции
-            for (IElem5e elem5e : listElem) {
+            for (ElemSimple elem5e : listElem) {
 
                 if (elem5e.type() == Type.MOSKITKA) {
                     //По id - профиля
-                    List<Record> elementList4 = List.of(eElement.find4(((ICom5t) elem5e).sysprofRec().getInt(eSysprof.id)));
+                    List<Record> elementList4 = List.of(eElement.find4(((Com5t) elem5e).sysprofRec().getInt(eSysprof.id)));
                     //Цикл по списку элементов сторон маскитки
                     for (int side : List.of(0, 90, 180, 270)) {
                         elem5e.anglHoriz(side); //устан. угол. проверяемой стороны
@@ -72,7 +68,7 @@ public class Elements extends Cal5e {
         }
     }
 
-    protected void detail(List<Record> elementList, IElem5e elem5e) {
+    protected void detail(List<Record> elementList, ElemSimple elem5e) {
         try {
             //Цикл по вариантам
             for (Record elementRec : elementList) {

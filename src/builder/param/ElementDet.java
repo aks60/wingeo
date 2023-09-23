@@ -7,8 +7,8 @@ import domain.eSetting;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
-import builder.ICom5t;
-import builder.IElem5e;
+import builder.model1.Com5t;
+import builder.model1.ElemSimple;
 import common.UCom;
 import domain.eArtikl;
 import enums.Type;
@@ -20,7 +20,7 @@ public class ElementDet extends Par5s {
         super(winc);
     }
 
-    public boolean filter(HashMap<Integer, String> mapParam, IElem5e elem5e, Record elemdetRec) {
+    public boolean filter(HashMap<Integer, String> mapParam, ElemSimple elem5e, Record elemdetRec) {
 
         List<Record> paramList = eElempar2.find3(elemdetRec.getInt(eElemdet.id)); //список параметров детализации 
         if (filterParamDef(paramList) == false) {
@@ -35,7 +35,7 @@ public class ElementDet extends Par5s {
         return true;
     }
 
-    public boolean check(HashMap<Integer, String> mapParam, IElem5e elem5e, Record rec) {
+    public boolean check(HashMap<Integer, String> mapParam, ElemSimple elem5e, Record rec) {
         int grup = rec.getInt(GRUP);
         try {
             switch (grup) {
@@ -91,7 +91,7 @@ public class ElementDet extends Par5s {
                     break;
                 case 33011: //Толщина внешнего/внутреннего заполнения, мм
                 case 34011: //Толщина внешнего/внутреннего заполнения, мм
-                    List<IElem5e> glassList = UPar.getGlassDepth(elem5e);
+                    List<ElemSimple> glassList = UPar.getGlassDepth(elem5e);
                     if (glassList.get(0).type() == Type.GLASS && glassList.get(1).type() == Type.GLASS) {
                         if ("ps3".equals(eSetting.val(2))) { //Толщина заполнения, мм
                             if (UCom.containsNumbAny(rec.getStr(TEXT),
@@ -154,7 +154,7 @@ public class ElementDet extends Par5s {
                 case 33063: //Диапазон веса створки, кг 
                 case 34063: //Диапазон веса створки, кг 
                 {
-                    ICom5t glass = elem5e.owner().childs().stream().filter(el -> el.type() == Type.GLASS).findFirst().orElse(null);
+                    Com5t glass = elem5e.owner().childs().stream().filter(el -> el.type() == Type.GLASS).findFirst().orElse(null);
                     if (glass != null) {
                         double weight = ((glass.width() * glass.height()) / 1000000) * glass.artiklRecAn().getDbl(eArtikl.density);
                         if (UCom.containsNumbExp(rec.getStr(TEXT), weight) == false) {

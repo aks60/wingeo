@@ -1,7 +1,7 @@
 package report;
 
-import builder.IElem5e;
-import builder.IStvorka;
+import builder.model1.AreaSimple;
+import builder.model1.AreaStvorka;
 import builder.Wincalc;
 import common.eProp;
 import dataset.Record;
@@ -90,12 +90,12 @@ public class HtmlOfOffer {
 
                 tdList.get(0).text("Изделие № " + (i + 1));
                 tdList.get(3).text(eSystree.systemProfile(6));
-                IStvorka area5e = (IStvorka) winc.listArea.find(Type.STVORKA);
-                IStvorka stv = (area5e != null) ? ((IStvorka) area5e) : null;
+                AreaStvorka area5e = (AreaStvorka) winc.listArea.find(Type.STVORKA);
+                AreaStvorka stv = (area5e != null) ? ((AreaStvorka) area5e) : null;
                 int furniture_id = stv.sysfurnRec().getInt(eSysfurn.furniture_id);
                 String fname = (furniture_id != -1) ? eFurniture.find(furniture_id).getStr(eFurniture.name) : "";
                 tdList.get(5).text(fname);
-                IElem5e elemGlass = winc.listElem.find(Type.GLASS);
+                ElemSimple elemGlass = winc.listElem.find(Type.GLASS);
                 String gname = (elemGlass != null) ? elemGlass.artiklRec().getStr(eArtikl.code) + " - " + elemGlass.artiklRec().getStr(eArtikl.name) : "";
                 tdList.get(7).text(gname);
                 tdList.get(9).text(eColor.find(winc.colorID1).getStr(eColor.name));

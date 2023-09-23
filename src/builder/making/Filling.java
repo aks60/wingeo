@@ -12,7 +12,7 @@ import builder.Wincalc;
 import builder.param.ElementDet;
 import builder.param.FillingDet;
 import builder.param.FillingVar;
-import builder.IElem5e;
+import builder.model1.ElemSimple;
 import common.UCom;
 import dataset.Query;
 import enums.Type;
@@ -44,23 +44,23 @@ public class Filling extends Cal5e {
 
     @Override
     public void calc() {
-        LinkedList<IElem5e> elemGlassList = winc.listElem.filter(Type.GLASS);
+        LinkedList<ElemSimple> elemGlassList = winc.listElem.filter(Type.GLASS);
         //Цикл по списку заполнений
-        for (IElem5e elemGlass : elemGlassList) {
+        for (ElemSimple elemGlass : elemGlassList) {
             calc(elemGlass);
         }
     }
 
-    public void calc(IElem5e elemGlass) {
+    public void calc(ElemSimple elemGlass) {
         super.calc();
         try {
             Double depth = elemGlass.artiklRec().getDbl(eArtikl.depth); //толщина стекда           
-            List<IElem5e> elemFrameList = new ArrayList<IElem5e>(rootArea().frames().values());  //список рам конструкции
+            List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(rootArea().frames().values());  //список рам конструкции
             
             //Цикл по сторонам стеклопакета
             double sideHoriz[] = {0, 90, 180, 270};
             for (int side = 0; side < 4; ++side) {
-                IElem5e elemFrame = elemFrameList.get(side);
+                ElemSimple elemFrame = elemFrameList.get(side);
                 elemGlass.anglHoriz(sideHoriz[side]); //устан. угол. проверяемой стороны
 
                 //Цикл по группам заполнений
@@ -97,7 +97,7 @@ public class Filling extends Cal5e {
         }
     }
 
-    protected void detail(IElem5e elemGlass, Record glasgrpRec, List<Record> glasdetList) {
+    protected void detail(ElemSimple elemGlass, Record glasgrpRec, List<Record> glasdetList) {
         try {
             //Цикл по списку детализации
             for (Record glasdetRec : glasdetList) {

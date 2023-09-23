@@ -2,9 +2,8 @@ package frames;
 
 import builder.Wincalc;
 import builder.model1.Com5t;
-import builder.IArea5e;
-import builder.ICom5t;
-import builder.IElem5e;
+import builder.model1.AreaSimple;
+import builder.model1.ElemSimple;
 import builder.script.GsonRoot;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -179,11 +178,11 @@ public class UGui {
         frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
 
         //Цикл по всем детям ареа
-        for (ICom5t com : winc.rootArea.childs()) {
+        for (Com5t com : winc.rootArea.childs()) {
             //Если это не створка
             if (com.type() != Type.STVORKA) {
                 //Если это элемент
-                if (com instanceof IElem5e) {
+                if (com instanceof ElemSimple) {
                     frm.add(new DefMutableTreeNode(com));
                     if (com.type() != Type.GLASS) {
                         frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING) {
@@ -191,27 +190,27 @@ public class UGui {
                     }
                     //Если это ареа
                 } else {
-                    for (ICom5t com2 : ((IArea5e) com).childs()) {
+                    for (Com5t com2 : ((AreaSimple) com).childs()) {
                         if (com2.type() != Type.STVORKA) {
-                            if (com2 instanceof IElem5e) {
+                            if (com2 instanceof ElemSimple) {
                                 frm.add(new DefMutableTreeNode(com2));
                                 if (com2.type() != Type.GLASS) {
                                     frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING) {
                                     }));
                                 }
                             } else {
-                                for (ICom5t com3 : ((IArea5e) com2).childs()) {
+                                for (Com5t com3 : ((AreaSimple) com2).childs()) {
                                     if (com3.type() != Type.STVORKA) {
-                                        if (com3 instanceof IElem5e) {
+                                        if (com3 instanceof ElemSimple) {
                                             frm.add(new DefMutableTreeNode(com3));
                                             if (com3.type() != Type.GLASS) {
                                                 frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING) {
                                                 }));
                                             }
                                         } else {
-                                            for (ICom5t com4 : ((IArea5e) com3).childs()) {
+                                            for (ICom5t com4 : ((AreaSimple) com3).childs()) {
                                                 if (com4.type() != Type.STVORKA) {
-                                                    if (com4 instanceof IElem5e) {
+                                                    if (com4 instanceof ElemSimple) {
                                                         frm.add(new DefMutableTreeNode(com4));
                                                         if (com4.type() != Type.GLASS) {
                                                             frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING) {
@@ -243,9 +242,9 @@ public class UGui {
     /**
      * Створка
      */
-    public static void loadWinTree(Wincalc winc, DefMutableTreeNode root, ICom5t com) {
+    public static void loadWinTree(Wincalc winc, DefMutableTreeNode root, Com5t com) {
         DefMutableTreeNode nodeStv = root.add(new DefMutableTreeNode(com));
-        IArea5e stv = (IArea5e) com;
+        AreaSimple stv = (AreaSimple) com;
         nodeStv.add(new DefMutableTreeNode(stv.frames().get(Layout.BOTT)));
         nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
         nodeStv.add(new DefMutableTreeNode(stv.frames().get(Layout.RIGHT)));
@@ -255,24 +254,24 @@ public class UGui {
         nodeStv.add(new DefMutableTreeNode(stv.frames().get(Layout.LEFT)));
         nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
         //Цикл по детям створки
-        for (ICom5t com2 : ((IArea5e) com).childs()) {
+        for (Com5t com2 : ((AreaSimple) com).childs()) {
             //Если это элемент
-            if (com2 instanceof IElem5e) {
+            if (com2 instanceof ElemSimple) {
                 nodeStv.add(new DefMutableTreeNode(com2));
                 if (com2.type() != Type.GLASS && com2.type() != Type.MOSKITKA) { //В стекле нет соединений
                     nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
                 }
                 //Это ареа
             } else {
-                for (ICom5t com3 : ((IArea5e) com2).childs()) {
-                    if (com3 instanceof IElem5e) {
+                for (Com5t com3 : ((AreaSimple) com2).childs()) {
+                    if (com3 instanceof ElemSimple) {
                         nodeStv.add(new DefMutableTreeNode(com3));
                         if (com3.type() != Type.GLASS && com3.type() != Type.MOSKITKA) {
                             nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
                         }
                     } else {
-                        for (ICom5t com4 : ((IArea5e) com3).childs()) {
-                            if (com4 instanceof IElem5e) {
+                        for (Com5t com4 : ((AreaSimple) com3).childs()) {
+                            if (com4 instanceof ElemSimple) {
                                 nodeStv.add(new DefMutableTreeNode(com4));
                                 if (com4.type() != Type.GLASS && com4.type() != Type.MOSKITKA) {
                                     nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));

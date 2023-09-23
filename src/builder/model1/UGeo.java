@@ -1,6 +1,5 @@
-package builder.model2;
+package builder.model1;
 
-import builder.IElem5e;
 import domain.eArtikl;
 import enums.Layout;
 import enums.Type;
@@ -46,7 +45,7 @@ public class UGeo {
     }
 
     //http://ru.solverbook.com/spravochnik/vektory/ugol-mezhdu-vektorami/
-    public static double betweenAngl(IElem5e e1, IElem5e e2) {
+    public static double betweenAngl(ElemSimple e1, ElemSimple e2) {
 
         double dx1 = e1.x2() - e1.x1();
         double dy1 = e1.y2() - e1.y1();
@@ -61,14 +60,14 @@ public class UGeo {
     }
 
     //https://www.onemathematicalcat.org/Math/Precalculus_obj/horizVertToDirMag.htm
-    public static double horizontAngl(IElem5e e) {
-        return horizontAngl(e.x1(), e.y1(), e.x2(), e.y2());
-    }
-
-    //https://www.onemathematicalcat.org/Math/Precalculus_obj/horizVertToDirMag.htm
     public static double horizontAngl(ElemSimple e) {
         return horizontAngl(e.x1(), e.y1(), e.x2(), e.y2());
     }
+
+//    //https://www.onemathematicalcat.org/Math/Precalculus_obj/horizVertToDirMag.htm
+//    public static double horizontAngl(ElemSimple e) {
+//        return horizontAngl(e.x1(), e.y1(), e.x2(), e.y2());
+//    }
 
     //https://www.onemathematicalcat.org/Math/Precalculus_obj/horizVertToDirMag.htm
     public static double horizontAngl(double x1, double y1, double x2, double y2) {
@@ -599,7 +598,7 @@ public class UGeo {
     }
 
     //Точка пересечения двух векторов 
-    public static double[] cross(IElem5e e1, IElem5e e2) {
+    public static double[] cross(ElemSimple e1, ElemSimple e2) {
         return UGeo.crossOnLine(e1.x1(), e1.y1(), e1.x2(), e1.y2(), e2.x1(), e2.y1(), e2.x2(), e2.y2());
     }
 
@@ -750,7 +749,7 @@ public class UGeo {
     }
 
     //Ширина рамки по оси x и y
-    public static double[] diff(IElem5e e, double dh) {
+    public static double[] diff(ElemSimple e, double dh) {
 
         double x = -1 * cos(e.anglHoriz());
         double y = -1 * sin(e.anglHoriz());
@@ -762,7 +761,7 @@ public class UGeo {
         }
     }
 
-    public static double[] diff(Area shape, IElem5e e, double dh) {
+    public static double[] diff(Area shape, ElemSimple e, double dh) {
         boolean imp = false;
         if (e.type() == Type.IMPOST || e.type() == Type.STOIKA || e.type() == Type.RIGEL_IMP) {
             if (e.layout() == Layout.VERT && (shape.getBounds2D().getX() == e.x1() || shape.getBounds2D().getX() == e.x2())) {

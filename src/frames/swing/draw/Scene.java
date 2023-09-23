@@ -1,9 +1,9 @@
 package frames.swing.draw;
 
 import builder.Wincalc;
-import builder.IArea5e;
-import builder.ICom5t;
-import builder.IElem5e;
+import builder.model1.Com5t;
+import builder.model1.AreaSimple;
+import builder.model1.ElemSimple;
 import enums.Layout;
 import enums.Type;
 import common.listener.ListenerReload;
@@ -63,16 +63,16 @@ public class Scene extends javax.swing.JPanel {
                         lineVert = List.of(new Scale(winc.rootArea));
 
                     } else { //На конструкции
-                        for (IElem5e crs : winc.listElem) {
+                        for (ElemSimple crs : winc.listElem) {
                             if (List.of(Type.IMPOST, Type.SHTULP, Type.STOIKA).contains(crs.type())
                                     && crs.inside(evt.getX() / winc.scale, evt.getY() / winc.scale)) {
-                                List<ICom5t> areaChilds = ((IElem5e) crs).owner().childs(); //дети импоста на котором был клик
+                                List<Com5t> areaChilds = ((ElemSimple) crs).owner().childs(); //дети импоста на котором был клик
                                 for (int i = 0; i < areaChilds.size(); ++i) {
                                     if (areaChilds.get(i).id() == crs.id()) {
                                         if (crs.layout() == Layout.HORIZ) { //area слева и справа от импоста
-                                            lineVert = List.of(new Scale((IArea5e) areaChilds.get(i - 1)), new Scale((IArea5e) areaChilds.get(i + 1)));
+                                            lineVert = List.of(new Scale((AreaSimple) areaChilds.get(i - 1)), new Scale((AreaSimple) areaChilds.get(i + 1)));
                                         } else {
-                                            lineHoriz = List.of(new Scale((IArea5e) areaChilds.get(i - 1)), new Scale((IArea5e) areaChilds.get(i + 1)));
+                                            lineHoriz = List.of(new Scale((AreaSimple) areaChilds.get(i - 1)), new Scale((AreaSimple) areaChilds.get(i + 1)));
                                         }
                                     }
                                 }
@@ -111,7 +111,7 @@ public class Scene extends javax.swing.JPanel {
         if (winc != null) {
             double k = winc.scale;
             Graphics2D g = (Graphics2D) gc;
-            g.translate(ICom5t.TRANSLATE_XY + 14, 0);
+            g.translate(Com5t.TRANSLATE_XY + 14, 0);
             g.setFont(new java.awt.Font("Tahoma", java.awt.Font.BOLD, resizeFont()));
 
             //1 - шкала
@@ -147,7 +147,7 @@ public class Scene extends javax.swing.JPanel {
         if (winc != null) {
             double k = winc.scale;
             Graphics2D g = (Graphics2D) gc;
-            g.translate(0, ICom5t.TRANSLATE_XY);
+            g.translate(0, Com5t.TRANSLATE_XY);
             g.setFont(new java.awt.Font("Tahoma", java.awt.Font.BOLD, resizeFont()));
 
             //1 - шкала

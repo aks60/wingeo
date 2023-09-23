@@ -1,6 +1,6 @@
 package common;
 
-import builder.IElem5e;
+import builder.model1.AreaSimple;
 import dataset.Field;
 import dataset.Query;
 import domain.eColor;

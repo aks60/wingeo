@@ -9,9 +9,9 @@ import domain.eSetting;
 import domain.eSystree;
 import java.util.List;
 import builder.Wincalc;
+import builder.model1.AreaStvorka;
 import builder.model1.ElemJoining;
-import builder.IElem5e;
-import builder.IStvorka;
+import builder.model1.ElemSimple;
 import common.UCom;
 import enums.Layout;
 import enums.LayoutJoin;
@@ -222,7 +222,7 @@ public class JoiningVar extends Par5s {
                     //Применяется если сист. константы отсутствуют
                     if (elemJoin.elem1.type() == Type.STVORKA_SIDE) {
                         listenerList.add(() -> {
-                            IStvorka stv = (IStvorka) elemJoin.elem1.owner();
+                            AreaStvorka stv = (AreaStvorka) elemJoin.elem1.owner();
                             if (elemJoin.elem1.layout() == Layout.BOTT) {
                                 stv.offset()[0] = rec.getDbl(TEXT);
                             } else if (elemJoin.elem1.layout() == Layout.RIGHT) {
@@ -467,7 +467,7 @@ public class JoiningVar extends Par5s {
                 case 3031:  //Усечение Артикула1/Артикула2, мм 
                     listenerList.add(() -> {
                         if ("ps3".equals(eSetting.val(2))) { //Усечение Артикула 1, мм
-                            IElem5e el9 = winc.listElem.find(5.4f);
+                            ElemSimple el9 = winc.listElem.find(5.4f);
                             elemJoin.elem1.spcRec().width -= rec.getDbl(TEXT);
 
                         } else {
@@ -501,8 +501,8 @@ public class JoiningVar extends Par5s {
                     break;
                 case 4018: //От ручки не менее, мм 
                 {
-                    IStvorka stv = (IStvorka) elemJoin.elem1.owner();
-                    IElem5e imp = elemJoin.elem1;
+                    AreaStvorka stv = (AreaStvorka) elemJoin.elem1.owner();
+                    ElemSimple imp = elemJoin.elem1;
                     if (Math.abs(imp.y2() - stv.handleHeight()) < rec.getDbl(TEXT)) {
                         return false;
                     }

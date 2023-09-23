@@ -2,8 +2,7 @@ package frames;
 
 import frames.swing.ProgressBar;
 import frames.swing.FrameToFile;
-import builder.IArea5e;
-import builder.ICom5t;
+import builder.model1.Com5t;
 import common.eProp;
 import dataset.Conn;
 import dataset.Field;
@@ -75,10 +74,11 @@ import common.eProfile;
 import domain.eJoining;
 import builder.making.Joining;
 import builder.making.UColor;
-import builder.IElem5e;
-import builder.IStvorka;
+import builder.model1.AreaSimple;
 import builder.making.Cal5e;
+import builder.model1.AreaStvorka;
 import builder.model1.ElemMosquit;
+import builder.model1.ElemSimple;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -471,22 +471,22 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     setText(txt18, artiklRec.getStr(eArtikl.name));
                     Record colorRec = eColor.find(winNode.com5t().colorID1());
                     setText(txt34, colorRec.getStr(eColor.name));
-                    Record rasclRec = ((IElem5e) winNode.com5t()).rasclRec();
+                    Record rasclRec = ((ElemSimple) winNode.com5t()).rasclRec();
                     setText(txt49, rasclRec.getStr(eArtikl.code));
                     setText(txt50, rasclRec.getStr(eArtikl.name));
-                    Record colorRascl = eColor.find(((IElem5e) winNode.com5t()).rasclColor());
+                    Record colorRascl = eColor.find(((ElemSimple) winNode.com5t()).rasclColor());
                     setText(txt51, colorRascl.getStr(eColor.name));
-                    spinHor.setValue(((IElem5e) winNode.com5t()).rasclNumber(0));
-                    spinVert.setValue(((IElem5e) winNode.com5t()).rasclNumber(1));
+                    spinHor.setValue(((ElemSimple) winNode.com5t()).rasclNumber(0));
+                    spinVert.setValue(((ElemSimple) winNode.com5t()).rasclNumber(1));
 
                     //Створка
                 } else if (winNode.com5t().type() == enums.Type.STVORKA) {
                     new Furniture(wincalc(), true); //найдём ручку створки
                     ((CardLayout) pan7.getLayout()).show(pan7, "card16");
-                    IStvorka stv = (IStvorka) winNode.com5t();
-                    IArea5e sta = (IArea5e) winNode.com5t();
+                    AreaStvorka stv = (AreaStvorka) winNode.com5t();
+                    AreaSimple sta = (AreaSimple) winNode.com5t();
                     int id = stv.sysfurnRec().getInt(eSysfurn.furniture_id);
-                    IArea5e own = winNode.com5t().owner();
+                    AreaSimple own = winNode.com5t().owner();
                     setText(txt24, own.width());
                     setText(txt26, own.height());
                     setText(txt20, eFurniture.find(id).getStr(eFurniture.name));
@@ -512,9 +512,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     setText(txt48, eColor.find(stv.lockColor()).getStr(eColor.name));
                     setIcon(btn24, stv.paramCheck()[6]);
                     //Москитка
-                    LinkedCom<ICom5t> mosqList = ((IArea5e) stv).childs().filter(enums.Type.MOSKITKA);
+                    LinkedCom<Com5t> mosqList = ((AreaSimple) stv).childs().filter(enums.Type.MOSKITKA);
                     if (mosqList.isEmpty() == false) {
-                        IElem5e mosq = (IElem5e) mosqList.get(0);
+                        ElemSimple mosq = (ElemSimple) mosqList.get(0);
                         setText(txt54, mosq.artiklRec().getStr(eArtikl.code));
                         setText(txt55, mosq.artiklRec().getStr(eArtikl.name));
                         setText(txt60, eColor.find(mosq.colorID1()).getStr(eColor.name));
@@ -526,7 +526,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     //new Joining(winc(), true); //заполним соединения данными из конструктива
                     ((CardLayout) pan7.getLayout()).show(pan7, "card17");
                     DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
-                    IElem5e elem5e = (IElem5e) nodeParent.com5t();
+                    ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
                     ElemJoining ej1 = winc.listJoin.get(elem5e, 0);
                     ElemJoining ej2 = winc.listJoin.get(elem5e, 1);
                     ElemJoining ej3 = winc.listJoin.get(elem5e, 2);
@@ -3918,7 +3918,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     private void handlToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_handlToStvorka
         try {
             double stvorkaID = winNode.com5t().id();
-            int furnitureID = ((IStvorka) winNode.com5t()).sysfurnRec().getInt(eSysfurn.furniture_id);
+            int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec().getInt(eSysfurn.furniture_id);
             Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up, "where", eArtikl.level1, "= 2 and", eArtikl.level2, " = 11");
             Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicArtikl(this, (artiklRec) -> {
@@ -3942,7 +3942,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
 
     private void heightHandlToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heightHandlToStvorka
 
-        IArea5e areaStv = (IArea5e) winNode.com5t();
+        AreaSimple areaStv = (AreaSimple) winNode.com5t();
         int indexLayoutHandl = 0;
         if (LayoutHandle.CONST.name.equals(txt16.getText())) {
             indexLayoutHandl = 1;
@@ -3980,7 +3980,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     private void colorToHandl(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToHandl
         try {
             double selectID = winNode.com5t().id();
-            IStvorka stv = (IStvorka) winNode.com5t();
+            AreaStvorka stv = (AreaStvorka) winNode.com5t();
             HashSet<Record> colorSet = UGui.artiklToColorSet(stv.handleRec().getInt(eArtikl.id));
             DicColor frame = new DicColor(this, (colorRec) -> {
 
@@ -4004,7 +4004,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             Wincalc winc = wincalc();
             if (winNode != null) {
                 DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
-                IElem5e elem5e = (IElem5e) nodeParent.com5t();
+                ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
                 JButton btn = (JButton) evt.getSource();
                 int point = (btn.getName().equals("btn26")) ? 0 : (btn.getName().equals("btn27")) ? 1 : 2;
                 ElemJoining elemJoin = winc.listJoin.get(elem5e, point);
@@ -4018,7 +4018,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     private void loopToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loopToStvorka
         try {
             double selectID = winNode.com5t().id();
-            int furnitureID = ((IStvorka) winNode.com5t()).sysfurnRec().getInt(eSysfurn.furniture_id);
+            int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec().getInt(eSysfurn.furniture_id);
             Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up, "where", eArtikl.level1, "= 2 and", eArtikl.level2, " = 12");
             Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicArtikl(this, (artiklRec) -> {
@@ -4043,7 +4043,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     private void lockToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lockToStvorka
         try {
             double selectID = winNode.com5t().id();
-            int furnitureID = ((IStvorka) winNode.com5t()).sysfurnRec().getInt(eSysfurn.furniture_id);
+            int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec().getInt(eSysfurn.furniture_id);
             Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up, "where", eArtikl.level1, "= 2 and", eArtikl.level2, " = 9");
             Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicArtikl(this, (artiklRec) -> {
@@ -4068,7 +4068,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     private void colorFromLoop(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromLoop
         try {
             double selectID = winNode.com5t().id();
-            IStvorka stv = (IStvorka) winNode.com5t();
+            AreaStvorka stv AreaStvorkarka) winNode.com5t();
             HashSet<Record> colorSet = UGui.artiklToColorSet(stv.loopRec().getInt(eArtikl.id));
             DicColor frame = new DicColor(this, (colorRec) -> {
 
@@ -4090,7 +4090,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     private void colorFromLock(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromLock
         try {
             double selectID = winNode.com5t().id();
-            IStvorka stv = (IStvorka) winNode.com5t();
+            AreaStvorka stv = (AreaStvorka) winNode.com5t();
             HashSet<Record> colorSet = UGui.artiklToColorSet(stv.lockRec().getInt(eArtikl.id));
             DicColor frame = new DicColor(this, (colorRec) -> {
 
@@ -4118,7 +4118,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     private void colorFromGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromGlass
         try {
             double selectID = winNode.com5t().id();
-            IElem5e glas = (IElem5e) winNode.com5t();
+            ElemSimple glas = (ElemSimple) winNode.com5t();
             HashSet<Record> colorSet = UGui.artiklToColorSet(glas.artiklRec().getInt(eArtikl.id));
             DicColor frame = new DicColor(this, (colorRec) -> {
 
@@ -4190,7 +4190,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
 
     private void mosquitToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mosquitToStvorka
         try {
-            IArea5e stvElem = (IArea5e) winNode.com5t();
+            AreaSimple stvElem = (AreaSimple) winNode.com5t();
             double selectID = winNode.com5t().id();
             Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
                     "where", eArtikl.level1, "= 5 and", eArtikl.level2, "= 20");
@@ -4198,10 +4198,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             new DicArtikl(this, (artiklRec) -> {
 
                 GsonElem gsonElem = null;
-                LinkedCom<ICom5t> mosqList = ((IArea5e) stvElem).childs().filter(enums.Type.MOSKITKA);
+                LinkedCom<Com5t> mosqList = ((AreaSimple) stvElem).childs().filter(enums.Type.MOSKITKA);
 
                 if (mosqList.isEmpty() == false) {
-                    IElem5e mosqElem = (IElem5e) mosqList.get(0);
+                    ElemSimple mosqElem = (ElemSimple) mosqList.get(0);
                     gsonElem = mosqElem.gson();
                 } else {
                     gsonElem = new GsonElem(enums.Type.MOSKITKA);
@@ -4226,10 +4226,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     private void mosqToElements(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mosqToElements
         try {
             double selectID = winNode.com5t().id();
-            IArea5e stvElem = (IArea5e) winNode.com5t();
-            LinkedCom<ICom5t> mosqList = ((IArea5e) stvElem).childs().filter(enums.Type.MOSKITKA);
+            AreaSimple stvElem = (AreaSimple) winNode.com5t();
+            LinkedCom<Com5t> mosqList = ((AreaSimple) stvElem).childs().filter(enums.Type.MOSKITKA);
             if (mosqList.isEmpty() == false) {
-                IElem5e mosqElem = (IElem5e) mosqList.get(0);
+                ElemSimple mosqElem = (ElemSimple) mosqList.get(0);
                 Record artiklRec = mosqElem.artiklRec();
                 Query qElements = new Query(eElement.values()).select(eElement.up,
                         "where", eElement.artikl_id, "=", artiklRec.getInt(eArtikl.id));
@@ -4271,7 +4271,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
 
     private void rascladkaToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rascladkaToGlass
         try {
-            IElem5e classElem = (IElem5e) winNode.com5t();
+            ElemSimple classElem = (ElemSimple) winNode.com5t();
             double selectID = winNode.com5t().id();
             Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
                     "where", eArtikl.level1, "= 1 and", eArtikl.level2, "= 12");
@@ -4291,7 +4291,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     private void colorToRascladka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToRascladka
         try {
             double selectID = winNode.com5t().id();
-            IElem5e glas = (IElem5e) winNode.com5t();
+            ElemSimple glas = (ElemSimple) winNode.com5t();
             HashSet<Record> colorSet = UGui.artiklToColorSet(glas.rasclRec().getInt(eArtikl.id));
             DicColor frame = new DicColor(this, (colorRec) -> {
 
@@ -4327,8 +4327,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     private void mosqToColor(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mosqToColor
         try {
             double selectID = winNode.com5t().id();
-            IStvorka stvElem = (IStvorka) winNode.com5t();
-            LinkedCom<ICom5t> mosqList = ((IArea5e) stvElem).childs().filter(enums.Type.MOSKITKA);
+            AreaStvorka stvElem = (AreaStvorka) winNode.com5t();
+            LinkedCom<Com5t> mosqList = ((AreaSimple) stvElem).childs().filter(enums.Type.MOSKITKA);
             if (mosqList.isEmpty() == false) {
                 ElemMosquit mosqElem = (ElemMosquit) mosqList.get(0);
                 HashSet<Record> colorSet = UGui.artiklToColorSet(mosqElem.artiklRec().getInt(eArtikl.id));

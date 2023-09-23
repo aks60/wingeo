@@ -1,19 +1,20 @@
 package builder;
 
-import builder.model2.AreaPolygon;
-import builder.model2.AreaSimple;
-import builder.model2.AreaStvorka;
-import builder.model2.Com5t;
-import builder.model2.ElemCross;
-import builder.model2.ElemFrame;
-import builder.model2.ElemGlass;
-import builder.model2.ElemSimple;
+import builder.model1.AreaPolygon;
+import builder.model1.AreaSimple;
+import builder.model1.AreaStvorka;
+import builder.model1.Com5t;
+import builder.model1.ElemCross;
+import builder.model1.ElemFrame;
+import builder.model1.ElemGlass;
+import builder.model1.ElemSimple;
 import builder.making.Specific;
-import builder.model2.Canvas2D;
+import builder.model1.Canvas2D;
 import builder.script.GeoElem;
 import builder.script.GeoRoot;
 import com.google.gson.GsonBuilder;
 import common.ArraySpc;
+import common.LinkedCom;
 import common.listener.ListenerMouse;
 import dataset.Record;
 import domain.eSyspar1;
@@ -44,14 +45,14 @@ public class Wincalc {
 
     public HashMap<Integer, Record> mapPardef = new HashMap(); //пар. по умолчанию + наложенные пар. клиента
     public GeometryFactory geomFact = new GeometryFactory();			
-    public List<AreaSimple> listArea = new ArrayList(); //список ареа.
-    public List<ElemSimple> listLine = new ArrayList(); //список элем.
-    public List<ElemFrame> listFrame = new ArrayList(); //список рам
+    public LinkedCom<AreaSimple> listArea = new LinkedCom(); //список ареа.
+    public LinkedCom<ElemSimple> listElem = new LinkedCom(); //список элем.
+    public LinkedCom<ElemFrame> listFrame = new LinkedCom(); //список рам
     public List<ElemCross> listCross = new ArrayList(); //список имп.
     public ArraySpc<Specific> listSpec = new ArraySpc(); //спецификация
 
     public GeoRoot gson = null; //объектная модель конструкции 1-го уровня
-    public AreaPolygon root = null; //объектная модель конструкции 2-го уровня
+    public AreaPolygon rootArea = null; //объектная модель конструкции 2-го уровня
 
     public Wincalc() {
     }
@@ -76,7 +77,7 @@ public class Wincalc {
             parsing(script);
 
             //построение полигонов
-            root.setLocation();
+            rootArea.setLocation();
 
             //Каждый элемент конструкции попадает в спецификацию через функцию setSpecific()            
             //listLine.forEach(elem -> elem.setSpecific()); //спецификация ведущих элементов конструкции
@@ -97,9 +98,9 @@ public class Wincalc {
         Record sysprofRec = eSysprof.find2(nuni, UseArtiklTo.FRAME);
         eSyspar1.find(nuni).forEach(syspar1Rec -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), syspar1Rec)); //загрузим параметры по умолчанию
 
-        root = new AreaPolygon(this, gson);
+        rootArea = new AreaPolygon(this, gson);
 
-        elements(root, gson);
+        elements(rootArea, gson);
     }
 
     private void elements(Com5t owner, GeoElem gson) {
@@ -120,13 +121,13 @@ public class Wincalc {
 
                 } else if (Type.FRAME_SIDE == js.type) {
                     ElemFrame elem5e = new ElemFrame(this, js, owner);
-                    listLine.add(elem5e);
+                    listElem.add(elem5e);
                     listFrame.add(elem5e);
 
                 } else if (Type.IMPOST == js.type || Type.SHTULP == js.type || Type.STOIKA == js.type) {
                     ElemCross elem5e = new ElemCross(this, js, owner);
                     owner.childs().add(elem5e); //добавим ребёнка родителю
-                    listLine.add(elem5e);
+                    listElem.add(elem5e);
                     listCross.add(elem5e);
 
                 } else if (Type.GLASS == js.type) {
@@ -152,8 +153,8 @@ public class Wincalc {
 
     public void draw() {
         try {
-            root.setLocation();
-            root.paint();
+            rootArea.setLocation();
+            rootArea.paint();
             listFrame.forEach(e -> e.setLocation());
             listFrame.forEach(e -> e.paint());
             listCross.forEach(e -> e.setLocation());
@@ -173,11 +174,11 @@ public class Wincalc {
     }
 
     public double width() {
-        return root.area.getBounds2D().getWidth();
+        return rootArea.area.getBounds2D().getWidth();
     }
 
     public double height() {
-        return root.area.getBounds2D().getHeight();
+        return rootArea.area.getBounds2D().getHeight();
     }
     // </editor-fold>  
 }

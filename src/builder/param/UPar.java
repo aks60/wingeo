@@ -1,8 +1,8 @@
 package builder.param;
 
 import builder.Wincalc;
-import builder.IElem5e;
-import builder.IStvorka;
+import builder.model1.AreaStvorka;
+import builder.model1.ElemSimple;
 import common.UCom;
 import dataset.Record;
 import domain.eArtikl;
@@ -24,9 +24,9 @@ import java.util.List;
 class UPar {
 
     //Толщина внешнего/внутреннего заполнения, мм
-    static List<IElem5e> getGlassDepth(IElem5e elem5e) {
-        IElem5e glass1 = null, glass2 = null;
-        for (IElem5e el : elem5e.winc().listElem) {
+    static List<ElemSimple> getGlassDepth(ElemSimple elem5e) {
+        ElemSimple glass1 = null, glass2 = null;
+        for (ElemSimple el : elem5e.winc().listElem) {
             if (el.type() == Type.GLASS) {
                 if (elem5e.layout() == Layout.VERT) {
                     if (el.inside(elem5e.x1() - 200, elem5e.y1() + elem5e.height() / 2)) {
@@ -46,11 +46,11 @@ class UPar {
                 }
             }
         }
-        return List.of((IElem5e) glass1, (IElem5e) glass2);
+        return List.of((ElemSimple) glass1, (ElemSimple) glass2);
     }
 
     //Тип проема 
-    static boolean is_13003_14005_15005_37008(String txt, IElem5e elem5e) {
+    static boolean is_13003_14005_15005_37008(String txt, ElemSimple elem5e) {
         if ("глухой".equals(txt) == true && elem5e.owner().type() == Type.STVORKA == true) {
             return false;
         } else if ("не глухой".equals(txt) == true && elem5e.owner().type() == Type.STVORKA == false) {
@@ -60,7 +60,7 @@ class UPar {
     }
 
     //Контейнер типа
-    static boolean is_1005x6_2005x6_3005_4005_11005_12005_31050_33071_34071(String txt, IElem5e elem5e) {
+    static boolean is_1005x6_2005x6_3005_4005_11005_12005_31050_33071_34071(String txt, ElemSimple elem5e) {
         if ("ps3".equals(eSetting.val(2))) {
             String[] arr = {"коробка", "створка", "импост", "стойка", "эркер"};
             int[] index = {1, 2, 3, 5, 19};
@@ -78,7 +78,7 @@ class UPar {
     }
 
     //Для технологического кода контейнера 
-    static boolean is_STRING_XX000(String txt, IElem5e elem5e) {
+    static boolean is_STRING_XX000(String txt, ElemSimple elem5e) {
         Record sysprofRec = elem5e.sysprofRec();
         if (elem5e.type() == Type.GLASS) {
             sysprofRec = elem5e.owner().frames().get(Layout.BOTT).sysprofRec();
@@ -123,7 +123,7 @@ class UPar {
     }
 
     //Если номер стороны в контуре
-    static boolean is_INT_33066_34066(String txt, IElem5e elem5e) {
+    static boolean is_INT_33066_34066(String txt, ElemSimple elem5e) {
         if ("1".equals(txt) == true && Layout.BOTT != elem5e.layout()) {
             return false;
         } else if ("2".equals(txt) == true && Layout.RIGHT != elem5e.layout()) {
@@ -137,14 +137,14 @@ class UPar {
     }
 
     //Перспектива
-    static boolean is_13081_13082_13086_13087(IElem5e elem5e, String txt) {
+    static boolean is_13081_13082_13086_13087(ElemSimple elem5e, String txt) {
         return true;
     }
 
     //Эффективное заполнение изделия, мм 
     static boolean is_1008_11008_12008_14008_15008_31008_34008_40008(String txt, Wincalc winc) {
         double depth = 0;
-        for (IElem5e elem : winc.listElem) {
+        for (ElemSimple elem : winc.listElem) {
             if (elem.type() == Type.GLASS) {
                 depth = (elem.artiklRecAn().getDbl(eArtikl.depth) > depth) ? elem.artiklRecAn().getDbl(eArtikl.depth) : depth;
             }
@@ -156,7 +156,7 @@ class UPar {
     }
 
     //Номер стороны 
-    static boolean is_38010_39002(IElem5e elem5e, String txt) {
+    static boolean is_38010_39002(ElemSimple elem5e, String txt) {
         if (elem5e.anglHoriz() == 0 && "1".equals(txt) == false) {
             return false;
         } else if (elem5e.anglHoriz() == 90 && "2".equals(txt) == false) {
@@ -170,9 +170,9 @@ class UPar {
     }
 
     //Название фурнитуры содержит 
-    static boolean is_31037_38037_39037_40037(IElem5e elem5e, String txt) {
+    static boolean is_31037_38037_39037_40037(ElemSimple elem5e, String txt) {
         if (Type.STVORKA == elem5e.owner().type()) {
-            IStvorka stv = (IStvorka) elem5e.owner();
+            AreaStvorka stv = (AreaStvorka) elem5e.owner();
             String name = eFurniture.find(stv.sysfurnRec().getInt(eSysfurn.furniture_id)).getStr(eFurniture.name);
             if ((name.equals(txt)) == false) {
                 return false;
@@ -184,9 +184,9 @@ class UPar {
     }
 
     //Для типа открывания
-    static boolean is_1039_38039_39039(IElem5e elem5e, String txt) {
+    static boolean is_1039_38039_39039(ElemSimple elem5e, String txt) {
         if (elem5e.owner().type() == Type.STVORKA) {
-            IStvorka stv = (IStvorka) elem5e.owner();
+            AreaStvorka stv = (AreaStvorka) elem5e.owner();
             if (!"фрамуга".equals(txt) && stv.typeOpen() == TypeOpen1.UPPER) { //фрамуга
                 return false;
             } else if (!"поворотное".equals(txt) && (stv.typeOpen() == TypeOpen1.LEFT || stv.typeOpen() == TypeOpen1.RIGHT)) { //поворотное
@@ -206,7 +206,7 @@ class UPar {
         return true;
     }
 
-    static boolean is_11001_11002_12001_12002_13001_14001_15001_33001_34001(String txt, IElem5e elem5e) {
+    static boolean is_11001_11002_12001_12002_13001_14001_15001_33001_34001(String txt, ElemSimple elem5e) {
         Record record = eElement.query().stream().filter(rec
                 -> elem5e.artiklRecAn().getInt(eArtikl.id) == rec.getInt(eElement.artikl_id)
                 && txt.equals(rec.get(eElement.signset))).findFirst().orElse(null);
@@ -226,7 +226,7 @@ class UPar {
         return true;
     }
 
-    static boolean is_21010_21011_21012_21013(String txt, IElem5e elem5e) {
+    static boolean is_21010_21011_21012_21013(String txt, ElemSimple elem5e) {
         String[] arr = txt.split("-");
         if (arr.length == 1) { //Минимальная длина, мм
             if (UCom.getInt(txt) < elem5e.length()) {

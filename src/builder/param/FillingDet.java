@@ -9,7 +9,7 @@ import domain.eSystree;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
-import builder.IElem5e;
+import builder.model1.ElemSimple;
 import common.UCom;
 import enums.Layout;
 import enums.Type;
@@ -21,7 +21,7 @@ public class FillingDet extends Par5s {
         super(winc);
     }
 
-    public boolean filter(HashMap<Integer, String> mapParam, IElem5e elem5e, Record glasdetRec) {
+    public boolean filter(HashMap<Integer, String> mapParam, ElemSimple elem5e, Record glasdetRec) {
 
         List<Record> paramList = eGlaspar2.find(glasdetRec.getInt(eGlasdet.id)); //список параметров детализации  
         if (filterParamDef(paramList) == false) {
@@ -36,7 +36,7 @@ public class FillingDet extends Par5s {
         return true;
     }
 
-    public boolean check(HashMap<Integer, String> mapParam, IElem5e elem5e, Record rec) {
+    public boolean check(HashMap<Integer, String> mapParam, ElemSimple elem5e, Record rec) {
 
         int grup = rec.getInt(GRUP);
         try {
@@ -44,7 +44,7 @@ public class FillingDet extends Par5s {
                 case 14000: //Для технологического кода контейнера
                 case 15000: //Для технологического кода контейнера 
                 {
-                    IElem5e elem = winc.rootArea.frames().get(Layout.BOTT);
+                    ElemSimple elem = winc.rootArea.frames().get(Layout.BOTT);
                     if (!UPar.is_STRING_XX000(rec.getStr(TEXT), elem)) {
                         return false;
                     }
@@ -53,7 +53,7 @@ public class FillingDet extends Par5s {
                 case 14001: //Если признак состава 
                 case 15001: //Если признак состава    
                 {
-                    IElem5e elem = winc.rootArea.frames().get(Layout.BOTT);
+                    ElemSimple elem = winc.rootArea.frames().get(Layout.BOTT);
                     if (UPar.is_11001_11002_12001_12002_13001_14001_15001_33001_34001(rec.getStr(TEXT), elem) == false) {
                         return false;
                     }
@@ -136,7 +136,7 @@ public class FillingDet extends Par5s {
                 case 14081: //Если артикул профиля контура 
                 case 15081: //Если артикул профиля контура 
                 {
-                    IElem5e elem = (elem5e.owner().frames().isEmpty() == false) ? elem5e.owner().frames().get(Layout.BOTT) : elem5e.root().frames().get(Layout.BOTT);
+                    ElemSimple elem = (elem5e.owner().frames().isEmpty() == false) ? elem5e.owner().frames().get(Layout.BOTT) : elem5e.root().frames().get(Layout.BOTT);
                     if (rec.getStr(TEXT).equals(elem.artiklRecAn().getStr(eArtikl.code)) == false) {
                         return false;
                     }

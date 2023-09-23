@@ -1,4 +1,4 @@
-package builder.model2;
+package builder.model1;
 
 import builder.Wincalc;
 import builder.making.Specific;
@@ -44,6 +44,10 @@ public class ElemSimple extends Com5t {
 //        }        
     }
 
+    public void addSpecific(Specific spcAdd) {
+        
+    }
+    
     @Override
     public String toString() {
         return super.toString() + ", anglHoriz=" + anglHoriz;

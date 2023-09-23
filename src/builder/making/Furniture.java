@@ -13,9 +13,9 @@ import java.util.List;
 import builder.Wincalc;
 import builder.param.FurnitureDet;
 import builder.param.FurnitureVar;
-import builder.IArea5e;
-import builder.IElem5e;
-import builder.IStvorka;
+import builder.model1.AreaSimple;
+import builder.model1.AreaStvorka;
+import builder.model1.ElemSimple;
 import common.UCom;
 import dataset.Query;
 import enums.Type;
@@ -50,12 +50,12 @@ public class Furniture extends Cal5e {
     @Override
     public void calc() {
         super.calc();
-        LinkedList<IArea5e> stvorkaList = winc.listArea.filter(Type.STVORKA);
+        LinkedList<AreaSimple> stvorkaList = winc.listArea.filter(Type.STVORKA);
         try {
             //Цикл по створкам      
-            for (IArea5e areaStv : stvorkaList) {
+            for (AreaSimple areaStv : stvorkaList) {
 
-                IStvorka stv = (IStvorka) areaStv;
+                AreaStvorka stv = (AreaStvorka) areaStv;
                 //Подбор фурнитуры по параметрам
                 List<Record> sysfurnList = eSysfurn.find(winc.nuni()); //список фурнитур в системе профилей
                 if (sysfurnList.isEmpty() == false) {
@@ -86,7 +86,7 @@ public class Furniture extends Cal5e {
         }
     }
 
-    protected void variant(IArea5e areaStv, Record furnitureRec, int count) {
+    protected void variant(AreaSimple areaStv, Record furnitureRec, int count) {
         try {
             List<Record> furndetList1 = eFurndet.find(furnitureRec.getInt(eFurniture.id));
             List<Record> furndetList2 = furndetList1.stream().filter(rec -> rec.getInt(eFurndet.id) != rec.getInt(eFurndet.furndet_pk)).collect(toList());
@@ -94,7 +94,7 @@ public class Furniture extends Cal5e {
 
             //Цикл по описанию сторон фурнитуры
             for (Record furnside1Rec : furnsidetList) {
-                IElem5e elemFrame = areaStv.frames().get((Layout) Layout.ANY.find(furnside1Rec.getInt(eFurnside1.side_num)));
+                ElemSimple elemFrame = areaStv.frames().get((Layout) Layout.ANY.find(furnside1Rec.getInt(eFurnside1.side_num)));
 
                 //ФИЛЬТР вариантов с учётом стороны
                 if (furnitureVar.filter(elemFrame, furnside1Rec) == false) {
@@ -129,7 +129,7 @@ public class Furniture extends Cal5e {
         }
     }
 
-    protected boolean detail(IArea5e areaStv, Record furndetRec, int countKit) {
+    protected boolean detail(AreaSimple areaStv, Record furndetRec, int countKit) {
         try {
             Record artiklRec = eArtikl.find(furndetRec.getInt(eFurndet.artikl_id), false);
             HashMap<Integer, String> mapParam = new HashMap(); //тут накапливаются параметры element и specific
@@ -153,7 +153,7 @@ public class Furniture extends Cal5e {
 
             //Цикл по ограничению сторон фурнитуры
             for (Record furnside2Rec : furnside2List) {
-                IElem5e el;
+                ElemSimple el;
                 double width = 0;
                 int side = furnside2Rec.getInt(eFurnside2.side_num);
 
@@ -223,8 +223,8 @@ public class Furniture extends Cal5e {
         }
     }
 
-    private boolean propertyStv(IArea5e areaStv, Specific spcAdd) {
-        IStvorka stv = (IStvorka) areaStv;
+    private boolean propertyStv(AreaSimple areaStv, Specific spcAdd) {
+        AreaStvorka stv = (AreaStvorka) areaStv;
         if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2) {
             boolean add_specific = true;
             //Ручка
@@ -279,7 +279,7 @@ public class Furniture extends Cal5e {
         return true;
     }
 
-    public IElem5e determOfSide(HashMap<Integer, String> mapParam, IArea5e area5e) {
+    public ElemSimple determOfSide(HashMap<Integer, String> mapParam, AreaSimple area5e) {
 
         //Через параметр
         if ("1".equals(mapParam.get(25010))) {
@@ -297,9 +297,9 @@ public class Furniture extends Cal5e {
     }
 
     //Там где крепится ручка
-    public static IElem5e determOfSide(IArea5e area5e) {
-        if (area5e instanceof IStvorka) {
-            int id = ((IStvorka) area5e).typeOpen().id;
+    public static ElemSimple determOfSide(AreaSimple area5e) {
+        if (area5e instanceof AreaStvorka) {
+            int id = ((AreaStvorka) area5e).typeOpen().id;
             if (List.of(1, 3, 11).contains(id)) {
                 return area5e.frames().get(Layout.LEFT);
             } else if (List.of(2, 4, 12).contains(id)) {

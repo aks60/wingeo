@@ -1,4 +1,4 @@
-package builder.model2;
+package builder.model1;
 
 import builder.Wincalc;
 import java.awt.Graphics;
@@ -52,7 +52,7 @@ public class Canvas2D extends JComponent {
     }
 
     public double scale(Wincalc wing, double dx, double dy) {
-        Rectangle2D rec = wing.root.area.getBounds2D();
+        Rectangle2D rec = wing.rootArea.area.getBounds2D();
         return ((getWidth() + dx) / rec.getMaxX() > (getHeight() + dx) / rec.getMaxY())
                 ? (getHeight() + dx) / (rec.getMaxY() + dy) : (getWidth() + dx) / (rec.getMaxX() + dy);
     }

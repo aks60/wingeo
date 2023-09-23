@@ -1,7 +1,7 @@
 package common;
 
-import builder.IElem5e;
 import builder.model1.ElemJoining;
+import builder.model1.ElemSimple;
 import enums.LayoutJoin;
 import enums.Type;
 import enums.TypeJoin;
@@ -22,7 +22,7 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
      * 2-прилег.артикл
      * @return - класс описатель соединения
      */
-    public ElemJoining get(IElem5e el, int side) {
+    public ElemJoining get(ElemSimple el, int side) {
         try {
             for (ElemJoining join : this) {
                 if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(el.type())) {
@@ -61,7 +61,7 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
      * 2-прилег.артикл
      * @return - элемент соединения
      */
-    public IElem5e elem(IElem5e el, int side) {
+    public ElemSimple elem(ElemSimple el, int side) {
         ElemJoining join = get(el, side);
         try {
             if (join != null) {

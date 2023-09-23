@@ -1,4 +1,4 @@
-package builder.model2;
+package builder.model1;
 
 import builder.Wincalc;
 import builder.script.GeoElem;
@@ -75,7 +75,7 @@ public class ElemCross extends ElemSimple {
             //UGeo.PRINT(owner.area);
             //Area импоста внутренняя
             //Area areaPadding = UGeo.areaPadding(wing.listFrame);        
-            Area areaPadding = UGeo.areaPadding(owner.area, wing.listLine);
+            Area areaPadding = UGeo.areaPadding(owner.area, wing.listElem);
 
             areaPadding.intersect(UGeo.area(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]));
             //this.area = UGeo.areaReduc(areaPadding);

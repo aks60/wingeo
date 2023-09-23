@@ -1,7 +1,7 @@
 package frames.swing.draw;
 
 import builder.Wincalc;
-import builder.ICom5t;
+import builder.model1.Com5t;
 import common.listener.ListenerFrame;
 import java.awt.BasicStroke;
 import java.awt.Graphics;
@@ -50,7 +50,7 @@ public class Canvas extends javax.swing.JPanel implements ListenerFrame<MouseEve
             winc.gc2d = (Graphics2D) g;
             winc.gc2d.setColor(getBackground());
             winc.gc2d.setStroke(new BasicStroke(2)); //толщина линии
-            winc.gc2d.translate(ICom5t.TRANSLATE_XY, ICom5t.TRANSLATE_XY);
+            winc.gc2d.translate(Com5t.TRANSLATE_XY, Com5t.TRANSLATE_XY);
             winc.scale = scale(winc, -3, 0);
             winc.gc2d.scale(winc.scale, winc.scale);
             winc.rootArea.draw();

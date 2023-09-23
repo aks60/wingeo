@@ -1,11 +1,9 @@
 package builder.making;
 
-import java.util.*;
 import builder.Wincalc;
-import builder.IArea5e;
-import builder.IElem5e;
+import builder.model1.AreaSimple;
+import builder.model1.ElemSimple;
 import dataset.Query;
-import dataset.Record;
 import enums.TypeArtikl;
 
 public abstract class Cal5e {
@@ -23,11 +21,11 @@ public abstract class Cal5e {
         Query.conf = "calc";
     }
 
-    public IArea5e rootArea() {
+    public AreaSimple rootArea() {
         return winc.rootArea;
     }
 
-    public static void artype(Specific spcAdd, IElem5e elem5e) {
+    public static void artype(Specific spcAdd, ElemSimple elem5e) {
         TypeArtikl typ = TypeArtikl.find(spcAdd.artiklRec);
         switch (typ) {
             case X100:;

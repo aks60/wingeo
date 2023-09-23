@@ -8,14 +8,12 @@ import domain.eSetting;
 import enums.Layout;
 import java.util.List;
 import builder.Wincalc;
+import builder.model1.AreaStvorka;
 import builder.model1.ElemJoining;
-import builder.IElem5e;
-import builder.IStvorka;
 import common.UCom;
 import enums.Type;
 import enums.TypeJoin;
 import java.util.ArrayList;
-import java.util.Map;
 
 //Составы 31000, 37000
 public class ElementVar extends Par5s {
@@ -25,7 +23,7 @@ public class ElementVar extends Par5s {
         listenerList = new ArrayList();
     }
 
-    public boolean filter(IElem5e elem5e, Record elementRec) {
+    public boolean filter(ElemSimple elem5e, Record elementRec) {
 
         listenerList.clear();
         List<Record> paramList = eElempar1.find3(elementRec.getInt(eElement.id)); //список параметров вариантов использования
@@ -41,7 +39,7 @@ public class ElementVar extends Par5s {
         return true;
     }
 
-    public boolean check(IElem5e elem5e, Record rec) {
+    public boolean check(ElemSimple elem5e, Record rec) {
         int grup = rec.getInt(GRUP);
         try {
             switch (grup) {
@@ -53,9 +51,9 @@ public class ElementVar extends Par5s {
                     break;
                 case 31001: //Максимальное заполнение изделия, мм 
                 {
-                    List<IElem5e> glassList = winc.listElem.filter(Type.GLASS);
+                    List<ElemSimple> glassList = winc.listElem.filter(Type.GLASS);
                     double depth = 0;
-                    for (IElem5e glass : glassList) {
+                    for (ElemSimple glass : glassList) {
                         if (glass.artiklRecAn().getDbl(eArtikl.depth) > depth) {
                             depth = (glass.artiklRecAn().getDbl(eArtikl.depth));
                         }
@@ -124,7 +122,7 @@ public class ElementVar extends Par5s {
                     break;
                 case 31011: //Толщина внешнего/внутреннего заполнения, мм
                 {
-                    List<IElem5e> glassList = UPar.getGlassDepth(elem5e);
+                    List<ElemSimple> glassList = UPar.getGlassDepth(elem5e);
                     if (glassList.get(0).type() == Type.GLASS && glassList.get(1).type() == Type.GLASS) {
                         if ("ps3".equals(eSetting.val(2))) { //Толщина заполнения, мм
                             if (UCom.containsNumbAny(rec.getStr(TEXT),
@@ -142,7 +140,7 @@ public class ElementVar extends Par5s {
                 break;
                 case 31012: //Для внешнего заполнения, мм", только для PS3
                 {
-                    List<IElem5e> glassList = UPar.getGlassDepth(elem5e);
+                    List<ElemSimple> glassList = UPar.getGlassDepth(elem5e);
                     if (glassList.get(1).type() == Type.GLASS) {
                         if (UCom.containsNumbJust(rec.getStr(TEXT),
                                 glassList.get(1).artiklRec().getDbl(eArtikl.depth)) == false) {
@@ -153,7 +151,7 @@ public class ElementVar extends Par5s {
                 break;
                 case 31013: //Для внутреннего заполнения, мм", только для PS3
                 {
-                    List<IElem5e> glassList = UPar.getGlassDepth(elem5e);
+                    List<ElemSimple> glassList = UPar.getGlassDepth(elem5e);
                     if (glassList.get(0).type() == Type.GLASS) {
                         if (UCom.containsNumbJust(rec.getStr(TEXT),
                                 glassList.get(0).artiklRec().getDbl(eArtikl.depth)) == false) {
@@ -164,7 +162,7 @@ public class ElementVar extends Par5s {
                 break;
                 case 31014: //Заполнения одинаковой толщины 
                 {
-                    List<IElem5e> glassList = UPar.getGlassDepth(elem5e);
+                    List<ElemSimple> glassList = UPar.getGlassDepth(elem5e);
                     if ("Да".equals(rec.getStr(TEXT)) == true) {
                         if (glassList.get(0).artiklRecAn().getDbl(eArtikl.depth) != glassList.get(1).artiklRecAn().getDbl(eArtikl.depth)) {
                             return false;
@@ -262,9 +260,9 @@ public class ElementVar extends Par5s {
                     break;
                 case 31051:  //Если створка фурнитуры 
                     if (elem5e.owner().type() == Type.STVORKA) {
-                        if ("ведущая".equals(rec.getStr(TEXT)) == true && ((IStvorka) elem5e.owner()).handleRec().getInt(eArtikl.id) == -3) {
+                        if ("ведущая".equals(rec.getStr(TEXT)) == true && ((AreaStvorka) elem5e.owner()).handleRec().getInt(eArtikl.id) == -3) {
                             return false;
-                        } else if ("ведомая".equals(rec.getStr(TEXT)) == true && ((IStvorka) elem5e.owner()).handleRec().getInt(eArtikl.id) != -3) {
+                        } else if ("ведомая".equals(rec.getStr(TEXT)) == true && ((AreaStvorka) elem5e.owner()).handleRec().getInt(eArtikl.id) != -3) {
                             return false;
                         }
                     }
@@ -367,7 +365,7 @@ public class ElementVar extends Par5s {
                     break;
                 case 37009: //Тип заполнения 
                 {
-                    IElem5e glass = (IElem5e) elem5e.owner().childs().stream().filter(it -> it.type() == Type.GLASS).findFirst().orElse(null);
+                    ElemSimple glass = (ElemSimple) elem5e.owner().childs().stream().filter(it -> it.type() == Type.GLASS).findFirst().orElse(null);
                     if ("Прямоугольное".equals(rec.getStr(TEXT)) && winc.form != null) {
                         return false;
 

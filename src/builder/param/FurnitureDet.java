@@ -1,6 +1,5 @@
 package builder.param;
 
-import builder.IArea5e;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eFurndet;
@@ -11,9 +10,10 @@ import java.util.List;
 import builder.Wincalc;
 import builder.making.Specific;
 import builder.model1.AreaArch;
-import builder.ICom5t;
-import builder.IElem5e;
-import builder.IStvorka;
+import builder.model1.Com5t;
+import builder.model1.AreaSimple;
+import builder.model1.AreaStvorka;
+import builder.model1.ElemSimple;
 import common.UCom;
 import domain.eColor;
 import domain.eGroups;
@@ -28,7 +28,7 @@ public class FurnitureDet extends Par5s {
         super(winc);
     }
 
-    public boolean filter(HashMap<Integer, String> mapParam, IArea5e areaStv, Record furndetRec) {
+    public boolean filter(HashMap<Integer, String> mapParam, AreaSimple areaStv, Record furndetRec) {
 
         this.detailRec = furndetRec;
         List<Record> tableList = eFurnpar2.find(furndetRec.getInt(eFurndet.id));
@@ -44,9 +44,9 @@ public class FurnitureDet extends Par5s {
         return true;
     }
 
-    public boolean check(HashMap<Integer, String> mapParam, IArea5e areaStv, Record rec) {
+    public boolean check(HashMap<Integer, String> mapParam, AreaSimple areaStv, Record rec) {
 
-        IStvorka elemStv = (IStvorka) areaStv;
+        AreaStvorka elemStv = (AreaStvorka) areaStv;
         int grup = rec.getInt(GRUP);
         try {
             switch (grup) {
@@ -124,7 +124,7 @@ public class FurnitureDet extends Par5s {
                 break;
                 case 24009:  //Коды текстуры подвеса 
                 case 25009:  //Коды текстуры подвеса                   
-                    for (Map.Entry<Layout, IElem5e> elem : areaStv.frames().entrySet()) {
+                    for (Map.Entry<Layout, ElemSimple> elem : areaStv.frames().entrySet()) {
                         for (Specific spc : elem.getValue().spcRec().spcList) {
                             if (spc.artiklRec.getInt(eArtikl.level1) == 2 && spc.artiklRec.getInt(eArtikl.level2) == 12) {
                                 String name = eColor.find(spc.colorID1).getStr(eColor.name);
@@ -175,7 +175,7 @@ public class FurnitureDet extends Par5s {
                 {
                     if (rec.getStr(TEXT).equals("Да")) {
                         boolean ret = false;
-                        for (Map.Entry<Layout, IElem5e> entry : areaStv.frames().entrySet()) {
+                        for (Map.Entry<Layout, ElemSimple> entry : areaStv.frames().entrySet()) {
                             if (winc.listJoin.elem(entry.getValue(), 2).type() == Type.SHTULP) {
                                 ret = true;
                             }
@@ -185,7 +185,7 @@ public class FurnitureDet extends Par5s {
                         }
                     } else if (rec.getStr(TEXT).equals("Нет")) {
                         boolean ret = false;
-                        for (Map.Entry<Layout, IElem5e> entry : areaStv.frames().entrySet()) {
+                        for (Map.Entry<Layout, ElemSimple> entry : areaStv.frames().entrySet()) {
                             if (winc.listJoin.elem(entry.getValue(), 2).type() == Type.SHTULP) {
                                 ret = true;
                             }
@@ -225,7 +225,7 @@ public class FurnitureDet extends Par5s {
                 case 24063: //Диапазон веса, кг 
                 case 25063: //Диапазон веса, кг 
                 {
-                    ICom5t glass = areaStv.childs().stream().filter(el -> el.type() == Type.GLASS).findFirst().orElse(null);
+                    Com5t glass = areaStv.childs().stream().filter(el -> el.type() == Type.GLASS).findFirst().orElse(null);
                     if (glass != null) {
                         double weight = ((glass.width() * glass.height()) / 1000000) * glass.artiklRecAn().getDbl(eArtikl.density);
                         if (UCom.containsNumbExp(rec.getStr(TEXT), weight) == false) {

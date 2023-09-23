@@ -1,4 +1,4 @@
-package builder.model2;
+package builder.model1;
 
 import builder.Wincalc;
 import builder.script.GeoElem;

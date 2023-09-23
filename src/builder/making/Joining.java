@@ -14,7 +14,7 @@ import builder.param.ElementDet;
 import builder.param.JoiningDet;
 import builder.param.JoiningVar;
 import builder.model1.ElemJoining;
-import builder.IElem5e;
+import builder.model1.ElemSimple;
 import dataset.Query;
 import domain.eSetting;
 import enums.TypeJoin;
@@ -52,8 +52,8 @@ public class Joining extends Cal5e {
             //Цикл по списку соединений
             for (ElemJoining elemJoin : winc.listJoin) {
                 
-                IElem5e joinElem1 = elemJoin.elem1;
-                IElem5e joinElem2 = elemJoin.elem2;
+                ElemSimple joinElem1 = elemJoin.elem1;
+                ElemSimple joinElem2 = elemJoin.elem2;
 
                 int id1 = joinElem1.artiklRecAn().getInt(eArtikl.id);
                 int id2 = joinElem2.artiklRecAn().getInt(eArtikl.id);

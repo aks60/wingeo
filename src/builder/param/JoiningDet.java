@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
 import builder.model1.ElemJoining;
-import builder.IElem5e;
+import builder.model1.ElemSimple;
 import common.UCom;
 import enums.Type;
 import java.util.LinkedList;
@@ -93,8 +93,8 @@ public class JoiningDet extends Par5s {
                 case 12028: //Диапазон веса заполнения, кг 
                 {
                     double weight = 0;
-                    LinkedList<IElem5e> glassList = winc.listElem.filter(Type.GLASS);
-                    for (IElem5e glass : glassList) {
+                    LinkedList<ElemSimple> glassList = winc.listElem.filter(Type.GLASS);
+                    for (ElemSimple glass : glassList) {
                         if (glass.artiklRecAn().getDbl(eArtikl.density) > 0) {
                             weight += glass.width() * glass.height() * glass.artiklRecAn().getDbl(eArtikl.density) / 1000000;
                         }

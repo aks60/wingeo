@@ -8,7 +8,7 @@ import enums.TypeArtikl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
-import builder.IElem5e;
+import builder.model1.ElemSimple;
 import common.ArraySpc;
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class Specific {
 
     public ArraySpc<Specific> spcList = new ArraySpc();  //список составов, фурнитур и т.д.
     public HashMap<Integer, String> mapParam = null;  //параметры спецификации
-    public IElem5e elem5e = null;  //элемент пораждающий спецификацию (контейнер)
+    public ElemSimple elem5e = null;  //элемент пораждающий спецификацию (контейнер)
     public Record variantRec = null;  //вариант в конструктиве
     public Record detailRec = null;  //детализация в конструктиве
     public Record artiklRec = null;  //артикул в детализации конструктива
@@ -51,14 +51,14 @@ public class Specific {
     public Specific() {        
     }
     
-    public Specific(double id, IElem5e elem5e) {
+    public Specific(double id, ElemSimple elem5e) {
         elem5e.winc().genId();
         this.id = id;
         this.elem5e = elem5e;
         this.mapParam = new HashMap();
     }
 
-    public Specific(String place, Record detailRec, Record artiklRec, IElem5e elem5e, HashMap<Integer, String> mapParam) {
+    public Specific(String place, Record detailRec, Record artiklRec, ElemSimple elem5e, HashMap<Integer, String> mapParam) {
         this.id = elem5e.winc().genId();
         this.elem5e = elem5e;
         this.mapParam = mapParam;

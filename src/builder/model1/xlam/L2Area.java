@@ -1,4 +1,4 @@
-package builder.model2.xlam;
+package builder.model1.xlam;
 
 import java.util.ArrayList;
 

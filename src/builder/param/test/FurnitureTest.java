@@ -1,7 +1,7 @@
 package builder.param.test;
 
-import builder.IArea5e;
-import builder.IStvorka;
+import builder.model1.AreaSimple;
+import builder.model1.AreaStvorka;
 import java.util.HashMap;
 
 public class FurnitureTest extends ParamTest {
@@ -52,9 +52,9 @@ public class FurnitureTest extends ParamTest {
      */
     public void furnitureDet() {
         HashMap<Integer, String> mapParam = new HashMap();
-        IArea5e area_stv_3 = (IArea5e) stv_right_3.owner();
-        IArea5e area_stv_2 = (IArea5e) stv_right_2.owner();
-        IArea5e area_stv_4 = (IArea5e) stv_right_4.owner();
+        AreaSimple area_stv_3 = (AreaSimple) stv_right_3.owner();
+        AreaSimple area_stv_2 = (AreaSimple) stv_right_2.owner();
+        AreaSimple area_stv_4 = (AreaSimple) stv_right_4.owner();
 
         grup = 24001; //25001 //Форма контура
         //assert true == furnitureDet3.check(mapParam, area_stv_3, param("арочная", grup)) : grup;

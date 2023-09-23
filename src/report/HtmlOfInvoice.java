@@ -1,6 +1,6 @@
 package report;
 
-import builder.IElem5e;
+import builder.model1.AreaSimple;
 import builder.Wincalc;
 import common.MoneyInWords;
 import common.UCom;
