@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.6" maxVersion="1.6" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="title" type="java.lang.String" value="&#x41a;&#x430;&#x43b;&#x435;&#x43d;&#x434;&#x430;&#x440;&#x44c;"/>
+    <Property name="resizable" type="boolean" value="false"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <Events>
+    <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="formShown"/>
+  </Events>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="labl1" max="32767" attributes="2"/>
+                          <Group type="102" attributes="0">
+                              <Component id="scrYear" min="-2" max="-2" attributes="2"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lab2" max="32767" attributes="2"/>
+                          <Group type="102" attributes="0">
+                              <Component id="listMonth" min="-2" pref="79" max="-2" attributes="2"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="lab3" min="-2" pref="146" max="-2" attributes="2"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="lab4" pref="58" max="32767" attributes="2"/>
+                          </Group>
+                          <Component id="tabDay" pref="210" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Component id="tool" alignment="1" pref="352" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lab2" alignment="3" min="-2" max="-2" attributes="1"/>
+                  <Component id="labl1" alignment="3" min="-2" max="-2" attributes="2"/>
+                  <Component id="lab3" alignment="3" min="-2" max="-2" attributes="1"/>
+                  <Component id="lab4" alignment="3" min="-2" max="-2" attributes="2"/>
+              </Group>
+              <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="scrYear" max="32767" attributes="3"/>
+                  <Component id="listMonth" alignment="0" max="32767" attributes="3"/>
+                  <Component id="tabDay" alignment="0" pref="194" max="32767" attributes="3"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="tool" min="-2" pref="35" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JList" name="listMonth">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder/>
+          </Border>
+        </Property>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="frames.UGui.getFont(-1,0)" type="code"/>
+        </Property>
+        <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
+          <StringArray count="12">
+            <StringItem index="0" value="  1  &#x42f;&#x43d;&#x432;&#x430;&#x440;&#x44c;"/>
+            <StringItem index="1" value="  2  &#x424;&#x435;&#x432;&#x440;&#x430;&#x43b;&#x44c;"/>
+            <StringItem index="2" value="  3  &#x41c;&#x430;&#x440;&#x442; "/>
+            <StringItem index="3" value="  4  &#x410;&#x43f;&#x440;&#x435;&#x43b;&#x44c;"/>
+            <StringItem index="4" value="  5  &#x41c;&#x430;&#x439;"/>
+            <StringItem index="5" value="  6  &#x418;&#x44e;&#x43d;&#x44c;"/>
+            <StringItem index="6" value="  7  &#x418;&#x44e;&#x43b;&#x44c;"/>
+            <StringItem index="7" value="  8  &#x410;&#x432;&#x433;&#x443;&#x441;&#x442;"/>
+            <StringItem index="8" value="  9  &#x421;&#x435;&#x43d;&#x442;&#x44f;&#x431;&#x440;&#x44c;"/>
+            <StringItem index="9" value="10  &#x41e;&#x43a;&#x442;&#x44f;&#x431;&#x440;&#x44c;"/>
+            <StringItem index="10" value="11  &#x41d;&#x43e;&#x44f;&#x431;&#x440;&#x44c;"/>
+            <StringItem index="11" value="12  &#x414;&#x435;&#x43a;&#x430;&#x431;&#x440;&#x44c;"/>
+          </StringArray>
+        </Property>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[32767, 32767]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[71, 190]"/>
+        </Property>
+        <Property name="visibleRowCount" type="int" value="12"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mouseClicked"/>
+        <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="monthChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTable" name="tabDay">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder/>
+          </Border>
+        </Property>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="frames.UGui.getFont(1,0)" type="code"/>
+        </Property>
+        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+          <Table columnCount="7" rowCount="6">
+            <Column editable="false" title="&#x41f;&#x43d;" type="java.lang.Object">
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+            </Column>
+            <Column editable="false" title="&#x412;&#x442;" type="java.lang.Object">
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+            </Column>
+            <Column editable="false" title="&#x421;&#x440;" type="java.lang.Object">
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+            </Column>
+            <Column editable="false" title="&#x427;&#x442;" type="java.lang.Object">
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+            </Column>
+            <Column editable="false" title="&#x41f;&#x442;" type="java.lang.Object">
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+            </Column>
+            <Column editable="false" title="&#x421;&#x431;" type="java.lang.Object">
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+            </Column>
+            <Column editable="false" title="&#x412;&#x441;" type="java.lang.Object">
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+              <Data value=""/>
+            </Column>
+          </Table>
+        </Property>
+        <Property name="cellSelectionEnabled" type="boolean" value="true"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[32767, 32767]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[525, 192]"/>
+        </Property>
+        <Property name="rowHeight" type="int" value="32"/>
+        <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
+          <JTableSelectionModel selectionMode="0"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mouseClicked"/>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="keyPressed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="tabDay.getSelectionModel().addListSelectionListener(new ListSelectionListener() {&#xa;  public void valueChanged(ListSelectionEvent event) {&#xa;      dayChanged(event);&#xa;  }&#xa;});&#xa;tabDay.getColumnModel().getSelectionModel().addListSelectionListener(new ListSelectionListener() {&#xa;  public void valueChanged(ListSelectionEvent event) {&#xa;      dayChanged(event);&#xa;  }&#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="DicDate_tabDay"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+      </AuxValues>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="scrYear">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder/>
+          </Border>
+        </Property>
+        <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
+        <Property name="verticalScrollBarPolicy" type="int" value="22"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[0, 0]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[48, 190]"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JList" name="listYear">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="frames.UGui.getFont(-1,0)" type="code"/>
+            </Property>
+            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
+              <StringArray count="81">
+                <StringItem index="0" value="2015"/>
+                <StringItem index="1" value="2014"/>
+                <StringItem index="2" value="2013"/>
+                <StringItem index="3" value="2012"/>
+                <StringItem index="4" value="2011"/>
+                <StringItem index="5" value="2010"/>
+                <StringItem index="6" value="2009"/>
+                <StringItem index="7" value="2008"/>
+                <StringItem index="8" value="2007"/>
+                <StringItem index="9" value="2006"/>
+                <StringItem index="10" value="2005"/>
+                <StringItem index="11" value="2004"/>
+                <StringItem index="12" value="2003"/>
+                <StringItem index="13" value="2002"/>
+                <StringItem index="14" value="2001"/>
+                <StringItem index="15" value="2000"/>
+                <StringItem index="16" value="1999"/>
+                <StringItem index="17" value="1998"/>
+                <StringItem index="18" value="1997"/>
+                <StringItem index="19" value="1996"/>
+                <StringItem index="20" value="1995"/>
+                <StringItem index="21" value="1994"/>
+                <StringItem index="22" value="1993"/>
+                <StringItem index="23" value="1992"/>
+                <StringItem index="24" value="1991"/>
+                <StringItem index="25" value="1990"/>
+                <StringItem index="26" value="1989"/>
+                <StringItem index="27" value="1988"/>
+                <StringItem index="28" value="1987"/>
+                <StringItem index="29" value="1986"/>
+                <StringItem index="30" value="1985"/>
+                <StringItem index="31" value="1984"/>
+                <StringItem index="32" value="1983"/>
+                <StringItem index="33" value="1982"/>
+                <StringItem index="34" value="1981"/>
+                <StringItem index="35" value="1980"/>
+                <StringItem index="36" value="1979"/>
+                <StringItem index="37" value="1978"/>
+                <StringItem index="38" value="1977"/>
+                <StringItem index="39" value="1976"/>
+                <StringItem index="40" value="1975"/>
+                <StringItem index="41" value="1974"/>
+                <StringItem index="42" value="1973"/>
+                <StringItem index="43" value="1972"/>
+                <StringItem index="44" value="1971"/>
+                <StringItem index="45" value="1970"/>
+                <StringItem index="46" value="1969"/>
+                <StringItem index="47" value="1968"/>
+                <StringItem index="48" value="1967"/>
+                <StringItem index="49" value="1966"/>
+                <StringItem index="50" value="1965"/>
+                <StringItem index="51" value="1964"/>
+                <StringItem index="52" value="1963"/>
+                <StringItem index="53" value="1962"/>
+                <StringItem index="54" value="1961"/>
+                <StringItem index="55" value="1960"/>
+                <StringItem index="56" value="1959"/>
+                <StringItem index="57" value="1958"/>
+                <StringItem index="58" value="1957"/>
+                <StringItem index="59" value="1956"/>
+                <StringItem index="60" value="1955"/>
+                <StringItem index="61" value="1954"/>
+                <StringItem index="62" value="1953"/>
+                <StringItem index="63" value="1952"/>
+                <StringItem index="64" value="1951"/>
+                <StringItem index="65" value="1950"/>
+                <StringItem index="66" value="1949"/>
+                <StringItem index="67" value="1948"/>
+                <StringItem index="68" value="1947"/>
+                <StringItem index="69" value="1946"/>
+                <StringItem index="70" value="1945"/>
+                <StringItem index="71" value="1944"/>
+                <StringItem index="72" value="1943"/>
+                <StringItem index="73" value="1942"/>
+                <StringItem index="74" value="1941"/>
+                <StringItem index="75" value="1940"/>
+                <StringItem index="76" value="1939"/>
+                <StringItem index="77" value="1938"/>
+                <StringItem index="78" value="1937"/>
+                <StringItem index="79" value="1936"/>
+                <StringItem index="80" value="1935"/>
+              </StringArray>
+            </Property>
+            <Property name="selectionMode" type="int" value="0"/>
+            <Property name="visibleRowCount" type="int" value="22"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mouseClicked"/>
+            <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="yearChanged"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="tool">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+            <EmptyBorder/>
+          </Border>
+        </Property>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[32767, 26]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[289, 26]"/>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="162" max="32767" attributes="0"/>
+                  <Component id="btnOk" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="btnClose" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnOk" alignment="3" max="32767" attributes="1"/>
+                      <Component id="btnClose" alignment="3" max="32767" attributes="1"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JButton" name="btnClose">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resource/img24/c037.gif"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="&#x41e;&#x442;&#x43c;&#x435;&#x43d;&#x430;"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                <EtchetBorder bevelType="0"/>
+              </Border>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[80, 25]"/>
+            </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[0, 0]"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[80, 25]"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closeAction"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnOk">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resource/img24/c020.gif"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="OK"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                <EtchetBorder bevelType="0"/>
+              </Border>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[80, 25]"/>
+            </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[0, 0]"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[80, 25]"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="okAction"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JLabel" name="labl1">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="12" style="0"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="0" red="0" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value=" &#x413;&#x43e;&#x434;"/>
+        <Property name="alignmentY" type="float" value="6.0"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+            <EmptyBorder/>
+          </Border>
+        </Property>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[30, 19]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[30, 19]"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lab2">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="12" style="0"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="0" red="0" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="    &#x41c;&#x435;&#x441;&#x44f;&#x446;"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+            <EmptyBorder/>
+          </Border>
+        </Property>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[54, 19]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[54, 19]"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lab3">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="12" style="0"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="0" red="0" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value=" &#x41f;&#x43d;    &#x412;&#x442;   &#x421;&#x440;   &#x427;&#x442;     &#x41f;&#x442;"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+            <EmptyBorder/>
+          </Border>
+        </Property>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[54, 19]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[54, 19]"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lab4">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="12" style="0"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="&#x421;&#x431;    &#x412;&#x441;"/>
+        <Property name="alignmentY" type="float" value="6.0"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+            <EmptyBorder/>
+          </Border>
+        </Property>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[30, 19]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[30, 19]"/>
+        </Property>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>

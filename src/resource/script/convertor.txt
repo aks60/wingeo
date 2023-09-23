@@ -1,0 +1,52 @@
+
+ЧТО МЕШАЕТ ПЕРЕКОНВЕРТИРОВАТЬ ДАННЫЕ
+1. В пс3 и пс4 разное количество полей в таблицах но список столбцов eEnum.values() для них один.
+2. Отсутствующие поля в пс3 будут заполняться пустышками.
+3. Поля не вошедшие в список столбцов eEnum.values() тоже будут переноситься для sql update таблиц и потом удаляться.
+
+==Добавлены таблицы и колотки в ПрофСтрой-3== 
+Artikls //материальные цености
+  amain //артикул аналога
+  atech //технологический код контейнера
+  asizn //размер технологический
+  sunic //ID системы (см. табл. SYSSIZE)
+  cnumt // кросс-курс валюты для неосновных текстур (внутренняя, внешняя, двухсторонняя)
+Artsvst //тариф. мат. цености
+  cways //галочки по приоритетности текстур (основной, внутренней, внешней):
+Syssize - добавил таблицу //системные константы
+Connlst - добавил таблицу //соединения
+Vstalst //составы
+  vtype - сменили тип //тип состава (1 - внутренний, 5 - состав_С/П)
+
+==SCRIPT==
+ALTER TABLE ARTIKLS
+ADD AMAIN SMALLINT,
+ADD ATECH VARCHAR(64),
+ADD ASIZN DOUBLE PRECISION,
+ADD SUNIC INTEGER,
+ADD CNUMT INTEGER;
+
+ALTER TABLE ARTSVST
+ADD CWAYS SMALLINT;
+
+CREATE TABLE SYSSIZE (
+    SUNIC  INTEGER,
+    SNAME  VARCHAR(32),
+    SSIZP  DOUBLE PRECISION,
+    SSIZN  DOUBLE PRECISION,
+    SSIZF  DOUBLE PRECISION,
+    SSIZI  DOUBLE PRECISION
+);
+
+CREATE TABLE CONNLST (
+    CPREF  VARCHAR(25) NOT NULL,
+    ANUM1  VARCHAR(25) NOT NULL,
+    ANUM2  VARCHAR(25) NOT NULL,
+    CCONN  INTEGER NOT NULL,
+    CNAME  VARCHAR(64),
+    CVARF  SMALLINT,
+    CEQUV  VARCHAR(25)
+);
+INSERT INTO connlst SELECT * FROM connect;
+ВНИМАНИЕ!  При изменении в CONNECT триггер должен изменить CONNLST
+
