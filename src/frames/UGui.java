@@ -180,39 +180,39 @@ public class UGui {
         //Цикл по всем детям ареа
         for (Com5t com : winc.rootArea.childs()) {
             //Если это не створка
-            if (com.type() != Type.STVORKA) {
+            if (com.type != Type.STVORKA) {
                 //Если это элемент
                 if (com instanceof ElemSimple) {
                     frm.add(new DefMutableTreeNode(com));
-                    if (com.type() != Type.GLASS) {
+                    if (com.type != Type.GLASS) {
                         frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING) {
                         }));
                     }
                     //Если это ареа
                 } else {
                     for (Com5t com2 : ((AreaSimple) com).childs()) {
-                        if (com2.type() != Type.STVORKA) {
+                        if (com2.type != Type.STVORKA) {
                             if (com2 instanceof ElemSimple) {
                                 frm.add(new DefMutableTreeNode(com2));
-                                if (com2.type() != Type.GLASS) {
+                                if (com2.type != Type.GLASS) {
                                     frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING) {
                                     }));
                                 }
                             } else {
                                 for (Com5t com3 : ((AreaSimple) com2).childs()) {
-                                    if (com3.type() != Type.STVORKA) {
+                                    if (com3.type != Type.STVORKA) {
                                         if (com3 instanceof ElemSimple) {
                                             frm.add(new DefMutableTreeNode(com3));
-                                            if (com3.type() != Type.GLASS) {
+                                            if (com3.type != Type.GLASS) {
                                                 frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING) {
                                                 }));
                                             }
                                         } else {
                                             for (ICom5t com4 : ((AreaSimple) com3).childs()) {
-                                                if (com4.type() != Type.STVORKA) {
+                                                if (com4.type != Type.STVORKA) {
                                                     if (com4 instanceof ElemSimple) {
                                                         frm.add(new DefMutableTreeNode(com4));
-                                                        if (com4.type() != Type.GLASS) {
+                                                        if (com4.type != Type.GLASS) {
                                                             frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING) {
                                                             }));
                                                         }
@@ -258,7 +258,7 @@ public class UGui {
             //Если это элемент
             if (com2 instanceof ElemSimple) {
                 nodeStv.add(new DefMutableTreeNode(com2));
-                if (com2.type() != Type.GLASS && com2.type() != Type.MOSKITKA) { //В стекле нет соединений
+                if (com2.type != Type.GLASS && com2.type != Type.MOSKITKA) { //В стекле нет соединений
                     nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
                 }
                 //Это ареа
@@ -266,14 +266,14 @@ public class UGui {
                 for (Com5t com3 : ((AreaSimple) com2).childs()) {
                     if (com3 instanceof ElemSimple) {
                         nodeStv.add(new DefMutableTreeNode(com3));
-                        if (com3.type() != Type.GLASS && com3.type() != Type.MOSKITKA) {
+                        if (com3.type != Type.GLASS && com3.type != Type.MOSKITKA) {
                             nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
                         }
                     } else {
                         for (Com5t com4 : ((AreaSimple) com3).childs()) {
                             if (com4 instanceof ElemSimple) {
                                 nodeStv.add(new DefMutableTreeNode(com4));
-                                if (com4.type() != Type.GLASS && com4.type() != Type.MOSKITKA) {
+                                if (com4.type != Type.GLASS && com4.type != Type.MOSKITKA) {
                                     nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
                                 }
                             }

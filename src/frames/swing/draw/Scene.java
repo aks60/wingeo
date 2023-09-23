@@ -64,7 +64,7 @@ public class Scene extends javax.swing.JPanel {
 
                     } else { //На конструкции
                         for (ElemSimple crs : winc.listElem) {
-                            if (List.of(Type.IMPOST, Type.SHTULP, Type.STOIKA).contains(crs.type())
+                            if (List.of(Type.IMPOST, Type.SHTULP, Type.STOIKA).contains(crs.type)
                                     && crs.inside(evt.getX() / winc.scale, evt.getY() / winc.scale)) {
                                 List<Com5t> areaChilds = ((ElemSimple) crs).owner().childs(); //дети импоста на котором был клик
                                 for (int i = 0; i < areaChilds.size(); ++i) {
@@ -240,25 +240,25 @@ public class Scene extends javax.swing.JPanel {
 
             if (lineHoriz.size() == 2) {
                 Scale sc2 = lineHoriz.get(1);
-                if (sc1.area().type() == Type.ARCH && sc2.area().type() == Type.AREA) {
+                if (sc1.area().type == Type.ARCH && sc2.area().type == Type.AREA) {
                     sc1.X1 = 0;
                     sc1.X2 = sc1.gson().length();
                     sc2.X1 = sc1.gson().length();
                     sc2.X2 = sc1.gson().length() + sc2.gson().length();
 
-                } else if (sc1.area().type() == Type.TRAPEZE && sc2.area().type() == Type.AREA) {
+                } else if (sc1.area().type == Type.TRAPEZE && sc2.area().type == Type.AREA) {
                     sc1.X1 = 0;
                     sc1.X2 = sc1.gson().length();
                     sc2.X1 = sc1.gson().length();
                     sc2.X2 = sc1.gson().length() + sc2.gson().length();
 
-                } else if (sc1.area().root().type() == Type.DOOR) {
+                } else if (sc1.area().root.type == Type.DOOR) {
                     sc1.X1 = 0;
                     sc1.X2 = sc1.area().x2();
                     sc2.X1 = sc1.area().x2();
-                    sc2.X2 = sc2.area().root().width();
+                    sc2.X2 = sc2.area().root.width();
 
-                } else if (sc1.area().type() == Type.AREA && sc2.area().type() == Type.AREA) {
+                } else if (sc1.area().type == Type.AREA && sc2.area().type == Type.AREA) {
                     sc2.X1 = sc2.area().x1();
                     sc2.X2 = sc2.area().x2();
 
@@ -278,25 +278,25 @@ public class Scene extends javax.swing.JPanel {
 
             if (lineVert.size() == 2) {
                 Scale sc2 = lineVert.get(1);
-                if (sc1.area().type() == Type.ARCH && sc2.area().type() == Type.AREA) {
+                if (sc1.area().type == Type.ARCH && sc2.area().type == Type.AREA) {
                     sc1.Y1 = 0;
                     sc1.Y2 = sc1.gson().length();
                     sc2.Y1 = sc1.gson().length();
                     sc2.Y2 = sc1.gson().length() + sc2.gson().length();
 
-                } else if (sc1.area().type() == Type.TRAPEZE && sc2.area().type() == Type.AREA) {
+                } else if (sc1.area().type == Type.TRAPEZE && sc2.area().type == Type.AREA) {
                     sc1.Y1 = 0;
                     sc1.Y2 = sc1.gson().length();
                     sc2.Y1 = sc1.gson().length();
                     sc2.Y2 = sc1.gson().length() + sc2.gson().length();
 
-                } else if (sc1.area().root().type() == Type.DOOR) {
+                } else if (sc1.area().root.type == Type.DOOR) {
                     sc1.Y1 = 0;
                     sc1.Y2 = sc1.area().y2();
                     sc2.Y1 = sc1.area().y2();
-                    sc2.Y2 = sc2.area().root().height();
+                    sc2.Y2 = sc2.area().root.height();
 
-                } else if (sc1.area().type() == Type.AREA && sc2.area().type() == Type.AREA) {
+                } else if (sc1.area().type == Type.AREA && sc2.area().type == Type.AREA) {
                     sc2.Y1 = sc2.area().y1();
                     sc2.Y2 = sc2.area().y2();
 

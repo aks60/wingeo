@@ -25,7 +25,7 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
     public ElemJoining get(ElemSimple el, int side) {
         try {
             for (ElemJoining join : this) {
-                if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(el.type())) {
+                if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(el.type)) {
                     if (side == 0 && join.elem1.id() == el.id() && (join.layout == LayoutJoin.TEE || join.layout == LayoutJoin.TEE)) {
                         return join;
                     } else if (side == 1 && join.elem1.id() == el.id() && (join.layout == LayoutJoin.TEE || join.layout == LayoutJoin.TEE)) {
@@ -33,15 +33,15 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
                     }
                 } else {
                     if (side == 0 && join.elem2.id() == el.id() && join.type != TypeJoin.VAR10) {  //Угловое левое
-                        if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(join.elem1.type()) == false) {
+                        if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(join.elem1.type) == false) {
                             return join;
                         }
                     } else if (side == 1 && join.elem1.id() == el.id() && join.type != TypeJoin.VAR10) { //Угловое правое
-                        if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(join.elem2.type()) == false) {
+                        if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(join.elem2.type) == false) {
                             return join;
                         }
                     } else if (side == 2 && join.elem1.id() == el.id() && join.type == TypeJoin.VAR10) { //Прилегающее
-                        //if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(join.elem1.type()) == false) {
+                        //if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(join.elem1.type) == false) {
                             return join;
                         //}
                     }
@@ -67,7 +67,7 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
             if (join != null) {
 
                 if (side == 0) {
-                    return (el.type() == Type.IMPOST || el.type() == Type.SHTULP || el.type() == Type.STOIKA) ? join.elem2 : join.elem1;
+                    return (el.type == Type.IMPOST || el.type == Type.SHTULP || el.type == Type.STOIKA) ? join.elem2 : join.elem1;
                 } else if (side == 1) {
                     return join.elem2;
                 } else if (side == 2 && join.type == TypeJoin.VAR10) {

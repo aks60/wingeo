@@ -73,9 +73,9 @@ public class FillingDet extends Par5s {
                     break;
                 case 14009: //Арочное заполнение 
                 case 15009: //Арочное заполнение  
-                    if ("Да".equals(rec.getStr(TEXT)) && elem5e.owner().type() != Type.ARCH) {
+                    if ("Да".equals(rec.getStr(TEXT)) && elem5e.owner().type != Type.ARCH) {
                         return false;
-                    } else if ("Нет".equals(rec.getStr(TEXT)) && elem5e.owner().type() == Type.ARCH) {
+                    } else if ("Нет".equals(rec.getStr(TEXT)) && elem5e.owner().type == Type.ARCH) {
                         return false;
                     }
                     break;
@@ -100,17 +100,17 @@ public class FillingDet extends Par5s {
                 case 14065:  //Ограничение угла, ° или Точный угол 
                 case 15055:  //Ограничение угла, ° или Точный угол  
                     if ("ps3".equals(eSetting.val(2))) {
-                        if (rec.getDbl(TEXT) != elem5e.anglHoriz()) {
+                        if (rec.getDbl(TEXT) != elem5e.anglHoriz) {
                             return false;
                         }
-                    } else if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.anglHoriz()) == false) {
+                    } else if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.anglHoriz) == false) {
                         return false;
                     }
                     break;
                 case 14066: //Исключить угол, °
                 case 15056:
                     if ("ps3".equals(eSetting.val(2))) {
-                        if (rec.getDbl(TEXT) == elem5e.anglHoriz()) {
+                        if (rec.getDbl(TEXT) == elem5e.anglHoriz) {
                             return false;
                         }
                     }
@@ -136,8 +136,8 @@ public class FillingDet extends Par5s {
                 case 14081: //Если артикул профиля контура 
                 case 15081: //Если артикул профиля контура 
                 {
-                    ElemSimple elem = (elem5e.owner().frames().isEmpty() == false) ? elem5e.owner().frames().get(Layout.BOTT) : elem5e.root().frames().get(Layout.BOTT);
-                    if (rec.getStr(TEXT).equals(elem.artiklRecAn().getStr(eArtikl.code)) == false) {
+                    ElemSimple elem = (elem5e.owner().frames().isEmpty() == false) ? elem5e.owner().frames().get(Layout.BOTT) : elem5e.root.frames().get(Layout.BOTT);
+                    if (rec.getStr(TEXT).equals(elem.artiklRecAn.getStr(eArtikl.code)) == false) {
                         return false;
                     }
                 }
@@ -167,7 +167,7 @@ public class FillingDet extends Par5s {
                     message(rec.getInt(GRUP));
                     break;
                 case 15027:  //Рассчитывать для профиля 
-                    if ("с уплотнителем".equals(rec.getStr(TEXT)) == true && elem5e.artiklRec().getInt(eArtikl.with_seal) == 0) {
+                    if ("с уплотнителем".equals(rec.getStr(TEXT)) == true && elem5e.artiklRec.getInt(eArtikl.with_seal) == 0) {
                         return false;
                     }
                     break;
@@ -184,7 +184,7 @@ public class FillingDet extends Par5s {
                     mapParam.put(rec.getInt(GRUP), rec.getStr(TEXT));
                     break;
                 case 15051:  //Удлинение на один пог.м., мм 
-                    if (elem5e.spcRec().getParam("0", 31052).equals(rec.getStr(TEXT)) == false) {
+                    if (elem5e.spcRec.getParam("0", 31052).equals(rec.getStr(TEXT)) == false) {
                         mapParam.put(rec.getInt(GRUP), rec.getStr(TEXT));
                     }
                     break;

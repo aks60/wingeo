@@ -55,21 +55,21 @@ public class FurnitureDet extends Par5s {
                 case 25001: //Форма контура 
                 {
                     //"Прямоугольное", "Не прямоугольное", "Не арочное", "Арочное" (TypeElem.AREA - глухарь)
-                    if ("прямоугольная".equals(rec.getStr(TEXT)) && Type.RECTANGL.equals(areaStv.type()) == false
-                            && Type.AREA.equals(areaStv.type()) == false && Type.STVORKA.equals(areaStv.type()) == false) {
+                    if ("прямоугольная".equals(rec.getStr(TEXT)) && Type.RECTANGL.equals(areaStv.type) == false
+                            && Type.AREA.equals(areaStv.type) == false && Type.STVORKA.equals(areaStv.type) == false) {
                         return false;
-                    } else if ("трапециевидная".equals(rec.getStr(TEXT)) && Type.TRAPEZE.equals(areaStv.type()) == false) {
+                    } else if ("трапециевидная".equals(rec.getStr(TEXT)) && Type.TRAPEZE.equals(areaStv.type) == false) {
                         return false;
-                    } else if ("арочная".equals(rec.getStr(TEXT)) && Type.ARCH.equals(areaStv.type()) == false) {
+                    } else if ("арочная".equals(rec.getStr(TEXT)) && Type.ARCH.equals(areaStv.type) == false) {
                         return false;
-                    } else if ("не арочная".equals(rec.getStr(TEXT)) && Type.ARCH.equals(areaStv.type()) == true) {
+                    } else if ("не арочная".equals(rec.getStr(TEXT)) && Type.ARCH.equals(areaStv.type) == true) {
                         return false;
                     }
                     break;
                 }
                 case 24002:  //Если артикул створки 
                 case 25002:  //Если артикул створки 
-                    if (areaStv.frames().entrySet().stream().filter(el -> el.getValue().artiklRec().getStr(eArtikl.code).equals(rec.getStr(TEXT))).findFirst().orElse(null) == null) {
+                    if (areaStv.frames().entrySet().stream().filter(el -> el.getValue().artiklRec.getStr(eArtikl.code).equals(rec.getStr(TEXT))).findFirst().orElse(null) == null) {
                         return false;
                     }
                     break;
@@ -78,7 +78,7 @@ public class FurnitureDet extends Par5s {
                     message(rec.getInt(GRUP));
                     break;
                 case 24004: //Если створка прилегает к артикулу 
-                    if (areaStv.frames().entrySet().stream().filter(el -> winc.listJoin.elem(el.getValue(), 2).artiklRec().getStr(eArtikl.code).equals(rec.getStr(TEXT))).findFirst().orElse(null) == null) {
+                    if (areaStv.frames().entrySet().stream().filter(el -> winc.listJoin.elem(el.getValue(), 2).artiklRec.getStr(eArtikl.code).equals(rec.getStr(TEXT))).findFirst().orElse(null) == null) {
                         return false;
                     }
                     break;
@@ -115,7 +115,7 @@ public class FurnitureDet extends Par5s {
                 case 24008: //Если серия створки 
                 case 25008: //Если серия створки   
                 {
-                    int series_id = areaStv.frames().get(Layout.BOTT).artiklRec().getInt(eArtikl.groups4_id);
+                    int series_id = areaStv.frames().get(Layout.BOTT).artiklRec.getInt(eArtikl.groups4_id);
                     String name = eGroups.find(series_id).getStr(eGroups.name);
                     if (name.equals(rec.getStr(TEXT)) == false) {
                         return false;
@@ -125,7 +125,7 @@ public class FurnitureDet extends Par5s {
                 case 24009:  //Коды текстуры подвеса 
                 case 25009:  //Коды текстуры подвеса                   
                     for (Map.Entry<Layout, ElemSimple> elem : areaStv.frames().entrySet()) {
-                        for (Specific spc : elem.getValue().spcRec().spcList) {
+                        for (Specific spc : elem.getValue().spcRec.spcList) {
                             if (spc.artiklRec.getInt(eArtikl.level1) == 2 && spc.artiklRec.getInt(eArtikl.level2) == 12) {
                                 String name = eColor.find(spc.colorID1).getStr(eColor.name);
                                 if (name.equals(rec.getStr(TEXT)) == false) {
@@ -163,7 +163,7 @@ public class FurnitureDet extends Par5s {
                     break;
                 case 24032:  //Правильная полуарка 
                 case 25032:  //Правильная полуарка 
-                    if (winc.rootArea.type() == Type.ARCH) {
+                    if (winc.rootArea.type == Type.ARCH) {
                         int k = (int) (winc.rootArea.width() / ((AreaArch) winc.rootArea).radiusArch);
                         if (k != 2) {
                             return false;
@@ -176,7 +176,7 @@ public class FurnitureDet extends Par5s {
                     if (rec.getStr(TEXT).equals("Да")) {
                         boolean ret = false;
                         for (Map.Entry<Layout, ElemSimple> entry : areaStv.frames().entrySet()) {
-                            if (winc.listJoin.elem(entry.getValue(), 2).type() == Type.SHTULP) {
+                            if (winc.listJoin.elem(entry.getValue(), 2).type == Type.SHTULP) {
                                 ret = true;
                             }
                         }
@@ -186,7 +186,7 @@ public class FurnitureDet extends Par5s {
                     } else if (rec.getStr(TEXT).equals("Нет")) {
                         boolean ret = false;
                         for (Map.Entry<Layout, ElemSimple> entry : areaStv.frames().entrySet()) {
-                            if (winc.listJoin.elem(entry.getValue(), 2).type() == Type.SHTULP) {
+                            if (winc.listJoin.elem(entry.getValue(), 2).type == Type.SHTULP) {
                                 ret = true;
                             }
                         }
@@ -225,9 +225,9 @@ public class FurnitureDet extends Par5s {
                 case 24063: //Диапазон веса, кг 
                 case 25063: //Диапазон веса, кг 
                 {
-                    Com5t glass = areaStv.childs().stream().filter(el -> el.type() == Type.GLASS).findFirst().orElse(null);
+                    Com5t glass = areaStv.childs().stream().filter(el -> el.type == Type.GLASS).findFirst().orElse(null);
                     if (glass != null) {
-                        double weight = ((glass.width() * glass.height()) / 1000000) * glass.artiklRecAn().getDbl(eArtikl.density);
+                        double weight = ((glass.width() * glass.height()) / 1000000) * glass.artiklRecAn.getDbl(eArtikl.density);
                         if (UCom.containsNumbExp(rec.getStr(TEXT), weight) == false) {
                             return false;
                         }

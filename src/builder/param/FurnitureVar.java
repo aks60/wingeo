@@ -43,19 +43,19 @@ public class FurnitureVar extends Par5s {
 
                 case 21001:  //Форма контура 
                     //"Прямоугольное", "Не прямоугольное", "Не арочное", "Арочное" (Type.AREA - глухарь)
-                    if ("прямоугольная".equals(rec.getStr(TEXT)) && Type.RECTANGL.equals(elem5e.owner().type()) == false
-                            && Type.AREA.equals(elem5e.owner().type()) == false && Type.STVORKA.equals(elem5e.owner().type()) == false) {
+                    if ("прямоугольная".equals(rec.getStr(TEXT)) && Type.RECTANGL.equals(elem5e.owner().type) == false
+                            && Type.AREA.equals(elem5e.owner().type) == false && Type.STVORKA.equals(elem5e.owner().type) == false) {
                         return false;
-                    } else if ("трапециевидная".equals(rec.getStr(TEXT)) && Type.TRAPEZE.equals(elem5e.owner().type()) == false) {
+                    } else if ("трапециевидная".equals(rec.getStr(TEXT)) && Type.TRAPEZE.equals(elem5e.owner().type) == false) {
                         return false;
-                    } else if ("арочная".equals(rec.getStr(TEXT)) && Type.ARCH.equals(elem5e.owner().type()) == false) {
+                    } else if ("арочная".equals(rec.getStr(TEXT)) && Type.ARCH.equals(elem5e.owner().type) == false) {
                         return false;
-                    } else if ("не арочная".equals(rec.getStr(TEXT)) && Type.ARCH.equals(elem5e.owner().type()) == true) {
+                    } else if ("не арочная".equals(rec.getStr(TEXT)) && Type.ARCH.equals(elem5e.owner().type) == true) {
                         return false;
                     }
                     break;
                 case 21004:  //Артикул створки 
-                    if (elem5e.artiklRecAn().getStr(eArtikl.code).equals(rec.getStr(TEXT)) == false) {
+                    if (elem5e.artiklRecAn.getStr(eArtikl.code).equals(rec.getStr(TEXT)) == false) {
                         return false;
                     }
                     break;
@@ -130,41 +130,41 @@ public class FurnitureVar extends Par5s {
                 break;
                 case 21039:  //Минимальный угол, °
                     if ("ps3".equals(eSetting.val(2))) {
-                        if (elem5e.anglHoriz() < rec.getDbl(TEXT)) {
+                        if (elem5e.anglHoriz < rec.getDbl(TEXT)) {
                             return false;
                         }
                     }
                     break;
                 case 21040:  //Ограничение угла, ° или Угол максимальный, ° для ps3 
                     if ("ps3".equals(eSetting.val(2))) {
-                        if (rec.getDbl(TEXT) > elem5e.anglHoriz()) {
+                        if (rec.getDbl(TEXT) > elem5e.anglHoriz) {
                             return false;
                         }
-                    } else if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.anglHoriz()) == false) {
+                    } else if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.anglHoriz) == false) {
                         return false;
                     }
                     break;
                 case 21044:  //Точный угол 
                     if ("ps3".equals(eSetting.val(2))) {
-                        if (rec.getDbl(TEXT) != elem5e.anglHoriz()) {
+                        if (rec.getDbl(TEXT) != elem5e.anglHoriz) {
                             return false;
                         }
                     }
                     break;
                 case 21045: //Исключить угол, °
                     if ("ps3".equals(eSetting.val(2))) {
-                        if (rec.getDbl(TEXT) == elem5e.anglHoriz()) {
+                        if (rec.getDbl(TEXT) == elem5e.anglHoriz) {
                             return false;
                         }
                     }
                     break;
                 case 21050:  //Ориентация стороны, ° 
-                    if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.anglHoriz()) == false) {
+                    if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.anglHoriz) == false) {
                         return false;
                     }
                     break;
                 case 21085:  //Надпись на эскизе 
-                    elem5e.spcRec().mapParam.put(grup, rec.getStr(TEXT));
+                    elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
                 case 21088:  //Уравнивание складных створок 
                     message(rec.getInt(GRUP));

@@ -51,40 +51,40 @@ public class FillingVar extends Par5s {
                     }
                     break;
                 case 13005: //Заполнение типа 
-                    if ("Стекло".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn().getInt(eArtikl.level2) != 1) {
+                    if ("Стекло".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 1) {
                         return false;
-                    } else if ("Стеклопакет".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn().getInt(eArtikl.level2) != 2) {
+                    } else if ("Стеклопакет".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 2) {
                         return false;
-                    } else if ("Сендвич".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn().getInt(eArtikl.level2) != 3) {
+                    } else if ("Сендвич".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 3) {
                         return false;
-                    } else if ("Вагонка".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn().getInt(eArtikl.level2) != 4) {
+                    } else if ("Вагонка".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 4) {
                         return false;
-                    } else if ("Алюминевый лист".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn().getInt(eArtikl.level2) != 5) {
+                    } else if ("Алюминевый лист".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 5) {
                         return false;
-                    } else if ("Специальное стекло".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn().getInt(eArtikl.level2) != 6) {
+                    } else if ("Специальное стекло".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 6) {
                         return false;
-                    } else if ("Конструктив".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn().getInt(eArtikl.level2) != 9) {
+                    } else if ("Конструктив".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 9) {
                         return false;
-                    } else if ("Панель откоса".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn().getInt(eArtikl.level2) != 15) {
+                    } else if ("Панель откоса".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 15) {
                         return false;
                     }
                     break;
                 case 13014:  //Углы ориентации стороны, ° 
-                    if (UCom.containsNumbJust(rec.getStr(TEXT), ((ElemSimple) elem5e).anglHoriz()) == false) {
+                    if (UCom.containsNumbJust(rec.getStr(TEXT), ((ElemSimple) elem5e).anglHoriz) == false) {
                         return false;
                     }
                     break;
                 case 13015:  //Форма заполнения 
                     //"Прямоугольное", "Не прямоугольное", "Не арочное", "Арочное" (TypeElem.AREA - глухарь)
-                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && Type.RECTANGL.equals(elem5e.owner().type()) == false
-                            && Type.AREA.equals(elem5e.owner().type()) == false && Type.STVORKA.equals(elem5e.owner().type()) == false) {
+                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && Type.RECTANGL.equals(elem5e.owner().type) == false
+                            && Type.AREA.equals(elem5e.owner().type) == false && Type.STVORKA.equals(elem5e.owner().type) == false) {
                         return false;
-                    } else if ("Не прямоугольное".equals(rec.getStr(TEXT)) && (Type.TRAPEZE.equals(elem5e.owner().type()) == false
-                            && Type.TRIANGL.equals(elem5e.owner().type()) == false)) {
+                    } else if ("Не прямоугольное".equals(rec.getStr(TEXT)) && (Type.TRAPEZE.equals(elem5e.owner().type) == false
+                            && Type.TRIANGL.equals(elem5e.owner().type) == false)) {
                         return false;
-                    } else if ("Арочное".equals(rec.getStr(TEXT)) && Type.ARCH.equals(elem5e.owner().type()) == false) {
+                    } else if ("Арочное".equals(rec.getStr(TEXT)) && Type.ARCH.equals(elem5e.owner().type) == false) {
                         return false;
-                    } else if ("Не арочное".equals(rec.getStr(TEXT)) && Type.ARCH.equals(elem5e.owner().type()) == true) {
+                    } else if ("Не арочное".equals(rec.getStr(TEXT)) && Type.ARCH.equals(elem5e.owner().type) == true) {
                         return false;
                     }
                     break;
@@ -131,7 +131,7 @@ public class FillingVar extends Par5s {
                     message(rec.getInt(GRUP));
                     break;
                 case 13099:  //Трудозатраты, ч/ч. 
-                    elem5e.spcRec().mapParam.put(grup, rec.getStr(TEXT));
+                    elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
                 default:
                     assert !(grup > 0 && grup < 50000) : "Код " + grup + "  не обработан!!!";

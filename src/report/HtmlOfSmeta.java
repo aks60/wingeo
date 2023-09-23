@@ -207,7 +207,7 @@ public class HtmlOfSmeta {
                 tdList.get(2).text(prjprodRec.getStr(ePrjprod.name));
                 tdList.get(4).text(prjprodRec.getStr(ePrjprod.name));
                 tdList.get(6).text(winc.width() + "x" + winc.height());
-                tdList.get(8).text(glassList.get(0).artiklRecAn().getStr(eArtikl.code));
+                tdList.get(8).text(glassList.get(0).artiklRecAn.getStr(eArtikl.code));
                 tdList.get(10).text("");
                 tdList.get(12).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / "
                         + eColor.find(winc.colorID2).getStr(eColor.name) + " / "

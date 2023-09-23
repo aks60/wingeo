@@ -429,19 +429,19 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 Wincalc winc = wincalc();
 
                 //Конструкции
-                if (winNode.com5t().type() == enums.Type.RECTANGL || winNode.com5t().type() == enums.Type.DOOR || winNode.com5t().type() == enums.Type.TRAPEZE || winNode.com5t().type() == enums.Type.ARCH) {
+                if (winNode.com5t().type == enums.Type.RECTANGL || winNode.com5t().type == enums.Type.DOOR || winNode.com5t().type == enums.Type.TRAPEZE || winNode.com5t().type == enums.Type.ARCH) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card12");
-                    ((TitledBorder) pan12.getBorder()).setTitle(winc.rootArea.type().name);
+                    ((TitledBorder) pan12.getBorder()).setTitle(winc.rootArea.type.name);
                     setText(txt9, eColor.find(winc.colorID1).getStr(eColor.name));
                     setText(txt13, eColor.find(winc.colorID2).getStr(eColor.name));
                     setText(txt14, eColor.find(winc.colorID3).getStr(eColor.name));
                     setText(txt17, UCom.format(winc.rootGson.width(), 1));
                     setText(txt22, UCom.format(winc.rootGson.height1(), 1));
                     setText(txt23, UCom.format(winc.rootGson.height2(), 1));
-                    txt23.setEditable(List.of(enums.Type.ARCH, enums.Type.TRIANGL, enums.Type.TRAPEZE).contains(winNode.com5t().type()));
+                    txt23.setEditable(List.of(enums.Type.ARCH, enums.Type.TRIANGL, enums.Type.TRAPEZE).contains(winNode.com5t().type);
 
                     //Параметры
-                } else if (winNode.com5t().type() == enums.Type.PARAM) {
+                } else if (winNode.com5t().type == enums.Type.PARAM) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card11");
                     qSyspar1b.clear();
                     winc.mapPardef().forEach((pk, syspar1Rec) -> qSyspar1b.add(syspar1Rec));
@@ -450,23 +450,23 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     ((DefTableModel) tab7.getModel()).fireTableDataChanged();
 
                     //Рама, импост...
-                } else if (winNode.com5t().type() == enums.Type.FRAME_SIDE
-                        || winNode.com5t().type() == enums.Type.STVORKA_SIDE
-                        || winNode.com5t().type() == enums.Type.IMPOST
-                        || winNode.com5t().type() == enums.Type.STOIKA
-                        || winNode.com5t().type() == enums.Type.SHTULP) {
+                } else if (winNode.com5t().type == enums.Type.FRAME_SIDE
+                        || winNode.com5t().type == enums.Type.STVORKA_SIDE
+                        || winNode.com5t().type == enums.Type.IMPOST
+                        || winNode.com5t().type == enums.Type.STOIKA
+                        || winNode.com5t().type == enums.Type.SHTULP) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card13");
                     ((TitledBorder) pan13.getBorder()).setTitle(winNode.toString());
-                    setText(txt32, winNode.com5t().artiklRec().getStr(eArtikl.code));
-                    setText(txt33, winNode.com5t().artiklRec().getStr(eArtikl.name));
+                    setText(txt32, winNode.com5t().artiklRec.getStr(eArtikl.code));
+                    setText(txt33, winNode.com5t().artiklRec.getStr(eArtikl.name));
                     setText(txt27, eColor.find(winNode.com5t().colorID1()).getStr(eColor.name));
                     setText(txt28, eColor.find(winNode.com5t().colorID2()).getStr(eColor.name));
                     setText(txt29, eColor.find(winNode.com5t().colorID3()).getStr(eColor.name));
 
                     //Стеклопакет
-                } else if (winNode.com5t().type() == enums.Type.GLASS) {
+                } else if (winNode.com5t().type == enums.Type.GLASS) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card15");
-                    Record artiklRec = winNode.com5t().artiklRec();
+                    Record artiklRec = winNode.com5t().artiklRec;
                     setText(txt19, artiklRec.getStr(eArtikl.code));
                     setText(txt18, artiklRec.getStr(eArtikl.name));
                     Record colorRec = eColor.find(winNode.com5t().colorID1());
@@ -480,7 +480,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     spinVert.setValue(((ElemSimple) winNode.com5t()).rasclNumber(1));
 
                     //Створка
-                } else if (winNode.com5t().type() == enums.Type.STVORKA) {
+                } else if (winNode.com5t().type == enums.Type.STVORKA) {
                     new Furniture(wincalc(), true); //найдём ручку створки
                     ((CardLayout) pan7.getLayout()).show(pan7, "card16");
                     AreaStvorka stv = (AreaStvorka) winNode.com5t();
@@ -515,14 +515,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     LinkedCom<Com5t> mosqList = ((AreaSimple) stv).childs().filter(enums.Type.MOSKITKA);
                     if (mosqList.isEmpty() == false) {
                         ElemSimple mosq = (ElemSimple) mosqList.get(0);
-                        setText(txt54, mosq.artiklRec().getStr(eArtikl.code));
-                        setText(txt55, mosq.artiklRec().getStr(eArtikl.name));
+                        setText(txt54, mosq.artiklRec.getStr(eArtikl.code));
+                        setText(txt55, mosq.artiklRec.getStr(eArtikl.name));
                         setText(txt60, eColor.find(mosq.colorID1()).getStr(eColor.name));
-                        setText(txt56, mosq.sysprofRec().getStr(eElement.name));
+                        setText(txt56, mosq.sysprofRec.getStr(eElement.name));
                     }
 
                     //Соединения
-                } else if (winNode.com5t().type() == enums.Type.JOINING) {
+                } else if (winNode.com5t().type == enums.Type.JOINING) {
                     //new Joining(winc(), true); //заполним соединения данными из конструктива
                     ((CardLayout) pan7.getLayout()).show(pan7, "card17");
                     DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
@@ -3651,7 +3651,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     Record sysprofRec = qSysprof.get(index);
 
                     //Отфильтруем подходящие по параметрам
-                    if (winNode.com5t().type().id2 == sysprofRec.getInt(eSysprof.use_type)) {
+                    if (winNode.com5t().type.id2 == sysprofRec.getInt(eSysprof.use_type)) {
                         int useSideId = sysprofRec.getInt(eSysprof.use_side);
                         if (useSideId == layout.id
                                 || ((layout == Layout.BOTT || layout == Layout.TOP) && useSideId == UseSide.HORIZ.id)
@@ -3665,7 +3665,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 }
                 new DicSysprof(this, (sysprofRec) -> {
                     Wincalc winc = wincalc();
-                    if (winNode.com5t().type() == enums.Type.FRAME_SIDE) { //рама окна
+                    if (winNode.com5t().type == enums.Type.FRAME_SIDE) { //рама окна
                         double elemId = winNode.com5t().id();
                         GsonElem gsonRama = winc.listAll.gson(elemId);
                         if (sysprofRec.get(1) == null) {
@@ -3675,7 +3675,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                         }
                         updateScript(selectID);
 
-                    } else if (winNode.com5t().type() == enums.Type.STVORKA_SIDE) { //рама створки
+                    } else if (winNode.com5t().type == enums.Type.STVORKA_SIDE) { //рама створки
                         double stvId = winNode.com5t().owner().id();
                         GsonElem stvArea = (GsonElem) winc.listAll.gson(stvId);
                         JsonObject paramObj = stvArea.param();
@@ -3720,7 +3720,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             HashSet<Record> colorSet = new HashSet();
             //Все текстуры артикула элемента конструкции
             Field field = (evt.getSource() == btn18) ? eArtdet.mark_c1 : (evt.getSource() == btn19) ? eArtdet.mark_c2 : eArtdet.mark_c3;
-            Query artdetList = new Query(eArtdet.values()).select(eArtdet.up, "where", eArtdet.artikl_id, "=", winNode.com5t().artiklRec().getInt(eArtikl.id));
+            Query artdetList = new Query(eArtdet.values()).select(eArtdet.up, "where", eArtdet.artikl_id, "=", winNode.com5t().artiklRec.getInt(eArtikl.id));
             artdetList.forEach(rec -> {
                 if (rec.getInt(field) == 1) {
 
@@ -3741,7 +3741,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 double parentId = winNode.com5t().owner().id();
                 GsonElem parentArea = (GsonElem) wincalc().listAll.gson(parentId);
 
-                if (winNode.com5t().type() == enums.Type.STVORKA_SIDE) {
+                if (winNode.com5t().type == enums.Type.STVORKA_SIDE) {
                     JsonObject paramObj = parentArea.param();
                     String stvKey = null;
                     if (winNode.com5t().layout() == Layout.BOTT) {
@@ -3762,7 +3762,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     }
                     updateScript(selectID);
 
-                } else if (winNode.com5t().type() == enums.Type.FRAME_SIDE) {
+                } else if (winNode.com5t().type == enums.Type.FRAME_SIDE) {
                     for (GsonElem elem : parentArea.childs()) {
                         if (elem.id() == ((DefMutableTreeNode) winNode).com5t().id()) {
                             if (colorRec.get(1) == null) {
@@ -3773,9 +3773,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                             updateScript(selectID);
                         }
                     }
-                } else if (winNode.com5t().type() == enums.Type.IMPOST
-                        || winNode.com5t().type() == enums.Type.STOIKA
-                        || winNode.com5t().type() == enums.Type.SHTULP) {
+                } else if (winNode.com5t().type == enums.Type.IMPOST
+                        || winNode.com5t().type == enums.Type.STOIKA
+                        || winNode.com5t().type == enums.Type.SHTULP) {
                     for (GsonElem elem : parentArea.childs()) {
                         if (elem.id() == ((DefMutableTreeNode) winNode).com5t().id()) {
                             if (colorRec.get(1) == null) {
@@ -4119,7 +4119,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         try {
             double selectID = winNode.com5t().id();
             ElemSimple glas = (ElemSimple) winNode.com5t();
-            HashSet<Record> colorSet = UGui.artiklToColorSet(glas.artiklRec().getInt(eArtikl.id));
+            HashSet<Record> colorSet = UGui.artiklToColorSet(glas.artiklRec.getInt(eArtikl.id));
             DicColor frame = new DicColor(this, (colorRec) -> {
 
                 GsonElem stvArea = (GsonElem) wincalc().listAll.gson(selectID);
@@ -4230,7 +4230,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             LinkedCom<Com5t> mosqList = ((AreaSimple) stvElem).childs().filter(enums.Type.MOSKITKA);
             if (mosqList.isEmpty() == false) {
                 ElemSimple mosqElem = (ElemSimple) mosqList.get(0);
-                Record artiklRec = mosqElem.artiklRec();
+                Record artiklRec = mosqElem.artiklRec;
                 Query qElements = new Query(eElement.values()).select(eElement.up,
                         "where", eElement.artikl_id, "=", artiklRec.getInt(eArtikl.id));
 
@@ -4331,7 +4331,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             LinkedCom<Com5t> mosqList = ((AreaSimple) stvElem).childs().filter(enums.Type.MOSKITKA);
             if (mosqList.isEmpty() == false) {
                 ElemMosquit mosqElem = (ElemMosquit) mosqList.get(0);
-                HashSet<Record> colorSet = UGui.artiklToColorSet(mosqElem.artiklRec().getInt(eArtikl.id));
+                HashSet<Record> colorSet = UGui.artiklToColorSet(mosqElem.artiklRec.getInt(eArtikl.id));
                 DicColor frame = new DicColor(this, (colorRec) -> {
 
                     if (colorRec.get(1) == null) {

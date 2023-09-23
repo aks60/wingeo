@@ -55,8 +55,8 @@ public class Joining extends Cal5e {
                 ElemSimple joinElem1 = elemJoin.elem1;
                 ElemSimple joinElem2 = elemJoin.elem2;
 
-                int id1 = joinElem1.artiklRecAn().getInt(eArtikl.id);
-                int id2 = joinElem2.artiklRecAn().getInt(eArtikl.id);
+                int id1 = joinElem1.artiklRecAn.getInt(eArtikl.id);
+                int id2 = joinElem2.artiklRecAn.getInt(eArtikl.id);
                 Record joiningRec1 = eJoining.find(id1, id2);
                 Record joiningRec2 = null;
 
@@ -69,7 +69,7 @@ public class Joining extends Cal5e {
                     joinvarList = eJoinvar.find(joiningRec2.getInt(eJoining.id));
                 }
                 //Если неудача то ищем зеркальность (только для дверей)
-                if (winc.rootArea.type() == Type.DOOR && joinvarList.isEmpty()) {
+                if (winc.rootArea.type == Type.DOOR && joinvarList.isEmpty()) {
                     joiningRec1 = eJoining.find(id2, id1);
                     joinvarList = eJoinvar.find(joiningRec1.getInt(eJoining.id));
                 }
@@ -83,7 +83,7 @@ public class Joining extends Cal5e {
                     if (elemJoin.layout.equalType(typeID)) { //если варианты соединения совпали
                         go = true;
                     } else if (joinvarRec.getInt(eJoinvar.mirr) == 1) { //когда включена зеркальность
-                        if (winc.rootArea.type() == Type.DOOR && (typeID == 30 || typeID == 31)
+                        if (winc.rootArea.type == Type.DOOR && (typeID == 30 || typeID == 31)
                                 && (elemJoin.layout.id == 30 || elemJoin.layout.id == 31)) {
                             go = true;
                         }
@@ -151,7 +151,7 @@ public class Joining extends Cal5e {
     public List<Record> varList(ElemJoining elemJoin) {
         List<Record> list = new ArrayList();
 
-        Record joiningRec = eJoining.find(elemJoin.elem1.artiklRecAn(), elemJoin.elem2.artiklRecAn());
+        Record joiningRec = eJoining.find(elemJoin.elem1.artiklRecAn, elemJoin.elem2.artiklRecAn);
         //Список вариантов соединения для артикула1 и артикула2
         List<Record> joinvarList = eJoinvar.find(joiningRec.getInt(eJoining.id));
         //Если неудача, ищем в аналоге соединения

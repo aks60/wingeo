@@ -96,7 +96,7 @@ public class HtmlOfOffer {
                 String fname = (furniture_id != -1) ? eFurniture.find(furniture_id).getStr(eFurniture.name) : "";
                 tdList.get(5).text(fname);
                 ElemSimple elemGlass = winc.listElem.find(Type.GLASS);
-                String gname = (elemGlass != null) ? elemGlass.artiklRec().getStr(eArtikl.code) + " - " + elemGlass.artiklRec().getStr(eArtikl.name) : "";
+                String gname = (elemGlass != null) ? elemGlass.artiklRec.getStr(eArtikl.code) + " - " + elemGlass.artiklRec.getStr(eArtikl.name) : "";
                 tdList.get(7).text(gname);
                 tdList.get(9).text(eColor.find(winc.colorID1).getStr(eColor.name));
                 tdList.get(11).text(eColor.find(winc.colorID2).getStr(eColor.name));

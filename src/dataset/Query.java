@@ -1,8 +1,6 @@
 package dataset;
 
 import static dataset.Query.INS;
-import java.awt.Window;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

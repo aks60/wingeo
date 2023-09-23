@@ -41,22 +41,22 @@ public class Elements extends Cal5e {
             //Цикл по списку элементов конструкции
             for (ElemSimple elem5e : listElem) {
 
-                if (elem5e.type() == Type.MOSKITKA) {
+                if (elem5e.type == Type.MOSKITKA) {
                     //По id - профиля
-                    List<Record> elementList4 = List.of(eElement.find4(((Com5t) elem5e).sysprofRec().getInt(eSysprof.id)));
+                    List<Record> elementList4 = List.of(eElement.find4(((Com5t) elem5e).sysprofRec.getInt(eSysprof.id)));
                     //Цикл по списку элементов сторон маскитки
                     for (int side : List.of(0, 90, 180, 270)) {
-                        elem5e.anglHoriz(side); //устан. угол. проверяемой стороны
+                        elem5e.anglHoriz = side; //устан. угол. проверяемой стороны
                         detail(elementList4, elem5e);
                     }
                 } else {
                     //По artikl_id - артикула профилей
-                    int artiklID = elem5e.artiklRecAn().getInt(eArtikl.id);
+                    int artiklID = elem5e.artiklRecAn.getInt(eArtikl.id);
                     List<Record> elementList3 = eElement.find2(artiklID);
                     detail(elementList3, elem5e);
 
                     //По groups1_id - серии профилей
-                    int seriesID = elem5e.artiklRecAn().getInt(eArtikl.groups4_id);
+                    int seriesID = elem5e.artiklRecAn.getInt(eArtikl.groups4_id);
                     List<Record> elementList2 = eElement.find(seriesID); //список элементов в серии
                     detail(elementList2, elem5e);
                 }
@@ -100,20 +100,20 @@ public class Elements extends Cal5e {
                                 //Свойства контейнера менять нельзя!!!
                                 if (TypeArtikl.isType(artiklRec, TypeArtikl.X101, TypeArtikl.X102,
                                         TypeArtikl.X103, TypeArtikl.X104, TypeArtikl.X105)) {
-                                    elem5e.spcRec().setArtikl(spcAdd.artiklRec); //подмена артикула в основной спецификации
-                                    elem5e.spcRec().setColor(1, spcAdd.colorID1);
-                                    elem5e.spcRec().setColor(2, spcAdd.colorID2);
-                                    elem5e.spcRec().setColor(3, spcAdd.colorID3);
-                                    elem5e.addSpecific(elem5e.spcRec());
+                                    elem5e.spcRec.setArtikl(spcAdd.artiklRec); //подмена артикула в основной спецификации
+                                    elem5e.spcRec.setColor(1, spcAdd.colorID1);
+                                    elem5e.spcRec.setColor(2, spcAdd.colorID2);
+                                    elem5e.spcRec.setColor(3, spcAdd.colorID3);
+                                    elem5e.addSpecific(elem5e.spcRec);
 
                                     //Контейнер маскитка не учавствует в цикле сторон
                                 } else if (TypeArtikl.isType(artiklRec, TypeArtikl.X520)) {
-                                    if (elem5e.anglHoriz() == 0) {
-                                        elem5e.spcRec().setArtikl(spcAdd.artiklRec); //подмена артикула в основной спецификации
-                                        elem5e.spcRec().setColor(1, spcAdd.colorID1);
-                                        elem5e.spcRec().setColor(2, spcAdd.colorID2);
-                                        elem5e.spcRec().setColor(3, spcAdd.colorID3);
-                                        elem5e.addSpecific(elem5e.spcRec()); //в спецификацию     
+                                    if (elem5e.anglHoriz == 0) {
+                                        elem5e.spcRec.setArtikl(spcAdd.artiklRec); //подмена артикула в основной спецификации
+                                        elem5e.spcRec.setColor(1, spcAdd.colorID1);
+                                        elem5e.spcRec.setColor(2, spcAdd.colorID2);
+                                        elem5e.spcRec.setColor(3, spcAdd.colorID3);
+                                        elem5e.addSpecific(elem5e.spcRec); //в спецификацию     
                                     }
                                 } else {
                                     elem5e.addSpecific(spcAdd); //в спецификацию

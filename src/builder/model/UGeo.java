@@ -751,8 +751,8 @@ public class UGeo {
     //Ширина рамки по оси x и y
     public static double[] diff(ElemSimple e, double dh) {
 
-        double x = -1 * cos(e.anglHoriz());
-        double y = -1 * sin(e.anglHoriz());
+        double x = -1 * cos(e.anglHoriz);
+        double y = -1 * sin(e.anglHoriz);
 
         if (Math.abs(x) >= Math.abs(y)) {
             return new double[]{0, dh / x};
@@ -763,7 +763,7 @@ public class UGeo {
 
     public static double[] diff(Area shape, ElemSimple e, double dh) {
         boolean imp = false;
-        if (e.type() == Type.IMPOST || e.type() == Type.STOIKA || e.type() == Type.RIGEL_IMP) {
+        if (e.type == Type.IMPOST || e.type == Type.STOIKA || e.type == Type.RIGEL_IMP) {
             if (e.layout() == Layout.VERT && (shape.getBounds2D().getX() == e.x1() || shape.getBounds2D().getX() == e.x2())) {
                 imp = true;
             }
@@ -771,8 +771,8 @@ public class UGeo {
                 imp = true;
             }
         }
-        double x = cos(e.anglHoriz());
-        double y = sin(e.anglHoriz());
+        double x = cos(e.anglHoriz);
+        double y = sin(e.anglHoriz);
 
         if (Math.abs(x) >= Math.abs(y)) {
             return (imp) ? new double[]{0, dh / x} : new double[]{0, -dh / x};

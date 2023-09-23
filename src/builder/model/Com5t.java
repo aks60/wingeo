@@ -20,6 +20,7 @@ public abstract class Com5t {
     public double id;
     public Wincalc wing = null;
     public Com5t owner = null; //владелец
+    public AreaSimple root = null; //главный класс конструкции
     public Com5t enext = null; //сдедующий элемент
     public GeoElem gson = null; //gson object конструкции
     public Type type = Type.NONE; //тип элемента или окна

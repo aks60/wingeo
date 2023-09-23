@@ -28,7 +28,7 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
         List tp = List.of(type);
         LinkedCom<T> list2 = new LinkedCom();
         for (E el : this) {
-            if (tp.contains(el.type())) {
+            if (tp.contains(el.type)) {
                 list2.add((T) el);
             }
         }
@@ -38,7 +38,7 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
     public E find(Type type) {
 
         for (E el : this) {
-            if (type == el.type()) {
+            if (type == el.type) {
                 return (E) el;
             }
         }

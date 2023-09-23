@@ -380,8 +380,8 @@ public class UColor {
                 case 0:
                     return spcAdd.detailRec.getInt(COLOR_FK);  //указана вручную
                 case 11: //По текстуре профиля
-                    HashMap.Entry<Layout, ElemSimple> firstEntry = (Entry<Layout, ElemSimple>) spcAdd.elem5e.root().frames().entrySet().iterator().next();
-                    int artiklID = firstEntry.getValue().artiklRec().getInt(eArtikl.id);
+                    HashMap.Entry<Layout, ElemSimple> firstEntry = (Entry<Layout, ElemSimple>) spcAdd.elem5e.root.frames().entrySet().iterator().next();
+                    int artiklID = firstEntry.getValue().artiklRec.getInt(eArtikl.id);
                     return eArtdet.query().stream().filter(rec -> rec.getInt(eArtdet.mark_c1) == 1
                             && rec.getInt(eArtdet.mark_c2) == 1 && rec.getInt(eArtdet.mark_c3) == 1
                             && rec.getInt(eArtdet.artikl_id) == artiklID && rec.getInt(eArtdet.color_fk) > 0)
@@ -427,19 +427,19 @@ public class UColor {
 
     public static void colorRuleFromParam(ElemSimple slem5e) {  //см. http://help.profsegment.ru/?id=1107        
 
-        String ruleOfColor = slem5e.spcRec().getParam(-1, 31019);
+        String ruleOfColor = slem5e.spcRec.getParam(-1, 31019);
         if ("-1".equals(ruleOfColor) == false) {
             if ("внутренняя по основной".equalsIgnoreCase(ruleOfColor)) {
-                slem5e.spcRec().colorID2 = slem5e.spcRec().colorID1;
+                slem5e.spcRec.colorID2 = slem5e.spcRec.colorID1;
             } else if ("внешняя по основной".equalsIgnoreCase(ruleOfColor)) {
-                slem5e.spcRec().colorID3 = slem5e.spcRec().colorID1;
+                slem5e.spcRec.colorID3 = slem5e.spcRec.colorID1;
             } else if ("внутрення по внешней".equalsIgnoreCase(ruleOfColor)) {
-                slem5e.spcRec().colorID2 = slem5e.spcRec().colorID3;
+                slem5e.spcRec.colorID2 = slem5e.spcRec.colorID3;
             } else if ("внешняя по внутренней".equalsIgnoreCase(ruleOfColor)) {
-                slem5e.spcRec().colorID3 = slem5e.spcRec().colorID2;
+                slem5e.spcRec.colorID3 = slem5e.spcRec.colorID2;
             } else if ("2 стороны по основной".equalsIgnoreCase(ruleOfColor)) {
-                slem5e.spcRec().colorID2 = slem5e.spcRec().colorID1;
-                slem5e.spcRec().colorID3 = slem5e.spcRec().colorID1;
+                slem5e.spcRec.colorID2 = slem5e.spcRec.colorID1;
+                slem5e.spcRec.colorID3 = slem5e.spcRec.colorID1;
             }
         }
     }

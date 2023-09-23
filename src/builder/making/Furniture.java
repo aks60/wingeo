@@ -169,20 +169,20 @@ public class Furniture extends Cal5e {
                 }
                 if (side == 1) {// || side == -2) {
                     el = areaStv.frames().get(Layout.BOTT);
-                    double size_falz = (el.artiklRec().getDbl(eArtikl.size_falz) == 0) ? 21 : el.artiklRec().getDbl(eArtikl.size_falz);
-                    width = el.spcRec().width - 2 * size_falz;
+                    double size_falz = (el.artiklRec.getDbl(eArtikl.size_falz) == 0) ? 21 : el.artiklRec.getDbl(eArtikl.size_falz);
+                    width = el.spcRec.width - 2 * size_falz;
                 } else if (side == 2) {// || side == -1) {
                     el = areaStv.frames().get(Layout.RIGHT);
-                    double size_falz = (el.artiklRec().getDbl(eArtikl.size_falz) == 0) ? 21 : el.artiklRec().getDbl(eArtikl.size_falz);
-                    width = el.spcRec().width - 2 * size_falz;
+                    double size_falz = (el.artiklRec.getDbl(eArtikl.size_falz) == 0) ? 21 : el.artiklRec.getDbl(eArtikl.size_falz);
+                    width = el.spcRec.width - 2 * size_falz;
                 } else if (side == 3) {// || side == -2) {
                     el = areaStv.frames().get(Layout.TOP);
-                    double size_falz = (el.artiklRec().getDbl(eArtikl.size_falz) == 0) ? 21 : el.artiklRec().getDbl(eArtikl.size_falz);
-                    width = el.spcRec().width - 2 * size_falz;
+                    double size_falz = (el.artiklRec.getDbl(eArtikl.size_falz) == 0) ? 21 : el.artiklRec.getDbl(eArtikl.size_falz);
+                    width = el.spcRec.width - 2 * size_falz;
                 } else if (side == 4) {// || side == -1) {
                     el = areaStv.frames().get(Layout.LEFT);
-                    double size_falz = (el.artiklRec().getDbl(eArtikl.size_falz) == 0) ? 21 : el.artiklRec().getDbl(eArtikl.size_falz);
-                    width = el.spcRec().width - 2 * size_falz;
+                    double size_falz = (el.artiklRec.getDbl(eArtikl.size_falz) == 0) ? 21 : el.artiklRec.getDbl(eArtikl.size_falz);
+                    width = el.spcRec.width - 2 * size_falz;
                 }
                 if (width >= furnside2Rec.getDbl(eFurnside2.len_max) || (width < furnside2Rec.getDbl(eFurnside2.len_min))) {
                     return false;

@@ -74,7 +74,7 @@ public class ElementTest extends ParamTest {
         grup = 31019; //Правило подбора текстур
         elementVar3.check(stv_right_3, param("внутренняя по основной", grup));
         UColor.colorRuleFromParam(stv_right_3);
-        assert stv_right_3.spcRec().colorID2 == stv_right_3.spcRec().colorID1 : grup;
+        assert stv_right_3.spcRec.colorID2 == stv_right_3.spcRec.colorID1 : grup;
 
         grup = 31020; //Ограничение угла к горизонту, °
         assert true == elementVar2.check(frame_left_2, param("90;270", grup)) : grup;

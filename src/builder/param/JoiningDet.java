@@ -95,8 +95,8 @@ public class JoiningDet extends Par5s {
                     double weight = 0;
                     LinkedList<ElemSimple> glassList = winc.listElem.filter(Type.GLASS);
                     for (ElemSimple glass : glassList) {
-                        if (glass.artiklRecAn().getDbl(eArtikl.density) > 0) {
-                            weight += glass.width() * glass.height() * glass.artiklRecAn().getDbl(eArtikl.density) / 1000000;
+                        if (glass.artiklRecAn.getDbl(eArtikl.density) > 0) {
+                            weight += glass.width() * glass.height() * glass.artiklRecAn.getDbl(eArtikl.density) / 1000000;
                         }
                     }
                     if (UCom.containsNumbExp(rec.getStr(TEXT), weight) == false) {
@@ -161,7 +161,7 @@ public class JoiningDet extends Par5s {
                     }
                     break;
                 case 12027:  //Рассчитывать для профиля 
-                    if ("с уплотнителем".equals(rec.getStr(TEXT)) == true && elemJoin.elem1.artiklRec().getInt(eArtikl.with_seal) == 0) {
+                    if ("с уплотнителем".equals(rec.getStr(TEXT)) == true && elemJoin.elem1.artiklRec.getInt(eArtikl.with_seal) == 0) {
                         return false;
                     }
                     break;

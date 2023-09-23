@@ -92,16 +92,16 @@ public class ElementDet extends Par5s {
                 case 33011: //Толщина внешнего/внутреннего заполнения, мм
                 case 34011: //Толщина внешнего/внутреннего заполнения, мм
                     List<ElemSimple> glassList = UPar.getGlassDepth(elem5e);
-                    if (glassList.get(0).type() == Type.GLASS && glassList.get(1).type() == Type.GLASS) {
+                    if (glassList.get(0).type == Type.GLASS && glassList.get(1).type == Type.GLASS) {
                         if ("ps3".equals(eSetting.val(2))) { //Толщина заполнения, мм
                             if (UCom.containsNumbAny(rec.getStr(TEXT),
-                                    glassList.get(0).artiklRec().getDbl(eArtikl.depth),
-                                    glassList.get(1).artiklRec().getDbl(eArtikl.depth)) == false) {
+                                    glassList.get(0).artiklRec.getDbl(eArtikl.depth),
+                                    glassList.get(1).artiklRec.getDbl(eArtikl.depth)) == false) {
                                 return false;
                             }
                         } else if (UCom.containsNumb(rec.getStr(TEXT),
-                                glassList.get(0).artiklRec().getDbl(eArtikl.depth),
-                                glassList.get(1).artiklRec().getDbl(eArtikl.depth)) == false) {
+                                glassList.get(0).artiklRec.getDbl(eArtikl.depth),
+                                glassList.get(1).artiklRec.getDbl(eArtikl.depth)) == false) {
                             return false;
                         }
                     }
@@ -154,9 +154,9 @@ public class ElementDet extends Par5s {
                 case 33063: //Диапазон веса створки, кг 
                 case 34063: //Диапазон веса створки, кг 
                 {
-                    Com5t glass = elem5e.owner().childs().stream().filter(el -> el.type() == Type.GLASS).findFirst().orElse(null);
+                    Com5t glass = elem5e.owner().childs().stream().filter(el -> el.type == Type.GLASS).findFirst().orElse(null);
                     if (glass != null) {
-                        double weight = ((glass.width() * glass.height()) / 1000000) * glass.artiklRecAn().getDbl(eArtikl.density);
+                        double weight = ((glass.width() * glass.height()) / 1000000) * glass.artiklRecAn.getDbl(eArtikl.density);
                         if (UCom.containsNumbExp(rec.getStr(TEXT), weight) == false) {
                             return false;
                         }
@@ -273,7 +273,7 @@ public class ElementDet extends Par5s {
                     break;
                 case 34052:  //Поправка не прямого угла импоста, мм 
                     message(grup);
-                    if (elem5e.spcRec().getParam("0", 31052).equals(rec.getStr(TEXT)) == false) {
+                    if (elem5e.spcRec.getParam("0", 31052).equals(rec.getStr(TEXT)) == false) {
                         mapParam.put(grup, rec.getStr(TEXT));
                     }
                     break;
@@ -333,7 +333,7 @@ public class ElementDet extends Par5s {
                     break;
                 case 38081:  //Если артикул профиля контура 
                 case 39081:  //Если артикул профиля контура 
-                    if (elem5e.artiklRecAn().getStr(eArtikl.code).equals(rec.getStr(TEXT)) == false) {
+                    if (elem5e.artiklRecAn.getStr(eArtikl.code).equals(rec.getStr(TEXT)) == false) {
                         return false;
                     }
                     break;

@@ -714,7 +714,7 @@ public class PSConvert {
                     record.setNo(eSysmodel.npp, ++index);
                     record.setNo(eSysmodel.name, name);
                     record.setNo(eSysmodel.script, script);
-                    record.setNo(eSysmodel.form, gson.type().id);
+                    record.setNo(eSysmodel.form, gson.type.id);
                     q.insert(record);
                 }
             }
