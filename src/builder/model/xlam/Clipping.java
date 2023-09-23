@@ -1,6 +1,6 @@
-package builder.model1.xlam;
+package builder.model.xlam;
 
-import builder.model1.UGeo;
+import builder.model.UGeo;
 import java.awt.Graphics2D;
 import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;

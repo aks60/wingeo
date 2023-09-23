@@ -1,6 +1,6 @@
 package frames.swing.draw;
 
-import builder.model1.AreaSimple;
+import builder.model.AreaSimple;
 import builder.script.GsonElem;
 import enums.Type;
 import java.awt.Color;

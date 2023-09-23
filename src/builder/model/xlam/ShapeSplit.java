@@ -1,4 +1,4 @@
-package builder.model1.xlam;
+package builder.model.xlam;
 
 import java.awt.Color;
 import java.awt.Graphics;

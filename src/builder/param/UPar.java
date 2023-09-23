@@ -1,8 +1,8 @@
 package builder.param;
 
 import builder.Wincalc;
-import builder.model1.AreaStvorka;
-import builder.model1.ElemSimple;
+import builder.model.AreaStvorka;
+import builder.model.ElemSimple;
 import common.UCom;
 import dataset.Record;
 import domain.eArtikl;

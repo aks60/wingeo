@@ -1,6 +1,6 @@
 package builder.making;
 
-import builder.model1.ElemSimple;
+import builder.model.ElemSimple;
 import dataset.Field;
 import dataset.Record;
 import domain.eArtdet;

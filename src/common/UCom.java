@@ -1,6 +1,6 @@
 package common;
 
-import builder.model1.AreaSimple;
+import builder.model.AreaSimple;
 import dataset.Field;
 import dataset.Query;
 import domain.eColor;

@@ -1,6 +1,6 @@
 package builder.making;
 
-import builder.model1.Com5t;
+import builder.model.Com5t;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eElemdet;
@@ -12,7 +12,7 @@ import java.util.List;
 import builder.Wincalc;
 import builder.param.ElementDet;
 import builder.param.ElementVar;
-import builder.model1.ElemSimple;
+import builder.model.ElemSimple;
 import dataset.Query;
 import domain.eSysprof;
 import enums.Type;

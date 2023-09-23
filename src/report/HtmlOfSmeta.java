@@ -1,7 +1,7 @@
 package report;
 
 import builder.Wincalc;
-import builder.model1.ElemSimple;
+import builder.model.ElemSimple;
 import common.MoneyInWords;
 import common.eProp;
 import dataset.Record;

@@ -1,9 +1,9 @@
 package frames.swing.draw;
 
 import builder.Wincalc;
-import builder.model1.Com5t;
-import builder.model1.AreaSimple;
-import builder.model1.ElemSimple;
+import builder.model.Com5t;
+import builder.model.AreaSimple;
+import builder.model.ElemSimple;
 import enums.Layout;
 import enums.Type;
 import common.listener.ListenerReload;

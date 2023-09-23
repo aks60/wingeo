@@ -1,6 +1,6 @@
 package startup;
 
-import builder.model1.UGeo;
+import builder.model.UGeo;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

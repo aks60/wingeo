@@ -1,8 +1,8 @@
 package builder.making;
 
 import builder.Wincalc;
-import builder.model1.AreaSimple;
-import builder.model1.ElemSimple;
+import builder.model.AreaSimple;
+import builder.model.ElemSimple;
 import dataset.Query;
 import enums.TypeArtikl;
 

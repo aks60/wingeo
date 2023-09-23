@@ -1,15 +1,15 @@
 package builder;
 
-import builder.model1.AreaPolygon;
-import builder.model1.AreaSimple;
-import builder.model1.AreaStvorka;
-import builder.model1.Com5t;
-import builder.model1.ElemCross;
-import builder.model1.ElemFrame;
-import builder.model1.ElemGlass;
-import builder.model1.ElemSimple;
+import builder.model.AreaPolygon;
+import builder.model.AreaSimple;
+import builder.model.AreaStvorka;
+import builder.model.Com5t;
+import builder.model.ElemCross;
+import builder.model.ElemFrame;
+import builder.model.ElemGlass;
+import builder.model.ElemSimple;
 import builder.making.Specific;
-import builder.model1.Canvas2D;
+import builder.model.Canvas2D;
 import builder.script.GeoElem;
 import builder.script.GeoRoot;
 import com.google.gson.GsonBuilder;

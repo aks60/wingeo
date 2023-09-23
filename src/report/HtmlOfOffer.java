@@ -1,7 +1,7 @@
 package report;
 
-import builder.model1.AreaSimple;
-import builder.model1.AreaStvorka;
+import builder.model.AreaSimple;
+import builder.model.AreaStvorka;
 import builder.Wincalc;
 import common.eProp;
 import dataset.Record;

@@ -5,7 +5,7 @@ import domain.eGlasgrp;
 import domain.eGlaspar1;
 import java.util.List;
 import builder.Wincalc;
-import builder.model1.ElemSimple;
+import builder.model.ElemSimple;
 import common.UCom;
 import domain.eArtikl;
 import domain.eSetting;

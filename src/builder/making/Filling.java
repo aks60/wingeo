@@ -12,7 +12,7 @@ import builder.Wincalc;
 import builder.param.ElementDet;
 import builder.param.FillingDet;
 import builder.param.FillingVar;
-import builder.model1.ElemSimple;
+import builder.model.ElemSimple;
 import common.UCom;
 import dataset.Query;
 import enums.Type;

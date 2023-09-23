@@ -9,7 +9,7 @@ import domain.eSystree;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
-import builder.model1.ElemSimple;
+import builder.model.ElemSimple;
 import common.UCom;
 import enums.Layout;
 import enums.Type;

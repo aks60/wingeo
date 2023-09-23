@@ -1,7 +1,7 @@
 package builder.param.test;
 
-import builder.model1.AreaSimple;
-import builder.model1.AreaStvorka;
+import builder.model.AreaSimple;
+import builder.model.AreaStvorka;
 import java.util.HashMap;
 
 public class FurnitureTest extends ParamTest {

@@ -13,7 +13,7 @@ import enums.TypeForm;
 import enums.UseUnit;
 import java.util.LinkedList;
 import builder.Wincalc;
-import builder.model1.ElemSimple;
+import builder.model.ElemSimple;
 import common.ArraySpc;
 import common.UCom;
 import dataset.Query;

@@ -8,7 +8,7 @@ import enums.TypeArtikl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
-import builder.model1.ElemSimple;
+import builder.model.ElemSimple;
 import common.ArraySpc;
 import java.util.List;
 

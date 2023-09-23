@@ -1,4 +1,4 @@
-package builder.model1;
+package builder.model;
 
 import builder.Wincalc;
 import builder.making.Specific;

@@ -1,6 +1,6 @@
 package common;
 
-import builder.model1.Com5t;
+import builder.model.Com5t;
 import builder.script.GsonElem;
 import enums.Type;
 import java.util.LinkedList;

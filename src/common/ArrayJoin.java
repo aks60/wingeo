@@ -1,7 +1,7 @@
 package common;
 
 import builder.model1.ElemJoining;
-import builder.model1.ElemSimple;
+import builder.model.ElemSimple;
 import enums.LayoutJoin;
 import enums.Type;
 import enums.TypeJoin;
