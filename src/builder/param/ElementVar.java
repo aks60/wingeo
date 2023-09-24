@@ -9,7 +9,9 @@ import enums.Layout;
 import java.util.List;
 import builder.Wincalc;
 import builder.model.AreaStvorka;
-import builder.model1.ElemJoining;
+import builder.model.ElemGlass;
+import builder.model.ElemJoining;
+import builder.model.ElemSimple;
 import common.UCom;
 import enums.Type;
 import enums.TypeJoin;
@@ -86,8 +88,8 @@ public class ElementVar extends Par5s {
                 case 31004: //Если прилегающий артикул 
                 {
                     boolean ret = false;
-                    for (ElemJoining elemJoining : winc.listJoin) {    
-                        if (elemJoining.elem2.artiklRecAn.getInt(1) == elem5e.a.artiklRecAnetInt(1)
+                    for (ElemJoining elemJoining : winc.listJoin) {
+                        if (elemJoining.elem2.artiklRecAn.getInt(1) == elem5e.artiklRecAn.getInt(1)
                                 && rec.getStr(TEXT).equals(elemJoining.elem1.artiklRecAn.getStr(eArtikl.code))) {
                             ret = true;
                         }
@@ -99,19 +101,19 @@ public class ElementVar extends Par5s {
                 break;
                 case 31005:  //Коды основной текстуры контейнера 
                 case 37005:  //Коды основной текстуры контейнера 
-                    if (UCom.containsColor(rec.getStr(TEXT), elem5e.colorID1()) == false) {
+                    if (UCom.containsColor(rec.getStr(TEXT), elem5e.colorID1) == false) {
                         return false;
                     }
                     break;
                 case 31006:  //Коды внутр. текстуры контейнера 
                 case 37006:  //Коды внутр. текстуры контейнера  
-                    if (UCom.containsColor(rec.getStr(TEXT), elem5e.colorID2()) == false) {
+                    if (UCom.containsColor(rec.getStr(TEXT), elem5e.colorID2) == false) {
                         return false;
                     }
                     break;
                 case 31007:  //Коды внешн. текстуры контейнера 
                 case 37007:  //Коды внешн. текстуры контейнера  
-                    if (UCom.containsColor(rec.getStr(TEXT), elem5e.colorID3()) == false) {
+                    if (UCom.containsColor(rec.getStr(TEXT), elem5e.colorID3) == false) {
                         return false;
                     }
                     break;
@@ -164,7 +166,7 @@ public class ElementVar extends Par5s {
                 {
                     List<ElemSimple> glassList = UPar.getGlassDepth(elem5e);
                     if ("Да".equals(rec.getStr(TEXT)) == true) {
-                        if (glassList.get(0).artiklRecAn.getDbl(eArtikl.depth) != glassList.get(1).a.artiklRecAnetDbl(eArtikl.depth)) {
+                        if (glassList.get(0).artiklRecAn.getDbl(eArtikl.depth) != glassList.get(1).artiklRecAn.getDbl(eArtikl.depth)) {
                             return false;
                         }
                     } else {
@@ -260,9 +262,9 @@ public class ElementVar extends Par5s {
                     break;
                 case 31051:  //Если створка фурнитуры 
                     if (elem5e.owner.type == Type.STVORKA) {
-                        if ("ведущая".equals(rec.getStr(TEXT)) == true && ((AreaStvorka) elem5e.owner).handleRec().getInt(eArtikl.id) == -3) {
+                        if ("ведущая".equals(rec.getStr(TEXT)) == true && ((AreaStvorka) elem5e.owner).handleRec.getInt(eArtikl.id) == -3) {
                             return false;
-                        } else if ("ведомая".equals(rec.getStr(TEXT)) == true && ((AreaStvorka) elem5e.owner).handleRec().getInt(eArtikl.id) != -3) {
+                        } else if ("ведомая".equals(rec.getStr(TEXT)) == true && ((AreaStvorka) elem5e.owner).handleRec.getInt(eArtikl.id) != -3) {
                             return false;
                         }
                     }
@@ -280,20 +282,20 @@ public class ElementVar extends Par5s {
                     break;
                 case 31055:  //Коды внутр. и внешн. текстуры изд.
                 case 37055:  //Коды внутр. и внешн. текстуры изд. 
-                    if ((UCom.containsColor(rec.getStr(TEXT), elem5e.colorID2()) == true
-                            && UCom.containsColor(rec.getStr(TEXT), elem5e.colorID3()) == true) == false) {
+                    if ((UCom.containsColor(rec.getStr(TEXT), elem5e.colorID2) == true
+                            && UCom.containsColor(rec.getStr(TEXT), elem5e.colorID3) == true) == false) {
                         return false;
                     }
                     break;
                 case 31056:  //Коды внутр. или внеш. текстуры изд. 
                 case 37056:  //Коды внут. или внеш. текстуры изд. 
-                    if ((UCom.containsColor(rec.getStr(TEXT), elem5e.colorID2()) == true
-                            || UCom.containsColor(rec.getStr(TEXT), elem5e.colorID3()) == true) == false) {
+                    if ((UCom.containsColor(rec.getStr(TEXT), elem5e.colorID2) == true
+                            || UCom.containsColor(rec.getStr(TEXT), elem5e.colorID3) == true) == false) {
                         return false;
                     }
                     break;
                 case 31057:  //Внутренняя текстура равна внешней 
-                    if (elem5e.colorID2() == elem5e.colorID3()) {
+                    if (elem5e.colorID2 == elem5e.colorID3) {
                         return false;
                     }
                     break;
@@ -365,11 +367,11 @@ public class ElementVar extends Par5s {
                     break;
                 case 37009: //Тип заполнения 
                 {
-                    ElemSimple glass = (ElemSimple) elem5e.owner.childs().stream().filter(it -> it.type == Type.GLASS).findFirst().orElse(null);
+                    ElemGlass glass = (ElemGlass) elem5e.owner.childs().stream().filter(it -> it.type == Type.GLASS).findFirst().orElse(null);
                     if ("Прямоугольное".equals(rec.getStr(TEXT)) && winc.form != null) {
                         return false;
 
-                    } else if ("Арочное".equals(rec.getStr(TEXT)) && glass.radiusGlass() == 0) {
+                    } else if ("Арочное".equals(rec.getStr(TEXT)) && glass.radiusGlass == 0) {
                         return false;
 
                     } else if ("Произвольное".equals(rec.getStr(TEXT)) && winc.form == null) {
@@ -387,7 +389,7 @@ public class ElementVar extends Par5s {
                         if (rec.getDbl(TEXT) > elem5e.root.width() / 1000 * elem5e.root.height() / 1000) {
                             return false;
                         }
-                    } else {                     
+                    } else {
                         if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.root.width() / 1000 * elem5e.root.height() / 1000) == false) {
                             return false;
                         }

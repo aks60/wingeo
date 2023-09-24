@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ElemFrame extends ElemSimple {
 
-    public ElemFrame(Wincalc wing, GsonElem gson, Com5t owner) {
+    public ElemFrame(Wincalc wing, GsonElem gson, AreaSimple owner) {
         super(wing, gson, owner);
         initСonstructiv(gson.param);
         mouseEvent();

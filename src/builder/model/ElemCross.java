@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ElemCross extends ElemSimple {
 
-    public ElemCross(Wincalc wing, GsonElem gson, Com5t owner) {
+    public ElemCross(Wincalc wing, GsonElem gson, AreaSimple owner) {
         super(wing, gson, owner);
         initСonstructiv(gson.param);
         mouseEvent();

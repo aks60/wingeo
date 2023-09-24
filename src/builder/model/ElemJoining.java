@@ -1,7 +1,6 @@
 package builder.model;
 
 import builder.Wincalc;
-import builder.ICom5t;
 import dataset.Record;
 import enums.LayoutJoin;
 import enums.TypeJoin;
@@ -23,12 +22,12 @@ public class ElemJoining {
     public TypeJoin type = TypeJoin.EMPTY;      //тип соединения (то что пишет )
     public int vid = 0; //вид соединения ("0-Простое L-обр", "1-Крестовое †-обр") или ("0-Простое T-обр", "1-Крестовое †-обр", "2-Сложное Y-обр)
 
-    public ElemSimple elem1 = null;  //элемент соединения 1
-    public ElemSimple elem2 = null;  //элемент соединения 2
+    public ElemFrame elem1 = null;  //элемент соединения 1
+    public ElemFrame elem2 = null;  //элемент соединения 2
     public double angl = 90;      //угол между профилями
     public String costs = "";     //трудозатраты, ч/ч.
 
-    public ElemJoining(Wincalc winc, TypeJoin type, LayoutJoin layout, ElemSimple elem1, ElemSimple elem2) {
+    public ElemJoining(Wincalc winc, TypeJoin type, LayoutJoin layout, ElemFrame elem1, ElemFrame elem2) {
         this.id = ++winc.genId;
         this.winc = winc;
         this.type = type;
@@ -39,14 +38,14 @@ public class ElemJoining {
         this.elem2 = elem2;
         this.angl = UGeo.betweenAngl(elem1, elem2);
         if (elem1.owner.type != Type.ARCH && elem2.owner.type != Type.ARCH && TypeJoin.VAR10 != type) {
-            elem1.anglCut(1,angl / 2);
-            elem2.anglCut(0,angl / 2);
+            elem1.anglCut[1] = angl / 2;
+            elem2.anglCut[0] = angl / 2;
         }
     }
 
     public void addSpecific(Specific spcAdd) { //добавление спесификаций зависимых элементов
         try {
-            Specific spcRec = elem1.spcRec();
+            Specific spcRec = elem1.spcRec;
 
             String sideCalc = spcAdd.getParam("null", 11072, 12072);
             if (sideCalc != null && "большей".equals(sideCalc)) {
@@ -74,7 +73,7 @@ public class ElemJoining {
             spcAdd.width = spcAdd.width / UPar.to_12040_15031_25036_34040_39040(spcAdd);//"[ / коэф-т ]"
             spcAdd.count = UPar.to_11070_12070_33078_34078(spcAdd); //ставить однократно
 
-            elem1.spcRec().spcList.add(spcAdd);
+            elem1.spcRec.spcList.add(spcAdd);
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemJoinning.addSpecific() " + e);
@@ -91,7 +90,7 @@ public class ElemJoining {
     }
 
     public boolean equals(Object obj) {
-        return id == ((ICom5t) obj).id;
+        return id == ((Com5t) obj).id;
     }
 
     public double id() {

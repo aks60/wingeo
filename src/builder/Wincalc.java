@@ -13,12 +13,14 @@ import builder.model.Canvas2D;
 import builder.script.GsonElem;
 import builder.script.GsonRoot;
 import com.google.gson.GsonBuilder;
+import common.ArrayJoin;
 import common.ArraySpc;
 import common.LinkedCom;
 import common.listener.ListenerMouse;
 import dataset.Record;
 import domain.eSyspar1;
 import domain.eSysprof;
+import enums.Form;
 import enums.Type;
 import enums.UseArtiklTo;
 import java.awt.Graphics2D;
@@ -35,6 +37,7 @@ public class Wincalc {
     public Record syssizeRec = null; //системные константы     
     public double genId = 0; //для генерации ключа в спецификации
     public int colorID1 = -1, colorID2 = 1, colorID3 = -1; //базовый,внутр,внещний 
+    public Form form = null; //форма контура (параметр в развитии)
 
     public Graphics2D gc2D = null; //графический котекст рисунка 
     public Canvas2D canvas = null;
@@ -44,12 +47,13 @@ public class Wincalc {
     public ArrayList<ListenerMouse> mouseDragged = new ArrayList();
 
     public HashMap<Integer, Record> mapPardef = new HashMap(); //пар. по умолчанию + наложенные пар. клиента
-    public GeometryFactory geomFact = new GeometryFactory();			
+    public GeometryFactory geomFact = new GeometryFactory();
     public LinkedCom<AreaSimple> listArea = new LinkedCom(); //список ареа.
     public LinkedCom<ElemSimple> listElem = new LinkedCom(); //список элем.
     public LinkedCom<ElemFrame> listFrame = new LinkedCom(); //список рам
     public List<ElemCross> listCross = new ArrayList(); //список имп.
     public ArraySpc<Specific> listSpec = new ArraySpc(); //спецификация
+    public ArrayJoin listJoin = new ArrayJoin(); //список соединений рам и створок 
 
     public GsonRoot gson = null; //объектная модель конструкции 1-го уровня
     public AreaPolygon rootArea = null; //объектная модель конструкции 2-го уровня
@@ -103,9 +107,9 @@ public class Wincalc {
         elements(rootArea, gson);
     }
 
-    private void elements(Com5t owner, GsonElem gson) {
+    private void elements(AreaSimple owner, GsonElem gson) {
         try {
-            LinkedHashMap<Com5t, GsonElem> hm = new LinkedHashMap();
+            LinkedHashMap<AreaSimple, GsonElem> hm = new LinkedHashMap();
             for (GsonElem js : gson.childs) {
 
                 if (Type.STVORKA == js.type) {
@@ -142,7 +146,7 @@ public class Wincalc {
             }
 
             //Теперь вложенные элементы
-            for (Map.Entry<Com5t, GsonElem> entry : hm.entrySet()) {
+            for (Map.Entry<AreaSimple, GsonElem> entry : hm.entrySet()) {
                 elements(entry.getKey(), entry.getValue());
             }
 
@@ -151,6 +155,64 @@ public class Wincalc {
         }
     }
 
+    //Конструктив и тарификация 
+    public void constructiv(boolean norm_otx) {
+//        weight = 0;
+//        price = 0;
+//        cost2 = 0;
+//        //cost3 = 0;
+//        try {
+//            //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
+//            calcJoining = new Joining(this); //соединения
+//            calcJoining.calc();
+//            Cal5e calcElements = (eProp.old.read().equals("0")) //составы
+//                    ? new builder.making.Elements(this)
+//                    : new builder.making.Elements(this);
+//            calcElements.calc();
+//            calcFilling = (eProp.old.read().equals("0")) //заполнения
+//                    ? new builder.making.Filling(this)
+//                    : new builder.making.Filling(this);
+//            calcFilling.calc();
+//            calcFurniture = (eProp.old.read().equals("0")) //фурнитура 
+//                    ? new builder.making.Furniture(this)
+//                    : new builder.making.Furniture(this);
+//            calcFurniture.calc();
+//            calcTariffication = (eProp.old.read().equals("0")) //тарификация 
+//                    ? new builder.making.Tariffic(this, norm_otx)
+//                    : new builder.making.Tariffic(this, norm_otx);
+//            calcTariffication.calc();
+//
+//            //Построим список спецификации
+//            for (IElem5e elem5e : listElem) {
+//                if (elem5e.spcRec().artikl.isEmpty() || elem5e.spcRec().artikl.trim().charAt(0) != '@') {
+//                    listSpec.add(elem5e.spcRec());
+//                }
+//                for (Specific spc : elem5e.spcRec().spcList) {
+//                    if (spc.artikl.isEmpty() || spc.artikl.trim().charAt(0) != '@') {
+//                        listSpec.add(spc);
+//                    }
+//                }
+//            }
+//
+//            //Итоговая стоимость
+//            for (Specific spc : listSpec) {
+//                this.price(this.price() + spc.price); //общая стоимость без скидки
+//                this.cost2(this.cost2() + spc.cost2); //общая стоимость со скидкой             
+//            }
+//
+//            //Вес изделия
+//            LinkedList<IElem5e> glassList = listElem.filter(Type.GLASS);
+//            for (IElem5e el : glassList) {
+//                this.weight += el.artiklRecAn().getDbl(eArtikl.density) * el.width() * el.height() / 1000000; //уд.вес * площадь = вес
+//            }
+//
+//            Collections.sort(listSpec, (o1, o2) -> (o1.place.subSequence(0, 3) + o1.name + o1.width).compareTo(o2.place.subSequence(0, 3) + o2.name + o2.width));
+//
+//        } catch (Exception e) {
+//            System.err.println("Ошибка:Wincalc.constructiv() " + e);
+//        }
+    }
+    
     public void draw() {
         try {
             rootArea.setLocation();

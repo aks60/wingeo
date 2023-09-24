@@ -18,7 +18,7 @@ public class AreaSimple extends Com5t {
     public LinkedList<Point2D> listSkin = new LinkedList();
     public List<Com5t> childs = new ArrayList(); //дети
 
-    public AreaSimple(Wincalc wing, GsonElem gson, Com5t owner) {
+    public AreaSimple(Wincalc wing, GsonElem gson, AreaSimple owner) {
         super(wing, gson, owner);
     }
 

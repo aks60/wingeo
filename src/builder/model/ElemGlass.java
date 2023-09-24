@@ -20,7 +20,7 @@ public class ElemGlass extends ElemSimple {
     private int rasclColor = -3; //цвет раскладки
     private int rasclNumber[] = {2, 2}; //количество проёмов раскладки     
     
-    public ElemGlass(Wincalc wing, GsonElem gson, Com5t owner) {
+    public ElemGlass(Wincalc wing, GsonElem gson, AreaSimple owner) {
         super(wing, gson, owner);
     }
 

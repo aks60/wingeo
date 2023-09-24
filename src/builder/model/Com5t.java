@@ -20,7 +20,7 @@ public abstract class Com5t {
     public int SIZE = 24;
     public double id;
     public Wincalc winc = null;
-    public Com5t owner = null; //владелец
+    public AreaSimple owner = null; //владелец
     public AreaSimple root = null; //главный класс конструкции
     public Com5t enext = null; //сдедующий элемент
     public GsonElem gson = null; //gson object конструкции    
@@ -40,7 +40,7 @@ public abstract class Com5t {
         this.type = type;
     }
         
-    public Com5t(Wincalc wing, GsonElem gson, Com5t owner) {
+    public Com5t(Wincalc wing, GsonElem gson, AreaSimple owner) {
         this.id = gson.id;
         this.winc = wing;
         this.owner = owner;
@@ -100,6 +100,17 @@ public abstract class Com5t {
         this.winc.mouseDragged.add(mouseDragge);
     }
 
+    public double length() {
+        ElemSimple elem5e = (ElemSimple) this;
+        if (elem5e.anglHoriz == 0 || elem5e.anglHoriz == 180) {
+            return (x2() > x1()) ? x2() - x1() : x1() - x2();
+        } else if (elem5e.anglHoriz == 90 || elem5e.anglHoriz == 270) {
+            return (y2() > y1()) ? y2() - y1() : y1() - y2();
+        } else {
+            return Math.sqrt((x2() - x1()) * (x2() - x1()) + (y2() - y1()) * (y2() - y1()));
+        }
+    }
+    
     public boolean isJson(JsonObject jso, String key) {
         if (jso == null) {
             return false;

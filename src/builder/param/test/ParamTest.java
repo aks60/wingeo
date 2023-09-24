@@ -128,7 +128,7 @@ public class ParamTest {
         imp_vert_3 = getElem(iwin_3.rootArea, 12.0f);
         glass_top_3 = (ElemSimple) getElem(iwin_3.rootArea, 6.0f);
         glass_left_3 = (ElemSimple) getElem(iwin_3.rootArea, 11.0f);
-        glass_left_3.anglHoriz(0);
+        glass_left_3.anglHoriz = 0;
     }
 
     //700027  "Montblanc / Eco / 1 ОКНА (штульп)"

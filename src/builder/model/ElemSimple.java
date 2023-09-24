@@ -23,7 +23,7 @@ public class ElemSimple extends Com5t {
     public Specific spcRec = null; //спецификация элемента
     public Color borderColor = Color.BLACK;
 
-    public ElemSimple(Wincalc wing, GsonElem gson, Com5t owner) {
+    public ElemSimple(Wincalc wing, GsonElem gson, AreaSimple owner) {
         super(wing, gson, owner);
         //spcRec = new Specific(id, this);
     }
