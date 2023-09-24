@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import builder.Wincalc;
+import builder.model.ElemJoining;
 import builder.param.ElementDet;
 import builder.param.JoiningDet;
 import builder.param.JoiningVar;

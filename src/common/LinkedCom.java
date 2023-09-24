@@ -13,13 +13,13 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
     }
 
     public E find(double id) {
-        return this.stream().filter(it -> it.id() == id).findFirst().get();
+        return this.stream().filter(it -> it.id == id).findFirst().get();
     }
 
     public GsonElem gson(double id) {
-        Com5t com5t = this.stream().filter(it -> it.id() == id).findFirst().orElse(null);
+        Com5t com5t = this.stream().filter(it -> it.id == id).findFirst().orElse(null);
         if (com5t != null) {
-            return com5t.gson();
+            return com5t.gson;
         }
         return null;
     }

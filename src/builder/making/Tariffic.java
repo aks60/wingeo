@@ -74,7 +74,7 @@ public class Tariffic extends Cal5e {
             for (ElemSimple elem5e : winc.listElem) {
                 if (filter(elem5e)) {
 
-                    Record systreeRec = eSystree.find(winc.nuni());
+                    Record systreeRec = eSystree.find(winc.nuni);
                     //Цикл по правилам расчёта.                 
                     for (Record rulecalcRec : eRulecalc.list()) {
                         //Всё обнуляется и рассчитывается по таблице правил расчёта
@@ -87,14 +87,14 @@ public class Tariffic extends Cal5e {
                             if (form == TypeForm.P00.id) {//не проверять форму
                                 rulecalcPrise(winc, rulecalcRec, elem5e.spcRec);
 
-                            } else if (form == TypeForm.P10.id && Type.TRAPEZE == elem5e.owner().type) { //не прямоугольное, не арочное заполнение
+                            } else if (form == TypeForm.P10.id && Type.TRAPEZE == elem5e.owner.type) { //не прямоугольное, не арочное заполнение
                                 rulecalcPrise(winc, rulecalcRec, elem5e.spcRec);
 
-                            } else if (form == TypeForm.P12.id && Type.ARCH == elem5e.owner().type) {//не прямоугольное заполнение с арками
+                            } else if (form == TypeForm.P12.id && Type.ARCH == elem5e.owner.type) {//не прямоугольное заполнение с арками
                                 rulecalcPrise(winc, rulecalcRec, elem5e.spcRec);
                             }
                         } else if (form == TypeForm.P04.id && elem5e.type == Type.FRAME_SIDE
-                                && elem5e.owner().type == Type.ARCH && elem5e.layout() == Layout.TOP) {  //профиль с радиусом  (фильтр для арки профиля AYPC.W62.0101)
+                                && elem5e.owner.type == Type.ARCH && elem5e.layout == Layout.TOP) {  //профиль с радиусом  (фильтр для арки профиля AYPC.W62.0101)
                             rulecalcPrise(winc, rulecalcRec, elem5e.spcRec); //профиль с радиусом
 
                         } else {
@@ -158,7 +158,7 @@ public class Tariffic extends Cal5e {
     public static ArraySpc<Specific> kits(Record prjprodRec, Wincalc winc, boolean norm_otx) {
         ArraySpc<Specific> kitList = new ArraySpc();
         try {
-            Record systreeRec = eSystree.find(winc.nuni()); //для нахожд. коэф. рентабельности
+            Record systreeRec = eSystree.find(winc.nuni); //для нахожд. коэф. рентабельности
             double percentMarkup = percentMarkup(winc); //процентная надбавка на изделия сложной формы
             if (prjprodRec != null) {
                 List<Record> prjkitList = ePrjkit.find3(prjprodRec.getInt(ePrjprod.id));
@@ -167,7 +167,7 @@ public class Tariffic extends Cal5e {
                 for (Record prjkitRec : prjkitList) {
                     Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.artikl_id), true);
                     if (artiklRec != null) {
-                        Specific spc = new Specific("КОМП", winc.genId(), prjkitRec, artiklRec, null);
+                        Specific spc = new Specific("КОМП", ++winc.genId, prjkitRec, artiklRec, null);
                         spc.width = prjkitRec.getDbl(ePrjkit.width);
                         spc.height = prjkitRec.getDbl(ePrjkit.height);
                         spc.count = prjkitRec.getDbl(ePrjkit.numb);

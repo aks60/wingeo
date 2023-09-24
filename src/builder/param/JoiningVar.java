@@ -163,18 +163,18 @@ public class JoiningVar extends Par5s {
                 break;
                 case 1014:  //Только горизонтальная ориентация
                     if ("ps3".equals(eSetting.val(2))) {
-                        if ("Да".equals(rec.getStr(TEXT)) && elemJoin.elem1.layout() != Layout.HORIZ && elemJoin.elem1.layout() != Layout.BOTT && elemJoin.elem1.layout() != Layout.TOP) {
+                        if ("Да".equals(rec.getStr(TEXT)) && elemJoin.elem1.layout != Layout.HORIZ && elemJoin.elem1.layout != Layout.BOTT && elemJoin.elem1.layout != Layout.TOP) {
                             return false;
-                        } else if ("Нет".equals(rec.getStr(TEXT)) && (elemJoin.elem1.layout() == Layout.HORIZ || elemJoin.elem1.layout() == Layout.BOTT || elemJoin.elem1.layout() == Layout.TOP)) {
+                        } else if ("Нет".equals(rec.getStr(TEXT)) && (elemJoin.elem1.layout == Layout.HORIZ || elemJoin.elem1.layout == Layout.BOTT || elemJoin.elem1.layout == Layout.TOP)) {
                             return false;
                         }
                     }
                     break;
                 case 1015:  //Только вертикальная ориентация
                     if ("ps3".equals(eSetting.val(2))) {
-                        if ("Да".equals(rec.getStr(TEXT)) && elemJoin.elem1.layout() != Layout.VERT && elemJoin.elem1.layout() != Layout.RIGHT && elemJoin.elem1.layout() != Layout.LEFT) {
+                        if ("Да".equals(rec.getStr(TEXT)) && elemJoin.elem1.layout != Layout.VERT && elemJoin.elem1.layout != Layout.RIGHT && elemJoin.elem1.layout != Layout.LEFT) {
                             return false;
-                        } else if ("Нет".equals(rec.getStr(TEXT)) && (elemJoin.elem1.layout() == Layout.VERT || elemJoin.elem1.layout() == Layout.RIGHT || elemJoin.elem1.layout() == Layout.LEFT)) {
+                        } else if ("Нет".equals(rec.getStr(TEXT)) && (elemJoin.elem1.layout == Layout.VERT || elemJoin.elem1.layout == Layout.RIGHT || elemJoin.elem1.layout == Layout.LEFT)) {
                             return false;
                         }
                     }
@@ -222,14 +222,14 @@ public class JoiningVar extends Par5s {
                     //Применяется если сист. константы отсутствуют
                     if (elemJoin.elem1.type == Type.STVORKA_SIDE) {
                         listenerList.add(() -> {
-                            AreaStvorka stv = (AreaStvorka) elemJoin.elem1.owner();
-                            if (elemJoin.elem1.layout() == Layout.BOTT) {
+                            AreaStvorka stv = (AreaStvorka) elemJoin.elem1.owner;
+                            if (elemJoin.elem1.layout == Layout.BOTT) {
                                 stv.offset()[0] = rec.getDbl(TEXT);
-                            } else if (elemJoin.elem1.layout() == Layout.RIGHT) {
+                            } else if (elemJoin.elem1.layout == Layout.RIGHT) {
                                 stv.offset()[1] = rec.getDbl(TEXT);
-                            } else if (elemJoin.elem1.layout() == Layout.TOP) {
+                            } else if (elemJoin.elem1.layout == Layout.TOP) {
                                 stv.offset()[2] = rec.getDbl(TEXT);
-                            } else if (elemJoin.elem1.layout() == Layout.LEFT) {
+                            } else if (elemJoin.elem1.layout == Layout.LEFT) {
                                 stv.offset()[3] = rec.getDbl(TEXT);
                             }
                         });
@@ -251,7 +251,7 @@ public class JoiningVar extends Par5s {
                 case 3095:  //Если признак системы конструкции 
                 case 4095: //Если признак системы конструкции 
                 {
-                    Record systreefRec = eSystree.find(winc.nuni());
+                    Record systreefRec = eSystree.find(winc.nuni);
                     String[] arr = rec.getStr(TEXT).split(";");
                     List<String> arrList = List.of(arr);
                     boolean ret = false;
@@ -501,7 +501,7 @@ public class JoiningVar extends Par5s {
                     break;
                 case 4018: //От ручки не менее, мм 
                 {
-                    AreaStvorka stv = (AreaStvorka) elemJoin.elem1.owner();
+                    AreaStvorka stv = (AreaStvorka) elemJoin.elem1.owner;
                     ElemSimple imp = elemJoin.elem1;
                     if (Math.abs(imp.y2() - stv.handleHeight()) < rec.getDbl(TEXT)) {
                         return false;

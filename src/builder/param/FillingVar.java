@@ -76,15 +76,15 @@ public class FillingVar extends Par5s {
                     break;
                 case 13015:  //Форма заполнения 
                     //"Прямоугольное", "Не прямоугольное", "Не арочное", "Арочное" (TypeElem.AREA - глухарь)
-                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && Type.RECTANGL.equals(elem5e.owner().type) == false
-                            && Type.AREA.equals(elem5e.owner().type) == false && Type.STVORKA.equals(elem5e.owner().type) == false) {
+                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && Type.RECTANGL.equals(elem5e.owner.type) == false
+                            && Type.AREA.equals(elem5e.owner.type) == false && Type.STVORKA.equals(elem5e.owner.type) == false) {
                         return false;
-                    } else if ("Не прямоугольное".equals(rec.getStr(TEXT)) && (Type.TRAPEZE.equals(elem5e.owner().type) == false
-                            && Type.TRIANGL.equals(elem5e.owner().type) == false)) {
+                    } else if ("Не прямоугольное".equals(rec.getStr(TEXT)) && (Type.TRAPEZE.equals(elem5e.owner.type) == false
+                            && Type.TRIANGL.equals(elem5e.owner.type) == false)) {
                         return false;
-                    } else if ("Арочное".equals(rec.getStr(TEXT)) && Type.ARCH.equals(elem5e.owner().type) == false) {
+                    } else if ("Арочное".equals(rec.getStr(TEXT)) && Type.ARCH.equals(elem5e.owner.type) == false) {
                         return false;
-                    } else if ("Не арочное".equals(rec.getStr(TEXT)) && Type.ARCH.equals(elem5e.owner().type) == true) {
+                    } else if ("Не арочное".equals(rec.getStr(TEXT)) && Type.ARCH.equals(elem5e.owner.type) == true) {
                         return false;
                     }
                     break;
@@ -120,7 +120,7 @@ public class FillingVar extends Par5s {
                         }
                     }
                 case 13095:  //Если признак системы конструкции 
-                    if (!UPar.is_11095_12095_31095_33095_34095_37095_38095_39095_40095(rec.getStr(TEXT), winc.nuni())) {
+                    if (!UPar.is_11095_12095_31095_33095_34095_37095_38095_39095_40095(rec.getStr(TEXT), winc.nuni)) {
                         return false;
                     }
                     break;

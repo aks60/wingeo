@@ -44,7 +44,7 @@ public class FillingDet extends Par5s {
                 case 14000: //Для технологического кода контейнера
                 case 15000: //Для технологического кода контейнера 
                 {
-                    ElemSimple elem = winc.rootArea.frames().get(Layout.BOTT);
+                    ElemSimple elem = winc.rootArea.frames.get(Layout.BOTT);
                     if (!UPar.is_STRING_XX000(rec.getStr(TEXT), elem)) {
                         return false;
                     }
@@ -53,7 +53,7 @@ public class FillingDet extends Par5s {
                 case 14001: //Если признак состава 
                 case 15001: //Если признак состава    
                 {
-                    ElemSimple elem = winc.rootArea.frames().get(Layout.BOTT);
+                    ElemSimple elem = winc.rootArea.frames.get(Layout.BOTT);
                     if (UPar.is_11001_11002_12001_12002_13001_14001_15001_33001_34001(rec.getStr(TEXT), elem) == false) {
                         return false;
                     }
@@ -73,9 +73,9 @@ public class FillingDet extends Par5s {
                     break;
                 case 14009: //Арочное заполнение 
                 case 15009: //Арочное заполнение  
-                    if ("Да".equals(rec.getStr(TEXT)) && elem5e.owner().type != Type.ARCH) {
+                    if ("Да".equals(rec.getStr(TEXT)) && elem5e.owner.type != Type.ARCH) {
                         return false;
-                    } else if ("Нет".equals(rec.getStr(TEXT)) && elem5e.owner().type == Type.ARCH) {
+                    } else if ("Нет".equals(rec.getStr(TEXT)) && elem5e.owner.type == Type.ARCH) {
                         return false;
                     }
                     break;
@@ -117,26 +117,26 @@ public class FillingDet extends Par5s {
                     break;
                 case 14067:  //Коды основной текстуры изделия 
                 case 15067:  //Коды основной текстуры изделия    
-                    if (UCom.containsColor(rec.getStr(TEXT), elem5e.winc().colorID1) == false) {
+                    if (UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID1) == false) {
                         return false;
                     }
                     break;
                 case 14068:  //Коды внутр. текстуры изделия 
                 case 15068:  //Коды внутр. текстуры изделия     
-                    if (UCom.containsColor(rec.getStr(TEXT), elem5e.winc().colorID2) == false) {
+                    if (UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID2) == false) {
                         return false;
                     }
                     break;
                 case 14069:  //Коды внешн. текстуры изделия 
                 case 15069:  //Коды внешн. текстуры изделия     
-                    if (UCom.containsColor(rec.getStr(TEXT), elem5e.winc().colorID3) == false) {
+                    if (UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID3) == false) {
                         return false;
                     }
                     break;
                 case 14081: //Если артикул профиля контура 
                 case 15081: //Если артикул профиля контура 
                 {
-                    ElemSimple elem = (elem5e.owner().frames().isEmpty() == false) ? elem5e.owner().frames().get(Layout.BOTT) : elem5e.root.frames().get(Layout.BOTT);
+                    ElemSimple elem = (elem5e.owner.frames.isEmpty() == false) ? elem5e.owner.frames.get(Layout.BOTT) : elem5e.root.frames.get(Layout.BOTT);
                     if (rec.getStr(TEXT).equals(elem.artiklRecAn.getStr(eArtikl.code)) == false) {
                         return false;
                     }
@@ -145,7 +145,7 @@ public class FillingDet extends Par5s {
                 case 14095: //Если признак системы конструкции 
                 case 15095: //Если признак системы конструкции  
                 {
-                    Record systreeRec = eSystree.find(winc.nuni());
+                    Record systreeRec = eSystree.find(winc.nuni);
                     String[] arr = rec.getStr(TEXT).split(";");
                     List<String> arrList = List.of(arr);
                     boolean ret = false;

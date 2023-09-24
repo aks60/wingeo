@@ -52,14 +52,14 @@ public class Specific {
     }
     
     public Specific(double id, ElemSimple elem5e) {
-        elem5e.winc().genId();
+        ++elem5e.winc.genId;
         this.id = id;
         this.elem5e = elem5e;
         this.mapParam = new HashMap();
     }
 
     public Specific(String place, Record detailRec, Record artiklRec, ElemSimple elem5e, HashMap<Integer, String> mapParam) {
-        this.id = elem5e.winc().genId();
+        this.id = ++elem5e.winc.genId;
         this.elem5e = elem5e;
         this.mapParam = mapParam;
         this.detailRec = detailRec;
@@ -115,7 +115,7 @@ public class Specific {
     }
 
     public Vector getVector(int npp) {
-        return new Vector(List.of(npp, id, elem5e.id(), place, artikl, name, eColor.find(colorID1).getStr(eColor.name), eColor.find(colorID2).getStr(eColor.name),
+        return new Vector(List.of(npp, id, elem5e.id, place, artikl, name, eColor.find(colorID1).getStr(eColor.name), eColor.find(colorID2).getStr(eColor.name),
                 eColor.find(colorID3).getStr(eColor.name), width, height, weight, anglCut0, anglCut1, anglHoriz,
                 count, UseUnit.getName(unit), wastePrc, quant1, quant2, costpric1, costpric2, price, cost2));
     }

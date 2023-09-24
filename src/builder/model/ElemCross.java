@@ -1,7 +1,7 @@
 package builder.model;
 
 import builder.Wincalc;
-import builder.script.GeoElem;
+import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import domain.eArtikl;
 import domain.eSysprof;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ElemCross extends ElemSimple {
 
-    public ElemCross(Wincalc wing, GeoElem gson, Com5t owner) {
+    public ElemCross(Wincalc wing, GsonElem gson, Com5t owner) {
         super(wing, gson, owner);
         initСonstructiv(gson.param);
         mouseEvent();
@@ -23,15 +23,15 @@ public class ElemCross extends ElemSimple {
 
     public void initСonstructiv(JsonObject param) {
 
-        colorID1 = (isJson(param, PKjson.colorID1)) ? param.get(PKjson.colorID1).getAsInt() : wing.colorID1;
-        colorID2 = (isJson(param, PKjson.colorID2)) ? param.get(PKjson.colorID2).getAsInt() : wing.colorID2;
-        colorID3 = (isJson(param, PKjson.colorID3)) ? param.get(PKjson.colorID3).getAsInt() : wing.colorID3;
+        colorID1 = (isJson(param, PKjson.colorID1)) ? param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
+        colorID2 = (isJson(param, PKjson.colorID2)) ? param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
+        colorID3 = (isJson(param, PKjson.colorID3)) ? param.get(PKjson.colorID3).getAsInt() : winc.colorID3;
 
         double angl = UGeo.horizontAngl(this);
         if (isJson(param, PKjson.sysprofID)) { //профили через параметр
             sysprofRec = eSysprof.find3(param.get(PKjson.sysprofID).getAsInt());
         } else {
-            sysprofRec = eSysprof.find4(wing.nuni, type.id2, UseSide.ANY);
+            sysprofRec = eSysprof.find4(winc.nuni, type.id2, UseSide.ANY);
         }
         artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
         artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true);
@@ -75,7 +75,7 @@ public class ElemCross extends ElemSimple {
             //UGeo.PRINT(owner.area);
             //Area импоста внутренняя
             //Area areaPadding = UGeo.areaPadding(wing.listFrame);        
-            Area areaPadding = UGeo.areaPadding(owner.area, wing.listElem);
+            Area areaPadding = UGeo.areaPadding(owner.area, winc.listElem);
 
             areaPadding.intersect(UGeo.area(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]));
             //this.area = UGeo.areaReduc(areaPadding);
@@ -89,8 +89,8 @@ public class ElemCross extends ElemSimple {
 
     public void paint() {
         try {
-            wing.gc2D.draw(this.area);
-            wing.gc2D.draw(new Line2D.Double(this.x1(), this.y1(), this.x2(), this.y2()));
+            winc.gc2D.draw(this.area);
+            winc.gc2D.draw(new Line2D.Double(this.x1(), this.y1(), this.x2(), this.y2()));
 
         } catch (Exception e) {
             System.err.println("Ошибка:Elem2Cross.paint() " + e);

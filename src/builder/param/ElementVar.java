@@ -64,9 +64,9 @@ public class ElementVar extends Par5s {
                 }
                 break;
                 case 31002:  //Если профиль 
-                    if ("арочный".equals(rec.getStr(TEXT)) == true && (elem5e.owner().type == Type.ARCH && Layout.TOP == elem5e.layout()) == false) {
+                    if ("арочный".equals(rec.getStr(TEXT)) == true && (elem5e.owner.type == Type.ARCH && Layout.TOP == elem5e.layout) == false) {
                         return false;
-                    } else if ("прямой".equals(rec.getStr(TEXT)) == true && (elem5e.owner().type == Type.ARCH && Layout.TOP == elem5e.layout()) == true) {
+                    } else if ("прямой".equals(rec.getStr(TEXT)) == true && (elem5e.owner.type == Type.ARCH && Layout.TOP == elem5e.layout) == true) {
                         return false;
                     }
                     break;
@@ -259,10 +259,10 @@ public class ElementVar extends Par5s {
                     }
                     break;
                 case 31051:  //Если створка фурнитуры 
-                    if (elem5e.owner().type == Type.STVORKA) {
-                        if ("ведущая".equals(rec.getStr(TEXT)) == true && ((AreaStvorka) elem5e.owner()).handleRec().getInt(eArtikl.id) == -3) {
+                    if (elem5e.owner.type == Type.STVORKA) {
+                        if ("ведущая".equals(rec.getStr(TEXT)) == true && ((AreaStvorka) elem5e.owner).handleRec().getInt(eArtikl.id) == -3) {
                             return false;
-                        } else if ("ведомая".equals(rec.getStr(TEXT)) == true && ((AreaStvorka) elem5e.owner()).handleRec().getInt(eArtikl.id) != -3) {
+                        } else if ("ведомая".equals(rec.getStr(TEXT)) == true && ((AreaStvorka) elem5e.owner).handleRec().getInt(eArtikl.id) != -3) {
                             return false;
                         }
                     }
@@ -330,7 +330,7 @@ public class ElementVar extends Par5s {
                     break;
                 case 31095:  //Если признак системы конструкции 
                 case 37095:  //Если признак системы конструкции                    
-                    if (!UPar.is_11095_12095_31095_33095_34095_37095_38095_39095_40095(rec.getStr(TEXT), winc.nuni())) {
+                    if (!UPar.is_11095_12095_31095_33095_34095_37095_38095_39095_40095(rec.getStr(TEXT), winc.nuni)) {
                         return false;
                     }
                     break;
@@ -365,7 +365,7 @@ public class ElementVar extends Par5s {
                     break;
                 case 37009: //Тип заполнения 
                 {
-                    ElemSimple glass = (ElemSimple) elem5e.owner().childs().stream().filter(it -> it.type == Type.GLASS).findFirst().orElse(null);
+                    ElemSimple glass = (ElemSimple) elem5e.owner.childs().stream().filter(it -> it.type == Type.GLASS).findFirst().orElse(null);
                     if ("Прямоугольное".equals(rec.getStr(TEXT)) && winc.form != null) {
                         return false;
 

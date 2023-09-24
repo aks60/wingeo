@@ -10,8 +10,8 @@ import builder.model.ElemGlass;
 import builder.model.ElemSimple;
 import builder.making.Specific;
 import builder.model.Canvas2D;
-import builder.script.GeoElem;
-import builder.script.GeoRoot;
+import builder.script.GsonElem;
+import builder.script.GsonRoot;
 import com.google.gson.GsonBuilder;
 import common.ArraySpc;
 import common.LinkedCom;
@@ -51,7 +51,7 @@ public class Wincalc {
     public List<ElemCross> listCross = new ArrayList(); //список имп.
     public ArraySpc<Specific> listSpec = new ArraySpc(); //спецификация
 
-    public GeoRoot gson = null; //объектная модель конструкции 1-го уровня
+    public GsonRoot gson = null; //объектная модель конструкции 1-го уровня
     public AreaPolygon rootArea = null; //объектная модель конструкции 2-го уровня
 
     public Wincalc() {
@@ -90,7 +90,7 @@ public class Wincalc {
         //Для тестирования
         System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
-        gson = new GsonBuilder().create().fromJson(script, GeoRoot.class);
+        gson = new GsonBuilder().create().fromJson(script, GsonRoot.class);
         gson.setOwner(this);
 
         //Инит конструктива
@@ -103,10 +103,10 @@ public class Wincalc {
         elements(rootArea, gson);
     }
 
-    private void elements(Com5t owner, GeoElem gson) {
+    private void elements(Com5t owner, GsonElem gson) {
         try {
-            LinkedHashMap<Com5t, GeoElem> hm = new LinkedHashMap();
-            for (GeoElem js : gson.childs) {
+            LinkedHashMap<Com5t, GsonElem> hm = new LinkedHashMap();
+            for (GsonElem js : gson.childs) {
 
                 if (Type.STVORKA == js.type) {
                     AreaSimple area5e = new AreaStvorka(this, gson, owner);
@@ -142,7 +142,7 @@ public class Wincalc {
             }
 
             //Теперь вложенные элементы
-            for (Map.Entry<Com5t, GeoElem> entry : hm.entrySet()) {
+            for (Map.Entry<Com5t, GsonElem> entry : hm.entrySet()) {
                 elements(entry.getKey(), entry.getValue());
             }
 

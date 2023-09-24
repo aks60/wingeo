@@ -168,13 +168,13 @@ public class UGui {
         root.add(new DefMutableTreeNode(new Com5t(Type.PARAM)));
         //Рама
         DefMutableTreeNode frm = root.add(new DefMutableTreeNode(new Com5t(Type.FRAME)));
-        frm.add(new DefMutableTreeNode(winc.rootArea.frames().get(Layout.BOTT)));
+        frm.add(new DefMutableTreeNode(winc.rootArea.frames.get(Layout.BOTT)));
         frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
-        frm.add(new DefMutableTreeNode(winc.rootArea.frames().get(Layout.RIGHT)));
+        frm.add(new DefMutableTreeNode(winc.rootArea.frames.get(Layout.RIGHT)));
         frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
-        frm.add(new DefMutableTreeNode(winc.rootArea.frames().get(Layout.TOP)));
+        frm.add(new DefMutableTreeNode(winc.rootArea.frames.get(Layout.TOP)));
         frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
-        frm.add(new DefMutableTreeNode(winc.rootArea.frames().get(Layout.LEFT)));
+        frm.add(new DefMutableTreeNode(winc.rootArea.frames.get(Layout.LEFT)));
         frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
 
         //Цикл по всем детям ареа
@@ -245,13 +245,13 @@ public class UGui {
     public static void loadWinTree(Wincalc winc, DefMutableTreeNode root, Com5t com) {
         DefMutableTreeNode nodeStv = root.add(new DefMutableTreeNode(com));
         AreaSimple stv = (AreaSimple) com;
-        nodeStv.add(new DefMutableTreeNode(stv.frames().get(Layout.BOTT)));
+        nodeStv.add(new DefMutableTreeNode(stv.frames.get(Layout.BOTT)));
         nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
-        nodeStv.add(new DefMutableTreeNode(stv.frames().get(Layout.RIGHT)));
+        nodeStv.add(new DefMutableTreeNode(stv.frames.get(Layout.RIGHT)));
         nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
-        nodeStv.add(new DefMutableTreeNode(stv.frames().get(Layout.TOP)));
+        nodeStv.add(new DefMutableTreeNode(stv.frames.get(Layout.TOP)));
         nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
-        nodeStv.add(new DefMutableTreeNode(stv.frames().get(Layout.LEFT)));
+        nodeStv.add(new DefMutableTreeNode(stv.frames.get(Layout.LEFT)));
         nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
         //Цикл по детям створки
         for (Com5t com2 : ((AreaSimple) com).childs()) {
@@ -302,7 +302,7 @@ public class UGui {
         if (id != -1) {
             DefaultMutableTreeNode curNode = (DefaultMutableTreeNode) tree.getModel().getRoot();
             do {
-                if (id == ((DefMutableTreeNode) curNode).com5t().id()) {
+                if (id == ((DefMutableTreeNode) curNode).com5t().id) {
                     TreePath path = new TreePath(curNode.getPath());
                     tree.setSelectionPath(path);
                     tree.scrollPathToVisible(path);

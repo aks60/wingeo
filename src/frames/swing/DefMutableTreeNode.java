@@ -41,7 +41,7 @@ public class DefMutableTreeNode<E> extends DefaultMutableTreeNode {
             return ((AreaSimple) obj).type.name;
 
         } else if (obj instanceof ElemSimple) {
-            return ((ElemSimple) obj).type.name + ", " + ((ElemSimple) obj).layout().name.toLowerCase();
+            return ((ElemSimple) obj).type.name + ", " + ((ElemSimple) obj).layout.name.toLowerCase();
 
         } else if (obj instanceof Com5t) {
             return ((Com5t) obj).type.name;

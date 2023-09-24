@@ -1,7 +1,7 @@
 package builder.model;
 
 import builder.Wincalc;
-import builder.script.GeoElem;
+import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import dataset.Record;
 import domain.eArtdet;
@@ -12,11 +12,15 @@ import enums.PKjson;
 
 public class ElemGlass extends ElemSimple {
 
+    public double radiusGlass = 0; //радиус стекла
+    public double gzazo = 0; //зазор между фальцем и стеклопакетом 
+    public double gsize[] = {0, 0, 0, 0}; //размер от оси до стеклопакета
+    
     private Record rasclRec = eArtikl.virtualRec(); //раскладка
     private int rasclColor = -3; //цвет раскладки
     private int rasclNumber[] = {2, 2}; //количество проёмов раскладки     
     
-    public ElemGlass(Wincalc wing, GeoElem gson, Com5t owner) {
+    public ElemGlass(Wincalc wing, GsonElem gson, Com5t owner) {
         super(wing, gson, owner);
     }
 
@@ -25,7 +29,7 @@ public class ElemGlass extends ElemSimple {
         if (isJson(param, PKjson.artglasID)) {
             artiklRec = eArtikl.find(param.get(PKjson.artglasID).getAsInt(), false);
         } else {
-            Record sysreeRec = eSystree.find(wing.nuni); //по умолчанию стеклопакет
+            Record sysreeRec = eSystree.find(winc.nuni); //по умолчанию стеклопакет
             artiklRec = eArtikl.find2(sysreeRec.getStr(eSystree.glas));
         }
         artiklRecAn = artiklRec;

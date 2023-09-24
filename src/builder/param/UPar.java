@@ -26,9 +26,9 @@ class UPar {
     //Толщина внешнего/внутреннего заполнения, мм
     static List<ElemSimple> getGlassDepth(ElemSimple elem5e) {
         ElemSimple glass1 = null, glass2 = null;
-        for (ElemSimple el : elem5e.winc().listElem) {
+        for (ElemSimple el : elem5e.winc.listElem) {
             if (el.type == Type.GLASS) {
-                if (elem5e.layout() == Layout.VERT) {
+                if (elem5e.layout == Layout.VERT) {
                     if (el.inside(elem5e.x1() - 200, elem5e.y1() + elem5e.height() / 2)) {
                         glass1 = el;
                     }
@@ -36,7 +36,7 @@ class UPar {
                         glass2 = el;
                     }
                 }
-                if (elem5e.layout() == Layout.HORIZ) {
+                if (elem5e.layout == Layout.HORIZ) {
                     if (el.inside(elem5e.y1() - 200, elem5e.x1() + elem5e.width() / 2)) {
                         glass1 = el;
                     }
@@ -51,9 +51,9 @@ class UPar {
 
     //Тип проема 
     static boolean is_13003_14005_15005_37008(String txt, ElemSimple elem5e) {
-        if ("глухой".equals(txt) == true && elem5e.owner().type == Type.STVORKA == true) {
+        if ("глухой".equals(txt) == true && elem5e.owner.type == Type.STVORKA == true) {
             return false;
-        } else if ("не глухой".equals(txt) == true && elem5e.owner().type == Type.STVORKA == false) {
+        } else if ("не глухой".equals(txt) == true && elem5e.owner.type == Type.STVORKA == false) {
             return false;
         }
         return true;
@@ -81,7 +81,7 @@ class UPar {
     static boolean is_STRING_XX000(String txt, ElemSimple elem5e) {
         Record sysprofRec = elem5e.sysprofRec;
         if (elem5e.type == Type.GLASS) {
-            sysprofRec = elem5e.owner().frames().get(Layout.BOTT).sysprofRec;
+            sysprofRec = elem5e.owner.frames.get(Layout.BOTT).sysprofRec;
         }
         Record artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
         if (artiklRecAn.get(eArtikl.tech_code) == null) {
@@ -124,13 +124,13 @@ class UPar {
 
     //Если номер стороны в контуре
     static boolean is_INT_33066_34066(String txt, ElemSimple elem5e) {
-        if ("1".equals(txt) == true && Layout.BOTT != elem5e.layout()) {
+        if ("1".equals(txt) == true && Layout.BOTT != elem5e.layout) {
             return false;
-        } else if ("2".equals(txt) == true && Layout.RIGHT != elem5e.layout()) {
+        } else if ("2".equals(txt) == true && Layout.RIGHT != elem5e.layout) {
             return false;
-        } else if ("3".equals(txt) == true && Layout.TOP != elem5e.layout()) {
+        } else if ("3".equals(txt) == true && Layout.TOP != elem5e.layout) {
             return false;
-        } else if ("4".equals(txt) == true && Layout.LEFT != elem5e.layout()) {
+        } else if ("4".equals(txt) == true && Layout.LEFT != elem5e.layout) {
             return false;
         }
         return true;
@@ -171,8 +171,8 @@ class UPar {
 
     //Название фурнитуры содержит 
     static boolean is_31037_38037_39037_40037(ElemSimple elem5e, String txt) {
-        if (Type.STVORKA == elem5e.owner().type) {
-            AreaStvorka stv = (AreaStvorka) elem5e.owner();
+        if (Type.STVORKA == elem5e.owner.type) {
+            AreaStvorka stv = (AreaStvorka) elem5e.owner;
             String name = eFurniture.find(stv.sysfurnRec().getInt(eSysfurn.furniture_id)).getStr(eFurniture.name);
             if ((name.equals(txt)) == false) {
                 return false;
@@ -185,8 +185,8 @@ class UPar {
 
     //Для типа открывания
     static boolean is_1039_38039_39039(ElemSimple elem5e, String txt) {
-        if (elem5e.owner().type == Type.STVORKA) {
-            AreaStvorka stv = (AreaStvorka) elem5e.owner();
+        if (elem5e.owner.type == Type.STVORKA) {
+            AreaStvorka stv = (AreaStvorka) elem5e.owner;
             if (!"фрамуга".equals(txt) && stv.typeOpen() == TypeOpen1.UPPER) { //фрамуга
                 return false;
             } else if (!"поворотное".equals(txt) && (stv.typeOpen() == TypeOpen1.LEFT || stv.typeOpen() == TypeOpen1.RIGHT)) { //поворотное
@@ -217,7 +217,7 @@ class UPar {
     }
 
     static boolean is_13017_14017_24017_25017_31017_33017_34017_37017_38017(String txt, Wincalc winc) {
-        Record systreeRec = eSystree.find(winc.nuni());
+        Record systreeRec = eSystree.find(winc.nuni);
         String[] s = txt.split("/");
         String s2 = (s.length == 1) ? s[0] : s[1];
         if (systreeRec.getStr(eSystree.pref).contains(s2) == false) {

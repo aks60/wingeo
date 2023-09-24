@@ -33,7 +33,7 @@ public class Par5s {
 
         for (Record paramRec : paramList) {
             if (paramRec.getInt(GRUP) < 0) {
-                Record syspar1Rec = winc.mapPardef().get(paramRec.getInt(GRUP));
+                Record syspar1Rec = winc.mapPardef.get(paramRec.getInt(GRUP));
                 if (syspar1Rec == null) {
                     return false; //если группы нет
                 }

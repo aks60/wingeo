@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import builder.Wincalc;
+import builder.model.ElemGlass;
 import builder.param.ElementDet;
 import builder.param.FillingDet;
 import builder.param.FillingVar;
@@ -55,7 +56,7 @@ public class Filling extends Cal5e {
         super.calc();
         try {
             Double depth = elemGlass.artiklRec.getDbl(eArtikl.depth); //толщина стекда           
-            List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(rootArea().frames().values());  //список рам конструкции
+            List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(rootArea().frames.values());  //список рам конструкции
             
             //Цикл по сторонам стеклопакета
             double sideHoriz[] = {0, 90, 180, 270};
@@ -76,8 +77,8 @@ public class Filling extends Cal5e {
                                     //ФИЛЬТР вариантов, параметры накапливаются в спецификации элемента
                                     if (fillingVar.filter(elemGlass, glasgrpRec) == true) {
                                         
-                                        elemGlass.gzazo = glasgrpRec.getDbl(eGlasgrp.gap); //зазор между фальцем и стеклопакетом
-                                        elemGlass.gsize[side] = glasprofRec.getDbl(eGlasprof.gsize); //размер от оси до стеклопакета
+                                        ((ElemGlass) elemGlass).gzazo = glasgrpRec.getDbl(eGlasgrp.gap); //зазор между фальцем и стеклопакетом
+                                        ((ElemGlass) elemGlass).gsize[side] = glasprofRec.getDbl(eGlasprof.gsize); //размер от оси до стеклопакета
 
                                         if (shortPass == false) {
                                             List<Record> glasdetList = eGlasdet.find(glasgrpRec.getInt(eGlasgrp.id), elemGlass.artiklRec.getDbl(eArtikl.depth));

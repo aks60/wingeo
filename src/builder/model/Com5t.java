@@ -1,11 +1,12 @@
 package builder.model;
 
 import builder.Wincalc;
-import builder.script.GeoElem;
+import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import common.listener.ListenerMouse;
 import dataset.Record;
 import domain.eArtikl;
+import enums.Layout;
 import enums.Type;
 import java.awt.Point;
 import java.awt.geom.Area;
@@ -18,12 +19,13 @@ public abstract class Com5t {
 
     public int SIZE = 24;
     public double id;
-    public Wincalc wing = null;
+    public Wincalc winc = null;
     public Com5t owner = null; //владелец
     public AreaSimple root = null; //главный класс конструкции
     public Com5t enext = null; //сдедующий элемент
-    public GeoElem gson = null; //gson object конструкции
+    public GsonElem gson = null; //gson object конструкции    
     public Type type = Type.NONE; //тип элемента или окна
+    public Layout layout = Layout.FULL; //направление(AREA) сторона(ELEM) - расположения компонентов ...
     public Area area = null;
     public Polygon AREA = null;
     private boolean ev[] = {false, false};
@@ -34,9 +36,13 @@ public abstract class Com5t {
     public Record artiklRec = null;  //мат. средства
     public Record artiklRecAn = null;  //аналог мат. средства     
 
-    public Com5t(Wincalc wing, GeoElem gson, Com5t owner) {
+        public Com5t(Type type) {
+        this.type = type;
+    }
+        
+    public Com5t(Wincalc wing, GsonElem gson, Com5t owner) {
         this.id = gson.id;
-        this.wing = wing;
+        this.winc = wing;
         this.owner = owner;
         this.gson = gson;
         this.type = gson.type;
@@ -55,9 +61,9 @@ public abstract class Com5t {
     public void mouseEvent() {
         ListenerMouse mousePressed = (event) -> {
             pointPress = event.getPoint();
-            if (this.area.contains(event.getX() / wing.scale, event.getY() / wing.scale)) {
-                double d1 = Point2D.distance(x1(), y1(), event.getX() / wing.scale, event.getY() / wing.scale);
-                double d2 = Point2D.distance(x2(), y2(), event.getX() / wing.scale, event.getY() / wing.scale);
+            if (this.area.contains(event.getX() / winc.scale, event.getY() / winc.scale)) {
+                double d1 = Point2D.distance(x1(), y1(), event.getX() / winc.scale, event.getY() / winc.scale);
+                double d2 = Point2D.distance(x2(), y2(), event.getX() / winc.scale, event.getY() / winc.scale);
                 double d3 = (d1 + d2) / 3;
 
                 if (d1 < d3) {
@@ -72,26 +78,26 @@ public abstract class Com5t {
             ev[1] = false;
         };
         ListenerMouse mouseDragge = (event) -> {
-            int mx = wing.canvas.getWidth() - event.getX();
-            int my = wing.canvas.getHeight() - event.getY();
+            int mx = winc.canvas.getWidth() - event.getX();
+            int my = winc.canvas.getHeight() - event.getY();
             double dx = event.getX() - pointPress.getX();
             double dy = event.getY() - pointPress.getY();
             if (ev[0] == true) {
                 if (event.getX() > margin && mx > margin && event.getY() > margin && my > margin) { //контроль выхода за канву
-                    x1(dx / wing.scale + x1());
-                    y1(dy / wing.scale + y1());
+                    x1(dx / winc.scale + x1());
+                    y1(dy / winc.scale + y1());
                 }
             } else if (ev[1] == true) {
                 if (event.getX() > margin && mx > margin && event.getY() > margin && my > margin) { //контроль выхода за канву
-                    x2(dx / wing.scale + x2());
-                    y2(dy / wing.scale + y2());
+                    x2(dx / winc.scale + x2());
+                    y2(dy / winc.scale + y2());
                 }
             }
             pointPress = event.getPoint();
         };
-        this.wing.mousePressed.add(mousePressed);
-        this.wing.mouseReleased.add(mouseReleased);
-        this.wing.mouseDragged.add(mouseDragge);
+        this.winc.mousePressed.add(mousePressed);
+        this.winc.mouseReleased.add(mouseReleased);
+        this.winc.mouseDragged.add(mouseDragge);
     }
 
     public boolean isJson(JsonObject jso, String key) {
@@ -177,6 +183,38 @@ public abstract class Com5t {
         gson.y2 = v;
     }
 
+    public Double width() {
+        return (x2() > x1()) ? x2() - x1() : x1() - x2();
+    }
+
+    public Double height() {
+        return (y2() > y1()) ? y2() - y1() : y1() - y2();
+    }
+    
+    public boolean inside(double x, double y) {
+        int X = (int) x, Y = (int) y;
+        int X1 = (int) x1(), Y1 = (int) y1(), X2 = (int) x2(), Y2 = (int) y2();
+
+        if ((X2 | Y2) < 0) {
+            return false;
+        }
+
+        if (x1() > x2()) {
+            X1 = (int) x2();
+            X2 = (int) x1();
+        }
+
+        if (y1() > y2()) {
+            Y1 = (int) y2();
+            Y2 = (int) y1();
+        }
+
+        if (X < X1 || Y < Y1) {
+            return false;
+        }
+        return ((X2 >= X) && (Y2 >= Y));
+    }
+    
     @Override
     public String toString() {
         String art = (artiklRecAn == null) ? "null" : artiklRecAn.getStr(eArtikl.code);

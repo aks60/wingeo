@@ -737,7 +737,7 @@ public class PSConvert {
                     record2.setNo(eSysprod.npp, ++index);
                     record2.setNo(eSysprod.name, name2);
                     record2.setNo(eSysprod.script, script2);
-                    record2.setNo(eSysprod.systree_id, gson2.nuni());
+                    record2.setNo(eSysprod.systree_id, gson2.nuni);
                     q2.insert(record2);
                 }
             }

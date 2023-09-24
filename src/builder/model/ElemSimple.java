@@ -2,7 +2,7 @@ package builder.model;
 
 import builder.Wincalc;
 import builder.making.Specific;
-import builder.script.GeoElem;
+import builder.script.GsonElem;
 import domain.eArtikl;
 import java.awt.Color;
 import java.awt.geom.Area;
@@ -23,7 +23,7 @@ public class ElemSimple extends Com5t {
     public Specific spcRec = null; //спецификация элемента
     public Color borderColor = Color.BLACK;
 
-    public ElemSimple(Wincalc wing, GeoElem gson, Com5t owner) {
+    public ElemSimple(Wincalc wing, GsonElem gson, Com5t owner) {
         super(wing, gson, owner);
         //spcRec = new Specific(id, this);
     }

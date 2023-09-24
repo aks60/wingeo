@@ -1,7 +1,7 @@
 package builder.model;
 
 import builder.Wincalc;
-import builder.script.GeoElem;
+import builder.script.GsonElem;
 import java.awt.Shape;
 import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
@@ -12,7 +12,7 @@ import org.locationtech.jts.geom.Coordinate;
 
 public class AreaPolygon extends AreaSimple {
 
-    public AreaPolygon(Wincalc wing, GeoElem gson) {
+    public AreaPolygon(Wincalc wing, GsonElem gson) {
         super(wing, gson, null);
     }
 
@@ -20,11 +20,11 @@ public class AreaPolygon extends AreaSimple {
         try {
             GeneralPath p = new GeneralPath();
             p.reset();
-            p.moveTo((float) wing.listFrame.get(0).x1(), (float) wing.listFrame.get(0).y1());
-            wing.listFrame.get(0).enext = wing.listFrame.get(1);
-            for (int i = 1; i < wing.listFrame.size(); ++i) {
-                p.lineTo((float) wing.listFrame.get(i).x1(), (float) wing.listFrame.get(i).y1());
-                wing.listFrame.get(i).enext = (i + 1 == wing.listFrame.size()) ? wing.listFrame.get(0) : wing.listFrame.get(i + 1);
+            p.moveTo((float) winc.listFrame.get(0).x1(), (float) winc.listFrame.get(0).y1());
+            winc.listFrame.get(0).enext = winc.listFrame.get(1);
+            for (int i = 1; i < winc.listFrame.size(); ++i) {
+                p.lineTo((float) winc.listFrame.get(i).x1(), (float) winc.listFrame.get(i).y1());
+                winc.listFrame.get(i).enext = (i + 1 == winc.listFrame.size()) ? winc.listFrame.get(0) : winc.listFrame.get(i + 1);
             }
             p.closePath();
             area = new Area(p);
@@ -37,14 +37,14 @@ public class AreaPolygon extends AreaSimple {
     public void setLocation2() {
 
         List<Coordinate> listCoord = new ArrayList();
-        for (ElemFrame frame : wing.listFrame) {
+        for (ElemFrame frame : winc.listFrame) {
             listCoord.add(new Coordinate(frame.x1(), frame.y1()));
         }
-        listCoord.add(new Coordinate(wing.listFrame.get(0).x1(), wing.listFrame.get(0).y1()));
+        listCoord.add(new Coordinate(winc.listFrame.get(0).x1(), winc.listFrame.get(0).y1()));
         
         Coordinate[] coordinates = new Coordinate[listCoord.size()];
         listCoord.toArray(coordinates);
-        AREA = wing.geomFact.createPolygon(coordinates);
+        AREA = winc.geomFact.createPolygon(coordinates);
         ShapeWriter sw = new ShapeWriter();
         Shape polyShape = sw.toShape(AREA);
         area = new Area(polyShape);

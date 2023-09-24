@@ -1,6 +1,6 @@
 package common;
 
-import builder.model1.ElemJoining;
+import builder.model.ElemJoining;
 import builder.model.ElemSimple;
 import enums.LayoutJoin;
 import enums.Type;
@@ -26,21 +26,21 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
         try {
             for (ElemJoining join : this) {
                 if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(el.type)) {
-                    if (side == 0 && join.elem1.id() == el.id() && (join.layout == LayoutJoin.TEE || join.layout == LayoutJoin.TEE)) {
+                    if (side == 0 && join.elem1.id == el.id && (join.layout == LayoutJoin.TEE || join.layout == LayoutJoin.TEE)) {
                         return join;
-                    } else if (side == 1 && join.elem1.id() == el.id() && (join.layout == LayoutJoin.TEE || join.layout == LayoutJoin.TEE)) {
+                    } else if (side == 1 && join.elem1.id == el.id && (join.layout == LayoutJoin.TEE || join.layout == LayoutJoin.TEE)) {
                         return join;
                     }
                 } else {
-                    if (side == 0 && join.elem2.id() == el.id() && join.type != TypeJoin.VAR10) {  //Угловое левое
+                    if (side == 0 && join.elem2.id == el.id && join.type != TypeJoin.VAR10) {  //Угловое левое
                         if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(join.elem1.type) == false) {
                             return join;
                         }
-                    } else if (side == 1 && join.elem1.id() == el.id() && join.type != TypeJoin.VAR10) { //Угловое правое
+                    } else if (side == 1 && join.elem1.id == el.id && join.type != TypeJoin.VAR10) { //Угловое правое
                         if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(join.elem2.type) == false) {
                             return join;
                         }
-                    } else if (side == 2 && join.elem1.id() == el.id() && join.type == TypeJoin.VAR10) { //Прилегающее
+                    } else if (side == 2 && join.elem1.id == el.id && join.type == TypeJoin.VAR10) { //Прилегающее
                         //if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(join.elem1.type) == false) {
                             return join;
                         //}

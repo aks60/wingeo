@@ -764,10 +764,10 @@ public class UGeo {
     public static double[] diff(Area shape, ElemSimple e, double dh) {
         boolean imp = false;
         if (e.type == Type.IMPOST || e.type == Type.STOIKA || e.type == Type.RIGEL_IMP) {
-            if (e.layout() == Layout.VERT && (shape.getBounds2D().getX() == e.x1() || shape.getBounds2D().getX() == e.x2())) {
+            if (e.layout == Layout.VERT && (shape.getBounds2D().getX() == e.x1() || shape.getBounds2D().getX() == e.x2())) {
                 imp = true;
             }
-            if (e.layout() == Layout.HORIZ && (shape.getBounds2D().getY() == e.y1() || shape.getBounds2D().getY() == e.y2())) {
+            if (e.layout == Layout.HORIZ && (shape.getBounds2D().getY() == e.y1() || shape.getBounds2D().getY() == e.y2())) {
                 imp = true;
             }
         }
