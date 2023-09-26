@@ -65,6 +65,7 @@ public class Wincalc {
     public LinkedCom<ElemSimple> listElem = new LinkedCom(); //список элем.
     public LinkedCom<ElemFrame> listFrame = new LinkedCom(); //список рам
     public List<ElemCross> listCross = new ArrayList(); //список имп.
+    public LinkedCom<Com5t> listAll = new LinkedCom(); //список всех компонентов (area + elem)
     public ArraySpc<Specific> listSpec = new ArraySpc(); //спецификация
     public ArrayJoin listJoin = new ArrayJoin(); //список соединений рам и створок 
 

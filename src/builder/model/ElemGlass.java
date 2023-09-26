@@ -16,9 +16,9 @@ public class ElemGlass extends ElemSimple {
     public double gzazo = 0; //зазор между фальцем и стеклопакетом 
     public double gsize[] = {0, 0, 0, 0}; //размер от оси до стеклопакета
     
-    private Record rasclRec = eArtikl.virtualRec(); //раскладка
-    private int rasclColor = -3; //цвет раскладки
-    private int rasclNumber[] = {2, 2}; //количество проёмов раскладки     
+    public Record rasclRec = eArtikl.virtualRec(); //раскладка
+    public int rasclColor = -3; //цвет раскладки
+    public int rasclNumber[] = {2, 2}; //количество проёмов раскладки     
     
     public ElemGlass(Wincalc wing, GsonElem gson, AreaSimple owner) {
         super(wing, gson, owner);

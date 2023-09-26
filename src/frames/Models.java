@@ -1,6 +1,5 @@
 package frames;
 
-import builder.Wincalc;
 import frames.swing.FrameToFile;
 import dataset.Query;
 import dataset.Record;
@@ -18,7 +17,6 @@ import builder.making.Joining;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import common.eProp;
 import frames.swing.draw.Canvas;
@@ -29,7 +27,6 @@ import common.listener.ListenerReload;
 import dataset.Conn;
 import frames.swing.DefTableModel;
 import builder.model.Canvas2D;
-import builder.model.UGeo;
 import builder.script.test.Bimax2;
 import frames.swing.draw.Scene;
 import java.awt.BorderLayout;
@@ -142,7 +139,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             int index = UGui.getIndexRec(tab1);
             if (index != -1) {
                 Wincalc win = winc();
-                String script = win.rootGson.toJson();
+                String script = win.gson.toJson();
                 win.build(script);
                 win.imageIcon = Canvas.createIcon(win, 68);
                 Record sysmodelRec = qSysmodel.get(index);
@@ -741,7 +738,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 if (prj != null) {
                     json = GsonScript.modelJson(Integer.valueOf(prj.toString()));
                     GsonRoot gsonRoot = new Gson().fromJson(json, GsonRoot.class);
-                    record.set(eSysmodel.name, "<html> Kod:" + prj + "* " + gsonRoot.name());
+                    record.set(eSysmodel.name, "<html> Kod:" + prj + "* " + gsonRoot.name);
                     record.set(eSysmodel.script, json);
                 }
             } else {
@@ -758,7 +755,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                     GsonRoot gsonRoot = new Gson().fromJson(reader, GsonRoot.class);
                     json = gsonRoot.toJson();
                     reader.close();
-                    record.set(eSysmodel.name, "<html>" + gsonRoot.name());
+                    record.set(eSysmodel.name, "<html>" + gsonRoot.name);
                     record.set(eSysmodel.script, json);
                 }
             }

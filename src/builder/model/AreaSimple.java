@@ -2,6 +2,7 @@ package builder.model;
 
 import builder.Wincalc;
 import builder.script.GsonElem;
+import common.LinkedCom;
 import enums.Form;
 import enums.Layout;
 import java.awt.geom.Area;
@@ -16,7 +17,7 @@ public class AreaSimple extends Com5t {
     public EnumMap<Layout, ElemSimple> frames = new EnumMap<>(Layout.class); //список рам в окне 
     public Area area2 = null;
     public LinkedList<Point2D> listSkin = new LinkedList();
-    public List<Com5t> childs = new ArrayList(); //дети
+    public LinkedCom<Com5t> childs = new LinkedCom(); //дети
 
     public AreaSimple(Wincalc winc) {
         super(winc, winc.gson, null);
