@@ -173,7 +173,7 @@ class UPar {
     static boolean is_31037_38037_39037_40037(ElemSimple elem5e, String txt) {
         if (Type.STVORKA == elem5e.owner.type) {
             AreaStvorka stv = (AreaStvorka) elem5e.owner;
-            String name = eFurniture.find(stv.sysfurnRec().getInt(eSysfurn.furniture_id)).getStr(eFurniture.name);
+            String name = eFurniture.find(stv.sysfurnRec.getInt(eSysfurn.furniture_id)).getStr(eFurniture.name);
             if ((name.equals(txt)) == false) {
                 return false;
             }
@@ -187,13 +187,13 @@ class UPar {
     static boolean is_1039_38039_39039(ElemSimple elem5e, String txt) {
         if (elem5e.owner.type == Type.STVORKA) {
             AreaStvorka stv = (AreaStvorka) elem5e.owner;
-            if (!"фрамуга".equals(txt) && stv.typeOpen() == TypeOpen1.UPPER) { //фрамуга
+            if (!"фрамуга".equals(txt) && stv.typeOpen == TypeOpen1.UPPER) { //фрамуга
                 return false;
-            } else if (!"поворотное".equals(txt) && (stv.typeOpen() == TypeOpen1.LEFT || stv.typeOpen() == TypeOpen1.RIGHT)) { //поворотное
+            } else if (!"поворотное".equals(txt) && (stv.typeOpen == TypeOpen1.LEFT || stv.typeOpen == TypeOpen1.RIGHT)) { //поворотное
                 return false;
-            } else if (!"поворотно-откидное".equals(txt) && (stv.typeOpen() == TypeOpen1.LEFTUP || stv.typeOpen() == TypeOpen1.RIGHTUP)) { //поворотно-откидное
+            } else if (!"поворотно-откидное".equals(txt) && (stv.typeOpen == TypeOpen1.LEFTUP || stv.typeOpen == TypeOpen1.RIGHTUP)) { //поворотно-откидное
                 return false;
-            } else if (!"раздвижное".equals(txt) && (stv.typeOpen() == TypeOpen1.LEFTMOV || stv.typeOpen() == TypeOpen1.RIGHTMOV)) { //раздвижное
+            } else if (!"раздвижное".equals(txt) && (stv.typeOpen == TypeOpen1.LEFTMOV || stv.typeOpen == TypeOpen1.RIGHTMOV)) { //раздвижное
                 return false;
             }
         }

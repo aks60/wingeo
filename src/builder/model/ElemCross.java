@@ -89,8 +89,8 @@ public class ElemCross extends ElemSimple {
 
     public void paint() {
         try {
-            winc.gc2D.draw(this.area);
-            winc.gc2D.draw(new Line2D.Double(this.x1(), this.y1(), this.x2(), this.y2()));
+            winc.gc2d.draw(this.area);
+            winc.gc2d.draw(new Line2D.Double(this.x1(), this.y1(), this.x2(), this.y2()));
 
         } catch (Exception e) {
             System.err.println("Ошибка:Elem2Cross.paint() " + e);

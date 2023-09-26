@@ -435,9 +435,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     setText(txt9, eColor.find(winc.colorID1).getStr(eColor.name));
                     setText(txt13, eColor.find(winc.colorID2).getStr(eColor.name));
                     setText(txt14, eColor.find(winc.colorID3).getStr(eColor.name));
-                    setText(txt17, UCom.format(winc.rootGson.width(), 1));
-                    setText(txt22, UCom.format(winc.rootGson.height1(), 1));
-                    setText(txt23, UCom.format(winc.rootGson.height2(), 1));
+                    setText(txt17, UCom.format(winc.gson.width(), 1));
+                    setText(txt22, UCom.format(winc.gson.height1, 1));
+                    setText(txt23, UCom.format(winc.gson.height2, 1));
                     txt23.setEditable(List.of(enums.Type.ARCH, enums.Type.TRIANGL, enums.Type.TRAPEZE).contains(winNode.com5t().type);
 
                     //Параметры
@@ -459,9 +459,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     ((TitledBorder) pan13.getBorder()).setTitle(winNode.toString());
                     setText(txt32, winNode.com5t().artiklRec.getStr(eArtikl.code));
                     setText(txt33, winNode.com5t().artiklRec.getStr(eArtikl.name));
-                    setText(txt27, eColor.find(winNode.com5t().colorID1()).getStr(eColor.name));
-                    setText(txt28, eColor.find(winNode.com5t().colorID2()).getStr(eColor.name));
-                    setText(txt29, eColor.find(winNode.com5t().colorID3()).getStr(eColor.name));
+                    setText(txt27, eColor.find(winNode.com5t().colorID1).getStr(eColor.name));
+                    setText(txt28, eColor.find(winNode.com5t().colorID2).getStr(eColor.name));
+                    setText(txt29, eColor.find(winNode.com5t().colorID3).getStr(eColor.name));
 
                     //Стеклопакет
                 } else if (winNode.com5t().type == enums.Type.GLASS) {
@@ -469,12 +469,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     Record artiklRec = winNode.com5t().artiklRec;
                     setText(txt19, artiklRec.getStr(eArtikl.code));
                     setText(txt18, artiklRec.getStr(eArtikl.name));
-                    Record colorRec = eColor.find(winNode.com5t().colorID1());
+                    Record colorRec = eColor.find(winNode.com5t().colorID1);
                     setText(txt34, colorRec.getStr(eColor.name));
                     Record rasclRec = ((ElemSimple) winNode.com5t()).rasclRec();
                     setText(txt49, rasclRec.getStr(eArtikl.code));
                     setText(txt50, rasclRec.getStr(eArtikl.name));
-                    Record colorRascl = eColor.find(((ElemSimple) winNode.com5t()).rasclColor());
+                    Record colorRascl = eColor.find(((ElemSimple) winNode.com5t()).rasclColor);
                     setText(txt51, colorRascl.getStr(eColor.name));
                     spinHor.setValue(((ElemSimple) winNode.com5t()).rasclNumber(0));
                     spinVert.setValue(((ElemSimple) winNode.com5t()).rasclNumber(1));
@@ -485,7 +485,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card16");
                     AreaStvorka stv = (AreaStvorka) winNode.com5t();
                     AreaSimple sta = (AreaSimple) winNode.com5t();
-                    int id = stv.sysfurnRec().getInt(eSysfurn.furniture_id);
+                    int id = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
                     AreaSimple own = winNode.com5t().owner;
                     setText(txt24, own.width());
                     setText(txt26, own.height());

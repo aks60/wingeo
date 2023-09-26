@@ -242,15 +242,15 @@ public class Scene extends javax.swing.JPanel {
                 Scale sc2 = lineHoriz.get(1);
                 if (sc1.area().type == Type.ARCH && sc2.area().type == Type.AREA) {
                     sc1.X1 = 0;
-                    sc1.X2 = sc1.gson().length();
-                    sc2.X1 = sc1.gson().length();
-                    sc2.X2 = sc1.gson().length() + sc2.gson().length();
+                    sc1.X2 = sc1.gson().length;
+                    sc2.X1 = sc1.gson().length;
+                    sc2.X2 = sc1.gson().length + sc2.gson().length;
 
                 } else if (sc1.area().type == Type.TRAPEZE && sc2.area().type == Type.AREA) {
                     sc1.X1 = 0;
-                    sc1.X2 = sc1.gson().length();
-                    sc2.X1 = sc1.gson().length();
-                    sc2.X2 = sc1.gson().length() + sc2.gson().length();
+                    sc1.X2 = sc1.gson().length;
+                    sc2.X1 = sc1.gson().length;
+                    sc2.X2 = sc1.gson().length + sc2.gson().length;
 
                 } else if (sc1.area().root.type == Type.DOOR) {
                     sc1.X1 = 0;
@@ -280,15 +280,15 @@ public class Scene extends javax.swing.JPanel {
                 Scale sc2 = lineVert.get(1);
                 if (sc1.area().type == Type.ARCH && sc2.area().type == Type.AREA) {
                     sc1.Y1 = 0;
-                    sc1.Y2 = sc1.gson().length();
-                    sc2.Y1 = sc1.gson().length();
-                    sc2.Y2 = sc1.gson().length() + sc2.gson().length();
+                    sc1.Y2 = sc1.gson().length;
+                    sc2.Y1 = sc1.gson().length;
+                    sc2.Y2 = sc1.gson().length + sc2.gson().length;
 
                 } else if (sc1.area().type == Type.TRAPEZE && sc2.area().type == Type.AREA) {
                     sc1.Y1 = 0;
-                    sc1.Y2 = sc1.gson().length();
-                    sc2.Y1 = sc1.gson().length();
-                    sc2.Y2 = sc1.gson().length() + sc2.gson().length();
+                    sc1.Y2 = sc1.gson().length;
+                    sc2.Y1 = sc1.gson().length;
+                    sc2.Y2 = sc1.gson().length + sc2.gson().length;
 
                 } else if (sc1.area().root.type == Type.DOOR) {
                     sc1.Y1 = 0;

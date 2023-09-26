@@ -1,7 +1,7 @@
 package startup;
 
 import builder.Wincalc;
-import builder.model1.ElemJoining;
+import builder.model.ElemJoining;
 import frames.swing.FrameToFile;
 import common.eProfile;
 import common.listener.ListenerRecord;
@@ -43,7 +43,6 @@ import domain.ePrjprod;
 import domain.eProject;
 import domain.ePrjkit;
 import domain.eRulecalc;
-import domain.eSetting;
 import domain.eSysfurn;
 import domain.eSysmodel;
 import domain.eSyspar1;
@@ -55,7 +54,6 @@ import domain.eSysuser;
 import frames.AboutBox;
 import frames.Artikles;
 import frames.Colors;
-import frames.dialog.DicCurrenc;
 import frames.PSCompare;
 import frames.Elements;
 import frames.Fillings;
@@ -76,7 +74,6 @@ import frames.PSFrame;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.ResultSet;
-import java.util.Set;
 import javax.swing.JFrame;
 
 public enum App {

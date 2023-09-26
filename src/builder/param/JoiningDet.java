@@ -7,7 +7,7 @@ import domain.eJoinpar2;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
-import builder.model1.ElemJoining;
+import builder.model.ElemJoining;
 import builder.model.ElemSimple;
 import common.UCom;
 import enums.Type;
@@ -124,7 +124,7 @@ public class JoiningDet extends Par5s {
                     mapParam.put(rec.getInt(GRUP), rec.getStr(TEXT));
                     break;
                 case 11066:  //Если текстура профиля Арт.1 
-                    if (UCom.containsColor(rec.getStr(TEXT), elemJoin.elem1.colorID1()) == false) {
+                    if (UCom.containsColor(rec.getStr(TEXT), elemJoin.elem1.colorID1) == false) {
                         return false;
                     }
                     break;

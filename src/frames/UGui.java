@@ -1,8 +1,8 @@
 package frames;
 
 import builder.Wincalc;
-import builder.model.Com5t;
 import builder.model.AreaSimple;
+import builder.model.Com5t;
 import builder.model.ElemSimple;
 import builder.script.GsonRoot;
 import com.google.gson.Gson;
@@ -208,7 +208,7 @@ public class UGui {
                                                 }));
                                             }
                                         } else {
-                                            for (ICom5t com4 : ((AreaSimple) com3).childs()) {
+                                            for (Com5t com4 : ((AreaSimple) com3).childs()) {
                                                 if (com4.type != Type.STVORKA) {
                                                     if (com4 instanceof ElemSimple) {
                                                         frm.add(new DefMutableTreeNode(com4));
@@ -335,7 +335,7 @@ public class UGui {
     public static String ioknaParamUpdate(String script, int ioknaID) {
         Gson gson = new GsonBuilder().create();
         GsonRoot gsonRoot = gson.fromJson(script, GsonRoot.class);
-        JsonObject jsonObj = gson.fromJson(gsonRoot.param(), JsonObject.class);
+        JsonObject jsonObj = gson.fromJson(gsonRoot.param, JsonObject.class);
         JsonArray jsonArr = jsonObj.getAsJsonArray(PKjson.ioknaParam);
         jsonArr = (jsonArr == null) ? new JsonArray() : jsonArr;
 
@@ -358,7 +358,7 @@ public class UGui {
         }
         jsonArr.add(ioknaID);
         jsonObj.add(PKjson.ioknaParam, jsonArr);
-        gsonRoot.param(jsonObj);
+        gsonRoot.param = jsonObj;
         return gsonRoot.toJson();
     }
 

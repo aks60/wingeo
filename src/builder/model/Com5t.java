@@ -15,8 +15,9 @@ import java.awt.geom.Point2D;
 import java.util.List;
 import org.locationtech.jts.geom.Polygon;
 
-public abstract class Com5t {
+public class Com5t {
 
+    public static int TRANSLATE_XY = 2; //сдвиг графика
     public int SIZE = 24;
     public double id;
     public Wincalc winc = null;
@@ -36,10 +37,10 @@ public abstract class Com5t {
     public Record artiklRec = null;  //мат. средства
     public Record artiklRecAn = null;  //аналог мат. средства     
 
-        public Com5t(Type type) {
+    public Com5t(Type type) {
         this.type = type;
     }
-        
+
     public Com5t(Wincalc wing, GsonElem gson, AreaSimple owner) {
         this.id = gson.id;
         this.winc = wing;
@@ -99,7 +100,9 @@ public abstract class Com5t {
         this.winc.mouseReleased.add(mouseReleased);
         this.winc.mouseDragged.add(mouseDragge);
     }
-
+    /**
+     * Длина компонента
+     */
     public double length() {
         ElemSimple elem5e = (ElemSimple) this;
         if (elem5e.anglHoriz == 0 || elem5e.anglHoriz == 180) {
@@ -110,7 +113,19 @@ public abstract class Com5t {
             return Math.sqrt((x2() - x1()) * (x2() - x1()) + (y2() - y1()) * (y2() - y1()));
         }
     }
-    
+
+    /**
+     * Ширина в gson
+     */
+    public double lengthX() {
+        return (this == winc.rootArea) ? this.gson.width() : this.gson.length;
+    }
+
+    //Высота в gson
+    public double lengthY() {
+        return (this == winc.rootArea) ? this.gson.height() : this.gson.length;
+    }
+
     public boolean isJson(JsonObject jso, String key) {
         if (jso == null) {
             return false;
@@ -201,7 +216,7 @@ public abstract class Com5t {
     public Double height() {
         return (y2() > y1()) ? y2() - y1() : y1() - y2();
     }
-    
+
     public boolean inside(double x, double y) {
         int X = (int) x, Y = (int) y;
         int X1 = (int) x1(), Y1 = (int) y1(), X2 = (int) x2(), Y2 = (int) y2();
@@ -225,7 +240,7 @@ public abstract class Com5t {
         }
         return ((X2 >= X) && (Y2 >= Y));
     }
-    
+
     @Override
     public String toString() {
         String art = (artiklRecAn == null) ? "null" : artiklRecAn.getStr(eArtikl.code);

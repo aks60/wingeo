@@ -257,11 +257,11 @@ public class PSCompare extends javax.swing.JFrame {
             Set<String> setSpcSa = new HashSet();
             Set<String> setSpcPs = new HashSet();
             winc.listSpec.forEach(specRec -> setSpcSa.add(specRec.artikl));
-            if (winc.rootGson.project() != null) {
-                txt21.setText(String.valueOf(winc.rootGson.project()));
+            if (winc.gson.prj != null) {
+                txt21.setText(String.valueOf(winc.gson.prj));
             }
-            if (winc.rootGson.order() != null) {
-                txt20.setText(String.valueOf(winc.rootGson.order()));
+            if (winc.gson.ord != null) {
+                txt20.setText(String.valueOf(winc.gson.ord));
             }
             //Заполним на будушее hmSpc из SA
             for (String art_code : setSpcSa) {
@@ -320,8 +320,8 @@ public class PSCompare extends javax.swing.JFrame {
                 }
             }
             rs.close();
-            lab1.setText("Изд: punic=" + punic + "    Проект: pnumb=" + winc.rootGson.project() + "  Заказ: onumb="
-                    + winc.rootGson.order() + "   Стоим.без.ск = " + df2.format(sum1) + "   Стоим.со.ск = " + df2.format(sum2));
+            lab1.setText("Изд: punic=" + punic + "    Проект: pnumb=" + winc.gson.prj + "  Заказ: onumb="
+                    + winc.gson.ord + "   Стоим.без.ск = " + df2.format(sum1) + "   Стоим.со.ск = " + df2.format(sum2));
 
             //=== Таблица 2 ===
             ((DefaultTableModel) tab2.getModel()).getDataVector().clear();
@@ -479,17 +479,17 @@ public class PSCompare extends javax.swing.JFrame {
     //Сравнение спецификации с профстроем
     public static void iwinPs4(Wincalc winc, boolean detail) {
         System.out.println();
-        System.out.println("Prj=" + winc.rootGson.project() + " Ord=" + winc.rootGson.order());
+        System.out.println("Prj=" + winc.gson.prj + " Ord=" + winc.gson.ord);
         Double iwinTotal = 0.0, jarTotal = 0.0;
         Map<String, Double> hmDbPs = new LinkedHashMap();
         Map<String, Double> hmDbSa = new LinkedHashMap();
         try {
             Connection conn = Test.connect1();
             Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet rs = st.executeQuery("select PUNIC from LISTPRJ where PNUMB = " + winc.rootGson.project());
+            ResultSet rs = st.executeQuery("select PUNIC from LISTPRJ where PNUMB = " + winc.gson.prj);
             rs.next();
             int punic = rs.getInt("PUNIC");
-            rs = st.executeQuery("select a.* from SPECPAU a where a.PUNIC = " + punic + " and a.ONUMB = " + winc.rootGson.order() + "  and clke != -1 order by a.anumb");
+            rs = st.executeQuery("select a.* from SPECPAU a where a.PUNIC = " + punic + " and a.ONUMB = " + winc.gson.ord + "  and clke != -1 order by a.anumb");
             while (rs.next()) {
                 //double leng = rs.getDbl("ALENG"); //длина
                 //double count = rs.getDbl("AQTYP"); //колич
@@ -549,7 +549,7 @@ public class PSCompare extends javax.swing.JFrame {
                     jarTotal = jarTotal + value3;
                 }
             }
-            System.out.printf("%-18s%-18s%-18s%-12s", "Prj=" + winc.rootGson.project(), "PS=" + String.format("%.2f", iwinTotal), "SA="
+            System.out.printf("%-18s%-18s%-18s%-12s", "Prj=" + winc.gson.prj, "PS=" + String.format("%.2f", iwinTotal), "SA="
                     + String.format("%.2f", jarTotal), "dx=" + String.format("%.2f", Math.abs(iwinTotal - jarTotal)));
             System.out.println();
 

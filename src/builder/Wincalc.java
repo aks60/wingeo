@@ -24,11 +24,13 @@ import enums.Form;
 import enums.Type;
 import enums.UseArtiklTo;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.ImageIcon;
 import org.locationtech.jts.geom.GeometryFactory;
 
 public class Wincalc {
@@ -36,12 +38,23 @@ public class Wincalc {
     public Integer nuni = 0; //код системы
     public Record syssizeRec = null; //системные константы     
     public double genId = 0; //для генерации ключа в спецификации
+    public String script = null;
+    public double width1 = 0; //ширина окна нижняя
+    public double width2 = 0; //ширина окна верхняя    
+    public double height1 = 0; //высота окна левая
+    public double height2 = 0; //высота окна правая    
     public int colorID1 = -1, colorID2 = 1, colorID3 = -1; //базовый,внутр,внещний 
+    public double costpric1 = 0; //себест. за ед. без отхода     
+    public double costpric2 = 0; //себест. за ед. с отходом
+    public double price = 0; //стоимость без скидки
+    public double cost2 = 0; //стоимость с технологической скидкой
+    public double weight = 0; //масса конструкции  
     public Form form = null; //форма контура (параметр в развитии)
-
-    public Graphics2D gc2D = null; //графический котекст рисунка 
+    public BufferedImage bufferImg = null;  //образ рисунка
+    public ImageIcon imageIcon = null; //рисунок конструкции
+    public Graphics2D gc2d = null; //графический котекст рисунка  
+    public double scale = 1; //коэффициент сжатия
     public Canvas2D canvas = null;
-    public double scale = 1;
     public ArrayList<ListenerMouse> mousePressed = new ArrayList();
     public ArrayList<ListenerMouse> mouseReleased = new ArrayList();
     public ArrayList<ListenerMouse> mouseDragged = new ArrayList();
@@ -212,7 +225,7 @@ public class Wincalc {
 //            System.err.println("Ошибка:Wincalc.constructiv() " + e);
 //        }
     }
-    
+
     public void draw() {
         try {
             rootArea.setLocation();
@@ -241,6 +254,10 @@ public class Wincalc {
 
     public double height() {
         return rootArea.area.getBounds2D().getHeight();
+    }
+
+    public double square() {
+        return width() * height() / 1000000;
     }
     // </editor-fold>  
 }

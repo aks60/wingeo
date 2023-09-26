@@ -1,9 +1,8 @@
 package report;
 
-import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
 import builder.Wincalc;
-import common.eProp;
+import builder.model.ElemSimple;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eColor;
@@ -16,7 +15,6 @@ import domain.eSystree;
 import domain.eSysuser;
 import enums.Type;
 import frames.UGui;
-import frames.swing.draw.Canvas;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -92,7 +90,7 @@ public class HtmlOfOffer {
                 tdList.get(3).text(eSystree.systemProfile(6));
                 AreaStvorka area5e = (AreaStvorka) winc.listArea.find(Type.STVORKA);
                 AreaStvorka stv = (area5e != null) ? ((AreaStvorka) area5e) : null;
-                int furniture_id = stv.sysfurnRec().getInt(eSysfurn.furniture_id);
+                int furniture_id = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
                 String fname = (furniture_id != -1) ? eFurniture.find(furniture_id).getStr(eFurniture.name) : "";
                 tdList.get(5).text(fname);
                 ElemSimple elemGlass = winc.listElem.find(Type.GLASS);
@@ -104,8 +102,8 @@ public class HtmlOfOffer {
                 tdList.get(15).text(winc.width() + "x" + winc.height());
                 tdList.get(17).text(prjprodRec.getStr(ePrjprod.num));
                 tdList.get(19).text(df2.format(winc.square()));
-                tdList.get(21).text(df2.format(winc.weight()));
-                tdList.get(23).text(df1.format(winc.price()));
+                tdList.get(21).text(df2.format(winc.weight));
+                tdList.get(23).text(df1.format(winc.price));
             }
             {
                 Elements trList = doc.getElementById("tab2").getElementsByTag("tbody").get(0).getElementsByTag("tr");
@@ -133,28 +131,28 @@ public class HtmlOfOffer {
 
     private static List<Wincalc> wincList(List<Record> prjprodList, int length) {
         List<Wincalc> list = new ArrayList();
-        try {
-            for (int index = 0; index < prjprodList.size(); ++index) {
-                Record prjprodRec = prjprodList.get(index);
-                String script = prjprodRec.getStr(ePrjprod.script);
-                Wincalc winc = new Wincalc(script);
-                winc.constructiv(true);
-                winc.imageIcon = Canvas.createIcon(winc, length);
-                winc.bufferImg = new BufferedImage(length, length, BufferedImage.TYPE_INT_RGB);
-                winc.gc2d = winc.bufferImg.createGraphics();
-                winc.gc2d.fillRect(0, 0, length, length);
-                double height = (winc.height1() > winc.height2()) ? winc.height1() : winc.height2();
-                double width = (winc.width2() > winc.width1()) ? winc.width2() : winc.width1();
-                winc.scale = (length / width > length / height) ? length / (height + 80) : length / (width + 80);
-                winc.gc2d.scale(winc.scale, winc.scale);
-                winc.rootArea.draw(); //рисую конструкцию
-                File outputfile = new File(eProp.path_prop.read(), "img" + (index + 1) + ".gif");
-                ImageIO.write(winc.bufferImg, "gif", outputfile);
-                list.add(winc);
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:HtmlOfSmeta.wincList()" + e);
-        }
+//        try {
+//            for (int index = 0; index < prjprodList.size(); ++index) {
+//                Record prjprodRec = prjprodList.get(index);
+//                String script = prjprodRec.getStr(ePrjprod.script);
+//                Wincalc winc = new Wincalc(script);
+//                winc.constructiv(true);
+//                winc.imageIcon = Canvas.createIcon(winc, length);
+//                winc.bufferImg = new BufferedImage(length, length, BufferedImage.TYPE_INT_RGB);
+//                winc.gc2d = winc.bufferImg.createGraphics();
+//                winc.gc2d.fillRect(0, 0, length, length);
+//                double height = (winc.height1() > winc.height2()) ? winc.height1() : winc.height2();
+//                double width = (winc.width2() > winc.width1()) ? winc.width2() : winc.width1();
+//                winc.scale = (length / width > length / height) ? length / (height + 80) : length / (width + 80);
+//                winc.gc2d.scale(winc.scale, winc.scale);
+//                winc.rootArea.draw(); //рисую конструкцию
+//                File outputfile = new File(eProp.path_prop.read(), "img" + (index + 1) + ".gif");
+//                ImageIO.write(winc.bufferImg, "gif", outputfile);
+//                list.add(winc);
+//            }
+//        } catch (Exception e) {
+//            System.err.println("Ошибка:HtmlOfSmeta.wincList()" + e);
+//        }
         return list;
     }
 

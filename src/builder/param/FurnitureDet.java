@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
 import builder.making.Specific;
-import builder.model.AreaArch;
-import builder.model1.AreaArch;
 import builder.model.Com5t;
 import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
@@ -85,7 +83,7 @@ public class FurnitureDet extends Par5s {
                     break;
                 case 24005:  //Коды текстуры створки 
                 case 25005:  //Коды текстуры створки 
-                    if (areaStv.frames.entrySet().stream().filter(el -> UCom.containsColor(rec.getStr(TEXT), el.getValue().colorID1()) == true).findFirst().orElse(null) == null) {
+                    if (areaStv.frames.entrySet().stream().filter(el -> UCom.containsColor(rec.getStr(TEXT), el.getValue().colorID1) == true).findFirst().orElse(null) == null) {
                         return false;
                     }
                     break;
@@ -164,12 +162,12 @@ public class FurnitureDet extends Par5s {
                     break;
                 case 24032:  //Правильная полуарка 
                 case 25032:  //Правильная полуарка 
-                    if (winc.rootArea.type == Type.ARCH) {
-                        int k = (int) (winc.rootArea.width() / ((AreaArch) winc.rootArea).radiusArch);
-                        if (k != 2) {
-                            return false;
-                        }
-                    }
+//                    if (winc.rootArea.type == Type.ARCH) {
+//                        int k = (int) (winc.rootArea.width() / ((AreaArch) winc.rootArea).radiusArch);
+//                        if (k != 2) {
+//                            return false;
+//                        }
+//                    }
                     break;
                 case 24033: //Фурнитура штульповая 
                 case 25033: //Фурнитура штульповая 

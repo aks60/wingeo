@@ -81,7 +81,7 @@ public class ElemFrame extends ElemSimple {
     }
 
     public void paint() {
-        winc.gc2D.draw(area);
+        winc.gc2d.draw(area);
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">

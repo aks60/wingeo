@@ -15,6 +15,7 @@ public class GsonElem {
     public JsonObject param = null; //параметры элемента
     public Type type = null; //тип элемента
     public Double x1, y1, x2, y2;
+    public Double length = null; //ширина или высота добавляемой area (зависит от напрвления расположения) 
 
     public GsonElem() {
         ++genId;
@@ -71,4 +72,13 @@ public class GsonElem {
             System.err.println("Ошибка:GeoElem.setOwnerAndForm() " + e);
         }
     }
+    
+    public Double height() {
+        return -1.0; //(owner.layout == Layout.VERT) ? length : owner.height();
+    }
+
+    public Double width() {
+        return -1.0; //(owner.layout == Layout.HORIZ) ? length : owner.width();
+    }
+    
 }

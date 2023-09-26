@@ -13,21 +13,21 @@ public class DrawStroke {
         winc.gc2d.draw(new Line2D.Double(x1, y1, x2, y2));
     }
 
-    public static void strokePolygon(Wincalc wing, double x1, double x2, double x3, double x4,
-            double y1, double y2, double y3, double y4, int rgbFill, Color rgbStroke) {
-
-        if (rgbStroke == Color.RED) {
-            wing.gc2D.setStroke(new BasicStroke(6)); //толщина линии 
-        } else {
-            wing.gc2D.setStroke(new BasicStroke(1)); //толщина линии 
-        }
-        wing.gc2D.setColor(new java.awt.Color(rgbFill));
-        wing.gc2D.fillPolygon(new int[]{(int) x1, (int) x2, (int) x3, (int) x4},
-                new int[]{(int) y1, (int) y2, (int) y3, (int) y4}, 4);
-        wing.gc2D.setColor(rgbStroke);
-        wing.gc2D.drawPolygon(new int[]{(int) (x1), (int) (x2), (int) (x3), (int) (x4)},
-                new int[]{(int) y1, (int) y2, (int) y3, (int) y4}, 4);
-    }
+//    public static void strokePolygon(Wincalc wing, double x1, double x2, double x3, double x4,
+//            double y1, double y2, double y3, double y4, int rgbFill, Color rgbStroke) {
+//
+//        if (rgbStroke == Color.RED) {
+//            wing.gc2D.setStroke(new BasicStroke(6)); //толщина линии 
+//        } else {
+//            wing.gc2D.setStroke(new BasicStroke(1)); //толщина линии 
+//        }
+//        wing.gc2D.setColor(new java.awt.Color(rgbFill));
+//        wing.gc2D.fillPolygon(new int[]{(int) x1, (int) x2, (int) x3, (int) x4},
+//                new int[]{(int) y1, (int) y2, (int) y3, (int) y4}, 4);
+//        wing.gc2D.setColor(rgbStroke);
+//        wing.gc2D.drawPolygon(new int[]{(int) (x1), (int) (x2), (int) (x3), (int) (x4)},
+//                new int[]{(int) y1, (int) y2, (int) y3, (int) y4}, 4);
+//    }
 
     public static void strokePolygon(Wincalc winc, double x1, double x2, double x3, double x4,
             double y1, double y2, double y3, double y4, int rgbFill, Color rgbStroke) {

@@ -706,7 +706,7 @@ public class PSConvert {
                 if (script != null) {
                     //При этом nuni, prj, ord в скрипте json отсутствуют.
                     GsonRoot gson = new Gson().fromJson(script, GsonRoot.class);
-                    String name = "<html> Kod:" + prj + " " + gson.name();
+                    String name = "<html> Kod:" + prj + " " + gson.name;
                     println(Color.BLACK, name); //в отчёт                   
                     Query q = new Query(eSysmodel.values());
                     Record record = eSysmodel.up.newRecord(Query.INS);
@@ -730,7 +730,7 @@ public class PSConvert {
                 String script2 = GsonScript.productJson(prj);
                 if (script2 != null) {
                     GsonRoot gson2 = new Gson().fromJson(script2, GsonRoot.class);
-                    String name2 = "Проект:" + gson2.project() + "/Заказ:" + gson2.order() + " " + gson2.name();
+                    String name2 = "Проект:" + gson2.prj + "/Заказ:" + gson2.ord + " " + gson2.name;
                     Query q2 = new Query(eSysprod.values());
                     Record record2 = eSysprod.up.newRecord(Query.INS);
                     record2.setNo(eSysprod.id, Conn.genId(eSysprod.up));

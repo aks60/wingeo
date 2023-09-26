@@ -75,7 +75,7 @@ public class FurnitureVar extends Par5s {
                 case 21011: //Ограничение длины ручка константа, мм 
                 {
                     AreaStvorka stv = (AreaStvorka) elem5e.owner;
-                    if (stv.handleLayout() == LayoutHandle.CONST) {
+                    if (stv.handleLayout == LayoutHandle.CONST) {
                         if (UPar.is_21010_21011_21012_21013(rec.getStr(TEXT), elem5e) == false) {
                             return false;
                         }
@@ -85,7 +85,7 @@ public class FurnitureVar extends Par5s {
                 case 21012: //Ограничение длины ручка вариацион, мм 
                 {
                     AreaStvorka stv = (AreaStvorka) elem5e.owner;
-                    if (stv.handleLayout() == LayoutHandle.VARIAT) {
+                    if (stv.handleLayout == LayoutHandle.VARIAT) {
                         if (UPar.is_21010_21011_21012_21013(rec.getStr(TEXT), elem5e) == false) {
                             return false;
                         }
@@ -95,7 +95,7 @@ public class FurnitureVar extends Par5s {
                 case 21013: //Ограничение длины ручка по середине, мм 
                 {
                     AreaStvorka stv = (AreaStvorka) elem5e.owner;
-                    if (stv.handleLayout() == LayoutHandle.MIDL) {
+                    if (stv.handleLayout == LayoutHandle.MIDL) {
                         if (UPar.is_21010_21011_21012_21013(rec.getStr(TEXT), elem5e) == false) {
                             return false;
                         }
@@ -120,9 +120,9 @@ public class FurnitureVar extends Par5s {
                 case 21037: //Диапазон высоты вариационной ручки, мм 
                 {
                     AreaStvorka stv = (AreaStvorka) elem5e.owner;
-                    if (stv.handleLayout() == LayoutHandle.VARIAT) {
+                    if (stv.handleLayout == LayoutHandle.VARIAT) {
                         String[] arr = rec.getStr(TEXT).split("-");
-                        if (UCom.getInt(arr[0]) > stv.handleHeight() || UCom.getInt(arr[1]) < stv.handleHeight()) {
+                        if (UCom.getInt(arr[0]) > stv.handleHeight || UCom.getInt(arr[1]) < stv.handleHeight) {
                             return false;
                         }
                     }

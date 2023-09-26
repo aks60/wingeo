@@ -24,7 +24,7 @@ public class Scale {
     }
     
     public GsonElem gson() {
-        return area.gson();
+        return area.gson;
     }
 
     public double width() {
@@ -36,10 +36,10 @@ public class Scale {
     }
     
     public double widthGson() {
-        return area.gson().width();
+        return area.gson.width();
     }
 
     public double heightGson() {
-        return area.gson().height();
+        return area.gson.height();
     }
 }
