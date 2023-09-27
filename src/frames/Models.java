@@ -112,7 +112,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 String script = record.getStr(eSysmodel.script);
                 Wincalc iwin2 = new Wincalc(script);
 
-                if (iwin2.gson.version.equals("2.0")) {
+                if (iwin2.gson.version.equals("1.0")) {
                     Cal5e joining = new Joining(iwin2, true);//заполним соединения из конструктива
                     joining.calc();
                     iwin2.imageIcon = Canvas.createIcon(iwin2, 68);
