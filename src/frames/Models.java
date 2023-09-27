@@ -46,13 +46,19 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     private Canvas canvas = new Canvas();
     private Scene scene = null;
     private Query qSysmodel = new Query(eSysmodel.values());
-    private Wincalc geo = new Wincalc(Bimax2.script(501004));
-    private Canvas2D canvas2D = new Canvas2D(geo);
+    //private Wincalc geo = new Wincalc(Bimax2.script(501004));
+    //private Canvas2D canvas2D = new Canvas2D(geo);
 
     public Models() {
+//        initComponents();
+//        scene = new Scene(canvas, spinner, this);
+//        panDesign2.add(canvas2D, BorderLayout.CENTER);
+//        initElements();
+//        loadingModel();
+//        btnChoice.setVisible(false);
+//        loadingTab1(tab1, 1001);
         initComponents();
         scene = new Scene(canvas, spinner, this);
-        panDesign2.add(canvas2D, BorderLayout.CENTER);
         initElements();
         loadingModel();
         btnChoice.setVisible(false);
@@ -60,9 +66,15 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }
 
     public Models(ListenerRecord listener) {
+//        initComponents();
+//        scene = new Scene(canvas, spinner, this);
+//        panDesign2.add(canvas2D, BorderLayout.CENTER);
+//        initElements();
+//        loadingModel();
+//        this.listenet = listener;
+//        loadingTab1(tab1, 1001);
         initComponents();
         scene = new Scene(canvas, spinner, this);
-        panDesign2.add(canvas2D, BorderLayout.CENTER);
         initElements();
         loadingModel();
         this.listenet = listener;
@@ -97,15 +109,15 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         dm.getDataVector().removeAllElements();
         for (Record record : qSysmodel.table(eSysmodel.up)) {
             try {
-                if (btnT5.isSelected() == false) {
-                    String script = record.getStr(eSysmodel.script);
-                    Wincalc iwin2 = new Wincalc(script);
+                String script = record.getStr(eSysmodel.script);
+                Wincalc iwin2 = new Wincalc(script);
+
+                if (iwin2.gson.version.equals("2.0")) {
                     Cal5e joining = new Joining(iwin2, true);//заполним соединения из конструктива
                     joining.calc();
                     iwin2.imageIcon = Canvas.createIcon(iwin2, 68);
                     record.add(iwin2);
                 }
-                record.add(null);
 
             } catch (Exception e) {
                 System.err.println("Ошибка:Models.loadingTab() " + e);
@@ -867,9 +879,9 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }//GEN-LAST:event_btnMove
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-       //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(geo.gson));
-       //geo.listCross.get(0).prevAndNext(geo.listCross.get(0).childs().get(2).area);
-       geo.draw();
+        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(geo.gson));
+        //geo.listCross.get(0).prevAndNext(geo.listCross.get(0).childs().get(2).area);
+        //geo.draw();
     }//GEN-LAST:event_btnTestActionPerformed
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">     
