@@ -13,46 +13,46 @@ import javax.swing.JComponent;
 
 public class Canvas2D extends JComponent {
 
-    private Wincalc wing;
+    private Wincalc winc;
 
-    public Canvas2D(Wincalc wing) {
-        this.wing = wing;
-        wing.canvas = this;
+    public Canvas2D(Wincalc winc) {
+        this.winc = winc;
+        winc.canvas = this;
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent event) {
-                wing.mousePressed.forEach(e -> e.mouseEvent(event));
+                winc.mousePressed.forEach(e -> e.mouseEvent(event));
                 repaint();
             }
 
             public void mouseReleased(MouseEvent event) {
-                wing.mouseReleased.forEach(e -> e.mouseEvent(event));
+                winc.mouseReleased.forEach(e -> e.mouseEvent(event));
                 repaint();
             }
         });
         addMouseMotionListener(new MouseMotionAdapter() {
 
             public void mouseDragged(MouseEvent event) {
-                wing.mouseDragged.forEach(e -> e.mouseEvent(event));
+                winc.mouseDragged.forEach(e -> e.mouseEvent(event));
                 repaint();
             }
         });
         addComponentListener(new ComponentAdapter() {
 
             public void componentResized(ComponentEvent event) {
-                wing.scale = scale(wing, 0, 0);
+                winc.scale = scale(winc, 0, 0);
             }
         });
     }
 
     public void paintComponent(Graphics g) {
         //System.out.println("Canvas2D.paintComponent()");
-        wing.gc2d = (Graphics2D) g;
-        wing.gc2d.scale(wing.scale, wing.scale);
-        wing.draw();
+        winc.gc2d = (Graphics2D) g;
+        winc.gc2d.scale(winc.scale, winc.scale);
+        winc.draw();
     }
 
-    public double scale(Wincalc wing, double dx, double dy) {
-        Rectangle2D rec = wing.rootArea.area.getBounds2D();
+    public double scale(Wincalc winc, double dx, double dy) {
+        Rectangle2D rec = winc.rootArea.area.getBounds2D();
         return ((getWidth() + dx) / rec.getMaxX() > (getHeight() + dx) / rec.getMaxY())
                 ? (getHeight() + dx) / (rec.getMaxY() + dy) : (getWidth() + dx) / (rec.getMaxX() + dy);
     }

@@ -20,8 +20,8 @@ public class ElemGlass extends ElemSimple {
     public int rasclColor = -3; //цвет раскладки
     public int rasclNumber[] = {2, 2}; //количество проёмов раскладки     
     
-    public ElemGlass(Wincalc wing, GsonElem gson, AreaSimple owner) {
-        super(wing, gson, owner);
+    public ElemGlass(Wincalc winc, GsonElem gson, AreaSimple owner) {
+        super(winc, gson, owner);
     }
 
     public void initСonstructiv(JsonObject param) {

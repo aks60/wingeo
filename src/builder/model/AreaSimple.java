@@ -31,8 +31,8 @@ public class AreaSimple extends Com5t {
 //        initParametr(winc.gson.param());
     }
     
-    public AreaSimple(Wincalc wing, GsonElem gson, AreaSimple owner) {
-        super(wing, gson, owner);
+    public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
+        super(winc, gson, owner);
     }
 
     /**
@@ -179,7 +179,7 @@ public class AreaSimple extends Com5t {
 //    public void paint() {
 //        try {
 //            if (area != null) {
-//                wing.gc2D.draw(area);
+//                winc.gc2D.draw(area);
 //            }
 //        } catch (Exception e) {
 //            System.err.println("Ошибка:Area2Simple.paint()" + toString() + e);

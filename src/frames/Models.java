@@ -28,6 +28,7 @@ import dataset.Conn;
 import frames.swing.DefTableModel;
 import builder.model.Canvas2D;
 import builder.script.test.Bimax2;
+import com.google.gson.GsonBuilder;
 import frames.swing.draw.Scene;
 import java.awt.BorderLayout;
 import java.io.File;
@@ -46,17 +47,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     private Canvas canvas = new Canvas();
     private Scene scene = null;
     private Query qSysmodel = new Query(eSysmodel.values());
-    //private Wincalc geo = new Wincalc(Bimax2.script(501004));
-    //private Canvas2D canvas2D = new Canvas2D(geo);
 
     public Models() {
-//        initComponents();
-//        scene = new Scene(canvas, spinner, this);
-//        panDesign2.add(canvas2D, BorderLayout.CENTER);
-//        initElements();
-//        loadingModel();
-//        btnChoice.setVisible(false);
-//        loadingTab1(tab1, 1001);
         initComponents();
         scene = new Scene(canvas, spinner, this);
         initElements();
@@ -66,13 +58,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }
 
     public Models(ListenerRecord listener) {
-//        initComponents();
-//        scene = new Scene(canvas, spinner, this);
-//        panDesign2.add(canvas2D, BorderLayout.CENTER);
-//        initElements();
-//        loadingModel();
-//        this.listenet = listener;
-//        loadingTab1(tab1, 1001);
         initComponents();
         scene = new Scene(canvas, spinner, this);
         initElements();
@@ -104,19 +89,20 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }
 
     public void loadingTab1(JTable tab, int form) {
-        qSysmodel.select(eSysmodel.up, "where", eSysmodel.form, "=", form, "order by npp");
+        Query qModel = new Query(eSysmodel.values()).select(eSysmodel.up, "where", eSysmodel.form, "=", form, "order by npp");
         DefaultTableModel dm = (DefaultTableModel) tab.getModel();
         dm.getDataVector().removeAllElements();
-        for (Record record : qSysmodel.table(eSysmodel.up)) {
+        for (Record record : qModel.table(eSysmodel.up)) {
             try {
                 String script = record.getStr(eSysmodel.script);
-                Wincalc iwin2 = new Wincalc(script);
-
-                if (iwin2.gson.version.equals("1.0")) {
+                GsonRoot gson = new GsonBuilder().create().fromJson(script, GsonRoot.class);
+                if (gson.version.equals("2.0")) {
+                    Wincalc iwin2 = new Wincalc(script);
                     Cal5e joining = new Joining(iwin2, true);//заполним соединения из конструктива
                     joining.calc();
                     iwin2.imageIcon = Canvas.createIcon(iwin2, 68);
                     record.add(iwin2);
+                    qSysmodel.add(record);
                 }
 
             } catch (Exception e) {
@@ -135,34 +121,30 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc win = (Wincalc) w;
                 scene.init(win);
-                canvas.draw();
-                scene.draw();
+//                canvas.draw();
+//                scene.draw();
             }
         }
-    }
-
-    public void selectionTab2(ListSelectionEvent event, JTable tab) {
-        System.out.println("frames.Models.selectionTab2()");
     }
 
     @Override
     public void reload() {
         try {
-            int index = UGui.getIndexRec(tab1);
-            if (index != -1) {
-                Wincalc win = winc();
-                String script = win.gson.toJson();
-                win.build(script);
-                win.imageIcon = Canvas.createIcon(win, 68);
-                Record sysmodelRec = qSysmodel.get(index);
-                sysmodelRec.set(eSysmodel.script, script);
-                sysmodelRec.set(eSysmodel.values().length, win);
-                canvas.draw();
-                scene.lineHoriz.forEach(e -> e.init());
-                scene.lineVert.forEach(e -> e.init());
-                scene.draw();
-                //selectionWinTree();
-            }
+//            int index = UGui.getIndexRec(tab1);
+//            if (index != -1) {
+//                Wincalc win = winc();
+//                String script = win.gson.toJson();
+//                win.build(script);
+//                win.imageIcon = Canvas.createIcon(win, 68);
+//                Record sysmodelRec = qSysmodel.get(index);
+//                sysmodelRec.set(eSysmodel.script, script);
+//                sysmodelRec.set(eSysmodel.values().length, win);
+//                canvas.draw();
+//                scene.lineHoriz.forEach(e -> e.init());
+//                scene.lineVert.forEach(e -> e.init());
+//                scene.draw();
+//                //selectionWinTree();
+//            }
         } catch (Exception e) {
             System.err.println("Ошибка:Models.reload() " + e);
         }
@@ -212,12 +194,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         pan8 = new javax.swing.JPanel();
         pan9 = new javax.swing.JPanel();
         pan10 = new javax.swing.JPanel();
-        pan18 = new javax.swing.JPanel();
-        panDesign2 = new javax.swing.JPanel();
-        pan11 = new javax.swing.JPanel();
-        pan12 = new javax.swing.JPanel();
-        pan14 = new javax.swing.JPanel();
-        pan15 = new javax.swing.JPanel();
         south = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -225,7 +201,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         setFont(frames.UGui.getFont(0,1));
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 500));
-        setPreferredSize(new java.awt.Dimension(900, 600));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 Models.this.windowClosed(evt);
@@ -624,81 +599,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 
         centr.add(pan17, "pan17");
 
-        pan18.setPreferredSize(new java.awt.Dimension(600, 500));
-        pan18.setLayout(new java.awt.BorderLayout());
-
-        panDesign2.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
-        panDesign2.setPreferredSize(new java.awt.Dimension(0, 0));
-        panDesign2.setLayout(new java.awt.BorderLayout());
-
-        pan11.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        pan11.setPreferredSize(new java.awt.Dimension(700, 40));
-
-        javax.swing.GroupLayout pan11Layout = new javax.swing.GroupLayout(pan11);
-        pan11.setLayout(pan11Layout);
-        pan11Layout.setHorizontalGroup(
-            pan11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 422, Short.MAX_VALUE)
-        );
-        pan11Layout.setVerticalGroup(
-            pan11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 36, Short.MAX_VALUE)
-        );
-
-        panDesign2.add(pan11, java.awt.BorderLayout.NORTH);
-
-        pan12.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        pan12.setPreferredSize(new java.awt.Dimension(744, 10));
-
-        javax.swing.GroupLayout pan12Layout = new javax.swing.GroupLayout(pan12);
-        pan12.setLayout(pan12Layout);
-        pan12Layout.setHorizontalGroup(
-            pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 422, Short.MAX_VALUE)
-        );
-        pan12Layout.setVerticalGroup(
-            pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 6, Short.MAX_VALUE)
-        );
-
-        panDesign2.add(pan12, java.awt.BorderLayout.SOUTH);
-
-        pan14.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        pan14.setPreferredSize(new java.awt.Dimension(10, 376));
-
-        javax.swing.GroupLayout pan14Layout = new javax.swing.GroupLayout(pan14);
-        pan14.setLayout(pan14Layout);
-        pan14Layout.setHorizontalGroup(
-            pan14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 6, Short.MAX_VALUE)
-        );
-        pan14Layout.setVerticalGroup(
-            pan14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 487, Short.MAX_VALUE)
-        );
-
-        panDesign2.add(pan14, java.awt.BorderLayout.EAST);
-
-        pan15.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        pan15.setPreferredSize(new java.awt.Dimension(10, 336));
-
-        javax.swing.GroupLayout pan15Layout = new javax.swing.GroupLayout(pan15);
-        pan15.setLayout(pan15Layout);
-        pan15Layout.setHorizontalGroup(
-            pan15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 6, Short.MAX_VALUE)
-        );
-        pan15Layout.setVerticalGroup(
-            pan15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 487, Short.MAX_VALUE)
-        );
-
-        panDesign2.add(pan15, java.awt.BorderLayout.WEST);
-
-        pan18.add(panDesign2, java.awt.BorderLayout.CENTER);
-
-        centr.add(pan18, "pan18");
-
         getContentPane().add(centr, java.awt.BorderLayout.CENTER);
 
         south.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -903,18 +803,12 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     private javax.swing.JPanel centr;
     private javax.swing.JPanel north;
     private javax.swing.JPanel pan10;
-    private javax.swing.JPanel pan11;
-    private javax.swing.JPanel pan12;
     private javax.swing.JPanel pan13;
-    private javax.swing.JPanel pan14;
-    private javax.swing.JPanel pan15;
     private javax.swing.JPanel pan17;
-    private javax.swing.JPanel pan18;
     private javax.swing.JPanel pan7;
     private javax.swing.JPanel pan8;
     private javax.swing.JPanel pan9;
     private javax.swing.JPanel panDesign;
-    private javax.swing.JPanel panDesign2;
     private javax.swing.JPanel panSspinner;
     private javax.swing.JScrollPane scr1;
     private javax.swing.JPanel south;

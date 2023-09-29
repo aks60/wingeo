@@ -15,8 +15,8 @@ import java.util.List;
 
 public class ElemCross extends ElemSimple {
 
-    public ElemCross(Wincalc wing, GsonElem gson, AreaSimple owner) {
-        super(wing, gson, owner);
+    public ElemCross(Wincalc winc, GsonElem gson, AreaSimple owner) {
+        super(winc, gson, owner);
         initСonstructiv(gson.param);
         mouseEvent();
     }
@@ -74,7 +74,7 @@ public class ElemCross extends ElemSimple {
 
             //UGeo.PRINT(owner.area);
             //Area импоста внутренняя
-            //Area areaPadding = UGeo.areaPadding(wing.listFrame);        
+            //Area areaPadding = UGeo.areaPadding(winc.listFrame);        
             Area areaPadding = UGeo.areaPadding(owner.area, winc.listElem);
 
             areaPadding.intersect(UGeo.area(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]));

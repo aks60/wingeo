@@ -29,7 +29,7 @@ public class AreaStvorka extends AreaSimple {
     public boolean paramCheck[] = {true, true, true, true, true, true, true, true};
     public double offset[] = {0, 0, 0, 0};
     
-    public AreaStvorka(Wincalc wing, GsonElem gson, AreaSimple owner) {
-        super(wing, gson, owner);
+    public AreaStvorka(Wincalc winc, GsonElem gson, AreaSimple owner) {
+        super(winc, gson, owner);
     }
 }

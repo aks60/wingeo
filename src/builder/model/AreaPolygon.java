@@ -12,8 +12,8 @@ import org.locationtech.jts.geom.Coordinate;
 
 public class AreaPolygon extends AreaSimple {
 
-    public AreaPolygon(Wincalc wing, GsonElem gson) {
-        super(wing, gson, null);
+    public AreaPolygon(Wincalc winc, GsonElem gson) {
+        super(winc, gson, null);
     }
 
     public void setLocation() {
@@ -52,7 +52,7 @@ public class AreaPolygon extends AreaSimple {
     }
 
     public void paint() {
-     //   wing.gc2D.draw(area);
+     //   winc.gc2D.draw(area);
 //        Area area1 = UGeo.area(0, 0, 0, 900, 600, 800, 0, 0);
 //        UGeo.PRINT("", area1);
 //
@@ -60,21 +60,21 @@ public class AreaPolygon extends AreaSimple {
 //        area1.intersect(area2);
 //        UGeo.PRINT("", area1);
 //        
-//        wing.gc2D.draw(area1);
-//        wing.gc2D.draw(area2);
+//        winc.gc2D.draw(area1);
+//        winc.gc2D.draw(area2);
 
 //        try {
-//            wing.gc2D.draw(area);
+//            winc.gc2D.draw(area);
 //            
-//            if (wing.listCross.isEmpty() == false) {
-//                Elem2Cross cros = wing.listCross.get(0);
+//            if (winc.listCross.isEmpty() == false) {
+//                Elem2Cross cros = winc.listCross.get(0);
 //
 //                Area area2[] = UGeo.split(area, cros);
 //                double line[] = UGeo.cross(area2);
 //                if (line != null) {
 //                    cros.setLocation(line[0], line[1], line[2], line[3]);
 //                }
-//                wing.gc2D.draw(new Line2D.Double(cros.x1(), cros.y1(), cros.x2(), cros.y2()));
+//                winc.gc2D.draw(new Line2D.Double(cros.x1(), cros.y1(), cros.x2(), cros.y2()));
 //            }
 //        } catch (Exception e) {
 //            System.err.println("Ошибка:Area2Simple.paint()" + toString() + e);

@@ -17,15 +17,15 @@ import java.util.List;
 
 public class ElemFrame extends ElemSimple {
 
-    public ElemFrame(Wincalc wing, GsonElem gson, AreaSimple owner) {
-        super(wing, gson, owner);
+    public ElemFrame(Wincalc winc, GsonElem gson, AreaSimple owner) {
+        super(winc, gson, owner);
         initСonstructiv(gson.param);
         mouseEvent();
     }
 
     /**
      * Профиль через параметр или первая запись в системе см. табл. sysprof Цвет
-     * если нет параметра то берём wing.color.
+     * если нет параметра то берём winc.color.
      */
     public void initСonstructiv(JsonObject param) {
 

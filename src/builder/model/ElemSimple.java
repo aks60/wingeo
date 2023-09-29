@@ -23,8 +23,8 @@ public class ElemSimple extends Com5t {
     public Specific spcRec = null; //спецификация элемента
     public Color borderColor = Color.BLACK;
 
-    public ElemSimple(Wincalc wing, GsonElem gson, AreaSimple owner) {
-        super(wing, gson, owner);
+    public ElemSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
+        super(winc, gson, owner);
         //spcRec = new Specific(id, this);
     }
 
@@ -32,9 +32,9 @@ public class ElemSimple extends Com5t {
 //        try {
 //            GeneralPath p = new GeneralPath();
 //            p.reset();
-//            p.moveTo(wing.listFrame.get(0).x1(), wing.listFrame.get(0).y1());
-//            for (int i = 1; i < wing.listFrame.size(); ++i) {
-//                p.lineTo(wing.listFrame.get(i).x1(), wing.listFrame.get(i).y1());
+//            p.moveTo(winc.listFrame.get(0).x1(), winc.listFrame.get(0).y1());
+//            for (int i = 1; i < winc.listFrame.size(); ++i) {
+//                p.lineTo(winc.listFrame.get(i).x1(), winc.listFrame.get(i).y1());
 //            }
 //            p.closePath();
 //            area = new Area(p);
