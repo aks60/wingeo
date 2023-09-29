@@ -44,7 +44,7 @@ public class FillingDet extends Par5s {
                 case 14000: //Для технологического кода контейнера
                 case 15000: //Для технологического кода контейнера 
                 {
-                    ElemSimple elem = winc.rootArea.frames.get(Layout.BOTT);
+                    ElemSimple elem = winc.root.frames.get(Layout.BOTT);
                     if (!UPar.is_STRING_XX000(rec.getStr(TEXT), elem)) {
                         return false;
                     }
@@ -53,7 +53,7 @@ public class FillingDet extends Par5s {
                 case 14001: //Если признак состава 
                 case 15001: //Если признак состава    
                 {
-                    ElemSimple elem = winc.rootArea.frames.get(Layout.BOTT);
+                    ElemSimple elem = winc.root.frames.get(Layout.BOTT);
                     if (UPar.is_11001_11002_12001_12002_13001_14001_15001_33001_34001(rec.getStr(TEXT), elem) == false) {
                         return false;
                     }

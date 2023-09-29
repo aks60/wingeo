@@ -58,9 +58,9 @@ public class Scene extends javax.swing.JPanel {
             public void mouseClicked(MouseEvent evt) {
                 if (winc != null) {
                     //Если клик не на конструкции
-                    if (winc.rootArea.inside(evt.getX() / winc.scale, evt.getY() / winc.scale) == false) {
-                        lineHoriz = List.of(new Scale(winc.rootArea));
-                        lineVert = List.of(new Scale(winc.rootArea));
+                    if (winc.root.inside(evt.getX() / winc.scale, evt.getY() / winc.scale) == false) {
+                        lineHoriz = List.of(new Scale(winc.root));
+                        lineVert = List.of(new Scale(winc.root));
 
                     } else { //На конструкции
                         for (ElemSimple crs : winc.listElem) {
@@ -90,8 +90,8 @@ public class Scene extends javax.swing.JPanel {
     public void init(Wincalc winc) {
         this.winc = winc;
         if (winc != null) {
-            lineHoriz = List.of(new Scale(winc.rootArea));
-            lineVert = List.of(new Scale(winc.rootArea));
+            lineHoriz = List.of(new Scale(winc.root));
+            lineVert = List.of(new Scale(winc.root));
         }
         canvas.init(winc);
     }

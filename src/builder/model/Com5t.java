@@ -118,12 +118,12 @@ public class Com5t {
      * Ширина в gson
      */
     public double lengthX() {
-        return (this == winc.rootArea) ? this.gson.width() : this.gson.length;
+        return (this == winc.root) ? this.gson.width() : this.gson.length;
     }
 
     //Высота в gson
     public double lengthY() {
-        return (this == winc.rootArea) ? this.gson.height() : this.gson.length;
+        return (this == winc.root) ? this.gson.height() : this.gson.length;
     }
 
     public boolean isJson(JsonObject jso, String key) {

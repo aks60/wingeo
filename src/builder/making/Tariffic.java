@@ -380,10 +380,10 @@ public class Tariffic extends Cal5e {
 
     //Процентная надбавка на изделия сложной формы
     private static double percentMarkup(Wincalc winc) {
-        if (Type.ARCH == winc.rootArea.type) {
+        if (Type.ARCH == winc.root.type) {
             return eGroups.find(2101).getDbl(eGroups.val);
 
-        } else if (Type.RECTANGL != winc.rootArea.type) {
+        } else if (Type.RECTANGL != winc.root.type) {
             return eGroups.find(2104).getDbl(eGroups.val);
         }
         return 0;

@@ -164,21 +164,21 @@ public class UGui {
      */
     public static DefMutableTreeNode loadWinTree(Wincalc winc) {
 
-        DefMutableTreeNode root = new DefMutableTreeNode(winc.rootArea);
+        DefMutableTreeNode root = new DefMutableTreeNode(winc.root);
         root.add(new DefMutableTreeNode(new Com5t(Type.PARAM)));
         //Рама
         DefMutableTreeNode frm = root.add(new DefMutableTreeNode(new Com5t(Type.FRAME)));
-        frm.add(new DefMutableTreeNode(winc.rootArea.frames.get(Layout.BOTT)));
+        frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.BOTT)));
         frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
-        frm.add(new DefMutableTreeNode(winc.rootArea.frames.get(Layout.RIGHT)));
+        frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.RIGHT)));
         frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
-        frm.add(new DefMutableTreeNode(winc.rootArea.frames.get(Layout.TOP)));
+        frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.TOP)));
         frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
-        frm.add(new DefMutableTreeNode(winc.rootArea.frames.get(Layout.LEFT)));
+        frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.LEFT)));
         frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
 
         //Цикл по всем детям ареа
-        for (Com5t com : winc.rootArea.childs()) {
+        for (Com5t com : winc.root.childs()) {
             //Если это не створка
             if (com.type != Type.STVORKA) {
                 //Если это элемент

@@ -9,7 +9,6 @@ import builder.model.ElemFrame;
 import builder.model.ElemGlass;
 import builder.model.ElemSimple;
 import builder.making.Specific;
-import builder.model.Canvas2D;
 import builder.script.GsonElem;
 import builder.script.GsonRoot;
 import com.google.gson.GsonBuilder;
@@ -23,6 +22,7 @@ import domain.eSysprof;
 import enums.Form;
 import enums.Type;
 import enums.UseArtiklTo;
+import frames.swing.draw.Canvas;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class Wincalc {
     public ImageIcon imageIcon = null; //рисунок конструкции
     public Graphics2D gc2d = null; //графический котекст рисунка  
     public double scale = 1; //коэффициент сжатия
-    public Canvas2D canvas = null;
+    public Canvas canvas = null;
     public ArrayList<ListenerMouse> mousePressed = new ArrayList();
     public ArrayList<ListenerMouse> mouseReleased = new ArrayList();
     public ArrayList<ListenerMouse> mouseDragged = new ArrayList();
@@ -70,7 +70,7 @@ public class Wincalc {
     public ArrayJoin listJoin = new ArrayJoin(); //список соединений рам и створок 
 
     public GsonRoot gson = null; //объектная модель конструкции 1-го уровня
-    public AreaPolygon rootArea = null; //объектная модель конструкции 2-го уровня
+    public AreaPolygon root = null; //объектная модель конструкции 2-го уровня
 
     public Wincalc() {
     }
@@ -95,7 +95,7 @@ public class Wincalc {
             parsing(script);
 
             //построение полигонов
-            rootArea.setLocation();
+            root.setLocation();
 
             //Каждый элемент конструкции попадает в спецификацию через функцию setSpecific()            
             //listLine.forEach(elem -> elem.setSpecific()); //спецификация ведущих элементов конструкции
@@ -117,9 +117,9 @@ public class Wincalc {
         Record sysprofRec = eSysprof.find2(nuni, UseArtiklTo.FRAME);
         eSyspar1.find(nuni).forEach(syspar1Rec -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), syspar1Rec)); //загрузим параметры по умолчанию
 
-        rootArea = new AreaPolygon(this, gson);
+        root = new AreaPolygon(this, gson);
 
-        elements(rootArea, gson);
+        elements(root, gson);
     }
 
     private void elements(AreaSimple owner, GsonElem gson) {
@@ -230,8 +230,8 @@ public class Wincalc {
 
     public void draw() {
         try {
-            rootArea.setLocation();
-            rootArea.paint();
+            root.setLocation();
+            root.paint();
             listFrame.forEach(e -> e.setLocation());
             listFrame.forEach(e -> e.paint());
             listCross.forEach(e -> e.setLocation());
@@ -251,11 +251,11 @@ public class Wincalc {
     }
 
     public double width() {
-        return rootArea.area.getBounds2D().getWidth();
+        return root.area.getBounds2D().getWidth();
     }
 
     public double height() {
-        return rootArea.area.getBounds2D().getHeight();
+        return root.area.getBounds2D().getHeight();
     }
 
     public double square() {

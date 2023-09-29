@@ -391,7 +391,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                 //Конструкции
                 if (winNode.com5t().type == enums.Type.RECTANGL || winNode.com5t().type == enums.Type.DOOR || winNode.com5t().type == enums.Type.TRAPEZE || winNode.com5t().type == enums.Type.ARCH) {
                     ((CardLayout) pan8.getLayout()).show(pan8, "card12");
-                    ((TitledBorder) pan12.getBorder()).setTitle(winc.rootArea.type.name);
+                    ((TitledBorder) pan12.getBorder()).setTitle(winc.root.type.name);
                     setText(txt9, eColor.find(winc.colorID1).getStr(eColor.name));
                     setText(txt13, eColor.find(winc.colorID2).getStr(eColor.name));
                     setText(txt14, eColor.find(winc.colorID3).getStr(eColor.name));

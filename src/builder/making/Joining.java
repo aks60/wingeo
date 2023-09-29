@@ -69,7 +69,7 @@ public class Joining extends Cal5e {
                     joinvarList = eJoinvar.find(joiningRec2.getInt(eJoining.id));
                 }
                 //Если неудача то ищем зеркальность (только для дверей)
-                if (winc.rootArea.type == Type.DOOR && joinvarList.isEmpty()) {
+                if (winc.root.type == Type.DOOR && joinvarList.isEmpty()) {
                     joiningRec1 = eJoining.find(id2, id1);
                     joinvarList = eJoinvar.find(joiningRec1.getInt(eJoining.id));
                 }
@@ -83,7 +83,7 @@ public class Joining extends Cal5e {
                     if (elemJoin.layout.equalType(typeID)) { //если варианты соединения совпали
                         go = true;
                     } else if (joinvarRec.getInt(eJoinvar.mirr) == 1) { //когда включена зеркальность
-                        if (winc.rootArea.type == Type.DOOR && (typeID == 30 || typeID == 31)
+                        if (winc.root.type == Type.DOOR && (typeID == 30 || typeID == 31)
                                 && (elemJoin.layout.id == 30 || elemJoin.layout.id == 31)) {
                             go = true;
                         }

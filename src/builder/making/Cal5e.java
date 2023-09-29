@@ -22,7 +22,7 @@ public abstract class Cal5e {
     }
 
     public AreaSimple rootArea() {
-        return winc.rootArea;
+        return winc.root;
     }
 
     public static void artype(Specific spcAdd, ElemSimple elem5e) {

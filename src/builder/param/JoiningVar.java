@@ -237,7 +237,7 @@ public class JoiningVar extends Par5s {
                     break;
                 case 1043: //Ограничение габарита контура, мм 
                 {
-                    double area = winc.rootArea.width() * winc.rootArea.height() / 1000000;
+                    double area = winc.root.width() * winc.root.height() / 1000000;
                     if (UCom.containsNumbExp(rec.getStr(TEXT), area) == false) {
                         return false;
                     }
