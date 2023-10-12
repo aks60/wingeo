@@ -103,53 +103,32 @@ public class Canvas extends javax.swing.JPanel implements ListenerFrame<MouseEve
 
     //@Override
     public void paintComponent(Graphics g) {
-        //System.out.println("Canvas2D.paintComponent()");
+        System.out.println("Canvas2D.paintComponent()");
         winc.gc2d = (Graphics2D) g;
-        winc.gc2d.scale(winc.scale, winc.scale);
+        winc.gc2d.scale(winc.scale, winc.scale - 0.001);
         winc.draw();
-        
-//        super.paintComponent(g);
-//        if (winc != null) {
-//            winc.gc2d = (Graphics2D) g;
-//            winc.gc2d.setColor(getBackground());
-//            winc.gc2d.setStroke(new BasicStroke(2)); //толщина линии
-//            winc.gc2d.translate(Com5t.TRANSLATE_XY, Com5t.TRANSLATE_XY);
-//            winc.scale = scale(winc, -3, 0);
+    }
+
+    //Создание изображения конструкции
+    public static ImageIcon createIcon(Wincalc winc, int length) {
+//        try {
+//            BufferedImage bi = new BufferedImage(length, length, BufferedImage.TYPE_INT_RGB);
+//            winc.gc2d = bi.createGraphics();
+//            winc.gc2d.fillRect(0, 0, length, length);
+//            double height = (winc.height1 > winc.height2) ? winc.height1 : winc.height2;
+//            double width = (winc.width2 > winc.width1) ? winc.width2 : winc.width1;
+//            winc.scale = (length / width > length / height)
+//                    ? length / (height + 200) : length / (width + 200);
 //            winc.gc2d.scale(winc.scale, winc.scale);
-//            winc.root.draw();
-//
-//        } else {
-//            g.setColor(getBackground());
-//            g.fillRect(0, 0, getWidth(), getHeight());
-//            //g.clearRect(0, 0, getWidth(), getHeight());
+//            winc.root.draw(); //рисую конструкцию
+//            return new ImageIcon(bi);
+//        } catch (Exception e) {
+//            System.err.println("Canvas.createImageIcon() " + e);
+            return new ImageIcon();
 //        }
     }
 
-    //Создание изображение конструкции
-    public static ImageIcon createIcon(Wincalc winc, int length) {
-        try {
-            BufferedImage bi = new BufferedImage(length, length, BufferedImage.TYPE_INT_RGB);
-            winc.gc2d = bi.createGraphics();
-            winc.gc2d.fillRect(0, 0, length, length);
-            double height = (winc.height1 > winc.height2) ? winc.height1 : winc.height2;
-            double width = (winc.width2 > winc.width1) ? winc.width2 : winc.width1;
-            winc.scale = (length / width > length / height)
-                    ? length / (height + 200) : length / (width + 200);
-            winc.gc2d.scale(winc.scale, winc.scale);
-            winc.root.draw(); //рисую конструкцию
-            return new ImageIcon(bi);
-        } catch (Exception e) {
-            System.err.println("Canvas.createImageIcon() " + e);
-            return new ImageIcon();
-        }
-    }
-
     public double scale(Wincalc winc, double dx, double dy) {
-//        double height = (winc.height1 > winc.height2) ? winc.height1 : winc.height2;
-//        double width = (winc.width2 > winc.width1) ? winc.width2 : winc.width1;
-//
-//        return ((getWidth() + dx) / width > (getHeight() + dx) / height)
-//                ? (getHeight() + dx) / (height + dy) : (getWidth() + dx) / (width + dy);
         Rectangle2D rec = winc.root.area.getBounds2D();
         return ((getWidth() + dx) / rec.getMaxX() > (getHeight() + dx) / rec.getMaxY())
                 ? (getHeight() + dx) / (rec.getMaxY() + dy) : (getWidth() + dx) / (rec.getMaxX() + dy);

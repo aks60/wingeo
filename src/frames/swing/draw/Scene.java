@@ -107,77 +107,77 @@ public class Scene extends javax.swing.JPanel {
 
     //Рисуем на panSouth
     private void paintHorizontal(Graphics gc) {
-        adaptingHorizontal();
-        if (winc != null) {
-            double k = winc.scale;
-            Graphics2D g = (Graphics2D) gc;
-            g.translate(Com5t.TRANSLATE_XY + 14, 0);
-            g.setFont(new java.awt.Font("Tahoma", java.awt.Font.BOLD, resizeFont()));
-
-            //1 - шкала
-            g.setColor(Color.BLACK);
-            Scale sc1 = lineHoriz.get(0);
-            g.drawLine((int) (sc1.X1 * k), 6, (int) (sc1.X1 * k), 12);
-            g.drawLine((int) (sc1.X2 * k), 6, (int) (sc1.X2 * k), 12);
-            g.setColor(sc1.color);
-            int dw = g.getFontMetrics().stringWidth(df1.format(sc1.widthGson()));
-            double val = (sc1.X1 + sc1.width() / 2) * k - dw / 2;
-            g.drawString(df1.format(sc1.widthGson()), (int) val, 12);
-            if (lineHoriz.size() == 2) {
-
-                //2 - шкала
-                Scale sc2 = lineHoriz.get(1);
-                g.setColor(sc2.color);
-                dw = g.getFontMetrics().stringWidth(df1.format(sc2.widthGson()));
-                val = (sc2.X1 + sc2.width() / 2) * k - dw / 2;
-                g.drawString(df1.format(sc2.widthGson()), (int) val, 12);
-                g.setColor(Color.BLACK);
-                g.drawLine((int) (sc2.X2 * k), 6, (int) (sc2.X2 * k), 12);
-            }
-
-        } else {
-            gc.setColor(getBackground());
-            gc.fillRect(0, 0, panHoriz.getWidth(), panHoriz.getHeight());
-        }
+//        adaptingHorizontal();
+//        if (winc != null) {
+//            double k = winc.scale;
+//            Graphics2D g = (Graphics2D) gc;
+//            g.translate(Com5t.TRANSLATE_XY + 14, 0);
+//            g.setFont(new java.awt.Font("Tahoma", java.awt.Font.BOLD, resizeFont()));
+//
+//            //1 - шкала
+//            g.setColor(Color.BLACK);
+//            Scale sc1 = lineHoriz.get(0);
+//            g.drawLine((int) (sc1.X1 * k), 6, (int) (sc1.X1 * k), 12);
+//            g.drawLine((int) (sc1.X2 * k), 6, (int) (sc1.X2 * k), 12);
+//            g.setColor(sc1.color);
+//            int dw = g.getFontMetrics().stringWidth(df1.format(sc1.widthGson()));
+//            double val = (sc1.X1 + sc1.width() / 2) * k - dw / 2;
+//            g.drawString(df1.format(sc1.widthGson()), (int) val, 12);
+//            if (lineHoriz.size() == 2) {
+//
+//                //2 - шкала
+//                Scale sc2 = lineHoriz.get(1);
+//                g.setColor(sc2.color);
+//                dw = g.getFontMetrics().stringWidth(df1.format(sc2.widthGson()));
+//                val = (sc2.X1 + sc2.width() / 2) * k - dw / 2;
+//                g.drawString(df1.format(sc2.widthGson()), (int) val, 12);
+//                g.setColor(Color.BLACK);
+//                g.drawLine((int) (sc2.X2 * k), 6, (int) (sc2.X2 * k), 12);
+//            }
+//
+//        } else {
+//            gc.setColor(getBackground());
+//            gc.fillRect(0, 0, panHoriz.getWidth(), panHoriz.getHeight());
+//        }
     }
 
     //Рисуем на panWest
     private void paintVertical(Graphics gc) {
-        adaptingVertical();
-        if (winc != null) {
-            double k = winc.scale;
-            Graphics2D g = (Graphics2D) gc;
-            g.translate(0, Com5t.TRANSLATE_XY);
-            g.setFont(new java.awt.Font("Tahoma", java.awt.Font.BOLD, resizeFont()));
-
-            //1 - шкала
-            g.setColor(Color.BLACK);
-            Scale sc1 = lineVert.get(0);
-            g.drawLine(0, (int) (sc1.Y1 * k), 8, (int) (sc1.Y1 * k));
-            g.drawLine(0, (int) (sc1.Y2 * k), 8, (int) (sc1.Y2 * k));
-            g.setColor(sc1.color);
-            int dw = g.getFontMetrics().stringWidth(df1.format(sc1.heightGson()));
-            double val = (sc1.Y1 + sc1.height() / 2) * k + dw / 2;
-            g.rotate(Math.toRadians(-90), 11, val);
-            g.drawString(df1.format(sc1.height()), 11, (int) val);
-            g.rotate(Math.toRadians(90), 11, val);
-            if (lineVert.size() == 2) {
-
-                //2 - шкала
-                Scale sc2 = lineVert.get(1);
-                g.setColor(sc2.color);
-                dw = g.getFontMetrics().stringWidth(df1.format(sc2.heightGson()));
-                val = (sc2.Y1 + sc2.height() / 2) * k + dw / 2;
-                g.rotate(Math.toRadians(-90), 11, val);
-                g.drawString(df1.format(sc2.height()), 11, (int) val);
-                g.rotate(Math.toRadians(90), 11, val);
-                g.setColor(Color.BLACK);
-                g.drawLine(0, (int) (sc2.Y2 * k), 8, (int) (sc2.Y2 * k));
-            }
-        } else {
-            gc.setColor(getBackground());
-            gc.fillRect(0, 0, panWert.getWidth(), panWert.getHeight());
-        }
+//        adaptingVertical();
+//        if (winc != null) {
+//            double k = winc.scale;
+//            Graphics2D g = (Graphics2D) gc;
+//            g.translate(0, Com5t.TRANSLATE_XY);
+//            g.setFont(new java.awt.Font("Tahoma", java.awt.Font.BOLD, resizeFont()));
+//
+//            //1 - шкала
+//            g.setColor(Color.BLACK);
+//            Scale sc1 = lineVert.get(0);
+//            g.drawLine(0, (int) (sc1.Y1 * k), 8, (int) (sc1.Y1 * k));
+//            g.drawLine(0, (int) (sc1.Y2 * k), 8, (int) (sc1.Y2 * k));
+//            g.setColor(sc1.color);
+//            int dw = g.getFontMetrics().stringWidth(df1.format(sc1.heightGson()));
+//            double val = (sc1.Y1 + sc1.height() / 2) * k + dw / 2;
+//            g.rotate(Math.toRadians(-90), 11, val);
+//            g.drawString(df1.format(sc1.height()), 11, (int) val);
+//            g.rotate(Math.toRadians(90), 11, val);
+//            if (lineVert.size() == 2) {
+//
+//                //2 - шкала
+//                Scale sc2 = lineVert.get(1);
+//                g.setColor(sc2.color);
+//                dw = g.getFontMetrics().stringWidth(df1.format(sc2.heightGson()));
+//                val = (sc2.Y1 + sc2.height() / 2) * k + dw / 2;
+//                g.rotate(Math.toRadians(-90), 11, val);
+//                g.drawString(df1.format(sc2.height()), 11, (int) val);
+//                g.rotate(Math.toRadians(90), 11, val);
+//                g.setColor(Color.BLACK);
+//                g.drawLine(0, (int) (sc2.Y2 * k), 8, (int) (sc2.Y2 * k));
+//            }
+//        } else {
+//            gc.setColor(getBackground());
+//            gc.fillRect(0, 0, panWert.getWidth(), panWert.getHeight());
+//        }
     }
 
     private int resizeFont() {
@@ -232,79 +232,79 @@ public class Scene extends javax.swing.JPanel {
     }
 
     private void adaptingHorizontal() {
-        if (lineHoriz.size() > 0) {
-
-            Scale sc1 = lineHoriz.get(0);
-            sc1.X1 = sc1.area().x1();
-            sc1.X2 = sc1.area().x2();
-
-            if (lineHoriz.size() == 2) {
-                Scale sc2 = lineHoriz.get(1);
-                if (sc1.area().type == Type.ARCH && sc2.area().type == Type.AREA) {
-                    sc1.X1 = 0;
-                    sc1.X2 = sc1.gson().length;
-                    sc2.X1 = sc1.gson().length;
-                    sc2.X2 = sc1.gson().length + sc2.gson().length;
-
-                } else if (sc1.area().type == Type.TRAPEZE && sc2.area().type == Type.AREA) {
-                    sc1.X1 = 0;
-                    sc1.X2 = sc1.gson().length;
-                    sc2.X1 = sc1.gson().length;
-                    sc2.X2 = sc1.gson().length + sc2.gson().length;
-
-                } else if (sc1.area().root.type == Type.DOOR) {
-                    sc1.X1 = 0;
-                    sc1.X2 = sc1.area().x2();
-                    sc2.X1 = sc1.area().x2();
-                    sc2.X2 = sc2.area().root.width();
-
-                } else if (sc1.area().type == Type.AREA && sc2.area().type == Type.AREA) {
-                    sc2.X1 = sc2.area().x1();
-                    sc2.X2 = sc2.area().x2();
-
-                } else {
-                    System.err.println("Ошибка:frames.swing.draw.Scene.adaptingHorizontal()");
-                }
-            }
-        }
+//        if (lineHoriz.size() > 0) {
+//
+//            Scale sc1 = lineHoriz.get(0);
+//            sc1.X1 = sc1.area().x1();
+//            sc1.X2 = sc1.area().x2();
+//
+//            if (lineHoriz.size() == 2) {
+//                Scale sc2 = lineHoriz.get(1);
+//                if (sc1.area().type == Type.ARCH && sc2.area().type == Type.AREA) {
+//                    sc1.X1 = 0;
+//                    sc1.X2 = sc1.gson().length;
+//                    sc2.X1 = sc1.gson().length;
+//                    sc2.X2 = sc1.gson().length + sc2.gson().length;
+//
+//                } else if (sc1.area().type == Type.TRAPEZE && sc2.area().type == Type.AREA) {
+//                    sc1.X1 = 0;
+//                    sc1.X2 = sc1.gson().length;
+//                    sc2.X1 = sc1.gson().length;
+//                    sc2.X2 = sc1.gson().length + sc2.gson().length;
+//
+//                } else if (sc1.area().root.type == Type.DOOR) {
+//                    sc1.X1 = 0;
+//                    sc1.X2 = sc1.area().x2();
+//                    sc2.X1 = sc1.area().x2();
+//                    sc2.X2 = sc2.area().root.width();
+//
+//                } else if (sc1.area().type == Type.AREA && sc2.area().type == Type.AREA) {
+//                    sc2.X1 = sc2.area().x1();
+//                    sc2.X2 = sc2.area().x2();
+//
+//                } else {
+//                    System.err.println("Ошибка:frames.swing.draw.Scene.adaptingHorizontal()");
+//                }
+//            }
+//        }
     }
 
     private void adaptingVertical() {
-        if (lineVert.size() > 0) {
-
-            Scale sc1 = lineVert.get(0);
-            sc1.Y1 = sc1.area().y1();
-            sc1.Y2 = sc1.area().y2();
-
-            if (lineVert.size() == 2) {
-                Scale sc2 = lineVert.get(1);
-                if (sc1.area().type == Type.ARCH && sc2.area().type == Type.AREA) {
-                    sc1.Y1 = 0;
-                    sc1.Y2 = sc1.gson().length;
-                    sc2.Y1 = sc1.gson().length;
-                    sc2.Y2 = sc1.gson().length + sc2.gson().length;
-
-                } else if (sc1.area().type == Type.TRAPEZE && sc2.area().type == Type.AREA) {
-                    sc1.Y1 = 0;
-                    sc1.Y2 = sc1.gson().length;
-                    sc2.Y1 = sc1.gson().length;
-                    sc2.Y2 = sc1.gson().length + sc2.gson().length;
-
-                } else if (sc1.area().root.type == Type.DOOR) {
-                    sc1.Y1 = 0;
-                    sc1.Y2 = sc1.area().y2();
-                    sc2.Y1 = sc1.area().y2();
-                    sc2.Y2 = sc2.area().root.height();
-
-                } else if (sc1.area().type == Type.AREA && sc2.area().type == Type.AREA) {
-                    sc2.Y1 = sc2.area().y1();
-                    sc2.Y2 = sc2.area().y2();
-
-                } else {
-                    System.err.println("Ошибка:frames.swing.draw.Scene.adaptingVertical()");
-                }
-            }
-        }
+//        if (lineVert.size() > 0) {
+//
+//            Scale sc1 = lineVert.get(0);
+//            sc1.Y1 = sc1.area().y1();
+//            sc1.Y2 = sc1.area().y2();
+//
+//            if (lineVert.size() == 2) {
+//                Scale sc2 = lineVert.get(1);
+//                if (sc1.area().type == Type.ARCH && sc2.area().type == Type.AREA) {
+//                    sc1.Y1 = 0;
+//                    sc1.Y2 = sc1.gson().length;
+//                    sc2.Y1 = sc1.gson().length;
+//                    sc2.Y2 = sc1.gson().length + sc2.gson().length;
+//
+//                } else if (sc1.area().type == Type.TRAPEZE && sc2.area().type == Type.AREA) {
+//                    sc1.Y1 = 0;
+//                    sc1.Y2 = sc1.gson().length;
+//                    sc2.Y1 = sc1.gson().length;
+//                    sc2.Y2 = sc1.gson().length + sc2.gson().length;
+//
+//                } else if (sc1.area().root.type == Type.DOOR) {
+//                    sc1.Y1 = 0;
+//                    sc1.Y2 = sc1.area().y2();
+//                    sc2.Y1 = sc1.area().y2();
+//                    sc2.Y2 = sc2.area().root.height();
+//
+//                } else if (sc1.area().type == Type.AREA && sc2.area().type == Type.AREA) {
+//                    sc2.Y1 = sc2.area().y1();
+//                    sc2.Y2 = sc2.area().y2();
+//
+//                } else {
+//                    System.err.println("Ошибка:frames.swing.draw.Scene.adaptingVertical()");
+//                }
+//            }
+//        }
     }
 
     @SuppressWarnings("unchecked")
@@ -349,42 +349,42 @@ public class Scene extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void panWertClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panWertClicked
-        lineVert.forEach(it -> it.color = Color.BLACK);
-        lineHoriz.forEach(it -> it.color = Color.BLACK);
-        spinner.removeChangeListener(listenerSpinner);
-        spinner.setValue(0);
-        for (Scale scale : lineVert) {
-            double Y = evt.getY();
-            double y1 = scale.Y1 * winc.scale;
-            double y2 = scale.Y2 * winc.scale;
-            if (y1 < Y && Y < y2) {
-                scale.color = java.awt.Color.RED;
-                spinner.setValue(scale.Y2 - scale.Y1);
-            }
-        }
-        spinner.addChangeListener(listenerSpinner);
-        panHoriz.repaint();
-        panWert.repaint();
+//        lineVert.forEach(it -> it.color = Color.BLACK);
+//        lineHoriz.forEach(it -> it.color = Color.BLACK);
+//        spinner.removeChangeListener(listenerSpinner);
+//        spinner.setValue(0);
+//        for (Scale scale : lineVert) {
+//            double Y = evt.getY();
+//            double y1 = scale.Y1 * winc.scale;
+//            double y2 = scale.Y2 * winc.scale;
+//            if (y1 < Y && Y < y2) {
+//                scale.color = java.awt.Color.RED;
+//                spinner.setValue(scale.Y2 - scale.Y1);
+//            }
+//        }
+//        spinner.addChangeListener(listenerSpinner);
+//        panHoriz.repaint();
+//        panWert.repaint();
     }//GEN-LAST:event_panWertClicked
 
     private void panHorizClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panHorizClicked
-        lineVert.forEach(it -> it.color = Color.BLACK);
-        lineHoriz.forEach(it -> it.color = Color.BLACK);
-        spinner.removeChangeListener(listenerSpinner);
-        spinner.setValue(0);
-        double x1 = lineVert.get(0).area().x1() * winc.scale;
-        for (Scale scale : lineHoriz) {
-            double X = evt.getX() - 12;
-            double x2 = scale.area().x2() * winc.scale;
-            if (x1 < X && X < x2) {
-                scale.color = java.awt.Color.RED;
-                spinner.setValue(scale.widthGson());
-            }
-            x1 += scale.widthGson() * winc.scale;
-        }
-        spinner.addChangeListener(listenerSpinner);
-        panHoriz.repaint();
-        panWert.repaint();
+//        lineVert.forEach(it -> it.color = Color.BLACK);
+//        lineHoriz.forEach(it -> it.color = Color.BLACK);
+//        spinner.removeChangeListener(listenerSpinner);
+//        spinner.setValue(0);
+//        double x1 = lineVert.get(0).area().x1() * winc.scale;
+//        for (Scale scale : lineHoriz) {
+//            double X = evt.getX() - 12;
+//            double x2 = scale.area().x2() * winc.scale;
+//            if (x1 < X && X < x2) {
+//                scale.color = java.awt.Color.RED;
+//                spinner.setValue(scale.widthGson());
+//            }
+//            x1 += scale.widthGson() * winc.scale;
+//        }
+//        spinner.addChangeListener(listenerSpinner);
+//        panHoriz.repaint();
+//        panWert.repaint();
     }//GEN-LAST:event_panHorizClicked
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
