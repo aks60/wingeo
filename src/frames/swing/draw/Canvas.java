@@ -103,7 +103,7 @@ public class Canvas extends javax.swing.JPanel implements ListenerFrame<MouseEve
 
     //@Override
     public void paintComponent(Graphics g) {
-        System.out.println("Canvas2D.paintComponent()");
+        //System.out.println("Canvas2D.paintComponent()");
         winc.gc2d = (Graphics2D) g;
         winc.gc2d.scale(winc.scale, winc.scale - 0.001);
         winc.draw();
@@ -111,21 +111,21 @@ public class Canvas extends javax.swing.JPanel implements ListenerFrame<MouseEve
 
     //Создание изображения конструкции
     public static ImageIcon createIcon(Wincalc winc, int length) {
-//        try {
-//            BufferedImage bi = new BufferedImage(length, length, BufferedImage.TYPE_INT_RGB);
-//            winc.gc2d = bi.createGraphics();
-//            winc.gc2d.fillRect(0, 0, length, length);
-//            double height = (winc.height1 > winc.height2) ? winc.height1 : winc.height2;
-//            double width = (winc.width2 > winc.width1) ? winc.width2 : winc.width1;
-//            winc.scale = (length / width > length / height)
-//                    ? length / (height + 200) : length / (width + 200);
-//            winc.gc2d.scale(winc.scale, winc.scale);
-//            winc.root.draw(); //рисую конструкцию
-//            return new ImageIcon(bi);
-//        } catch (Exception e) {
-//            System.err.println("Canvas.createImageIcon() " + e);
+        try {
+            BufferedImage bi = new BufferedImage(length, length, BufferedImage.TYPE_INT_RGB);
+            winc.gc2d = bi.createGraphics();
+            winc.gc2d.fillRect(0, 0, length, length);
+            double height = (winc.height1 > winc.height2) ? winc.height1 : winc.height2;
+            double width = (winc.width2 > winc.width1) ? winc.width2 : winc.width1;
+            winc.scale = (length / width > length / height)
+                    ? length / (height + 200) : length / (width + 200);
+            winc.gc2d.scale(winc.scale, winc.scale);
+            winc.root.draw(); //рисую конструкцию
+            return new ImageIcon(bi);
+        } catch (Exception e) {
+            System.err.println("Canvas.createImageIcon() " + e);
             return new ImageIcon();
-//        }
+        }
     }
 
     public double scale(Wincalc winc, double dx, double dy) {
