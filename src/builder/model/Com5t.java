@@ -84,6 +84,7 @@ public class Com5t {
             double dx = event.getX() - pointPress.getX();
             double dy = event.getY() - pointPress.getY();
             if (ev[0] == true) {
+                //System.out.println(winc.scale + x1());
                 if (event.getX() > margin && mx > margin && event.getY() > margin && my > margin) { //контроль выхода за канву
                     x1(dx / winc.scale + x1());
                     y1(dy / winc.scale + y1());

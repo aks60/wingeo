@@ -127,21 +127,21 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     @Override
     public void reload() {
         try {
-//            int index = UGui.getIndexRec(tab1);
-//            if (index != -1) {
-//                Wincalc win = winc();
-//                String script = win.gson.toJson();
-//                win.build(script);
-//                win.imageIcon = Canvas.createIcon(win, 68);
-//                Record sysmodelRec = qSysmodel.get(index);
-//                sysmodelRec.set(eSysmodel.script, script);
-//                sysmodelRec.set(eSysmodel.values().length, win);
-//                canvas.draw();
-//                scene.lineHoriz.forEach(e -> e.init());
-//                scene.lineVert.forEach(e -> e.init());
-//                scene.draw();
-//                //selectionWinTree();
-//            }
+            int index = UGui.getIndexRec(tab1);
+            if (index != -1) {
+                Wincalc win = winc();
+                String script = win.gson.toJson();
+                win.build(script);
+                win.imageIcon = Canvas.createIcon(win, 68);
+                Record sysmodelRec = qSysmodel.get(index);
+                sysmodelRec.set(eSysmodel.script, script);
+                sysmodelRec.set(eSysmodel.values().length, win);
+                canvas.draw();
+                scene.lineHoriz.forEach(e -> e.init());
+                scene.lineVert.forEach(e -> e.init());
+                scene.draw();
+                //selectionWinTree();
+            }
         } catch (Exception e) {
             System.err.println("Ошибка:Models.reload() " + e);
         }

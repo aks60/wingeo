@@ -54,37 +54,36 @@ public class Scene extends javax.swing.JPanel {
         this.listenerWinc = listenerWinc;
         add(canvas, java.awt.BorderLayout.CENTER);
 
-        this.canvas.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent evt) {
-                if (winc != null) {
-                    //Если клик не на конструкции
-                    if (winc.root.inside(evt.getX() / winc.scale, evt.getY() / winc.scale) == false) {
-                        lineHoriz = List.of(new Scale(winc.root));
-                        lineVert = List.of(new Scale(winc.root));
-
-                    } else { //На конструкции
-                        for (ElemSimple crs : winc.listElem) {
-                            if (List.of(Type.IMPOST, Type.SHTULP, Type.STOIKA).contains(crs.type)
-                                    && crs.inside(evt.getX() / winc.scale, evt.getY() / winc.scale)) {
-                                List<Com5t> areaChilds = ((ElemSimple) crs).owner.childs(); //дети импоста на котором был клик
-                                for (int i = 0; i < areaChilds.size(); ++i) {
-                                    if (areaChilds.get(i).id == crs.id) {
-                                        if (crs.layout == Layout.HORIZ) { //area слева и справа от импоста
-                                            lineVert = List.of(new Scale((AreaSimple) areaChilds.get(i - 1)), new Scale((AreaSimple) areaChilds.get(i + 1)));
-                                        } else {
-                                            lineHoriz = List.of(new Scale((AreaSimple) areaChilds.get(i - 1)), new Scale((AreaSimple) areaChilds.get(i + 1)));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    draw();
-                }
-            }
-        }
-        );
-        spinner.addChangeListener(listenerSpinner);
+//        this.canvas.addMouseListener(new MouseAdapter() {
+//            public void mouseClicked(MouseEvent evt) {
+//                if (winc != null) {
+//                    //Если клик не на конструкции
+//                    if (winc.root.inside(evt.getX() / winc.scale, evt.getY() / winc.scale) == false) {
+//                        lineHoriz = List.of(new Scale(winc.root));
+//                        lineVert = List.of(new Scale(winc.root));
+//
+//                    } else { //На конструкции
+//                        for (ElemSimple crs : winc.listElem) {
+//                            if (List.of(Type.IMPOST, Type.SHTULP, Type.STOIKA).contains(crs.type)
+//                                    && crs.inside(evt.getX() / winc.scale, evt.getY() / winc.scale)) {
+//                                List<Com5t> areaChilds = ((ElemSimple) crs).owner.childs(); //дети импоста на котором был клик
+//                                for (int i = 0; i < areaChilds.size(); ++i) {
+//                                    if (areaChilds.get(i).id == crs.id) {
+//                                        if (crs.layout == Layout.HORIZ) { //area слева и справа от импоста
+//                                            lineVert = List.of(new Scale((AreaSimple) areaChilds.get(i - 1)), new Scale((AreaSimple) areaChilds.get(i + 1)));
+//                                        } else {
+//                                            lineHoriz = List.of(new Scale((AreaSimple) areaChilds.get(i - 1)), new Scale((AreaSimple) areaChilds.get(i + 1)));
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                    draw();
+//                }
+//            }
+//        });
+//        spinner.addChangeListener(listenerSpinner);
     }
 
     public void init(Wincalc winc) {
@@ -194,41 +193,41 @@ public class Scene extends javax.swing.JPanel {
 
     //Изменить размер и перерисовать шкалу
     private void resizeLine() {
-        try {
-            double val = Double.valueOf(spinner.getValue().toString()); //то что накликал клиент
-
-            //Если горизонтальное выделение красн.
-            Scale scaleHor = lineHoriz.stream().filter(sc -> sc.color == Color.RED).findFirst().orElse(null);
-            if (scaleHor != null) {
-                double dx = val - scaleHor.width();
-                if (dx != 0) {
-                    for (Scale scale : lineHoriz) {
-                        if (scale.color == java.awt.Color.RED) {
-                            scale.area().resizeX(scale.area().lengthX() + dx);
-                        } else {
-                            scale.area().resizeX(scale.area().lengthX() - dx);
-                        }
-                    }
-                }
-            }
-            //Если вертикальное выделение красн.
-            Scale scaleVer = lineVert.stream().filter(sc -> sc.color == Color.RED).findFirst().orElse(null);
-            if (scaleVer != null) {
-                double dy = val - scaleVer.height();
-                if (dy != 0) {
-                    for (Scale scale : lineVert) {
-                        if (scale.color == java.awt.Color.RED) {
-                            scale.area().resizeY(scale.area().lengthY() + dy);
-                        } else {
-                            scale.area().resizeY(scale.area().lengthY() - dy);
-                        }
-                    }
-                }
-            }
-            listenerWinc.reload();
-        } catch (Exception e) {
-            System.err.println("Ошибка:Scene.resizeLine() " + e);
-        }
+//        try {
+//            double val = Double.valueOf(spinner.getValue().toString()); //то что накликал клиент
+//
+//            //Если горизонтальное выделение красн.
+//            Scale scaleHor = lineHoriz.stream().filter(sc -> sc.color == Color.RED).findFirst().orElse(null);
+//            if (scaleHor != null) {
+//                double dx = val - scaleHor.width();
+//                if (dx != 0) {
+//                    for (Scale scale : lineHoriz) {
+//                        if (scale.color == java.awt.Color.RED) {
+//                            scale.area().resizeX(scale.area().lengthX() + dx);
+//                        } else {
+//                            scale.area().resizeX(scale.area().lengthX() - dx);
+//                        }
+//                    }
+//                }
+//            }
+//            //Если вертикальное выделение красн.
+//            Scale scaleVer = lineVert.stream().filter(sc -> sc.color == Color.RED).findFirst().orElse(null);
+//            if (scaleVer != null) {
+//                double dy = val - scaleVer.height();
+//                if (dy != 0) {
+//                    for (Scale scale : lineVert) {
+//                        if (scale.color == java.awt.Color.RED) {
+//                            scale.area().resizeY(scale.area().lengthY() + dy);
+//                        } else {
+//                            scale.area().resizeY(scale.area().lengthY() - dy);
+//                        }
+//                    }
+//                }
+//            }
+//            listenerWinc.reload();
+//        } catch (Exception e) {
+//            System.err.println("Ошибка:Scene.resizeLine() " + e);
+//        }
     }
 
     private void adaptingHorizontal() {
