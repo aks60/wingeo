@@ -68,7 +68,6 @@ public class UGeo {
 //    public static double horizontAngl(ElemSimple e) {
 //        return horizontAngl(e.x1(), e.y1(), e.x2(), e.y2());
 //    }
-
     //https://www.onemathematicalcat.org/Math/Precalculus_obj/horizVertToDirMag.htm
     public static double horizontAngl(double x1, double y1, double x2, double y2) {
         double x = x2 - x1;
@@ -114,11 +113,12 @@ public class UGeo {
     public static Area area(double... m) {
         GeneralPath p = new GeneralPath();
         try {
-            p.moveTo(Math.round(m[0]), Math.round(m[1]));
-            for (int i = 3; i < m.length; i = i + 2) {
-                p.lineTo(Math.round(m[i - 1]), Math.round(m[i]));
-            }
-            p.closePath();
+                p.moveTo(Math.round(m[0]), Math.round(m[1]));
+                for (int i = 3; i < m.length; i = i + 2) {
+                    p.lineTo(Math.round(m[i - 1]), Math.round(m[i]));
+                }
+                p.closePath();
+            
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.area()");
         }
@@ -333,11 +333,11 @@ public class UGeo {
     }
 
     public static Area areaReduc(Area area) {
-        UGeo.PRINT(area);
+        //UGeo.PRINT(area);
         ArrayList<Double> listPoint = new ArrayList();
         try {
             for (Line2D.Double line : UGeo.areaAllSegment(area)) {
-                if (Math.abs(line.x1 - line.x2) > 2 && Math.abs(line.y1 - line.y2) > 2) {
+                if (Math.abs(line.x1 - line.x2) > 2 || Math.abs(line.y1 - line.y2) > 2) {
                     listPoint.add(line.x1);
                     listPoint.add(line.y1);
                 }
@@ -347,6 +347,7 @@ public class UGeo {
         }
         double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
         UGeo.PRINT(UGeo.area(arr));
+        //return area;
         return UGeo.area(arr);
     }
 
