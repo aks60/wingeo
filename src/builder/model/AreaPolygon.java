@@ -19,7 +19,6 @@ public class AreaPolygon extends AreaSimple {
     public void setLocation() {
         try {
             GeneralPath p = new GeneralPath();
-            p.reset();
             p.moveTo((float) winc.listFrame.get(0).x1(), (float) winc.listFrame.get(0).y1());
             winc.listFrame.get(0).enext = winc.listFrame.get(1);
             for (int i = 1; i < winc.listFrame.size(); ++i) {
@@ -33,7 +32,7 @@ public class AreaPolygon extends AreaSimple {
             System.err.println("Ошибка:Area2Polygon.setLocation()" + toString() + e);
         }
     }
-
+    
     public void paint() {
      //   winc.gc2D.draw(area);
 //        Area area1 = UGeo.area(0, 0, 0, 900, 600, 800, 0, 0);

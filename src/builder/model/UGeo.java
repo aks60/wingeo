@@ -4,7 +4,7 @@ import domain.eArtikl;
 import enums.Layout;
 import enums.Type;
 import java.awt.Point;
-import java.awt.Polygon;
+import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
@@ -130,18 +130,6 @@ public class UGeo {
         }
     }
 
-    public static Area area2(double[] X, double[] Y) {
-        GeneralPath p = new GeneralPath();
-        int[] arrX = List.of(X).stream();
-        int[] arrY = null;
-        p.moveTo(arrX[0], arrY[0]);
-        for (int j = 1; j < arrX.length; j++) {
-            p.lineTo(arrX[j], arrY[j]);
-        }
-        p.closePath();
-        return new Area(p);
-    }
-
     //Ширина рамки по оси x и y
     public static double[] diffOnAngl(double anglHoriz, double h) {
 
@@ -215,54 +203,40 @@ public class UGeo {
 
     //https://stackoverflow.com/questions/8144156/using-pathiterator-to-return-all-line-segments-that-constrain-an-area
     public static ArrayList<Line2D.Double> areaAllSegment(Area area) {
-
         ArrayList<double[]> areaPoints = new ArrayList<double[]>();
         ArrayList<Line2D.Double> areaSegments = new ArrayList<Line2D.Double>();
         double[] coords = new double[6];
 
         for (PathIterator pi = area.getPathIterator(null); !pi.isDone(); pi.next()) {
-            //Тип будет SEG_LINETO, SEG_MOVETO или SEG_CLOSE
-            //Поскольку площадь состоит из прямых линий
             int type = pi.currentSegment(coords);
-            //Записываем двойной массив {тип сегмента, координата x, координата y}
-            if (areaPoints.size() > 1 && Math.round(coords[0]) != Math.round(areaPoints.get(areaPoints.size() - 1)[1])
-                    && Math.round(coords[0]) != Math.round(areaPoints.get(areaPoints.size() - 1)[1])) {
-
-                double[] pathIteratorCoords = {type, coords[0], coords[1]};
-                areaPoints.add(pathIteratorCoords);
-            } else {
-                double[] pathIteratorCoords = {type, coords[0], coords[1]};
-                areaPoints.add(pathIteratorCoords);
-            }
+            double[] pathIteratorCoords = {type, coords[0], coords[1]};
+            areaPoints.add(pathIteratorCoords);
         }
 
-        double[] start = new double[3]; //чтобы записать, где начинается каждый многоугольник
+        double[] start = new double[3];
 
         for (int i = 0; i < areaPoints.size(); i++) {
-            //Если мы не на последней точке, возвращаем линию от этой точки к следующей
             double[] currentElement = areaPoints.get(i);
-
-            //Нам нужно значение по умолчанию, если мы достигли конца ArrayList
             double[] nextElement = {-1, -1, -1};
             if (i < areaPoints.size() - 1) {
                 nextElement = areaPoints.get(i + 1);
             }
-
-            // Делаем линии
             if (currentElement[0] == PathIterator.SEG_MOVETO) {
-                start = currentElement; //запись, где полигон начал закрывать его позже
+                start = currentElement;
             }
 
             if (nextElement[0] == PathIterator.SEG_LINETO) {
                 areaSegments.add(
                         new Line2D.Double(
-                                currentElement[1], currentElement[2], nextElement[1], nextElement[2]
+                                currentElement[1], currentElement[2],
+                                nextElement[1], nextElement[2]
                         )
                 );
             } else if (nextElement[0] == PathIterator.SEG_CLOSE) {
                 areaSegments.add(
                         new Line2D.Double(
-                                currentElement[1], currentElement[2], start[1], start[2]
+                                currentElement[1], currentElement[2],
+                                start[1], start[2]
                         )
                 );
             }
@@ -355,18 +329,18 @@ public class UGeo {
         ArrayList<Double> listPoint = new ArrayList();
         try {
             for (Line2D.Double line : UGeo.areaAllSegment(area)) {
-                // if (Math.abs(line.x1 - line.x2) > 1 || Math.abs(line.y1 - line.y2) > 1) {
-                listPoint.add(line.x1);
-                listPoint.add(line.y1);
-                //}
+                if (!((line.x1 - line.x2) == 0 && (line.y1 - line.y2) == 0)) {
+                    listPoint.add(line.x1);
+                    listPoint.add(line.y1);
+                }
             }
             double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
             return UGeo.area(arr);
 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.areaReduc()" + e);
+            return area;
         }
-        return area;
     }
 
     public static void PRINT(Area area) {

@@ -53,7 +53,7 @@ public class ElemCross extends ElemSimple {
             if (this.y1() > this.y2()) {
                 areaLeft.intersect(UGeo.area(0, 0, 0, h, L0[2], h, L0[0], 0));
                 //areaLeft.intersect(new Area(new Polygon()));
-                
+
                 areaRigh.intersect(UGeo.area(L0[0], 0, L0[2], h, w, h, w, 0));
             } else {
                 areaRigh.intersect(UGeo.area(0, 0, 0, h, L0[2], h, L0[0], 0));
@@ -103,17 +103,14 @@ public class ElemCross extends ElemSimple {
             Area areaLeft = (Area) owner.area.clone();
             Area areaRigh = (Area) owner.area.clone();
             if (this.y1() > this.y2()) {
-                //int[] mm = new int[]{ 1,2,3,4,5,6,7,8,9,10 };
-                Area ar = UGeo.area2(new int[]{0, 0, L0[2], L0[0]}, new int[]{0, h, h, 0});
-                
-                //areaLeft.intersect(UGeo.area2(new int[]{0, 0, L0[2], L0[0]}, new int[]{0, h, h, 0}));
+                areaLeft.intersect(UGeo.area(0, 0, 0, h, L0[2], h, L0[0], 0));
                 areaRigh.intersect(UGeo.area(L0[0], 0, L0[2], h, w, h, w, 0));
             } else {
                 areaRigh.intersect(UGeo.area(0, 0, 0, h, L0[2], h, L0[0], 0));
                 areaLeft.intersect(UGeo.area(L0[0], 0, L0[2], h, w, h, w, 0));
             }
-            Area areaLeft2 = areaLeft;//UGeo.areaReduc(areaLeft);
-            Area areaRigh2 = areaRigh;//UGeo.areaReduc(areaRigh);
+            Area areaLeft2 = UGeo.areaReduc(areaLeft);
+            Area areaRigh2 = UGeo.areaReduc(areaRigh);
 
             owner.childs().get(0).area = areaLeft2;
             owner.childs().get(2).area = areaRigh2;
@@ -144,7 +141,7 @@ public class ElemCross extends ElemSimple {
             System.err.println("Ошибка:Elem2Cross.setLocation() " + e);
         }
     }
-    
+
     public void setLocation3() {
         try {
             anglHoriz = UGeo.horizontAngl(this);
