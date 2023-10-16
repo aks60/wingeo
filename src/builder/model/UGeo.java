@@ -113,12 +113,12 @@ public class UGeo {
     public static Area area(double... m) {
         GeneralPath p = new GeneralPath();
         try {
-                p.moveTo(Math.round(m[0]), Math.round(m[1]));
-                for (int i = 3; i < m.length; i = i + 2) {
-                    p.lineTo(Math.round(m[i - 1]), Math.round(m[i]));
-                }
-                p.closePath();
-            
+            p.moveTo(Math.round(m[0]), Math.round(m[1]));
+            for (int i = 3; i < m.length; i = i + 2) {
+                p.lineTo(Math.round(m[i - 1]), Math.round(m[i]));
+            }
+            p.closePath();
+
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.area()");
         }
@@ -337,18 +337,21 @@ public class UGeo {
         ArrayList<Double> listPoint = new ArrayList();
         try {
             for (Line2D.Double line : UGeo.areaAllSegment(area)) {
-                if (Math.abs(line.x1 - line.x2) > 2 || Math.abs(line.y1 - line.y2) > 2) {
+                if (Math.abs(line.x1 - line.x2) > 1 || Math.abs(line.y1 - line.y2) > 1) {
                     listPoint.add(line.x1);
                     listPoint.add(line.y1);
                 }
             }
+            double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
+            if (arr.length == 0) {
+                UGeo.PRINT(area);
+            }
+            return UGeo.area(arr);
+
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.areaReduc()" + e);
+            return area;
         }
-        double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
-        UGeo.PRINT(UGeo.area(arr));
-        //return area;
-        return UGeo.area(arr);
     }
 
 // <editor-fold defaultstate="collapsed" desc="XLAM">
@@ -860,16 +863,21 @@ public class UGeo {
             listStr.add("  (" + (++i) + ")" + Math.round(line.x1) + ":" + Math.round(line.y1) + " * " + Math.round(line.x2) + ":" + Math.round(line.y2));
             //listStr.add("  (" + (++i) + ")" + line.x1 + ":" + line.y1 + " * " + line.x2 + ":" + line.y2);
         }
-        System.out.println(listStr);
+        //System.out.println(listStr);
     }
 
     public static void PRINT(double... p) {
         if (p.length == 2) {
             System.out.println((int) p[0] + ":" + (int) p[1]);
-        } else {
+        } else if (p.length == 3) {
+            System.out.println((int) p[0] + ":" + (int) p[1] + ":" + (int) p[2]);
+        } else if (p.length == 4) {
             System.out.println((int) p[0] + ":" + (int) p[1] + ":" + (int) p[2] + ":" + (int) p[3]);
+        } else if (p.length == 5) {
+            System.out.println((int) p[0] + ":" + (int) p[1] + ":" + (int) p[2] + ":" + (int) p[3] + ":" + (int) p[4]);
+        } else if (p.length == 6) {
+            System.out.println((int) p[0] + ":" + (int) p[1] + ":" + (int) p[2] + ":" + (int) p[3] + ":" + (int) p[4] + ":" + (int) p[5]);
         }
     }
-
 // </editor-fold>    
 }
