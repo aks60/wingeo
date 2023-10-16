@@ -4,6 +4,7 @@ import domain.eArtikl;
 import enums.Layout;
 import enums.Type;
 import java.awt.Point;
+import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
@@ -110,18 +111,34 @@ public class UGeo {
         }
     }
 
-    public static Area area(double... m) {
-        GeneralPath p = new GeneralPath();
-        try {
-            p.moveTo(Math.round(m[0]), Math.round(m[1]));
-            for (int i = 3; i < m.length; i = i + 2) {
-                p.lineTo(Math.round(m[i - 1]), Math.round(m[i]));
-            }
-            p.closePath();
+    public static Area area(double... m) throws Exception {
+        if (m != null && m.length != 0) {
+            GeneralPath p = new GeneralPath();
+            try {
+                p.moveTo(Math.round(m[0]), Math.round(m[1]));
+                for (int i = 3; i < m.length; i = i + 2) {
+                    p.lineTo(Math.round(m[i - 1]), Math.round(m[i]));
+                }
+                p.closePath();
 
-        } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.area()");
+            } catch (Exception e) {
+                System.err.println("Ошибка:UGeo.area()");
+            }
+            return new Area(p);
+        } else {
+            throw new Exception("Ошибка2:UGeo.area()");
         }
+    }
+
+    public static Area area2(double[] X, double[] Y) {
+        GeneralPath p = new GeneralPath();
+        int[] arrX = List.of(X).stream();
+        int[] arrY = null;
+        p.moveTo(arrX[0], arrY[0]);
+        for (int j = 1; j < arrX.length; j++) {
+            p.lineTo(arrX[j], arrY[j]);
+        }
+        p.closePath();
         return new Area(p);
     }
 
@@ -325,33 +342,42 @@ public class UGeo {
                     listPoint.add(p[1]);
                 }
             }
+            double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
+            return UGeo.area(arr);
+
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.areaPadding()" + e);
+            return null;
         }
-        double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
-        return UGeo.area(arr);
     }
 
     public static Area areaReduc(Area area) {
-        //UGeo.PRINT(area);
         ArrayList<Double> listPoint = new ArrayList();
         try {
             for (Line2D.Double line : UGeo.areaAllSegment(area)) {
-                if (Math.abs(line.x1 - line.x2) > 1 || Math.abs(line.y1 - line.y2) > 1) {
-                    listPoint.add(line.x1);
-                    listPoint.add(line.y1);
-                }
+                // if (Math.abs(line.x1 - line.x2) > 1 || Math.abs(line.y1 - line.y2) > 1) {
+                listPoint.add(line.x1);
+                listPoint.add(line.y1);
+                //}
             }
             double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
-            if (arr.length == 0) {
-                UGeo.PRINT(area);
-            }
             return UGeo.area(arr);
 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.areaReduc()" + e);
-            return area;
         }
+        return area;
+    }
+
+    public static void PRINT(Area area) {
+        int i = 0;
+        ArrayList<Line2D.Double> listLine = UGeo.areaAllSegment(area);
+        ArrayList<String> listStr = new ArrayList();
+        for (Line2D.Double line : listLine) {
+            listStr.add("  (" + (++i) + ")" + Math.round(line.x1) + ":" + Math.round(line.y1) + ", " + Math.round(line.x2) + ":" + Math.round(line.y2));
+            //listStr.add("  (" + (++i) + ")" + line.x1 + ":" + line.y1 + " * " + line.x2 + ":" + line.y2);
+        }
+        System.out.println(listStr);
     }
 
 // <editor-fold defaultstate="collapsed" desc="XLAM">
@@ -853,17 +879,6 @@ public class UGeo {
             }
         }
         return null;
-    }
-
-    public static void PRINT(Area area) {
-        int i = 0;
-        ArrayList<Line2D.Double> listLine = UGeo.areaAllSegment(area);
-        ArrayList<String> listStr = new ArrayList();
-        for (Line2D.Double line : listLine) {
-            listStr.add("  (" + (++i) + ")" + Math.round(line.x1) + ":" + Math.round(line.y1) + " * " + Math.round(line.x2) + ":" + Math.round(line.y2));
-            //listStr.add("  (" + (++i) + ")" + line.x1 + ":" + line.y1 + " * " + line.x2 + ":" + line.y2);
-        }
-        //System.out.println(listStr);
     }
 
     public static void PRINT(double... p) {

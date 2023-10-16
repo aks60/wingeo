@@ -274,13 +274,13 @@ public class Test {
 
     //Пример PathIterator
     public static void PathIterator() {
-        Area area1 = UGeo.area(0, 0, 0, 900, 600, 899, 0, 0);
-        Area area2 = new Area(new Rectangle(0, 0, 200, 900));
-        UGeo.PRINT(area2);
-
-        UGeo.PRINT(area1);
-        area1.intersect(area2);
-        UGeo.PRINT(area1);
+//        Area area1 = UGeo.area(0, 0, 0, 900, 600, 899, 0, 0);
+//        Area area2 = new Area(new Rectangle(0, 0, 200, 900));
+//        UGeo.PRINT(area2);
+//
+//        UGeo.PRINT(area1);
+//        area1.intersect(area2);
+//        UGeo.PRINT(area1);
     }
 
     public static void intersect() {
