@@ -776,9 +776,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }//GEN-LAST:event_btnMove
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(geo.gson));
-        //geo.listCross.get(0).prevAndNext(geo.listCross.get(0).childs().get(2).area);
-        //geo.draw();
+        Wincalc geo = winc();
+        geo.draw();
     }//GEN-LAST:event_btnTestActionPerformed
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">     

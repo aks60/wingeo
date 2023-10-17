@@ -4,7 +4,8 @@ import domain.eArtikl;
 import enums.Layout;
 import enums.Type;
 import java.awt.Point;
-import java.awt.Shape;
+import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
@@ -326,21 +327,23 @@ public class UGeo {
     }
 
     public static Area areaReduc(Area area) {
-        ArrayList<Double> listPoint = new ArrayList();
-        try {
-            for (Line2D.Double line : UGeo.areaAllSegment(area)) {
-                if (!((line.x1 - line.x2) == 0 && (line.y1 - line.y2) == 0)) {
-                    listPoint.add(line.x1);
-                    listPoint.add(line.y1);
+        if (area.isPolygonal()) {
+            ArrayList<Double> listPoint = new ArrayList();
+            try {
+                for (Line2D.Double line : UGeo.areaAllSegment(area)) {
+                    if (Math.abs(line.x1 - line.x2) > 1 || Math.abs(line.y1 - line.y2) > 1) {
+                        listPoint.add(line.x1);
+                        listPoint.add(line.y1);
+                    }
                 }
-            }
-            double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
-            return UGeo.area(arr);
+                double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
+                return UGeo.area(arr);
 
-        } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.areaReduc()" + e);
-            return area;
+            } catch (Exception e) {
+                System.err.println("Ошибка:UGeo.areaReduc()" + e);
+            }
         }
+        return area;
     }
 
     public static void PRINT(Area area) {
@@ -348,10 +351,27 @@ public class UGeo {
         ArrayList<Line2D.Double> listLine = UGeo.areaAllSegment(area);
         ArrayList<String> listStr = new ArrayList();
         for (Line2D.Double line : listLine) {
-            listStr.add("  (" + (++i) + ")" + Math.round(line.x1) + ":" + Math.round(line.y1) + ", " + Math.round(line.x2) + ":" + Math.round(line.y2));
-            //listStr.add("  (" + (++i) + ")" + line.x1 + ":" + line.y1 + " * " + line.x2 + ":" + line.y2);
+            //listStr.add("  <" + (++i) + ">" + Math.round(line.x1) + ":" + Math.round(line.y1) + ", " + Math.round(line.x2) + ":" + Math.round(line.y2));
+            listStr.add("  <" + (++i) + ">" + line.x1 + ":" + line.y1 + ", " + line.x2 + ":" + line.y2);
         }
         System.out.println(listStr);
+    }
+
+    public static void amn() {
+        Area a = new Area(new Rectangle(1, 1, 5, 5));
+        PathIterator iterator = a.getPathIterator(null);
+        float[] floats = new float[6];
+        Polygon polygon = new Polygon();
+        while (!iterator.isDone()) {
+            int type = iterator.currentSegment(floats);
+            int x = (int) floats[0];
+            int y = (int) floats[1];
+            if (type != PathIterator.SEG_CLOSE) {
+                polygon.addPoint(x, y);
+                System.out.println("adding x = " + x + ", y = " + y);
+            }
+            iterator.next();
+        }
     }
 
 // <editor-fold defaultstate="collapsed" desc="XLAM">
