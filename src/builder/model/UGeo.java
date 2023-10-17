@@ -184,6 +184,30 @@ public class UGeo {
         return new double[]{X1, 0, X2, h};
     }
 
+    //x = (y - y1)/(y2 -y1)*(x2 - x1) + x1   y = (x - x1)*(y2 -y1)*(x2 - x1) + y1
+    public static Area crossCanvas2(double x1, double y1, double x2, double y2, double w, double h) {
+        try {
+            double X1 = (((0 - y1) / (y2 - y1)) * (x2 - x1)) + x1;
+            if (X1 < 0) {
+                double Y1 = (0 - x1) * (y2 - y1) * (x2 - x1) + y1;
+                double Y2 = (h - x1) * (y2 - y1) * (x2 - x1) + y1;
+                //return new double[]{0, Y1, w, Y2};
+                if (y1 == y2) {
+                    return null;
+                } else {
+                    return area(1.0, 1.0, 4.0, 6.0);
+                }
+            } else {
+                double X2 = (((h - y1) / (y2 - y1)) * (x2 - x1)) + x1;
+                //return new double[]{X1, 0, X2, h};
+                return null;
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.areaReduc()" + e);
+            return null;
+        }
+    }
+
     public static boolean pointOnLine(double x, double y, double x1, double y1, double x2, double y2) {
         //return (Math.round(((x2 - x1) * (y - y1)) - ((y2 - y1) * (x - x1))) == 0);
         //return (((x2 - x1) * (y - y1)) - ((y2 - y1) * (x - x1)) == 0);
