@@ -69,10 +69,10 @@ public class Test {
             //json();
             //uid();
             //script();
-            //intersect();
+            //geom();
 
         } catch (Exception e) {
-            System.err.println("TEST-MAIN: " + e);
+            System.err.println("AKSENOV TEST-MAIN: " + e);
         }
     }
 
@@ -273,7 +273,21 @@ public class Test {
     }
 
     //Пример PathIterator
-    public static void PathIterator() {
+    public static void geom() {
+            double x1 = 0.0;//1.8493652191864385E-5;
+            double x2 = 0.0;
+            double y1 = 0.0;//500.00000000000006;
+            double y2 = 500.00000000000006;
+
+//            if (1000.0 - 1.8493652191864385E-5 > 1) {
+                System.out.println(Math.abs(x1 - x2));
+//            }
+//            if (499.9999999998001 - 500.00000000000006 > 1) {
+                System.out.println(Math.abs(y1 - y2));
+//            }
+            if (Math.abs(x1 - x2) > 1 || Math.abs(y1 - y2) > 1) {
+                System.out.println("AKSENOV");
+            }        
 //        Area area1 = UGeo.area(0, 0, 0, 900, 600, 899, 0, 0);
 //        Area area2 = new Area(new Rectangle(0, 0, 200, 900));
 //        UGeo.PRINT(area2);
@@ -281,16 +295,13 @@ public class Test {
 //        UGeo.PRINT(area1);
 //        area1.intersect(area2);
 //        UGeo.PRINT(area1);
-    }
-
-    public static void intersect() {
-        double a[] = {200.03367570298246, 898.989728910591, 200.0336757029803, 898.989728910591};
-        double b[] = {200.16848754883262, 894.9452514648436, 594.0, 885.0};
-        if (Math.round(a[0]) != Math.round(a[2]) || Math.round(a[1]) != Math.round(a[3])) {
-            System.out.println("a");
-        }
-        if (Math.round(b[0]) != Math.round(b[2]) || Math.round(b[1]) != Math.round(b[3])) {
-            System.out.println("a");
-        }
+//        double a[] = {200.03367570298246, 898.989728910591, 200.0336757029803, 898.989728910591};
+//        double b[] = {200.16848754883262, 894.9452514648436, 594.0, 885.0};
+//        if (Math.round(a[0]) != Math.round(a[2]) || Math.round(a[1]) != Math.round(a[3])) {
+//            System.out.println("a");
+//        }
+//        if (Math.round(b[0]) != Math.round(b[2]) || Math.round(b[1]) != Math.round(b[3])) {
+//            System.out.println("a");
+//        }
     }
 }
