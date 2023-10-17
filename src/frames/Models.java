@@ -55,12 +55,12 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }
 
     public Models(ListenerRecord listener) {
-//        initComponents();
-//        scene = new Scene(canvas, spinner, this);
-//        initElements();
-//        loadingModel();
-//        this.listenet = listener;
-//        loadingTab1(tab1, 1001);
+        initComponents();
+        scene = new Scene(canvas, spinner, this);
+        initElements();
+        loadingModel();
+        this.listenet = listener;
+        loadingTab1(tab1, 1001);
     }
 
     public void loadingModel() {
@@ -108,6 +108,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         }
         ((DefaultTableModel) tab.getModel()).fireTableDataChanged();
         UGui.setSelectedRow(tab);
+        //UGui.setSelectedIndex(tab, 1);
     }
 
     public void selectionTab1(ListSelectionEvent event, JTable tab) {

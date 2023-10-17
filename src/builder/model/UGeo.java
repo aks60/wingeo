@@ -186,25 +186,23 @@ public class UGeo {
     }
 
     //x = (y - y1)/(y2 -y1)*(x2 - x1) + x1   y = (x - x1)*(y2 -y1)*(x2 - x1) + y1
-    public static Area crossCanvas2(double x1, double y1, double x2, double y2, double w, double h) {
+    public static double[][] cross2Canvas(double x1, double y1, double x2, double y2, double w, double h) {
         try {
             double X1 = (((0 - y1) / (y2 - y1)) * (x2 - x1)) + x1;
-            if (X1 < 0) {
+            if (X1 < 0 || X1 > w) {
                 double Y1 = (0 - x1) * (y2 - y1) * (x2 - x1) + y1;
                 double Y2 = (h - x1) * (y2 - y1) * (x2 - x1) + y1;
-                //return new double[]{0, Y1, w, Y2};
                 if (y1 == y2) {
-                    return null;
+                    return new double[][]{{0, 0}, {w, 0}, {w, y2}, {0, y1}};
                 } else {
-                    return area(1.0, 1.0, 4.0, 6.0);
+                    return new double[][] {{0, 0}, {w, 0}, {w, Y2}, {0, Y1}};
                 }
             } else {
                 double X2 = (((h - y1) / (y2 - y1)) * (x2 - x1)) + x1;
-                //return new double[]{X1, 0, X2, h};
-                return null;
+                return new double[][] {{0, 0}, {X1, 0}, {X2, h}, {0, h}};
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.areaReduc()" + e);
+            System.err.println("Ошибка:UGeo.cross2Canvas()" + e);
             return null;
         }
     }
@@ -272,22 +270,8 @@ public class UGeo {
     //Находим предыднщую и последующую линию от совместной между area1 и area2
     public static Line2D.Double[] prevAndNextSegment(Area area1, Area area2) {
 
-        ArrayList<Line2D.Double> list1a = UGeo.areaAllSegment(area1);
-        ArrayList<Line2D.Double> list2a = UGeo.areaAllSegment(area2);
-        ArrayList<Line2D.Double> list1 = new ArrayList();
-        ArrayList<Line2D.Double> list2 = new ArrayList();
-
-        for (Line2D.Double l : list1a) {
-            if (Math.round(l.x1) != Math.round(l.x2) || Math.round(l.y1) != Math.round(l.y2)) {
-                list1.add(l);
-            }
-        }
-        for (Line2D.Double l : list2a) {
-            if (Math.round(l.x1) != Math.round(l.x2) || Math.round(l.y1) != Math.round(l.y2)) {
-                list2.add(l);
-            }
-        }
-        //Цикл по сегментам area1
+        ArrayList<Line2D.Double> list1 = UGeo.areaAllSegment(area1);
+        ArrayList<Line2D.Double> list2 = UGeo.areaAllSegment(area2);
         for (int i1 = 0; i1 < list1.size(); i1++) {
             Line2D.Double line1 = list1.get(i1);
 
@@ -351,22 +335,22 @@ public class UGeo {
     }
 
     public static Area areaReduc(Area area) {
-        if (area.isPolygonal()) {
-            ArrayList<Double> listPoint = new ArrayList();
-            try {
-                for (Line2D.Double line : UGeo.areaAllSegment(area)) {
-                    if (Math.abs(line.x1 - line.x2) > 1 || Math.abs(line.y1 - line.y2) > 1) {
-                        listPoint.add(line.x1);
-                        listPoint.add(line.y1);
-                    }
-                }
-                double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
-                return UGeo.area(arr);
-
-            } catch (Exception e) {
-                System.err.println("Ошибка:UGeo.areaReduc()" + e);
-            }
-        }
+//        if (area.isPolygonal()) {
+//            ArrayList<Double> listPoint = new ArrayList();
+//            try {
+//                for (Line2D.Double line : UGeo.areaAllSegment(area)) {
+//                    if (Math.abs(line.x1 - line.x2) > 1 || Math.abs(line.y1 - line.y2) > 1) {
+//                        listPoint.add(line.x1);
+//                        listPoint.add(line.y1);
+//                    }
+//                }
+//                double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
+//                return UGeo.area(arr);
+//
+//            } catch (Exception e) {
+//                System.err.println("Ошибка:UGeo.areaReduc()" + e);
+//            }
+//        }
         return area;
     }
 
@@ -375,8 +359,8 @@ public class UGeo {
         ArrayList<Line2D.Double> listLine = UGeo.areaAllSegment(area);
         ArrayList<String> listStr = new ArrayList();
         for (Line2D.Double line : listLine) {
-            //listStr.add("  <" + (++i) + ">" + Math.round(line.x1) + ":" + Math.round(line.y1) + ", " + Math.round(line.x2) + ":" + Math.round(line.y2));
-            listStr.add("  <" + (++i) + ">" + line.x1 + ":" + line.y1 + ", " + line.x2 + ":" + line.y2);
+            listStr.add("  <" + (++i) + ">" + Math.round(line.x1) + ":" + Math.round(line.y1) + ", " + Math.round(line.x2) + ":" + Math.round(line.y2));
+            //listStr.add("  <" + (++i) + ">" + line.x1 + ":" + line.y1 + ", " + line.x2 + ":" + line.y2);
         }
         System.out.println(listStr);
     }

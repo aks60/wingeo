@@ -35,7 +35,7 @@ public class ElemCross extends ElemSimple {
         artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true);
     }
 
-    public void setLocation2() {
+    public void setLocation() {
         try {
             anglHoriz = UGeo.horizontAngl(this);
             double w = owner.area.getBounds2D().getMaxX();
@@ -45,49 +45,46 @@ public class ElemCross extends ElemSimple {
             double M[] = UGeo.diffOnAngl(UGeo.horizontAngl(this), this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
 
             //Пересечение канвы вектором импоста при y1 = 0, y2 = h
-            double L0[] = UGeo.crossCanvas(this.x1(), this.y1(), this.x2(), this.y2(), w, h);
+            double P[][] = UGeo.cross2Canvas(this.x1(), this.y1(), this.x2(), this.y2(), w, h);
 
             //Area слева и справа от импоста
             Area areaLeft = (Area) owner.area.clone();
             Area areaRigh = (Area) owner.area.clone();
-            if (this.y1() > this.y2()) {
-                areaLeft.intersect(UGeo.area(0, 0, 0, h, L0[2], h, L0[0], 0));
-                //areaLeft.intersect(new Area(new Polygon()));
+            
+            Area areaTop = UGeo.area(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]);
+            areaLeft.intersect(areaTop);
+            areaRigh.subtract(areaTop);
 
-                areaRigh.intersect(UGeo.area(L0[0], 0, L0[2], h, w, h, w, 0));
-            } else {
-                areaRigh.intersect(UGeo.area(0, 0, 0, h, L0[2], h, L0[0], 0));
-                areaLeft.intersect(UGeo.area(L0[0], 0, L0[2], h, w, h, w, 0));
-            }
             owner.childs().get(0).area = areaLeft;
             owner.childs().get(2).area = areaRigh;
 
-            //UGeo.PRINT(UGeo.area(L0[0], 0, L0[2], h, w, h, w, 0));
-            // UGeo.PRINT(areaRigh);
+            UGeo.PRINT(areaTop);
+            UGeo.PRINT(areaLeft);
+            UGeo.PRINT(areaRigh);
+
             //Предыднщая и последующая линия от совместной между area1 и area2
             Line2D.Double d[] = UGeo.prevAndNextSegment(areaLeft, areaRigh);
-            this.setDimension(d[2].x1, d[2].y1, d[2].x2, d[2].y2);
+            if (d != null) {
+                this.setDimension(d[2].x1, d[2].y1, d[2].x2, d[2].y2);
 
-            //Пересечение канвы сегментами импоста
-            double L1[] = UGeo.crossCanvas(this.x1() + M[0], this.y1() + M[1], this.x2() + M[0], this.y2() + M[1], w, h);
-            double L2[] = UGeo.crossCanvas(this.x1() - M[0], this.y1() - M[1], this.x2() - M[0], this.y2() - M[1], w, h);
+                //Пересечение канвы сегментами импоста
+                double L1[] = UGeo.crossCanvas(this.x1() + M[0], this.y1() + M[1], this.x2() + M[0], this.y2() + M[1], w, h);
+                double L2[] = UGeo.crossCanvas(this.x1() - M[0], this.y1() - M[1], this.x2() - M[0], this.y2() - M[1], w, h);
 
-            //UGeo.PRINT(owner.area);
-            //Area импоста внутренняя
-            //Area areaPadding = UGeo.areaPadding(wing.listFrame);        
-            Area areaPadding = UGeo.areaPadding(owner.area, winc.listElem);
+                //Area импоста внутренняя
+                //Area areaPadding = UGeo.areaPadding(winc.listFrame);        
+                Area areaPadding = UGeo.areaPadding(owner.area, winc.listElem);
 
-            areaPadding.intersect(UGeo.area(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]));
-            //this.area = UGeo.areaReduc(areaPadding);
-            this.area = areaPadding;
-
+                areaPadding.intersect(UGeo.area(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]));
+                this.area = areaPadding;
+            }
         } catch (Exception e) {
             this.area = null;
-            System.err.println("Ошибка:Elem2Cross.setLocation() " + e);
+            System.err.println("Ошибка:ElemCross.setLocation() " + e);
         }
     }
 
-    public void setLocation() {
+    public void setLocation2() {
         try {
             anglHoriz = UGeo.horizontAngl(this);
             double w = owner.area.getBounds2D().getMaxX();
@@ -131,69 +128,15 @@ public class ElemCross extends ElemSimple {
                 //Area импоста внутренняя
                 //Area areaPadding = UGeo.areaPadding(winc.listFrame);        
                 Area areaPadding = UGeo.areaPadding(owner.area, winc.listElem);
-
-                areaPadding.intersect(UGeo.area(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]));
-                this.area = UGeo.areaReduc(areaPadding);
-                //this.area = areaPadding;
+                if (areaPadding != null) {
+                    areaPadding.intersect(UGeo.area(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]));
+                    this.area = UGeo.areaReduc(areaPadding);
+                    //this.area = areaPadding;
+                }
             }
         } catch (Exception e) {
             this.area = null;
-            System.err.println("Ошибка:Elem2Cross.setLocation() " + e);
-        }
-    }
-
-    public void setLocation3() {
-        try {
-            anglHoriz = UGeo.horizontAngl(this);
-            double w = owner.area.getBounds2D().getMaxX();
-            double h = owner.area.getBounds2D().getMaxY();
-
-            //Ширина импоста
-            double M[] = UGeo.diffOnAngl(UGeo.horizontAngl(this), this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
-
-            //Пересечение канвы вектором импоста при y1 = 0, y2 = h
-            double L0[] = UGeo.crossCanvas(this.x1(), this.y1(), this.x2(), this.y2(), w, h);
-
-            //Area слева и справа от импоста
-            Area areaLeft = (Area) owner.area.clone();
-            Area areaRigh = (Area) owner.area.clone();
-            if (this.y1() > this.y2()) {
-                areaLeft.intersect(UGeo.area(0, 0, 0, h, L0[2], h, L0[0], 0));
-                areaRigh.intersect(UGeo.area(L0[0], 0, L0[2], h, w, h, w, 0));
-            } else {
-                areaRigh.intersect(UGeo.area(0, 0, 0, h, L0[2], h, L0[0], 0));
-                areaLeft.intersect(UGeo.area(L0[0], 0, L0[2], h, w, h, w, 0));
-            }
-            Area areaLeft2 = areaLeft;//UGeo.areaReduc(areaLeft);
-            Area areaRigh2 = areaRigh;//UGeo.areaReduc(areaRigh);
-
-            owner.childs().get(0).area = areaLeft2;
-            owner.childs().get(2).area = areaRigh2;
-
-            UGeo.PRINT(areaLeft2);
-            Area areaTest = UGeo.areaReduc(areaLeft2);
-            UGeo.PRINT(areaTest);
-
-            //Предыднщая и последующая линия от совместной между area1 и area2
-            Line2D.Double d[] = UGeo.prevAndNextSegment(areaLeft2, areaRigh2);
-            if (d != null) {
-                this.setDimension(d[2].x1, d[2].y1, d[2].x2, d[2].y2);
-
-                //Пересечение канвы сегментами импоста
-                double L1[] = UGeo.crossCanvas(this.x1() + M[0], this.y1() + M[1], this.x2() + M[0], this.y2() + M[1], w, h);
-                double L2[] = UGeo.crossCanvas(this.x1() - M[0], this.y1() - M[1], this.x2() - M[0], this.y2() - M[1], w, h);
-
-                //Area импоста внутренняя
-                //Area areaPadding = UGeo.areaPadding(winc.listFrame);        
-                Area areaPadding = UGeo.areaPadding(owner.area, winc.listElem);
-
-                areaPadding.intersect(UGeo.area(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]));
-                this.area = UGeo.areaReduc(areaPadding);
-                //this.area = areaPadding;
-            }
-        } catch (Exception e) {
-            this.area = null;
-            System.err.println("Ошибка:Elem2Cross.setLocation() " + e);
+            System.err.println("Ошибка:ElemCross.setLocation() " + e);
         }
     }
 
@@ -205,7 +148,7 @@ public class ElemCross extends ElemSimple {
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Elem2Cross.paint() " + e);
+            System.err.println("Ошибка:ElemCross.paint() " + e);
         }
     }
 

@@ -76,7 +76,7 @@ public class ElemFrame extends ElemSimple {
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Elem2Frame.setLocation()" + toString() + e);
+            System.err.println("Ошибка:ElemFrame.setLocation()" + toString() + e);
         }
     }
 
