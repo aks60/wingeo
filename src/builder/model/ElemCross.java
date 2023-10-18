@@ -41,15 +41,12 @@ public class ElemCross extends ElemSimple {
             double w = owner.area.getBounds2D().getMaxX();
             double h = owner.area.getBounds2D().getMaxY();
 
-            //Ширина импоста
-            double M[] = UGeo.diffOnAngl(UGeo.horizontAngl(this), this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
-
-            //Пересечение канвы вектором импоста при y1 = 0, y2 = h
+            //Пересечение канвы вектором импоста
             double P[][] = UGeo.cross2Canvas(this.x1(), this.y1(), this.x2(), this.y2(), w, h);
 
             //Area слева и справа от импоста
             Area areaTop = (Area) owner.area.clone();
-            Area areaBot = (Area) owner.area.clone();            
+            Area areaBot = (Area) owner.area.clone();
             areaTop.intersect(UGeo.area(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]));
             areaBot.subtract(UGeo.area(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]));
             owner.childs().get(0).area = areaTop;
@@ -66,14 +63,16 @@ public class ElemCross extends ElemSimple {
             if (d != null) {
                 this.setDimension(d[2].x1, d[2].y1, d[2].x2, d[2].y2);
 
+                double M[] = UGeo.diffOnAngl(UGeo.horizontAngl(this), //ширина импоста
+                        this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
+
                 //Пересечение канвы сегментами импоста
                 double L1[] = UGeo.crossCanvas(this.x1() + M[0], this.y1() + M[1], this.x2() + M[0], this.y2() + M[1], w, h);
                 double L2[] = UGeo.crossCanvas(this.x1() - M[0], this.y1() - M[1], this.x2() - M[0], this.y2() - M[1], w, h);
 
                 //Area импоста внутренняя       
-                Area areaPadding = UGeo.areaPadding(owner.area, winc.listElem);
-                areaPadding.intersect(UGeo.area(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]));
-                this.area = areaPadding;
+                this.area = UGeo.areaPadding(owner.area, winc.listElem);
+                this.area.intersect(UGeo.area(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]));
             }
         } catch (Exception e) {
             this.area = null;

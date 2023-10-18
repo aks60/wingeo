@@ -222,7 +222,7 @@ public class UGeo {
     }
 
     //https://stackoverflow.com/questions/8144156/using-pathiterator-to-return-all-line-segments-that-constrain-an-area
-    public static ArrayList<Line2D.Double> areaAllSegment2(Area area) {
+    public static ArrayList<Line2D.Double> areaAllSegment(Area area) {
         ArrayList<double[]> areaPoints = new ArrayList<double[]>();
         ArrayList<Line2D.Double> areaSegments = new ArrayList<Line2D.Double>();
         double[] coords = new double[6];
@@ -259,42 +259,6 @@ public class UGeo {
                                 start[1], start[2]
                         )
                 );
-            }
-        }
-        return areaSegments;
-    }
-
-    public static ArrayList<Line2D.Double> areaAllSegment(final Area area) {
-        final ArrayList<double[]> areaPoints = new ArrayList<>();
-        final ArrayList<Line2D.Double> areaSegments = new ArrayList<>();
-        final double[] coords = new double[6];
-        for (final PathIterator pi = area.getPathIterator(null); !pi.isDone(); pi.next()) {
-            // The type will be SEG_LINETO, SEG_MOVETO, or SEG_CLOSE
-            // Because the Area is composed of straight lines
-            final int type = pi.currentSegment(coords);
-            // We record a double array of x coord and y coord
-            final double[] pathIteratorCoords = {type, coords[0], coords[1]};
-            areaPoints.add(pathIteratorCoords);
-        }
-        double[] start = new double[3]; // To record where each polygon starts
-        for (int i = 0; i < areaPoints.size(); i++) {
-            // If we're not on the last point, return a line from this point to the
-            // next
-            final double[] currentElement = areaPoints.get(i);
-            // We need a default value in case we've reached the end of the ArrayList
-            double[] nextElement = {-1, -1, -1};
-            if (i < areaPoints.size() - 1) {
-                nextElement = areaPoints.get(i + 1);
-            }
-            // Make the lines
-            if (currentElement[0] == PathIterator.SEG_MOVETO) {
-                start = currentElement; // Record where the polygon started to close it
-                // later
-            }
-            if (nextElement[0] == PathIterator.SEG_LINETO) {
-                areaSegments.add(new Line2D.Double(currentElement[1], currentElement[2], nextElement[1], nextElement[2]));
-            } else if (nextElement[0] == PathIterator.SEG_CLOSE) {
-                areaSegments.add(new Line2D.Double(currentElement[1], currentElement[2], start[1], start[2]));
             }
         }
         return areaSegments;
