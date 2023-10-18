@@ -71,7 +71,7 @@ public class ElemFrame extends ElemSimple {
                             x1() + h0[0], y1() + h0[1], x2() + h0[0], y2() + h0[1], 
                             e1.x1() + h2[0], e1.y1() + h2[1], e1.x2() + h2[0], e1.y2() + h2[1]);
                     
-                    this.area = UGeo.rectangl(x1(), y1(), x2(), y2(), p2[0], p2[1], p1[0], p1[1]);
+                    this.area = UGeo.rectanglArea(x1(), y1(), x2(), y2(), p2[0], p2[1], p1[0], p1[1]);
                 }
             }
 
@@ -81,7 +81,9 @@ public class ElemFrame extends ElemSimple {
     }
 
     public void paint() {
-        winc.gc2d.draw(area);
+        if (this.area != null) {
+           winc.gc2d.draw(area);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">

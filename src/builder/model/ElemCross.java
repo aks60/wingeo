@@ -48,22 +48,20 @@ public class ElemCross extends ElemSimple {
             double P[][] = UGeo.cross2Canvas(this.x1(), this.y1(), this.x2(), this.y2(), w, h);
 
             //Area слева и справа от импоста
-            Area areaLeft = (Area) owner.area.clone();
-            Area areaRigh = (Area) owner.area.clone();
-            
-            Area areaTop = UGeo.area(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]);
-            areaLeft.intersect(areaTop);
-            areaRigh.subtract(areaTop);
+            Area areaTop = (Area) owner.area.clone();
+            Area areaBot = (Area) owner.area.clone();            
+            areaTop.intersect(UGeo.area(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]));
+            areaBot.subtract(UGeo.area(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]));
+            owner.childs().get(0).area = areaTop;
+            owner.childs().get(2).area = areaBot;
 
-            owner.childs().get(0).area = areaLeft;
-            owner.childs().get(2).area = areaRigh;
-
+            //UGeo.PRINT(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]);
+            //UGeo.PRINT(UGeo.area(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]));
             UGeo.PRINT(areaTop);
-            UGeo.PRINT(areaLeft);
-            UGeo.PRINT(areaRigh);
+            UGeo.PRINT(areaBot);
 
             //Предыднщая и последующая линия от совместной между area1 и area2
-            Line2D.Double d[] = UGeo.prevAndNextSegment(areaLeft, areaRigh);
+            Line2D.Double d[] = UGeo.prevAndNextSegment(areaTop, areaBot);
             if (d != null) {
                 this.setDimension(d[2].x1, d[2].y1, d[2].x2, d[2].y2);
 
@@ -71,10 +69,8 @@ public class ElemCross extends ElemSimple {
                 double L1[] = UGeo.crossCanvas(this.x1() + M[0], this.y1() + M[1], this.x2() + M[0], this.y2() + M[1], w, h);
                 double L2[] = UGeo.crossCanvas(this.x1() - M[0], this.y1() - M[1], this.x2() - M[0], this.y2() - M[1], w, h);
 
-                //Area импоста внутренняя
-                //Area areaPadding = UGeo.areaPadding(winc.listFrame);        
+                //Area импоста внутренняя       
                 Area areaPadding = UGeo.areaPadding(owner.area, winc.listElem);
-
                 areaPadding.intersect(UGeo.area(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]));
                 this.area = areaPadding;
             }

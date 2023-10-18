@@ -66,10 +66,6 @@ public class UGeo {
         return horizontAngl(e.x1(), e.y1(), e.x2(), e.y2());
     }
 
-//    //https://www.onemathematicalcat.org/Math/Precalculus_obj/horizVertToDirMag.htm
-//    public static double horizontAngl(ElemSimple e) {
-//        return horizontAngl(e.x1(), e.y1(), e.x2(), e.y2());
-//    }
     //https://www.onemathematicalcat.org/Math/Precalculus_obj/horizVertToDirMag.htm
     public static double horizontAngl(double x1, double y1, double x2, double y2) {
         double x = x2 - x1;
@@ -96,7 +92,7 @@ public class UGeo {
         }
     }
 
-    public static Area rectangl(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) {
+    public static Area rectanglArea(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) {
         try {
             GeneralPath p = new GeneralPath();
             p.moveTo(x1, y1);
@@ -170,7 +166,7 @@ public class UGeo {
         return dot;
     }
 
-    //Точки пересечение импостом Canvas2D. x = (y - y1)/(y2 -y1)*(x2 - x1) + x1
+    //Точки пересечение импостом Canvas2D. x = (x2 - x1) * (y - y1) / (y2 - y1) + x1
     //https://www.interestprograms.ru/source-codes-tochka-peresecheniya-dvuh-pryamyh-na-ploskosti#uravnenie-v-programmnyj-kod      
     public static double[] crossCanvas(double x1, double y1, double x2, double y2, double w, double h) {
 //        double X1 = (y1 == y2) ? 0 : (((0 - y1) / (y2 - y1)) * (x2 - x1)) + x1;
@@ -180,25 +176,26 @@ public class UGeo {
 
         double Y1 = (y1 == y2) ? y1 + 0.0000000001 : y1;
         double Y2 = (y1 == y2) ? y2 - 0.0000000001 : y2;
-        double X1 = (((0 - Y1) / (Y2 - Y1)) * (x2 - x1)) + x1;
-        double X2 = (((h - Y1) / (Y2 - Y1)) * (x2 - x1)) + x1;
+        double X1 = (x2 - x1) * (0 - Y1) / (Y2 - Y1) + x1;
+        double X2 = (x2 - x1) * (h - Y1) / (Y2 - Y1) + x1;
         return new double[]{X1, 0, X2, h};
     }
 
-    //x = (y - y1)/(y2 -y1)*(x2 - x1) + x1   y = (x - x1)*(y2 -y1)*(x2 - x1) + y1
+    //x = (x2 - x1) * (y - y1) / (y2 - y1) + x1   y = (y2 - y1) * (x - x1) / (x2 - x1) + y1
     public static double[][] cross2Canvas(double x1, double y1, double x2, double y2, double w, double h) {
         try {
             double X1 = (((0 - y1) / (y2 - y1)) * (x2 - x1)) + x1;
             if (X1 < 0 || X1 > w) {
-                double Y1 = (0 - x1) * (y2 - y1) * (x2 - x1) + y1;
-                double Y2 = (h - x1) * (y2 - y1) * (x2 - x1) + y1;
+                double Y1 = (y2 - y1) * (0 - x1) / (x2 - x1) + y1;
+                double Y2 = (y2 - y1) * (w - x1) / (x2 - x1) + y1;
+                
                 if (y1 == y2) {
                     return new double[][]{{0, 0}, {w, 0}, {w, y2}, {0, y1}};
                 } else {
                     return new double[][] {{0, 0}, {w, 0}, {w, Y2}, {0, Y1}};
                 }
             } else {
-                double X2 = (((h - y1) / (y2 - y1)) * (x2 - x1)) + x1;
+                double X2 = (x2 - x1) * (h - y1) / (y2 - y1) + x1;
                 return new double[][] {{0, 0}, {X1, 0}, {X2, h}, {0, h}};
             }
         } catch (Exception e) {
@@ -354,6 +351,8 @@ public class UGeo {
         return area;
     }
 
+// <editor-fold defaultstate="collapsed" desc="XLAM">
+
     public static void PRINT(Area area) {
         int i = 0;
         ArrayList<Line2D.Double> listLine = UGeo.areaAllSegment(area);
@@ -365,24 +364,24 @@ public class UGeo {
         System.out.println(listStr);
     }
 
-    public static void amn() {
-        Area a = new Area(new Rectangle(1, 1, 5, 5));
-        PathIterator iterator = a.getPathIterator(null);
-        float[] floats = new float[6];
-        Polygon polygon = new Polygon();
-        while (!iterator.isDone()) {
-            int type = iterator.currentSegment(floats);
-            int x = (int) floats[0];
-            int y = (int) floats[1];
-            if (type != PathIterator.SEG_CLOSE) {
-                polygon.addPoint(x, y);
-                System.out.println("adding x = " + x + ", y = " + y);
-            }
-            iterator.next();
+    public static void PRINT(double... p) {
+        if (p.length == 2) {
+            System.out.println((int) p[0] + ", *" + (int) p[1]);
+        } else if (p.length == 3) {
+            System.out.println((int) p[0] + "," + (int) p[1] + ", " + (int) p[2]);
+        } else if (p.length == 4) {
+            System.out.println((int) p[0] + ", " + (int) p[1] + ", " + (int) p[2] + ", " + (int) p[3]);
+        } else if (p.length == 5) {
+            System.out.println((int) p[0] + ", " + (int) p[1] + ", " + (int) p[2] + ", " + (int) p[3] + ", " + (int) p[4]);
+        } else if (p.length == 6) {
+            System.out.println((int) p[0] + ", " + (int) p[1] + ", " + (int) p[2] + ", " + (int) p[3] + ", " + (int) p[4] + ", " + (int) p[5]);
+        } else if (p.length == 7) {
+            System.out.println((int) p[0] + ", " + (int) p[1] + ", " + (int) p[2] + ", " + (int) p[3] + ", " + (int) p[4] + ", " + (int) p[5] + ", " + (int) p[6]);
+        } else if (p.length == 8) {
+            System.out.println((int) p[0] + ", " + (int) p[1] + ", " + (int) p[2] + ", " + (int) p[3] + ", " + (int) p[4] + ", " + (int) p[5] + ", " + (int) p[6] + ", " + (int) p[7]);
         }
     }
-
-// <editor-fold defaultstate="collapsed" desc="XLAM">
+    
     //https://stackoverflow.com/questions/21941156/shapes-and-segments-in-java
     public static Area[] split(Area area, Com5t line) {
 
@@ -881,20 +880,6 @@ public class UGeo {
             }
         }
         return null;
-    }
-
-    public static void PRINT(double... p) {
-        if (p.length == 2) {
-            System.out.println((int) p[0] + ":" + (int) p[1]);
-        } else if (p.length == 3) {
-            System.out.println((int) p[0] + ":" + (int) p[1] + ":" + (int) p[2]);
-        } else if (p.length == 4) {
-            System.out.println((int) p[0] + ":" + (int) p[1] + ":" + (int) p[2] + ":" + (int) p[3]);
-        } else if (p.length == 5) {
-            System.out.println((int) p[0] + ":" + (int) p[1] + ":" + (int) p[2] + ":" + (int) p[3] + ":" + (int) p[4]);
-        } else if (p.length == 6) {
-            System.out.println((int) p[0] + ":" + (int) p[1] + ":" + (int) p[2] + ":" + (int) p[3] + ":" + (int) p[4] + ":" + (int) p[5]);
-        }
     }
 // </editor-fold>    
 }
