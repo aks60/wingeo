@@ -271,25 +271,28 @@ public class UGeo {
         ArrayList<Line2D.Double> list2 = UGeo.areaAllSegment(area2);
         for (int i1 = 0; i1 < list1.size(); i1++) {
             Line2D.Double line1 = list1.get(i1);
+            if (!(line1.x1 == line1.x2 && line1.y1 == line1.y2)) { //проверка нулевого сегмета
 
-            //Цикл по сегментам area2
-            for (int i2 = 0; i2 < list2.size(); i2++) {
-                Line2D.Double line2 = list2.get(i2);
+                //Цикл по сегментам area2
+                for (int i2 = 0; i2 < list2.size(); i2++) {
+                    Line2D.Double line2 = list2.get(i2);
+                    if (!(line2.x1 == line2.x2 && line2.y1 == line2.y2)) { //проверка нулевого сегмета
 
-                //Если сегменты area1 и area2 общие
-                if (Math.round(line1.x1) == Math.round(line2.x2) && Math.round(line1.y1) == Math.round(line2.y2)
-                        && Math.round(line1.x2) == Math.round(line2.x1) && Math.round(line1.y2) == Math.round(line2.y1)) {
+                        //Если сегменты area1 и area2 общие
+                        if (Math.round(line1.x1) == Math.round(line2.x2) && Math.round(line1.y1) == Math.round(line2.y2)) {
 
-                    //Находим предыдущий и последующий сегмент
-                    int k1 = (i1 == 0) ? list1.size() - 1 : i1 - 1;
-                    int j1 = (i1 == (list1.size() - 1)) ? 0 : i1 + 1;
-                    Line2D.Double[] l1 = new Line2D.Double[]{list1.get(k1), list1.get(j1)};
+                            //Находим предыдущий и последующий сегмент
+                            int k1 = (i1 == 0) ? list1.size() - 1 : i1 - 1;
+                            int j1 = (i1 == (list1.size() - 1)) ? 0 : i1 + 1;
+                            Line2D.Double[] l1 = new Line2D.Double[]{list1.get(k1), list1.get(j1)};
 
-                    int k2 = (i2 == 0) ? list2.size() - 1 : i2 - 1;
-                    int j2 = (i2 == (list2.size() - 1)) ? 0 : i2 + 1;
-                    Line2D.Double[] l2 = new Line2D.Double[]{list2.get(k2), list2.get(j2)};
+                            int k2 = (i2 == 0) ? list2.size() - 1 : i2 - 1;
+                            int j2 = (i2 == (list2.size() - 1)) ? 0 : i2 + 1;
+                            Line2D.Double[] l2 = new Line2D.Double[]{list2.get(k2), list2.get(j2)};
 
-                    return new Line2D.Double[]{l1[0], l1[1], line1, l2[0], l2[1]};
+                            return new Line2D.Double[]{l1[0], l1[1], line1, l2[0], l2[1]};
+                        }
+                    }
                 }
             }
         }
@@ -332,22 +335,22 @@ public class UGeo {
     }
 
     public static Area areaReduc(Area area) {
-//        if (area.isPolygonal()) {
-//            ArrayList<Double> listPoint = new ArrayList();
-//            try {
-//                for (Line2D.Double line : UGeo.areaAllSegment(area)) {
-//                    if (Math.abs(line.x1 - line.x2) > 1 || Math.abs(line.y1 - line.y2) > 1) {
-//                        listPoint.add(line.x1);
-//                        listPoint.add(line.y1);
-//                    }
-//                }
-//                double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
-//                return UGeo.area(arr);
-//
-//            } catch (Exception e) {
-//                System.err.println("Ошибка:UGeo.areaReduc()" + e);
-//            }
-//        }
+        if (area.isPolygonal()) {
+            ArrayList<Double> listPoint = new ArrayList();
+            try {
+                for (Line2D.Double line : UGeo.areaAllSegment(area)) {
+                    if (!(line.x1 == line.x2 && line.y1 == line.y2)) { //проверка нулевого сегмета
+                        listPoint.add(line.x1);
+                        listPoint.add(line.y1);
+                    }
+                }
+                double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
+                return UGeo.area(arr);
+
+            } catch (Exception e) {
+                System.err.println("Ошибка:UGeo.areaReduc()" + e);
+            }
+        }
         return area;
     }
 
@@ -829,35 +832,6 @@ public class UGeo {
         }   // end if
 
         return result;
-    }
-
-    public static Area reduceArea(Area area) {
-        GeneralPath p = new GeneralPath();
-        double[] v = new double[6];
-        List<Point2D> list = new ArrayList(List.of(new Point2D.Double(-1, -1)));
-        try {
-            PathIterator iterator = area.getPathIterator(null);
-            while (!iterator.isDone()) {
-                if (iterator.currentSegment(v) != PathIterator.SEG_CLOSE) {
-                    Point2D a = list.get(list.size() - 1);
-                    if (Math.round(a.getX()) != Math.round(v[0]) || Math.round(a.getY()) != Math.round(v[1])) {
-                        list.add(new Point2D.Double(v[0], v[1]));
-                        //System.out.println(Math.round(a.getX()) + " == " + Math.round(v[0])  + "......" + Math.round(a.getY())  + " == " + Math.round(v[1]));
-                    }
-                }
-                iterator.next();
-            }
-            //System.out.println(list);
-            p.moveTo(list.get(1).getX(), list.get(1).getY());
-            for (int i = 2; i < list.size(); ++i) {
-                p.lineTo(list.get(i).getX(), list.get(i).getY());
-            }
-            p.closePath();
-
-        } catch (Exception e) {
-            System.out.println("Ошибка:UGeo.reduceArea()");
-        }
-        return new Area(p);
     }
 
     public static double[] generalSegment(Area area1, Area area2) {

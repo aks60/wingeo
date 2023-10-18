@@ -45,10 +45,13 @@ public class ElemCross extends ElemSimple {
             double P[][] = UGeo.cross2Canvas(this.x1(), this.y1(), this.x2(), this.y2(), w, h);
 
             //Area слева и справа от импоста
-            Area areaTop = (Area) owner.area.clone();
-            Area areaBot = (Area) owner.area.clone();
-            areaTop.intersect(UGeo.area(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]));
-            areaBot.subtract(UGeo.area(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]));
+            Area areaTop2 = (Area) owner.area.clone();
+            Area areaBot2 = (Area) owner.area.clone();
+            areaTop2.intersect(UGeo.area(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]));
+            areaBot2.subtract(UGeo.area(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]));
+            
+            Area areaTop = UGeo.areaReduc(areaTop2);
+            Area areaBot = UGeo.areaReduc(areaBot2);            
             owner.childs().get(0).area = areaTop;
             owner.childs().get(2).area = areaBot;
 
@@ -71,8 +74,9 @@ public class ElemCross extends ElemSimple {
                 double L2[] = UGeo.crossCanvas(this.x1() - M[0], this.y1() - M[1], this.x2() - M[0], this.y2() - M[1], w, h);
 
                 //Area импоста внутренняя       
-                this.area = UGeo.areaPadding(owner.area, winc.listElem);
-                this.area.intersect(UGeo.area(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]));
+                Area areaPadding = UGeo.areaPadding(owner.area, winc.listElem);
+                areaPadding.intersect(UGeo.area(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]));
+                this.area = UGeo.areaReduc(areaPadding);
             }
         } catch (Exception e) {
             this.area = null;
