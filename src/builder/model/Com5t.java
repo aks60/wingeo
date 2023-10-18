@@ -31,7 +31,6 @@ public class Com5t {
     public Polygon AREA = null;
     private boolean ev[] = {false, false};
     private Point pointPress = null;
-    private int margin = 4;  //отступы вокруг канвы
     public int colorID1 = -1, colorID2 = -1, colorID3 = -1; //1-базовый 2-внутренний 3-внешний 
     public Record sysprofRec = null; //рофиль в системе
     public Record artiklRec = null;  //мат. средства
@@ -61,38 +60,46 @@ public class Com5t {
 
     public void mouseEvent() {
         ListenerMouse mousePressed = (event) -> {
+            
             pointPress = event.getPoint();
-            if (this.area.contains(event.getX() / winc.scale, event.getY() / winc.scale)) {
-                double d1 = Point2D.distance(x1(), y1(), event.getX() / winc.scale, event.getY() / winc.scale);
-                double d2 = Point2D.distance(x2(), y2(), event.getX() / winc.scale, event.getY() / winc.scale);
+            //Если клик внутри контура
+            if (this.area != null && this.area.contains(event.getX() / winc.scale, event.getY() / winc.scale)) {
+                double d1 = Point2D.distance(x1(), y1(), event.getX() / winc.scale, event.getY() / winc.scale); //длина к началу вектора
+                double d2 = Point2D.distance(x2(), y2(), event.getX() / winc.scale, event.getY() / winc.scale); //длина к концу вектора
                 double d3 = (d1 + d2) / 3;
 
                 if (d1 < d3) {
-                    ev[0] = true;
+                    ev[0] = true; //кликнул ближе к началу ветора
                 } else if (d2 < d3) {
-                    ev[1] = true;
+                    ev[1] = true; //кликнул ближе к концу ветора
                 }
             }
         };
         ListenerMouse mouseReleased = (event) -> {
+            
             ev[0] = false;
             ev[1] = false;
         };
         ListenerMouse mouseDragge = (event) -> {
-            int mx = winc.canvas.getWidth() - event.getX();
-            int my = winc.canvas.getHeight() - event.getY();
-            double dx = event.getX() - pointPress.getX();
-            double dy = event.getY() - pointPress.getY();
+            
+            double W = winc.canvas.getWidth();
+            double H = winc.canvas.getHeight();
+            double dX = event.getX() - pointPress.getX();
+            double dY = event.getY() - pointPress.getY();
+
             if (ev[0] == true) {
-                //System.out.println(winc.scale + x1());
-                if (event.getX() > margin && mx > margin && event.getY() > margin && my > margin) { //контроль выхода за канву
-                    x1(dx / winc.scale + x1());
-                    y1(dy / winc.scale + y1());
+                double X1 = dX / winc.scale + x1();
+                double Y1 = dY / winc.scale + y1();
+                if (X1 >= 0 && X1 <= W / winc.scale  && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
+                    x1(X1);
+                    y1(Y1);
                 }
             } else if (ev[1] == true) {
-                if (event.getX() > margin && mx > margin && event.getY() > margin && my > margin) { //контроль выхода за канву
-                    x2(dx / winc.scale + x2());
-                    y2(dy / winc.scale + y2());
+                double X2 = dX / winc.scale + x2();
+                double Y2 = dY / winc.scale + y2();
+                if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву
+                    x2(X2);
+                    y2(Y2);
                 }
             }
             pointPress = event.getPoint();
@@ -101,6 +108,7 @@ public class Com5t {
         this.winc.mouseReleased.add(mouseReleased);
         this.winc.mouseDragged.add(mouseDragge);
     }
+
     /**
      * Длина компонента
      */
