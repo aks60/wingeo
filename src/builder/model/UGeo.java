@@ -188,15 +188,15 @@ public class UGeo {
             if (X1 < 0 || X1 > w) {
                 double Y1 = (y2 - y1) * (0 - x1) / (x2 - x1) + y1;
                 double Y2 = (y2 - y1) * (w - x1) / (x2 - x1) + y1;
-                
+
                 if (y1 == y2) {
                     return new double[][]{{0, 0}, {w, 0}, {w, y2}, {0, y1}};
                 } else {
-                    return new double[][] {{0, 0}, {w, 0}, {w, Y2}, {0, Y1}};
+                    return new double[][]{{0, 0}, {w, 0}, {w, Y2}, {0, Y1}};
                 }
             } else {
                 double X2 = (x2 - x1) * (h - y1) / (y2 - y1) + x1;
-                return new double[][] {{0, 0}, {X1, 0}, {X2, h}, {0, h}};
+                return new double[][]{{0, 0}, {X1, 0}, {X2, h}, {0, h}};
             }
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.cross2Canvas()" + e);
@@ -222,7 +222,7 @@ public class UGeo {
     }
 
     //https://stackoverflow.com/questions/8144156/using-pathiterator-to-return-all-line-segments-that-constrain-an-area
-    public static ArrayList<Line2D.Double> areaAllSegment(Area area) {
+    public static ArrayList<Line2D.Double> areaAllSegment2(Area area) {
         ArrayList<double[]> areaPoints = new ArrayList<double[]>();
         ArrayList<Line2D.Double> areaSegments = new ArrayList<Line2D.Double>();
         double[] coords = new double[6];
@@ -259,6 +259,42 @@ public class UGeo {
                                 start[1], start[2]
                         )
                 );
+            }
+        }
+        return areaSegments;
+    }
+
+    public static ArrayList<Line2D.Double> areaAllSegment(final Area area) {
+        final ArrayList<double[]> areaPoints = new ArrayList<>();
+        final ArrayList<Line2D.Double> areaSegments = new ArrayList<>();
+        final double[] coords = new double[6];
+        for (final PathIterator pi = area.getPathIterator(null); !pi.isDone(); pi.next()) {
+            // The type will be SEG_LINETO, SEG_MOVETO, or SEG_CLOSE
+            // Because the Area is composed of straight lines
+            final int type = pi.currentSegment(coords);
+            // We record a double array of x coord and y coord
+            final double[] pathIteratorCoords = {type, coords[0], coords[1]};
+            areaPoints.add(pathIteratorCoords);
+        }
+        double[] start = new double[3]; // To record where each polygon starts
+        for (int i = 0; i < areaPoints.size(); i++) {
+            // If we're not on the last point, return a line from this point to the
+            // next
+            final double[] currentElement = areaPoints.get(i);
+            // We need a default value in case we've reached the end of the ArrayList
+            double[] nextElement = {-1, -1, -1};
+            if (i < areaPoints.size() - 1) {
+                nextElement = areaPoints.get(i + 1);
+            }
+            // Make the lines
+            if (currentElement[0] == PathIterator.SEG_MOVETO) {
+                start = currentElement; // Record where the polygon started to close it
+                // later
+            }
+            if (nextElement[0] == PathIterator.SEG_LINETO) {
+                areaSegments.add(new Line2D.Double(currentElement[1], currentElement[2], nextElement[1], nextElement[2]));
+            } else if (nextElement[0] == PathIterator.SEG_CLOSE) {
+                areaSegments.add(new Line2D.Double(currentElement[1], currentElement[2], start[1], start[2]));
             }
         }
         return areaSegments;
@@ -352,7 +388,6 @@ public class UGeo {
     }
 
 // <editor-fold defaultstate="collapsed" desc="XLAM">
-
     public static void PRINT(Area area) {
         int i = 0;
         ArrayList<Line2D.Double> listLine = UGeo.areaAllSegment(area);
@@ -381,7 +416,7 @@ public class UGeo {
             System.out.println((int) p[0] + ", " + (int) p[1] + ", " + (int) p[2] + ", " + (int) p[3] + ", " + (int) p[4] + ", " + (int) p[5] + ", " + (int) p[6] + ", " + (int) p[7]);
         }
     }
-    
+
     //https://stackoverflow.com/questions/21941156/shapes-and-segments-in-java
     public static Area[] split(Area area, Com5t line) {
 
