@@ -28,7 +28,7 @@ public class Canvas extends javax.swing.JPanel implements ListenerFrame<MouseEve
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent event) {
                 winc.mousePressed.forEach(e -> e.mouseEvent(event));
-                repaint();
+                //repaint();
             }
 
             public void mouseReleased(MouseEvent event) {
@@ -52,10 +52,10 @@ public class Canvas extends javax.swing.JPanel implements ListenerFrame<MouseEve
     }
 
     public void draw() {
-//        if (winc != null) {
-//            winc.scale = scale(winc, 0, 24);
-//            repaint();
-//        }
+        if (winc != null) {
+            winc.scale = scale(winc, 0, 24);
+            repaint();
+        }
     }
 
     public void saveImage(String name, String type) {
