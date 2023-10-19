@@ -221,22 +221,25 @@ public class UGeo {
     //Внутренняя обводка ареа  
     public static Area areaPadding(Area area, List<ElemSimple> listFrame) {
         
-        ArrayList<Line2D.Double> areaSegment = areaAllSegment(area);
+        ArrayList<Line2D.Double> segmList = areaAllSegment(area);
         List<Double> listPoint = new ArrayList();
         try {
-            for (int i = 0; i < areaSegment.size(); i++) {
+            for (int i = 0; i < segmList.size(); i++) {
 
-                int j = (i == (areaSegment.size() - 1)) ? 0 : i + 1;
-                Line2D.Double segment1 = areaSegment.get(i);
-                Line2D.Double segment2 = areaSegment.get(j);
+                int j = (i == (segmList.size() - 1)) ? 0 : i + 1;
+                Line2D.Double segment1 = segmList.get(i);
+                Line2D.Double segment2 = segmList.get(j);
 
                 ElemSimple e1 = UGeo.elemFromSegment(listFrame, segment1);
                 ElemSimple e2 = UGeo.elemFromSegment(listFrame, segment2);
-
+                
+//                if(e1 == null || e2 == null) {
+                   UGeo.elemFromSegment(listFrame, segment2); 
+//                }
                 if (e1 != null && e2 != null && e1 != e2) {
                     double h1[] = UGeo.diffOnAngl(UGeo.horizontAngl(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
                     double h2[] = UGeo.diffOnAngl(UGeo.horizontAngl(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
-                    double p[] = UGeo.crossOnLine(
+                    double p[] = UGeo.crossOnLine( //точка пересечения сегментов смещённыв внутрь
                             e1.x1() + h1[0], e1.y1() + h1[1], e1.x2() + h1[0], e1.y2() + h1[1],
                             e2.x1() + h2[0], e2.y1() + h2[1], e2.x2() + h2[0], e2.y2() + h2[1]);
 
@@ -244,13 +247,13 @@ public class UGeo {
                     listPoint.add(p[1]);
                 }
             }
-            double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
+            double[] arrayPoint = listPoint.stream().mapToDouble(i -> i).toArray();
             //Area areaTest = UGeo.areaPoly(arr);
-            PRINT(arr);
+            PRINT(arrayPoint);
             //if(areaTest == null) {
-            //    System.out.println("builder.model.UGeo.areaPadding()");
+               // System.out.println("xxx " + listPoint);
             //}
-            return UGeo.areaPoly(arr);
+            return UGeo.areaPoly(arrayPoint);
 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.areaPadding()" + e);
