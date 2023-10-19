@@ -107,8 +107,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             }
         }
         ((DefaultTableModel) tab.getModel()).fireTableDataChanged();
-        UGui.setSelectedRow(tab);
-        //UGui.setSelectedIndex(tab, 1);
+        //UGui.setSelectedRow(tab);
+        UGui.setSelectedIndex(tab, 1);
     }
 
     public void selectionTab1(ListSelectionEvent event, JTable tab) {

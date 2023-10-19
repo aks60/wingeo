@@ -63,13 +63,9 @@ public class UGeo {
 
     //https://www.onemathematicalcat.org/Math/Precalculus_obj/horizVertToDirMag.htm
     public static double horizontAngl(ElemSimple e) {
-        return horizontAngl(e.x1(), e.y1(), e.x2(), e.y2());
-    }
-
-    //https://www.onemathematicalcat.org/Math/Precalculus_obj/horizVertToDirMag.htm
-    public static double horizontAngl(double x1, double y1, double x2, double y2) {
-        double x = x2 - x1;
-        double y = y1 - y2;
+ 
+        double x = e.x2() - e.x1();
+        double y = e.y1() - e.y2();
 
         if (x > 0 && y == 0) {
             return 0;
@@ -89,42 +85,7 @@ public class UGeo {
             return 360 + atan(y / x);
         } else {
             return 0;
-        }
-    }
-
-    public static Area rectanglArea(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) {
-        try {
-            GeneralPath p = new GeneralPath();
-            p.moveTo(x1, y1);
-            p.lineTo(x2, y2);
-            p.lineTo(x3, y3);
-            p.lineTo(x4, y4);
-            p.closePath();
-            return new Area(p);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.polygon()" + e);
-            return null;
-        }
-    }
-
-    public static Area area(double... m) throws Exception {
-        if (m != null && m.length != 0) {
-            GeneralPath p = new GeneralPath();
-            try {
-                p.moveTo(Math.round(m[0]), Math.round(m[1]));
-                for (int i = 3; i < m.length; i = i + 2) {
-                    p.lineTo(Math.round(m[i - 1]), Math.round(m[i]));
-                }
-                p.closePath();
-
-            } catch (Exception e) {
-                System.err.println("Ошибка:UGeo.area()");
-            }
-            return new Area(p);
-        } else {
-            throw new Exception("Ошибка2:UGeo.area()");
-        }
+        }        
     }
 
     //Ширина рамки по оси x и y
@@ -166,23 +127,9 @@ public class UGeo {
         return dot;
     }
 
-    //Точки пересечение импостом Canvas2D. x = (x2 - x1) * (y - y1) / (y2 - y1) + x1
-    //https://www.interestprograms.ru/source-codes-tochka-peresecheniya-dvuh-pryamyh-na-ploskosti#uravnenie-v-programmnyj-kod      
-    public static double[] crossCanvas(double x1, double y1, double x2, double y2, double w, double h) {
-//        double X1 = (y1 == y2) ? 0 : (((0 - y1) / (y2 - y1)) * (x2 - x1)) + x1;
-//        double X2 = (y1 == y2) ? w : (((h - y1) / (y2 - y1)) * (x2 - x1)) + x1;
-//        //System.out.println(X1 + "  " + 0 + "  =  " + X2 + "  " + h);
-//        return new double[]{X1, 0, X2, h};
-
-        double Y1 = (y1 == y2) ? y1 + 0.0000000001 : y1;
-        double Y2 = (y1 == y2) ? y2 - 0.0000000001 : y2;
-        double X1 = (x2 - x1) * (0 - Y1) / (Y2 - Y1) + x1;
-        double X2 = (x2 - x1) * (h - Y1) / (Y2 - Y1) + x1;
-        return new double[]{X1, 0, X2, h};
-    }
-
+    //https://www.interestprograms.ru/source-codes-tochka-peresecheniya-dvuh-pryamyh-na-ploskosti#uravnenie-v-programmnyj-kod
     //x = (x2 - x1) * (y - y1) / (y2 - y1) + x1   y = (y2 - y1) * (x - x1) / (x2 - x1) + y1
-    public static double[][] cross2Canvas(double x1, double y1, double x2, double y2, double w, double h) {
+    public static double[][] clipCanvas(double x1, double y1, double x2, double y2, double w, double h) {
         try {
             double X1 = (((0 - y1) / (y2 - y1)) * (x2 - x1)) + x1;
             if (X1 < 0 || X1 > w) {
@@ -203,7 +150,22 @@ public class UGeo {
             return null;
         }
     }
+    
+    //Точки пересечение импостом Canvas2D. x = (x2 - x1) * (y - y1) / (y2 - y1) + x1
+    //https://www.interestprograms.ru/source-codes-tochka-peresecheniya-dvuh-pryamyh-na-ploskosti#uravnenie-v-programmnyj-kod      
+    public static double[] crossCanvas(double x1, double y1, double x2, double y2, double w, double h) {
+//        double X1 = (y1 == y2) ? 0 : (((0 - y1) / (y2 - y1)) * (x2 - x1)) + x1;
+//        double X2 = (y1 == y2) ? w : (((h - y1) / (y2 - y1)) * (x2 - x1)) + x1;
+//        //System.out.println(X1 + "  " + 0 + "  =  " + X2 + "  " + h);
+//        return new double[]{X1, 0, X2, h};
 
+        double Y1 = (y1 == y2) ? y1 + 0.0000000001 : y1;
+        double Y2 = (y1 == y2) ? y2 - 0.0000000001 : y2;
+        double X1 = (x2 - x1) * (0 - Y1) / (Y2 - Y1) + x1;
+        double X2 = (x2 - x1) * (h - Y1) / (Y2 - Y1) + x1;
+        return new double[]{X1, 0, X2, h};
+    }
+    
     public static boolean pointOnLine(double x, double y, double x1, double y1, double x2, double y2) {
         //return (Math.round(((x2 - x1) * (y - y1)) - ((y2 - y1) * (x - x1))) == 0);
         //return (((x2 - x1) * (y - y1)) - ((y2 - y1) * (x - x1)) == 0);
@@ -221,6 +183,101 @@ public class UGeo {
         return null;
     }
 
+    //Находим предыднщую и последующую линию от совместной между area1 и area2
+    public static Line2D.Double[] prevAndNextSegment(Area area1, Area area2) {
+
+        ArrayList<Line2D.Double> list1 = UGeo.areaAllSegment(area1);
+        ArrayList<Line2D.Double> list2 = UGeo.areaAllSegment(area2);
+        for (int i1 = 0; i1 < list1.size(); i1++) {
+            Line2D.Double line1 = list1.get(i1);
+            if (!(line1.x1 == line1.x2 && line1.y1 == line1.y2)) { //проверка нулевого сегмета
+
+                //Цикл по сегментам area2
+                for (int i2 = 0; i2 < list2.size(); i2++) {
+                    Line2D.Double line2 = list2.get(i2);
+                    if (!(line2.x1 == line2.x2 && line2.y1 == line2.y2)) { //проверка нулевого сегмета
+
+                        //Если сегменты area1 и area2 общие
+                        if (Math.round(line1.x1) == Math.round(line2.x2) && Math.round(line1.y1) == Math.round(line2.y2)) {
+
+                            //Находим предыдущий и последующий сегмент
+                            int k1 = (i1 == 0) ? list1.size() - 1 : i1 - 1;
+                            int j1 = (i1 == (list1.size() - 1)) ? 0 : i1 + 1;
+                            Line2D.Double[] l1 = new Line2D.Double[]{list1.get(k1), list1.get(j1)};
+
+                            int k2 = (i2 == 0) ? list2.size() - 1 : i2 - 1;
+                            int j2 = (i2 == (list2.size() - 1)) ? 0 : i2 + 1;
+                            Line2D.Double[] l2 = new Line2D.Double[]{list2.get(k2), list2.get(j2)};
+
+                            return new Line2D.Double[]{l1[0], l1[1], line1, l2[0], l2[1]};
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    
+    //Внутренняя обводка ареа  
+    public static Area areaPadding(Area area, List<ElemSimple> listFrame) {
+        
+        ArrayList<Line2D.Double> areaSegment = areaAllSegment(area);
+        List<Double> listPoint = new ArrayList();
+        try {
+            for (int i = 0; i < areaSegment.size(); i++) {
+
+                int j = (i == (areaSegment.size() - 1)) ? 0 : i + 1;
+                Line2D.Double segment1 = areaSegment.get(i);
+                Line2D.Double segment2 = areaSegment.get(j);
+
+                ElemSimple e1 = UGeo.elemFromSegment(listFrame, segment1);
+                ElemSimple e2 = UGeo.elemFromSegment(listFrame, segment2);
+
+                if (e1 != null && e2 != null && e1 != e2) {
+                    double h1[] = UGeo.diffOnAngl(UGeo.horizontAngl(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
+                    double h2[] = UGeo.diffOnAngl(UGeo.horizontAngl(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
+                    double p[] = UGeo.crossOnLine(
+                            e1.x1() + h1[0], e1.y1() + h1[1], e1.x2() + h1[0], e1.y2() + h1[1],
+                            e2.x1() + h2[0], e2.y1() + h2[1], e2.x2() + h2[0], e2.y2() + h2[1]);
+
+                    listPoint.add(p[0]);
+                    listPoint.add(p[1]);
+                }
+            }
+            double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
+            //Area areaTest = UGeo.areaPoly(arr);
+            PRINT(arr);
+            //if(areaTest == null) {
+            //    System.out.println("builder.model.UGeo.areaPadding()");
+            //}
+            return UGeo.areaPoly(arr);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.areaPadding()" + e);
+            return null;
+        }
+    }
+
+    public static Area areaReduc(Area area) {
+        if (area != null) {
+            ArrayList<Double> listPoint = new ArrayList();
+            try {
+                for (Line2D.Double line : UGeo.areaAllSegment(area)) {
+                    if (!(line.x1 == line.x2 && line.y1 == line.y2)) { //проверка нулевого сегмета
+                        listPoint.add(line.x1);
+                        listPoint.add(line.y1);
+                    }
+                }
+                double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
+                return UGeo.areaPoly(arr);
+
+            } catch (Exception e) {
+                System.err.println("Ошибка:UGeo.areaReduc()" + e);
+            }
+        }
+        return area;
+    }
+    
     //https://stackoverflow.com/questions/8144156/using-pathiterator-to-return-all-line-segments-that-constrain-an-area
     public static ArrayList<Line2D.Double> areaAllSegment(Area area) {
         ArrayList<double[]> areaPoints = new ArrayList<double[]>();
@@ -264,94 +321,36 @@ public class UGeo {
         return areaSegments;
     }
 
-    //Находим предыднщую и последующую линию от совместной между area1 и area2
-    public static Line2D.Double[] prevAndNextSegment(Area area1, Area area2) {
-
-        ArrayList<Line2D.Double> list1 = UGeo.areaAllSegment(area1);
-        ArrayList<Line2D.Double> list2 = UGeo.areaAllSegment(area2);
-        for (int i1 = 0; i1 < list1.size(); i1++) {
-            Line2D.Double line1 = list1.get(i1);
-            if (!(line1.x1 == line1.x2 && line1.y1 == line1.y2)) { //проверка нулевого сегмета
-
-                //Цикл по сегментам area2
-                for (int i2 = 0; i2 < list2.size(); i2++) {
-                    Line2D.Double line2 = list2.get(i2);
-                    if (!(line2.x1 == line2.x2 && line2.y1 == line2.y2)) { //проверка нулевого сегмета
-
-                        //Если сегменты area1 и area2 общие
-                        if (Math.round(line1.x1) == Math.round(line2.x2) && Math.round(line1.y1) == Math.round(line2.y2)) {
-
-                            //Находим предыдущий и последующий сегмент
-                            int k1 = (i1 == 0) ? list1.size() - 1 : i1 - 1;
-                            int j1 = (i1 == (list1.size() - 1)) ? 0 : i1 + 1;
-                            Line2D.Double[] l1 = new Line2D.Double[]{list1.get(k1), list1.get(j1)};
-
-                            int k2 = (i2 == 0) ? list2.size() - 1 : i2 - 1;
-                            int j2 = (i2 == (list2.size() - 1)) ? 0 : i2 + 1;
-                            Line2D.Double[] l2 = new Line2D.Double[]{list2.get(k2), list2.get(j2)};
-
-                            return new Line2D.Double[]{l1[0], l1[1], line1, l2[0], l2[1]};
-                        }
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
-    //Внутренняя обводка ареа  
-    public static Area areaPadding(Area area, List<ElemSimple> listFrame) {
-        //UGeo.PRINT(area);
-        ArrayList<Line2D.Double> listLine = areaAllSegment(area);
-        List<Double> listPoint = new ArrayList();
+    public static Area areaRectangl(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) {
         try {
-            for (int i = 0; i < listLine.size(); i++) {
-
-                int j = (i == (listLine.size() - 1)) ? 0 : i + 1;
-                Line2D.Double segment1 = listLine.get(i);
-                Line2D.Double segment2 = listLine.get(j);
-
-                ElemSimple e1 = UGeo.elemFromSegment(listFrame, segment1);
-                ElemSimple e2 = UGeo.elemFromSegment(listFrame, segment2);
-
-                if (e1 != null && e2 != null && e1 != e2) {
-                    double h1[] = UGeo.diffOnAngl(UGeo.horizontAngl(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
-                    double h2[] = UGeo.diffOnAngl(UGeo.horizontAngl(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
-                    double p[] = UGeo.crossOnLine(
-                            e1.x1() + h1[0], e1.y1() + h1[1], e1.x2() + h1[0], e1.y2() + h1[1],
-                            e2.x1() + h2[0], e2.y1() + h2[1], e2.x2() + h2[0], e2.y2() + h2[1]);
-
-                    listPoint.add(p[0]);
-                    listPoint.add(p[1]);
-                }
-            }
-            double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
-            return UGeo.area(arr);
+            GeneralPath p = new GeneralPath();
+            p.moveTo(x1, y1);
+            p.lineTo(x2, y2);
+            p.lineTo(x3, y3);
+            p.lineTo(x4, y4);
+            p.closePath();
+            return new Area(p);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.areaPadding()" + e);
+            System.err.println("Ошибка:UGeo.areaRectangl()" + e);
             return null;
         }
     }
 
-    public static Area areaReduc(Area area) {
-        if (area.isPolygonal()) {
-            ArrayList<Double> listPoint = new ArrayList();
-            try {
-                for (Line2D.Double line : UGeo.areaAllSegment(area)) {
-                    if (!(line.x1 == line.x2 && line.y1 == line.y2)) { //проверка нулевого сегмета
-                        listPoint.add(line.x1);
-                        listPoint.add(line.y1);
-                    }
-                }
-                double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
-                return UGeo.area(arr);
-
-            } catch (Exception e) {
-                System.err.println("Ошибка:UGeo.areaReduc()" + e);
+    public static Area areaPoly(double... m) throws Exception {
+        try {
+            GeneralPath p = new GeneralPath();
+            p.moveTo(Math.round(m[0]), Math.round(m[1]));
+            for (int i = 3; i < m.length; i = i + 2) {
+                p.lineTo(Math.round(m[i - 1]), Math.round(m[i]));
             }
+            p.closePath();
+            return new Area(p);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.areaPoly()");
+            return null;
         }
-        return area;
     }
 
 // <editor-fold defaultstate="collapsed" desc="XLAM">
