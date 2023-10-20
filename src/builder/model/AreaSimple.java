@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class AreaSimple extends Com5t {
+
     public Form form = null; //форма контура (параметр в развитии)
     public EnumMap<Layout, ElemSimple> frames = new EnumMap<>(Layout.class); //список рам в окне 
     public Area area2 = null;
@@ -30,7 +31,7 @@ public class AreaSimple extends Com5t {
 //        setLocation(winc.gson.width(), winc.gson.height());
 //        initParametr(winc.gson.param());
     }
-    
+
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
     }
@@ -166,27 +167,19 @@ public class AreaSimple extends Com5t {
 //            System.out.println("Ошибка:AreaSimple.resizeY()");
 //        }
     }
-    
+
     @Override
     public List<Com5t> childs() {
         return childs;
     }
 
-    public void draw()  {
-        
-    }
-    
-//    public void paint() {
+    public void paint() {
 //        try {
 //            if (area != null) {
-//                winc.gc2D.draw(area);
+//                winc.gc2d.draw(area);
 //            }
 //        } catch (Exception e) {
-//            System.err.println("Ошибка:Area2Simple.paint()" + toString() + e);
+//            System.err.println("Ошибка:AreaSimple.paint()" + toString() + e);
 //        }
-//    }
-
-//    public void mouseEvent() {
-//
-//    }
+    }
 }

@@ -53,6 +53,7 @@ public class ElemCross extends ElemSimple {
 
             Area areaTop = UGeo.areaReduc(areaTop2);
             Area areaBot = UGeo.areaReduc(areaBot2);
+            Object obj = owner.childs();
             owner.childs().get(0).area = areaTop;
             owner.childs().get(2).area = areaBot;
 
@@ -60,14 +61,13 @@ public class ElemCross extends ElemSimple {
             Line2D.Double d[] = UGeo.prevAndNextSegment(areaTop, areaBot);
 
             if (d != null) {
-//                if (id == 13.0) {
+                if (id == 13.0) {
 //                    UGeo.PRINT(areaTop);
 //                    UGeo.PRINT(areaBot);
 //                    UGeo.PRINT(this.x1(), this.y1(), this.x2(), this.y2());
 //                    UGeo.PRINT(d[2].x1, d[2].y1, d[2].x2, d[2].y2);
-//                }
+                }
                 this.setDimension(d[2].x1, d[2].y1, d[2].x2, d[2].y2);
-                this.area = null;
                 double M[] = UGeo.diffOnAngl(UGeo.horizontAngl(this), //ширина импоста
                         this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
 
@@ -82,7 +82,7 @@ public class ElemCross extends ElemSimple {
                 if (areaClip != null) {
                     areaPadding.intersect(areaClip);
                     this.area = UGeo.areaReduc(areaPadding);
-                }
+                } 
             }
         } catch (Exception e) {
             this.area = null;
