@@ -192,30 +192,37 @@ public class UGeo {
 
         ArrayList<Line2D.Double> list1 = UGeo.areaAllSegment(area1);
         ArrayList<Line2D.Double> list2 = UGeo.areaAllSegment(area2);
-        
+
         //Цикл по сегментам area1
         for (int ik = 0; ik < list1.size(); ik++) {
             Line2D.Double line1 = list1.get(ik);
+            if (Math.round(line1.x1) == Math.round(line1.x2) && Math.round(line1.y1) == Math.round(line1.y2)) {
+                continue;
+            }
 
-                //Цикл по сегментам area2
-                for (int ij = 0; ij < list2.size(); ij++) {
-                    Line2D.Double line2 = list2.get(ij);
-                    
-                        //Если сегмент area1 и area2 общий
-                        if ((line1.x1 == line2.x2 && line1.y1 == line2.y2) && (line1.x2 == line2.x1 && line1.y2 == line2.y1)) {
-
-                            //Находим предыдущий и последующий сегмент
-                            int k1 = (ik == 0) ? list1.size() - 1 : ik - 1;
-                            int j1 = (ik == (list1.size() - 1)) ? 0 : ik + 1;
-                            Line2D.Double[] l1 = new Line2D.Double[]{list1.get(k1), list1.get(j1)};
-
-                            int k2 = (ij == 0) ? list2.size() - 1 : ij - 1;
-                            int j2 = (ij == (list2.size() - 1)) ? 0 : ij + 1;
-                            Line2D.Double[] l2 = new Line2D.Double[]{list2.get(k2), list2.get(j2)};
-
-                            return new Line2D.Double[]{l1[0], l1[1], line1, l2[0], l2[1]};
-                        }
+            //Цикл по сегментам area2
+            for (int ij = 0; ij < list2.size(); ij++) {
+                Line2D.Double line2 = list2.get(ij);
+                if (Math.round(line2.x1) == Math.round(line2.x2) && Math.round(line2.y1) == Math.round(line2.y2)) {
+                    continue;
                 }
+
+                //Если сегмент area1 и area2 общий
+                //if ((line1.x1 == line2.x2 && line1.y1 == line2.y2) && (line1.x2 == line2.x1 && line1.y2 == line2.y1)) {
+              if ((Math.round(line1.x1) == Math.round(line2.x2) && Math.round(line1.y1) == Math.round(line2.y2)) && (Math.round(line1.x2) == Math.round(line2.x1) && Math.round(line1.y2) == Math.round(line2.y1))) {
+
+                    //Находим предыдущий и последующий сегмент
+                    int k1 = (ik == 0) ? list1.size() - 1 : ik - 1;
+                    int j1 = (ik == (list1.size() - 1)) ? 0 : ik + 1;
+                    Line2D.Double[] l1 = new Line2D.Double[]{list1.get(k1), list1.get(j1)};
+
+                    int k2 = (ij == 0) ? list2.size() - 1 : ij - 1;
+                    int j2 = (ij == (list2.size() - 1)) ? 0 : ij + 1;
+                    Line2D.Double[] l2 = new Line2D.Double[]{list2.get(k2), list2.get(j2)};
+
+                    return new Line2D.Double[]{l1[0], l1[1], line1, l2[0], l2[1]};
+                }
+            }
         }
         return null;
     }
@@ -356,9 +363,9 @@ public class UGeo {
         ArrayList<Line2D.Double> listLine = UGeo.areaAllSegment(area);
         ArrayList<String> listStr = new ArrayList();
         for (Line2D.Double line : listLine) {
-            //listStr.add("  <" + (++i) + ">" + Math.round(line.x1) + ":" + Math.round(line.y1) + ", " + Math.round(line.x2) + ":" + Math.round(line.y2));
+            listStr.add("  <" + (++i) + ">" + Math.round(line.x1) + ":" + Math.round(line.y1) + ", " + Math.round(line.x2) + ":" + Math.round(line.y2));
             //listStr.add("  <" + (++i) + ">" + line.x1 + ":" + line.y1 + ", " + line.x2 + ":" + line.y2);
-            listStr.add(line.x1 + ", " + line.y1 + ", " + line.x2 + ", " + line.y2 + ", ");
+            //listStr.add(line.x1 + ", " + line.y1 + ", " + line.x2 + ", " + line.y2 + ", ");
         }
         System.out.println(listStr);
     }

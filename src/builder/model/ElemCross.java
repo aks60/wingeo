@@ -36,6 +36,7 @@ public class ElemCross extends ElemSimple {
     }
 
     public void setLocation() {
+        //System.out.println(id);
         try {
             anglHoriz = UGeo.horizontAngl(this);
             double w = owner.area.getBounds2D().getMaxX();
@@ -55,23 +56,16 @@ public class ElemCross extends ElemSimple {
             owner.childs().get(0).area = areaTop;
             owner.childs().get(2).area = areaBot;
 
-            //UGeo.PRINT(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]);
-            //UGeo.PRINT(UGeo.area(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]));
-            //UGeo.PRINT(areaTop);
-            //UGeo.PRINT(areaBot);
             //Предыдущая и последующая линия от совместной между area1 и area2
             Line2D.Double d[] = UGeo.prevAndNextSegment(areaTop, areaBot);
-//            if (id == 13.0) {
-//                UGeo.PRINT(areaTop);
-//                UGeo.PRINT(areaBot);                 
-//                UGeo.PRINT(this.x1(), this.y1(), this.x2(), this.y2());
-//                UGeo.PRINT(d[2].x1, d[2].y1, d[2].x2, d[2].y2);
-//                
-//                if(d[2].y1 == 0  || d[2].y1 == 1) {
-//                    Line2D.Double D[] = UGeo.prevAndNextSegment(areaTop, areaBot);
-//                }
-//            }
+
             if (d != null) {
+//                if (id == 13.0) {
+//                    UGeo.PRINT(areaTop);
+//                    UGeo.PRINT(areaBot);
+//                    UGeo.PRINT(this.x1(), this.y1(), this.x2(), this.y2());
+//                    UGeo.PRINT(d[2].x1, d[2].y1, d[2].x2, d[2].y2);
+//                }
                 this.setDimension(d[2].x1, d[2].y1, d[2].x2, d[2].y2);
                 this.area = null;
                 double M[] = UGeo.diffOnAngl(UGeo.horizontAngl(this), //ширина импоста
