@@ -10,6 +10,7 @@ import dataset.Conn;
 import domain.eElement;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
+import java.awt.geom.Line2D;
 import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
@@ -69,7 +70,7 @@ public class Test {
             //json();
             //uid();
             //script();
-            //geom();
+            geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -80,16 +81,16 @@ public class Test {
 
         Conn.connection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
-        String _case = "min";
+        String _case = "one";
 
         if (_case.equals("one")) {
-            winc.build(GsonScript.productJson(508945));
-            winc.constructiv(true);
+            winc.build(GsonScript.productJson(501005));
+//            winc.constructiv(true);
 //            winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
 //            winc.gc2d = winc.bufferImg.createGraphics();
 //            winc.rootArea.draw(); //рисую конструкцию
             //frames.PSCompare.iwinXls(winc, true);
-            frames.PSCompare.iwinPs4(winc, true);
+//            frames.PSCompare.iwinPs4(winc, true);
             //winc.listJoin.forEach(it -> System.out.println(it));           
 
         } else if (_case.equals("min")) {
@@ -274,34 +275,13 @@ public class Test {
 
     //Пример PathIterator
     public static void geom() {
-            double x1 = 0.0;//1.8493652191864385E-5;
-            double x2 = 0.0;
-            double y1 = 0.0;//500.00000000000006;
-            double y2 = 500.00000000000006;
 
-//            if (1000.0 - 1.8493652191864385E-5 > 1) {
-                System.out.println(Math.abs(x1 - x2));
-//            }
-//            if (499.9999999998001 - 500.00000000000006 > 1) {
-                System.out.println(Math.abs(y1 - y2));
-//            }
-            if (Math.abs(x1 - x2) > 1 || Math.abs(y1 - y2) > 1) {
-                System.out.println("AKSENOV");
-            }        
-//        Area area1 = UGeo.area(0, 0, 0, 900, 600, 899, 0, 0);
-//        Area area2 = new Area(new Rectangle(0, 0, 200, 900));
-//        UGeo.PRINT(area2);
-//
-//        UGeo.PRINT(area1);
-//        area1.intersect(area2);
-//        UGeo.PRINT(area1);
-//        double a[] = {200.03367570298246, 898.989728910591, 200.0336757029803, 898.989728910591};
-//        double b[] = {200.16848754883262, 894.9452514648436, 594.0, 885.0};
-//        if (Math.round(a[0]) != Math.round(a[2]) || Math.round(a[1]) != Math.round(a[3])) {
-//            System.out.println("a");
-//        }
-//        if (Math.round(b[0]) != Math.round(b[2]) || Math.round(b[1]) != Math.round(b[3])) {
-//            System.out.println("a");
-//        }
+        Area areaTop = UGeo.areaPoly(500.0, 1.08695650100708, 0.0, 2.17391300201416, 0.0, 2.17391300201416, 0.0, 500.0, 0.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 1.08695650100708, 500.0, 1.08695650100708, 500.0, 1.08695650100708);
+        Area areaBot = UGeo.areaPoly(1000.0, 0.0, 500.0, 1.08695650100708, 500.0, 1.08695650100708, 500.0, 500.0, 500.0, 500.0, 1000.0, 500.0, 1000.0, 500.0, 1000.0, 0.0, 1000.0, 0.0, 1000.0, 0.);
+        UGeo.PRINT(areaTop);
+        UGeo.PRINT(areaBot);
+        Line2D.Double d[] = UGeo.prevAndNextSegment(areaTop, areaBot); 
+        UGeo.PRINT(d[2].x1, d[2].y1, d[2].x2, d[2].y2);
+        
     }
 }

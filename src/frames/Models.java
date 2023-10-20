@@ -86,7 +86,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }
 
     public void loadingTab1(JTable tab, int form) {
-        Query qModel = new Query(eSysmodel.values()).select(eSysmodel.up, "where", eSysmodel.form, "=", form, "order by npp");
+        Query qModel = new Query(eSysmodel.values()).select(eSysmodel.up, "where", eSysmodel.form, "=", form, "and id=19", "order by npp");
         DefaultTableModel dm = (DefaultTableModel) tab.getModel();
         dm.getDataVector().removeAllElements();
         for (Record record : qModel.table(eSysmodel.up)) {
@@ -107,8 +107,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             }
         }
         ((DefaultTableModel) tab.getModel()).fireTableDataChanged();
-        //UGui.setSelectedRow(tab);
-        UGui.setSelectedIndex(tab, 1);
+        UGui.setSelectedRow(tab);
     }
 
     public void selectionTab1(ListSelectionEvent event, JTable tab) {

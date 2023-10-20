@@ -59,13 +59,21 @@ public class ElemCross extends ElemSimple {
             //UGeo.PRINT(UGeo.area(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]));
             //UGeo.PRINT(areaTop);
             //UGeo.PRINT(areaBot);
-
             //Предыдущая и последующая линия от совместной между area1 и area2
             Line2D.Double d[] = UGeo.prevAndNextSegment(areaTop, areaBot);
-
+//            if (id == 13.0) {
+//                UGeo.PRINT(areaTop);
+//                UGeo.PRINT(areaBot);                 
+//                UGeo.PRINT(this.x1(), this.y1(), this.x2(), this.y2());
+//                UGeo.PRINT(d[2].x1, d[2].y1, d[2].x2, d[2].y2);
+//                
+//                if(d[2].y1 == 0  || d[2].y1 == 1) {
+//                    Line2D.Double D[] = UGeo.prevAndNextSegment(areaTop, areaBot);
+//                }
+//            }
             if (d != null) {
                 this.setDimension(d[2].x1, d[2].y1, d[2].x2, d[2].y2);
-
+                this.area = null;
                 double M[] = UGeo.diffOnAngl(UGeo.horizontAngl(this), //ширина импоста
                         this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
 
@@ -73,16 +81,10 @@ public class ElemCross extends ElemSimple {
                 double L1[] = UGeo.crossCanvas(this.x1() + M[0], this.y1() + M[1], this.x2() + M[0], this.y2() + M[1], w, h);
                 double L2[] = UGeo.crossCanvas(this.x1() - M[0], this.y1() - M[1], this.x2() - M[0], this.y2() - M[1], w, h);
 
-                System.out.println("----------------------");
-                UGeo.PRINT(owner.area);
-                
                 //Area импоста внутренняя       
                 Area areaPadding = UGeo.areaPadding(owner.area, winc.listElem);
                 Area areaClip = UGeo.areaPoly(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]);
-                
-                UGeo.PRINT(areaPadding);
 
-                
                 if (areaClip != null) {
                     areaPadding.intersect(areaClip);
                     this.area = UGeo.areaReduc(areaPadding);
@@ -107,7 +109,6 @@ public class ElemCross extends ElemSimple {
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
-
     public void setLocation2() {
         try {
             anglHoriz = UGeo.horizontAngl(this);
@@ -163,6 +164,6 @@ public class ElemCross extends ElemSimple {
             System.err.println("Ошибка:ElemCross.setLocation() " + e);
         }
     }
-    
+
     // </editor-fold>       
 }
