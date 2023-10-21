@@ -10,8 +10,13 @@ import enums.UseSide;
 import java.awt.Polygon;
 import java.awt.geom.Area;
 import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 public class ElemCross extends ElemSimple {
+
+    public Area areaTest = null;
+    public Line2D.Double lineTest = null;
 
     public ElemCross(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
@@ -44,10 +49,15 @@ public class ElemCross extends ElemSimple {
 
             //Пересечение канвы вектором импоста
             double P[][] = UGeo.clipCanvas(this.x1(), this.y1(), this.x2(), this.y2(), w, h);
-
+            if (id == 12.0) {
+                UGeo.clipCanvas(this.x1(), this.y1(), this.x2(), this.y2(), w, h);
+                //lineTest = new Line2D.Double(this.x1(), this.y1(), this.x2(), this.y2());
+                areaTest = UGeo.areaPoly(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]);
+            }
+            
             //Area слева и справа от импоста
             Area areaTop = (Area) owner.area.clone();
-            Area areaBot = (Area) owner.area.clone();
+            Area areaBot = (Area) owner.area.clone();            
             areaTop.intersect(UGeo.areaPoly(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]));
             areaBot.subtract(UGeo.areaPoly(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]));
             owner.childs().get(0).area = areaTop;
@@ -57,12 +67,6 @@ public class ElemCross extends ElemSimple {
             Line2D.Double d[] = UGeo.prevAndNextSegment(areaTop, areaBot);
 
             if (d != null) {
-                if (id == 13.0) {
-//                    UGeo.PRINT(areaTop);
-//                    UGeo.PRINT(areaBot);
-//                    UGeo.PRINT(this.x1(), this.y1(), this.x2(), this.y2());
-//                    UGeo.PRINT(d[2].x1, d[2].y1, d[2].x2, d[2].y2);
-                }
                 this.setDimension(d[2].x1, d[2].y1, d[2].x2, d[2].y2);
                 double M[] = UGeo.diffOnAngl(UGeo.horizontAngl(this), //ширина импоста
                         this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
@@ -78,7 +82,7 @@ public class ElemCross extends ElemSimple {
                 if (areaClip != null) {
                     areaPadding.intersect(areaClip);
                     this.area = areaPadding;
-                } 
+                }
             }
         } catch (Exception e) {
             this.area = null;
@@ -88,6 +92,16 @@ public class ElemCross extends ElemSimple {
 
     public void paint() {
         try {
+            java.awt.Color color = winc.gc2d.getColor();
+            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
+            
+            if (this.areaTest != null) {
+                winc.gc2d.draw(this.areaTest);                
+            }
+            if (this.lineTest != null) {
+                winc.gc2d.draw(this.lineTest);
+            }
+            winc.gc2d.setColor(color);
             if (this.area != null) {
                 winc.gc2d.draw(this.area);
                 winc.gc2d.draw(new Line2D.Double(this.x1(), this.y1(), this.x2(), this.y2()));

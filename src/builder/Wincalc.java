@@ -228,14 +228,23 @@ public class Wincalc {
 
     public void draw() {
         try {
-            root.setLocation();           
+            root.setLocation();
             listFrame.forEach(e -> e.setLocation());
             listCross.forEach(e -> e.setLocation());
-            
+
             root.paint();
             listArea.forEach(e -> e.paint());
             listFrame.forEach(e -> e.paint());
             listCross.forEach(e -> e.paint());
+            
+            listCross.forEach(e -> {
+                if (e.areaTest != null) {
+                    e.paint();
+                }
+                if (e.lineTest != null) {
+                    e.paint();
+                }               
+            });
 
         } catch (Exception e) {
             System.err.println("Ошибка:Wingeo.draw() " + e);
