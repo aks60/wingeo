@@ -58,10 +58,9 @@ public final class Bimax2 {
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 0.0));
 
             GsonElem area1 = rootGeo.addArea(new GsonElem(Type.AREA));
-
             rootGeo.addElem(new GsonElem(Type.IMPOST, .0, 500.0, 1000.0, 500.0));
-            GsonElem area2 = rootGeo.addArea(new GsonElem(Type.AREA));
-            area2.addElem(new GsonElem(Type.GLASS));
+            rootGeo.addArea(new GsonElem(Type.AREA))
+                    .addElem(new GsonElem(Type.GLASS));
 
             area1.addArea(new GsonElem(Type.AREA))
                     .addElem(new GsonElem(Type.GLASS));

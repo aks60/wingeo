@@ -46,14 +46,10 @@ public class ElemCross extends ElemSimple {
             double P[][] = UGeo.clipCanvas(this.x1(), this.y1(), this.x2(), this.y2(), w, h);
 
             //Area слева и справа от импоста
-            Area areaTop2 = (Area) owner.area.clone();
-            Area areaBot2 = (Area) owner.area.clone();
-            areaTop2.intersect(UGeo.areaPoly(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]));
-            areaBot2.subtract(UGeo.areaPoly(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]));
-
-            Area areaTop = UGeo.areaReduc(areaTop2);
-            Area areaBot = UGeo.areaReduc(areaBot2);
-            Object obj = owner.childs();
+            Area areaTop = (Area) owner.area.clone();
+            Area areaBot = (Area) owner.area.clone();
+            areaTop.intersect(UGeo.areaPoly(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]));
+            areaBot.subtract(UGeo.areaPoly(P[0][0], P[0][1], P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]));
             owner.childs().get(0).area = areaTop;
             owner.childs().get(2).area = areaBot;
 
@@ -81,7 +77,7 @@ public class ElemCross extends ElemSimple {
 
                 if (areaClip != null) {
                     areaPadding.intersect(areaClip);
-                    this.area = UGeo.areaReduc(areaPadding);
+                    this.area = areaPadding;
                 } 
             }
         } catch (Exception e) {

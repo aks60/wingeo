@@ -31,7 +31,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
-import org.locationtech.jts.geom.GeometryFactory;
 
 public class Wincalc {
 
@@ -60,7 +59,6 @@ public class Wincalc {
     public ArrayList<ListenerMouse> mouseDragged = new ArrayList();
 
     public HashMap<Integer, Record> mapPardef = new HashMap(); //пар. по умолчанию + наложенные пар. клиента
-    public GeometryFactory geomFact = new GeometryFactory();
     public LinkedCom<AreaSimple> listArea = new LinkedCom(); //список ареа.
     public LinkedCom<ElemSimple> listElem = new LinkedCom(); //список элем.
     public LinkedCom<ElemFrame> listFrame = new LinkedCom(); //список рам
@@ -106,8 +104,8 @@ public class Wincalc {
 
     private void parsing(String script) {
         //Для тестирования
-        System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
-        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+        //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
+        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
         gson = new GsonBuilder().create().fromJson(script, GsonRoot.class);
         gson.setOwner(this);

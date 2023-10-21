@@ -9,11 +9,11 @@ import domain.eArtikl;
 import enums.Layout;
 import enums.Type;
 import java.awt.Point;
+import java.awt.Polygon;
 import java.awt.geom.Area;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.util.List;
-import org.locationtech.jts.geom.Polygon;
 
 public class Com5t {
 

@@ -2,13 +2,8 @@ package builder.model;
 
 import builder.Wincalc;
 import builder.script.GsonElem;
-import java.awt.Shape;
 import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
-import java.util.ArrayList;
-import java.util.List;
-import org.locationtech.jts.awt.ShapeWriter;
-import org.locationtech.jts.geom.Coordinate;
 
 public class AreaPolygon extends AreaSimple {
 
