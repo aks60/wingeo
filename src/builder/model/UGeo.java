@@ -127,30 +127,52 @@ public class UGeo {
         return dot;
     }
 
-    //https://www.interestprograms.ru/source-codes-tochka-peresecheniya-dvuh-pryamyh-na-ploskosti#uravnenie-v-programmnyj-kod
-    //x = (x2 - x1) * (y - y1) / (y2 - y1) + x1   y = (y2 - y1) * (x - x1) / (x2 - x1) + y1
-    public static double[][] clipCanvas(double x1, double y1, double x2, double y2, double w, double h) {
+    //https://stackoverflow.com/questions/21941156/shapes-and-segments-in-java
+    public static Area[] splitCanvas(Area area, Com5t line) {
+
+        //Вычисление угла линии к оси x
+        double dx = line.x2() - line.x1();
+        double dy = line.y2() - line.y1();
+        double angl = Math.atan2(dy, dx);
+
+        //Выравниваем область так, чтобы линия совпадала с осью x
+        AffineTransform at = new AffineTransform();
+        at.rotate(-angl);
+        at.translate(-line.x1(), -line.y1());
+        Area aa = area.createTransformedArea(at);
+
+        //Вычисляем верхнюю и нижнюю половины площади должы пересекаться с...
+        Rectangle2D bounds = aa.getBounds2D();
+
+        double half0minY = Math.min(0, bounds.getMinY());
+        double half0maxY = Math.min(0, bounds.getMaxY());
+        Rectangle2D half0 = new Rectangle2D.Double(
+                bounds.getX(), half0minY, bounds.getWidth(), half0maxY - half0minY);
+
+        double half1minY = Math.max(0, bounds.getMinY());
+        double half1maxY = Math.max(0, bounds.getMaxY());
+        Rectangle2D half1 = new Rectangle2D.Double(
+                bounds.getX(), half1minY, bounds.getWidth(), half1maxY - half1minY);
+
+        //Вычисляем получившиеся площади путем пересечения исходной области с 
+        //обеими половинками, и возвращаем их в исходное положение
+        Area a0 = new Area(aa);
+        a0.intersect(new Area(half0));
+
+        Area a1 = new Area(aa);
+        a1.intersect(new Area(half1));
+
         try {
-            double X1 = (((0 - y1) / (y2 - y1)) * (x2 - x1)) + x1;
-            if (X1 < 0 || X1 > w) {
-                double Y1 = (y2 - y1) * (0 - x1) / (x2 - x1) + y1;
-                double Y2 = (y2 - y1) * (w - x1) / (x2 - x1) + y1;
-
-                if (y1 == y2) {
-                    return new double[][]{{0, 0}, {w, 0}, {w, y2}, {0, y1}};
-                } else {
-                    return new double[][]{{0, 0}, {w, 0}, {w, Y2}, {0, Y1}};
-                }
-            } else {
-                double X2 = (x2 - x1) * (h - y1) / (y2 - y1) + x1;
-                return new double[][]{{0, 0}, {X1, 0}, {X2, h}, {0, h}};
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.cross2Canvas()" + e);
-            return null;
+            at.invert();
+        } catch (NoninvertibleTransformException event) {
+            System.err.println("Ошибка:UGeo.split() " + event);
         }
-    }
+        a0 = a0.createTransformedArea(at);
+        a1 = a1.createTransformedArea(at);
 
+        return new Area[]{a0, a1};
+    }
+    
     //Точки пересечение импостом Canvas2D. x = (x2 - x1) * (y - y1) / (y2 - y1) + x1
     //https://www.interestprograms.ru/source-codes-tochka-peresecheniya-dvuh-pryamyh-na-ploskosti#uravnenie-v-programmnyj-kod      
     public static double[] crossCanvas(double x1, double y1, double x2, double y2, double w, double h) {
@@ -196,20 +218,20 @@ public class UGeo {
         //Цикл по сегментам area1
         for (int ik = 0; ik < list1.size(); ik++) {
             Line2D.Double line1 = list1.get(ik);
-            if (Math.round(line1.x1) == Math.round(line1.x2) && Math.round(line1.y1) == Math.round(line1.y2)) {
-                continue;
-            }
+//            if (Math.round(line1.x1) == Math.round(line1.x2) && Math.round(line1.y1) == Math.round(line1.y2)) {
+//                continue;
+//            }
 
             //Цикл по сегментам area2
             for (int ij = 0; ij < list2.size(); ij++) {
                 Line2D.Double line2 = list2.get(ij);
-                if (Math.round(line2.x1) == Math.round(line2.x2) && Math.round(line2.y1) == Math.round(line2.y2)) {
-                    continue;
-                }
+//                if (Math.round(line2.x1) == Math.round(line2.x2) && Math.round(line2.y1) == Math.round(line2.y2)) {
+//                    continue;
+//                }
 
                 //Если сегмент area1 и area2 общий
                 //if ((line1.x1 == line2.x2 && line1.y1 == line2.y2) && (line1.x2 == line2.x1 && line1.y2 == line2.y1)) {
-              if ((Math.round(line1.x1) == Math.round(line2.x2) && Math.round(line1.y1) == Math.round(line2.y2)) && (Math.round(line1.x2) == Math.round(line2.x1) && Math.round(line1.y2) == Math.round(line2.y1))) {
+                if ((Math.round(line1.x1) == Math.round(line2.x2) && Math.round(line1.y1) == Math.round(line2.y2)) && (Math.round(line1.x2) == Math.round(line2.x1) && Math.round(line1.y2) == Math.round(line2.y1))) {
 
                     //Находим предыдущий и последующий сегмент
                     int k1 = (ik == 0) ? list1.size() - 1 : ik - 1;
@@ -260,26 +282,6 @@ public class UGeo {
             System.err.println("Ошибка:UGeo.areaPadding()" + e);
             return null;
         }
-    }
-
-    public static Area areaReduc(Area area) {
-//        if (area != null) {
-//            ArrayList<Double> listPoint = new ArrayList();
-//            try {
-//                for (Line2D.Double line : UGeo.areaAllSegment(area)) {
-//                    if (!(line.x1 == line.x2 && line.y1 == line.y2)) { //проверка нулевого сегмета
-//                        listPoint.add(line.x1);
-//                        listPoint.add(line.y1);
-//                    }
-//                }
-//                double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
-//                return UGeo.areaPoly(arr);
-//
-//            } catch (Exception e) {
-//                System.err.println("Ошибка:UGeo.areaReduc()" + e);
-//            }
-//        }
-        return area;
     }
 
     //https://stackoverflow.com/questions/8144156/using-pathiterator-to-return-all-line-segments-that-constrain-an-area        
@@ -365,11 +367,11 @@ public class UGeo {
         for (Line2D.Double line : listLine) {
             listStr.add("  <" + (++i) + ">" + Math.round(line.x1) + ":" + Math.round(line.y1) + ", " + Math.round(line.x2) + ":" + Math.round(line.y2));
             //listStr.add("  <" + (++i) + ">" + line.x1 + ":" + line.y1 + ", " + line.x2 + ":" + line.y2);
-            //listStr.add(line.x1 + ", " + line.y1 + ", " + line.x2 + ", " + line.y2 + ", ");
+            //listStr.add(line.x1 + ", " + line.y1 + ", " + line.x2 + ", " + line.y2 + " = ");
         }
         System.out.println(listStr);
     }
-
+    
     public static void PRINT(double... p) {
         if (p.length == 2) {
             System.out.println((int) p[0] + ", *" + (int) p[1]);
@@ -388,50 +390,31 @@ public class UGeo {
         }
     }
 
-    //https://stackoverflow.com/questions/21941156/shapes-and-segments-in-java
-    public static Area[] split(Area area, Com5t line) {
-
-        //Вычисление угла линии к оси x
-        double dx = line.x2() - line.x1();
-        double dy = line.y2() - line.y1();
-        double angl = Math.atan2(dy, dx);
-
-        //Выравниваем область так, чтобы линия совпадала с осью x
-        AffineTransform at = new AffineTransform();
-        at.rotate(-angl);
-        at.translate(-line.x1(), -line.y1());
-        Area aa = area.createTransformedArea(at);
-
-        //Вычисляем верхнюю и нижнюю половины площади должы пересекаться с...
-        Rectangle2D bounds = aa.getBounds2D();
-
-        double half0minY = Math.min(0, bounds.getMinY());
-        double half0maxY = Math.min(0, bounds.getMaxY());
-        Rectangle2D half0 = new Rectangle2D.Double(
-                bounds.getX(), half0minY, bounds.getWidth(), half0maxY - half0minY);
-
-        double half1minY = Math.max(0, bounds.getMinY());
-        double half1maxY = Math.max(0, bounds.getMaxY());
-        Rectangle2D half1 = new Rectangle2D.Double(
-                bounds.getX(), half1minY, bounds.getWidth(), half1maxY - half1minY);
-
-        //Вычисляем получившиеся площади путем пересечения исходной области с 
-        //обеими половинками, и возвращаем их в исходное положение
-        Area a0 = new Area(aa);
-        a0.intersect(new Area(half0));
-
-        Area a1 = new Area(aa);
-        a1.intersect(new Area(half1));
-
+    //https://www.interestprograms.ru/source-codes-tochka-peresecheniya-dvuh-pryamyh-na-ploskosti#uravnenie-v-programmnyj-kod
+    //x = (x2 - x1) * (y - y1) / (y2 - y1) + x1   y = (y2 - y1) * (x - x1) / (x2 - x1) + y1
+    public static double[] splitCanvas(double x1, double y1, double x2, double y2, double w, double h) {
         try {
-            at.invert();
-        } catch (NoninvertibleTransformException event) {
-            System.err.println("Ошибка:UGeo.split() " + event);
-        }
-        a0 = a0.createTransformedArea(at);
-        a1 = a1.createTransformedArea(at);
+            if (y1 == y2) {
+                return new double[]{0, 0, w, 0, w, y2, 0, y1};
+            }
+            double X1 = (x2 - x1) * (0 - y1) / (y2 - y1) + x1; //y=0
+            double X2 = (x2 - x1) * (h - y1) / (y2 - y1) + x1; //y=h
+            double Y1 = (y2 - y1) * (0 - x1) / (x2 - x1) + y1; //x=0
+            double Y2 = (y2 - y1) * (w - x1) / (x2 - x1) + y1; //x=w
 
-        return new Area[]{a0, a1};
+            if (X1 < 0 || X1 > w) {
+                return new double[]{0, 0, w, 0, w, Y2, 0, Y1};
+                
+            } else if(Y1 > 0 && Y1 > 0) {
+                return new double[]{X1, 0, w, 0, w, Y2};
+                                
+            } else {
+                return new double[]{0, 0, X1, 0, X2, h, 0, h};
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.cross2Canvas()" + e);
+            return null;
+        }
     }
 
     public static double hypotenuseMax(Area area) {
@@ -858,5 +841,28 @@ public class UGeo {
         }
         return null;
     }
+    
+    public static Area areaReduc(Area area) {
+        if (area != null) {
+            ArrayList<Integer> listPoint = new ArrayList();
+            try {
+                for (Line2D.Double line : UGeo.areaAllSegment(area)) {
+                    if (!(line.x1 == line.x2 && line.y1 == line.y2)) { //проверка нулевого сегмета
+                        listPoint.add((int) line.x2);
+                        listPoint.add((int) line.y2);
+                        //System.out.println(line.x1 + ", " + );
+                    }
+                }
+                double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
+                
+                return UGeo.areaPoly(arr);
+
+            } catch (Exception e) {
+                System.err.println("Ошибка:UGeo.areaReduc()" + e);
+            }
+        }
+        return area;
+    }
+    
 // </editor-fold>    
 }

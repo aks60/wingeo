@@ -237,14 +237,14 @@ public class Wincalc {
             listFrame.forEach(e -> e.paint());
             listCross.forEach(e -> e.paint());
             
-            listCross.forEach(e -> {
-                if (e.areaTest != null) {
-                    e.paint();
-                }
-                if (e.lineTest != null) {
-                    e.paint();
-                }               
-            });
+//            listCross.forEach(e -> {
+//                if (e.areaTest != null) {
+//                    e.paint();
+//                }
+//                if (e.lineTest != null) {
+//                    e.paint();
+//                }               
+//            });
 
         } catch (Exception e) {
             System.err.println("Ошибка:Wingeo.draw() " + e);
