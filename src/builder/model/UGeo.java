@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import static java.util.stream.Collectors.toList;
 
 public class UGeo {
 
@@ -214,7 +215,10 @@ public class UGeo {
 
         ArrayList<Line2D.Double> list1 = UGeo.areaAllSegment(area1);
         ArrayList<Line2D.Double> list2 = UGeo.areaAllSegment(area2);
-
+        
+        //List<Line2D.Double> list1 = listA.stream().filter(line -> !(line.x1 == line.x2 && line.y1 == line.y2)).collect(toList());
+        //List<Line2D.Double> list2 = listB.stream().filter(line -> !(line.x1 == line.x2 && line.y1 == line.y2)).collect(toList());
+        
         //Цикл по сегментам area1
         for (int ik = 0; ik < list1.size(); ik++) {
             Line2D.Double line1 = list1.get(ik);
@@ -267,7 +271,7 @@ public class UGeo {
                 if (e1 != null && e2 != null && e1 != e2) {
                     double h1[] = UGeo.diffOnAngl(UGeo.horizontAngl(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
                     double h2[] = UGeo.diffOnAngl(UGeo.horizontAngl(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
-                    double p[] = UGeo.crossOnLine( //точка пересечения сегментов смещённая внутрь
+                    double p[] = UGeo.crossOnLine( //смещённая внутрь точка пересечения сегментов
                             e1.x1() + h1[0], e1.y1() + h1[1], e1.x2() + h1[0], e1.y2() + h1[1],
                             e2.x1() + h2[0], e2.y1() + h2[1], e2.x2() + h2[0], e2.y2() + h2[1]);
 
@@ -370,6 +374,10 @@ public class UGeo {
             //listStr.add(line.x1 + ", " + line.y1 + ", " + line.x2 + ", " + line.y2 + " = ");
         }
         System.out.println(listStr);
+    }
+    
+    public static void PRINT(Line2D.Double line) {
+        System.out.println((int) line.x1 + ", " + (int) line.y1 + ", " + (int) line.x2 + ", " + (int) line.y2);
     }
     
     public static void PRINT(double... p) {

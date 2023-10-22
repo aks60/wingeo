@@ -17,7 +17,9 @@ public class ElemCross extends ElemSimple {
 
     public Area areaTest1 = null;
     public Area areaTest2 = null;
-    public Line2D.Double lineTest = null;
+    public Line2D.Double lineTest1 = null;
+    public Line2D.Double lineTest2 = null;
+    public Line2D.Double lineTest3 = null;
 
     public ElemCross(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
@@ -50,10 +52,6 @@ public class ElemCross extends ElemSimple {
 
             //Пересечение канвы вектором импоста. Area слева и справа от импоста
             Area P[] = UGeo.splitCanvas(UGeo.areaPoly(0, 0, w, 0, w, h, 0, h), this);
-//            if (id == 12.0) {
-//                areaTest1 = P[1];
-//                areaTest2 = P[0];
-//            }
             Area areaTop = (Area) owner.area.clone();
             Area areaBot = (Area) owner.area.clone();
             areaTop.intersect(P[0]);
@@ -62,19 +60,10 @@ public class ElemCross extends ElemSimple {
             owner.childs().get(0).area = areaTop;
             owner.childs().get(2).area = areaBot;
 
-//            if (id == 12.0) {
-//                areaTest1 = areaBot;
-//                Area ar = UGeo.areaReduc(areaBot);
-//                areaTest2 = ar;
-//                UGeo.PRINT(areaTest1);
-//                UGeo.PRINT(areaTest2);
-//            }
-
             //Предыдущая и последующая линия от совместной между area1 и area2
             Line2D.Double d[] = UGeo.prevAndNextSegment(areaTop, areaBot);
 
 //            if (id == 12.0) {
-//                lineTest = d[2];
 //            }
 
             if (d != null) {
@@ -113,9 +102,17 @@ public class ElemCross extends ElemSimple {
                 winc.gc2d.setColor(new java.awt.Color(000, 255, 000));
                 winc.gc2d.draw(this.areaTest2);
             }
-            if (this.lineTest != null) {
+            if (this.lineTest1 != null) {
                 winc.gc2d.setColor(new java.awt.Color(00, 000, 255));
-                winc.gc2d.draw(this.lineTest);
+                winc.gc2d.draw(this.lineTest1);
+            }
+            if (this.lineTest2 != null) {
+                winc.gc2d.setColor(new java.awt.Color(00, 000, 255));
+                winc.gc2d.draw(this.lineTest2);
+            }
+            if (this.lineTest3 != null) {
+                winc.gc2d.setColor(new java.awt.Color(00, 000, 255));
+                winc.gc2d.draw(this.lineTest3);
             }
             winc.gc2d.setColor(color);
             if (this.area != null) {
