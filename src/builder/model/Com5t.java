@@ -9,14 +9,16 @@ import domain.eArtikl;
 import enums.Layout;
 import enums.Type;
 import java.awt.Point;
-import java.awt.Polygon;
 import java.awt.geom.Area;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.util.List;
+import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.GeometryFactory;
 
 public class Com5t {
 
+    public GeometryFactory gf = new GeometryFactory();
     public static int TRANSLATE_XY = 2; //сдвиг графика
     public int SIZE = 24;
     public double id;
@@ -28,7 +30,7 @@ public class Com5t {
     public Type type = Type.NONE; //тип элемента или окна
     public Layout layout = Layout.FULL; //направление(AREA) сторона(ELEM) - расположения компонентов ...
     public Area area = null;
-    public Polygon AREA = null;
+    public Polygon geom = null;
     private boolean ev[] = {false, false};
     private Point pointPress = null;
     public int colorID1 = -1, colorID2 = -1, colorID3 = -1; //1-базовый 2-внутренний 3-внешний 

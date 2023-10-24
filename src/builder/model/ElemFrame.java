@@ -4,16 +4,13 @@ import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import domain.eArtikl;
-import domain.eColor;
-import static domain.eColor.rgb;
 import domain.eSysprof;
 import domain.eSyssize;
 import enums.PKjson;
 import enums.UseSide;
-import frames.swing.DrawStroke;
-import java.awt.Polygon;
-import java.awt.geom.PathIterator;
-import java.util.List;
+import java.awt.Shape;
+import org.locationtech.jts.awt.ShapeWriter;
+import org.locationtech.jts.geom.Coordinate;
 
 public class ElemFrame extends ElemSimple {
 
@@ -55,7 +52,7 @@ public class ElemFrame extends ElemSimple {
             anglHoriz = UGeo.horizontAngl(this);
             for (int i = 0; i < winc.listFrame.size(); i++) {
                 if (winc.listFrame.get(i).id == this.id) {
-                    
+
                     int k = (i == 0) ? winc.listFrame.size() - 1 : i - 1;
                     int j = (i == (winc.listFrame.size() - 1)) ? 0 : i + 1;
                     ElemSimple e0 = winc.listFrame.get(k);
@@ -65,13 +62,19 @@ public class ElemFrame extends ElemSimple {
                     double h1[] = UGeo.diffOnAngl(UGeo.horizontAngl(e0), e0.artiklRec.getDbl(eArtikl.height) - e0.artiklRec.getDbl(eArtikl.size_centr));
                     double h2[] = UGeo.diffOnAngl(UGeo.horizontAngl(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
                     double p1[] = UGeo.crossOnLine(
-                            x1() + h0[0], y1() + h0[1], x2() + h0[0], y2() + h0[1], 
+                            x1() + h0[0], y1() + h0[1], x2() + h0[0], y2() + h0[1],
                             e0.x1() + h1[0], e0.y1() + h1[1], e0.x2() + h1[0], e0.y2() + h1[1]);
                     double p2[] = UGeo.crossOnLine(
-                            x1() + h0[0], y1() + h0[1], x2() + h0[0], y2() + h0[1], 
+                            x1() + h0[0], y1() + h0[1], x2() + h0[0], y2() + h0[1],
                             e1.x1() + h2[0], e1.y1() + h2[1], e1.x2() + h2[0], e1.y2() + h2[1]);
-                    
+
                     this.area = UGeo.areaRectangl(x1(), y1(), x2(), y2(), p2[0], p2[1], p1[0], p1[1]);
+
+                    Coordinate[] shell = new Coordinate[]{
+                        new Coordinate(x1(), y1()), new Coordinate(x2(), y2()),
+                        new Coordinate(p2[0], p2[1]), new Coordinate(p1[0], p1[1]), new Coordinate(x1(), y1())
+                    };
+                    this.geom = gf.createPolygon(shell);
                 }
             }
 
@@ -82,7 +85,12 @@ public class ElemFrame extends ElemSimple {
 
     public void paint() {
         if (this.area != null) {
-           winc.gc2d.draw(area);
+            winc.gc2d.draw(area);
+        }
+        if (this.geom != null) {
+            ShapeWriter sw = new ShapeWriter();
+            Shape polyShape = sw.toShape(this.geom);
+            winc.gc2d.draw(polyShape);
         }
     }
 

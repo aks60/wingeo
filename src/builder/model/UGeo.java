@@ -4,8 +4,6 @@ import domain.eArtikl;
 import enums.Layout;
 import enums.Type;
 import java.awt.Point;
-import java.awt.Polygon;
-import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
@@ -19,7 +17,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import static java.util.stream.Collectors.toList;
+import org.locationtech.jts.geom.Coordinate;
 
 public class UGeo {
 
@@ -173,7 +171,7 @@ public class UGeo {
 
         return new Area[]{a0, a1};
     }
-    
+
     //Точки пересечение импостом Canvas2D. x = (x2 - x1) * (y - y1) / (y2 - y1) + x1
     //https://www.interestprograms.ru/source-codes-tochka-peresecheniya-dvuh-pryamyh-na-ploskosti#uravnenie-v-programmnyj-kod      
     public static double[] crossCanvas(double x1, double y1, double x2, double y2, double w, double h) {
@@ -215,10 +213,9 @@ public class UGeo {
 
         ArrayList<Line2D.Double> list1 = UGeo.areaAllSegment(area1);
         ArrayList<Line2D.Double> list2 = UGeo.areaAllSegment(area2);
-        
+
         //List<Line2D.Double> list1 = listA.stream().filter(line -> !(line.x1 == line.x2 && line.y1 == line.y2)).collect(toList());
         //List<Line2D.Double> list2 = listB.stream().filter(line -> !(line.x1 == line.x2 && line.y1 == line.y2)).collect(toList());
-        
         //Цикл по сегментам area1
         for (int ik = 0; ik < list1.size(); ik++) {
             Line2D.Double line1 = list1.get(ik);
@@ -364,38 +361,49 @@ public class UGeo {
     }
 
 // <editor-fold defaultstate="collapsed" desc="XLAM">
+    public static void PRINT(Coordinate[] coord) {
+        
+        List<Double> list = new ArrayList();
+        for (Coordinate c : coord) {
+            list.add(c.x);
+            list.add(c.y);
+        }
+        double[] arr = new double[2 * coord.length];
+        for (int i = 0; i < list.size(); i++) {
+            arr[i] = list.get(i);
+            
+        }
+        UGeo.PRINT(arr);
+    }
+
     public static void PRINT(Area area) {
         int i = 0;
         ArrayList<Line2D.Double> listLine = UGeo.areaAllSegment(area);
         ArrayList<String> listStr = new ArrayList();
         for (Line2D.Double line : listLine) {
-            listStr.add("  <" + (++i) + ">" + Math.round(line.x1) + ":" + Math.round(line.y1) + ", " + Math.round(line.x2) + ":" + Math.round(line.y2));
-            //listStr.add("  <" + (++i) + ">" + line.x1 + ":" + line.y1 + ", " + line.x2 + ":" + line.y2);
+            listStr.add("  <" + (++i) + ">" + Math.round(line.x1) + " " + Math.round(line.y1) + ", " + Math.round(line.x2) + " " + Math.round(line.y2));
+            //listStr.add("  <" + (++i) + ">" + line.x1 + " " + line.y1 + ", " + line.x2 + " " + line.y2);
             //listStr.add(line.x1 + ", " + line.y1 + ", " + line.x2 + ", " + line.y2 + " = ");
         }
         System.out.println(listStr);
     }
-    
+
     public static void PRINT(Line2D.Double line) {
         System.out.println((int) line.x1 + ", " + (int) line.y1 + ", " + (int) line.x2 + ", " + (int) line.y2);
     }
-    
+
     public static void PRINT(double... p) {
-        if (p.length == 2) {
-            System.out.println((int) p[0] + ", *" + (int) p[1]);
-        } else if (p.length == 3) {
-            System.out.println((int) p[0] + "," + (int) p[1] + ", " + (int) p[2]);
-        } else if (p.length == 4) {
-            System.out.println((int) p[0] + ", " + (int) p[1] + ", " + (int) p[2] + ", " + (int) p[3]);
-        } else if (p.length == 5) {
-            System.out.println((int) p[0] + ", " + (int) p[1] + ", " + (int) p[2] + ", " + (int) p[3] + ", " + (int) p[4]);
-        } else if (p.length == 6) {
-            System.out.println((int) p[0] + ", " + (int) p[1] + ", " + (int) p[2] + ", " + (int) p[3] + ", " + (int) p[4] + ", " + (int) p[5]);
-        } else if (p.length == 7) {
-            System.out.println((int) p[0] + ", " + (int) p[1] + ", " + (int) p[2] + ", " + (int) p[3] + ", " + (int) p[4] + ", " + (int) p[5] + ", " + (int) p[6]);
-        } else if (p.length == 8) {
-            System.out.println((int) p[0] + ", " + (int) p[1] + ", " + (int) p[2] + ", " + (int) p[3] + ", " + (int) p[4] + ", " + (int) p[5] + ", " + (int) p[6] + ", " + (int) p[7]);
+        int index = 0;
+        String str = "";
+        for (int i = 0; i < p.length; i++) {
+            double d = p[i];
+            if ((i & 1) == 0) {
+                str = str + "<" + ++index + ">" + Math.round(d) + " ";
+            } else {
+                str = str + Math.round(d) + ", ";
+            }
         }
+        System.out.println(str);
     }
 
     //https://www.interestprograms.ru/source-codes-tochka-peresecheniya-dvuh-pryamyh-na-ploskosti#uravnenie-v-programmnyj-kod
@@ -412,10 +420,10 @@ public class UGeo {
 
             if (X1 < 0 || X1 > w) {
                 return new double[]{0, 0, w, 0, w, Y2, 0, Y1};
-                
-            } else if(Y1 > 0 && Y1 > 0) {
+
+            } else if (Y1 > 0 && Y1 > 0) {
                 return new double[]{X1, 0, w, 0, w, Y2};
-                                
+
             } else {
                 return new double[]{0, 0, X1, 0, X2, h, 0, h};
             }
@@ -849,7 +857,7 @@ public class UGeo {
         }
         return null;
     }
-    
+
     public static Area areaReduc(Area area) {
         if (area != null) {
             ArrayList<Integer> listPoint = new ArrayList();
@@ -862,7 +870,7 @@ public class UGeo {
                     }
                 }
                 double[] arr = listPoint.stream().mapToDouble(i -> i).toArray();
-                
+
                 return UGeo.areaPoly(arr);
 
             } catch (Exception e) {
@@ -871,6 +879,6 @@ public class UGeo {
         }
         return area;
     }
-    
+
 // </editor-fold>    
 }

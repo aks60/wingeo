@@ -4,6 +4,10 @@ import builder.Wincalc;
 import builder.script.GsonElem;
 import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
+import java.util.ArrayList;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LinearRing;
 
 public class AreaPolygon extends AreaSimple {
 
@@ -23,6 +27,24 @@ public class AreaPolygon extends AreaSimple {
             p.closePath();
             area = new Area(p);
 
+            setLocation2();
+            
+        } catch (Exception e) {
+            System.err.println("Ошибка:Area2Polygon.setLocation()" + toString() + e);
+        }
+    }
+    
+    public void setLocation2() {
+        try {            
+            ArrayList<Coordinate> listCoord = new ArrayList();
+            listCoord.add(new Coordinate(winc.listFrame.get(0).x1(), winc.listFrame.get(0).y1()));
+            winc.listFrame.forEach(line -> listCoord.add(new Coordinate(line.x2(), line.y2())));
+            Coordinate[] arrCoord = listCoord.toArray(new Coordinate[0]);
+            
+            this.geom = gf.createPolygon(arrCoord);
+
+            UGeo.PRINT(this.geom.getCoordinates());
+                    
         } catch (Exception e) {
             System.err.println("Ошибка:Area2Polygon.setLocation()" + toString() + e);
         }
