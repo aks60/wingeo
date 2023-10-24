@@ -1,19 +1,24 @@
 package startup;
 
-import builder.model.UGeo;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import common.Coord;
 import common.eProp;
 import dataset.Conn;
 import domain.eElement;
-import java.awt.Rectangle;
-import java.awt.geom.Area;
-import java.awt.geom.Line2D;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.CoordinateArrays;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.Polygon;
 
 public class Test {
 
@@ -64,13 +69,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            wincalc();
+            //wincalc();
             //query();
             //frame();
             //json();
             //uid();
             //script();
-            //geom();
+            geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -276,12 +281,20 @@ public class Test {
     //Пример PathIterator
     public static void geom() {
 
-        Area areaTop = UGeo.areaPoly(500.0, 1.08695650100708, 0.0, 2.17391300201416, 0.0, 2.17391300201416, 0.0, 500.0, 0.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 1.08695650100708, 500.0, 1.08695650100708, 500.0, 1.08695650100708);
-        Area areaBot = UGeo.areaPoly(1000.0, 0.0, 500.0, 1.08695650100708, 500.0, 1.08695650100708, 500.0, 500.0, 500.0, 500.0, 1000.0, 500.0, 1000.0, 500.0, 1000.0, 0.0, 1000.0, 0.0, 1000.0, 0.);
-        UGeo.PRINT(areaTop);
-        UGeo.PRINT(areaBot);
-        Line2D.Double d[] = UGeo.prevAndNextSegment(areaTop, areaBot); 
-        UGeo.PRINT(d[2].x1, d[2].y1, d[2].x2, d[2].y2);
+        GeometryFactory gf = new GeometryFactory(); //JTSFactoryFinder.getGeometryFactory();        
         
+        Coordinate[] coords1 = new Coordinate[]{
+            new Coordinate(4, 0), new Coordinate(2, 2),
+            new Coordinate(4, 4), new Coordinate(6, 2),
+            new Coordinate(4, 0)};
+        Coordinate[] coords2 = new Coordinate[]{
+            new Coordinate(4, 2), new Coordinate(6, 2),
+            new Coordinate(4, 4), new Coordinate(4, 2)};
+
+        Polygon polygon1 = gf.createPolygon(coords1);
+        Polygon polygon2 = gf.createPolygon(coords2);
+        Geometry gem1 = polygon1.intersection(polygon2);
+        System.out.println(gem1);
+
     }
 }
