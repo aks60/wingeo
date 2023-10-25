@@ -53,9 +53,11 @@ public class ElemCross extends ElemSimple {
 
             //Пересечение канвы вектором импоста. Area слева и справа от импоста
             Area P[] = UGeo.splitCanvas(UGeo.areaPoly(0, 0, w, 0, w, h, 0, h), this);
+            
             ShapeReader shr = new ShapeReader(gfac);
             Geometry P1 = shr.read(P[0].getPathIterator(null));
             Geometry P2 = shr.read(P[1].getPathIterator(null));
+            
             Polygon areaTop = (Polygon) owner.geom.copy();
             Polygon areaBot = (Polygon) owner.geom.copy();
             areaTop.intersection(P1);
@@ -65,7 +67,7 @@ public class ElemCross extends ElemSimple {
             owner.childs().get(2).geom = areaBot;
 
             //Предыдущая и последующая линия от совместной между area1 и area2
-            LineSegment d[] = UGeo.prevAndNextSegment2(areaTop, areaBot);
+            LineSegment d[] = UJts.prevAndNextSegment2(areaTop, areaBot);
 
             if (d != null) {
                 this.setDimension(d[2].p0.x, d[2].p0.y, d[2].p1.x, d[2].p0.y);
@@ -73,11 +75,11 @@ public class ElemCross extends ElemSimple {
                         this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
 
                 //Пересечение канвы сегментами импоста
-                double L1[] = UGeo.crossCanvas(this.x1() + M[0], this.y1() + M[1], this.x2() + M[0], this.y2() + M[1], w, h);
-                double L2[] = UGeo.crossCanvas(this.x1() - M[0], this.y1() - M[1], this.x2() - M[0], this.y2() - M[1], w, h);
+                double L1[] = UJts.crossCanvas(this.x1() + M[0], this.y1() + M[1], this.x2() + M[0], this.y2() + M[1], w, h);
+                double L2[] = UJts.crossCanvas(this.x1() - M[0], this.y1() - M[1], this.x2() - M[0], this.y2() - M[1], w, h);
 
                 //Area импоста внутренняя       
-                Area areaPadding = UGeo.areaPadding2(owner.geom, winc.listElem);
+                Area areaPadding = UJts.areaPadding(owner.geom, winc.listElem);
                 Area areaClip = UGeo.areaPoly(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]);
 
                 if (areaClip != null) {
