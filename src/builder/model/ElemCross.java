@@ -67,7 +67,7 @@ public class ElemCross extends ElemSimple {
             owner.childs().get(2).geom = areaBot;
 
             //Предыдущая и последующая линия от совместной между area1 и area2
-            LineSegment d[] = UJts.prevAndNextSegment2(areaTop, areaBot);
+            LineSegment d[] = UJts.prevAndNextSegment(areaTop, areaBot);
 
             if (d != null) {
                 this.setDimension(d[2].p0.x, d[2].p0.y, d[2].p1.x, d[2].p0.y);

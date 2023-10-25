@@ -58,7 +58,7 @@ public class UJts {
      * 0 - сегмент входящий слева 1 - сегмент выходящий слева 2 - общий сегмент
      * 3 - сегмент входящий справа 3 - сегмент выходящий справа
      */
-    public static LineSegment[] prevAndNextSegment2(Polygon area1, Polygon area2) {
+    public static LineSegment[] prevAndNextSegment(Polygon area1, Polygon area2) {
 
         Coordinate[] c1 = area1.getCoordinates();
         Coordinate[] c2 = area2.getCoordinates();
@@ -81,7 +81,8 @@ public class UJts {
 
                     return new LineSegment[]{
                         new LineSegment(c1[k1 - 1].x, c1[k1 - 1].y, c1[k1].x, c1[k1].y),
-                        new LineSegment(c1[j1 - 1].x, c1[j1 - 1].y, c1[j1].x, c1[j1].y), s1,
+                        new LineSegment(c1[j1 - 1].x, c1[j1 - 1].y, c1[j1].x, c1[j1].y), 
+                        s1,
                         new LineSegment(c2[k1 - 1].x, c2[k1 - 1].y, c2[k1].x, c2[k1].y),
                         new LineSegment(c2[j1 - 1].x, c2[j1 - 1].y, c2[j1].x, c2[j1].y)};
                 }
@@ -93,38 +94,37 @@ public class UJts {
     //Внутренняя обводка ареа 
     public static Area areaPadding(Polygon area, List<ElemSimple> listFrame) {
 
-        //ArrayList<Line2D.Double> segmList = areaAllSegment(area);
-//        Coordinate[] arrCoord = area.getCoordinates();
-//        LineSegment segment1 = new LineSegment();
-//        LineSegment segment2 = new LineSegment();
-//        List<Double> listPoint = new ArrayList();
-//        try {
-//            for (int i = 0; i < arrCoord.length; i++) {
-//
-//                int j = (i == (arrCoord.length - 1)) ? 0 : i + 1;
-//                segment1.setCoordinates(p0, p1); //= arrCoord.get(i);
-//                segment2.setCoordinates(p0, p1); // = arrCoord.get(j);
-//
-//                ElemSimple e1 = UJts.elemFromSegment(listFrame, segment1);
-//                ElemSimple e2 = UJts.elemFromSegment(listFrame, segment2);
-//
-//                if (e1 != null && e2 != null && e1 != e2) {
-//                    double h1[] = UGeo.diffOnAngl(UGeo.horizontAngl(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
-//                    double h2[] = UGeo.diffOnAngl(UGeo.horizontAngl(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
-//                    double p[] = UGeo.crossOnLine( //смещённая внутрь точка пересечения сегментов
-//                            e1.x1() + h1[0], e1.y1() + h1[1], e1.x2() + h1[0], e1.y2() + h1[1],
-//                            e2.x1() + h2[0], e2.y1() + h2[1], e2.x2() + h2[0], e2.y2() + h2[1]);
-//
-//                    listPoint.add(p[0]);
-//                    listPoint.add(p[1]);
-//                }
-//            }
-//            double[] arrayPoint = listPoint.stream().mapToDouble(i -> i).toArray();
-//            return UGeo.areaPoly(arrayPoint);
-//
-//        } catch (Exception e) {
-//            System.err.println("Ошибка:UGeo.areaPadding()" + e);
+        Coordinate[] arrCoord = area.getCoordinates();
+        LineSegment segment1 = new LineSegment();
+        LineSegment segment2 = new LineSegment();
+        List<Double> listPoint = new ArrayList();
+        try {
+            for (int i = 0; i < arrCoord.length; i++) {
+
+                int j = (i == (arrCoord.length - 1)) ? 0 : i + 1;
+                segment1.setCoordinates(p0, p1); //= arrCoord.get(i);
+                segment2.setCoordinates(p0, p1); // = arrCoord.get(j);
+
+                ElemSimple e1 = UJts.elemFromSegment(listFrame, segment1);
+                ElemSimple e2 = UJts.elemFromSegment(listFrame, segment2);
+
+                if (e1 != null && e2 != null && e1 != e2) {
+                    double h1[] = UGeo.diffOnAngl(UGeo.horizontAngl(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
+                    double h2[] = UGeo.diffOnAngl(UGeo.horizontAngl(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
+                    double p[] = UGeo.crossOnLine( //смещённая внутрь точка пересечения сегментов
+                            e1.x1() + h1[0], e1.y1() + h1[1], e1.x2() + h1[0], e1.y2() + h1[1],
+                            e2.x1() + h2[0], e2.y1() + h2[1], e2.x2() + h2[0], e2.y2() + h2[1]);
+
+                    listPoint.add(p[0]);
+                    listPoint.add(p[1]);
+                }
+            }
+            double[] arrayPoint = listPoint.stream().mapToDouble(i -> i).toArray();
+            return UGeo.areaPoly(arrayPoint);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.areaPadding()" + e);
             return null;
-//        }
+        }
     }
 }
