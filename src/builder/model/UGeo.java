@@ -18,6 +18,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.Polygon;
 
 public class UGeo {
 
@@ -209,6 +212,38 @@ public class UGeo {
      * 0 - сегмент входящий слева 1 - сегмент выходящий слева 2 - общий сегмент
      * 3 - сегмент входящий справа 3 - сегмент выходящий справа
      */
+    public static LineSegment[] prevAndNextSegment2(Polygon area1, Polygon area2) {
+        
+        Coordinate[] c1 = area1.getCoordinates();
+        Coordinate[] c2 = area2.getCoordinates();
+        
+        //Цикл по сегментам area1
+        for (int ik = 1; ik < c1.length; ++ik) {
+            //Цикл по сегментам area2
+            for (int ij = 1; ij < c2.length; ++ij) {
+
+                LineSegment s1 = new LineSegment(c1[ik - 1].x, c1[ik].y, c1[ik - 1].x, c1[ik].y);
+                LineSegment s2 = new LineSegment(c2[ij - 1].x, c2[ij].y, c2[ij - 1].x, c2[ij].y);
+                if (s1.equalsTopo(s2)) { //Если сегмент area1 и area2 общий
+
+                    //Находим предыдущий и последующий сегмент
+                    int k1 = (ik == 1) ? c1.length - 2 : ik - 2;
+                    int j1 = (ik == (c1.length - 2)) ? 1 : ik + 2;
+
+                    int k2 = (ij == 0) ? c2.length - 1 : ij - 1;
+                    int j2 = (ij == (c2.length - 1)) ? 0 : ij + 1;
+
+                    return new LineSegment[]{
+                        new LineSegment(c1[k1 - 1].x, c1[k1 - 1].y, c1[k1].x, c1[k1].y),
+                        new LineSegment(c1[j1 - 1].x, c1[j1 - 1].y, c1[j1].x, c1[j1].y), s1,
+                        new LineSegment(c2[k1 - 1].x, c2[k1 - 1].y, c2[k1].x, c2[k1].y),
+                        new LineSegment(c2[j1 - 1].x, c2[j1 - 1].y, c2[j1].x, c2[j1].y)};
+                }
+            }
+        }
+        return null;
+    }
+
     public static Line2D.Double[] prevAndNextSegment(Area area1, Area area2) {
 
         ArrayList<Line2D.Double> list1 = UGeo.areaAllSegment(area1);
@@ -232,7 +267,10 @@ public class UGeo {
 
                 //Если сегмент area1 и area2 общий
                 //if ((line1.x1 == line2.x2 && line1.y1 == line2.y2) && (line1.x2 == line2.x1 && line1.y2 == line2.y1)) {
-                if ((Math.round(line1.x1) == Math.round(line2.x2) && Math.round(line1.y1) == Math.round(line2.y2)) && (Math.round(line1.x2) == Math.round(line2.x1) && Math.round(line1.y2) == Math.round(line2.y1))) {
+                if ((Math.round(line1.x1) == Math.round(line2.x1) && Math.round(line1.y1) == Math.round(line2.y1)
+                        && Math.round(line1.x2) == Math.round(line2.x2) && Math.round(line1.y2) == Math.round(line2.y2))
+                        || (Math.round(line1.x1) == Math.round(line2.x2) && Math.round(line1.y1) == Math.round(line2.y2)
+                        && Math.round(line1.x2) == Math.round(line2.x1) && Math.round(line1.y2) == Math.round(line2.y1))) {
 
                     //Находим предыдущий и последующий сегмент
                     int k1 = (ik == 0) ? list1.size() - 1 : ik - 1;
@@ -251,6 +289,40 @@ public class UGeo {
     }
 
     //Внутренняя обводка ареа  
+    public static Area areaPadding2(Polygon area, List<ElemSimple> listFrame) {
+//
+//        //ArrayList<Line2D.Double> segmList = areaAllSegment(area);
+//        Coordinate[] arrCoord = area.getCoordinates();
+//        List<Double> listPoint = new ArrayList();
+//        try {
+//            for (int i = 0; i < arrCoord.length; i++) {
+//
+//                int j = (i == (arrCoord.length - 1)) ? 0 : i + 1;
+//                Line2D.Double segment1 = arrCoord.get(i);
+//                Line2D.Double segment2 = arrCoord.get(j);
+//
+//                ElemSimple e1 = UGeo.elemFromSegment(listFrame, segment1);
+//                ElemSimple e2 = UGeo.elemFromSegment(listFrame, segment2);
+//
+//                if (e1 != null && e2 != null && e1 != e2) {
+//                    double h1[] = UGeo.diffOnAngl(UGeo.horizontAngl(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
+//                    double h2[] = UGeo.diffOnAngl(UGeo.horizontAngl(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
+//                    double p[] = UGeo.crossOnLine( //смещённая внутрь точка пересечения сегментов
+//                            e1.x1() + h1[0], e1.y1() + h1[1], e1.x2() + h1[0], e1.y2() + h1[1],
+//                            e2.x1() + h2[0], e2.y1() + h2[1], e2.x2() + h2[0], e2.y2() + h2[1]);
+//
+//                    listPoint.add(p[0]);
+//                    listPoint.add(p[1]);
+//                }
+//            }
+//            double[] arrayPoint = listPoint.stream().mapToDouble(i -> i).toArray();
+//            return UGeo.areaPoly(arrayPoint);
+//
+//        } catch (Exception e) {
+//            System.err.println("Ошибка:UGeo.areaPadding()" + e);
+            return null;
+//        }
+    }
     public static Area areaPadding(Area area, List<ElemSimple> listFrame) {
 
         ArrayList<Line2D.Double> segmList = areaAllSegment(area);
@@ -360,9 +432,31 @@ public class UGeo {
         }
     }
 
+    //https://gis.stackexchange.com/questions/291020/jts-generate-a-polygon-geometry-from-line-geomtry
+    private static Polygon generatePoly(LineString line, double offset) {
+
+//    Coordinate[] points = line.getCoordinates();
+//
+//    ArrayList<Coordinate> soln = new ArrayList<>();
+//    //store initial points
+//    soln.addAll(Arrays.asList(points));
+//    // reverse the list
+//    ArrayUtils.reverse(points);
+//    // for each point move offset metres right 
+//    for (Coordinate c:points) {
+//      soln.add(new Coordinate(c.x, c.y));
+//    }
+//    // close the polygon
+//    soln.add(soln.get(0));
+//    // create polygon
+//    Polygon poly = gf.createPolygon(soln.toArray(new Coordinate[] {}));
+//    return poly;
+        return null;
+    }
+
 // <editor-fold defaultstate="collapsed" desc="XLAM">
     public static void PRINT(Coordinate[] coord) {
-        
+
         List<Double> list = new ArrayList();
         for (Coordinate c : coord) {
             list.add(c.x);
@@ -371,7 +465,7 @@ public class UGeo {
         double[] arr = new double[2 * coord.length];
         for (int i = 0; i < list.size(); i++) {
             arr[i] = list.get(i);
-            
+
         }
         UGeo.PRINT(arr);
     }

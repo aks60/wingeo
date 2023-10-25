@@ -13,6 +13,7 @@ import java.util.UUID;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
 
 public class Test {
@@ -289,7 +290,15 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coords1);
         Polygon polygon2 = gf.createPolygon(coords2);
         Geometry gem1 = polygon1.intersection(polygon2);
-        System.out.println(gem1);
+        //System.out.println(gem1);
+        LineSegment s1 = new LineSegment(2,2,2,8);
+        LineSegment s2 = new LineSegment(2,2,2,8);
+        LineSegment s3 = new LineSegment(2,8,2,2);
+        System.out.println(s1.equals(s2));
+        System.out.println(s1.equals(s3));
+        System.out.println(s1.equalsTopo(s2));
+        System.out.println(s1.equalsTopo(s3));
+        
 
     }
 }

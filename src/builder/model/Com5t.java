@@ -19,7 +19,7 @@ import org.locationtech.jts.geom.GeometryFactory;
 public class Com5t {
 
     //GeometryFactory gf2 = new GeometryFactory(new PrecisionModel(), srid);
-    public GeometryFactory gf = new GeometryFactory();
+    public static GeometryFactory gfac = new GeometryFactory();
     public static int TRANSLATE_XY = 2; //сдвиг графика
     public int SIZE = 24;
     public double id;
