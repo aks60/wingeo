@@ -22,10 +22,10 @@ import org.locationtech.jts.operation.polygonize.Polygonizer;
 public class UJts {
 
     public static boolean pointOnLine(double x, double y, double x1, double y1, double x2, double y2) {
-        //return (Math.round(((x2 - x1) * (y - y1)) - ((y2 - y1) * (x - x1))) == 0);
+        return (((x2 - x1) * (y - y1)) - ((y2 - y1) * (x - x1)) == 0);
         //return (((x2 - x1) * (y - y1)) - ((y2 - y1) * (x - x1)) == 0);
-        double d = ((x2 - x1) * (y - y1)) - ((y2 - y1) * (x - x1));
-        return (d > -.1 && d < .1);
+        //double d = ((x2 - x1) * (y - y1)) - ((y2 - y1) * (x - x1));
+        //return (d > -.1 && d < .1);
     }
 
     public static ArrayList<LineSegment> polyAllSegment(Polygon area) {
@@ -38,10 +38,10 @@ public class UJts {
         return list;
     }
 
-    public static ElemSimple elemFromSegment(List<ElemSimple> listLine, LineSegment segment) {
+    public static ElemSimple elemFromSegment(List<ElemSimple> listLine, LineString line) {
         for (ElemSimple elem : listLine) {
-            if (UGeo.pointOnLine(segment.p0.x, segment.p0.y, elem.x1(), elem.y1(), elem.x2(), elem.y2())
-                    && UJts.pointOnLine(segment.p1.x, segment.p1.y, elem.x1(), elem.y1(), elem.x2(), elem.y2())) {
+            if (UGeo.pointOnLine(line.getCoordinateN(0).x, line.getCoordinateN(0).y, elem.x1(), elem.y1(), elem.x2(), elem.y2())
+                    && UJts.pointOnLine(line.getCoordinateN(1).x, line.getCoordinateN(1).y, elem.x1(), elem.y1(), elem.x2(), elem.y2())) {
                 return elem;
             }
         }
@@ -102,9 +102,10 @@ public class UJts {
     }
 
     //Внутренняя обводка ареа 
-    public static Area areaPadding(Polygon area, List<ElemSimple> listFrame) {
+    public static Polygon areaPadding(Polygon area, List<ElemSimple> listFrame) {
 
-        List<Double> listPoint = new ArrayList();
+        List<Coordinate> listCoord = new ArrayList();
+        Coordinate[] coordArray = new Coordinate[area.getNumPoints()];
         try {
             for(int i = 1; i < area.getExteriorRing().getNumPoints(); i++) {
                 LineString segm1 = (LineString) area.getGeometryN(i-1);
@@ -121,12 +122,10 @@ public class UJts {
                             e1.x1() + h1[0], e1.y1() + h1[1], e1.x2() + h1[0], e1.y2() + h1[1],
                             e2.x1() + h2[0], e2.y1() + h2[1], e2.x2() + h2[0], e2.y2() + h2[1]);
 
-                    listPoint.add(p[0]);
-                    listPoint.add(p[1]);
+                    coordArray[i] = new Coordinate(p[0], p[1]);
                 }
-            }
-            double[] arrayPoint = listPoint.stream().mapToDouble(i -> i).toArray();
-            return UGeo.areaPoly(arrayPoint);
+            }     
+            return Com5t.gf.createPolygon(coordArray);
 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.areaPadding()" + e);
@@ -136,9 +135,9 @@ public class UJts {
 
     //Разделить произвольный многоугольник линией
     //https://gis.stackexchange.com/questions/189976/jts-split-arbitrary-polygon-by-a-line    
-    public static Geometry splitPolygon(GeometryFactory gf, Geometry poly, double x1, double y1, double x2, double y2) {
+    public static Geometry splitPolygon(Geometry poly, double x1, double y1, double x2, double y2) {
 
-        Geometry line = gf.createLineString(new Coordinate[]{new Coordinate(x1, y1), new Coordinate(x2, y2)});
+        Geometry line = Com5t.gf.createLineString(new Coordinate[]{new Coordinate(x1, y1), new Coordinate(x2, y2)});
         Geometry nodedLinework = poly.getBoundary().union(line);
         Geometry polys = polygonize(nodedLinework);
 
@@ -152,12 +151,12 @@ public class UJts {
         return poly.getFactory().createGeometryCollection(GeometryFactory.toGeometryArray(output));
     }
 
-    public static Polygon createPolygon(GeometryFactory gf, double... list) {
-        Coordinate[] c = new Coordinate[list.length / 2];
-        for (int i = 1; i < list.length; i++) {
-            c[i] = new Coordinate(list[i - 1], list[i]);
+    public static Polygon createPolygon(double... d) {
+        Coordinate[] c = new Coordinate[d.length / 2];
+        for (int i = 1; i < d.length; i++) {
+            c[i] = new Coordinate(d[i - 1], d[i]);
         }
-        return gf.createPolygon(c);
+        return Com5t.gf.createPolygon(c);
     }
 
 // <editor-fold defaultstate="collapsed" desc="ADD">

@@ -45,14 +45,13 @@ public class ElemCross extends ElemSimple {
     }
 
     public void setLocation() {
-        //System.out.println(id);
         try {
             anglHoriz = UGeo.horizontAngl(this);
             double w = owner.area.getBounds2D().getMaxX();
             double h = owner.area.getBounds2D().getMaxY();
 
             //Пересечение канвы вектором импоста. Area слева и справа от импоста
-            Geometry dblPoly = UJts.splitPolygon(gf, UJts.createPolygon(gf, 0, 0, w, 0, w, h, 0, h), this.x1(), this.y1(), this.x2(), this.y2());
+            Geometry dblPoly = UJts.splitPolygon(UJts.createPolygon(0, 0, w, 0, w, h, 0, h), this.x1(), this.y1(), this.x2(), this.y2());
 
             Geometry P1 = dblPoly.getGeometryN(0);
             Geometry P2 = dblPoly.getGeometryN(1);
@@ -66,10 +65,10 @@ public class ElemCross extends ElemSimple {
             owner.childs().get(2).geom = areaBot;
 
             //Предыдущая и последующая линия от совместной между area1 и area2
-            LineSegment d[] = UJts.prevAndNextSegment(areaTop, areaBot);
+            LineSegment lineQue[] = UJts.prevAndNextSegment(areaTop, areaBot);
 
-            if (d != null) {
-                this.setDimension(d[2].p0.x, d[2].p0.y, d[2].p1.x, d[2].p0.y);
+            if (lineQue != null) {
+                this.setDimension(lineQue[2].p0.x, lineQue[2].p0.y, lineQue[2].p1.x, lineQue[2].p0.y);
                 double M[] = UGeo.diffOnAngl(UGeo.horizontAngl(this), //ширина импоста
                         this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
 
@@ -78,12 +77,12 @@ public class ElemCross extends ElemSimple {
                 double L2[] = UJts.crossCanvas(this.x1() - M[0], this.y1() - M[1], this.x2() - M[0], this.y2() - M[1], w, h);
 
                 //Area импоста внутренняя       
-                Area areaPadding = UJts.areaPadding(owner.geom, winc.listElem);
-                Area areaClip = UGeo.areaPoly(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]);
+                Polygon areaPadding = UJts.areaPadding(owner.geom, winc.listElem);
+                Polygon areaClip = UJts.createPolygon(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]);
 
                 if (areaClip != null) {
-                    areaPadding.intersect(areaClip);
-                    this.area = areaPadding;
+                    areaPadding.intersection(areaClip);
+                    this.geom = areaPadding;
                 }
             }
         } catch (Exception e) {
