@@ -41,7 +41,7 @@ public class AreaPolygon extends AreaSimple {
             winc.listFrame.forEach(line -> listCoord.add(new Coordinate(line.x2(), line.y2())));
             Coordinate[] arrCoord = listCoord.toArray(new Coordinate[0]);
             
-            this.geom = gfac.createPolygon(arrCoord);
+            this.geom = gf.createPolygon(arrCoord);
 
             UGeo.PRINT(this.geom.getCoordinates());
                     

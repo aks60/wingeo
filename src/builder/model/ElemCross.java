@@ -52,11 +52,10 @@ public class ElemCross extends ElemSimple {
             double h = owner.area.getBounds2D().getMaxY();
 
             //Пересечение канвы вектором импоста. Area слева и справа от импоста
-            Area P[] = UGeo.splitCanvas(UGeo.areaPoly(0, 0, w, 0, w, h, 0, h), this);
-            
-            ShapeReader shr = new ShapeReader(gfac);
-            Geometry P1 = shr.read(P[0].getPathIterator(null));
-            Geometry P2 = shr.read(P[1].getPathIterator(null));
+            Geometry dblPoly = UJts.splitPolygon(gf, UJts.createPolygon(gf, 0, 0, w, 0, w, h, 0, h), this.x1(), this.y1(), this.x2(), this.y2());
+
+            Geometry P1 = dblPoly.getGeometryN(0);
+            Geometry P2 = dblPoly.getGeometryN(1);
             
             Polygon areaTop = (Polygon) owner.geom.copy();
             Polygon areaBot = (Polygon) owner.geom.copy();

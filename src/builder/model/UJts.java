@@ -2,13 +2,23 @@ package builder.model;
 
 import domain.eArtikl;
 import java.awt.geom.Area;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.util.LineStringExtracter;
+import org.locationtech.jts.operation.polygonize.Polygonizer;
 
+/**
+ * GeometryFixer - Исправляет геометрию LineStringExtracter.getLines(geometry) -
+ * Извлекает LineString
+ *
+ */
 public class UJts {
 
     public static boolean pointOnLine(double x, double y, double x1, double y1, double x2, double y2) {
@@ -81,7 +91,7 @@ public class UJts {
 
                     return new LineSegment[]{
                         new LineSegment(c1[k1 - 1].x, c1[k1 - 1].y, c1[k1].x, c1[k1].y),
-                        new LineSegment(c1[j1 - 1].x, c1[j1 - 1].y, c1[j1].x, c1[j1].y), 
+                        new LineSegment(c1[j1 - 1].x, c1[j1 - 1].y, c1[j1].x, c1[j1].y),
                         s1,
                         new LineSegment(c2[k1 - 1].x, c2[k1 - 1].y, c2[k1].x, c2[k1].y),
                         new LineSegment(c2[j1 - 1].x, c2[j1 - 1].y, c2[j1].x, c2[j1].y)};
@@ -94,21 +104,17 @@ public class UJts {
     //Внутренняя обводка ареа 
     public static Area areaPadding(Polygon area, List<ElemSimple> listFrame) {
 
-        Coordinate[] arrCoord = area.getCoordinates();
-        LineSegment segment1 = new LineSegment();
-        LineSegment segment2 = new LineSegment();
         List<Double> listPoint = new ArrayList();
         try {
-            for (int i = 0; i < arrCoord.length; i++) {
+            for(int i = 1; i < area.getExteriorRing().getNumPoints(); i++) {
+                LineString segm1 = (LineString) area.getGeometryN(i-1);
+                LineString segm2 = (LineString) area.getGeometryN(i);
 
-                int j = (i == (arrCoord.length - 1)) ? 0 : i + 1;
-                segment1.setCoordinates(p0, p1); //= arrCoord.get(i);
-                segment2.setCoordinates(p0, p1); // = arrCoord.get(j);
-
-                ElemSimple e1 = UJts.elemFromSegment(listFrame, segment1);
-                ElemSimple e2 = UJts.elemFromSegment(listFrame, segment2);
+                ElemSimple e1 = UJts.elemFromSegment(listFrame, segm1);
+                ElemSimple e2 = UJts.elemFromSegment(listFrame, segm2);
 
                 if (e1 != null && e2 != null && e1 != e2) {
+                    //Получим ширину сегментов в цыкле
                     double h1[] = UGeo.diffOnAngl(UGeo.horizontAngl(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
                     double h2[] = UGeo.diffOnAngl(UGeo.horizontAngl(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
                     double p[] = UGeo.crossOnLine( //смещённая внутрь точка пересечения сегментов
@@ -127,4 +133,42 @@ public class UJts {
             return null;
         }
     }
+
+    //Разделить произвольный многоугольник линией
+    //https://gis.stackexchange.com/questions/189976/jts-split-arbitrary-polygon-by-a-line    
+    public static Geometry splitPolygon(GeometryFactory gf, Geometry poly, double x1, double y1, double x2, double y2) {
+
+        Geometry line = gf.createLineString(new Coordinate[]{new Coordinate(x1, y1), new Coordinate(x2, y2)});
+        Geometry nodedLinework = poly.getBoundary().union(line);
+        Geometry polys = polygonize(nodedLinework);
+
+        List output = new ArrayList();
+        for (int i = 0; i < polys.getNumGeometries(); i++) {
+            Polygon candpoly = (Polygon) polys.getGeometryN(i);
+            if (poly.contains(candpoly.getInteriorPoint())) {
+                output.add(candpoly);
+            }
+        }
+        return poly.getFactory().createGeometryCollection(GeometryFactory.toGeometryArray(output));
+    }
+
+    public static Polygon createPolygon(GeometryFactory gf, double... list) {
+        Coordinate[] c = new Coordinate[list.length / 2];
+        for (int i = 1; i < list.length; i++) {
+            c[i] = new Coordinate(list[i - 1], list[i]);
+        }
+        return gf.createPolygon(c);
+    }
+
+// <editor-fold defaultstate="collapsed" desc="ADD">
+    public static Geometry polygonize(Geometry geometry) {
+
+        List lines = LineStringExtracter.getLines(geometry);
+        Polygonizer polygonizer = new Polygonizer();
+        polygonizer.add(lines);
+        Collection polys = polygonizer.getPolygons();
+        Polygon[] polyArray = GeometryFactory.toPolygonArray(polys);
+        return geometry.getFactory().createGeometryCollection(polyArray);
+    }
+// </editor-fold>    
 }
