@@ -24,7 +24,6 @@ import enums.Type;
 import enums.UseArtiklTo;
 import frames.swing.draw.Canvas;
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
