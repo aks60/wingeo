@@ -68,7 +68,7 @@ public class ElemFrame extends ElemSimple {
                             x1() + h0[0], y1() + h0[1], x2() + h0[0], y2() + h0[1],
                             e1.x1() + h2[0], e1.y1() + h2[1], e1.x2() + h2[0], e1.y2() + h2[1]);
 
-                    this.area = UGeo.areaRectangl(x1(), y1(), x2(), y2(), p2[0], p2[1], p1[0], p1[1]);
+                    this.geom = UJts.createPolygon(x1(), y1(), x2(), y2(), p2[0], p2[1], p1[0], p1[1]);
 
                     Coordinate[] shell = new Coordinate[]{
                         new Coordinate(x1(), y1()), new Coordinate(x2(), y2()),
@@ -84,13 +84,9 @@ public class ElemFrame extends ElemSimple {
     }
 
     public void paint() {
-        if (this.area != null) {
-            winc.gc2d.draw(area);
-        }
         if (this.geom != null) {
-            ShapeWriter sw = new ShapeWriter();
-            Shape polyShape = sw.toShape(this.geom);
-            winc.gc2d.draw(polyShape);
+            Shape shape = new ShapeWriter().toShape(this.geom);
+            winc.gc2d.draw(shape);
         }
     }
 

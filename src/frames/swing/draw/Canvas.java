@@ -6,6 +6,7 @@ import common.listener.ListenerFrame;
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
@@ -13,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Rectangle2D;
 import javax.swing.ImageIcon;
+import org.locationtech.jts.awt.ShapeWriter;
 
 public class Canvas extends javax.swing.JPanel implements ListenerFrame<MouseEvent, MouseEvent> {
 
@@ -110,7 +112,8 @@ public class Canvas extends javax.swing.JPanel implements ListenerFrame<MouseEve
     }
 
     public double scale(Wincalc winc, double dx, double dy) {
-        Rectangle2D rec = winc.root.area.getBounds2D();
+        Shape shape = new ShapeWriter().toShape(winc.root.geom);
+        Rectangle2D rec = shape.getBounds2D();
         return ((getWidth() + dx) / rec.getMaxX() > (getHeight() + dx) / rec.getMaxY())
                 ? (getHeight() + dx) / (rec.getMaxY() + dy) : (getWidth() + dx) / (rec.getMaxX() + dy);
     }

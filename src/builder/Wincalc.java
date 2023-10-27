@@ -24,6 +24,7 @@ import enums.Type;
 import enums.UseArtiklTo;
 import frames.swing.draw.Canvas;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +32,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
+import org.locationtech.jts.awt.ShapeWriter;
 
 public class Wincalc {
 
@@ -260,11 +262,11 @@ public class Wincalc {
     }
 
     public double width() {
-        return root.area.getBounds2D().getWidth();
+        return new ShapeWriter().toShape(root.geom).getBounds2D().getWidth();
     }
 
     public double height() {
-        return root.area.getBounds2D().getHeight();
+        return new ShapeWriter().toShape(root.geom).getBounds2D().getHeight();
     }
 
     public double square() {

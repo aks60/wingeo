@@ -9,10 +9,9 @@ import domain.eArtikl;
 import enums.Layout;
 import enums.Type;
 import java.awt.Point;
-import java.awt.geom.Area;
-import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.util.List;
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.GeometryFactory;
 
@@ -30,7 +29,7 @@ public class Com5t {
     public GsonElem gson = null; //gson object конструкции    
     public Type type = Type.NONE; //тип элемента или окна
     public Layout layout = Layout.FULL; //направление(AREA) сторона(ELEM) - расположения компонентов ...
-    public Area area = null;
+    //public Area area = null;
     public Polygon geom = null;
     private boolean ev[] = {false, false};
     private Point pointPress = null;
@@ -63,10 +62,11 @@ public class Com5t {
 
     public void mouseEvent() {
         ListenerMouse mousePressed = (event) -> {
-            
+
             pointPress = event.getPoint();
             //Если клик внутри контура
-            if (this.area != null && this.area.contains(event.getX() / winc.scale, event.getY() / winc.scale)) {
+            org.locationtech.jts.geom.Point p = gf.createPoint(new Coordinate(event.getX() / winc.scale, event.getY() / winc.scale));
+            if (this.geom != null && this.geom.contains(p)) {
                 double d1 = Point2D.distance(x1(), y1(), event.getX() / winc.scale, event.getY() / winc.scale); //длина к началу вектора
                 double d2 = Point2D.distance(x2(), y2(), event.getX() / winc.scale, event.getY() / winc.scale); //длина к концу вектора
                 double d3 = (d1 + d2) / 3;
@@ -79,12 +79,12 @@ public class Com5t {
             }
         };
         ListenerMouse mouseReleased = (event) -> {
-            
+
             ev[0] = false;
             ev[1] = false;
         };
         ListenerMouse mouseDragge = (event) -> {
-            
+
             double W = winc.canvas.getWidth();
             double H = winc.canvas.getHeight();
             double dX = event.getX() - pointPress.getX();
@@ -93,7 +93,7 @@ public class Com5t {
             if (ev[0] == true) {
                 double X1 = dX / winc.scale + x1();
                 double Y1 = dY / winc.scale + y1();
-                if (X1 >= 0 && X1 <= W / winc.scale  && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
+                if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
                     x1(X1);
                     y1(Y1);
                 }
@@ -173,15 +173,11 @@ public class Com5t {
         if (gson.x2 != null) {
             return gson.x2;
         } else {
-            double[] d = new double[6];
-            PathIterator it1 = owner.area.getPathIterator(null);
-            while (!it1.isDone()) {
-                it1.currentSegment(d);
-                if (d[0] == x1()) {
-                    it1.next();
-                    return d[0];
+            Coordinate[] coordArr = this.geom.getCoordinates();
+            for (int i = coordArr.length; i > 0; --i) {
+                if (coordArr[i].x == x1()) {
+                    return coordArr[i - 1].x;
                 }
-                it1.next();
             }
             return -1;
         }
@@ -191,15 +187,11 @@ public class Com5t {
         if (gson.y2 != null) {
             return gson.y2;
         } else {
-            double[] d = new double[6];
-            PathIterator it1 = owner.area.getPathIterator(null);
-            while (!it1.isDone()) {
-                it1.currentSegment(d);
-                if (d[0] == x1()) {
-                    it1.next();
-                    return d[1];
+            Coordinate[] coordArr = this.geom.getCoordinates();
+            for (int i = coordArr.length; i > 0; --i) {
+                if (coordArr[i].y == y1()) {
+                    return coordArr[i - 1].y;
                 }
-                it1.next();
             }
             return -1;
         }
