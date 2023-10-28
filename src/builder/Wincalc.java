@@ -106,7 +106,7 @@ public class Wincalc {
     private void parsing(String script) {
         //Для тестирования
         //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
-        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
         gson = new GsonBuilder().create().fromJson(script, GsonRoot.class);
         gson.setOwner(this);

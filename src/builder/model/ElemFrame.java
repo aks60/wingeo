@@ -53,7 +53,7 @@ public class ElemFrame extends ElemSimple {
             for (int i = 0; i < winc.listFrame.size(); i++) {
                 if (winc.listFrame.get(i).id == this.id) {
 
-                    int k = (i == 0) ? winc.listFrame.size() - 1 : i - 1;
+                    int k = i; //(i == 0) ? winc.listFrame.size() - 1 : i - 1;
                     int j = (i == (winc.listFrame.size() - 1)) ? 0 : i + 1;
                     ElemSimple e0 = winc.listFrame.get(k);
                     ElemSimple e1 = winc.listFrame.get(j);
