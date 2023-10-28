@@ -25,9 +25,7 @@ public class AreaPolygon extends AreaSimple {
             listCoord.add(new Coordinate(winc.listFrame.get(0).x1(), winc.listFrame.get(0).y1()));            
             Coordinate[] arrCoord = listCoord.toArray(new Coordinate[0]);
 
-            this.geom = gf.createPolygon(arrCoord);
-            
-            winc.listFrame.forEach(line -> System.out.println(line.x1() + " " + line.y1() + " - " + line.x2() + " " + line.y2()));
+            this.geom = gf.createPolygon(arrCoord);                        
 
         } catch (Exception e) {
             System.err.println("Ошибка:Area2Polygon.setLocation()" + toString() + e);

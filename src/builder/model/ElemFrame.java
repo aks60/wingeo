@@ -63,20 +63,24 @@ public class ElemFrame extends ElemSimple {
                     double h1[] = UGeo.diffOnAngl(UGeo.horizontAngl(e0), e0.artiklRec.getDbl(eArtikl.height) - e0.artiklRec.getDbl(eArtikl.size_centr));
                     double h2[] = UGeo.diffOnAngl(UGeo.horizontAngl(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
 
+                    winc.listFrame.forEach(line -> System.out.println(e0.x1() + " " + e0.y1() + " - " + e0.x2() + " " + e0.y2()));
+                    winc.listFrame.forEach(line -> System.out.println(e1.x1() + " " + e1.y1() + " - " + e1.x2() + " " + e1.y2()));
+                    
                     Coordinate c1 = Intersection.intersection(
                             new Coordinate(x1() + h0[0], y1() + h0[1]), new Coordinate(x2() + h0[0], y2() + h0[1]),
                             new Coordinate(e0.x1() + h1[0], e0.y1() + h1[1]), new Coordinate(e0.x2() + h1[0], e0.y2() + h1[1]));
                     Coordinate c2 = Intersection.intersection(
                             new Coordinate(x1() + h0[0], y1() + h0[1]), new Coordinate(x2() + h0[0], y2() + h0[1]),
                             new Coordinate(e1.x1() + h2[0], e1.y1() + h2[1]), new Coordinate(e1.x2() + h2[0], e1.y2() + h2[1]));
-                    this.geom = UJts.createPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y);
+                    
+                    this.geom = UJts.createPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y, x1(), y1());
 
-                    Coordinate[] shell = new Coordinate[]{
-                        new Coordinate(x1(), y1()), new Coordinate(x2(), y2()),
-                        new Coordinate(c2.x, c2.y), new Coordinate(c1.x, c1.y),
-                        new Coordinate(x1(), y1())
-                    };
-                    this.geom = gf.createPolygon(shell);
+//                    Coordinate[] shell = new Coordinate[]{
+//                        new Coordinate(x1(), y1()), new Coordinate(x2(), y2()),
+//                        new Coordinate(c2.x, c2.y), new Coordinate(c1.x, c1.y),
+//                        new Coordinate(x1(), y1())
+//                    };
+//                    this.geom = gf.createPolygon(shell);
                 }
             }
 
