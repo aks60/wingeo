@@ -13,7 +13,22 @@ public class AreaPolygon extends AreaSimple {
     
     public void setLocation() {
         try {            
-            ArrayList<Coordinate> listCoord = new ArrayList();
+            ArrayList<Coordinate> listCoord = new ArrayList<Coordinate>();
+            winc.listFrame.forEach(line -> listCoord.add(new Coordinate(line.x1(), line.y1())));
+            listCoord.add(new Coordinate(winc.listFrame.get(0).x1(), winc.listFrame.get(0).y1()));
+            Coordinate[] arrCoord = listCoord.toArray(new Coordinate[0]);
+            
+            this.geom = gf.createPolygon(arrCoord);
+
+            //UGeo.PRINT(this.geom.getCoordinates());
+                    
+        } catch (Exception e) {
+            System.err.println("Ошибка:Area2Polygon.setLocation()" + toString() + e);
+        }
+    }
+    public void setLocation2() {
+        try {            
+            ArrayList<Coordinate> listCoord = new ArrayList<Coordinate>();
             listCoord.add(new Coordinate(winc.listFrame.get(0).x1(), winc.listFrame.get(0).y1()));
             winc.listFrame.forEach(line -> listCoord.add(new Coordinate(line.x2(), line.y2())));
             Coordinate[] arrCoord = listCoord.toArray(new Coordinate[0]);
