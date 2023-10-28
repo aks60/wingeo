@@ -10,38 +10,44 @@ public class AreaPolygon extends AreaSimple {
     public AreaPolygon(Wincalc winc, GsonElem gson) {
         super(winc, gson, null);
     }
-    
+
     public void setLocation() {
-        try {            
+        try {
+            ArrayList<Coordinate> listCoord = new ArrayList<Coordinate>();
+            winc.listFrame.forEach(line -> listCoord.add(new Coordinate(line.x1(), line.y1())));
+            listCoord.add(new Coordinate(winc.listFrame.get(0).x1(), winc.listFrame.get(0).y1()));
+            for (int i = 0; i < winc.listFrame.size(); i++) {
+                if (i + 1 > winc.listFrame.size()) {
+                    winc.listFrame.get(i).enext = winc.listFrame.get(i + 1);
+                } else {
+                    winc.listFrame.get(i).enext = winc.listFrame.get(0);
+                }
+            }
+            Coordinate[] arrCoord = listCoord.toArray(new Coordinate[0]);
+
+            this.geom = gf.createPolygon(arrCoord);
+
+            //UGeo.PRINT(this.geom.getCoordinates());
+        } catch (Exception e) {
+            System.err.println("Ошибка:Area2Polygon.setLocation()" + toString() + e);
+        }
+    }
+
+    public void setLocation2() {
+        try {
             ArrayList<Coordinate> listCoord = new ArrayList<Coordinate>();
             winc.listFrame.forEach(line -> listCoord.add(new Coordinate(line.x1(), line.y1())));
             listCoord.add(new Coordinate(winc.listFrame.get(0).x1(), winc.listFrame.get(0).y1()));
             Coordinate[] arrCoord = listCoord.toArray(new Coordinate[0]);
-            
+
             this.geom = gf.createPolygon(arrCoord);
 
             //UGeo.PRINT(this.geom.getCoordinates());
-                    
         } catch (Exception e) {
             System.err.println("Ошибка:Area2Polygon.setLocation()" + toString() + e);
         }
     }
-    public void setLocation2() {
-        try {            
-            ArrayList<Coordinate> listCoord = new ArrayList<Coordinate>();
-            listCoord.add(new Coordinate(winc.listFrame.get(0).x1(), winc.listFrame.get(0).y1()));
-            winc.listFrame.forEach(line -> listCoord.add(new Coordinate(line.x2(), line.y2())));
-            Coordinate[] arrCoord = listCoord.toArray(new Coordinate[0]);
-            
-            this.geom = gf.createPolygon(arrCoord);
 
-            UGeo.PRINT(this.geom.getCoordinates());
-                    
-        } catch (Exception e) {
-            System.err.println("Ошибка:Area2Polygon.setLocation()" + toString() + e);
-        }
-    }
-    
     public void paint() {
     }
 }
