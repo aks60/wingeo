@@ -9,8 +9,10 @@ import domain.eArtikl;
 import enums.Layout;
 import enums.Type;
 import java.awt.Point;
+import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.util.List;
+import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -65,8 +67,8 @@ public class Com5t {
 
             pointPress = event.getPoint();
             //Если клик внутри контура
-            org.locationtech.jts.geom.Point p = gf.createPoint(new Coordinate(event.getX() / winc.scale, event.getY() / winc.scale));
-            if (this.geom != null && this.geom.contains(p)) {
+            Shape geom = new ShapeWriter().toShape(this.geom);
+            if (this.geom != null && geom.contains(pointPress)) {
                 double d1 = Point2D.distance(x1(), y1(), event.getX() / winc.scale, event.getY() / winc.scale); //длина к началу вектора
                 double d2 = Point2D.distance(x2(), y2(), event.getX() / winc.scale, event.getY() / winc.scale); //длина к концу вектора
                 double d3 = (d1 + d2) / 3;
