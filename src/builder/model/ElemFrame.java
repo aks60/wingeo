@@ -73,7 +73,7 @@ public class ElemFrame extends ElemSimple {
                             new Coordinate(x1() + h0[0], y1() + h0[1]), new Coordinate(x2() + h0[0], y2() + h0[1]),
                             new Coordinate(e1.x1() + h2[0], e1.y1() + h2[1]), new Coordinate(e1.x2() + h2[0], e1.y2() + h2[1]));
 
-                    this.geom = UJts.createPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y, x1(), y1()); 
+                    this.geom = UJts.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y, x1(), y1()); 
                 }
             }
 

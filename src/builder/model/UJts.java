@@ -48,9 +48,9 @@ public class UJts {
         return null;
     }
 
-    //Точки пересечение импостом Canvas2D. x = (x2 - x1) * (y - y1) / (y2 - y1) + x1
-    //https://www.interestprograms.ru/source-codes-tochka-peresecheniya-dvuh-pryamyh-na-ploskosti#uravnenie-v-programmnyj-kod      
-    public static double[] crossCanvas(double x1, double y1, double x2, double y2, double w, double h) {
+    //Точки пересечение импостом Canvas2D. x = (x2 - x1) * (y - y1) / (y2 - y1) + x1   y = (y2 - y1) * (x - x1) / (x2 - x1) + y1
+    //https://www.interestprograms.ru/source-codes-tochka-peresecheniya-dvuh-pryamyh-na-ploskosti#uravnenie-v-programmnyj-kod     
+    public static double[] crossCanvas(double x1, double y1, double x2, double y2, double width, double height) {
 //        double X1 = (y1 == y2) ? 0 : (((0 - y1) / (y2 - y1)) * (x2 - x1)) + x1;
 //        double X2 = (y1 == y2) ? w : (((h - y1) / (y2 - y1)) * (x2 - x1)) + x1;
 //        //System.out.println(X1 + "  " + 0 + "  =  " + X2 + "  " + h);
@@ -59,8 +59,8 @@ public class UJts {
         double Y1 = (y1 == y2) ? y1 + 0.0000000001 : y1;
         double Y2 = (y1 == y2) ? y2 - 0.0000000001 : y2;
         double X1 = (x2 - x1) * (0 - Y1) / (Y2 - Y1) + x1;
-        double X2 = (x2 - x1) * (h - Y1) / (Y2 - Y1) + x1;
-        return new double[]{X1, 0, X2, h};
+        double X2 = (x2 - x1) * (height - Y1) / (Y2 - Y1) + x1;
+        return new double[]{X1, 0, X2, height};
     }
 
     //Находим предыднщую и последующую линию от совместной между area1 и area2
@@ -159,12 +159,8 @@ public class UJts {
         return list.toArray(new Coordinate[0]);
     }
     
-    public static Polygon createPolygon(double... d) {
-        List<Coordinate> list = new ArrayList();
-        for (int i = 1; i < d.length; i = i + 2) {
-            list.add(new Coordinate(d[i - 1], d[i]));
-        }
-        return Com5t.gf.createPolygon(list.toArray(new Coordinate[0]));
+    public static Polygon newPolygon(double... d) {
+        return Com5t.gf.createPolygon(UJts.arrCoord(d));
     }
 
 // <editor-fold defaultstate="collapsed" desc="ADD">
