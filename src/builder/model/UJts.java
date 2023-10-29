@@ -151,14 +151,18 @@ public class UJts {
         return poly.getFactory().createGeometryCollection(GeometryFactory.toGeometryArray(output));
     }
 
+    //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Coordinate[] arrCoord(double... d) {
         List<Coordinate> list = new ArrayList();
         for (int i = 1; i < d.length; i = i + 2) {
             list.add(new Coordinate(d[i - 1], d[i]));
         } 
+        list.add(new Coordinate(d[0], d[1]));
+        
         return list.toArray(new Coordinate[0]);
     }
     
+    //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Polygon newPolygon(double... d) {
         return Com5t.gf.createPolygon(UJts.arrCoord(d));
     }
