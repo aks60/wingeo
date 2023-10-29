@@ -1,6 +1,5 @@
 package startup;
 
-import builder.model.UJts;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -11,6 +10,7 @@ import domain.eElement;
 import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
+import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.geom.*;
 
 public class Test {
@@ -275,12 +275,12 @@ public class Test {
     public static void geom() {
 
         GeometryFactory gf = new GeometryFactory(); //JTSFactoryFinder.getGeometryFactory(); 
-        
+
         Coordinate[] cline1 = new Coordinate[]{
-            new Coordinate(0, 4), new Coordinate(12, 4)};        
+            new Coordinate(0, 4), new Coordinate(12, 4)};
         Coordinate[] cline2 = new Coordinate[]{
-            new Coordinate(4, 0), new Coordinate(4, 4)};  
-        
+            new Coordinate(4, 0), new Coordinate(0, 4)};
+
         Coordinate[] coords1 = new Coordinate[]{
             new Coordinate(4, 0), new Coordinate(2, 2),
             new Coordinate(4, 4), new Coordinate(6, 2),
@@ -295,21 +295,24 @@ public class Test {
             new Coordinate(0, 2), new Coordinate(8, 2),
             new Coordinate(8, 2.001), new Coordinate(0, 2.001),
             new Coordinate(0, 2)};
-        
+
         Point point1 = gf.createPoint(new Coordinate(4, 2));
         Point point2 = gf.createPoint(new Coordinate(4, 8));
         LineString line1 = gf.createLineString(cline1);
         LineString line2 = gf.createLineString(cline2);
-        Polygon polygon1 = gf.createPolygon(coords1);        
+        Polygon polygon1 = gf.createPolygon(coords1);
         Polygon polygon2 = gf.createPolygon(coords2);
         Polygon polygon3 = gf.createPolygon(coords3);
         Polygon polygon4 = gf.createPolygon(coords4);
-        
-        System.out.println(polygon3); 
+
+        //System.out.println(polygon3); 
         //Geometry gem1 = polygon1.intersection(polygon4);
         //Geometry gem1 = polygon1.getEnvelope();                     
         //Geometry gem1 = polygon3.getBoundary();                     
-        System.out.println(polygon3.getBoundary());
-        Envelope envelope = polygon3.getEnvelopeInternal();
+        //System.out.println(polygon3.getBoundary());
+        Coordinate c1 = Intersection.intersection(new Coordinate(0, 4), new Coordinate(4, 12), new Coordinate(2, 8), new Coordinate(12, 8));
+        Coordinate c2 = Intersection.lineSegment(new Coordinate(0, 4), new Coordinate(4, 12), new Coordinate(2, 8), new Coordinate(12, 8));
+        System.out.println(c1);
+        System.out.println(c2);
     }
 }

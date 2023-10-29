@@ -111,7 +111,8 @@ public class UJts {
                 LineString segm1 = (LineString) area.getGeometryN(i - 1);
                 LineString segm2 = (LineString) area.getGeometryN(i);
 
-                ElemSimple e1 = UJts.elemFromSegment(listFrame, segm1);                ElemSimple e2 = UJts.elemFromSegment(listFrame, segm2);
+                ElemSimple e1 = UJts.elemFromSegment(listFrame, segm1);
+                ElemSimple e2 = UJts.elemFromSegment(listFrame, segm2);
 
                 if (e1 != null && e2 != null && e1 != e2) {
                     //Получим ширину сегментов в цыкле
@@ -155,15 +156,30 @@ public class UJts {
         List<Coordinate> list = new ArrayList();
         for (int i = 1; i < d.length; i = i + 2) {
             list.add(new Coordinate(d[i - 1], d[i]));
-        } 
+        }
         list.add(new Coordinate(d[0], d[1]));
-        
+
         return list.toArray(new Coordinate[0]);
     }
-    
+
     //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Polygon newPolygon(double... d) {
         return Com5t.gf.createPolygon(UJts.arrCoord(d));
+    }
+
+    //параллельную линию для данного сегмента, которая находится выше и ниже исходной
+    //https://stackoverflow.com/questions/46319815/how-to-find-a-parallel-line-for-a-given-line-segment-both-the-parallel-line-whi
+    public static void test() {
+//        // source line from given start and end coordinate
+//        LineSegment sourceLine = new LineSegment(startCoordinate, endCoordinate)       
+//        // left from start- to end-point (note negative offset distance!)
+//        Coordinate startLeft = sourceLine.pointAlongOffset(0, -parallelDistance);
+//        Coordinate endLeft = sourceLine.pointAlongOffset(1, -parallelDistance);
+//        LineString leftLine = new GeometryFactory().createLineString(new Coordinate[]{startLeft, endLeft});
+//        // right from start- to end-point (note positive offset distance!)
+//        Coordinate startRight = sourceLine.pointAlongOffset(0, parallelDistance);
+//        Coordinate endRight = sourceLine.pointAlongOffset(1, parallelDistance);
+//        LineString rightLine = new GeometryFactory().createLineString(new Coordinate[]{startRight, endRight});
     }
 
 // <editor-fold defaultstate="collapsed" desc="ADD">
