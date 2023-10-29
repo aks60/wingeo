@@ -107,12 +107,11 @@ public class UJts {
         List<Coordinate> listCoord = new ArrayList();
         Coordinate[] coordArray = new Coordinate[area.getNumPoints()];
         try {
-            for (int i = 1; i < area.getExteriorRing().getNumPoints(); i++) {
+            for (int i = 1; i < area.getNumPoints(); i++) {
                 LineString segm1 = (LineString) area.getGeometryN(i - 1);
                 LineString segm2 = (LineString) area.getGeometryN(i);
 
-                ElemSimple e1 = UJts.elemFromSegment(listFrame, segm1);
-                ElemSimple e2 = UJts.elemFromSegment(listFrame, segm2);
+                ElemSimple e1 = UJts.elemFromSegment(listFrame, segm1);                ElemSimple e2 = UJts.elemFromSegment(listFrame, segm2);
 
                 if (e1 != null && e2 != null && e1 != e2) {
                     //Получим ширину сегментов в цыкле
