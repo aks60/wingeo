@@ -151,6 +151,14 @@ public class UJts {
         return poly.getFactory().createGeometryCollection(GeometryFactory.toGeometryArray(output));
     }
 
+    public static Coordinate[] arrCoord(double... d) {
+        List<Coordinate> list = new ArrayList();
+        for (int i = 1; i < d.length; i = i + 2) {
+            list.add(new Coordinate(d[i - 1], d[i]));
+        } 
+        return list.toArray(new Coordinate[0]);
+    }
+    
     public static Polygon createPolygon(double... d) {
         List<Coordinate> list = new ArrayList();
         for (int i = 1; i < d.length; i = i + 2) {

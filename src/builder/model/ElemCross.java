@@ -10,8 +10,9 @@ import enums.UseSide;
 import java.awt.Shape;
 import java.awt.geom.Area;
 import java.awt.geom.Line2D;
-import org.locationtech.jts.awt.ShapeReader;
+import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
@@ -48,8 +49,7 @@ public class ElemCross extends ElemSimple {
 
     public void setLocation() {
         try {
-            anglHoriz = UGeo.horizontAngl(this);
-
+            anglHoriz = Angle.angle(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()));
             double w = owner.geom.getEnvelopeInternal().getWidth();
             double h = owner.geom.getEnvelopeInternal().getHeight();
             
@@ -72,10 +72,12 @@ public class ElemCross extends ElemSimple {
 
             if (lineQue != null) {
                 this.setDimension(lineQue[2].p0.x, lineQue[2].p0.y, lineQue[2].p1.x, lineQue[2].p0.y);
-                double M[] = UGeo.diffOnAngl(UGeo.horizontAngl(this), //ширина импоста
+                
+                //Ширина импоста
+                double M[] = UGeo.diffOnAngl(UGeo.horizontAngl(this), 
                         this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
 
-                //Пересечение канвы сегментами импоста
+                //Пересечение канвы сегментом импоста
                 double L1[] = UJts.crossCanvas(this.x1() + M[0], this.y1() + M[1], this.x2() + M[0], this.y2() + M[1], w, h);
                 double L2[] = UJts.crossCanvas(this.x1() - M[0], this.y1() - M[1], this.x2() - M[0], this.y2() - M[1], w, h);
 
