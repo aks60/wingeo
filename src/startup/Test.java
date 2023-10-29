@@ -68,7 +68,7 @@ public class Test {
             //json();
             //uid();
             //script();
-            //geom();
+            geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -305,9 +305,11 @@ public class Test {
         Polygon polygon3 = gf.createPolygon(coords3);
         Polygon polygon4 = gf.createPolygon(coords4);
         
-        System.out.println(polygon1); 
+        System.out.println(polygon3); 
         //Geometry gem1 = polygon1.intersection(polygon4);
-        Geometry gem1 = polygon1.getEnvelope();                     
-        System.out.println(gem1);                          
+        //Geometry gem1 = polygon1.getEnvelope();                     
+        //Geometry gem1 = polygon3.getBoundary();                     
+        System.out.println(polygon3.getBoundary());
+        Envelope envelope = polygon3.getEnvelopeInternal();
     }
 }

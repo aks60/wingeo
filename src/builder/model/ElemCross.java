@@ -49,10 +49,10 @@ public class ElemCross extends ElemSimple {
     public void setLocation() {
         try {
             anglHoriz = UGeo.horizontAngl(this);
-            Shape shape = new ShapeWriter().toShape(owner.geom);
-            double w = shape.getBounds2D().getMaxX();
-            double h = shape.getBounds2D().getMaxY();
 
+            double w = owner.geom.getEnvelopeInternal().getWidth();
+            double h = owner.geom.getEnvelopeInternal().getHeight();
+            
             //Пересечение канвы вектором импоста. Area слева и справа от импоста
             Geometry dblPoly = UJts.splitPolygon(UJts.createPolygon(0, 0, w, 0, w, h, 0, h), this.x1(), this.y1(), this.x2(), this.y2());
 

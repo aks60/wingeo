@@ -107,8 +107,8 @@ public class UJts {
         List<Coordinate> listCoord = new ArrayList();
         Coordinate[] coordArray = new Coordinate[area.getNumPoints()];
         try {
-            for(int i = 1; i < area.getExteriorRing().getNumPoints(); i++) {
-                LineString segm1 = (LineString) area.getGeometryN(i-1);
+            for (int i = 1; i < area.getExteriorRing().getNumPoints(); i++) {
+                LineString segm1 = (LineString) area.getGeometryN(i - 1);
                 LineString segm2 = (LineString) area.getGeometryN(i);
 
                 ElemSimple e1 = UJts.elemFromSegment(listFrame, segm1);
@@ -124,7 +124,7 @@ public class UJts {
 
                     coordArray[i] = new Coordinate(p[0], p[1]);
                 }
-            }     
+            }
             return Com5t.gf.createPolygon(coordArray);
 
         } catch (Exception e) {
@@ -152,11 +152,11 @@ public class UJts {
     }
 
     public static Polygon createPolygon(double... d) {
-        Coordinate[] c = new Coordinate[d.length / 2];
-        for (int i = 1; i < d.length; i++) {
-            c[i] = new Coordinate(d[i - 1], d[i]);
+        List<Coordinate> list = new ArrayList();
+        for (int i = 1; i < d.length; i = i + 2) {
+            list.add(new Coordinate(d[i - 1], d[i]));
         }
-        return Com5t.gf.createPolygon(c);
+        return Com5t.gf.createPolygon(list.toArray(new Coordinate[0]));
     }
 
 // <editor-fold defaultstate="collapsed" desc="ADD">

@@ -49,6 +49,7 @@ public class UGeo {
         return Math.toDegrees(Math.atan(angl));
     }
 
+// <editor-fold defaultstate="collapsed" desc="XLAM">    
     //http://ru.solverbook.com/spravochnik/vektory/ugol-mezhdu-vektorami/
     public static double betweenAngl(ElemSimple e1, ElemSimple e2) {
 
@@ -367,7 +368,6 @@ public class UGeo {
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="XLAM">
     public static void PRINT(Coordinate[] coord) {
 
         List<Double> list = new ArrayList();
