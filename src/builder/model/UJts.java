@@ -10,6 +10,7 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.LineStringExtracter;
 import org.locationtech.jts.operation.polygonize.Polygonizer;
@@ -103,11 +104,16 @@ public class UJts {
 
     //Внутренняя обводка ареа 
     public static Polygon areaPadding(Polygon area, List<ElemSimple> listFrame) {
-
+        LinearRing ring = Com5t.gf.createLinearRing(area.getCoordinates());
         List<Coordinate> listCoord = new ArrayList();
         Coordinate[] coordArray = new Coordinate[area.getNumPoints()];
         try {
-            for (int i = 1; i < area.getNumPoints(); i++) {
+            for (int i = 2; i < ring.getNumPoints(); i++) {
+
+                Coordinate coo1 = ring.getCoordinateN(i - 2);
+                Coordinate coo2 = ring.getCoordinateN(i - 1);
+                Coordinate coo3 = ring.getCoordinateN(i);
+
                 LineString segm1 = (LineString) area.getGeometryN(i - 1);
                 LineString segm2 = (LineString) area.getGeometryN(i);
 
