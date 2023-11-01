@@ -26,16 +26,6 @@ public class UJts {
         //return (d > -.1 && d < .1);
     }
 
-    public static ArrayList<LineSegment> polyAllSegment(Polygon area) {
-
-        ArrayList<LineSegment> list = new ArrayList();
-        Coordinate[] c = area.getCoordinates();
-        for (int i = 1; i < c.length; ++i) {
-            list.add(new LineSegment(c[i - 1].x, c[i - 1].y, c[i].x, c[i].y));
-        }
-        return list;
-    }
-
     public static ElemSimple elemFromSegment(List<ElemSimple> listLine, LineSegment line) {
         for (ElemSimple elem : listLine) {
             if (UGeo.pointOnLine(line.p0.x, line.p0.y, elem.x1(), elem.y1(), elem.x2(), elem.y2())
@@ -59,6 +49,25 @@ public class UJts {
         double X1 = (x2 - x1) * (0 - Y1) / (Y2 - Y1) + x1;
         double X2 = (x2 - x1) * (height - Y1) / (Y2 - Y1) + x1;
         return new double[]{X1, 0, X2, height};
+    }
+
+    public static Coordinate[] crossPoly(double x1, double y1, double x2, double y2, Polygon poly) {
+        
+        List<Coordinate> out = new ArrayList();
+        LineSegment s1 = new LineSegment(x1, y1, x2, y2);
+        LineSegment s2 = new LineSegment();
+        
+        Coordinate[] c = poly.getCoordinates();       
+        for (int i = 1; i < c.length; i++) {
+            Coordinate c1 = c[i - 1];
+            Coordinate c2 = c[i];
+            s2.setCoordinates(c1, c2);
+            Coordinate c3 = s2.lineIntersection(s1);
+            if(c3 != null) {
+                out.add(c3);
+            }
+        }
+        return out.toArray(new Coordinate[0]);
     }
 
     //Внутренняя обводка ареа 
@@ -130,21 +139,6 @@ public class UJts {
         return Com5t.gf.createPolygon(UJts.arrCoord(d));
     }
 
-    //параллельную линию для данного сегмента, которая находится выше и ниже исходной
-    //https://stackoverflow.com/questions/46319815/how-to-find-a-parallel-line-for-a-given-line-segment-both-the-parallel-line-whi
-    public static void test() {
-//        // source line from given start and end coordinate
-//        LineSegment sourceLine = new LineSegment(startCoordinate, endCoordinate)       
-//        // left from start- to end-point (note negative offset distance!)
-//        Coordinate startLeft = sourceLine.pointAlongOffset(0, -parallelDistance);
-//        Coordinate endLeft = sourceLine.pointAlongOffset(1, -parallelDistance);
-//        LineString leftLine = new GeometryFactory().createLineString(new Coordinate[]{startLeft, endLeft});
-//        // right from start- to end-point (note positive offset distance!)
-//        Coordinate startRight = sourceLine.pointAlongOffset(0, parallelDistance);
-//        Coordinate endRight = sourceLine.pointAlongOffset(1, parallelDistance);
-//        LineString rightLine = new GeometryFactory().createLineString(new Coordinate[]{startRight, endRight});
-    }
-
 // <editor-fold defaultstate="collapsed" desc="ADD">
     public static Geometry polygonize(Geometry geometry) {
 
@@ -155,7 +149,7 @@ public class UJts {
         Polygon[] polyArray = GeometryFactory.toPolygonArray(polys);
         return geometry.getFactory().createGeometryCollection(polyArray);
     }
-    
+
     //Находим предыднщую и последующую линию от совместной между area1 и area2
     /**
      * 0 - сегмент входящий слева 1 - сегмент выходящий слева 2 - общий сегмент
@@ -193,5 +187,31 @@ public class UJts {
 //        }
         return null;
     }
+
+    public static ArrayList<LineSegment> polyAllSegmentTest(Polygon area) {
+
+        ArrayList<LineSegment> list = new ArrayList();
+        Coordinate[] c = area.getCoordinates();
+        for (int i = 1; i < c.length; ++i) {
+            list.add(new LineSegment(c[i - 1].x, c[i - 1].y, c[i].x, c[i].y));
+        }
+        return list;
+    }
+
+    //параллельную линию для данного сегмента, которая находится выше и ниже исходной
+    //https://stackoverflow.com/questions/46319815/how-to-find-a-parallel-line-for-a-given-line-segment-both-the-parallel-line-whi
+    public static void test() {
+//        // source line from given start and end coordinate
+//        LineSegment sourceLine = new LineSegment(startCoordinate, endCoordinate)       
+//        // left from start- to end-point (note negative offset distance!)
+//        Coordinate startLeft = sourceLine.pointAlongOffset(0, -parallelDistance);
+//        Coordinate endLeft = sourceLine.pointAlongOffset(1, -parallelDistance);
+//        LineString leftLine = new GeometryFactory().createLineString(new Coordinate[]{startLeft, endLeft});
+//        // right from start- to end-point (note positive offset distance!)
+//        Coordinate startRight = sourceLine.pointAlongOffset(0, parallelDistance);
+//        Coordinate endRight = sourceLine.pointAlongOffset(1, parallelDistance);
+//        LineString rightLine = new GeometryFactory().createLineString(new Coordinate[]{startRight, endRight});
+    }
+
 // </editor-fold>    
 }

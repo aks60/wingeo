@@ -1,5 +1,6 @@
 package startup;
 
+import builder.model.UJts;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -11,7 +12,6 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 import org.locationtech.jts.geom.*;
-import org.locationtech.jts.geom.util.LineStringExtracter;
 
 public class Test {
 
@@ -279,11 +279,11 @@ public class Test {
         Coordinate[] cline1 = new Coordinate[]{
             new Coordinate(0, 500), new Coordinate(500, 500)};
         Coordinate[] cline2 = new Coordinate[]{
-            new Coordinate(4, 0), new Coordinate(0, 4)};
+            new Coordinate(0, 0), new Coordinate(0, 1000)};
 
         Coordinate[] coords1 = new Coordinate[]{
             new Coordinate(0, 0), new Coordinate(0, 1000),
-            new Coordinate(1000, 1000), new Coordinate(6, 2),
+            new Coordinate(1000, 1000), new Coordinate(1000, 0),
             new Coordinate(0, 0)};
         Coordinate[] coords2 = new Coordinate[]{
             new Coordinate(2, 2), new Coordinate(4, 4),
@@ -296,7 +296,7 @@ public class Test {
             new Coordinate(8, 2.001), new Coordinate(0, 2.001),
             new Coordinate(0, 2)};
 
-        Point point1 = gf.createPoint(new Coordinate(4, 2));
+        Point point1 = gf.createPoint(new Coordinate(0, 1000));
         Point point2 = gf.createPoint(new Coordinate(4, 8));
         LineString line1 = gf.createLineString(cline1);
         LineString line2 = gf.createLineString(cline2);
@@ -305,7 +305,15 @@ public class Test {
         Polygon polygon3 = gf.createPolygon(coords3);
         Polygon polygon4 = gf.createPolygon(coords4);
 
-        Geometry geo = polygon1.intersection(line1);
-        System.out.println(geo);
+        Coordinate[] geo = UJts.crossPoly(0, 1500, 1000, 1500, polygon1);
+        if (geo.length > 0) {
+            System.out.println(geo[0]);
+            System.out.println(geo[1]);
+            
+            //System.out.println(polygon1.contains(point1));
+            
+        } else {
+            System.out.println("==NULL==");
+        }
     }
 }

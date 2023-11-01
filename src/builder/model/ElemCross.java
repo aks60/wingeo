@@ -68,35 +68,34 @@ public class ElemCross extends ElemSimple {
             //Ширина импоста
             double W[] = UGeo.diffOnAngl(UGeo.horizontAngl(this),
                     this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
-
             
-            this.geom = null;
-//            //Находим пересечение канвы сегментами импоста
-//            double L1[] = UJts.crossCanvas(this.x1() + W[0], this.y1() + W[1], this.x2() + W[0], this.y2() + W[1], w, h);
-//            double L2[] = UJts.crossCanvas(this.x1() - W[0], this.y1() - W[1], this.x2() - W[0], this.y2() - W[1], w, h);
-//
-//            //Расширенная area импоста между канвой
-//            Polygon areaClip = UJts.newPolygon(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]);
-//
-//            //Area owner.geom импоста внутренняя       
-//            Polygon areaPadding = UJts.areaPadding(owner.geom, winc.listElem);
-//
-//            if (areaClip != null) {
-//                areaPadding.intersection(areaClip);
-//                this.geom = areaPadding;
-//            }
+            //Находим пересечение канвы сегментами импоста
+            double L1[] = UJts.crossCanvas(this.x1() + W[0], this.y1() + W[1], this.x2() + W[0], this.y2() + W[1], w, h);
+            double L2[] = UJts.crossCanvas(this.x1() - W[0], this.y1() - W[1], this.x2() - W[0], this.y2() - W[1], w, h);
+
+            //Расширенная area импоста между канвой
+            Polygon areaClip = UJts.newPolygon(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]);
+            
+            //Area owner.geom импоста внутренняя       
+            Polygon areaPadding = UJts.areaPadding(owner.geom, winc.listElem);
+            System.out.println(areaPadding);
+
+            if (areaClip != null) {
+                areaPadding.intersection(areaClip);
+                this.geom = areaPadding;
+            }
         } catch (Exception e) {
-            //this.geom = null;
+            this.geom = null;
             System.err.println("Ошибка:ElemCross.setLocation() " + e);
         }
     }
 
     public void paint() {
         try {
-//            if (this.geom != null) {
-//                Shape shape = new ShapeWriter().toShape(this.geom);
-//                winc.gc2d.draw(shape);
-//            }            
+            if (this.geom != null) {
+                Shape shape = new ShapeWriter().toShape(this.geom);
+                winc.gc2d.draw(shape);
+            }            
 //            java.awt.Color color = winc.gc2d.getColor();
 //
 //            if (this.areaTest1 != null) {
