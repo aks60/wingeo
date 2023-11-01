@@ -76,13 +76,8 @@ public class ElemCross extends ElemSimple {
             Coordinate C1[] = UJts.crossPoly(areaPadding, this.x1() + W[0], this.y1() + W[1], this.x2() + W[0], this.y2() + W[1]);
             Coordinate C2[] = UJts.crossPoly(areaPadding, this.x1() - W[0], this.y1() - W[1], this.x2() - W[0], this.y2() - W[1]);
 
-            //Расширенная area импоста между канвой
-//            Polygon areaClip = UJts.newPolygon(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]);
-//            
-//            if (areaClip != null) {
-//                areaPadding.intersection(areaClip);
-//                this.geom = areaPadding;
-//            }
+//           this.geom = UJts.newPolygon(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]);
+
         } catch (Exception e) {
             this.geom = null;
             System.err.println("Ошибка:ElemCross.setLocation() " + e);
