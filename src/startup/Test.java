@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 import org.locationtech.jts.geom.*;
+import org.locationtech.jts.geom.util.LineStringExtracter;
 
 public class Test {
 
@@ -294,7 +295,6 @@ public class Test {
             new Coordinate(0, 2), new Coordinate(8, 2),
             new Coordinate(8, 2.001), new Coordinate(0, 2.001),
             new Coordinate(0, 2)};
-        //List.of(coords4).forEach(i -> i.);
 
         Point point1 = gf.createPoint(new Coordinate(4, 2));
         Point point2 = gf.createPoint(new Coordinate(4, 8));
@@ -305,8 +305,7 @@ public class Test {
         Polygon polygon3 = gf.createPolygon(coords3);
         Polygon polygon4 = gf.createPolygon(coords4);
 
-        Geometry geo1 = polygon1.intersection(polygon2);                    
-        System.out.println(geo1);
-        
+        List geo = LineStringExtracter.getLines(polygon1);
+        System.out.println(geo);
     }
 }
