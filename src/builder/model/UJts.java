@@ -51,7 +51,7 @@ public class UJts {
         return new double[]{X1, 0, X2, height};
     }
 
-    public static Coordinate[] crossPoly(double x1, double y1, double x2, double y2, Polygon poly) {
+    public static Coordinate[] crossPoly(Polygon poly, double x1, double y1, double x2, double y2) {
 
         List<Coordinate> out = new ArrayList();
         LineSegment s1 = new LineSegment(x1, y1, x2, y2);

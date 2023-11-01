@@ -300,7 +300,7 @@ public class Test {
         Polygon polygon3 = gf.createPolygon(coords3);
         Polygon polygon4 = gf.createPolygon(coords4);
 
-        Coordinate[] geo = UJts.crossPoly(60, 999, 1800, 999, polygon1);
+        Coordinate[] geo = UJts.crossPoly(polygon1, 60, 999, 1800, 999);
         if (geo != null) {
             System.out.println(geo[0]);
             System.out.println(geo[1]);
