@@ -276,11 +276,6 @@ public class Test {
 
         GeometryFactory gf = new GeometryFactory(); //JTSFactoryFinder.getGeometryFactory(); 
 
-        Coordinate[] cline1 = new Coordinate[]{
-            new Coordinate(0, 500), new Coordinate(500, 500)};
-        Coordinate[] cline2 = new Coordinate[]{
-            new Coordinate(0, 0), new Coordinate(0, 1000)};
-
         Coordinate[] coords1 = new Coordinate[]{
             new Coordinate(0, 0), new Coordinate(0, 1000),
             new Coordinate(1000, 1000), new Coordinate(1000, 0),
@@ -296,22 +291,19 @@ public class Test {
             new Coordinate(8, 2.001), new Coordinate(0, 2.001),
             new Coordinate(0, 2)};
 
-        Point point1 = gf.createPoint(new Coordinate(0, 1000));
+        Point point1 = gf.createPoint(new Coordinate(0, 0));
         Point point2 = gf.createPoint(new Coordinate(4, 8));
-        LineString line1 = gf.createLineString(cline1);
-        LineString line2 = gf.createLineString(cline2);
+        LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
+        LineString line2 = gf.createLineString(new Coordinate[]{ new Coordinate(0, 0), new Coordinate(0, 1000)});
         Polygon polygon1 = gf.createPolygon(coords1);
         Polygon polygon2 = gf.createPolygon(coords2);
         Polygon polygon3 = gf.createPolygon(coords3);
         Polygon polygon4 = gf.createPolygon(coords4);
 
-        Coordinate[] geo = UJts.crossPoly(0, 1500, 1000, 1500, polygon1);
-        if (geo.length > 0) {
+        Coordinate[] geo = UJts.crossPoly(60, 999, 1800, 999, polygon1);
+        if (geo != null) {
             System.out.println(geo[0]);
             System.out.println(geo[1]);
-            
-            //System.out.println(polygon1.contains(point1));
-            
         } else {
             System.out.println("==NULL==");
         }

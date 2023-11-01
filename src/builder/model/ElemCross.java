@@ -56,34 +56,33 @@ public class ElemCross extends ElemSimple {
             //Возвращает area слева и справа от импоста
             Geometry dblPoly = UJts.splitPolygon(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
             Polygon area1 = (Polygon) dblPoly.getGeometryN(0);
-            Polygon area2 = (Polygon) dblPoly.getGeometryN(1);           
-            owner.childs().get(0).geom = area1;           
-            owner.childs().get(2).geom = area2;           
-            
+            Polygon area2 = (Polygon) dblPoly.getGeometryN(1);
+            owner.childs().get(0).geom = area1;
+            owner.childs().get(2).geom = area2;
+
             //Общий сегменты от совместнго между area1 и area2
             Coordinate[] segm = owner.childs().get(0).geom.intersection(owner.childs().get(2).geom).getCoordinates();
-            
+
             this.setDimension(segm[0].x, segm[0].y, segm[1].x, segm[1].y);
 
             //Ширина импоста
             double W[] = UGeo.diffOnAngl(UGeo.horizontAngl(this),
                     this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
-            
-            //Находим пересечение канвы сегментами импоста
-            double L1[] = UJts.crossCanvas(this.x1() + W[0], this.y1() + W[1], this.x2() + W[0], this.y2() + W[1], w, h);
-            double L2[] = UJts.crossCanvas(this.x1() - W[0], this.y1() - W[1], this.x2() - W[0], this.y2() - W[1], w, h);
 
-            //Расширенная area импоста между канвой
-            Polygon areaClip = UJts.newPolygon(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]);
-            
             //Area owner.geom импоста внутренняя       
             Polygon areaPadding = UJts.areaPadding(owner.geom, winc.listElem);
-            System.out.println(areaPadding);
 
-            if (areaClip != null) {
-                areaPadding.intersection(areaClip);
-                this.geom = areaPadding;
-            }
+            //Находим пересечение areaPadding сегментами импоста
+            Coordinate C1[] = UJts.crossPoly(this.x1() + W[0], this.y1() + W[1], this.x2() + W[0], this.y2() + W[1], areaPadding);
+            Coordinate C2[] = UJts.crossPoly(this.x1() - W[0], this.y1() - W[1], this.x2() - W[0], this.y2() - W[1], areaPadding);
+
+            //Расширенная area импоста между канвой
+//            Polygon areaClip = UJts.newPolygon(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]);
+//            
+//            if (areaClip != null) {
+//                areaPadding.intersection(areaClip);
+//                this.geom = areaPadding;
+//            }
         } catch (Exception e) {
             this.geom = null;
             System.err.println("Ошибка:ElemCross.setLocation() " + e);
@@ -95,7 +94,7 @@ public class ElemCross extends ElemSimple {
             if (this.geom != null) {
                 Shape shape = new ShapeWriter().toShape(this.geom);
                 winc.gc2d.draw(shape);
-            }            
+            }
 //            java.awt.Color color = winc.gc2d.getColor();
 //
 //            if (this.areaTest1 != null) {

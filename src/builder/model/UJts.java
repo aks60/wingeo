@@ -52,22 +52,26 @@ public class UJts {
     }
 
     public static Coordinate[] crossPoly(double x1, double y1, double x2, double y2, Polygon poly) {
-        
+
         List<Coordinate> out = new ArrayList();
         LineSegment s1 = new LineSegment(x1, y1, x2, y2);
         LineSegment s2 = new LineSegment();
-        
-        Coordinate[] c = poly.getCoordinates();       
+
+        Coordinate[] c = poly.getCoordinates();
         for (int i = 1; i < c.length; i++) {
             Coordinate c1 = c[i - 1];
             Coordinate c2 = c[i];
             s2.setCoordinates(c1, c2);
             Coordinate c3 = s2.lineIntersection(s1);
-            if(c3 != null) {
+            boolean b = Com5t.gf.createLineString(new Coordinate[]{c1, c2}).contains(Com5t.gf.createPoint(c3));
+            if (c3 != null && b == true) {
                 out.add(c3);
             }
         }
-        return out.toArray(new Coordinate[0]);
+        if (out.size() == 2) {
+            return out.toArray(new Coordinate[0]);
+        }
+        return null;
     }
 
     //Внутренняя обводка ареа 
