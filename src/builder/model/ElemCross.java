@@ -63,10 +63,7 @@ public class ElemCross extends ElemSimple {
             Geometry area2 = owner.geom.intersection(P2);
             owner.childs().get(0).geom = (Polygon) area1;
             owner.childs().get(2).geom = (Polygon) area2;
-
-            System.out.println(area1);
-            System.out.println(area2);
-
+            
             //Общий сегменты от совместнго между area1 и area2
             Coordinate[] coo = area1.intersection(area2).getCoordinates();
             this.setDimension(coo[0].x, coo[1].y, coo[1].x, coo[1].y);
