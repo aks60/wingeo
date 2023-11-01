@@ -305,8 +305,7 @@ public class Test {
         Polygon polygon3 = gf.createPolygon(coords3);
         Polygon polygon4 = gf.createPolygon(coords4);
 
-        System.out.println(polygon4); 
-        LinearRing geo1 = gf.createLinearRing(polygon4.getCoordinates());                    
+        Geometry geo1 = polygon1.intersection(polygon2);                    
         System.out.println(geo1);
         
     }

@@ -14,7 +14,7 @@ import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
 
 public class ElemCross extends ElemSimple {
@@ -52,49 +52,45 @@ public class ElemCross extends ElemSimple {
             anglHoriz = Angle.angle(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()));
             double w = owner.geom.getEnvelopeInternal().getWidth();
             double h = owner.geom.getEnvelopeInternal().getHeight();
-            
-            //Пересечение канвы вектором импоста. 
-            //Возвращает area слева и справа от импоста
-            Geometry dblPoly = UJts.splitPolygon(UJts.newPolygon(0, 0, w, 0, w, h, 0, h), this.x1(), this.y1(), this.x2(), this.y2());
 
+            //Пересечение канвы вектором импоста.             
+            Geometry dblPoly = UJts.splitPolygon(UJts.newPolygon(0, 0, w, 0, w, h, 0, h), this.x1(), this.y1(), this.x2(), this.y2());
             Geometry P1 = dblPoly.getGeometryN(0);
             Geometry P2 = dblPoly.getGeometryN(1);
-            
-            Polygon area1 = (Polygon) owner.geom.copy();
-            Polygon area2 = (Polygon) owner.geom.copy();
-            area1.intersection(P1);
-            area2.intersection(P2);
 
-            owner.childs().get(0).geom = area1;
-            owner.childs().get(2).geom = area2;
+            //Возвращает area слева и справа от импоста
+            Geometry area1 = owner.geom.intersection(P1);
+            Geometry area2 = owner.geom.intersection(P2);
+            owner.childs().get(0).geom = (Polygon) area1;
+            owner.childs().get(2).geom = (Polygon) area2;
 
-            //Предыдущий и последующий сегмент от совместнго между area1 и area2
-            LineSegment lineQue[] = UJts.prevAndNextSegment(area1, area2);
+            System.out.println(area1);
+            System.out.println(area2);
 
-            if (lineQue != null) {
-                this.setDimension(lineQue[2].p0.x, lineQue[2].p0.y, lineQue[2].p1.x, lineQue[2].p0.y);
-                
-                //Ширина импоста
-                double W[] = UGeo.diffOnAngl(UGeo.horizontAngl(this), 
-                        this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
+            //Общий сегменты от совместнго между area1 и area2
+            Coordinate[] coo = area1.intersection(area2).getCoordinates();
+            this.setDimension(coo[0].x, coo[1].y, coo[1].x, coo[1].y);
 
-                //Находим пересечение канвы сегментами импоста
-                double L1[] = UJts.crossCanvas(this.x1() + W[0], this.y1() + W[1], this.x2() + W[0], this.y2() + W[1], w, h);
-                double L2[] = UJts.crossCanvas(this.x1() - W[0], this.y1() - W[1], this.x2() - W[0], this.y2() - W[1], w, h);
-                
-                //Расширенная area импоста между канвой
-                Polygon areaClip = UJts.newPolygon(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]);
+            //Ширина импоста
+            double W[] = UGeo.diffOnAngl(UGeo.horizontAngl(this),
+                    this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
 
-                //Area owner.geom импоста внутренняя       
-                Polygon areaPadding = UJts.areaPadding(owner.geom, winc.listElem);
+            //Находим пересечение канвы сегментами импоста
+            double L1[] = UJts.crossCanvas(this.x1() + W[0], this.y1() + W[1], this.x2() + W[0], this.y2() + W[1], w, h);
+            double L2[] = UJts.crossCanvas(this.x1() - W[0], this.y1() - W[1], this.x2() - W[0], this.y2() - W[1], w, h);
 
-                if (areaClip != null) {
-                    areaPadding.intersection(areaClip);
-                    this.geom = areaPadding;
-                }
+            //Расширенная area импоста между канвой
+            Polygon areaClip = UJts.newPolygon(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]);
+
+            //Area owner.geom импоста внутренняя       
+            Polygon areaPadding = UJts.areaPadding(owner.geom, winc.listElem);
+
+            if (areaClip != null) {
+                areaPadding.intersection(areaClip);
+                this.geom = areaPadding;
             }
         } catch (Exception e) {
-            this.geom = null;
+            //this.geom = null;
             System.err.println("Ошибка:ElemCross.setLocation() " + e);
         }
     }
