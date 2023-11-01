@@ -61,44 +61,6 @@ public class UJts {
         return new double[]{X1, 0, X2, height};
     }
 
-//    //Находим предыднщую и последующую линию от совместной между area1 и area2
-//    /**
-//     * 0 - сегмент входящий слева 1 - сегмент выходящий слева 2 - общий сегмент
-//     * 3 - сегмент входящий справа 4 - сегмент выходящий справа
-//     */
-//    public static LineSegment[] prevAndNextSegment(Polygon area1, Polygon area2) {
-//
-//        Coordinate[] c1 = area1.getCoordinates();
-//        Coordinate[] c2 = area2.getCoordinates();
-//
-//        //Цикл по сегментам area1
-//        for (int ik = 1; ik < c1.length; ++ik) {
-//            //Цикл по сегментам area2
-//            for (int ij = 1; ij < c2.length; ++ij) {
-//
-//                LineSegment s1 = new LineSegment(c1[ik - 1].x, c1[ik].y, c1[ik - 1].x, c1[ik].y);
-//                LineSegment s2 = new LineSegment(c2[ij - 1].x, c2[ij].y, c2[ij - 1].x, c2[ij].y);
-//                if (s1.equalsTopo(s2)) { //Если сегмент area1 и area2 общий
-//
-//                    //Находим предыдущий и последующий сегмент
-//                    int k1 = (ik == 1) ? c1.length - 2 : ik - 2;
-//                    int j1 = (ik == (c1.length - 2)) ? 1 : ik + 2;
-//
-//                    int k2 = (ij == 0) ? c2.length - 1 : ij - 1;
-//                    int j2 = (ij == (c2.length - 1)) ? 0 : ij + 1;
-//
-//                    return new LineSegment[]{
-//                        new LineSegment(c1[k1 - 1].x, c1[k1 - 1].y, c1[k1].x, c1[k1].y),
-//                        new LineSegment(c1[j1 - 1].x, c1[j1 - 1].y, c1[j1].x, c1[j1].y),
-//                        s1,
-//                        new LineSegment(c2[k1 - 1].x, c2[k1 - 1].y, c2[k1].x, c2[k1].y),
-//                        new LineSegment(c2[j1 - 1].x, c2[j1 - 1].y, c2[j1].x, c2[j1].y)};
-//                }
-//            }
-//        }
-//        return null;
-//    }
-
     //Внутренняя обводка ареа 
     public static Polygon areaPadding(Polygon poly, List<ElemSimple> listFrame) {
 
@@ -192,6 +154,44 @@ public class UJts {
         Collection polys = polygonizer.getPolygons();
         Polygon[] polyArray = GeometryFactory.toPolygonArray(polys);
         return geometry.getFactory().createGeometryCollection(polyArray);
+    }
+    
+    //Находим предыднщую и последующую линию от совместной между area1 и area2
+    /**
+     * 0 - сегмент входящий слева 1 - сегмент выходящий слева 2 - общий сегмент
+     * 3 - сегмент входящий справа 4 - сегмент выходящий справа
+     */
+    public static LineSegment[] prevAndNextSegmentTest(Polygon area1, Polygon area2) {
+//
+//        Coordinate[] c1 = area1.getCoordinates();
+//        Coordinate[] c2 = area2.getCoordinates();
+//
+//        //Цикл по сегментам area1
+//        for (int ik = 1; ik < c1.length; ++ik) {
+//            //Цикл по сегментам area2
+//            for (int ij = 1; ij < c2.length; ++ij) {
+//
+//                LineSegment s1 = new LineSegment(c1[ik - 1].x, c1[ik].y, c1[ik - 1].x, c1[ik].y);
+//                LineSegment s2 = new LineSegment(c2[ij - 1].x, c2[ij].y, c2[ij - 1].x, c2[ij].y);
+//                if (s1.equalsTopo(s2)) { //Если сегмент area1 и area2 общий
+//
+//                    //Находим предыдущий и последующий сегмент
+//                    int k1 = (ik == 1) ? c1.length - 2 : ik - 2;
+//                    int j1 = (ik == (c1.length - 2)) ? 1 : ik + 2;
+//
+//                    int k2 = (ij == 0) ? c2.length - 1 : ij - 1;
+//                    int j2 = (ij == (c2.length - 1)) ? 0 : ij + 1;
+//
+//                    return new LineSegment[]{
+//                        new LineSegment(c1[k1 - 1].x, c1[k1 - 1].y, c1[k1].x, c1[k1].y),
+//                        new LineSegment(c1[j1 - 1].x, c1[j1 - 1].y, c1[j1].x, c1[j1].y),
+//                        s1,
+//                        new LineSegment(c2[k1 - 1].x, c2[k1 - 1].y, c2[k1].x, c2[k1].y),
+//                        new LineSegment(c2[j1 - 1].x, c2[j1 - 1].y, c2[j1].x, c2[j1].y)};
+//                }
+//            }
+//        }
+        return null;
     }
 // </editor-fold>    
 }

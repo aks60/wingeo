@@ -64,19 +64,20 @@ public class Com5t {
 
     public void mouseEvent() {
         ListenerMouse mousePressed = (event) -> {
+            if (this.geom != null) {
+                pointPress = event.getPoint();
+                //Если клик внутри контура
+                Shape geom = new ShapeWriter().toShape(this.geom);
+                if (this.geom != null && geom.contains(pointPress)) {
+                    double d1 = Point2D.distance(x1(), y1(), event.getX() / winc.scale, event.getY() / winc.scale); //длина к началу вектора
+                    double d2 = Point2D.distance(x2(), y2(), event.getX() / winc.scale, event.getY() / winc.scale); //длина к концу вектора
+                    double d3 = (d1 + d2) / 3;
 
-            pointPress = event.getPoint();
-            //Если клик внутри контура
-            Shape geom = new ShapeWriter().toShape(this.geom);
-            if (this.geom != null && geom.contains(pointPress)) {
-                double d1 = Point2D.distance(x1(), y1(), event.getX() / winc.scale, event.getY() / winc.scale); //длина к началу вектора
-                double d2 = Point2D.distance(x2(), y2(), event.getX() / winc.scale, event.getY() / winc.scale); //длина к концу вектора
-                double d3 = (d1 + d2) / 3;
-
-                if (d1 < d3) {
-                    ev[0] = true; //кликнул ближе к началу ветора
-                } else if (d2 < d3) {
-                    ev[1] = true; //кликнул ближе к концу ветора
+                    if (d1 < d3) {
+                        ev[0] = true; //кликнул ближе к началу ветора
+                    } else if (d2 < d3) {
+                        ev[1] = true; //кликнул ближе к концу ветора
+                    }
                 }
             }
         };
@@ -86,28 +87,29 @@ public class Com5t {
             ev[1] = false;
         };
         ListenerMouse mouseDragge = (event) -> {
+            if (this.geom != null) {
+                double W = winc.canvas.getWidth();
+                double H = winc.canvas.getHeight();
+                double dX = event.getX() - pointPress.getX();
+                double dY = event.getY() - pointPress.getY();
 
-            double W = winc.canvas.getWidth();
-            double H = winc.canvas.getHeight();
-            double dX = event.getX() - pointPress.getX();
-            double dY = event.getY() - pointPress.getY();
-
-            if (ev[0] == true) {
-                double X1 = dX / winc.scale + x1();
-                double Y1 = dY / winc.scale + y1();
-                if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
-                    x1(X1);
-                    y1(Y1);
+                if (ev[0] == true) {
+                    double X1 = dX / winc.scale + x1();
+                    double Y1 = dY / winc.scale + y1();
+                    if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
+                        x1(X1);
+                        y1(Y1);
+                    }
+                } else if (ev[1] == true) {
+                    double X2 = dX / winc.scale + x2();
+                    double Y2 = dY / winc.scale + y2();
+                    if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву
+                        x2(X2);
+                        y2(Y2);
+                    }
                 }
-            } else if (ev[1] == true) {
-                double X2 = dX / winc.scale + x2();
-                double Y2 = dY / winc.scale + y2();
-                if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву
-                    x2(X2);
-                    y2(Y2);
-                }
+                pointPress = event.getPoint();
             }
-            pointPress = event.getPoint();
         };
         this.winc.mousePressed.add(mousePressed);
         this.winc.mouseReleased.add(mouseReleased);
@@ -173,7 +175,7 @@ public class Com5t {
 
     public double x2() {
 //        if (gson.x2 != null) {
-            return gson.x2;
+        return gson.x2;
 //        } else {
 //            Coordinate[] coordArr = this.geom.getCoordinates();
 //            for (int i = coordArr.length; i > 0; --i) {
@@ -187,7 +189,7 @@ public class Com5t {
 
     public double y2() {
 //        if (gson.y2 != null) {
-            return gson.y2;
+        return gson.y2;
 //        } else {
 //            Coordinate[] coordArr = this.geom.getCoordinates();
 //            for (int i = coordArr.length; i > 0; --i) {

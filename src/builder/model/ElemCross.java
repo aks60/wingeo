@@ -53,39 +53,38 @@ public class ElemCross extends ElemSimple {
             double w = owner.geom.getEnvelopeInternal().getWidth();
             double h = owner.geom.getEnvelopeInternal().getHeight();
 
-            //Пересечение канвы вектором импоста.             
-            Geometry dblPoly = UJts.splitPolygon(UJts.newPolygon(0, 0, w, 0, w, h, 0, h), this.x1(), this.y1(), this.x2(), this.y2());
-            Geometry P1 = dblPoly.getGeometryN(0);
-            Geometry P2 = dblPoly.getGeometryN(1);
-
             //Возвращает area слева и справа от импоста
-            Geometry area1 = owner.geom.intersection(P1);
-            Geometry area2 = owner.geom.intersection(P2);
-            owner.childs().get(0).geom = (Polygon) area1;
-            owner.childs().get(2).geom = (Polygon) area2;
+            Geometry dblPoly = UJts.splitPolygon(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
+            Polygon area1 = (Polygon) dblPoly.getGeometryN(0);
+            Polygon area2 = (Polygon) dblPoly.getGeometryN(1);           
+            owner.childs().get(0).geom = area1;           
+            owner.childs().get(2).geom = area2;           
             
             //Общий сегменты от совместнго между area1 и area2
-            Coordinate[] coo = area1.intersection(area2).getCoordinates();
-            this.setDimension(coo[0].x, coo[1].y, coo[1].x, coo[1].y);
+            Coordinate[] segm = owner.childs().get(0).geom.intersection(owner.childs().get(2).geom).getCoordinates();
+            
+            this.setDimension(segm[0].x, segm[0].y, segm[1].x, segm[1].y);
 
             //Ширина импоста
             double W[] = UGeo.diffOnAngl(UGeo.horizontAngl(this),
                     this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
 
-            //Находим пересечение канвы сегментами импоста
-            double L1[] = UJts.crossCanvas(this.x1() + W[0], this.y1() + W[1], this.x2() + W[0], this.y2() + W[1], w, h);
-            double L2[] = UJts.crossCanvas(this.x1() - W[0], this.y1() - W[1], this.x2() - W[0], this.y2() - W[1], w, h);
-
-            //Расширенная area импоста между канвой
-            Polygon areaClip = UJts.newPolygon(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]);
-
-            //Area owner.geom импоста внутренняя       
-            Polygon areaPadding = UJts.areaPadding(owner.geom, winc.listElem);
-
-            if (areaClip != null) {
-                areaPadding.intersection(areaClip);
-                this.geom = areaPadding;
-            }
+            
+            this.geom = null;
+//            //Находим пересечение канвы сегментами импоста
+//            double L1[] = UJts.crossCanvas(this.x1() + W[0], this.y1() + W[1], this.x2() + W[0], this.y2() + W[1], w, h);
+//            double L2[] = UJts.crossCanvas(this.x1() - W[0], this.y1() - W[1], this.x2() - W[0], this.y2() - W[1], w, h);
+//
+//            //Расширенная area импоста между канвой
+//            Polygon areaClip = UJts.newPolygon(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]);
+//
+//            //Area owner.geom импоста внутренняя       
+//            Polygon areaPadding = UJts.areaPadding(owner.geom, winc.listElem);
+//
+//            if (areaClip != null) {
+//                areaPadding.intersection(areaClip);
+//                this.geom = areaPadding;
+//            }
         } catch (Exception e) {
             //this.geom = null;
             System.err.println("Ошибка:ElemCross.setLocation() " + e);
@@ -94,33 +93,33 @@ public class ElemCross extends ElemSimple {
 
     public void paint() {
         try {
-            java.awt.Color color = winc.gc2d.getColor();
-
-            if (this.areaTest1 != null) {
-                winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
-                winc.gc2d.draw(this.areaTest1);
-            }
-            if (this.areaTest2 != null) {
-                winc.gc2d.setColor(new java.awt.Color(000, 255, 000));
-                winc.gc2d.draw(this.areaTest2);
-            }
-            if (this.lineTest1 != null) {
-                winc.gc2d.setColor(new java.awt.Color(00, 000, 255));
-                winc.gc2d.draw(this.lineTest1);
-            }
-            if (this.lineTest2 != null) {
-                winc.gc2d.setColor(new java.awt.Color(00, 000, 255));
-                winc.gc2d.draw(this.lineTest2);
-            }
-            if (this.lineTest3 != null) {
-                winc.gc2d.setColor(new java.awt.Color(00, 000, 255));
-                winc.gc2d.draw(this.lineTest3);
-            }
-            winc.gc2d.setColor(color);
-            if (this.geom != null) {
-                Shape shape = new ShapeWriter().toShape(this.geom);
-                winc.gc2d.draw(shape);
-            }
+//            if (this.geom != null) {
+//                Shape shape = new ShapeWriter().toShape(this.geom);
+//                winc.gc2d.draw(shape);
+//            }            
+//            java.awt.Color color = winc.gc2d.getColor();
+//
+//            if (this.areaTest1 != null) {
+//                winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
+//                winc.gc2d.draw(this.areaTest1);
+//            }
+//            if (this.areaTest2 != null) {
+//                winc.gc2d.setColor(new java.awt.Color(000, 255, 000));
+//                winc.gc2d.draw(this.areaTest2);
+//            }
+//            if (this.lineTest1 != null) {
+//                winc.gc2d.setColor(new java.awt.Color(00, 000, 255));
+//                winc.gc2d.draw(this.lineTest1);
+//            }
+//            if (this.lineTest2 != null) {
+//                winc.gc2d.setColor(new java.awt.Color(00, 000, 255));
+//                winc.gc2d.draw(this.lineTest2);
+//            }
+//            if (this.lineTest3 != null) {
+//                winc.gc2d.setColor(new java.awt.Color(00, 000, 255));
+//                winc.gc2d.draw(this.lineTest3);
+//            }
+//            winc.gc2d.setColor(color);
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.paint() " + e);

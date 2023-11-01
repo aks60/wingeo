@@ -277,14 +277,14 @@ public class Test {
         GeometryFactory gf = new GeometryFactory(); //JTSFactoryFinder.getGeometryFactory(); 
 
         Coordinate[] cline1 = new Coordinate[]{
-            new Coordinate(0, 4), new Coordinate(12, 4)};
+            new Coordinate(0, 500), new Coordinate(500, 500)};
         Coordinate[] cline2 = new Coordinate[]{
             new Coordinate(4, 0), new Coordinate(0, 4)};
 
         Coordinate[] coords1 = new Coordinate[]{
-            new Coordinate(4, 0), new Coordinate(2, 2),
-            new Coordinate(4, 4), new Coordinate(6, 2),
-            new Coordinate(4, 0)};
+            new Coordinate(0, 0), new Coordinate(0, 1000),
+            new Coordinate(1000, 1000), new Coordinate(6, 2),
+            new Coordinate(0, 0)};
         Coordinate[] coords2 = new Coordinate[]{
             new Coordinate(2, 2), new Coordinate(4, 4),
             new Coordinate(6, 2), new Coordinate(2, 2)};
@@ -305,7 +305,7 @@ public class Test {
         Polygon polygon3 = gf.createPolygon(coords3);
         Polygon polygon4 = gf.createPolygon(coords4);
 
-        List geo = LineStringExtracter.getLines(polygon1);
+        Geometry geo = polygon1.intersection(line1);
         System.out.println(geo);
     }
 }
