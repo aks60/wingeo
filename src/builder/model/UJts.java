@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
+import org.locationtech.jts.algorithm.Distance;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.LineStringExtracter;
 import org.locationtech.jts.operation.polygonize.Polygonizer;
@@ -41,7 +43,18 @@ public class UJts {
     }
 
     public static boolean pointOnLine(double x, double y, double x1, double y1, double x2, double y2) {
-        return (((x2 - x1) * (y - y1)) - ((y2 - y1) * (x - x1)) == 0);
+        //return (((x2 - x1) * (y - y1)) - ((y2 - y1) * (x - x1)) == 0);
+        double d = Math.abs(((x2 - x1) * (y - y1)) - ((y2 - y1) * (x - x1)));
+        boolean b = d < 0.1;
+        return b;
+    }
+
+    public static boolean pointOnLine2(double x, double y, double x1, double y1, double x2, double y2) {
+        Coordinate p0 = new Coordinate(x, y);
+        Coordinate p1 = new Coordinate(x1, y1);
+        Coordinate p2 = new Coordinate(x2, y2);
+        double dist = Distance.pointToSegment(p0, p1, p2);
+        return Math.abs(dist) < 0.1;
     }
 
     public static ElemSimple elemFromSegment(List<ElemSimple> listLine, LineSegment line) {
@@ -54,61 +67,69 @@ public class UJts {
         return null;
     }
 
-
     //Точка пересечения двух линий 
     //https://habr.com/ru/articles/523440/ 
-    public static double[] crossLine(double x1, double y1, double x2, 
-            double y2, double x3, double y3, double x4, double y4) {
-        double n;
-        double dot[] = {0, 0};
-        if (y2 - y1 != 0) {  // a(y)
-            double q = (x2 - x1) / (y1 - y2);
-            double sn = (x3 - x4) + (y3 - y4) * q;
-            if (sn == 0) {
-                System.err.println("Ошибка: UJts.crossLine() 1"); 
-                return null;
-            }  // c(x) + c(y)*q
+    public static double[] crossLine(double x1, double y1,
+            double x2, double y2, double x3, double y3, double x4, double y4) {
+        try {
+            double n;
+            double dot[] = {0, 0};
+            if (y2 - y1 != 0) {  // a(y)
+                double q = (x2 - x1) / (y1 - y2);
+                double sn = (x3 - x4) + (y3 - y4) * q;
+                if (sn == 0) {
+                    System.err.println("Ошибка: UJts.crossLine() 1");
+                    return null;
+                }  // c(x) + c(y)*q
 
-            double fn = (x3 - x1) + (y3 - y1) * q;   // b(x) + b(y)*q
-            n = fn / sn;
-        } else {
-            if ((y3 - y4) == 0) {
-                System.err.println("Ошибка: UJts.crossLine() 2"); 
-                return null;
-            }  // b(y)
+                double fn = (x3 - x1) + (y3 - y1) * q;   // b(x) + b(y)*q
+                n = fn / sn;
+            } else {
+                if ((y3 - y4) == 0) {
+                    System.err.println("Ошибка: UJts.crossLine() 2");
+                    return null;
+                }  // b(y)
 
-            n = (y3 - y1) / (y3 - y4);   // c(y)/b(y)
-        }
-        dot[0] = x3 + (x4 - x3) * n;  // x3 + (-b(x))*n
-        dot[1] = y3 + (y4 - y3) * n;  // y3 +(-b(y))*n
-        return dot;
-    }
-    
-    public static Coordinate[] crossPoly(Polygon poly, double x1, double y1, double x2, double y2) {
-
-        List<Coordinate> out = new ArrayList();
-        LineSegment s1 = new LineSegment(x1, y1, x2, y2);
-        LineSegment s2 = new LineSegment();
-        Coordinate[] c = poly.getCoordinates();
-        for (int i = 1; i < c.length; i++) {
-            Coordinate c1 = c[i - 1];
-            Coordinate c2 = c[i];
-            s2.setCoordinates(c1, c2);
-            Coordinate c3 = s2.lineIntersection(s1);
-            boolean b = Com5t.gf.createLineString(new Coordinate[]{c1, c2}).contains(Com5t.gf.createPoint(c3));
-            //boolean b = UJts.pointOnLine(c3.x, c3.y, c1.x, c1.y, c2.x, c2.y);
-            //double d[] = UJts.crossLine(x1, y1, x2, y2, c1.x, c1.y, c2.x, c2.y);
-            if (c3 != null && b == true) {
-            //if (d != null) {
-                out.add(c3);
+                n = (y3 - y1) / (y3 - y4);   // c(y)/b(y)
             }
-        }
-        if (out.size() == 2) {
-            return out.toArray(new Coordinate[0]);
+            dot[0] = x3 + (x4 - x3) * n;  // x3 + (-b(x))*n
+            dot[1] = y3 + (y4 - y3) * n;  // y3 +(-b(y))*n
+            return dot;
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.crossLine()" + e);
         }
         return null;
     }
-    
+
+    public static Coordinate[] crossPolySegment(Polygon poly, double x1, double y1, double x2, double y2) {
+        try {
+            List<Coordinate> out = new ArrayList();
+            LineSegment s1 = new LineSegment(x1, y1, x2, y2);
+            LineSegment s2 = new LineSegment();
+            Coordinate[] c = poly.getCoordinates();
+            for (int i = 1; i < c.length; i++) {
+                Coordinate c1 = c[i - 1];
+                Coordinate c2 = c[i];
+                s2.setCoordinates(c1, c2);
+                Coordinate c3 = s2.lineIntersection(s1);
+                LineString s3 = Com5t.gf.createLineString(new Coordinate[]{c1, c2});
+                if (c3 != null) {
+                    //boolean b = s3.contains(Com5t.gf.createPoint(c3));
+                    boolean b = UJts.pointOnLine2(c3.x, c3.y, c1.x, c1.y, c2.x, c2.y);
+                    if (b == true) {
+                        out.add(c3);
+                    }
+                }
+            }
+            if (out.size() == 2) {
+                return out.toArray(new Coordinate[0]);
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.crossPoly()" + e);
+        }
+        return null;
+    }
+
     //Внутренняя обводка ареа 
     public static Polygon areaPadding(Polygon poly, List<ElemSimple> listFrame) {
 
@@ -131,7 +152,7 @@ public class UJts {
                 //Смещённая внутрь точка пересечения сегментов
                 LineSegment segm3 = new LineSegment(e1.x1() + h1[0], e1.y1() - h1[1], e1.x2() + h1[0], e1.y2() - h1[1]);
                 LineSegment segm4 = new LineSegment(e2.x1() + h2[0], e2.y1() - h2[1], e2.x2() + h2[0], e2.y2() - h2[1]);
-                
+
                 c2[i] = segm3.lineIntersection(segm4);
             }
 
@@ -146,19 +167,24 @@ public class UJts {
     //Разделить произвольный многоугольник линией
     //https://gis.stackexchange.com/questions/189976/jts-split-arbitrary-polygon-by-a-line    
     public static Geometry splitPolygon(Geometry poly, double x1, double y1, double x2, double y2) {
+        try {
+            Geometry line = Com5t.gf.createLineString(new Coordinate[]{new Coordinate(x1, y1), new Coordinate(x2, y2)});
+            Geometry nodedLinework = poly.getBoundary().union(line);
+            Geometry polys = polygonize(nodedLinework);
 
-        Geometry line = Com5t.gf.createLineString(new Coordinate[]{new Coordinate(x1, y1), new Coordinate(x2, y2)});
-        Geometry nodedLinework = poly.getBoundary().union(line);
-        Geometry polys = polygonize(nodedLinework);
-
-        List output = new ArrayList();
-        for (int i = 0; i < polys.getNumGeometries(); i++) {
-            Polygon candpoly = (Polygon) polys.getGeometryN(i);
-            if (poly.contains(candpoly.getInteriorPoint())) {
-                output.add(candpoly);
+            List output = new ArrayList();
+            for (int i = 0; i < polys.getNumGeometries(); i++) {
+                Polygon candpoly = (Polygon) polys.getGeometryN(i);
+                if (poly.contains(candpoly.getInteriorPoint())) {
+                    output.add(candpoly);
+                }
             }
+            return poly.getFactory().createGeometryCollection(GeometryFactory.toGeometryArray(output));
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.splitPolygon()" + e);
         }
-        return poly.getFactory().createGeometryCollection(GeometryFactory.toGeometryArray(output));
+        return null;
     }
 
     //Список входн. параметров не замыкается начальной точкой как в jts!

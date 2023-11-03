@@ -50,7 +50,9 @@ public class ElemCross extends ElemSimple {
 
     public void setLocation() {
         try {
-
+            if (this.geom != null) {
+                System.out.println("NULL 1 builder.model.ElemCross.setLocation()");
+            }
             anglHoriz = UJts.anglHor(this);
             double w = owner.geom.getEnvelopeInternal().getWidth();
             double h = owner.geom.getEnvelopeInternal().getHeight();
@@ -74,14 +76,18 @@ public class ElemCross extends ElemSimple {
             Polygon areaPadding = UJts.areaPadding(owner.geom, winc.listElem);
 
             //Находим точки пересечение внутр. ареа левым и правым сегментами импоста
-            Coordinate C1[] = UJts.crossPoly(areaPadding, this.x1() - W[0], this.y1() + W[1], this.x2() - W[0], this.y2() + W[1]);
-            Coordinate C2[] = UJts.crossPoly(areaPadding, this.x1() + W[0], this.y1() - W[1], this.x2() + W[0], this.y2() - W[1]);
-            
-            System.out.println("impost " + this.x1() + " " + this.y1() + " " + this.x2() + " " + this.y2());
-            System.out.println("impPadding " + areaPadding);
-            System.out.println(W[0] + "  " + W[1]);
-            
-            this.geom = UJts.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
+            Coordinate C1[] = UJts.crossPolySegment(areaPadding, this.x1() - W[0], this.y1() + W[1], this.x2() - W[0], this.y2() + W[1]);
+            Coordinate C2[] = UJts.crossPolySegment(areaPadding, this.x1() + W[0], this.y1() - W[1], this.x2() + W[0], this.y2() - W[1]);
+
+//            System.out.println("impost " + this.x1() + " " + this.y1() + " " + this.x2() + " " + this.y2());
+//            System.out.println("impPadding " + areaPadding);
+//            System.out.println(W[0] + "  " + W[1]);
+
+            if (C1 != null && C2 != null) {
+                this.geom = UJts.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
+            } else {
+                System.out.println("NULL 2 builder.model.ElemCross.setLocation()");
+            }
 
         } catch (Exception e) {
             this.geom = null;
