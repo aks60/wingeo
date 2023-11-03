@@ -14,6 +14,7 @@ import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
 
@@ -37,7 +38,7 @@ public class ElemCross extends ElemSimple {
         colorID2 = (isJson(param, PKjson.colorID2)) ? param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
         colorID3 = (isJson(param, PKjson.colorID3)) ? param.get(PKjson.colorID3).getAsInt() : winc.colorID3;
 
-        double angl = UGeo.horizontAngl(this);
+        double angl = UJts.anglHor(this);
         if (isJson(param, PKjson.sysprofID)) { //профили через параметр
             sysprofRec = eSysprof.find3(param.get(PKjson.sysprofID).getAsInt());
         } else {
@@ -49,7 +50,8 @@ public class ElemCross extends ElemSimple {
 
     public void setLocation() {
         try {
-            anglHoriz = Angle.angle(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()));
+
+            anglHoriz = UJts.anglHor(this);
             double w = owner.geom.getEnvelopeInternal().getWidth();
             double h = owner.geom.getEnvelopeInternal().getHeight();
 
@@ -66,17 +68,16 @@ public class ElemCross extends ElemSimple {
             this.setDimension(segm[0].x, segm[0].y, segm[1].x, segm[1].y);
 
             //Ширина импоста
-            double W[] = UGeo.diffOnAngl(UGeo.horizontAngl(this),
-                    this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
+            double W[] = UJts.diffOnAngl(UJts.anglHor(this), this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
 
             //Area owner.geom импоста внутренняя       
             Polygon areaPadding = UJts.areaPadding(owner.geom, winc.listElem);
 
-            //Находим пересечение areaPadding сегментами импоста
-            Coordinate C1[] = UJts.crossPoly(areaPadding, this.x1() + W[0], this.y1() + W[1], this.x2() + W[0], this.y2() + W[1]);
-            Coordinate C2[] = UJts.crossPoly(areaPadding, this.x1() - W[0], this.y1() - W[1], this.x2() - W[0], this.y2() - W[1]);
+            //Находим пересечение areaPadding левым и правым сегментами импоста
+            Coordinate C1[] = UJts.crossPoly(areaPadding, this.x1() - W[0], this.y1() + W[1], this.x2() - W[0], this.y2() + W[1]);
+            Coordinate C2[] = UJts.crossPoly(areaPadding, this.x1() + W[0], this.y1() - W[1], this.x2() + W[0], this.y2() - W[1]);
 
-//           this.geom = UJts.newPolygon(L1[0], L1[1], L1[2], L1[3], L2[2], L2[3], L2[0], L2[1]);
+            this.geom = UJts.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
 
         } catch (Exception e) {
             this.geom = null;

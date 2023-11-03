@@ -84,6 +84,20 @@ public final class Bimax2 {
             area2.addElem(new GsonElem(Type.IMPOST, 500.0, 1000.0, 500.0, 500.0))
                     .addArea(new GsonElem(Type.AREA))
                     .addElem(new GsonElem(Type.GLASS));
+
+        } else if (prj == 501006) {
+            rootGeo = new GsonRoot("2.0", prj, 2, 8, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
+            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1000.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 1000.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 0.0));
+
+            rootGeo.addArea(new GsonElem(Type.AREA))
+                    .addElem(new GsonElem(Type.GLASS));
+            rootGeo.addElem(new GsonElem(Type.IMPOST, .0, 500.0, 1000.0, 500.0));
+            rootGeo.addArea(new GsonElem(Type.AREA))
+                    .addElem(new GsonElem(Type.GLASS));
+
         } else {
             return null;
         }

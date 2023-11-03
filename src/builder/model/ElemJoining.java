@@ -32,11 +32,11 @@ public class ElemJoining {
         this.winc = winc;
         this.type = type;
         this.layout = layout;
-        elem1.anglHoriz = UGeo.horizontAngl(elem1);
-        elem2.anglHoriz = UGeo.horizontAngl(elem2);
+        elem1.anglHoriz = UJts.anglHor(elem1);
+        elem2.anglHoriz = UJts.anglHor(elem2);
         this.elem1 = elem1;
         this.elem2 = elem2;
-        this.angl = UGeo.betweenAngl(elem1, elem2);
+        //this.angl = UJts.betweenAngl(elem1, elem2);
         if (elem1.owner.type != Type.ARCH && elem2.owner.type != Type.ARCH && TypeJoin.VAR10 != type) {
             elem1.anglCut[1] = angl / 2;
             elem2.anglCut[0] = angl / 2;

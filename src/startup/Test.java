@@ -11,6 +11,7 @@ import domain.eElement;
 import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
+import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.*;
 
 public class Test {
@@ -62,13 +63,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            //wincalc();
+            wincalc();
             //query();
             //frame();
             //json();
             //uid();
             //script();
-            geom();
+            //geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -82,7 +83,7 @@ public class Test {
         String _case = "one";
 
         if (_case.equals("one")) {
-            winc.build(GsonScript.productJson(501001));
+            winc.build(GsonScript.productJson(501006));
 //            winc.constructiv(true);
 //            winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
 //            winc.gc2d = winc.bufferImg.createGraphics();
@@ -300,12 +301,13 @@ public class Test {
         Polygon polygon3 = gf.createPolygon(coords3);
         Polygon polygon4 = gf.createPolygon(coords4);
 
-        Coordinate[] geo = UJts.crossPoly(polygon1, 60, 999, 1800, 999);
-        if (geo != null) {
-            System.out.println(geo[0]);
-            System.out.println(geo[1]);
-        } else {
-            System.out.println("==NULL==");
-        }
+//        Coordinate[] geo = UJts.crossPoly(polygon1, 60, 999, 1800, 999);
+//        if (geo != null) {
+//            System.out.println(geo[0]);
+//            System.out.println(geo[1]);
+//        } else {
+//            System.out.println("==NULL==");
+//        }
+        System.out.println(Math.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(0, 1))));
     }
 }

@@ -67,8 +67,9 @@ public class Com5t {
             if (this.geom != null) {
                 pointPress = event.getPoint();
                 //Если клик внутри контура
-                Shape geom = new ShapeWriter().toShape(this.geom);
-                if (this.geom != null && geom.contains(pointPress)) {
+                Shape area = new ShapeWriter().toShape(this.geom);
+                boolean b = area.contains(event.getX() / winc.scale, event.getY() / winc.scale);
+                if (this.geom != null && b == true) {
                     double d1 = Point2D.distance(x1(), y1(), event.getX() / winc.scale, event.getY() / winc.scale); //длина к началу вектора
                     double d2 = Point2D.distance(x2(), y2(), event.getX() / winc.scale, event.getY() / winc.scale); //длина к концу вектора
                     double d3 = (d1 + d2) / 3;
