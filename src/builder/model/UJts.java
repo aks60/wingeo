@@ -71,7 +71,7 @@ public class UJts {
             double x2, double y2, double x3, double y3, double x4, double y4) {
         LineSegment s1 = new LineSegment(x1, y1, x2, y2);
         LineSegment s2 = new LineSegment();
-        
+
         return null;
     }
 
@@ -168,6 +168,43 @@ public class UJts {
 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.areaPadding()" + e);
+            return null;
+        }
+    }
+
+    public static Coordinate[] splitCanvas(double x1, double y1, double x2, double y2, double w, double h) {
+        try {
+            List<Coordinate> list = new ArrayList();
+            LineSegment segm = new LineSegment();
+            LineSegment imp = new LineSegment(x1, y1, x2, y2);
+
+            segm.setCoordinates(new Coordinate(0, 0), new Coordinate(0, h));
+            Coordinate c1 = imp.lineIntersection(segm);
+            if (c1 != null && c1.y >= 0 && c1.y < h) {
+                list.add(c1);
+            }
+            segm.setCoordinates(new Coordinate(0, h), new Coordinate(w, h));
+            Coordinate c2 = imp.lineIntersection(segm);
+            if (c2 != null && c2.x >= 0 && c2.x < w) {
+                list.add(c2);
+            }
+            segm.setCoordinates(new Coordinate(w, h), new Coordinate(w, 0));
+            Coordinate c3 = imp.lineIntersection(segm);
+            if (c3 != null && c3.y <= h && c3.y > 0) {
+                list.add(c3);
+            }
+            segm.setCoordinates(new Coordinate(w, 0), new Coordinate(0, 0));
+            Coordinate c4 = imp.lineIntersection(segm);
+            if (c4 != null && c4.x <= w && c4.x > 0) {
+                list.add(c4);
+            }
+            if(list.size() != 2) {
+                System.out.println("Ошибка+++++++++++++++++++");
+            }
+            return list.toArray(new Coordinate[0]);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.splitCanvas()" + e);
             return null;
         }
     }

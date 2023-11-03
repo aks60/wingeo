@@ -302,25 +302,9 @@ public class Test {
         Polygon polygon3 = gf.createPolygon(coords3);
         Polygon polygon4 = gf.createPolygon(coords4);
 
-//impost 0.0 500.0 997.8260869565217 500.0
-//impPadding POLYGON ((63 63, 63 937, 936.7254914961978 937, 932.9254914961979 63, 63 63))
-//        double W[] = {0, 0}; //43.5};
-//        Polygon area = Com5t.gf.createPolygon(new Coordinate[]{
-//            new Coordinate(63, 63), new Coordinate(63, 937),
-//            new Coordinate(936.8628946126522, 937),
-//            new Coordinate(934.9628946126522, 63),
-//            new Coordinate(63, 63)});
-//        Coordinate Coo[] = UJts.crossPolySegment(area, 
-//                0.0 + W[0], 500.0 + W[1], 998.9130434782609 - W[0], 500.0 + W[1]);
-        
-        Polygon area = Com5t.gf.createPolygon(new Coordinate[]{
-            new Coordinate(0, 0), new Coordinate(0, 1000),
-            new Coordinate(1000.8, 1000),
-            new Coordinate(1000, 0),
-            new Coordinate(0, 0)});
-        Coordinate Coo[] = UJts.crossPolySegment(area, 0, 500, 800, 500);
+        Coordinate c[] = UJts.splitCanvas(10, 20, 20, 30, 1000, 1000);
 
-        System.out.println(Coo);
+        System.out.println(c);
 
     }
 }

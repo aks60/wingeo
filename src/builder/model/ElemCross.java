@@ -58,7 +58,8 @@ public class ElemCross extends ElemSimple {
             double h = owner.geom.getEnvelopeInternal().getHeight();
 
             //Возвращает area слева и справа от импоста
-            Geometry dblPoly = UJts.splitPolygon(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
+            Coordinate[] imp = UJts.splitCanvas(this.x1(), this.y1(), this.x2(), this.y2(), w, h);
+            Geometry dblPoly = UJts.splitPolygon(owner.geom, imp[0].x, imp[0].y, imp[1].x, imp[1].y);
             Polygon area1 = (Polygon) dblPoly.getGeometryN(0);
             Polygon area2 = (Polygon) dblPoly.getGeometryN(1);
             owner.childs().get(0).geom = area1;
@@ -90,7 +91,7 @@ public class ElemCross extends ElemSimple {
             }
 
         } catch (Exception e) {
-            this.geom = null;
+            //this.geom = null;
             System.err.println("Ошибка:ElemCross.setLocation() " + e);
         }
     }
