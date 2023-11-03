@@ -70,13 +70,17 @@ public class ElemCross extends ElemSimple {
             //Ширина импоста
             double W[] = UJts.diffOnAngl(UJts.anglHor(this), this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
 
-            //Area owner.geom импоста внутренняя       
+            //Внутренняя ареа       
             Polygon areaPadding = UJts.areaPadding(owner.geom, winc.listElem);
 
-            //Находим пересечение areaPadding левым и правым сегментами импоста
+            //Находим точки пересечение внутр. ареа левым и правым сегментами импоста
             Coordinate C1[] = UJts.crossPoly(areaPadding, this.x1() - W[0], this.y1() + W[1], this.x2() - W[0], this.y2() + W[1]);
             Coordinate C2[] = UJts.crossPoly(areaPadding, this.x1() + W[0], this.y1() - W[1], this.x2() + W[0], this.y2() - W[1]);
-
+            
+            System.out.println("impost " + this.x1() + " " + this.y1() + " " + this.x2() + " " + this.y2());
+            System.out.println("impPadding " + areaPadding);
+            System.out.println(W[0] + "  " + W[1]);
+            
             this.geom = UJts.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
 
         } catch (Exception e) {

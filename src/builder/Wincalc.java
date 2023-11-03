@@ -230,13 +230,13 @@ public class Wincalc {
     public void draw() {
         try {
             root.setLocation();
-//            listFrame.forEach(e -> e.setLocation());
+            listFrame.forEach(e -> e.setLocation());
             listCross.forEach(e -> e.setLocation());
-//
-//            root.paint();
-//            listArea.forEach(e -> e.paint());
-//            listFrame.forEach(e -> e.paint());
-//            listCross.forEach(e -> e.paint());
+
+            root.paint();
+            listArea.forEach(e -> e.paint());
+            listFrame.forEach(e -> e.paint());
+            listCross.forEach(e -> e.paint());
             
 //            listCross.forEach(e -> {
 //                if (e.areaTest != null) {

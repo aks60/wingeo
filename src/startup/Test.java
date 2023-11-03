@@ -1,5 +1,6 @@
 package startup;
 
+import builder.model.Com5t;
 import builder.model.UJts;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -63,13 +64,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            wincalc();
+            //wincalc();
             //query();
             //frame();
             //json();
             //uid();
             //script();
-            //geom();
+            geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -295,19 +296,24 @@ public class Test {
         Point point1 = gf.createPoint(new Coordinate(0, 0));
         Point point2 = gf.createPoint(new Coordinate(4, 8));
         LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
-        LineString line2 = gf.createLineString(new Coordinate[]{ new Coordinate(0, 0), new Coordinate(0, 1000)});
+        LineString line2 = gf.createLineString(new Coordinate[]{new Coordinate(0, 0), new Coordinate(0, 1000)});
         Polygon polygon1 = gf.createPolygon(coords1);
         Polygon polygon2 = gf.createPolygon(coords2);
         Polygon polygon3 = gf.createPolygon(coords3);
         Polygon polygon4 = gf.createPolygon(coords4);
 
-//        Coordinate[] geo = UJts.crossPoly(polygon1, 60, 999, 1800, 999);
-//        if (geo != null) {
-//            System.out.println(geo[0]);
-//            System.out.println(geo[1]);
-//        } else {
-//            System.out.println("==NULL==");
-//        }
-        System.out.println(Math.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(0, 1))));
+//impost 0.0 500.0 997.8260869565217 500.0
+//impPadding POLYGON ((63 63, 63 937, 936.7254914961978 937, 932.9254914961979 63, 63 63))
+        double W[] = {0, 0}; //43.5};
+        Polygon area = Com5t.gf.createPolygon(new Coordinate[]{
+            new Coordinate(63, 63), new Coordinate(63, 937),
+            new Coordinate(936.8628946126522, 937),
+            new Coordinate(934.9628946126522, 63),
+            new Coordinate(63, 63)});
+        Coordinate Coo[] = UJts.crossPoly(area, 
+                0.0 + W[0], 500.0 + W[1], 998.9130434782609 - W[0], 500.0 + W[1]);
+
+        System.out.println(W);
+
     }
 }

@@ -57,13 +57,15 @@ public class UJts {
 
     //Точка пересечения двух линий 
     //https://habr.com/ru/articles/523440/ 
-    public static double[] crossLine(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) {
+    public static double[] crossLine(double x1, double y1, double x2, 
+            double y2, double x3, double y3, double x4, double y4) {
         double n;
         double dot[] = {0, 0};
         if (y2 - y1 != 0) {  // a(y)
             double q = (x2 - x1) / (y1 - y2);
             double sn = (x3 - x4) + (y3 - y4) * q;
             if (sn == 0) {
+                System.err.println("Ошибка: UJts.crossLine() 1"); 
                 return null;
             }  // c(x) + c(y)*q
 
@@ -71,6 +73,7 @@ public class UJts {
             n = fn / sn;
         } else {
             if ((y3 - y4) == 0) {
+                System.err.println("Ошибка: UJts.crossLine() 2"); 
                 return null;
             }  // b(y)
 
@@ -86,7 +89,6 @@ public class UJts {
         List<Coordinate> out = new ArrayList();
         LineSegment s1 = new LineSegment(x1, y1, x2, y2);
         LineSegment s2 = new LineSegment();
-
         Coordinate[] c = poly.getCoordinates();
         for (int i = 1; i < c.length; i++) {
             Coordinate c1 = c[i - 1];
@@ -95,10 +97,9 @@ public class UJts {
             Coordinate c3 = s2.lineIntersection(s1);
             boolean b = Com5t.gf.createLineString(new Coordinate[]{c1, c2}).contains(Com5t.gf.createPoint(c3));
             //boolean b = UJts.pointOnLine(c3.x, c3.y, c1.x, c1.y, c2.x, c2.y);
-            double d[] = UJts.crossLine(x1, y1, x2, y2, c1.x, c1.y, c2.x, c2.y);
-            
-//            if (c3 != null && b == true) {
-            if (d != null) {
+            //double d[] = UJts.crossLine(x1, y1, x2, y2, c1.x, c1.y, c2.x, c2.y);
+            if (c3 != null && b == true) {
+            //if (d != null) {
                 out.add(c3);
             }
         }

@@ -72,7 +72,7 @@ public class Canvas extends javax.swing.JPanel implements ListenerFrame<MouseEve
 //        }
     }
 
-    //@Override
+    @Override
     public void paintComponent(Graphics g) {
         //System.out.println("Canvas2D.paintComponent()");
         super.paintComponent(g);
