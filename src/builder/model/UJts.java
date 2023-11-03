@@ -67,6 +67,14 @@ public class UJts {
         return null;
     }
 
+    public static double[] crossSegment(double x1, double y1,
+            double x2, double y2, double x3, double y3, double x4, double y4) {
+        LineSegment s1 = new LineSegment(x1, y1, x2, y2);
+        LineSegment s2 = new LineSegment();
+        
+        return null;
+    }
+
     //Точка пересечения двух линий 
     //https://habr.com/ru/articles/523440/ 
     public static double[] crossLine(double x1, double y1,
