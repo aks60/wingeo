@@ -172,7 +172,7 @@ public class UJts {
         }
     }
 
-    public static Coordinate[] splitCanvas(double x1, double y1, double x2, double y2, double w, double h) {
+    public static Coordinate[] expImpost(double x1, double y1, double x2, double y2, double w, double h) {
         try {
             List<Coordinate> list = new ArrayList();
             LineSegment segm = new LineSegment();

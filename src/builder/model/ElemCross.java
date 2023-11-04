@@ -51,15 +51,18 @@ public class ElemCross extends ElemSimple {
     public void setLocation() {
         try {
             if (this.geom != null) {
-                System.out.println("NULL 1 builder.model.ElemCross.setLocation()");
+                System.out.println("Ошибка:this.geom == null");
             }
             anglHoriz = UJts.anglHor(this);
-            double w = owner.geom.getEnvelopeInternal().getWidth();
-            double h = owner.geom.getEnvelopeInternal().getHeight();
+            //double w = owner.geom.getEnvelopeInternal().getWidth();
+            //double h = owner.geom.getEnvelopeInternal().getHeight();
 
             //Возвращает area слева и справа от импоста
-            Coordinate[] imp = UJts.splitCanvas(this.x1(), this.y1(), this.x2(), this.y2(), w, h);
-            Geometry dblPoly = UJts.splitPolygon(owner.geom, imp[0].x, imp[0].y, imp[1].x, imp[1].y);
+            Coordinate[] expImp = UJts.expImpost(this.x1(), this.y1(), this.x2(), this.y2(), 6000, 6000);
+            Geometry dblPoly = UJts.splitPolygon(owner.geom, expImp[0].x, expImp[0].y, expImp[1].x, expImp[1].y);
+            
+            System.out.println(dblPoly);
+            
             Polygon area1 = (Polygon) dblPoly.getGeometryN(0);
             Polygon area2 = (Polygon) dblPoly.getGeometryN(1);
             owner.childs().get(0).geom = area1;

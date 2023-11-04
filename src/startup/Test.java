@@ -302,7 +302,7 @@ public class Test {
         Polygon polygon3 = gf.createPolygon(coords3);
         Polygon polygon4 = gf.createPolygon(coords4);
 
-        Coordinate c[] = UJts.splitCanvas(10, 20, 20, 30, 1000, 1000);
+        Coordinate c[] = UJts.expImpost(10, 20, 20, 30, 1000, 1000);
 
         System.out.println(c);
 
