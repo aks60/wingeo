@@ -49,7 +49,8 @@ public class ElemCross extends ElemSimple {
             Geometry[] arrGeo = UJts.splitCanvas(this.x1(), this.y1(), this.x2(), this.y2(), 10000, 10000);
 
             //Новые координаты импоста
-            Coordinate[] newImp = arrGeo[0].getCoordinates();
+            Geometry canvImp = owner.geom.intersection(arrGeo[0]);
+            Coordinate[] newImp = canvImp.getCoordinates();
             this.setDimension(newImp[0].x, newImp[0].y, newImp[1].x, newImp[1].y);
 
             //Возвращает area слева и справа от импоста
