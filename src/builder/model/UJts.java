@@ -109,7 +109,7 @@ public class UJts {
         return null;
     }
 
-    public static Coordinate[] crossPolySegment(Polygon poly, double x1, double y1, double x2, double y2) {
+    public static Coordinate[] splitPolygon(Polygon poly, double x1, double y1, double x2, double y2) {
         try {
             List<Coordinate> out = new ArrayList();
             LineSegment s1 = new LineSegment(x1, y1, x2, y2);
@@ -122,11 +122,7 @@ public class UJts {
                 Coordinate c3 = s2.lineIntersection(s1);
                 LineString s3 = Com5t.gf.createLineString(new Coordinate[]{c1, c2});
                 if (c3 != null) {
-                    //boolean b = s3.contains(Com5t.gf.createPoint(c3));
-                    boolean b = UJts.pointOnLine2(c3.x, c3.y, c1.x, c1.y, c2.x, c2.y);
-                    if (b == true) {
                         out.add(c3);
-                    }
                 }
             }
             if (out.size() == 2) {
@@ -172,46 +168,9 @@ public class UJts {
         }
     }
 
-    public static Coordinate[] expImpost(double x1, double y1, double x2, double y2, double w, double h) {
-        try {
-            List<Coordinate> list = new ArrayList();
-            LineSegment segm = new LineSegment();
-            LineSegment imp = new LineSegment(x1, y1, x2, y2);
-
-            segm.setCoordinates(new Coordinate(0, 0), new Coordinate(0, h));
-            Coordinate c1 = imp.lineIntersection(segm);
-            if (c1 != null && c1.y >= 0 && c1.y < h) {
-                list.add(c1);
-            }
-            segm.setCoordinates(new Coordinate(0, h), new Coordinate(w, h));
-            Coordinate c2 = imp.lineIntersection(segm);
-            if (c2 != null && c2.x >= 0 && c2.x < w) {
-                list.add(c2);
-            }
-            segm.setCoordinates(new Coordinate(w, h), new Coordinate(w, 0));
-            Coordinate c3 = imp.lineIntersection(segm);
-            if (c3 != null && c3.y <= h && c3.y > 0) {
-                list.add(c3);
-            }
-            segm.setCoordinates(new Coordinate(w, 0), new Coordinate(0, 0));
-            Coordinate c4 = imp.lineIntersection(segm);
-            if (c4 != null && c4.x <= w && c4.x > 0) {
-                list.add(c4);
-            }
-            if(list.size() != 2) {
-                System.out.println("Ошибка+++++++++++++++++++");
-            }
-            return list.toArray(new Coordinate[0]);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.splitCanvas()" + e);
-            return null;
-        }
-    }
-
     //Разделить произвольный многоугольник линией
     //https://gis.stackexchange.com/questions/189976/jts-split-arbitrary-polygon-by-a-line    
-    public static Geometry splitPolygon(Geometry poly, double x1, double y1, double x2, double y2) {
+    public static Geometry splitPolygon2(Geometry poly, double x1, double y1, double x2, double y2) {
         try {
             Geometry line = Com5t.gf.createLineString(new Coordinate[]{new Coordinate(x1, y1), new Coordinate(x2, y2)});
             Geometry nodedLinework = poly.getBoundary().union(line);
@@ -258,5 +217,44 @@ public class UJts {
         Polygon[] polyArray = GeometryFactory.toPolygonArray(polys);
         return geometry.getFactory().createGeometryCollection(polyArray);
     }
+    
+
+    public static Coordinate[] expImpost(double x1, double y1, double x2, double y2, double w, double h) {
+        try {
+            List<Coordinate> list = new ArrayList();
+            LineSegment segm = new LineSegment();
+            LineSegment imp = new LineSegment(x1, y1, x2, y2);
+
+            segm.setCoordinates(new Coordinate(0, 0), new Coordinate(0, h));
+            Coordinate c1 = imp.lineIntersection(segm);
+            if (c1 != null && c1.y >= 0 && c1.y < h) {
+                list.add(c1);
+            }
+            segm.setCoordinates(new Coordinate(0, h), new Coordinate(w, h));
+            Coordinate c2 = imp.lineIntersection(segm);
+            if (c2 != null && c2.x >= 0 && c2.x < w) {
+                list.add(c2);
+            }
+            segm.setCoordinates(new Coordinate(w, h), new Coordinate(w, 0));
+            Coordinate c3 = imp.lineIntersection(segm);
+            if (c3 != null && c3.y <= h && c3.y > 0) {
+                list.add(c3);
+            }
+            segm.setCoordinates(new Coordinate(w, 0), new Coordinate(0, 0));
+            Coordinate c4 = imp.lineIntersection(segm);
+            if (c4 != null && c4.x <= w && c4.x > 0) {
+                list.add(c4);
+            }
+            if(list.size() != 2) {
+                System.out.println("Ошибка+++++++++++++++++++");
+            }
+            return list.toArray(new Coordinate[0]);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.splitCanvas()" + e);
+            return null;
+        }
+    }
+    
 // </editor-fold>    
 }

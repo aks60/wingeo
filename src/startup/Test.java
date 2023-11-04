@@ -1,6 +1,5 @@
 package startup;
 
-import builder.model.Com5t;
 import builder.model.UJts;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -12,7 +11,7 @@ import domain.eElement;
 import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
-import org.locationtech.jts.algorithm.Angle;
+import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.geom.*;
 
 public class Test {
@@ -297,13 +296,14 @@ public class Test {
         Point point2 = gf.createPoint(new Coordinate(4, 8));
         LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
         LineString line2 = gf.createLineString(new Coordinate[]{new Coordinate(0, 0), new Coordinate(0, 1000)});
+        LineSegment segm1 = new LineSegment(0, 0, 0, 1000);
         Polygon polygon1 = gf.createPolygon(coords1);
         Polygon polygon2 = gf.createPolygon(coords2);
         Polygon polygon3 = gf.createPolygon(coords3);
         Polygon polygon4 = gf.createPolygon(coords4);
 
-        Coordinate c[] = UJts.expImpost(10, 20, 20, 30, 1000, 1000);
-
+        Coordinate c = Intersection.lineSegment(new Coordinate(10.01, 1000), new Coordinate(500, 500), new Coordinate(10, 0), new Coordinate(10, 1000));
+        
         System.out.println(c);
 
     }
