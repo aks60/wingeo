@@ -125,38 +125,40 @@ public class UJts {
         return null;
     }
 
-    public static Polygon splitCanvas(double x1, double y1, double x2, double y2, double w, double h) {
+    public static Geometry[] splitCanvas(double x1, double y1, double x2, double y2, double w, double h) {
 
-        boolean b = true;
-        Coordinate l1 = new Coordinate(x1, y1);
-        Coordinate l2 = new Coordinate(x2, y2);
+        Coordinate l1 = new Coordinate(x1, y1), l2 = new Coordinate(x2, y2);
         Coordinate[] p = {new Coordinate(0, 0), new Coordinate(0, h), new Coordinate(w, h), new Coordinate(w, 0), new Coordinate(0, 0)};
-        List<Coordinate> rect = new ArrayList(List.of(new Coordinate(0, 0)));
-//        int index = 1;
-//        while (index < p.length) {            
-//            Coordinate s1 = p[index - 1];
-//            Coordinate s2 = p[index];
-//            Coordinate c3 = Intersection.lineSegment(l1, l2, s1, s2);            
-//        }
-        for (int i = 1; i < p.length; i++) {
 
-            Coordinate s1 = p[i - 1];
-            Coordinate s2 = p[i];
+        List<Coordinate> poly = new ArrayList(), cros = new ArrayList();
+        List<Coordinate> rect = new ArrayList(List.of(new Coordinate(0, 0)));
+
+        for (int i = 1; i < p.length; i++) {
+            Coordinate s1 = p[i - 1], s2 = p[i];
             Coordinate c3 = Intersection.lineSegment(l1, l2, s1, s2);
             if (c3 != null) {
                 rect.add(c3);
+                cros.add(c3);
+            }
+            rect.add(p[i]);
+        }
+        boolean b = true;
+        for (Coordinate c : rect) {
+            if (b == true) {
+                poly.add(c);
+            }
+            if (cros.contains(c)) {
+                if (b == false) {
+                    poly.add(c);
+                }
                 b = !b;
-            } else if (b) {
-                rect.add(p[i - 1]);
             }
         }
-//        if(rect.get(0).equals(p[0]) == false) {
-//            rect.add(new Coordinate(0, 0));
-//        }
-//        if(rect.get(rect.size()-1).equals(p[0]) == false) {
-//            rect.add(new Coordinate(0, 0));
-//        }
-        return Com5t.gf.createPolygon(rect.toArray(new Coordinate[0]));
+        Geometry p0 = Com5t.gf.createLineString(cros.toArray(new Coordinate[0]));
+        Geometry p1 = Com5t.gf.createPolygon(poly.toArray(new Coordinate[0]));
+        Geometry p2 = Com5t.gf.createPolygon(p).difference(p1);
+        
+        return new Geometry[] {p0, p1, p2};
     }
 
     //Внутренняя обводка ареа 

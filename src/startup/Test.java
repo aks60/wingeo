@@ -284,13 +284,6 @@ public class Test {
         Coordinate[] coords2 = new Coordinate[]{
             new Coordinate(2, 2), new Coordinate(4, 4),
             new Coordinate(6, 2), new Coordinate(2, 2)};
-        Coordinate[] coords3 = new Coordinate[]{
-            new Coordinate(2, 2), new Coordinate(4, 4),
-            new Coordinate(2, 4), new Coordinate(2, 2)};
-        Coordinate[] coords4 = new Coordinate[]{
-            new Coordinate(0, 2), new Coordinate(8, 2),
-            new Coordinate(8, 2.001), new Coordinate(0, 2.001),
-            new Coordinate(0, 2)};
 
         Point point1 = gf.createPoint(new Coordinate(0, 0));
         Point point2 = gf.createPoint(new Coordinate(4, 8));
@@ -299,12 +292,10 @@ public class Test {
         LineSegment segm1 = new LineSegment(0, 0, 0, 1000);
         Polygon polygon1 = gf.createPolygon(coords1);
         Polygon polygon2 = gf.createPolygon(coords2);
-        Polygon polygon3 = gf.createPolygon(coords3);
-        Polygon polygon4 = gf.createPolygon(coords4);
 
-        Coordinate c = Intersection.lineSegment(new Coordinate(10.01, 1000), new Coordinate(500, 500), new Coordinate(10, 0), new Coordinate(10, 1000));
-        
-        System.out.println(c);
-
+        Geometry geo[] = UJts.splitCanvas(0, 500, 100, 500, 10000, 10000);
+        System.out.println(geo[0]);
+        System.out.println(geo[1]);
+        System.out.println(geo[2]);
     }
 }

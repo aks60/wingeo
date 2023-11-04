@@ -20,11 +20,7 @@ import org.locationtech.jts.geom.Polygon;
 
 public class ElemCross extends ElemSimple {
 
-    public Area areaTest1 = null;
-    public Area areaTest2 = null;
-    public Line2D.Double lineTest1 = null;
-    public Line2D.Double lineTest2 = null;
-    public Line2D.Double lineTest3 = null;
+    Polygon geoTest = null;
 
     public ElemCross(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
@@ -50,25 +46,20 @@ public class ElemCross extends ElemSimple {
 
     public void setLocation() {
         try {
-            if (this.geom != null) {
-                System.out.println("Ошибка:this.geom == null");
-            }
-            anglHoriz = UJts.anglHor(this);
-            double w = owner.geom.getEnvelopeInternal().getWidth();
-            double h = owner.geom.getEnvelopeInternal().getHeight();
+            Geometry[] arrGeo = UJts.splitCanvas(this.x1(), this.y1(), this.x2(), this.y2(), 10000, 10000);
+
+            //Новые координаты импоста
+            Coordinate[] newImp = arrGeo[0].getCoordinates();
+            this.setDimension(newImp[0].x, newImp[0].y, newImp[1].x, newImp[1].y);
 
             //Возвращает area слева и справа от импоста
-            Geometry dblPoly = UJts.splitPolygon(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
-            Polygon area1 = (Polygon) dblPoly.getGeometryN(0);
-            Polygon area2 = (Polygon) dblPoly.getGeometryN(1);
+            Polygon area1 = (Polygon) arrGeo[1];
+            Polygon area2 = (Polygon) arrGeo[2];
             owner.childs().get(0).geom = area1;
             owner.childs().get(2).geom = area2;
 
             //Общий сегменты от совместнго между area1 и area2
-            Coordinate[] segm = owner.childs().get(0).geom.intersection(owner.childs().get(2).geom).getCoordinates();
-
-            this.setDimension(segm[0].x, segm[0].y, segm[1].x, segm[1].y);
-
+            //Coordinate[] segm = owner.childs().get(0).geom.intersection(owner.childs().get(2).geom).getCoordinates();
             //Ширина импоста
             double W[] = UJts.diffOnAngl(UJts.anglHor(this), this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
 
@@ -76,12 +67,8 @@ public class ElemCross extends ElemSimple {
             Polygon areaPadding = UJts.areaPadding(owner.geom, winc.listElem);
 
             //Находим точки пересечение внутр. ареа левым и правым сегментами импоста
-            Coordinate C1[] = UJts.crossPolySegment(areaPadding, this.x1() - W[0], this.y1() + W[1], this.x2() - W[0], this.y2() + W[1]);
-            Coordinate C2[] = UJts.crossPolySegment(areaPadding, this.x1() + W[0], this.y1() - W[1], this.x2() + W[0], this.y2() - W[1]);
-
-//            System.out.println("impost " + this.x1() + " " + this.y1() + " " + this.x2() + " " + this.y2());
-//            System.out.println("impPadding " + areaPadding);
-//            System.out.println(W[0] + "  " + W[1]);
+            Coordinate C1[] = UJts.intersectPoligon(areaPadding, this.x1() - W[0], this.y1() + W[1], this.x2() - W[0], this.y2() + W[1]);
+            Coordinate C2[] = UJts.intersectPoligon(areaPadding, this.x1() + W[0], this.y1() - W[1], this.x2() + W[0], this.y2() - W[1]);
 
             if (C1 != null && C2 != null) {
                 this.geom = UJts.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
@@ -101,29 +88,15 @@ public class ElemCross extends ElemSimple {
                 Shape shape = new ShapeWriter().toShape(this.geom);
                 winc.gc2d.draw(shape);
             }
-//            java.awt.Color color = winc.gc2d.getColor();
-//
-//            if (this.areaTest1 != null) {
-//                winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
-//                winc.gc2d.draw(this.areaTest1);
-//            }
-//            if (this.areaTest2 != null) {
-//                winc.gc2d.setColor(new java.awt.Color(000, 255, 000));
-//                winc.gc2d.draw(this.areaTest2);
-//            }
-//            if (this.lineTest1 != null) {
-//                winc.gc2d.setColor(new java.awt.Color(00, 000, 255));
-//                winc.gc2d.draw(this.lineTest1);
-//            }
-//            if (this.lineTest2 != null) {
-//                winc.gc2d.setColor(new java.awt.Color(00, 000, 255));
-//                winc.gc2d.draw(this.lineTest2);
-//            }
-//            if (this.lineTest3 != null) {
-//                winc.gc2d.setColor(new java.awt.Color(00, 000, 255));
-//                winc.gc2d.draw(this.lineTest3);
-//            }
-//            winc.gc2d.setColor(color);
+            winc.gc2d.draw(new Line2D.Double(this.x1(), this.y1(), this.x2(), this.y2()));
+            java.awt.Color color = winc.gc2d.getColor();
+
+            if (this.geoTest != null) {
+                winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
+                Shape shape = new ShapeWriter().toShape(this.geoTest);
+                winc.gc2d.draw(shape);
+            }
+            winc.gc2d.setColor(color);
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.paint() " + e);
