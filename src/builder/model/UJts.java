@@ -44,9 +44,9 @@ public class UJts {
     }
 
     //Отображение сегмента на компонент
-    public static ElemSimple segMapElem(List<ElemSimple> listLine, LineSegment line) {
+    public static ElemSimple segMapElem(List<ElemSimple> listLine, LineSegment segm) {
         try {           
-            Coordinate p = line.midPoint();
+            Coordinate p = segm.midPoint();
             LineSegment s = new LineSegment();
             for (ElemSimple elem : listLine) {
 
@@ -56,7 +56,7 @@ public class UJts {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.segmMapElem()" + e);
+            System.err.println("Ошибка:UGeo.segMapElem()" + e);
         }
         return null;
     }
