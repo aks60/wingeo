@@ -63,17 +63,7 @@ public class ElemFrame extends ElemSimple {
                     double h0[] = UJts.deltaOnAngl(UJts.anglHor(this), this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
                     double h1[] = UJts.deltaOnAngl(UJts.anglHor(elem0), elem0.artiklRec.getDbl(eArtikl.height) - elem0.artiklRec.getDbl(eArtikl.size_centr));
                     double h2[] = UJts.deltaOnAngl(UJts.anglHor(elem1), elem1.artiklRec.getDbl(eArtikl.height) - elem1.artiklRec.getDbl(eArtikl.size_centr));
-
-//                    double delta0 = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
-//                    double delta1 = e0.artiklRec.getDbl(eArtikl.height) - e0.artiklRec.getDbl(eArtikl.size_centr);
-//                    double delta2 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);                   
-//                    LineSegment baseSegm = new LineSegment(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()));
-//                    LineSegment seg0 = baseSegm.offset(-delta0);
-//                    LineSegment seg1 = baseSegm.offset(-delta1);
-//                    LineSegment seg2 = baseSegm.offset(-delta2);
-//                    Coordinate c1 = Intersection.lineSegment(seg0.p0, seg0.p1, seg1.p0, seg1.p1);
-//                    Coordinate c2 = Intersection.lineSegment(seg0.p0, seg0.p1, seg2.p0, seg2.p1);
-                            
+  
                     Coordinate c1 = Intersection.intersection(
                             new Coordinate(this.x1() + h0[0], this.y1() - h0[1]), new Coordinate(this.x2() + h0[0], this.y2() - h0[1]),
                             new Coordinate(elem0.x1() + h1[0], elem0.y1() - h1[1]), new Coordinate(elem0.x2() + h1[0], elem0.y2() - h1[1]));

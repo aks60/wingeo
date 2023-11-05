@@ -22,7 +22,7 @@ import org.locationtech.jts.operation.polygonize.Polygonizer;
  * Извлекает LineString
  *
  */
-public  class UJts {
+public class UJts {
 
     public static double sin(double angl) {
         return Math.toDegrees(Math.sin(Math.toRadians(angl)));
@@ -44,26 +44,23 @@ public  class UJts {
     }
 
     //Отображение сегмента на компонент
-    public static ElemSimple segmMapElem(List<ElemSimple> listLine, LineSegment line) {
-        try {
-            Coordinate p0 = new Coordinate(line.p0.x, line.p0.y);
-            Coordinate p1 = new Coordinate(line.p1.x, line.p1.y);
+    public static ElemSimple segMapElem(List<ElemSimple> listLine, LineSegment line) {
+        try {           
+            Coordinate p = line.midPoint();
+            LineSegment s = new LineSegment();
             for (ElemSimple elem : listLine) {
 
-                Coordinate[] c = {new Coordinate(elem.x1(), elem.y1()), new Coordinate(elem.x2(), elem.y2())};
-                if (PointLocation.isOnLine(p0, c) && PointLocation.isOnLine(p1, c)) {
+                s.setCoordinates(new Coordinate(elem.x1(), elem.y1()), new Coordinate(elem.x2(), elem.y2()));
+                if (s.distance(p) < .001) {
                     return elem;
-                }                 
-                if(elem.geom.contains(Com5t.gf.createPoint(line.midPoint())) == true) {
-                    return elem;
-                }               
-            }          
+                }
+            }
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.segmMapElem()" + e);
         }
         return null;
     }
-
+    
     //Пересечение сегмента(линии) импоста с сегментами(отрезками) многоугольника
     public static Coordinate[] intersectPoligon(Polygon poly, LineSegment segm) {
         try {
@@ -139,22 +136,16 @@ public  class UJts {
                 int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
                 LineSegment segm1 = new LineSegment(coo[i], coo[j]);
                 LineSegment segm2 = new LineSegment(coo[k], coo[i]);
-                ElemSimple e1 = UJts.segmMapElem(listFrame, segm1);
-                ElemSimple e2 = UJts.segmMapElem(listFrame, segm2);
+                ElemSimple e1 = UJts.segMapElem(listFrame, segm1);
+                ElemSimple e2 = UJts.segMapElem(listFrame, segm2);
 
                 //Получим ширину сегментов
                 double w1[] = UJts.deltaOnAngl(UJts.anglHor(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
                 double w2[] = UJts.deltaOnAngl(UJts.anglHor(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
-                
-                //double h1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);
-                //double h2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr);
-                
+
                 //Смещённая внутрь точка пересечения сегментов
                 LineSegment segm3 = new LineSegment(e1.x1() + w1[0], e1.y1() - w1[1], e1.x2() + w1[0], e1.y2() - w1[1]);
                 LineSegment segm4 = new LineSegment(e2.x1() + w2[0], e2.y1() - w2[1], e2.x2() + w2[0], e2.y2() - w2[1]);
-                
-                //LineSegment segm3 = segm1.offset(+h1);
-                //LineSegment segm4 = segm2.offset(-h2);
 
                 //Точка пересечения внутренних сегментов
                 out[i] = segm3.lineIntersection(segm4);
@@ -185,117 +176,5 @@ public  class UJts {
     }
 
 // <editor-fold defaultstate="collapsed" desc="XLAM">
-    public static boolean pointOnLine2(double x, double y, double x1, double y1, double x2, double y2) {
-        Coordinate p0 = new Coordinate(x, y);
-        Coordinate p1 = new Coordinate(x1, y1);
-        Coordinate p2 = new Coordinate(x2, y2);
-        double dist = Distance.pointToSegment(p0, p1, p2);
-        return Math.abs(dist) < 0.1;
-    }
-
-    //Точка пересечения двух линий 
-    //https://habr.com/ru/articles/523440/ 
-    public static double[] crossLine(double x1, double y1,
-            double x2, double y2, double x3, double y3, double x4, double y4) {
-        try {
-            double n;
-            double dot[] = {0, 0};
-            if (y2 - y1 != 0) {  // a(y)
-                double q = (x2 - x1) / (y1 - y2);
-                double sn = (x3 - x4) + (y3 - y4) * q;
-                if (sn == 0) {
-                    System.err.println("Ошибка: UJts.crossLine() 1");
-                    return null;
-                }  // c(x) + c(y)*q
-
-                double fn = (x3 - x1) + (y3 - y1) * q;   // b(x) + b(y)*q
-                n = fn / sn;
-            } else {
-                if ((y3 - y4) == 0) {
-                    System.err.println("Ошибка: UJts.crossLine() 2");
-                    return null;
-                }  // b(y)
-
-                n = (y3 - y1) / (y3 - y4);   // c(y)/b(y)
-            }
-            dot[0] = x3 + (x4 - x3) * n;  // x3 + (-b(x))*n
-            dot[1] = y3 + (y4 - y3) * n;  // y3 +(-b(y))*n
-            return dot;
-        } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.crossLine()" + e);
-        }
-        return null;
-    }
-
-    //Разделить произвольный многоугольник линией
-    //https://gis.stackexchange.com/questions/189976/jts-split-arbitrary-polygon-by-a-line    
-    public static Geometry splitPolygon2(Geometry poly, double x1, double y1, double x2, double y2) {
-        try {
-            Geometry line = Com5t.gf.createLineString(new Coordinate[]{new Coordinate(x1, y1), new Coordinate(x2, y2)});
-            Geometry nodedLinework = poly.getBoundary().union(line);
-            Geometry polys = polygonize(nodedLinework);
-
-            List output = new ArrayList();
-            for (int i = 0; i < polys.getNumGeometries(); i++) {
-                Polygon candpoly = (Polygon) polys.getGeometryN(i);
-                if (poly.contains(candpoly.getInteriorPoint())) {
-                    output.add(candpoly);
-                }
-            }
-            return poly.getFactory().createGeometryCollection(GeometryFactory.toGeometryArray(output));
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.splitPolygon()" + e);
-        }
-        return null;
-    }
-
-    public static Geometry polygonize(Geometry geometry) {
-
-        List lines = LineStringExtracter.getLines(geometry);
-        Polygonizer polygonizer = new Polygonizer();
-        polygonizer.add(lines);
-        Collection polys = polygonizer.getPolygons();
-        Polygon[] polyArray = GeometryFactory.toPolygonArray(polys);
-        return geometry.getFactory().createGeometryCollection(polyArray);
-    }
-
-    public static Coordinate[] expImpost(double x1, double y1, double x2, double y2, double w, double h) {
-        try {
-            List<Coordinate> list = new ArrayList();
-            LineSegment segm = new LineSegment();
-            LineSegment imp = new LineSegment(x1, y1, x2, y2);
-
-            segm.setCoordinates(new Coordinate(0, 0), new Coordinate(0, h));
-            Coordinate c1 = imp.lineIntersection(segm);
-            if (c1 != null && c1.y >= 0 && c1.y < h) {
-                list.add(c1);
-            }
-            segm.setCoordinates(new Coordinate(0, h), new Coordinate(w, h));
-            Coordinate c2 = imp.lineIntersection(segm);
-            if (c2 != null && c2.x >= 0 && c2.x < w) {
-                list.add(c2);
-            }
-            segm.setCoordinates(new Coordinate(w, h), new Coordinate(w, 0));
-            Coordinate c3 = imp.lineIntersection(segm);
-            if (c3 != null && c3.y <= h && c3.y > 0) {
-                list.add(c3);
-            }
-            segm.setCoordinates(new Coordinate(w, 0), new Coordinate(0, 0));
-            Coordinate c4 = imp.lineIntersection(segm);
-            if (c4 != null && c4.x <= w && c4.x > 0) {
-                list.add(c4);
-            }
-            if (list.size() != 2) {
-                System.out.println("Ошибка+++++++++++++++++++");
-            }
-            return list.toArray(new Coordinate[0]);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.splitCanvas()" + e);
-            return null;
-        }
-    }
-
 // </editor-fold>    
 }

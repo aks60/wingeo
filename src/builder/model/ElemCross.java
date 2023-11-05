@@ -46,6 +46,7 @@ public class ElemCross extends ElemSimple {
 
     public synchronized void setLocation() {
         try {
+            //Пилим полигон
             Geometry[] arrGeo = UJts.splitPolygon(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
 
             //Новые координаты импоста
@@ -72,12 +73,8 @@ public class ElemCross extends ElemSimple {
             Coordinate C1[] = UJts.intersectPoligon(areaCanvas, offSegm[0]);
             Coordinate C2[] = UJts.intersectPoligon(areaCanvas, offSegm[1]);
 
-            if (C1 != null && C2 != null) {
-                Polygon areaExp = UJts.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
-                this.geom = (Polygon) areaExp.intersection(areaPadding);
-            } else {
-                System.err.println("Ошибка2:ElemCross.setLocation()");
-            }
+            Polygon areaExp = UJts.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
+            this.geom = (Polygon) areaExp.intersection(areaPadding);
 
         } catch (Exception e) {
             //this.geom = null;
