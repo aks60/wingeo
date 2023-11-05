@@ -83,7 +83,7 @@ public class UJts {
         return null;
     }
 
-    //Режем многоугольник
+    //Пилим многоугольник
     public static Geometry[] splitPolygon(Geometry geo, double x1, double y1, double x2, double y2) {
 
         Coordinate[] coo = geo.getCoordinates();
