@@ -12,6 +12,7 @@ import java.awt.Shape;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.LineSegment;
 
 public class ElemFrame extends ElemSimple {
 
@@ -48,7 +49,7 @@ public class ElemFrame extends ElemSimple {
         }
     }
 
-    public void setLocation() {
+    public synchronized void setLocation() {
         try {
             anglHoriz = UJts.anglHor(this);
             for (int i = 0; i < winc.listFrame.size(); i++) {
@@ -56,19 +57,29 @@ public class ElemFrame extends ElemSimple {
 
                     int k = (i == 0) ? winc.listFrame.size() - 1 : i - 1;
                     int j = (i == (winc.listFrame.size() - 1)) ? 0 : i + 1;
-                    ElemSimple e0 = winc.listFrame.get(k);
-                    ElemSimple e1 = winc.listFrame.get(j);
+                    ElemSimple elem0 = winc.listFrame.get(k);
+                    ElemSimple elem1 = winc.listFrame.get(j);
                     
                     double h0[] = UJts.deltaOnAngl(UJts.anglHor(this), this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
-                    double h1[] = UJts.deltaOnAngl(UJts.anglHor(e0), e0.artiklRec.getDbl(eArtikl.height) - e0.artiklRec.getDbl(eArtikl.size_centr));
-                    double h2[] = UJts.deltaOnAngl(UJts.anglHor(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
+                    double h1[] = UJts.deltaOnAngl(UJts.anglHor(elem0), elem0.artiklRec.getDbl(eArtikl.height) - elem0.artiklRec.getDbl(eArtikl.size_centr));
+                    double h2[] = UJts.deltaOnAngl(UJts.anglHor(elem1), elem1.artiklRec.getDbl(eArtikl.height) - elem1.artiklRec.getDbl(eArtikl.size_centr));
 
+//                    double delta0 = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
+//                    double delta1 = e0.artiklRec.getDbl(eArtikl.height) - e0.artiklRec.getDbl(eArtikl.size_centr);
+//                    double delta2 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);                   
+//                    LineSegment baseSegm = new LineSegment(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()));
+//                    LineSegment seg0 = baseSegm.offset(-delta0);
+//                    LineSegment seg1 = baseSegm.offset(-delta1);
+//                    LineSegment seg2 = baseSegm.offset(-delta2);
+//                    Coordinate c1 = Intersection.lineSegment(seg0.p0, seg0.p1, seg1.p0, seg1.p1);
+//                    Coordinate c2 = Intersection.lineSegment(seg0.p0, seg0.p1, seg2.p0, seg2.p1);
+                            
                     Coordinate c1 = Intersection.intersection(
-                            new Coordinate(x1() + h0[0], y1() - h0[1]), new Coordinate(x2() + h0[0], y2() - h0[1]),
-                            new Coordinate(e0.x1() + h1[0], e0.y1() - h1[1]), new Coordinate(e0.x2() + h1[0], e0.y2() - h1[1]));
+                            new Coordinate(this.x1() + h0[0], this.y1() - h0[1]), new Coordinate(this.x2() + h0[0], this.y2() - h0[1]),
+                            new Coordinate(elem0.x1() + h1[0], elem0.y1() - h1[1]), new Coordinate(elem0.x2() + h1[0], elem0.y2() - h1[1]));
                     Coordinate c2 = Intersection.intersection(
-                            new Coordinate(x1() + h0[0], y1() - h0[1]), new Coordinate(x2() + h0[0], y2() - h0[1]),
-                            new Coordinate(e1.x1() + h2[0], e1.y1() - h2[1]), new Coordinate(e1.x2() + h2[0], e1.y2() - h2[1]));
+                            new Coordinate(this.x1() + h0[0], this.y1() - h0[1]), new Coordinate(this.x2() + h0[0], this.y2() - h0[1]),
+                            new Coordinate(elem1.x1() + h2[0], elem1.y1() - h2[1]), new Coordinate(elem1.x2() + h2[0], elem1.y2() - h2[1]));
 
                     this.geom = UJts.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y); 
                 }

@@ -22,7 +22,7 @@ import org.locationtech.jts.operation.polygonize.Polygonizer;
  * Извлекает LineString
  *
  */
-public class UJts {
+public  class UJts {
 
     public static double sin(double angl) {
         return Math.toDegrees(Math.sin(Math.toRadians(angl)));
@@ -142,15 +142,21 @@ public class UJts {
                 ElemSimple e1 = UJts.segmMapElem(listFrame, segm1);
                 ElemSimple e2 = UJts.segmMapElem(listFrame, segm2);
 
-                //Получим ширину сегментов в цыкле
+                //Получим ширину сегментов
                 double w1[] = UJts.deltaOnAngl(UJts.anglHor(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
                 double w2[] = UJts.deltaOnAngl(UJts.anglHor(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
-
+                
+                //double h1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);
+                //double h2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr);
+                
                 //Смещённая внутрь точка пересечения сегментов
                 LineSegment segm3 = new LineSegment(e1.x1() + w1[0], e1.y1() - w1[1], e1.x2() + w1[0], e1.y2() - w1[1]);
                 LineSegment segm4 = new LineSegment(e2.x1() + w2[0], e2.y1() - w2[1], e2.x2() + w2[0], e2.y2() - w2[1]);
+                
+                //LineSegment segm3 = segm1.offset(+h1);
+                //LineSegment segm4 = segm2.offset(-h2);
 
-                //Точка пересечения внутренних сегментор
+                //Точка пересечения внутренних сегментов
                 out[i] = segm3.lineIntersection(segm4);
             }
 
