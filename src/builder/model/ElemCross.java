@@ -46,14 +46,12 @@ public class ElemCross extends ElemSimple {
 
     public synchronized void setLocation() {
         try {
-//System.out.println("1");            
-//            Geometry[] arrGeo = UJts.splitPolygon(UJts.newPolygon(0, 0, 0, 10000, 10000, 10000, 10000, 0), this.x1(), this.y1(), this.x2(), this.y2());
             Geometry[] arrGeo = UJts.splitPolygon(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
 
             //Новые координаты импоста
             Geometry lineImp = owner.geom.intersection(arrGeo[0]);
             Coordinate[] newImp = lineImp.getCoordinates();
-            
+
             this.setDimension(newImp[0].x, newImp[0].y, newImp[1].x, newImp[1].y);
 
             //Возвращает area слева и справа от импоста
@@ -62,19 +60,21 @@ public class ElemCross extends ElemSimple {
             owner.childs().get(0).geom = area1;
             owner.childs().get(2).geom = area2;
 
-            //Ширина импоста
-            double W[] = UJts.deltaOnAngl(UJts.anglHor(this), this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
-
             //Внутренняя ареа       
             Polygon areaPadding = UJts.areaPadding(owner.geom, winc.listElem);
-//System.out.println("2");
+
             //Находим точки пересечение внутр. ареа левым и правым сегментами импоста
-            Coordinate C1[] = UJts.intersectPoligon(areaPadding, this.x1() - W[0], this.y1() + W[1], this.x2() - W[0], this.y2() + W[1]);
-            Coordinate C2[] = UJts.intersectPoligon(areaPadding, this.x1() + W[0], this.y1() - W[1], this.x2() + W[0], this.y2() - W[1]);
+            double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
+            LineSegment baseSegm = new LineSegment(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()));
+            LineSegment offSegm[] = {baseSegm.offset(+delta), baseSegm.offset(-delta)};
+
+            Polygon areaCanvas = UJts.newPolygon(0, 0, 0, 10000, 10000, 10000, 10000, 0);
+            Coordinate C1[] = UJts.intersectPoligon(areaCanvas, offSegm[0]);
+            Coordinate C2[] = UJts.intersectPoligon(areaCanvas, offSegm[1]);
 
             if (C1 != null && C2 != null) {
-                this.geom = UJts.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
-//System.out.println("3");
+                Polygon areaExp = UJts.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
+                this.geom = (Polygon) areaExp.intersection(areaPadding);
             } else {
                 System.err.println("Ошибка2:ElemCross.setLocation()");
             }

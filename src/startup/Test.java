@@ -1,5 +1,6 @@
 package startup;
 
+import builder.model.UJts;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -10,7 +11,6 @@ import domain.eElement;
 import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
-import org.locationtech.jts.algorithm.MinimumBoundingCircle;
 import org.locationtech.jts.geom.*;
 
 public class Test {
@@ -82,7 +82,7 @@ public class Test {
         String _case = "one";
 
         if (_case.equals("one")) {
-            winc.build(GsonScript.productJson(501006));
+            winc.build(GsonScript.productJson(501007));
 //            winc.constructiv(true);
 //            winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
 //            winc.gc2d = winc.bufferImg.createGraphics();
@@ -293,8 +293,11 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coords1);
         Polygon polygon2 = gf.createPolygon(coords2);
 
-        System.out.println(polygon2);
-        Geometry geo = polygon2;
-        System.out.println(new MinimumBoundingCircle(geo).getCircle());
+        double h0[] = UJts.deltaOnAngl(90, 43);
+        LineSegment segm = new LineSegment(0, 0, 0, 1000);
+        LineSegment geo = segm.offset(-43);
+        System.out.println(h0[0]);
+        System.out.println(h0[1]);
+        System.out.println(geo);
     }
 }

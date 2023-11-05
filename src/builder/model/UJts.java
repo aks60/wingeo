@@ -65,17 +65,15 @@ public class UJts {
     }
 
     //Пересечение сегмента(линии) импоста с сегментами(отрезками) многоугольника
-    public static Coordinate[] intersectPoligon(Polygon poly, double x1, double y1, double x2, double y2) {
+    public static Coordinate[] intersectPoligon(Polygon poly, LineSegment segm) {
         try {
             List<Coordinate> out = new ArrayList();
-            Coordinate imp1 = new Coordinate(x1, y1);
-            Coordinate imp2 = new Coordinate(x2, y2);
             Coordinate[] c = poly.getCoordinates();
             for (int i = 1; i < c.length; i++) {
 
                 Coordinate segm1 = c[i - 1];
                 Coordinate segm2 = c[i];
-                Coordinate c3 = Intersection.lineSegment(imp1, imp2, segm1, segm2);
+                Coordinate c3 = Intersection.lineSegment(segm.p0, segm.p1, segm1, segm2);
                 if (c3 != null) {
                     out.add(c3);
                 }
@@ -94,7 +92,7 @@ public class UJts {
         Coordinate[] coo = geo.getCoordinates();
         Coordinate linePoint1 = new Coordinate(x1, y1), linePoint2 = new Coordinate(x2, y2);
         List<Coordinate> poly = new ArrayList(), cros = new ArrayList();
-        List<Coordinate> rect = new ArrayList(List.of(new Coordinate(0, 0)));
+        List<Coordinate> rect = new ArrayList(List.of(coo[0]));
         try {
             for (int i = 1; i < coo.length; i++) {
                 Coordinate segmPoint1 = coo[i - 1], segmentPoint2 = coo[i];
