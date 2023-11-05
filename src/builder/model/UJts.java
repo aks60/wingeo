@@ -92,20 +92,20 @@ public class UJts {
         Coordinate[] coo = geo.getCoordinates();
         Coordinate linePoint1 = new Coordinate(x1, y1), linePoint2 = new Coordinate(x2, y2);
         List<Coordinate> poly = new ArrayList(), cros = new ArrayList();
-        List<Coordinate> rect = new ArrayList(List.of(coo[0]));
+        List<Coordinate> exp = new ArrayList(List.of(coo[0]));
         try {
             for (int i = 1; i < coo.length; i++) {
                 Coordinate segmPoint1 = coo[i - 1], segmentPoint2 = coo[i];
                 Coordinate c3 = Intersection.lineSegment(
                         linePoint1, linePoint2, segmPoint1, segmentPoint2);
                 if (c3 != null) {
-                    rect.add(c3);
+                    exp.add(c3);
                     cros.add(c3);
                 }
-                rect.add(coo[i]);
+                exp.add(coo[i]);
             }
             boolean b = true;
-            for (Coordinate c : rect) {
+            for (Coordinate c : exp) {
                 if (b == true) {
                     poly.add(c);
                 }
