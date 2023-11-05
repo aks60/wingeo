@@ -1,6 +1,5 @@
 package startup;
 
-import builder.model.UJts;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -11,7 +10,7 @@ import domain.eElement;
 import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
-import org.locationtech.jts.algorithm.Intersection;
+import org.locationtech.jts.algorithm.MinimumBoundingCircle;
 import org.locationtech.jts.geom.*;
 
 public class Test {
@@ -282,8 +281,9 @@ public class Test {
             new Coordinate(1000, 1000), new Coordinate(1000, 0),
             new Coordinate(0, 0)};
         Coordinate[] coords2 = new Coordinate[]{
-            new Coordinate(2, 2), new Coordinate(4, 4),
-            new Coordinate(6, 2), new Coordinate(2, 2)};
+            new Coordinate(0, 0), new Coordinate(0, 500),
+            new Coordinate(80, 1000), new Coordinate(999, 500),
+            new Coordinate(300, 0), new Coordinate(0, 0)};
 
         Point point1 = gf.createPoint(new Coordinate(0, 0));
         Point point2 = gf.createPoint(new Coordinate(4, 8));
@@ -293,9 +293,8 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coords1);
         Polygon polygon2 = gf.createPolygon(coords2);
 
-        Geometry geo[] = UJts.splitCanvas(0, 500, 100, 500, 10000, 10000);
-        System.out.println(geo[0]);
-        System.out.println(geo[1]);
-        System.out.println(geo[2]);
+        System.out.println(polygon2);
+        Geometry geo = polygon2;
+        System.out.println(new MinimumBoundingCircle(geo).getCircle());
     }
 }

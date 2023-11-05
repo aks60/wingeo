@@ -59,9 +59,9 @@ public class ElemFrame extends ElemSimple {
                     ElemSimple e0 = winc.listFrame.get(k);
                     ElemSimple e1 = winc.listFrame.get(j);
                     
-                    double h0[] = UJts.diffOnAngl(UJts.anglHor(this), this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
-                    double h1[] = UJts.diffOnAngl(UJts.anglHor(e0), e0.artiklRec.getDbl(eArtikl.height) - e0.artiklRec.getDbl(eArtikl.size_centr));
-                    double h2[] = UJts.diffOnAngl(UJts.anglHor(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
+                    double h0[] = UJts.deltaOnAngl(UJts.anglHor(this), this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
+                    double h1[] = UJts.deltaOnAngl(UJts.anglHor(e0), e0.artiklRec.getDbl(eArtikl.height) - e0.artiklRec.getDbl(eArtikl.size_centr));
+                    double h2[] = UJts.deltaOnAngl(UJts.anglHor(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
 
                     Coordinate c1 = Intersection.intersection(
                             new Coordinate(x1() + h0[0], y1() - h0[1]), new Coordinate(x2() + h0[0], y2() - h0[1]),
