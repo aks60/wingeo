@@ -3,15 +3,7 @@ package builder.model;
 import builder.Wincalc;
 import builder.making.Specific;
 import builder.script.GsonElem;
-import domain.eArtikl;
 import java.awt.Color;
-import java.awt.geom.Area;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.PathIterator;
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ElemSimple extends Com5t {
 

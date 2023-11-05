@@ -49,7 +49,7 @@ public class ElemFrame extends ElemSimple {
         }
     }
 
-    public synchronized void setLocation() {
+    public void setLocation() {
         try {
             anglHoriz = UJts.anglHor(this);
             for (int i = 0; i < winc.listFrame.size(); i++) {
