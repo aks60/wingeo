@@ -79,8 +79,8 @@ public class ElemCross extends ElemSimple {
 
             //Точки пересечения канвы сегментами импоста
             Polygon areaCanvas = UJts.newPolygon(0, 0, 0, 1000, 1000, 1000, 1000, 0);
-            Coordinate C1[] = UJts.intersectPoligon(areaCanvas, moveBaseSegment[0]);
-            Coordinate C2[] = UJts.intersectPoligon(areaCanvas, moveBaseSegment[1]);
+            Coordinate C1[] = UJts.geoIntersect(areaCanvas, moveBaseSegment[0]);
+            Coordinate C2[] = UJts.geoIntersect(areaCanvas, moveBaseSegment[1]);
 
             //Разширенную ареа импоста обрезаем areaPadding 
             Polygon areaExp = UJts.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
