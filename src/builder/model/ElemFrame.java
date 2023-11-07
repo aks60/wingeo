@@ -12,7 +12,6 @@ import java.awt.Shape;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.LineSegment;
 
 public class ElemFrame extends ElemSimple {
 
@@ -49,7 +48,7 @@ public class ElemFrame extends ElemSimple {
         }
     }
 
-    public void setLocation() {
+    public void setLocation() { 
         try {
             anglHoriz = UJts.anglHor(this);
             for (int i = 0; i < winc.listFrame.size(); i++) {

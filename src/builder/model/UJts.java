@@ -7,7 +7,9 @@ import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.algorithm.Distance;
 import org.locationtech.jts.algorithm.Intersection;
+import org.locationtech.jts.algorithm.LineIntersector;
 import org.locationtech.jts.algorithm.PointLocation;
+import org.locationtech.jts.algorithm.RobustLineIntersector;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -45,7 +47,7 @@ public class UJts {
 
     //Отображение сегмента на компонент
     public static ElemSimple segMapElem(List<ElemSimple> listLine, LineSegment segm) {
-        try {           
+        try {
             Coordinate p = segm.midPoint();
             LineSegment s = new LineSegment();
             for (ElemSimple elem : listLine) {
@@ -60,7 +62,7 @@ public class UJts {
         }
         return null;
     }
-    
+
     //Пересечение сегмента(линии) импоста с сегментами(отрезками) многоугольника
     public static Coordinate[] intersectPoligon(Polygon poly, LineSegment segm) {
         try {
@@ -125,10 +127,47 @@ public class UJts {
     }
 
     //Внутренняя обводка ареа 
-    public static Polygon areaPadding(Polygon poly, List<ElemSimple> listFrame) {
+    public static Polygon areaPadding2(Polygon poly, List<ElemSimple> listFrame) {
 
+        List list = new ArrayList();
         Coordinate[] coo = poly.getCoordinates();
         Coordinate[] out = new Coordinate[coo.length];
+        out[0] = coo[0];
+        LineIntersector robus = new RobustLineIntersector();
+        try {
+            for (int i = 1; i < coo.length; i++) {
+
+                //int j = (i == coo.length - 1) ? 0 : i;
+                LineSegment segm1 = new LineSegment(coo[i - 1], coo[i]);
+                LineSegment segm2 = new LineSegment(coo[i], coo[i + 1]);
+                ElemSimple e1 = UJts.segMapElem(listFrame, segm1);
+                ElemSimple e2 = UJts.segMapElem(listFrame, segm2);
+
+                //Получим ширину сегментов
+                double w1[] = UJts.deltaOnAngl(UJts.anglHor(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
+                double w2[] = UJts.deltaOnAngl(UJts.anglHor(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
+
+                //Смещённая внутрь точка пересечения сегментов
+                LineSegment segm1a = new LineSegment(e1.x1() + w1[0], e1.y1() - w1[1], e1.x2() + w1[0], e1.y2() - w1[1]);
+                LineSegment segm2a = new LineSegment(e2.x1() + w2[0], e2.y1() - w2[1], e2.x2() + w2[0], e2.y2() - w2[1]);
+
+                //Точка пересечения внутренних сегментов
+                out[i] = segm1a.lineIntersection(segm2a);
+            }
+            return Com5t.gf.createPolygon(out);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.areaPadding()" + e);
+            return null;
+        }
+    }
+
+    public static Polygon areaPadding(Polygon poly, List<ElemSimple> listFrame) {
+
+        List list = new ArrayList();
+        Coordinate[] coo = poly.getCoordinates();
+        Coordinate[] out = new Coordinate[coo.length];
+        LineIntersector robus = new RobustLineIntersector();
         try {
             for (int i = 0; i < coo.length; i++) {
 
@@ -144,13 +183,26 @@ public class UJts {
                 double w2[] = UJts.deltaOnAngl(UJts.anglHor(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
 
                 //Смещённая внутрь точка пересечения сегментов
-                LineSegment segm3 = new LineSegment(e1.x1() + w1[0], e1.y1() - w1[1], e1.x2() + w1[0], e1.y2() - w1[1]);
-                LineSegment segm4 = new LineSegment(e2.x1() + w2[0], e2.y1() - w2[1], e2.x2() + w2[0], e2.y2() - w2[1]);
+                LineSegment segm1a = new LineSegment(e1.x1() + w1[0], e1.y1() - w1[1], e1.x2() + w1[0], e1.y2() - w1[1]);
+                LineSegment segm2a = new LineSegment(e2.x1() + w2[0], e2.y1() - w2[1], e2.x2() + w2[0], e2.y2() - w2[1]);
 
                 //Точка пересечения внутренних сегментов
-                out[i] = segm3.lineIntersection(segm4);
+                out[i] = segm1a.lineIntersection(segm2a);
             }
-
+//            for (int i = 0; i < out.length; i++) {
+//
+//                int j = (i == out.length - 1) ? 1 : i + 1;
+//                int k = (i == 0 || i == out.length - 1) ? out.length - 2 : i - 1;
+//                LineSegment segm1 = new LineSegment(out[i], out[j]);
+//                LineSegment segm2 = new LineSegment(out[k], out[i]);
+//
+//                robus.computeIntersection(segm1.p0, segm1.p1, segm2.p0, segm2.p1);
+//                if (robus.isProper() == false) {
+//                    list.add(robus.getIntersection(0));
+//                } else {
+//                    list.add(out[i]);
+//                }
+//            }
             return Com5t.gf.createPolygon(out);
 
         } catch (Exception e) {

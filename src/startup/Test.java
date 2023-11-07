@@ -1,6 +1,5 @@
 package startup;
 
-import builder.model.UJts;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -9,8 +8,11 @@ import common.eProp;
 import dataset.Conn;
 import domain.eElement;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import org.locationtech.jts.algorithm.LineIntersector;
+import org.locationtech.jts.algorithm.RobustLineIntersector;
 import org.locationtech.jts.geom.*;
 
 public class Test {
@@ -276,28 +278,58 @@ public class Test {
 
         GeometryFactory gf = new GeometryFactory(); //JTSFactoryFinder.getGeometryFactory(); 
 
-        Coordinate[] coords1 = new Coordinate[]{
+        Coordinate[] coord1 = new Coordinate[]{
             new Coordinate(0, 0), new Coordinate(0, 1000),
             new Coordinate(1000, 1000), new Coordinate(1000, 0),
             new Coordinate(0, 0)};
-        Coordinate[] coords2 = new Coordinate[]{
-            new Coordinate(0, 0), new Coordinate(0, 500),
-            new Coordinate(80, 1000), new Coordinate(999, 500),
-            new Coordinate(300, 0), new Coordinate(0, 0)};
+        Coordinate[] coord2 = new Coordinate[]{
+            new Coordinate(63, 63), new Coordinate(63, 33),
+            new Coordinate(900, 400), new Coordinate(900, 63),
+            new Coordinate(63, 63)};
 
         Point point1 = gf.createPoint(new Coordinate(0, 0));
         Point point2 = gf.createPoint(new Coordinate(4, 8));
         LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
         LineString line2 = gf.createLineString(new Coordinate[]{new Coordinate(0, 0), new Coordinate(0, 1000)});
-        LineSegment segm1 = new LineSegment(0, 0, 0, 1000);
-        Polygon polygon1 = gf.createPolygon(coords1);
-        Polygon polygon2 = gf.createPolygon(coords2);
+        LineSegment segm1 = new LineSegment(10, 0, 10, 100);
+        LineSegment segm2 = new LineSegment(10, 10, 500, 10);
+        Polygon polygon1 = gf.createPolygon(coord1);
+        Polygon polygon2 = gf.createPolygon(coord2);
 
-        double h0[] = UJts.deltaOnAngl(90, 43);
-        LineSegment segm = new LineSegment(0, 0, 0, 1000);
-        LineSegment geo = segm.offset(-43);
-        System.out.println(h0[0]);
-        System.out.println(h0[1]);
-        System.out.println(geo);
+        //System.out.println(polygon2);
+//        LineIntersector geo = new RobustLineIntersector();
+//        geo.computeIntersection(segm1.p0, segm1.p1, segm2.p0, segm2.p1);
+//        System.out.println(geo.getIntersection(0));
+//        System.out.println(geo.isProper());
+        System.out.println(polygon2);
+        List list = new ArrayList();
+        LineIntersector robus = new RobustLineIntersector();
+        for (int i = 1; i < coord2.length; i++) {
+
+            int j = (i == coord2.length - 1) ? 0 : i;
+            LineSegment segm1a = new LineSegment(coord2[i - 1], coord2[i]);
+            LineSegment segm2a = new LineSegment(coord2[i], coord2[j]);
+
+            //robus.computeIntersection(segm1a.p0, segm1a.p1, segm2a.p0, segm2a.p1);
+            //if(robus.isProper() == false) {
+            //list.add(robus.getIntersection(0));
+            //} else {
+            list.add(coord2[i - 1]);
+            //}
+        }
+        System.out.println(list);
+
+//        GeometryFactory gf = new GeometryFactory();
+//        double x1 = 10.342211513452, y1 = 11.342211514232, x2 = 0.342211513926, y2 = 1.342211513111,
+//                x3 = 0.342211513898, y3 = 13.342211513101, x4 = 11.342211513921, y4 = 2.342211513878;
+//        LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(x1, y1), new Coordinate(x2, y2)});
+//        LineString line2 = gf.createLineString(new Coordinate[]{new Coordinate(x3, y3), new Coordinate(x4, y4)});
+//        Point intersectionPoint = (Point) line2.intersection(line1);
+//
+//         // define very small buffer
+//        double bufferDistance = 0.0001 * 0.0001 * 0.0001;
+//        // use buffer when looking for intersection
+//        System.out.println(line1.buffer(bufferDistance).intersects(intersectionPoint)); // true
+//        System.out.println(line2.buffer(bufferDistance).intersects(intersectionPoint)); // true        
     }
 }

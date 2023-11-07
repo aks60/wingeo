@@ -56,29 +56,32 @@ public class ElemCross extends ElemSimple {
             this.setDimension(newImp[0].x, newImp[0].y, newImp[1].x, newImp[1].y);
 
             //Возвращает area слева и справа от импоста
-            Polygon area1 = (Polygon) arrGeo[1];
-            Polygon area2 = (Polygon) arrGeo[2];
-            owner.childs().get(0).geom = area1;
-            owner.childs().get(2).geom = area2;
+            Polygon geo1 = (Polygon) arrGeo[1];
+            Polygon geo2 = (Polygon) arrGeo[2];
+            owner.childs().get(0).geom = geo1;
+            owner.childs().get(2).geom = geo2;
 
             //Внутренняя ареа       
-            Polygon areaPadding = UJts.areaPadding(owner.geom, winc.listElem);
-
+            Polygon geoPadding = UJts.areaPadding(owner.geom, winc.listElem);
+            System.out.println(geoPadding);
             //Находим точки пересечение внутр. ареа левым и правым сегментами импоста
             double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
             LineSegment baseSegm = new LineSegment(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()));
             LineSegment offSegm[] = {baseSegm.offset(+delta), baseSegm.offset(-delta)};
 
+            //Точки пересечения канвы сегментами импоста
             Polygon areaCanvas = UJts.newPolygon(0, 0, 0, 10000, 10000, 10000, 10000, 0);
             Coordinate C1[] = UJts.intersectPoligon(areaCanvas, offSegm[0]);
             Coordinate C2[] = UJts.intersectPoligon(areaCanvas, offSegm[1]);
 
-            Polygon areaExp = UJts.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
-            this.geom = (Polygon) areaExp.intersection(areaPadding);
+            //Разширенную ареа импоста обрезаем areaPadding 
+            Polygon areaExp = UJts.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);  
+            Geometry g = areaExp.intersection(geoPadding);
+            this.geom = (Polygon) g;  
 
         } catch (Exception e) {
-            //this.geom = null;
             System.err.println("Ошибка:ElemCross.setLocation() " + e);
+            setLocation();
         }
     }
 
