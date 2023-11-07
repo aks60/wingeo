@@ -20,8 +20,8 @@ import org.locationtech.jts.geom.Polygon;
 
 public class ElemCross extends ElemSimple {
 
-    Polygon geoTest1 = null;
-    Polygon geoTest2 = null;
+    Geometry geoTest1 = null;
+    Geometry geoTest2 = null;
 
     public ElemCross(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
@@ -48,22 +48,29 @@ public class ElemCross extends ElemSimple {
     public void setLocation() {
         try {
             //Пилим полигон
-            Geometry[] arrGeo = UJts.splitPolygon(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
+            Geometry[] geoSplit = UJts.geoSplit(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
 
+            //System.out.println(geoSplit[1]);
+            //System.out.println(geoSplit[2]);
+            //geoTest1 = geoSplit[1];
+            //geoTest2 = geoSplit[0]; 
+            
             //Новые координаты импоста
-            Geometry lineImp = owner.geom.intersection(arrGeo[0]);
+            Geometry lineImp = owner.geom.intersection(geoSplit[0]);
             Coordinate[] newImp = lineImp.getCoordinates();
 
-            this.setDimension(newImp[0].x, newImp[0].y, newImp[1].x, newImp[1].y);
-
+            this.setDimension(newImp[0].x, newImp[0].y, newImp[1].x, newImp[1].y);           
+            
             //Возвращает area слева и справа от импоста
-            Polygon geo1 = (Polygon) arrGeo[1];
-            Polygon geo2 = (Polygon) arrGeo[2];
+            Polygon geo1 = (Polygon) geoSplit[1];
+            Polygon geo2 = (Polygon) geoSplit[2];
             owner.childs().get(0).geom = geo1;
             owner.childs().get(2).geom = geo2;
 
             //Внутренняя ареа       
-            Polygon geoPadding = UJts.areaPadding(owner.geom, winc.listElem);
+            Polygon geoPadding = UJts.geoPadding(owner.geom, winc.listElem);
+            
+            geoTest1 = geoPadding;
 
             //Находим точки пересечение внутр. ареа левым и правым сегментами импоста
             double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
@@ -72,25 +79,16 @@ public class ElemCross extends ElemSimple {
 
             //Точки пересечения канвы сегментами импоста
             Polygon areaCanvas = UJts.newPolygon(0, 0, 0, 1000, 1000, 1000, 1000, 0);
-            Coordinate C1[] = UJts.intersectPoligon(areaCanvas, moveBaseSegment[0], moveBaseSegment[1]);
-            Coordinate C2[] = UJts.intersectPoligon(areaCanvas, moveBaseSegment[1], moveBaseSegment[0]);
+            Coordinate C1[] = UJts.intersectPoligon(areaCanvas, moveBaseSegment[0]);
+            Coordinate C2[] = UJts.intersectPoligon(areaCanvas, moveBaseSegment[1]);
 
             //Разширенную ареа импоста обрезаем areaPadding 
             Polygon areaExp = UJts.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
+
+            //System.out.println(C2[0].x + "  " + C2[0].y + "  " + C2[1].x + "  " + C2[1].y);
+            //System.out.println(C1[0].x + "  " + C1[0].y + "  " + C1[1].x + "  " + C1[1].y);
             
-            //System.out.println("areaExp " + areaExp);
-            //System.out.println("geoPadding" + geoPadding);
-
-            geoTest1 = areaExp;
-            //geoTest2 = geoPadding;
-
-            try {
-                Geometry g = areaExp.intersection(geoPadding);
-                this.geom = (Polygon) g;
-
-            } catch (Exception e) {
-                System.err.println("Ошибка: " + e);
-            }
+            this.geom = (Polygon) areaExp.intersection(geoPadding);
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation() " + e);
@@ -107,8 +105,9 @@ public class ElemCross extends ElemSimple {
             winc.gc2d.draw(new Line2D.Double(this.x1(), this.y1(), this.x2(), this.y2()));
 
             java.awt.Color color = winc.gc2d.getColor();
-            if (this.geoTest1 != null) {                
-                winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
+            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
+
+            if (this.geoTest1 != null) {
                 Shape shape = new ShapeWriter().toShape(this.geoTest1);
                 winc.gc2d.draw(shape);
             }
