@@ -68,12 +68,12 @@ public class ElemCross extends ElemSimple {
             //Находим точки пересечение внутр. ареа левым и правым сегментами импоста
             double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
             LineSegment baseSegm = new LineSegment(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()));
-            LineSegment moveBaseLineSegment[] = {baseSegm.offset(+delta), baseSegm.offset(-delta)};
+            LineSegment moveBaseSegment[] = {baseSegm.offset(+delta), baseSegm.offset(-delta)};
 
             //Точки пересечения канвы сегментами импоста
             Polygon areaCanvas = UJts.newPolygon(0, 0, 0, 1000, 1000, 1000, 1000, 0);
-            Coordinate C1[] = UJts.intersectPoligon(areaCanvas, moveBaseLineSegment[0]);
-            Coordinate C2[] = UJts.intersectPoligon(areaCanvas, moveBaseLineSegment[1]);
+            Coordinate C1[] = UJts.intersectPoligon(areaCanvas, moveBaseSegment[0], moveBaseSegment[1]);
+            Coordinate C2[] = UJts.intersectPoligon(areaCanvas, moveBaseSegment[1], moveBaseSegment[0]);
 
             //Разширенную ареа импоста обрезаем areaPadding 
             Polygon areaExp = UJts.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);

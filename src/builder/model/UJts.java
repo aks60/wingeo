@@ -57,6 +57,37 @@ public class UJts {
     }
 
     //Пересечение сегмента(линии) импоста с сегментами(отрезками) многоугольника
+    public static Coordinate[] intersectPoligon(Polygon poly, LineSegment line1, LineSegment line2) {
+        try {
+            Coordinate c2 = null;
+            List<Coordinate> out1 = new ArrayList();
+            List<Coordinate> out2 = new ArrayList();
+            Coordinate[] c = poly.getCoordinates();
+            for (int i = 1; i < c.length; i++) {
+
+                Coordinate seg1 = c[i - 1];
+                Coordinate seg2 = c[i];
+                Coordinate c3 = Intersection.lineSegment(line1.p0, line1.p1, seg1, seg2);
+                if (c3 != null) {
+                    out1.add(c3);
+                }
+                Coordinate c4 = Intersection.lineSegment(line2.p0, line2.p1, seg1, seg2);
+                if (c4 != null) {
+                    out2.add(c4);
+                }
+            }
+            c2 = Intersection.lineSegment(out1.get(0), out1.get(1), out2.get(0), out2.get(1));
+            if (c2 != null) {
+                System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            }
+            return out1.toArray(new Coordinate[0]);
+
+        } catch (Exception e) {
+            System.err.println("intersectPoligon" + e);
+        }
+        return null;
+    }
+
     public static Coordinate[] intersectPoligon(Polygon poly, LineSegment segm) {
         try {
             List<Coordinate> out = new ArrayList();
@@ -191,7 +222,7 @@ public class UJts {
     //Вырождение полигона
     public static Polygon areaReduc(Polygon poly) {
         Coordinate[] coo = poly.getCoordinates();
-        Coordinate[] out = new Coordinate[coo.length];        
+        Coordinate[] out = new Coordinate[coo.length];
         try {
             List<Coordinate> list = new ArrayList(List.of(out[0]));
             for (int i = 1; i < out.length; i++) {

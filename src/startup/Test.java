@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.algorithm.LineIntersector;
 import org.locationtech.jts.algorithm.RobustLineIntersector;
 import org.locationtech.jts.geom.*;
@@ -292,21 +293,22 @@ public class Test {
         Point point2 = gf.createPoint(new Coordinate(4, 8));
         LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
         LineString line2 = gf.createLineString(new Coordinate[]{new Coordinate(0, 0), new Coordinate(0, 1000)});
-        LineSegment segm1 = new LineSegment(10, 0, 10, 100);
-        LineSegment segm2 = new LineSegment(10, 10, 500, 10);
+        LineSegment segm1 = new LineSegment(40, 40, 200, 40);
+        LineSegment segm2 = new LineSegment(20, 20, 200, 120);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
 
-        Coordinate[] coord3 = UJts.arrCoord(10000, 4543.08845550434, 0, 93.03991619457653, 10000, 4638.654942320835, 5.5582591297247745, -0.0000000000000009, 10000, 4543.08845550434);
-        Coordinate[] coord4 = UJts.arrCoord(63, 63, 63, 937, 937.7495798400032, 937, 937.0503798400032, 63, 63, 63);
-        Polygon polygon3 = gf.createPolygon(coord3);
-        Polygon polygon4 = gf.createPolygon(coord4);   
-               
-        Geometry geo = polygon4.intersection(polygon3);
-        if(geo.isEmpty()) {
-            System.out.println(" ********************* ");
-        }
-        System.out.println(geo);
+//        Coordinate[] coord3 = UJts.arrCoord(10000, 4543.08845550434, 0, 93.03991619457653, 10000, 4638.654942320835, 5.5582591297247745, -0.0000000000000009, 10000, 4543.08845550434);
+//        Coordinate[] coord4 = UJts.arrCoord(63, 63, 63, 937, 937.7495798400032, 937, 937.0503798400032, 63, 63, 63);
+//        Polygon polygon3 = gf.createPolygon(coord3);
+//        Polygon polygon4 = gf.createPolygon(coord4);   
+//               
+//        Geometry geo = polygon4.intersection(polygon3);
+//        if(geo.isEmpty()) {
+//            System.out.println(" ********************* ");
+//        }
+       Coordinate c5 = Intersection.lineSegment(segm1.p0, segm1.p1, segm2.p0, segm2.p1);
+       System.out.println(c5);
 
     }
 }
