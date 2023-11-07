@@ -1,5 +1,6 @@
 package startup;
 
+import builder.model.UJts;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -296,40 +297,16 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
 
-        //System.out.println(polygon2);
-//        LineIntersector geo = new RobustLineIntersector();
-//        geo.computeIntersection(segm1.p0, segm1.p1, segm2.p0, segm2.p1);
-//        System.out.println(geo.getIntersection(0));
-//        System.out.println(geo.isProper());
-        System.out.println(polygon2);
-        List list = new ArrayList();
-        LineIntersector robus = new RobustLineIntersector();
-        for (int i = 1; i < coord2.length; i++) {
-
-            int j = (i == coord2.length - 1) ? 0 : i;
-            LineSegment segm1a = new LineSegment(coord2[i - 1], coord2[i]);
-            LineSegment segm2a = new LineSegment(coord2[i], coord2[j]);
-
-            //robus.computeIntersection(segm1a.p0, segm1a.p1, segm2a.p0, segm2a.p1);
-            //if(robus.isProper() == false) {
-            //list.add(robus.getIntersection(0));
-            //} else {
-            list.add(coord2[i - 1]);
-            //}
+        Coordinate[] coord3 = UJts.arrCoord(10000, 4543.08845550434, 0, 93.03991619457653, 10000, 4638.654942320835, 5.5582591297247745, -0.0000000000000009, 10000, 4543.08845550434);
+        Coordinate[] coord4 = UJts.arrCoord(63, 63, 63, 937, 937.7495798400032, 937, 937.0503798400032, 63, 63, 63);
+        Polygon polygon3 = gf.createPolygon(coord3);
+        Polygon polygon4 = gf.createPolygon(coord4);   
+               
+        Geometry geo = polygon4.intersection(polygon3);
+        if(geo.isEmpty()) {
+            System.out.println(" ********************* ");
         }
-        System.out.println(list);
+        System.out.println(geo);
 
-//        GeometryFactory gf = new GeometryFactory();
-//        double x1 = 10.342211513452, y1 = 11.342211514232, x2 = 0.342211513926, y2 = 1.342211513111,
-//                x3 = 0.342211513898, y3 = 13.342211513101, x4 = 11.342211513921, y4 = 2.342211513878;
-//        LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(x1, y1), new Coordinate(x2, y2)});
-//        LineString line2 = gf.createLineString(new Coordinate[]{new Coordinate(x3, y3), new Coordinate(x4, y4)});
-//        Point intersectionPoint = (Point) line2.intersection(line1);
-//
-//         // define very small buffer
-//        double bufferDistance = 0.0001 * 0.0001 * 0.0001;
-//        // use buffer when looking for intersection
-//        System.out.println(line1.buffer(bufferDistance).intersects(intersectionPoint)); // true
-//        System.out.println(line2.buffer(bufferDistance).intersects(intersectionPoint)); // true        
     }
 }

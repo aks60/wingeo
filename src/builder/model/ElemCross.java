@@ -20,7 +20,8 @@ import org.locationtech.jts.geom.Polygon;
 
 public class ElemCross extends ElemSimple {
 
-    Polygon geoTest = null;
+    Polygon geoTest1 = null;
+    Polygon geoTest2 = null;
 
     public ElemCross(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
@@ -63,25 +64,37 @@ public class ElemCross extends ElemSimple {
 
             //Внутренняя ареа       
             Polygon geoPadding = UJts.areaPadding(owner.geom, winc.listElem);
-            System.out.println(geoPadding);
+
             //Находим точки пересечение внутр. ареа левым и правым сегментами импоста
             double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
             LineSegment baseSegm = new LineSegment(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()));
-            LineSegment offSegm[] = {baseSegm.offset(+delta), baseSegm.offset(-delta)};
+            LineSegment moveBaseLineSegment[] = {baseSegm.offset(+delta), baseSegm.offset(-delta)};
 
             //Точки пересечения канвы сегментами импоста
-            Polygon areaCanvas = UJts.newPolygon(0, 0, 0, 10000, 10000, 10000, 10000, 0);
-            Coordinate C1[] = UJts.intersectPoligon(areaCanvas, offSegm[0]);
-            Coordinate C2[] = UJts.intersectPoligon(areaCanvas, offSegm[1]);
+            Polygon areaCanvas = UJts.newPolygon(0, 0, 0, 1000, 1000, 1000, 1000, 0);
+            Coordinate C1[] = UJts.intersectPoligon(areaCanvas, moveBaseLineSegment[0]);
+            Coordinate C2[] = UJts.intersectPoligon(areaCanvas, moveBaseLineSegment[1]);
 
             //Разширенную ареа импоста обрезаем areaPadding 
-            Polygon areaExp = UJts.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);  
-            Geometry g = areaExp.intersection(geoPadding);
-            this.geom = (Polygon) g;  
+            Polygon areaExp = UJts.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
+            
+            //System.out.println("areaExp " + areaExp);
+            //System.out.println("geoPadding" + geoPadding);
+
+            geoTest1 = areaExp;
+            //geoTest2 = geoPadding;
+
+            try {
+                Geometry g = areaExp.intersection(geoPadding);
+                this.geom = (Polygon) g;
+
+            } catch (Exception e) {
+                System.err.println("Ошибка: " + e);
+            }
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation() " + e);
-            setLocation();
+            //setLocation();
         }
     }
 
@@ -92,11 +105,15 @@ public class ElemCross extends ElemSimple {
                 winc.gc2d.draw(shape);
             }
             winc.gc2d.draw(new Line2D.Double(this.x1(), this.y1(), this.x2(), this.y2()));
-            java.awt.Color color = winc.gc2d.getColor();
 
-            if (this.geoTest != null) {
+            java.awt.Color color = winc.gc2d.getColor();
+            if (this.geoTest1 != null) {                
                 winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
-                Shape shape = new ShapeWriter().toShape(this.geoTest);
+                Shape shape = new ShapeWriter().toShape(this.geoTest1);
+                winc.gc2d.draw(shape);
+            }
+            if (this.geoTest2 != null) {
+                Shape shape = new ShapeWriter().toShape(this.geoTest2);
                 winc.gc2d.draw(shape);
             }
             winc.gc2d.setColor(color);

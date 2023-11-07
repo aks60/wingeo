@@ -2,22 +2,15 @@ package builder.model;
 
 import domain.eArtikl;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
-import org.locationtech.jts.algorithm.Distance;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.algorithm.LineIntersector;
-import org.locationtech.jts.algorithm.PointLocation;
 import org.locationtech.jts.algorithm.RobustLineIntersector;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
-import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
-import org.locationtech.jts.geom.util.LineStringExtracter;
-import org.locationtech.jts.operation.polygonize.Polygonizer;
 
 /**
  * GeometryFixer - Исправляет геометрию LineStringExtracter.getLines(geometry) -
@@ -164,10 +157,8 @@ public class UJts {
 
     public static Polygon areaPadding(Polygon poly, List<ElemSimple> listFrame) {
 
-        List list = new ArrayList();
         Coordinate[] coo = poly.getCoordinates();
         Coordinate[] out = new Coordinate[coo.length];
-        LineIntersector robus = new RobustLineIntersector();
         try {
             for (int i = 0; i < coo.length; i++) {
 
@@ -189,26 +180,31 @@ public class UJts {
                 //Точка пересечения внутренних сегментов
                 out[i] = segm1a.lineIntersection(segm2a);
             }
-//            for (int i = 0; i < out.length; i++) {
-//
-//                int j = (i == out.length - 1) ? 1 : i + 1;
-//                int k = (i == 0 || i == out.length - 1) ? out.length - 2 : i - 1;
-//                LineSegment segm1 = new LineSegment(out[i], out[j]);
-//                LineSegment segm2 = new LineSegment(out[k], out[i]);
-//
-//                robus.computeIntersection(segm1.p0, segm1.p1, segm2.p0, segm2.p1);
-//                if (robus.isProper() == false) {
-//                    list.add(robus.getIntersection(0));
-//                } else {
-//                    list.add(out[i]);
-//                }
-//            }
             return Com5t.gf.createPolygon(out);
 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.areaPadding()" + e);
             return null;
         }
+    }
+
+    //Вырождение полигона
+    public static Polygon areaReduc(Polygon poly) {
+        Coordinate[] coo = poly.getCoordinates();
+        Coordinate[] out = new Coordinate[coo.length];        
+        try {
+            List<Coordinate> list = new ArrayList(List.of(out[0]));
+            for (int i = 1; i < out.length; i++) {
+                LineSegment ls = new LineSegment(out[i - 1], out[i]);
+                if (ls.getLength() > 1) {
+                    list.add(out[i]);
+                }
+            }
+            return Com5t.gf.createPolygon(list.toArray(new Coordinate[0]));
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.areaReduc()" + e);
+        }
+        return null;
     }
 
     //Список входн. параметров не замыкается начальной точкой как в jts!
