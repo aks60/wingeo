@@ -304,12 +304,12 @@ public class Test {
         Polygon geoPadding = gf.createPolygon(coord8);
         
         GeometryFixer fix = new GeometryFixer(geoPadding);
-        fix.setKeepCollapsed(false);
+        //fix.setKeepCollapsed(true);
         fix.setKeepMulti(false);
         Geometry geo = fix.getResult();
 
         //System.out.println(geoPadding.getGeometryType());
-        System.out.println(polygon1.isValid());
+        System.out.println(geo);
 
     }
 }
