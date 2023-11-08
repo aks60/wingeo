@@ -222,9 +222,10 @@ public class UJts {
         return Com5t.gf.createPolygon(UJts.arrCoord(d));
     }
 
-    public static Geometry splitPolygon(Geometry poly, double x1, double y1, double x2, double y2) {
+    //https://gis.stackexchange.com/questions/189976/jts-split-arbitrary-polygon-by-a-line
+    public static Geometry geoSplit(Geometry poly,Coordinate[] coo) {
 
-        Geometry line = Com5t.gf.createLineString(arrCoord(x1, y1, x2, y2));
+        Geometry line = Com5t.gf.createLineString(coo);
         Geometry nodedLinework = poly.getBoundary().union(line);
         Geometry polys = polygonize(nodedLinework);
 
