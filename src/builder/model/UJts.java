@@ -2,15 +2,17 @@ package builder.model;
 
 import domain.eArtikl;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.algorithm.Intersection;
-import org.locationtech.jts.algorithm.LineIntersector;
-import org.locationtech.jts.algorithm.RobustLineIntersector;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.util.LineStringExtracter;
+import org.locationtech.jts.operation.polygonize.Polygonizer;
 
 /**
  * GeometryFixer - Исправляет геометрию LineStringExtracter.getLines(geometry) -
@@ -120,21 +122,19 @@ public class UJts {
     //Внутренняя обводка ареа 
     public static Polygon geoPadding2(Polygon poly, List<ElemSimple> listFrame) {
 
-        List list = new ArrayList();
         Coordinate[] coo = poly.getCoordinates();
         Coordinate[] out = new Coordinate[coo.length];
-        out[0] = coo[0];
-        LineIntersector robus = new RobustLineIntersector();
         try {
-            for (int i = 1; i < coo.length; i++) {
+            for (int i = 0; i < coo.length; i++) {
 
-                //int j = (i == coo.length - 1) ? 0 : i;
-                LineSegment segm1 = new LineSegment(coo[i - 1], coo[i]);
-                LineSegment segm2 = new LineSegment(coo[i], coo[i + 1]);
-                ElemSimple e1 = UJts.segMapElem(listFrame, segm1);
-                ElemSimple e2 = UJts.segMapElem(listFrame, segm2);
+                int j = (i == coo.length - 1) ? 1 : i + 1;
+                int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
+                LineSegment segm1 = new LineSegment(coo[i], coo[j]);
+                LineSegment segm2 = new LineSegment(coo[k], coo[i]);
 
                 //Получим ширину сегментов
+                ElemSimple e1 = UJts.segMapElem(listFrame, segm1);
+                ElemSimple e2 = UJts.segMapElem(listFrame, segm2);
                 double w1[] = UJts.deltaOnAngl(UJts.anglHor(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
                 double w2[] = UJts.deltaOnAngl(UJts.anglHor(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
 
@@ -222,6 +222,30 @@ public class UJts {
         return Com5t.gf.createPolygon(UJts.arrCoord(d));
     }
 
+    public static Geometry splitPolygon(Geometry poly, double x1, double y1, double x2, double y2) {
+
+        Geometry line = Com5t.gf.createLineString(arrCoord(x1, y1, x2, y2));
+        Geometry nodedLinework = poly.getBoundary().union(line);
+        Geometry polys = polygonize(nodedLinework);
+
+        List output = new ArrayList();
+        for (int i = 0; i < polys.getNumGeometries(); i++) {
+            Polygon candpoly = (Polygon) polys.getGeometryN(i);
+            if (poly.contains(candpoly.getInteriorPoint())) {
+                output.add(candpoly);
+            }
+        }
+        return poly.getFactory().createGeometryCollection(GeometryFactory.toGeometryArray(output));
+    }
+
 // <editor-fold defaultstate="collapsed" desc="XLAM">
+    public static Geometry polygonize(Geometry geometry) {
+        List lines = LineStringExtracter.getLines(geometry);
+        Polygonizer polygonizer = new Polygonizer();
+        polygonizer.add(lines);
+        Collection polys = polygonizer.getPolygons();
+        Polygon[] polyArray = GeometryFactory.toPolygonArray(polys);
+        return geometry.getFactory().createGeometryCollection(polyArray);
+    }
 // </editor-fold>    
 }

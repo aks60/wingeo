@@ -8,14 +8,12 @@ import com.google.gson.JsonParser;
 import common.eProp;
 import dataset.Conn;
 import domain.eElement;
+import static java.lang.System.out;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import org.locationtech.jts.algorithm.Intersection;
-import org.locationtech.jts.algorithm.LineIntersector;
-import org.locationtech.jts.algorithm.RobustLineIntersector;
 import org.locationtech.jts.geom.*;
+import org.locationtech.jts.geom.util.GeometryFixer;
 
 public class Test {
 
@@ -298,17 +296,20 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
 
-//        Coordinate[] coord3 = UJts.arrCoord(10000, 4543.08845550434, 0, 93.03991619457653, 10000, 4638.654942320835, 5.5582591297247745, -0.0000000000000009, 10000, 4543.08845550434);
-//        Coordinate[] coord4 = UJts.arrCoord(63, 63, 63, 937, 937.7495798400032, 937, 937.0503798400032, 63, 63, 63);
-//        Polygon polygon3 = gf.createPolygon(coord3);
-//        Polygon polygon4 = gf.createPolygon(coord4);   
-//               
-//        Geometry geo = polygon4.intersection(polygon3);
-//        if(geo.isEmpty()) {
-//            System.out.println(" ********************* ");
-//        }
-       Coordinate c5 = Intersection.lineSegment(segm1.p0, segm1.p1, segm2.p0, segm2.p1);
-       System.out.println(c5);
+        Coordinate[] coord6 = UJts.arrCoord(0, 0, 0.0000000000000009, 80.5950147413561, 1000, 500, 1000, 0, 0, 0);
+        Coordinate[] coord7 = UJts.arrCoord(456.5, 1000, 543.5, 1000, 543.5, 0, 456.5, 0, 456.5, 1000);
+        Coordinate[] coord8 = UJts.arrCoord(63, 63, 63, 59.84658648630139, 937, 426.40654360235624, 937, 63, 63, 63);
+        Polygon polygon6 = gf.createPolygon(coord6);
+        Polygon areaExp = gf.createPolygon(coord7);
+        Polygon geoPadding = gf.createPolygon(coord8);
+        
+        GeometryFixer fix = new GeometryFixer(geoPadding);
+        fix.setKeepCollapsed(false);
+        fix.setKeepMulti(false);
+        Geometry geo = fix.getResult();
+
+        //System.out.println(geoPadding.getGeometryType());
+        System.out.println(polygon1.isValid());
 
     }
 }

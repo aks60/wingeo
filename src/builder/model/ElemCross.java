@@ -17,6 +17,7 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.util.GeometryFixer;
 
 public class ElemCross extends ElemSimple {
 
@@ -50,17 +51,12 @@ public class ElemCross extends ElemSimple {
             //Пилим полигон
             Geometry[] geoSplit = UJts.geoSplit(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
 
-            //System.out.println(geoSplit[1]);
-            //System.out.println(geoSplit[2]);
-            //geoTest1 = geoSplit[1];
-            //geoTest2 = geoSplit[0]; 
-            
             //Новые координаты импоста
             Geometry lineImp = owner.geom.intersection(geoSplit[0]);
             Coordinate[] newImp = lineImp.getCoordinates();
 
-            this.setDimension(newImp[0].x, newImp[0].y, newImp[1].x, newImp[1].y);           
-            
+            this.setDimension(newImp[0].x, newImp[0].y, newImp[1].x, newImp[1].y);
+
             //Возвращает area слева и справа от импоста
             Polygon geo1 = (Polygon) geoSplit[1];
             Polygon geo2 = (Polygon) geoSplit[2];
@@ -69,8 +65,10 @@ public class ElemCross extends ElemSimple {
 
             //Внутренняя ареа       
             Polygon geoPadding = UJts.geoPadding(owner.geom, winc.listElem);
-            
-            geoTest1 = geoPadding;
+            if(geoPadding.isValid() == false) {
+                GeometryFixer fix = new GeometryFixer(geoPadding);
+                geoPadding = (Polygon) fix.getResult().getGeometryN(0);
+            }
 
             //Находим точки пересечение внутр. ареа левым и правым сегментами импоста
             double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
@@ -85,14 +83,10 @@ public class ElemCross extends ElemSimple {
             //Разширенную ареа импоста обрезаем areaPadding 
             Polygon areaExp = UJts.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
 
-            //System.out.println(C2[0].x + "  " + C2[0].y + "  " + C2[1].x + "  " + C2[1].y);
-            //System.out.println(C1[0].x + "  " + C1[0].y + "  " + C1[1].x + "  " + C1[1].y);
-            
             this.geom = (Polygon) areaExp.intersection(geoPadding);
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation() " + e);
-            //setLocation();
         }
     }
 
