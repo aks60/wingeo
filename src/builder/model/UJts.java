@@ -120,40 +120,6 @@ public class UJts {
     }
 
     //Внутренняя обводка ареа 
-    public static Polygon geoPadding2(Polygon poly, List<ElemSimple> listFrame) {
-
-        Coordinate[] coo = poly.getCoordinates();
-        Coordinate[] out = new Coordinate[coo.length];
-        try {
-            for (int i = 0; i < coo.length; i++) {
-
-                int j = (i == coo.length - 1) ? 1 : i + 1;
-                int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
-                LineSegment segm1 = new LineSegment(coo[i], coo[j]);
-                LineSegment segm2 = new LineSegment(coo[k], coo[i]);
-
-                //Получим ширину сегментов
-                ElemSimple e1 = UJts.segMapElem(listFrame, segm1);
-                ElemSimple e2 = UJts.segMapElem(listFrame, segm2);
-                double w1[] = UJts.deltaOnAngl(UJts.anglHor(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
-                double w2[] = UJts.deltaOnAngl(UJts.anglHor(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
-
-                //Смещённая внутрь точка пересечения сегментов
-                LineSegment segm1a = new LineSegment(e1.x1() + w1[0], e1.y1() - w1[1], e1.x2() + w1[0], e1.y2() - w1[1]);
-                LineSegment segm2a = new LineSegment(e2.x1() + w2[0], e2.y1() - w2[1], e2.x2() + w2[0], e2.y2() - w2[1]);
-
-                //Точка пересечения внутренних сегментов
-                out[i] = segm1a.lineIntersection(segm2a);
-            }
-            return Com5t.gf.createPolygon(out);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.areaPadding()" + e);
-            return null;
-        }
-    }
-
-    //Внутренняя обводка ареа 
     public static Polygon geoPadding(Polygon poly, List<ElemSimple> listFrame) {
 
         Coordinate[] coo = poly.getCoordinates();
@@ -182,28 +148,9 @@ public class UJts {
             return Com5t.gf.createPolygon(out);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.areaPadding()" + e);
+            System.err.println("Ошибка:UGeo.areaPadding() " + e);
             return null;
         }
-    }
-
-    //Вырождение полигона
-    public static Polygon geoReduc(Polygon poly) {
-        Coordinate[] coo = poly.getCoordinates();
-        Coordinate[] out = new Coordinate[coo.length];
-        try {
-            List<Coordinate> list = new ArrayList(List.of(out[0]));
-            for (int i = 1; i < out.length; i++) {
-                LineSegment ls = new LineSegment(out[i - 1], out[i]);
-                if (ls.getLength() > 1) {
-                    list.add(out[i]);
-                }
-            }
-            return Com5t.gf.createPolygon(list.toArray(new Coordinate[0]));
-        } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.areaReduc()" + e);
-        }
-        return null;
     }
 
     //Список входн. параметров не замыкается начальной точкой как в jts!
@@ -222,23 +169,6 @@ public class UJts {
         return Com5t.gf.createPolygon(UJts.arrCoord(d));
     }
 
-    //https://gis.stackexchange.com/questions/189976/jts-split-arbitrary-polygon-by-a-line
-    public static Geometry geoSplit(Geometry poly,Coordinate[] coo) {
-
-        Geometry line = Com5t.gf.createLineString(coo);
-        Geometry nodedLinework = poly.getBoundary().union(line);
-        Geometry polys = polygonize(nodedLinework);
-
-        List output = new ArrayList();
-        for (int i = 0; i < polys.getNumGeometries(); i++) {
-            Polygon candpoly = (Polygon) polys.getGeometryN(i);
-            if (poly.contains(candpoly.getInteriorPoint())) {
-                output.add(candpoly);
-            }
-        }
-        return poly.getFactory().createGeometryCollection(GeometryFactory.toGeometryArray(output));
-    }
-
 // <editor-fold defaultstate="collapsed" desc="XLAM">
     public static Geometry polygonize(Geometry geometry) {
         List lines = LineStringExtracter.getLines(geometry);
@@ -247,6 +177,23 @@ public class UJts {
         Collection polys = polygonizer.getPolygons();
         Polygon[] polyArray = GeometryFactory.toPolygonArray(polys);
         return geometry.getFactory().createGeometryCollection(polyArray);
+    }
+    //https://gis.stackexchange.com/questions/189976/jts-split-arbitrary-polygon-by-a-line
+    public static Polygon[] geoSplit(Geometry poly, Coordinate[] coo) {
+
+        Geometry line = Com5t.gf.createLineString(coo);
+        Geometry nodedLinework = poly.getBoundary().union(line);
+        Geometry polys = polygonize(nodedLinework);
+
+        List<Polygon> output = new ArrayList();
+        for (int i = 0; i < polys.getNumGeometries(); i++) {
+            Polygon candpoly = (Polygon) polys.getGeometryN(i);
+            if (poly.contains(candpoly.getInteriorPoint())) {
+                output.add(candpoly);
+            }
+        }
+        //return poly.getFactory().createGeometryCollection(GeometryFactory.toGeometryArray(output));
+        return new Polygon[]{null, output.get(0), output.get(1)};
     }
 // </editor-fold>    
 }

@@ -65,10 +65,11 @@ public class ElemCross extends ElemSimple {
 
             //Внутренняя ареа       
             Polygon geoPadding = UJts.geoPadding(owner.geom, winc.listElem);
-            if(geoPadding.isValid() == false) {
+            if(geoPadding.isValid() == false) { //исправление полигона
                 GeometryFixer fix = new GeometryFixer(geoPadding);
                 geoPadding = (Polygon) fix.getResult().getGeometryN(0);
             }
+            System.out.println(geoPadding);
 
             //Находим точки пересечение внутр. ареа левым и правым сегментами импоста
             double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
@@ -87,6 +88,7 @@ public class ElemCross extends ElemSimple {
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation() " + e);
+            setLocation();
         }
     }
 
