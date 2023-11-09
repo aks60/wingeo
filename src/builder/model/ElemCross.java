@@ -69,7 +69,6 @@ public class ElemCross extends ElemSimple {
                 GeometryFixer fix = new GeometryFixer(geoPadding);
                 geoPadding = (Polygon) fix.getResult().getGeometryN(0);
             }
-            //System.out.println(geoPadding);
 
             //Находим точки пересечение внутр. ареа левым и правым сегментами импоста
             double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
