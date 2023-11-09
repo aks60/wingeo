@@ -60,6 +60,10 @@ public class ElemCross extends ElemSimple {
             //Возвращает area слева и справа от импоста
             Polygon geo1 = (Polygon) geoSplit[1];
             Polygon geo2 = (Polygon) geoSplit[2];
+            
+            //Object test1 = owner.childs().get(0).id;
+            //Object test2 = owner.childs().get(2).id;
+            
             owner.childs().get(0).geom = geo1;
             owner.childs().get(2).geom = geo2;
 
