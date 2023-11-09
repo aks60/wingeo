@@ -123,7 +123,7 @@ public class Wincalc {
 
     private void elements(AreaSimple owner, GsonElem gson) {
         try {
-            //if (gson.childs != null) {
+            if (gson.childs != null) {
                 LinkedHashMap<AreaSimple, GsonElem> hm = new LinkedHashMap();
                 for (GsonElem js : gson.childs) {
 
@@ -164,7 +164,7 @@ public class Wincalc {
                 for (Map.Entry<AreaSimple, GsonElem> entry : hm.entrySet()) {
                     elements(entry.getKey(), entry.getValue());
                 }
-            //}
+            }
         } catch (Exception e) {
             System.err.println("Ошибка:Wincalc.elements(*) " + e);
         }
