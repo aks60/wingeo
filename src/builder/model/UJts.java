@@ -10,6 +10,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.LineStringExtracter;
 import org.locationtech.jts.operation.polygonize.Polygonizer;
@@ -73,7 +74,7 @@ public class UJts {
             return out.toArray(new Coordinate[0]);
 
         } catch (Exception e) {
-            System.err.println("intersectPoligon" + e);
+            System.err.println("geoIntersect" + e);
         }
         return null;
     }
@@ -83,38 +84,13 @@ public class UJts {
 
         Coordinate[] coo = geo.getCoordinates();
         Coordinate linePoint1 = new Coordinate(x1, y1), linePoint2 = new Coordinate(x2, y2);
-        List<Coordinate> poly = new ArrayList(), cros = new ArrayList();
-        List<Coordinate> exp = new ArrayList(List.of(coo[0]));
         try {
-            for (int i = 1; i < coo.length; i++) {
-                Coordinate segmPoint1 = coo[i - 1], segmentPoint2 = coo[i];
-                Coordinate c3 = Intersection.lineSegment(
-                        linePoint1, linePoint2, segmPoint1, segmentPoint2);
-                if (c3 != null) {
-                    exp.add(c3);
-                    cros.add(c3);
-                }
-                exp.add(coo[i]);
-            }
-            boolean b = true;
-            for (Coordinate c : exp) {
-                if (b == true) {
-                    poly.add(c);
-                }
-                if (cros.contains(c)) {
-                    if (b == false) {
-                        poly.add(c);
-                    }
-                    b = !b;
-                }
-            }
-            Geometry p0 = Com5t.gf.createLineString(cros.toArray(new Coordinate[0]));
-            Geometry p1 = Com5t.gf.createPolygon(poly.toArray(new Coordinate[0]));
-            Geometry p2 = Com5t.gf.createPolygon(coo).difference(p1);
-            return new Geometry[]{p0, p1, p2};
+            Geometry[] v = oneSplit(geo.getCoordinates(), linePoint1, linePoint2);
+            Geometry[] k = oneSplit(geo.reverse().getCoordinates(), linePoint1, linePoint2);
+            return new Geometry[]{v[0], v[1], k[1]};
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.splitPolygon()" + e);
+            System.err.println("Ошибка:UGeo.geoSplit()" + e);
             return null;
         }
     }
@@ -148,7 +124,7 @@ public class UJts {
             return Com5t.gf.createPolygon(out);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.areaPadding() " + e);
+            System.err.println("Ошибка:UGeo.geoPadding() " + e);
             return null;
         }
     }
@@ -170,30 +146,40 @@ public class UJts {
     }
 
 // <editor-fold defaultstate="collapsed" desc="XLAM">
-    public static Geometry polygonize(Geometry geometry) {
-        List lines = LineStringExtracter.getLines(geometry);
-        Polygonizer polygonizer = new Polygonizer();
-        polygonizer.add(lines);
-        Collection polys = polygonizer.getPolygons();
-        Polygon[] polyArray = GeometryFactory.toPolygonArray(polys);
-        return geometry.getFactory().createGeometryCollection(polyArray);
-    }
-    //https://gis.stackexchange.com/questions/189976/jts-split-arbitrary-polygon-by-a-line
-    public static Polygon[] geoSplit(Geometry poly, Coordinate[] coo) {
-
-        Geometry line = Com5t.gf.createLineString(coo);
-        Geometry nodedLinework = poly.getBoundary().union(line);
-        Geometry polys = polygonize(nodedLinework);
-
-        List<Polygon> output = new ArrayList();
-        for (int i = 0; i < polys.getNumGeometries(); i++) {
-            Polygon candpoly = (Polygon) polys.getGeometryN(i);
-            if (poly.contains(candpoly.getInteriorPoint())) {
-                output.add(candpoly);
+    private static Geometry[] oneSplit(Coordinate[] coo, Coordinate linePoint1, Coordinate linePoint2) {
+        try {
+            List<Coordinate> pol = new ArrayList(), cros = new ArrayList();
+            List<Coordinate> exp = new ArrayList(List.of(coo[0]));
+            for (int i = 1; i < coo.length; i++) {
+                Coordinate segmPoint1 = coo[i - 1], segmentPoint2 = coo[i];
+                Coordinate c3 = Intersection.lineSegment(
+                        linePoint1, linePoint2, segmPoint1, segmentPoint2);
+                if (c3 != null) {
+                    exp.add(c3);
+                    cros.add(c3);
+                }
+                exp.add(coo[i]);
             }
+            boolean b = true;
+            for (Coordinate c : exp) {
+                if (b == true) {
+                    pol.add(c);
+                }
+                if (cros.contains(c)) {
+                    if (b == false) {
+                        pol.add(c);
+                    }
+                    b = !b;
+                }
+            }
+            Geometry p0 = Com5t.gf.createLineString(cros.toArray(new Coordinate[0]));
+            Geometry p1 = Com5t.gf.createPolygon(pol.toArray(new Coordinate[0]));
+            return new Geometry[]{p0, p1};
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.oneSplit()" + e);
+            return null;
         }
-        //return poly.getFactory().createGeometryCollection(GeometryFactory.toGeometryArray(output));
-        return new Polygon[]{null, output.get(0), output.get(1)};
     }
 // </editor-fold>    
 }

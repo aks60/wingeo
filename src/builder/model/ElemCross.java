@@ -88,7 +88,7 @@ public class ElemCross extends ElemSimple {
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation() " + e);
-            setLocation();
+            //setLocation();
         }
     }
 
