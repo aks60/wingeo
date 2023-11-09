@@ -69,7 +69,7 @@ public class ElemCross extends ElemSimple {
                 GeometryFixer fix = new GeometryFixer(geoPadding);
                 geoPadding = (Polygon) fix.getResult().getGeometryN(0);
             }
-            System.out.println(geoPadding);
+            //System.out.println(geoPadding);
 
             //Находим точки пересечение внутр. ареа левым и правым сегментами импоста
             double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
@@ -77,7 +77,7 @@ public class ElemCross extends ElemSimple {
             LineSegment moveBaseSegment[] = {baseSegm.offset(+delta), baseSegm.offset(-delta)};
 
             //Точки пересечения канвы сегментами импоста
-            Polygon areaCanvas = UJts.newPolygon(0, 0, 0, 1000, 1000, 1000, 1000, 0);
+            Polygon areaCanvas = UJts.newPolygon(0, 0, 0, 10000, 10000, 10000, 10000, 0);
             Coordinate C1[] = UJts.geoIntersect(areaCanvas, moveBaseSegment[0]);
             Coordinate C2[] = UJts.geoIntersect(areaCanvas, moveBaseSegment[1]);
 

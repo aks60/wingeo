@@ -123,47 +123,48 @@ public class Wincalc {
 
     private void elements(AreaSimple owner, GsonElem gson) {
         try {
-            LinkedHashMap<AreaSimple, GsonElem> hm = new LinkedHashMap();
-            for (GsonElem js : gson.childs) {
+            if (gson.childs != null) {
+                LinkedHashMap<AreaSimple, GsonElem> hm = new LinkedHashMap();
+                for (GsonElem js : gson.childs) {
 
-                if (Type.STVORKA == js.type) {
-                    AreaSimple area5e = new AreaStvorka(this, gson, owner);
-                    owner.childs().add(area5e); //добавим ребёнка родителю
-                    hm.put(area5e, js);
+                    if (Type.STVORKA == js.type) {
+                        AreaSimple area5e = new AreaStvorka(this, gson, owner);
+                        owner.childs().add(area5e); //добавим ребёнка родителю
+                        hm.put(area5e, js);
 
-                } else if (Type.AREA == js.type) {
-                    AreaSimple area5e = new AreaSimple(this, js, owner);
-                    owner.childs().add(area5e); //добавим ребёнка родителю
-                    listArea.add(area5e);
-                    hm.put(area5e, js);
+                    } else if (Type.AREA == js.type) {
+                        AreaSimple area5e = new AreaSimple(this, js, owner);
+                        owner.childs().add(area5e); //добавим ребёнка родителю
+                        listArea.add(area5e);
+                        hm.put(area5e, js);
 
-                } else if (Type.FRAME_SIDE == js.type) {
-                    ElemFrame elem5e = new ElemFrame(this, js, owner);
-                    listElem.add(elem5e);
-                    listFrame.add(elem5e);
+                    } else if (Type.FRAME_SIDE == js.type) {
+                        ElemFrame elem5e = new ElemFrame(this, js, owner);
+                        listElem.add(elem5e);
+                        listFrame.add(elem5e);
 
-                } else if (Type.IMPOST == js.type || Type.SHTULP == js.type || Type.STOIKA == js.type) {
-                    ElemCross elem5e = new ElemCross(this, js, owner);
-                    owner.childs().add(elem5e); //добавим ребёнка родителю
-                    listElem.add(elem5e);
-                    listCross.add(elem5e);
+                    } else if (Type.IMPOST == js.type || Type.SHTULP == js.type || Type.STOIKA == js.type) {
+                        ElemCross elem5e = new ElemCross(this, js, owner);
+                        owner.childs().add(elem5e); //добавим ребёнка родителю
+                        listElem.add(elem5e);
+                        listCross.add(elem5e);
 
-                } else if (Type.GLASS == js.type) {
-                    ElemGlass elem5e = new ElemGlass(this, js, owner);
-                    owner.childs().add(elem5e); //добавим ребёнка родителю
+                    } else if (Type.GLASS == js.type) {
+                        ElemGlass elem5e = new ElemGlass(this, js, owner);
+                        owner.childs().add(elem5e); //добавим ребёнка родителю
 
-                } else if (Type.MOSKITKA == js.type) {
-                    //Elem2Mosquit elem5e = new Elem2Mosquit(this, js, owner);
-                    //owner.childs().add(elem5e); //добавим ребёнка родителю
+                    } else if (Type.MOSKITKA == js.type) {
+                        //Elem2Mosquit elem5e = new Elem2Mosquit(this, js, owner);
+                        //owner.childs().add(elem5e); //добавим ребёнка родителю
 
+                    }
+                }
+
+                //Теперь вложенные элементы
+                for (Map.Entry<AreaSimple, GsonElem> entry : hm.entrySet()) {
+                    elements(entry.getKey(), entry.getValue());
                 }
             }
-
-            //Теперь вложенные элементы
-            for (Map.Entry<AreaSimple, GsonElem> entry : hm.entrySet()) {
-                elements(entry.getKey(), entry.getValue());
-            }
-
         } catch (Exception e) {
             System.err.println("Ошибка:Wincalc.elements(*) " + e);
         }
@@ -237,7 +238,7 @@ public class Wincalc {
             listArea.forEach(e -> e.paint());
             listFrame.forEach(e -> e.paint());
             listCross.forEach(e -> e.paint());
-            
+
 //            listCross.forEach(e -> {
 //                if (e.areaTest != null) {
 //                    e.paint();
@@ -246,7 +247,6 @@ public class Wincalc {
 //                    e.paint();
 //                }               
 //            });
-
         } catch (Exception e) {
             System.err.println("Ошибка:Wingeo.draw() " + e);
         }
