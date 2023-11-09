@@ -51,7 +51,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         initElements();
         loadingModel();
         btnChoice.setVisible(false);
-        loadingTab1(tab1, 1001);
+        loadingTab1(tab1, 2001);
     }
 
     public Models(ListenerRecord listener) {
@@ -60,7 +60,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         initElements();
         loadingModel();
         this.listenet = listener;
-        loadingTab1(tab1, 1001);
+        loadingTab1(tab1, 2001);
     }
 
     public void loadingModel() {
@@ -86,7 +86,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }
 
     public void loadingTab1(JTable tab, int form) {
-        Query qModel = new Query(eSysmodel.values()).select(eSysmodel.up, "where", eSysmodel.form, "=", form, "and id=36", "order by npp");
+        Query qModel = new Query(eSysmodel.values()).select(eSysmodel.up, "where", eSysmodel.form, "=", form, "and id=35", "order by npp");
         DefaultTableModel dm = (DefaultTableModel) tab.getModel();
         dm.getDataVector().removeAllElements();
         for (Record record : qModel.table(eSysmodel.up)) {
@@ -623,7 +623,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }//GEN-LAST:event_btnClose
 
     private void btnRefresh(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefresh
-        loadingTab1(tab1, 1001);
+        loadingTab1(tab1, 2001);
     }//GEN-LAST:event_btnRefresh
 
     private void btnDelete(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete
@@ -670,29 +670,29 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             }
             if (json != null) {
                 if (btnT1.isSelected()) {
-                    record.set(eSysmodel.form, 1001);
+                    record.set(eSysmodel.form, 2001);
                     qSysmodel.insert(record);
-                    loadingTab1(tab1, 1001);
+                    loadingTab1(tab1, 2001);
 
                 } else if (btnT2.isSelected()) {
-                    record.set(eSysmodel.form, 1004);
+                    record.set(eSysmodel.form, 2004);
                     qSysmodel.insert(record);
-                    loadingTab1(tab1, 1004);
+                    loadingTab1(tab1, 2004);
 
                 } else if (btnT3.isSelected()) {
-                    record.set(eSysmodel.form, 1002);
+                    record.set(eSysmodel.form, 2002);
                     qSysmodel.insert(record);
-                    loadingTab1(tab1, 1002);
+                    loadingTab1(tab1, 2002);
 
                 } else if (btnT4.isSelected()) {
-                    record.set(eSysmodel.form, 1007);
+                    record.set(eSysmodel.form, 2007);
                     qSysmodel.insert(record);
-                    loadingTab1(tab1, 1007);
+                    loadingTab1(tab1, 2007);
 
                 } else if (btnT5.isSelected()) {
-                    //record.set(eSysmodel.form, 1009);
+                    //record.set(eSysmodel.form, 2009);
                     //qSysmodel.insert(record);
-                    //loadingTab1(tab1, 1009);
+                    //loadingTab1(tab1, 2009);
                     System.out.println("frames.Models.btnInsert()");
                 }
                 UGui.setSelectedIndex(tab1, qSysmodel.size() - 1);
@@ -728,19 +728,19 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     private void btnToggl(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnToggl
 
         if (btnT1.isSelected()) {
-            loadingTab1(tab1, 1001);
+            loadingTab1(tab1, 2001);
             ((CardLayout) centr.getLayout()).show(centr, "pan17");
         } else if (btnT2.isSelected()) {
-            loadingTab1(tab1, 1004);
+            loadingTab1(tab1, 2004);
             ((CardLayout) centr.getLayout()).show(centr, "pan17");
         } else if (btnT3.isSelected()) {
-            loadingTab1(tab1, 1002);
+            loadingTab1(tab1, 2002);
             ((CardLayout) centr.getLayout()).show(centr, "pan17");
         } else if (btnT4.isSelected()) {
-            loadingTab1(tab1, 1007);
+            loadingTab1(tab1, 2007);
             ((CardLayout) centr.getLayout()).show(centr, "pan17");
         } else {
-            loadingTab1(tab1, 1009);
+            loadingTab1(tab1, 2009);
             ((CardLayout) centr.getLayout()).show(centr, "pan18");
         }
         UGui.updateBorderAndSql(tab1, List.of(tab1));
