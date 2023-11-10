@@ -21,9 +21,6 @@ import org.locationtech.jts.geom.util.GeometryFixer;
 
 public class ElemCross extends ElemSimple {
 
-    Geometry geoTest1 = null;
-    Geometry geoTest2 = null;
-
     public ElemCross(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
         initСonstructiv(gson.param);
@@ -63,13 +60,9 @@ public class ElemCross extends ElemSimple {
             //Возвращает area слева и справа от импоста
             Polygon geo1 = (Polygon) geoSplit[1];
             Polygon geo2 = (Polygon) geoSplit[2];
-
             owner.childs().get(0).geom = geo1;
             owner.childs().get(2).geom = geo2;
 
-            Object elem0 = owner.childs().get(0);
-            Object elem1 = owner.childs().get(1);
-            Object elem2 = owner.childs().get(2);
 
             //Внутренняя ареа       
             Polygon geoPadding = UJts.geoPadding(owner.geom, winc.listElem);
@@ -95,7 +88,6 @@ public class ElemCross extends ElemSimple {
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation() " + e);
-            //setLocation();
         }
     }
 
@@ -107,18 +99,9 @@ public class ElemCross extends ElemSimple {
             }
             winc.gc2d.draw(new Line2D.Double(this.x1(), this.y1(), this.x2(), this.y2()));
 
-            java.awt.Color color = winc.gc2d.getColor();
-            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
-
-            if (this.geoTest1 != null) {
-                Shape shape = new ShapeWriter().toShape(this.geoTest1);
-                winc.gc2d.draw(shape);
-            }
-            if (this.geoTest2 != null) {
-                Shape shape = new ShapeWriter().toShape(this.geoTest2);
-                winc.gc2d.draw(shape);
-            }
-            winc.gc2d.setColor(color);
+            //java.awt.Color color = winc.gc2d.getColor();
+            //winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
+            //winc.gc2d.setColor(color);
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.paint() " + e);

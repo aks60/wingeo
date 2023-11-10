@@ -17,65 +17,59 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import java.awt.*;
 
-public class ShapeSplit
-{
-    public static void main(String[] args) 
-    {
-        SwingUtilities.invokeLater(new Runnable()
-        {
+public class ShapeSplit {
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 createAndShowGUI();
             }
         });
-    }    
+    }
 
-    private static void createAndShowGUI()
-    {
+    private static void createAndShowGUI() {
         JFrame f = new JFrame();
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.getContentPane().add(new ShapeSplitPanel());
-        f.setSize(1100,600);
+        f.setSize(1100, 600);
         f.setLocationRelativeTo(null);
         f.setVisible(true);
     }
 }
 
-class ShapeSplitPanel extends JPanel implements MouseMotionListener
-{
-    private Shape inputShape = new Ellipse2D.Double(300,200,200,300);
-    private Point2D point0 = new Point2D.Double(200,300);
-    private Point2D point1 = new Point2D.Double(600,400);
+class ShapeSplitPanel extends JPanel implements MouseMotionListener {
 
-    ShapeSplitPanel()
-    {
+    private Shape inputShape = new Ellipse2D.Double(300,200,200,300);
+    //private Shape inputShape = new Polygon(new int[]{30, 300, 300, 30}, new int[]{20, 20, 200, 200}, 4);
+    private Point2D point0 = new Point2D.Double(200, 300);
+    private Point2D point1 = new Point2D.Double(600, 400);
+
+    ShapeSplitPanel() {
         addMouseMotionListener(this);
     }
 
     @Override
-    protected void paintComponent(Graphics gr)
-    {
+    protected void paintComponent(Graphics gr) {
         super.paintComponent(gr);
-        Graphics2D g = (Graphics2D)gr;
+        Graphics2D g = (Graphics2D) gr;
         g.setColor(Color.BLUE);
         g.fill(inputShape);
 
         g.setColor(Color.BLACK);
         g.draw(new Line2D.Double(point0, point1));
         g.fill(new Ellipse2D.Double(
-            point0.getX() - 3, point0.getY()-3, 6, 6));
+                point0.getX() - 3, point0.getY() - 3, 6, 6));
         g.fill(new Ellipse2D.Double(
-            point1.getX() - 3, point1.getY()-3, 6, 6));
+                point1.getX() - 3, point1.getY() - 3, 6, 6));
 
         split(new Area(inputShape), point0, point1, g);
 
     }
 
-
-    private static Area[] split(Area a, Point2D p0, Point2D p1, Graphics2D g)
-    {
+    private static Area[] split(Area a, Point2D p0, Point2D p1, Graphics2D g) {
         // Compute the direction of the line (L)
         // and its perpendicular (P)
         double dx = p1.getX() - p0.getX();
@@ -98,8 +92,7 @@ class ShapeSplitPanel extends JPanel implements MouseMotionListener
         double minDotP = Double.MAX_VALUE;
         double maxDotP = -Double.MAX_VALUE;
         Rectangle2D bounds = a.getBounds2D();
-        for (int i=0; i<4; i++)
-        {
+        for (int i = 0; i < 4; i++) {
             Point2D corner = getCorner(bounds, i);
             double pdx = corner.getX() - p0.getX();
             double pdy = corner.getY() - p0.getY();
@@ -118,20 +111,20 @@ class ShapeSplitPanel extends JPanel implements MouseMotionListener
         // extent of the bounds along the line
         // and the perpendicular
         Point2D extentLmin = new Point2D.Double(
-            p0.getX() + minDotL * dirLx, 
-            p0.getY() + minDotL * dirLy); 
+                p0.getX() + minDotL * dirLx,
+                p0.getY() + minDotL * dirLy);
 
         Point2D extentLmax = new Point2D.Double(
-            p0.getX() + maxDotL * dirLx, 
-            p0.getY() + maxDotL * dirLy); 
+                p0.getX() + maxDotL * dirLx,
+                p0.getY() + maxDotL * dirLy);
 
         Point2D extentPmin = new Point2D.Double(
-            p0.getX() + minDotP * dirPx, 
-            p0.getY() + minDotP * dirPy); 
+                p0.getX() + minDotP * dirPx,
+                p0.getY() + minDotP * dirPy);
 
         Point2D extentPmax = new Point2D.Double(
-            p0.getX() + maxDotP * dirPx, 
-            p0.getY() + maxDotP * dirPy);
+                p0.getX() + maxDotP * dirPx,
+                p0.getY() + maxDotP * dirPy);
 
         // Compute the two rectangles that cover
         // each half of the object based on 
@@ -139,22 +132,22 @@ class ShapeSplitPanel extends JPanel implements MouseMotionListener
         Path2D half0 = new Path2D.Double();
         half0.moveTo(extentLmin.getX(), extentLmin.getY());
         half0.lineTo(
-            extentLmin.getX() + minDotP * dirPx, 
-            extentLmin.getY() + minDotP * dirPy);
+                extentLmin.getX() + minDotP * dirPx,
+                extentLmin.getY() + minDotP * dirPy);
         half0.lineTo(
-            extentLmax.getX() + minDotP * dirPx, 
-            extentLmax.getY() + minDotP * dirPy);
+                extentLmax.getX() + minDotP * dirPx,
+                extentLmax.getY() + minDotP * dirPy);
         half0.lineTo(extentLmax.getX(), extentLmax.getY());
         half0.closePath();
 
         Path2D half1 = new Path2D.Double();
         half1.moveTo(extentLmin.getX(), extentLmin.getY());
         half1.lineTo(
-            extentLmin.getX() + maxDotP * dirPx, 
-            extentLmin.getY() + maxDotP * dirPy);
+                extentLmin.getX() + maxDotP * dirPx,
+                extentLmin.getY() + maxDotP * dirPy);
         half1.lineTo(
-            extentLmax.getX() + maxDotP * dirPx, 
-            extentLmax.getY() + maxDotP * dirPy);
+                extentLmax.getX() + maxDotP * dirPx,
+                extentLmax.getY() + maxDotP * dirPy);
         half1.lineTo(extentLmax.getX(), extentLmax.getY());
         half1.closePath();
 
@@ -167,8 +160,7 @@ class ShapeSplitPanel extends JPanel implements MouseMotionListener
         a1.intersect(new Area(half1));
 
         // Debugging output
-        if (g != null)
-        {
+        if (g != null) {
             g.setColor(Color.GRAY);
             g.draw(bounds);
 
@@ -186,39 +178,36 @@ class ShapeSplitPanel extends JPanel implements MouseMotionListener
 
             g.setColor(Color.BLUE);
             g.fill(AffineTransform.getTranslateInstance(400, -20).
-                createTransformedShape(a0));
+                    createTransformedShape(a0));
 
             g.setColor(Color.BLUE);
             g.fill(AffineTransform.getTranslateInstance(400, +20).
-                createTransformedShape(a1));
+                    createTransformedShape(a1));
         }
-        return new Area[] { a0, a1 };
+        return new Area[]{a0, a1};
     }
 
-    private static Point2D getCorner(Rectangle2D r, int corner)
-    {
-        switch (corner)
-        {
-            case 0: return new Point2D.Double(r.getMinX(), r.getMinY());
-            case 1: return new Point2D.Double(r.getMinX(), r.getMaxY());
-            case 2: return new Point2D.Double(r.getMaxX(), r.getMaxY());
-            case 3: return new Point2D.Double(r.getMaxX(), r.getMinY());
+    private static Point2D getCorner(Rectangle2D r, int corner) {
+        switch (corner) {
+            case 0:
+                return new Point2D.Double(r.getMinX(), r.getMinY());
+            case 1:
+                return new Point2D.Double(r.getMinX(), r.getMaxY());
+            case 2:
+                return new Point2D.Double(r.getMaxX(), r.getMaxY());
+            case 3:
+                return new Point2D.Double(r.getMaxX(), r.getMinY());
         }
         return null;
     }
 
-
-
     @Override
-    public void mouseDragged(MouseEvent e)
-    {
+    public void mouseDragged(MouseEvent e) {
         point1.setLocation(e.getPoint());
         repaint();
     }
 
-
     @Override
-    public void mouseMoved(MouseEvent e)
-    {
+    public void mouseMoved(MouseEvent e) {
     }
 }

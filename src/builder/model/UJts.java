@@ -2,24 +2,16 @@ package builder.model;
 
 import domain.eArtikl;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
-import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
-import org.locationtech.jts.geom.util.LineStringExtracter;
-import org.locationtech.jts.operation.polygonize.Polygonizer;
 
 /**
- * GeometryFixer - Исправляет геометрию LineStringExtracter.getLines(geometry) -
- * Извлекает LineString
- *
+ * Утилиты JTS
  */
 public class UJts {
 
