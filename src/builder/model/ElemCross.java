@@ -50,7 +50,7 @@ public class ElemCross extends ElemSimple {
         try {          
             //Пилим полигон
             Geometry[] geoSplit = UJts.geoSplit(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
-
+            System.out.println(this.x1() + "   " + this.y1() +  "  " + this.x2() + "   " + this.y2());
             //Новые координаты импоста
             Geometry lineImp = owner.geom.intersection(geoSplit[0]);
             Coordinate[] newImp = lineImp.getCoordinates();

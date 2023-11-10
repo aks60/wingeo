@@ -112,7 +112,6 @@ public class UJts {
                     }
                 }
             }
-            po1.add(coo[0]);
             po2.add(po2.get(0));
             Geometry p0 = Com5t.gf.createLineString(cros.toArray(new Coordinate[0]));
             Geometry p1 = Com5t.gf.createPolygon(po1.toArray(new Coordinate[0]));
@@ -175,84 +174,6 @@ public class UJts {
         return Com5t.gf.createPolygon(UJts.arrCoord(d));
     }
 
-// <editor-fold defaultstate="collapsed" desc="XLAM">
-//    private static Geometry[] oneSplit(Coordinate[] coo, Coordinate linePoint1, Coordinate linePoint2) {
-//        try {
-//            List<Coordinate> pol = new ArrayList(), cros = new ArrayList();
-//            List<Coordinate> exp = new ArrayList(List.of(coo[0]));
-//            for (int i = 1; i < coo.length; i++) {
-//                Coordinate segmPoint1 = coo[i - 1], segmentPoint2 = coo[i];
-//                Coordinate c3 = Intersection.lineSegment(
-//                        linePoint1, linePoint2, segmPoint1, segmentPoint2);
-//                if (c3 != null) {
-//                    exp.add(c3);
-//                    cros.add(c3);
-//                }
-//                exp.add(coo[i]);
-//            }
-//            boolean b = true;
-//            for (Coordinate c : exp) {
-//                if (b == true) {
-//                    pol.add(c);
-//                }
-//                if (cros.contains(c)) {
-//                    if (b == false) {
-//                        pol.add(c);
-//                    }
-//                    b = !b;
-//                }
-//            }
-//            Geometry p0 = Com5t.gf.createLineString(cros.toArray(new Coordinate[0]));
-//            Geometry p1 = Com5t.gf.createPolygon(pol.toArray(new Coordinate[0]));
-//            return new Geometry[]{p0, p1};
-//
-//        } catch (Exception e) {
-//            System.err.println("Ошибка:UGeo.oneSplit()" + e);
-//            return null;
-//        }
-//    }
-
-//    private static Geometry[] oneSplit2(Coordinate[] coordinate, Coordinate linePoint1, Coordinate linePoint2) {
-//        try {
-//            List<Coordinate> po1 = new ArrayList(), po2 = new ArrayList(),
-//                    cros = new ArrayList(), exp = new ArrayList(List.of(coordinate[0]));
-//            Coordinate[] coo = Arrays.copyOf(coordinate, coordinate.length - 1);
-//
-//            for (int i = 1; i < coo.length; i++) {
-//                Coordinate segmPoint1 = coo[i - 1], segmentPoint2 = coo[i];
-//                Coordinate c3 = Intersection.lineSegment(
-//                        linePoint1, linePoint2, segmPoint1, segmentPoint2);
-//                if (c3 != null) {
-//                    exp.add(c3);
-//                    cros.add(c3);
-//                }
-//                exp.add(coo[i]);
-//            }
-//            boolean b = true;
-//            for (Coordinate c : exp) {
-//                if (cros.get(0) == c || cros.get(1) == c) {
-//                    b = !b;
-//                    po1.add(c);
-//                    po2.add(c);
-//                } else {
-//                    if (b == true) {
-//                        po1.add(c);
-//                    } else {
-//                        po2.add(c);
-//                    }
-//                }
-//            }
-//            po1.add(coordinate[0]);
-//            po2.add(po2.get(0));
-//            Geometry p0 = Com5t.gf.createLineString(cros.toArray(new Coordinate[0]));
-//            Geometry p1 = Com5t.gf.createPolygon(po1.toArray(new Coordinate[0]));
-//            Geometry p2 = Com5t.gf.createPolygon(po2.toArray(new Coordinate[0]));
-//            return new Geometry[]{p0, p1, p2};
-//
-//        } catch (Exception e) {
-//            System.err.println("Ошибка:UGeo.oneSplit()" + e);
-//            return null;
-//        }
-//    }
+// <editor-fold defaultstate="collapsed" desc="TEMP">
 // </editor-fold>    
 }
