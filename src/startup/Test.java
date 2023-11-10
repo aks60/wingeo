@@ -8,12 +8,10 @@ import com.google.gson.JsonParser;
 import common.eProp;
 import dataset.Conn;
 import domain.eElement;
-import static java.lang.System.out;
 import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 import org.locationtech.jts.geom.*;
-import org.locationtech.jts.geom.util.GeometryFixer;
 
 public class Test {
 
@@ -64,13 +62,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            wincalc();
+            //wincalc();
             //query();
             //frame();
             //json();
             //uid();
             //script();
-            //geom();
+            geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -290,25 +288,25 @@ public class Test {
         Point point1 = gf.createPoint(new Coordinate(0, 0));
         Point point2 = gf.createPoint(new Coordinate(4, 8));
         LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
-        LineString line2 = gf.createLineString(new Coordinate[]{new Coordinate(0, 0), new Coordinate(0, 1000)});
+        LineString line2 = gf.createLineString(new Coordinate[]{new Coordinate(93.81658797276759, 896.6494075724012), new Coordinate(199.48228309038115, 309.9099755154137)});
         LineSegment segm1 = new LineSegment(40, 40, 200, 40);
         LineSegment segm2 = new LineSegment(20, 20, 200, 120);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
 
-        Coordinate[] coord6 = UJts.arrCoord(0, 0, 0.0000000000000009, 80.5950147413561, 1000, 500, 1000, 0, 0, 0);
+        Coordinate[] coord6 = UJts.arrCoord(0, 0, 0, 900, 566.2921348314605, 879.7752808988762, 0, 0);
         Coordinate[] coord7 = UJts.arrCoord(456.5, 1000, 543.5, 1000, 543.5, 0, 456.5, 0, 456.5, 1000);
         Coordinate[] coord8 = UJts.arrCoord(63, 63, 63, 59.84658648630139, 937, 426.40654360235624, 937, 63, 63, 63);
         Polygon polygon6 = gf.createPolygon(coord6);
-        Polygon areaExp = gf.createPolygon(coord7);
-        Polygon geoPadding = gf.createPolygon(coord8);
         
-        GeometryFixer fix = new GeometryFixer(geoPadding);
-        //fix.setKeepCollapsed(true);
-        fix.setKeepMulti(false);
-        Geometry geo = fix.getResult();
-
-        //System.out.println(geoPadding.getGeometryType());
+//        Polygon areaExp = gf.createPolygon(coord7);
+//        Polygon geoPadding = gf.createPolygon(coord8);      
+//        GeometryFixer fix = new GeometryFixer(geoPadding);
+//        //fix.setKeepCollapsed(true);
+//        fix.setKeepMulti(false);
+//        Geometry geo = fix.getResult();
+        //Geometry[] geo = UJts.geoSplit(polygon6,  85.49812646820278, 899.759836723404, 85.4981264682028, 899.759836723404);
+        Geometry geo = polygon6.intersection(line2);
         System.out.println(geo);
 
     }

@@ -47,20 +47,23 @@ public class ElemCross extends ElemSimple {
     }
 
     public void setLocation() {
-        try {          
+        try {
             //Пилим полигон
             Geometry[] geoSplit = UJts.geoSplit(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
-            System.out.println(this.x1() + "   " + this.y1() +  "  " + this.x2() + "   " + this.y2());
+
             //Новые координаты импоста
             Geometry lineImp = owner.geom.intersection(geoSplit[0]);
             Coordinate[] newImp = lineImp.getCoordinates();
-
+            if (lineImp.getGeometryType().equals("MultiLineString")) {
+                int index = (lineImp.getGeometryN(0).getLength() > lineImp.getGeometryN(1).getLength()) ? 0 : 1;
+                newImp = lineImp.getGeometryN(index).getCoordinates();
+            }
             this.setDimension(newImp[0].x, newImp[0].y, newImp[1].x, newImp[1].y);
 
             //Возвращает area слева и справа от импоста
             Polygon geo1 = (Polygon) geoSplit[1];
-            Polygon geo2 = (Polygon) geoSplit[2];   
-            
+            Polygon geo2 = (Polygon) geoSplit[2];
+
             owner.childs().get(0).geom = geo1;
             owner.childs().get(2).geom = geo2;
 
@@ -70,7 +73,7 @@ public class ElemCross extends ElemSimple {
 
             //Внутренняя ареа       
             Polygon geoPadding = UJts.geoPadding(owner.geom, winc.listElem);
-            if(geoPadding.isValid() == false) { //исправление полигона
+            if (geoPadding.isValid() == false) { //исправление полигона
                 GeometryFixer fix = new GeometryFixer(geoPadding);
                 geoPadding = (Polygon) fix.getResult().getGeometryN(0);
             }
