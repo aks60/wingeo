@@ -47,7 +47,7 @@ public class ElemCross extends ElemSimple {
     }
 
     public void setLocation() {
-        try {
+        try {          
             //Пилим полигон
             Geometry[] geoSplit = UJts.geoSplit(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
 
@@ -64,9 +64,10 @@ public class ElemCross extends ElemSimple {
             owner.childs().get(0).geom = geo1;
             owner.childs().get(2).geom = geo2;
 
-            Object elem1 = owner.childs().get(0);
+            Object elem0 = owner.childs().get(0);
+            Object elem1 = owner.childs().get(1);
             Object elem2 = owner.childs().get(2);
-            
+
             //Внутренняя ареа       
             Polygon geoPadding = UJts.geoPadding(owner.geom, winc.listElem);
             if(geoPadding.isValid() == false) { //исправление полигона
