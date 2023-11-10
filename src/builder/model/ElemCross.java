@@ -59,14 +59,14 @@ public class ElemCross extends ElemSimple {
 
             //Возвращает area слева и справа от импоста
             Polygon geo1 = (Polygon) geoSplit[1];
-            Polygon geo2 = (Polygon) geoSplit[2];
-            
-            //Object test1 = owner.childs().get(0).id;
-            //Object test2 = owner.childs().get(2).id;
+            Polygon geo2 = (Polygon) geoSplit[2];   
             
             owner.childs().get(0).geom = geo1;
             owner.childs().get(2).geom = geo2;
 
+            Object elem1 = owner.childs().get(0);
+            Object elem2 = owner.childs().get(2);
+            
             //Внутренняя ареа       
             Polygon geoPadding = UJts.geoPadding(owner.geom, winc.listElem);
             if(geoPadding.isValid() == false) { //исправление полигона
