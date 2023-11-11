@@ -86,21 +86,18 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }
 
     public void loadingTab1(JTable tab, int form) {
-        Query qModel = new Query(eSysmodel.values()).select(eSysmodel.up, "where", eSysmodel.form, "=", form, "and form > 2000", "order by npp");
+        qSysmodel.select(eSysmodel.up, "where", eSysmodel.form, "=", form, "and form > 2000", "order by npp");
         DefaultTableModel dm = (DefaultTableModel) tab.getModel();
         dm.getDataVector().removeAllElements();
-        for (Record record : qModel.table(eSysmodel.up)) {
+        for (Record record : qSysmodel.table(eSysmodel.up)) {
             try {
                 String script = record.getStr(eSysmodel.script);
-                GsonRoot gson = new GsonBuilder().create().fromJson(script, GsonRoot.class);
-                if (gson.version.equals("2.0")) {
-                    Wincalc iwin2 = new Wincalc(script);
-                    Cal5e joining = new Joining(iwin2, true);//заполним соединения из конструктива
-                    joining.calc();
-                    iwin2.imageIcon = Canvas.createIcon(iwin2, 68);
-                    record.add(iwin2);
-                    qSysmodel.add(record);
-                }
+                Wincalc iwin2 = new Wincalc(script);
+                Cal5e joining = new Joining(iwin2, true);//заполним соединения из конструктива
+                joining.calc();
+                iwin2.imageIcon = Canvas.createIcon(iwin2, 68);
+                record.add(iwin2);
+                record.add(null);
 
             } catch (Exception e) {
                 System.err.println("Ошибка:Models.loadingTab() " + e);
@@ -174,7 +171,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         btnT2 = new javax.swing.JToggleButton();
         btnT3 = new javax.swing.JToggleButton();
         btnT4 = new javax.swing.JToggleButton();
-        btnT5 = new javax.swing.JToggleButton();
         btnMoveU = new javax.swing.JButton();
         btnMoveD = new javax.swing.JButton();
         panSspinner = new javax.swing.JPanel();
@@ -342,18 +338,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             }
         });
 
-        buttonGroup.add(btnT5);
-        btnT5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c002.gif"))); // NOI18N
-        btnT5.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btnT5.setMaximumSize(new java.awt.Dimension(25, 25));
-        btnT5.setMinimumSize(new java.awt.Dimension(25, 25));
-        btnT5.setPreferredSize(new java.awt.Dimension(25, 25));
-        btnT5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnToggl(evt);
-            }
-        });
-
         btnMoveU.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c051.gif"))); // NOI18N
         btnMoveU.setToolTipText(bundle.getString("Переместить вверх")); // NOI18N
         btnMoveU.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -430,9 +414,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 .addComponent(btnT3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(btnT4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(btnT5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(43, 43, 43)
                 .addComponent(btnChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(131, 131, 131)
                 .addComponent(panSspinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -461,8 +443,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                             .addComponent(btnT2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnT3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnT4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(panSspinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnT5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(panSspinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -689,12 +670,13 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                     qSysmodel.insert(record);
                     loadingTab1(tab1, 2007);
 
-                } else if (btnT5.isSelected()) {
-                    //record.set(eSysmodel.form, 2009);
-                    //qSysmodel.insert(record);
-                    //loadingTab1(tab1, 2009);
-                    System.out.println("frames.Models.btnInsert()");
                 }
+                //else if (btnT5.isSelected()) {
+                //record.set(eSysmodel.form, 2009);
+                //qSysmodel.insert(record);
+                //loadingTab1(tab1, 2009);
+                //System.out.println("frames.Models.btnInsert()");
+                // }
                 UGui.setSelectedIndex(tab1, qSysmodel.size() - 1);
                 UGui.scrollRectToIndex(qSysmodel.size() - 1, tab1);
             }
@@ -729,20 +711,21 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 
         if (btnT1.isSelected()) {
             loadingTab1(tab1, 2001);
-            ((CardLayout) centr.getLayout()).show(centr, "pan17");
+            //((CardLayout) centr.getLayout()).show(centr, "pan13");
         } else if (btnT2.isSelected()) {
             loadingTab1(tab1, 2004);
-            ((CardLayout) centr.getLayout()).show(centr, "pan17");
+            //((CardLayout) centr.getLayout()).show(centr, "pan14");
         } else if (btnT3.isSelected()) {
             loadingTab1(tab1, 2002);
-            ((CardLayout) centr.getLayout()).show(centr, "pan17");
+            //((CardLayout) centr.getLayout()).show(centr, "pan15");
         } else if (btnT4.isSelected()) {
             loadingTab1(tab1, 2007);
-            ((CardLayout) centr.getLayout()).show(centr, "pan17");
-        } else {
-            loadingTab1(tab1, 2009);
-            ((CardLayout) centr.getLayout()).show(centr, "pan18");
+            //((CardLayout) centr.getLayout()).show(centr, "pan18");
         }
+        //else {
+        // loadingTab1(tab1, 2009);
+        //((CardLayout) centr.getLayout()).show(centr, "pan18");
+        //}
         UGui.updateBorderAndSql(tab1, List.of(tab1));
         UGui.setSelectedRow(tab1);
     }//GEN-LAST:event_btnToggl
@@ -776,8 +759,9 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }//GEN-LAST:event_btnMove
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        Wincalc geo = winc();
-        geo.draw();
+        DefaultTableModel dm = (DefaultTableModel) tab1.getModel();
+        dm.getDataVector().removeAllElements();
+        dm.fireTableDataChanged();
     }//GEN-LAST:event_btnTestActionPerformed
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">     
@@ -793,7 +777,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     private javax.swing.JToggleButton btnT2;
     private javax.swing.JToggleButton btnT3;
     private javax.swing.JToggleButton btnT4;
-    private javax.swing.JToggleButton btnT5;
     private javax.swing.JButton btnTest;
     private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JPanel centr;
