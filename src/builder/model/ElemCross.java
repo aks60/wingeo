@@ -33,7 +33,7 @@ public class ElemCross extends ElemSimple {
         colorID2 = (isJson(param, PKjson.colorID2)) ? param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
         colorID3 = (isJson(param, PKjson.colorID3)) ? param.get(PKjson.colorID3).getAsInt() : winc.colorID3;
 
-        double angl = UJts.anglHor(this);
+        double angl = UGeo.anglHor(this);
         if (isJson(param, PKjson.sysprofID)) { //профили через параметр
             sysprofRec = eSysprof.find3(param.get(PKjson.sysprofID).getAsInt());
         } else {
@@ -46,7 +46,7 @@ public class ElemCross extends ElemSimple {
     public void setLocation() {
         try {
             //Пилим полигон
-            Geometry[] geoSplit = UJts.geoSplit(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
+            Geometry[] geoSplit = UGeo.geoSplit(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
 
             //Новые координаты импоста
             Geometry lineImp = owner.geom.intersection(geoSplit[0]);
@@ -65,7 +65,7 @@ public class ElemCross extends ElemSimple {
 
 
             //Внутренняя ареа       
-            Polygon geoPadding = UJts.geoPadding(owner.geom, winc.listElem);
+            Polygon geoPadding = UGeo.geoPadding(owner.geom, winc.listElem);
             if (geoPadding.isValid() == false) { //исправление полигона
                 GeometryFixer fix = new GeometryFixer(geoPadding);
                 geoPadding = (Polygon) fix.getResult().getGeometryN(0);
@@ -77,12 +77,12 @@ public class ElemCross extends ElemSimple {
             LineSegment moveBaseSegment[] = {baseSegm.offset(+delta), baseSegm.offset(-delta)};
 
             //Точки пересечения канвы сегментами импоста
-            Polygon areaCanvas = UJts.newPolygon(0, 0, 0, 10000, 10000, 10000, 10000, 0);
-            Coordinate C1[] = UJts.geoIntersect(areaCanvas, moveBaseSegment[0]);
-            Coordinate C2[] = UJts.geoIntersect(areaCanvas, moveBaseSegment[1]);
+            Polygon areaCanvas = UGeo.newPolygon(0, 0, 0, 10000, 10000, 10000, 10000, 0);
+            Coordinate C1[] = UGeo.geoIntersect(areaCanvas, moveBaseSegment[0]);
+            Coordinate C2[] = UGeo.geoIntersect(areaCanvas, moveBaseSegment[1]);
 
             //Разширенную ареа импоста обрезаем areaPadding 
-            Polygon areaExp = UJts.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
+            Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
 
             this.geom = (Polygon) areaExp.intersection(geoPadding);
 

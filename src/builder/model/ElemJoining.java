@@ -32,8 +32,8 @@ public class ElemJoining {
         this.winc = winc;
         this.type = type;
         this.layout = layout;
-        elem1.anglHoriz = UJts.anglHor(elem1);
-        elem2.anglHoriz = UJts.anglHor(elem2);
+        elem1.anglHoriz = UGeo.anglHor(elem1);
+        elem2.anglHoriz = UGeo.anglHor(elem2);
         this.elem1 = elem1;
         this.elem2 = elem2;
         //this.angl = UJts.betweenAngl(elem1, elem2);

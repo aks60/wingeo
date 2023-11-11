@@ -1,6 +1,6 @@
 package startup;
 
-import builder.model.UJts;
+import builder.model.UGeo;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -294,9 +294,9 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
 
-        Coordinate[] coord6 = UJts.arrCoord(0, 0, 0, 900, 566.2921348314605, 879.7752808988762, 0, 0);
-        Coordinate[] coord7 = UJts.arrCoord(456.5, 1000, 543.5, 1000, 543.5, 0, 456.5, 0, 456.5, 1000);
-        Coordinate[] coord8 = UJts.arrCoord(63, 63, 63, 59.84658648630139, 937, 426.40654360235624, 937, 63, 63, 63);
+        Coordinate[] coord6 = UGeo.arrCoord(0, 0, 0, 900, 566.2921348314605, 879.7752808988762, 0, 0);
+        Coordinate[] coord7 = UGeo.arrCoord(456.5, 1000, 543.5, 1000, 543.5, 0, 456.5, 0, 456.5, 1000);
+        Coordinate[] coord8 = UGeo.arrCoord(63, 63, 63, 59.84658648630139, 937, 426.40654360235624, 937, 63, 63, 63);
         Polygon polygon6 = gf.createPolygon(coord6);
         
 //        Polygon areaExp = gf.createPolygon(coord7);

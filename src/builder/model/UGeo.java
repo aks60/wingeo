@@ -13,7 +13,7 @@ import org.locationtech.jts.geom.Polygon;
 /**
  * Утилиты JTS
  */
-public class UJts {
+public class UGeo {
 
     //Ширина рамки по оси x и y
     public static double[] deltaOnAngl(double anglHoriz, double h) {
@@ -128,12 +128,12 @@ public class UJts {
                 int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
                 LineSegment segm1 = new LineSegment(coo[i], coo[j]);
                 LineSegment segm2 = new LineSegment(coo[k], coo[i]);
-                ElemSimple e1 = UJts.segMapElem(listFrame, segm1);
-                ElemSimple e2 = UJts.segMapElem(listFrame, segm2);
+                ElemSimple e1 = UGeo.segMapElem(listFrame, segm1);
+                ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
 
                 //Получим ширину сегментов
-                double w1[] = UJts.deltaOnAngl(UJts.anglHor(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
-                double w2[] = UJts.deltaOnAngl(UJts.anglHor(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
+                double w1[] = UGeo.deltaOnAngl(UGeo.anglHor(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
+                double w2[] = UGeo.deltaOnAngl(UGeo.anglHor(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
 
                 //Смещённая внутрь точка пересечения сегментов
                 LineSegment segm1a = new LineSegment(e1.x1() + w1[0], e1.y1() - w1[1], e1.x2() + w1[0], e1.y2() - w1[1]);
@@ -163,7 +163,7 @@ public class UJts {
 
     //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Polygon newPolygon(double... d) {
-        return Com5t.gf.createPolygon(UJts.arrCoord(d));
+        return Com5t.gf.createPolygon(UGeo.arrCoord(d));
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">
