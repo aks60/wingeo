@@ -54,36 +54,36 @@ public class Scene extends javax.swing.JPanel {
         this.listenerWinc = listenerWinc;
         add(canvas, java.awt.BorderLayout.CENTER);
 
-//        this.canvas.addMouseListener(new MouseAdapter() {
-//            public void mouseClicked(MouseEvent evt) {
-//                if (winc != null) {
-//                    //Если клик не на конструкции
-//                    if (winc.root.inside(evt.getX() / winc.scale, evt.getY() / winc.scale) == false) {
-//                        lineHoriz = List.of(new Scale(winc.root));
-//                        lineVert = List.of(new Scale(winc.root));
-//
-//                    } else { //На конструкции
-//                        for (ElemSimple crs : winc.listElem) {
-//                            if (List.of(Type.IMPOST, Type.SHTULP, Type.STOIKA).contains(crs.type)
-//                                    && crs.inside(evt.getX() / winc.scale, evt.getY() / winc.scale)) {
-//                                List<Com5t> areaChilds = ((ElemSimple) crs).owner.childs(); //дети импоста на котором был клик
-//                                for (int i = 0; i < areaChilds.size(); ++i) {
-//                                    if (areaChilds.get(i).id == crs.id) {
-//                                        if (crs.layout == Layout.HORIZ) { //area слева и справа от импоста
-//                                            lineVert = List.of(new Scale((AreaSimple) areaChilds.get(i - 1)), new Scale((AreaSimple) areaChilds.get(i + 1)));
-//                                        } else {
-//                                            lineHoriz = List.of(new Scale((AreaSimple) areaChilds.get(i - 1)), new Scale((AreaSimple) areaChilds.get(i + 1)));
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                    draw();
-//                }
-//            }
-//        });
-//        spinner.addChangeListener(listenerSpinner);
+        this.canvas.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                if (winc != null) {
+                    //Если клик не на конструкции
+                    if (winc.root.inside(evt.getX() / winc.scale, evt.getY() / winc.scale) == false) {
+                        lineHoriz = List.of(new Scale(winc.root));
+                        lineVert = List.of(new Scale(winc.root));
+
+                    } else { //На конструкции
+                        for (ElemSimple crs : winc.listElem) {
+                            if (List.of(Type.IMPOST, Type.SHTULP, Type.STOIKA).contains(crs.type)
+                                    && crs.inside(evt.getX() / winc.scale, evt.getY() / winc.scale)) {
+                                List<Com5t> areaChilds = ((ElemSimple) crs).owner.childs(); //дети импоста на котором был клик
+                                for (int i = 0; i < areaChilds.size(); ++i) {
+                                    if (areaChilds.get(i).id == crs.id) {
+                                        if (crs.layout == Layout.HORIZ) { //area слева и справа от импоста
+                                            lineVert = List.of(new Scale((AreaSimple) areaChilds.get(i - 1)), new Scale((AreaSimple) areaChilds.get(i + 1)));
+                                        } else {
+                                            lineHoriz = List.of(new Scale((AreaSimple) areaChilds.get(i - 1)), new Scale((AreaSimple) areaChilds.get(i + 1)));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    draw();
+                }
+            }
+        });
+        spinner.addChangeListener(listenerSpinner);
     }
 
     public void init(Wincalc winc) {

@@ -97,7 +97,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 joining.calc();
                 iwin2.imageIcon = Canvas.createIcon(iwin2, 68);
                 record.add(iwin2);
-                record.add(null);
 
             } catch (Exception e) {
                 System.err.println("Ошибка:Models.loadingTab() " + e);

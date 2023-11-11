@@ -75,6 +75,7 @@ public class Wincalc {
     }
 
     public Wincalc(String script) {
+        this.script = script;
         build(script);
     }
 
@@ -113,6 +114,12 @@ public class Wincalc {
 
         //Инит конструктива
         this.nuni = gson.nuni;
+
+        this.width2 = (gson.width2() == null) ? gson.width() : gson.width2();
+        this.width1 = gson.width1(); //ширина в основании всегда задана
+        this.height1 = gson.height1(); //высота слева всегда задана
+        this.height2 = (gson.height2() == null) ? gson.height() : gson.height2();
+
         Record sysprofRec = eSysprof.find2(nuni, UseArtiklTo.FRAME);
         eSyspar1.find(nuni).forEach(syspar1Rec -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), syspar1Rec)); //загрузим параметры по умолчанию
 
