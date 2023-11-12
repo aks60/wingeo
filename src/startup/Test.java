@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 import org.locationtech.jts.geom.*;
+import org.locationtech.jts.io.WKTReader;
 
 public class Test {
 
@@ -281,9 +282,9 @@ public class Test {
             new Coordinate(1000, 1000), new Coordinate(1000, 0),
             new Coordinate(0, 0)};
         Coordinate[] coord2 = new Coordinate[]{
-            new Coordinate(63, 63), new Coordinate(63, 33),
-            new Coordinate(900, 400), new Coordinate(900, 63),
-            new Coordinate(63, 63)};
+            new Coordinate(50, 50), new Coordinate(50, 900),
+            new Coordinate(900, 900), new Coordinate(900, 50),
+            new Coordinate(50, 50)};
 
         Point point1 = gf.createPoint(new Coordinate(0, 0));
         Point point2 = gf.createPoint(new Coordinate(4, 8));
@@ -297,8 +298,9 @@ public class Test {
         Coordinate[] coord6 = UGeo.arrCoord(0, 0, 0, 900, 566.2921348314605, 879.7752808988762, 0, 0);
         Coordinate[] coord7 = UGeo.arrCoord(456.5, 1000, 543.5, 1000, 543.5, 0, 456.5, 0, 456.5, 1000);
         Coordinate[] coord8 = UGeo.arrCoord(63, 63, 63, 59.84658648630139, 937, 426.40654360235624, 937, 63, 63, 63);
+
         Polygon polygon6 = gf.createPolygon(coord6);
-        
+
 //        Polygon areaExp = gf.createPolygon(coord7);
 //        Polygon geoPadding = gf.createPolygon(coord8);      
 //        GeometryFixer fix = new GeometryFixer(geoPadding);
@@ -306,8 +308,28 @@ public class Test {
 //        fix.setKeepMulti(false);
 //        Geometry geo = fix.getResult();
         //Geometry[] geo = UJts.geoSplit(polygon6,  85.49812646820278, 899.759836723404, 85.4981264682028, 899.759836723404);
-        Geometry geo = polygon6.intersection(line2);
-        System.out.println(geo);
-
+        //Geometry geo = polygon6.intersection(line2);
+        //System.out.println(geo);
+        //Geometry g = reader.read("MULTIPOINT(10 10, 20 20, 30 30)");
+        //assertTrue(g.getBoundary().isEmpty());
+        try {
+//            WKTReader reader = new WKTReader();
+//            Geometry g = reader.read("MULTIPOLYGON("
+//                    + "(  (0 0, 40 0, 40 40, 0 40, 0 0),"
+//                    + "   (10 10, 30 10, 30 30, 10 30, 10 10)  ),"
+//                    + "(  (200 200, 210 200, 210 210, 200 200) )  )");
+//            Geometry b = reader.read("MULTILINESTRING("
+//                    + "(0 0, 40 0, 40 40, 0 40, 0 0),"
+//                    + "(10 10, 30 10, 30 30, 10 30, 10 10),"
+//                    + "(200 200, 210 200, 210 210, 200 200))");
+//            System.out.println(g.getBoundary());
+//            System.out.println(g.getEnvelope());
+//            Envelope env = g.getEnvelopeInternal();
+            //env.get
+            //System.out.println(b.equalsExact(g));
+            
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

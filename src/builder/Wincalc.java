@@ -38,11 +38,7 @@ public class Wincalc {
     public Integer nuni = 0; //код системы
     public Record syssizeRec = null; //системные константы     
     public double genId = 0; //для генерации ключа в спецификации
-    public String script = null;
-    public double width1 = 0; //ширина окна нижняя
-    public double width2 = 0; //ширина окна верхняя    
-    public double height1 = 0; //высота окна левая
-    public double height2 = 0; //высота окна правая    
+    public String script = null;   
     public int colorID1 = -1, colorID2 = 1, colorID3 = -1; //базовый,внутр,внещний 
     public double costpric1 = 0; //себест. за ед. без отхода     
     public double costpric2 = 0; //себест. за ед. с отходом
@@ -114,11 +110,6 @@ public class Wincalc {
 
         //Инит конструктива
         this.nuni = gson.nuni;
-
-        this.width2 = (gson.width2() == null) ? gson.width() : gson.width2();
-        this.width1 = gson.width1(); //ширина в основании всегда задана
-        this.height1 = gson.height1(); //высота слева всегда задана
-        this.height2 = (gson.height2() == null) ? gson.height() : gson.height2();
 
         Record sysprofRec = eSysprof.find2(nuni, UseArtiklTo.FRAME);
         eSyspar1.find(nuni).forEach(syspar1Rec -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), syspar1Rec)); //загрузим параметры по умолчанию
@@ -268,15 +259,11 @@ public class Wincalc {
     }
 
     public double width() {
-        return new ShapeWriter().toShape(root.geom).getBounds2D().getWidth();
+        return root.geom.getEnvelopeInternal().getWidth();
     }
 
     public double height() {
-        return new ShapeWriter().toShape(root.geom).getBounds2D().getHeight();
-    }
-
-    public double square() {
-        return width() * height() / 1000000;
+        return root.geom.getEnvelopeInternal().getHeight();
     }
     // </editor-fold>  
 }

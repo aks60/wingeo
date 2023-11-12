@@ -34,4 +34,7 @@ public class AreaPolygon extends AreaSimple {
 
     public void paint() {
     }
+    
+    // <editor-fold defaultstate="collapsed" desc="GET-SET">
+    // </editor-fold>     
 }
