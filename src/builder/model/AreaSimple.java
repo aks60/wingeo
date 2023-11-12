@@ -174,6 +174,8 @@ public class AreaSimple extends Com5t {
     }
 
     public void paint() {
+        java.awt.Color color = winc.gc2d.getColor();
+        winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
 //        try {
 //            if (area != null) {
 //                winc.gc2d.draw(area);
@@ -181,5 +183,6 @@ public class AreaSimple extends Com5t {
 //        } catch (Exception e) {
 //            System.err.println("Ошибка:AreaSimple.paint()" + toString() + e);
 //        }
+        winc.gc2d.setColor(color);
     }
 }

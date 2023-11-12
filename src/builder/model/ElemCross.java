@@ -93,16 +93,15 @@ public class ElemCross extends ElemSimple {
 
     public void paint() {
         try {
+            java.awt.Color color = winc.gc2d.getColor();
+            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
             if (this.geom != null) {
                 Shape shape = new ShapeWriter().toShape(this.geom);
                 winc.gc2d.draw(shape);
             }
             winc.gc2d.draw(new Line2D.Double(this.x1(), this.y1(), this.x2(), this.y2()));
-
-            //java.awt.Color color = winc.gc2d.getColor();
-            //winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
-            //winc.gc2d.setColor(color);
-
+            winc.gc2d.setColor(color);
+            
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.paint() " + e);
         }

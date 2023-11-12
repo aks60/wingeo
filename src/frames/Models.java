@@ -33,6 +33,7 @@ import java.io.FileReader;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -40,6 +41,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public final class Models extends javax.swing.JFrame implements ListenerFrame<Object, Object>, ListenerReload {
 
+    private Icon ico = new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"));
+    
     private ListenerRecord listenet = null;
     private Canvas canvas = new Canvas();
     private Scene scene = null;

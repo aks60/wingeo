@@ -48,7 +48,7 @@ public class ElemFrame extends ElemSimple {
         }
     }
 
-    public void setLocation() { 
+    public void setLocation() {
         try {
             anglHoriz = UGeo.anglHor(this);
             for (int i = 0; i < winc.listFrame.size(); i++) {
@@ -58,11 +58,11 @@ public class ElemFrame extends ElemSimple {
                     int j = (i == (winc.listFrame.size() - 1)) ? 0 : i + 1;
                     ElemSimple elem0 = winc.listFrame.get(k);
                     ElemSimple elem1 = winc.listFrame.get(j);
-                    
+
                     double h0[] = UGeo.deltaOnAngl(UGeo.anglHor(this), this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
                     double h1[] = UGeo.deltaOnAngl(UGeo.anglHor(elem0), elem0.artiklRec.getDbl(eArtikl.height) - elem0.artiklRec.getDbl(eArtikl.size_centr));
                     double h2[] = UGeo.deltaOnAngl(UGeo.anglHor(elem1), elem1.artiklRec.getDbl(eArtikl.height) - elem1.artiklRec.getDbl(eArtikl.size_centr));
-  
+
                     Coordinate c1 = Intersection.intersection(
                             new Coordinate(this.x1() + h0[0], this.y1() - h0[1]), new Coordinate(this.x2() + h0[0], this.y2() - h0[1]),
                             new Coordinate(elem0.x1() + h1[0], elem0.y1() - h1[1]), new Coordinate(elem0.x2() + h1[0], elem0.y2() - h1[1]));
@@ -70,7 +70,7 @@ public class ElemFrame extends ElemSimple {
                             new Coordinate(this.x1() + h0[0], this.y1() - h0[1]), new Coordinate(this.x2() + h0[0], this.y2() - h0[1]),
                             new Coordinate(elem1.x1() + h2[0], elem1.y1() - h2[1]), new Coordinate(elem1.x2() + h2[0], elem1.y2() - h2[1]));
 
-                    this.geom = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y); 
+                    this.geom = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y);
                 }
             }
 
@@ -80,10 +80,13 @@ public class ElemFrame extends ElemSimple {
     }
 
     public void paint() {
+        java.awt.Color color = winc.gc2d.getColor();
+        winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
         if (this.geom != null) {
             Shape shape = new ShapeWriter().toShape(this.geom);
             winc.gc2d.draw(shape);
         }
+        winc.gc2d.setColor(color);
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
