@@ -1,6 +1,6 @@
 package builder;
 
-import builder.model.AreaPolygon;
+import builder.model.AreaRectangl;
 import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
 import builder.model.Com5t;
@@ -65,7 +65,7 @@ public class Wincalc {
     public ArrayJoin listJoin = new ArrayJoin(); //список соединений рам и створок 
 
     public GsonRoot gson = null; //объектная модель конструкции 1-го уровня
-    public AreaPolygon root = null; //объектная модель конструкции 2-го уровня
+    public AreaRectangl root = null; //объектная модель конструкции 2-го уровня
 
     public Wincalc() {
     }
@@ -114,7 +114,7 @@ public class Wincalc {
         Record sysprofRec = eSysprof.find2(nuni, UseArtiklTo.FRAME);
         eSyspar1.find(nuni).forEach(syspar1Rec -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), syspar1Rec)); //загрузим параметры по умолчанию
 
-        root = new AreaPolygon(this, gson);
+        root = new AreaRectangl(this, gson);
 
         elements(root, gson);
     }

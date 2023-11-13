@@ -3,11 +3,9 @@ package builder.model;
 import builder.Wincalc;
 import builder.script.GsonElem;
 import common.LinkedCom;
-import enums.Form;
-import enums.Layout;
+import enums.*;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -173,6 +171,44 @@ public class AreaSimple extends Com5t {
         return childs;
     }
 
+    /**
+     * T - соединения area. Все поперечены(cross) в area имеют Т-соединения.
+     * Т-соед. записываются в map, см. winc.listJoin.put(point, cross). За
+     * угловые соединени отвечает конечнй наследник например
+     * AreaRectangl.joining(). Прилегающие см. IElem5e.joinFlat()
+     */   
+    public void joining() {
+
+        LinkedList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA);
+        LinkedList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+
+        //T - соединения
+        //Цикл по кросс элементам
+        for (ElemSimple crosEl : crosList) {
+            //Цикл по сторонам рамы и импостам (т.к. в створке Т-обр. соединений нет)
+            for (ElemSimple elem5e : elemList) {
+                if ((elem5e.owner.type == Type.ARCH && elem5e.layout == Layout.TOP) == false) { //для арки inside() не работает
+
+                    if (crosEl.owner.layout == Layout.HORIZ) { //Импосты(штульпы...) расположены вертикально снизу вверх                    
+                        if (elem5e.inside(crosEl.x2(), crosEl.y2()) == true && elem5e != crosEl) { //T - соединение нижнее  
+                            Object obj = new ElemJoining(winc, TypeJoin.VAR40, LayoutJoin.TEE, crosEl, elem5e);
+                            winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR40, LayoutJoin.TEE, crosEl, elem5e));
+                        } else if (elem5e.inside(crosEl.x1(), crosEl.y1()) == true && elem5e != crosEl) { //T - соединение верхнее                            
+                            winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR40, LayoutJoin.TEE, crosEl, elem5e));
+                        }
+
+                    } else { //Импосты(штульпы...)  расположены горизонтально слева на право 
+                        if (elem5e.inside(crosEl.x1(), crosEl.y1()) == true && elem5e != crosEl) { //T - соединение левое                             
+                            winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR40, LayoutJoin.TEE, crosEl, elem5e));
+                        } else if (elem5e.inside(crosEl.x2(), crosEl.y2()) == true && elem5e != crosEl) { //T - соединение правое                              
+                            winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR40, LayoutJoin.TEE, crosEl, elem5e));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     public void paint() {
         java.awt.Color color = winc.gc2d.getColor();
         winc.gc2d.setColor(new java.awt.Color(000, 000, 000));

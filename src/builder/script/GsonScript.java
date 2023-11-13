@@ -1,6 +1,6 @@
 package builder.script;
 
-import builder.script.test.Bimax2;
+import builder.script.test.Bimax;
 import common.eProp;
 import java.util.List;
 
@@ -694,7 +694,7 @@ public class GsonScript {
             //return Alutech3.script(prj);
 
         } else if (base_name.toLowerCase().contains("bimax")) {
-            return Bimax2.script(prj);
+            return Bimax.script(prj);
 
         } else if (base_name.toLowerCase().contains("vidnal")) {
             //return Vidnal.script(prj);

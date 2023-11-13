@@ -27,15 +27,15 @@ public class ElemJoining {
     public double angl = 90;      //угол между профилями
     public String costs = "";     //трудозатраты, ч/ч.
 
-    public ElemJoining(Wincalc winc, TypeJoin type, LayoutJoin layout, ElemFrame elem1, ElemFrame elem2) {
+    public ElemJoining(Wincalc winc, TypeJoin type, LayoutJoin layout, ElemSimple elem1, ElemSimple elem2) {
         this.id = ++winc.genId;
         this.winc = winc;
         this.type = type;
         this.layout = layout;
         elem1.anglHoriz = UGeo.anglHor(elem1);
         elem2.anglHoriz = UGeo.anglHor(elem2);
-        this.elem1 = elem1;
-        this.elem2 = elem2;
+        this.elem1 = (ElemFrame) elem1;
+        this.elem2 = (ElemFrame) elem2;
         //this.angl = UJts.betweenAngl(elem1, elem2);
         if (elem1.owner.type != Type.ARCH && elem2.owner.type != Type.ARCH && TypeJoin.VAR10 != type) {
             elem1.anglCut[1] = angl / 2;
