@@ -63,13 +63,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            //wincalc();
+            wincalc();
             //query();
             //frame();
             //json();
             //uid();
             //script();
-            geom();
+            //geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -83,8 +83,8 @@ public class Test {
         String _case = "one";
 
         if (_case.equals("one")) {
-            winc.build(GsonScript.productJson(501006));
-//            winc.constructiv(true);
+            winc.build(GsonScript.productJson(501001));
+            winc.constructiv(true);
 //            winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
 //            winc.gc2d = winc.bufferImg.createGraphics();
 //            winc.rootArea.draw(); //рисую конструкцию

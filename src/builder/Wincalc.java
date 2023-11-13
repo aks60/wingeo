@@ -1,5 +1,7 @@
 package builder;
 
+import builder.making.Cal5e;
+import builder.making.Joining;
 import builder.model.AreaRectangl;
 import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
@@ -31,14 +33,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
-import org.locationtech.jts.awt.ShapeWriter;
 
 public class Wincalc {
 
     public Integer nuni = 0; //код системы
     public Record syssizeRec = null; //системные константы     
     public double genId = 0; //для генерации ключа в спецификации
-    public String script = null;   
+    public String script = null;
     public int colorID1 = -1, colorID2 = 1, colorID3 = -1; //базовый,внутр,внещний 
     public double costpric1 = 0; //себест. за ед. без отхода     
     public double costpric2 = 0; //себест. за ед. с отходом
@@ -63,6 +64,7 @@ public class Wincalc {
     public LinkedCom<Com5t> listAll = new LinkedCom(); //список всех компонентов (area + elem)
     public ArraySpc<Specific> listSpec = new ArraySpc(); //спецификация
     public ArrayJoin listJoin = new ArrayJoin(); //список соединений рам и створок 
+    public Cal5e calcJoining, calcElements, calcFilling, calcFurniture, calcTariffication; //объекты калькуляции конструктива
 
     public GsonRoot gson = null; //объектная модель конструкции 1-го уровня
     public AreaRectangl root = null; //объектная модель конструкции 2-го уровня
@@ -170,18 +172,15 @@ public class Wincalc {
 
     //Конструктив и тарификация 
     public void constructiv(boolean norm_otx) {
-//        weight = 0;
-//        price = 0;
-//        cost2 = 0;
-//        //cost3 = 0;
-//        try {
-//            //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
-//            calcJoining = new Joining(this); //соединения
-//            calcJoining.calc();
-//            Cal5e calcElements = (eProp.old.read().equals("0")) //составы
-//                    ? new builder.making.Elements(this)
-//                    : new builder.making.Elements(this);
-//            calcElements.calc();
+        weight = 0;
+        price = 0;
+        cost2 = 0;
+        try {
+            //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
+            calcJoining = new Joining(this); //соединения
+            calcJoining.calc();
+            Cal5e calcElements = new builder.making.Elements(this);
+            calcElements.calc();
 //            calcFilling = (eProp.old.read().equals("0")) //заполнения
 //                    ? new builder.making.Filling(this)
 //                    : new builder.making.Filling(this);
@@ -220,17 +219,18 @@ public class Wincalc {
 //            }
 //
 //            Collections.sort(listSpec, (o1, o2) -> (o1.place.subSequence(0, 3) + o1.name + o1.width).compareTo(o2.place.subSequence(0, 3) + o2.name + o2.width));
-//
-//        } catch (Exception e) {
-//            System.err.println("Ошибка:Wincalc.constructiv() " + e);
-//        }
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:Wincalc.constructiv() " + e);
+        }
     }
 
     public void draw() {
         try {
             root.setLocation();
-            listFrame.forEach(e -> e.setLocation());
-            listCross.forEach(e -> e.setLocation());
+            //listFrame.forEach(e -> e.setLocation());
+            //listCross.forEach(e -> e.setLocation());
+            listElem.forEach(e -> e.setLocation());
 
             root.paint();
             listArea.forEach(e -> e.paint());

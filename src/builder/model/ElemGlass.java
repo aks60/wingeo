@@ -15,11 +15,11 @@ public class ElemGlass extends ElemSimple {
     public double radiusGlass = 0; //радиус стекла
     public double gzazo = 0; //зазор между фальцем и стеклопакетом 
     public double gsize[] = {0, 0, 0, 0}; //размер от оси до стеклопакета
-    
+
     public Record rasclRec = eArtikl.virtualRec(); //раскладка
     public int rasclColor = -3; //цвет раскладки
     public int rasclNumber[] = {2, 2}; //количество проёмов раскладки     
-    
+
     public ElemGlass(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
     }
@@ -64,11 +64,13 @@ public class ElemGlass extends ElemSimple {
             }
         }
     }
-    
+
     public void setLocation() {
-        super.setLocation();
+        setDimension(owner.x1(), owner.y1(), owner.x2(), owner.y2());
     }
 
     public void paint() {
-    }    
+        winc.gc2d.fillPolygon(new int[]{(int) this.x1(), (int) this.x2(), (int) this.x2(), (int) this.x1()},
+                new int[]{(int) this.y1(), (int) this.y1(), (int) this.y2(), (int) this.y2()}, 4);
+    }
 }
