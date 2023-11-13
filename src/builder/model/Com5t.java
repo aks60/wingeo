@@ -142,6 +142,13 @@ public class Com5t {
         return (this == winc.root) ? this.gson.height() : this.gson.length;
     }
 
+    public boolean isJson(JsonObject jso) {
+        if (jso == null || "".equals(jso)) {
+            return false;
+        }
+        return !jso.isJsonNull();
+    }
+    
     public boolean isJson(JsonObject jso, String key) {
         if (jso == null) {
             return false;

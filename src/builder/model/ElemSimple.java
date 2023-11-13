@@ -17,7 +17,9 @@ public class ElemSimple extends Com5t {
 
     public ElemSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
-        //spcRec = new Specific(id, this);
+        winc.listElem.add(this);
+        winc.listAll.add(this);        
+        spcRec = new Specific(id, this);
     }
 
     public void setLocation() {

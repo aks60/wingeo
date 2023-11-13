@@ -60,7 +60,7 @@ public class Wincalc {
     public LinkedCom<AreaSimple> listArea = new LinkedCom(); //список ареа.
     public LinkedCom<ElemSimple> listElem = new LinkedCom(); //список элем.
     public LinkedCom<ElemFrame> listFrame = new LinkedCom(); //список рам
-    public List<ElemCross> listCross = new ArrayList(); //список имп.
+    public LinkedCom<ElemCross> listCross = new LinkedCom(); //список имп.
     public LinkedCom<Com5t> listAll = new LinkedCom(); //список всех компонентов (area + elem)
     public ArraySpc<Specific> listSpec = new ArraySpc(); //спецификация
     public ArrayJoin listJoin = new ArrayJoin(); //список соединений рам и створок 
@@ -85,6 +85,7 @@ public class Wincalc {
      */
     public void build(String script) {
         try {
+            this.script = script;
             //Инит свойств окна
             init();
 
@@ -228,23 +229,17 @@ public class Wincalc {
     public void draw() {
         try {
             root.setLocation();
-            //listFrame.forEach(e -> e.setLocation());
-            //listCross.forEach(e -> e.setLocation());
-            listElem.forEach(e -> e.setLocation());
+            listFrame.forEach(e -> e.setLocation());
+            listCross.forEach(e -> e.setLocation());
+            //listAll.forEach(e -> e.setLocation());
 
-            root.paint();
-            listArea.forEach(e -> e.paint());
-            listFrame.forEach(e -> e.paint());
-            listCross.forEach(e -> e.paint());
+            root.draw();
+            //listArea.forEach(e -> e.paint());
+            //listFrame.forEach(e -> e.paint());
+            //listCross.forEach(e -> e.paint());
+            //listElem.forEach(e -> e.paint());
+            //listAll.forEach(e -> e.paint());
 
-//            listCross.forEach(e -> {
-//                if (e.areaTest != null) {
-//                    e.paint();
-//                }
-//                if (e.lineTest != null) {
-//                    e.paint();
-//                }               
-//            });
         } catch (Exception e) {
             System.err.println("Ошибка:Wingeo.draw() " + e);
         }

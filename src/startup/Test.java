@@ -3,6 +3,7 @@ package startup;
 import builder.model.UGeo;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.eProp;
@@ -12,7 +13,6 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 import org.locationtech.jts.geom.*;
-import org.locationtech.jts.io.WKTReader;
 
 public class Test {
 
@@ -84,14 +84,16 @@ public class Test {
 
         if (_case.equals("one")) {
             winc.build(GsonScript.productJson(501001));
-            winc.constructiv(true);
+            System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(winc.script)));
+            //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(winc.script)));
+
+//            winc.constructiv(true);
 //            winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
 //            winc.gc2d = winc.bufferImg.createGraphics();
 //            winc.rootArea.draw(); //рисую конструкцию
             //frames.PSCompare.iwinXls(winc, true);
 //            frames.PSCompare.iwinPs4(winc, true);
             //winc.listJoin.forEach(it -> System.out.println(it));           
-
         } else if (_case.equals("min")) {
             List<Integer> prjList = GsonScript.productList(_case);
             for (int prj : prjList) {
@@ -327,7 +329,7 @@ public class Test {
 //            Envelope env = g.getEnvelopeInternal();
             //env.get
             //System.out.println(b.equalsExact(g));
-            
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

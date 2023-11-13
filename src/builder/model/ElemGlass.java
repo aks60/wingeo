@@ -9,6 +9,8 @@ import domain.eArtikl;
 import domain.eColor;
 import domain.eSystree;
 import enums.PKjson;
+import java.awt.Shape;
+import org.locationtech.jts.awt.ShapeWriter;
 
 public class ElemGlass extends ElemSimple {
 
@@ -70,7 +72,17 @@ public class ElemGlass extends ElemSimple {
     }
 
     public void paint() {
-        winc.gc2d.fillPolygon(new int[]{(int) this.x1(), (int) this.x2(), (int) this.x2(), (int) this.x1()},
-                new int[]{(int) this.y1(), (int) this.y1(), (int) this.y2(), (int) this.y2()}, 4);
+        java.awt.Color color = winc.gc2d.getColor();
+        int rgb = eColor.find(colorID2).getInt(eColor.rgb);
+        winc.gc2d.setColor(new java.awt.Color(rgb));
+        try {
+            if (owner.geom != null) {
+                Shape shape = new ShapeWriter().toShape(owner.geom);
+                winc.gc2d.fill(shape);;
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:ElemGlass.paint()" + toString() + e);
+        }
+        winc.gc2d.setColor(color);                
     }
 }
