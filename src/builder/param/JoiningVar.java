@@ -290,25 +290,25 @@ public class JoiningVar extends Par5s {
                 case 3003:  //Угол варианта 
                     if (var.getInt(eJoinvar.types) == 30 || var.getInt(eJoinvar.types) == 31) {
                         if ("левый".equals(rec.getStr(TEXT))) {
-                            if (elemJoin.layout == LayoutJoin.ANGL && var.getInt(eJoinvar.types) == 31) {
+                            if (elemJoin.layout == LayoutJoin.LTOP && var.getInt(eJoinvar.types) == 31) {
                                 return false;
-                            } else if (elemJoin.layout == LayoutJoin.ANGL && var.getInt(eJoinvar.types) == 31) {
+                            } else if (elemJoin.layout == LayoutJoin.LBOT && var.getInt(eJoinvar.types) == 31) {
                                 return false;
                             }
                         } else if ("правый".equals(rec.getStr(TEXT))) {
-                            if (elemJoin.layout == LayoutJoin.ANGL && var.getInt(eJoinvar.types) == 30) {
+                            if (elemJoin.layout == LayoutJoin.RTOP && var.getInt(eJoinvar.types) == 30) {
                                 return false;
-                            } else if (elemJoin.layout == LayoutJoin.ANGL && var.getInt(eJoinvar.types) == 30) {
+                            } else if (elemJoin.layout == LayoutJoin.RBOT && var.getInt(eJoinvar.types) == 30) {
                                 return false;
                             }
                         }
                     } else {
                         if ("левый".equals(rec.getStr(TEXT))) {
-                            if (elemJoin.layout == LayoutJoin.ANGL || elemJoin.layout == LayoutJoin.ANGL || elemJoin.layout == LayoutJoin.TEE) {
+                            if (elemJoin.layout == LayoutJoin.LBOT || elemJoin.layout == LayoutJoin.LTOP || elemJoin.layout == LayoutJoin.TLEFT) {
                                 return false;
                             }
                         } else { //левый
-                            if (elemJoin.layout == LayoutJoin.ANGL || elemJoin.layout == LayoutJoin.ANGL || elemJoin.layout == LayoutJoin.TEE) {
+                            if (elemJoin.layout == LayoutJoin.RBOT || elemJoin.layout == LayoutJoin.RTOP || elemJoin.layout == LayoutJoin.TRIGH) {
                                 return false;
                             }
                         }

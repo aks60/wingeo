@@ -26,9 +26,9 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
         try {
             for (ElemJoining join : this) {
                 if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(el.type)) {
-                    if (side == 0 && join.elem1.id == el.id && (join.layout == LayoutJoin.TEE || join.layout == LayoutJoin.TEE)) {
+                    if (side == 0 && join.elem1.id == el.id && (join.layout == LayoutJoin.TLEFT || join.layout == LayoutJoin.TBOT)) {
                         return join;
-                    } else if (side == 1 && join.elem1.id == el.id && (join.layout == LayoutJoin.TEE || join.layout == LayoutJoin.TEE)) {
+                    } else if (side == 1 && join.elem1.id == el.id && (join.layout == LayoutJoin.TRIGH || join.layout == LayoutJoin.TTOP)) {
                         return join;
                     }
                 } else {
