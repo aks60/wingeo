@@ -19,7 +19,6 @@ import org.locationtech.jts.geom.GeometryFactory;
 
 public class Com5t {
 
-    //GeometryFactory gf2 = new GeometryFactory(new PrecisionModel(), srid);
     public static GeometryFactory gf = new GeometryFactory();
     public static int TRANSLATE_XY = 2; //сдвиг графика
     public int SIZE = 24;
@@ -121,9 +120,9 @@ public class Com5t {
      */
     public double length() {
         ElemSimple elem5e = (ElemSimple) this;
-        if (elem5e.anglHoriz == 0 || elem5e.anglHoriz == 180) {
+        if (elem5e.anglHoriz() == 0 || elem5e.anglHoriz() == 180) {
             return (x2() > x1()) ? x2() - x1() : x1() - x2();
-        } else if (elem5e.anglHoriz == 90 || elem5e.anglHoriz == 270) {
+        } else if (elem5e.anglHoriz() == 90 || elem5e.anglHoriz() == 270) {
             return (y2() > y1()) ? y2() - y1() : y1() - y2();
         } else {
             return Math.sqrt((x2() - x1()) * (x2() - x1()) + (y2() - y1()) * (y2() - y1()));

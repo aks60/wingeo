@@ -50,7 +50,6 @@ public class ElemFrame extends ElemSimple {
 
     public void setLocation() {
         try {
-            anglHoriz = UGeo.anglHor(this);
             for (int i = 0; i < winc.listFrame.size(); i++) {
                 if (winc.listFrame.get(i).id == this.id) {
 

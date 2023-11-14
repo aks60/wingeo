@@ -46,7 +46,7 @@ public class Elements extends Cal5e {
                     List<Record> elementList4 = List.of(eElement.find4(((Com5t) elem5e).sysprofRec.getInt(eSysprof.id)));
                     //Цикл по списку элементов сторон маскитки
                     for (int side : List.of(0, 90, 180, 270)) {
-                        elem5e.anglHoriz = side; //устан. угол. проверяемой стороны
+///////////////////////                        elem5e.anglHoriz = side; //устан. угол. проверяемой стороны
                         detail(elementList4, elem5e);
                     }
                 } else {
@@ -108,13 +108,13 @@ public class Elements extends Cal5e {
 
                                     //Контейнер маскитка не учавствует в цикле сторон
                                 } else if (TypeArtikl.isType(artiklRec, TypeArtikl.X520)) {
-                                    if (elem5e.anglHoriz == 0) {
+////////////////////////////                                    if (elem5e.anglHoriz == 0) {
                                         elem5e.spcRec.setArtikl(spcAdd.artiklRec); //подмена артикула в основной спецификации
                                         elem5e.spcRec.setColor(1, spcAdd.colorID1);
                                         elem5e.spcRec.setColor(2, spcAdd.colorID2);
                                         elem5e.spcRec.setColor(3, spcAdd.colorID3);
                                         elem5e.addSpecific(elem5e.spcRec); //в спецификацию     
-                                    }
+///////////////////////////                                    }
                                 } else {
                                     elem5e.addSpecific(spcAdd); //в спецификацию
                                 }

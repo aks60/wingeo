@@ -157,13 +157,13 @@ class UPar {
 
     //Номер стороны 
     static boolean is_38010_39002(ElemSimple elem5e, String txt) {
-        if (elem5e.anglHoriz == 0 && "1".equals(txt) == false) {
+        if (elem5e.anglHoriz() == 0 && "1".equals(txt) == false) {
             return false;
-        } else if (elem5e.anglHoriz == 90 && "2".equals(txt) == false) {
+        } else if (elem5e.anglHoriz() == 90 && "2".equals(txt) == false) {
             return false;
-        } else if (elem5e.anglHoriz == 180 && "3".equals(txt) == false) {
+        } else if (elem5e.anglHoriz() == 180 && "3".equals(txt) == false) {
             return false;
-        } else if (elem5e.anglHoriz == 270 && "4".equals(txt) == false) {
+        } else if (elem5e.anglHoriz() == 270 && "4".equals(txt) == false) {
             return false;
         }
         return true;

@@ -4,12 +4,13 @@ import builder.Wincalc;
 import builder.making.Specific;
 import builder.script.GsonElem;
 import java.awt.Color;
+import org.locationtech.jts.algorithm.Angle;
+import org.locationtech.jts.geom.Coordinate;
 
 public class ElemSimple extends Com5t {
 
     public double anglCut[] = {45, 45}; //угол реза
-    public double[] anglFlat = {0, 0, 0, 0}; //мин/мах внутренний и мин/мах внешний угол к плоскости
-    public double anglHoriz = 0; //угол к горизонту    
+    public double[] anglFlat = {0, 0, 0, 0}; //мин/мах внутренний и мин/мах внешний угол к плоскости   
     public double[] betweenHoriz = {0, 0}; //угол между векторами    
 
     public Specific spcRec = null; //спецификация элемента
@@ -42,8 +43,13 @@ public class ElemSimple extends Com5t {
         
     }
     
+    //Угол к горизонту 
+    public double anglHoriz() {
+        return Angle.toDegrees(Angle.angle(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2())));
+    }
+    
     @Override
     public String toString() {
-        return super.toString() + ", anglHoriz=" + anglHoriz;
+        return super.toString() + ", anglHoriz=" + anglHoriz();
     }
 }

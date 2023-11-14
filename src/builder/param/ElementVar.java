@@ -196,32 +196,32 @@ public class ElementVar extends Par5s {
                     break;
                 case 31020:  //Ограничение угла к горизонту, °
                     if ("ps3".equals(eSetting.val(2))) { //Угол к горизонту минимальный, °
-                        if (elem5e.anglHoriz < rec.getDbl(TEXT)) {
+                        if (elem5e.anglHoriz() < rec.getDbl(TEXT)) {
                             return false;
                         }
                     } else {
-                        if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.anglHoriz) == false) {
+                        if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.anglHoriz()) == false) {
                             return false;
                         }
                     }
                     break;
                 case 31030:  //Угол к горизонту максимальный, °
                     if ("ps3".equals(eSetting.val(2))) {
-                        if (rec.getDbl(TEXT) < elem5e.anglHoriz) {
+                        if (rec.getDbl(TEXT) < elem5e.anglHoriz()) {
                             return false;
                         }
                     }
                     break;
                 case 31031:  //Точный угол к горизонту
                     if ("ps3".equals(eSetting.val(2))) {
-                        if (rec.getDbl(TEXT) != elem5e.anglHoriz) {
+                        if (rec.getDbl(TEXT) != elem5e.anglHoriz()) {
                             return false;
                         }
                     }
                     break;
                 case 31032:  //Исключить угол к горизонту, °
                     if ("ps3".equals(eSetting.val(2))) {
-                        if (rec.getDbl(TEXT) == elem5e.anglHoriz) {
+                        if (rec.getDbl(TEXT) == elem5e.anglHoriz()) {
                             return false;
                         }
                     }
@@ -300,8 +300,8 @@ public class ElementVar extends Par5s {
                     }
                     break;
                 case 31060:  //Допустимый угол между плоскостями, ° 
-                    if ((UCom.containsNumbJust(rec.getStr(TEXT), winc.listJoin.get(elem5e, 0).angl) == true
-                            || UCom.containsNumbJust(rec.getStr(TEXT), winc.listJoin.get(elem5e, 1).angl) == true) == false) {
+                    if ((UCom.containsNumbJust(rec.getStr(TEXT), winc.listJoin.get(elem5e, 0).angl_90) == true
+                            || UCom.containsNumbJust(rec.getStr(TEXT), winc.listJoin.get(elem5e, 1).angl_90) == true) == false) {
                         return false;
                     }
                     break;
