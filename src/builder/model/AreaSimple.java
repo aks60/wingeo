@@ -5,7 +5,6 @@ import builder.script.GsonElem;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import common.LinkedCom;
-import common.eProp;
 import dataset.Record;
 import domain.eColor;
 import domain.eParams;
@@ -14,12 +13,10 @@ import domain.eSysprof;
 import enums.*;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
-import javax.imageio.ImageIO;
 
 public class AreaSimple extends Com5t {
 

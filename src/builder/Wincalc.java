@@ -22,6 +22,7 @@ import dataset.Record;
 import domain.eSyspar1;
 import domain.eSysprof;
 import enums.Form;
+import enums.Layout;
 import enums.Type;
 import enums.UseArtiklTo;
 import frames.swing.draw.Canvas;
@@ -93,6 +94,9 @@ public class Wincalc {
             //Создание элементов конструкции
             parsing(script);
 
+            //Cоединения ареа           
+            root.joining();
+            
             //построение полигонов
             root.setLocation();
 
@@ -143,6 +147,7 @@ public class Wincalc {
                         ElemFrame elem5e = new ElemFrame(this, js, owner);
                         listElem.add(elem5e);
                         listFrame.add(elem5e);
+                        //root.frames.put(js.layout, elem5e);
 
                     } else if (Type.IMPOST == js.type || Type.SHTULP == js.type || Type.STOIKA == js.type) {
                         ElemCross elem5e = new ElemCross(this, js, owner);
@@ -180,8 +185,8 @@ public class Wincalc {
             //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
             calcJoining = new Joining(this); //соединения
             calcJoining.calc();
-            Cal5e calcElements = new builder.making.Elements(this);
-            calcElements.calc();
+            //Cal5e calcElements = new builder.making.Elements(this);
+            //calcElements.calc();
 //            calcFilling = (eProp.old.read().equals("0")) //заполнения
 //                    ? new builder.making.Filling(this)
 //                    : new builder.making.Filling(this);
