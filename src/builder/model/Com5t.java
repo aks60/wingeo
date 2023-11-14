@@ -13,9 +13,9 @@ import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
-import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineSegment;
 
 public class Com5t {
 
@@ -54,10 +54,6 @@ public class Com5t {
     }
 
     public void paint() {
-    }
-
-    public List<Com5t> childs() {
-        return null;
     }
 
     public void mouseEvent() {
@@ -118,15 +114,9 @@ public class Com5t {
     /**
      * Длина компонента
      */
-    public double length() {
-        ElemSimple elem5e = (ElemSimple) this;
-        if (elem5e.anglHoriz() == 0 || elem5e.anglHoriz() == 180) {
-            return (x2() > x1()) ? x2() - x1() : x1() - x2();
-        } else if (elem5e.anglHoriz() == 90 || elem5e.anglHoriz() == 270) {
-            return (y2() > y1()) ? y2() - y1() : y1() - y2();
-        } else {
-            return Math.sqrt((x2() - x1()) * (x2() - x1()) + (y2() - y1()) * (y2() - y1()));
-        }
+    public double length() { 
+        //return owner.geom.getEnvelopeInternal().getWidth();
+        return new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).getLength();
     }
 
     /**

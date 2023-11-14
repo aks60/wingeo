@@ -1,5 +1,6 @@
 package startup;
 
+import builder.model.Com5t;
 import builder.model.UGeo;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -17,6 +18,8 @@ import org.locationtech.jts.geom.*;
 public class Test {
 
     public static Integer numDb = Integer.valueOf(eProp.base_num.read());
+
+    private static GeometryFactory gf = new GeometryFactory();
 
     // <editor-fold defaultstate="collapsed" desc="Connection[] connect(int numDb)">
     public static Connection connect1() {
@@ -63,13 +66,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            //wincalc();
+            wincalc();
             //query();
             //frame();
             //json();
             //uid();
             //script();
-            geom();
+            //geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -312,26 +315,7 @@ public class Test {
         //Geometry[] geo = UJts.geoSplit(polygon6,  85.49812646820278, 899.759836723404, 85.4981264682028, 899.759836723404);
         //Geometry geo = polygon6.intersection(line2);
         //System.out.println(geo);
-        //Geometry g = reader.read("MULTIPOINT(10 10, 20 20, 30 30)");
-        //assertTrue(g.getBoundary().isEmpty());
-        try {
-//            WKTReader reader = new WKTReader();
-//            Geometry g = reader.read("MULTIPOLYGON("
-//                    + "(  (0 0, 40 0, 40 40, 0 40, 0 0),"
-//                    + "   (10 10, 30 10, 30 30, 10 30, 10 10)  ),"
-//                    + "(  (200 200, 210 200, 210 210, 200 200) )  )");
-//            Geometry b = reader.read("MULTILINESTRING("
-//                    + "(0 0, 40 0, 40 40, 0 40, 0 0),"
-//                    + "(10 10, 30 10, 30 30, 10 30, 10 10),"
-//                    + "(200 200, 210 200, 210 210, 200 200))");
-//            System.out.println(g.getBoundary());
-//            System.out.println(g.getEnvelope());
-//            Envelope env = g.getEnvelopeInternal();
-            //env.get
-            //System.out.println(b.equalsExact(g));
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        
+        //System.out.println(coord1.getCoordinateSequence());
     }
 }

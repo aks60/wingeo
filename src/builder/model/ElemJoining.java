@@ -90,6 +90,7 @@ public class ElemJoining {
         return "id=" + id + ",  layout= " + layout + ",  type=" + type + ",  elem1=" + elem1.layout + ",  elem2=" + elem2.layout + ",  " + layout.name;
     }
     
+    
     public double angl_90 = 90;      //угол между профилями (кандидат на удаление)
     public Record joiningRec = eJoining.up.newRecord(); //для рассчёта тарификации
     public Record joinvarRec = eJoinvar.up.newRecord(); //для рассчёта тарификации     

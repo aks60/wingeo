@@ -229,7 +229,6 @@ public class AreaSimple extends Com5t {
 //        }
     }
 
-    @Override
     public List<Com5t> childs() {
         return childs;
     }
