@@ -63,13 +63,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            wincalc();
+            //wincalc();
             //query();
             //frame();
             //json();
             //uid();
             //script();
-            //geom();
+            geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
