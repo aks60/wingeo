@@ -301,27 +301,10 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
 
-        Coordinate[] coord6 = UGeo.arrCoord(0, 0, 0, 900, 566.2921348314605, 879.7752808988762, 0, 0);
-        Coordinate[] coord7 = UGeo.arrCoord(456.5, 1000, 543.5, 1000, 543.5, 0, 456.5, 0, 456.5, 1000);
-        Coordinate[] coord8 = UGeo.arrCoord(63, 63, 63, 59.84658648630139, 937, 426.40654360235624, 937, 63, 63, 63);
-
-        Polygon polygon6 = gf.createPolygon(coord6);
-
-//        Polygon areaExp = gf.createPolygon(coord7);
-//        Polygon geoPadding = gf.createPolygon(coord8);      
-//        GeometryFixer fix = new GeometryFixer(geoPadding);
-//        //fix.setKeepCollapsed(true);
-//        fix.setKeepMulti(false);
-//        Geometry geo = fix.getResult();
-        //Geometry[] geo = UJts.geoSplit(polygon6,  85.49812646820278, 899.759836723404, 85.4981264682028, 899.759836723404);
-        //Geometry geo = polygon6.intersection(line2);
-        //System.out.println(geo);
-        
-        //System.out.println(coord1.getCoordinateSequence());
-        System.out.println(Angle.toDegrees(Angle.angleBetweenOriented(
-                new Coordinate(100, 100), 
-                new Coordinate(100, 0), 
-                new Coordinate(200,0))));
+        Envelope env = polygon1.getEnvelopeInternal();
+        Envelope env2 = new Envelope(env.getMinX() + env.getWidth() / 2, env.getMaxX(), env.getMinY() + env.getHeight() / 2, env.getMaxY());
+        System.out.println(env.contains(1000, 1000));
+        System.out.println(env2.contains(900, 900));
         
     }
 }
