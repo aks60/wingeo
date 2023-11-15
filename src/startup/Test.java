@@ -318,10 +318,10 @@ public class Test {
         //System.out.println(geo);
         
         //System.out.println(coord1.getCoordinateSequence());
-        System.out.println(Angle.toDegrees(Angle.angleBetween(
-                new Coordinate(0, 100), 
+        System.out.println(Angle.toDegrees(Angle.angleBetweenOriented(
                 new Coordinate(100, 100), 
-                new Coordinate(100,0))));
+                new Coordinate(100, 0), 
+                new Coordinate(200,0))));
         
     }
 }
