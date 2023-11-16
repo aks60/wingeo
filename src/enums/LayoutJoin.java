@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public enum LayoutJoin implements Enam {
 
-    NONE(0, "Не определено"),
+    NONE(0, "Не определено", 0, 0),
     LTOP(1, "Угловое левое верхнее", 20, 30),
     LBOT(2, "Угловое левое нижнее", 20, 30),
     RTOP(3, "Угловое правое верхнее", 20, 31),

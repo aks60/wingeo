@@ -83,6 +83,7 @@ import builder.model.ElemSimple;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import common.LinkedCom;
 import domain.eJoinvar;
 import enums.TypeJoin;

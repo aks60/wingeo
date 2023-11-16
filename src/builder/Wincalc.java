@@ -183,8 +183,8 @@ public class Wincalc {
         cost2 = 0;
         try {
             //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
-//            calcJoining = new Joining(this); //соединения
-//            calcJoining.calc();
+            calcJoining = new Joining(this); //соединения
+            calcJoining.calc();
 //            Cal5e calcElements = new builder.making.Elements(this);
 //            calcElements.calc();
 //            calcFilling = (eProp.old.read().equals("0")) //заполнения

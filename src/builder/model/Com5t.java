@@ -113,7 +113,7 @@ public class Com5t {
     /**
      * Длина компонента
      */
-    public double length() { 
+    public double length() {
         //return owner.geom.getEnvelopeInternal().getWidth();
         return new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).getLength();
     }
@@ -136,7 +136,7 @@ public class Com5t {
         }
         return !jso.isJsonNull();
     }
-    
+
     public boolean isJson(JsonObject jso, String key) {
         if (jso == null) {
             return false;
@@ -169,31 +169,31 @@ public class Com5t {
     }
 
     public double x2() {
-//        if (gson.x2 != null) {
-        return gson.x2;
-//        } else {
+        if (gson.x2 != null) {
+            return gson.x2;
+        } else {
 //            Coordinate[] coordArr = this.geom.getCoordinates();
 //            for (int i = coordArr.length; i > 0; --i) {
 //                if (coordArr[i].x == x1()) {
 //                    return coordArr[i - 1].x;
 //                }
 //            }
-//            return -1;
-//        }
+            return -1;
+        }
     }
 
     public double y2() {
-//        if (gson.y2 != null) {
-        return gson.y2;
-//        } else {
+        if (gson.y2 != null) {
+            return gson.y2;
+        } else {
 //            Coordinate[] coordArr = this.geom.getCoordinates();
 //            for (int i = coordArr.length; i > 0; --i) {
 //                if (coordArr[i].y == y1()) {
 //                    return coordArr[i - 1].y;
 //                }
 //            }
-//            return -1;
-//        }
+            return -1;
+        }
     }
 
     public void x1(double v) {
