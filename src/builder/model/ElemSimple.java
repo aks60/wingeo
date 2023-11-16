@@ -23,20 +23,7 @@ public class ElemSimple extends Com5t {
         spcRec = new Specific(id, this);
     }
 
-    public void setLocation() {
-//        try {
-//            GeneralPath p = new GeneralPath();
-//            p.reset();
-//            p.moveTo(winc.listFrame.get(0).x1(), winc.listFrame.get(0).y1());
-//            for (int i = 1; i < winc.listFrame.size(); ++i) {
-//                p.lineTo(winc.listFrame.get(i).x1(), winc.listFrame.get(i).y1());
-//            }
-//            p.closePath();
-//            area = new Area(p);
-//
-//        } catch (Exception e) {
-//            System.err.println("Ошибка:Elem2Simple.build()" + toString() + e);
-//        }        
+    public void setLocation() {      
     }
 
     public void addSpecific(Specific spcAdd) {
