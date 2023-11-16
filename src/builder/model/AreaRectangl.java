@@ -36,6 +36,15 @@ public class AreaRectangl extends AreaSimple {
     public void paint() {
     }
     
+    public void joining() {
+        
+        Coordinate[] c1 = winc.root.geom.getCoordinates();  
+        for (int i = 0; i < winc.listFrame.size(); i++) {
+            ElemFrame frame2 = winc.listFrame.get((i == winc.listFrame.size() - 1) ? 0 : i + 1);
+            winc.listJoin.add(new ElemJoining(this.winc, winc.listFrame.get(i), frame2));
+        }
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
     // </editor-fold>     
 }

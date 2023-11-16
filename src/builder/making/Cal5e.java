@@ -21,10 +21,6 @@ public abstract class Cal5e {
         Query.conf = "calc";
     }
 
-    public AreaSimple rootArea() {
-        return winc.root;
-    }
-
     public static void artype(Specific spcAdd, ElemSimple elem5e) {
         TypeArtikl typ = TypeArtikl.find(spcAdd.artiklRec);
         switch (typ) {

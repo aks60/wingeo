@@ -41,7 +41,7 @@ public class AreaSimple extends Com5t {
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
     }
-    
+
     /**
      * Профиль через параметр PKjson_sysprofID пример створки:sysprofID:1121,
      * typeOpen:4, sysfurnID:2916} Этого параметра нет в интерфейсе программы,
@@ -54,7 +54,7 @@ public class AreaSimple extends Com5t {
         winc.listArea.add(this);
         winc.listAll.add(this);
     }
-    
+
     /**
      * Параметры системы(технолога) + параметры менеджера В таблице syspar1 для
      * каждой системы лежат параметры по умолчанию от технолога. К параметрам от
@@ -93,7 +93,10 @@ public class AreaSimple extends Com5t {
             System.err.println("Ошибка:AreaSimple.initParametr() " + e);
         }
     }
-    
+
+    public void joining() {
+    }
+
     /**
      * Изменение размеров конструкции по оси X
      *
@@ -113,7 +116,7 @@ public class AreaSimple extends Com5t {
     public List<Com5t> childs() {
         return childs;
     }
-    
+
     public void draw() {
         try {
             //Прорисовка стеклопакетов
@@ -142,7 +145,6 @@ public class AreaSimple extends Com5t {
             //Прорисовка раскладок
             //LinkedList<ElemSimple> glassList = winc.listElem.filter(Type.GLASS);
             //glassList.stream().forEach(el -> el.rascladkaPaint());
-
             //Прорисовка москиток
             LinkedList<ElemSimple> mosqList = winc.listElem.filter(Type.MOSKITKA);
             mosqList.stream().forEach(el -> el.paint());
@@ -160,7 +162,7 @@ public class AreaSimple extends Com5t {
             System.err.println("Ошибка:AreaSimple.draw() " + s);
         }
     }
-    
+
     public void paint() {
 
     }
