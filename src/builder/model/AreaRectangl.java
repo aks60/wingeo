@@ -39,25 +39,6 @@ public class AreaRectangl extends AreaSimple {
             System.err.println("Ошибка:Area2Polygon.setLocation()" + toString() + e);
         }
     }
-
-    //Угловые соединения
-    @Override
-    public void joining() {
-
-        super.joining(); //T - соединения
-
-        ElemSimple elemBott = frames.get(Layout.BOTT), elemRight = frames.get(Layout.RIGHT),
-                elemTop = frames.get(Layout.TOP), elemLeft = frames.get(Layout.LEFT);
-
-        //Угловое соединение правое нижнее
-        winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR20, LayoutJoin.RBOT, elemBott, elemRight));
-        //Угловое соединение правое верхнее
-        winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR20, LayoutJoin.RTOP, elemRight, elemTop));
-        //Угловое соединение левое верхнее    
-        winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR20, LayoutJoin.LTOP, elemTop, elemLeft));
-        //Угловое соединение левое нижнее
-        winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR20, LayoutJoin.LBOT, elemLeft, elemBott));
-    }
     
     public void paint() {
     }

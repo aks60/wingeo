@@ -95,7 +95,7 @@ public class Wincalc {
             parsing(script);
 
             //Cоединения ареа           
-            root.joining();
+            //root.joining();
             
             //построение полигонов
             root.setLocation();

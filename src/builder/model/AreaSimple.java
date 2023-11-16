@@ -229,43 +229,6 @@ public class AreaSimple extends Com5t {
     public List<Com5t> childs() {
         return childs;
     }
-
-    /**
-     * T - соединения area. Все поперечены(cross) в area имеют Т-соединения.
-     * Т-соед. записываются в map, см. winc.listJoin.put(point, cross). За
-     * угловые соединени отвечает конечнй наследник например
-     * AreaRectangl.joining(). Прилегающие см. IElem5e.joinFlat()
-     */   
-    public void joining() {
-
-        LinkedList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA);
-        LinkedList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
-
-        //T - соединения
-        //Цикл по кросс элементам
-        for (ElemSimple crosEl : crosList) {
-            //Цикл по сторонам рамы и импостам (т.к. в створке Т-обр. соединений нет)
-            for (ElemSimple elem5e : elemList) {
-                if ((elem5e.owner.type == Type.ARCH && elem5e.layout == Layout.TOP) == false) { //для арки inside() не работает
-
-                    if (crosEl.owner.layout == Layout.HORIZ) { //Импосты(штульпы...) расположены вертикально снизу вверх                    
-                        if (elem5e.inside(crosEl.x2(), crosEl.y2()) == true && elem5e != crosEl) { //T - соединение нижнее  
-                            winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR40, LayoutJoin.TBOT, crosEl, elem5e));
-                        } else if (elem5e.inside(crosEl.x1(), crosEl.y1()) == true && elem5e != crosEl) { //T - соединение верхнее                            
-                            winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR40, LayoutJoin.TTOP, crosEl, elem5e));
-                        }
-
-                    } else { //Импосты(штульпы...)  расположены горизонтально слева на право 
-                        if (elem5e.inside(crosEl.x1(), crosEl.y1()) == true && elem5e != crosEl) { //T - соединение левое                             
-                            winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR40, LayoutJoin.TLEFT, crosEl, elem5e));
-                        } else if (elem5e.inside(crosEl.x2(), crosEl.y2()) == true && elem5e != crosEl) { //T - соединение правое                              
-                            winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR40, LayoutJoin.TRIGH, crosEl, elem5e));
-                        }
-                    }
-                }
-            }
-        }
-    }
     
     public void draw() {
         try {
