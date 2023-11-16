@@ -17,12 +17,19 @@ public class ElemJoining {
     private double id = -1; //идентификатор соединения
     private Wincalc winc;
     public LayoutJoin layout = LayoutJoin.NONE; //расположение соединения 
-    public TypeJoin type = TypeJoin.EMPTY;      //тип соединения (то что пишет )
+    public TypeJoin type = TypeJoin.NONE;      //тип соединения (то что пишет )
     public int vid = 0; //вид соединения ("0-Простое L-обр", "1-Крестовое †-обр") или ("0-Простое T-обр", "1-Крестовое †-обр", "2-Сложное Y-обр)
     public ElemSimple elem1 = null;  //элемент соединения 1
     public ElemSimple elem2 = null;  //элемент соединения 2
     public String costs = "";     //трудозатраты, ч/ч.
 
+    public ElemJoining(Wincalc winc, ElemSimple elem1, ElemSimple elem2) {
+        this(winc, TypeJoin.NONE, LayoutJoin.NONE, elem1, elem2);
+    }
+    
+    public ElemJoining(Wincalc winc, TypeJoin type, ElemSimple elem1, ElemSimple elem2) {
+        this(winc, type, LayoutJoin.NONE, elem1, elem2);
+    }
     public ElemJoining(Wincalc winc, TypeJoin type, LayoutJoin layout, ElemSimple elem1, ElemSimple elem2) {
         this.id = ++winc.genId;
         this.winc = winc;

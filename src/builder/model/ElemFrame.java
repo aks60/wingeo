@@ -3,15 +3,19 @@ package builder.model;
 import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
+import common.LinkedCom;
 import domain.eArtikl;
 import domain.eSysprof;
 import domain.eSyssize;
 import enums.PKjson;
 import enums.UseSide;
 import java.awt.Shape;
+import java.util.LinkedList;
+import java.util.List;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.LineSegment;
 
 public class ElemFrame extends ElemSimple {
 
@@ -91,22 +95,42 @@ public class ElemFrame extends ElemSimple {
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
     @Override
     public double x2() {
-        return (enext.gson.x1 != null) ? enext.gson.x1 : -1;
+        Coordinate[] coo = this.owner.geom.getCoordinates();
+        for (int i = 0; i < coo.length; i++) {
+            if (coo[i].x == this.x1() && coo[i].y == this.y1()) {
+                return coo[(i == coo.length - 1) ? 0 : i + 1].x;
+            }
+        }
+        return -1;
     }
 
     @Override
     public double y2() {
-        return (enext.gson.y1 != null) ? enext.gson.y1 : -1;
+        Coordinate[] coo = this.owner.geom.getCoordinates();
+        for (int i = 0; i < coo.length; i++) {
+            if (coo[i].x == this.x1() && coo[i].y == this.y1()) {
+                return coo[(i == coo.length - 1) ? 0 : i + 1].y;
+            }
+        }
+        return -1;
     }
 
     @Override
     public void x2(double v) {
-        enext.gson.x1 = v;
+        for (int i = 0; i < winc.listFrame.size(); i++) {
+            if (winc.listFrame.get(i).x1() == this.x1() && winc.listFrame.get(i).y1() == this.y1()) {
+                winc.listFrame.get((i == winc.listFrame.size() - 1) ? 0 : i + 1).x1(v);
+            }
+        }
     }
 
     @Override
     public void y2(double v) {
-        enext.gson.y1 = v;
+        for (int i = 0; i < winc.listFrame.size(); i++) {
+            if (winc.listFrame.get(i).x1() == this.x1() && winc.listFrame.get(i).y1() == this.y1()) {
+                winc.listFrame.get((i == winc.listFrame.size() - 1) ? 0 : i + 1).y1(v);
+            }
+        }
     }
     // </editor-fold>     
 }

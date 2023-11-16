@@ -95,7 +95,7 @@ public class Wincalc {
             parsing(script);
 
             //Cоединения ареа           
-            root.joining();
+            //root.joining();
             
             //построение полигонов
             root.setLocation();
@@ -123,7 +123,7 @@ public class Wincalc {
 
         root = new AreaRectangl(this, gson);
 
-        elements(root, gson);
+        elements(root, gson);                
     }
 
     private void elements(AreaSimple owner, GsonElem gson) {
@@ -183,10 +183,10 @@ public class Wincalc {
         cost2 = 0;
         try {
             //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
-            calcJoining = new Joining(this); //соединения
-            calcJoining.calc();
-            //Cal5e calcElements = new builder.making.Elements(this);
-            //calcElements.calc();
+//            calcJoining = new Joining(this); //соединения
+//            calcJoining.calc();
+//            Cal5e calcElements = new builder.making.Elements(this);
+//            calcElements.calc();
 //            calcFilling = (eProp.old.read().equals("0")) //заполнения
 //                    ? new builder.making.Filling(this)
 //                    : new builder.making.Filling(this);
@@ -233,7 +233,7 @@ public class Wincalc {
 
     public void draw() {
         try {
-            root.setLocation();
+            root.setLocation();            
             listFrame.forEach(e -> e.setLocation());
             listCross.forEach(e -> e.setLocation());
             //listAll.forEach(e -> e.setLocation());

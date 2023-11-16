@@ -12,10 +12,6 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
         super();
     }
 
-    public E find(double id) {
-        return this.stream().filter(it -> it.id == id).findFirst().get();
-    }
-
     public GsonElem gson(double id) {
         Com5t com5t = this.stream().filter(it -> it.id == id).findFirst().orElse(null);
         if (com5t != null) {
@@ -35,6 +31,10 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
         return list2;
     }
 
+    public E find(double id) {
+        return this.stream().filter(it -> it.id == id).findFirst().get();
+    }
+    
     public E find(Type type) {
 
         for (E el : this) {

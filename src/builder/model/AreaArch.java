@@ -10,7 +10,7 @@ public class AreaArch extends AreaSimple {
         super(winc);
     }
 
-    //Угловые соединения
-    public void joining() {
-    }
+//    //Угловые соединения
+//    public void joining() {
+//    }
 }

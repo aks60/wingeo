@@ -301,10 +301,5 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
 
-        Envelope env = polygon1.getEnvelopeInternal();
-        Envelope env2 = new Envelope(env.getMinX() + env.getWidth() / 2, env.getMaxX(), env.getMinY() + env.getHeight() / 2, env.getMaxY());
-        System.out.println(env.contains(1000, 1000));
-        System.out.println(env2.contains(900, 900));
-        
     }
 }
