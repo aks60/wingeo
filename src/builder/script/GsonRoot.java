@@ -27,7 +27,19 @@ public class GsonRoot extends GsonElem {
         this.prj = prj;
         this.ord = ord;
         this.nuni = nuni;
+        this.name = name;       
+    }
+    
+    public GsonRoot(String version, Integer prj, Integer ord, Integer nuni, String name, Integer color1, Integer color2, Integer color3) {
+
+        this.version = version;
+        this.prj = prj;
+        this.ord = ord;
+        this.nuni = nuni;
         this.name = name;
+        this.color1 = color1;
+        this.color2 = color2;
+        this.color3 = color3;            
     }
     
     public Double height() {

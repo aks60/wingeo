@@ -3,19 +3,17 @@ package builder.model;
 import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
-import common.LinkedCom;
 import domain.eArtikl;
+import domain.eColor;
 import domain.eSysprof;
 import domain.eSyssize;
 import enums.PKjson;
 import enums.UseSide;
+import java.awt.BasicStroke;
 import java.awt.Shape;
-import java.util.LinkedList;
-import java.util.List;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.LineSegment;
 
 public class ElemFrame extends ElemSimple {
 
@@ -82,14 +80,18 @@ public class ElemFrame extends ElemSimple {
         }
     }
 
-    public void paint() {
-        java.awt.Color color = winc.gc2d.getColor();
-        winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
+    public void paint() {      
         if (this.geom != null) {
+            java.awt.Color color = winc.gc2d.getColor();
             Shape shape = new ShapeWriter().toShape(this.geom);
+
+            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
+            winc.gc2d.fill(shape);            
+            
+            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));            
             winc.gc2d.draw(shape);
+            winc.gc2d.setColor(color);
         }
-        winc.gc2d.setColor(color);
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">

@@ -11,26 +11,30 @@ import builder.model.ElemFrame;
 import builder.model.ElemGlass;
 import builder.model.ElemSimple;
 import builder.making.Specific;
+import builder.making.UColor;
 import builder.script.GsonElem;
 import builder.script.GsonRoot;
 import com.google.gson.GsonBuilder;
 import common.ArrayJoin;
 import common.ArraySpc;
 import common.LinkedCom;
+import common.eProp;
 import common.listener.ListenerMouse;
 import dataset.Record;
+import domain.eArtikl;
 import domain.eSyspar1;
 import domain.eSysprof;
 import enums.Form;
-import enums.Layout;
 import enums.Type;
 import enums.UseArtiklTo;
 import frames.swing.draw.Canvas;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
@@ -96,7 +100,6 @@ public class Wincalc {
 
             //Cоединения ареа           
             //root.joining();
-            
             //построение полигонов
             root.setLocation();
 
@@ -119,11 +122,14 @@ public class Wincalc {
         this.nuni = gson.nuni;
 
         Record sysprofRec = eSysprof.find2(nuni, UseArtiklTo.FRAME);
+        this.colorID1 = (gson.color1 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1;
+        this.colorID2 = (gson.color2 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2;
+        this.colorID3 = (gson.color3 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3;
         eSyspar1.find(nuni).forEach(syspar1Rec -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), syspar1Rec)); //загрузим параметры по умолчанию
 
         root = new AreaRectangl(this, gson);
 
-        elements(root, gson);                
+        elements(root, gson);
     }
 
     private void elements(AreaSimple owner, GsonElem gson) {
@@ -185,46 +191,40 @@ public class Wincalc {
             //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
             calcJoining = new Joining(this); //соединения
             calcJoining.calc();
-//            Cal5e calcElements = new builder.making.Elements(this);
-//            calcElements.calc();
-//            calcFilling = (eProp.old.read().equals("0")) //заполнения
-//                    ? new builder.making.Filling(this)
-//                    : new builder.making.Filling(this);
-//            calcFilling.calc();
-//            calcFurniture = (eProp.old.read().equals("0")) //фурнитура 
-//                    ? new builder.making.Furniture(this)
-//                    : new builder.making.Furniture(this);
-//            calcFurniture.calc();
-//            calcTariffication = (eProp.old.read().equals("0")) //тарификация 
-//                    ? new builder.making.Tariffic(this, norm_otx)
-//                    : new builder.making.Tariffic(this, norm_otx);
-//            calcTariffication.calc();
-//
-//            //Построим список спецификации
-//            for (IElem5e elem5e : listElem) {
-//                if (elem5e.spcRec().artikl.isEmpty() || elem5e.spcRec().artikl.trim().charAt(0) != '@') {
-//                    listSpec.add(elem5e.spcRec());
-//                }
-//                for (Specific spc : elem5e.spcRec().spcList) {
-//                    if (spc.artikl.isEmpty() || spc.artikl.trim().charAt(0) != '@') {
-//                        listSpec.add(spc);
-//                    }
-//                }
-//            }
-//
-//            //Итоговая стоимость
-//            for (Specific spc : listSpec) {
-//                this.price(this.price() + spc.price); //общая стоимость без скидки
-//                this.cost2(this.cost2() + spc.cost2); //общая стоимость со скидкой             
-//            }
-//
-//            //Вес изделия
-//            LinkedList<IElem5e> glassList = listElem.filter(Type.GLASS);
-//            for (IElem5e el : glassList) {
-//                this.weight += el.artiklRecAn().getDbl(eArtikl.density) * el.width() * el.height() / 1000000; //уд.вес * площадь = вес
-//            }
-//
-//            Collections.sort(listSpec, (o1, o2) -> (o1.place.subSequence(0, 3) + o1.name + o1.width).compareTo(o2.place.subSequence(0, 3) + o2.name + o2.width));
+            calcElements = new builder.making.Elements(this);
+            calcElements.calc();
+            calcFilling = new builder.making.Filling(this); //заполнения
+            calcFilling.calc();
+            calcFurniture = new builder.making.Furniture(this); //фурнитура 
+            calcFurniture.calc();
+            calcTariffication = new builder.making.Tariffic(this, norm_otx); //тарификация 
+            calcTariffication.calc();
+
+            //Построим список спецификации
+            for (ElemSimple elem5e : listElem) {
+                if (elem5e.spcRec.artikl.isEmpty() || elem5e.spcRec.artikl.trim().charAt(0) != '@') {
+                    listSpec.add(elem5e.spcRec);
+                }
+                for (Specific spc : elem5e.spcRec.spcList) {
+                    if (spc.artikl.isEmpty() || spc.artikl.trim().charAt(0) != '@') {
+                        listSpec.add(spc);
+                    }
+                }
+            }
+
+            //Итоговая стоимость
+            for (Specific spc : listSpec) {
+                this.price = (this.price + spc.price); //общая стоимость без скидки
+                this.cost2 = (this.cost2 + spc.cost2); //общая стоимость со скидкой             
+            }
+
+            //Вес изделия
+            LinkedList<ElemSimple> glassList = listElem.filter(Type.GLASS);
+            for (ElemSimple el : glassList) {
+                this.weight += el.artiklRecAn.getDbl(eArtikl.density) * el.width() * el.height() / 1000000; //уд.вес * площадь = вес
+            }
+
+            Collections.sort(listSpec, (o1, o2) -> (o1.place.subSequence(0, 3) + o1.name + o1.width).compareTo(o2.place.subSequence(0, 3) + o2.name + o2.width));
 
         } catch (Exception e) {
             System.err.println("Ошибка:Wincalc.constructiv() " + e);
@@ -233,7 +233,7 @@ public class Wincalc {
 
     public void draw() {
         try {
-            root.setLocation();            
+            root.setLocation();
             listFrame.forEach(e -> e.setLocation());
             listCross.forEach(e -> e.setLocation());
             //listAll.forEach(e -> e.setLocation());

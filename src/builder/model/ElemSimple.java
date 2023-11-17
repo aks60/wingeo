@@ -11,7 +11,8 @@ public class ElemSimple extends Com5t {
 
     public double anglCut[] = {45, 45}; //угол реза
     public double[] anglFlat = {0, 0, 0, 0}; //мин/мах внутренний и мин/мах внешний угол к плоскости   
-    public double[] betweenHoriz = {0, 0}; //угол между векторами    
+    public double[] betweenHoriz = {0, 0}; //угол между векторами 
+    public double anglHoriz = 0; //угол к горизонту 
 
     public Specific spcRec = null; //спецификация элемента
     public Color borderColor = Color.BLACK;

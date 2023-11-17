@@ -30,6 +30,7 @@ public class ElemJoining {
     public ElemJoining(Wincalc winc, TypeJoin type, ElemSimple elem1, ElemSimple elem2) {
         this(winc, type, LayoutJoin.NONE, elem1, elem2);
     }
+    
     public ElemJoining(Wincalc winc, TypeJoin type, LayoutJoin layout, ElemSimple elem1, ElemSimple elem2) {
         this.id = ++winc.genId;
         this.winc = winc;

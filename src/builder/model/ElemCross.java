@@ -4,6 +4,7 @@ import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import domain.eArtikl;
+import domain.eColor;
 import domain.eSysprof;
 import enums.PKjson;
 import enums.UseSide;
@@ -63,7 +64,6 @@ public class ElemCross extends ElemSimple {
             owner.childs().get(0).geom = geo1;
             owner.childs().get(2).geom = geo2;
 
-
             //Внутренняя ареа       
             Polygon geoPadding = UGeo.geoPadding(owner.geom, winc.listElem);
             if (geoPadding.isValid() == false) { //исправление полигона
@@ -92,19 +92,19 @@ public class ElemCross extends ElemSimple {
     }
 
     public void paint() {
-        try {
+        
+        if (this.geom != null) {
             java.awt.Color color = winc.gc2d.getColor();
+            Shape shape = new ShapeWriter().toShape(this.geom);
+
+            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
+            winc.gc2d.fill(shape);
+
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
-            if (this.geom != null) {
-                Shape shape = new ShapeWriter().toShape(this.geom);
-                winc.gc2d.draw(shape);
-            }
             winc.gc2d.draw(new Line2D.Double(this.x1(), this.y1(), this.x2(), this.y2()));
+            winc.gc2d.draw(shape);
             winc.gc2d.setColor(color);
-            
-        } catch (Exception e) {
-            System.err.println("Ошибка:ElemCross.paint() " + e);
-        }
+        }        
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">

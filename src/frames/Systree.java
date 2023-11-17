@@ -311,7 +311,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         if (selectedPath != null) {
             sysTree.setSelectionPath(new TreePath(selectedPath));
         } else {
-            sysTree.setSelectionRow(0);
+            UGui.setSelectedRow(tab4);
         }
     }
 
@@ -344,13 +344,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     }
 
     public void loadingTree2(Wincalc winc) {
-        try {
-            DefMutableTreeNode root = UGui.loadWinTree(winc);
-            winTree.setModel(new DefaultTreeModel(root));
-
-        } catch (Exception e) {
-            System.err.println("Ошибка: Systree.loadingWinTree() " + e);
-        }
+//        try {
+//            DefMutableTreeNode root = UGui.loadWinTree(winc);
+//            winTree.setModel(new DefaultTreeModel(root));
+//
+//        } catch (Exception e) {
+//            System.err.println("Ошибка:Systree.loadingWinTree() " + e);
+//        }
     }
 
     public void loadingTab5() {
@@ -378,7 +378,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         List.of(tab2, tab3, tab4).forEach(table -> ((DefTableModel) table.getModel()).getQuery().execsql());
 
         sysNode = (DefMutableTreeNode) sysTree.getLastSelectedPathComponent();
-        if (sysNode != null) {
+        if (sysNode != null && sysNode.getChildCount() == 0) {
             systreeID = sysNode.rec().getInt(eSystree.id);
             rsvSystree.load();
             qSysprof.select(eSysprof.up, "left join", eArtikl.up, "on", eArtikl.id, "=",
@@ -417,8 +417,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     UGui.setSelectedRow(tab5);
                 }
             } else {
-                canvas.init(null);
-                canvas.repaint();
+                //НАДО ОЧИСТИТЬ КАНВУ!!!
+                //canvas.init(null);
+                //canvas.repaint();
             }
         }
     }
