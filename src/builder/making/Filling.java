@@ -56,7 +56,7 @@ public class Filling extends Cal5e {
         super.calc();
         try {
             Double depth = elemGlass.artiklRec.getDbl(eArtikl.depth); //толщина стекда           
-            List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(winc.root.frames.values());  //список рам конструкции
+            List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(winc.root.frames);  //список рам конструкции
             
             //Цикл по сторонам стеклопакета
             double sideHoriz[] = {0, 90, 180, 270};

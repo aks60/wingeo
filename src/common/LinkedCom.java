@@ -1,7 +1,9 @@
 package common;
 
 import builder.model.Com5t;
+import builder.model.ElemSimple;
 import builder.script.GsonElem;
+import enums.Layout;
 import enums.Type;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,6 +21,25 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
         }
         return null;
     }
+    
+    public E get(Layout layout) {
+        double angl = 0;
+        if(layout == Layout.LEFT) {
+            angl = 90;
+        } else if(layout == Layout.BOTT) {
+            angl = 0;
+        } else if(layout == Layout.RIGHT) {
+            angl = -90;
+        } else if(layout == Layout.TOP) {
+            angl = 180;
+        }
+        for (E el : this) {
+            if (angl == ((ElemSimple) el).anglHoriz()) {
+                return (E) el;
+            }
+        }
+        return null;
+    }
 
     public <T extends Com5t> LinkedCom<T> filter(Type... type) {
         List tp = List.of(type);
@@ -31,11 +52,21 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
         return list2;
     }
 
-    public E find(double id) {
+    public E find2(double id) {
         return this.stream().filter(it -> it.id == id).findFirst().get();
     }
-    
-    public E find(Type type) {
+
+    public E find3(double angl) {
+
+        for (E el : this) {
+            if (angl == ((ElemSimple) el).anglHoriz()) {
+                return (E) el;
+            }
+        }
+        return null;
+    }
+
+    public E find4(Type type) {
 
         for (E el : this) {
             if (type == el.type) {
@@ -44,4 +75,5 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
         }
         return null;
     }
+
 }

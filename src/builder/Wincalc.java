@@ -153,7 +153,7 @@ public class Wincalc {
                         ElemFrame elem5e = new ElemFrame(this, js, owner);
                         listElem.add(elem5e);
                         listFrame.add(elem5e);
-                        //root.frames.put(js.layout, elem5e);
+                        root.frames.add(elem5e);
 
                     } else if (Type.IMPOST == js.type || Type.SHTULP == js.type || Type.STOIKA == js.type) {
                         ElemCross elem5e = new ElemCross(this, js, owner);

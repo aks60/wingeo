@@ -281,7 +281,6 @@ public class Test {
 
     //Пример PathIterator
     public static void geom() {
-
         GeometryFactory gf = new GeometryFactory(); //JTSFactoryFinder.getGeometryFactory(); 
 
         Coordinate[] coord1 = new Coordinate[]{
@@ -302,10 +301,9 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
         
-        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(0, 10))));   //90.0
-        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(0, 10), new Coordinate(10, 10)))); //0.0
-        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(10, 10), new Coordinate(10, 0)))); //-90.0
-        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(10, 0), new Coordinate(0, 0))));   //180.0
-
+        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(0, 10))));   //90.0 left
+        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(0, 10), new Coordinate(10, 10)))); //0.0 bott
+        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(10, 10), new Coordinate(10, 0)))); //-90.0 right
+        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(10, 0), new Coordinate(0, 0))));   //180.0 top
     }
 }

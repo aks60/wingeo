@@ -380,7 +380,7 @@ public class UColor {
                 case 0:
                     return spcAdd.detailRec.getInt(COLOR_FK);  //указана вручную
                 case 11: //По текстуре профиля
-                    HashMap.Entry<Layout, ElemSimple> firstEntry = (Entry<Layout, ElemSimple>) spcAdd.elem5e.root.frames.entrySet().iterator().next();
+                    HashMap.Entry<Layout, ElemSimple> firstEntry = (Entry<Layout, ElemSimple>) spcAdd.elem5e.root.frames.iterator().next();
                     int artiklID = firstEntry.getValue().artiklRec.getInt(eArtikl.id);
                     return eArtdet.query().stream().filter(rec -> rec.getInt(eArtdet.mark_c1) == 1
                             && rec.getInt(eArtdet.mark_c2) == 1 && rec.getInt(eArtdet.mark_c3) == 1

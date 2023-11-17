@@ -68,7 +68,7 @@ public class FurnitureDet extends Par5s {
                 }
                 case 24002:  //Если артикул створки 
                 case 25002:  //Если артикул створки 
-                    if (areaStv.frames.entrySet().stream().filter(el -> el.getValue().artiklRec.getStr(eArtikl.code).equals(rec.getStr(TEXT))).findFirst().orElse(null) == null) {
+                    if (areaStv.frames.stream().filter(el -> el.artiklRec.getStr(eArtikl.code).equals(rec.getStr(TEXT))).findFirst().orElse(null) == null) {
                         return false;
                     }
                     break;
@@ -77,13 +77,13 @@ public class FurnitureDet extends Par5s {
                     message(rec.getInt(GRUP));
                     break;
                 case 24004: //Если створка прилегает к артикулу 
-                    if (areaStv.frames.entrySet().stream().filter(el -> winc.listJoin.elem(el.getValue(), 2).artiklRec.getStr(eArtikl.code).equals(rec.getStr(TEXT))).findFirst().orElse(null) == null) {
+                    if (areaStv.frames.stream().filter(el -> winc.listJoin.elem(el, 2).artiklRec.getStr(eArtikl.code).equals(rec.getStr(TEXT))).findFirst().orElse(null) == null) {
                         return false;
                     }
                     break;
                 case 24005:  //Коды текстуры створки 
                 case 25005:  //Коды текстуры створки 
-                    if (areaStv.frames.entrySet().stream().filter(el -> UCom.containsColor(rec.getStr(TEXT), el.getValue().colorID1) == true).findFirst().orElse(null) == null) {
+                    if (areaStv.frames.stream().filter(el -> UCom.containsColor(rec.getStr(TEXT), el.colorID1) == true).findFirst().orElse(null) == null) {
                         return false;
                     }
                     break;
@@ -123,8 +123,8 @@ public class FurnitureDet extends Par5s {
                 break;
                 case 24009:  //Коды текстуры подвеса 
                 case 25009:  //Коды текстуры подвеса                   
-                    for (Map.Entry<Layout, ElemSimple> elem : areaStv.frames.entrySet()) {
-                        for (Specific spc : elem.getValue().spcRec.spcList) {
+                    for (ElemSimple elem : areaStv.frames) {
+                        for (Specific spc : elem.spcRec.spcList) {
                             if (spc.artiklRec.getInt(eArtikl.level1) == 2 && spc.artiklRec.getInt(eArtikl.level2) == 12) {
                                 String name = eColor.find(spc.colorID1).getStr(eColor.name);
                                 if (name.equals(rec.getStr(TEXT)) == false) {
@@ -174,8 +174,8 @@ public class FurnitureDet extends Par5s {
                 {
                     if (rec.getStr(TEXT).equals("Да")) {
                         boolean ret = false;
-                        for (Map.Entry<Layout, ElemSimple> entry : areaStv.frames.entrySet()) {
-                            if (winc.listJoin.elem(entry.getValue(), 2).type == Type.SHTULP) {
+                        for (ElemSimple entry : areaStv.frames) {
+                            if (winc.listJoin.elem(entry, 2).type == Type.SHTULP) {
                                 ret = true;
                             }
                         }
@@ -184,8 +184,8 @@ public class FurnitureDet extends Par5s {
                         }
                     } else if (rec.getStr(TEXT).equals("Нет")) {
                         boolean ret = false;
-                        for (Map.Entry<Layout, ElemSimple> entry : areaStv.frames.entrySet()) {
-                            if (winc.listJoin.elem(entry.getValue(), 2).type == Type.SHTULP) {
+                        for (ElemSimple entry : areaStv.frames) {
+                            if (winc.listJoin.elem(entry, 2).type == Type.SHTULP) {
                                 ret = true;
                             }
                         }

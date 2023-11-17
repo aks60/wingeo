@@ -467,7 +467,7 @@ public class JoiningVar extends Par5s {
                 case 3031:  //Усечение Артикула1/Артикула2, мм 
                     listenerList.add(() -> {
                         if ("ps3".equals(eSetting.val(2))) { //Усечение Артикула 1, мм
-                            ElemSimple el9 = winc.listElem.find(5.4f);
+                            ElemSimple el9 = winc.listElem.find2(5.4f);
                             elemJoin.elem1.spcRec.width -= rec.getDbl(TEXT);
 
                         } else {
