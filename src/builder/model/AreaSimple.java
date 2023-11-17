@@ -21,7 +21,7 @@ import java.util.List;
 public class AreaSimple extends Com5t {
 
     public Form form = null; //форма контура (параметр в развитии)
-    //public EnumMap<Layout, ElemSimple> frames = new EnumMap<>(Layout.class); //список рам в окне 
+    public EnumMap<Layout, ElemSimple> frames = new EnumMap<>(Layout.class); //список рам в окне 
     public Area area2 = null;
     public LinkedList<Point2D> listSkin = new LinkedList();
     public LinkedCom<Com5t> childs = new LinkedCom(); //дети

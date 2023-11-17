@@ -67,13 +67,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            wincalc();
+            //wincalc();
             //query();
             //frame();
             //json();
             //uid();
             //script();
-            //geom();
+            geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -301,6 +301,11 @@ public class Test {
         LineSegment segm2 = new LineSegment(20, 20, 200, 120);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
+        
+        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(0, 10))));   //90.0
+        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(0, 10), new Coordinate(10, 10)))); //0.0
+        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(10, 10), new Coordinate(10, 0)))); //-90.0
+        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(10, 0), new Coordinate(0, 0))));   //180.0
 
     }
 }
