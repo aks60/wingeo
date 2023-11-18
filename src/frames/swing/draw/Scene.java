@@ -69,7 +69,7 @@ public class Scene extends javax.swing.JPanel {
                                 List<Com5t> areaChilds = ((ElemSimple) crs).owner.childs(); //дети импоста на котором был клик
                                 for (int i = 0; i < areaChilds.size(); ++i) {
                                     if (areaChilds.get(i).id == crs.id) {
-                                        if (crs.layout == Layout.HORIZ) { //area слева и справа от импоста
+                                        if (crs.layout() == Layout.HORIZ) { //area слева и справа от импоста
                                             lineVert = List.of(new Scale((AreaSimple) areaChilds.get(i - 1)), new Scale((AreaSimple) areaChilds.get(i + 1)));
                                         } else {
                                             lineHoriz = List.of(new Scale((AreaSimple) areaChilds.get(i - 1)), new Scale((AreaSimple) areaChilds.get(i + 1)));

@@ -29,7 +29,7 @@ public class AreaRectangl extends AreaSimple {
             this.geom = gf.createPolygon(arrCoord);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Area2Polygon.setLocation()" + toString() + e);
+            System.err.println("Ошибка:AreaPolygon.setLocation()" + toString() + e);
         }
     }
 

@@ -15,7 +15,7 @@ public class ElemMosquit extends ElemSimple {
 
     public ElemMosquit(AreaSimple owner, GsonElem gson) {
         super(owner.winc, gson, owner);
-        this.layout = Layout.FULL;
+        //this.layout() = Layout.FULL;
 
         initСonstructiv(gson.param);
         setLocation();

@@ -28,7 +28,7 @@ public class Com5t {
     public AreaSimple root = null; //главный класс конструкции
     public GsonElem gson = null; //gson object конструкции    
     public Type type = Type.NONE; //тип элемента или окна
-    public Layout layout = Layout.FULL; //направление(AREA) сторона(ELEM) - расположения компонентов ...
+    //public Layout layout = Layout.FULL; //направление(AREA) сторона(ELEM) - расположения компонентов ...
     public Polygon geom = null;
     private boolean ev[] = {false, false};
     private Point pointPress = null;
@@ -116,6 +116,10 @@ public class Com5t {
     public double length() {
         //return owner.geom.getEnvelopeInternal().getWidth();
         return new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).getLength();
+    }
+
+    public Layout layout() {
+        return Layout.ANY;
     }
 
     /**

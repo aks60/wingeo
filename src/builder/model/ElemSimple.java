@@ -3,6 +3,7 @@ package builder.model;
 import builder.Wincalc;
 import builder.making.Specific;
 import builder.script.GsonElem;
+import enums.Layout;
 import java.awt.Color;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.Coordinate;
@@ -20,22 +21,22 @@ public class ElemSimple extends Com5t {
     public ElemSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
         winc.listElem.add(this);
-        winc.listAll.add(this);        
+        winc.listAll.add(this);
         spcRec = new Specific(id, this);
     }
 
-    public void setLocation() {      
+    public void setLocation() {
     }
 
     public void addSpecific(Specific spcAdd) {
-        
+
     }
-    
+
     //Угол к горизонту 
     public double anglHoriz() {
         return Angle.toDegrees(Angle.angle(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2())));
     }
-    
+
     @Override
     public String toString() {
         return super.toString() + ", anglHoriz=" + anglHoriz();

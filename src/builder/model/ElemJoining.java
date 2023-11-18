@@ -50,9 +50,9 @@ public class ElemJoining {
             } else if (sideCalc != null && "меньшей".equals(sideCalc)) {
                 spcAdd.width = (elem1.length() > elem2.length()) ? elem2.length() : elem1.length();
             } else if (sideCalc != null && "общей".equals(sideCalc)) {
-                if (elem1.layout == Layout.HORIZ || elem1.layout == Layout.BOTT || elem1.layout == Layout.TOP) {
+                if (elem1.layout() == Layout.HORIZ || elem1.layout() == Layout.BOTT || elem1.layout() == Layout.TOP) {
                     spcAdd.width = (elem1.x1() > elem2.x1()) ? elem1.x1() - elem2.x2() : elem2.x1() - elem1.x2();
-                } else if (elem1.layout == Layout.VERT || elem1.layout == Layout.RIGHT || elem1.layout == Layout.LEFT) {
+                } else if (elem1.layout() == Layout.VERT || elem1.layout() == Layout.RIGHT || elem1.layout() == Layout.LEFT) {
                     spcAdd.width = (elem1.y1() > elem2.y1()) ? elem1.y1() - elem2.y2() : elem2.y1() - elem1.y2();
                 }
             }
@@ -95,7 +95,7 @@ public class ElemJoining {
     }
 
     public String toString() {
-        return "id=" + id + ",  layout= " + layout + ",  type=" + type + ",  elem1=" + elem1.layout + ",  elem2=" + elem2.layout + ",  " + layout.name;
+        return "id=" + id + ",  layout= " + layout + ",  type=" + type + ",  elem1=" + elem1.layout() + ",  elem2=" + elem2.layout() + ",  " + layout.name;
     }
     
     

@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import domain.eArtikl;
 import domain.eColor;
 import domain.eSysprof;
+import enums.Layout;
 import enums.PKjson;
 import enums.UseSide;
 import java.awt.Shape;
@@ -91,6 +92,20 @@ public class ElemCross extends ElemSimple {
         }
     }
 
+    public Layout layout() {
+        double angl = this.anglHoriz();
+        if (angl == 90) {
+            return Layout.VERT;
+        } else if (angl == 0) {
+            return Layout.HORIZ;
+        } else if (angl == -90) {
+            return Layout.VERT;
+        } else if (angl == 180) {
+            return Layout.HORIZ;
+        }
+        return Layout.ANY;
+    }
+    
     public void paint() {
         
         if (this.geom != null) {

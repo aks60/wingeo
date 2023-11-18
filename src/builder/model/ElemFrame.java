@@ -7,6 +7,7 @@ import domain.eArtikl;
 import domain.eColor;
 import domain.eSysprof;
 import domain.eSyssize;
+import enums.Layout;
 import enums.PKjson;
 import enums.UseSide;
 import java.awt.BasicStroke;
@@ -80,15 +81,29 @@ public class ElemFrame extends ElemSimple {
         }
     }
 
-    public void paint() {      
+    public Layout layout() {
+        double angl = this.anglHoriz();
+        if (angl == 90) {
+            return Layout.LEFT;
+        } else if (angl == 0) {
+            return Layout.BOTT;
+        } else if (angl == -90) {
+            return Layout.RIGHT;
+        } else if (angl == 180) {
+            return Layout.TOP;
+        }
+        return Layout.ANY;
+    }
+    
+    public void paint() {
         if (this.geom != null) {
             java.awt.Color color = winc.gc2d.getColor();
             Shape shape = new ShapeWriter().toShape(this.geom);
 
             winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-            winc.gc2d.fill(shape);            
-            
-            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));            
+            winc.gc2d.fill(shape);
+
+            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
             winc.gc2d.draw(shape);
             winc.gc2d.setColor(color);
         }
