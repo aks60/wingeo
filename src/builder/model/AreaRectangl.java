@@ -22,8 +22,8 @@ public class AreaRectangl extends AreaSimple {
     public void setLocation() {
         try {
             ArrayList<Coordinate> listCoord = new ArrayList<Coordinate>();
-            winc.listFrame.forEach(line -> listCoord.add(new Coordinate(line.x1(), line.y1())));
-            listCoord.add(new Coordinate(winc.listFrame.get(0).x1(), winc.listFrame.get(0).y1()));
+            this.frames.forEach(line -> listCoord.add(new Coordinate(line.x1(), line.y1())));
+            listCoord.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1()));
             Coordinate[] arrCoord = listCoord.toArray(new Coordinate[0]);
 
             this.geom = gf.createPolygon(arrCoord);
@@ -41,9 +41,9 @@ public class AreaRectangl extends AreaSimple {
         LinkedList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);        
         try {
             //L - соединения
-            for (int i = 0; i < winc.listFrame.size(); i++) { //цикл по сторонам рамы
-                ElemFrame nextFrame = winc.listFrame.get((i == winc.listFrame.size() - 1) ? 0 : i + 1);
-                winc.listJoin.add(new ElemJoining(this.winc, winc.listFrame.get(i), nextFrame));
+            for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам рамы
+                ElemFrame nextFrame = this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1);
+                winc.listJoin.add(new ElemJoining(this.winc, this.frames.get(i), nextFrame));
             }
             //T - соединения
             for (ElemSimple e1 : crosList) { //цикл по кросс элементам

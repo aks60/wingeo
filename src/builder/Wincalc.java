@@ -64,8 +64,6 @@ public class Wincalc {
     public HashMap<Integer, Record> mapPardef = new HashMap(); //пар. по умолчанию + наложенные пар. клиента
     public LinkedCom<AreaSimple> listArea = new LinkedCom(); //список ареа.
     public LinkedCom<ElemSimple> listElem = new LinkedCom(); //список элем.
-    public LinkedCom<ElemFrame> listFrame = new LinkedCom(); //список рам
-    //public LinkedCom<ElemCross> listCross = new LinkedCom(); //список имп.
     public LinkedCom<Com5t> listAll = new LinkedCom(); //список всех компонентов (area + elem)
     public ArraySpc<Specific> listSpec = new ArraySpc(); //спецификация
     public ArrayJoin listJoin = new ArrayJoin(); //список соединений рам и створок 
@@ -152,7 +150,6 @@ public class Wincalc {
                     } else if (Type.FRAME_SIDE == js.type) {
                         ElemFrame elem5e = new ElemFrame(this, js, owner);
                         listElem.add(elem5e);
-                        listFrame.add(elem5e);
                         root.frames.add(elem5e);
 
                     } else if (Type.IMPOST == js.type || Type.SHTULP == js.type || Type.STOIKA == js.type) {
