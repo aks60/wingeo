@@ -3245,7 +3245,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                 ListenerRecord listenerColor = (colorRec) -> {
 
                     if (colorRec.get(1) != null) {
-                        GsonElem jsonElem2 = winc().listAll.gson(selectID);
                         GsonElem jsonElem = winc().listAll.gson(selectID);
                         if (jsonElem != null) {
                             if (evt.getSource() == btn9) {

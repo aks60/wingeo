@@ -5,6 +5,7 @@ import builder.model.ElemSimple;
 import builder.script.GsonElem;
 import enums.Layout;
 import enums.Type;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,6 +13,10 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
 
     public LinkedCom() {
         super();
+    }
+    
+    public LinkedCom(Collection<? extends E> c) {
+        super(c);
     }
 
     public GsonElem gson(double id) {

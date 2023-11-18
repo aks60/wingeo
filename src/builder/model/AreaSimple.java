@@ -35,7 +35,6 @@ public class AreaSimple extends Com5t {
         this.colorID3 = winc.gson.color3;
 
         initСonstructiv(winc.gson.param);
-        //setLocation(winc.gson.width(), winc.gson.height());
         initParametr(winc.gson.param);
     }
 
