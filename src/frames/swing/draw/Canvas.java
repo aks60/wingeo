@@ -86,7 +86,7 @@ public class Canvas extends javax.swing.JPanel implements ListenerFrame<MouseEve
             winc.gc2d.translate(Com5t.TRANSLATE_XY, Com5t.TRANSLATE_XY);
             winc.scale = scale(winc, -3, 0);
             winc.gc2d.scale(winc.scale, winc.scale - 0.001);
-            winc.draw();
+            winc.root.draw();
 
         } else {
             g.setColor(getBackground());
@@ -106,8 +106,7 @@ public class Canvas extends javax.swing.JPanel implements ListenerFrame<MouseEve
             winc.scale = (length / width > length / height)
                     ? length / (height + 200) : length / (width + 200);
             winc.gc2d.scale(winc.scale, winc.scale);
-            //winc.root.draw(); //рисую конструкцию
-            winc.draw(); //рисую конструкцию
+            winc.root.draw(); //рисую конструкцию
             return new ImageIcon(bi);
             
         } catch (Exception e) {

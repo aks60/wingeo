@@ -65,7 +65,7 @@ public class Wincalc {
     public LinkedCom<AreaSimple> listArea = new LinkedCom(); //список ареа.
     public LinkedCom<ElemSimple> listElem = new LinkedCom(); //список элем.
     public LinkedCom<ElemFrame> listFrame = new LinkedCom(); //список рам
-    public LinkedCom<ElemCross> listCross = new LinkedCom(); //список имп.
+    //public LinkedCom<ElemCross> listCross = new LinkedCom(); //список имп.
     public LinkedCom<Com5t> listAll = new LinkedCom(); //список всех компонентов (area + elem)
     public ArraySpc<Specific> listSpec = new ArraySpc(); //спецификация
     public ArrayJoin listJoin = new ArrayJoin(); //список соединений рам и створок 
@@ -159,7 +159,6 @@ public class Wincalc {
                         ElemCross elem5e = new ElemCross(this, js, owner);
                         owner.childs().add(elem5e); //добавим ребёнка родителю
                         listElem.add(elem5e);
-                        listCross.add(elem5e);
 
                     } else if (Type.GLASS == js.type) {
                         ElemGlass elem5e = new ElemGlass(this, js, owner);
@@ -231,31 +230,12 @@ public class Wincalc {
         }
     }
 
-    public void draw() {
-        try {
-            root.setLocation();
-            listFrame.forEach(e -> e.setLocation());
-            listCross.forEach(e -> e.setLocation());
-            //listAll.forEach(e -> e.setLocation());
-
-            root.draw();
-            //listArea.forEach(e -> e.paint());
-            //listFrame.forEach(e -> e.paint());
-            //listCross.forEach(e -> e.paint());
-            //listElem.forEach(e -> e.paint());
-            //listAll.forEach(e -> e.paint());
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Wingeo.draw() " + e);
-        }
-    }
-
     // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 
     private void init() {
         genId = 0;
         syssizeRec = null;
         mapPardef.clear();
-        List.of((List) listArea, (List) listFrame, (List) listCross, (List) listSpec).forEach(el -> el.clear());
+        List.of((List) listArea, (List) listElem, (List) listSpec, (List) listAll, (List) listJoin).forEach(el -> el.clear());
     }
 
     public double width() {

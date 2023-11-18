@@ -120,6 +120,9 @@ public class AreaSimple extends Com5t {
 
     public void draw() {
         try {
+            winc.root.setLocation();
+            winc.listElem.forEach(e -> e.setLocation());
+
             //Прорисовка стеклопакетов
             LinkedList<ElemSimple> elemGlassList = winc.listElem.filter(Type.GLASS);
             elemGlassList.stream().forEach(el -> el.paint());

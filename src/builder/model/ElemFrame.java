@@ -80,6 +80,36 @@ public class ElemFrame extends ElemSimple {
         }
     }
 
+    public void setLocation2() {
+        try {
+            for (int i = 0; i < winc.listFrame.size(); i++) {
+                if (winc.listFrame.get(i).id == this.id) {
+
+                    int k = (i == 0) ? winc.listFrame.size() - 1 : i - 1;
+                    int j = (i == (winc.listFrame.size() - 1)) ? 0 : i + 1;
+                    ElemSimple elem0 = winc.listFrame.get(k);
+                    ElemSimple elem1 = winc.listFrame.get(j);
+
+                    double h0[] = UGeo.deltaOnAngl(UGeo.anglHor(this), this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
+                    double h1[] = UGeo.deltaOnAngl(UGeo.anglHor(elem0), elem0.artiklRec.getDbl(eArtikl.height) - elem0.artiklRec.getDbl(eArtikl.size_centr));
+                    double h2[] = UGeo.deltaOnAngl(UGeo.anglHor(elem1), elem1.artiklRec.getDbl(eArtikl.height) - elem1.artiklRec.getDbl(eArtikl.size_centr));
+
+                    Coordinate c1 = Intersection.intersection(
+                            new Coordinate(this.x1() + h0[0], this.y1() - h0[1]), new Coordinate(this.x2() + h0[0], this.y2() - h0[1]),
+                            new Coordinate(elem0.x1() + h1[0], elem0.y1() - h1[1]), new Coordinate(elem0.x2() + h1[0], elem0.y2() - h1[1]));
+                    Coordinate c2 = Intersection.intersection(
+                            new Coordinate(this.x1() + h0[0], this.y1() - h0[1]), new Coordinate(this.x2() + h0[0], this.y2() - h0[1]),
+                            new Coordinate(elem1.x1() + h2[0], elem1.y1() - h2[1]), new Coordinate(elem1.x2() + h2[0], elem1.y2() - h2[1]));
+
+                    this.geom = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y);
+                }
+            }
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:ElemFrame.setLocation()" + toString() + e);
+        }
+    }
+
     public void paint() {      
         if (this.geom != null) {
             java.awt.Color color = winc.gc2d.getColor();
