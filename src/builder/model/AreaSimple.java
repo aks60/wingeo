@@ -21,7 +21,6 @@ import java.util.List;
 public class AreaSimple extends Com5t {
 
     public Form form = null; //форма контура (параметр в развитии)
-    //public EnumMap<Layout, ElemSimple> frames = new EnumMap<>(Layout.class); //список рам в окне 
     public LinkedCom<ElemFrame> frames = new LinkedCom(); //список рам
     public Area area2 = null;
     public LinkedList<Point2D> listSkin = new LinkedList();
@@ -36,6 +35,8 @@ public class AreaSimple extends Com5t {
 
         initСonstructiv(winc.gson.param);
         initParametr(winc.gson.param);
+        winc.listArea.add(this);
+        winc.listAll.add(this);        
     }
 
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
@@ -51,8 +52,6 @@ public class AreaSimple extends Com5t {
         if (isJson(param, PKjson.sysprofID)) {//профили через параметр
             sysprofRec = eSysprof.find3(param.get(PKjson.sysprofID).getAsInt());
         }
-        winc.listArea.add(this);
-        winc.listAll.add(this);
     }
 
     /**
