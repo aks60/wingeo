@@ -2,7 +2,6 @@ package frames.swing.draw;
 
 import builder.model.AreaSimple;
 import builder.script.GsonElem;
-import enums.Type;
 import java.awt.Color;
 
 public class Scale {
@@ -33,13 +32,5 @@ public class Scale {
 
     public double height() {
         return (Y2 - Y1);
-    }
-    
-    public double widthGson() {
-        return area.gson.width();
-    }
-
-    public double heightGson() {
-        return area.gson.height();
     }
 }

@@ -124,18 +124,6 @@ public class Com5t {
         return Layout.ANY;
     }
 
-    /**
-     * Ширина в gson
-     */
-    public double lengthX() {
-        return (this == winc.root) ? this.gson.width() : this.gson.length;
-    }
-
-    //Высота в gson
-    public double lengthY() {
-        return (this == winc.root) ? this.gson.height() : this.gson.length;
-    }
-
     public boolean isJson(JsonObject jso) {
         if (jso == null || "".equals(jso)) {
             return false;

@@ -395,9 +395,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                     setText(txt9, eColor.find(winc.colorID1).getStr(eColor.name));
                     setText(txt13, eColor.find(winc.colorID2).getStr(eColor.name));
                     setText(txt14, eColor.find(winc.colorID3).getStr(eColor.name));
-                    setText(txt17, String.valueOf(winc.gson.width()));
-                    setText(txt22, String.valueOf(winc.gson.height1));
-                    setText(txt23, UCom.format(winc.gson.height2, 1));
+                    setText(txt17, String.valueOf(winc.width()));
+                    setText(txt22, UCom.format(333, 1)); //winc.gson.height1, 1));
+                    setText(txt23, UCom.format(333, 1)); //winc.gson.height2, 1));
                     txt23.setEditable(List.of(enums.Type.ARCH, enums.Type.TRIANGL, enums.Type.TRAPEZE).contains(winNode.com5t().type));
                     int systreeID = qPrjprod.getAs(UGui.getIndexRec(tab2), ePrjprod.systree_id);
                     setText(txt12, eSystree.find(systreeID).getStr(eSystree.note));

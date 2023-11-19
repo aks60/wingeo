@@ -13,7 +13,6 @@ public class GsonElem {
     public transient GsonElem owner = null;  //владелец
     public LinkedList<GsonElem> childs = null; //список детей
     public JsonObject param = null; //параметры элемента
-    //public Layout layout = Layout.ANY; //направление расположения
     public Type type = null; //тип элемента
     public Double x1, y1, x2, y2;
     public Double length = null; //ширина или высота добавляемой area (зависит от напрвления расположения) 
@@ -72,14 +71,6 @@ public class GsonElem {
         } catch (Exception e) {
             System.err.println("Ошибка:GeoElem.setOwnerAndForm() " + e);
         }
-    }
-    
-    public Double height() {
-        return -1.0; //(owner.layout == Layout.VERT) ? length : owner.height();
-    }
-
-    public Double width() {
-        return -1.0; //(owner.layout == Layout.HORIZ) ? length : owner.width();
     }
     
 }
