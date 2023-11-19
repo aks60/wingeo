@@ -21,7 +21,7 @@ public class ElemFrame extends ElemSimple {
     public ElemFrame(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
         initСonstructiv(gson.param);
-        mouseEvent();
+        systemEvent();
     }
 
     /**

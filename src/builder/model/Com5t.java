@@ -3,15 +3,17 @@ package builder.model;
 import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
+import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
+import java.awt.event.KeyListener;
 import dataset.Record;
 import domain.eArtikl;
 import enums.Layout;
 import enums.Type;
 import java.awt.Point;
 import java.awt.Shape;
+import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
-import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -57,7 +59,10 @@ public class Com5t {
     public void paint() {
     }
 
-    public void mouseEvent() {
+    public void systemEvent() {
+        ListenerKey keyPressed = (event) -> {
+            System.out.println("keyPressed");
+        };         
         ListenerMouse mousePressed = (event) -> {
             if (this.geom != null) {
                 pointPress = event.getPoint();
@@ -106,10 +111,12 @@ public class Com5t {
                 }
                 pointPress = event.getPoint();
             }
-        };
+        };       
+               
+        this.winc.keyboardPressed.add(keyPressed);
         this.winc.mousePressed.add(mousePressed);
         this.winc.mouseReleased.add(mouseReleased);
-        this.winc.mouseDragged.add(mouseDragge);
+        this.winc.mouseDragged.add(mouseDragge);     
     }
 
     /**

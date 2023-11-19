@@ -2,13 +2,14 @@ package frames.swing.draw;
 
 import builder.Wincalc;
 import builder.model.Com5t;
-import common.listener.ListenerFrame;
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -19,17 +20,34 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import org.locationtech.jts.awt.ShapeWriter;
 
-public class Canvas extends javax.swing.JPanel implements ListenerFrame<MouseEvent, MouseEvent> {
+public class Canvas extends javax.swing.JPanel {
 
     private Wincalc winc = null;
 
     public Canvas() {
-        initComponents();       
+        initComponents();
     }
 
     public void init(Wincalc winc) {
         this.winc = winc;
-        winc.canvas = this;
+        this.winc.canvas = this;
+        this.addKeyListener(new KeyAdapter() {
+ 
+            public void keyReleased(KeyEvent e) {
+                System.out.println(e.getKeyText(e.getKeyCode()));
+            }
+             
+        });        
+        
+        
+        addKeyListener(new KeyAdapter() {
+
+            public void keyPressed(KeyEvent event) {
+                System.out.println(".keyPressed()");
+                winc.keyboardPressed.forEach(e -> e.keysEvent(event));
+                repaint();
+            }
+        });        
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent event) {
                 winc.mousePressed.forEach(e -> e.mouseEvent(event));
@@ -53,7 +71,7 @@ public class Canvas extends javax.swing.JPanel implements ListenerFrame<MouseEve
             public void componentResized(ComponentEvent event) {
                 //winc.scale = scale(winc, 0, 0);
             }
-        });        
+        });
     }
 
     public void draw() {
@@ -77,7 +95,6 @@ public class Canvas extends javax.swing.JPanel implements ListenerFrame<MouseEve
 
     @Override
     public void paintComponent(Graphics g) {
-        //System.out.println("Canvas2D.paintComponent()");
         super.paintComponent(g);
         if (winc != null) {
             winc.gc2d = (Graphics2D) g;
@@ -108,7 +125,7 @@ public class Canvas extends javax.swing.JPanel implements ListenerFrame<MouseEve
             winc.gc2d.scale(winc.scale, winc.scale);
             winc.root.draw(); //рисую конструкцию
             return new ImageIcon(bi);
-            
+
         } catch (Exception e) {
             System.err.println("Canvas.createImageIcon() " + e);
             return new ImageIcon();

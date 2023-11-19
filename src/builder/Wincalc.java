@@ -18,7 +18,7 @@ import com.google.gson.GsonBuilder;
 import common.ArrayJoin;
 import common.ArraySpc;
 import common.LinkedCom;
-import common.eProp;
+import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
 import dataset.Record;
 import domain.eArtikl;
@@ -57,10 +57,10 @@ public class Wincalc {
     public Graphics2D gc2d = null; //графический котекст рисунка  
     public double scale = 1; //коэффициент сжатия
     public Canvas canvas = null;
+    public ArrayList<ListenerKey> keyboardPressed = new ArrayList();    
     public ArrayList<ListenerMouse> mousePressed = new ArrayList();
     public ArrayList<ListenerMouse> mouseReleased = new ArrayList();
     public ArrayList<ListenerMouse> mouseDragged = new ArrayList();
-
     public HashMap<Integer, Record> mapPardef = new HashMap(); //пар. по умолчанию + наложенные пар. клиента
     public LinkedCom<AreaSimple> listArea = new LinkedCom(); //список ареа.
     public LinkedCom<ElemSimple> listElem = new LinkedCom(); //список элем.
