@@ -169,9 +169,6 @@ public class UGui {
         root.add(new DefMutableTreeNode(new Com5t(Type.PARAM)));
         //Рама
         DefMutableTreeNode frm = root.add(new DefMutableTreeNode(new Com5t(Type.FRAME)));
-        Object o1 = winc.root.frames.get(Layout.RIGHT);
-        Object o2 = winc.root.frames.get(Layout.TOP);
-        Object o3 = winc.root.frames.get(Layout.LEFT);
         frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.BOTT)));
         frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
         frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.RIGHT)));

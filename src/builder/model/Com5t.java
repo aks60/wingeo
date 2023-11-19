@@ -46,7 +46,9 @@ public class Com5t {
         this.winc = winc;
         this.owner = owner;
         this.gson = gson;
-        this.type = gson.type;
+        if (gson.type != null) {
+            this.type = gson.type;
+        }
     }
 
     public void setLocation() {
