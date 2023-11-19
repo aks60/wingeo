@@ -31,13 +31,13 @@ public class Canvas extends javax.swing.JPanel {
     public void init(Wincalc winc) {
         this.winc = winc;
         this.winc.canvas = this;
-        this.addKeyListener(new KeyAdapter() {
- 
-            public void keyReleased(KeyEvent e) {
-                System.out.println(e.getKeyText(e.getKeyCode()));
-            }
-             
-        });        
+//        this.addKeyListener(new KeyAdapter() {
+// 
+//            public void keyReleased(KeyEvent e) {
+//                System.out.println(e.getKeyText(e.getKeyCode()));
+//            }
+//             
+//        });        
         
         
         addKeyListener(new KeyAdapter() {
