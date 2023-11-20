@@ -28,6 +28,8 @@ import dataset.Conn;
 import frames.swing.DefTableModel;
 import com.google.gson.GsonBuilder;
 import frames.swing.draw.Scene;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Collections;
@@ -761,9 +763,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }//GEN-LAST:event_btnMove
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        DefaultTableModel dm = (DefaultTableModel) tab1.getModel();
-        dm.getDataVector().removeAllElements();
-        dm.fireTableDataChanged();
+        canvas.requestFocus();
     }//GEN-LAST:event_btnTestActionPerformed
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">     
@@ -809,6 +809,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                     selectionTab1(event, tab1);
                 }
             }
-        });
+        });       
     }
 }

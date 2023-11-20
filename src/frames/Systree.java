@@ -4582,10 +4582,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         new FrameToFile(this, btnClose);
         new UColor();
 
-        TableFieldFilter filterTable = new TableFieldFilter(0, tab2, tab3, tab4, tab5, tab7);
-        south.add(filterTable, 0);
-        filterTable.getTxt().grabFocus();
-
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
         UGui.setDocumentFilter(3, txt17, txt22, txt23, txt24, txt26);
         List.of(btnIns, btnDel, btnRef).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab2, tab3, tab4, tab5)));
@@ -4617,6 +4613,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         DefaultTreeModel model = (DefaultTreeModel) winTree.getModel();
         ((DefaultMutableTreeNode) model.getRoot()).removeAllChildren();
         model.reload();
+        
+        TableFieldFilter filterTable = new TableFieldFilter(0, tab5, tab3, tab4, tab5, tab7);
+        south.add(filterTable, 0);
+        filterTable.getTxt().grabFocus();        
     }
 
     private void testBimax() {

@@ -26,28 +26,21 @@ public class Canvas extends javax.swing.JPanel {
 
     public Canvas() {
         initComponents();
+        this.setFocusable(true);        
     }
 
     public void init(Wincalc winc) {
+        this.requestFocus();
         this.winc = winc;
         this.winc.canvas = this;
-//        this.addKeyListener(new KeyAdapter() {
-// 
-//            public void keyReleased(KeyEvent e) {
-//                System.out.println(e.getKeyText(e.getKeyCode()));
-//            }
-//             
-//        });        
-        
-        
+
         addKeyListener(new KeyAdapter() {
 
             public void keyPressed(KeyEvent event) {
-                System.out.println(".keyPressed()");
                 winc.keyboardPressed.forEach(e -> e.keysEvent(event));
                 repaint();
             }
-        });        
+        });
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent event) {
                 winc.mousePressed.forEach(e -> e.mouseEvent(event));
@@ -143,6 +136,7 @@ public class Canvas extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        setFocusable(false);
         setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
 

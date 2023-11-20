@@ -61,8 +61,10 @@ public class Com5t {
 
     public void systemEvent() {
         ListenerKey keyPressed = (event) -> {
-            System.out.println("keyPressed");
-        };         
+            if (ev[0] == true || ev[1] == true) {
+                System.out.println("KEY = " + event.getKeyText(event.getKeyCode()));
+            }
+        };
         ListenerMouse mousePressed = (event) -> {
             if (this.geom != null) {
                 pointPress = event.getPoint();
@@ -70,6 +72,7 @@ public class Com5t {
                 Shape area = new ShapeWriter().toShape(this.geom);
                 boolean b = area.contains(event.getX() / winc.scale, event.getY() / winc.scale);
                 if (this.geom != null && b == true) {
+
                     double d1 = Point2D.distance(x1(), y1(), event.getX() / winc.scale, event.getY() / winc.scale); //длина к началу вектора
                     double d2 = Point2D.distance(x2(), y2(), event.getX() / winc.scale, event.getY() / winc.scale); //длина к концу вектора
                     double d3 = (d1 + d2) / 3;
@@ -111,12 +114,12 @@ public class Com5t {
                 }
                 pointPress = event.getPoint();
             }
-        };       
-               
+        };
+
         this.winc.keyboardPressed.add(keyPressed);
         this.winc.mousePressed.add(mousePressed);
         this.winc.mouseReleased.add(mouseReleased);
-        this.winc.mouseDragged.add(mouseDragge);     
+        this.winc.mouseDragged.add(mouseDragge);
     }
 
     /**
