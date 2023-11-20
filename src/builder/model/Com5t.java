@@ -61,8 +61,39 @@ public class Com5t {
 
     public void systemEvent() {
         ListenerKey keyPressed = (event) -> {
-            if (ev[0] == true || ev[1] == true) {
-                System.out.println("KEY = " + event.getKeyText(event.getKeyCode()));
+            if (this.geom != null) {
+                double W = winc.canvas.getWidth();
+                double H = winc.canvas.getHeight();
+                double dX = 0;
+                double dY = 0;
+                if (ev[0] == true || ev[1] == true) {
+                    if (event.getKeyCode() == KeyEvent.VK_UP) {
+                        dY = -1;
+                    } else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+                        dY = 1;
+                    } else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+                        dX = -1;
+                    } else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+                        dX = 1;
+                    }
+                    if (ev[0] == true) {
+                        double X1 = dX / winc.scale + x1();
+                        double Y1 = dY / winc.scale + y1();
+                        if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
+                            x1(X1);
+                            y1(Y1);
+                            pointPress.setLocation(x1(), y1());
+                        }
+                    } else if (ev[1] == true) {
+                        double X2 = dX / winc.scale + x2();
+                        double Y2 = dY / winc.scale + y2();
+                        if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву
+                            x2(X2);
+                            y2(Y2);
+                            pointPress.setLocation(x2(), y2());
+                        }
+                    }
+                }
             }
         };
         ListenerMouse mousePressed = (event) -> {
