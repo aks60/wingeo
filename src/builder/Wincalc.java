@@ -25,7 +25,6 @@ import dataset.Record;
 import domain.eArtikl;
 import domain.eSyspar1;
 import domain.eSysprof;
-import enums.Form;
 import enums.Type;
 import enums.UseArtiklTo;
 import frames.swing.draw.Canvas;
@@ -52,7 +51,6 @@ public class Wincalc {
     public double price = 0; //стоимость без скидки
     public double cost2 = 0; //стоимость с технологической скидкой
     public double weight = 0; //масса конструкции  
-    public Form form = null; //форма контура (параметр в развитии)
     public BufferedImage bufferImg = null;  //образ рисунка
     public ImageIcon imageIcon = null; //рисунок конструкции
     public Graphics2D gc2d = null; //графический котекст рисунка  

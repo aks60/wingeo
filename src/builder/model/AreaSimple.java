@@ -11,16 +11,13 @@ import domain.eParams;
 import domain.eParmap;
 import domain.eSysprof;
 import enums.*;
-import java.awt.geom.Area;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.EnumMap;
+import java.text.Normalizer.Form;
 import java.util.LinkedList;
 import java.util.List;
 
 public class AreaSimple extends Com5t {
 
-    public Form form = null; //форма контура (параметр в развитии)
     public LinkedCom<ElemFrame> frames = new LinkedCom(); //список рам
     public LinkedList<Point2D> listSkin = new LinkedList();
     public LinkedCom<Com5t> childs = new LinkedCom(); //дети
