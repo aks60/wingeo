@@ -24,6 +24,7 @@ public class ElemGlass extends ElemSimple {
 
     public ElemGlass(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
+        initСonstructiv(gson.param);
     }
 
     public void initСonstructiv(JsonObject param) {
