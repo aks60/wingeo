@@ -71,14 +71,4 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
         return null;
     }
 
-    public E find4(Type type) {
-
-        for (E el : this) {
-            if (type == el.type) {
-                return (E) el;
-            }
-        }
-        return null;
-    }
-
 }

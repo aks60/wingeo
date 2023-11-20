@@ -30,7 +30,6 @@ public class Com5t {
     public AreaSimple root = null; //главный класс конструкции
     public GsonElem gson = null; //gson object конструкции    
     public Type type = Type.NONE; //тип элемента или окна
-    //public Layout layout = Layout.FULL; //направление(AREA) сторона(ELEM) - расположения компонентов ...
     public Polygon geom = null;
     private boolean ev[] = {false, false};
     private Point pointPress = null;

@@ -12,6 +12,7 @@ import builder.model.ElemGlass;
 import builder.model.ElemSimple;
 import builder.making.Specific;
 import builder.making.UColor;
+import builder.model.ElemMosquit;
 import builder.script.GsonElem;
 import builder.script.GsonRoot;
 import com.google.gson.GsonBuilder;
@@ -144,26 +145,23 @@ public class Wincalc {
                     } else if (Type.AREA == js.type) {
                         AreaSimple area5e = new AreaSimple(this, js, owner);
                         owner.childs().add(area5e); //добавим ребёнка родителю
-                        listArea.add(area5e);
                         hm.put(area5e, js);
 
                     } else if (Type.FRAME_SIDE == js.type) {
                         ElemFrame elem5e = new ElemFrame(this, js, owner);
-                        listElem.add(elem5e);
                         root.frames.add(elem5e);
 
                     } else if (Type.IMPOST == js.type || Type.SHTULP == js.type || Type.STOIKA == js.type) {
                         ElemCross elem5e = new ElemCross(this, js, owner);
                         owner.childs().add(elem5e); //добавим ребёнка родителю
-                        listElem.add(elem5e);
 
                     } else if (Type.GLASS == js.type) {
                         ElemGlass elem5e = new ElemGlass(this, js, owner);
                         owner.childs().add(elem5e); //добавим ребёнка родителю
 
                     } else if (Type.MOSKITKA == js.type) {
-                        //Elem2Mosquit elem5e = new Elem2Mosquit(this, js, owner);
-                        //owner.childs().add(elem5e); //добавим ребёнка родителю
+                        ElemMosquit elem5e = new ElemMosquit(this, js, owner);
+                        owner.childs().add(elem5e); //добавим ребёнка родителю
 
                     }
                 }
