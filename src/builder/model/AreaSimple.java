@@ -25,21 +25,11 @@ public class AreaSimple extends Com5t {
     public LinkedList<Point2D> listSkin = new LinkedList();
     public LinkedCom<Com5t> childs = new LinkedCom(); //дети
 
-    public AreaSimple(Wincalc winc) {
-        super(winc, winc.gson, null);
-        //this.layout = winc.gson.layout;
-        this.colorID1 = winc.gson.color1;
-        this.colorID2 = winc.gson.color2;
-        this.colorID3 = winc.gson.color3;
-
-        initСonstructiv(winc.gson.param);
-        initParametr(winc.gson.param);
-        winc.listArea.add(this);
-        winc.listAll.add(this);        
-    }
-
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
+        initСonstructiv(gson.param);
+        winc.listArea.add(this);
+        winc.listAll.add(this); 
     }
 
     /**
@@ -47,7 +37,7 @@ public class AreaSimple extends Com5t {
      * typeOpen:4, sysfurnID:2916} Этого параметра нет в интерфейсе программы,
      * он сделан для тестирования с ps4. Делегируется детьми см. класс ElemFrame
      */
-    public void initСonstructiv(JsonObject param) {
+    public void initСonstructiv(JsonObject param) {        
         if (isJson(param, PKjson.sysprofID)) {//профили через параметр
             sysprofRec = eSysprof.find3(param.get(PKjson.sysprofID).getAsInt());
         }
@@ -90,25 +80,6 @@ public class AreaSimple extends Com5t {
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.initParametr() " + e);
         }
-    }
-
-    public void joining() {
-    }
-
-    /**
-     * Изменение размеров конструкции по оси X
-     *
-     * @param v - новый размер
-     */
-    public void resizeX(double v) {
-    }
-
-    /**
-     * Изменение размеров конструкции по оси Y
-     *
-     * @param v - новый размер
-     */
-    public void resizeY(double v) {
     }
 
     public List<Com5t> childs() {
@@ -164,7 +135,4 @@ public class AreaSimple extends Com5t {
         }
     }
 
-    public void paint() {
-
-    }
 }

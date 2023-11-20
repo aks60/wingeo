@@ -13,11 +13,6 @@ public class AreaRectangl extends AreaSimple {
         super(winc, gson, null);
     }
 
-    public AreaRectangl(Wincalc winc) {
-        super(winc);
-        setDimension(0, 0, winc.width(), winc.height());
-    }
-
     public void setLocation() {
         try {
             ArrayList<Coordinate> listCoord = new ArrayList<Coordinate>();
@@ -30,9 +25,6 @@ public class AreaRectangl extends AreaSimple {
         } catch (Exception e) {
             System.err.println("Ошибка:AreaPolygon.setLocation()" + toString() + e);
         }
-    }
-
-    public void paint() {
     }
 
     public void joining() {
