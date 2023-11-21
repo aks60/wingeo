@@ -51,7 +51,7 @@ public class ElemCross extends ElemSimple {
             Polygon geo2 = (Polygon) geoSplit[2];
             owner.childs().get(0).geom = geo1;
             owner.childs().get(2).geom = geo2;
-            
+
             //Новые координаты импоста
             Geometry lineImp = owner.geom.intersection(geoSplit[0]);
             if (lineImp.getGeometryType().equals("MultiLineString")) { //исправление коллизий
@@ -59,7 +59,7 @@ public class ElemCross extends ElemSimple {
                 lineImp = lineImp.getGeometryN(index);
             }
             //Присваиваю нов. коорд.
-            this.setDimension(lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y, lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y); 
+            this.setDimension(lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y, lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y);
 
             //Внутренняя ареа       
             Polygon geoPadding = UGeo.geoPadding(owner.geom, winc.listElem);
@@ -81,6 +81,9 @@ public class ElemCross extends ElemSimple {
             //Ареа импоста обрезаем areaPadding 
             Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
             this.geom = (Polygon) areaExp.intersection(geoPadding);
+            if (id == 12.0) {
+                System.out.println(id + " " + geoPadding);
+            }
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation() " + e);
@@ -100,9 +103,9 @@ public class ElemCross extends ElemSimple {
         }
         return Layout.ANY;
     }
-    
+
     public void paint() {
-        
+
         if (this.geom != null) {
             java.awt.Color color = winc.gc2d.getColor();
             Shape shape = new ShapeWriter().toShape(this.geom);
@@ -114,7 +117,7 @@ public class ElemCross extends ElemSimple {
             winc.gc2d.draw(new Line2D.Double(this.x1(), this.y1(), this.x2(), this.y2()));
             winc.gc2d.draw(shape);
             winc.gc2d.setColor(color);
-        }        
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">

@@ -130,21 +130,21 @@ public class UGeo {
 
                 int j = (i == coo.length - 1) ? 1 : i + 1;
                 int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
-                LineSegment segm1 = new LineSegment(coo[i], coo[j]);
-                LineSegment segm2 = new LineSegment(coo[k], coo[i]);
+                LineSegment segm1 = new LineSegment(coo[k], coo[i]);
+                LineSegment segm2 = new LineSegment(coo[i], coo[j]);
                 ElemSimple e1 = UGeo.segMapElem(listFrame, segm1);
                 ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
-
+                
                 //Получим ширину сегментов
                 double w1[] = UGeo.deltaOnAngl(UGeo.anglHor(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
                 double w2[] = UGeo.deltaOnAngl(UGeo.anglHor(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
-
+                
                 //Смещённая внутрь точка пересечения сегментов
-                LineSegment segm1a = new LineSegment(e1.x1() + w1[0], e1.y1() - w1[1], e1.x2() + w1[0], e1.y2() - w1[1]);
-                LineSegment segm2a = new LineSegment(e2.x1() + w2[0], e2.y1() - w2[1], e2.x2() + w2[0], e2.y2() - w2[1]);
-
+                LineSegment segm1p = new LineSegment(e1.x1() + w1[0], e1.y1() - w1[1], e1.x2() + w1[0], e1.y2() - w1[1]);
+                LineSegment segm2p = new LineSegment(e2.x1() + w2[0], e2.y1() - w2[1], e2.x2() + w2[0], e2.y2() - w2[1]);
+                
                 //Точка пересечения внутренних сегментов
-                out[i] = segm1a.lineIntersection(segm2a);
+                out[i] = segm2p.lineIntersection(segm1p);
             }
             return Com5t.gf.createPolygon(out);
 
