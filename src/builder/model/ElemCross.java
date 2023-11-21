@@ -81,9 +81,6 @@ public class ElemCross extends ElemSimple {
             //Ареа импоста обрезаем areaPadding 
             Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
             this.geom = (Polygon) areaExp.intersection(geoPadding);
-            if (id == 12.0) {
-                System.out.println(id + " " + geoPadding);
-            }
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation() " + e);

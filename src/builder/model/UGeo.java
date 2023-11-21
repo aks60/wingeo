@@ -121,30 +121,30 @@ public class UGeo {
 
     //Внутренняя обводка ареа 
     public static Polygon geoPadding(Polygon poly, LinkedCom<ElemSimple> listElem) {
-
-        List<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);	
         Coordinate[] coo = poly.getCoordinates();
         Coordinate[] out = new Coordinate[coo.length];
+        List<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
         try {
             for (int i = 0; i < coo.length; i++) {
 
+                //Сегменты границ полигона
                 int j = (i == coo.length - 1) ? 1 : i + 1;
                 int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
                 LineSegment segm1 = new LineSegment(coo[k], coo[i]);
                 LineSegment segm2 = new LineSegment(coo[i], coo[j]);
+
+                //Получим ширину сегментов
                 ElemSimple e1 = UGeo.segMapElem(listFrame, segm1);
                 ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
-                
-                //Получим ширину сегментов
-                double w1[] = UGeo.deltaOnAngl(UGeo.anglHor(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
-                double w2[] = UGeo.deltaOnAngl(UGeo.anglHor(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
-                
-                //Смещённая внутрь точка пересечения сегментов
-                LineSegment segm1p = new LineSegment(e1.x1() + w1[0], e1.y1() - w1[1], e1.x2() + w1[0], e1.y2() - w1[1]);
-                LineSegment segm2p = new LineSegment(e2.x1() + w2[0], e2.y1() - w2[1], e2.x2() + w2[0], e2.y2() - w2[1]);
-                
+                double delta1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);
+                double delta2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr);
+
+                //Смещение сегментов относительно границ
+                LineSegment segm3 = segm1.offset(-delta1);
+                LineSegment segm4 = segm2.offset(-delta2);
+
                 //Точка пересечения внутренних сегментов
-                out[i] = segm2p.lineIntersection(segm1p);
+                out[i] = segm4.lineIntersection(segm3);
             }
             return Com5t.gf.createPolygon(out);
 
