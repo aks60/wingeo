@@ -10,9 +10,7 @@ import enums.Layout;
 import enums.PKjson;
 import enums.UseSide;
 import java.awt.Shape;
-import java.awt.geom.Area;
 import java.awt.geom.Line2D;
-import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
@@ -47,33 +45,31 @@ public class ElemCross extends ElemSimple {
 
     public void setLocation() {
         try {
-            //Пилим полигон
+            //Пилим полигон импостом
             Geometry[] geoSplit = UGeo.geoSplit(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
-
-            //Новые координаты импоста
-            Geometry lineImp = owner.geom.intersection(geoSplit[0]);
-            Coordinate[] newImp = lineImp.getCoordinates();
-            if (lineImp.getGeometryType().equals("MultiLineString")) {
-                int index = (lineImp.getGeometryN(0).getLength() > lineImp.getGeometryN(1).getLength()) ? 0 : 1;
-                newImp = lineImp.getGeometryN(index).getCoordinates();
-            }
-            this.setDimension(newImp[0].x, newImp[0].y, newImp[1].x, newImp[1].y);
-
-            //Возвращает area слева и справа от импоста
             Polygon geo1 = (Polygon) geoSplit[1];
             Polygon geo2 = (Polygon) geoSplit[2];
             owner.childs().get(0).geom = geo1;
             owner.childs().get(2).geom = geo2;
+            
+            //Новые координаты импоста
+            Geometry lineImp = owner.geom.intersection(geoSplit[0]);
+            if (lineImp.getGeometryType().equals("MultiLineString")) { //исправление коллизий
+                int index = (lineImp.getGeometryN(0).getLength() > lineImp.getGeometryN(1).getLength()) ? 0 : 1;
+                lineImp = lineImp.getGeometryN(index);
+            }
+            //Присваиваю нов. коорд.
+            this.setDimension(lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y, lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y); 
 
             //Внутренняя ареа       
             Polygon geoPadding = UGeo.geoPadding(owner.geom, winc.listElem);
-            if (geoPadding.isValid() == false) { //исправление полигона
+            if (geoPadding.isValid() == false) { //исправление коллизий
                 GeometryFixer fix = new GeometryFixer(geoPadding);
                 geoPadding = (Polygon) fix.getResult().getGeometryN(0);
             }
 
-            //Находим точки пересечение внутр. ареа левым и правым сегментами импоста
-            double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
+            //Левый и правый сегмент вдоль импоста
+            double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr); //ширина
             LineSegment baseSegm = new LineSegment(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()));
             LineSegment moveBaseSegment[] = {baseSegm.offset(+delta), baseSegm.offset(-delta)};
 
@@ -82,9 +78,8 @@ public class ElemCross extends ElemSimple {
             Coordinate C1[] = UGeo.geoIntersect(areaCanvas, moveBaseSegment[0]);
             Coordinate C2[] = UGeo.geoIntersect(areaCanvas, moveBaseSegment[1]);
 
-            //Разширенную ареа импоста обрезаем areaPadding 
+            //Ареа импоста обрезаем areaPadding 
             Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
-
             this.geom = (Polygon) areaExp.intersection(geoPadding);
 
         } catch (Exception e) {

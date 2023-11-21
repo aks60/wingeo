@@ -111,7 +111,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         UGui.setSelectedRow(tab);
     }
 
-    public void selectionTab1(ListSelectionEvent event, JTable tab) {
+    public void selectionTab1(JTable tab) {
         int index = UGui.getIndexRec(tab);
         if (index != -1) {
             Record sysmodelRec = qSysmodel.get(index);
@@ -141,7 +141,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 scene.lineHoriz.forEach(e -> e.init());
                 scene.lineVert.forEach(e -> e.init());
                 scene.draw();
-                //selectionWinTree();
+                ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
+                UGui.setSelectedIndex(tab1, index);
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Models.reload() " + e);
@@ -188,6 +189,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         pan17 = new javax.swing.JPanel();
         panDesign = new javax.swing.JPanel();
         pan7 = new javax.swing.JPanel();
+        btnSave = new javax.swing.JButton();
         pan8 = new javax.swing.JPanel();
         pan9 = new javax.swing.JPanel();
         pan10 = new javax.swing.JPanel();
@@ -422,7 +424,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 .addComponent(btnChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(131, 131, 131)
                 .addComponent(panSspinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 227, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -521,15 +523,30 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 
         pan7.setPreferredSize(new java.awt.Dimension(700, 40));
 
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c036.gif"))); // NOI18N
+        btnSave.setText("Сохранить");
+        btnSave.setMinimumSize(new java.awt.Dimension(113, 20));
+        btnSave.setPreferredSize(new java.awt.Dimension(120, 26));
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pan7Layout = new javax.swing.GroupLayout(pan7);
         pan7.setLayout(pan7Layout);
         pan7Layout.setHorizontalGroup(
             pan7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 426, Short.MAX_VALUE)
+            .addGroup(pan7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(474, Short.MAX_VALUE))
         );
         pan7Layout.setVerticalGroup(
             pan7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
+            .addGroup(pan7Layout.createSequentialGroup()
+                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 14, Short.MAX_VALUE))
         );
 
         pan17.add(pan7, java.awt.BorderLayout.NORTH);
@@ -540,7 +557,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         pan8.setLayout(pan8Layout);
         pan8Layout.setHorizontalGroup(
             pan8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 426, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
         pan8Layout.setVerticalGroup(
             pan8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -559,7 +576,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         );
         pan9Layout.setVerticalGroup(
             pan9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 491, Short.MAX_VALUE)
+            .addGap(0, 510, Short.MAX_VALUE)
         );
 
         pan17.add(pan9, java.awt.BorderLayout.EAST);
@@ -574,7 +591,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         );
         pan10Layout.setVerticalGroup(
             pan10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 491, Short.MAX_VALUE)
+            .addGap(0, 510, Short.MAX_VALUE)
         );
 
         pan17.add(pan10, java.awt.BorderLayout.WEST);
@@ -591,7 +608,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         south.setLayout(southLayout);
         southLayout.setHorizontalGroup(
             southLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 782, Short.MAX_VALUE)
+            .addGap(0, 956, Short.MAX_VALUE)
         );
         southLayout.setVerticalGroup(
             southLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -766,6 +783,10 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         canvas.requestFocus();
     }//GEN-LAST:event_btnTestActionPerformed
 
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        reload();
+    }//GEN-LAST:event_btnSaveActionPerformed
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code">     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChoice;
@@ -775,6 +796,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     private javax.swing.JButton btnMoveD;
     private javax.swing.JButton btnMoveU;
     private javax.swing.JButton btnRef;
+    private javax.swing.JButton btnSave;
     private javax.swing.JToggleButton btnT1;
     private javax.swing.JToggleButton btnT2;
     private javax.swing.JToggleButton btnT3;
@@ -806,7 +828,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         tab1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (event.getValueIsAdjusting() == false) {
-                    selectionTab1(event, tab1);
+                    selectionTab1(tab1);
                 }
             }
         });       

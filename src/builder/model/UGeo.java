@@ -1,6 +1,8 @@
 package builder.model;
 
+import common.LinkedCom;
 import domain.eArtikl;
+import enums.Type;
 import java.util.ArrayList;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
@@ -118,8 +120,9 @@ public class UGeo {
     }
 
     //Внутренняя обводка ареа 
-    public static Polygon geoPadding(Polygon poly, List<ElemSimple> listFrame) {
+    public static Polygon geoPadding(Polygon poly, LinkedCom<ElemSimple> listElem) {
 
+        List<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);	
         Coordinate[] coo = poly.getCoordinates();
         Coordinate[] out = new Coordinate[coo.length];
         try {
