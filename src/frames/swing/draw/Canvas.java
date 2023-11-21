@@ -94,8 +94,8 @@ public class Canvas extends javax.swing.JPanel {
             //winc.gc2d.setColor(getBackground());
             winc.gc2d.setStroke(new BasicStroke(2)); //толщина линии
             winc.gc2d.translate(Com5t.TRANSLATE_XY, Com5t.TRANSLATE_XY);
-            winc.scale = scale(winc, -3, 0);
             winc.gc2d.scale(winc.scale, winc.scale - 0.001);
+            winc.gc2d.scale(0.5, 0.5);
             winc.root.draw();
 
         } else {

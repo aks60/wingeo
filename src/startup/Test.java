@@ -300,21 +300,6 @@ public class Test {
         LineSegment segm2 = new LineSegment(20, 20, 200, 120);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
-        
-//Coordinate	pointAlong(double segmentLengthFraction) Вычисляет то Coordinate, что лежит заданной дробью вдоль линии, определяемой этим сегментом.        
-//Coordinate	project(Coordinate p) Вычислите проекцию точки на линию, определяемую этим отрезком.
-//double	projectionFactor(Coordinate p) Вычисляет коэффициент проекции для проекции точки p на этот LineSegment.
-//Coordinate	reflect(Coordinate p) Вычисляет отражение точки на линии, определенной этим сегментом линии.
-//double	segmentFraction(Coordinate inputPt) Вычисляет долю расстояния (в [0,0, 1,0] ), на котором проекция точки происходит вдоль этого отрезка.
-        //System.out.println(segm1.pointAlong(0.5));
-        //System.out.println(segm1.project(new Coordinate(80, 40)));
-        //System.out.println(segm1.projectionFactor(new Coordinate(80, 20)));  //!!!
-        //System.out.println(segm1.reflect(new Coordinate(80, 40)));
-        
-        LineSegment segm = new LineSegment(100, 0, 0, 0);
-        System.out.println(segm);
-        segm.normalize();
-        System.out.println(segm);
-        System.out.println(segm.segmentFraction(new Coordinate(10, 10)));
+
     }
 }
