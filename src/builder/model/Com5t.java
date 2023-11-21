@@ -5,16 +5,15 @@ import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
-import java.awt.event.KeyListener;
 import dataset.Record;
 import domain.eArtikl;
 import enums.Layout;
 import enums.Type;
 import java.awt.Point;
-import java.awt.Shape;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
-import org.locationtech.jts.awt.ShapeWriter;
+import org.locationtech.jts.algorithm.Distance;
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
@@ -59,20 +58,21 @@ public class Com5t {
     }
 
     public void systemEvent() {
-        ListenerKey keyPressed = (event) -> {
+
+        ListenerKey keyPressed = (evt) -> {
             if (this.geom != null) {
                 double W = winc.canvas.getWidth();
                 double H = winc.canvas.getHeight();
                 double dX = 0;
                 double dY = 0;
                 if (ev[0] == true || ev[1] == true) {
-                    if (event.getKeyCode() == KeyEvent.VK_UP) {
+                    if (evt.getKeyCode() == KeyEvent.VK_UP) {
                         dY = -1;
-                    } else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+                    } else if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
                         dY = 1;
-                    } else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+                    } else if (evt.getKeyCode() == KeyEvent.VK_LEFT) {
                         dX = -1;
-                    } else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+                    } else if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
                         dX = 1;
                     }
                     if (ev[0] == true) {
@@ -95,37 +95,46 @@ public class Com5t {
                 }
             }
         };
-        ListenerMouse mousePressed = (event) -> {
+        ListenerMouse mousePressed = (evt) -> {
             if (this.geom != null) {
-                pointPress = event.getPoint();
-                //Если клик внутри контура
-                Shape area = new ShapeWriter().toShape(this.geom);
-                boolean b = area.contains(event.getX() / winc.scale, event.getY() / winc.scale);
-                if (this.geom != null && b == true) {
+//                if (id == 2.0) {
+//                    System.out.println(this.geom);
+//                    System.out.println(evt.getX() / winc.scale + "  " + evt.getY() / winc.scale);
+//                    System.out.println(this.geom.contains(gf.createPoint(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale))));
+//                }
+                pointPress = evt.getPoint();
 
-                    double d1 = Point2D.distance(x1(), y1(), event.getX() / winc.scale, event.getY() / winc.scale); //длина к началу вектора
-                    double d2 = Point2D.distance(x2(), y2(), event.getX() / winc.scale, event.getY() / winc.scale); //длина к концу вектора
+                //Если клик внутри контура
+                boolean b = this.geom.contains(gf.createPoint(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale)));
+                if (b == true) {
+
+                    new Distance().pointToLinePerpendicular(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale),
+                            new Coordinate(x1(), y1()), new Coordinate(x2(), y2()));
+                    double d1 = Point2D.distance(x1(), y1(), evt.getX() / winc.scale, evt.getY() / winc.scale); //длина к началу вектора
+                    double d2 = Point2D.distance(x2(), y2(), evt.getX() / winc.scale, evt.getY() / winc.scale); //длина к концу вектора
                     double d3 = (d1 + d2) / 3;
 
                     if (d1 < d3) {
                         ev[0] = true; //кликнул ближе к началу ветора
                     } else if (d2 < d3) {
                         ev[1] = true; //кликнул ближе к концу ветора
+                    } else {
+                        System.out.println("Середина сегмента");
                     }
                 }
             }
         };
-        ListenerMouse mouseReleased = (event) -> {
+        ListenerMouse mouseReleased = (evt) -> {
 
             ev[0] = false;
             ev[1] = false;
         };
-        ListenerMouse mouseDragge = (event) -> {
+        ListenerMouse mouseDragge = (evt) -> {
             if (this.geom != null) {
                 double W = winc.canvas.getWidth();
                 double H = winc.canvas.getHeight();
-                double dX = event.getX() - pointPress.getX();
-                double dY = event.getY() - pointPress.getY();
+                double dX = evt.getX() - pointPress.getX();
+                double dY = evt.getY() - pointPress.getY();
 
                 if (ev[0] == true) {
                     double X1 = dX / winc.scale + x1();
@@ -142,7 +151,7 @@ public class Com5t {
                         y2(Y2);
                     }
                 }
-                pointPress = event.getPoint();
+                pointPress = evt.getPoint();
             }
         };
 

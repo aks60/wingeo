@@ -3,6 +3,8 @@ package builder.model;
 import common.LinkedCom;
 import domain.eArtikl;
 import enums.Type;
+import java.awt.Shape;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
@@ -136,12 +138,12 @@ public class UGeo {
                 //Получим ширину сегментов
                 ElemSimple e1 = UGeo.segMapElem(listFrame, segm1);
                 ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
-                double delta1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);
-                double delta2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr);
+                double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);
+                double w2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr);
 
                 //Смещение сегментов относительно границ
-                LineSegment segm3 = segm1.offset(-delta1);
-                LineSegment segm4 = segm2.offset(-delta2);
+                LineSegment segm3 = segm1.offset(-w1);
+                LineSegment segm4 = segm2.offset(-w2);
 
                 //Точка пересечения внутренних сегментов
                 out[i] = segm4.lineIntersection(segm3);
@@ -153,6 +155,7 @@ public class UGeo {
             return null;
         }
     }
+    
 
     //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Coordinate[] arrCoord(double... d) {
@@ -175,6 +178,6 @@ public class UGeo {
         return new Envelope(e.getMinX() + e.getWidth() / 2, e.getMaxX(), e.getMinY() + e.getHeight() / 2, e.getMaxY()).contains(x, y);
     }
 
-// <editor-fold defaultstate="collapsed" desc="TEMP">
+// <editor-fold defaultstate="collapsed" desc="TEMP">    
 // </editor-fold>    
 }

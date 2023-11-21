@@ -51,34 +51,28 @@ public class ElemFrame extends ElemSimple {
             winc.syssizeRec = eSyssize.find(artiklRec);
         }
     }
-
     public void setLocation() {
         try {
             for (int i = 0; i < owner.frames.size(); i++) {
                 if (owner.frames.get(i).id == this.id) {
 
-                    //Примыкающие элементы к этому this
                     int k = (i == 0) ? owner.frames.size() - 1 : i - 1;
                     int j = (i == (owner.frames.size() - 1)) ? 0 : i + 1;
                     ElemSimple e1 = owner.frames.get(k);
                     ElemSimple e2 = owner.frames.get(j);
 
-                    //Получим ширину сегментов                  
-                    double delta0 = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
-                    double delta1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);
-                    double delta2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr);
+                    double h0[] = UGeo.deltaOnAngl(UGeo.anglHor(this), this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
+                    double h1[] = UGeo.deltaOnAngl(UGeo.anglHor(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
+                    double h2[] = UGeo.deltaOnAngl(UGeo.anglHor(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
 
-                    //Сдвиг сегментов внутрь на delta
-                    LineSegment segm0 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).offset(-delta0);
-                    LineSegment segm1 = new LineSegment(e1.x1(), e1.y1(), e1.x2(), e1.y2()).offset(-delta1);
-                    LineSegment segm2 = new LineSegment(e2.x1(), e2.y1(), e2.x2(), e2.y2()).offset(-delta2);
+                    Coordinate c1 = Intersection.intersection(
+                            new Coordinate(this.x1() + h0[0], this.y1() - h0[1]), new Coordinate(this.x2() + h0[0], this.y2() - h0[1]),
+                            new Coordinate(e1.x1() + h1[0], e1.y1() - h1[1]), new Coordinate(e1.x2() + h1[0], e1.y2() - h1[1]));
+                    Coordinate c2 = Intersection.intersection(
+                            new Coordinate(this.x1() + h0[0], this.y1() - h0[1]), new Coordinate(this.x2() + h0[0], this.y2() - h0[1]),
+                            new Coordinate(e2.x1() + h2[0], e2.y1() - h2[1]), new Coordinate(e2.x2() + h2[0], e2.y2() - h2[1]));
 
-                    //Точки пересечения внутр. вершин
-                    Coordinate c1 = Intersection.intersection(segm0.p0, segm0.p1, segm1.p0, segm1.p1);
-                    Coordinate c2 = Intersection.intersection(segm0.p0, segm0.p1, segm2.p0, segm2.p1);
-
-                    //Строим полигон
-                    this.geom = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), c2.x, c2.y, c1.x, c1.y);
+                    this.geom = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y);
                 }
             }
 
