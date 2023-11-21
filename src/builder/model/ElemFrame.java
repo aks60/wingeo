@@ -135,9 +135,8 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void x2(double v) {
         for (int i = 0; i < owner.frames.size(); i++) {
-            if (owner.frames.get(i).x1() == this.x1() && owner.frames.get(i).y1() == this.y1()) {               
-               ElemSimple el = owner.frames.get((i == owner.frames.size() - 1) ? 0 : i + 1);
-               el.x1(v);
+            if (owner.frames.get(i).x1() == this.x1() && owner.frames.get(i).y1() == this.y1()) {
+                owner.frames.get((i == owner.frames.size() - 1) ? 0 : i + 1).x1(v);
             }
         }
     }
