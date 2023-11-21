@@ -296,14 +296,25 @@ public class Test {
         Point point2 = gf.createPoint(new Coordinate(4, 8));
         LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
         LineString line2 = gf.createLineString(new Coordinate[]{new Coordinate(93.81658797276759, 896.6494075724012), new Coordinate(199.48228309038115, 309.9099755154137)});
-        LineSegment segm1 = new LineSegment(40, 40, 200, 40);
+        LineSegment segm1 = new LineSegment(100, 100, 0, 0);
         LineSegment segm2 = new LineSegment(20, 20, 200, 120);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
         
-        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(0, 10))));   //90.0 left
-        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(0, 10), new Coordinate(10, 10)))); //0.0 bott
-        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(10, 10), new Coordinate(10, 0)))); //-90.0 right
-        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(10, 0), new Coordinate(0, 0))));   //180.0 top
+//Coordinate	pointAlong(double segmentLengthFraction) Вычисляет то Coordinate, что лежит заданной дробью вдоль линии, определяемой этим сегментом.        
+//Coordinate	project(Coordinate p) Вычислите проекцию точки на линию, определяемую этим отрезком.
+//double	projectionFactor(Coordinate p) Вычисляет коэффициент проекции для проекции точки p на этот LineSegment.
+//Coordinate	reflect(Coordinate p) Вычисляет отражение точки на линии, определенной этим сегментом линии.
+//double	segmentFraction(Coordinate inputPt) Вычисляет долю расстояния (в [0,0, 1,0] ), на котором проекция точки происходит вдоль этого отрезка.
+        //System.out.println(segm1.pointAlong(0.5));
+        //System.out.println(segm1.project(new Coordinate(80, 40)));
+        //System.out.println(segm1.projectionFactor(new Coordinate(80, 20)));  //!!!
+        //System.out.println(segm1.reflect(new Coordinate(80, 40)));
+        
+        LineSegment segm = new LineSegment(100, 0, 0, 0);
+        System.out.println(segm);
+        segm.normalize();
+        System.out.println(segm);
+        System.out.println(segm.segmentFraction(new Coordinate(10, 10)));
     }
 }

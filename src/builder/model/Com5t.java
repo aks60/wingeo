@@ -97,30 +97,17 @@ public class Com5t {
         };
         ListenerMouse mousePressed = (evt) -> {
             if (this.geom != null) {
-//                if (id == 2.0) {
-//                    System.out.println(this.geom);
-//                    System.out.println(evt.getX() / winc.scale + "  " + evt.getY() / winc.scale);
-//                    System.out.println(this.geom.contains(gf.createPoint(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale))));
-//                }
                 pointPress = evt.getPoint();
-
                 //Если клик внутри контура
                 boolean b = this.geom.contains(gf.createPoint(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale)));
                 if (b == true) {
-
-                    new Distance().pointToLinePerpendicular(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale),
-                            new Coordinate(x1(), y1()), new Coordinate(x2(), y2()));
-                    double d1 = Point2D.distance(x1(), y1(), evt.getX() / winc.scale, evt.getY() / winc.scale); //длина к началу вектора
-                    double d2 = Point2D.distance(x2(), y2(), evt.getX() / winc.scale, evt.getY() / winc.scale); //длина к концу вектора
-                    double d3 = (d1 + d2) / 3;
-
-                    if (d1 < d3) {
+                    LineSegment segm = new LineSegment(x1(), y1(), x2(), y2());
+                    double coef = segm.segmentFraction(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale));
+                    if(coef < .33) {
                         ev[0] = true; //кликнул ближе к началу ветора
-                    } else if (d2 < d3) {
+                    } else if(coef > .67) {
                         ev[1] = true; //кликнул ближе к концу ветора
-                    } else {
-                        System.out.println("Середина сегмента");
-                    }
+                    }     
                 }
             }
         };
