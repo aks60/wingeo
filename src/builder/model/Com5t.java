@@ -30,7 +30,7 @@ public class Com5t {
     public GsonElem gson = null; //gson object конструкции    
     public Type type = Type.NONE; //тип элемента или окна
     public Polygon geom = null;
-    private boolean ev[] = {false, false};
+    private boolean pass[] = {false, false};
     private Point pointPress = null;
     public int colorID1 = -1, colorID2 = -1, colorID3 = -1; //1-базовый 2-внутренний 3-внешний 
     public Record sysprofRec = null; //рофиль в системе
@@ -65,7 +65,7 @@ public class Com5t {
                 double H = winc.canvas.getHeight();
                 double dX = 0;
                 double dY = 0;
-                if (ev[0] == true || ev[1] == true) {
+                if (pass[0] == true || pass[1] == true) {
                     if (evt.getKeyCode() == KeyEvent.VK_UP) {
                         dY = -1;
                     } else if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
@@ -75,7 +75,7 @@ public class Com5t {
                     } else if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
                         dX = 1;
                     }
-                    if (ev[0] == true) {
+                    if (pass[0] == true) {
                         double X1 = dX / winc.scale + x1();
                         double Y1 = dY / winc.scale + y1();
                         if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
@@ -83,7 +83,7 @@ public class Com5t {
                             y1(Y1);
                             pointPress.setLocation(x1(), y1());
                         }
-                    } else if (ev[1] == true) {
+                    } else if (pass[1] == true) {
                         double X2 = dX / winc.scale + x2();
                         double Y2 = dY / winc.scale + y2();
                         if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву
@@ -104,17 +104,17 @@ public class Com5t {
                     LineSegment segm = new LineSegment(x1(), y1(), x2(), y2());
                     double coef = segm.segmentFraction(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale));;
                     if (coef < .33) {
-                        ev[0] = true; //кликнул ближе к началу вектора
+                        pass[0] = true; //кликнул ближе к началу вектора
                     } else if (coef > .67) {
-                        ev[1] = true; //кликнул ближе к концу вектора
+                        pass[1] = true; //кликнул ближе к концу вектора
                     }
                 }
             }
         };
         ListenerMouse mouseReleased = (evt) -> {
 
-            ev[0] = false;
-            ev[1] = false;
+            pass[0] = false;
+            pass[1] = false;
         };
         ListenerMouse mouseDragge = (evt) -> {
             if (this.geom != null) {
@@ -127,16 +127,16 @@ public class Com5t {
                     double dYTest = dY / winc.scale;
                     double X2Test = x2();
                     double Y2Test = y2();
-                    String evTest = ev[0] + " " + ev[1]; 
+                    String evTest = pass[0] + " " + pass[1]; 
                 }
-                if (ev[0] == true) {
+                if (pass[0] == true) {
                     double X1 = dX / winc.scale + x1();
                     double Y1 = dY / winc.scale + y1();
                     if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
                         x1(X1);
                         y1(Y1);
                     }
-                } else if (ev[1] == true) {
+                } else if (pass[1] == true) {
                     double X2 = dX / winc.scale + x2();
                     double Y2 = dY / winc.scale + y2();
                     if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву                       
@@ -188,7 +188,7 @@ public class Com5t {
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
     public void setDimension(double x1, double y1, double x2, double y2) {
-        if (ev[0] == false && ev[1] == false) {
+        if (pass[0] == false && pass[1] == false) {
             gson.x1 = x1;
             gson.y1 = y1;
             gson.x2 = x2;

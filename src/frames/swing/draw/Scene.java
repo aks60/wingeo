@@ -23,10 +23,6 @@ public class Scene extends javax.swing.JPanel {
     public void draw() {
     }
 
-    public Wincalc winc() {
-        return winc;
-    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
