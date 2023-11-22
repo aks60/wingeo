@@ -844,8 +844,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 sysprodRec.set(eSysprod.script, script);
                 sysprodRec.set(eSysprod.values().length, win);
                 canvas.draw();
-                scene.lineHoriz.forEach(e -> e.init());
-                scene.lineVert.forEach(e -> e.init());
                 scene.draw();
                 selectionTree2();
             }

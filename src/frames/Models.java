@@ -98,8 +98,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             try {
                 String script = record.getStr(eSysmodel.script);
                 Wincalc iwin2 = new Wincalc(script);
-                Cal5e joining = new Joining(iwin2, true);//заполним соединения из конструктива
-                joining.calc();
+                //Cal5e joining = new Joining(iwin2, true);//заполним соединения из конструктива
+                //joining.calc();
                 iwin2.imageIcon = Canvas.createIcon(iwin2, 68);
                 record.add(iwin2);
 
@@ -119,8 +119,9 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc win = (Wincalc) w;
                 scene.init(win);
-                canvas.draw();
+                canvas.init(win);
                 scene.draw();
+                canvas.draw();
             }
         }
     }
@@ -138,8 +139,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 sysmodelRec.set(eSysmodel.script, script);
                 sysmodelRec.set(eSysmodel.values().length, win);
                 canvas.draw();
-                scene.lineHoriz.forEach(e -> e.init());
-                scene.lineVert.forEach(e -> e.init());
                 scene.draw();
                 ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
                 UGui.setSelectedIndex(tab1, index);
@@ -690,16 +689,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                     record.set(eSysmodel.form, 2007);
                     qSysmodel.insert(record);
                     loadingTab1(tab1, 2007);
-
                 }
-                //else if (btnT5.isSelected()) {
-                //record.set(eSysmodel.form, 2009);
-                //qSysmodel.insert(record);
-                //loadingTab1(tab1, 2009);
-                //System.out.println("frames.Models.btnInsert()");
-                // }
-                UGui.setSelectedIndex(tab1, qSysmodel.size() - 1);
-                UGui.scrollRectToIndex(qSysmodel.size() - 1, tab1);
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Models.btnInsert()");
@@ -732,28 +722,18 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 
         if (btnT1.isSelected()) {
             loadingTab1(tab1, 2001);
-            //((CardLayout) centr.getLayout()).show(centr, "pan13");
         } else if (btnT2.isSelected()) {
             loadingTab1(tab1, 2004);
-            //((CardLayout) centr.getLayout()).show(centr, "pan14");
         } else if (btnT3.isSelected()) {
             loadingTab1(tab1, 2002);
-            //((CardLayout) centr.getLayout()).show(centr, "pan15");
         } else if (btnT4.isSelected()) {
             loadingTab1(tab1, 2007);
-            //((CardLayout) centr.getLayout()).show(centr, "pan18");
         }
-        //else {
-        // loadingTab1(tab1, 2009);
-        //((CardLayout) centr.getLayout()).show(centr, "pan18");
-        //}
         UGui.updateBorderAndSql(tab1, List.of(tab1));
         UGui.setSelectedRow(tab1);
     }//GEN-LAST:event_btnToggl
 
     private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
-        //JTable table = (JTable) evt.getSource();
-        //UGui.updateBorderAndSql(table, List.of(tab1, tab2, tab3, tab4));
         if (listenet != null && evt.getClickCount() == 2) {
             btnChoice(null);
         }
@@ -780,7 +760,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }//GEN-LAST:event_btnMove
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        canvas.requestFocus();
+        //((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
+        UGui.setSelectedRow(tab1);
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed

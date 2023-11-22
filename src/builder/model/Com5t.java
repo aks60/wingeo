@@ -104,9 +104,9 @@ public class Com5t {
                     LineSegment segm = new LineSegment(x1(), y1(), x2(), y2());
                     double coef = segm.segmentFraction(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale));
                     if (coef < .33) {
-                        ev[0] = true; //кликнул ближе к началу ветора
+                        ev[0] = true; //кликнул ближе к началу вектора
                     } else if (coef > .67) {
-                        ev[1] = true; //кликнул ближе к концу ветора
+                        ev[1] = true; //кликнул ближе к концу вектора
                     }
                 }
             }
@@ -118,37 +118,37 @@ public class Com5t {
         };
         ListenerMouse mouseDragge = (evt) -> {
             if (this.geom != null) {
-                if (id == 2.0) {
-                    System.out.println(evt.getX() / winc.scale + "  " + evt.getY() / winc.scale);
-                    System.out.println(pointPress.getX() / winc.scale + "  " + pointPress.getY() / winc.scale);
-                }
-                //double W = winc.canvas.getWidth();
-                //double H = winc.canvas.getHeight();
+                //if (id == 2.0) {
+                //System.out.println(evt.getX() / winc.scale + "  " + evt.getY() / winc.scale);
+                //System.out.println(pointPress.getX() / winc.scale + "  " + pointPress.getY() / winc.scale);
+                //}
+                double W = winc.canvas.getWidth();
+                double H = winc.canvas.getHeight();
                 double dX = evt.getX() - pointPress.getX();
                 double dY = evt.getY() - pointPress.getY();
-                
-                double dXTest = dX / winc.scale;
-                double dYTest = dY / winc.scale;
-                double X2Test =  x2();
-                double Y2Test =  y2();
-                
-                if (id == 2.0) {
-                    System.out.println(ev[0] + " " + ev[1]);
-                }
+//                if (id == 2.0) {
+//                    double dXTest = dX / winc.scale;
+//                    double dYTest = dY / winc.scale;
+//                    double X2Test = x2();
+//                    double Y2Test = y2();
+//                }
+//                if (id == 2.0) {
+//                    System.out.println(ev[0] + " " + ev[1]);
+//                }
                 if (ev[0] == true) {
                     double X1 = dX / winc.scale + x1();
                     double Y1 = dY / winc.scale + y1();
-                    //if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
-                    x1(X1);
-                    y1(Y1);
-                    //}
+                    if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
+                        x1(X1);
+                        y1(Y1);
+                    }
                 } else if (ev[1] == true) {
                     double X2 = dX / winc.scale + x2();
                     double Y2 = dY / winc.scale + y2();
-                    //if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву
-                    x2(X2);
-                    y2(Y2);
-                    //}
+                    if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву
+                        x2(X2);
+                        y2(Y2);
+                    }
                 }
                 pointPress = evt.getPoint();
             }
