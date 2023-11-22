@@ -70,12 +70,12 @@ public class Canvas extends javax.swing.JPanel {
     }
 
     //Прорисовка конструкции
-//    public void draw() {
+    public void draw() {
 //        if (winc != null) {
 //            winc.scale = scale(winc, 0, 24);
 //            repaint();
 //        }
-//    }
+    }
 
     public void saveImage(String name, String type) {
 
