@@ -102,7 +102,7 @@ public class Com5t {
                 boolean b = this.geom.contains(gf.createPoint(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale)));
                 if (b == true) {
                     LineSegment segm = new LineSegment(x1(), y1(), x2(), y2());
-                    double coef = segm.segmentFraction(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale));
+                    double coef = segm.segmentFraction(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale));;
                     if (coef < .33) {
                         ev[0] = true; //кликнул ближе к началу вектора
                     } else if (coef > .67) {
@@ -126,15 +126,13 @@ public class Com5t {
                 double H = winc.canvas.getHeight();
                 double dX = evt.getX() - pointPress.getX();
                 double dY = evt.getY() - pointPress.getY();
-//                if (id == 2.0) {
-//                    double dXTest = dX / winc.scale;
-//                    double dYTest = dY / winc.scale;
-//                    double X2Test = x2();
-//                    double Y2Test = y2();
-//                }
-//                if (id == 2.0) {
-//                    System.out.println(ev[0] + " " + ev[1]);
-//                }
+                if (id == 2.0) {
+                    double dXTest = dX / winc.scale;
+                    double dYTest = dY / winc.scale;
+                    double X2Test = x2();
+                    double Y2Test = y2();
+                    String evTest = ev[0] + " " + ev[1]; 
+                }
                 if (ev[0] == true) {
                     double X1 = dX / winc.scale + x1();
                     double Y1 = dY / winc.scale + y1();
@@ -146,8 +144,14 @@ public class Com5t {
                     double X2 = dX / winc.scale + x2();
                     double Y2 = dY / winc.scale + y2();
                     if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву
+                        if (id == 2.0) { // && X2 == 0) {
+                            System.out.println(x2());
+                        }                        
                         x2(X2);
                         y2(Y2);
+                        if (id == 2.0) { // && X2 == 0) {
+                            System.out.println(x2());
+                        }                        
                     }
                 }
                 pointPress = evt.getPoint();

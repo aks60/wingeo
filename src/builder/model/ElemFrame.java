@@ -51,6 +51,7 @@ public class ElemFrame extends ElemSimple {
             winc.syssizeRec = eSyssize.find(artiklRec);
         }
     }
+
     public void setLocation() {
         try {
             for (int i = 0; i < owner.frames.size(); i++) {
@@ -112,10 +113,9 @@ public class ElemFrame extends ElemSimple {
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
     @Override
     public double x2() {
-        Coordinate[] coo = this.owner.geom.getCoordinates();
-        for (int i = 0; i < coo.length; i++) {
-            if (coo[i].x == this.x1() && coo[i].y == this.y1()) {
-                return coo[(i == coo.length - 1) ? 0 : i + 1].x;
+        for (int i = 0; i < owner.frames.size(); i++) {
+            if (owner.frames.get(i).x1() == this.x1() && owner.frames.get(i).y1() == this.y1()) {
+                return owner.frames.get((i == owner.frames.size() - 1) ? 0 : i + 1).x1();
             }
         }
         return -1;
@@ -123,10 +123,9 @@ public class ElemFrame extends ElemSimple {
 
     @Override
     public double y2() {
-        Coordinate[] coo = this.owner.geom.getCoordinates();
-        for (int i = 0; i < coo.length; i++) {
-            if (coo[i].x == this.x1() && coo[i].y == this.y1()) {
-                return coo[(i == coo.length - 1) ? 0 : i + 1].y;
+        for (int i = 0; i < owner.frames.size(); i++) {
+            if (owner.frames.get(i).x1() == this.x1() && owner.frames.get(i).y1() == this.y1()) {
+                return owner.frames.get((i == owner.frames.size() - 1) ? 0 : i + 1).y1();
             }
         }
         return -1;
@@ -137,6 +136,7 @@ public class ElemFrame extends ElemSimple {
         for (int i = 0; i < owner.frames.size(); i++) {
             if (owner.frames.get(i).x1() == this.x1() && owner.frames.get(i).y1() == this.y1()) {
                 owner.frames.get((i == owner.frames.size() - 1) ? 0 : i + 1).x1(v);
+                return;
             }
         }
     }
@@ -146,6 +146,7 @@ public class ElemFrame extends ElemSimple {
         for (int i = 0; i < owner.frames.size(); i++) {
             if (owner.frames.get(i).x1() == this.x1() && owner.frames.get(i).y1() == this.y1()) {
                 owner.frames.get((i == owner.frames.size() - 1) ? 0 : i + 1).y1(v);
+                return;
             }
         }
     }
