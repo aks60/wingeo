@@ -575,11 +575,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc win = (Wincalc) w;
                 scene.init(win);
+                canvas.init(win);
                 canvas.draw();
                 scene.draw();
 
                 loadingTree2(win);
-
                 winTree.setSelectionInterval(0, 0);
             }
         } else {
