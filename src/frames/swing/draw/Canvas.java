@@ -32,8 +32,8 @@ public class Canvas extends javax.swing.JPanel {
     public void init(Wincalc winc) {
         //this.requestFocus();
         this.winc = winc;
-        this.winc.canvas = this;
-        this.winc.scale = scale(winc, -3, 0);
+        //this.winc.canvas = this;
+        //this.winc.scale = scale(winc, -3, 0);
 
         addKeyListener(new KeyAdapter() {
 
@@ -64,17 +64,18 @@ public class Canvas extends javax.swing.JPanel {
 
             public void componentResized(ComponentEvent event) {
                 //winc.scale = scale(winc, 0, 0);
+                //System.out.println("RESIZE");
             }
         });
     }
 
     //Прорисовка конструкции
-    public void draw() {
+//    public void draw() {
 //        if (winc != null) {
 //            winc.scale = scale(winc, 0, 24);
 //            repaint();
 //        }
-    }
+//    }
 
     public void saveImage(String name, String type) {
 

@@ -103,7 +103,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             }
         }
         ((DefaultTableModel) tab.getModel()).fireTableDataChanged();
-        UGui.setSelectedRow(tab);
+        //UGui.setSelectedRow(tab);
     }
 
     public void selectionTab1(JTable tab) {
@@ -116,12 +116,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 scene.init(win);
                 canvas.init(win);
                 canvas.repaint();
-                //canvas.setVisible(true);
-                //canvas.requestFocus();
-                
-                //win.root.draw();
-                //win.canvas.paintComponent(win.gc2d);
-                //scene.draw();
+                //canvas.setFocusable(true);
                 //canvas.draw();
             }
         }
@@ -761,7 +756,19 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }//GEN-LAST:event_btnMove
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        //((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
+//        int index = 0;
+//        if (index != -1) {
+//            Record sysmodelRec = qSysmodel.get(index);
+//            Object w = sysmodelRec.get(eSysmodel.values().length);
+//            if (w instanceof Wincalc) { //прорисовка окна               
+//                Wincalc win = (Wincalc) w;
+//                scene.init(win);
+//                canvas.init(win);
+//                canvas.repaint();
+//                canvas.setFocusable(true);
+//            }
+//        }
+        //selectionTab1(tab1);
         UGui.setSelectedRow(tab1);
     }//GEN-LAST:event_btnTestActionPerformed
 
