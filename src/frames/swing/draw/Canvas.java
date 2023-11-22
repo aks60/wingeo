@@ -26,13 +26,14 @@ public class Canvas extends javax.swing.JPanel {
 
     public Canvas() {
         initComponents();
-        this.setFocusable(true);        
+        this.setFocusable(true);
     }
 
     public void init(Wincalc winc) {
-        this.requestFocus();
+        //this.requestFocus();
         this.winc = winc;
         this.winc.canvas = this;
+        this.winc.scale = scale(winc, -3, 0);
 
         addKeyListener(new KeyAdapter() {
 
@@ -69,10 +70,10 @@ public class Canvas extends javax.swing.JPanel {
 
     //Прорисовка конструкции
     public void draw() {
-        if (winc != null) {
-            winc.scale = scale(winc, 0, 24);
-            repaint();
-        }
+//        if (winc != null) {
+//            winc.scale = scale(winc, 0, 24);
+//            repaint();
+//        }
     }
 
     public void saveImage(String name, String type) {
@@ -91,11 +92,11 @@ public class Canvas extends javax.swing.JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (winc != null) {
-            winc.gc2d = (Graphics2D) g;            
+            winc.gc2d = (Graphics2D) g;
             winc.gc2d.setColor(getBackground());
             winc.gc2d.setStroke(new BasicStroke(2)); //толщина линии
             winc.gc2d.translate(Com5t.TRANSLATE_XY, Com5t.TRANSLATE_XY);
-            winc.scale = scale(winc, -3, 0);
+            //winc.scale = scale(winc, -3, 0);
             winc.gc2d.scale(winc.scale, winc.scale - 0.001);
             winc.root.draw();
 
@@ -114,8 +115,7 @@ public class Canvas extends javax.swing.JPanel {
             winc.gc2d.fillRect(0, 0, length, length);
             double height = winc.root.geom.getEnvelopeInternal().getMaxY();
             double width = winc.root.geom.getEnvelopeInternal().getMaxX();
-            winc.scale = (length / width > length / height)
-                    ? length / (height + 200) : length / (width + 200);
+            winc.scale = (length / width > length / height) ? length / (height + 200) : length / (width + 200);
             winc.gc2d.scale(winc.scale, winc.scale);
             winc.root.draw(); //рисую конструкцию
             return new ImageIcon(bi);
@@ -138,8 +138,18 @@ public class Canvas extends javax.swing.JPanel {
     private void initComponents() {
 
         setFocusable(false);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                formComponentResized(evt);
+            }
+        });
         setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+//        if (winc != null)
+//            this.scale(winc, -3, 0);
+    }//GEN-LAST:event_formComponentResized
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
