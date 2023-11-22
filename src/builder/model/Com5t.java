@@ -118,10 +118,6 @@ public class Com5t {
         };
         ListenerMouse mouseDragge = (evt) -> {
             if (this.geom != null) {
-                //if (id == 2.0) {
-                //System.out.println(evt.getX() / winc.scale + "  " + evt.getY() / winc.scale);
-                //System.out.println(pointPress.getX() / winc.scale + "  " + pointPress.getY() / winc.scale);
-                //}
                 double W = winc.canvas.getWidth();
                 double H = winc.canvas.getHeight();
                 double dX = evt.getX() - pointPress.getX();
@@ -143,15 +139,9 @@ public class Com5t {
                 } else if (ev[1] == true) {
                     double X2 = dX / winc.scale + x2();
                     double Y2 = dY / winc.scale + y2();
-                    if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву
-                        if (id == 2.0) { // && X2 == 0) {
-                            System.out.println(x2());
-                        }                        
+                    if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву                       
                         x2(X2);
-                        y2(Y2);
-                        if (id == 2.0) { // && X2 == 0) {
-                            System.out.println(x2());
-                        }                        
+                        y2(Y2);                        
                     }
                 }
                 pointPress = evt.getPoint();
