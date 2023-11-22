@@ -32,8 +32,8 @@ public class Canvas extends javax.swing.JPanel {
     public void init(Wincalc winc) {
         //this.requestFocus();
         this.winc = winc;
-        //this.winc.canvas = this;
-        //this.winc.scale = scale(winc, -3, 0);
+        this.winc.canvas = this;
+        this.winc.scale = scale(winc, -3, 0);
 
         addKeyListener(new KeyAdapter() {
 

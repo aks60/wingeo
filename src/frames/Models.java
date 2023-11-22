@@ -52,6 +52,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         loadingModel();
         btnChoice.setVisible(false);
         loadingTab1(tab1, 2001);
+        //setVisible(true);
+        //UGui.setSelectedRow(tab1);
     }
 
     public Models(ListenerRecord listener) {
@@ -82,7 +84,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 return label;
             }
         });
-        canvas.setVisible(true);
+        //canvas.setVisible(true);
     }
 
     public void loadingTab1(JTable tab, int form) {
