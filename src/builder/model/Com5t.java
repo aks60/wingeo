@@ -21,7 +21,6 @@ import org.locationtech.jts.geom.LineSegment;
 public class Com5t {
 
     public static GeometryFactory gf = new GeometryFactory();
-    public static int TRANSLATE_XY = 2; //сдвиг графика
     public int SIZE = 24;
     public double id;
     public Wincalc winc = null;

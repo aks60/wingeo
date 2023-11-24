@@ -33,7 +33,7 @@ public class Canvas extends javax.swing.JPanel {
         this.requestFocus();
         this.winc = winc;
         this.winc.canvas = this;
-        this.winc.scale = scale(winc, 0, 0);
+        this.winc.scale = scale(winc);
 
         addKeyListener(new KeyAdapter() {
 
@@ -63,7 +63,7 @@ public class Canvas extends javax.swing.JPanel {
         addComponentListener(new ComponentAdapter() {
 
             public void componentResized(ComponentEvent event) {
-                winc.scale = scale(winc, 0, 0);
+                winc.scale = scale(winc);
             }
         });
     }
@@ -94,14 +94,13 @@ public class Canvas extends javax.swing.JPanel {
             winc.gc2d = (Graphics2D) g;
             winc.gc2d.setColor(getBackground());
             winc.gc2d.setStroke(new BasicStroke(2)); //толщина линии
-            winc.gc2d.translate(Com5t.TRANSLATE_XY, Com5t.TRANSLATE_XY);
-            winc.gc2d.scale(winc.scale, winc.scale - 0.001);
+            winc.gc2d.translate(0, 0);
+            winc.gc2d.scale(winc.scale, winc.scale);
             winc.root.draw();
 
         } else {
             g.setColor(getBackground());
             g.fillRect(0, 0, getWidth(), getHeight());
-            //g.clearRect(0, 0, getWidth(), getHeight());
         }
     }
 
@@ -125,11 +124,11 @@ public class Canvas extends javax.swing.JPanel {
         }
     }
 
-    public double scale(Wincalc winc, double dx, double dy) {
+    public double scale(Wincalc winc) {
         Shape shape = new ShapeWriter().toShape(winc.root.geom);
         Rectangle2D rect = shape.getBounds2D();
-        return ((getWidth() + dx) / rect.getMaxX() > (getHeight() + dx) / rect.getMaxY())
-                ? (getHeight() + dx) / (rect.getMaxY() + dy) : (getWidth() + dx) / (rect.getMaxX() + dy);
+        return (getWidth() / rect.getMaxX() > getHeight() / rect.getMaxY())
+                ? (getHeight() - 4) / rect.getMaxY() : getWidth() / rect.getMaxX();
     }
 
     @SuppressWarnings("unchecked")
