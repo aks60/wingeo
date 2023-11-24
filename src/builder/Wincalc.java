@@ -1,3 +1,4 @@
+
 package builder;
 
 import builder.making.Cal5e;
@@ -11,25 +12,30 @@ import builder.model.ElemFrame;
 import builder.model.ElemGlass;
 import builder.model.ElemSimple;
 import builder.making.Specific;
+import builder.making.UColor;
+import builder.model.ElemMosquit;
 import builder.script.GsonElem;
 import builder.script.GsonRoot;
 import com.google.gson.GsonBuilder;
 import common.ArrayJoin;
 import common.ArraySpc;
 import common.LinkedCom;
+import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
 import dataset.Record;
+import domain.eArtikl;
 import domain.eSyspar1;
 import domain.eSysprof;
-import enums.Form;
 import enums.Type;
 import enums.UseArtiklTo;
 import frames.swing.draw.Canvas;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
@@ -46,21 +52,18 @@ public class Wincalc {
     public double price = 0; //стоимость без скидки
     public double cost2 = 0; //стоимость с технологической скидкой
     public double weight = 0; //масса конструкции  
-    public Form form = null; //форма контура (параметр в развитии)
     public BufferedImage bufferImg = null;  //образ рисунка
     public ImageIcon imageIcon = null; //рисунок конструкции
     public Graphics2D gc2d = null; //графический котекст рисунка  
     public double scale = 1; //коэффициент сжатия
     public Canvas canvas = null;
+    public ArrayList<ListenerKey> keyboardPressed = new ArrayList();    
     public ArrayList<ListenerMouse> mousePressed = new ArrayList();
     public ArrayList<ListenerMouse> mouseReleased = new ArrayList();
     public ArrayList<ListenerMouse> mouseDragged = new ArrayList();
-
     public HashMap<Integer, Record> mapPardef = new HashMap(); //пар. по умолчанию + наложенные пар. клиента
     public LinkedCom<AreaSimple> listArea = new LinkedCom(); //список ареа.
     public LinkedCom<ElemSimple> listElem = new LinkedCom(); //список элем.
-    public LinkedCom<ElemFrame> listFrame = new LinkedCom(); //список рам
-    public LinkedCom<ElemCross> listCross = new LinkedCom(); //список имп.
     public LinkedCom<Com5t> listAll = new LinkedCom(); //список всех компонентов (area + elem)
     public ArraySpc<Specific> listSpec = new ArraySpc(); //спецификация
     public ArrayJoin listJoin = new ArrayJoin(); //список соединений рам и створок 
@@ -93,6 +96,8 @@ public class Wincalc {
             //Создание элементов конструкции
             parsing(script);
 
+            //Cоединения ареа           
+            //root.joining();
             //построение полигонов
             root.setLocation();
 
@@ -115,6 +120,9 @@ public class Wincalc {
         this.nuni = gson.nuni;
 
         Record sysprofRec = eSysprof.find2(nuni, UseArtiklTo.FRAME);
+        this.colorID1 = (gson.color1 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1;
+        this.colorID2 = (gson.color2 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2;
+        this.colorID3 = (gson.color3 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3;
         eSyspar1.find(nuni).forEach(syspar1Rec -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), syspar1Rec)); //загрузим параметры по умолчанию
 
         root = new AreaRectangl(this, gson);
@@ -136,27 +144,23 @@ public class Wincalc {
                     } else if (Type.AREA == js.type) {
                         AreaSimple area5e = new AreaSimple(this, js, owner);
                         owner.childs().add(area5e); //добавим ребёнка родителю
-                        listArea.add(area5e);
                         hm.put(area5e, js);
 
                     } else if (Type.FRAME_SIDE == js.type) {
                         ElemFrame elem5e = new ElemFrame(this, js, owner);
-                        listElem.add(elem5e);
-                        listFrame.add(elem5e);
+                        root.frames.add(elem5e);
 
                     } else if (Type.IMPOST == js.type || Type.SHTULP == js.type || Type.STOIKA == js.type) {
                         ElemCross elem5e = new ElemCross(this, js, owner);
                         owner.childs().add(elem5e); //добавим ребёнка родителю
-                        listElem.add(elem5e);
-                        listCross.add(elem5e);
 
                     } else if (Type.GLASS == js.type) {
                         ElemGlass elem5e = new ElemGlass(this, js, owner);
                         owner.childs().add(elem5e); //добавим ребёнка родителю
 
                     } else if (Type.MOSKITKA == js.type) {
-                        //Elem2Mosquit elem5e = new Elem2Mosquit(this, js, owner);
-                        //owner.childs().add(elem5e); //добавим ребёнка родителю
+                        ElemMosquit elem5e = new ElemMosquit(this, js, owner);
+                        owner.childs().add(elem5e); //добавим ребёнка родителю
 
                     }
                 }
@@ -180,68 +184,43 @@ public class Wincalc {
             //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
             calcJoining = new Joining(this); //соединения
             calcJoining.calc();
-            Cal5e calcElements = new builder.making.Elements(this);
+            calcElements = new builder.making.Elements(this);
             calcElements.calc();
-//            calcFilling = (eProp.old.read().equals("0")) //заполнения
-//                    ? new builder.making.Filling(this)
-//                    : new builder.making.Filling(this);
-//            calcFilling.calc();
-//            calcFurniture = (eProp.old.read().equals("0")) //фурнитура 
-//                    ? new builder.making.Furniture(this)
-//                    : new builder.making.Furniture(this);
-//            calcFurniture.calc();
-//            calcTariffication = (eProp.old.read().equals("0")) //тарификация 
-//                    ? new builder.making.Tariffic(this, norm_otx)
-//                    : new builder.making.Tariffic(this, norm_otx);
-//            calcTariffication.calc();
-//
-//            //Построим список спецификации
-//            for (IElem5e elem5e : listElem) {
-//                if (elem5e.spcRec().artikl.isEmpty() || elem5e.spcRec().artikl.trim().charAt(0) != '@') {
-//                    listSpec.add(elem5e.spcRec());
-//                }
-//                for (Specific spc : elem5e.spcRec().spcList) {
-//                    if (spc.artikl.isEmpty() || spc.artikl.trim().charAt(0) != '@') {
-//                        listSpec.add(spc);
-//                    }
-//                }
-//            }
-//
-//            //Итоговая стоимость
-//            for (Specific spc : listSpec) {
-//                this.price(this.price() + spc.price); //общая стоимость без скидки
-//                this.cost2(this.cost2() + spc.cost2); //общая стоимость со скидкой             
-//            }
-//
-//            //Вес изделия
-//            LinkedList<IElem5e> glassList = listElem.filter(Type.GLASS);
-//            for (IElem5e el : glassList) {
-//                this.weight += el.artiklRecAn().getDbl(eArtikl.density) * el.width() * el.height() / 1000000; //уд.вес * площадь = вес
-//            }
-//
-//            Collections.sort(listSpec, (o1, o2) -> (o1.place.subSequence(0, 3) + o1.name + o1.width).compareTo(o2.place.subSequence(0, 3) + o2.name + o2.width));
+            calcFilling = new builder.making.Filling(this); //заполнения
+            calcFilling.calc();
+            calcFurniture = new builder.making.Furniture(this); //фурнитура 
+            calcFurniture.calc();
+            calcTariffication = new builder.making.Tariffic(this, norm_otx); //тарификация 
+            calcTariffication.calc();
+
+            //Построим список спецификации
+            for (ElemSimple elem5e : listElem) {
+                if (elem5e.spcRec.artikl.isEmpty() || elem5e.spcRec.artikl.trim().charAt(0) != '@') {
+                    listSpec.add(elem5e.spcRec);
+                }
+                for (Specific spc : elem5e.spcRec.spcList) {
+                    if (spc.artikl.isEmpty() || spc.artikl.trim().charAt(0) != '@') {
+                        listSpec.add(spc);
+                    }
+                }
+            }
+
+            //Итоговая стоимость
+            for (Specific spc : listSpec) {
+                this.price = (this.price + spc.price); //общая стоимость без скидки
+                this.cost2 = (this.cost2 + spc.cost2); //общая стоимость со скидкой             
+            }
+
+            //Вес изделия
+            LinkedList<ElemSimple> glassList = listElem.filter(Type.GLASS);
+            for (ElemSimple el : glassList) {
+                this.weight += el.artiklRecAn.getDbl(eArtikl.density) * el.width() * el.height() / 1000000; //уд.вес * площадь = вес
+            }
+
+            Collections.sort(listSpec, (o1, o2) -> (o1.place.subSequence(0, 3) + o1.name + o1.width).compareTo(o2.place.subSequence(0, 3) + o2.name + o2.width));
 
         } catch (Exception e) {
             System.err.println("Ошибка:Wincalc.constructiv() " + e);
-        }
-    }
-
-    public void draw() {
-        try {
-            root.setLocation();
-            listFrame.forEach(e -> e.setLocation());
-            listCross.forEach(e -> e.setLocation());
-            //listAll.forEach(e -> e.setLocation());
-
-            root.draw();
-            //listArea.forEach(e -> e.paint());
-            //listFrame.forEach(e -> e.paint());
-            //listCross.forEach(e -> e.paint());
-            //listElem.forEach(e -> e.paint());
-            //listAll.forEach(e -> e.paint());
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Wingeo.draw() " + e);
         }
     }
 
@@ -250,7 +229,7 @@ public class Wincalc {
         genId = 0;
         syssizeRec = null;
         mapPardef.clear();
-        List.of((List) listArea, (List) listFrame, (List) listCross, (List) listSpec).forEach(el -> el.clear());
+        List.of((List) listArea, (List) listElem, (List) listSpec, (List) listAll, (List) listJoin).forEach(el -> el.clear());
     }
 
     public double width() {

@@ -128,7 +128,7 @@ public class ParamTest {
         imp_vert_3 = getElem(iwin_3.root, 12.0f);
         glass_top_3 = (ElemSimple) getElem(iwin_3.root, 6.0f);
         glass_left_3 = (ElemSimple) getElem(iwin_3.root, 11.0f);
-        glass_left_3.anglHoriz = 0;
+////////////////        glass_left_3.anglHoriz = 0;
     }
 
     //700027  "Montblanc / Eco / 1 ОКНА (штульп)"
@@ -156,7 +156,7 @@ public class ParamTest {
 
     //Получить элемент по ключу
     public ElemSimple getElem(AreaSimple rootArea, double id) {
-        for (ElemSimple frm : rootArea.frames.values()) {
+        for (ElemSimple frm : rootArea.frames) {
             if (frm.id == id) {
                 return (ElemSimple) frm;
             }
@@ -166,7 +166,7 @@ public class ParamTest {
                 return (ElemSimple) it1;
             }
             if (it1 instanceof AreaSimple) {
-                for (ElemSimple frm : ((AreaSimple) it1).frames.values()) {
+                for (ElemSimple frm : ((AreaSimple) it1).frames) {
                     if (frm.id == id) {
                         return (ElemSimple) frm;
                     }
@@ -178,7 +178,7 @@ public class ParamTest {
                         return (ElemSimple) it2;
                     }
                     if (it2 instanceof AreaSimple) {
-                        for (ElemSimple frm : ((AreaSimple) it2).frames.values()) {
+                        for (ElemSimple frm : ((AreaSimple) it2).frames) {
                             if (frm.id == id) {
                                 return frm;
                             }
@@ -190,7 +190,7 @@ public class ParamTest {
                                 return (ElemSimple) it3;
                             }
                             if (it3 instanceof AreaSimple) {
-                                for (ElemSimple frm : ((AreaSimple) it3).frames.values()) {
+                                for (ElemSimple frm : ((AreaSimple) it3).frames) {
                                     if (frm.id == id) {
                                         return frm;
                                     }
@@ -202,7 +202,7 @@ public class ParamTest {
                                         return (ElemSimple) it4;
                                     }
                                     if (it4 instanceof AreaSimple) {
-                                        for (ElemSimple frm : ((AreaSimple) it4).frames.values()) {
+                                        for (ElemSimple frm : ((AreaSimple) it4).frames) {
                                             if (frm.id == id) {
                                                 return frm;
                                             }

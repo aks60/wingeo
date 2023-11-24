@@ -56,13 +56,13 @@ public class Filling extends Cal5e {
         super.calc();
         try {
             Double depth = elemGlass.artiklRec.getDbl(eArtikl.depth); //толщина стекда           
-            List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(rootArea().frames.values());  //список рам конструкции
+            List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(winc.root.frames);  //список рам конструкции
             
             //Цикл по сторонам стеклопакета
             double sideHoriz[] = {0, 90, 180, 270};
             for (int side = 0; side < 4; ++side) {
                 ElemSimple elemFrame = elemFrameList.get(side);
-                elemGlass.anglHoriz = sideHoriz[side]; //устан. угол. проверяемой стороны
+/////////////////////////                elemGlass.anglHoriz = sideHoriz[side]; //устан. угол. проверяемой стороны
 
                 //Цикл по группам заполнений
                 for (Record glasgrpRec : eGlasgrp.findAll()) {

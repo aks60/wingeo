@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import builder.Wincalc;
+import builder.model.ElemFrame;
 import builder.model.ElemJoining;
 import builder.param.ElementDet;
 import builder.param.JoiningDet;
@@ -20,6 +21,7 @@ import domain.eSetting;
 import enums.TypeJoin;
 import enums.Type;
 import java.util.ArrayList;
+import org.locationtech.jts.geom.Coordinate;
 
 //Соединения
 public class Joining extends Cal5e {
@@ -47,8 +49,10 @@ public class Joining extends Cal5e {
 
     @Override
     public void calc() {
-        super.calc();
+        super.calc();        
         try {
+            this.winc.root.joining();
+            
             //Цикл по списку соединений
             for (ElemJoining elemJoin : winc.listJoin) {
                 

@@ -66,9 +66,9 @@ public class ElementVar extends Par5s {
                 }
                 break;
                 case 31002:  //Если профиль 
-                    if ("арочный".equals(rec.getStr(TEXT)) == true && (elem5e.owner.type == Type.ARCH && Layout.TOP == elem5e.layout) == false) {
+                    if ("арочный".equals(rec.getStr(TEXT)) == true && (elem5e.owner.type == Type.ARCH && Layout.TOP == elem5e.layout()) == false) {
                         return false;
-                    } else if ("прямой".equals(rec.getStr(TEXT)) == true && (elem5e.owner.type == Type.ARCH && Layout.TOP == elem5e.layout) == true) {
+                    } else if ("прямой".equals(rec.getStr(TEXT)) == true && (elem5e.owner.type == Type.ARCH && Layout.TOP == elem5e.layout()) == true) {
                         return false;
                     }
                     break;
@@ -196,32 +196,32 @@ public class ElementVar extends Par5s {
                     break;
                 case 31020:  //Ограничение угла к горизонту, °
                     if ("ps3".equals(eSetting.val(2))) { //Угол к горизонту минимальный, °
-                        if (elem5e.anglHoriz < rec.getDbl(TEXT)) {
+                        if (elem5e.anglHoriz() < rec.getDbl(TEXT)) {
                             return false;
                         }
                     } else {
-                        if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.anglHoriz) == false) {
+                        if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.anglHoriz()) == false) {
                             return false;
                         }
                     }
                     break;
                 case 31030:  //Угол к горизонту максимальный, °
                     if ("ps3".equals(eSetting.val(2))) {
-                        if (rec.getDbl(TEXT) < elem5e.anglHoriz) {
+                        if (rec.getDbl(TEXT) < elem5e.anglHoriz()) {
                             return false;
                         }
                     }
                     break;
                 case 31031:  //Точный угол к горизонту
                     if ("ps3".equals(eSetting.val(2))) {
-                        if (rec.getDbl(TEXT) != elem5e.anglHoriz) {
+                        if (rec.getDbl(TEXT) != elem5e.anglHoriz()) {
                             return false;
                         }
                     }
                     break;
                 case 31032:  //Исключить угол к горизонту, °
                     if ("ps3".equals(eSetting.val(2))) {
-                        if (rec.getDbl(TEXT) == elem5e.anglHoriz) {
+                        if (rec.getDbl(TEXT) == elem5e.anglHoriz()) {
                             return false;
                         }
                     }
@@ -300,8 +300,8 @@ public class ElementVar extends Par5s {
                     }
                     break;
                 case 31060:  //Допустимый угол между плоскостями, ° 
-                    if ((UCom.containsNumbJust(rec.getStr(TEXT), winc.listJoin.get(elem5e, 0).angl) == true
-                            || UCom.containsNumbJust(rec.getStr(TEXT), winc.listJoin.get(elem5e, 1).angl) == true) == false) {
+                    if ((UCom.containsNumbJust(rec.getStr(TEXT), winc.listJoin.get(elem5e, 0).angl_90) == true
+                            || UCom.containsNumbJust(rec.getStr(TEXT), winc.listJoin.get(elem5e, 1).angl_90) == true) == false) {
                         return false;
                     }
                     break;
@@ -368,13 +368,13 @@ public class ElementVar extends Par5s {
                 case 37009: //Тип заполнения 
                 {
                     ElemGlass glass = (ElemGlass) elem5e.owner.childs().stream().filter(it -> it.type == Type.GLASS).findFirst().orElse(null);
-                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && winc.form != null) {
+                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && winc.root.geom.isRectangle() == true) {
                         return false;
 
-                    } else if ("Арочное".equals(rec.getStr(TEXT)) && glass.radiusGlass == 0) {
+                    } else if ("Арочное".equals(rec.getStr(TEXT)) && glass.radiusGlass != 0) {
                         return false;
 
-                    } else if ("Произвольное".equals(rec.getStr(TEXT)) && winc.form == null) {
+                    } else if ("Произвольное".equals(rec.getStr(TEXT))) {
                         return false;
                     }
                 }

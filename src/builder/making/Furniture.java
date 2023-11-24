@@ -308,6 +308,6 @@ public class Furniture extends Cal5e {
                 return area5e.frames.get(Layout.BOTT);
             }
         }
-        return area5e.frames.values().stream().findFirst().get();  //первая попавшаяся        
+        return area5e.frames.stream().findFirst().get();  //первая попавшаяся        
     }
 }

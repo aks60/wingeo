@@ -20,6 +20,7 @@ import domain.eSysprod;
 import domain.eSystree;
 import enums.Enam;
 import builder.param.ParamList;
+import common.LinkedCom;
 import common.UCom;
 import enums.UseColor;
 import java.awt.Component;

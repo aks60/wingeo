@@ -2,10 +2,9 @@ package builder.model;
 
 import builder.Wincalc;
 import builder.script.GsonElem;
-import enums.Layout;
-import enums.LayoutJoin;
-import enums.TypeJoin;
+import enums.Type;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import org.locationtech.jts.geom.Coordinate;
 
 public class AreaRectangl extends AreaSimple {
@@ -14,54 +13,43 @@ public class AreaRectangl extends AreaSimple {
         super(winc, gson, null);
     }
 
-    public AreaRectangl(Wincalc winc) {
-        super(winc);
-        setDimension(0, 0, winc.gson.width(), winc.gson.height());
-    }
-    
     public void setLocation() {
         try {
-            for (int i = 0; i < winc.listFrame.size(); i++) {
-                if (i + 1 < winc.listFrame.size()) {
-                    winc.listFrame.get(i).enext = winc.listFrame.get(i + 1);
-                } else {
-                    winc.listFrame.get(i).enext = winc.listFrame.get(0);
-                }
-            }
             ArrayList<Coordinate> listCoord = new ArrayList<Coordinate>();
-            winc.listFrame.forEach(line -> listCoord.add(new Coordinate(line.x1(), line.y1())));
-            listCoord.add(new Coordinate(winc.listFrame.get(0).x1(), winc.listFrame.get(0).y1()));            
+            this.frames.forEach(line -> listCoord.add(new Coordinate(line.x1(), line.y1())));
+            listCoord.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1()));
             Coordinate[] arrCoord = listCoord.toArray(new Coordinate[0]);
 
-            this.geom = gf.createPolygon(arrCoord);                        
+            this.geom = gf.createPolygon(arrCoord);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Area2Polygon.setLocation()" + toString() + e);
+            System.err.println("Ошибка:AreaPolygon.setLocation()" + toString() + e);
         }
     }
 
-    //Угловые соединения
-    @Override
     public void joining() {
-
-        super.joining(); //T - соединения
-
-        ElemSimple elemBott = frames.get(Layout.BOTT), elemRight = frames.get(Layout.RIGHT),
-                elemTop = frames.get(Layout.TOP), elemLeft = frames.get(Layout.LEFT);
-
-        //Угловое соединение правое нижнее
-        winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR20, LayoutJoin.RBOT, elemBott, elemRight));
-        //Угловое соединение правое верхнее
-        winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR20, LayoutJoin.RTOP, elemRight, elemTop));
-        //Угловое соединение левое верхнее    
-        winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR20, LayoutJoin.LTOP, elemTop, elemLeft));
-        //Угловое соединение левое нижнее
-        winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR20, LayoutJoin.LBOT, elemLeft, elemBott));
+        LinkedList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA);
+        LinkedList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);        
+        try {
+            //L - соединения
+            for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам рамы
+                ElemFrame nextFrame = this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1);
+                //winc.listJoin.add(new ElemJoining(this.winc, this.frames.get(i), nextFrame));
+            }
+            //T - соединения
+            for (ElemSimple e1 : crosList) { //цикл по кросс элементам
+                for (ElemSimple e2 : elemList) { //цикл по сторонам рамы и импостам (т.к. в створке Т-обр. соединений нет)
+                    if (e2.inside(e1.x1(), e1.y1()) == true && e2 != e1) {                       
+                        //winc.listJoin.add(new ElemJoining(winc, e1, e2));
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("AreaRectangl.joining() " + e);
+        }
     }
-    
-    public void paint() {
-    }
-    
+
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
     // </editor-fold>     
 }

@@ -3,36 +3,33 @@ package builder.model;
 import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
+import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
 import dataset.Record;
 import domain.eArtikl;
 import enums.Layout;
 import enums.Type;
 import java.awt.Point;
-import java.awt.Shape;
+import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
-import java.util.List;
-import org.locationtech.jts.awt.ShapeWriter;
+import org.locationtech.jts.algorithm.Distance;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineSegment;
 
 public class Com5t {
 
-    //GeometryFactory gf2 = new GeometryFactory(new PrecisionModel(), srid);
     public static GeometryFactory gf = new GeometryFactory();
-    public static int TRANSLATE_XY = 2; //сдвиг графика
     public int SIZE = 24;
     public double id;
     public Wincalc winc = null;
     public AreaSimple owner = null; //владелец
     public AreaSimple root = null; //главный класс конструкции
-    public Com5t enext = null; //сдедующий элемент
     public GsonElem gson = null; //gson object конструкции    
     public Type type = Type.NONE; //тип элемента или окна
-    public Layout layout = Layout.FULL; //направление(AREA) сторона(ELEM) - расположения компонентов ...
     public Polygon geom = null;
-    private boolean ev[] = {false, false};
+    private boolean pass[] = {false, false};
     private Point pointPress = null;
     public int colorID1 = -1, colorID2 = -1, colorID3 = -1; //1-базовый 2-внутренний 3-внешний 
     public Record sysprofRec = null; //рофиль в системе
@@ -48,7 +45,9 @@ public class Com5t {
         this.winc = winc;
         this.owner = owner;
         this.gson = gson;
-        this.type = gson.type;
+        if (gson.type != null) {
+            this.type = gson.type;
+        }
     }
 
     public void setLocation() {
@@ -57,60 +56,98 @@ public class Com5t {
     public void paint() {
     }
 
-    public List<Com5t> childs() {
-        return null;
-    }
+    public void systemEvent() {
 
-    public void mouseEvent() {
-        ListenerMouse mousePressed = (event) -> {
+        ListenerKey keyPressed = (evt) -> {
             if (this.geom != null) {
-                pointPress = event.getPoint();
-                //Если клик внутри контура
-                Shape area = new ShapeWriter().toShape(this.geom);
-                boolean b = area.contains(event.getX() / winc.scale, event.getY() / winc.scale);
-                if (this.geom != null && b == true) {
-                    double d1 = Point2D.distance(x1(), y1(), event.getX() / winc.scale, event.getY() / winc.scale); //длина к началу вектора
-                    double d2 = Point2D.distance(x2(), y2(), event.getX() / winc.scale, event.getY() / winc.scale); //длина к концу вектора
-                    double d3 = (d1 + d2) / 3;
-
-                    if (d1 < d3) {
-                        ev[0] = true; //кликнул ближе к началу ветора
-                    } else if (d2 < d3) {
-                        ev[1] = true; //кликнул ближе к концу ветора
+                double W = winc.canvas.getWidth();
+                double H = winc.canvas.getHeight();
+                double dX = 0;
+                double dY = 0;
+                if (pass[0] == true || pass[1] == true) {
+                    if (evt.getKeyCode() == KeyEvent.VK_UP) {
+                        dY = -1;
+                    } else if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
+                        dY = 1;
+                    } else if (evt.getKeyCode() == KeyEvent.VK_LEFT) {
+                        dX = -1;
+                    } else if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
+                        dX = 1;
+                    }
+                    if (pass[0] == true) {
+                        double X1 = dX / winc.scale + x1();
+                        double Y1 = dY / winc.scale + y1();
+                        if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
+                            x1(X1);
+                            y1(Y1);
+                            pointPress.setLocation(x1(), y1());
+                        }
+                    } else if (pass[1] == true) {
+                        double X2 = dX / winc.scale + x2();
+                        double Y2 = dY / winc.scale + y2();
+                        if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву
+                            x2(X2);
+                            y2(Y2);
+                            pointPress.setLocation(x2(), y2());
+                        }
                     }
                 }
             }
         };
-        ListenerMouse mouseReleased = (event) -> {
-
-            ev[0] = false;
-            ev[1] = false;
+        ListenerMouse mousePressed = (evt) -> {
+            if (this.geom != null) {
+                pointPress = evt.getPoint();
+                //Если клик внутри контура
+                boolean b = this.geom.contains(gf.createPoint(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale)));
+                if (b == true) {
+                    LineSegment segm = new LineSegment(x1(), y1(), x2(), y2());
+                    double coef = segm.segmentFraction(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale));;
+                    if (coef < .33) {
+                        pass[0] = true; //кликнул ближе к началу вектора
+                    } else if (coef > .67) {
+                        pass[1] = true; //кликнул ближе к концу вектора
+                    }
+                }
+            }
         };
-        ListenerMouse mouseDragge = (event) -> {
+        ListenerMouse mouseReleased = (evt) -> {
+
+            pass[0] = false;
+            pass[1] = false;
+        };
+        ListenerMouse mouseDragge = (evt) -> {
             if (this.geom != null) {
                 double W = winc.canvas.getWidth();
                 double H = winc.canvas.getHeight();
-                double dX = event.getX() - pointPress.getX();
-                double dY = event.getY() - pointPress.getY();
-
-                if (ev[0] == true) {
+                double dX = evt.getX() - pointPress.getX();
+                double dY = evt.getY() - pointPress.getY();
+                if (id == 2.0) {
+                    double dXTest = dX / winc.scale;
+                    double dYTest = dY / winc.scale;
+                    double X2Test = x2();
+                    double Y2Test = y2();
+                    String evTest = pass[0] + " " + pass[1]; 
+                }
+                if (pass[0] == true) {
                     double X1 = dX / winc.scale + x1();
                     double Y1 = dY / winc.scale + y1();
                     if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
                         x1(X1);
                         y1(Y1);
                     }
-                } else if (ev[1] == true) {
+                } else if (pass[1] == true) {
                     double X2 = dX / winc.scale + x2();
                     double Y2 = dY / winc.scale + y2();
-                    if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву
+                    if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву                       
                         x2(X2);
-                        y2(Y2);
+                        y2(Y2);                        
                     }
                 }
-                pointPress = event.getPoint();
+                pointPress = evt.getPoint();
             }
         };
+
+        this.winc.keyboardPressed.add(keyPressed);
         this.winc.mousePressed.add(mousePressed);
         this.winc.mouseReleased.add(mouseReleased);
         this.winc.mouseDragged.add(mouseDragge);
@@ -120,26 +157,12 @@ public class Com5t {
      * Длина компонента
      */
     public double length() {
-        ElemSimple elem5e = (ElemSimple) this;
-        if (elem5e.anglHoriz == 0 || elem5e.anglHoriz == 180) {
-            return (x2() > x1()) ? x2() - x1() : x1() - x2();
-        } else if (elem5e.anglHoriz == 90 || elem5e.anglHoriz == 270) {
-            return (y2() > y1()) ? y2() - y1() : y1() - y2();
-        } else {
-            return Math.sqrt((x2() - x1()) * (x2() - x1()) + (y2() - y1()) * (y2() - y1()));
-        }
+        //return owner.geom.getEnvelopeInternal().getWidth();
+        return new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).getLength();
     }
 
-    /**
-     * Ширина в gson
-     */
-    public double lengthX() {
-        return (this == winc.root) ? this.gson.width() : this.gson.length;
-    }
-
-    //Высота в gson
-    public double lengthY() {
-        return (this == winc.root) ? this.gson.height() : this.gson.length;
+    public Layout layout() {
+        return Layout.ANY;
     }
 
     public boolean isJson(JsonObject jso) {
@@ -148,7 +171,7 @@ public class Com5t {
         }
         return !jso.isJsonNull();
     }
-    
+
     public boolean isJson(JsonObject jso, String key) {
         if (jso == null) {
             return false;
@@ -164,7 +187,7 @@ public class Com5t {
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
     public void setDimension(double x1, double y1, double x2, double y2) {
-        if (ev[0] == false && ev[1] == false) {
+        if (pass[0] == false && pass[1] == false) {
             gson.x1 = x1;
             gson.y1 = y1;
             gson.x2 = x2;
@@ -181,31 +204,31 @@ public class Com5t {
     }
 
     public double x2() {
-//        if (gson.x2 != null) {
-        return gson.x2;
-//        } else {
+        if (gson.x2 != null) {
+            return gson.x2;
+        } else {
 //            Coordinate[] coordArr = this.geom.getCoordinates();
 //            for (int i = coordArr.length; i > 0; --i) {
 //                if (coordArr[i].x == x1()) {
 //                    return coordArr[i - 1].x;
 //                }
 //            }
-//            return -1;
-//        }
+            return -1;
+        }
     }
 
     public double y2() {
-//        if (gson.y2 != null) {
-        return gson.y2;
-//        } else {
+        if (gson.y2 != null) {
+            return gson.y2;
+        } else {
 //            Coordinate[] coordArr = this.geom.getCoordinates();
 //            for (int i = coordArr.length; i > 0; --i) {
 //                if (coordArr[i].y == y1()) {
 //                    return coordArr[i - 1].y;
 //                }
 //            }
-//            return -1;
-//        }
+            return -1;
+        }
     }
 
     public void x1(double v) {

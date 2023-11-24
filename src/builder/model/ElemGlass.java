@@ -24,6 +24,7 @@ public class ElemGlass extends ElemSimple {
 
     public ElemGlass(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
+        initСonstructiv(gson.param);
     }
 
     public void initСonstructiv(JsonObject param) {
@@ -72,17 +73,12 @@ public class ElemGlass extends ElemSimple {
     }
 
     public void paint() {
-        java.awt.Color color = winc.gc2d.getColor();
-        int rgb = eColor.find(colorID2).getInt(eColor.rgb);
-        winc.gc2d.setColor(new java.awt.Color(rgb));
-        try {
-            if (owner.geom != null) {
-                Shape shape = new ShapeWriter().toShape(owner.geom);
-                winc.gc2d.fill(shape);;
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:ElemGlass.paint()" + toString() + e);
+        if (owner.geom != null) {
+            java.awt.Color color = winc.gc2d.getColor();
+            winc.gc2d.setColor(new java.awt.Color(eColor.find(colorID2).getInt(eColor.rgb)));
+            Shape shape = new ShapeWriter().toShape(owner.geom);
+            winc.gc2d.fill(shape);
+            winc.gc2d.setColor(color);
         }
-        winc.gc2d.setColor(color);                
     }
 }

@@ -1,11 +1,16 @@
 package builder.model;
 
+import common.LinkedCom;
 import domain.eArtikl;
+import enums.Type;
+import java.awt.Shape;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
@@ -117,30 +122,31 @@ public class UGeo {
     }
 
     //Внутренняя обводка ареа 
-    public static Polygon geoPadding(Polygon poly, List<ElemSimple> listFrame) {
-
+    public static Polygon geoPadding(Polygon poly, LinkedCom<ElemSimple> listElem) {
         Coordinate[] coo = poly.getCoordinates();
         Coordinate[] out = new Coordinate[coo.length];
+        List<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
         try {
             for (int i = 0; i < coo.length; i++) {
 
+                //Сегменты границ полигона
                 int j = (i == coo.length - 1) ? 1 : i + 1;
                 int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
-                LineSegment segm1 = new LineSegment(coo[i], coo[j]);
-                LineSegment segm2 = new LineSegment(coo[k], coo[i]);
-                ElemSimple e1 = UGeo.segMapElem(listFrame, segm1);
-                ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
+                LineSegment segm1 = new LineSegment(coo[k], coo[i]);
+                LineSegment segm2 = new LineSegment(coo[i], coo[j]);
 
                 //Получим ширину сегментов
-                double w1[] = UGeo.deltaOnAngl(UGeo.anglHor(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
-                double w2[] = UGeo.deltaOnAngl(UGeo.anglHor(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
+                ElemSimple e1 = UGeo.segMapElem(listFrame, segm1);
+                ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
+                double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);
+                double w2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr);
 
-                //Смещённая внутрь точка пересечения сегментов
-                LineSegment segm1a = new LineSegment(e1.x1() + w1[0], e1.y1() - w1[1], e1.x2() + w1[0], e1.y2() - w1[1]);
-                LineSegment segm2a = new LineSegment(e2.x1() + w2[0], e2.y1() - w2[1], e2.x2() + w2[0], e2.y2() - w2[1]);
+                //Смещение сегментов относительно границ
+                LineSegment segm3 = segm1.offset(-w1);
+                LineSegment segm4 = segm2.offset(-w2);
 
                 //Точка пересечения внутренних сегментов
-                out[i] = segm1a.lineIntersection(segm2a);
+                out[i] = segm4.lineIntersection(segm3);
             }
             return Com5t.gf.createPolygon(out);
 
@@ -149,6 +155,7 @@ public class UGeo {
             return null;
         }
     }
+    
 
     //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Coordinate[] arrCoord(double... d) {
@@ -166,6 +173,11 @@ public class UGeo {
         return Com5t.gf.createPolygon(UGeo.arrCoord(d));
     }
 
-// <editor-fold defaultstate="collapsed" desc="TEMP">
+    public static boolean sidePoint(Polygon p, double x, double y) {
+        Envelope e = p.getEnvelopeInternal();
+        return new Envelope(e.getMinX() + e.getWidth() / 2, e.getMaxX(), e.getMinY() + e.getHeight() / 2, e.getMaxY()).contains(x, y);
+    }
+
+// <editor-fold defaultstate="collapsed" desc="TEMP">    
 // </editor-fold>    
 }

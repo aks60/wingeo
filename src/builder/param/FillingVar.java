@@ -70,7 +70,7 @@ public class FillingVar extends Par5s {
                     }
                     break;
                 case 13014:  //Углы ориентации стороны, ° 
-                    if (UCom.containsNumbJust(rec.getStr(TEXT), ((ElemSimple) elem5e).anglHoriz) == false) {
+                    if (UCom.containsNumbJust(rec.getStr(TEXT), ((ElemSimple) elem5e).anglHoriz()) == false) {
                         return false;
                     }
                     break;

@@ -395,9 +395,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                     setText(txt9, eColor.find(winc.colorID1).getStr(eColor.name));
                     setText(txt13, eColor.find(winc.colorID2).getStr(eColor.name));
                     setText(txt14, eColor.find(winc.colorID3).getStr(eColor.name));
-                    setText(txt17, String.valueOf(winc.gson.width()));
-                    setText(txt22, String.valueOf(winc.gson.height1));
-                    setText(txt23, UCom.format(winc.gson.height2, 1));
+                    setText(txt17, String.valueOf(winc.width()));
+                    setText(txt22, UCom.format(333, 1)); //winc.gson.height1, 1));
+                    setText(txt23, UCom.format(333, 1)); //winc.gson.height2, 1));
                     txt23.setEditable(List.of(enums.Type.ARCH, enums.Type.TRIANGL, enums.Type.TRAPEZE).contains(winNode.com5t().type));
                     int systreeID = qPrjprod.getAs(UGui.getIndexRec(tab2), ePrjprod.systree_id);
                     setText(txt12, eSystree.find(systreeID).getStr(eSystree.note));
@@ -735,8 +735,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
             sysprodRec.set(ePrjprod.script, script);
             sysprodRec.set(ePrjprod.values().length, win);
             canvas.draw();
-            scene.lineHoriz.forEach(e -> e.init());
-            scene.lineVert.forEach(e -> e.init());
             scene.draw();
             selectionTree();
         }
@@ -3245,7 +3243,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                 ListenerRecord listenerColor = (colorRec) -> {
 
                     if (colorRec.get(1) != null) {
-                        GsonElem jsonElem2 = winc().listAll.gson(selectID);
                         GsonElem jsonElem = winc().listAll.gson(selectID);
                         if (jsonElem != null) {
                             if (evt.getSource() == btn9) {
@@ -3273,7 +3270,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
     private void sysprofToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysprofToFrame
         try {
             if (winNode != null) {
-                Layout layout = winNode.com5t().layout;
+                Layout layout = winNode.com5t().layout();
                 double selectID = winNode.com5t().id;
                 int systreeID = qPrjprod.getAs(UGui.getIndexRec(tab2), ePrjprod.systree_id);
                 Query qSysprof = new Query(eSysprof.values(), eArtikl.values()).select(eSysprof.up, "left join",
@@ -3284,7 +3281,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                 for (int index = 0; index < qSysprof.size(); ++index) {
                     Record sysprofRec = qSysprof.get(index);
                     if (winNode.com5t().type.id2 == sysprofRec.getInt(eSysprof.use_type)) {
-                        if (sysprofRec.getInt(eSysprof.use_side) == winNode.com5t().layout.id
+                        if (sysprofRec.getInt(eSysprof.use_side) == winNode.com5t().layout().id
                                 || sysprofRec.getInt(eSysprof.use_side) == UseSide.ANY.id
                                 || sysprofRec.getInt(eSysprof.use_side) == UseSide.MANUAL.id) {
                             qSysprof2.add(sysprofRec);
@@ -3370,13 +3367,13 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                 if (winNode.com5t().type == enums.Type.STVORKA_SIDE) {
                     JsonObject paramObj = parentArea.param;
                     String stvKey = null;
-                    if (winNode.com5t().layout == Layout.BOTT) {
+                    if (winNode.com5t().layout() == Layout.BOTT) {
                         stvKey = PKjson.stvorkaBottom;
-                    } else if (winNode.com5t().layout == Layout.RIGHT) {
+                    } else if (winNode.com5t().layout() == Layout.RIGHT) {
                         stvKey = PKjson.stvorkaRight;
-                    } else if (winNode.com5t().layout == Layout.TOP) {
+                    } else if (winNode.com5t().layout() == Layout.TOP) {
                         stvKey = PKjson.stvorkaTop;
-                    } else if (winNode.com5t().layout == Layout.LEFT) {
+                    } else if (winNode.com5t().layout() == Layout.LEFT) {
                         stvKey = PKjson.stvorkaLeft;
                     }
 

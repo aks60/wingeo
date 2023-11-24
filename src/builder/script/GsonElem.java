@@ -73,12 +73,4 @@ public class GsonElem {
         }
     }
     
-    public Double height() {
-        return -1.0; //(owner.layout == Layout.VERT) ? length : owner.height();
-    }
-
-    public Double width() {
-        return -1.0; //(owner.layout == Layout.HORIZ) ? length : owner.width();
-    }
-    
 }

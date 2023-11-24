@@ -13,11 +13,11 @@ public final class Bimax {
     public static String script(Integer prj) {
 // <editor-fold defaultstate="collapsed" desc="RECTANGL">
         if (prj == 501001) { //PUNIC = 427595
-            rootGeo = new GsonRoot("2.0", prj, 2, 8, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
+            rootGeo = new GsonRoot("2.0", prj, 2, 8, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
             rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1000.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 1000.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 0.0));
+                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1400.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 1400.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0));
 
             rootGeo.addElem(new GsonElem(Type.GLASS));
                     
@@ -36,7 +36,7 @@ public final class Bimax {
                     .addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 501004) {
-            rootGeo = new GsonRoot("2.0", prj, 2, 8, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
+            rootGeo = new GsonRoot("2.0", prj, 2, 8, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
             rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 900.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 600.0, 900.0));
@@ -49,14 +49,14 @@ public final class Bimax {
 
         } else if (prj == 501005) {
             rootGeo = new GsonRoot("2.0", prj, 2, 8, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
-            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1000.0))
+            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 0.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1000.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 1000.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 0.0));
 
             GsonElem area1 = rootGeo.addArea(new GsonElem(Type.AREA));
             area1.addElem(new GsonElem(Type.GLASS));
-            rootGeo.addElem(new GsonElem(Type.IMPOST, .0, 500.0, 1000.0, 500.0));
+            rootGeo.addElem(new GsonElem(Type.IMPOST, 0.0, 500.0, 1000.0, 500.0));
             GsonElem area2 = rootGeo.addArea(new GsonElem(Type.AREA));
 
             area2.addArea(new GsonElem(Type.AREA))

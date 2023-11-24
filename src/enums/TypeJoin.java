@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public enum TypeJoin {
 
-    EMPTY(00, "Тип соединеия не установлен"),
+    NONE(00, "Не определен"),
     VAR10(10, "Прилегающее"),
     VAR20(20, "Угловое на ус"),
     VAR30(30, "Угловое левое"),
@@ -27,6 +27,6 @@ public enum TypeJoin {
                 return v;
             }
         }
-        return EMPTY;
+        return NONE;
     }
 }

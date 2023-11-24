@@ -88,12 +88,12 @@ public class HtmlOfOffer {
 
                 tdList.get(0).text("Изделие № " + (i + 1));
                 tdList.get(3).text(eSystree.systemProfile(6));
-                AreaStvorka area5e = (AreaStvorka) winc.listArea.find(Type.STVORKA);
+                AreaStvorka area5e = (AreaStvorka) winc.listArea.filter(Type.STVORKA).get(0);
                 AreaStvorka stv = (area5e != null) ? ((AreaStvorka) area5e) : null;
                 int furniture_id = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
                 String fname = (furniture_id != -1) ? eFurniture.find(furniture_id).getStr(eFurniture.name) : "";
                 tdList.get(5).text(fname);
-                ElemSimple elemGlass = winc.listElem.find(Type.GLASS);
+                ElemSimple elemGlass = (ElemSimple) winc.listElem.filter(Type.GLASS).get(0);
                 String gname = (elemGlass != null) ? elemGlass.artiklRec.getStr(eArtikl.code) + " - " + elemGlass.artiklRec.getStr(eArtikl.name) : "";
                 tdList.get(7).text(gname);
                 tdList.get(9).text(eColor.find(winc.colorID1).getStr(eColor.name));

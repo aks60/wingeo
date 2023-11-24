@@ -16,31 +16,28 @@ public class ElemJoining {
 
     private double id = -1; //идентификатор соединения
     private Wincalc winc;
-    public Record joiningRec = eJoining.up.newRecord();
-    public Record joinvarRec = eJoinvar.up.newRecord();
     public LayoutJoin layout = LayoutJoin.NONE; //расположение соединения 
-    public TypeJoin type = TypeJoin.EMPTY;      //тип соединения (то что пишет )
+    public TypeJoin type = TypeJoin.NONE;      //тип соединения (то что пишет )
     public int vid = 0; //вид соединения ("0-Простое L-обр", "1-Крестовое †-обр") или ("0-Простое T-обр", "1-Крестовое †-обр", "2-Сложное Y-обр)
-
-    public ElemFrame elem1 = null;  //элемент соединения 1
-    public ElemFrame elem2 = null;  //элемент соединения 2
-    public double angl = 90;      //угол между профилями
+    public ElemSimple elem1 = null;  //элемент соединения 1
+    public ElemSimple elem2 = null;  //элемент соединения 2
     public String costs = "";     //трудозатраты, ч/ч.
 
+    public ElemJoining(Wincalc winc, ElemSimple elem1, ElemSimple elem2) {
+        this(winc, TypeJoin.NONE, LayoutJoin.NONE, elem1, elem2);
+    }
+    
+    public ElemJoining(Wincalc winc, TypeJoin type, ElemSimple elem1, ElemSimple elem2) {
+        this(winc, type, LayoutJoin.NONE, elem1, elem2);
+    }
+    
     public ElemJoining(Wincalc winc, TypeJoin type, LayoutJoin layout, ElemSimple elem1, ElemSimple elem2) {
         this.id = ++winc.genId;
         this.winc = winc;
         this.type = type;
         this.layout = layout;
-        elem1.anglHoriz = UGeo.anglHor(elem1);
-        elem2.anglHoriz = UGeo.anglHor(elem2);
-        this.elem1 = (ElemFrame) elem1;
-        this.elem2 = (ElemFrame) elem2;
-        //this.angl = UJts.betweenAngl(elem1, elem2);
-        if (elem1.owner.type != Type.ARCH && elem2.owner.type != Type.ARCH && TypeJoin.VAR10 != type) {
-            elem1.anglCut[1] = angl / 2;
-            elem2.anglCut[0] = angl / 2;
-        }
+        this.elem1 = elem1;
+        this.elem2 = elem2;
     }
 
     public void addSpecific(Specific spcAdd) { //добавление спесификаций зависимых элементов
@@ -53,9 +50,9 @@ public class ElemJoining {
             } else if (sideCalc != null && "меньшей".equals(sideCalc)) {
                 spcAdd.width = (elem1.length() > elem2.length()) ? elem2.length() : elem1.length();
             } else if (sideCalc != null && "общей".equals(sideCalc)) {
-                if (elem1.layout == Layout.HORIZ || elem1.layout == Layout.BOTT || elem1.layout == Layout.TOP) {
+                if (elem1.layout() == Layout.HORIZ || elem1.layout() == Layout.BOTT || elem1.layout() == Layout.TOP) {
                     spcAdd.width = (elem1.x1() > elem2.x1()) ? elem1.x1() - elem2.x2() : elem2.x1() - elem1.x2();
-                } else if (elem1.layout == Layout.VERT || elem1.layout == Layout.RIGHT || elem1.layout == Layout.LEFT) {
+                } else if (elem1.layout() == Layout.VERT || elem1.layout() == Layout.RIGHT || elem1.layout() == Layout.LEFT) {
                     spcAdd.width = (elem1.y1() > elem2.y1()) ? elem1.y1() - elem2.y2() : elem2.y1() - elem1.y2();
                 }
             }
@@ -98,6 +95,11 @@ public class ElemJoining {
     }
 
     public String toString() {
-        return "id=" + id + ",  layout= " + layout + ",  type=" + type + ",  elem1=" + elem1.layout + ",  elem2=" + elem2.layout + ",  " + layout.name;
+        return "id=" + id + ",  layout= " + layout + ",  type=" + type + ",  elem1=" + elem1.layout() + ",  elem2=" + elem2.layout() + ",  " + layout.name;
     }
+    
+    
+    public double angl_90 = 90;      //угол между профилями (кандидат на удаление)
+    public Record joiningRec = eJoining.up.newRecord(); //для рассчёта тарификации
+    public Record joinvarRec = eJoinvar.up.newRecord(); //для рассчёта тарификации     
 }

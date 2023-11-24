@@ -4,21 +4,25 @@ import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import domain.eArtikl;
+import domain.eColor;
 import domain.eSysprof;
 import domain.eSyssize;
+import enums.Layout;
 import enums.PKjson;
 import enums.UseSide;
+import java.awt.BasicStroke;
 import java.awt.Shape;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.LineSegment;
 
 public class ElemFrame extends ElemSimple {
 
     public ElemFrame(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
         initСonstructiv(gson.param);
-        mouseEvent();
+        systemEvent();
     }
 
     /**
@@ -50,25 +54,24 @@ public class ElemFrame extends ElemSimple {
 
     public void setLocation() {
         try {
-            anglHoriz = UGeo.anglHor(this);
-            for (int i = 0; i < winc.listFrame.size(); i++) {
-                if (winc.listFrame.get(i).id == this.id) {
+            for (int i = 0; i < owner.frames.size(); i++) {
+                if (owner.frames.get(i).id == this.id) {
 
-                    int k = (i == 0) ? winc.listFrame.size() - 1 : i - 1;
-                    int j = (i == (winc.listFrame.size() - 1)) ? 0 : i + 1;
-                    ElemSimple elem0 = winc.listFrame.get(k);
-                    ElemSimple elem1 = winc.listFrame.get(j);
+                    int k = (i == 0) ? owner.frames.size() - 1 : i - 1;
+                    int j = (i == (owner.frames.size() - 1)) ? 0 : i + 1;
+                    ElemSimple e1 = owner.frames.get(k);
+                    ElemSimple e2 = owner.frames.get(j);
 
                     double h0[] = UGeo.deltaOnAngl(UGeo.anglHor(this), this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr));
-                    double h1[] = UGeo.deltaOnAngl(UGeo.anglHor(elem0), elem0.artiklRec.getDbl(eArtikl.height) - elem0.artiklRec.getDbl(eArtikl.size_centr));
-                    double h2[] = UGeo.deltaOnAngl(UGeo.anglHor(elem1), elem1.artiklRec.getDbl(eArtikl.height) - elem1.artiklRec.getDbl(eArtikl.size_centr));
+                    double h1[] = UGeo.deltaOnAngl(UGeo.anglHor(e1), e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr));
+                    double h2[] = UGeo.deltaOnAngl(UGeo.anglHor(e2), e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr));
 
                     Coordinate c1 = Intersection.intersection(
                             new Coordinate(this.x1() + h0[0], this.y1() - h0[1]), new Coordinate(this.x2() + h0[0], this.y2() - h0[1]),
-                            new Coordinate(elem0.x1() + h1[0], elem0.y1() - h1[1]), new Coordinate(elem0.x2() + h1[0], elem0.y2() - h1[1]));
+                            new Coordinate(e1.x1() + h1[0], e1.y1() - h1[1]), new Coordinate(e1.x2() + h1[0], e1.y2() - h1[1]));
                     Coordinate c2 = Intersection.intersection(
                             new Coordinate(this.x1() + h0[0], this.y1() - h0[1]), new Coordinate(this.x2() + h0[0], this.y2() - h0[1]),
-                            new Coordinate(elem1.x1() + h2[0], elem1.y1() - h2[1]), new Coordinate(elem1.x2() + h2[0], elem1.y2() - h2[1]));
+                            new Coordinate(e2.x1() + h2[0], e2.y1() - h2[1]), new Coordinate(e2.x2() + h2[0], e2.y2() - h2[1]));
 
                     this.geom = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y);
                 }
@@ -79,35 +82,73 @@ public class ElemFrame extends ElemSimple {
         }
     }
 
-    public void paint() {
-        java.awt.Color color = winc.gc2d.getColor();
-        winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
-        if (this.geom != null) {
-            Shape shape = new ShapeWriter().toShape(this.geom);
-            winc.gc2d.draw(shape);
+    public Layout layout() {
+        double angl = this.anglHoriz();
+        if (angl == 90) {
+            return Layout.LEFT;
+        } else if (angl == 0) {
+            return Layout.BOTT;
+        } else if (angl == -90) {
+            return Layout.RIGHT;
+        } else if (angl == 180) {
+            return Layout.TOP;
         }
-        winc.gc2d.setColor(color);
+        return Layout.ANY;
+    }
+
+    public void paint() {
+        if (this.geom != null) {
+            java.awt.Color color = winc.gc2d.getColor();
+            Shape shape = new ShapeWriter().toShape(this.geom);
+
+            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
+            winc.gc2d.fill(shape);
+
+            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
+            winc.gc2d.draw(shape);
+            winc.gc2d.setColor(color);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
     @Override
     public double x2() {
-        return (enext.gson.x1 != null) ? enext.gson.x1 : -1;
+        for (int i = 0; i < owner.frames.size(); i++) {
+            if (owner.frames.get(i).x1() == this.x1() && owner.frames.get(i).y1() == this.y1()) {
+                return owner.frames.get((i == owner.frames.size() - 1) ? 0 : i + 1).x1();
+            }
+        }
+        return -1;
     }
 
     @Override
     public double y2() {
-        return (enext.gson.y1 != null) ? enext.gson.y1 : -1;
+        for (int i = 0; i < owner.frames.size(); i++) {
+            if (owner.frames.get(i).x1() == this.x1() && owner.frames.get(i).y1() == this.y1()) {
+                return owner.frames.get((i == owner.frames.size() - 1) ? 0 : i + 1).y1();
+            }
+        }
+        return -1;
     }
 
     @Override
     public void x2(double v) {
-        enext.gson.x1 = v;
+        for (int i = 0; i < owner.frames.size(); i++) {
+            if (owner.frames.get(i).x1() == this.x1() && owner.frames.get(i).y1() == this.y1()) {
+                owner.frames.get((i == owner.frames.size() - 1) ? 0 : i + 1).x1(v);
+                return;
+            }
+        }
     }
 
     @Override
     public void y2(double v) {
-        enext.gson.y1 = v;
+        for (int i = 0; i < owner.frames.size(); i++) {
+            if (owner.frames.get(i).x1() == this.x1() && owner.frames.get(i).y1() == this.y1()) {
+                owner.frames.get((i == owner.frames.size() - 1) ? 0 : i + 1).y1(v);
+                return;
+            }
+        }
     }
     // </editor-fold>     
 }

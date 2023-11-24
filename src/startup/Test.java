@@ -1,5 +1,6 @@
 package startup;
 
+import builder.model.Com5t;
 import builder.model.UGeo;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -12,11 +13,14 @@ import domain.eElement;
 import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
+import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.*;
 
 public class Test {
 
     public static Integer numDb = Integer.valueOf(eProp.base_num.read());
+
+    private static GeometryFactory gf = new GeometryFactory();
 
     // <editor-fold defaultstate="collapsed" desc="Connection[] connect(int numDb)">
     public static Connection connect1() {
@@ -87,13 +91,14 @@ public class Test {
             System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(winc.script)));
             //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(winc.script)));
 
-//            winc.constructiv(true);
+            winc.constructiv(true);
 //            winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
 //            winc.gc2d = winc.bufferImg.createGraphics();
 //            winc.rootArea.draw(); //рисую конструкцию
-            //frames.PSCompare.iwinXls(winc, true);
-//            frames.PSCompare.iwinPs4(winc, true);
-            //winc.listJoin.forEach(it -> System.out.println(it));           
+ 
+            frames.PSCompare.iwinPs4(winc, true);
+            //winc.listJoin.forEach(it -> System.out.println(it));     
+            
         } else if (_case.equals("min")) {
             List<Integer> prjList = GsonScript.productList(_case);
             for (int prj : prjList) {
@@ -276,7 +281,6 @@ public class Test {
 
     //Пример PathIterator
     public static void geom() {
-
         GeometryFactory gf = new GeometryFactory(); //JTSFactoryFinder.getGeometryFactory(); 
 
         Coordinate[] coord1 = new Coordinate[]{
@@ -292,46 +296,10 @@ public class Test {
         Point point2 = gf.createPoint(new Coordinate(4, 8));
         LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
         LineString line2 = gf.createLineString(new Coordinate[]{new Coordinate(93.81658797276759, 896.6494075724012), new Coordinate(199.48228309038115, 309.9099755154137)});
-        LineSegment segm1 = new LineSegment(40, 40, 200, 40);
+        LineSegment segm1 = new LineSegment(100, 100, 0, 0);
         LineSegment segm2 = new LineSegment(20, 20, 200, 120);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
 
-        Coordinate[] coord6 = UGeo.arrCoord(0, 0, 0, 900, 566.2921348314605, 879.7752808988762, 0, 0);
-        Coordinate[] coord7 = UGeo.arrCoord(456.5, 1000, 543.5, 1000, 543.5, 0, 456.5, 0, 456.5, 1000);
-        Coordinate[] coord8 = UGeo.arrCoord(63, 63, 63, 59.84658648630139, 937, 426.40654360235624, 937, 63, 63, 63);
-
-        Polygon polygon6 = gf.createPolygon(coord6);
-
-//        Polygon areaExp = gf.createPolygon(coord7);
-//        Polygon geoPadding = gf.createPolygon(coord8);      
-//        GeometryFixer fix = new GeometryFixer(geoPadding);
-//        //fix.setKeepCollapsed(true);
-//        fix.setKeepMulti(false);
-//        Geometry geo = fix.getResult();
-        //Geometry[] geo = UJts.geoSplit(polygon6,  85.49812646820278, 899.759836723404, 85.4981264682028, 899.759836723404);
-        //Geometry geo = polygon6.intersection(line2);
-        //System.out.println(geo);
-        //Geometry g = reader.read("MULTIPOINT(10 10, 20 20, 30 30)");
-        //assertTrue(g.getBoundary().isEmpty());
-        try {
-//            WKTReader reader = new WKTReader();
-//            Geometry g = reader.read("MULTIPOLYGON("
-//                    + "(  (0 0, 40 0, 40 40, 0 40, 0 0),"
-//                    + "   (10 10, 30 10, 30 30, 10 30, 10 10)  ),"
-//                    + "(  (200 200, 210 200, 210 210, 200 200) )  )");
-//            Geometry b = reader.read("MULTILINESTRING("
-//                    + "(0 0, 40 0, 40 40, 0 40, 0 0),"
-//                    + "(10 10, 30 10, 30 30, 10 30, 10 10),"
-//                    + "(200 200, 210 200, 210 210, 200 200))");
-//            System.out.println(g.getBoundary());
-//            System.out.println(g.getEnvelope());
-//            Envelope env = g.getEnvelopeInternal();
-            //env.get
-            //System.out.println(b.equalsExact(g));
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 }

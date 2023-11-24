@@ -310,7 +310,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         if (selectedPath != null) {
             sysTree.setSelectionPath(new TreePath(selectedPath));
         } else {
-            sysTree.setSelectionRow(0);
+            UGui.setSelectedRow(tab4);
         }
     }
 
@@ -348,7 +348,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             winTree.setModel(new DefaultTreeModel(root));
 
         } catch (Exception e) {
-            System.err.println("Ошибка: Systree.loadingWinTree() " + e);
+            System.err.println("Ошибка:Systree.loadingWinTree() " + e);
         }
     }
 
@@ -377,7 +377,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         List.of(tab2, tab3, tab4).forEach(table -> ((DefTableModel) table.getModel()).getQuery().execsql());
 
         sysNode = (DefMutableTreeNode) sysTree.getLastSelectedPathComponent();
-        if (sysNode != null) {
+        if (sysNode != null && sysNode.getChildCount() == 0) {
             systreeID = sysNode.rec().getInt(eSystree.id);
             rsvSystree.load();
             qSysprof.select(eSysprof.up, "left join", eArtikl.up, "on", eArtikl.id, "=",
@@ -416,8 +416,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     UGui.setSelectedRow(tab5);
                 }
             } else {
-                canvas.init(null);
-                canvas.repaint();
+                //НАДО ОЧИСТИТЬ КАНВУ!!!
+                //canvas.init(null);
+                //canvas.repaint();
             }
         }
     }
@@ -436,9 +437,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     setText(txt9, eColor.find(winc.colorID1).getStr(eColor.name));
                     setText(txt13, eColor.find(winc.colorID2).getStr(eColor.name));
                     setText(txt14, eColor.find(winc.colorID3).getStr(eColor.name));
-                    setText(txt17, UCom.format(winc.gson.width(), 1));
-                    setText(txt22, UCom.format(winc.gson.height1, 1));
-                    setText(txt23, UCom.format(winc.gson.height2, 1));
+                    setText(txt17, UCom.format(winc.width(), 1));
+                    setText(txt22, UCom.format(333, 1)); //winc.gson.height1, 1));
+                    setText(txt23, UCom.format(333, 1)); //winc.gson.height2, 1));
                     txt23.setEditable(List.of(enums.Type.ARCH, enums.Type.TRIANGL, enums.Type.TRAPEZE).contains(winNode.com5t().type));
 
                     //Параметры
@@ -574,11 +575,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc win = (Wincalc) w;
                 scene.init(win);
+                canvas.init(win);
                 canvas.draw();
                 scene.draw();
 
                 loadingTree2(win);
-
                 winTree.setSelectionInterval(0, 0);
             }
         } else {
@@ -843,8 +844,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 sysprodRec.set(eSysprod.script, script);
                 sysprodRec.set(eSysprod.values().length, win);
                 canvas.draw();
-                scene.lineHoriz.forEach(e -> e.init());
-                scene.lineVert.forEach(e -> e.init());
                 scene.draw();
                 selectionTree2();
             }
@@ -3644,7 +3643,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     private void sysprofToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysprofToFrame
         try {
             if (winNode != null) {
-                Layout layout = winNode.com5t().layout;
+                Layout layout = winNode.com5t().layout();
                 double selectID = winNode.com5t().id; //id элемента который уже есть в конструкции, это либо виртуал. либо найденный по приоритету при построении модели
                 Query qSysprofFilter = new Query(eSysprof.values(), eArtikl.values()); //тут будет список допустимых профилей из ветки системы
                 //Цикл по профилям ветки 
@@ -3745,13 +3744,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 if (winNode.com5t().type == enums.Type.STVORKA_SIDE) {
                     JsonObject paramObj = parentArea.param;
                     String stvKey = null;
-                    if (winNode.com5t().layout == Layout.BOTT) {
+                    if (winNode.com5t().layout() == Layout.BOTT) {
                         stvKey = PKjson.stvorkaBottom;
-                    } else if (winNode.com5t().layout == Layout.RIGHT) {
+                    } else if (winNode.com5t().layout() == Layout.RIGHT) {
                         stvKey = PKjson.stvorkaRight;
-                    } else if (winNode.com5t().layout == Layout.TOP) {
+                    } else if (winNode.com5t().layout() == Layout.TOP) {
                         stvKey = PKjson.stvorkaTop;
-                    } else if (winNode.com5t().layout == Layout.LEFT) {
+                    } else if (winNode.com5t().layout() == Layout.LEFT) {
                         stvKey = PKjson.stvorkaLeft;
                     }
 
@@ -4581,10 +4580,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         new FrameToFile(this, btnClose);
         new UColor();
 
-        TableFieldFilter filterTable = new TableFieldFilter(0, tab2, tab3, tab4, tab5, tab7);
-        south.add(filterTable, 0);
-        filterTable.getTxt().grabFocus();
-
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
         UGui.setDocumentFilter(3, txt17, txt22, txt23, txt24, txt26);
         List.of(btnIns, btnDel, btnRef).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab2, tab3, tab4, tab5)));
@@ -4616,6 +4611,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         DefaultTreeModel model = (DefaultTreeModel) winTree.getModel();
         ((DefaultMutableTreeNode) model.getRoot()).removeAllChildren();
         model.reload();
+        
+        TableFieldFilter filterTable = new TableFieldFilter(0, tab5, tab3, tab4, tab5, tab7);
+        south.add(filterTable, 0);
+        filterTable.getTxt().grabFocus();        
     }
 
     private void testBimax() {
