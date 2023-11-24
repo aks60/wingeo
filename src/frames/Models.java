@@ -12,6 +12,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import builder.Wincalc;
+import builder.making.Cal5e;
+import builder.making.Joining;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -24,7 +26,10 @@ import common.listener.ListenerFrame;
 import common.listener.ListenerReload;
 import dataset.Conn;
 import frames.swing.DefTableModel;
+import com.google.gson.GsonBuilder;
 import frames.swing.draw.Scene;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Collections;
@@ -52,8 +57,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         loadingModel();
         btnChoice.setVisible(false);
         loadingTab1(tab1, 2001);
-        //setVisible(true);
-        //UGui.setSelectedRow(tab1);
     }
 
     public Models(ListenerRecord listener) {
@@ -84,7 +87,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 return label;
             }
         });
-        //canvas.setVisible(true);
     }
 
     public void loadingTab1(JTable tab, int form) {
@@ -94,18 +96,18 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         for (Record record : qSysmodel.table(eSysmodel.up)) {
             try {
                 String script = record.getStr(eSysmodel.script);
-                Wincalc iwin = new Wincalc(script);
+                Wincalc iwin2 = new Wincalc(script);
                 //Cal5e joining = new Joining(iwin2, true);//заполним соединения из конструктива
                 //joining.calc();
-                iwin.imageIcon = Canvas.createIcon(iwin, 68);
-                record.add(iwin);
+                iwin2.imageIcon = Canvas.createIcon(iwin2, 68);
+                record.add(iwin2);
 
             } catch (Exception e) {
                 System.err.println("Ошибка:Models.loadingTab() " + e);
             }
         }
         ((DefaultTableModel) tab.getModel()).fireTableDataChanged();
-        //UGui.setSelectedRow(tab);
+        UGui.setSelectedRow(tab);
     }
 
     public void selectionTab1(JTable tab) {
@@ -117,33 +119,32 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 Wincalc win = (Wincalc) w;
                 scene.init(win);
                 canvas.init(win);
-                canvas.repaint();
-                //canvas.setFocusable(true);
-                //canvas.draw();
+                scene.draw();
+                canvas.draw();
             }
         }
     }
 
     @Override
     public void reload() {
-//        try {
-//            int index = UGui.getIndexRec(tab1);
-//            if (index != -1) {
-//                Wincalc win = winc();
-//                String script = win.gson.toJson();
-//                win.build(script);
-//                win.imageIcon = Canvas.createIcon(win, 68);
-//                Record sysmodelRec = qSysmodel.get(index);
-//                sysmodelRec.set(eSysmodel.script, script);
-//                sysmodelRec.set(eSysmodel.values().length, win);
-//                canvas.draw();
-//                scene.draw();
-//                ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
-//                UGui.setSelectedIndex(tab1, index);
-//            }
-//        } catch (Exception e) {
-//            System.err.println("Ошибка:Models.reload() " + e);
-//        }
+        try {
+            int index = UGui.getIndexRec(tab1);
+            if (index != -1) {
+                Wincalc win = winc();
+                String script = win.gson.toJson();
+                win.build(script);
+                win.imageIcon = Canvas.createIcon(win, 68);
+                Record sysmodelRec = qSysmodel.get(index);
+                sysmodelRec.set(eSysmodel.script, script);
+                sysmodelRec.set(eSysmodel.values().length, win);
+                canvas.draw();
+                scene.draw();
+                ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
+                UGui.setSelectedIndex(tab1, index);
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:Models.reload() " + e);
+        }
     }
 
     private Wincalc winc() {
@@ -758,19 +759,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }//GEN-LAST:event_btnMove
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-//        int index = 0;
-//        if (index != -1) {
-//            Record sysmodelRec = qSysmodel.get(index);
-//            Object w = sysmodelRec.get(eSysmodel.values().length);
-//            if (w instanceof Wincalc) { //прорисовка окна               
-//                Wincalc win = (Wincalc) w;
-//                scene.init(win);
-//                canvas.init(win);
-//                canvas.repaint();
-//                canvas.setFocusable(true);
-//            }
-//        }
-        //selectionTab1(tab1);
+        //((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
         UGui.setSelectedRow(tab1);
     }//GEN-LAST:event_btnTestActionPerformed
 
@@ -822,6 +811,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                     selectionTab1(tab1);
                 }
             }
-        });
+        });       
     }
 }
