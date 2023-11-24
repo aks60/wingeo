@@ -15,7 +15,7 @@ import org.locationtech.jts.awt.ShapeWriter;
 public class ElemGlass extends ElemSimple {
 
     public double radiusGlass = 0; //радиус стекла
-    public double gzazo = 0; //зазор между фальцем и стеклопакетом 
+    public double gzazo = 8; //зазор между фальцем и стеклопакетом 
     public double gsize[] = {0, 0, 0, 0}; //размер от оси до стеклопакета
 
     public Record rasclRec = eArtikl.virtualRec(); //раскладка
@@ -69,14 +69,14 @@ public class ElemGlass extends ElemSimple {
     }
 
     public void setLocation() {
-        setDimension(owner.x1(), owner.y1(), owner.x2(), owner.y2());
+        this.geom = owner.geom;
     }
 
     public void paint() {
         if (owner.geom != null) {
             java.awt.Color color = winc.gc2d.getColor();
             winc.gc2d.setColor(new java.awt.Color(eColor.find(colorID2).getInt(eColor.rgb)));
-            Shape shape = new ShapeWriter().toShape(owner.geom);
+            Shape shape = new ShapeWriter().toShape(this.geom);
             winc.gc2d.fill(shape);
             winc.gc2d.setColor(color);
         }

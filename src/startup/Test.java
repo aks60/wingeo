@@ -1,7 +1,5 @@
 package startup;
 
-import builder.model.Com5t;
-import builder.model.UGeo;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,10 +8,13 @@ import com.google.gson.JsonParser;
 import common.eProp;
 import dataset.Conn;
 import domain.eElement;
+import java.awt.Shape;
+import java.awt.geom.Point2D;
 import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
-import org.locationtech.jts.algorithm.Angle;
+import org.locationtech.jts.awt.PointShapeFactory;
+import org.locationtech.jts.awt.PointShapeFactory.Circle;
 import org.locationtech.jts.geom.*;
 
 public class Test {
@@ -95,10 +96,10 @@ public class Test {
 //            winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
 //            winc.gc2d = winc.bufferImg.createGraphics();
 //            winc.rootArea.draw(); //рисую конструкцию
- 
+
             frames.PSCompare.iwinPs4(winc, true);
             //winc.listJoin.forEach(it -> System.out.println(it));     
-            
+
         } else if (_case.equals("min")) {
             List<Integer> prjList = GsonScript.productList(_case);
             for (int prj : prjList) {
@@ -300,6 +301,5 @@ public class Test {
         LineSegment segm2 = new LineSegment(20, 20, 200, 120);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
-
     }
 }

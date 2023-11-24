@@ -14,9 +14,16 @@ public class GsonScript {
     public static GsonRoot rootGeo = null;
 
     public static String modelJson(Integer prj) {
-        
+
 // <editor-fold defaultstate="collapsed" desc="RECTANGL">
-        if (prj == 601001) {
+        if (prj == -501001) {
+            rootGeo = new GsonRoot("2.0", prj, 2, 8, "Простое 1 створка");
+            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1400.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 1400.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0))
+                    .addArea(new GsonElem(Type.STVORKA))
+                    .addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 601002) {
 
@@ -56,15 +63,14 @@ public class GsonScript {
                     .addElem(new GsonElem(Type.GLASS));
         } else if (prj == 700027) {
 
-       } else if (prj == 508634) {
+        } else if (prj == 508634) {
 
         } else if (prj == 508777) {
 
 // </editor-fold>
-
 // <editor-fold defaultstate="collapsed" desc="ARCH">
         } else if (prj == 604004) {
-            
+
         } else if (prj == 604005) {
 
         } else if (prj == 604006) {
@@ -94,10 +100,10 @@ public class GsonScript {
         } else if (prj == -508916) { //Трапеции
 
         } else if (prj == 508945) { //Трапеции
-            
+
         } else if (prj == 506929) { //PUNIC = 425688          
 // </editor-fold>
-            
+
 // <editor-fold defaultstate="collapsed" desc="DOOR">
         } else if (prj == 508841) { //Двери
 
@@ -128,7 +134,7 @@ public class GsonScript {
         return rootGeo.toJson();
     }
 
-    public static List<Integer> modelList(String scale)     {
+    public static List<Integer> modelList(String scale) {
         String base_name = (eProp.base_num.read().equals("1")) ? eProp.base1.read()
                 : (eProp.base_num.read().equals("2")) ? eProp.base2.read() : eProp.base3.read();
 
@@ -210,8 +216,8 @@ public class GsonScript {
                     601001, 601002, 601003, 601004, 601005, 601006, 601007, 601008, 601009, 601010, //прямоугольные окна
                     700027, 604004, 604005, 604006, 604007, 604008, 604009, 604010, //арки
                     506642, -506642, 605001, 508916, 508945, 508841, 700009, 700014) //трапеции, двери
-//                    : List.of(601001, 601002, 601003, 601004, 601005, 601006,
-//                            601007, 601008, 601009, 601010, 604005, 604006, 604007, 604008, 604009, 604010);
+                    //                    : List.of(601001, 601002, 601003, 601004, 601005, 601006,
+                    //                            601007, 601008, 601009, 601010, 604005, 604006, 604007, 604008, 604009, 604010);
                     : List.of(601001, 601002, 601003, 601004, 601005, 601006,
                             601007, 601008, 601009, 601010, 506642, 604005, 604006, 604007, 604008, 604009, 604010);
 

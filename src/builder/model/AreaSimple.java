@@ -86,6 +86,7 @@ public class AreaSimple extends Com5t {
     public void draw() {
         try {
             winc.root.setLocation();
+            //winc.listArea.forEach(e -> e.setLocation());
             winc.listElem.forEach(e -> e.setLocation());
 
             //Прорисовка стеклопакетов
