@@ -26,13 +26,14 @@ public class Canvas extends javax.swing.JPanel {
 
     public Canvas() {
         initComponents();
-        this.setFocusable(true);        
+        this.setFocusable(true);
     }
 
     public void init(Wincalc winc) {
         this.requestFocus();
         this.winc = winc;
         this.winc.canvas = this;
+        this.winc.scale = scale(winc, 0, 0);
 
         addKeyListener(new KeyAdapter() {
 
@@ -62,15 +63,14 @@ public class Canvas extends javax.swing.JPanel {
         addComponentListener(new ComponentAdapter() {
 
             public void componentResized(ComponentEvent event) {
-                //winc.scale = scale(winc, 0, 0);
+                winc.scale = scale(winc, 0, 0);
             }
         });
     }
 
     //Прорисовка конструкции
     public void draw() {
-        if (winc != null) {
-            winc.scale = scale(winc, 0, 24);
+        if (winc != null) {;
             repaint();
         }
     }
@@ -91,11 +91,10 @@ public class Canvas extends javax.swing.JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (winc != null) {
-            winc.gc2d = (Graphics2D) g;            
+            winc.gc2d = (Graphics2D) g;
             winc.gc2d.setColor(getBackground());
             winc.gc2d.setStroke(new BasicStroke(2)); //толщина линии
             winc.gc2d.translate(Com5t.TRANSLATE_XY, Com5t.TRANSLATE_XY);
-            winc.scale = scale(winc, -3, 0);
             winc.gc2d.scale(winc.scale, winc.scale - 0.001);
             winc.root.draw();
 

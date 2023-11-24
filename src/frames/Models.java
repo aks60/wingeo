@@ -137,8 +137,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 Record sysmodelRec = qSysmodel.get(index);
                 sysmodelRec.set(eSysmodel.script, script);
                 sysmodelRec.set(eSysmodel.values().length, win);
-                canvas.draw();
-                scene.draw();
+                //canvas.draw();
+                //scene.draw();
                 ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
                 UGui.setSelectedIndex(tab1, index);
             }
