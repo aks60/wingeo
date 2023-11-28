@@ -17,7 +17,9 @@ public final class Bimax {
             rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 1400.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0));
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0))
+                    .addArea(new GsonElem(Type.STVORKA))
+                    .addElem(new GsonElem(Type.GLASS));                    
 
             rootGeo.addElem(new GsonElem(Type.GLASS));
                     

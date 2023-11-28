@@ -44,7 +44,9 @@ public class AreaStvorka extends AreaSimple {
 
     public AreaStvorka(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
-        //initFurniture(gson.param);
+        initFurniture(gson.param);
+        winc.listArea.add(this);
+        winc.listAll.add(this); 
     }
 
     public void initFurniture(JsonObject param) {
@@ -143,6 +145,11 @@ public class AreaStvorka extends AreaSimple {
                 //Элементы сегментов
                 ElemSimple e1 = UGeo.segMapElem(listFrame, segm1);
                 ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
+                if(e1 == null) {
+                   ElemFrame stv_side = new ElemFrame(this.winc, this.gson, this.owner); 
+                   winc.listElem.add(stv_side);
+                   this.frames.add(stv_side);
+                }
 
                 //Отступ створки
                 double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)
@@ -157,8 +164,8 @@ public class AreaStvorka extends AreaSimple {
                 //Точка пересечения внутренних сегментов
                 coo2[i] = segm4.lineIntersection(segm3);
             }
-           this.geom = Com5t.gf.createPolygon(coo2);
-
+//           this.geom = Com5t.gf.createPolygon(coo2);
+//
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.setLocation() " + e);
         }
