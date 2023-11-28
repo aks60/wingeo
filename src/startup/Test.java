@@ -88,7 +88,7 @@ public class Test {
         String _case = "one";
 
         if (_case.equals("one")) {
-            winc.build(GsonScript.productJson(501001));
+            winc.build(GsonScript.productJson(501006));
             System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(winc.script)));
             System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(winc.script)));
 

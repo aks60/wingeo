@@ -46,22 +46,19 @@ public class AreaStvorka extends AreaSimple {
         super(winc, gson, owner);
         //initStvorka();
         //initFurniture(gson.param);
-        winc.listArea.add(this);
-        winc.listAll.add(this);
     }
 
     public void initStvorka() {
         try {
-            Coordinate[] coo = owner.geom.getCoordinates();
-            Coordinate[] coo2 = new Coordinate[coo.length];
-            for (int i = 0; i < coo.length - 1; i++) {
-
-                LineSegment segm = new LineSegment(coo[i], coo[i + 1]);
-                ElemFrame stv = new ElemFrame(this.winc, this.gson, this.owner);
-                stv.setDimension(segm.p0.x, segm.p0.y, segm.p1.x, segm.p1.y);
-                winc.listElem.add(stv);
-                this.frames.add(stv);
-            }
+//            Coordinate[] coo = owner.geom.getCoordinates();
+//            Coordinate[] coo2 = new Coordinate[coo.length];
+//            for (int i = 0; i < coo.length - 1; i++) {
+//                LineSegment segm = new LineSegment(coo[i], coo[i + 1]);
+//                ElemFrame stv = new ElemFrame(this.winc, this.gson, this.owner);
+//                segm = segm.offset(-8);
+//                stv.setDimension(segm.p0.x, segm.p0.y, segm.p1.x, segm.p1.y);
+//                this.frames.add(stv);
+//            }
         } catch (Exception e) {
             System.err.println("Ошибка:initStvorka.initStvorka() " + e);
         }
@@ -148,42 +145,44 @@ public class AreaStvorka extends AreaSimple {
     }
 
     public void setLocation() {
-        Coordinate[] coo = owner.geom.getCoordinates();
-        Coordinate[] coo2 = new Coordinate[coo.length];
-        List<ElemSimple> listFrame = winc.listElem.filter(Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+//        Coordinate[] coo = owner.geom.getCoordinates();
+//        Coordinate[] coo2 = new Coordinate[coo.length];
+//        List<ElemSimple> listFrame = winc.listElem.filter(Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
         try {
-            for (int i = 0; i < coo.length; i++) {
+            this.geom = UGeo.stvPadding(owner.geom, winc.listElem, -8);
 
-                //Сегменты границ полигона
-                int j = (i == coo.length - 1) ? 1 : i + 1;
-                int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
-                LineSegment segm1 = new LineSegment(coo[k], coo[i]);
-                LineSegment segm2 = new LineSegment(coo[i], coo[j]);
-
-                //Элементы сегментов
-                ElemSimple e1 = UGeo.segMapElem(listFrame, segm1);
-                ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
-                if (e1 == null) {
-                    ElemFrame stv_side = new ElemFrame(this.winc, this.gson, this.owner);
-                    winc.listElem.add(stv_side);
-                    this.frames.add(stv_side);
-                }
-
-                //Отступ створки
-                double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)
-                        - e1.artiklRec.getDbl(eArtikl.size_falz) - winc.syssizeRec.getDbl(eSyssize.naxl);
-                double w2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)
-                        - e2.artiklRec.getDbl(eArtikl.size_falz) - winc.syssizeRec.getDbl(eSyssize.naxl);
-
-                //Смещение сегментов створки
-                LineSegment segm3 = segm1.offset(-w1);
-                LineSegment segm4 = segm2.offset(-w2);
-
-                //Точка пересечения внутренних сегментов
-                coo2[i] = segm4.lineIntersection(segm3);
-            }
-//           this.geom = Com5t.gf.createPolygon(coo2);
+//            for (int i = 0; i < coo.length; i++) {
 //
+//                //Сегменты границ полигона
+//                int j = (i == coo.length - 1) ? 1 : i + 1;
+//                int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
+//                LineSegment segm1 = new LineSegment(coo[k], coo[i]);
+//                LineSegment segm2 = new LineSegment(coo[i], coo[j]);
+//
+//                //Элементы сегментов
+//                ElemSimple e1 = UGeo.segMapElem(listFrame, segm1);
+//                ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
+//                if (e1 == null) {
+//                    ElemFrame stv_side = new ElemFrame(this.winc, this.gson, this.owner);
+//                    winc.listElem.add(stv_side);
+//                    this.frames.add(stv_side);
+//                }
+//
+//                //Отступ створки
+//                double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)
+//                        - e1.artiklRec.getDbl(eArtikl.size_falz) - winc.syssizeRec.getDbl(eSyssize.naxl);
+//                double w2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)
+//                        - e2.artiklRec.getDbl(eArtikl.size_falz) - winc.syssizeRec.getDbl(eSyssize.naxl);
+//
+//                //Смещение сегментов створки
+//                LineSegment segm3 = segm1.offset(-w1);
+//                LineSegment segm4 = segm2.offset(-w2);
+//
+//                //Точка пересечения внутренних сегментов
+//                coo2[i] = segm4.lineIntersection(segm3);
+//            }
+////           this.geom = Com5t.gf.createPolygon(coo2);
+////
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.setLocation() " + e);
         }
@@ -197,7 +196,7 @@ public class AreaStvorka extends AreaSimple {
             winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
             winc.gc2d.fill(shape);
 
-            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
+            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
             winc.gc2d.draw(shape);
             winc.gc2d.setColor(color);
         }

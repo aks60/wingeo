@@ -137,7 +137,7 @@ public class Wincalc {
                 for (GsonElem js : gson.childs) {
 
                     if (Type.STVORKA == js.type) {
-                        AreaSimple area5e = new AreaStvorka(this, gson, owner);
+                        AreaSimple area5e = new AreaStvorka(this, js, owner);
                         owner.childs().add(area5e); //добавим ребёнка родителю
                         hm.put(area5e, js);
 
