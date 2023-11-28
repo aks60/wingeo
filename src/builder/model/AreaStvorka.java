@@ -44,9 +44,27 @@ public class AreaStvorka extends AreaSimple {
 
     public AreaStvorka(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
-        initFurniture(gson.param);
+        //initStvorka();
+        //initFurniture(gson.param);
         winc.listArea.add(this);
-        winc.listAll.add(this); 
+        winc.listAll.add(this);
+    }
+
+    public void initStvorka() {
+        try {
+            Coordinate[] coo = owner.geom.getCoordinates();
+            Coordinate[] coo2 = new Coordinate[coo.length];
+            for (int i = 0; i < coo.length - 1; i++) {
+
+                LineSegment segm = new LineSegment(coo[i], coo[i + 1]);
+                ElemFrame stv = new ElemFrame(this.winc, this.gson, this.owner);
+                stv.setDimension(segm.p0.x, segm.p0.y, segm.p1.x, segm.p1.y);
+                winc.listElem.add(stv);
+                this.frames.add(stv);
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:initStvorka.initStvorka() " + e);
+        }
     }
 
     public void initFurniture(JsonObject param) {
@@ -145,10 +163,10 @@ public class AreaStvorka extends AreaSimple {
                 //Элементы сегментов
                 ElemSimple e1 = UGeo.segMapElem(listFrame, segm1);
                 ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
-                if(e1 == null) {
-                   ElemFrame stv_side = new ElemFrame(this.winc, this.gson, this.owner); 
-                   winc.listElem.add(stv_side);
-                   this.frames.add(stv_side);
+                if (e1 == null) {
+                    ElemFrame stv_side = new ElemFrame(this.winc, this.gson, this.owner);
+                    winc.listElem.add(stv_side);
+                    this.frames.add(stv_side);
                 }
 
                 //Отступ створки
