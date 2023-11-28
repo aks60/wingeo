@@ -41,7 +41,17 @@ public class ElemFrame extends ElemSimple {
         } else if (owner.sysprofRec != null) { //профили через параметр рамы, створки
             sysprofRec = owner.sysprofRec;
         } else {
-            sysprofRec = eSysprof.find4(winc.nuni, type.id2, UseSide.ANY);
+            if (Layout.BOTT.equals(layout())) {
+                sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.BOT, UseSide.HORIZ);
+            } else if (Layout.RIGHT.equals(layout())) {
+                sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.RIGHT, UseSide.VERT);
+            } else if (Layout.TOP.equals(layout())) {
+                sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.TOP, UseSide.HORIZ);
+            } else if (Layout.LEFT.equals(layout())) {
+                sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.LEFT, UseSide.VERT);
+            } else {
+                sysprofRec = eSysprof.find4(winc.nuni, type.id2, UseSide.ANY);
+            }
         }
         artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
         artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true);

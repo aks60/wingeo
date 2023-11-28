@@ -9,18 +9,14 @@ import domain.eArtikl;
 import domain.eColor;
 import domain.eElement;
 import domain.eSysfurn;
-import domain.eSyssize;
 import enums.Layout;
 import enums.LayoutHandle;
 import enums.PKjson;
-import enums.Type;
 import enums.TypeOpen1;
 import enums.TypeOpen2;
 import java.awt.Shape;
-import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.Polygon;
 
 public class AreaStvorka extends AreaSimple {
 
@@ -150,7 +146,7 @@ public class AreaStvorka extends AreaSimple {
 //        List<ElemSimple> listFrame = winc.listElem.filter(Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
         try {
             this.geom = UGeo.stvPadding(owner.geom, winc.listElem, -8);
-
+            
 //            for (int i = 0; i < coo.length; i++) {
 //
 //                //Сегменты границ полигона
