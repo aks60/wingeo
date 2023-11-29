@@ -110,8 +110,8 @@ public class AreaSimple extends Com5t {
             elemFrameList.stream().forEach(el -> el.paint());
 
             //Прорисовка створок
-            LinkedList<AreaSimple> areaStvorkaList = winc.listArea.filter(Type.STVORKA);
-            areaStvorkaList.stream().forEach(el -> el.paint());
+            LinkedList<AreaSimple> elemStvorkaList = winc.listElem.filter(Type.STVORKA_SIDE);
+            elemStvorkaList.stream().forEach(el -> el.paint());
 
             //Прорисовка раскладок
             //LinkedList<ElemSimple> glassList = winc.listElem.filter(Type.GLASS);

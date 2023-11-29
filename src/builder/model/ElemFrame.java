@@ -96,6 +96,9 @@ public class ElemFrame extends ElemSimple {
                             new Coordinate(segm5.p0.x, segm5.p0.y), new Coordinate(segm5.p1.x, segm5.p1.y));
 
                     this.geom = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y);
+                    if(this.type == Type.STVORKA_SIDE) {
+                        System.out.println(this.geom);
+                    }
                 }
             }
 

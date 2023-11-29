@@ -135,9 +135,11 @@ public class AreaStvorka extends AreaSimple {
             //Создадим рамы створок
             Coordinate[] coo = this.geom.getCoordinates();
             for (int i = 0; i < coo.length - 1; i++) {
+                
                 LineSegment segm = new LineSegment(coo[i], coo[i + 1]); 
-                GsonElem gse = new GsonElem(Type.STVORKA_SIDE, segm.p0.x, segm.p0.y);
-                ElemFrame stvside = new ElemFrame(this.winc, gson.id + (.01 + Double.valueOf(i)/100), gse, this);
+                GsonElem gselem = new GsonElem(Type.STVORKA_SIDE, segm.p0.x, segm.p0.y);
+                ElemFrame stvside = new ElemFrame(this.winc, gson.id + (.01 + Double.valueOf(i)/100), gselem, this);
+                winc.listElem.add(stvside);
                 this.frames.add(stvside);
             }
         } catch (Exception e) {
@@ -148,8 +150,7 @@ public class AreaStvorka extends AreaSimple {
     public void paint() {
         
         //Рамы створок
-        this.frames.stream().forEach(el -> el.setLocation());
-        this.frames.stream().forEach(el -> el.paint());
+        //this.frames.stream().forEach(el -> el.paint());
         
         if (this.geom != null) {
             java.awt.Color color = winc.gc2d.getColor();
