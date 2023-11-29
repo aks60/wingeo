@@ -19,7 +19,11 @@ public class ElemSimple extends Com5t {
     public Color borderColor = Color.BLACK;
 
     public ElemSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
-        super(winc, gson, owner);
+        this(winc, gson.id, gson, owner);
+    }
+
+    public ElemSimple(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
+        super(winc, id, gson, owner);
         spcRec = new Specific(id, this);
         winc.listElem.add(this);
         winc.listAll.add(this);

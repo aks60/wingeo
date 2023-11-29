@@ -135,13 +135,10 @@ public class AreaStvorka extends AreaSimple {
             //Создадим рамы створок
             Coordinate[] coo = this.geom.getCoordinates();
             for (int i = 0; i < coo.length - 1; i++) {
-                LineSegment segm = new LineSegment(coo[i], coo[i + 1]);  
-                ElemFrame stvside = new ElemFrame(this.winc, this.gson, this);
-                stvside.setDimension(segm.p0.x, segm.p0.y, segm.p1.x, segm.p1.y);
-                stvside.type = Type.STVORKA_SIDE;
+                LineSegment segm = new LineSegment(coo[i], coo[i + 1]); 
+                GsonElem gse = new GsonElem(Type.STVORKA_SIDE, segm.p0.x, segm.p0.y);
+                ElemFrame stvside = new ElemFrame(this.winc, gson.id + (.01 + Double.valueOf(i)/100), gse, this);
                 this.frames.add(stvside);
-                winc.listElem.add(stvside);
-                System.out.println(stvside);
             }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.setLocation() " + e);
@@ -149,6 +146,11 @@ public class AreaStvorka extends AreaSimple {
     }
 
     public void paint() {
+        
+        //Рамы створок
+        this.frames.stream().forEach(el -> el.setLocation());
+        this.frames.stream().forEach(el -> el.paint());
+        
         if (this.geom != null) {
             java.awt.Color color = winc.gc2d.getColor();
             Shape shape = new ShapeWriter().toShape(this.geom);
