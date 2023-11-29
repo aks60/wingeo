@@ -16,8 +16,8 @@ public class GsonScript {
     public static String modelJson(Integer prj) {
 
 // <editor-fold defaultstate="collapsed" desc="RECTANGL">
-        if (prj == -501001) {
-            rootGeo = new GsonRoot("2.0", prj, 2, 8, "Простое 1 створка");
+        if (prj == 501001) { //PUNIC = 427595
+            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
             rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 1400.0))
@@ -25,35 +25,29 @@ public class GsonScript {
                     .addArea(new GsonElem(Type.STVORKA))
                     .addElem(new GsonElem(Type.GLASS));
 
-        } else if (prj == 601002) {
-
-        } else if (prj == 601003) {
-
-        } else if (prj == 601004) {
-
-        } else if (prj == 601005) {
-
-        } else if (prj == 601006) {
-
-        } else if (prj == 601007) {
-
-        } else if (prj == 601008) {
-
-        } else if (prj == 601009) {
-
-        } else if (prj == 999) {
-
-            //Тут просочилась ручка не подходящая по параметру. Возможно ошибка ПрофСтроя4
-        } else if (prj == 501005) {
-            rootGeo = new GsonRoot("2.0", prj, 2, 8, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
-            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, 10.0, 10.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 10.0, 1000.0))
+        } else if (prj == 501003) {
+            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
+            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1000.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 1000.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 10.0));
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 0.0));
+
+            rootGeo.addArea(new GsonElem(Type.AREA))
+                    .addElem(new GsonElem(Type.GLASS));
+            rootGeo.addElem(new GsonElem(Type.IMPOST, .0, 500.0, 1000.0, 500.0))
+                    .addArea(new GsonElem(Type.AREA))
+                    .addElem(new GsonElem(Type.GLASS));
+
+        } else if (prj == 501005) {
+            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
+            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 0.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1000.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 1000.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 0.0));
 
             GsonElem area1 = rootGeo.addArea(new GsonElem(Type.AREA));
             area1.addElem(new GsonElem(Type.GLASS));
-            rootGeo.addElem(new GsonElem(Type.IMPOST, 10.0, 500.0, 1000.0, 500.0));
+            rootGeo.addElem(new GsonElem(Type.IMPOST, 0.0, 500.0, 1000.0, 500.0));
             GsonElem area2 = rootGeo.addArea(new GsonElem(Type.AREA));
 
             area2.addArea(new GsonElem(Type.AREA))
@@ -61,47 +55,71 @@ public class GsonScript {
             area2.addElem(new GsonElem(Type.IMPOST, 500.0, 1000.0, 500.0, 500.0))
                     .addArea(new GsonElem(Type.AREA))
                     .addElem(new GsonElem(Type.GLASS));
-        } else if (prj == 700027) {
 
-        } else if (prj == 508634) {
+        } else if (prj == 501006) {
+            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
+            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1000.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 1000.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 0.0));
 
-        } else if (prj == 508777) {
+            GsonElem area1 = rootGeo.addArea(new GsonElem(Type.AREA));
+            rootGeo.addElem(new GsonElem(Type.IMPOST, .0, 500.0, 1000.0, 500.0));
+            GsonElem area2 = rootGeo.addArea(new GsonElem(Type.AREA));
+            area2.addElem(new GsonElem(Type.GLASS));
+
+            area1.addArea(new GsonElem(Type.AREA))
+                    .addElem(new GsonElem(Type.GLASS));
+            area1.addElem(new GsonElem(Type.IMPOST, 500.0, 1000.0, 500.0, 500.0))
+                    .addArea(new GsonElem(Type.STVORKA))
+                    .addElem(new GsonElem(Type.GLASS));
+            //.addArea(new GsonElem(Type.AREA))
+            //.addElem(new GsonElem(Type.GLASS));
 
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="ARCH">
-        } else if (prj == 604004) {
+        } else if (prj == 501007) {
+            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.ARCH, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
+            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1000.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 1000.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 0.0));
 
-        } else if (prj == 604005) {
-
-        } else if (prj == 604006) {
-
-        } else if (prj == 604007) {
-
-        } else if (prj == 604008) {
-
-        } else if (prj == 604009) {
-
-        } else if (prj == 604010) {
-
-        } else if (prj == 508983) {
+            rootGeo.addArea(new GsonElem(Type.AREA))
+                    .addElem(new GsonElem(Type.GLASS));
+            rootGeo.addElem(new GsonElem(Type.IMPOST, .0, 500.0, 1000.0, 500.0));
+            rootGeo.addArea(new GsonElem(Type.AREA))
+                    .addElem(new GsonElem(Type.GLASS));
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="TRAPEZE">
-        } else if (prj == 506642) { // Трапеции без импоста
+        } else if (prj == 501004) {
+            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.TRIANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
+            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 900.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 600.0, 900.0));
 
-        } else if (prj == -506642) { //Трапеции без импоста
+            rootGeo.addArea(new GsonElem(Type.AREA))
+                    .addElem(new GsonElem(Type.GLASS));
+            rootGeo.addElem(new GsonElem(Type.IMPOST, 200.0, 900.0, 201.0, 300.0));
+            rootGeo.addArea(new GsonElem(Type.AREA))
+                    .addElem(new GsonElem(Type.GLASS));
 
-        } else if (prj == 605001) { // Трапеции
+        } else if (prj == 501002) {
+            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.TRAPEZE, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
+            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 500.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 500.0, 1000.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 400.0, 1770.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 3500.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 3500.0, 3500.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 4000.0, 1000.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 3500.0, 500.0));
 
-        } else if (prj == -605001) { // Трапеции
-
-        } else if (prj == 508916) { //Трапеции
-
-        } else if (prj == -508916) { //Трапеции
-
-        } else if (prj == 508945) { //Трапеции
-
-        } else if (prj == 506929) { //PUNIC = 425688          
+            rootGeo.addArea(new GsonElem(Type.AREA))
+                    .addElem(new GsonElem(Type.GLASS));
+            rootGeo.addElem(new GsonElem(Type.IMPOST, 1000.0, 500.0, 3500.0, 3500.0))
+                    .addArea(new GsonElem(Type.AREA))
+                    .addElem(new GsonElem(Type.GLASS));
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="DOOR">

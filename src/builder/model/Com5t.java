@@ -28,7 +28,7 @@ public class Com5t {
     public AreaSimple root = null; //главный класс конструкции
     public GsonElem gson = null; //gson object конструкции    
     public Type type = Type.NONE; //тип элемента или окна
-    public Polygon geom = null;
+    public Polygon geom = null; //ареа компонента
     private boolean pass[] = {false, false};
     private Point pointPress = null;
     public int colorID1 = -1, colorID2 = -1, colorID3 = -1; //1-базовый 2-внутренний 3-внешний 
@@ -45,9 +45,7 @@ public class Com5t {
         this.winc = winc;
         this.owner = owner;
         this.gson = gson;
-        if (gson.type != null) {
-            this.type = gson.type;
-        }
+        this.type = gson.type;
     }
 
     public void setLocation() {
@@ -126,7 +124,7 @@ public class Com5t {
                     double dYTest = dY / winc.scale;
                     double X2Test = x2();
                     double Y2Test = y2();
-                    String evTest = pass[0] + " " + pass[1]; 
+                    String evTest = pass[0] + " " + pass[1];
                 }
                 if (pass[0] == true) {
                     double X1 = dX / winc.scale + x1();
@@ -140,7 +138,7 @@ public class Com5t {
                     double Y2 = dY / winc.scale + y2();
                     if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву                       
                         x2(X2);
-                        y2(Y2);                        
+                        y2(Y2);
                     }
                 }
                 pointPress = evt.getPoint();

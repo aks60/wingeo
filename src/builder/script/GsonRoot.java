@@ -1,9 +1,7 @@
 package builder.script;
 
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import java.awt.geom.Point2D;
-import java.util.List;
+import enums.Type;
 
 public class GsonRoot extends GsonElem {
 
@@ -17,25 +15,20 @@ public class GsonRoot extends GsonElem {
     public Integer color2 = -3;  //внутренняя текстура
     public Integer color3 = -3;  //внешняя текстура       
 
-    public GsonRoot(String version, Integer prj, Integer ord, Integer nuni, String name) {
-
-        this.version = version;
-        this.prj = prj;
-        this.ord = ord;
-        this.nuni = nuni;
-        this.name = name;       
+    public GsonRoot(String version, Integer prj, Integer ord, Integer nuni, Type type, String name) {
+      this(version, prj, ord, nuni, type, name, -3, -3, -3);
     }
     
-    public GsonRoot(String version, Integer prj, Integer ord, Integer nuni, String name, Integer color1, Integer color2, Integer color3) {
-
+    public GsonRoot(String version, Integer prj, Integer ord, Integer nuni, Type type, String name, Integer color1, Integer color2, Integer color3) {
         this.version = version;
         this.prj = prj;
         this.ord = ord;
         this.nuni = nuni;
         this.name = name;
+        this.type = type;
         this.color1 = color1;
         this.color2 = color2;
-        this.color3 = color3;            
+        this.color3 = color3;        
     }
 
     public String toJson() {

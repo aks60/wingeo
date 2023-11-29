@@ -1,4 +1,3 @@
-
 package builder;
 
 import builder.making.Cal5e;
@@ -57,7 +56,7 @@ public class Wincalc {
     public Graphics2D gc2d = null; //графический котекст рисунка  
     public double scale = 1; //коэффициент сжатия
     public Canvas canvas = null;
-    public ArrayList<ListenerKey> keyboardPressed = new ArrayList();    
+    public ArrayList<ListenerKey> keyboardPressed = new ArrayList();
     public ArrayList<ListenerMouse> mousePressed = new ArrayList();
     public ArrayList<ListenerMouse> mouseReleased = new ArrayList();
     public ArrayList<ListenerMouse> mouseDragged = new ArrayList();
@@ -111,7 +110,7 @@ public class Wincalc {
     private void parsing(String script) {
         //Для тестирования
         //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
-        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
         gson = new GsonBuilder().create().fromJson(script, GsonRoot.class);
         gson.setOwner(this);
@@ -125,7 +124,9 @@ public class Wincalc {
         this.colorID3 = (gson.color3 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3;
         eSyspar1.find(nuni).forEach(syspar1Rec -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), syspar1Rec)); //загрузим параметры по умолчанию
 
-        root = new AreaRectangl(this, gson);
+        if (Type.RECTANGL == gson.type) {
+            root = new AreaRectangl(this, gson);
+        }
 
         elements(root, gson);
     }
