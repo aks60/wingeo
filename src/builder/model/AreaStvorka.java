@@ -133,7 +133,7 @@ public class AreaStvorka extends AreaSimple {
             this.geom = UGeo.stvPadding(owner.geom, winc.listElem, naxl);
             Coordinate[] coo = this.geom.getCoordinates();
 
-            //Создадим рамы створок
+            //Координаты рам створок
             if (this.frames.size() == 0) {
                 
                 for (int i = 0; i < coo.length - 1; i++) {
