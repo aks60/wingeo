@@ -42,12 +42,12 @@ public class AreaStvorka extends AreaSimple {
 
     public AreaStvorka(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
-        //initFurniture(gson.param);
+        initFurniture(gson.param);
     }
 
     public void initFurniture(JsonObject param) {
 
-        ElemSimple stvLeft = frames.get(Layout.LEFT);
+        //ElemSimple stvLeft = frames.get(Layout.LEFT);
 
         //Фурнитура створки, ручка, подвес
         if (isJson(param, PKjson.sysfurnID)) {
@@ -108,23 +108,24 @@ public class AreaStvorka extends AreaSimple {
                 handleHeight = param.get(PKjson.heightHandl).getAsInt();
             } else {
                 handleLayout = (position == LayoutHandle.MIDL.id) ? LayoutHandle.MIDL : LayoutHandle.CONST;
-                handleHeight = stvLeft.height() / 2;
+                //handleHeight = stvLeft.height() / 2;
             }
         } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutHandle.MIDL.id) {
             handleLayout = LayoutHandle.MIDL;
-            handleHeight = stvLeft.height() / 2;
+            //handleHeight = stvLeft.height() / 2;
         } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutHandle.CONST.id) {
             handleLayout = LayoutHandle.CONST;
-            handleHeight = stvLeft.height() / 2;
+            //handleHeight = stvLeft.height() / 2;
         } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutHandle.VARIAT.id) {
             handleLayout = LayoutHandle.VARIAT;
-            handleHeight = stvLeft.height() / 2;
+            //handleHeight = stvLeft.height() / 2;
         } else {
             handleLayout = LayoutHandle.MIDL; //по умолчанию
-            handleHeight = stvLeft.height() / 2;
+            //handleHeight = stvLeft.height() / 2;
         }
     }
 
+    //Создание и коррекция координат элементов (сторон) створки
     public void setLocation() {
         double naxl = -8;
         try {
