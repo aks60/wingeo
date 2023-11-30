@@ -135,8 +135,8 @@ public class AreaStvorka extends AreaSimple {
 
             //Создадим рамы створок
             if (this.frames.size() == 0) {
+                
                 for (int i = 0; i < coo.length - 1; i++) {
-
                     LineSegment segm = new LineSegment(coo[i], coo[i + 1]);
                     GsonElem gselem = new GsonElem(Type.STVORKA_SIDE, segm.p0.x, segm.p0.y);
                     ElemFrame stvside = new ElemFrame(this.winc, gson.id + (.01 + Double.valueOf(i) / 100), gselem, this);
