@@ -79,16 +79,13 @@ public class AreaSimple extends Com5t {
         }
     }
 
-    public List<Com5t> childs() {
-        return childs;
-    }
-
     public void draw() {
         try {
-            winc.root.setLocation();
-            winc.listArea.forEach(e -> e.setLocation());
-            winc.listElem.forEach(e -> e.setLocation());
-
+            winc.root.setLocation();           
+            winc.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA).forEach(e -> e.setLocation()); //пилим полигоны
+            winc.listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
+            winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
+                
             //Прорисовка стеклопакетов
             LinkedList<ElemSimple> elemGlassList = winc.listElem.filter(Type.GLASS);
             elemGlassList.stream().forEach(el -> el.paint());

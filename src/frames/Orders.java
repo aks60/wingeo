@@ -565,7 +565,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                         String script2 = UGui.ioknaParamUpdate(script, record.getInt(0));
                         prjprodRec.set(ePrjprod.script, script2);
                         qPrjprod.execsql();
-                        winc().build(script2);
+                        winc().parsing(script2);
                         selectionTree();
                         UGui.setSelectedIndex(tab3, index2);
                     }
@@ -729,7 +729,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
         int index = UGui.getIndexRec(tab2);
         if (index != -1) {
             String script = win.gson.toJson();
-            win.build(script);
+            win.parsing(script);
             win.imageIcon = Canvas.createIcon(win, 68);
             Record sysprodRec = qPrjprod.get(index);
             sysprodRec.set(ePrjprod.script, script);
@@ -3608,7 +3608,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                                 String script = prjprodRec.getStr(ePrjprod.script);
                                 JsonElement jsonElem = new Gson().fromJson(script, JsonElement.class);
 
-                                win.build(jsonElem.toString()); //калкуляция
+                                win.parsing(jsonElem.toString()); //калкуляция
                                 Query.listOpenTable.forEach(q -> q.clear()); //очистим кэш                                
                                 win.constructiv(true); //конструктив                                                               
 

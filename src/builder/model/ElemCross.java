@@ -49,8 +49,8 @@ public class ElemCross extends ElemSimple {
             Geometry[] geoSplit = UGeo.geoSplit(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
             Polygon geo1 = (Polygon) geoSplit[1];
             Polygon geo2 = (Polygon) geoSplit[2];
-            owner.childs().get(0).geom = geo1;
-            owner.childs().get(2).geom = geo2;
+            owner.childs.get(0).geom = geo1;
+            owner.childs.get(2).geom = geo2;
 
             //Новые координаты импоста
             Geometry lineImp = owner.geom.intersection(geoSplit[0]);

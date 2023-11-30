@@ -88,16 +88,16 @@ public class Test {
         String _case = "one";
 
         if (_case.equals("one")) {
-            winc.build(GsonScript.productJson(501006));
+            winc.parsing(GsonScript.productJson(501006));
             System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(winc.script)));
             System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(winc.script)));
 
-            winc.constructiv(true);
+//            winc.constructiv(true);
 //            winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
 //            winc.gc2d = winc.bufferImg.createGraphics();
 //            winc.rootArea.draw(); //рисую конструкцию
 
-            frames.PSCompare.iwinPs4(winc, true);
+            //frames.PSCompare.iwinPs4(winc, true);
             //winc.listJoin.forEach(it -> System.out.println(it));     
 
         } else if (_case.equals("min")) {
@@ -105,7 +105,7 @@ public class Test {
             for (int prj : prjList) {
                 String script = GsonScript.productJson(prj);
                 if (script != null) {
-                    winc.build(script);
+                    winc.parsing(script);
                     winc.constructiv(true);
                     //frames.PSCompare.iwinXls(winc, false);
                     frames.PSCompare.iwinPs4(winc, false);
@@ -117,7 +117,7 @@ public class Test {
             for (int prj : prjList) {
                 String script = GsonScript.productJson(prj);
                 if (script != null) {
-                    winc.build(script);
+                    winc.parsing(script);
                     winc.constructiv(true);
                     //frames.PSCompare.iwinXls(winc, false);
                     frames.PSCompare.iwinPs4(winc, false);

@@ -74,44 +74,23 @@ public class Wincalc {
     public Wincalc() {
     }
 
-    public Wincalc(String script) {
-        this.script = script;
-        build(script);
+    public Wincalc(String script) {        
+        parsing(script);
     }
 
-    /**
-     * Построение окна из json скрипта
-     *
-     * @param script - json скрипт построения окна
-     * @return rootArea - главное окно
-     */
-    public void build(String script) {
-        try {
-            this.script = script;
-            //Инит свойств окна
-            init();
-
-            //Парсинг входного скрипта
-            //Создание элементов конструкции
-            parsing(script);
-
-            //Cоединения ареа           
-            //root.joining();
-            //построение полигонов
-            root.setLocation();
-
-            //Каждый элемент конструкции попадает в спецификацию через функцию setSpecific()            
-            //listLine.forEach(elem -> elem.setSpecific()); //спецификация ведущих элементов конструкции
-        } catch (Exception e) {
-            System.err.println("Ошибка:Wincalc.build() " + e);
-        }
-    }
-
-    private void parsing(String script) {
+    public void parsing(String script) {
         //Для тестирования
         //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
         //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
+        //Инит свойств окна
+        this.script = script;
+        genId = 0;
+        syssizeRec = null;
+        mapPardef.clear();
+        List.of((List) listArea, (List) listElem, (List) listSpec, (List) listAll, (List) listJoin).forEach(el -> el.clear());
+
+        //Создание Gson класса
         gson = new GsonBuilder().create().fromJson(script, GsonRoot.class);
         gson.setOwner(this);
 
@@ -129,6 +108,12 @@ public class Wincalc {
         }
 
         elements(root, gson);
+
+        //Создание полигона рамы
+        root.setLocation();
+
+        //Каждый элемент конструкции попадает в спецификацию через функцию setSpecific()            
+        //listLine.forEach(elem -> elem.setSpecific()); //спецификация ведущих элементов конструкции        
     }
 
     private void elements(AreaSimple owner, GsonElem gson) {
@@ -139,13 +124,13 @@ public class Wincalc {
 
                     if (Type.STVORKA == js.type) {
                         AreaSimple area5e = new AreaStvorka(this, js, owner);
-                        owner.childs().add(area5e); //добавим ребёнка родителю
-                        hm.put(area5e, js);
+                        owner.childs.add(area5e); //добавим ребёнка родителю
+                        hm.put(area5e, js); //погружение ареа
 
                     } else if (Type.AREA == js.type) {
                         AreaSimple area5e = new AreaSimple(this, js, owner);
-                        owner.childs().add(area5e); //добавим ребёнка родителю
-                        hm.put(area5e, js);
+                        owner.childs.add(area5e); //добавим ребёнка родителю
+                        hm.put(area5e, js); //погружение ареа
 
                     } else if (Type.FRAME_SIDE == js.type) {
                         ElemFrame elem5e = new ElemFrame(this, js, owner);
@@ -153,19 +138,17 @@ public class Wincalc {
 
                     } else if (Type.IMPOST == js.type || Type.SHTULP == js.type || Type.STOIKA == js.type) {
                         ElemCross elem5e = new ElemCross(this, js, owner);
-                        owner.childs().add(elem5e); //добавим ребёнка родителю
+                        owner.childs.add(elem5e); //добавим ребёнка родителю
 
                     } else if (Type.GLASS == js.type) {
                         ElemGlass elem5e = new ElemGlass(this, js, owner);
-                        owner.childs().add(elem5e); //добавим ребёнка родителю
+                        owner.childs.add(elem5e); //добавим ребёнка родителю
 
                     } else if (Type.MOSKITKA == js.type) {
                         ElemMosquit elem5e = new ElemMosquit(this, js, owner);
-                        owner.childs().add(elem5e); //добавим ребёнка родителю
-
+                        owner.childs.add(elem5e); //добавим ребёнка родителю
                     }
                 }
-
                 //Теперь вложенные элементы
                 for (Map.Entry<AreaSimple, GsonElem> entry : hm.entrySet()) {
                     elements(entry.getKey(), entry.getValue());
@@ -226,13 +209,6 @@ public class Wincalc {
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 
-    private void init() {
-        genId = 0;
-        syssizeRec = null;
-        mapPardef.clear();
-        List.of((List) listArea, (List) listElem, (List) listSpec, (List) listAll, (List) listJoin).forEach(el -> el.clear());
-    }
-
     public double width() {
         return root.geom.getEnvelopeInternal().getWidth();
     }

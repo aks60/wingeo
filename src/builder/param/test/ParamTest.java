@@ -86,7 +86,7 @@ public class ParamTest {
     //601004 "KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)"
     private void iwin2() {
         iwin_2 = new builder.Wincalc(); //601004
-        iwin_2.build(builder.script.GsonScript.productJson(601004));
+        iwin_2.parsing(builder.script.GsonScript.productJson(601004));
         iwin_2.constructiv(true);
         elementVar2 = new ElementVar(iwin_2);
         elementDet2 = new ElementDet(iwin_2);
@@ -110,7 +110,7 @@ public class ParamTest {
     //604005  "Wintech\\Termotech 742\\1 ОКНА"
     private void iwin3() {
         iwin_3 = new builder.Wincalc(); //604005
-        iwin_3.build(builder.script.GsonScript.productJson(604005));
+        iwin_3.parsing(builder.script.GsonScript.productJson(604005));
         iwin_3.constructiv(true);
         elementVar3 = new ElementVar(iwin_3);
         elementDet3 = new ElementDet(iwin_3);
@@ -134,7 +134,7 @@ public class ParamTest {
     //700027  "Montblanc / Eco / 1 ОКНА (штульп)"
     private void iwin4() {
         iwin_4 = new builder.Wincalc(); //700027
-        iwin_4.build(builder.script.GsonScript.productJson(700027));
+        iwin_4.parsing(builder.script.GsonScript.productJson(700027));
         iwin_4.constructiv(true);
         elementVar4 = new ElementVar(iwin_4);
         elementDet4 = new ElementDet(iwin_4);
@@ -161,7 +161,7 @@ public class ParamTest {
                 return (ElemSimple) frm;
             }
         }
-        for (Com5t it1 : rootArea.childs()) {
+        for (Com5t it1 : rootArea.childs) {
             if (it1.id == id) {
                 return (ElemSimple) it1;
             }
@@ -173,7 +173,7 @@ public class ParamTest {
                 }
             }
             if (it1 instanceof AreaSimple) {
-                for (Com5t it2 : ((AreaSimple) it1).childs()) {
+                for (Com5t it2 : ((AreaSimple) it1).childs) {
                     if (it2.id == id) {
                         return (ElemSimple) it2;
                     }
@@ -185,7 +185,7 @@ public class ParamTest {
                         }
                     }
                     if (it2 instanceof AreaSimple) {
-                        for (Com5t it3 : ((AreaSimple) it2).childs()) {
+                        for (Com5t it3 : ((AreaSimple) it2).childs) {
                             if (it3.id == id) {
                                 return (ElemSimple) it3;
                             }
@@ -197,7 +197,7 @@ public class ParamTest {
                                 }
                             }
                             if (it3 instanceof AreaSimple) {
-                                for (Com5t it4 : ((AreaSimple) it3).childs()) {
+                                for (Com5t it4 : ((AreaSimple) it3).childs) {
                                     if (it4.id == id) {
                                         return (ElemSimple) it4;
                                     }

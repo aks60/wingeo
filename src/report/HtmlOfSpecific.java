@@ -56,7 +56,7 @@ public class HtmlOfSpecific {
         //Цикл по конструкциям заказа
         for (Record prjprodRec : prjprodList) {
             String script = prjprodRec.getStr(ePrjprod.script);
-            winc.build(script);
+            winc.parsing(script);
             winc.constructiv(true);
             spcList2.addAll(winc.listSpec); //добавим спецификацию
             ArraySpc<Specific> kitList = Tariffic.kits(prjprodRec, winc, true); 

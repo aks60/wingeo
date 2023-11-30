@@ -154,7 +154,7 @@ public class ElementDet extends Par5s {
                 case 33063: //Диапазон веса створки, кг 
                 case 34063: //Диапазон веса створки, кг 
                 {
-                    Com5t glass = elem5e.owner.childs().stream().filter(el -> el.type == Type.GLASS).findFirst().orElse(null);
+                    Com5t glass = elem5e.owner.childs.stream().filter(el -> el.type == Type.GLASS).findFirst().orElse(null);
                     if (glass != null) {
                         double weight = ((glass.width() * glass.height()) / 1000000) * glass.artiklRecAn.getDbl(eArtikl.density);
                         if (UCom.containsNumbExp(rec.getStr(TEXT), weight) == false) {

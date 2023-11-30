@@ -224,7 +224,7 @@ public class FurnitureDet extends Par5s {
                 case 24063: //Диапазон веса, кг 
                 case 25063: //Диапазон веса, кг 
                 {
-                    Com5t glass = areaStv.childs().stream().filter(el -> el.type == Type.GLASS).findFirst().orElse(null);
+                    Com5t glass = areaStv.childs.stream().filter(el -> el.type == Type.GLASS).findFirst().orElse(null);
                     if (glass != null) {
                         double weight = ((glass.width() * glass.height()) / 1000000) * glass.artiklRecAn.getDbl(eArtikl.density);
                         if (UCom.containsNumbExp(rec.getStr(TEXT), weight) == false) {

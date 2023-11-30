@@ -73,6 +73,7 @@ public class ElemGlass extends ElemSimple {
     }
 
     public void paint() {
+        System.out.println("builder.model.ElemGlass.paint() " + owner.geom);
         if (owner.geom != null) {
             java.awt.Color color = winc.gc2d.getColor();
             winc.gc2d.setColor(new java.awt.Color(eColor.find(colorID2).getInt(eColor.rgb)));

@@ -90,7 +90,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }
 
     public void loadingTab1(JTable tab, int form) {
-        qSysmodel.select(eSysmodel.up, "where", eSysmodel.form, "=", form, "and form > 2000 and id > 0", "order by npp");
+        qSysmodel.select(eSysmodel.up, "where", eSysmodel.form, "=", form, "and form > 2000 and id = 44", "order by npp");
         DefaultTableModel dm = (DefaultTableModel) tab.getModel();
         dm.getDataVector().removeAllElements();
         for (Record record : qSysmodel.table(eSysmodel.up)) {
@@ -132,7 +132,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             if (index != -1) {
                 Wincalc win = winc();
                 String script = win.gson.toJson();
-                win.build(script);
+                win.parsing(script);
                 win.imageIcon = Canvas.createIcon(win, 68);
                 Record sysmodelRec = qSysmodel.get(index);
                 sysmodelRec.set(eSysmodel.script, script);

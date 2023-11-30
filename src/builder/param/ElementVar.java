@@ -367,7 +367,7 @@ public class ElementVar extends Par5s {
                     break;
                 case 37009: //Тип заполнения 
                 {
-                    ElemGlass glass = (ElemGlass) elem5e.owner.childs().stream().filter(it -> it.type == Type.GLASS).findFirst().orElse(null);
+                    ElemGlass glass = (ElemGlass) elem5e.owner.childs.stream().filter(it -> it.type == Type.GLASS).findFirst().orElse(null);
                     if ("Прямоугольное".equals(rec.getStr(TEXT)) && winc.root.geom.isRectangle() == true) {
                         return false;
 
