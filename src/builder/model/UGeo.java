@@ -122,7 +122,8 @@ public class UGeo {
     }
 
     //Внутренняя обводка ареа 
-    public static Polygon geoPadding(Polygon poly, LinkedCom<ElemSimple> listElem) {
+    public static Polygon geoPadding(Polygon poly, LinkedCom<ElemSimple> listElem, double delta) {
+        
         Coordinate[] coo = poly.getCoordinates();
         Coordinate[] out = new Coordinate[coo.length];
         List<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
@@ -138,8 +139,8 @@ public class UGeo {
                 //Получим ширину сегментов
                 ElemSimple e1 = UGeo.segMapElem(listFrame, segm1);
                 ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
-                double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);
-                double w2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr);
+                double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr) + delta;
+                double w2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr) + delta;
 
                 //Смещение сегментов относительно границ
                 LineSegment segm3 = segm1.offset(-w1);
@@ -154,42 +155,7 @@ public class UGeo {
             System.err.println("Ошибка:UGeo.geoPadding() " + e);
             return null;
         }
-    }
-    
-    public static Polygon stvPadding(Polygon poly, LinkedCom<ElemSimple> listElem, double naxl) {
-        Coordinate[] coo = poly.getCoordinates();
-        Coordinate[] out = new Coordinate[coo.length];
-        List<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
-        try {
-            for (int i = 0; i < coo.length; i++) {
-
-                //Сегменты границ полигона
-                int j = (i == coo.length - 1) ? 1 : i + 1;
-                int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
-                LineSegment segm1 = new LineSegment(coo[k], coo[i]);
-                LineSegment segm2 = new LineSegment(coo[i], coo[j]);
-
-                //Получим ширину сегментов
-                ElemSimple e1 = UGeo.segMapElem(listFrame, segm1);
-                ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
-                double w1 = (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) + naxl;
-                double w2 = (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) + naxl;
-
-                //Смещение сегментов относительно границ
-                LineSegment segm3 = segm1.offset(-w1);
-                LineSegment segm4 = segm2.offset(-w2);
-
-                //Точка пересечения внутренних сегментов
-                out[i] = segm4.lineIntersection(segm3);
-            }
-            return Com5t.gf.createPolygon(out);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.geoPadding() " + e);
-            return null;
-        }
-    }
-    
+    }    
 
     //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Coordinate[] arrCoord(double... d) {

@@ -42,7 +42,6 @@ public class AreaStvorka extends AreaSimple {
 
     public AreaStvorka(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
-        //initStvorka();
         //initFurniture(gson.param);
     }
 
@@ -130,12 +129,16 @@ public class AreaStvorka extends AreaSimple {
         double naxl = -8;
         try {
             //Ареа створки
-            this.geom = UGeo.stvPadding(owner.geom, winc.listElem, naxl);
+            if (owner == root) {
+                this.geom = UGeo.geoPadding(owner.geom, winc.listElem, naxl);
+            } else {
+                this.geom = UGeo.geoPadding(this.geom, winc.listElem, naxl);
+            }
             Coordinate[] coo = this.geom.getCoordinates();
 
             //Координаты рам створок
             if (this.frames.size() == 0) {
-                
+
                 for (int i = 0; i < coo.length - 1; i++) {
                     LineSegment segm = new LineSegment(coo[i], coo[i + 1]);
                     GsonElem gselem = new GsonElem(Type.STVORKA_SIDE, segm.p0.x, segm.p0.y);
@@ -154,9 +157,9 @@ public class AreaStvorka extends AreaSimple {
         }
     }
 
-    public void paint() {        
+    public void paint() {
         if (this.geom != null) {
-            
+
             java.awt.Color color = winc.gc2d.getColor();
             Shape shape = new ShapeWriter().toShape(this.geom);
 

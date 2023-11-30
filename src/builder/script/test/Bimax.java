@@ -79,10 +79,10 @@ public final class Bimax {
             area1.addArea(new GsonElem(Type.AREA))
                     .addElem(new GsonElem(Type.GLASS));
             area1.addElem(new GsonElem(Type.IMPOST, 500.0, 1000.0, 500.0, 500.0));
+            //area1.addArea(new GsonElem(Type.AREA))
+            //.addElem(new GsonElem(Type.GLASS));
             area1.addArea(new GsonElem(Type.STVORKA))
                     .addElem(new GsonElem(Type.GLASS));
-            //.addArea(new GsonElem(Type.AREA))
-            //.addElem(new GsonElem(Type.GLASS));
 
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="ARCH"> 

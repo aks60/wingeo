@@ -15,13 +15,14 @@ public class AreaRectangl extends AreaSimple {
 
     public void setLocation() {
         try {
-            //Создадим вершины рамы
             ArrayList<Coordinate> listCoord = new ArrayList<Coordinate>();
+
+            //Создадим вершины рамы
             this.frames.forEach(line -> listCoord.add(new Coordinate(line.x1(), line.y1())));
             listCoord.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1()));
-            Coordinate[] arrCoord = listCoord.toArray(new Coordinate[0]);
-            
+
             //Создадим полигон рамы
+            Coordinate[] arrCoord = listCoord.toArray(new Coordinate[0]);
             this.geom = gf.createPolygon(arrCoord);
 
         } catch (Exception e) {
@@ -31,7 +32,7 @@ public class AreaRectangl extends AreaSimple {
 
     public void joining() {
         LinkedList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA);
-        LinkedList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);        
+        LinkedList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
         try {
             //L - соединения
             for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам рамы
@@ -41,7 +42,7 @@ public class AreaRectangl extends AreaSimple {
             //T - соединения
             for (ElemSimple e1 : crosList) { //цикл по кросс элементам
                 for (ElemSimple e2 : elemList) { //цикл по сторонам рамы и импостам (т.к. в створке Т-обр. соединений нет)
-                    if (e2.inside(e1.x1(), e1.y1()) == true && e2 != e1) {                       
+                    if (e2.inside(e1.x1(), e1.y1()) == true && e2 != e1) {
                         //winc.listJoin.add(new ElemJoining(winc, e1, e2));
                         break;
                     }

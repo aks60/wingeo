@@ -68,6 +68,7 @@ public class ElemFrame extends ElemSimple {
         }
     }
 
+    //Рассчёт полигона стороны рамы
     public void setLocation() {
         try {
             for (int i = 0; i < owner.frames.size(); i++) {
@@ -78,14 +79,17 @@ public class ElemFrame extends ElemSimple {
                     ElemSimple e1 = owner.frames.get(k);
                     ElemSimple e2 = owner.frames.get(j);
 
+                    //Ширина сегментов
                     double w0 = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
                     double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);
                     double w2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr);
 
+                    //Входящие и выходящие сегменты
                     LineSegment segm0 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                     LineSegment segm1 = new LineSegment(e1.x1(), e1.y1(), e1.x2(), e1.y2());
                     LineSegment segm2 = new LineSegment(e2.x1(), e2.y1(), e2.x2(), e2.y2());
 
+                    //Сдвиг сегментов внутрь
                     LineSegment segm3 = segm0.offset(-w0);
                     LineSegment segm4 = segm1.offset(-w1);
                     LineSegment segm5 = segm2.offset(-w2);

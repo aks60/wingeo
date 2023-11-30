@@ -103,9 +103,9 @@ public class Wincalc {
         this.colorID3 = (gson.color3 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3;
         eSyspar1.find(nuni).forEach(syspar1Rec -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), syspar1Rec)); //загрузим параметры по умолчанию
 
-        if (Type.RECTANGL == gson.type) {
+        //if (Type.RECTANGL == gson.type) {
             root = new AreaRectangl(this, gson);
-        }
+        //}
 
         elements(root, gson);
 

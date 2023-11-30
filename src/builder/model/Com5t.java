@@ -49,6 +49,7 @@ public class Com5t {
         this.winc = winc;
         this.owner = owner;
         this.gson = gson;
+        this.root = winc.root;
         this.type = gson.type;
     }
 
