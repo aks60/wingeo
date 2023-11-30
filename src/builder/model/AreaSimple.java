@@ -18,7 +18,7 @@ import java.util.List;
 
 public class AreaSimple extends Com5t {
 
-    public LinkedCom<ElemFrame> frames = new LinkedCom(); //список рам
+    public LinkedCom<ElemSimple> frames = new LinkedCom(); //список рам
     public LinkedList<Point2D> listSkin = new LinkedList();
     public LinkedCom<Com5t> childs = new LinkedCom(); //дети
 

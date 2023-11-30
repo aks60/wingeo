@@ -127,20 +127,27 @@ public class AreaStvorka extends AreaSimple {
     }
 
     public void setLocation() {
-         double naxl = -8;
+        double naxl = -8;
         try {
             //Ареа створки
             this.geom = UGeo.stvPadding(owner.geom, winc.listElem, naxl);
-                     
-            //Создадим рамы створок
-            this.frames.clear();
             Coordinate[] coo = this.geom.getCoordinates();
-            for (int i = 0; i < coo.length - 1; i++) {
-                
-                LineSegment segm = new LineSegment(coo[i], coo[i + 1]); 
-                GsonElem gselem = new GsonElem(Type.STVORKA_SIDE, segm.p0.x, segm.p0.y);
-                ElemFrame stvside = new ElemFrame(this.winc, gson.id + (.01 + Double.valueOf(i)/100), gselem, this);
-                this.frames.add(stvside);
+
+            //Создадим рамы створок
+            if (this.frames.size() == 0) {
+                for (int i = 0; i < coo.length - 1; i++) {
+
+                    LineSegment segm = new LineSegment(coo[i], coo[i + 1]);
+                    GsonElem gselem = new GsonElem(Type.STVORKA_SIDE, segm.p0.x, segm.p0.y);
+                    ElemFrame stvside = new ElemFrame(this.winc, gson.id + (.01 + Double.valueOf(i) / 100), gselem, this);
+                    this.frames.add(stvside);
+                }
+            } else {
+                for (int i = 0; i < coo.length - 1; i++) {
+                    LineSegment segm = new LineSegment(coo[i], coo[i + 1]);
+                    ElemSimple elem = this.frames.get(i);
+                    elem.setDimension(segm.p0.x, segm.p0.y, segm.p1.x, segm.p1.y);
+                }
             }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.setLocation() " + e);
