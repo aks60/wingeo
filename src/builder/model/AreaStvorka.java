@@ -147,12 +147,9 @@ public class AreaStvorka extends AreaSimple {
         }
     }
 
-    public void paint() {
-        
-        //Рамы створок
-        this.frames.stream().forEach(el -> el.paint());
-        
+    public void paint() {        
         if (this.geom != null) {
+            
             java.awt.Color color = winc.gc2d.getColor();
             Shape shape = new ShapeWriter().toShape(this.geom);
 

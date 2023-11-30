@@ -87,20 +87,6 @@ public class ElemCross extends ElemSimple {
         }
     }
 
-    public Layout layout() {
-        double angl = this.anglHoriz();
-        if (angl == 90) {
-            return Layout.VERT;
-        } else if (angl == 0) {
-            return Layout.HORIZ;
-        } else if (angl == -90) {
-            return Layout.VERT;
-        } else if (angl == 180) {
-            return Layout.HORIZ;
-        }
-        return Layout.ANY;
-    }
-
     public void paint() {
 
         if (this.geom != null) {
@@ -118,5 +104,19 @@ public class ElemCross extends ElemSimple {
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
+    public Layout layout() {
+        double angl = this.anglHoriz();
+        if (angl == 90) {
+            return Layout.VERT;
+        } else if (angl == 0) {
+            return Layout.HORIZ;
+        } else if (angl == -90) {
+            return Layout.VERT;
+        } else if (angl == 180) {
+            return Layout.HORIZ;
+        }
+        return Layout.ANY;
+    }
+
     // </editor-fold>       
 }

@@ -20,13 +20,15 @@ import org.locationtech.jts.geom.LineSegment;
 public class ElemFrame extends ElemSimple {
 
     public ElemFrame(Wincalc winc, GsonElem gson, AreaSimple owner) {
-       this(winc, gson.id, gson, owner); 
+        this(winc, gson.id, gson, owner);
     }
-    
+
     public ElemFrame(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
         super(winc, id, gson, owner);
         initСonstructiv(gson.param);
-        systemEvent();
+        if (gson.type == Type.FRAME_SIDE) {
+            systemEvent();
+        }
     }
 
     /**
@@ -79,15 +81,15 @@ public class ElemFrame extends ElemSimple {
                     double w0 = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
                     double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);
                     double w2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr);
-                    
+
                     LineSegment segm0 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                     LineSegment segm1 = new LineSegment(e1.x1(), e1.y1(), e1.x2(), e1.y2());
                     LineSegment segm2 = new LineSegment(e2.x1(), e2.y1(), e2.x2(), e2.y2());
-                    
+
                     LineSegment segm3 = segm0.offset(-w0);
                     LineSegment segm4 = segm1.offset(-w1);
-                    LineSegment segm5 = segm2.offset(-w2);                    
-                    
+                    LineSegment segm5 = segm2.offset(-w2);
+
                     Coordinate c1 = Intersection.intersection(
                             new Coordinate(segm3.p0.x, segm3.p0.y), new Coordinate(segm3.p1.x, segm3.p1.y),
                             new Coordinate(segm4.p0.x, segm4.p0.y), new Coordinate(segm4.p1.x, segm4.p1.y));
@@ -96,9 +98,6 @@ public class ElemFrame extends ElemSimple {
                             new Coordinate(segm5.p0.x, segm5.p0.y), new Coordinate(segm5.p1.x, segm5.p1.y));
 
                     this.geom = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y);
-                    if(this.type == Type.STVORKA_SIDE) {
-                        System.out.println(this.geom);
-                    }
                 }
             }
 
