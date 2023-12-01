@@ -148,12 +148,7 @@ public class AreaStvorka extends AreaSimple {
             } else {
                 for (int i = 0; i < coo.length - 1; i++) {
                     ElemSimple elem = this.frames.get(i);
-                    elem.setDimension(coo[i].x, coo[i].y, coo[i + 1].x, coo[i + 1].y);
-                    
-                    if (coo[i].x < 0) {
-                        System.out.println("builder.model.AreaStvorka.location()");
-                        //Object geom = UGeo.geoPadding(owner.geom, winc.listElem, naxl);
-                    }                    
+                    elem.setDimension(coo[i].x, coo[i].y, coo[i + 1].x, coo[i + 1].y);                  
                 }
             }
         } catch (Exception e) {

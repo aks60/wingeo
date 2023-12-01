@@ -81,7 +81,7 @@ public class Com5t {
                         if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
                             x1(X1);
                             y1(Y1);
-                            pointPress.setLocation(x1(), y1());
+                            //pointPress.setLocation(x1(), y1());
                         }
                     } else if (pass[1] == true) {
                         double X2 = dX / winc.scale + x2();
@@ -89,12 +89,13 @@ public class Com5t {
                         if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву
                             x2(X2);
                             y2(Y2);
-                            pointPress.setLocation(x2(), y2());
+                            //pointPress.setLocation(x2(), y2());
                         }
                     }
                 }
             }
         };
+        //ListenerKey keyReleased = (evt) -> {};        
         ListenerMouse mousePressed = (evt) -> {
             if (this.geom != null) {
                 pointPress = evt.getPoint();
@@ -120,21 +121,16 @@ public class Com5t {
             if (this.geom != null) {
                 double W = winc.canvas.getWidth();
                 double H = winc.canvas.getHeight();
-                double dX = evt.getX() - pointPress.getX();
-                double dY = evt.getY() - pointPress.getY();
-                if (id == 2.0) {
-                    double dXTest = dX / winc.scale;
-                    double dYTest = dY / winc.scale;
-                    double X2Test = x2();
-                    double Y2Test = y2();
-                    String evTest = pass[0] + " " + pass[1];
-                }
+                double dX = evt.getX() - pointPress.getX(); //прирощение по горизонтали
+                double dY = evt.getY() - pointPress.getY(); //прирощение по вертикали 
+                
                 if (pass[0] == true) {
                     double X1 = dX / winc.scale + x1();
                     double Y1 = dY / winc.scale + y1();
                     if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
                         x1(X1);
                         y1(Y1);
+                        pointPress = evt.getPoint();
                     }
                 } else if (pass[1] == true) {
                     double X2 = dX / winc.scale + x2();
@@ -142,9 +138,9 @@ public class Com5t {
                     if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву                       
                         x2(X2);
                         y2(Y2);
+                        pointPress = evt.getPoint();
                     }
                 }
-                pointPress = evt.getPoint();
             }
         };
 
