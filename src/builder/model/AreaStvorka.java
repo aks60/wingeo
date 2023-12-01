@@ -19,6 +19,7 @@ import java.awt.Shape;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.Polygon;
 
 public class AreaStvorka extends AreaSimple {
 
@@ -48,7 +49,6 @@ public class AreaStvorka extends AreaSimple {
     public void furniture(JsonObject param) {
 
         //ElemSimple stvLeft = frames.get(Layout.LEFT);
-
         //Фурнитура створки, ручка, подвес
         if (isJson(param, PKjson.sysfurnID)) {
             sysfurnRec = eSysfurn.find2(param.get(PKjson.sysfurnID).getAsInt());
@@ -130,11 +130,8 @@ public class AreaStvorka extends AreaSimple {
         double naxl = -8;
         try {
             //Ареа створки
-            if (owner == root) {
-                this.geom = UGeo.geoPadding(owner.geom, winc.listElem, naxl);
-            } else {
-                this.geom = UGeo.geoPadding(this.geom, winc.listElem, naxl);
-            }
+            Polygon geo = (owner == root) ? owner.geom : this.geom; //случай когда створка в root
+            this.geom = UGeo.geoPadding(geo, winc.listElem, naxl);
             Coordinate[] coo = this.geom.getCoordinates();
 
             //Координаты рам створок
@@ -148,7 +145,7 @@ public class AreaStvorka extends AreaSimple {
             } else {
                 for (int i = 0; i < coo.length - 1; i++) {
                     ElemSimple elem = this.frames.get(i);
-                    elem.setDimension(coo[i].x, coo[i].y, coo[i + 1].x, coo[i + 1].y);                  
+                    elem.setDimension(coo[i].x, coo[i].y, coo[i + 1].x, coo[i + 1].y);
                 }
             }
         } catch (Exception e) {

@@ -13,7 +13,7 @@ public class AreaRectangl extends AreaSimple {
         super(winc, gson, null);
     }
 
-    //Внешний полигон рамы
+    // Полигон рамы. Функ. выпоняется после создания рам конструкции
     public void location() {
         try {
             ArrayList<Coordinate> listCoord = new ArrayList<Coordinate>();
