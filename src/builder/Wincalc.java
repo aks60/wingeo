@@ -170,10 +170,10 @@ public class Wincalc {
             calcJoining.calc();
             calcElements = new builder.making.Elements(this);
             calcElements.calc();
-            calcFilling = new builder.making.Filling(this); //заполнения
-            calcFilling.calc();
-            calcFurniture = new builder.making.Furniture(this); //фурнитура 
-            calcFurniture.calc();
+//            calcFilling = new builder.making.Filling(this); //заполнения
+//            calcFilling.calc();
+//            calcFurniture = new builder.making.Furniture(this); //фурнитура 
+//            calcFurniture.calc();
             calcTariffication = new builder.making.Tariffic(this, norm_otx); //тарификация 
             calcTariffication.calc();
 

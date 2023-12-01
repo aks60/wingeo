@@ -13,6 +13,7 @@ public class AreaRectangl extends AreaSimple {
         super(winc, gson, null);
     }
 
+    //Внешний полигон рамы
     public void location() {
         try {
             ArrayList<Coordinate> listCoord = new ArrayList<Coordinate>();
@@ -30,21 +31,22 @@ public class AreaRectangl extends AreaSimple {
         }
     }
 
+    //Соединения
     public void joining() {
+        winc.listJoin.clear();
         LinkedList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA);
         LinkedList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
         try {
             //L - соединения
             for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам рамы
                 ElemFrame nextFrame = (ElemFrame) this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1);
-                //winc.listJoin.add(new ElemJoining(this.winc, this.frames.get(i), nextFrame));
+                winc.listJoin.add(new ElemJoining(this.winc, this.frames.get(i), nextFrame));
             }
             //T - соединения
             for (ElemSimple e1 : crosList) { //цикл по кросс элементам
                 for (ElemSimple e2 : elemList) { //цикл по сторонам рамы и импостам (т.к. в створке Т-обр. соединений нет)
                     if (e2.inside(e1.x1(), e1.y1()) == true && e2 != e1) {
-                        //winc.listJoin.add(new ElemJoining(winc, e1, e2));
-                        break;
+                        winc.listJoin.add(new ElemJoining(winc, e1, e2));
                     }
                 }
             }
