@@ -141,16 +141,19 @@ public class AreaStvorka extends AreaSimple {
             if (this.frames.size() == 0) {
 
                 for (int i = 0; i < coo.length - 1; i++) {
-                    LineSegment segm = new LineSegment(coo[i], coo[i + 1]);
-                    GsonElem gselem = new GsonElem(Type.STVORKA_SIDE, segm.p0.x, segm.p0.y);
+                    GsonElem gselem = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y);
                     ElemFrame stvside = new ElemFrame(this.winc, gson.id + (.01 + Double.valueOf(i) / 100), gselem, this);
                     this.frames.add(stvside);
                 }
             } else {
                 for (int i = 0; i < coo.length - 1; i++) {
-                    LineSegment segm = new LineSegment(coo[i], coo[i + 1]);
                     ElemSimple elem = this.frames.get(i);
-                    elem.setDimension(segm.p0.x, segm.p0.y, segm.p1.x, segm.p1.y);
+                    elem.setDimension(coo[i].x, coo[i].y, coo[i + 1].x, coo[i + 1].y);
+                    
+                    if (coo[i].x < 0) {
+                        System.out.println("builder.model.AreaStvorka.location()");
+                        //Object geom = UGeo.geoPadding(owner.geom, winc.listElem, naxl);
+                    }                    
                 }
             }
         } catch (Exception e) {
