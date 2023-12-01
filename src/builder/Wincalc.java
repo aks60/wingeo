@@ -110,7 +110,7 @@ public class Wincalc {
         elements(root, gson);
 
         //Создание полигона рамы
-        root.setLocation();
+        root.location();
 
         //Каждый элемент конструкции попадает в спецификацию через функцию setSpecific()            
         //listLine.forEach(elem -> elem.setSpecific()); //спецификация ведущих элементов конструкции        

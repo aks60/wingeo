@@ -23,11 +23,11 @@ public class ElemCross extends ElemSimple {
 
     public ElemCross(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
-        initСonstructiv(gson.param);
-        systemEvent();
+        constructiv(gson.param);
+        events();
     }
 
-    public void initСonstructiv(JsonObject param) {
+    public void constructiv(JsonObject param) {
 
         colorID1 = (isJson(param, PKjson.colorID1)) ? param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
         colorID2 = (isJson(param, PKjson.colorID2)) ? param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
@@ -43,7 +43,7 @@ public class ElemCross extends ElemSimple {
         artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true);
     }
 
-    public void setLocation() {
+    public void location() {
         try {
             //Пилим полигон импостом
             Geometry[] geoSplit = UGeo.geoSplit(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
@@ -83,7 +83,7 @@ public class ElemCross extends ElemSimple {
             this.geom = (Polygon) areaExp.intersection(geoPadding);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemCross.setLocation() " + e);
+            System.err.println("Ошибка:ElemCross.location() " + e);
         }
     }
 

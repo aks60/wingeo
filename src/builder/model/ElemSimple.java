@@ -29,9 +29,6 @@ public class ElemSimple extends Com5t {
         winc.listAll.add(this);
     }
 
-    //public void setLocation() {
-    //}
-
     public void addSpecific(Specific spcAdd) {
 
     }

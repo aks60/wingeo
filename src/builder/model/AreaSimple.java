@@ -24,7 +24,7 @@ public class AreaSimple extends Com5t {
 
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
-        initСonstructiv(gson.param);
+        constructiv(gson.param);
         winc.listArea.add(this);
         winc.listAll.add(this); 
     }
@@ -34,7 +34,7 @@ public class AreaSimple extends Com5t {
      * typeOpen:4, sysfurnID:2916} Этого параметра нет в интерфейсе программы,
      * он сделан для тестирования с ps4. Делегируется детьми см. класс ElemFrame
      */
-    public void initСonstructiv(JsonObject param) {        
+    public void constructiv(JsonObject param) {        
         if (isJson(param, PKjson.sysprofID)) {//профили через параметр
             sysprofRec = eSysprof.find3(param.get(PKjson.sysprofID).getAsInt());
         }
@@ -81,10 +81,10 @@ public class AreaSimple extends Com5t {
 
     public void draw() {
         try {
-            winc.root.setLocation();           
-            winc.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA).forEach(e -> e.setLocation()); //пилим полигоны
-            winc.listArea.filter(Type.STVORKA).forEach(e -> e.setLocation()); 
-            winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation()); 
+            winc.root.location();           
+            winc.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA).forEach(e -> e.location()); //пилим полигоны
+            winc.listArea.filter(Type.STVORKA).forEach(e -> e.location()); 
+            winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.location()); 
                 
             //Прорисовка стеклопакетов
             LinkedList<ElemSimple> elemGlassList = winc.listElem.filter(Type.GLASS);

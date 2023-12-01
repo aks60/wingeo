@@ -42,10 +42,10 @@ public class AreaStvorka extends AreaSimple {
 
     public AreaStvorka(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
-        initFurniture(gson.param);
+        furniture(gson.param);
     }
 
-    public void initFurniture(JsonObject param) {
+    public void furniture(JsonObject param) {
 
         //ElemSimple stvLeft = frames.get(Layout.LEFT);
 
@@ -126,7 +126,7 @@ public class AreaStvorka extends AreaSimple {
     }
 
     //Создание и коррекция координат элементов (сторон) створки
-    public void setLocation() {
+    public void location() {
         double naxl = -8;
         try {
             //Ареа створки
@@ -154,7 +154,7 @@ public class AreaStvorka extends AreaSimple {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaStvorka.setLocation() " + e);
+            System.err.println("Ошибка:AreaStvorka.location() " + e);
         }
     }
 

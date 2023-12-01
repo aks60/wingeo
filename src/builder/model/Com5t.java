@@ -32,9 +32,7 @@ public class Com5t {
     private boolean pass[] = {false, false};
     private Point pointPress = null;
     public int colorID1 = -1, colorID2 = -1, colorID3 = -1; //1-базовый 2-внутренний 3-внешний 
-    public Record sysprofRec = null; //рофиль в системе
-    public Record artiklRec = null;  //мат. средства
-    public Record artiklRecAn = null;  //аналог мат. средства     
+    public Record sysprofRec = null, artiklRec = null, artiklRecAn = null; //рофиль система, мат.средства, аналог.мат.средств
 
     public Com5t(Type type) {
         this.type = type;
@@ -53,13 +51,13 @@ public class Com5t {
         this.type = gson.type;
     }
 
-    public void setLocation() {
+    public void location() {
     }
 
     public void paint() {
     }
 
-    public void systemEvent() {
+    public void events() {
 
         ListenerKey keyPressed = (evt) -> {
             if (this.geom != null) {

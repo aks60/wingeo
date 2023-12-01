@@ -13,7 +13,7 @@ public class AreaRectangl extends AreaSimple {
         super(winc, gson, null);
     }
 
-    public void setLocation() {
+    public void location() {
         try {
             ArrayList<Coordinate> listCoord = new ArrayList<Coordinate>();
 
@@ -26,7 +26,7 @@ public class AreaRectangl extends AreaSimple {
             this.geom = gf.createPolygon(arrCoord);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaRectangl.setLocation()" + toString() + e);
+            System.err.println("Ошибка:AreaRectangl.location()" + toString() + e);
         }
     }
 

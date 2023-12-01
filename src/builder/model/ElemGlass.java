@@ -24,10 +24,10 @@ public class ElemGlass extends ElemSimple {
 
     public ElemGlass(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
-        initСonstructiv(gson.param);
+        constructiv(gson.param);
     }
 
-    public void initСonstructiv(JsonObject param) {
+    public void constructiv(JsonObject param) {
 
         if (isJson(param, PKjson.artglasID)) {
             artiklRec = eArtikl.find(param.get(PKjson.artglasID).getAsInt(), false);
@@ -68,7 +68,7 @@ public class ElemGlass extends ElemSimple {
         }
     }
 
-    public void setLocation() {
+    public void location() {
         this.geom = owner.geom;
     }
 

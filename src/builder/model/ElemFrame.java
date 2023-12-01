@@ -25,9 +25,9 @@ public class ElemFrame extends ElemSimple {
 
     public ElemFrame(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
         super(winc, id, gson, owner);
-        initСonstructiv(gson.param);
+        constructiv(gson.param);
         if (gson.type == Type.FRAME_SIDE) {
-            systemEvent();
+            events();
         }
     }
 
@@ -35,7 +35,7 @@ public class ElemFrame extends ElemSimple {
      * Профиль через параметр или первая запись в системе см. табл. sysprof Цвет
      * если нет параметра то берём winc.color.
      */
-    public void initСonstructiv(JsonObject param) {
+    public void constructiv(JsonObject param) {
 
         colorID1 = (isJson(param, PKjson.colorID1)) ? param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
         colorID2 = (isJson(param, PKjson.colorID2)) ? param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
@@ -69,7 +69,7 @@ public class ElemFrame extends ElemSimple {
     }
 
     //Рассчёт полигона стороны рамы
-    public void setLocation() {
+    public void location() {
         try {
             for (int i = 0; i < owner.frames.size(); i++) {
                 if (owner.frames.get(i).id == this.id) {
@@ -106,7 +106,7 @@ public class ElemFrame extends ElemSimple {
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemFrame.setLocation()" + toString() + e);
+            System.err.println("Ошибка:ElemFrame.location()" + toString() + e);
         }
     }
 
