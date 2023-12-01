@@ -47,9 +47,9 @@ public class AreaSimple extends Com5t {
      * {"ioknaParam": [-8252]}. При этом в winc.mapPardef будут изменения с
      * учётом менеджера.
      */
-    protected void initParametr(JsonObject param) {
+    protected void parametr(JsonObject param) {
         try {
-            if (isJson(param)) {
+            if (isJson(param, null)) {
                 //Добавим к параметрам системы конструкции параметры конкретной конструкции
                 JsonArray ioknaParamArr = param.getAsJsonArray(PKjson.ioknaParam);
                 if (ioknaParamArr != null && !ioknaParamArr.isJsonNull() && ioknaParamArr.isJsonArray()) {
@@ -75,7 +75,7 @@ public class AreaSimple extends Com5t {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaSimple.initParametr() " + e);
+            System.err.println("Ошибка:AreaSimple.parametr() " + e);
         }
     }
 

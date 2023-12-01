@@ -166,21 +166,20 @@ public class Com5t {
         return Layout.ANY;
     }
 
-    public boolean isJson(JsonObject jso) {
-        if (jso == null || "".equals(jso)) {
-            return false;
-        }
-        return !jso.isJsonNull();
-    }
-
     public boolean isJson(JsonObject jso, String key) {
-        if (jso == null) {
+        if (key == null) {
+            if (jso == null || "".equals(jso)) {
+                return false;
+            }
+            return !jso.isJsonNull();
+
+        } else if (jso == null) {
             return false;
-        }
-        if (jso.isJsonNull()) {
+
+        } else if (jso.isJsonNull()) {
             return false;
-        }
-        if (jso.get(key) == null) {
+
+        } else if (jso.get(key) == null) {
             return false;
         }
         return true;
