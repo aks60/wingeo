@@ -112,8 +112,8 @@ public class Wincalc {
         //Создание полигона рамы
         root.location();
 
-        //Каждый элемент конструкции попадает в спецификацию через функцию setSpecific()            
-        //listLine.forEach(elem -> elem.setSpecific()); //спецификация ведущих элементов конструкции        
+        //Каждый элемент конструкции попадает в спецификацию через функцию setSpecific()   
+        //listElem.filter4(Type.FRAME_SIDE).forEach(elem -> elem.setSpecific()); //спецификация ведущих элементов конструкции
     }
 
     private void elements(AreaSimple owner, GsonElem gson) {

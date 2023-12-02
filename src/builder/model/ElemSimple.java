@@ -30,6 +30,9 @@ public class ElemSimple extends Com5t {
         winc.listAll.add(this);
     }
 
+    public void setSpecific() {   
+    }
+    
     public void addSpecific(Specific spcAdd) {
 
     }
