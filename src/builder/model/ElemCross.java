@@ -1,21 +1,26 @@
 package builder.model;
 
 import builder.Wincalc;
+import builder.making.Specific;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
+import common.UCom;
 import domain.eArtikl;
 import domain.eColor;
 import domain.eSysprof;
+import domain.eSyssize;
 import enums.Layout;
 import enums.PKjson;
+import enums.Type;
+import enums.TypeArtikl;
 import enums.UseSide;
 import java.awt.Shape;
 import java.awt.geom.Line2D;
+import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
-import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.GeometryFixer;
 
@@ -84,6 +89,109 @@ public class ElemCross extends ElemSimple {
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.location() " + e);
+        }
+    }
+
+    @Override
+    //Главная спецификация   
+    public void setSpecific() {
+        try {
+            spcRec.place = (Layout.HORIZ == owner.layout()) ? "ВСТ.в" : "ВСТ.г";
+            spcRec.setArtikl(artiklRec);
+            spcRec.colorID1 = colorID1;
+            spcRec.colorID2 = colorID2;
+            spcRec.colorID3 = colorID3;
+            spcRec.anglCut0 = 90;
+            spcRec.anglCut1 = 90;
+            spcRec.anglHoriz = anglHoriz;
+
+            if (type == Type.IMPOST) {
+                //На эскизе заход импоста не показываю, сразу пишу в спецификацию
+                if (winc.syssizeRec.getInt(eSyssize.id) != -1) {
+                    double zax = winc.syssizeRec.getDbl(eSyssize.zax);
+                    if (Layout.HORIZ == owner.layout()) { //ареа слева направо  
+                        ElemSimple inTop = joinFlat(Layout.TOP), inBott = joinFlat(Layout.BOTT);
+                        spcRec.width = (inBott.y1() - inBott.artiklRec.getDbl(eArtikl.height) + inBott.artiklRec.getDbl(eArtikl.size_centr))
+                                - (inTop.y2() + inTop.artiklRec.getDbl(eArtikl.height) - inTop.artiklRec.getDbl(eArtikl.size_centr))
+                                + zax * 2 + inBott.artiklRec.getDbl(eArtikl.size_falz) + inTop.artiklRec.getDbl(eArtikl.size_falz);
+                        spcRec.height = artiklRec.getDbl(eArtikl.height);
+
+                    } else if (Layout.VERT == owner.layout()) { //ареа сверху вниз
+                        ElemSimple inLeft = joinFlat(Layout.LEFT), inRight = joinFlat(Layout.RIGHT);
+                        spcRec.width = (inRight.x1() - inRight.artiklRec.getDbl(eArtikl.height) + inRight.artiklRec.getDbl(eArtikl.size_centr))
+                                - (inLeft.x1() + inLeft.artiklRec.getDbl(eArtikl.height) - inLeft.artiklRec.getDbl(eArtikl.size_centr))
+                                + zax * 2 + inLeft.artiklRec.getDbl(eArtikl.size_falz) + inRight.artiklRec.getDbl(eArtikl.size_falz);
+                        spcRec.height = artiklRec.getDbl(eArtikl.height);
+                    }
+                } else {
+                    if (Layout.HORIZ == owner.layout()) { //слева направо  
+                        spcRec.width = length();
+                        spcRec.height = artiklRec.getDbl(eArtikl.height);
+
+                    } else if (Layout.VERT == owner.layout()) { //снизу вверх
+                        spcRec.width = length();
+                        spcRec.height = artiklRec.getDbl(eArtikl.height);
+                    }
+                }
+            } else if (type == Type.SHTULP) {
+                if (Layout.HORIZ == owner.layout()) { //слева направо  
+                    spcRec.width = y2() - y1();
+                    spcRec.height = artiklRec.getDbl(eArtikl.height);
+
+                } else if (Layout.VERT == owner.layout()) { //сверху вниз
+                    spcRec.width = x2() - x1();
+                    spcRec.height = artiklRec.getDbl(eArtikl.height);
+                }
+            } else if (type == Type.STOIKA) {
+                if (Layout.HORIZ == owner.layout()) { //слева направо  
+                    spcRec.width = y2() - y1();
+                    spcRec.height = artiklRec.getDbl(eArtikl.height);
+
+                } else if (Layout.VERT == owner.layout()) { //сверху вниз
+                    spcRec.width = x2() - x1();
+                    spcRec.height = artiklRec.getDbl(eArtikl.height);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:ElemCross.setSpecific() " + e);
+        }
+    }
+
+    //Вложеная спецификация 
+    @Override
+    public void addSpecific(Specific spcAdd) { //добавление спесификаций зависимых элементов
+        try {
+            spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
+            spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
+            spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм 
+
+            //Армирование
+            if (TypeArtikl.isType(spcAdd.artiklRec, TypeArtikl.X107)) {
+                spcAdd.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
+                spcAdd.anglCut0 = 90;
+                spcAdd.anglCut1 = 90;
+            }
+            if (List.of(1, 3, 5).contains(spcAdd.artiklRec.getInt(eArtikl.level1)) && spcRec.id != spcAdd.id) {
+                spcAdd.width += spcRec.width;
+            }
+            UPar.to_12075_34075_39075(this, spcAdd); //углы реза
+            UPar.to_34077_39077(spcAdd); //задать Угол_реза_1/Угол_реза_2
+            spcAdd.height = UCom.getDbl(spcAdd.getParam(spcAdd.height, 40006)); //высота заполнения, мм
+            spcAdd.width = UPar.to_12065_15045_25040_34070_39070(spcAdd); //длина мм
+            spcAdd.width = UCom.getDbl(spcAdd.getParam(spcAdd.width, 40004)); //ширина заполнения, мм 
+            spcAdd.width = spcAdd.width * UPar.to_12030_15030_25035_34030_39030(spcAdd);//"[ * коэф-т ]"
+            spcAdd.width = spcAdd.width / UPar.to_12040_15031_25036_34040_39040(spcAdd);//"[ / коэф-т ]"
+            UPar.to_40005_40010(spcAdd); //Поправка на стороны четные/нечетные (ширины/высоты), мм
+            UPar.to_40007(spcAdd); //высоту сделать длиной
+            spcAdd.count = UPar.to_11070_12070_33078_34078(spcAdd); //ставить однократно
+            spcAdd.count = UPar.to_39063(spcAdd); //округлять количество до ближайшего
+
+            if (spcRec.id != spcAdd.id) {
+                spcRec.spcList.add(spcAdd);
+            }
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:ElemCross.addSpecific() " + e);
         }
     }
 

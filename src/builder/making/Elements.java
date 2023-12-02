@@ -50,9 +50,9 @@ public class Elements extends Cal5e {
                         detail(elementList4, elem5e);
                     }
                 } else {
-                    //По artikl_id - артикула профилей
+                    //По artikl_id - артикулу профилей
                     int artiklID = elem5e.artiklRecAn.getInt(eArtikl.id);
-                    List<Record> elementList3 = eElement.find2(artiklID);
+                    List<Record> elementList3 = eElement.find2(artiklID); //список элементов в артикуле
                     detail(elementList3, elem5e);
 
                     //По groups1_id - серии профилей

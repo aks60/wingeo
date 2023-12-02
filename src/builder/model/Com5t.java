@@ -53,6 +53,9 @@ public class Com5t {
     public void location() {
     }
 
+    void setSpecific() {        
+    }
+    
     public void paint() {
     }
 
