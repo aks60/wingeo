@@ -76,6 +76,10 @@ public class ElemGlass extends ElemSimple {
         }
     }
 
+    /**
+     * Установка координат заполнений с учётов типа конст. x1y1 - верхняя левая
+     * точка x2y2 - нижняя правая точка
+     */    
     public void setLocation() {
         this.geom = owner.geom;
     }
