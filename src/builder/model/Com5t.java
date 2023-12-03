@@ -105,7 +105,7 @@ public class Com5t {
                 boolean b = this.geom.contains(gf.createPoint(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale)));
                 if (b == true) {
                     LineSegment segm = new LineSegment(x1(), y1(), x2(), y2());
-                    double coef = segm.segmentFraction(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale));;
+                    double coef = segm.segmentFraction(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale));                    
                     if (coef < .33) {
                         pass[0] = true; //кликнул ближе к началу вектора
                     } else if (coef > .67) {
