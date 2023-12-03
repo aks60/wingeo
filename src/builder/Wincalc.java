@@ -81,7 +81,7 @@ public class Wincalc {
     public void parsing(String script) {
         //Для тестирования
         //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
-        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
         //Инит свойств окна
         this.script = script;
@@ -174,7 +174,7 @@ public class Wincalc {
         }
     }
 
-    //Конструктив и тарификация 
+    //Спецификация и тарификация 
     public void calcTarification(boolean norm_otx) {
         weight = 0;
         price = 0;
