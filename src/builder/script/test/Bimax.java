@@ -12,8 +12,8 @@ public final class Bimax {
 
     public static String script(Integer prj) {
 // <editor-fold defaultstate="collapsed" desc="RECTANGL">
-        if (prj == 501001) { //PUNIC = 427595
-            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
+        if (prj == 601006) { //PUNIC = 427838
+            rootGeo = new GsonRoot("2.0", prj, 1, 110, Type.RECTANGL, "RAZIO\\RAZIO 58 N\\1 ОКНА", 1009, 1009, 1009);
             rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 1400.0))
