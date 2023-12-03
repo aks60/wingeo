@@ -1,6 +1,7 @@
 package builder.script;
 
 import builder.Wincalc;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import enums.Layout;
 import enums.Type;
@@ -25,7 +26,13 @@ public class GsonElem {
         this.id = ++genId;
         this.type = type;
     }
-
+    
+    public GsonElem(Type type, String paramJson) {
+        this.id = ++genId;
+        this.type = type;
+        this.param = new Gson().fromJson(paramJson, JsonObject.class);
+    }
+    
     public GsonElem(Type type, Double x1, Double y1) {
         this(type, x1, y1, null, null);
     }

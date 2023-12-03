@@ -897,7 +897,7 @@ public class PSCompare extends javax.swing.JFrame {
         lab20.setPreferredSize(new java.awt.Dimension(60, 20));
 
         txt19.setFont(frames.UGui.getFont(0,0));
-        txt19.setText("425688");
+        txt19.setText("427838");
         txt19.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         txt19.setPreferredSize(new java.awt.Dimension(80, 18));
 
@@ -921,7 +921,7 @@ public class PSCompare extends javax.swing.JFrame {
         labFurn.setPreferredSize(new java.awt.Dimension(200, 19));
 
         txt21.setFont(frames.UGui.getFont(0,0));
-        txt21.setText("506929");
+        txt21.setText("601006");
         txt21.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         txt21.setPreferredSize(new java.awt.Dimension(80, 18));
 

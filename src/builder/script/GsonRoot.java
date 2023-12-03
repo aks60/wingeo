@@ -15,6 +15,10 @@ public class GsonRoot extends GsonElem {
     public Integer color2 = -3;  //внутренняя текстура
     public Integer color3 = -3;  //внешняя текстура       
 
+    public GsonRoot(String version, Type type, String name) {
+      this(version, null, null, null, type, name, -3, -3, -3);
+    }
+    
     public GsonRoot(String version, Integer prj, Integer ord, Integer nuni, Type type, String name) {
       this(version, prj, ord, nuni, type, name, -3, -3, -3);
     }

@@ -95,7 +95,7 @@ public class Wincalc {
         gson.setOwner(this);
 
         //Инит конструктива
-        this.nuni = gson.nuni;
+        this.nuni = (nuni == null) ? -3 : nuni;
         Record sysprofRec = eSysprof.find2(nuni, UseArtiklTo.FRAME);
         this.colorID1 = (gson.color1 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1;
         this.colorID2 = (gson.color2 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2;
