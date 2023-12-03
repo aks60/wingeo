@@ -1,7 +1,6 @@
 package builder.script;
 
 import builder.script.test.Bimax;
-import static builder.script.test.Bimax.rootGeo;
 import common.eProp;
 import enums.Type;
 import java.util.List;
@@ -11,14 +10,14 @@ import java.util.List;
  */
 public class GsonScript {
 
-    public static GsonRoot rootGeo = null;
+    public static GsonRoot rootGson = null;
 
     public static String modelJson(Integer prj) {
 
 // <editor-fold defaultstate="collapsed" desc="RECTANGL">
         if (prj == 601001) { //PUNIC = 427595
-            rootGeo = new GsonRoot("2.0", Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
-            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
+            rootGson = new GsonRoot("2.0", Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1300.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 1300.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0))
@@ -26,8 +25,8 @@ public class GsonScript {
                     .addElem(new GsonElem(Type.GLASS));
             
         } else if (prj == 601006) { //PUNIC = 427838
-            rootGeo = new GsonRoot("1.0", Type.RECTANGL, "RAZIO \\ RAZIO 58 \\ 1 ОКНА");
-            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
+            rootGson = new GsonRoot("1.0", Type.RECTANGL, "RAZIO \\ RAZIO 58 \\ 1 ОКНА");
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0))
@@ -159,7 +158,7 @@ public class GsonScript {
         else {
             return null;
         }
-        return rootGeo.toJson();
+        return rootGson.toJson();
     }
 
     public static List<Integer> modelList(String scale) {

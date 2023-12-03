@@ -3,18 +3,19 @@ package builder.script.test;
 import builder.script.GsonElem;
 import builder.script.GsonRoot;
 import com.google.gson.GsonBuilder;
+import static builder.script.GsonScript.rootGson;
 import enums.Layout;
 import enums.Type;
 
 public final class Bimax {
 
-    public static GsonRoot rootGeo;
+    //public static GsonRoot rootGson;
 
     public static String script(Integer prj) {
 // <editor-fold defaultstate="collapsed" desc="RECTANGL">
         if (prj == 601001) { //PUNIC = 427595
-            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
-            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
+            rootGson = new GsonRoot("2.0", prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1300.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 1300.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0))
@@ -22,37 +23,37 @@ public final class Bimax {
                     .addElem(new GsonElem(Type.GLASS));
             
         } else if (prj == 601006) { //PUNIC = 427838
-            rootGeo = new GsonRoot("1.0", prj, 1, 110,Type.RECTANGL, "RAZIO\\RAZIO 58 N\\1 ОКНА", 1009, 1009, 1009);
-            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
+            rootGson = new GsonRoot("1.0", prj, 1, 110,Type.RECTANGL, "RAZIO\\RAZIO 58 N\\1 ОКНА", 1009, 1009, 1009);
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0))
                     .addElem(new GsonElem(Type.GLASS, "{artglasID:5746}")); //или R4x10x4x10x4
             
         } else if (prj == 501003) {
-            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
-            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
+            rootGson = new GsonRoot("2.0", prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1000.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 1000.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 0.0));
 
-            rootGeo.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-            rootGeo.addElem(new GsonElem(Type.IMPOST, .0, 500.0, 1000.0, 500.0))
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST, .0, 500.0, 1000.0, 500.0))
                     .addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 501004) {
-            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
-            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
+            rootGson = new GsonRoot("2.0", prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 900.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 600.0, 900.0));
 
-            rootGeo.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-            rootGeo.addElem(new GsonElem(Type.IMPOST, 200.0, 900.0, 201.0, 300.0));
-            rootGeo.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 200.0, 900.0, 201.0, 300.0));
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 601003) { //PUNIC = 427819
-            rootGeo = new GsonRoot("2.0", prj, 1, 81, Type.RECTANGL, "Darrio\\DARRIO 200\\1 ОКНА", 1009, 1009, 1009);
-            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
+            rootGson = new GsonRoot("2.0", prj, 1, 81, Type.RECTANGL, "Darrio\\DARRIO 200\\1 ОКНА", 1009, 1009, 1009);
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1700.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1440.0, 1700.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1440.0, .0))
@@ -60,31 +61,31 @@ public final class Bimax {
                     .addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 501005) {
-            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
-            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 0.0))
+            rootGson = new GsonRoot("2.0", prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 0.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1000.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 1000.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 0.0));
 
-            GsonElem area1 = rootGeo.addArea(new GsonElem(Type.AREA));
+            GsonElem area1 = rootGson.addArea(new GsonElem(Type.AREA));
             area1.addElem(new GsonElem(Type.GLASS));
-            rootGeo.addElem(new GsonElem(Type.IMPOST, 0.0, 500.0, 1000.0, 500.0));
-            GsonElem area2 = rootGeo.addArea(new GsonElem(Type.AREA));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 500.0, 1000.0, 500.0));
+            GsonElem area2 = rootGson.addArea(new GsonElem(Type.AREA));
 
             area2.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             area2.addElem(new GsonElem(Type.IMPOST, 500.0, 1000.0, 500.0, 500.0))
                     .addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 501006) {
-            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
-            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
+            rootGson = new GsonRoot("2.0", prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1000.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 1000.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 0.0));
 
-            GsonElem area1 = rootGeo.addArea(new GsonElem(Type.AREA));
-            rootGeo.addElem(new GsonElem(Type.IMPOST, .0, 500.0, 1000.0, 500.0));
-            GsonElem area2 = rootGeo.addArea(new GsonElem(Type.AREA));
+            GsonElem area1 = rootGson.addArea(new GsonElem(Type.AREA));
+            rootGson.addElem(new GsonElem(Type.IMPOST, .0, 500.0, 1000.0, 500.0));
+            GsonElem area2 = rootGson.addArea(new GsonElem(Type.AREA));
             area2.addElem(new GsonElem(Type.GLASS));
 
             area1.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
@@ -125,6 +126,6 @@ public final class Bimax {
         } else {
             return null;
         }
-        return new GsonBuilder().create().toJson(rootGeo);
+        return new GsonBuilder().create().toJson(rootGson);
     }
 }
