@@ -13,8 +13,9 @@ public class AreaRectangl extends AreaSimple {
         super(winc, gson, null);
     }
 
-    // Полигон рамы. Функ. выпоняется после создания рам конструкции
-    public void calcLocation() {
+    //Полигон рамы. Функ. выпоняется после создания рам конструкции
+    @Override
+    public void setLocation() {
         try {
             ArrayList<Coordinate> listCoord = new ArrayList<Coordinate>();
 
@@ -27,11 +28,12 @@ public class AreaRectangl extends AreaSimple {
             this.geom = gf.createPolygon(arrCoord);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaRectangl.calcLocation" + toString() + e);
+            System.err.println("Ошибка:AreaRectangl.setLocation" + toString() + e);
         }
     }
 
     //Соединения
+    @Override
     public void joining() {
         winc.listJoin.clear();
         LinkedList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA);

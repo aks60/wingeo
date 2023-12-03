@@ -26,7 +26,7 @@ public class AreaSimple extends Com5t {
         super(winc, gson, owner);
         constructiv(gson.param);
         winc.listArea.add(this);
-        winc.listAll.add(this); 
+        winc.listAll.add(this);
     }
 
     /**
@@ -34,7 +34,7 @@ public class AreaSimple extends Com5t {
      * typeOpen:4, sysfurnID:2916} Этого параметра нет в интерфейсе программы,
      * он сделан для тестирования с ps4. Делегируется детьми см. класс ElemFrame
      */
-    public void constructiv(JsonObject param) {        
+    public void constructiv(JsonObject param) {
         if (isJson(param, PKjson.sysprofID)) {//профили через параметр
             sysprofRec = eSysprof.find3(param.get(PKjson.sysprofID).getAsInt());
         }
@@ -79,9 +79,17 @@ public class AreaSimple extends Com5t {
         }
     }
 
+    public void setLocation() {
+    }
+
+    //Соединения
+    public void joining() {
+    }
+
     /**
      * Определяет ближайшего соседа в указанном направлении
-     * @param side - сторона направления 
+     *
+     * @param side - сторона направления
      */
     //@Override
     public ElemSimple joinSide(Layout side) {

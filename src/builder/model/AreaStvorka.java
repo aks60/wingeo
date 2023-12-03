@@ -126,7 +126,7 @@ public class AreaStvorka extends AreaSimple {
     }
 
     //Создание и коррекция сторон створки
-    public void calcLocation() {
+    public void setLocation() {
         double naxl = -8;
         try {
             //Ареа створки
@@ -150,7 +150,7 @@ public class AreaStvorka extends AreaSimple {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaStvorka.calcLocation " + e);
+            System.err.println("Ошибка:AreaStvorka.setLocation " + e);
         }
     }
 

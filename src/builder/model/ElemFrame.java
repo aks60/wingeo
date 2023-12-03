@@ -18,10 +18,10 @@ import enums.TypeArtikl;
 import enums.UseSide;
 import java.awt.Shape;
 import java.util.List;
-import java.util.Map;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 
 public class ElemFrame extends ElemSimple {
@@ -78,7 +78,7 @@ public class ElemFrame extends ElemSimple {
     }
 
     //Рассчёт полигона стороны рамы
-    public void calcLocation() {
+    public void setLocation() {
         try {
             for (int i = 0; i < owner.frames.size(); i++) {
                 if (owner.frames.get(i).id == this.id) {
@@ -115,7 +115,7 @@ public class ElemFrame extends ElemSimple {
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemFrame.calcLocation" + toString() + e);
+            System.err.println("Ошибка:ElemFrame.setLocation" + toString() + e);
         }
     }
 
@@ -182,19 +182,8 @@ public class ElemFrame extends ElemSimple {
 //                    //System.out.println("RIGHT " + UCom.horizontAngl(this));
 //                }
             } else {
-                if (Layout.BOTT == layout()) {
-                    spcRec.width = length() + 2 * winc.syssizeRec.getDbl(eSyssize.prip);
-                    spcRec.height = artiklRec.getDbl(eArtikl.height);
-                } else if (Layout.RIGHT == layout()) {
-                    spcRec.width = length() + 2 * winc.syssizeRec.getDbl(eSyssize.prip);
-                    spcRec.height = artiklRec.getDbl(eArtikl.height);
-                } else if (Layout.TOP == layout()) {
-                    spcRec.width = length() + 2 * winc.syssizeRec.getDbl(eSyssize.prip);
-                    spcRec.height = artiklRec.getDbl(eArtikl.height);
-                } else if (Layout.LEFT == layout()) {
-                    spcRec.width = length() + 2 * winc.syssizeRec.getDbl(eSyssize.prip);
-                    spcRec.height = artiklRec.getDbl(eArtikl.height);
-                }
+                spcRec.width = length() + 2 * winc.syssizeRec.getDbl(eSyssize.prip);
+                spcRec.height = artiklRec.getDbl(eArtikl.height);
             }
         } catch (Exception e) {
             System.err.println("Ошибка:ElemFrame.setSpecific() " + e);

@@ -69,7 +69,7 @@ public class Wincalc {
     public Cal5e calcJoining, calcElements, calcFilling, calcFurniture, calcTariffication; //объекты калькуляции конструктива
 
     public GsonRoot gson = null; //объектная модель конструкции 1-го уровня
-    public AreaRectangl root = null; //объектная модель конструкции 2-го уровня
+    public AreaSimple root = null; //объектная модель конструкции 2-го уровня
 
     public Wincalc() {
     }
@@ -109,7 +109,7 @@ public class Wincalc {
         passElements(root, gson);
 
         //Создание полигона рамы
-        this.calcLocation();
+        this.setLocation();
     }
 
     private void passElements(AreaSimple owner, GsonElem gson) {
@@ -156,19 +156,20 @@ public class Wincalc {
     }
 
     //Кальк.коорд. элементов конструкции
-    public void calcLocation() {
+    public void setLocation() {
         try {
             //Главное окно ограниченное сторонами рамы
-            this.root.calcLocation();
+            this.root.setLocation();
 
             //Пилим полигоны на ареа справа и слева
-            this.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA).forEach(e -> e.calcLocation());
+            this.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA, Type.GLASS).forEach(e -> e.setLocation());
 
             //Создание и коррекция сторон створки
-            this.listArea.filter(Type.STVORKA).forEach(e -> e.calcLocation());
+            this.listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
 
             //Рассчёт полигонов сторон рамы
-            this.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.calcLocation());
+            this.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
+            
         } catch (Exception s) {
             System.err.println("Ошибка:Wincalc.location() " + s);
         }
@@ -185,9 +186,9 @@ public class Wincalc {
 
             //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
             //calcJoining = new Joining(this); //соединения
-            //calcJoining.calc();
-//            calcElements = new builder.making.Elements(this);
-//            calcElements.calc();
+//            //calcJoining.calc();
+            calcElements = new builder.making.Elements(this);
+            calcElements.calc();
 //            calcFilling = new builder.making.Filling(this); //заполнения
 //            calcFilling.calc();
 //            calcFurniture = new builder.making.Furniture(this); //фурнитура 
@@ -230,35 +231,29 @@ public class Wincalc {
     public void draw() {
         try {
             //Прорисовка стеклопакетов
-            LinkedList<ElemSimple> elemGlassList = this.listElem.filter(Type.GLASS);
-            elemGlassList.stream().forEach(el -> el.paint());
+            this.listElem.filter4(Type.GLASS).stream().forEach(el -> el.paint());
 
             //Прорисовка импостов
-            LinkedList<ElemSimple> elemImpostList = this.listElem.filter(Type.IMPOST);
-            elemImpostList.stream().forEach(el -> el.paint());
+            this.listElem.filter4(Type.IMPOST).stream().forEach(el -> el.paint());
 
             //Прорисовка штульпов
-            LinkedList<ElemSimple> elemShtulpList = this.listElem.filter(Type.SHTULP);
-            elemShtulpList.stream().forEach(el -> el.paint());
+            this.listElem.filter4(Type.SHTULP).stream().forEach(el -> el.paint());
 
             //Прорисовка стоек
-            LinkedList<ElemSimple> elemStoikaList = this.listElem.filter(Type.STOIKA);
-            elemStoikaList.stream().forEach(el -> el.paint());
+            this.listElem.filter4(Type.STOIKA).stream().forEach(el -> el.paint());
 
             //Прорисовка рам
-            LinkedList<ElemSimple> elemFrameList = this.listElem.filter(Type.FRAME_SIDE);
-            elemFrameList.stream().forEach(el -> el.paint());
+            this.listElem.filter4(Type.FRAME_SIDE).stream().forEach(el -> el.paint());
 
             //Прорисовка створок
-            LinkedList<ElemSimple> elemStvorkaList = this.listElem.filter(Type.STVORKA_SIDE);
-            elemStvorkaList.stream().forEach(el -> el.paint());
+            this.listElem.filter4(Type.STVORKA_SIDE).stream().forEach(el -> el.paint());
 
             //Прорисовка раскладок
-            //LinkedList<ElemSimple> glassList = winc.listElem.filter(Type.GLASS);
-            //glassList.stream().forEach(el -> el.rascladkaPaint());
+            //winc.listElem.filter4(Type.GLASS).stream().forEach(el -> el.rascladkaPaint());
+            
             //Прорисовка москиток
-            //LinkedList<ElemSimple> mosqList = this.listElem.filter(Type.MOSKITKA);
-            //mosqList.stream().forEach(el -> el.paint());
+            //this.listElem.filter4(Type.MOSKITKA).stream().forEach(el -> el.paint());
+            
             //Рисунок в память
 //            if (winc.bufferImg != null) {
 //                ByteArrayOutputStream byteArrOutStream = new ByteArrayOutputStream();

@@ -48,7 +48,7 @@ public class ElemCross extends ElemSimple {
         artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true);
     }
 
-    public void calcLocation() {
+    public void setLocation() {
         try {
             //Пилим полигон импостом
             Geometry[] geoSplit = UGeo.geoSplit(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
@@ -88,7 +88,7 @@ public class ElemCross extends ElemSimple {
             this.geom = (Polygon) areaExp.intersection(geoPadding);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemCross.calcLocation " + e);
+            System.err.println("Ошибка:ElemCross.setLocation " + e);
         }
     }
 
