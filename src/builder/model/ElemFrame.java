@@ -78,7 +78,7 @@ public class ElemFrame extends ElemSimple {
     }
 
     //Рассчёт полигона стороны рамы
-    public void location() {
+    public void calcLocation() {
         try {
             for (int i = 0; i < owner.frames.size(); i++) {
                 if (owner.frames.get(i).id == this.id) {
@@ -115,7 +115,7 @@ public class ElemFrame extends ElemSimple {
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemFrame.location()" + toString() + e);
+            System.err.println("Ошибка:ElemFrame.calcLocation" + toString() + e);
         }
     }
 

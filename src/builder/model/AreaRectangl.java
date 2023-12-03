@@ -14,7 +14,7 @@ public class AreaRectangl extends AreaSimple {
     }
 
     // Полигон рамы. Функ. выпоняется после создания рам конструкции
-    public void location() {
+    public void calcLocation() {
         try {
             ArrayList<Coordinate> listCoord = new ArrayList<Coordinate>();
 
@@ -27,7 +27,7 @@ public class AreaRectangl extends AreaSimple {
             this.geom = gf.createPolygon(arrCoord);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaRectangl.location()" + toString() + e);
+            System.err.println("Ошибка:AreaRectangl.calcLocation" + toString() + e);
         }
     }
 

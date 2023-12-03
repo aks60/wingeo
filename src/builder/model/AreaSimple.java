@@ -30,7 +30,7 @@ public class AreaSimple extends Com5t {
     }
 
     /**
-     * Профиль через параметр PKjson_sysprofID пример створки:sysprofID:1121,
+     * Профиль через параметр. PKjson_sysprofID пример створки:sysprofID:1121,
      * typeOpen:4, sysfurnID:2916} Этого параметра нет в интерфейсе программы,
      * он сделан для тестирования с ps4. Делегируется детьми см. класс ElemFrame
      */
@@ -76,58 +76,6 @@ public class AreaSimple extends Com5t {
             }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.parametr() " + e);
-        }
-    }
-
-    public void draw() {
-        try {
-            winc.root.location();           
-            winc.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA).forEach(e -> e.location()); //пилим полигоны
-            winc.listArea.filter(Type.STVORKA).forEach(e -> e.location()); 
-            winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.location()); 
-                
-            //Прорисовка стеклопакетов
-            LinkedList<ElemSimple> elemGlassList = winc.listElem.filter(Type.GLASS);
-            elemGlassList.stream().forEach(el -> el.paint());
-
-            //Прорисовка импостов
-            LinkedList<ElemSimple> elemImpostList = winc.listElem.filter(Type.IMPOST);
-            elemImpostList.stream().forEach(el -> el.paint());
-
-            //Прорисовка штульпов
-            LinkedList<ElemSimple> elemShtulpList = winc.listElem.filter(Type.SHTULP);
-            elemShtulpList.stream().forEach(el -> el.paint());
-
-            //Прорисовка стоек
-            LinkedList<ElemSimple> elemStoikaList = winc.listElem.filter(Type.STOIKA);
-            elemStoikaList.stream().forEach(el -> el.paint());
-
-            //Прорисовка рам
-            LinkedList<ElemSimple> elemFrameList = winc.listElem.filter(Type.FRAME_SIDE);
-            elemFrameList.stream().forEach(el -> el.paint());
-
-            //Прорисовка створок
-            LinkedList<ElemSimple> elemStvorkaList = winc.listElem.filter(Type.STVORKA_SIDE);
-            elemStvorkaList.stream().forEach(el -> el.paint());
-
-            //Прорисовка раскладок
-            //LinkedList<ElemSimple> glassList = winc.listElem.filter(Type.GLASS);
-            //glassList.stream().forEach(el -> el.rascladkaPaint());
-            //Прорисовка москиток
-            LinkedList<ElemSimple> mosqList = winc.listElem.filter(Type.MOSKITKA);
-            mosqList.stream().forEach(el -> el.paint());
-
-            //Рисунок в память
-//            if (winc.bufferImg != null) {
-//                ByteArrayOutputStream byteArrOutStream = new ByteArrayOutputStream();
-//                ImageIO.write(winc.bufferImg, "png", byteArrOutStream);
-//                if (eProp.dev == true) {
-//                    File outputfile = new File("CanvasImage.png");
-//                    ImageIO.write(winc.bufferImg, "png", outputfile);
-//                }
-//            }
-        } catch (Exception s) {
-            System.err.println("Ошибка:AreaSimple.draw() " + s);
         }
     }
 

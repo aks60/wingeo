@@ -50,7 +50,7 @@ public class HtmlOfMaterial {
         for (Record prjprodRec : prjprodList) {
             String script = prjprodRec.getStr(ePrjprod.script);
             Wincalc winc = new Wincalc(script);
-            winc.constructiv(true);
+            winc.calcTarification(true);
             spcList2.addAll(winc.listSpec);
         }
         List<RSpecific> spcList3 = new ArrayList();

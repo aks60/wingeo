@@ -106,7 +106,7 @@ public class Test {
                 String script = GsonScript.productJson(prj);
                 if (script != null) {
                     winc.parsing(script);
-                    winc.constructiv(true);
+                    winc.calcTarification(true);
                     //frames.PSCompare.iwinXls(winc, false);
                     frames.PSCompare.iwinPs4(winc, false);
                 }
@@ -118,7 +118,7 @@ public class Test {
                 String script = GsonScript.productJson(prj);
                 if (script != null) {
                     winc.parsing(script);
-                    winc.constructiv(true);
+                    winc.calcTarification(true);
                     //frames.PSCompare.iwinXls(winc, false);
                     frames.PSCompare.iwinPs4(winc, false);
                 }

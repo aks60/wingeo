@@ -125,31 +125,32 @@ public class AreaStvorka extends AreaSimple {
         }
     }
 
-    //Создание и коррекция координат элементов (сторон) створки
-    public void location() {
+    //Создание и коррекция сторон створки
+    public void calcLocation() {
         double naxl = -8;
         try {
             //Ареа створки
-            Polygon geo = (owner == root) ? owner.geom : this.geom; //случай когда створка в root
+            Polygon geo = (owner == root) ? owner.geom : this.geom; //случай когда створка в гл.окне или внутр...
             this.geom = UGeo.geoPadding(geo, winc.listElem, naxl);
             Coordinate[] coo = this.geom.getCoordinates();
 
             //Координаты рам створок
             if (this.frames.size() == 0) {
-
+                //Если стороны ств. ещё не созданы
                 for (int i = 0; i < coo.length - 1; i++) {
                     GsonElem gselem = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y);
                     ElemFrame stvside = new ElemFrame(this.winc, gson.id + (.01 + Double.valueOf(i) / 100), gselem, this);
                     this.frames.add(stvside);
                 }
             } else {
+                //Если стороны уже созданы
                 for (int i = 0; i < coo.length - 1; i++) {
                     ElemSimple elem = this.frames.get(i);
-                    elem.setDimension(coo[i].x, coo[i].y, coo[i + 1].x, coo[i + 1].y);
+                    elem.setDimension(coo[i].x, coo[i].y, coo[i + 1].x, coo[i + 1].y); //запишем координаты
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaStvorka.location() " + e);
+            System.err.println("Ошибка:AreaStvorka.calcLocation " + e);
         }
     }
 

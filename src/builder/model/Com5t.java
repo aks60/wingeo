@@ -50,7 +50,7 @@ public class Com5t {
         this.type = gson.type;
     }
 
-    public void location() {
+    public void calcLocation() {
     }
 
     void setSpecific() {        

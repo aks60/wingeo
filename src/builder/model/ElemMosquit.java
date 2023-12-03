@@ -53,7 +53,7 @@ public class ElemMosquit extends ElemSimple {
     }
 
     //Установка координат элементов окна
-    public void location() {
+    public void calcLocation() {
 //        ElemSimple bott = owner.frames.get(Layout.BOTT), right = owner.frames.get(Layout.RIGHT), top = owner.frames.get(Layout.TOP), left = owner.frames.get(Layout.LEFT);
 //        setDimension(left.x2(), top.y2(), right.x1(), bott.y1());
     }

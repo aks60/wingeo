@@ -76,7 +76,7 @@ public class ElemGlass extends ElemSimple {
         }
     }
 
-    public void location() {
+    public void calcLocation() {
         this.geom = owner.geom;
     }
 
