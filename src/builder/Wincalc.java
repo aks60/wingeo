@@ -84,22 +84,22 @@ public class Wincalc {
         //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
         //Инит свойств окна
-        this.script = script;
+        script = script;
         genId = 0;
         syssizeRec = null;
         mapPardef.clear();
         List.of((List) listArea, (List) listElem, (List) listSpec, (List) listAll, (List) listJoin).forEach(el -> el.clear());
 
-        //Создание Gson класса  q
+        //Создание Gson класса
         gson = new GsonBuilder().create().fromJson(script, GsonRoot.class);
         gson.setOwner(this);
 
         //Инит конструктива
-        this.nuni = (nuni == null) ? -3 : nuni;
+        nuni = (gson.nuni == null) ? -3 : gson.nuni;
         Record sysprofRec = eSysprof.find2(nuni, UseArtiklTo.FRAME); //первая.запись коробки
-        this.colorID1 = (gson.color1 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1;
-        this.colorID2 = (gson.color2 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2;
-        this.colorID3 = (gson.color3 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3;
+        colorID1 = (gson.color1 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1;
+        colorID2 = (gson.color2 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2;
+        colorID3 = (gson.color3 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3;
         eSyspar1.find(nuni).forEach(syspar1Rec -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), syspar1Rec)); //загрузим параметры по умолчанию
 
         //if (Type.RECTANGL == gson.type) {
@@ -156,20 +156,25 @@ public class Wincalc {
     //Кальк.коорд. элементов конструкции
     public void prepare() {
         try {
+            //LinkedCom<ElemSimple> lst = listElem.filter(Type.STVORKA_SIDE);
+            //lst.forEach(e -> ((ElemSimple) e).initConstructiv());
+            
+            //Создание и коррекция сторон створки
+            listArea.filter(Type.STVORKA).forEach(e -> ((AreaStvorka) e).setLocation());
+            
             //Инит. конструктива
-            this.listElem.forEach(e -> e.initConstructiv());
+            listElem.forEach(e -> e.initConstructiv());
 
             //Главное окно ограниченное сторонами рамы
-            this.root.setLocation();
+            root.setLocation();
 
             //Пилим полигоны на ареа справа и слева
-            this.listElem.filter(Type.IMPOST).forEach(e -> ((ElemSimple) e).setLocation());
-
-            //Создание и коррекция сторон створки
-            this.listArea.filter(Type.STVORKA).forEach(e -> ((AreaStvorka) e).setLocation());
+            listElem.filter(Type.IMPOST).forEach(e -> ((ElemSimple) e).setLocation());
 
             //Рассчёт полигонов сторон рамы
-            this.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> ((ElemSimple) e).setLocation());
+            listElem.filter(Type.FRAME_SIDE).forEach(e -> ((ElemSimple) e).setLocation());
+            listElem.filter(Type.STVORKA_SIDE).forEach(e -> ((ElemSimple) e).setLocation());
+            listElem.filter(Type.GLASS).forEach(e -> ((ElemSimple) e).setLocation());
 
         } catch (Exception s) {
             System.err.println("Ошибка:Wincalc.location() " + s);

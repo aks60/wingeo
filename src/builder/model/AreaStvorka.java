@@ -141,6 +141,7 @@ public class AreaStvorka extends AreaSimple {
                     GsonElem gselem = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y);
                     ElemFrame stvside = new ElemFrame(this.winc, gson.id + (.01 + Double.valueOf(i) / 100), gselem, this);
                     this.frames.add(stvside);
+                    winc.listElem.add(stvside);
                 }
             } else {
                 //Если стороны уже созданы
