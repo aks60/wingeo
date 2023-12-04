@@ -32,13 +32,13 @@ public class ElemGlass extends ElemSimple {
 
     public ElemGlass(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
-        constructiv(gson.param);
     }
 
-    public void constructiv(JsonObject param) {
+    @Override
+    public void initConstructiv() {
 
-        if (isJson(param, PKjson.artglasID)) {
-            artiklRec = eArtikl.find(param.get(PKjson.artglasID).getAsInt(), false);
+        if (isJson(gson.param, PKjson.artglasID)) {
+            artiklRec = eArtikl.find(gson.param.get(PKjson.artglasID).getAsInt(), false);
         } else {
             Record sysreeRec = eSystree.find(winc.nuni); //по умолчанию стеклопакет
             artiklRec = eArtikl.find2(sysreeRec.getStr(eSystree.glas));
@@ -46,8 +46,8 @@ public class ElemGlass extends ElemSimple {
         artiklRecAn = artiklRec;
 
         //Цвет стекла
-        if (isJson(param, PKjson.colorGlass)) {
-            colorID1 = param.get(PKjson.colorGlass).getAsInt();
+        if (isJson(gson.param, PKjson.colorGlass)) {
+            colorID1 = gson.param.get(PKjson.colorGlass).getAsInt();
         } else {
             Record artdetRec = eArtdet.find(artiklRec.getInt(eArtikl.id));
             Record colorRec = eColor.find3(artdetRec.getInt(eArtdet.color_fk));
@@ -57,21 +57,21 @@ public class ElemGlass extends ElemSimple {
         }
 
         //Раскладка
-        if (isJson(param, PKjson.artiklRascl)) {
-            rasclRec = eArtikl.find(param.get(PKjson.artiklRascl).getAsInt(), false);
+        if (isJson(gson.param, PKjson.artiklRascl)) {
+            rasclRec = eArtikl.find(gson.param.get(PKjson.artiklRascl).getAsInt(), false);
             //Текстура
-            if (isJson(param, PKjson.colorRascl)) {
-                rasclColor = eColor.get(param.get(PKjson.colorRascl).getAsInt()).getInt(eColor.id);
+            if (isJson(gson.param, PKjson.colorRascl)) {
+                rasclColor = eColor.get(gson.param.get(PKjson.colorRascl).getAsInt()).getInt(eColor.id);
             } else {
                 rasclColor = eArtdet.find(rasclRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk); //цвет по умолчанию
             }
             //Проёмы гориз.
-            if (isJson(param, PKjson.rasclHor)) {
-                rasclNumber[0] = param.get(PKjson.rasclHor).getAsInt();
+            if (isJson(gson.param, PKjson.rasclHor)) {
+                rasclNumber[0] = gson.param.get(PKjson.rasclHor).getAsInt();
             }
             //Проёмы вертик.
-            if (isJson(param, PKjson.rasclVert)) {
-                rasclNumber[1] = param.get(PKjson.rasclVert).getAsInt();
+            if (isJson(gson.param, PKjson.rasclVert)) {
+                rasclNumber[1] = gson.param.get(PKjson.rasclVert).getAsInt();
             }
         }
     }

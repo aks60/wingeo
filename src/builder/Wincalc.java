@@ -81,7 +81,7 @@ public class Wincalc {
     public void parsing(String script) {
         //Для тестирования
         //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
-        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
         //Инит свойств окна
         this.script = script;
@@ -90,7 +90,7 @@ public class Wincalc {
         mapPardef.clear();
         List.of((List) listArea, (List) listElem, (List) listSpec, (List) listAll, (List) listJoin).forEach(el -> el.clear());
 
-        //Создание Gson класса
+        //Создание Gson класса  q
         gson = new GsonBuilder().create().fromJson(script, GsonRoot.class);
         gson.setOwner(this);
 
@@ -105,14 +105,12 @@ public class Wincalc {
         //if (Type.RECTANGL == gson.type) {
         root = new AreaRectangl(this, gson);
         //}
-
-        passElements(root, gson);
-
-        //Создание полигона рамы
-        this.setLocation();
+       
+        elements(root, gson);
+        prepare();
     }
 
-    private void passElements(AreaSimple owner, GsonElem gson) {
+    private void elements(AreaSimple owner, GsonElem gson) {
         try {
             if (gson.childs != null) {
                 LinkedHashMap<AreaSimple, GsonElem> hm = new LinkedHashMap();
@@ -147,7 +145,7 @@ public class Wincalc {
                 }
                 //Теперь вложенные элементы
                 for (Map.Entry<AreaSimple, GsonElem> entry : hm.entrySet()) {
-                    passElements(entry.getKey(), entry.getValue());
+                    elements(entry.getKey(), entry.getValue());
                 }
             }
         } catch (Exception e) {
@@ -156,27 +154,30 @@ public class Wincalc {
     }
 
     //Кальк.коорд. элементов конструкции
-    public void setLocation() {
+    public void prepare() {
         try {
+            //Инит. конструктива
+            this.listElem.forEach(e -> e.initConstructiv());
+
             //Главное окно ограниченное сторонами рамы
             this.root.setLocation();
 
             //Пилим полигоны на ареа справа и слева
-            this.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA, Type.GLASS).forEach(e -> e.setLocation());
+            this.listElem.filter(Type.IMPOST).forEach(e -> ((ElemSimple) e).setLocation());
 
             //Создание и коррекция сторон створки
-            this.listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
+            this.listArea.filter(Type.STVORKA).forEach(e -> ((AreaStvorka) e).setLocation());
 
             //Рассчёт полигонов сторон рамы
-            this.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
-            
+            this.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> ((ElemSimple) e).setLocation());
+
         } catch (Exception s) {
             System.err.println("Ошибка:Wincalc.location() " + s);
         }
     }
 
     //Спецификация и тарификация 
-    public void calcTarification(boolean norm_otx) {
+    public void tarification(boolean norm_otx) {
         weight = 0;
         price = 0;
         cost2 = 0;
@@ -250,10 +251,8 @@ public class Wincalc {
 
             //Прорисовка раскладок
             //winc.listElem.filter4(Type.GLASS).stream().forEach(el -> el.rascladkaPaint());
-            
             //Прорисовка москиток
             //this.listElem.filter4(Type.MOSKITKA).stream().forEach(el -> el.paint());
-            
             //Рисунок в память
 //            if (winc.bufferImg != null) {
 //                ByteArrayOutputStream byteArrOutStream = new ByteArrayOutputStream();

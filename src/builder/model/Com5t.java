@@ -49,12 +49,6 @@ public class Com5t {
         this.root = winc.root;
         this.type = gson.type;
     }
-
-    public void setLocation() {
-    }
-
-    void setSpecific() {        
-    }
     
     public void paint() {
     }

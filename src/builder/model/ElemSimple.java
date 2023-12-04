@@ -3,13 +3,14 @@ package builder.model;
 import builder.Wincalc;
 import builder.making.Specific;
 import builder.script.GsonElem;
+import com.google.gson.JsonObject;
 import enums.Layout;
 import enums.Type;
 import java.awt.Color;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.Coordinate;
 
-public class ElemSimple extends Com5t {
+public abstract class ElemSimple extends Com5t {
 
     public double anglCut[] = {45, 45}; //угол реза
     public double[] anglFlat = {0, 0, 0, 0}; //мин/мах внутренний и мин/мах внешний угол к плоскости   
@@ -30,16 +31,19 @@ public class ElemSimple extends Com5t {
         winc.listAll.add(this);
     }
 
-    public void setSpecific() {   
-    }
-    
-    public void addSpecific(Specific spcAdd) {
+    public abstract void initConstructiv();
 
-    }
+    public abstract void setSpecific();
     
+    public abstract void setLocation();
+
+    public abstract void addSpecific(Specific spcAdd);
+
     /**
-     * Определяет прилегающий элемент по точке принадлежащей вектору. Прил. соед. используется для
-     * определения координат примыкаемого элемента. (см. ElemXxx.setSpecific())
+     * Определяет прилегающий элемент по точке принадлежащей вектору. Прил.
+     * соед. используется для определения координат примыкаемого элемента. (см.
+     * ElemXxx.setSpecific())
+     *
      * @param side - сторона прилегания
      * @return - элемент прилегания
      */
@@ -85,7 +89,7 @@ public class ElemSimple extends Com5t {
             return null;
         }
     }
-    
+
     //Угол к горизонту 
     public double anglHoriz() {
         return Angle.toDegrees(Angle.angle(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2())));

@@ -34,7 +34,6 @@ public class ElemFrame extends ElemSimple {
 
     public ElemFrame(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
         super(winc, id, gson, owner);
-        constructiv(gson.param);
         if (gson.type == Type.FRAME_SIDE) {
             events();
         }
@@ -44,16 +43,18 @@ public class ElemFrame extends ElemSimple {
      * Профиль через параметр или первая запись в системе см. табл. sysprof Цвет
      * если нет параметра то берём winc.color.
      */
-    public void constructiv(JsonObject param) {
+    @Override
+    public void initConstructiv() {
 
-        colorID1 = (isJson(param, PKjson.colorID1)) ? param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
-        colorID2 = (isJson(param, PKjson.colorID2)) ? param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
-        colorID3 = (isJson(param, PKjson.colorID3)) ? param.get(PKjson.colorID3).getAsInt() : winc.colorID3;
+        colorID1 = (isJson(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
+        colorID2 = (isJson(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
+        colorID3 = (isJson(gson.param, PKjson.colorID3)) ? gson.param.get(PKjson.colorID3).getAsInt() : winc.colorID3;
         
+        Object o2 = this.x2();
         Object o1 = layout();
         
-        if (isJson(param, PKjson.sysprofID)) { //профили через параметр
-            sysprofRec = eSysprof.find3(param.get(PKjson.sysprofID).getAsInt());
+        if (isJson(gson.param, PKjson.sysprofID)) { //профили через параметр
+            sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());
 
         } else if (owner.sysprofRec != null) { //профили через параметр рамы, створки
             sysprofRec = owner.sysprofRec;

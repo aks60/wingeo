@@ -96,7 +96,7 @@ public class Canvas extends javax.swing.JPanel {
             winc.gc2d.setStroke(new BasicStroke(2)); //толщина линии
             winc.gc2d.translate(0, 0);
             winc.gc2d.scale(winc.scale, winc.scale);
-            winc.setLocation();
+            winc.prepare();
             winc.draw();
 
         } else {
@@ -116,7 +116,7 @@ public class Canvas extends javax.swing.JPanel {
             winc.scale = (length / width > length / height)
                     ? length / (height + 200) : length / (width + 200);
             winc.gc2d.scale(winc.scale, winc.scale);
-            winc.setLocation();
+            winc.prepare();
             winc.draw(); //рисую конструкцию
             return new ImageIcon(bi);
 

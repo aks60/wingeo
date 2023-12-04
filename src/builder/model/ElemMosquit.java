@@ -17,22 +17,22 @@ public class ElemMosquit extends ElemSimple {
 
     public ElemMosquit(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(owner.winc, gson, owner);
-        constructiv(gson.param);
     }
 
-    public void constructiv(JsonObject param) {
+    @Override
+    public void initConstructiv() {
 
         //Артикл
-        if (isJson(param, PKjson.artiklID)) {
-            artiklRec = eArtikl.find(param.get(PKjson.artiklID).getAsInt(), false);
+        if (isJson(gson.param, PKjson.artiklID)) {
+            artiklRec = eArtikl.find(gson.param.get(PKjson.artiklID).getAsInt(), false);
         } else {
             artiklRec = eArtikl.virtualRec();
         }
         artiklRecAn = artiklRec;
 
         //Цвет
-        if (isJson(param, PKjson.colorID1)) {
-            colorID1 = param.get(PKjson.colorID1).getAsInt();
+        if (isJson(gson.param, PKjson.colorID1)) {
+            colorID1 = gson.param.get(PKjson.colorID1).getAsInt();
         }
         if (colorID1 == -1) {
             HashSet<Record> hsColor = UGui.artiklToColorSet(artiklRec.getInt(eArtikl.id));
@@ -45,8 +45,8 @@ public class ElemMosquit extends ElemSimple {
         }
 
         //Состав москитки. ВНИМАЕИЕ! elementID подменён на sysprofRec
-        if (isJson(param, PKjson.elementID)) {
-            sysprofRec = eElement.find4(param.get(PKjson.elementID).getAsInt());
+        if (isJson(gson.param, PKjson.elementID)) {
+            sysprofRec = eElement.find4(gson.param.get(PKjson.elementID).getAsInt());
         } else {
             sysprofRec = eElement.up.newRecord();
         }

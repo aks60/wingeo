@@ -28,19 +28,20 @@ public class ElemCross extends ElemSimple {
 
     public ElemCross(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
-        constructiv(gson.param);
+        //constructiv(gson.param);
         events();
     }
 
-    public void constructiv(JsonObject param) {
+    @Override
+    public void initConstructiv() {
 
-        colorID1 = (isJson(param, PKjson.colorID1)) ? param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
-        colorID2 = (isJson(param, PKjson.colorID2)) ? param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
-        colorID3 = (isJson(param, PKjson.colorID3)) ? param.get(PKjson.colorID3).getAsInt() : winc.colorID3;
+        colorID1 = (isJson(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
+        colorID2 = (isJson(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
+        colorID3 = (isJson(gson.param, PKjson.colorID3)) ? gson.param.get(PKjson.colorID3).getAsInt() : winc.colorID3;
 
         double angl = UGeo.anglHor(this);
-        if (isJson(param, PKjson.sysprofID)) { //профили через параметр
-            sysprofRec = eSysprof.find3(param.get(PKjson.sysprofID).getAsInt());
+        if (isJson(gson.param, PKjson.sysprofID)) { //профили через параметр
+            sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());
         } else {
             sysprofRec = eSysprof.find4(winc.nuni, type.id2, UseSide.ANY);
         }
@@ -92,8 +93,8 @@ public class ElemCross extends ElemSimple {
         }
     }
 
+    //Главная спецификация 
     @Override
-    //Главная спецификация   
     public void setSpecific() {
         try {
             spcRec.place = (Layout.HORIZ == owner.layout()) ? "ВСТ.в" : "ВСТ.г";
