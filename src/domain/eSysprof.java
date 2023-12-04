@@ -52,7 +52,7 @@ public enum eSysprof implements Field {
 
     public static Record find2(int _nuni, UseArtiklTo _type) {
         if (_nuni == -3) {
-            return record(_type.id);
+            return virtualRec(_type.id);
         }
         if (Query.conf.equals("calc")) {
             HashMap<Integer, Record> mapPrio = new HashMap();
@@ -88,27 +88,27 @@ public enum eSysprof implements Field {
     
     public static Record find4(int nuni, int typ, UseSide us1) {
         if (nuni == -3) {
-            return record(typ);
+            return virtualRec(typ);
         }
         return query().stream().filter(rec -> rec.getInt(systree_id) == nuni
                 && rec.getInt(use_type) == typ
                 && UseSide.MANUAL.id != rec.getInt(use_side)
                 && (us1.id == rec.getInt(use_side) || UseSide.ANY.id == rec.getInt(use_side))
-        ).findFirst().orElse(up.record(typ));
+        ).findFirst().orElse(up.virtualRec(typ));
     }
     
-    public static Record find5(int nuni, int typ, UseSide us1, UseSide us2) {
+    public static Record find5(int nuni, int type, UseSide us1, UseSide us2) {
         if (nuni == -3) {
-            return record(typ);
+            return virtualRec(type);
         }
         return query().stream().filter(rec -> rec.getInt(systree_id) == nuni
-                && rec.getInt(use_type) == typ
+                && rec.getInt(use_type) == type
                 && UseSide.MANUAL.id != rec.getInt(use_side)
                 && (us1.id == rec.getInt(use_side) || us2.id == rec.getInt(use_side) || UseSide.ANY.id == rec.getInt(use_side))
-        ).findFirst().orElse(up.record(typ));
+        ).findFirst().orElse(up.virtualRec(type));
     }
 
-    public static Record record(int typeId) {
+    public static Record virtualRec(int typeId) {
 
         Record record = up.newRecord();
         record.setNo(id, -3);

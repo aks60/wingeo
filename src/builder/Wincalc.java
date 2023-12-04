@@ -81,7 +81,7 @@ public class Wincalc {
     public void parsing(String script) {
         //Для тестирования
         //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
-        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
         //Инит свойств окна
         this.script = script;
@@ -96,7 +96,7 @@ public class Wincalc {
 
         //Инит конструктива
         this.nuni = (nuni == null) ? -3 : nuni;
-        Record sysprofRec = eSysprof.find2(nuni, UseArtiklTo.FRAME);
+        Record sysprofRec = eSysprof.find2(nuni, UseArtiklTo.FRAME); //первая.запись коробки
         this.colorID1 = (gson.color1 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1;
         this.colorID2 = (gson.color2 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2;
         this.colorID3 = (gson.color3 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3;

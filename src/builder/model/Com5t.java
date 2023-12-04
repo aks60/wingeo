@@ -161,7 +161,7 @@ public class Com5t {
     }
 
     public Layout layout() {
-        return Layout.ANY;
+        return Layout.FULL;
     }
 
     public boolean isJson(JsonObject jso, String key) {

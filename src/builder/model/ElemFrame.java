@@ -49,7 +49,9 @@ public class ElemFrame extends ElemSimple {
         colorID1 = (isJson(param, PKjson.colorID1)) ? param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
         colorID2 = (isJson(param, PKjson.colorID2)) ? param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
         colorID3 = (isJson(param, PKjson.colorID3)) ? param.get(PKjson.colorID3).getAsInt() : winc.colorID3;
-
+        
+        Object o1 = layout();
+        
         if (isJson(param, PKjson.sysprofID)) { //профили через параметр
             sysprofRec = eSysprof.find3(param.get(PKjson.sysprofID).getAsInt());
 
@@ -63,10 +65,11 @@ public class ElemFrame extends ElemSimple {
             } else if (Layout.TOP.equals(layout())) {
                 sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.TOP, UseSide.HORIZ);
             } else if (Layout.LEFT.equals(layout())) {
-                sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.LEFT, UseSide.VERT);
-            } else {
-                sysprofRec = eSysprof.find4(winc.nuni, type.id2, UseSide.ANY);
-            }
+                sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.LEFT, UseSide.VERT);                                                                                                                                                                                                                                                                                                                                        
+            } 
+//            else {
+//                sysprofRec = eSysprof.find4(winc.nuni, type.id2, UseSide.ANY);
+//            }
         }
         artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
         artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true);

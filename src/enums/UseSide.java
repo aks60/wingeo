@@ -5,8 +5,11 @@ package enums;
 import static enums.UseArtiklTo.values;
 import static enums.TypeOpen1.values;
 import java.util.stream.Stream;
-
-// select distinct ASETS from PRO4_SYSPROA where region_id = 177 order by ASETS
+/**
+ * 
+ * select distinct ASETS from PRO4_SYSPROA where region_id = 177 order by ASETS
+ */
+// 
 public enum UseSide implements Enam { 
     VERT(-3, "Вертикальная"),//разрешена вертикальная установка профиля
     HORIZ(-2, "Горизонтальная"),//разрешена горизонтальная установка профиля
