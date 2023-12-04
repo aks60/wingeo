@@ -67,9 +67,9 @@ public class ElemFrame extends ElemSimple {
             } else if (Layout.LEFT.equals(layout())) {
                 sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.LEFT, UseSide.VERT);                                                                                                                                                                                                                                                                                                                                        
             } 
-//            else {
-//                sysprofRec = eSysprof.find4(winc.nuni, type.id2, UseSide.ANY);
-//            }
+            else {
+                sysprofRec = eSysprof.find4(winc.nuni, type.id2, UseSide.ANY);
+            }
         }
         artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
         artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true);
