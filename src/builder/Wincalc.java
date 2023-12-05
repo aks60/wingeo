@@ -100,14 +100,16 @@ public class Wincalc {
         colorID1 = (gson.color1 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1;
         colorID2 = (gson.color2 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2;
         colorID3 = (gson.color3 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3;
-        eSyspar1.find(nuni).forEach(syspar1Rec -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), syspar1Rec)); //загрузим параметры по умолчанию
+        
+        //Параметры по умолчанию
+        eSyspar1.find(nuni).forEach(syspar1Rec -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), syspar1Rec)); 
 
         //if (Type.RECTANGL == gson.type) {
         root = new AreaRectangl(this, gson);
         //}
        
         elements(root, gson);
-        prepare();
+        upgrade();
     }
 
     private void elements(AreaSimple owner, GsonElem gson) {
@@ -154,27 +156,25 @@ public class Wincalc {
     }
 
     //Кальк.коорд. элементов конструкции
-    public void prepare() {
+    public void upgrade() {
         try {
-            //LinkedCom<ElemSimple> lst = listElem.filter(Type.STVORKA_SIDE);
-            //lst.forEach(e -> ((ElemSimple) e).initConstructiv());
+            //Главное окно ограниченное сторонами рамы
+            root.setLocation();
+
+            //Инит. конструктива
+            listElem.forEach(e -> e.initConstructiv());            
+            
+            //Пилим полигоны на ареа справа и слева
+            listElem.filter(Type.IMPOST).forEach(e -> ((ElemSimple) e).setLocation());
             
             //Создание и коррекция сторон створки
             listArea.filter(Type.STVORKA).forEach(e -> ((AreaStvorka) e).setLocation());
             
-            //Инит. конструктива
-            listElem.forEach(e -> e.initConstructiv());
-
-            //Главное окно ограниченное сторонами рамы
-            root.setLocation();
-
-            //Пилим полигоны на ареа справа и слева
-            listElem.filter(Type.IMPOST).forEach(e -> ((ElemSimple) e).setLocation());
+            //Инит. конструктива створки
+            listArea.filter(Type.STVORKA).forEach(e -> ((AreaStvorka) e).frames.forEach(e2 -> e2.initConstructiv()));
 
             //Рассчёт полигонов сторон рамы
-            listElem.filter(Type.FRAME_SIDE).forEach(e -> ((ElemSimple) e).setLocation());
-            listElem.filter(Type.STVORKA_SIDE).forEach(e -> ((ElemSimple) e).setLocation());
-            listElem.filter(Type.GLASS).forEach(e -> ((ElemSimple) e).setLocation());
+            listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> ((ElemSimple) e).setLocation());
 
         } catch (Exception s) {
             System.err.println("Ошибка:Wincalc.location() " + s);
@@ -191,14 +191,14 @@ public class Wincalc {
             listElem.filter4(Type.FRAME_SIDE).forEach(elem -> elem.setSpecific()); //спецификация ведущих элементов конструкции
 
             //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
-            //calcJoining = new Joining(this); //соединения
-//            //calcJoining.calc();
+            calcJoining = new Joining(this); //соединения
+            calcJoining.calc();
             calcElements = new builder.making.Elements(this);
             calcElements.calc();
-//            calcFilling = new builder.making.Filling(this); //заполнения
-//            calcFilling.calc();
-//            calcFurniture = new builder.making.Furniture(this); //фурнитура 
-//            calcFurniture.calc();
+            calcFilling = new builder.making.Filling(this); //заполнения
+            calcFilling.calc();
+            calcFurniture = new builder.making.Furniture(this); //фурнитура 
+            calcFurniture.calc();
             calcTariffication = new builder.making.Tariffic(this, norm_otx); //тарификация 
             calcTariffication.calc();
 

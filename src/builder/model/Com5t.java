@@ -63,13 +63,13 @@ public class Com5t {
                 double dY = 0;
                 if (pass[0] == true || pass[1] == true) {
                     if (evt.getKeyCode() == KeyEvent.VK_UP) {
-                        dY = -1;
+                        dY = -.5;
                     } else if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
-                        dY = 1;
+                        dY = .5;
                     } else if (evt.getKeyCode() == KeyEvent.VK_LEFT) {
-                        dX = -1;
+                        dX = -.5;
                     } else if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
-                        dX = 1;
+                        dX = .5;
                     }
                     if (pass[0] == true) {
                         double X1 = dX / winc.scale + x1();
@@ -90,8 +90,7 @@ public class Com5t {
                     }
                 }
             }
-        };
-        //ListenerKey keyReleased = (evt) -> {};        
+        };       
         ListenerMouse mousePressed = (evt) -> {
             if (this.geom != null) {
                 pointPress = evt.getPoint();

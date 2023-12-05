@@ -684,8 +684,8 @@ public class Tex extends javax.swing.JFrame {
 
         mn0.add(mn09);
 
+        mn03.setText("  Конструктив  ");
         mn03.setFont(frames.UGui.getFont(1,1));
-        mn03.setLabel("  Составы  ");
 
         mn31.setFont(frames.UGui.getFont(0,1));
         mn31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b056.gif"))); // NOI18N
@@ -709,7 +709,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn34.setFont(frames.UGui.getFont(0,1));
         mn34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b056.gif"))); // NOI18N
-        mn34.setText("Вставки");
+        mn34.setText("Составы");
         mn34.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnElement(evt);
