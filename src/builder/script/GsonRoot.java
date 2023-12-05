@@ -36,7 +36,6 @@ public class GsonRoot extends GsonElem {
     }
 
     public String toJson() {
-//        this.notSerialize(this);
         return new GsonBuilder().create().toJson(this);
     }    
 }

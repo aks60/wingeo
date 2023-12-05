@@ -81,14 +81,13 @@ public class Wincalc {
     public void parsing(String script) {
         //Для тестирования
         //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
-        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
         //Инит свойств окна
-        //script = scr;
-        //genId = 0;
-        //syssizeRec = null;
-        //mapPardef.clear();
-        //List.of((List) listArea, (List) listElem, (List) listSpec, (List) listAll, (List) listJoin).forEach(el -> el.clear());
+        genId = 0;
+        syssizeRec = null;
+        mapPardef.clear();
+        List.of((List) listArea, (List) listElem, (List) listSpec, (List) listAll, (List) listJoin).forEach(el -> el.clear());
 
         //Создание Gson класса
         gson = new GsonBuilder().create().fromJson(script, GsonRoot.class);
@@ -177,7 +176,7 @@ public class Wincalc {
             listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
 
             //Инит. конструктива створки
-            listArea.filter(Type.STVORKA).forEach(e -> e.frames.forEach(e2 -> e2.initConstructiv()));
+            listArea.filter(Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initConstructiv()));
 
             //Рассчёт полигонов сторон рамы
             listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
