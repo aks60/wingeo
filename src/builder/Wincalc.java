@@ -44,7 +44,6 @@ public class Wincalc {
     public Integer nuni = 0; //код системы
     public Record syssizeRec = null; //системные константы     
     public double genId = 0; //для генерации ключа в спецификации
-    public String script = null;
     public int colorID1 = -1, colorID2 = 1, colorID3 = -1; //базовый,внутр,внещний 
     public double costpric1 = 0; //себест. за ед. без отхода     
     public double costpric2 = 0; //себест. за ед. с отходом
@@ -56,20 +55,21 @@ public class Wincalc {
     public Graphics2D gc2d = null; //графический котекст рисунка  
     public double scale = 1; //коэффициент сжатия
     public Canvas canvas = null;
+    public GsonRoot gson = null; //объектная модель конструкции 1-го уровня
+    public AreaSimple root = null; //объектная модель конструкции 2-го уровня    
+    public Cal5e calcJoining, calcElements, calcFilling, calcFurniture, calcTariffication; //объекты калькуляции конструктива
+    
     public ArrayList<ListenerKey> keyboardPressed = new ArrayList();
     public ArrayList<ListenerMouse> mousePressed = new ArrayList();
     public ArrayList<ListenerMouse> mouseReleased = new ArrayList();
     public ArrayList<ListenerMouse> mouseDragged = new ArrayList();
+    
     public HashMap<Integer, Record> mapPardef = new HashMap(); //пар. по умолчанию + наложенные пар. клиента
     public LinkedCom<AreaSimple> listArea = new LinkedCom(); //список ареа.
     public LinkedCom<ElemSimple> listElem = new LinkedCom(); //список элем.
     public LinkedCom<Com5t> listAll = new LinkedCom(); //список всех компонентов (area + elem)
     public ArraySpc<Specific> listSpec = new ArraySpc(); //спецификация
     public ArrayJoin listJoin = new ArrayJoin(); //список соединений рам и створок 
-    public Cal5e calcJoining, calcElements, calcFilling, calcFurniture, calcTariffication; //объекты калькуляции конструктива
-
-    public GsonRoot gson = null; //объектная модель конструкции 1-го уровня
-    public AreaSimple root = null; //объектная модель конструкции 2-го уровня
 
     public Wincalc() {
     }
@@ -84,11 +84,11 @@ public class Wincalc {
         //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
         //Инит свойств окна
-        script = script;
-        genId = 0;
-        syssizeRec = null;
-        mapPardef.clear();
-        List.of((List) listArea, (List) listElem, (List) listSpec, (List) listAll, (List) listJoin).forEach(el -> el.clear());
+        //script = scr;
+        //genId = 0;
+        //syssizeRec = null;
+        //mapPardef.clear();
+        //List.of((List) listArea, (List) listElem, (List) listSpec, (List) listAll, (List) listJoin).forEach(el -> el.clear());
 
         //Создание Gson класса
         gson = new GsonBuilder().create().fromJson(script, GsonRoot.class);
@@ -100,15 +100,21 @@ public class Wincalc {
         colorID1 = (gson.color1 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1;
         colorID2 = (gson.color2 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2;
         colorID3 = (gson.color3 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3;
-        
-        //Параметры по умолчанию
-        eSyspar1.find(nuni).forEach(syspar1Rec -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), syspar1Rec)); 
 
-        //if (Type.RECTANGL == gson.type) {
-        root = new AreaRectangl(this, gson);
-        //}
-       
+        //Параметры по умолчанию
+        eSyspar1.find(nuni).forEach(syspar1Rec -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), syspar1Rec));
+
+        //Главное окно
+        if (Type.RECTANGL == gson.type) {
+            root = new AreaRectangl(this, gson);
+        } else {
+            root = new AreaRectangl(this, gson);
+        }
+
+        //Элементы конструкции
         elements(root, gson);
+        
+        //Обновление конструкции
         upgrade();
     }
 
@@ -162,14 +168,14 @@ public class Wincalc {
             root.setLocation();
 
             //Инит. конструктива
-            listElem.forEach(e -> e.initConstructiv());            
-            
+            listElem.forEach(e -> e.initConstructiv());
+
             //Пилим полигоны на ареа справа и слева
             listElem.filter(Type.IMPOST).forEach(e -> e.setLocation());
-            
+
             //Создание и коррекция сторон створки
             listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
-            
+
             //Инит. конструктива створки
             listArea.filter(Type.STVORKA).forEach(e -> e.frames.forEach(e2 -> e2.initConstructiv()));
 
