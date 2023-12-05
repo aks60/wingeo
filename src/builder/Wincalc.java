@@ -165,16 +165,16 @@ public class Wincalc {
             listElem.forEach(e -> e.initConstructiv());            
             
             //Пилим полигоны на ареа справа и слева
-            listElem.filter(Type.IMPOST).forEach(e -> ((ElemSimple) e).setLocation());
+            listElem.filter(Type.IMPOST).forEach(e -> e.setLocation());
             
             //Создание и коррекция сторон створки
-            listArea.filter(Type.STVORKA).forEach(e -> ((AreaStvorka) e).setLocation());
+            listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
             
             //Инит. конструктива створки
-            listArea.filter(Type.STVORKA).forEach(e -> ((AreaStvorka) e).frames.forEach(e2 -> e2.initConstructiv()));
+            listArea.filter(Type.STVORKA).forEach(e -> e.frames.forEach(e2 -> e2.initConstructiv()));
 
             //Рассчёт полигонов сторон рамы
-            listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> ((ElemSimple) e).setLocation());
+            listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
 
         } catch (Exception s) {
             System.err.println("Ошибка:Wincalc.location() " + s);
@@ -188,7 +188,7 @@ public class Wincalc {
         cost2 = 0;
         try {
             //Каждый элемент конструкции попадает в спецификацию через функцию setSpecific()   
-            listElem.filter4(Type.FRAME_SIDE).forEach(elem -> elem.setSpecific()); //спецификация ведущих элементов конструкции
+            listElem.filter(Type.FRAME_SIDE).forEach(elem -> elem.setSpecific()); //спецификация ведущих элементов конструкции
 
             //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
             calcJoining = new Joining(this); //соединения
@@ -237,27 +237,27 @@ public class Wincalc {
     public void draw() {
         try {
             //Прорисовка стеклопакетов
-            this.listElem.filter4(Type.GLASS).stream().forEach(el -> el.paint());
+            this.listElem.filter(Type.GLASS).stream().forEach(el -> el.paint());
 
             //Прорисовка импостов
-            this.listElem.filter4(Type.IMPOST).stream().forEach(el -> el.paint());
+            this.listElem.filter(Type.IMPOST).stream().forEach(el -> el.paint());
 
             //Прорисовка штульпов
-            this.listElem.filter4(Type.SHTULP).stream().forEach(el -> el.paint());
+            this.listElem.filter(Type.SHTULP).stream().forEach(el -> el.paint());
 
             //Прорисовка стоек
-            this.listElem.filter4(Type.STOIKA).stream().forEach(el -> el.paint());
+            this.listElem.filter(Type.STOIKA).stream().forEach(el -> el.paint());
 
             //Прорисовка рам
-            this.listElem.filter4(Type.FRAME_SIDE).stream().forEach(el -> el.paint());
+            this.listElem.filter(Type.FRAME_SIDE).stream().forEach(el -> el.paint());
 
             //Прорисовка створок
-            this.listElem.filter4(Type.STVORKA_SIDE).stream().forEach(el -> el.paint());
+            this.listElem.filter(Type.STVORKA_SIDE).stream().forEach(el -> el.paint());
 
             //Прорисовка раскладок
-            //winc.listElem.filter4(Type.GLASS).stream().forEach(el -> el.rascladkaPaint());
+            //winc.listElem.filter(Type.GLASS).stream().forEach(el -> el.rascladkaPaint());
             //Прорисовка москиток
-            //this.listElem.filter4(Type.MOSKITKA).stream().forEach(el -> el.paint());
+            //this.listElem.filter(Type.MOSKITKA).stream().forEach(el -> el.paint());
             //Рисунок в память
 //            if (winc.bufferImg != null) {
 //                ByteArrayOutputStream byteArrOutStream = new ByteArrayOutputStream();

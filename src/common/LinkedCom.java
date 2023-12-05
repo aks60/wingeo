@@ -46,18 +46,7 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
         return null;
     }
 
-    public <T extends Com5t> LinkedCom<T> filter(Type... type) {
-        List tp = List.of(type);
-        LinkedCom<T> list2 = new LinkedCom();
-        for (E el : this) {
-            if (tp.contains(el.type)) {
-                list2.add((T) el);
-            }
-        }
-        return list2;
-    }
-    
-    public LinkedCom<E> filter2(Type... type) {
+    public LinkedCom<E> filter(Type... type) {
         List tp = List.of(type);
         LinkedCom<E> list2 = new LinkedCom();
         for (E el : this) {
@@ -80,17 +69,6 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
             }
         }
         return null;
-    }
-    
-    public LinkedCom<ElemSimple> filter4(Type... type) {
-        List tp = List.of(type);
-        LinkedCom<ElemSimple> list2 = new LinkedCom();
-        for (E el : this) {
-            if (tp.contains(el.type)) {
-                list2.add((ElemSimple) el);
-            }
-        }
-        return list2;        
     }
 
 }
