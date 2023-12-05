@@ -34,7 +34,7 @@ public class ElemGlass extends ElemSimple {
         super(winc, gson, owner);
     }
 
-    @Override
+    @Override   
     public void initConstructiv() {
 
         if (isJson(gson.param, PKjson.artglasID)) {

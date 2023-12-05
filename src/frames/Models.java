@@ -12,6 +12,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import builder.Wincalc;
+import builder.making.Cal5e;
+import builder.making.Joining;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -85,15 +87,15 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }
 
     public void loadingTab1(JTable tab, int form) {
-        qSysmodel.select(eSysmodel.up, "where", eSysmodel.form, "=", form, "and form > 2000 and id >0", "order by npp");
+        qSysmodel.select(eSysmodel.up, "where", eSysmodel.form, "=", form, "and form > 2000 and id =64", "order by npp");
         DefaultTableModel dm = (DefaultTableModel) tab.getModel();
         dm.getDataVector().removeAllElements();
         for (Record record : qSysmodel.table(eSysmodel.up)) {
             try {
                 String script = record.getStr(eSysmodel.script);
                 Wincalc iwin2 = new Wincalc(script);
-                //Cal5e joining = new Joining(iwin2, true);//заполним соединения из конструктива
-                //joining.calc();
+                Cal5e joining = new Joining(iwin2, true);//заполним соединения из конструктива
+                joining.calc();
                 iwin2.imageIcon = Canvas.createIcon(iwin2, 68);
                 record.add(iwin2);
 

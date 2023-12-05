@@ -28,7 +28,6 @@ public class ElemCross extends ElemSimple {
 
     public ElemCross(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
-        //constructiv(gson.param);
         events();
     }
 
