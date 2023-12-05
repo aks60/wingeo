@@ -208,7 +208,7 @@ public class Wincalc {
             calcTariffication = new builder.making.Tariffic(this, norm_otx); //тарификация 
             calcTariffication.calc();
 
-            //Построим список спецификации
+            //Строим список спецификации
             for (ElemSimple elem5e : listElem) {
                 if (elem5e.spcRec.artikl.isEmpty() || elem5e.spcRec.artikl.trim().charAt(0) != '@') {
                     listSpec.add(elem5e.spcRec);
