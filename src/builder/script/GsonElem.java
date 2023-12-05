@@ -9,7 +9,7 @@ import java.util.LinkedList;
 
 public class GsonElem {
 
-    private static transient double genId = 0;  //идентификатор    
+    protected static transient double genId = 0;  //идентификатор    
     public double id = 0;  //идентификатор
     public transient GsonElem owner = null;  //владелец
     public LinkedList<GsonElem> childs = null; //список детей
@@ -44,10 +44,6 @@ public class GsonElem {
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
-    }
-
-    public GsonElem(Layout layout, Type type, String paramJson) {
-        
     }
     
     public GsonElem addArea(GsonElem area) {

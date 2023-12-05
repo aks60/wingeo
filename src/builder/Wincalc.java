@@ -43,7 +43,7 @@ public class Wincalc {
 
     public Integer nuni = 0; //код системы
     public Record syssizeRec = null; //системные константы     
-    public double genId = 0; //для генерации ключа в спецификации
+    public double spcID = 0; //для генерации ключа в спецификации
     public int colorID1 = -1, colorID2 = 1, colorID3 = -1; //базовый,внутр,внещний 
     public double costpric1 = 0; //себест. за ед. без отхода     
     public double costpric2 = 0; //себест. за ед. с отходом
@@ -81,10 +81,10 @@ public class Wincalc {
     public void parsing(String script) {
         //Для тестирования
         //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
-        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
         //Инит свойств окна
-        genId = 0;
+        spcID = 0;
         syssizeRec = null;
         mapPardef.clear();
         List.of((List) listArea, (List) listElem, (List) listSpec, (List) listAll, (List) listJoin).forEach(el -> el.clear());

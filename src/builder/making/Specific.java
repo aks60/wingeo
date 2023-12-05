@@ -52,14 +52,14 @@ public class Specific {
     }
     
     public Specific(double id, ElemSimple elem5e) {
-        ++elem5e.winc.genId;
+        ++elem5e.winc.spcID;
         this.id = id;
         this.elem5e = elem5e;
         this.mapParam = new HashMap();
     }
 
     public Specific(String place, Record detailRec, Record artiklRec, ElemSimple elem5e, HashMap<Integer, String> mapParam) {
-        this.id = ++elem5e.winc.genId;
+        this.id = ++elem5e.winc.spcID;
         this.elem5e = elem5e;
         this.mapParam = mapParam;
         this.detailRec = detailRec;

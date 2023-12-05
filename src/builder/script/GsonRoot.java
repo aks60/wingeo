@@ -4,8 +4,7 @@ import com.google.gson.GsonBuilder;
 import enums.Type;
 
 public class GsonRoot extends GsonElem {
-
-    public static transient double genId = 0;  //идентификатор   
+   
     public String version = null; //версия
     public Integer prj = null; //PNUMB - номер тестируемого проекта, поле пока нужно только для тестов при сравнении с PS4
     public Integer ord = null; //ONUMB - номер тестируемого заказа, поле пока нужно только для тестов при сравнении с PS4 
@@ -24,6 +23,8 @@ public class GsonRoot extends GsonElem {
     }
     
     public GsonRoot(String version, Integer prj, Integer ord, Integer nuni, Type type, String name, Integer color1, Integer color2, Integer color3) {
+        genId = 0;
+        this.id = 0;        
         this.version = version;
         this.prj = prj;
         this.ord = ord;
