@@ -32,7 +32,7 @@ public class ElemJoining {
     }
     
     public ElemJoining(Wincalc winc, TypeJoin type, LayoutJoin layout, ElemSimple elem1, ElemSimple elem2) {
-        this.id = ++winc.spcID;
+        this.id = ++winc.specificID;
         this.winc = winc;
         this.type = type;
         this.layout = layout;

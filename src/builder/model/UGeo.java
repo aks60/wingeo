@@ -35,7 +35,7 @@ public class UGeo {
     //Отображение сегмента на элемент конструкции
     public static ElemSimple segMapElem(List<ElemSimple> listLine, LineSegment segm) {
         try {
-            Coordinate p = segm.midPoint();
+            Coordinate p = segm.midPoint(); //средн. точка
             LineSegment s = new LineSegment();
             for (ElemSimple elem : listLine) {
 

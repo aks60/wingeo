@@ -41,9 +41,8 @@ import javax.swing.ImageIcon;
 
 public class Wincalc {
 
-    public Integer nuni = 0; //код системы
-    public Record syssizeRec = null; //системные константы     
-    public double spcID = 0; //для генерации ключа в спецификации
+    public Integer nuni = 0; //код системы  
+    public double specificID = 0; //для генерации ключа в спецификации
     public int colorID1 = -1, colorID2 = 1, colorID3 = -1; //базовый,внутр,внещний 
     public double costpric1 = 0; //себест. за ед. без отхода     
     public double costpric2 = 0; //себест. за ед. с отходом
@@ -84,8 +83,7 @@ public class Wincalc {
         //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
         //Инит свойств окна
-        spcID = 0;
-        syssizeRec = null;
+        specificID = 0;
         mapPardef.clear();
         List.of((List) listArea, (List) listElem, (List) listSpec, (List) listAll, (List) listJoin).forEach(el -> el.clear());
 

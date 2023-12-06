@@ -426,7 +426,7 @@
                           <Data value="2222"/>
                           <Data value="null"/>
                         </Column>
-                        <Column editable="true" title="&#x417;&#x430;&#x437;&#x43e;&#x440;" type="java.lang.Double">
+                        <Column editable="true" title="&#x417;&#x430;&#x437;&#x43e;&#x440; &#x43c;&#x435;&#x436;&#x434;&#x443; &#x444;&#x430;&#x43b;&#x44c;&#x446;&#x435;&#x43c; &#x438; &#x441;&#x442;&#x435;&#x43a;&#x43b;&#x43e;&#x43f;&#x430;&#x43a;&#x435;&#x442;&#x43e;&#x43c; " type="java.lang.Double">
                           <Data value="2.0"/>
                           <Data value="2.0"/>
                           <Data value="null"/>
@@ -446,7 +446,7 @@
                           <Editor/>
                           <Renderer/>
                         </Column>
-                        <Column maxWidth="160" minWidth="-1" prefWidth="60" resizable="true">
+                        <Column maxWidth="260" minWidth="-1" prefWidth="60" resizable="true">
                           <Title/>
                           <Editor/>
                           <Renderer/>
@@ -828,7 +828,7 @@
                           <Table columnCount="6" rowCount="2">
                             <Column editable="true" title="&#x410;&#x440;&#x442;&#x438;&#x43a;&#x443;&#x43b;" type="java.lang.String"/>
                             <Column editable="true" title="&#x41d;&#x430;&#x437;&#x432;&#x430;&#x43d;&#x438;&#x435;" type="java.lang.String"/>
-                            <Column editable="true" title="&#x420;&#x430;&#x437;&#x43c;&#x435;&#x440; &#x43e;&#x442; &#x43e;&#x441;&#x438;" type="java.lang.Double"/>
+                            <Column editable="true" title="&#x420;&#x430;&#x437;&#x43c;&#x435;&#x440; &#x43e;&#x442; &#x43e;&#x441;&#x438; &#x434;&#x43e; &#x441;&#x442;&#x435;&#x43a;&#x43b;&#x43e;&#x43f;&#x430;&#x43a;&#x435;&#x442;&#x430;" type="java.lang.Double"/>
                             <Column editable="true" title="&#x412;&#x43d;&#x443;&#x442;&#x440;&#x435;&#x43d;&#x43d;&#x435;&#x435;" type="java.lang.Boolean"/>
                             <Column editable="true" title="&#x412;&#x43d;&#x435;&#x448;&#x43d;&#x435;&#x435;" type="java.lang.Boolean"/>
                             <Column editable="false" title="ID" type="java.lang.Integer"/>
@@ -846,7 +846,7 @@
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="180" minWidth="-1" prefWidth="80" resizable="true">
+                            <Column maxWidth="210" minWidth="-1" prefWidth="80" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>

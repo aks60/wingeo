@@ -650,7 +650,7 @@ public class Fillings extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Название", "Зазор", "Толщины доступные", "ID"
+                "Название", "Зазор между фальцем и стеклопакетом ", "Толщины доступные", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -684,7 +684,7 @@ public class Fillings extends javax.swing.JFrame {
             tab1.getColumnModel().getColumn(0).setPreferredWidth(700);
             tab1.getColumnModel().getColumn(0).setMaxWidth(1600);
             tab1.getColumnModel().getColumn(1).setPreferredWidth(60);
-            tab1.getColumnModel().getColumn(1).setMaxWidth(160);
+            tab1.getColumnModel().getColumn(1).setMaxWidth(260);
             tab1.getColumnModel().getColumn(2).setPreferredWidth(120);
             tab1.getColumnModel().getColumn(2).setMaxWidth(340);
             tab1.getColumnModel().getColumn(3).setPreferredWidth(40);
@@ -846,7 +846,7 @@ public class Fillings extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Артикул", "Название", "Размер от оси", "Внутреннее", "Внешнее", "ID"
+                "Артикул", "Название", "Размер от оси до стеклопакета", "Внутреннее", "Внешнее", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -882,7 +882,7 @@ public class Fillings extends javax.swing.JFrame {
             tab5.getColumnModel().getColumn(1).setPreferredWidth(300);
             tab5.getColumnModel().getColumn(1).setMaxWidth(1600);
             tab5.getColumnModel().getColumn(2).setPreferredWidth(80);
-            tab5.getColumnModel().getColumn(2).setMaxWidth(180);
+            tab5.getColumnModel().getColumn(2).setMaxWidth(210);
             tab5.getColumnModel().getColumn(3).setPreferredWidth(80);
             tab5.getColumnModel().getColumn(3).setMaxWidth(120);
             tab5.getColumnModel().getColumn(4).setPreferredWidth(80);

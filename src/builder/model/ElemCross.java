@@ -3,8 +3,8 @@ package builder.model;
 import builder.Wincalc;
 import builder.making.Specific;
 import builder.script.GsonElem;
-import com.google.gson.JsonObject;
 import common.UCom;
+import dataset.Record;
 import domain.eArtikl;
 import domain.eColor;
 import domain.eSysprof;
@@ -107,8 +107,9 @@ public class ElemCross extends ElemSimple {
 
             if (type == Type.IMPOST) {
                 //На эскизе заход импоста не показываю, сразу пишу в спецификацию
-                if (winc.syssizeRec.getInt(eSyssize.id) != -1) {
-                    double zax = winc.syssizeRec.getDbl(eSyssize.zax);
+                Record syssizeRec = eSyssize.find(artiklRec); //системные константы 
+                if (syssizeRec.getInt(eSyssize.id) != -1) {
+                    double zax = syssizeRec.getDbl(eSyssize.zax);
                     if (Layout.HORIZ == owner.layout()) { //ареа слева направо  
                         ElemSimple inTop = joinFlat(Layout.TOP), inBott = joinFlat(Layout.BOTT);
                         spcRec.width = (inBott.y1() - inBott.artiklRec.getDbl(eArtikl.height) + inBott.artiklRec.getDbl(eArtikl.size_centr))

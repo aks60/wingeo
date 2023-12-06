@@ -1,9 +1,9 @@
 package builder.model;
 
 import builder.Wincalc;
+import builder.making.Filling;
 import builder.making.Specific;
 import builder.script.GsonElem;
-import com.google.gson.JsonObject;
 import common.UCom;
 import dataset.Record;
 import domain.eArtdet;
@@ -11,24 +11,22 @@ import domain.eArtikl;
 import domain.eColor;
 import domain.eSyssize;
 import domain.eSystree;
-import enums.Layout;
 import enums.PKjson;
 import enums.Type;
 import enums.TypeArtikl;
 import enums.UseUnit;
 import java.awt.Shape;
-import java.text.Normalizer.Form;
 import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.LineSegment;
 
 public class ElemGlass extends ElemSimple {
 
     public double radiusGlass = 0; //радиус стекла
-    public double gzazo = 8; //зазор между фальцем и стеклопакетом 
+    public double gzazo = 0; //зазор между фальцем и стеклопакетом 
     public double gsize[] = {0, 0, 0, 0}; //размер от оси до стеклопакета
-    public static double  size_falz = 8; //фальц внутренний (предварительная поправка для рисунка)
 
     public Record rasclRec = eArtikl.virtualRec(); //раскладка
     public int rasclColor = -3; //цвет раскладки
@@ -80,12 +78,9 @@ public class ElemGlass extends ElemSimple {
         }
     }
 
-    /**
-     * Установка координат заполнений с учётов типа конст. x1y1 - верхняя левая
-     * точка x2y2 - нижняя правая точка
-     */
+    //Внутренний полигон створки/рамы для прорисовки
     public void setLocation() {
-        this.geom = UGeo.geoPadding(owner.geom, winc.listElem, size_falz);       
+        this.geom = UGeo.geoPadding(owner.geom, winc.listElem, 0);
     }
 
     //Главная спецификация    
@@ -97,18 +92,40 @@ public class ElemGlass extends ElemSimple {
             spcRec.colorID1 = colorID1;
             spcRec.colorID2 = colorID2;
             spcRec.colorID3 = colorID3;
-//            Coordinate[] coo = this.geom.getCoordinates();
-//            Coordinate[] out = new Coordinate[coo.length];
-//            List<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
-//            for (int i = 0; i < coo.length; i++) {
-//
-//                //Сегменты границ полигона
-//                int j = (i == coo.length - 1) ? 1 : i + 1;
-//                int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
-//                LineSegment segm1 = new LineSegment(coo[k], coo[i]);
-//                LineSegment segm2 = new LineSegment(coo[i], coo[j]);
-//                
-//            }
+
+            //Фича определения gzazo и gsize на раннем этапе построения. 
+            Filling filling = new Filling(winc, true);
+            filling.calc(this);
+
+            //Внешний полигон створки/рамы для прорисовки 
+            Coordinate[] coo = owner.geom.getCoordinates();
+            
+            Coordinate[] out = new Coordinate[coo.length];
+            List<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+            for (int i = 0; i < coo.length; i++) {
+
+                //Сегменты границ полигона
+                int j = (i == coo.length - 1) ? 1 : i + 1;
+                int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
+                LineSegment segm1 = new LineSegment(coo[k], coo[i]);
+                LineSegment segm2 = new LineSegment(coo[i], coo[j]);
+
+                //Получим ширину сегментов
+                ElemSimple e1 = UGeo.segMapElem(listFrame, segm1);
+                ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
+                Record syssizeRec1 = eSyssize.get(e1.artiklRec);
+                Record syssizeRec2 = eSyssize.get(e2.artiklRec);
+                double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr) + syssizeRec1.getDbl(eSyssize.falz) + gzazo;
+                double w2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr) + syssizeRec2.getDbl(eSyssize.falz) + gzazo;
+            
+                //Смещение сегментов относительно границ
+                LineSegment segm3 = segm1.offset(-w1);
+                LineSegment segm4 = segm2.offset(-w2);            
+            }
+            Envelope env = this.geom.getEnvelopeInternal();
+            spcRec.width = env.getWidth();
+            spcRec.height = env.getHeight();
+
         } catch (Exception e) {
             System.err.println("Ошибка:ElemGlass.setSpecific() " + e);
         }
