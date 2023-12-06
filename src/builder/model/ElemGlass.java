@@ -18,13 +18,17 @@ import enums.TypeArtikl;
 import enums.UseUnit;
 import java.awt.Shape;
 import java.text.Normalizer.Form;
+import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.LineSegment;
 
 public class ElemGlass extends ElemSimple {
 
     public double radiusGlass = 0; //радиус стекла
     public double gzazo = 8; //зазор между фальцем и стеклопакетом 
     public double gsize[] = {0, 0, 0, 0}; //размер от оси до стеклопакета
+    public static double  size_falz = 8; //фальц внутренний (предварительная поправка для рисунка)
 
     public Record rasclRec = eArtikl.virtualRec(); //раскладка
     public int rasclColor = -3; //цвет раскладки
@@ -34,7 +38,7 @@ public class ElemGlass extends ElemSimple {
         super(winc, gson, owner);
     }
 
-    @Override   
+    @Override
     public void initConstructiv() {
 
         if (isJson(gson.param, PKjson.artglasID)) {
@@ -79,67 +83,35 @@ public class ElemGlass extends ElemSimple {
     /**
      * Установка координат заполнений с учётов типа конст. x1y1 - верхняя левая
      * точка x2y2 - нижняя правая точка
-     */    
+     */
     public void setLocation() {
-        this.geom = owner.geom;
+        this.geom = UGeo.geoPadding(owner.geom, winc.listElem, size_falz);       
     }
 
     //Главная спецификация    
     @Override
     public void setSpecific() {
-
-        spcRec.place = "ЗАП";
-        spcRec.setArtikl(artiklRec);
-        spcRec.colorID1 = colorID1;
-        spcRec.colorID2 = colorID2;
-        spcRec.colorID3 = colorID3;
-        if (owner.type == Type.ARCH) { //если арка
-//            ElemSimple elemArch = root.frames.get(Layout.TOP);
-//            ElemSimple elemImpost = owner.joinSide(Layout.BOTT);
-//            y1(y1() + elemArch.artiklRec.getDbl(eArtikl.height) - elemArch.artiklRec.getDbl(eArtikl.size_falz) + gzazo);
-//            y2(y2() + elemImpost.artiklRec.getDbl(eArtikl.size_falz) - gzazo);
-//            double r = ((AreaArch) root).radiusArch - elemArch.artiklRec.getDbl(eArtikl.height) + elemArch.artiklRec.getDbl(eArtikl.size_falz) - gzazo;
-//            double w = Math.sqrt(2 * height() * r - height() * height());
-//            x1((owner.width() / 2) - w);
-//            x2(owner.width() - x1());
-//            radiusGlass = r;
-
-        } else if (owner.type == Type.TRAPEZE) {
-
-//            ElemSimple inLeft = root.frames.get(Layout.LEFT), inTop = root().frames.get(Layout.TOP), inBott = owner.joinSide(Layout.BOTT), inRight = root().frames().get(Layout.RIGHT);
-//            x1 = inLeft.x1() + inLeft.artiklRec.getDbl(eArtikl.height) - inLeft.artiklRec.getDbl(eArtikl.size_falz) + gzazo;
-//            x2 = inRight.x1() - inRight.artiklRec.getDbl(eArtikl.height) + inRight.artiklRec.getDbl(eArtikl.size_falz) - gzazo;
+        try {
+            spcRec.place = "ЗАП";
+            spcRec.setArtikl(artiklRec);
+            spcRec.colorID1 = colorID1;
+            spcRec.colorID2 = colorID2;
+            spcRec.colorID3 = colorID3;
+//            Coordinate[] coo = this.geom.getCoordinates();
+//            Coordinate[] out = new Coordinate[coo.length];
+//            List<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+//            for (int i = 0; i < coo.length; i++) {
 //
-//            if (winc.form == Form.RIGHT) {
-//                ElemJoining ej = winc.listJoin.get(inTop, 1);
-//                double dy1 = (inTop.artiklRec.getDbl(eArtikl.height) - inTop.artiklRec.getDbl(eArtikl.size_falz) + gzazo) / UCom.sin(ej.angl);
-//                double dy2 = (inLeft.artiklRec.getDbl(eArtikl.height) - inLeft.artiklRec.getDbl(eArtikl.size_falz) + gzazo) * UCom.tan(90 - ej.angl);
-//                y1(dy1 + dy2);
-//            } else if (winc.form == Form.LEFT) {
-//                ElemJoining ej = winc.listJoin.get(inTop, 0);
-//                double dy1 = (inTop.artiklRec.getDbl(eArtikl.height) - inTop.artiklRec.getDbl(eArtikl.size_falz) + gzazo) / UCom.sin(ej.angl);
-//                double dy2 = (inRight.artiklRec.getDbl(eArtikl.height) - inRight.artiklRec.getDbl(eArtikl.size_falz) + gzazo) * UCom.tan(90 - ej.angl);
-//                y1 = dy1 + dy2;
+//                //Сегменты границ полигона
+//                int j = (i == coo.length - 1) ? 1 : i + 1;
+//                int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
+//                LineSegment segm1 = new LineSegment(coo[k], coo[i]);
+//                LineSegment segm2 = new LineSegment(coo[i], coo[j]);
+//                
 //            }
-//            y2 = inBott.y2() - (inBott.artiklRec.getDbl(eArtikl.height) - inBott.artiklRec.getDbl(eArtikl.size_centr)) + inBott.artiklRec.getDbl(eArtikl.size_falz) - gzazo;
-
-        } else {
-            ElemSimple inLeft = owner.joinSide(Layout.LEFT), inTop = owner.joinSide(Layout.TOP), inBott = owner.joinSide(Layout.BOTT), inRight = owner.joinSide(Layout.RIGHT);
-
-            if (winc.syssizeRec.getInt(eSyssize.id) == -1) {
-                x1(x1() + inLeft.artiklRec.getDbl(eArtikl.size_centr) + gsize[3]);
-                y1(y1() + inTop.artiklRec.getDbl(eArtikl.size_centr) + gsize[2]);
-                x2(x2() - inRight.artiklRec.getDbl(eArtikl.size_centr) - gsize[1]);
-                y2(y2() - inBott.artiklRec.getDbl(eArtikl.size_centr) - gsize[0]);
-            } else {
-                x1(x1() + inLeft.artiklRec.getDbl(eArtikl.height) - inLeft.artiklRec.getDbl(eArtikl.size_centr) - inLeft.artiklRec.getDbl(eArtikl.size_falz) + gzazo);
-                y1(y1() + inTop.artiklRec.getDbl(eArtikl.height) - inTop.artiklRec.getDbl(eArtikl.size_centr) - inTop.artiklRec.getDbl(eArtikl.size_falz) + gzazo);
-                x2(x2() - inRight.artiklRec.getDbl(eArtikl.height) + inRight.artiklRec.getDbl(eArtikl.size_centr) + inRight.artiklRec.getDbl(eArtikl.size_falz) - gzazo);
-                y2(y2() - inBott.artiklRec.getDbl(eArtikl.height) + inBott.artiklRec.getDbl(eArtikl.size_centr) + inBott.artiklRec.getDbl(eArtikl.size_falz) - gzazo);
-            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:ElemGlass.setSpecific() " + e);
         }
-        spcRec.width = width();
-        spcRec.height = height();
     }
 
     //Вложенная спецификация
@@ -379,7 +351,7 @@ public class ElemGlass extends ElemSimple {
             System.err.println("Ошибка:ElemGlass.addSpecific()  " + e);
         }
     }
-    
+
     public void paint() {
         if (owner.geom != null) {
             java.awt.Color color = winc.gc2d.getColor();

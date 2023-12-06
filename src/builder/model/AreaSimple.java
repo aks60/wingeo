@@ -23,7 +23,7 @@ public class AreaSimple extends Com5t {
     public LinkedCom<Com5t> childs = new LinkedCom(); //дети
 
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
-        super(winc, gson, owner);
+        super(winc, gson.id, gson, owner);
         initConstructiv(gson.param);
         winc.listArea.add(this);
         winc.listAll.add(this);
@@ -94,31 +94,31 @@ public class AreaSimple extends Com5t {
     //@Override
     public ElemSimple joinSide(Layout side) {
         try {
-            if (this.equals(root) || this.type == Type.STVORKA) {
+            if (this.equals(winc.root) || this.type == Type.STVORKA) {
                 return frames.get(side);
             }
-            LinkedCom<ElemSimple> mapJoin = root.frames;
+            LinkedCom<ElemSimple> mapJoin = winc.root.frames;
             Com5t ret = null;
             List<Com5t> listCom = owner.childs;
             for (int index = 0; index < listCom.size(); ++index) {
                 if (listCom.get(index).id == id) {
 
-                    if (owner.equals(root) && owner.layout() == Layout.VERT) {
+                    if (owner.equals(winc.root) && owner.layout() == Layout.VERT) {
                         if (side == Layout.TOP) {
                             ret = (index == 0) ? mapJoin.get(side) : listCom.get(index - 1);
                         } else if (side == Layout.BOTT) {
                             ret = (index == listCom.size() - 1) ? mapJoin.get(side) : listCom.get(index + 1);
                         } else {
-                            ret = root.frames.get(side);
+                            ret = winc.root.frames.get(side);
                         }
 
-                    } else if (owner.equals(root) && owner.layout() == Layout.HORIZ) {
+                    } else if (owner.equals(winc.root) && owner.layout() == Layout.HORIZ) {
                         if (side == Layout.LEFT) {
                             ret = (index == 0) ? mapJoin.get(side) : listCom.get(index - 1);
                         } else if (side == Layout.RIGHT) {
                             ret = (index == listCom.size() - 1) ? mapJoin.get(side) : listCom.get(index + 1);
                         } else {
-                            return root.frames.get(side);
+                            return winc.root.frames.get(side);
                         }
 
                     } else {

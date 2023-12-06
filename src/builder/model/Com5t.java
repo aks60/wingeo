@@ -37,10 +37,6 @@ public class Com5t {
         this.type = type;
     }
 
-    public Com5t(Wincalc winc, GsonElem gson, AreaSimple owner) {
-        this(winc, gson.id, gson, owner);
-    }
-
     public Com5t(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
         this.id = id;
         this.winc = winc;
