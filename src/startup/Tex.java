@@ -205,7 +205,6 @@ public class Tex extends javax.swing.JFrame {
         btn4.setFocusable(false);
         btn4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn4.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnSetting(evt);
@@ -218,7 +217,6 @@ public class Tex extends javax.swing.JFrame {
         btn15.setFocusable(false);
         btn15.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn15.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn15.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnRulecalc(evt);
@@ -231,7 +229,6 @@ public class Tex extends javax.swing.JFrame {
         btn2.setFocusable(false);
         btn2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn2.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnGroup1(evt);
@@ -251,7 +248,6 @@ public class Tex extends javax.swing.JFrame {
         btn14.setFocusable(false);
         btn14.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn14.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn14.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnSyssize(evt);
@@ -275,7 +271,6 @@ public class Tex extends javax.swing.JFrame {
         btn11.setFocusable(false);
         btn11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn11.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn11.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnParametr(evt);
@@ -288,7 +283,6 @@ public class Tex extends javax.swing.JFrame {
         btn16.setFocusable(false);
         btn16.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn16.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn16.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnGroup2(evt);
@@ -308,7 +302,6 @@ public class Tex extends javax.swing.JFrame {
         btn52.setFocusable(false);
         btn52.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn52.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn52.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn52.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnBoxTypical(evt);
@@ -321,7 +314,6 @@ public class Tex extends javax.swing.JFrame {
         btn51.setFocusable(false);
         btn51.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn51.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn51.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn51.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mn94(evt);
@@ -334,7 +326,6 @@ public class Tex extends javax.swing.JFrame {
         btn53.setFocusable(false);
         btn53.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn53.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn53.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn53.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mn42(evt);
@@ -378,7 +369,6 @@ public class Tex extends javax.swing.JFrame {
         btn25.setFocusable(false);
         btn25.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn25.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn25.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn25.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnElement(evt);
@@ -391,7 +381,6 @@ public class Tex extends javax.swing.JFrame {
         btn26.setFocusable(false);
         btn26.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn26.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn26.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn26.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnGlass(evt);
@@ -404,7 +393,6 @@ public class Tex extends javax.swing.JFrame {
         btn27.setFocusable(false);
         btn27.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn27.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn27.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn27.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnFurnityra(evt);
@@ -417,7 +405,6 @@ public class Tex extends javax.swing.JFrame {
         btn21.setFocusable(false);
         btn21.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn21.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn21.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnSpecif(evt);
@@ -435,7 +422,6 @@ public class Tex extends javax.swing.JFrame {
         btn17.setFocusable(false);
         btn17.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn17.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn17.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnPartn(evt);
@@ -448,7 +434,6 @@ public class Tex extends javax.swing.JFrame {
         btn3.setFocusable(false);
         btn3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn3.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnOrder(evt);
@@ -461,7 +446,6 @@ public class Tex extends javax.swing.JFrame {
         btn5.setFocusable(false);
         btn5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn5.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnDiler(evt);
@@ -482,7 +466,6 @@ public class Tex extends javax.swing.JFrame {
         btnT7.setFocusable(false);
         btnT7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnT7.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c061.gif"))); // NOI18N
-        btnT7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnT7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBase(evt);
@@ -496,7 +479,6 @@ public class Tex extends javax.swing.JFrame {
         btnT8.setFocusable(false);
         btnT8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnT8.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c062.gif"))); // NOI18N
-        btnT8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnT8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBase(evt);
@@ -510,7 +492,6 @@ public class Tex extends javax.swing.JFrame {
         btnT9.setFocusable(false);
         btnT9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnT9.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c063.gif"))); // NOI18N
-        btnT9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnT9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBase(evt);
@@ -543,7 +524,6 @@ public class Tex extends javax.swing.JFrame {
         btn42.setFocusable(false);
         btn42.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn42.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn42.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn42.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnExit(evt);
