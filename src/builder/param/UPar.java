@@ -99,10 +99,11 @@ class UPar {
                 }
             }
         }
-        if (ret2 == false) {
-            return false;
-        }
-        return true;
+        return ret2;
+//        if (ret2 == false) {
+//            return false;
+//        }
+//        return true;
     }
 
     //Если признак системы конструкции
