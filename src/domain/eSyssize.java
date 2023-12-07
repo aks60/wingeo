@@ -14,7 +14,7 @@ public enum eSyssize implements Field {
     up("0", "0", "0", "Системные константы", "SYSSIZE"),
     id("4", "10", "0", "Идентификатор", "id"),
     name("12", "32", "1", "Система артикулов", "SNAME"),
-    prip("8", "15", "1", "Припуск на сварку", "SSIZP"),    
+    prip("8", "15", "1", "Припуск на сварку", "SSIZP"),
     naxl("8", "15", "1", "Нахлест створки", "SSIZF"),
     falz("8", "15", "1", "T - Глубина до фальца", "SSIZN"),
     zax("8", "15", "1", "Заход импоста", "SSIZI");
@@ -40,20 +40,24 @@ public enum eSyssize implements Field {
             query.select(up, "order by", id);
             Query.listOpenTable.add(query);
             map.clear();
-            query.stream().forEach(rec -> map.put(rec.getInt(id), rec));            
+            query.stream().forEach(rec -> map.put(rec.getInt(id), rec));
         }
         return query;
     }
-    
+
     public static Record get(Record artiklRec) {
-        int id = artiklRec.getInt(eArtikl.syssize_id);
-        if (id == -3) {
+        int _id = artiklRec.getInt(eArtikl.syssize_id);
+        if (_id == -3) {
             return eArtikl.virtualRec();
         }
-        query();
-        return map.get(id);
+        if (Query.conf.equals("calc")) {
+            query();
+            return map.get(_id);
+        }
+        Query recordList = new Query(values()).select(up, "where", id, "=", _id);
+        return (recordList.isEmpty() == true) ? null : recordList.get(0);
     }
-    
+
     public static Record find(Record artiklRec) {
         int _id = artiklRec.getInt(eArtikl.syssize_id);
         if (_id == -3) { //если арт. вирт. то return virtualRec();
@@ -65,7 +69,7 @@ public enum eSyssize implements Field {
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
         return (recordList.isEmpty() == true) ? null : recordList.get(0);
     }
-    
+
     //Виртуал. системные переменные
     public static Record virtualRec() {
         Record record = up.newRecord();
