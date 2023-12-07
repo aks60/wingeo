@@ -25,6 +25,7 @@ import org.locationtech.jts.geom.LineSegment;
 public class ElemGlass extends ElemSimple {
 
     public double radiusGlass = 0; //радиус стекла
+    public double anglGHoriz = 0; //угол к горизонту
     public double gzazo = 0; //зазор между фальцем и стеклопакетом 
     public double gaxis = 0; //размер от оси до стеклопакета
 
@@ -149,12 +150,12 @@ public class ElemGlass extends ElemSimple {
             }
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
-
-                if (anglHoriz == 0 || anglHoriz == 180) { //по горизонтали
+                
+                if (anglGHoriz == 0 || anglGHoriz == 180) { //по горизонтали
                     spcAdd.width += width() + 2 * gzazo;
                     spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
 
-                } else if (anglHoriz == 90 || anglHoriz == 270) { //по вертикали
+                } else if (anglGHoriz == 90 || anglGHoriz == 270) { //по вертикали
                     spcAdd.width += height() + 2 * gzazo;
                     spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
 
@@ -163,10 +164,10 @@ public class ElemGlass extends ElemSimple {
                 }
                 spcAdd.anglCut0 = 45;
                 spcAdd.anglCut1 = 45;
-                spcAdd.anglHoriz = anglHoriz;
+                spcAdd.anglHoriz = anglGHoriz;
                 spcRec.spcList.add(spcAdd);
 
-                if (anglHoriz == 0 || anglHoriz == 180) { //по горизонтали
+                if (anglGHoriz == 0 || anglGHoriz == 180) { //по горизонтали
                     if (spcAdd.mapParam.get(15010) != null) {
                         if ("Нет".equals(spcAdd.mapParam.get(15010)) == false) { //Усекать нижний штапик
                             spcAdd.width = spcAdd.width - 2 * spcAdd.height;
@@ -178,7 +179,7 @@ public class ElemGlass extends ElemSimple {
                         }
                     }
 
-                } else if (anglHoriz == 90 || anglHoriz == 270) { //по вертикали
+                } else if (anglGHoriz == 90 || anglGHoriz == 270) { //по вертикали
                     if (spcAdd.mapParam.get(15010) != null) {
                         if ("Да".equals(spcAdd.mapParam.get(15010)) == false) { //Усекать нижний штапик
                             spcAdd.width = spcAdd.width - 2 * spcAdd.height;
@@ -201,7 +202,7 @@ public class ElemGlass extends ElemSimple {
             } else if (UseUnit.PIE.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
                 if (spcAdd.mapParam.get(13014) != null) {
-                    if (UCom.containsNumbJust(spcAdd.mapParam.get(13014), anglHoriz) == true) { //Углы ориентации стороны
+                    if (UCom.containsNumbJust(spcAdd.mapParam.get(13014), anglGHoriz) == true) { //Углы ориентации стороны
                         spcRec.spcList.add(spcAdd);
                     }
                 } else {

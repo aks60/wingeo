@@ -43,12 +43,12 @@ public class Elements extends Cal5e {
 
                 if (elem5e.type == Type.MOSKITKA) {
                     //По id - профиля
-                    List<Record> elementList4 = List.of(eElement.find4(((Com5t) elem5e).sysprofRec.getInt(eSysprof.id)));
+                    //List<Record> elementList4 = List.of(eElement.find4(((Com5t) elem5e).sysprofRec.getInt(eSysprof.id)));
                     //Цикл по списку элементов сторон маскитки
-                    for (int side : List.of(0, 90, 180, 270)) {
-                        elem5e.anglHoriz = side; //устан. угол. проверяемой стороны
-                        detail(elementList4, elem5e);
-                    }
+                    //for (int side : List.of(0, 90, 180, 270)) {
+                    //    elem5e.anglHoriz = side; //устан. угол. проверяемой стороны
+                    //    detail(elementList4, elem5e);
+                    //}
                 } else {
                     //По artikl_id - артикулу профилей
                     int artiklID = elem5e.artiklRecAn.getInt(eArtikl.id);
@@ -108,7 +108,7 @@ public class Elements extends Cal5e {
 
                                     //Контейнер маскитка не учавствует в цикле сторон
                                 } else if (TypeArtikl.isType(artiklRec, TypeArtikl.X520)) {
-                                    if (elem5e.anglHoriz == 0) {
+                                    if (elem5e.anglHoriz() == 0) {
                                         elem5e.spcRec.setArtikl(spcAdd.artiklRec); //подмена артикула в основной спецификации
                                         elem5e.spcRec.setColor(1, spcAdd.colorID1);
                                         elem5e.spcRec.setColor(2, spcAdd.colorID2);

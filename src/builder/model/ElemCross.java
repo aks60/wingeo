@@ -103,7 +103,7 @@ public class ElemCross extends ElemSimple {
             spcRec.colorID3 = colorID3;
             spcRec.anglCut0 = 90;
             spcRec.anglCut1 = 90;
-            spcRec.anglHoriz = anglHoriz;
+            spcRec.anglHoriz = anglHoriz();
 
             if (type == Type.IMPOST) {
                 //На эскизе заход импоста не показываю, сразу пишу в спецификацию

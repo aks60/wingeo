@@ -63,9 +63,9 @@ public class Filling extends Cal5e {
             
             List<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             Coordinate[] coo = elemGlass.owner.geom.getCoordinates();
+            
             //Цикл по сторонам стеклопакета
-            for (int i = 0; i < coo.length - 1; i++) {
-                
+            for (int i = 0; i < coo.length - 1; i++) {              
                 LineSegment segm = new LineSegment(coo[i], coo[i + 1]);
                 ElemSimple elemFrame = UGeo.segMapElem(listFrame, segm);
 
@@ -82,6 +82,7 @@ public class Filling extends Cal5e {
                                     //ФИЛЬТР вариантов, параметры накапливаются в спецификации элемента
                                     if (fillingVar.filter(elemGlass, glasgrpRec) == true) {
 
+                                        ((ElemGlass) elemGlass).anglGHoriz = elemFrame.anglHoriz(); //угол к гор. стороны стекла
                                         ((ElemGlass) elemGlass).gzazo = glasgrpRec.getDbl(eGlasgrp.gap); //зазор между фальцем и стеклопакетом
                                         ((ElemGlass) elemGlass).gaxis = glasprofRec.getDbl(eGlasprof.gsize); //размер от оси до стеклопакета
 
