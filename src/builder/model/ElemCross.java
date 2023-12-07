@@ -107,8 +107,8 @@ public class ElemCross extends ElemSimple {
 
             if (type == Type.IMPOST) {
                 //На эскизе заход импоста не показываю, сразу пишу в спецификацию
-                Record syssizeRec = eSyssize.find(artiklRec); //системные константы 
-                if (syssizeRec.getInt(eSyssize.id) != -1) {
+                Record syssizeRec = eSyssize.get(artiklRec); //системные константы 
+                if (syssizeRec != null) {
                     double zax = syssizeRec.getDbl(eSyssize.zax);
                     if (Layout.HORIZ == owner.layout()) { //ареа слева направо  
                         ElemSimple inTop = joinFlat(Layout.TOP), inBott = joinFlat(Layout.BOTT);
@@ -125,33 +125,13 @@ public class ElemCross extends ElemSimple {
                         spcRec.height = artiklRec.getDbl(eArtikl.height);
                     }
                 } else {
-                    if (Layout.HORIZ == owner.layout()) { //слева направо  
-                        spcRec.width = length();
-                        spcRec.height = artiklRec.getDbl(eArtikl.height);
-
-                    } else if (Layout.VERT == owner.layout()) { //снизу вверх
-                        spcRec.width = length();
-                        spcRec.height = artiklRec.getDbl(eArtikl.height);
-                    }
-                }
-            } else if (type == Type.SHTULP) {
-                if (Layout.HORIZ == owner.layout()) { //слева направо  
-                    spcRec.width = y2() - y1();
-                    spcRec.height = artiklRec.getDbl(eArtikl.height);
-
-                } else if (Layout.VERT == owner.layout()) { //сверху вниз
-                    spcRec.width = x2() - x1();
+                    spcRec.width = length();
                     spcRec.height = artiklRec.getDbl(eArtikl.height);
                 }
-            } else if (type == Type.STOIKA) {
-                if (Layout.HORIZ == owner.layout()) { //слева направо  
-                    spcRec.width = y2() - y1();
-                    spcRec.height = artiklRec.getDbl(eArtikl.height);
+            } else if (type == Type.SHTULP || type == Type.STOIKA) {
+                spcRec.width = length();
+                spcRec.height = artiklRec.getDbl(eArtikl.height);
 
-                } else if (Layout.VERT == owner.layout()) { //сверху вниз
-                    spcRec.width = x2() - x1();
-                    spcRec.height = artiklRec.getDbl(eArtikl.height);
-                }
             }
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setSpecific() " + e);

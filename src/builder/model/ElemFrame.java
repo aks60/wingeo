@@ -139,48 +139,12 @@ public class ElemFrame extends ElemSimple {
             spcRec.colorID3 = colorID3;
             spcRec.anglCut0 = anglCut[0];
             spcRec.anglCut1 = anglCut[1];
-            
-            Record syssizeRec = eSyssize.find(artiklRec); //системные константы как правило на всю систему профилей
-            if (owner.type == Type.ARCH) {
-//                if (Layout.TOP == layout()) {
-//                    AreaArch areaArch = (AreaArch) root;
-//                    double angl = UCom.asin((width() / 2) / areaArch.radiusArch);
-//                    lengthArch = ((2 * Math.PI * areaArch.radiusArch) / 360 * angl * 2);
-//                    spcRec.width = lengthArch + 2 * syssizeRec.getDbl(eSyssize.prip);
-//                    spcRec.height = owner.frames.get(Layout.TOP).artiklRec.getDbl(eArtikl.height);
-//                } else if (Layout.BOTT == layout()) {
-//                    spcRec.width = length() + 2 * syssizeRec.getDbl(eSyssize.prip);
-//                    spcRec.height = artiklRec.getDbl(eArtikl.height);
-//                } else if (Layout.LEFT == layout()) {
-//                    spcRec.width = length() + 2 * syssizeRec.getDbl(eSyssize.prip);
-//                    spcRec.height = artiklRec.getDbl(eArtikl.height);
-//                } else if (Layout.RIGHT == layout()) {
-//                    spcRec.width = length() + 2 * syssizeRec.getDbl(eSyssize.prip);
-//                    spcRec.height = artiklRec.getDbl(eArtikl.height);
-//                }
-            } else if (owner.type == Type.TRAPEZE) {
-//                if (Layout.TOP == layout()) {
-//                    double length = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow(Math.abs(winc.height1() - winc.height2()), 2));
-//                    spcRec.width = length + 2 * syssizeRec.getDbl(eSyssize.prip);
-//                    spcRec.height = artiklRec.getDbl(eArtikl.height);
-//                    //System.out.println("TOP " + UCom.horizontAngl(this));
-//                } else if (Layout.BOTT == layout()) {
-//                    spcRec.width = length() + 2 * syssizeRec.getDbl(eSyssize.prip);
-//                    spcRec.height = artiklRec.getDbl(eArtikl.height);
-//                    //System.out.println("BOTT " + UCom.horizontAngl(this));
-//                } else if (Layout.LEFT == layout()) {
-//                    spcRec.width = length() + 2 * syssizeRec.getDbl(eSyssize.prip);
-//                    spcRec.height = artiklRec.getDbl(eArtikl.height);
-//                    //System.out.println("LEFT " + UCom.horizontAngl(this));
-//                } else if (Layout.RIGHT == layout()) {
-//                    spcRec.width = length() + 2 * syssizeRec.getDbl(eSyssize.prip);
-//                    spcRec.height = artiklRec.getDbl(eArtikl.height);
-//                    //System.out.println("RIGHT " + UCom.horizontAngl(this));
-//                }
-            } else {
-                spcRec.width = length() + 2 * syssizeRec.getDbl(eSyssize.prip);
-                spcRec.height = artiklRec.getDbl(eArtikl.height);
-            }
+
+            Record syssizeRec = eSyssize.get(artiklRec); //системные константы как правило на всю систему профилей
+            double prip = (syssizeRec == null) ? length() : length() + 2 * syssizeRec.getDbl(eSyssize.prip);
+            spcRec.width = prip;
+            spcRec.height = artiklRec.getDbl(eArtikl.height);
+
         } catch (Exception e) {
             System.err.println("Ошибка:ElemFrame.setSpecific() " + e);
         }
@@ -193,31 +157,15 @@ public class ElemFrame extends ElemSimple {
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм
-            Record syssizeRec = eSyssize.find(artiklRec); //системные константы 
+            Record syssizeRec = eSyssize.get(artiklRec); //системные константы 
             //Армирование
             if (TypeArtikl.isType(spcAdd.artiklRec, TypeArtikl.X107)) {
                 spcAdd.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
                 spcAdd.anglCut0 = 90;
                 spcAdd.anglCut1 = 90;
 
-                if (Type.TRAPEZE == owner.type) {
-                    if (Layout.TOP == layout()) {
-                        spcAdd.width += length();
+                spcAdd.width += length();
 
-                    } else if (Layout.BOTT == layout()) {
-                        spcAdd.width += length();
-
-                    } else if (Layout.LEFT == layout() || Layout.RIGHT == layout()) {
-                        spcAdd.width += length();
-                    }
-                } else {
-                    if (Layout.TOP == layout() || Layout.BOTT == layout()) {
-                        spcAdd.width += length();
-
-                    } else if (Layout.LEFT == layout() || Layout.RIGHT == layout()) {
-                        spcAdd.width += length();
-                    }
-                }
                 if ("ps3".equals(eSetting.val(2))) {
                     if ("Да".equals(spcAdd.getParam(null, 34010))) {
                         Double dw1 = artiklRec.getDbl(eArtikl.height) / Math.tan(Math.toRadians(anglCut[0]));
