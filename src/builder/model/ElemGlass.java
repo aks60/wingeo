@@ -99,7 +99,7 @@ public class ElemGlass extends ElemSimple {
 
             //Внешний полигон створки/рамы для прорисовки 
             Coordinate[] coo = owner.geom.getCoordinates();
-            
+
             Coordinate[] out = new Coordinate[coo.length];
             List<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             for (int i = 0; i < coo.length; i++) {
@@ -117,10 +117,10 @@ public class ElemGlass extends ElemSimple {
                 Record syssizeRec2 = eSyssize.get(e2.artiklRec);
                 double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr) + syssizeRec1.getDbl(eSyssize.falz) + gzazo;
                 double w2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr) + syssizeRec2.getDbl(eSyssize.falz) + gzazo;
-            
+
                 //Смещение сегментов относительно границ
                 LineSegment segm3 = segm1.offset(-w1);
-                LineSegment segm4 = segm2.offset(-w2);            
+                LineSegment segm4 = segm2.offset(-w2);
             }
             Envelope env = this.geom.getEnvelopeInternal();
             spcRec.width = env.getWidth();
@@ -145,164 +145,14 @@ public class ElemGlass extends ElemSimple {
                 return;  //если стеклопакет сразу выход
             }
 
+            //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
                 if (Type.ARCH == owner.type) {
-                    // <editor-fold defaultstate="collapsed" desc="ARCH"> 
-//                    Double dw = spcAdd.width;
-//                    ElemSimple imp = owner.joinSide(Layout.BOTT);
-//                    ElemSimple arch = root.frames.get(Layout.TOP);
-//                    double radiusArch = ((AreaArch) winc.rootArea).radiusArch;
-//
-//                    if (anglHoriz() == 0) { //по основанию арки
-//                        double r1 = radiusArch - arch.artiklRec.getDbl(eArtikl.height) + arch.artiklRec.getDbl(eArtikl.size_falz); //внешний радиус штапика
-//                        double h1 = imp.y1() - imp.artiklRec.getDbl(eArtikl.height) + imp.artiklRec.getDbl(eArtikl.size_centr)
-//                                + imp.artiklRec.getDbl(eArtikl.size_falz) - arch.artiklRec.getDbl(eArtikl.height) + arch.artiklRec.getDbl(eArtikl.size_falz);
-//                        double w1 = Math.sqrt((2 * r1 * h1) - (h1 * h1)); //длина нижней стороны штапика
-//                        double r2 = r1 - spcAdd.artiklRec.getDbl(eArtikl.height); //внутренний радиус
-//                        double h2 = h1 - 2 * spcAdd.artiklRec.getDbl(eArtikl.height);
-//                        double w2 = Math.sqrt((2 * r2 * h2) - (h2 * h2)); //длина верхней стороны штапика
-//                        double ang1 = Math.toDegrees(Math.atan(spcAdd.artiklRec.getDbl(eArtikl.height) / (w1 - w2))); //угол реза
-//                        spcAdd.width = (2 * w1 + dw);
-//                        spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
-//                        spcAdd.anglCut0 = ang1;
-//                        spcAdd.anglCut1 = ang1;
-//                        spcRec.spcList.add(spcAdd); //добавим спецификацию
-//
-//                    } else if (anglHoriz() == 180) { //по дуге арки   
-//                        if (spcAdd.artiklRec.getInt(eArtikl.level1) == 1 && spcAdd.artiklRec.getInt(eArtikl.level2) == 8) { //Штапик
-//
-//                            double r1 = radiusArch - arch.artiklRec.getDbl(eArtikl.height) + arch.artiklRec.getDbl(eArtikl.size_falz); //внешний радиус штапика
-//                            double h1 = imp.y1() - imp.artiklRec.getDbl(eArtikl.height) + imp.artiklRec.getDbl(eArtikl.size_centr)
-//                                    + imp.artiklRec.getDbl(eArtikl.size_falz) - arch.artiklRec.getDbl(eArtikl.height);
-//                            double w1 = Math.sqrt((2 * r1 * h1) - (h1 * h1)); //длина нижней стороны основания арки штапика
-//                            double r2 = r1 - spcAdd.artiklRec.getDbl(eArtikl.height); //внутренний радиус
-//                            double h2 = h1 - 2 * spcAdd.artiklRec.getDbl(eArtikl.height);
-//                            double w2 = Math.sqrt((2 * r2 * h2) - (h2 * h2)); //длина верхней стороны основания арки штапика   
-//                            double ang1 = Math.toDegrees(Math.atan(spcAdd.artiklRec.getDbl(eArtikl.height) / (w1 - w2))); //угол реза
-//                            double ang2 = Math.toDegrees(Math.asin(w1 / r1)); //угол дуги арки
-//                            //double ang2 = Math.toDegrees(Math.asin((owner.width() / 2) / radiusArch)); //угол дуги арки
-//                            double w4 = ((2 * Math.PI * r1) / 360) * ang2 * 2; //длина верхней стороны арки штапика
-//                            double ang3 = 90 - (90 - ang2 + ang1);
-//                            spcAdd.width = (dw + w4);
-//                            spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
-//                            spcAdd.anglCut0 = ang3;
-//                            spcAdd.anglCut1 = ang3;
-//                            spcRec.spcList.add(spcAdd); //добавим спецификацию
-//
-//                        } else {
-//                            //В PS4 длина уплотнения равна длине штапика, в SA нет.
-//                            double r1 = radiusArch - arch.artiklRec.getDbl(eArtikl.height) + spcAdd.artiklRec.getDbl(eArtikl.height); //внешний радиус уплотнения
-//                            double h1 = imp.y1() - imp.artiklRec.getDbl(eArtikl.size_centr) - arch.artiklRec.getDbl(eArtikl.height);
-//                            double w1 = Math.sqrt((2 * r1 * h1) - (h1 * h1)); //длина нижней стороны основания арки уплотнения
-//                            double r2 = r1 - spcAdd.artiklRec.getDbl(eArtikl.height); //внутренний радиус
-//                            double h2 = h1 - 2 * spcAdd.artiklRec.getDbl(eArtikl.height);
-//                            double w2 = Math.sqrt((2 * r2 * h2) - (h2 * h2)); //длина верхней стороны основания арки уплотнения   
-//                            double ang1 = Math.toDegrees(Math.atan(spcAdd.artiklRec.getDbl(eArtikl.height) / (w1 - w2))); //угол реза
-//                            double ang2 = Math.toDegrees(Math.asin(w1 / r1)); //угол дуги арки
-//                            double w4 = ((2 * Math.PI * r1) / 360) * ang2 * 2; //длина верхней стороны арки уплотнения
-//                            double ang3 = 90 - (90 - ang2 + ang1);
-//                            spcAdd.width = (dw + w4);
-//                            spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
-//                            spcAdd.anglCut0 = ang3;
-//                            spcAdd.anglCut1 = ang3;
-//                            spcRec.spcList.add(spcAdd); //добавим спецификацию
-//                        }
-//                    }
-                    // </editor-fold> 
+                    System.out.println("В разработке");
                 } else if (Type.TRAPEZE == owner.type) {
-                    // <editor-fold defaultstate="collapsed" desc="TRAPEZE"> 
-//                    ElemSimple inTop = owner.joinSide(Layout.TOP), inBott = owner.joinSide(Layout.BOTT), inRigh = owner.joinSide(Layout.RIGHT), inLeft = owner.joinSide(Layout.LEFT);
-//                    if (winc.form == Form.RIGHT) {
-//
-//                        if (anglHoriz() == 0) {
-//                            spcAdd.width += width() + 2 * gzazo;
-//                            spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
-//                            spcAdd.anglCut1 = 45;
-//                            spcAdd.anglCut2 = 45;
-//                            spcAdd.anglHoriz = inBott.anglHoriz();
-//
-//                        } else if (anglHoriz() == 90) {
-//                            ElemSimple el = winc.listJoin.elem(inRigh, 1);
-//                            double dy1 = inBott.y2() - inRigh.y2() - (inBott.artiklRec.getDbl(eArtikl.height)
-//                                    - inBott.artiklRec.getDbl(eArtikl.size_centr) - inBott.artiklRec.getDbl(eArtikl.size_falz));
-//                            double dy2 = (inTop.artiklRec.getDbl(eArtikl.height) - inTop.artiklRec.getDbl(eArtikl.size_falz)) / UCom.sin(inTop.anglHoriz() - 90);
-//                            double dy3 = (inRigh.artiklRec.getDbl(eArtikl.height) - inRigh.artiklRec.getDbl(eArtikl.size_falz)) / UCom.tan(inTop.anglHoriz() - 90);
-//                            spcAdd.width += dy1 - dy2 + dy3;
-//                            spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
-//                            spcAdd.anglCut1 = 45;
-//                            spcAdd.anglCut1 = inRigh.anglCut[1];
-//                            spcAdd.anglHoriz = inRigh.anglHoriz();
-//
-//                        } else if (anglHoriz() == 180) {
-//                            ElemJoining ej = winc.listJoin.get(inTop, 1);
-//                            double dx1 = inLeft.x2() + inLeft.artiklRec.getDbl(eArtikl.height) - inLeft.artiklRec.getDbl(eArtikl.size_falz);
-//                            double dx2 = inRigh.x2() - inRigh.artiklRec.getDbl(eArtikl.height) + inRigh.artiklRec.getDbl(eArtikl.size_falz);
-//                            spcAdd.width += (dx2 - dx1) / UCom.sin(ej.angl);
-//                            spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
-//                            spcAdd.anglCut1 = root.frames.get(Layout.TOP).anglCut[0];
-//                            spcAdd.anglCut2 = root.frames.get(Layout.TOP).anglCut[1];
-//                            spcAdd.anglHoriz = inTop.anglHoriz();
-//
-//                        } else if (anglHoriz() == 270) {
-//                            ElemJoining ej = winc.listJoin.get(inTop, 1);
-//                            double dy1 = (inTop.artiklRec.getDbl(eArtikl.height) - inTop.artiklRec.getDbl(eArtikl.size_falz)) / UCom.cos(90 - ej.angl);
-//                            double dy2 = (inLeft.artiklRec.getDbl(eArtikl.height) - inLeft.artiklRec.getDbl(eArtikl.size_falz)) * UCom.tan(90 - ej.angl);
-//                            double Y1 = inLeft.y1() + dy1 + dy2;
-//                            double Y2 = inBott.y1() - inBott.artiklRec.getDbl(eArtikl.height) + inBott.artiklRec.getDbl(eArtikl.size_centr) + inBott.artiklRec.getDbl(eArtikl.size_falz);
-//                            spcAdd.width += Y2 - Y1;
-//                            spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
-//                            spcAdd.anglCut0 = inLeft.anglCut[0];
-//                            spcAdd.anglCut1 = 45;
-//                            spcAdd.anglHoriz = inLeft.anglHoriz();
-//                        }
-//                    } else if (winc.form == Form.LEFT) {
-//                        if (anglHoriz() == 0) {
-//                            spcAdd.width += width() + 2 * gzazo;
-//                            spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
-//                            spcAdd.anglCut0 = 45;
-//                            spcAdd.anglCut0 = 45;
-//                            spcAdd.anglHoriz = inBott.anglHoriz();
-//
-//                        } else if (anglHoriz() == 90) {
-//                            ElemJoining ej = winc.listJoin.get(inTop, 0);
-//                            double dy1 = (inTop.artiklRec.getDbl(eArtikl.height) - inTop.artiklRec.getDbl(eArtikl.size_falz)) / UCom.cos(90 - ej.angl);
-//                            double dy2 = (inRigh.artiklRec.getDbl(eArtikl.height) - inRigh.artiklRec.getDbl(eArtikl.size_falz)) * UCom.tan(90 - ej.angl);
-//                            double Y1 = inRigh.y2() + dy1 + dy2;
-//                            double Y2 = inBott.y2() - inBott.artiklRec.getDbl(eArtikl.height) + inBott.artiklRec.getDbl(eArtikl.size_centr) + inBott.artiklRec.getDbl(eArtikl.size_falz);
-//                            spcAdd.width += Y2 - Y1;
-//                            spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
-//                            spcAdd.anglCut0 = inRigh.anglCut[1];
-//                            spcAdd.anglCut1 = 45;
-//                            spcAdd.anglHoriz = inRigh.anglHoriz();                            
-//
-//                        } else if (anglHoriz() == 180) {           
-//                            ElemJoining ej = winc.listJoin.get(inTop, 1);
-//                            double dx1 = inLeft.x2() + inLeft.artiklRec.getDbl(eArtikl.height) - inLeft.artiklRec.getDbl(eArtikl.size_falz);
-//                            double dx2 = inRigh.x2() - inRigh.artiklRec.getDbl(eArtikl.height) + inRigh.artiklRec.getDbl(eArtikl.size_falz);
-//                            spcAdd.width += (dx2 - dx1) / UCom.sin(ej.angl);
-//                            spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
-//                            spcAdd.anglCut0 = root.frames.get(Layout.TOP).anglCut[0];
-//                            spcAdd.anglCut1 = root.frames.get(Layout.TOP).anglCut[1];
-//                            spcAdd.anglHoriz = inTop.anglHoriz();                            
-//
-//                        } else if (anglHoriz() == 270) {
-//                            ElemSimple el = winc.listJoin.elem(inLeft, 0);
-//                            double dy1 = inBott.y1() - inLeft.y1() - (inBott.artiklRec.getDbl(eArtikl.height)
-//                                    - inBott.artiklRec.getDbl(eArtikl.size_centr) - inBott.artiklRec.getDbl(eArtikl.size_falz));
-//                            double dy2 = (inTop.artiklRec.getDbl(eArtikl.height) - inTop.artiklRec.getDbl(eArtikl.size_falz)) / UCom.sin(270 - inTop.anglHoriz());
-//                            double dy3 = (inLeft.artiklRec.getDbl(eArtikl.height) - inLeft.artiklRec.getDbl(eArtikl.size_falz)) / UCom.tan(270 - inTop.anglHoriz());
-//                            spcAdd.width += dy1 - dy2 + dy3;
-//                            spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
-//                            spcAdd.anglCut0 = 45;
-//                            spcAdd.anglCut1 = inLeft.anglCut[1];
-//                            spcAdd.anglHoriz = inLeft.anglHoriz();                            
-//                        }
-//                    }
-//                    spcRec.spcList.add(spcAdd); //добавим спецификацию
-                    // </editor-fold>
-                } else {
-                    // <editor-fold defaultstate="collapsed" desc="AREA and STVORKA"> 
+                    System.out.println("В разработке");
+                } else { 
                     if (anglHoriz == 0 || anglHoriz == 180) { //по горизонтали
                         spcAdd.width += width() + 2 * gzazo;
                         spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
@@ -318,7 +168,6 @@ public class ElemGlass extends ElemSimple {
                     spcAdd.anglCut1 = 45;
                     spcAdd.anglHoriz = anglHoriz;
                     spcRec.spcList.add(spcAdd);
-                    // </editor-fold>
                 }
 
                 if (anglHoriz == 0 || anglHoriz == 180) { //по горизонтали
@@ -352,6 +201,7 @@ public class ElemGlass extends ElemSimple {
                 spcAdd.width = spcAdd.width * UPar.to_12030_15030_25035_34030_39030(spcAdd); //"[ * коэф-т ]"
                 spcAdd.width = spcAdd.width / UPar.to_12040_15031_25036_34040_39040(spcAdd); //"[ / коэф-т ]" 
 
+             //Штуки   
             } else if (UseUnit.PIE.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
                 if (spcAdd.mapParam.get(13014) != null) {
