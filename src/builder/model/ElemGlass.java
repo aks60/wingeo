@@ -80,7 +80,7 @@ public class ElemGlass extends ElemSimple {
 
     //Внутренний полигон створки/рамы для прорисовки
     public void setLocation() {
-        this.geom = UGeo.geoPadding(owner.geom, winc.listElem, 0);
+        this.geom = UGeo.geoPadding(owner.geom, winc.listElem, -20);
     }
 
     //Главная спецификация    
@@ -104,24 +104,30 @@ public class ElemGlass extends ElemSimple {
             List<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             for (int i = 0; i < coo.length; i++) {
 
-                //Сегменты границ полигона
+                //Сегменты полигона
                 int j = (i == coo.length - 1) ? 1 : i + 1;
                 int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
                 LineSegment segm1 = new LineSegment(coo[k], coo[i]);
                 LineSegment segm2 = new LineSegment(coo[i], coo[j]);
 
-                //Получим ширину сегментов
+                //Ширина сегментов
                 ElemSimple e1 = UGeo.segMapElem(listFrame, segm1);
                 ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
                 Record syssizeRec1 = eSyssize.get(e1.artiklRec);
                 Record syssizeRec2 = eSyssize.get(e2.artiklRec);
-                double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr) + syssizeRec1.getDbl(eSyssize.falz) + gzazo;
-                double w2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr) + syssizeRec2.getDbl(eSyssize.falz) + gzazo;
-            
-                //Смещение сегментов относительно границ
+                double w1 = (syssizeRec1 == null) ? e1.artiklRec.getDbl(eArtikl.size_centr) + gsize[0]
+                        : (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) - syssizeRec1.getDbl(eSyssize.falz) + gzazo;
+                double w2 = (syssizeRec2 == null) ? e2.artiklRec.getDbl(eArtikl.size_centr) + gsize[0]
+                        : (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) - syssizeRec2.getDbl(eSyssize.falz) + gzazo;
+
+                //Смещение сегментов
                 LineSegment segm3 = segm1.offset(-w1);
-                LineSegment segm4 = segm2.offset(-w2);            
+                LineSegment segm4 = segm2.offset(-w2);  
+                
+                //Точка пересечения внутренних сегментов
+                out[i] = segm4.lineIntersection(segm3);                
             }
+            this.geom = Com5t.gf.createPolygon(out);
             Envelope env = this.geom.getEnvelopeInternal();
             spcRec.width = env.getWidth();
             spcRec.height = env.getHeight();

@@ -44,14 +44,14 @@ public enum eSyssize implements Field {
         }
         return query;
     }
+    
     public static Record get(Record artiklRec) {
         int id = artiklRec.getInt(eArtikl.syssize_id);
         if (id == -3) {
             return eArtikl.virtualRec();
         }
         query();
-        Record rec = map.get(id);
-        return (rec == null) ? eSyssize.virtualRec() : rec;
+        return map.get(id);
     }
     
     public static Record find(Record artiklRec) {
@@ -60,20 +60,10 @@ public enum eSyssize implements Field {
             return virtualRec();
         }
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(defaultRec());
+            return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(null);
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
-        return (recordList.isEmpty() == true) ? defaultRec() : recordList.get(0);
-    }
-
-    //Cистемные переменные по умолчанию
-    public static Record defaultRec() {
-        Record record = up.newRecord();
-        record.setNo(id, -1);
-        record.setNo(prip, 0);
-        record.setNo(naxl, 0);
-        record.setNo(zax, 0);
-        return record;
+        return (recordList.isEmpty() == true) ? null : recordList.get(0);
     }
     
     //Виртуал. системные переменные
