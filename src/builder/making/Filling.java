@@ -14,10 +14,13 @@ import builder.param.ElementDet;
 import builder.param.FillingDet;
 import builder.param.FillingVar;
 import builder.model.ElemSimple;
+import builder.model.UGeo;
 import common.UCom;
 import dataset.Query;
 import enums.Type;
 import java.util.ArrayList;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.LineSegment;
 
 /**
  * Заполнения
@@ -58,17 +61,19 @@ public class Filling extends Cal5e {
             Double depth = elemGlass.artiklRec.getDbl(eArtikl.depth); //толщина стекда           
             List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(winc.root.frames);  //список рам конструкции
             
+            List<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+            Coordinate[] coo = elemGlass.owner.geom.getCoordinates();
             //Цикл по сторонам стеклопакета
-            double sideHoriz[] = {0, 90, 180, 270};
-            for (int side = 0; side < 4; ++side) {
-                ElemSimple elemFrame = elemFrameList.get(side);
-                elemGlass.anglHoriz = sideHoriz[side]; //устан. угол. проверяемой стороны
+            for (int i = 0; i < coo.length - 1; i++) {
+                
+                LineSegment segm = new LineSegment(coo[i], coo[i + 1]);
+                ElemSimple elemFrame = UGeo.segMapElem(listFrame, segm);
 
                 //Цикл по группам заполнений
                 for (Record glasgrpRec : eGlasgrp.findAll()) {
                     if (UCom.containsNumbJust(glasgrpRec.getStr(eGlasgrp.depth), depth) == true) { //доступные толщины 
                         List<Record> glasprofList = eGlasprof.find(glasgrpRec.getInt(eGlasgrp.id)); //список профилей в группе заполнений
-                        
+
                         //Цикл по профилям в группах заполнений
                         for (Record glasprofRec : glasprofList) {
                             if (elemFrame.artiklRecAn.getInt(eArtikl.id) == glasprofRec.getInt(eGlasprof.artikl_id)) { //если артикулы совпали
@@ -76,9 +81,9 @@ public class Filling extends Cal5e {
 
                                     //ФИЛЬТР вариантов, параметры накапливаются в спецификации элемента
                                     if (fillingVar.filter(elemGlass, glasgrpRec) == true) {
-                                        
+
                                         ((ElemGlass) elemGlass).gzazo = glasgrpRec.getDbl(eGlasgrp.gap); //зазор между фальцем и стеклопакетом
-                                        ((ElemGlass) elemGlass).gsize[side] = glasprofRec.getDbl(eGlasprof.gsize); //размер от оси до стеклопакета
+                                        ((ElemGlass) elemGlass).gaxis = glasprofRec.getDbl(eGlasprof.gsize); //размер от оси до стеклопакета
 
                                         if (shortPass == false) {
                                             List<Record> glasdetList = eGlasdet.find(glasgrpRec.getInt(eGlasgrp.id), elemGlass.artiklRec.getDbl(eArtikl.depth));

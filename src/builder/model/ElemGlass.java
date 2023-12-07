@@ -26,7 +26,7 @@ public class ElemGlass extends ElemSimple {
 
     public double radiusGlass = 0; //радиус стекла
     public double gzazo = 0; //зазор между фальцем и стеклопакетом 
-    public double gsize[] = {0, 0, 0, 0}; //размер от оси до стеклопакета
+    public double gaxis = 0; //размер от оси до стеклопакета
 
     public Record rasclRec = eArtikl.virtualRec(); //раскладка
     public int rasclColor = -3; //цвет раскладки
@@ -93,7 +93,7 @@ public class ElemGlass extends ElemSimple {
             spcRec.colorID2 = colorID2;
             spcRec.colorID3 = colorID3;
 
-            //Фича определения gzazo и gsize на раннем этапе построения. 
+            //Фича определения gzazo и gaxis на раннем этапе построения. 
             Filling filling = new Filling(winc, true);
             filling.calc(this);
 
@@ -115,17 +115,17 @@ public class ElemGlass extends ElemSimple {
                 ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
                 Record syssizeRec1 = eSyssize.get(e1.artiklRec);
                 Record syssizeRec2 = eSyssize.get(e2.artiklRec);
-                double w1 = (syssizeRec1 == null) ? e1.artiklRec.getDbl(eArtikl.size_centr) + gsize[0]
+                double w1 = (syssizeRec1 == null) ? e1.artiklRec.getDbl(eArtikl.size_centr) + gaxis
                         : (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) - syssizeRec1.getDbl(eSyssize.falz) + gzazo;
-                double w2 = (syssizeRec2 == null) ? e2.artiklRec.getDbl(eArtikl.size_centr) + gsize[0]
+                double w2 = (syssizeRec2 == null) ? e2.artiklRec.getDbl(eArtikl.size_centr) + gaxis
                         : (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) - syssizeRec2.getDbl(eSyssize.falz) + gzazo;
 
                 //Смещение сегментов
                 LineSegment segm3 = segm1.offset(-w1);
-                LineSegment segm4 = segm2.offset(-w2);  
-                
+                LineSegment segm4 = segm2.offset(-w2);
+
                 //Точка пересечения внутренних сегментов
-                out[i] = segm4.lineIntersection(segm3);                
+                out[i] = segm4.lineIntersection(segm3);
             }
             this.geom = Com5t.gf.createPolygon(out);
             Envelope env = this.geom.getEnvelopeInternal();
@@ -141,40 +141,30 @@ public class ElemGlass extends ElemSimple {
     @Override
     public void addSpecific(Specific spcAdd) {
         try {
-            if (Type.ARCH == owner.type && (anglHoriz == 90 || anglHoriz == 270)) {
-                return;  //нет таких сторон у арки
-            }
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм         
             if (TypeArtikl.X502.isType(spcAdd.artiklRec)) {
                 return;  //если стеклопакет сразу выход
             }
-
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
-                if (Type.ARCH == owner.type) {
-                    System.out.println("В разработке");
-                } else if (Type.TRAPEZE == owner.type) {
-                    System.out.println("В разработке");
-                } else { 
-                    if (anglHoriz == 0 || anglHoriz == 180) { //по горизонтали
-                        spcAdd.width += width() + 2 * gzazo;
-                        spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
+                if (anglHoriz == 0 || anglHoriz == 180) { //по горизонтали
+                    spcAdd.width += width() + 2 * gzazo;
+                    spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
 
-                    } else if (anglHoriz == 90 || anglHoriz == 270) { //по вертикали
-                        spcAdd.width += height() + 2 * gzazo;
-                        spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
+                } else if (anglHoriz == 90 || anglHoriz == 270) { //по вертикали
+                    spcAdd.width += height() + 2 * gzazo;
+                    spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
 
-                    } else {
-                        System.out.println("Промах:builder.model.IArea5e.addFilling()");
-                    }
-                    spcAdd.anglCut0 = 45;
-                    spcAdd.anglCut1 = 45;
-                    spcAdd.anglHoriz = anglHoriz;
-                    spcRec.spcList.add(spcAdd);
+                } else {
+                    System.out.println("Промах:builder.model.IArea5e.addFilling()");
                 }
+                spcAdd.anglCut0 = 45;
+                spcAdd.anglCut1 = 45;
+                spcAdd.anglHoriz = anglHoriz;
+                spcRec.spcList.add(spcAdd);
 
                 if (anglHoriz == 0 || anglHoriz == 180) { //по горизонтали
                     if (spcAdd.mapParam.get(15010) != null) {
@@ -207,7 +197,7 @@ public class ElemGlass extends ElemSimple {
                 spcAdd.width = spcAdd.width * UPar.to_12030_15030_25035_34030_39030(spcAdd); //"[ * коэф-т ]"
                 spcAdd.width = spcAdd.width / UPar.to_12040_15031_25036_34040_39040(spcAdd); //"[ / коэф-т ]" 
 
-             //Штуки   
+                //Штуки   
             } else if (UseUnit.PIE.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
                 if (spcAdd.mapParam.get(13014) != null) {
