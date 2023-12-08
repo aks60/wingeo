@@ -142,23 +142,7 @@ public class ElemGlass extends ElemSimple {
     //Вложенная спецификация
     @Override
     public void addSpecific(Specific spcAdd) {
-        try {
-            
-            LineSegment segm1 = new LineSegment();
-            LineSegment segm2 = new LineSegment();
-            Coordinate[] coo = this.geom.getCoordinates();
-            for (int i = 0; i < coo.length; i++) {
-
-                //Сегменты границ полигона
-                int j = (i == coo.length - 1) ? 1 : i + 1;
-                int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
-                segm2.setCoordinates(coo[i], coo[j]);
-                double anglHoriz = Angle.toDegrees(Angle.angle(segm2.p0, segm2.p1));
-                if (anglHoriz == anglGHoriz) {
-                    segm1 = new LineSegment(coo[k], coo[i]);
-                    break;
-                }
-            }
+        try {         
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм         
@@ -167,17 +151,24 @@ public class ElemGlass extends ElemSimple {
             }
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
-
+                
+            LineSegment segm1 = null, segm2 = null, segm3 = null;
+            for (int i = 0; i < this.geom.getNumPoints() - 1; i++) {
+                segm2 = UGeo.segmPolygon(this.geom, i, 1);
+                double anglHoriz = Angle.toDegrees(Angle.angle(segm2.p0, segm2.p1));
+                if (anglHoriz == anglGHoriz) {
+                    segm1 = UGeo.segmPolygon(this.geom, i, -1);
+                    segm3 = UGeo.segmPolygon(this.geom, ++i, 1);
+                    break;
+                }
+            }
                 spcAdd.width += segm1.getLength() + 2 * gzazo;
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
 
-                spcAdd.anglCut0 = Angle.angleBetween(segm2.p0, segm2.p1, segm1.p1);
-                //spcAdd.anglCut1 = Angle.angleBetween(seg2.p0, segm1.p0, segm1.p1);
+                spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(segm2.p1, segm2.p0, segm1.p0)) / 2;
+                spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(segm2.p0, segm2.p1, segm3.p1)) / 2;
                 spcAdd.anglHoriz = anglGHoriz;
                 spcRec.spcList.add(spcAdd);
-                
-                //spcAdd.anglCut0 = 45;
-                //spcAdd.anglCut1 = 45;
                 
                 if (anglGHoriz == 0 || anglGHoriz == 180) { //по горизонтали
                     if (spcAdd.mapParam.get(15010) != null) {

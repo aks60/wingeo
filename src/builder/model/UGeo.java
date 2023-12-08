@@ -123,7 +123,7 @@ public class UGeo {
 
     //Внутренняя обводка ареа 
     public static Polygon geoPadding(Polygon poly, LinkedCom<ElemSimple> listElem, double delta) {
-        
+
         Coordinate[] coo = poly.getCoordinates();
         Coordinate[] out = new Coordinate[coo.length];
         List<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
@@ -133,7 +133,7 @@ public class UGeo {
                 //Сегменты границ полигона
                 int j = (i == coo.length - 1) ? 1 : i + 1;
                 int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
-                
+
                 LineSegment segm1 = new LineSegment(coo[k], coo[i]);
                 LineSegment segm2 = new LineSegment(coo[i], coo[j]);
 
@@ -156,7 +156,7 @@ public class UGeo {
             System.err.println("Ошибка:UGeo.geoPadding() " + e);
             return null;
         }
-    }    
+    }
 
     //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Coordinate[] arrCoord(double... d) {
@@ -174,15 +174,23 @@ public class UGeo {
         return Com5t.gf.createPolygon(UGeo.arrCoord(d));
     }
 
-    public static boolean sidePoint(Polygon p, double x, double y) {
-        Envelope e = p.getEnvelopeInternal();
-        return new Envelope(e.getMinX() + e.getWidth() / 2, e.getMaxX(), e.getMinY() + e.getHeight() / 2, e.getMaxY()).contains(x, y);
+    public static LineSegment segmPolygon(Polygon poly, int index, int step) {
+        Coordinate[] coo = poly.getCoordinates();
+        if (step < 0) {
+            int index2 = (index == 0) ? poly.getNumPoints() - 2 : index + step;
+            return new LineSegment(coo[index2], coo[index]);
+            
+        } else {
+            int index2 = (index + step == poly.getNumPoints() - 1) ? 0 : index + step;
+            return new LineSegment(coo[index], coo[index2]);
+        }
     }
     
-    public static LineSegment segmPolygon(Polygon poly, int index) {
-        //int j = (index)
-        return null;
-    }
+//    public static boolean sidePoint(Polygon p, double x, double y) {
+//        Envelope e = p.getEnvelopeInternal();
+//        return new Envelope(e.getMinX() + e.getWidth() / 2, e.getMaxX(), e.getMinY() + e.getHeight() / 2, e.getMaxY()).contains(x, y);
+//    }
+
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">    
 // </editor-fold>    

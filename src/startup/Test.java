@@ -9,12 +9,12 @@ import dataset.Conn;
 import domain.eElement;
 import java.sql.Connection;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.UUID;
 import org.locationtech.jts.geom.*;
+import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.linearref.LengthIndexedLine;
-import org.locationtech.jts.linearref.LinearIterator;
 import org.locationtech.jts.linearref.LinearLocation;
+import org.locationtech.jts.linearref.LocationIndexedLine;
 
 public class Test {
 
@@ -298,13 +298,7 @@ public class Test {
         LineString line2 = gf.createLineString(new Coordinate[]{new Coordinate(93.81658797276759, 896.6494075724012), new Coordinate(199.48228309038115, 309.9099755154137)});
         LineSegment segm1 = new LineSegment(100, 100, 0, 0);
         LineSegment segm2 = new LineSegment(20, 20, 200, 120);
-        Geometry polygon1 = gf.createLineString(coord1);
+        Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
-
-        LinearLocation ll = new LinearLocation();
-        LengthIndexedLine li = new LengthIndexedLine(line1);
-        double index = li.project(new Coordinate(.0, .0)); //Вычисляет индекс ближайшей к данной точке точки на линии.
-
-        ListIterator<String> iterator = null;
     }
 }
