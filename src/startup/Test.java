@@ -2,20 +2,19 @@ package startup;
 
 import builder.script.GsonScript;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.eProp;
 import dataset.Conn;
 import domain.eElement;
-import java.awt.Shape;
-import java.awt.geom.Point2D;
 import java.sql.Connection;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.UUID;
-import org.locationtech.jts.awt.PointShapeFactory;
-import org.locationtech.jts.awt.PointShapeFactory.Circle;
 import org.locationtech.jts.geom.*;
+import org.locationtech.jts.linearref.LengthIndexedLine;
+import org.locationtech.jts.linearref.LinearIterator;
+import org.locationtech.jts.linearref.LinearLocation;
 
 public class Test {
 
@@ -68,13 +67,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            wincalc();
+            //wincalc();
             //query();
             //frame();
             //json();
             //uid();
             //script();
-            //geom();
+            geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -285,8 +284,8 @@ public class Test {
         GeometryFactory gf = new GeometryFactory(); //JTSFactoryFinder.getGeometryFactory(); 
 
         Coordinate[] coord1 = new Coordinate[]{
-            new Coordinate(0, 0), new Coordinate(0, 1000),
-            new Coordinate(1000, 1000), new Coordinate(1000, 0),
+            new Coordinate(0, 0), new Coordinate(0, 1400),
+            new Coordinate(900, 1400), new Coordinate(900, 0),
             new Coordinate(0, 0)};
         Coordinate[] coord2 = new Coordinate[]{
             new Coordinate(50, 50), new Coordinate(50, 900),
@@ -299,7 +298,13 @@ public class Test {
         LineString line2 = gf.createLineString(new Coordinate[]{new Coordinate(93.81658797276759, 896.6494075724012), new Coordinate(199.48228309038115, 309.9099755154137)});
         LineSegment segm1 = new LineSegment(100, 100, 0, 0);
         LineSegment segm2 = new LineSegment(20, 20, 200, 120);
-        Polygon polygon1 = gf.createPolygon(coord1);
+        Geometry polygon1 = gf.createLineString(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
+
+        LinearLocation ll = new LinearLocation();
+        LengthIndexedLine li = new LengthIndexedLine(line1);
+        double index = li.project(new Coordinate(.0, .0)); //Вычисляет индекс ближайшей к данной точке точки на линии.
+
+        ListIterator<String> iterator = null;
     }
 }

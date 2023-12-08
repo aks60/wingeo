@@ -133,6 +133,7 @@ public class UGeo {
                 //Сегменты границ полигона
                 int j = (i == coo.length - 1) ? 1 : i + 1;
                 int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
+                
                 LineSegment segm1 = new LineSegment(coo[k], coo[i]);
                 LineSegment segm2 = new LineSegment(coo[i], coo[j]);
 
@@ -176,6 +177,11 @@ public class UGeo {
     public static boolean sidePoint(Polygon p, double x, double y) {
         Envelope e = p.getEnvelopeInternal();
         return new Envelope(e.getMinX() + e.getWidth() / 2, e.getMaxX(), e.getMinY() + e.getHeight() / 2, e.getMaxY()).contains(x, y);
+    }
+    
+    public static LineSegment segmPolygon(Polygon poly, int index) {
+        //int j = (index)
+        return null;
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">    

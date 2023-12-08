@@ -17,6 +17,7 @@ import enums.TypeArtikl;
 import enums.UseUnit;
 import java.awt.Shape;
 import java.util.List;
+import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
@@ -28,6 +29,7 @@ public class ElemGlass extends ElemSimple {
     public double anglGHoriz = 0; //угол к горизонту
     public double gzazo = 0; //зазор между фальцем и стеклопакетом 
     public double gaxis = 0; //размер от оси до стеклопакета
+    public double indexSegm = 0;
 
     public Record rasclRec = eArtikl.virtualRec(); //раскладка
     public int rasclColor = -3; //цвет раскладки
@@ -95,8 +97,7 @@ public class ElemGlass extends ElemSimple {
             spcRec.colorID3 = colorID3;
 
             //Фича определения gzazo и gaxis на раннем этапе построения. 
-            Filling filling = new Filling(winc, true);
-            filling.calc(this);
+            new Filling(winc, true).calc(this);
 
             //Внешний полигон створки/рамы для прорисовки 
             Coordinate[] coo = owner.geom.getCoordinates();
@@ -142,6 +143,22 @@ public class ElemGlass extends ElemSimple {
     @Override
     public void addSpecific(Specific spcAdd) {
         try {
+            
+            LineSegment segm1 = new LineSegment();
+            LineSegment segm2 = new LineSegment();
+            Coordinate[] coo = this.geom.getCoordinates();
+            for (int i = 0; i < coo.length; i++) {
+
+                //Сегменты границ полигона
+                int j = (i == coo.length - 1) ? 1 : i + 1;
+                int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
+                segm2.setCoordinates(coo[i], coo[j]);
+                double anglHoriz = Angle.toDegrees(Angle.angle(segm2.p0, segm2.p1));
+                if (anglHoriz == anglGHoriz) {
+                    segm1 = new LineSegment(coo[k], coo[i]);
+                    break;
+                }
+            }
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм         
@@ -150,23 +167,18 @@ public class ElemGlass extends ElemSimple {
             }
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
-                
-                if (anglGHoriz == 0 || anglGHoriz == 180) { //по горизонтали
-                    spcAdd.width += width() + 2 * gzazo;
-                    spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
 
-                } else if (anglGHoriz == 90 || anglGHoriz == 270) { //по вертикали
-                    spcAdd.width += height() + 2 * gzazo;
-                    spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
+                spcAdd.width += segm1.getLength() + 2 * gzazo;
+                spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
 
-                } else {
-                    System.out.println("Промах:builder.model.IArea5e.addFilling()");
-                }
-                spcAdd.anglCut0 = 45;
-                spcAdd.anglCut1 = 45;
+                spcAdd.anglCut0 = Angle.angleBetween(segm2.p0, segm2.p1, segm1.p1);
+                //spcAdd.anglCut1 = Angle.angleBetween(seg2.p0, segm1.p0, segm1.p1);
                 spcAdd.anglHoriz = anglGHoriz;
                 spcRec.spcList.add(spcAdd);
-
+                
+                //spcAdd.anglCut0 = 45;
+                //spcAdd.anglCut1 = 45;
+                
                 if (anglGHoriz == 0 || anglGHoriz == 180) { //по горизонтали
                     if (spcAdd.mapParam.get(15010) != null) {
                         if ("Нет".equals(spcAdd.mapParam.get(15010)) == false) { //Усекать нижний штапик
