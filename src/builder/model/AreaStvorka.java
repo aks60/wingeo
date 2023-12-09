@@ -16,6 +16,7 @@ import enums.Type;
 import enums.TypeOpen1;
 import enums.TypeOpen2;
 import java.awt.Shape;
+import java.util.LinkedList;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineSegment;
@@ -127,11 +128,10 @@ public class AreaStvorka extends AreaSimple {
 
     //Создание и коррекция сторон створки
     public void setLocation() {
-        double naxl = -8;
         try {
             //Ареа створки
             Polygon geo = (owner == root) ? owner.geom : this.geom; //случай когда створка в гл.окне или внутр...
-            this.geom = UGeo.geoPadding(geo, winc.listElem, naxl);
+            this.geom = UGeo.geoPadding(geo, winc.listElem, -8);
             Coordinate[] coo = this.geom.getCoordinates();
 
             //Координаты рам створок
@@ -139,7 +139,8 @@ public class AreaStvorka extends AreaSimple {
                 //Если стороны ств. ещё не созданы
                 for (int i = 0; i < coo.length - 1; i++) {
                     GsonElem gselem = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y);
-                    ElemFrame stvside = new ElemFrame(this.winc, gson.id + (.01 + Double.valueOf(i) / 100), gselem, this);
+                    ElemFrame stvside = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gselem, this);
+
                     this.frames.add(stvside);
                     winc.listElem.add(stvside);
                 }
@@ -152,6 +153,25 @@ public class AreaStvorka extends AreaSimple {
             }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.setLocation " + e);
+        }
+    }
+
+    @Override
+    public void joining() {
+        LinkedList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+        try {  
+            //L - соединения
+            for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам створки
+                ElemFrame nextStv = (ElemFrame) this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1);
+                winc.listJoin.add(new ElemJoining(this.winc, this.frames.get(i), nextStv));
+
+                //Прилегающее
+                LineSegment segm = UGeo.segmPolygon(owner.geom, i, 1);
+                ElemSimple frame = UGeo.segMapElem(elemList, segm);
+                winc.listJoin.add(new ElemJoining(winc, this.frames.get(i), frame));
+            }
+        } catch (Exception e) {
+            System.err.println("AreaStvorka.joining() " + e);
         }
     }
 

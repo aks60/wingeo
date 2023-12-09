@@ -33,11 +33,11 @@ public class UGeo {
     }
 
     //Отображение сегмента на элемент конструкции
-    public static ElemSimple segMapElem(List<ElemSimple> listLine, LineSegment segm) {
+    public static ElemSimple segMapElem(List<ElemSimple> elems, LineSegment segm) {
         try {
             Coordinate p = segm.midPoint(); //средн. точка
             LineSegment s = new LineSegment();
-            for (ElemSimple elem : listLine) {
+            for (ElemSimple elem : elems) {
 
                 s.setCoordinates(new Coordinate(elem.x1(), elem.y1()), new Coordinate(elem.x2(), elem.y2()));
                 if (s.distance(p) < .001) {
@@ -126,7 +126,7 @@ public class UGeo {
 
         Coordinate[] coo = poly.getCoordinates();
         Coordinate[] out = new Coordinate[coo.length];
-        List<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+        List<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
         try {
             for (int i = 0; i < coo.length; i++) {
 

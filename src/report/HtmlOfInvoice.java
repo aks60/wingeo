@@ -208,7 +208,7 @@ public class HtmlOfInvoice {
                 Record prjprodRec = prjprodList.get(index);
                 String script = prjprodRec.getStr(ePrjprod.script);
                 Wincalc winc = new Wincalc(script);
-                winc.tarification(true);
+                winc.constructiv(true);
                 list.add(winc);
             }
         } catch (Exception e) {

@@ -166,26 +166,30 @@ public class Wincalc {
 
             //Инит. конструктива
             listElem.forEach(e -> e.initConstructiv());
-
+ 
             //Пилим полигоны на ареа справа и слева
             listElem.filter(Type.IMPOST).forEach(e -> e.setLocation());
 
             //Создание и коррекция сторон створки
             listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
-
+ listElem.filter(Type.STVORKA_SIDE).forEach(e -> System.out.println(e));
             //Инит. конструктива створки
             listArea.filter(Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initConstructiv()));
 
             //Рассчёт полигонов сторон рамы
             listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
 
+            //Соединения конструкции            
+            root.joining();
+            listArea.filter(Type.STVORKA).forEach(e -> e.joining());
+            
         } catch (Exception s) {
             System.err.println("Ошибка:Wincalc.location() " + s);
         }
     }
 
     //Спецификация и тарификация 
-    public void tarification(boolean norm_otx) {
+    public void constructiv(boolean norm_otx) {
         weight = 0;
         price = 0;
         cost2 = 0;

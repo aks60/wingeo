@@ -459,7 +459,7 @@ public class UColor {
                     }
                 }
             }
-            return -1;
+            return -3;
 
         } catch (Exception e) {
             System.err.println("Ошибна Paint.colorFromArtikl() " + e);

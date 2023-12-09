@@ -51,7 +51,6 @@ public class Joining extends Cal5e {
     public void calc() {
         super.calc();        
         try {
-            this.winc.root.joining();
             
             //Цикл по списку соединений
             for (ElemJoining elemJoin : winc.listJoin) {

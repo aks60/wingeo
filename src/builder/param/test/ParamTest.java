@@ -87,7 +87,7 @@ public class ParamTest {
     private void iwin2() {
         iwin_2 = new builder.Wincalc(); //601004
         iwin_2.parsing(builder.script.GsonScript.productJson(601004));
-        iwin_2.tarification(true);
+        iwin_2.constructiv(true);
         elementVar2 = new ElementVar(iwin_2);
         elementDet2 = new ElementDet(iwin_2);
         joiningVar2 = new JoiningVar(iwin_2);
@@ -111,7 +111,7 @@ public class ParamTest {
     private void iwin3() {
         iwin_3 = new builder.Wincalc(); //604005
         iwin_3.parsing(builder.script.GsonScript.productJson(604005));
-        iwin_3.tarification(true);
+        iwin_3.constructiv(true);
         elementVar3 = new ElementVar(iwin_3);
         elementDet3 = new ElementDet(iwin_3);
         joiningVar3 = new JoiningVar(iwin_3);
@@ -135,7 +135,7 @@ public class ParamTest {
     private void iwin4() {
         iwin_4 = new builder.Wincalc(); //700027
         iwin_4.parsing(builder.script.GsonScript.productJson(700027));
-        iwin_4.tarification(true);
+        iwin_4.constructiv(true);
         elementVar4 = new ElementVar(iwin_4);
         elementDet4 = new ElementDet(iwin_4);
         joiningVar4 = new JoiningVar(iwin_4);

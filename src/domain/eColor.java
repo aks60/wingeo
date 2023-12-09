@@ -51,11 +51,11 @@ public enum eColor implements Field {
 
     public static int rgb(int id) {
         if (id == -3) {
-            return -1;
+            return virtualRec().getInt(rgb);
         }
         query();
         Record rec = map.get(id);
-        return (rec == null) ? -1 : rec.getInt(rgb);
+        return (rec == null) ? virtualRec().getInt(rgb) : rec.getInt(rgb);
     }
 
     public static Record get(int id) {
@@ -75,7 +75,7 @@ public enum eColor implements Field {
             return query().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(up.newRecord());
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
-        return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
+        return (recordList.isEmpty() == true) ? virtualRec() : recordList.get(0);
     }
 
     public static List<Record> find2(int _colgrp_id) {

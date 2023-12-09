@@ -29,7 +29,7 @@ public class ElemGlass extends ElemSimple {
     public double radiusGlass = 0; //радиус стекла
     public double anglGHoriz = 0; //угол к горизонту
     public double gzazo = 0; //зазор между фальцем и стеклопакетом 
-    public double gaxis = 0; //размер от оси до стеклопакета
+    //public double gaxis = 0; //размер от оси до стеклопакета
     public HashMap<Integer, Double> gaxisMap = new HashMap(); //размер от оси до стеклопакета
     public int indexSegm = 0;
 
@@ -105,7 +105,7 @@ public class ElemGlass extends ElemSimple {
             Coordinate[] coo = owner.geom.getCoordinates();
 
             Coordinate[] out = new Coordinate[coo.length];
-            List<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+            List<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             for (int i = 0; i < coo.length; i++) {
 
                 //Сегменты полигона
