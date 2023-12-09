@@ -65,14 +65,16 @@ public class Filling extends Cal5e {
             Coordinate[] coo = elemGlass.owner.geom.getCoordinates();
             
             //Цикл по сторонам стеклопакета
-            for (int i = 0; i < coo.length - 1; i++) {              
-                LineSegment segm = new LineSegment(coo[i], coo[i + 1]);
+            for (int indexSegm = 0; indexSegm < coo.length - 1; indexSegm++) {              
+                LineSegment segm = new LineSegment(coo[indexSegm], coo[indexSegm + 1]);
                 ElemSimple elemFrame = UGeo.segMapElem(listFrame, segm);
 
                 //Цикл по группам заполнений
                 for (Record glasgrpRec : eGlasgrp.findAll()) {
                     if (UCom.containsNumbJust(glasgrpRec.getStr(eGlasgrp.depth), depth) == true) { //доступные толщины 
                         List<Record> glasprofList = eGlasprof.find(glasgrpRec.getInt(eGlasgrp.id)); //список профилей в группе заполнений
+                        
+                        ((ElemGlass) elemGlass).gzazo = glasgrpRec.getDbl(eGlasgrp.gap); //зазор между фальцем и стеклопакетом
 
                         //Цикл по профилям в группах заполнений
                         for (Record glasprofRec : glasprofList) {
@@ -82,9 +84,8 @@ public class Filling extends Cal5e {
                                     //ФИЛЬТР вариантов, параметры накапливаются в спецификации элемента
                                     if (fillingVar.filter(elemGlass, glasgrpRec) == true) {
 
-                                        ((ElemGlass) elemGlass).anglGHoriz = elemFrame.anglHoriz(); //угол к гор. стороны стекла
-                                        ((ElemGlass) elemGlass).gzazo = glasgrpRec.getDbl(eGlasgrp.gap); //зазор между фальцем и стеклопакетом
-                                        ((ElemGlass) elemGlass).gaxis = glasprofRec.getDbl(eGlasprof.gsize); //размер от оси до стеклопакета
+                                        ((ElemGlass) elemGlass).indexSegm = indexSegm;                                                                                
+                                        ((ElemGlass) elemGlass).gaxisMap.put(indexSegm, glasprofRec.getDbl(eGlasprof.gsize)); //размер от оси до стеклопакета
 
                                         if (shortPass == false) {
                                             List<Record> glasdetList = eGlasdet.find(glasgrpRec.getInt(eGlasgrp.id), elemGlass.artiklRec.getDbl(eArtikl.depth));

@@ -16,6 +16,7 @@ import enums.Type;
 import enums.TypeArtikl;
 import enums.UseUnit;
 import java.awt.Shape;
+import java.util.HashMap;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
@@ -29,7 +30,8 @@ public class ElemGlass extends ElemSimple {
     public double anglGHoriz = 0; //угол к горизонту
     public double gzazo = 0; //зазор между фальцем и стеклопакетом 
     public double gaxis = 0; //размер от оси до стеклопакета
-    public double indexSegm = 0;
+    public HashMap<Integer, Double> gaxisMap = new HashMap(); //размер от оси до стеклопакета
+    public int indexSegm = 0;
 
     public Record rasclRec = eArtikl.virtualRec(); //раскладка
     public int rasclColor = -3; //цвет раскладки
@@ -117,9 +119,9 @@ public class ElemGlass extends ElemSimple {
                 ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
                 Record syssizeRec1 = eSyssize.get(e1.artiklRec);
                 Record syssizeRec2 = eSyssize.get(e2.artiklRec);
-                double w1 = (syssizeRec1 == null) ? e1.artiklRec.getDbl(eArtikl.size_centr) + gaxis
+                double w1 = (syssizeRec1 == null) ? e1.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(k)
                         : (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) - syssizeRec1.getDbl(eSyssize.falz) + gzazo;
-                double w2 = (syssizeRec2 == null) ? e2.artiklRec.getDbl(eArtikl.size_centr) + gaxis
+                double w2 = (syssizeRec2 == null) ? e2.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(i)
                         : (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) - syssizeRec2.getDbl(eSyssize.falz) + gzazo;
 
                 //Смещение сегментов
@@ -142,7 +144,7 @@ public class ElemGlass extends ElemSimple {
     //Вложенная спецификация
     @Override
     public void addSpecific(Specific spcAdd) {
-        try {         
+        try {
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм         
@@ -151,25 +153,19 @@ public class ElemGlass extends ElemSimple {
             }
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
-                
-            LineSegment segm1 = null, segm2 = null, segm3 = null;
-            for (int i = 0; i < this.geom.getNumPoints() - 1; i++) {
-                segm2 = UGeo.segmPolygon(this.geom, i, 1);
-                double anglHoriz = Angle.toDegrees(Angle.angle(segm2.p0, segm2.p1));
-                if (anglHoriz == anglGHoriz) {
-                    segm1 = UGeo.segmPolygon(this.geom, i, -1);
-                    segm3 = UGeo.segmPolygon(this.geom, ++i, 1);
-                    break;
-                }
-            }
+
+                LineSegment segm1 = UGeo.segmPolygon(this.geom, indexSegm, -1);
+                LineSegment segm2 = UGeo.segmPolygon(this.geom, indexSegm, 1);
+                LineSegment segm3 = UGeo.segmPolygon(this.geom, indexSegm + 1, 1);
+
                 spcAdd.width += segm1.getLength() + 2 * gzazo;
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
-
                 spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(segm2.p1, segm2.p0, segm1.p0)) / 2;
                 spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(segm2.p0, segm2.p1, segm3.p1)) / 2;
-                spcAdd.anglHoriz = anglGHoriz;
-                spcRec.spcList.add(spcAdd);
+                spcAdd.anglHoriz = Math.abs(spcAdd.elem5e.anglHoriz()); //угол к гор. стороны стекла);
                 
+                spcRec.spcList.add(spcAdd);
+
                 if (anglGHoriz == 0 || anglGHoriz == 180) { //по горизонтали
                     if (spcAdd.mapParam.get(15010) != null) {
                         if ("Нет".equals(spcAdd.mapParam.get(15010)) == false) { //Усекать нижний штапик

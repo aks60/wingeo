@@ -174,23 +174,26 @@ public class UGeo {
         return Com5t.gf.createPolygon(UGeo.arrCoord(d));
     }
 
-    public static LineSegment segmPolygon(Polygon poly, int index, int step) {
-        Coordinate[] coo = poly.getCoordinates();
+    public static LineSegment segmPolygon(Polygon p, int i, int step) {
+        Coordinate[] coo = p.getCoordinates();
+        int imax = p.getNumPoints() - 1;
+        int j = i;
+        
+        if(i < 0) {
+            j = i + imax; 
+            
+        } else if(i > imax) {
+            j = i - imax;
+        }
         if (step < 0) {
-            int index2 = (index == 0) ? poly.getNumPoints() - 2 : index + step;
-            return new LineSegment(coo[index2], coo[index]);
+            int k = (j == 0) ? imax - 1 : j + step;
+            return new LineSegment(coo[k], coo[j]);
             
         } else {
-            int index2 = (index + step == poly.getNumPoints() - 1) ? 0 : index + step;
-            return new LineSegment(coo[index], coo[index2]);
+            int k = (j == imax) ? 1 : j + step;
+            return new LineSegment(coo[j], coo[k]);
         }
     }
-    
-//    public static boolean sidePoint(Polygon p, double x, double y) {
-//        Envelope e = p.getEnvelopeInternal();
-//        return new Envelope(e.getMinX() + e.getWidth() / 2, e.getMaxX(), e.getMinY() + e.getHeight() / 2, e.getMaxY()).contains(x, y);
-//    }
-
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">    
 // </editor-fold>    

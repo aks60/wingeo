@@ -67,13 +67,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            //wincalc();
+            wincalc();
             //query();
             //frame();
             //json();
             //uid();
             //script();
-            geom();
+            //geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -87,7 +87,7 @@ public class Test {
         String _case = "one";
 
         if (_case.equals("one")) {
-            winc.parsing(GsonScript.productJson(601006));
+            winc.parsing(GsonScript.productJson(601001));
             //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(winc.script)));
             //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(winc.script)));
 

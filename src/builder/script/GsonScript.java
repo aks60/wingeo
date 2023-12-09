@@ -90,6 +90,7 @@ public class GsonScript {
             //.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
 
 // </editor-fold>
+
 // <editor-fold defaultstate="collapsed" desc="ARCH">
 //        } else if (prj == 501007) {
 //            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.ARCH, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
