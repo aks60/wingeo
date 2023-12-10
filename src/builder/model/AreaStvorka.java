@@ -135,14 +135,13 @@ public class AreaStvorka extends AreaSimple {
             Coordinate[] coo = this.geom.getCoordinates();
 
             //Координаты рам створок
-            if (this.frames.size() == 0) {
+            if (this.frames.size() == 0) {                
+
                 //Если стороны ств. ещё не созданы
                 for (int i = 0; i < coo.length - 1; i++) {
                     GsonElem gselem = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y);
-                    ElemFrame stvside = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gselem, this);
-
-                    this.frames.add(stvside);
-                    winc.listElem.add(stvside);
+                    ElemFrame sideStv = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gselem, this);
+                    this.frames.add(sideStv);
                 }
             } else {
                 //Если стороны уже созданы

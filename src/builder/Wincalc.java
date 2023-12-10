@@ -169,10 +169,10 @@ public class Wincalc {
  
             //Пилим полигоны на ареа справа и слева
             listElem.filter(Type.IMPOST).forEach(e -> e.setLocation());
-
+             
             //Создание и коррекция сторон створки
             listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
- listElem.filter(Type.STVORKA_SIDE).forEach(e -> System.out.println(e));
+
             //Инит. конструктива створки
             listArea.filter(Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initConstructiv()));
 
@@ -194,8 +194,8 @@ public class Wincalc {
         price = 0;
         cost2 = 0;
         try {
-            //Каждый элемент конструкции попадает в спецификацию через функцию setSpecific()   
-            listElem.filter(Type.FRAME_SIDE, Type.GLASS).forEach(elem -> elem.setSpecific()); //спецификация ведущих элементов конструкции
+            //Спецификация ведущих элементов конструкции   
+            listElem.filter(Type.FRAME_SIDE, Type.GLASS).forEach(elem -> elem.setSpecific()); 
 
             //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
             calcJoining = new Joining(this); //соединения
@@ -205,7 +205,7 @@ public class Wincalc {
             calcFilling = new builder.making.Filling(this); //заполнения
             calcFilling.calc();
             calcFurniture = new builder.making.Furniture(this); //фурнитура 
-            calcFurniture.calc();
+            //calcFurniture.calc();
             calcTariffication = new builder.making.Tariffic(this, norm_otx); //тарификация 
             calcTariffication.calc();
 
