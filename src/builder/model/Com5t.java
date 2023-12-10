@@ -145,7 +145,6 @@ public class Com5t {
      * Длина компонента
      */
     public double length() {
-        //return owner.geom.getEnvelopeInternal().getWidth();
         return new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).getLength();
     }
 

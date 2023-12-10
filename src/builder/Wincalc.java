@@ -195,7 +195,7 @@ public class Wincalc {
         cost2 = 0;
         try {
             //Спецификация ведущих элементов конструкции   
-            listElem.filter(Type.FRAME_SIDE, Type.GLASS).forEach(elem -> elem.setSpecific()); 
+            listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(elem -> elem.setSpecific()); 
 
             //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
             calcJoining = new Joining(this); //соединения

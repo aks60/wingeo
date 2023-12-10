@@ -66,10 +66,14 @@ public class ElemFrame extends ElemSimple {
                 sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.TOP, UseSide.HORIZ);
             } else if (Layout.LEFT.equals(layout())) {
                 sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.LEFT, UseSide.VERT);
-            }
+            } 
+//            else {
+//                sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.ANY, UseSide.ANY);
+//            }
         }
+       
         artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
-        artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true);
+        artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true);        
     }
 
     //Рассчёт полигона стороны рамы
@@ -133,7 +137,7 @@ public class ElemFrame extends ElemSimple {
     public void setSpecific() {  //добавление основной спецификации
         try {
             spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
-            spcRec.setArtikl(artiklRec);
+            spcRec.setArtikl(artiklRecAn);            
             spcRec.colorID1 = colorID1;
             spcRec.colorID2 = colorID2;
             spcRec.colorID3 = colorID3;
@@ -141,8 +145,8 @@ public class ElemFrame extends ElemSimple {
             spcRec.anglCut1 = anglCut[1];
 
             Record syssizeRec = eSyssize.get(artiklRec); //системные константы как правило на всю систему профилей
-            double prip = (syssizeRec == null) ? length() : length() + 2 * syssizeRec.getDbl(eSyssize.prip);
-            spcRec.width = prip;
+            double w = (syssizeRec == null) ? length() : length() + 2 * syssizeRec.getDbl(eSyssize.prip);
+            spcRec.width = w;
             spcRec.height = artiklRec.getDbl(eArtikl.height);
 
         } catch (Exception e) {
