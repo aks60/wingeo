@@ -281,11 +281,11 @@ public class Wincalc {
 
     // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 
     public double width() {
-        return root.geom.getEnvelopeInternal().getWidth();
+        return root.area.getEnvelopeInternal().getWidth();
     }
 
     public double height() {
-        return root.geom.getEnvelopeInternal().getHeight();
+        return root.area.getEnvelopeInternal().getHeight();
     }
     // </editor-fold>  
 }

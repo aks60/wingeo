@@ -27,7 +27,7 @@ public class Com5t {
     public AreaSimple root = null; //главный класс конструкции
     public GsonElem gson = null; //gson object конструкции    
     public Type type = Type.NONE; //тип элемента или окна
-    public Polygon geom = null; //ареа компонента
+    public Polygon area = null; //ареа компонента
     private boolean pass[] = {false, false};
     private Point pointPress = null;
     public int colorID1 = -1, colorID2 = -1, colorID3 = -1; //1-базовый 2-внутренний 3-внешний 
@@ -52,7 +52,7 @@ public class Com5t {
     public void events() {
 
         ListenerKey keyPressed = (evt) -> {
-            if (this.geom != null) {
+            if (this.area != null) {
                 double W = winc.canvas.getWidth();
                 double H = winc.canvas.getHeight();
                 double dX = 0;
@@ -88,10 +88,10 @@ public class Com5t {
             }
         };       
         ListenerMouse mousePressed = (evt) -> {
-            if (this.geom != null) {
+            if (this.area != null) {
                 pointPress = evt.getPoint();
                 //Если клик внутри контура
-                boolean b = this.geom.contains(gf.createPoint(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale)));
+                boolean b = this.area.contains(gf.createPoint(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale)));
                 if (b == true) {
                     LineSegment segm = new LineSegment(x1(), y1(), x2(), y2());
                     double coef = segm.segmentFraction(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale));                    
@@ -109,7 +109,7 @@ public class Com5t {
             pass[1] = false;
         };
         ListenerMouse mouseDragge = (evt) -> {
-            if (this.geom != null) {
+            if (this.area != null) {
                 double W = winc.canvas.getWidth();
                 double H = winc.canvas.getHeight();
                 double dX = evt.getX() - pointPress.getX(); //прирощение по горизонтали

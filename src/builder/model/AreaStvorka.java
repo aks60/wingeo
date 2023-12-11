@@ -130,9 +130,9 @@ public class AreaStvorka extends AreaSimple {
     public void setLocation() {
         try {
             //Ареа створки
-            Polygon geo = (owner == root) ? owner.geom : this.geom; //случай когда створка в гл.окне или внутр...
-            this.geom = UGeo.geoPadding(geo, winc.listElem, -8);
-            Coordinate[] coo = this.geom.getCoordinates();
+            Polygon geo = (owner == root) ? owner.area : this.area; //случай когда створка в гл.окне или внутр...
+            this.area = UGeo.geoPadding(geo, winc.listElem, -8);
+            Coordinate[] coo = this.area.getCoordinates();
 
             //Координаты рам створок
             if (this.frames.size() == 0) {                
@@ -165,7 +165,7 @@ public class AreaStvorka extends AreaSimple {
                 winc.listJoin.add(new ElemJoining(this.winc, this.frames.get(i), nextStv));
 
                 //Прилегающее
-                LineSegment segm = UGeo.segmPolygon(owner.geom, i, 1);
+                LineSegment segm = UGeo.segmPolygon(owner.area, i, 1);
                 ElemSimple frame = UGeo.segMapElem(elemList, segm);
                 winc.listJoin.add(new ElemJoining(winc, this.frames.get(i), frame));
             }
@@ -175,10 +175,10 @@ public class AreaStvorka extends AreaSimple {
     }
 
     public void paint() {
-        if (this.geom != null) {
+        if (this.area != null) {
 
             java.awt.Color color = winc.gc2d.getColor();
-            Shape shape = new ShapeWriter().toShape(this.geom);
+            Shape shape = new ShapeWriter().toShape(this.area);
 
             winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
             winc.gc2d.fill(shape);

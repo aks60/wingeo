@@ -109,7 +109,7 @@ public class ElemFrame extends ElemSimple {
                             new Coordinate(segm3.p0.x, segm3.p0.y), new Coordinate(segm3.p1.x, segm3.p1.y),
                             new Coordinate(segm5.p0.x, segm5.p0.y), new Coordinate(segm5.p1.x, segm5.p1.y));
 
-                    this.geom = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y);
+                    this.area = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y);
                 }
             }
 
@@ -292,9 +292,9 @@ public class ElemFrame extends ElemSimple {
     }
 
     public void paint() {
-        if (this.geom != null) {
+        if (this.area != null) {
             java.awt.Color color = winc.gc2d.getColor();
-            Shape shape = new ShapeWriter().toShape(this.geom);
+            Shape shape = new ShapeWriter().toShape(this.area);
 
             winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
             winc.gc2d.fill(shape);

@@ -51,14 +51,14 @@ public class ElemCross extends ElemSimple {
     public void setLocation() {
         try {
             //Пилим полигон импостом
-            Geometry[] geoSplit = UGeo.geoSplit(owner.geom, this.x1(), this.y1(), this.x2(), this.y2());
+            Geometry[] geoSplit = UGeo.geoSplit(owner.area, this.x1(), this.y1(), this.x2(), this.y2());
             Polygon geo1 = (Polygon) geoSplit[1];
             Polygon geo2 = (Polygon) geoSplit[2];
-            owner.childs.get(0).geom = geo1;
-            owner.childs.get(2).geom = geo2;
+            owner.childs.get(0).area = geo1;
+            owner.childs.get(2).area = geo2;
 
             //Новые координаты импоста
-            Geometry lineImp = owner.geom.intersection(geoSplit[0]);
+            Geometry lineImp = owner.area.intersection(geoSplit[0]);
             if (lineImp.getGeometryType().equals("MultiLineString")) { //исправление коллизий
                 int index = (lineImp.getGeometryN(0).getLength() > lineImp.getGeometryN(1).getLength()) ? 0 : 1;
                 lineImp = lineImp.getGeometryN(index);
@@ -67,7 +67,7 @@ public class ElemCross extends ElemSimple {
             this.setDimension(lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y, lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y);
 
             //Внутренняя ареа       
-            Polygon geoPadding = UGeo.geoPadding(owner.geom, winc.listElem, 0);
+            Polygon geoPadding = UGeo.geoPadding(owner.area, winc.listElem, 0);
             if (geoPadding.isValid() == false) { //исправление коллизий
                 GeometryFixer fix = new GeometryFixer(geoPadding);
                 geoPadding = (Polygon) fix.getResult().getGeometryN(0);
@@ -85,7 +85,7 @@ public class ElemCross extends ElemSimple {
 
             //Ареа импоста обрезаем areaPadding 
             Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
-            this.geom = (Polygon) areaExp.intersection(geoPadding);
+            this.area = (Polygon) areaExp.intersection(geoPadding);
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation " + e);
@@ -178,9 +178,9 @@ public class ElemCross extends ElemSimple {
 
     public void paint() {
 
-        if (this.geom != null) {
+        if (this.area != null) {
             java.awt.Color color = winc.gc2d.getColor();
-            Shape shape = new ShapeWriter().toShape(this.geom);
+            Shape shape = new ShapeWriter().toShape(this.area);
 
             winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
             winc.gc2d.fill(shape);

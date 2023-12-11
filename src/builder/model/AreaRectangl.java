@@ -25,7 +25,7 @@ public class AreaRectangl extends AreaSimple {
 
             //Создадим полигон рамы
             Coordinate[] arrCoord = listCoord.toArray(new Coordinate[0]);
-            this.geom = gf.createPolygon(arrCoord);
+            this.area = gf.createPolygon(arrCoord);
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaRectangl.setLocation" + toString() + e);

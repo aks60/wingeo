@@ -83,7 +83,7 @@ public class HtmlOfOffer {
 
                 Elements tdList = tab4List.get(i).getElementsByTag("td");
                 Wincalc winc = wincList.get(i);
-                square = square + winc.root.geom.getArea();
+                square = square + winc.root.area.getArea();
                 Record prjprodRec = prjprodList.get(i);
 
                 tdList.get(0).text("Изделие № " + (i + 1));
@@ -101,7 +101,7 @@ public class HtmlOfOffer {
                 tdList.get(13).text(eColor.find(winc.colorID3).getStr(eColor.name));
                 tdList.get(15).text(winc.width() + "x" + winc.height());
                 tdList.get(17).text(prjprodRec.getStr(ePrjprod.num));
-                tdList.get(19).text(df2.format(winc.root.geom.getArea()));
+                tdList.get(19).text(df2.format(winc.root.area.getArea()));
                 tdList.get(21).text(df2.format(winc.weight));
                 tdList.get(23).text(df1.format(winc.price));
             }

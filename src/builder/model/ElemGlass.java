@@ -85,7 +85,7 @@ public class ElemGlass extends ElemSimple {
 
     //Внутренний полигон створки/рамы для прорисовки
     public void setLocation() {
-        this.geom = UGeo.geoPadding(owner.geom, winc.listElem, -20);
+        this.area = UGeo.geoPadding(owner.area, winc.listElem, -20);
     }
 
     //Главная спецификация    
@@ -102,7 +102,7 @@ public class ElemGlass extends ElemSimple {
             new Filling(winc, true).calc(this);
 
             //Внешний полигон створки/рамы для прорисовки 
-            Coordinate[] coo = owner.geom.getCoordinates();
+            Coordinate[] coo = owner.area.getCoordinates();
 
             Coordinate[] out = new Coordinate[coo.length];
             List<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
@@ -131,8 +131,8 @@ public class ElemGlass extends ElemSimple {
                 //Точка пересечения внутренних сегментов
                 out[i] = segm4.lineIntersection(segm3);
             }
-            this.geom = Com5t.gf.createPolygon(out);
-            Envelope env = this.geom.getEnvelopeInternal();
+            this.area = Com5t.gf.createPolygon(out);
+            Envelope env = this.area.getEnvelopeInternal();
             spcRec.width = env.getWidth();
             spcRec.height = env.getHeight();
 
@@ -154,9 +154,9 @@ public class ElemGlass extends ElemSimple {
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
-                LineSegment segm1 = UGeo.segmPolygon(this.geom, indexSegm, -1);
-                LineSegment segm2 = UGeo.segmPolygon(this.geom, indexSegm, 1);
-                LineSegment segm3 = UGeo.segmPolygon(this.geom, indexSegm + 1, 1);
+                LineSegment segm1 = UGeo.segmPolygon(this.area, indexSegm, -1);
+                LineSegment segm2 = UGeo.segmPolygon(this.area, indexSegm, 1);
+                LineSegment segm3 = UGeo.segmPolygon(this.area, indexSegm + 1, 1);
 
                 spcAdd.width += segm1.getLength() + 2 * gzazo;
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
@@ -216,10 +216,10 @@ public class ElemGlass extends ElemSimple {
     }
 
     public void paint() {
-        if (owner.geom != null) {
+        if (owner.area != null) {
             java.awt.Color color = winc.gc2d.getColor();
             winc.gc2d.setColor(new java.awt.Color(eColor.find(colorID2).getInt(eColor.rgb)));
-            Shape shape = new ShapeWriter().toShape(this.geom);
+            Shape shape = new ShapeWriter().toShape(this.area);
             winc.gc2d.fill(shape);
             winc.gc2d.setColor(color);
         }
