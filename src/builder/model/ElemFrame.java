@@ -101,6 +101,7 @@ public class ElemFrame extends ElemSimple {
                             new Coordinate(segm3.p0.x, segm3.p0.y), new Coordinate(segm3.p1.x, segm3.p1.y),
                             new Coordinate(segm5.p0.x, segm5.p0.y), new Coordinate(segm5.p1.x, segm5.p1.y));
 
+                    //Полигон элемента конструкции 
                     this.area = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y);
                 }
             }
@@ -130,11 +131,8 @@ public class ElemFrame extends ElemSimple {
         try {
             spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
             spcRec.setArtikl(artiklRec);            
-            spcRec.colorID1 = colorID1;
-            spcRec.colorID2 = colorID2;
-            spcRec.colorID3 = colorID3;
-            spcRec.anglCut0 = anglCut[0];
-            spcRec.anglCut1 = anglCut[1];
+            spcRec.setColor(colorID1, colorID2, colorID3);
+            spcRec.setAnglCut(anglCut[0], anglCut[1]);
             double w = (winc.syssizRec == null) ? length() : length() + 2 * winc.syssizRec.getDbl(eSyssize.prip);
             spcRec.width = w;
             spcRec.height = artiklRec.getDbl(eArtikl.height);

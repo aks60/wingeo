@@ -24,8 +24,10 @@ public class AreaRectangl extends AreaSimple {
             coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1()));
 
             //Создадим area рамы
-            Coordinate[] cooArr = coo.toArray(new Coordinate[0]);
-            this.area = gf.createPolygon(cooArr); //полигон векторов рамы
+            Coordinate[] arr = coo.toArray(new Coordinate[0]);
+            
+            //Полигон векторов рамы
+            this.area = gf.createPolygon(arr);
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaRectangl.setLocation" + toString() + e);

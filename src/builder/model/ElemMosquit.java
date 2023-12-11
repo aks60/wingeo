@@ -63,9 +63,7 @@ public class ElemMosquit extends ElemSimple {
         try {
             spcRec.place = "ВСТ";
             spcRec.setArtikl(artiklRec);
-            spcRec.colorID1 = colorID1;
-            spcRec.colorID2 = colorID2;
-            spcRec.colorID3 = colorID3;
+            spcRec.setColor(colorID1, colorID2, colorID3);
             spcRec.width = width();
             spcRec.height = height();
 

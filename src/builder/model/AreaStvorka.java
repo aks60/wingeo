@@ -133,17 +133,19 @@ public class AreaStvorka extends AreaSimple {
     //Создание и коррекция сторон створки
     public void setLocation() {
         try {
-            //Ареа створки
+            //Ареа родителя или ареа створки без смещения
             Polygon area = (owner == root) ? owner.area : this.area; //случай когда створка в гл.окне или внутр...
             double delta = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            this.area = UGeo.geoPadding(area, winc.listElem, -delta); //полигон векторов сторон створки
+            
+            //Полигон векторов сторон створки
+            this.area = UGeo.geoPadding(area, winc.listElem, -delta); 
             Coordinate[] coo = this.area.getCoordinates();
 
             //Координаты рам створок
             if (this.frames.size() == 0) {
+                
                 //Если стороны ств. ещё не созданы
-                for (int i = 0; i < coo.length - 1; i++) {
-                    
+                for (int i = 0; i < coo.length - 1; i++) {                    
                     GsonElem gson = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y);
                     ElemFrame sideStv = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gson, this);
                     this.frames.add(sideStv);

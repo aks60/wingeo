@@ -94,9 +94,7 @@ public class ElemGlass extends ElemSimple {
         try {
             spcRec.place = "ЗАП";
             spcRec.setArtikl(artiklRec);
-            spcRec.colorID1 = colorID1;
-            spcRec.colorID2 = colorID2;
-            spcRec.colorID3 = colorID3;
+            spcRec.setColor(colorID1, colorID2, colorID3);
 
             //Фича определения gzazo и gaxis на раннем этапе построения. 
             new Filling(winc, true).calc(this);
@@ -130,7 +128,9 @@ public class ElemGlass extends ElemSimple {
                 //Точка пересечения внутренних сегментов
                 out[i] = segm4.lineIntersection(segm3);
             }
+            //Полигон элемента конструкции
             this.area = Com5t.gf.createPolygon(out);
+            
             Envelope env = this.area.getEnvelopeInternal();
             spcRec.width = env.getWidth();
             spcRec.height = env.getHeight();
