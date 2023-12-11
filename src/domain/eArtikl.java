@@ -127,8 +127,8 @@ public enum eArtikl implements Field {
     public static Record virtualRec() {
         Record record = up.newRecord();
         record.setNo(id, -3);
-        record.setNo(code, "");
-        record.setNo(name, "");
+        record.setNo(code, "VIRT");
+        record.setNo(name, "virtual");
         //для построения типовых конструкций
         record.setNo(height, 80);
         record.setNo(size_centr, 40);
