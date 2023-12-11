@@ -67,13 +67,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            wincalc();
+            //wincalc();
             //query();
             //frame();
             //json();
             //uid();
             //script();
-            //geom();
+            geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -292,7 +292,7 @@ public class Test {
             new Coordinate(900, 900), new Coordinate(900, 50),
             new Coordinate(50, 50)};
 
-        Point point1 = gf.createPoint(new Coordinate(0, 0));
+        Point point1 = gf.createPoint(new Coordinate(499.9, 500));
         Point point2 = gf.createPoint(new Coordinate(4, 8));
         LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
         LineString line2 = gf.createLineString(new Coordinate[]{new Coordinate(93.81658797276759, 896.6494075724012), new Coordinate(199.48228309038115, 309.9099755154137)});
@@ -300,5 +300,7 @@ public class Test {
         LineSegment segm2 = new LineSegment(20, 20, 200, 120);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
+        
+        System.out.println(line1.contains(point1));
     }
 }
