@@ -129,7 +129,7 @@ public enum eColor implements Field {
         record.setNo(id, -3);
         record.setNo(groups_id, -3);
         record.setNo(name, "");
-        record.setNo(rgb, 13158600);
+        record.setNo(rgb, 15790320);
         return record;
     }
 
