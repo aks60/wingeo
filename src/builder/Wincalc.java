@@ -25,6 +25,7 @@ import dataset.Record;
 import domain.eArtikl;
 import domain.eSyspar1;
 import domain.eSysprof;
+import domain.eSyssize;
 import enums.Type;
 import enums.UseArtiklTo;
 import frames.swing.draw.Canvas;
@@ -44,6 +45,7 @@ public class Wincalc {
     public Integer nuni = 0; //код системы  
     public double specificID = 0; //для генерации ключа в спецификации
     public int colorID1 = -1, colorID2 = 1, colorID3 = -1; //базовый,внутр,внещний 
+    public Record syssizRec; //система констант
     public double costpric1 = 0; //себест. за ед. без отхода     
     public double costpric2 = 0; //себест. за ед. с отходом
     public double price = 0; //стоимость без скидки
@@ -94,6 +96,8 @@ public class Wincalc {
         //Инит конструктива
         nuni = (gson.nuni == null) ? -3 : gson.nuni;
         Record sysprofRec = eSysprof.find2(nuni, UseArtiklTo.FRAME); //первая.запись коробки
+        Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
+        syssizRec = eSyssize.find(artiklRec); //системные константы
         colorID1 = (gson.color1 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1;
         colorID2 = (gson.color2 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2;
         colorID3 = (gson.color3 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3;
@@ -132,7 +136,7 @@ public class Wincalc {
                         hm.put(area5e, js); //погружение ареа
 
                     } else if (Type.FRAME_SIDE == js.type) {
-                        ElemFrame elem5e = new ElemFrame(this, js, owner);
+                        ElemFrame elem5e = new ElemFrame(this, js.id, js, owner);
                         root.frames.add(elem5e);
 
                     } else if (Type.IMPOST == js.type || Type.SHTULP == js.type || Type.STOIKA == js.type) {

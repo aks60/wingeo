@@ -52,10 +52,8 @@ public class ElemCross extends ElemSimple {
         try {
             //Пилим полигон импостом
             Geometry[] geoSplit = UGeo.geoSplit(owner.area, this.x1(), this.y1(), this.x2(), this.y2());
-            Polygon geo1 = (Polygon) geoSplit[1];
-            Polygon geo2 = (Polygon) geoSplit[2];
-            owner.childs.get(0).area = geo1;
-            owner.childs.get(2).area = geo2;
+            owner.childs.get(0).area = (Polygon) geoSplit[1];;
+            owner.childs.get(2).area = (Polygon) geoSplit[2];
 
             //Новые координаты импоста
             Geometry lineImp = owner.area.intersection(geoSplit[0]);
@@ -84,8 +82,8 @@ public class ElemCross extends ElemSimple {
             Coordinate C2[] = UGeo.geoIntersect(areaCanvas, moveBaseSegment[1]);
 
             //Ареа импоста обрезаем areaPadding 
-            Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
-            this.area = (Polygon) areaExp.intersection(geoPadding);
+            Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);           
+            this.area = (Polygon) areaExp.intersection(geoPadding); //полигон элемента конструкции
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation " + e);
@@ -98,18 +96,14 @@ public class ElemCross extends ElemSimple {
         try {
             spcRec.place = (Layout.HORIZ == owner.layout()) ? "ВСТ.в" : "ВСТ.г";
             spcRec.setArtikl(artiklRec);
-            spcRec.colorID1 = colorID1;
-            spcRec.colorID2 = colorID2;
-            spcRec.colorID3 = colorID3;
-            spcRec.anglCut0 = 90;
-            spcRec.anglCut1 = 90;
+            spcRec.setColor(colorID1, colorID2, colorID3);
+            spcRec.setAnglCut(90, 90);
             spcRec.anglHoriz = anglHoriz();
 
             if (type == Type.IMPOST) {
                 //На эскизе заход импоста не показываю, сразу пишу в спецификацию
-                Record syssizeRec = eSyssize.get(artiklRec); //системные константы 
-                if (syssizeRec != null) {
-                    double zax = syssizeRec.getDbl(eSyssize.zax);
+                if (winc.syssizRec != null) {
+                    double zax = winc.syssizRec.getDbl(eSyssize.zax);
                     if (Layout.HORIZ == owner.layout()) { //ареа слева направо  
                         ElemSimple inTop = joinFlat(Layout.TOP), inBott = joinFlat(Layout.BOTT);
                         spcRec.width = (inBott.y1() - inBott.artiklRec.getDbl(eArtikl.height) + inBott.artiklRec.getDbl(eArtikl.size_centr))

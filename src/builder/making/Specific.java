@@ -84,6 +84,12 @@ public class Specific {
         setAnglCut();
     }
     
+    public void setColor(int colorID1, int colorID2, int colorID3) {
+        this.colorID1 = colorID1;
+        this.colorID2 = colorID2;
+        this.colorID3 = colorID3;
+    }
+    
     public Specific clon(Specific spec) {
         this.id = spec.id;
         this.place = spec.place;
@@ -129,7 +135,12 @@ public class Specific {
             colorID3 = colorID;
         }
     }
-
+    
+    public void setAnglCut(double angl0, double angl1) {
+        this.anglCut0 = angl0;
+        this.anglCut1 = angl1;
+    }
+    
     protected void setAnglCut() {
         if (TypeArtikl.X109.isType(artiklRec)
                 || TypeArtikl.X135.isType(artiklRec)

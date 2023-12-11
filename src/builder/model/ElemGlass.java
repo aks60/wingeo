@@ -94,9 +94,7 @@ public class ElemGlass extends ElemSimple {
         try {
             spcRec.place = "ЗАП";
             spcRec.setArtikl(artiklRec);
-            spcRec.colorID1 = colorID1;
-            spcRec.colorID2 = colorID2;
-            spcRec.colorID3 = colorID3;
+            spcRec.setColor(colorID1, colorID2, colorID3);
 
             //Фича определения gzazo и gaxis на раннем этапе построения. 
             new Filling(winc, true).calc(this);
@@ -117,12 +115,11 @@ public class ElemGlass extends ElemSimple {
                 //Ширина сегментов
                 ElemSimple e1 = UGeo.segMapElem(listFrame, segm1);
                 ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
-                Record syssizeRec1 = eSyssize.get(e1.artiklRec);
-                Record syssizeRec2 = eSyssize.get(e2.artiklRec);
-                double w1 = (syssizeRec1 == null) ? e1.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(k)
-                        : (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) - syssizeRec1.getDbl(eSyssize.falz) + gzazo;
-                double w2 = (syssizeRec2 == null) ? e2.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(i)
-                        : (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) - syssizeRec2.getDbl(eSyssize.falz) + gzazo;
+                double falz = winc.syssizRec.getDbl(eSyssize.falz);
+                double w1 = (winc.syssizRec == null) ? e1.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(k)
+                        : (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) - falz + gzazo;
+                double w2 = (winc.syssizRec == null) ? e2.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(i)
+                        : (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) - falz + gzazo;
 
                 //Смещение сегментов
                 LineSegment segm3 = segm1.offset(-w1);
@@ -131,7 +128,9 @@ public class ElemGlass extends ElemSimple {
                 //Точка пересечения внутренних сегментов
                 out[i] = segm4.lineIntersection(segm3);
             }
+            //Полигон элемента конструкции
             this.area = Com5t.gf.createPolygon(out);
+            
             Envelope env = this.area.getEnvelopeInternal();
             spcRec.width = env.getWidth();
             spcRec.height = env.getHeight();
