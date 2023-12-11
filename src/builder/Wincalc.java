@@ -132,7 +132,7 @@ public class Wincalc {
                         hm.put(area5e, js); //погружение ареа
 
                     } else if (Type.FRAME_SIDE == js.type) {
-                        ElemFrame elem5e = new ElemFrame(this, js, owner);
+                        ElemFrame elem5e = new ElemFrame(this, js.id, js, owner);
                         root.frames.add(elem5e);
 
                     } else if (Type.IMPOST == js.type || Type.SHTULP == js.type || Type.STOIKA == js.type) {

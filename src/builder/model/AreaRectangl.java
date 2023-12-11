@@ -17,15 +17,15 @@ public class AreaRectangl extends AreaSimple {
     @Override
     public void setLocation() {
         try {
-            ArrayList<Coordinate> listCoord = new ArrayList<Coordinate>();
+            ArrayList<Coordinate> coo = new ArrayList<Coordinate>();
 
             //Создадим вершины рамы
-            this.frames.forEach(line -> listCoord.add(new Coordinate(line.x1(), line.y1())));
-            listCoord.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1()));
+            this.frames.forEach(line -> coo.add(new Coordinate(line.x1(), line.y1())));
+            coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1()));
 
-            //Создадим полигон рамы
-            Coordinate[] arrCoord = listCoord.toArray(new Coordinate[0]);
-            this.area = gf.createPolygon(arrCoord);
+            //Создадим area рамы
+            Coordinate[] cooArr = coo.toArray(new Coordinate[0]);
+            this.area = gf.createPolygon(cooArr); //полигон векторов рамы
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaRectangl.setLocation" + toString() + e);

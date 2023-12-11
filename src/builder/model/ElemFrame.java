@@ -29,10 +29,6 @@ public class ElemFrame extends ElemSimple {
 
     protected double lengthArch = 0; //длина арки 
 
-    public ElemFrame(Wincalc winc, GsonElem gson, AreaSimple owner) {
-        this(winc, gson.id, gson, owner);
-    }
-
     public ElemFrame(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
         super(winc, id, gson, owner);
         if (gson.type == Type.FRAME_SIDE) {
@@ -66,10 +62,7 @@ public class ElemFrame extends ElemSimple {
                 sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.TOP, UseSide.HORIZ);
             } else if (Layout.LEFT.equals(layout())) {
                 sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.LEFT, UseSide.VERT);
-            } 
-//            else {
-//                sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.ANY, UseSide.ANY);
-//            }
+            }
         }
        
         artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
@@ -137,7 +130,7 @@ public class ElemFrame extends ElemSimple {
     public void setSpecific() {  //добавление основной спецификации
         try {
             spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
-            spcRec.setArtikl(artiklRecAn);            
+            spcRec.setArtikl(artiklRec);            
             spcRec.colorID1 = colorID1;
             spcRec.colorID2 = colorID2;
             spcRec.colorID3 = colorID3;
