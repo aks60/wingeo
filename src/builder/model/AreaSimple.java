@@ -88,7 +88,6 @@ public class AreaSimple extends Com5t {
 
     /**
      * Определяет ближайшего соседа в указанном направлении
-     *
      * @param side - сторона направления
      */
     //@Override
