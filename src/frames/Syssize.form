@@ -452,7 +452,7 @@
                       <Data value="1.0"/>
                       <Data value="2.0"/>
                     </Column>
-                    <Column editable="true" title="&#x41d;&#x430;&#x43f;&#x43b;&#x430;&#x432; &#x441;&#x438;&#x441;&#x442;&#x435;&#x43c;&#x44b;" type="java.lang.Double">
+                    <Column editable="true" title="&#x41d;&#x430;&#x43f;&#x43b;&#x430;&#x432; &#x441;&#x438;&#x441;&#x442;&#x435;&#x43c;&#x44b;, &#x43f;&#x43e;&#x43b;&#x43a;&#x430;" type="java.lang.Double">
                       <Data value="1.0"/>
                       <Data value="2.0"/>
                     </Column>

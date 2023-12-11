@@ -105,9 +105,8 @@ public class ElemCross extends ElemSimple {
 
             if (type == Type.IMPOST) {
                 //На эскизе заход импоста не показываю, сразу пишу в спецификацию
-                Record syssizeRec = eSyssize.get(artiklRec); //системные константы 
-                if (syssizeRec != null) {
-                    double zax = syssizeRec.getDbl(eSyssize.zax);
+                if (winc.syssizRec != null) {
+                    double zax = winc.syssizRec.getDbl(eSyssize.zax);
                     if (Layout.HORIZ == owner.layout()) { //ареа слева направо  
                         ElemSimple inTop = joinFlat(Layout.TOP), inBott = joinFlat(Layout.BOTT);
                         spcRec.width = (inBott.y1() - inBott.artiklRec.getDbl(eArtikl.height) + inBott.artiklRec.getDbl(eArtikl.size_centr))

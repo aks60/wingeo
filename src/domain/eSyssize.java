@@ -16,12 +16,11 @@ public enum eSyssize implements Field {
     name("12", "32", "1", "Система артикулов", "SNAME"),
     prip("8", "15", "1", "Припуск на сварку", "SSIZP"),
     naxl("8", "15", "1", "Нахлест створки", "SSIZF"),
-    falz("8", "15", "1", "T - Глубина до фальца", "SSIZN"),
+    falz("8", "15", "1", "T- Глубина до фальца, полка", "SSIZN"),
     zax("8", "15", "1", "Заход импоста", "SSIZI");
     //sunic("4", "10", "1", "ID системы", "SUNIC"),
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());
-    private static HashMap<Integer, Record> map = new HashMap();
 
     eSyssize(Object... p) {
         meta.init(p);
@@ -39,24 +38,10 @@ public enum eSyssize implements Field {
         if (query.size() == 0) {
             query.select(up, "order by", id);
             Query.listOpenTable.add(query);
-            map.clear();
-            query.stream().forEach(rec -> map.put(rec.getInt(id), rec));
         }
         return query;
     }
 
-    public static Record get(Record artiklRec) {
-        int _id = artiklRec.getInt(eArtikl.syssize_id);
-        if (_id == -3) {
-            return eArtikl.virtualRec();
-        }
-        if (Query.conf.equals("calc")) {
-            query();
-            return map.get(_id);
-        }
-        Query recordList = new Query(values()).select(up, "where", id, "=", _id);
-        return (recordList.isEmpty() == true) ? null : recordList.get(0);
-    }
 
     public static Record find(Record artiklRec) {
         int _id = artiklRec.getInt(eArtikl.syssize_id);
@@ -67,16 +52,17 @@ public enum eSyssize implements Field {
             return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(null);
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
-        return (recordList.isEmpty() == true) ? null : recordList.get(0);
+        return (recordList.isEmpty() == true) ? virtualRec() : recordList.get(0);
     }
 
     //Виртуал. системные переменные
     public static Record virtualRec() {
         Record record = up.newRecord();
         record.setNo(id, -3);
-        record.setNo(prip, 0);
-        record.setNo(naxl, 0);
-        record.setNo(zax, 0);
+        record.setNo(prip, 3);
+        record.setNo(naxl, 6);
+        record.setNo(falz, 14);   
+        record.setNo(zax, 4);
         return record;
     }
 

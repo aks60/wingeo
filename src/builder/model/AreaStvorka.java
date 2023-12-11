@@ -42,7 +42,6 @@ public class AreaStvorka extends AreaSimple {
     public LayoutHandle handleLayout = LayoutHandle.VARIAT; //положение ручки на створке      
     public boolean paramCheck[] = {true, true, true, true, true, true, true, true};
     public double offset[] = {0, 0, 0, 0};
-    public double amend = -20;
 
     public AreaStvorka(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
@@ -136,17 +135,17 @@ public class AreaStvorka extends AreaSimple {
         try {
             //Ареа створки
             Polygon area = (owner == root) ? owner.area : this.area; //случай когда створка в гл.окне или внутр...
-            this.area = UGeo.geoPadding(area, winc.listElem, amend); //полигон векторов створки + поправка
+            double delta = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
+            this.area = UGeo.geoPadding(area, winc.listElem, -delta); //полигон векторов сторон створки
             Coordinate[] coo = this.area.getCoordinates();
 
             //Координаты рам створок
             if (this.frames.size() == 0) {
-
                 //Если стороны ств. ещё не созданы
                 for (int i = 0; i < coo.length - 1; i++) {
-                    GsonElem gselem = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y);
-                    ElemFrame sideStv = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gselem, this);
-                    //Record syssizeRec = eSyssize.get(artiklRec); //системные константы
+                    
+                    GsonElem gson = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y);
+                    ElemFrame sideStv = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gson, this);
                     this.frames.add(sideStv);
                 }
             } else {

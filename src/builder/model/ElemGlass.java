@@ -117,12 +117,11 @@ public class ElemGlass extends ElemSimple {
                 //Ширина сегментов
                 ElemSimple e1 = UGeo.segMapElem(listFrame, segm1);
                 ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
-                Record syssizeRec1 = eSyssize.get(e1.artiklRec);
-                Record syssizeRec2 = eSyssize.get(e2.artiklRec);
-                double w1 = (syssizeRec1 == null) ? e1.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(k)
-                        : (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) - syssizeRec1.getDbl(eSyssize.falz) + gzazo;
-                double w2 = (syssizeRec2 == null) ? e2.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(i)
-                        : (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) - syssizeRec2.getDbl(eSyssize.falz) + gzazo;
+                double falz = winc.syssizRec.getDbl(eSyssize.falz);
+                double w1 = (winc.syssizRec == null) ? e1.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(k)
+                        : (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) - falz + gzazo;
+                double w2 = (winc.syssizRec == null) ? e2.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(i)
+                        : (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) - falz + gzazo;
 
                 //Смещение сегментов
                 LineSegment segm3 = segm1.offset(-w1);

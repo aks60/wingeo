@@ -27,7 +27,7 @@ import org.locationtech.jts.geom.LineSegment;
 
 public class ElemFrame extends ElemSimple {
 
-    protected double lengthArch = 0; //длина арки 
+    public double lengthArch = 0; //длина арки     
 
     public ElemFrame(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
         super(winc, id, gson, owner);
@@ -46,8 +46,7 @@ public class ElemFrame extends ElemSimple {
         colorID1 = (isJson(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
         colorID2 = (isJson(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
         colorID3 = (isJson(gson.param, PKjson.colorID3)) ? gson.param.get(PKjson.colorID3).getAsInt() : winc.colorID3;
-        Object o2 = this.x2();
-        Object o1 = layout();
+
         if (isJson(gson.param, PKjson.sysprofID)) { //профили через параметр
             sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());
 
@@ -65,8 +64,8 @@ public class ElemFrame extends ElemSimple {
             }
         }
        
-        artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
-        artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true);        
+        artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
+        artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true); //аналог 
     }
 
     //Рассчёт полигона стороны рамы
@@ -136,9 +135,7 @@ public class ElemFrame extends ElemSimple {
             spcRec.colorID3 = colorID3;
             spcRec.anglCut0 = anglCut[0];
             spcRec.anglCut1 = anglCut[1];
-
-            Record syssizeRec = eSyssize.get(artiklRec); //системные константы как правило на всю систему профилей
-            double w = (syssizeRec == null) ? length() : length() + 2 * syssizeRec.getDbl(eSyssize.prip);
+            double w = (winc.syssizRec == null) ? length() : length() + 2 * winc.syssizRec.getDbl(eSyssize.prip);
             spcRec.width = w;
             spcRec.height = artiklRec.getDbl(eArtikl.height);
 
@@ -154,7 +151,6 @@ public class ElemFrame extends ElemSimple {
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм
-            Record syssizeRec = eSyssize.get(artiklRec); //системные константы 
             //Армирование
             if (TypeArtikl.isType(spcAdd.artiklRec, TypeArtikl.X107)) {
                 spcAdd.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
@@ -167,18 +163,18 @@ public class ElemFrame extends ElemSimple {
                     if ("Да".equals(spcAdd.getParam(null, 34010))) {
                         Double dw1 = artiklRec.getDbl(eArtikl.height) / Math.tan(Math.toRadians(anglCut[0]));
                         Double dw2 = artiklRec.getDbl(eArtikl.height) / Math.tan(Math.toRadians(anglCut[1]));
-                        spcAdd.width = spcAdd.width + 2 * syssizeRec.getDbl(eSyssize.prip) - dw1.floatValue() - dw2.floatValue();
+                        spcAdd.width = spcAdd.width + 2 * winc.syssizRec.getDbl(eSyssize.prip) - dw1.floatValue() - dw2.floatValue();
                     }
                 } else {
                     if ("от внутреннего угла".equals(spcAdd.getParam(null, 34010))) {
                         Double dw1 = artiklRec.getDbl(eArtikl.height) / Math.tan(Math.toRadians(anglCut[0]));
                         Double dw2 = artiklRec.getDbl(eArtikl.height) / Math.tan(Math.toRadians(anglCut[1]));
-                        spcAdd.width = spcAdd.width + 2 * syssizeRec.getDbl(eSyssize.prip) - dw1.floatValue() - dw2.floatValue();
+                        spcAdd.width = spcAdd.width + 2 * winc.syssizRec.getDbl(eSyssize.prip) - dw1.floatValue() - dw2.floatValue();
 
                     } else if ("от внутреннего фальца".equals(spcAdd.getParam(null, 34010))) {
                         Double dw1 = (artiklRec.getDbl(eArtikl.height) - artiklRec.getDbl(eArtikl.size_falz)) / Math.tan(Math.toRadians(anglCut[0]));
                         Double dw2 = (artiklRec.getDbl(eArtikl.height) - artiklRec.getDbl(eArtikl.size_falz)) / Math.tan(Math.toRadians(anglCut[1]));
-                        spcAdd.width = spcAdd.width + 2 * syssizeRec.getDbl(eSyssize.prip) - dw1.floatValue() - dw2.floatValue();
+                        spcAdd.width = spcAdd.width + 2 * winc.syssizRec.getDbl(eSyssize.prip) - dw1.floatValue() - dw2.floatValue();
                     }
                 }
 
@@ -256,7 +252,7 @@ public class ElemFrame extends ElemSimple {
                             spcAdd.width = UPar.to_25013(spcRec, spcAdd); //укорочение от высоты ручки
                         }
                     } else {
-                        spcAdd.width += width() + syssizeRec.getDbl(eSyssize.prip) * 2;
+                        spcAdd.width += width() + winc.syssizRec.getDbl(eSyssize.prip) * 2;
                     }
 
                 } else if (List.of(1, 3, 5).contains(spcAdd.artiklRec.getInt(eArtikl.level1)) && spcRec.id != spcAdd.id) {

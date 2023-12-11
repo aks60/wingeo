@@ -297,7 +297,7 @@ public class Syssize extends javax.swing.JFrame {
                 {"222",  new Double(2.0),  new Double(2.0),  new Double(2.0),  new Double(2.0), null}
             },
             new String [] {
-                "Система артикулов", "Припуск на сварку", "Нахлест створки", "Заход импоста", "Наплав системы", "ID"
+                "Система артикулов", "Припуск на сварку", "Нахлест створки", "Заход импоста", "Наплав системы, полка", "ID"
             }
         ) {
             Class[] types = new Class [] {
