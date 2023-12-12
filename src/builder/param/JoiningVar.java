@@ -318,10 +318,10 @@ public class JoiningVar extends Par5s {
                 case 3010:  //Угол минимальный, °
                 case 4020:  //Ограничение угла, °
                     if ("ps3".equals(eSetting.val(2))) { //Угол минимальный, °
-                        if (rec.getDbl(TEXT) < elemJoin.angl_90) {
+                        if (rec.getDbl(TEXT) < elemJoin.angl()) {
                             return false;
                         }
-                    } else if (UCom.containsNumbJust(rec.getStr(TEXT), elemJoin.angl_90) == false) { //Ограничение угла, °
+                    } else if (UCom.containsNumbJust(rec.getStr(TEXT), elemJoin.angl()) == false) { //Ограничение угла, °
                         return false;
                     }
                     break;
@@ -379,7 +379,7 @@ public class JoiningVar extends Par5s {
                     break;
                 case 2020:  //Ограничение угла, °
                 case 3020:  //Ограничение угла, °
-                    if (UCom.containsNumbJust(rec.getStr(TEXT), elemJoin.angl_90) == false) { //Ограничение угла, °
+                    if (UCom.containsNumbJust(rec.getStr(TEXT), elemJoin.angl()) == false) { //Ограничение угла, °
                         return false;
                     }
                     break;
@@ -387,7 +387,7 @@ public class JoiningVar extends Par5s {
                 case 3021: //Точный угол, °
                 case 4031: //Точный угол, °
                     if ("ps3".equals(eSetting.val(2))) {
-                        if (rec.getDbl(TEXT) != elemJoin.angl_90) {
+                        if (rec.getDbl(TEXT) != elemJoin.angl()) {
                             return false;
                         }
                     }
@@ -396,7 +396,7 @@ public class JoiningVar extends Par5s {
                 case 3022: //Исключить угол, °
                 case 4032: //Исключить угол, °
                     if ("ps3".equals(eSetting.val(2))) {
-                        if (rec.getDbl(TEXT) == elemJoin.angl_90) {
+                        if (rec.getDbl(TEXT) == elemJoin.angl()) {
                             return false;
                         }
                     }
@@ -510,7 +510,7 @@ public class JoiningVar extends Par5s {
                 break;
                 case 4030:  //Угол максимальный, °                      
                     if ("ps3".equals(eSetting.val(2))) {
-                        if (elemJoin.angl_90 > rec.getDbl(TEXT)) {
+                        if (elemJoin.angl() > rec.getDbl(TEXT)) {
                             return false;
                         }
                     }

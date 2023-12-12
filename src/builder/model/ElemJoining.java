@@ -11,22 +11,20 @@ import domain.eJoinvar;
 import enums.Layout;
 import enums.Type;
 import java.util.List;
+import org.locationtech.jts.algorithm.Angle;
+import org.locationtech.jts.geom.Coordinate;
 
 public class ElemJoining {
 
-    private double id = -1; //идентификатор соединения
-    private Wincalc winc;
-    public LayoutJoin layout = LayoutJoin.NONE; //расположение соединения 
+    public double id = -1; //идентификатор соединения
+    public Wincalc winc;
+    //public LayoutJoin layout = LayoutJoin.NONE; //расположение соединения 
     public TypeJoin type = TypeJoin.NONE;      //тип соединения (то что пишет )
     public int vid = 0; //вид соединения ("0-Простое L-обр", "1-Крестовое †-обр") или ("0-Простое T-обр", "1-Крестовое †-обр", "2-Сложное Y-обр)
     public ElemSimple elem1 = null;  //элемент соединения 1
     public ElemSimple elem2 = null;  //элемент соединения 2
     public String costs = "";     //трудозатраты, ч/ч.
 
-//    public ElemJoining(Wincalc winc, ElemSimple elem1, ElemSimple elem2) {
-//        this(winc, TypeJoin.NONE, elem1, elem2);
-//    }
-    
     public ElemJoining(Wincalc winc, TypeJoin type, ElemSimple elem1, ElemSimple elem2) {
         this.id = ++winc.specificID;
         this.winc = winc;
@@ -85,16 +83,39 @@ public class ElemJoining {
         return id == ((Com5t) obj).id;
     }
 
-    public double id() {
-        return id;
+    //Тип соединения
+    public TypeJoin type() {
+        if (type == TypeJoin.ANGL) {
+
+            double ang1 = elem1.anglHoriz();
+            double ang2 = elem2.anglHoriz();
+
+            if ((ang1 == -90 && ang2 == 180) || (ang1 == 90 && ang2 == 0)) {
+                return TypeJoin.ANG1;
+
+            } else if ((ang1 == 0 && ang2 == -90) || (ang1 == 180 && ang2 == 90)) {
+                return TypeJoin.ANG2;
+            } else {
+                return TypeJoin.ANGL;
+            }
+        } else {
+            return type;
+        }
+    }
+
+    //Угол между профилями
+    public double angl() {
+        return Angle.toDegrees(Angle.angleBetween(
+                new Coordinate(elem1.x1(), elem1.y1()),
+                new Coordinate(elem1.x2(), elem1.y2()),
+                new Coordinate(elem2.x2(), elem1.y2())));
     }
 
     public String toString() {
-        return "id=" + id + ",  layout= " + layout + ",  type=" + type + ",  elem1=" + elem1.layout() + ",  elem2=" + elem2.layout() + ",  " + layout.name;
+        return "id=" + id + ",  type=" + type + ",  elem1=" + elem1.layout() + ",  elem2=" + elem2.layout();
     }
-    
-    
-    public double angl_90 = 90;      //угол между профилями (кандидат на удаление)
+
+    //public double angl_90 = 90;      //угол между профилями (кандидат на удаление)
     public Record joiningRec = eJoining.up.newRecord(); //для рассчёта тарификации
     public Record joinvarRec = eJoinvar.up.newRecord(); //для рассчёта тарификации     
 }

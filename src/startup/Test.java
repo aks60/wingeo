@@ -10,6 +10,7 @@ import domain.eElement;
 import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
+import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.linearref.LengthIndexedLine;
@@ -301,6 +302,17 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
         
-        System.out.println(line1.contains(point1));
+        double angl = Angle.toDegrees(Angle.angleBetween(
+                new Coordinate(0, 0), 
+                new Coordinate(0, 1000),
+                new Coordinate(900, 1000)));
+        
+        double ang2 = Angle.toDegrees(Angle.angleBetween(
+                new Coordinate(0, 1000), 
+                new Coordinate(900, 1000),
+                new Coordinate(900, 0)));
+        
+        System.out.println(angl);
+        System.out.println(ang2);
     }
 }
