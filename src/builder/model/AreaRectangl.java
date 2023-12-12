@@ -3,6 +3,7 @@ package builder.model;
 import builder.Wincalc;
 import builder.script.GsonElem;
 import enums.Type;
+import enums.TypeJoin;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import org.locationtech.jts.geom.Coordinate;
@@ -45,13 +46,14 @@ public class AreaRectangl extends AreaSimple {
             //L - соединения
             for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам рамы
                 ElemFrame nextFrame = (ElemFrame) this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1);
-                winc.listJoin.add(new ElemJoining(this.winc, this.frames.get(i), nextFrame));
+                TypeJoin type = (i == 0 || i == 2) ? TypeJoin.VAR31 :TypeJoin.VAR30; 
+                winc.listJoin.add(new ElemJoining(this.winc, type, this.frames.get(i), nextFrame));
             }
             //T - соединения
             for (ElemSimple e1 : crosList) { //цикл по кросс элементам
                 for (ElemSimple e2 : elemList) { //цикл по сторонам рамы и импостам (т.к. в створке Т-обр. соединений нет)
-                    if (e2.inside(e1.x1(), e1.y1()) == true && e2 != e1) {
-                        winc.listJoin.add(new ElemJoining(winc, e1, e2));
+                    if (e2.inside(e1.x1(), e1.y1()) == true && e2 != e1) {                      
+                        winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR40, e1, e2));
                     }
                 }
             }

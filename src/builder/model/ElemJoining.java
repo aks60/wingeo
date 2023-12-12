@@ -23,19 +23,14 @@ public class ElemJoining {
     public ElemSimple elem2 = null;  //элемент соединения 2
     public String costs = "";     //трудозатраты, ч/ч.
 
-    public ElemJoining(Wincalc winc, ElemSimple elem1, ElemSimple elem2) {
-        this(winc, TypeJoin.NONE, LayoutJoin.NONE, elem1, elem2);
-    }
+//    public ElemJoining(Wincalc winc, ElemSimple elem1, ElemSimple elem2) {
+//        this(winc, TypeJoin.NONE, elem1, elem2);
+//    }
     
     public ElemJoining(Wincalc winc, TypeJoin type, ElemSimple elem1, ElemSimple elem2) {
-        this(winc, type, LayoutJoin.NONE, elem1, elem2);
-    }
-    
-    public ElemJoining(Wincalc winc, TypeJoin type, LayoutJoin layout, ElemSimple elem1, ElemSimple elem2) {
         this.id = ++winc.specificID;
         this.winc = winc;
         this.type = type;
-        this.layout = layout;
         this.elem1 = elem1;
         this.elem2 = elem2;
     }

@@ -10,10 +10,10 @@ import domain.eColor;
 import domain.eElement;
 import domain.eSysfurn;
 import domain.eSyssize;
-import enums.Layout;
 import enums.LayoutHandle;
 import enums.PKjson;
 import enums.Type;
+import enums.TypeJoin;
 import enums.TypeOpen1;
 import enums.TypeOpen2;
 import java.awt.Shape;
@@ -169,12 +169,13 @@ public class AreaStvorka extends AreaSimple {
             //L - соединения
             for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам створки
                 ElemFrame nextStv = (ElemFrame) this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1);
-                winc.listJoin.add(new ElemJoining(this.winc, this.frames.get(i), nextStv));
+                TypeJoin type = (i == 0 || i == 2) ? TypeJoin.VAR31 :TypeJoin.VAR30; 
+                winc.listJoin.add(new ElemJoining(this.winc, type, this.frames.get(i), nextStv));
 
                 //Прилегающее
                 LineSegment segm = UGeo.segmPolygon(owner.area, i, 1);
                 ElemSimple frame = UGeo.segMapElem(elemList, segm);
-                winc.listJoin.add(new ElemJoining(winc, this.frames.get(i), frame));
+                winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR10, this.frames.get(i), frame));
             }
         } catch (Exception e) {
             System.err.println("AreaStvorka.joining() " + e);
