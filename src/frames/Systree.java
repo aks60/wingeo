@@ -545,7 +545,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                         setText(txt39, ej2.joinvarRec.getStr(eJoinvar.name));
                         lab56.setIcon(UColor.iconFromTypeJoin2(ej2.type.id));
                     }
-                    if (ej3 != null && ej3.type == TypeJoin.VAR10) {
+                    if (ej3 != null && ej3.type == TypeJoin.FLAT) {
                         setText(txt40, ej3.joiningRec.getStr(eJoining.name));
                         setText(txt44, ej3.name());
                         setText(txt41, ej3.joinvarRec.getStr(eJoinvar.name));

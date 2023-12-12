@@ -169,13 +169,13 @@ public class AreaStvorka extends AreaSimple {
             //L - соединения
             for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам створки
                 ElemFrame nextStv = (ElemFrame) this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1);
-                TypeJoin type = (i == 0 || i == 2) ? TypeJoin.VAR31 :TypeJoin.VAR30; 
+                TypeJoin type = (i == 0 || i == 2) ? TypeJoin.ANG2 :TypeJoin.ANG1; 
                 winc.listJoin.add(new ElemJoining(this.winc, type, this.frames.get(i), nextStv));
 
                 //Прилегающее
                 LineSegment segm = UGeo.segmPolygon(owner.area, i, 1);
                 ElemSimple frame = UGeo.segMapElem(elemList, segm);
-                winc.listJoin.add(new ElemJoining(winc, TypeJoin.VAR10, this.frames.get(i), frame));
+                winc.listJoin.add(new ElemJoining(winc, TypeJoin.FLAT, this.frames.get(i), frame));
             }
         } catch (Exception e) {
             System.err.println("AreaStvorka.joining() " + e);

@@ -46,8 +46,8 @@ public class DicJoinvar extends javax.swing.JDialog {
     public void loadingModel() {
 
         String[] titl = {"Наименование соединения", "ID"};
-        Object[][] rows = {{TypeJoin.VAR10.name, TypeJoin.VAR10.id}, {TypeJoin.VAR20.name, TypeJoin.VAR20.id}, {TypeJoin.VAR30.name, TypeJoin.VAR30.id},
-        {TypeJoin.VAR31.name, TypeJoin.VAR31.id}, {TypeJoin.VAR40.name, TypeJoin.VAR40.id}, {TypeJoin.VAR41.name, TypeJoin.VAR41.id}};
+        Object[][] rows = {{TypeJoin.FLAT.name, TypeJoin.FLAT.id}, {TypeJoin.ANGL.name, TypeJoin.ANGL.id}, {TypeJoin.ANG1.name, TypeJoin.ANG1.id},
+        {TypeJoin.ANG2.name, TypeJoin.ANG2.id}, {TypeJoin.TIMG1.name, TypeJoin.TIMG1.id}, {TypeJoin.TIMG2.name, TypeJoin.TIMG2.id}};
         ((DefaultTableModel) tab1.getModel()).setDataVector(rows, titl);
         if (eProp.dev == false) {
             ((DefaultTableColumnModel) tab1.getColumnModel()).getColumn(1).setMinWidth(0);

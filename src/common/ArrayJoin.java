@@ -32,15 +32,15 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
                         return join;
                     }
                 } else {
-                    if (side == 0 && join.elem2.id == el.id && join.type != TypeJoin.VAR10) {  //Угловое левое
+                    if (side == 0 && join.elem2.id == el.id && join.type != TypeJoin.FLAT) {  //Угловое левое
                         if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(join.elem1.type) == false) {
                             return join;
                         }
-                    } else if (side == 1 && join.elem1.id == el.id && join.type != TypeJoin.VAR10) { //Угловое правое
+                    } else if (side == 1 && join.elem1.id == el.id && join.type != TypeJoin.FLAT) { //Угловое правое
                         if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(join.elem2.type) == false) {
                             return join;
                         }
-                    } else if (side == 2 && join.elem1.id == el.id && join.type == TypeJoin.VAR10) { //Прилегающее
+                    } else if (side == 2 && join.elem1.id == el.id && join.type == TypeJoin.FLAT) { //Прилегающее
                         //if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(join.elem1.type) == false) {
                             return join;
                         //}
@@ -70,7 +70,7 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
                     return (el.type == Type.IMPOST || el.type == Type.SHTULP || el.type == Type.STOIKA) ? join.elem2 : join.elem1;
                 } else if (side == 1) {
                     return join.elem2;
-                } else if (side == 2 && join.type == TypeJoin.VAR10) {
+                } else if (side == 2 && join.type == TypeJoin.FLAT) {
                     return join.elem2;
                 }
             }
