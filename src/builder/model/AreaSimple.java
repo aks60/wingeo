@@ -12,9 +12,11 @@ import domain.eParmap;
 import domain.eSysprof;
 import enums.*;
 import java.awt.geom.Point2D;
-import java.text.Normalizer.Form;
 import java.util.LinkedList;
 import java.util.List;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.Point;
 
 public class AreaSimple extends Com5t {
 
@@ -84,11 +86,33 @@ public class AreaSimple extends Com5t {
 
     //Соединения
     public void joining() {
+
+        //T - соединения
+        LinkedList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA);
+        LinkedList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+
+        //Цикл по кросс элементам
+        for (ElemSimple crosE : crosList) {
+            //Цикл по сторонам рамы и импостам
+            for (ElemSimple elemE : elemList) {
+                LineString line = gf.createLineString(new Coordinate[]{
+                    new Coordinate(elemE.x1(), elemE.y1()), new Coordinate(elemE.x2(), elemE.y2())});
+
+                Point point = gf.createPoint(new Coordinate(crosE.x1(), crosE.y1()));
+                if (line.contains(point)) {
+                    winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMG1, elemE, crosE));
+                }
+                point = gf.createPoint(new Coordinate(crosE.x2(), crosE.y2()));
+                if (line.contains(point)) {
+                    winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMG1, elemE, crosE));
+                }
+            }
+        }
     }
 
     /**
      * Определяет ближайшего соседа в указанном направлении
-     * 
+     *
      * @param side - сторона направления
      */
     //@Override

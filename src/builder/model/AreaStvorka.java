@@ -37,7 +37,7 @@ public class AreaStvorka extends AreaSimple {
     public int lockColor = -3; //цвет замка
     public int mosqColor = -3; //цвет москитки
 
-    public double handleHeight = 0; //высота ручки
+    public double handleHeight = 60; //высота ручки
     public TypeOpen1 typeOpen = TypeOpen1.INVALID; //направление открывания
     public LayoutHandle handleLayout = LayoutHandle.VARIAT; //положение ручки на створке      
     public boolean paramCheck[] = {true, true, true, true, true, true, true, true};
@@ -136,16 +136,16 @@ public class AreaStvorka extends AreaSimple {
             //Ареа родителя или ареа створки без смещения
             Polygon area = (owner == root) ? owner.area : this.area; //случай когда створка в гл.окне или внутр...
             double delta = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            
+
             //Полигон векторов сторон створки
-            this.area = UGeo.geoPadding(area, winc.listElem, -delta); 
+            this.area = UGeo.geoPadding(area, winc.listElem, -delta);
             Coordinate[] coo = this.area.getCoordinates();
 
             //Координаты рам створок
             if (this.frames.size() == 0) {
-                
+
                 //Если стороны ств. ещё не созданы
-                for (int i = 0; i < coo.length - 1; i++) {                    
+                for (int i = 0; i < coo.length - 1; i++) {
                     GsonElem gson = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y);
                     ElemFrame sideStv = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gson, this);
                     this.frames.add(sideStv);
@@ -164,7 +164,7 @@ public class AreaStvorka extends AreaSimple {
 
     @Override
     public void joining() {
-        LinkedList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+        LinkedList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
         try {
             //L - соединения
             for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам створки

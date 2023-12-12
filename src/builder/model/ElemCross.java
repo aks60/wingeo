@@ -168,8 +168,8 @@ public class ElemCross extends ElemSimple {
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.addSpecific() " + e);
         }
-    }
-
+    } 
+    
     public void paint() {
 
         if (this.area != null) {
