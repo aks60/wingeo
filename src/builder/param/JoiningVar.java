@@ -14,7 +14,6 @@ import builder.model.ElemJoining;
 import builder.model.ElemSimple;
 import common.UCom;
 import enums.Layout;
-import enums.LayoutJoin;
 import enums.Type;
 import enums.TypeJoin;
 import java.util.ArrayList;

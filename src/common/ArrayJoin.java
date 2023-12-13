@@ -2,7 +2,6 @@ package common;
 
 import builder.model.ElemJoining;
 import builder.model.ElemSimple;
-import enums.LayoutJoin;
 import enums.Type;
 import enums.TypeJoin;
 import java.util.ArrayList;

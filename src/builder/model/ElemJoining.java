@@ -2,7 +2,6 @@ package builder.model;
 
 import builder.Wincalc;
 import dataset.Record;
-import enums.LayoutJoin;
 import enums.TypeJoin;
 import builder.making.Specific;
 import domain.eArtikl;
