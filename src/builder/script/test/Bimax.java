@@ -14,12 +14,13 @@ public final class Bimax {
     public static String script(Integer prj) {
 // <editor-fold defaultstate="collapsed" desc="RECTANGL">
         if (prj == 601001) { //PUNIC = 427595
-            rootGson = new GsonRoot("2.0", prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
+            rootGson = new GsonRoot("2.0", prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 
+                    1009, 1009, 1009, "{ioknaParam: [-9504]}");  //маскитка Р400);
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1300.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 1300.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0))
-                    .addArea(new GsonElem(Type.STVORKA))
+                    .addArea(new GsonElem(Type.STVORKA, "{typeOpen:1, sysfurnID:1634}"))
                     .addElem(new GsonElem(Type.GLASS));
             
         } else if (prj == 601006) { //PUNIC = 427838

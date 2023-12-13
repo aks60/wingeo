@@ -129,7 +129,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             if (index != -1) {
                 Wincalc win = winc();
                 String script = win.gson.toJson();
-                win.parsing(script);
+                win.build(script);
                 win.imageIcon = Canvas.createIcon(win, 68);
                 Record sysmodelRec = qSysmodel.get(index);
                 sysmodelRec.set(eSysmodel.script, script);

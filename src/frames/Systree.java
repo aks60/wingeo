@@ -749,7 +749,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 String script = sysprodRec.getStr(eSysprod.script);
                 String script2 = UGui.ioknaParamUpdate(script, record.getInt(0));
                 sysprodRec.set(eSysprod.script, script2);
-                wincalc().parsing(script2);
+                wincalc().build(script2);
                 selectionTree2();
                 UGui.setSelectedIndex(tab7, index2);
             }
@@ -838,7 +838,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             int index = UGui.getIndexRec(tab5);
             if (index != -1) {
                 String script = win.gson.toJson();
-                win.parsing(script);
+                win.build(script);
                 win.imageIcon = Canvas.createIcon(win, 68);
                 Record sysprodRec = qSysprod.get(index);
                 sysprodRec.set(eSysprod.script, script);

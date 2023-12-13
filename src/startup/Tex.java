@@ -55,7 +55,7 @@ public class Tex extends javax.swing.JFrame {
             if (script != null && script.isEmpty() == false) {
                 JsonElement script2 = new Gson().fromJson(script, JsonElement.class);
                 script2.getAsJsonObject().addProperty("nuni", sysprodRec.getInt(eSysprod.systree_id)); //запишем nuni в script
-                winc.parsing(script2.toString()); //калькуляция изделия                
+                winc.build(script2.toString()); //калькуляция изделия                
             }
         }
     }

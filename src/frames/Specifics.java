@@ -76,7 +76,7 @@ public class Specifics extends javax.swing.JFrame {
                 String script = sysprodRec.getStr(eSysprod.script);
                 JsonElement je = new Gson().fromJson(script, JsonElement.class);
                 je.getAsJsonObject().addProperty("nuni", sysprodRec.getInt(eSysprod.systree_id));
-                winc.parsing(je.toString());
+                winc.build(je.toString());
                 Query.listOpenTable.forEach(q -> q.clear());
                 winc.constructiv(cbx2.getSelectedIndex() == 0);
             }
@@ -91,7 +91,7 @@ public class Specifics extends javax.swing.JFrame {
                 JsonElement je = new Gson().fromJson(script, JsonElement.class);
                 je.getAsJsonObject().addProperty("nuni", prjprodRec.getInt(ePrjprod.systree_id));
                 winc = new Wincalc();
-                winc.parsing(je.toString());
+                winc.build(je.toString());
                 Query.listOpenTable.forEach(q -> q.clear());
                 winc.constructiv(true);
             }
