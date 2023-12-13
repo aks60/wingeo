@@ -100,11 +100,11 @@ public class AreaSimple extends Com5t {
 
                 Point point = gf.createPoint(new Coordinate(crosE.x1(), crosE.y1()));
                 if (line.contains(point)) {
-                    winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMG1, elemE, crosE));
+                    winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, elemE, crosE));
                 }
                 point = gf.createPoint(new Coordinate(crosE.x2(), crosE.y2()));
                 if (line.contains(point)) {
-                    winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMG1, elemE, crosE));
+                    winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, elemE, crosE));
                 }
             }
         }

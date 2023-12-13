@@ -68,13 +68,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            //wincalc();
+            wincalc();
             //query();
             //frame();
             //json();
             //uid();
             //script();
-            geom();
+            //geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -97,8 +97,9 @@ public class Test {
 //            winc.gc2d = winc.bufferImg.createGraphics();
 //            winc.rootArea.draw(); //рисую конструкцию
 
-            frames.PSCompare.iwinPs4(winc, true);
-            //winc.listJoin.forEach(it -> System.out.println(it));     
+            //frames.PSCompare.iwinPs4(winc, true);
+            //winc.listElem.forEach(it -> System.out.println(it));
+            winc.listJoin.forEach(it -> System.out.println(it));     
 
         } else if (_case.equals("min")) {
             List<Integer> prjList = GsonScript.productList(_case);
@@ -302,17 +303,11 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
         
-        double angl = Angle.toDegrees(Angle.angleBetween(
-                new Coordinate(0, 0), 
-                new Coordinate(0, 1000),
-                new Coordinate(900, 1000)));
+
         
-        double ang2 = Angle.toDegrees(Angle.angleBetween(
-                new Coordinate(0, 1000), 
-                new Coordinate(900, 1000),
-                new Coordinate(900, 0)));
-        
-        System.out.println(angl);
-        System.out.println(ang2);
+        //System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(900, 1000), new Coordinate(900, 0))));
+        //System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(0, 1000))));
+        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(900, 0))));
+        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(900, 0), new Coordinate(0, 0))));
     }
 }

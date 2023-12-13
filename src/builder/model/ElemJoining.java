@@ -84,27 +84,31 @@ public class ElemJoining {
     //Тип соединения
     public TypeJoin type() {
         if (type == TypeJoin.ANGL) {
+            int lev1 = elem1.artiklRec.getInt(eArtikl.level2);
+            int lev2 = elem2.artiklRec.getInt(eArtikl.level2);
+            
+            //Если профиль не коробка и не створка меняем угол
+            if ((lev1 != 1 && lev1 != 2) || (lev2 != 1 && lev2 != 2)) { 
+                double ang1 = elem1.anglHoriz();
+                double ang2 = elem2.anglHoriz();
 
-            double ang1 = elem1.anglHoriz();
-            double ang2 = elem2.anglHoriz();
+                if ((ang1 == -90 && ang2 == 180) || (ang1 == 90 && ang2 == 0)) {
+                    return TypeJoin.ANG1;
 
-            if ((ang1 == -90 && ang2 == 180) || (ang1 == 90 && ang2 == 0)) {
-                return TypeJoin.ANG1;
-
-            } else if ((ang1 == 0 && ang2 == -90) || (ang1 == 180 && ang2 == 90)) {
-                return TypeJoin.ANG2;
-            } else {
-                return TypeJoin.ANGL;
+                } else if ((ang1 == 0 && ang2 == -90) || (ang1 == 180 && ang2 == 90)) {
+                    return TypeJoin.ANG2;
+                } else {
+                    return TypeJoin.ANGL;
+                }
             }
-        } else {
-            return type;
         }
+        return type;
     }
-    
+
     public void type(TypeJoin v) {
-     this.type = v;    
+        this.type = v;
     }
-    
+
     //Угол между профилями
     public double angl() {
         return Angle.toDegrees(Angle.angleBetween(

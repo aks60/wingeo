@@ -168,22 +168,21 @@ public class AreaStvorka extends AreaSimple {
         try {
             //L - соединения
             for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам створки
-                ElemFrame nextStv = (ElemFrame) this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1);
+                ElemFrame frameStv = (ElemFrame) this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1);
                 TypeJoin type = (i == 0 || i == 2) ? TypeJoin.ANG2 : TypeJoin.ANG1;
-                winc.listJoin.add(new ElemJoining(this.winc, type, this.frames.get(i), nextStv));
+                winc.listJoin.add(new ElemJoining(this.winc, type, this.frames.get(i), frameStv));
+            }
+            //Прилегающее
+            LineSegment segm = new LineSegment();
+            Coordinate co1[] = owner.area.getCoordinates(); //полигон векторов сторон рамы
+            Coordinate co2[] = this.area.getCoordinates();  //полигон векторов сторон створки
 
-                //Прилегающее
-                LineSegment segm = new LineSegment();
-                Coordinate co1[] = owner.area.getCoordinates(); //полигон векторов сторон рамы
-                Coordinate co2[] = this.area.getCoordinates();  //полигон векторов сторон створки
-
-                for (int j = 0; j < co2.length - 1; j++) {
-                    segm.setCoordinates(co1[j], co1[j + 1]);
-                    ElemSimple elemFrm = UGeo.segMapElem(elemList, segm);
-                    segm.setCoordinates(co2[j], co2[j + 1]);
-                    ElemSimple elemStv = UGeo.segMapElem(elemList, segm);
-                    winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.FLAT, elemFrm, elemStv));
-                }
+            for (int j = 0; j < co2.length - 1; j++) {
+                segm.setCoordinates(co1[j], co1[j + 1]);
+                ElemSimple elemFrm = UGeo.segMapElem(owner.frames, segm);
+                segm.setCoordinates(co2[j], co2[j + 1]);
+                ElemSimple elemStv = UGeo.segMapElem(this.frames, segm);
+                winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.FLAT, elemStv, elemFrm));
             }
         } catch (Exception e) {
             System.err.println("AreaStvorka.joining() " + e);

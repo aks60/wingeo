@@ -74,11 +74,11 @@ public class ElementVar extends Par5s {
                     break;
                 case 31003:  //Если соединенный артикул  T-обр.
                     if (rec.getStr(TEXT).equals(winc.listJoin.elem(elem5e, 0).artiklRecAn.getStr(eArtikl.code)) == true) {
-                        if (winc.listJoin.get(elem5e, 0).type() != TypeJoin.TIMG1 && winc.listJoin.get(elem5e, 0).type() != TypeJoin.TIMG2) {
+                        if (winc.listJoin.get(elem5e, 0).type() != TypeJoin.TIMP && winc.listJoin.get(elem5e, 0).type() != TypeJoin.TCON) {
                             return false;
                         }
                     } else if (rec.getStr(TEXT).equals(winc.listJoin.elem(elem5e, 1).artiklRecAn.getStr(eArtikl.code))) {
-                        if (winc.listJoin.get(elem5e, 1).type() != TypeJoin.TIMG1 && winc.listJoin.get(elem5e, 1).type() != TypeJoin.TIMG2) {
+                        if (winc.listJoin.get(elem5e, 1).type() != TypeJoin.TIMP && winc.listJoin.get(elem5e, 1).type() != TypeJoin.TCON) {
                             return false;
                         }
                     } else {
