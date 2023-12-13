@@ -16,6 +16,7 @@ import common.UCom;
 import enums.Layout;
 import enums.LayoutJoin;
 import enums.Type;
+import enums.TypeJoin;
 import java.util.ArrayList;
 
 //Соединения
@@ -57,7 +58,7 @@ public class JoiningVar extends Par5s {
                 case 1005:  //Контейнер имеет тип Артикула1/Артикула2
                 case 2005:  //Контейнер имеет тип Артикула1/Артикула2
                 case 3005:  //Контейнер имеет тип Артикула1/Артикула2
-                case 4005: //Контейнер имеет тип Артикула1/Артикула2
+                case 4005:  //Контейнер имеет тип Артикула1/Артикула2
                     if ("ps3".equals(eSetting.val(2))) { //Контейнер Артикула 1 имеет тип
                         String[] arr = {"коробка", "створка", "импост", "стойка", "эркер"};
                         int[] index = {1, 2, 3, 5, 19};
@@ -290,29 +291,15 @@ public class JoiningVar extends Par5s {
                 case 3003:  //Угол варианта 
                     if (var.getInt(eJoinvar.types) == 30 || var.getInt(eJoinvar.types) == 31) {
                         if ("левый".equals(rec.getStr(TEXT))) {
-                            if (elemJoin.layout == LayoutJoin.LTOP && var.getInt(eJoinvar.types) == 31) {
-                                return false;
-                            } else if (elemJoin.layout == LayoutJoin.LBOT && var.getInt(eJoinvar.types) == 31) {
+                            if (elemJoin.type() != TypeJoin.ANG1) {
                                 return false;
                             }
                         } else if ("правый".equals(rec.getStr(TEXT))) {
-                            if (elemJoin.layout == LayoutJoin.RTOP && var.getInt(eJoinvar.types) == 30) {
-                                return false;
-                            } else if (elemJoin.layout == LayoutJoin.RBOT && var.getInt(eJoinvar.types) == 30) {
+                            if (elemJoin.type() != TypeJoin.ANG2) {
                                 return false;
                             }
                         }
-                    } else {
-                        if ("левый".equals(rec.getStr(TEXT))) {
-                            if (elemJoin.layout == LayoutJoin.LBOT || elemJoin.layout == LayoutJoin.LTOP || elemJoin.layout == LayoutJoin.TLEFT) {
-                                return false;
-                            }
-                        } else { //левый
-                            if (elemJoin.layout == LayoutJoin.RBOT || elemJoin.layout == LayoutJoin.RTOP || elemJoin.layout == LayoutJoin.TRIGH) {
-                                return false;
-                            }
-                        }
-                    }
+                    } 
                     break;
                 case 2010:  //Угол минимальный, °
                 case 3010:  //Угол минимальный, °

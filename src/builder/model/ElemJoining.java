@@ -18,8 +18,7 @@ public class ElemJoining {
 
     public double id = -1; //идентификатор соединения
     public Wincalc winc;
-    //public LayoutJoin layout = LayoutJoin.NONE; //расположение соединения 
-    public TypeJoin type = TypeJoin.NONE;      //тип соединения (то что пишет )
+    private TypeJoin type = TypeJoin.NONE;      //тип соединения (то что пишет )
     public int vid = 0; //вид соединения ("0-Простое L-обр", "1-Крестовое †-обр") или ("0-Простое T-обр", "1-Крестовое †-обр", "2-Сложное Y-обр)
     public ElemSimple elem1 = null;  //элемент соединения 1
     public ElemSimple elem2 = null;  //элемент соединения 2
@@ -28,7 +27,7 @@ public class ElemJoining {
     public ElemJoining(Wincalc winc, TypeJoin type, ElemSimple elem1, ElemSimple elem2) {
         this.id = ++winc.specificID;
         this.winc = winc;
-        this.type = type;
+        this.type = type; //угол варианта вычисл. динамически см. type();
         this.elem1 = elem1;
         this.elem2 = elem2;
     }
@@ -102,7 +101,11 @@ public class ElemJoining {
             return type;
         }
     }
-
+    
+    public void type(TypeJoin v) {
+     this.type = v;    
+    }
+    
     //Угол между профилями
     public double angl() {
         return Angle.toDegrees(Angle.angleBetween(

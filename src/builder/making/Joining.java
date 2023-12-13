@@ -83,11 +83,11 @@ public class Joining extends Cal5e {
                     boolean go = false;
                     int typeID = joinvarRec.getInt(eJoinvar.types);
 
-                    if (elemJoin.layout.equalType(typeID)) { //если варианты соединения совпали
+                    if (elemJoin.type().id == typeID) { //если варианты соединения совпали
                         go = true;
                     } else if (joinvarRec.getInt(eJoinvar.mirr) == 1) { //когда включена зеркальность
                         if (winc.root.type == Type.DOOR && (typeID == 30 || typeID == 31)
-                                && (elemJoin.layout.id == 30 || elemJoin.layout.id == 31)) {
+                                && (elemJoin.type().id == 30 || elemJoin.type().id == 31)) {
                             go = true;
                         }
                     }
@@ -103,7 +103,7 @@ public class Joining extends Cal5e {
                             mapJoinvar.put(elemJoin, joinvarRec.getInt(eJoinvar.id));
 
                             //Сохраним подхоящий вариант соединения из таблиц bd                           
-                            elemJoin.type = TypeJoin.get(joinvarRec.getInt(eJoinvar.types));
+                            elemJoin.type(TypeJoin.get(joinvarRec.getInt(eJoinvar.types)));
                             elemJoin.joiningRec = joiningRec1;
                             elemJoin.joinvarRec = joinvarRec;
 
@@ -167,7 +167,7 @@ public class Joining extends Cal5e {
         //Цикл по вариантам соединения
         for (Record joinvarRec : joinvarList) {
             //Если варианты соединения совпали
-            if (elemJoin.layout.equalType(joinvarRec.getInt(eJoinvar.types))) {
+            if (elemJoin.type().id == joinvarRec.getInt(eJoinvar.types)) {
                 //ФИЛЬТР вариантов  
                 if (joiningVar.filter(elemJoin, joinvarRec) == true) {
                     joinvarRec.setNo(eJoinvar.name, joinvarRec.getStr(eJoinvar.name) + " (" + joiningRec.getStr(eJoining.name) + ")");

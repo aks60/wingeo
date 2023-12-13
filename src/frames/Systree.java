@@ -537,19 +537,19 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                         setText(txt36, ej1.joiningRec.getStr(eJoining.name));
                         setText(txt42, ej1.name());
                         setText(txt38, ej1.joinvarRec.getStr(eJoinvar.name));
-                        lab55.setIcon(UColor.iconFromTypeJoin2(ej1.type.id));
+                        lab55.setIcon(UColor.iconFromTypeJoin2(ej1.type().id));
                     }
                     if (ej2 != null) {
                         setText(txt37, ej2.joiningRec.getStr(eJoining.name));
                         setText(txt43, ej2.name());
                         setText(txt39, ej2.joinvarRec.getStr(eJoinvar.name));
-                        lab56.setIcon(UColor.iconFromTypeJoin2(ej2.type.id));
+                        lab56.setIcon(UColor.iconFromTypeJoin2(ej2.type().id));
                     }
-                    if (ej3 != null && ej3.type == TypeJoin.FLAT) {
+                    if (ej3 != null && ej3.type() == TypeJoin.FLAT) {
                         setText(txt40, ej3.joiningRec.getStr(eJoining.name));
                         setText(txt44, ej3.name());
                         setText(txt41, ej3.joinvarRec.getStr(eJoinvar.name));
-                        lab57.setIcon(UColor.iconFromTypeJoin2(ej3.type.id));
+                        lab57.setIcon(UColor.iconFromTypeJoin2(ej3.type().id));
                     }
                 } else {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card18");
