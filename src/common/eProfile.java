@@ -13,7 +13,7 @@ public enum eProfile {
     P02("SA.OKNA <АРМ Технолог>", "TEXNOLOG_RO", "TEXNOLOG_RW"), 
     P03("SA.OKNA <АРМ Менеджер>", "MANAGER_RO", "MANAGER_RW"); 
 
-    public final static int[] version = {1, 0}; //версия программы      
+    public final static int[] version = {2, 0}; //версия программы      
     public static eProfile profile = null; //профиль пользователя 
     public static String user = null;
     

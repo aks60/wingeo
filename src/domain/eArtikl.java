@@ -104,7 +104,7 @@ public enum eArtikl implements Field {
     }
 
     public static Record find2(String _code) {
-        if (_code.equals("0x0x0x0")) {
+        if ("0x0x0x0".equals(_code)) { //|| "-".equals(_code)) {
             return virtualRec();
         }
         if (Query.conf.equals("calc")) {
@@ -127,7 +127,7 @@ public enum eArtikl implements Field {
     public static Record virtualRec() {
         Record record = up.newRecord();
         record.setNo(id, -3);
-        record.setNo(code, "VIRT");
+        record.setNo(code, "-");
         record.setNo(name, "virtual");
         //для построения типовых конструкций
         record.setNo(height, 80);

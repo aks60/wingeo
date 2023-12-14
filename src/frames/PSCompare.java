@@ -96,7 +96,6 @@ public class PSCompare extends javax.swing.JFrame {
         }
     };
 
-
     /**
      * Конструктор из главного меню
      */
@@ -110,7 +109,7 @@ public class PSCompare extends javax.swing.JFrame {
         tabb.setSelectedIndex(4);
         tab1.setColumnSelectionInterval(3, 3);
     }
-    
+
     /**
      * Конструктор из спецификации
      */
@@ -210,7 +209,7 @@ public class PSCompare extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, b.pdate, a.bpict from listord a, listprj b where a.punic = b.punic and b.punic in "
                     + "(412463, 427595, 427597, 427761, 427817, 427818 ,427819, 427820, 427840, 427838, 427842, 427848, 427851, 427852, 427858, 427872, 427422, 427565, "
                     + "427833, 427832, 427831, 427830, 427825, 427826, 427779, 425392, 425392, 427850, 427708, 427737, 427629, 427847, 427856,"
-                    + "425688) order by b.pnumb");          
+                    + "425688) order by b.pnumb");
             if (rs.isLast() == false) {
                 while (rs.next()) {
                     Vector vectorRec = new Vector();
@@ -250,7 +249,7 @@ public class PSCompare extends javax.swing.JFrame {
             System.err.println("Ошибка: DBCompare.loadingTab4().  " + e);
         }
     }
-    
+
     public void loadingTabGroup2(Wincalc winc) {
         try {
             Map<String, Vector> hmSpc = new HashMap();
@@ -263,12 +262,18 @@ public class PSCompare extends javax.swing.JFrame {
             if (winc.gson.ord != null) {
                 txt20.setText(String.valueOf(winc.gson.ord));
             }
+//setSpcSa.forEach(a -> System.out.println(a));
             //Заполним на будушее hmSpc из SA
             for (String art_code : setSpcSa) {
-                Record artiklRec = eArtikl.find2(art_code);
-                hmSpc.put(art_code, new Vector(List.of(art_code, artiklRec.get(eArtikl.name), 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)));
+                try {
+                    if ("-".equals(art_code) == false) {
+                        Record artiklRec = eArtikl.find2(art_code);
+                        hmSpc.put(art_code, new Vector(List.of(art_code, artiklRec.get(eArtikl.name), 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)));
+                    }
+                } catch (Exception e) {
+                    System.out.println("XXXXXXXXXXXX");
+                }
             }
-            //setSpcSa.forEach(el -> hmSpc.put(el, new Vector(List.of(el + "*", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0))));
             winc.listSpec.forEach(specRec -> {
                 List<Double> val = hmSpc.get(specRec.artikl);
                 val.set(2, val.get(2) + specRec.count); //колич. в SA
@@ -448,7 +453,7 @@ public class PSCompare extends javax.swing.JFrame {
             tab6.getColumnModel().getColumn(1).setMaxWidth(80);
             tab6.getColumnModel().getColumn(2).setMaxWidth(80);
             rs.close();
-         
+
             //=== Таблица 7 ===
             ((DefaultTableModel) tab7.getModel()).getDataVector().clear();
 //            rs = st.executeQuery("select c.pname, b.pname from savefup a "
@@ -472,7 +477,9 @@ public class PSCompare extends javax.swing.JFrame {
             }
             rs.close();
         } catch (SQLException e) {
-            System.err.println("Ошибка: DBCompare.loadingTab().  " + e);
+            System.err.println("Ошибка SQL: DBCompare.loadingTabGroup2().  " + e);
+        } catch (Exception e) {
+            System.err.println("Ошибка: DBCompare.loadingTabGroup2().  " + e);
         }
     }
 
@@ -557,6 +564,7 @@ public class PSCompare extends javax.swing.JFrame {
             System.err.println("Ошибка: DBCompare.iwinPs4()  " + e);
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -897,7 +905,7 @@ public class PSCompare extends javax.swing.JFrame {
         lab20.setPreferredSize(new java.awt.Dimension(60, 20));
 
         txt19.setFont(frames.UGui.getFont(0,0));
-        txt19.setText("427595");
+        txt19.setText("427818");
         txt19.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         txt19.setPreferredSize(new java.awt.Dimension(80, 18));
 
@@ -921,7 +929,7 @@ public class PSCompare extends javax.swing.JFrame {
         labFurn.setPreferredSize(new java.awt.Dimension(200, 19));
 
         txt21.setFont(frames.UGui.getFont(0,0));
-        txt21.setText("601001");
+        txt21.setText("601002");
         txt21.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         txt21.setPreferredSize(new java.awt.Dimension(80, 18));
 

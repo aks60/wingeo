@@ -2,6 +2,7 @@ package startup;
 
 import builder.script.GsonScript;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.eProp;
@@ -12,10 +13,6 @@ import java.util.List;
 import java.util.UUID;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.*;
-import org.locationtech.jts.io.WKTReader;
-import org.locationtech.jts.linearref.LengthIndexedLine;
-import org.locationtech.jts.linearref.LinearLocation;
-import org.locationtech.jts.linearref.LocationIndexedLine;
 
 public class Test {
 
@@ -88,9 +85,10 @@ public class Test {
         String _case = "one";
 
         if (_case.equals("one")) {
-            winc.build(GsonScript.productJson(601001));
-            //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(winc.script)));
-            //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(winc.script)));
+            String script = GsonScript.productJson(601002);
+            winc.build(script);
+            //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
+            System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
             winc.constructiv(true);
 //            winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
@@ -108,7 +106,6 @@ public class Test {
                 if (script != null) {
                     winc.build(script);
                     winc.constructiv(true);
-                    //frames.PSCompare.iwinXls(winc, false);
                     frames.PSCompare.iwinPs4(winc, false);
                 }
             }
@@ -120,7 +117,6 @@ public class Test {
                 if (script != null) {
                     winc.build(script);
                     winc.constructiv(true);
-                    //frames.PSCompare.iwinXls(winc, false);
                     frames.PSCompare.iwinPs4(winc, false);
                 }
             }

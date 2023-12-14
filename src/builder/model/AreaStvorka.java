@@ -134,7 +134,7 @@ public class AreaStvorka extends AreaSimple {
     public void setLocation() {
         try {
             //Ареа родителя или ареа створки без смещения
-            Polygon area = (owner == root) ? owner.area : this.area; //случай когда створка в гл.окне или внутр...
+            Polygon area = (this.area == null) ? owner.area : this.area; //случай когда створка в гл.окне или внутр...
             double delta = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
 
             //Полигон векторов сторон створки

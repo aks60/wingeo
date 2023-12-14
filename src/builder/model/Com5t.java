@@ -45,7 +45,7 @@ public class Com5t {
         this.root = winc.root;
         this.type = gson.type;
     }
-    
+
     public void paint() {
     }
 
@@ -86,7 +86,7 @@ public class Com5t {
                     }
                 }
             }
-        };       
+        };
         ListenerMouse mousePressed = (evt) -> {
             if (this.area != null) {
                 pointPress = evt.getPoint();
@@ -94,7 +94,7 @@ public class Com5t {
                 boolean b = this.area.contains(gf.createPoint(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale)));
                 if (b == true) {
                     LineSegment segm = new LineSegment(x1(), y1(), x2(), y2());
-                    double coef = segm.segmentFraction(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale));                    
+                    double coef = segm.segmentFraction(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale));
                     if (coef < .33) {
                         pass[0] = true; //кликнул ближе к началу вектора
                     } else if (coef > .67) {
@@ -114,7 +114,7 @@ public class Com5t {
                 double H = winc.canvas.getHeight();
                 double dX = evt.getX() - pointPress.getX(); //прирощение по горизонтали
                 double dY = evt.getY() - pointPress.getY(); //прирощение по вертикали 
-                
+
                 if (pass[0] == true) {
                     double X1 = dX / winc.scale + x1();
                     double Y1 = dY / winc.scale + y1();
@@ -169,6 +169,10 @@ public class Com5t {
             return false;
         }
         return true;
+    }
+
+    public boolean equals(Object obj) {
+        return (this.id == ((Com5t) obj).id);
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">

@@ -23,7 +23,19 @@ public class GsonScript {
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0))
                     .addArea(new GsonElem(Type.STVORKA))
                     .addElem(new GsonElem(Type.GLASS));
-            
+
+        } else if (prj == 601002) { //PUNIC = 427818  S = 1300*1400
+            rootGson = new GsonRoot("2.0", Type.RECTANGL, "Montblanc\\Nord\\1 ОКНА");
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1400.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1400.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1400.0, .0))
+                    .addArea(new GsonElem(Type.STVORKA))
+                    .addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 650.0, 1400.0, 650.0, .0));
+            rootGson.addArea(new GsonElem(Type.STVORKA))
+                    .addElem(new GsonElem(Type.GLASS));
+
         } else if (prj == 601006) { //PUNIC = 427838
             rootGson = new GsonRoot("1.0", Type.RECTANGL, "RAZIO \\ RAZIO 58 \\ 1 ОКНА");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
@@ -90,7 +102,6 @@ public class GsonScript {
             //.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
 
 // </editor-fold>
-
 // <editor-fold defaultstate="collapsed" desc="ARCH">
 //        } else if (prj == 501007) {
 //            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.ARCH, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
@@ -103,7 +114,6 @@ public class GsonScript {
 //            rootGeo.addElem(new GsonElem(Type.IMPOST, .0, 500.0, 1000.0, 500.0));
 //            rootGeo.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
 // </editor-fold>
-
 // <editor-fold defaultstate="collapsed" desc="TRAPEZE">
 //        } else if (prj == 501004) {
 //            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.TRIANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
@@ -131,7 +141,6 @@ public class GsonScript {
 //            rootGeo.addElem(new GsonElem(Type.IMPOST, 1000.0, 500.0, 3500.0, 3500.0))
 //                    .addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
 // </editor-fold>
-
 // <editor-fold defaultstate="collapsed" desc="DOOR">
         } else if (prj == 508841) { //Двери
 
@@ -246,8 +255,7 @@ public class GsonScript {
                     506642, -506642, 605001, 508916, 508945, 508841, 700009, 700014) //трапеции, двери
                     //                    : List.of(601001, 601002, 601003, 601004, 601005, 601006,
                     //                            601007, 601008, 601009, 601010, 604005, 604006, 604007, 604008, 604009, 604010);
-                    : List.of(601001, 601002, 601003, 601004, 601005, 601006,
-                            601007, 601008, 601009, 601010, 506642, 604005, 604006, 604007, 604008, 604009, 604010);
+                    : List.of(601001, 601002, 601006);
 
         } else if (base_name.toLowerCase().contains("vidnal.fdb")) {
             return List.of(26);
