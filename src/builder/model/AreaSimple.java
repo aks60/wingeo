@@ -84,7 +84,7 @@ public class AreaSimple extends Com5t {
     public void setLocation() {
     }
 
-    //Соединения
+    //Т - соединения
     public void joining() {
 
         //T - соединения

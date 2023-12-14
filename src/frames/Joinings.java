@@ -426,7 +426,7 @@ public class Joinings extends javax.swing.JFrame {
                 joindetRec.set(eJoindet.color_fk, null);
                 int artiklID = record.getInt(eArtikl.id);
                 List<Record> artdetList = eArtdet.filter2(artiklID);
-                
+
                 if (artdetList.size() == 1) {
                     if (artdetList.get(0).getInt(eArtdet.color_fk) > 0) {
                         Record colorRec = eColor.find(artdetList.get(0).getInt(eArtdet.color_fk));
@@ -437,7 +437,7 @@ public class Joinings extends javax.swing.JFrame {
                 UGui.setSelectedIndex(tab4, index);
             }
         };
-        
+
         listenerColor = (record) -> {
             UGui.cellParamColor(record, tab4, eJoindet.color_fk, eJoindet.color_us, tab1, tab2, tab3, tab4, tab5);
         };
@@ -497,12 +497,18 @@ public class Joinings extends javax.swing.JFrame {
         try {
             Query qVar = new Query(eJoinvar.values());
             Query qDet = new Query(eJoindet.values(), eArtikl.values());
+
+            //Цыкл по соединениям
             for (int index = 0; index < qJoining.size(); index++) {
                 int joining_id = qJoining.get(index).getInt(eJoining.id);
                 qVar.select(eJoinvar.up, "where", eJoinvar.joining_id, "=", joining_id, "order by", eJoinvar.prio);
+
+                //Цыкл по вариантам соединениям
                 for (int index2 = 0; index2 < qVar.size(); index2++) {
                     int joinvar_id = qVar.get(index2).getInt(eJoining.id);
                     qDet.select(eJoindet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eJoindet.artikl_id, "where", eJoindet.joinvar_id, "=", joinvar_id, "order by", eJoindet.artikl_id);
+
+                    //Цыкл по детализации соединений
                     for (int index3 = 0; index3 < qDet.size(); index3++) {
                         if (qDet.get(index3).getInt(eJoindet.id) == deteilID) {
 
