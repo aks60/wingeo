@@ -131,7 +131,7 @@ public enum App {
                         if (param[0] instanceof ElemJoining) {
                             frame = new Joinings((ElemJoining) param[0]);
                         } else {
-                            frame = new Joinings((int) param[1]);
+                            frame = new Joinings((int) param[0]);
                         }
                     }
                     break;
