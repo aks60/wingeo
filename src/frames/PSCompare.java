@@ -255,14 +255,13 @@ public class PSCompare extends javax.swing.JFrame {
             Map<String, Vector> hmSpc = new HashMap();
             Set<String> setSpcSa = new HashSet();
             Set<String> setSpcPs = new HashSet();
-            winc.listSpec.forEach(specRec -> setSpcSa.add(specRec.artikl));
+            winc.listSpec.forEach(rec -> setSpcSa.add(rec.artikl));
             if (winc.gson.prj != null) {
                 txt21.setText(String.valueOf(winc.gson.prj));
             }
             if (winc.gson.ord != null) {
                 txt20.setText(String.valueOf(winc.gson.ord));
             }
-//setSpcSa.forEach(a -> System.out.println(a));
             //Заполним на будушее hmSpc из SA
             for (String art_code : setSpcSa) {
                 try {

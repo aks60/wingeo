@@ -689,7 +689,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn34.setFont(frames.UGui.getFont(0,1));
         mn34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b056.gif"))); // NOI18N
-        mn34.setText("Составы");
+        mn34.setText("Вставки");
         mn34.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnElement(evt);

@@ -94,24 +94,25 @@ public class ElemCross extends ElemSimple {
     @Override
     public void setSpecific() {
         try {
-            spcRec.place = (Layout.HORIZ == owner.layout()) ? "ВСТ.в" : "ВСТ.г";
+            //spcRec.place = (Layout.HORIZ == owner.layout()) ? "ВСТ.в" : "ВСТ.г";
+            spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
             spcRec.setArtikl(artiklRec);
             spcRec.setColor(colorID1, colorID2, colorID3);
             spcRec.setAnglCut(90, 90);
-            spcRec.anglHoriz = anglHoriz();
+            spcRec.anglHoriz = Math.abs(anglHoriz());
 
             if (type == Type.IMPOST) {
                 //На эскизе заход импоста не показываю, сразу пишу в спецификацию
                 if (winc.syssizRec != null) {
                     double zax = winc.syssizRec.getDbl(eSyssize.zax);
-                    if (Layout.HORIZ == owner.layout()) { //ареа слева направо  
+                    if (Layout.VERT == this.layout()) {  
                         ElemSimple inTop = joinFlat(Layout.TOP), inBott = joinFlat(Layout.BOTT);
                         spcRec.width = (inBott.y1() - inBott.artiklRec.getDbl(eArtikl.height) + inBott.artiklRec.getDbl(eArtikl.size_centr))
                                 - (inTop.y2() + inTop.artiklRec.getDbl(eArtikl.height) - inTop.artiklRec.getDbl(eArtikl.size_centr))
                                 + zax * 2 + inBott.artiklRec.getDbl(eArtikl.size_falz) + inTop.artiklRec.getDbl(eArtikl.size_falz);
                         spcRec.height = artiklRec.getDbl(eArtikl.height);
 
-                    } else if (Layout.VERT == owner.layout()) { //ареа сверху вниз
+                    } else if (Layout.HORIZ == this.layout()) {
                         ElemSimple inLeft = joinFlat(Layout.LEFT), inRight = joinFlat(Layout.RIGHT);
                         spcRec.width = (inRight.x1() - inRight.artiklRec.getDbl(eArtikl.height) + inRight.artiklRec.getDbl(eArtikl.size_centr))
                                 - (inLeft.x1() + inLeft.artiklRec.getDbl(eArtikl.height) - inLeft.artiklRec.getDbl(eArtikl.size_centr))
@@ -189,13 +190,11 @@ public class ElemCross extends ElemSimple {
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
     public Layout layout() {
         double angl = this.anglHoriz();
-        if (angl == 90) {
+        
+        if (angl == 90 || angl == -90) {
             return Layout.VERT;
-        } else if (angl == 0) {
-            return Layout.HORIZ;
-        } else if (angl == -90) {
-            return Layout.VERT;
-        } else if (angl == 180) {
+
+        } else if (angl == 180 || angl == 0) {
             return Layout.HORIZ;
         }
         return Layout.ANY;

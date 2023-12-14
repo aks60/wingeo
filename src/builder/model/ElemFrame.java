@@ -154,6 +154,7 @@ public class ElemFrame extends ElemSimple {
                 spcAdd.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
                 spcAdd.anglCut0 = 90;
                 spcAdd.anglCut1 = 90;
+                spcRec.anglHoriz = Math.abs(anglHoriz());
 
                 spcAdd.width += length();
 
