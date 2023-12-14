@@ -11,8 +11,6 @@ import enums.Layout;
 import enums.Type;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Point2D;
-import org.locationtech.jts.algorithm.Distance;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.GeometryFactory;

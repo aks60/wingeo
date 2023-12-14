@@ -133,18 +133,16 @@ public class AreaStvorka extends AreaSimple {
     //Создание и коррекция сторон створки
     public void setLocation() {
         try {
-            //Ареа родителя или ареа створки без смещения
-            Polygon area = (this.area == null) ? owner.area : this.area; //случай когда створка в гл.окне или внутр...
-            double delta = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-
             //Полигон векторов сторон створки
+            Polygon area = (owner.equals(winc.root)) ? owner.area : this.area;  //случай когда створка в гл.окне
+            double delta = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
             this.area = UGeo.geoPadding(area, winc.listElem, -delta);
-            Coordinate[] coo = this.area.getCoordinates();
-
+            
             //Координаты рам створок
             if (this.frames.size() == 0) {
 
                 //Если стороны ств. ещё не созданы
+                Coordinate[] coo = this.area.getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
                     GsonElem gson = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y);
                     ElemFrame sideStv = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gson, this);
@@ -152,6 +150,7 @@ public class AreaStvorka extends AreaSimple {
                 }
             } else {
                 //Если стороны уже созданы
+                Coordinate[] coo = this.area.getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
                     ElemSimple elem = this.frames.get(i);
                     elem.setDimension(coo[i].x, coo[i].y, coo[i + 1].x, coo[i + 1].y); //запишем координаты
