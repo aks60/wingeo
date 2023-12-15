@@ -118,7 +118,7 @@ public class ElemJoining {
     }
 
     public String toString() {
-        return "id=" + id + ",  type=" + type + ",  elem1=" + elem1.layout() + ",  elem2=" + elem2.layout();
+        return "id=" + id + ",  type=" + type + ",  elem1=" + elem1.layout() + ",  elem2=" + elem2.layout() + ", " + type.name;
     }
 
     //public double angl_90 = 90;      //угол между профилями (кандидат на удаление)

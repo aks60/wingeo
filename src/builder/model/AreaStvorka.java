@@ -31,6 +31,7 @@ public class AreaStvorka extends AreaSimple {
     public Record lockRec = eArtikl.virtualRec(); //замок
     public Record mosqRec = eArtikl.virtualRec(); //москитка
     public Record elementRec = eElement.up.newRecord(); //состав москидки 
+    private Polygon areaNaxl = null; //ареа створки с нахлёстом
 
     public int handleColor = -3; //цвет ручки
     public int loopColor = -3; //цвет подвеса
@@ -134,15 +135,16 @@ public class AreaStvorka extends AreaSimple {
     public void setLocation() {
         try {
             //Полигон векторов сторон створки
-            Polygon area = (owner.equals(winc.root)) ? owner.area : this.area;  //случай когда створка в гл.окне
+            
+            this.area = (owner.equals(winc.root)) ? owner.area : this.area;  //случай когда створка в гл.окне
             double delta = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            this.area = UGeo.geoPadding(area, winc.listElem, -delta);
+            this.areaNaxl = UGeo.geoPadding(this.area, winc.listElem, -delta);
             
             //Координаты рам створок
             if (this.frames.size() == 0) {
 
                 //Если стороны ств. ещё не созданы
-                Coordinate[] coo = this.area.getCoordinates();
+                Coordinate[] coo = this.areaNaxl.getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
                     GsonElem gson = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y);
                     ElemFrame sideStv = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gson, this);
@@ -150,7 +152,7 @@ public class AreaStvorka extends AreaSimple {
                 }
             } else {
                 //Если стороны уже созданы
-                Coordinate[] coo = this.area.getCoordinates();
+                Coordinate[] coo = this.areaNaxl.getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
                     ElemSimple elem = this.frames.get(i);
                     elem.setDimension(coo[i].x, coo[i].y, coo[i + 1].x, coo[i + 1].y); //запишем координаты
@@ -163,7 +165,7 @@ public class AreaStvorka extends AreaSimple {
 
     @Override
     public void joining() {
-        LinkedList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+        LinkedList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.STOIKA);
         try {
             //L - соединения
             for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам створки
@@ -173,13 +175,13 @@ public class AreaStvorka extends AreaSimple {
             }
             //Прилегающее
             LineSegment segm = new LineSegment();
-            Coordinate co1[] = owner.area.getCoordinates(); //полигон векторов сторон рамы
-            Coordinate co2[] = this.area.getCoordinates();  //полигон векторов сторон створки
-
-            for (int j = 0; j < co2.length - 1; j++) {
-                segm.setCoordinates(co1[j], co1[j + 1]);
-                ElemSimple elemFrm = UGeo.segMapElem(owner.frames, segm);
-                segm.setCoordinates(co2[j], co2[j + 1]);
+            Coordinate coo1[] = this.area.getCoordinates();  //полигон векторов сторон створки
+            Coordinate coo2[] = this.areaNaxl.getCoordinates(); //полигон векторов сторон рамы
+            
+            for (int j = 0; j < coo2.length - 1; j++) {
+                segm.setCoordinates(coo1[j], coo1[j + 1]);
+                ElemSimple elemFrm = UGeo.segMapElem(elemList, segm);
+                segm.setCoordinates(coo2[j], coo2[j + 1]);
                 ElemSimple elemStv = UGeo.segMapElem(this.frames, segm);
                 winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.FLAT, elemStv, elemFrm));
             }
