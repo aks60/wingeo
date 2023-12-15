@@ -9,12 +9,14 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import org.locationtech.jts.awt.ShapeWriter;
@@ -34,6 +36,11 @@ public class Canvas extends javax.swing.JPanel {
         this.winc.canvas = this;
         this.winc.scale = scale(winc);
 
+        List.of(getKeyListeners()).forEach(l -> removeKeyListener(l));
+        List.of(getMouseListeners()).forEach(l -> removeMouseListener(l));
+        List.of(getMouseMotionListeners()).forEach(l -> removeMouseMotionListener(l));
+        List.of(getComponentListeners()).forEach(l -> removeComponentListener(l));
+        
         addKeyListener(new KeyAdapter() {
 
             public void keyPressed(KeyEvent event) {
@@ -64,7 +71,7 @@ public class Canvas extends javax.swing.JPanel {
             public void componentResized(ComponentEvent event) {
                 winc.scale = scale(winc);
             }
-        });
+        });       
     }
 
     //Прорисовка конструкции
