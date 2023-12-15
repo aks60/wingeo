@@ -184,8 +184,8 @@ public class Wincalc {
             listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
 
             //Соединения конструкции            
-            //root.joining();  //L и T соединения
-            //listArea.filter(Type.STVORKA).forEach(e -> e.joining());
+            root.joining();  //L и T соединения
+            listArea.filter(Type.STVORKA).forEach(e -> e.joining());
             
         } catch (Exception s) {
             System.err.println("Ошибка:Wincalc.location() " + s);

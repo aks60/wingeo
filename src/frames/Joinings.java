@@ -70,7 +70,7 @@ public class Joinings extends javax.swing.JFrame {
 
     //Запуск из Tex (главное меню)
     public Joinings() {
-        this.subsql = null;
+        //this.subsql = null;
         initComponents();
         initElements();
         loadingData();
@@ -112,7 +112,7 @@ public class Joinings extends javax.swing.JFrame {
         qGroups.select(eGroups.up, "where", eGroups.grup, "in (", TypeGrup.PARAM_USER.id, ",", TypeGrup.COLOR_MAP.id, ") order by", eGroups.npp, ",", eGroups.name);
         qColor.select(eColor.up);
         qArtikl.select(eArtikl.up);
-        if (subsql == null) {
+        if (subsql.equals("(-1)") == true) {
             qJoining.select(eJoining.up, "order by", eJoining.name);
         } else {
             qJoining.select(eJoining.up, "where", eJoining.id, "in", subsql, "order by", eJoining.name);
