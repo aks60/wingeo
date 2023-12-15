@@ -52,14 +52,6 @@ public class AreaRectangl extends AreaSimple {
                 //TypeJoin type = (i == 0 || i == 2) ? TypeJoin.ANG2 :TypeJoin.ANG1; 
                 winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.ANGL, this.frames.get(i), nextFrame));
             }
-            //T - соединения
-            for (ElemSimple e1 : crosList) { //цикл по кросс элементам
-                for (ElemSimple e2 : elemList) { //цикл по сторонам рамы и импостам
-                    if (e2.inside(e1.x1(), e1.y1()) == true && e2 != e1) {                      
-                        winc.listJoin.add(new ElemJoining(winc, TypeJoin.TIMP, e1, e2));
-                    }
-                }
-            }
         } catch (Exception e) {
             System.err.println("AreaRectangl.joining() " + e);
         }

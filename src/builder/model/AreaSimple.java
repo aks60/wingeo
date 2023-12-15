@@ -89,22 +89,26 @@ public class AreaSimple extends Com5t {
 
         //T - соединения
         LinkedList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.STOIKA);
-        LinkedList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST,  Type.STOIKA);
+        LinkedList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.STOIKA);
 
         //Цикл по кросс элементам
-        for (ElemSimple crosE : crosList) {
+        for (ElemSimple cross : crosList) {
+            
             //Цикл по сторонам рамы и импостам
-            for (ElemSimple elemE : elemList) {
-                LineString line = gf.createLineString(new Coordinate[]{
-                    new Coordinate(elemE.x1(), elemE.y1()), new Coordinate(elemE.x2(), elemE.y2())});
+            for (ElemSimple frame : elemList) {
+                if (cross.equals(frame) == false) {
+                    
+                    LineString line = gf.createLineString(new Coordinate[]{
+                        new Coordinate(frame.x1(), frame.y1()), new Coordinate(frame.x2(), frame.y2())});                    
 
-                Point point = gf.createPoint(new Coordinate(crosE.x1(), crosE.y1()));
-                if (line.contains(point)) {
-                    winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, elemE, crosE));
-                }
-                point = gf.createPoint(new Coordinate(crosE.x2(), crosE.y2()));
-                if (line.contains(point)) {
-                    winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, elemE, crosE));
+                    Point point = gf.createPoint(new Coordinate(cross.x1(), cross.y1()));
+                    if (line.contains(point)) {
+                        winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, frame, cross));
+                    }
+                    point = gf.createPoint(new Coordinate(cross.x2(), cross.y2()));
+                    if (line.contains(point)) {
+                        winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, frame, cross));
+                    }
                 }
             }
         }
