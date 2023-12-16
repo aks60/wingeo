@@ -297,9 +297,6 @@ public class Test {
         LineSegment segm2 = new LineSegment(20, 20, 200, 120);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
-        
-
-        
         //System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(900, 1000), new Coordinate(900, 0))));
         //System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(0, 1000))));
     }
