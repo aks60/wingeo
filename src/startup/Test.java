@@ -97,7 +97,7 @@ public class Test {
 
             frames.PSCompare.iwinPs4(winc, true);
             //winc.listElem.forEach(it -> System.out.println(it));
-            winc.listJoin.forEach(it -> System.out.println(it));     
+            //winc.listJoin.forEach(it -> System.out.println(it));     
 
         } else if (_case.equals("min")) {
             List<Integer> prjList = GsonScript.productList(_case);

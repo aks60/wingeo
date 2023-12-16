@@ -42,30 +42,35 @@ public class ElemFrame extends ElemSimple {
      */
     @Override
     public void initConstructiv() {
+        try {
+            colorID1 = (isJson(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
+            colorID2 = (isJson(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
+            colorID3 = (isJson(gson.param, PKjson.colorID3)) ? gson.param.get(PKjson.colorID3).getAsInt() : winc.colorID3;
 
-        colorID1 = (isJson(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
-        colorID2 = (isJson(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
-        colorID3 = (isJson(gson.param, PKjson.colorID3)) ? gson.param.get(PKjson.colorID3).getAsInt() : winc.colorID3;
+            if (isJson(gson.param, PKjson.sysprofID)) { //профили через параметр
+                sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());
 
-        if (isJson(gson.param, PKjson.sysprofID)) { //профили через параметр
-            sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());
-
-        } else if (owner.sysprofRec != null) { //профили через параметр рамы, створки
-            sysprofRec = owner.sysprofRec;
-        } else {
-            if (Layout.BOTT.equals(layout())) {
-                sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.BOT, UseSide.HORIZ);
-            } else if (Layout.RIGHT.equals(layout())) {
-                sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.RIGHT, UseSide.VERT);
-            } else if (Layout.TOP.equals(layout())) {
-                sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.TOP, UseSide.HORIZ);
-            } else if (Layout.LEFT.equals(layout())) {
-                sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.LEFT, UseSide.VERT);
+            } else if (owner.sysprofRec != null) { //профили через параметр рамы, створки
+                sysprofRec = owner.sysprofRec;
+            } else {
+                if (Layout.BOTT.equals(layout())) {
+                    sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.BOT, UseSide.HORIZ);
+                } else if (Layout.RIGHT.equals(layout())) {
+                    sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.RIGHT, UseSide.VERT);
+                } else if (Layout.TOP.equals(layout())) {
+                    sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.TOP, UseSide.HORIZ);
+                } else if (Layout.LEFT.equals(layout())) {
+                    sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.LEFT, UseSide.VERT);
+                } else {
+                    sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.ANY, UseSide.ANY);
+                }
             }
+
+            artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
+            artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true); //аналог 
+        } catch (Exception e) {
+            System.err.println("Ошибка:ElemFrame.initConstructiv() " + e);
         }
-       
-        artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
-        artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true); //аналог 
     }
 
     //Рассчёт полигона стороны рамы
@@ -130,7 +135,7 @@ public class ElemFrame extends ElemSimple {
     public void setSpecific() {  //добавление основной спецификации
         try {
             spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
-            spcRec.setArtikl(artiklRec);            
+            spcRec.setArtikl(artiklRec);
             spcRec.setColor(colorID1, colorID2, colorID3);
             spcRec.setAnglCut(anglCut[0], anglCut[1]);
             double w = (winc.syssizRec == null) ? length() : length() + 2 * winc.syssizRec.getDbl(eSyssize.prip);
