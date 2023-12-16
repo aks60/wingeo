@@ -30,48 +30,52 @@ public class Canvas extends javax.swing.JPanel {
         this.setFocusable(true);
     }
 
-    public void init(Wincalc winc) {
+    public void init(Wincalc winc) {        
+        if (winc == null) {
+            this.winc = null;
+        } else {
+            this.winc = winc;
+            this.winc.canvas = this;
+            this.winc.scale = scale(winc);
+
+            List.of(getKeyListeners()).forEach(l -> removeKeyListener(l));
+            List.of(getMouseListeners()).forEach(l -> removeMouseListener(l));
+            List.of(getMouseMotionListeners()).forEach(l -> removeMouseMotionListener(l));
+            List.of(getComponentListeners()).forEach(l -> removeComponentListener(l));
+
+            addKeyListener(new KeyAdapter() {
+
+                public void keyPressed(KeyEvent event) {
+                    winc.keyboardPressed.forEach(e -> e.keysEvent(event));
+                    repaint();
+                }
+            });
+            addMouseListener(new MouseAdapter() {
+                public void mousePressed(MouseEvent event) {
+                    winc.mousePressed.forEach(e -> e.mouseEvent(event));
+                    //repaint();
+                }
+
+                public void mouseReleased(MouseEvent event) {
+                    winc.mouseReleased.forEach(e -> e.mouseEvent(event));
+                    repaint();
+                }
+            });
+            addMouseMotionListener(new MouseMotionAdapter() {
+
+                public void mouseDragged(MouseEvent event) {
+                    winc.mouseDragged.forEach(e -> e.mouseEvent(event));
+                    repaint();
+                }
+            });
+            addComponentListener(new ComponentAdapter() {
+
+                public void componentResized(ComponentEvent event) {
+                    winc.scale = scale(winc);
+                }
+            });
+        }
         this.requestFocus();
-        this.winc = winc;
-        this.winc.canvas = this;
-        this.winc.scale = scale(winc);
-
-        List.of(getKeyListeners()).forEach(l -> removeKeyListener(l));
-        List.of(getMouseListeners()).forEach(l -> removeMouseListener(l));
-        List.of(getMouseMotionListeners()).forEach(l -> removeMouseMotionListener(l));
-        List.of(getComponentListeners()).forEach(l -> removeComponentListener(l));
-        
-        addKeyListener(new KeyAdapter() {
-
-            public void keyPressed(KeyEvent event) {
-                winc.keyboardPressed.forEach(e -> e.keysEvent(event));
-                repaint();
-            }
-        });
-        addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent event) {
-                winc.mousePressed.forEach(e -> e.mouseEvent(event));
-                //repaint();
-            }
-
-            public void mouseReleased(MouseEvent event) {
-                winc.mouseReleased.forEach(e -> e.mouseEvent(event));
-                repaint();
-            }
-        });
-        addMouseMotionListener(new MouseMotionAdapter() {
-
-            public void mouseDragged(MouseEvent event) {
-                winc.mouseDragged.forEach(e -> e.mouseEvent(event));
-                repaint();
-            }
-        });
-        addComponentListener(new ComponentAdapter() {
-
-            public void componentResized(ComponentEvent event) {
-                winc.scale = scale(winc);
-            }
-        });       
     }
 
     //Прорисовка конструкции

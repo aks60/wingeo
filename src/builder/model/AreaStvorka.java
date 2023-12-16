@@ -31,7 +31,7 @@ public class AreaStvorka extends AreaSimple {
     public Record lockRec = eArtikl.virtualRec(); //замок
     public Record mosqRec = eArtikl.virtualRec(); //москитка
     public Record elementRec = eElement.up.newRecord(); //состав москидки 
-    private Polygon areaRam = null; //полигон векторов сторон рамы
+    private Polygon area2 = null; //полигон векторов сторон рамы
 
     public int handleColor = -3; //цвет ручки
     public int loopColor = -3; //цвет подвеса
@@ -135,10 +135,10 @@ public class AreaStvorka extends AreaSimple {
     public void setLocation() {
         try {
             //Полигон векторов сторон створки
-            
-            this.areaRam = (owner.equals(winc.root)) ? owner.area : this.area;  //случай когда створка в гл.окне
+            this.area2 = (winc.listElem.filter(Type.IMPOST).isEmpty()) ? owner.area : this.area;  //случай когда створка в гл.окне 
+            //this.area2 = (owner.equals(winc.root) && this.area2 == null) ? owner.area : this.area;  //случай когда створка в гл.окне
             double delta = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            this.area = UGeo.geoPadding(this.areaRam, winc.listElem, -delta); //полигон векторов сторон створки
+            this.area = UGeo.geoPadding(this.area2, winc.listElem, -delta); //полигон векторов сторон створки
             
             //Координаты рам створок
             if (this.frames.size() == 0) {
@@ -147,6 +147,7 @@ public class AreaStvorka extends AreaSimple {
                 Coordinate[] coo = this.area.getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
                     GsonElem gson = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y);
+                    gson.param = this.gson.param;
                     ElemFrame sideStv = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gson, this);
                     this.frames.add(sideStv);
                 }
@@ -175,7 +176,7 @@ public class AreaStvorka extends AreaSimple {
             }
             //Прилегающее
             LineSegment segm = new LineSegment();
-            Coordinate coo1[] = this.areaRam.getCoordinates();  //полигон векторов сторон рамы
+            Coordinate coo1[] = this.area2.getCoordinates();  //полигон векторов сторон рамы
             Coordinate coo2[] = this.area.getCoordinates(); //полигон векторов сторон створки
             
             for (int j = 0; j < coo2.length - 1; j++) {

@@ -93,7 +93,7 @@ public class Test {
             winc.constructiv(true);
 //            winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
 //            winc.gc2d = winc.bufferImg.createGraphics();
-//            winc.rootArea.draw(); //рисую конструкцию
+//            winc.root.draw(); //рисую конструкцию
 
             frames.PSCompare.iwinPs4(winc, true);
             //winc.listElem.forEach(it -> System.out.println(it));

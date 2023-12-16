@@ -417,8 +417,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 }
             } else {
                 //НАДО ОЧИСТИТЬ КАНВУ!!!
-                //canvas.init(null);
-                //canvas.repaint();
+                canvas.init(null);
+                canvas.repaint();
             }
         }
     }

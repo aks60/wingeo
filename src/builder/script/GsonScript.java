@@ -29,7 +29,7 @@ public class GsonScript {
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1400.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 1400.0, .0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, .0))
                     .addArea(new GsonElem(Type.STVORKA))
                     .addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST, 650.0, 1400.0, 650.0, .0));
