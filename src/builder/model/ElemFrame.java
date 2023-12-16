@@ -43,6 +43,7 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void initConstructiv() {
         try {
+            System.out.println(UGeo.indexPolygon(owner.area, this));
             //gson.param().getAsJsonObject(PKjson.stvorkaBottom)
             colorID1 = (isJson(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
             colorID2 = (isJson(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
@@ -118,15 +119,22 @@ public class ElemFrame extends ElemSimple {
     }
 
     public Layout layout() {
-        double angl = this.anglHoriz();
-        if (angl == 90) {
-            return Layout.LEFT;
-        } else if (angl == 0) {
-            return Layout.BOTT;
-        } else if (angl == -90) {
-            return Layout.RIGHT;
-        } else if (angl == 180) {
-            return Layout.TOP;
+        try {
+            if (owner.area.getNumPoints() == 4
+                    || owner.area.getNumPoints() == 5) {
+                int index = UGeo.indexPolygon(owner.area, this);
+                if (index == 0) {
+                    return Layout.LEFT;
+                } else if (index == 1) {
+                    return Layout.BOTT;
+                } else if (index == 2) {
+                    return Layout.RIGHT;
+                } else if (index == 3) {
+                    return Layout.TOP;
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:ElemFrame.layout() " + e);
         }
         return Layout.ANY;
     }

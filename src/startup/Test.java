@@ -1,8 +1,8 @@
 package startup;
 
+import builder.model.UGeo;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.eProp;
@@ -11,7 +11,6 @@ import domain.eElement;
 import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
-import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.*;
 
 public class Test {
@@ -65,13 +64,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            wincalc();
+            //wincalc();
             //query();
             //frame();
             //json();
             //uid();
             //script();
-            //geom();
+            geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -303,7 +302,5 @@ public class Test {
         
         //System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(900, 1000), new Coordinate(900, 0))));
         //System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(0, 1000))));
-        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(900, 0))));
-        System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(900, 0), new Coordinate(0, 0))));
     }
 }

@@ -178,23 +178,33 @@ public class UGeo {
         Coordinate[] coo = p.getCoordinates();
         int imax = p.getNumPoints() - 1;
         int j = i;
-        
-        if(i < 0) {
-            j = i + imax; 
-            
-        } else if(i > imax) {
+
+        if (i < 0) {
+            j = i + imax;
+
+        } else if (i > imax) {
             j = i - imax;
         }
         if (step < 0) {
             int k = (j == 0) ? imax - 1 : j + step;
             return new LineSegment(coo[k], coo[j]);
-            
+
         } else {
             int k = (j == imax) ? 1 : j + step;
             return new LineSegment(coo[j], coo[k]);
         }
     }
 
+    public static int indexPolygon(Polygon p, Com5t e) throws Exception {
+        Coordinate coo[] = p.getCoordinates();
+        
+        for (int i = 0; i < coo.length - 1; i++) {        
+            if (e.x1() == coo[i].x && e.y1() == coo[i].y && e.x2() == coo[i + 1].x && e.y2() == coo[i + 1].y) {
+                return i;
+            }
+        }
+        throw new Exception("Ошибка:UGeo.indexPolygon()");
+    }
 // <editor-fold defaultstate="collapsed" desc="TEMP">    
 // </editor-fold>    
 }
