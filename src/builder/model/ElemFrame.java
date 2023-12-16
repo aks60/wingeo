@@ -27,6 +27,7 @@ import org.locationtech.jts.geom.LineSegment;
 
 public class ElemFrame extends ElemSimple {
 
+    public int indexSegment = -1; //индекс сегмента
     public double lengthArch = 0; //длина арки     
 
     public ElemFrame(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
@@ -80,7 +81,8 @@ public class ElemFrame extends ElemSimple {
         try {
             for (int i = 0; i < owner.frames.size(); i++) {
                 if (owner.frames.get(i).id == this.id) {
-
+                    
+                    indexSegment = i;
                     int k = (i == 0) ? owner.frames.size() - 1 : i - 1;
                     int j = (i == (owner.frames.size() - 1)) ? 0 : i + 1;
                     ElemSimple e1 = owner.frames.get(k);
