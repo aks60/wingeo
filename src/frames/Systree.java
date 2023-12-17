@@ -4254,16 +4254,16 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         if (tab2.getBorder() != null) {
             JOptionPane.showMessageDialog(Systree.this, "В разработке...");
 //            Record sysprofRec = qSysprof.get(UGui.getIndexRec(tab2));
-//            FrameProgress.create(this, new ListenerFrame() {
+//            ProgressBar.create(this, new ListenerFrame() {
 //                public void actionRequest(Object obj) {
-//                    App.Element.createFrame(Systree.this, Set.of(sysprofRec.get(eSysprof.artikl_id)));
+//                    App.Element.createFrame(Systree.this, sysprofRec.get(eSysprof.artikl_id));
 //                }
 //            });
         } else if (tab3.getBorder() != null) {
             Record sysfurnRec = qSysfurn.get(UGui.getIndexRec(tab3));
             ProgressBar.create(this, new ListenerFrame() {
                 public void actionRequest(Object obj) {
-                    App.Furniture.createFrame(Systree.this, Set.of(sysfurnRec.get(eSysfurn.furniture_id)));
+                    App.Furniture.createFrame(Systree.this, sysfurnRec.getInt(eSysfurn.furniture_id));
                 }
             });
         }

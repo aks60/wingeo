@@ -255,10 +255,13 @@ public class PSCompare extends javax.swing.JFrame {
             Map<String, Vector> hmSpc = new HashMap();
             Set<String> setSpcSa = new HashSet();
             Set<String> setSpcPs = new HashSet();
-            winc.listSpec.forEach(rec -> setSpcSa.add(rec.artikl));
+            winc.listSpec.forEach(rec -> setSpcSa.add(rec.artikl));            
             if (winc.gson.prj != null) {
                 txt21.setText(String.valueOf(winc.gson.prj));
             }
+            if (winc.gson.pid != null) {
+                txt19.setText(String.valueOf(winc.gson.pid));
+            }             
             if (winc.gson.ord != null) {
                 txt20.setText(String.valueOf(winc.gson.ord));
             }
@@ -282,10 +285,10 @@ public class PSCompare extends javax.swing.JFrame {
             //=== Таблица 1 ===
             ((DefaultTableModel) tab1.getModel()).getDataVector().clear();
             Statement st = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet rs = st.executeQuery("select PUNIC from LISTPRJ where PNUMB = " + txt21.getText());
-            rs.next();
-            int punic = rs.getInt("PUNIC");
-            rs = st.executeQuery("select a.* from SPECPAU a where a.PUNIC = " + punic + " and a.ONUMB = " + txt20.getText() + " and clke != -1 order by a.anumb");
+//            ResultSet rs = st.executeQuery("select PUNIC from LISTPRJ where PNUMB = " + txt21.getText());
+//            rs.next();
+//            int punic = rs.getInt("PUNIC");           
+            ResultSet rs = st.executeQuery("select a.* from SPECPAU a where a.PUNIC = " + txt19.getText() + " and a.ONUMB = " + txt20.getText() + " and clke != -1 order by a.anumb");
             int npp = 0;
             double sum1 = 0, sum2 = 0;
             if (rs.isLast() == false) {
@@ -324,7 +327,7 @@ public class PSCompare extends javax.swing.JFrame {
                 }
             }
             rs.close();
-            lab1.setText("Изд: punic=" + punic + "    Проект: pnumb=" + winc.gson.prj + "  Заказ: onumb="
+            lab1.setText("Изд: punic=" + txt19.getText() + "    Проект: pnumb=" + winc.gson.prj + "  Заказ: onumb="
                     + winc.gson.ord + "   Стоим.без.ск = " + df2.format(sum1) + "   Стоим.со.ск = " + df2.format(sum2));
 
             //=== Таблица 2 ===
@@ -339,7 +342,7 @@ public class PSCompare extends javax.swing.JFrame {
             setSpc2x.forEach(e -> ((DefaultTableModel) tab2.getModel()).getDataVector().add(new Vector(List.of(e))));
             ((DefaultTableModel) tab2.getModel()).addRow(new Object[]{""});
             ((DefaultTableModel) tab2.getModel()).addRow(new Object[]{"Установленая фурнитура"});
-            rs = st.executeQuery("select b.fname from savefur a, furnlst b where a.punic = " + punic + " and a.onumb = " + txt20.getText() + " and a.funic = b.funic");
+            rs = st.executeQuery("select b.fname from savefur a, furnlst b where a.punic = " + txt19.getText() + " and a.onumb = " + txt20.getText() + " and a.funic = b.funic");
             if (rs.isLast() == false) {
                 while (rs.next()) {
                     ((DefaultTableModel) tab2.getModel()).addRow(new Object[]{rs.getString("FNAME")});
@@ -358,7 +361,7 @@ public class PSCompare extends javax.swing.JFrame {
             //=== Таблица 4 ===
             npp = 0;
             ((DefaultTableModel) tab4.getModel()).getDataVector().clear();
-            rs = st.executeQuery("select * from SAVEELM where TYPP != 0 and PUNIC = " + punic + "and ONUMB =" + txt20.getText() + "order by TYPP");
+            rs = st.executeQuery("select * from SAVEELM where TYPP != 0 and PUNIC = " + txt19.getText() + "and ONUMB =" + txt20.getText() + "order by TYPP");
             if (rs.isLast() == false) {
                 while (rs.next()) {
                     Vector vectorRec = new Vector();
@@ -389,7 +392,7 @@ public class PSCompare extends javax.swing.JFrame {
                             rs = st.executeQuery("select b.anumb, c.anumb, a.typ, d.anum1, d.anum2, d.cname, e.cname from SAVECON a"
                                     + " left join SAVEELM b on a.punic = b.punic and a.onumb = b.onumb and a.ne1 = b.nel left join SAVEELM c on a.punic = c.punic and a.onumb = c.onumb and a.ne2 = c.nel"
                                     + " left join connlst d on a.ncon = d.cconn left join connvar e on a.nvar = e.cunic"
-                                    + " where a.punic = " + punic + " and a.onumb = " + txt20.getText() + " order by a.typ, d.cname");
+                                    + " where a.punic = " + txt19.getText() + " and a.onumb = " + txt20.getText() + " order by a.typ, d.cname");
                             if (rs.isLast() == false) {
                                 while (rs.next()) {
                                     Vector vectorRec = new Vector();
@@ -416,7 +419,7 @@ public class PSCompare extends javax.swing.JFrame {
             Vector vectorData = new Vector();
             Vector vectorColumn = new Vector(List.of("PUNIC", "PNUMB", "ONUMB", "ONAME", "PDATE", "BPICT"));
             rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, b.pdate, a.bpict from listord a, listprj b "
-                    + "where  a.punic = b.punic and a.punic = " + punic + " and a.onumb = " + txt20.getText() + " order by b.pnumb");
+                    + "where  a.punic = b.punic and a.punic = " + txt19.getText() + " and a.onumb = " + txt20.getText() + " order by b.pnumb");
             if (rs.isLast() == false) {
                 while (rs.next()) {
                     Vector vectorRec = new Vector();
@@ -464,7 +467,7 @@ public class PSCompare extends javax.swing.JFrame {
                     + "left join parlist c on a.pnumb = c.pnumb and c.znumb = 0 "
                     + "left join listord d on a.punic = d.punic and a.onumb = d.onumb "
                     + "left join parsysp e on d.osysp = e.psss and a.pnumb = e.pnumb and a.znumb = e.znumb "
-                    + "where a.nel = 0 and a.punic = " + punic + " and a.onumb = " + txt20.getText());
+                    + "where a.nel = 0 and a.punic = " + txt19.getText() + " and a.onumb = " + txt20.getText());
             if (rs.isLast() == false) {
                 while (rs.next()) {
                     Vector vectorRec = new Vector();

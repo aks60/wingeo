@@ -27,7 +27,6 @@ import org.locationtech.jts.geom.LineSegment;
 
 public class ElemFrame extends ElemSimple {
 
-    public int indexSegment = -1; //индекс сегмента
     public double lengthArch = 0; //длина арки     
 
     public ElemFrame(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
@@ -44,7 +43,7 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void initConstructiv() {
         try {
-            System.out.println(UGeo.indexPolygon(owner.area, this));
+            //System.out.println(UGeo.indexPolygon(owner.area, this));
             //gson.param().getAsJsonObject(PKjson.stvorkaBottom)
             colorID1 = (isJson(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
             colorID2 = (isJson(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
@@ -82,7 +81,6 @@ public class ElemFrame extends ElemSimple {
             for (int i = 0; i < owner.frames.size(); i++) {
                 if (owner.frames.get(i).id == this.id) {
                     
-                    indexSegment = i;
                     int k = (i == 0) ? owner.frames.size() - 1 : i - 1;
                     int j = (i == (owner.frames.size() - 1)) ? 0 : i + 1;
                     ElemSimple e1 = owner.frames.get(k);
