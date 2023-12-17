@@ -416,7 +416,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     UGui.setSelectedRow(tab5);
                 }
             } else {
-                //НАДО ОЧИСТИТЬ КАНВУ!!!
                 canvas.init(null);
                 canvas.repaint();
             }
@@ -808,8 +807,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
 
             //Перерисуем конструкцию
             scene.init(iwin);
-            canvas.draw();
+            canvas.init(iwin);
             scene.draw();
+            canvas.draw();
 
             //Обновим поля форм
             selectionTree2();
@@ -3600,6 +3600,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         } else if (tab5.getBorder() != null) {
             if (UGui.isDeleteRecord(tab5, this) == 0) {
                 UGui.deleteRecord(tab5);
+                canvas.init(null);
+                canvas.repaint();
             }
         }
     }//GEN-LAST:event_btnDelete
@@ -3740,7 +3742,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 String colorKey = (evt.getSource() == btn18) ? PKjson.colorID1 : (evt.getSource() == btn19) ? PKjson.colorID2 : PKjson.colorID3;
                 double parentId = winNode.com5t().owner.id;
                 GsonElem parentArea = (GsonElem) wincalc().listAll.gson(parentId);
-
+                
                 if (winNode.com5t().type == enums.Type.STVORKA_SIDE) {
                     JsonObject paramObj = parentArea.param;
                     String stvKey = null;
@@ -4611,10 +4613,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         DefaultTreeModel model = (DefaultTreeModel) winTree.getModel();
         ((DefaultMutableTreeNode) model.getRoot()).removeAllChildren();
         model.reload();
-        
+
         TableFieldFilter filterTable = new TableFieldFilter(0, tab5, tab3, tab4, tab5, tab7);
         south.add(filterTable, 0);
-        filterTable.getTxt().grabFocus();        
+        filterTable.getTxt().grabFocus();
     }
 
     private void testBimax() {

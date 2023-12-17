@@ -43,8 +43,6 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void initConstructiv() {
         try {
-            //System.out.println(UGeo.indexPolygon(owner.area, this));
-            //gson.param().getAsJsonObject(PKjson.stvorkaBottom)
             colorID1 = (isJson(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
             colorID2 = (isJson(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
             colorID3 = (isJson(gson.param, PKjson.colorID3)) ? gson.param.get(PKjson.colorID3).getAsInt() : winc.colorID3;

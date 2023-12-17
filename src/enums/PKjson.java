@@ -32,9 +32,8 @@ public class PKjson {
     public final static String stvorkaRight = "stvorkaRight"; //Элемент    
     public final static String stvorkaTop = "stvorkaTop"; //Элемент    
     public final static String stvorkaLeft = "stvorkaLeft"; //Элемент 
-    
-    public final static String stvorkaSide = "stvorkaSide"; //Индекс стороны створки 
-    
+    public final static String stvorkaSide[] = {PKjson.stvorkaLeft, PKjson.stvorkaBottom, PKjson.stvorkaRight, PKjson.stvorkaTop};
+
     
     public final static String rasclHor = "rasclHor"; //количество проёмов раскладки
     public final static String rasclVert = "rasclVert"; //количество проёмов раскладки

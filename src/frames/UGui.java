@@ -3,6 +3,7 @@ package frames;
 import builder.Wincalc;
 import builder.model.AreaSimple;
 import builder.model.Com5t;
+import builder.model.ElemFrame;
 import builder.model.ElemSimple;
 import builder.script.GsonRoot;
 import com.google.gson.Gson;
@@ -20,7 +21,6 @@ import domain.eSysprod;
 import domain.eSystree;
 import enums.Enam;
 import builder.param.ParamList;
-import common.LinkedCom;
 import common.UCom;
 import enums.UseColor;
 import java.awt.Component;
@@ -246,14 +246,11 @@ public class UGui {
     public static void loadWinTree(Wincalc winc, DefMutableTreeNode root, Com5t com) {
         DefMutableTreeNode nodeStv = root.add(new DefMutableTreeNode(com));
         AreaSimple stv = (AreaSimple) com;
-        nodeStv.add(new DefMutableTreeNode(stv.frames.get(Layout.BOTT)));
-        nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
-        nodeStv.add(new DefMutableTreeNode(stv.frames.get(Layout.RIGHT)));
-        nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
-        nodeStv.add(new DefMutableTreeNode(stv.frames.get(Layout.TOP)));
-        nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
-        nodeStv.add(new DefMutableTreeNode(stv.frames.get(Layout.LEFT)));
-        nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
+        for (int i = 0; i < stv.frames.size(); i++) {
+            ElemFrame frame = (ElemFrame) stv.frames.get(i);
+            nodeStv.add(new DefMutableTreeNode(frame));
+            nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
+        }
         //Цикл по детям створки
         for (Com5t com2 : ((AreaSimple) com).childs) {
             //Если это элемент
