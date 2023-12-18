@@ -1,6 +1,6 @@
 package builder.script;
 
-import builder.script.test.Bimax;
+import builder.script.check.Bimax;
 import common.eProp;
 import enums.Type;
 import java.util.List;
@@ -15,7 +15,7 @@ public class GsonScript {
     public static String modelJson(Integer prj) {
 
 // <editor-fold defaultstate="collapsed" desc="RECTANGL">
-        if (prj == 601001) { //PUNIC = 427595
+        if (prj == 601001) { //PUNIC = 427817
             rootGson = new GsonRoot("2.0", Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1300.0))
@@ -255,7 +255,7 @@ public class GsonScript {
                     506642, -506642, 605001, 508916, 508945, 508841, 700009, 700014) //трапеции, двери
                     //                    : List.of(601001, 601002, 601003, 601004, 601005, 601006,
                     //                            601007, 601008, 601009, 601010, 604005, 604006, 604007, 604008, 604009, 604010);
-                    : List.of(601001, 601002, 601006);
+                    : List.of(601001, 601002, 601003, 601006);
 
         } else if (base_name.toLowerCase().contains("vidnal.fdb")) {
             return List.of(26);

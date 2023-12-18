@@ -1,4 +1,4 @@
-package builder.script.test;
+package builder.script.check;
 
 import builder.script.GsonElem;
 import builder.script.GsonRoot;
@@ -12,7 +12,7 @@ public final class Bimax {
     public static String script(Integer prj) {
 // <editor-fold defaultstate="collapsed" desc="RECTANGL">
         if (prj == 601001) { 
-            rootGson = new GsonRoot("2.0", 427595, prj, 1, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)",
+            rootGson = new GsonRoot("2.0", 427817, prj, 1, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)",
                     1009, 10009, 1009, "{ioknaParam: [-9504]}");  //маскитка Р400);
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1300.0))
