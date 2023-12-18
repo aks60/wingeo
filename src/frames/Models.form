@@ -7,7 +7,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
-    <Property name="title" type="java.lang.String" value="&#x41c;&#x43e;&#x434;&#x435;&#x43b;&#x438; &#x43a;&#x43e;&#x43d;&#x441;&#x442;&#x440;&#x443;&#x43a;&#x446;&#x438;&#x439;"/>
+    <Property name="title" type="java.lang.String" value="&#x41c;&#x43e;&#x434;&#x435;&#x43b;&#x438; &#x432;&#x438;&#x440;&#x442;&#x443;&#x430;&#x43b;&#x44c;&#x43d;&#x44b;&#x445; &#x43f;&#x440;&#x43e;&#x444;&#x438;&#x43b;&#x435;&#x439;"/>
     <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
       <Connection code="frames.UGui.getFont(0,1)" type="code"/>
     </Property>

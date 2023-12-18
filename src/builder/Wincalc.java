@@ -58,7 +58,7 @@ public class Wincalc {
     public Canvas canvas = null;
     public GsonRoot gson = null; //объектная модель конструкции 1-го уровня
     public AreaSimple root = null; //объектная модель конструкции 2-го уровня    
-    public Cal5e calcJoining, calcElements, calcFilling, calcFurniture, calcTariffication; //объекты калькуляции конструктива
+    //public Cal5e calcJoining, calcElements, calcFilling, calcFurniture, calcTariffication; //объекты калькуляции конструктива
     
     public ArrayList<ListenerKey> keyboardPressed = new ArrayList();
     public ArrayList<ListenerMouse> mousePressed = new ArrayList();
@@ -202,16 +202,11 @@ public class Wincalc {
             listElem.forEach(elem -> elem.setSpecific()); 
 
             //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
-            calcJoining = new Joining(this); //соединения
-            calcJoining.calc();
-            calcElements = new builder.making.Elements(this);
-            calcElements.calc();
-            calcFilling = new builder.making.Filling(this); //заполнения
-            calcFilling.calc();
-            calcFurniture = new builder.making.Furniture(this); //фурнитура 
-            calcFurniture.calc();
-            calcTariffication = new builder.making.Tariffic(this, norm_otx); //тарификация 
-            calcTariffication.calc();
+            new Joining(this).calc(); //соединения
+            new builder.making.Elements(this).calc();
+            new builder.making.Filling(this).calc(); //заполнения
+            new builder.making.Furniture(this).calc(); //фурнитура 
+            new builder.making.Tariffic(this, norm_otx).calc(); //тарификация 
 
             //Строим список спецификации
             for (ElemSimple elem5e : listElem) {

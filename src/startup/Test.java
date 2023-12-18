@@ -1,5 +1,7 @@
 package startup;
 
+import builder.making.Cal5e;
+import builder.making.Joining;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -100,7 +102,7 @@ public class Test {
 
             frames.PSCompare.iwinPs4(winc, true);
             //winc.listElem.forEach(it -> System.out.println(it));
-            //winc.listJoin.forEach(it -> System.out.println(it));     
+            //winc.listJoin.forEach(it -> System.out.println(it.joiningRec));     
 
         } else if (_case.equals("min")) {
             List<Integer> prjList = GsonScript.productList(_case);

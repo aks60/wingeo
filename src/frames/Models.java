@@ -189,7 +189,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         south = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Модели конструкций");
+        setTitle("Модели виртуальных профилей");
         setFont(frames.UGui.getFont(0,1));
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 500));

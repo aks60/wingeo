@@ -360,8 +360,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             try {
                 String script = record.getStr(eSysprod.script);
                 Wincalc iwin2 = new Wincalc(script);
-                Cal5e joining = new Joining(iwin2, true);//заполним соединения из конструктива
-                joining.calc();
+                new Joining(iwin2, true).calc();//заполним соединения из конструктива
+                iwin2.listJoin.forEach(it -> System.out.println(it.joiningRec)); 
+                
                 iwin2.imageIcon = Canvas.createIcon(iwin2, 68);
                 record.add(iwin2);
 
@@ -528,6 +529,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card17");
                     DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                     ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
+
+                   // new Joining(winc, true).calc();//заполним соединения из конструктива                   
+                   // winc.listJoin.forEach(it -> System.out.println(it.joiningRec)); 
+                    
                     ElemJoining ej1 = winc.listJoin.get(elem5e, 0);
                     ElemJoining ej2 = winc.listJoin.get(elem5e, 1);
                     ElemJoining ej3 = winc.listJoin.get(elem5e, 2);
@@ -573,6 +578,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             Object w = sysprodRec.get(eSysprod.values().length);
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc win = (Wincalc) w;
+               // win.listJoin.forEach(it -> System.out.println(it.joiningRec)); 
                 scene.init(win);
                 canvas.init(win);
                 canvas.draw();
@@ -823,9 +829,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         int index = UGui.getIndexRec(tab5);
         if (index != -1) {
             Record sysprodRec = qSysprod.table(eSysprod.up).get(index);
-            Object v = sysprodRec.get(eSysprod.values().length);
-            if (v instanceof Wincalc) {
-                return (Wincalc) v;
+            Object win = sysprodRec.get(eSysprod.values().length);
+            if (win instanceof Wincalc) {
+                return (Wincalc) win;
             }
         }
         return null;
