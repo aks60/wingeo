@@ -13,6 +13,7 @@ import java.util.Collections;
 import static java.util.Collections.list;
 import java.util.List;
 import java.util.UUID;
+import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.algorithm.locate.IndexedPointInAreaLocator;
 import org.locationtech.jts.geom.*;
 
@@ -300,24 +301,6 @@ public class Test {
         LineSegment segm2 = new LineSegment(20, 20, 200, 120);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
-        
-        IndexedPointInAreaLocator o1 = new IndexedPointInAreaLocator(polygon1);
-        System.out.println(o1.locate(new Coordinate(900, 1200)));
-        ArrayList<String> po2 = new ArrayList();
-        po2.add("0 1000");
-        po2.add("1000 1000");
-        po2.add("1000 500");
-        po2.add("0 500");
-        po2.add("0 1000");
 
-        System.out.println(po2);
-        po2.remove(po2.size() - 1);
-        Collections.rotate(po2, 1);
-        po2.add(po2.get(0));
-        System.out.println(po2);
-        
-        
-        //System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(900, 1000), new Coordinate(900, 0))));
-        //System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(0, 1000))));
     }
 }

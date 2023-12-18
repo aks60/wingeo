@@ -271,7 +271,7 @@ public class Com5t {
     public String toString() {
         String art = (artiklRecAn == null) ? "null" : artiklRecAn.getStr(eArtikl.code);
         double ownerID = (owner == null) ? -1 : owner.id;
-        return " art=" + art + ", type=" + type + ", owner=" + ownerID + ", id=" + id
+        return " art=" + art + ", type=" + type + ", layout=" + layout() + ", owner=" + ownerID + ", id=" + id
                 + ", x1=" + x1() + ", y1=" + y1() + ", x2=" + x2() + ", y2=" + y2();
     }
     // </editor-fold>

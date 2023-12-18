@@ -21,13 +21,6 @@ import org.locationtech.jts.geom.Polygon;
  */
 public class UGeo {
 
-    //Ширина рамки по оси x и y
-    public static double[] deltaOnAngl(double anglHoriz, double h) {
-        double x = Math.sin(Math.toRadians(anglHoriz));
-        double y = Math.cos(Math.toRadians(anglHoriz));
-        return new double[]{x * h, y * h};
-    }
-
     //Угол к горизонту
     public static double anglHor(ElemSimple e) {
         return Math.toDegrees(Angle.angle(new Coordinate(e.x1(), e.y1()), new Coordinate(e.x2(), e.y2())));

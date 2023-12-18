@@ -303,6 +303,7 @@ public class JoiningVar extends Par5s {
                 case 2010:  //Угол минимальный, °
                 case 3010:  //Угол минимальный, °
                 case 4020:  //Ограничение угла, °
+                    double ang = elemJoin.angl();
                     if ("ps3".equals(eSetting.val(2))) { //Угол минимальный, °
                         if (rec.getDbl(TEXT) < elemJoin.angl()) {
                             return false;

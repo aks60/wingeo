@@ -171,9 +171,17 @@ public class AreaStvorka extends AreaSimple {
         try {
             //L - соединения
             for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам створки
-                ElemFrame frameStv = (ElemFrame) this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1);
-                TypeJoin type = (i == 0 || i == 2) ? TypeJoin.ANG2 : TypeJoin.ANG1;
-                winc.listJoin.add(new ElemJoining(this.winc, type, this.frames.get(i), frameStv));
+                ElemFrame elem1 = (ElemFrame) this.frames.get(i);
+                ElemFrame elem2 = (ElemFrame) this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1);
+                int lev1 = elem1.artiklRec.getInt(eArtikl.level1);
+                int lev2 = elem2.artiklRec.getInt(eArtikl.level2);
+                
+                if ((lev1 == 1 && (lev2 == 1 || lev2 == 2)) == false) { //угловое левое/правое
+                    TypeJoin type = (i == 0 || i == 2) ? TypeJoin.ANG2 : TypeJoin.ANG1;
+                    winc.listJoin.add(new ElemJoining(this.winc, type, elem1, elem2));
+                } else { //угловое на ус
+                    winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.ANGL, elem1, elem2));
+                }
             }
             //Прилегающее
             LineSegment segm = new LineSegment();
