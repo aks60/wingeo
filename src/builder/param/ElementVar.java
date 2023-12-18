@@ -300,8 +300,8 @@ public class ElementVar extends Par5s {
                     }
                     break;
                 case 31060:  //Допустимый угол между плоскостями, ° 
-                    if ((UCom.containsNumbJust(rec.getStr(TEXT), winc.listJoin.get(elem5e, 0).angl()) == true
-                            || UCom.containsNumbJust(rec.getStr(TEXT), winc.listJoin.get(elem5e, 1).angl()) == true) == false) {
+                    if ((UCom.containsNumbJust(rec.getStr(TEXT), winc.listJoin.get(elem5e, 0).angleBetween()) == true
+                            || UCom.containsNumbJust(rec.getStr(TEXT), winc.listJoin.get(elem5e, 1).angleBetween()) == true) == false) {
                         return false;
                     }
                     break;

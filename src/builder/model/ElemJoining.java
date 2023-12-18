@@ -110,7 +110,7 @@ public class ElemJoining {
     }
 
     //Угол между профилями
-    public double angl() {
+    public double angleBetween() {
         if (elem1.type == Type.IMPOST || elem1.type == Type.STOIKA) {
             double dir1 = new LineSegment(elem2.x1(), elem2.y1(), elem2.x2(), elem2.y2()).distance(new Coordinate(elem1.x1(), elem1.y1()));
             double dir2 = new LineSegment(elem2.x1(), elem2.y1(), elem2.x2(), elem2.y2()).distance(new Coordinate(elem1.x2(), elem1.y2()));
