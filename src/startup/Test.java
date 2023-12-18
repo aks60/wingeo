@@ -1,6 +1,5 @@
 package startup;
 
-import builder.model.UGeo;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -11,6 +10,7 @@ import domain.eElement;
 import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
+import org.locationtech.jts.algorithm.locate.IndexedPointInAreaLocator;
 import org.locationtech.jts.geom.*;
 
 public class Test {
@@ -64,13 +64,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            wincalc();
+            //wincalc();
             //query();
             //frame();
             //json();
             //uid();
             //script();
-            //geom();
+            geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -290,13 +290,17 @@ public class Test {
             new Coordinate(50, 50)};
 
         Point point1 = gf.createPoint(new Coordinate(499.9, 500));
-        Point point2 = gf.createPoint(new Coordinate(4, 8));
+        Point point2 = gf.createPoint(new Coordinate(0, 0));
         LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
         LineString line2 = gf.createLineString(new Coordinate[]{new Coordinate(93.81658797276759, 896.6494075724012), new Coordinate(199.48228309038115, 309.9099755154137)});
         LineSegment segm1 = new LineSegment(100, 100, 0, 0);
         LineSegment segm2 = new LineSegment(20, 20, 200, 120);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
+        
+        IndexedPointInAreaLocator o1 = new IndexedPointInAreaLocator(polygon1);
+        System.out.println(o1.locate(new Coordinate(900, 1200)));
+        
         //System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(900, 1000), new Coordinate(900, 0))));
         //System.out.println(Angle.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(0, 1000))));
     }
