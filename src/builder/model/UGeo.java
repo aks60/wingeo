@@ -6,6 +6,7 @@ import enums.Type;
 import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.algorithm.Intersection;
@@ -87,7 +88,7 @@ public class UGeo {
         try {
             for (int i = 1; i < coo.length; i++) {
                 Coordinate segmPoint1 = coo[i - 1], segmentPoint2 = coo[i];
-                Coordinate c3 = Intersection.lineSegment(
+                Coordinate c3 = Intersection.lineSegment( //точка пересечения segmPoint и lineSegm
                         linePoint1, linePoint2, segmPoint1, segmentPoint2);
                 if (c3 != null) {
                     exp.add(c3);
@@ -109,7 +110,12 @@ public class UGeo {
                     }
                 }
             }
-            po2.add(po2.get(0));
+            if (y1 != y2) {
+                Collections.rotate(po2, 1);
+                po2.add(po2.get(0));
+            } else {
+                po2.add(po2.get(0));
+            }
             Geometry p0 = Com5t.gf.createLineString(cros.toArray(new Coordinate[0]));
             Geometry p1 = Com5t.gf.createPolygon(po1.toArray(new Coordinate[0]));
             Geometry p2 = Com5t.gf.createPolygon(po2.toArray(new Coordinate[0]));
@@ -197,8 +203,8 @@ public class UGeo {
 
     public static int indexPolygon(Polygon p, Com5t e) throws Exception {
         Coordinate coo[] = p.getCoordinates();
-        
-        for (int i = 0; i < coo.length - 1; i++) {        
+
+        for (int i = 0; i < coo.length - 1; i++) {
             if (e.x1() == coo[i].x && e.y1() == coo[i].y && e.x2() == coo[i + 1].x && e.y2() == coo[i + 1].y) {
                 return i;
             }
