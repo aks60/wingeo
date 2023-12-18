@@ -74,9 +74,9 @@ public final class Bimax {
             rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 400.0, 1440.0, 400.0));
             GsonElem area2 = rootGson.addArea(new GsonElem(Type.AREA));
 
-            area2.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
+            area2.addArea(new GsonElem(Type.STVORKA, "{typeOpen:1, sysfurnID:389}")).addElem(new GsonElem(Type.GLASS));
             area2.addElem(new GsonElem(Type.IMPOST, 720.0, 1700.0, 720.0, 400.0));
-            area2.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
+            area2.addArea(new GsonElem(Type.STVORKA, "{typeOpen:3, sysfurnID:819}")).addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 501005) {
             rootGson = new GsonRoot("2.0", null, prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
