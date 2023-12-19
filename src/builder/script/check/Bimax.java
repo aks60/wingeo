@@ -11,7 +11,7 @@ public final class Bimax {
 
     public static String script(Integer prj) {
 // <editor-fold defaultstate="collapsed" desc="RECTANGL">
-        if (prj == 601001) { 
+        if (prj == 601001) {
             rootGson = new GsonRoot("2.0", 427817, prj, 1, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)",
                     1009, 10009, 1009, "{ioknaParam: [-9504]}");  //маскитка Р400);
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
@@ -56,7 +56,6 @@ public final class Bimax {
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, .0))
-                    
                     .addArea(new GsonElem(Type.STVORKA, "{typeOpen:3, sysfurnID:860}"))
                     .addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST, 650.0, 1400.0, 650.0, .0));
@@ -69,7 +68,7 @@ public final class Bimax {
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1700.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1440.0, 1700.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1440.0, .0));
-            
+
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 400.0, 1440.0, 400.0));
             GsonElem area2 = rootGson.addArea(new GsonElem(Type.AREA));
@@ -108,7 +107,6 @@ public final class Bimax {
 
             area1.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             area1.addElem(new GsonElem(Type.IMPOST, 500.0, 1000.0, 500.0, 500.0));
-            //area1.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             area1.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
 
 // </editor-fold>
@@ -125,19 +123,16 @@ public final class Bimax {
 //            rootGeo.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="TRAPEZE"> 
-//        } else if (prj == 501002) {
-//            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.TRAPEZE, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
-//            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 500.0))
-//                    .addElem(new GsonElem(Type.FRAME_SIDE, 500.0, 1000.0))
-//                    .addElem(new GsonElem(Type.FRAME_SIDE, 400.0, 1770.0))
-//                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 3500.0))
-//                    .addElem(new GsonElem(Type.FRAME_SIDE, 3500.0, 3500.0))
-//                    .addElem(new GsonElem(Type.FRAME_SIDE, 4000.0, 1000.0))
-//                    .addElem(new GsonElem(Type.FRAME_SIDE, 3500.0, 500.0));
-//
-//            rootGeo.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-//            rootGeo.addElem(new GsonElem(Type.IMPOST, 1000.0, 500.0, 3500.0, 3500.0))
-//                    .addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+        } else if (prj == 605001) {
+            rootGson = new GsonRoot("2.0", 427850, prj, 1, 8, Type.TRAPEZE, "KBE\\KBE 58\\1 ОКНА\\*Открывание внутрь (ств. Z77)", 1009, 10009, 1009);
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0)
+                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1500.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0)));
+
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 300.0, 1300.0, 300.0));
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="DOOR">
 // </editor-fold>

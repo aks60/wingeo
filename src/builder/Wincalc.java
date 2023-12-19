@@ -1,6 +1,5 @@
 package builder;
 
-import builder.making.Cal5e;
 import builder.making.Joining;
 import builder.model.AreaRectangl;
 import builder.model.AreaSimple;
@@ -12,6 +11,7 @@ import builder.model.ElemGlass;
 import builder.model.ElemSimple;
 import builder.making.Specific;
 import builder.making.UColor;
+import builder.model.AreaTrapeze;
 import builder.model.ElemMosquit;
 import builder.script.GsonElem;
 import builder.script.GsonRoot;
@@ -108,9 +108,13 @@ public class Wincalc {
         //Главное окно
         if (Type.RECTANGL == gson.type) {
             root = new AreaRectangl(this, gson);
+            
+        } else  if (Type.TRAPEZE == gson.type) {
+            root = new AreaTrapeze(this, gson);
+            
         } else {
             root = new AreaRectangl(this, gson);
-        }
+        }    
 
         //Элементы конструкции
         elements(root, gson);
