@@ -484,6 +484,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                     ((CardLayout) pan8.getLayout()).show(pan8, "card17");
                     DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                     ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
+                    List.of(txt36, txt37, txt38, txt39, txt40, txt41, txt42, txt43, txt44).forEach(it -> it.setText(""));
                     new Joining(winc, true).calc();//заполним соединения из конструктива 
                     ElemJoining ej1 = winc.listJoin.get(elem5e, 0);
                     ElemJoining ej2 = winc.listJoin.get(elem5e, 1);
@@ -2842,7 +2843,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
         txt39.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab54.setFont(frames.UGui.getFont(0,0));
-        lab54.setText("3  соединение");
+        lab54.setText("3  прилегающее");
         lab54.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab54.setPreferredSize(new java.awt.Dimension(80, 18));
 
