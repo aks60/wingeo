@@ -170,8 +170,13 @@ public class UGeo {
     public static Point newPoint(double x, double y) {
         return Com5t.gf.createPoint(new Coordinate(x, y));
     }
+    
     public static LineString newLineStr(double... d) {
         return Com5t.gf.createLineString(UGeo.arrCoord(d));
+    }
+    
+    public static LineSegment newLineSegm(double x1, double y1, double x2, double y2) {
+        return new LineSegment(x1, y1, x2, y2);
     }
 
     //Список входн. параметров не замыкается начальной точкой как в jts!

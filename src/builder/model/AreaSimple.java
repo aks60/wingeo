@@ -101,12 +101,10 @@ public class AreaSimple extends Com5t {
                     LineString line = gf.createLineString(new Coordinate[]{
                         new Coordinate(frame.x1(), frame.y1()), new Coordinate(frame.x2(), frame.y2())});                    
 
-                    Point point = gf.createPoint(new Coordinate(cross.x1(), cross.y1()));
-                    if (line.contains(point)) {
+                    if (line.contains(UGeo.newPoint(cross.x1(), cross.y1()))) {
                         winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, cross, frame));
                     }
-                    point = gf.createPoint(new Coordinate(cross.x2(), cross.y2()));
-                    if (line.contains(point)) {
+                    if (line.contains(UGeo.newPoint(cross.x2(), cross.y2()))) {
                         winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, cross, frame));
                     }
                 }

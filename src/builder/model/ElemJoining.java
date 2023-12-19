@@ -111,15 +111,15 @@ public class ElemJoining {
 
     //Угол между профилями
     public double angleBetween() {
-        if (elem1.type == Type.IMPOST || elem1.type == Type.STOIKA) {
-            double dir1 = new LineSegment(elem2.x1(), elem2.y1(), elem2.x2(), elem2.y2()).distance(new Coordinate(elem1.x1(), elem1.y1()));
-            double dir2 = new LineSegment(elem2.x1(), elem2.y1(), elem2.x2(), elem2.y2()).distance(new Coordinate(elem1.x2(), elem1.y2()));
-            if (dir1 < dir2) {
+        if (Type.isCross(elem1.type)) {
+
+            if (UGeo.newLineStr(elem2.x1(), elem2.y1(), elem2.x2(), elem2.y2()).contains(UGeo.newPoint(elem1.x1(), elem1.y1()))) {
                 return Angle.toDegrees(Angle.angleBetween(
                         new Coordinate(elem1.x2(), elem1.y2()),
                         new Coordinate(elem1.x1(), elem1.y1()),
                         new Coordinate(elem2.x1(), elem2.y1())));
-            } else {
+
+            } else if (UGeo.newLineStr(elem2.x1(), elem2.y1(), elem2.x2(), elem2.y2()).contains(UGeo.newPoint(elem1.x2(), elem1.y2()))) {
                 return Angle.toDegrees(Angle.angleBetween(
                         new Coordinate(elem1.x1(), elem1.y1()),
                         new Coordinate(elem1.x2(), elem1.y2()),
