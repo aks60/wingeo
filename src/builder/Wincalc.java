@@ -183,7 +183,7 @@ public class Wincalc {
             //Рассчёт полигонов сторон рамы
             listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
 
-            //Соединения конструкции            
+            //Соединения конструкции             
             root.joining();  //L и T соединения
             listArea.filter(Type.STVORKA).forEach(e -> e.joining());
             
@@ -203,7 +203,7 @@ public class Wincalc {
 
             //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
             new Joining(this).calc(); //соединения
-            new builder.making.Elements(this).calc();
+            new builder.making.Elements(this).calc(); //вставки
             new builder.making.Filling(this).calc(); //заполнения
             new builder.making.Furniture(this).calc(); //фурнитура 
             new builder.making.Tariffic(this, norm_otx).calc(); //тарификация 

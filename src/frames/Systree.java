@@ -530,6 +530,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     ElemJoining ej2 = winc.listJoin.get(elem5e, 1);
                     ElemJoining ej3 = winc.listJoin.get(elem5e, 2);
                     List.of(lab55, lab56, lab57).forEach(it -> it.setIcon(null));
+                    List.of(txt36, txt37, txt38, txt39, txt40, txt41, txt42, txt43, txt44).forEach(it -> it.setText(""));
                     if (ej1 != null) {
                         setText(txt36, ej1.joiningRec.getStr(eJoining.name));
                         setText(txt42, ej1.name());

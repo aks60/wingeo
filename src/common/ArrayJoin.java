@@ -17,21 +17,26 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
      * Получить элемент соединения профилей.
      *
      * @param el - элемент соединения,
-     * @param side - сторона соединения 
-     * 0-пред.артикул, 1-след.артикл, 2-прилег.артикл
+     * @param side - сторона соединения 0-пред.артикул, 1-след.артикл,
+     * 2-прилег.артикл
      * @return - класс описатель соединения
      */
     public ElemJoining get(ElemSimple el, int side) {
         try {
             for (ElemJoining join : this) {
-                
-                if (side == 0 && el.x1() == join.elem1.x2() && el.y1() == join.elem1.y2()) { //0-пред.артикул
+                if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(el.type)) {
+                    if (side == 0 && join.elem1.id == el.id && (join.layout == LayoutJoin.TLEFT || join.layout == LayoutJoin.TBOT)) {
+                        return join;
+                    } else if (side == 1 && join.elem1.id == el.id && (join.layout == LayoutJoin.TRIGH || join.layout == LayoutJoin.TTOP)) {
+                        return join;
+                    }
+                } else if (side == 0 && el.x1() == join.elem1.x2() && el.y1() == join.elem1.y2()) { //0-пред.артикул
                     return join;
-                    
+
                 } else if (side == 1 && el.x2() == join.elem2.x1() && el.y2() == join.elem2.y1()) { //1-след.артикл
                     return join;
-                    
-                } else if(side == 2 && join.type() == TypeJoin.FLAT && el == join.elem1) { //2-прилег.артикл
+
+                } else if (side == 2 && join.type() == TypeJoin.FLAT && el == join.elem1) { //2-прилег.артикл
                     return join;
                 }
             }
@@ -44,10 +49,10 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
 
     /**
      * Получить элемент соединения профилей.
-     * 
+     *
      * @param el - элемент соединения,
-     * @param side - сторона соединения 
-     * 0-пред.артикул, 1-след.артикл, 2-прилег.артикл
+     * @param side - сторона соединения 0-пред.артикул, 1-след.артикл,
+     * 2-прилег.артикл
      * @return - элемент соединения
      */
     public ElemSimple elem(ElemSimple el, int side) {
