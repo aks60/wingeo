@@ -1098,7 +1098,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         setTitle("Системы профилей");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 500));
-        setPreferredSize(new java.awt.Dimension(900, 600));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 Systree.this.windowClosed(evt);
@@ -2722,7 +2721,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         txt39.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab54.setFont(frames.UGui.getFont(0,0));
-        lab54.setText("3  соединение");
+        lab54.setText("3  прилегающее");
         lab54.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab54.setPreferredSize(new java.awt.Dimension(80, 18));
 
