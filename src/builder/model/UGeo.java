@@ -179,7 +179,7 @@ public class UGeo {
         return Com5t.gf.createPolygon(UGeo.arrCoord(d));
     }
 
-    public static LineSegment segmPolygon(Polygon p, int i, int step) {
+    public static LineSegment getSegment(Polygon p, int i, int step) {
         Coordinate[] coo = p.getCoordinates();
         int imax = p.getNumPoints() - 1;
         int j = i;
@@ -200,7 +200,7 @@ public class UGeo {
         }
     }
 
-    public static int indexPolygon(Polygon p, Com5t e) throws Exception {
+    public static int getIndex(Polygon p, Com5t e) throws Exception {
         Coordinate coo[] = p.getCoordinates();
 
         for (int i = 0; i < coo.length - 1; i++) {

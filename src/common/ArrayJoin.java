@@ -67,7 +67,7 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
             if (join != null) {
 
                 if (side == 0) {
-                    return (el.type == Type.IMPOST || el.type == Type.SHTULP || el.type == Type.STOIKA) ? join.elem2 : join.elem1;
+                    return (Type.isCross(el.type)== true) ? join.elem2 : join.elem1;
                 } else if (side == 1) {
                     return join.elem2;
                 } else if (side == 2 && join.type() == TypeJoin.FLAT) {

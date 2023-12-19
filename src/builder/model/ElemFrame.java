@@ -120,7 +120,7 @@ public class ElemFrame extends ElemSimple {
         try {
             if (owner.area.getNumPoints() == 4
                     || owner.area.getNumPoints() == 5) {
-                int index = UGeo.indexPolygon(owner.area, this);
+                int index = UGeo.getIndex(owner.area, this);
                 if (index == 0) {
                     return Layout.LEFT;
                 } else if (index == 1) {
