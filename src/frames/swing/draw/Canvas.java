@@ -126,7 +126,7 @@ public class Canvas extends javax.swing.JPanel {
             winc.scale = (length / width > length / height)
                     ? length / (height + 200) : length / (width + 200);
             winc.gc2d.scale(winc.scale, winc.scale);
-            winc.upgrade();
+            //winc.upgrade();
             winc.draw(); //рисую конструкцию
             return new ImageIcon(bi);
 

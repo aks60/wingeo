@@ -276,8 +276,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                 try {
                     String script = record.getStr(ePrjprod.script);
                     Wincalc iwin2 = new Wincalc(script);
-                    Cal5e joining = new Joining(iwin2, true);//заполним соединения из конструктива
-                    joining.calc();
                     iwin2.imageIcon = Canvas.createIcon(iwin2, 68);
                     record.add(iwin2);
 
@@ -366,8 +364,10 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc win = (Wincalc) w;
                 scene.init(win);
+                canvas.init(win);
                 canvas.draw();
                 scene.draw();
+                
                 loadingTree(win);
                 winTree.setSelectionInterval(0, 0);
             }
@@ -484,6 +484,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                     ((CardLayout) pan8.getLayout()).show(pan8, "card17");
                     DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                     ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
+                    new Joining(winc, true).calc();//заполним соединения из конструктива 
                     ElemJoining ej1 = winc.listJoin.get(elem5e, 0);
                     ElemJoining ej2 = winc.listJoin.get(elem5e, 1);
                     ElemJoining ej3 = winc.listJoin.get(elem5e, 2);
@@ -695,8 +696,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
 
             //Экземпляр нового скрипта
             Wincalc iwin2 = new Wincalc(script);
-            Cal5e joining = new Joining(iwin2, true);//заполним соединения из конструктива
-            joining.calc();
             iwin2.imageIcon = Canvas.createIcon(iwin2, 68);
             prjprodRec.setNo(ePrjprod.values().length, iwin2);
 
@@ -1589,13 +1588,13 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
         });
         scr2.setViewportView(tab2);
         if (tab2.getColumnModel().getColumnCount() > 0) {
-            tab2.getColumnModel().getColumn(0).setPreferredWidth(80);
-            tab2.getColumnModel().getColumn(1).setPreferredWidth(40);
+            tab2.getColumnModel().getColumn(0).setPreferredWidth(180);
+            tab2.getColumnModel().getColumn(1).setPreferredWidth(20);
             tab2.getColumnModel().getColumn(1).setMaxWidth(80);
             tab2.getColumnModel().getColumn(2).setMinWidth(68);
             tab2.getColumnModel().getColumn(2).setPreferredWidth(68);
             tab2.getColumnModel().getColumn(2).setMaxWidth(68);
-            tab2.getColumnModel().getColumn(3).setPreferredWidth(40);
+            tab2.getColumnModel().getColumn(3).setPreferredWidth(30);
             tab2.getColumnModel().getColumn(3).setMaxWidth(60);
         }
 
