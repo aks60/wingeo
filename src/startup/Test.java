@@ -81,21 +81,21 @@ public class Test {
 
         Conn.connection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
-        String _case = "one";
+        String _case = "min";
 
         if (_case.equals("one")) {
-            String script = GsonScript.productJson(605001);
+            String script = GsonScript.productJson(506642);
             winc.build(script);
             //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
-            System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+            //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
-            //winc.constructiv(true);
+            winc.constructiv(true);
             //new Joining(winc).calc();
             //winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
             //winc.gc2d = winc.bufferImg.createGraphics();
             //winc.root.draw(); //рисую конструкцию
 
-            //frames.PSCompare.iwinPs4(winc, true);
+            frames.PSCompare.iwinPs4(winc, true);
             //winc.listElem.forEach(it -> System.out.println(it));
             //winc.listJoin.forEach(it -> System.out.println(it.joiningRec));     
 

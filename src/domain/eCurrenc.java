@@ -4,6 +4,8 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.eArtikl.code;
+import static domain.eArtikl.name;
 
 public enum eCurrenc implements Field {
     up("0", "0", "0", "Валюта", "CORRENC"),
@@ -52,6 +54,7 @@ public enum eCurrenc implements Field {
     public static Record virtualRec() {
         Record record = up.newRecord();
         record.setNo(id, -3);
+        record.setNo(name, "virtual");        
         record.setNo(cross_cour, 1);
         record.setNo(name, "");
         return record;

@@ -4,7 +4,9 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.eArtikl.code;
 import static domain.eArtikl.id;
+import static domain.eArtikl.name;
 import static domain.eArtikl.up;
 import static domain.eArtikl.virtualRec;
 import java.sql.SQLException;
@@ -59,6 +61,7 @@ public enum eSyssize implements Field {
     public static Record virtualRec() {
         Record record = up.newRecord();
         record.setNo(id, -3);
+        record.setNo(name, "virtual");        
         record.setNo(prip, 3);
         record.setNo(naxl, 6);
         record.setNo(falz, 14);   

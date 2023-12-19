@@ -115,12 +115,20 @@ public class GsonScript {
 //            rootGeo.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="TRAPEZE">
+        } else if (prj == 506642) { //Трапеции без импоста
+            rootGson = new GsonRoot("2.0",  Type.TRAPEZE, "KBE / KBE Эксперт / 1 ОКНА / Открывание внутрь (ств. Z 77)");
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1300.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 1300.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 350.0))
+                    .addElem(new GsonElem(Type.GLASS,"{artglasID: 5241}"));
+
         } else if (prj == 605001) {
             rootGson = new GsonRoot("2.0", Type.TRAPEZE, "KBE\\KBE 58\\1 ОКНА\\*Открывание внутрь (ств. Z77)");
-            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0)
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1500.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0)));
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0));  
 
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 300.0, 1300.0, 300.0));
