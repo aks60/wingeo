@@ -1,6 +1,8 @@
 package enums;
 
 //Типы конструкций и элементов
+import java.util.List;
+
 public enum Type implements Enam {
 
     NONE(0, 0, "Не определено"),
@@ -49,5 +51,12 @@ public enum Type implements Enam {
 
     public int numb() {
         return id;
+    }
+
+    public static boolean isCross(Type type) {
+        if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(type)) {
+            return true;
+        }
+        return false;
     }
 }

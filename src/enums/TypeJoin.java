@@ -1,8 +1,6 @@
 package enums;
 
 //То что пишет профстрой в базу данных
-import java.util.Arrays;
-
 public enum TypeJoin {
 
     NONE(00, "Не определен"),

@@ -1,11 +1,15 @@
 package common;
 
+import builder.model.Com5t;
 import builder.model.ElemJoining;
 import builder.model.ElemSimple;
+import builder.model.UGeo;
 import enums.Type;
 import enums.TypeJoin;
 import java.util.ArrayList;
 import java.util.List;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.Point;
 
 public class ArrayJoin extends ArrayList<ElemJoining> {
 
@@ -24,11 +28,13 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
     public ElemJoining get(ElemSimple el, int side) {
         try {
             for (ElemJoining join : this) {
+                
                 if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(el.type)) {
-                    if (side == 0 && join.elem1.id == el.id && (join.layout == LayoutJoin.TLEFT || join.layout == LayoutJoin.TBOT)) {
-                        return join;
-                    } else if (side == 1 && join.elem1.id == el.id && (join.layout == LayoutJoin.TRIGH || join.layout == LayoutJoin.TTOP)) {
-                        return join;
+                    Point p = (side == 0) ? UGeo.newPoint(el.x1(), el.y1()) : UGeo.newPoint(el.x2(), el.y2());
+                    for (ElemSimple e : el.winc.listElem) {
+                        if (UGeo.newLineStr(e.x1(), e.y1(), e.x2(), e.y2()).contains(p)) {
+                            return join;
+                        }
                     }
                 } else if (side == 0 && el.x1() == join.elem1.x2() && el.y1() == join.elem1.y2()) { //0-пред.артикул
                     return join;

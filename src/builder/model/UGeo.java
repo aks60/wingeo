@@ -3,17 +3,16 @@ package builder.model;
 import common.LinkedCom;
 import domain.eArtikl;
 import enums.Type;
-import java.awt.Shape;
-import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 
 /**
@@ -166,6 +165,13 @@ public class UGeo {
         list.add(new Coordinate(d[0], d[1]));
 
         return list.toArray(new Coordinate[0]);
+    }
+
+    public static Point newPoint(double x, double y) {
+        return Com5t.gf.createPoint(new Coordinate(x, y));
+    }
+    public static LineString newLineStr(double... d) {
+        return Com5t.gf.createLineString(UGeo.arrCoord(d));
     }
 
     //Список входн. параметров не замыкается начальной точкой как в jts!

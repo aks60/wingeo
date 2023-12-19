@@ -139,7 +139,7 @@ public class Wincalc {
                         ElemFrame elem5e = new ElemFrame(this, js.id, js, owner);
                         root.frames.add(elem5e);
 
-                    } else if (Type.IMPOST == js.type || Type.SHTULP == js.type || Type.STOIKA == js.type) {
+                    } else if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).contains(js.type)) {
                         ElemCross elem5e = new ElemCross(this, js, owner);
                         owner.childs.add(elem5e); //добавим ребёнка родителю
 
