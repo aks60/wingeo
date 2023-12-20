@@ -116,19 +116,19 @@ public class GsonScript {
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="TRAPEZE">
         } else if (prj == 506642) { //Трапеции без импоста
-            rootGson = new GsonRoot("2.0",  Type.TRAPEZE, "KBE / KBE Эксперт / 1 ОКНА / Открывание внутрь (ств. Z 77)");
+            rootGson = new GsonRoot("2.0", Type.TRAPEZE, "KBE / KBE Эксперт / 1 ОКНА / Открывание внутрь (ств. Z 77)");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1300.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 1300.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 350.0))
-                    .addElem(new GsonElem(Type.GLASS,"{artglasID: 5241}"));
+                    .addElem(new GsonElem(Type.GLASS, "{artglasID: 5241}"));
 
         } else if (prj == 605001) {
             rootGson = new GsonRoot("2.0", Type.TRAPEZE, "KBE\\KBE 58\\1 ОКНА\\*Открывание внутрь (ств. Z77)");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1500.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0));  
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0));
 
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 300.0, 1300.0, 300.0));
@@ -199,34 +199,6 @@ public class GsonScript {
         return null;
     }
 
-    public static String productJson(Integer prj) {
-        String base_name = (eProp.base_num.read().equals("1")) ? eProp.base1.read()
-                : (eProp.base_num.read().equals("2")) ? eProp.base2.read() : eProp.base3.read();
-
-        if (base_name.toLowerCase().contains("sial3")) {
-            //return Sial3.script(prj);
-
-        } else if (base_name.toLowerCase().contains("alutex3")) {
-            //return Alutex3.script(prj);
-
-        } else if (base_name.toLowerCase().contains("alutech3")) {
-            //return Alutech3.script(prj);
-
-        } else if (base_name.toLowerCase().contains("bimax")) {
-            return Bimax.script(prj);
-
-        } else if (base_name.toLowerCase().contains("vidnal")) {
-            //return Vidnal.script(prj);
-
-        } else if (base_name.toLowerCase().contains("krauss")) {
-            //return Krauss.script(prj);
-
-        } else if (base_name.toLowerCase().contains("sokol")) {
-            //return Sokol.script(prj);
-        }
-        return null;
-    }
-
     public static List<Integer> productList(String scale) {
         String base_name = (eProp.base_num.read().equals("1")) ? eProp.base1.read()
                 : (eProp.base_num.read().equals("2")) ? eProp.base2.read() : eProp.base3.read();
@@ -262,7 +234,35 @@ public class GsonScript {
         return null;
     }
 
-    public static String path() {
+    public static String scriptPath(Integer prj) {
+        String base_name = (eProp.base_num.read().equals("1")) ? eProp.base1.read()
+                : (eProp.base_num.read().equals("2")) ? eProp.base2.read() : eProp.base3.read();
+
+        if (base_name.toLowerCase().contains("sial3")) {
+            //return Sial3.script(prj);
+
+        } else if (base_name.toLowerCase().contains("alutex3")) {
+            //return Alutex3.script(prj);
+
+        } else if (base_name.toLowerCase().contains("alutech3")) {
+            //return Alutech3.script(prj);
+
+        } else if (base_name.toLowerCase().contains("bimax")) {
+            return Bimax.script(prj);
+
+        } else if (base_name.toLowerCase().contains("vidnal")) {
+            //return Vidnal.script(prj);
+
+        } else if (base_name.toLowerCase().contains("krauss")) {
+            //return Krauss.script(prj);
+
+        } else if (base_name.toLowerCase().contains("sokol")) {
+            //return Sokol.script(prj);
+        }
+        return null;
+    }
+
+    public static String databasePath() {
         String base_name = (eProp.base_num.read().equals("1")) ? eProp.base1.read()
                 : (eProp.base_num.read().equals("2")) ? eProp.base2.read() : eProp.base3.read();
 

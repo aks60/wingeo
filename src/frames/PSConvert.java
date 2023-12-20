@@ -727,7 +727,7 @@ public class PSConvert {
             List<Integer> prjList = GsonScript.productList("min");
             for (int prj : prjList) {
                 //Загрузка тестовых конструкций в систему, таблица SYSPROD.
-                String script2 = GsonScript.productJson(prj);
+                String script2 = GsonScript.scriptPath(prj);
                 if (script2 != null) {
                     GsonRoot gson2 = new Gson().fromJson(script2, GsonRoot.class);
                     String name2 = "Проект:" + gson2.prj + "/Заказ:" + gson2.ord + " " + gson2.name;

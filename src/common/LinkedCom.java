@@ -1,5 +1,6 @@
 package common;
 
+import builder.model.AreaSimple;
 import builder.model.Com5t;
 import builder.model.ElemSimple;
 import builder.model.UGeo;
@@ -13,12 +14,16 @@ import org.locationtech.jts.geom.Polygon;
 
 public class LinkedCom<E extends Com5t> extends LinkedList<E> {
 
-    public LinkedCom() {
+    AreaSimple areaS = null;
+    
+    public LinkedCom(AreaSimple area) {
         super();
+        this.areaS = area;
     }
 
-    public LinkedCom(Collection<? extends E> c) {
+    public LinkedCom(AreaSimple area, Collection<? extends E> c) {
         super(c);
+        this.areaS = area;
     }
 
     public GsonElem gson(double id) {
@@ -29,12 +34,12 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
         return null;
     }
 
-    public E get(Polygon poly, Layout layout) {
+    public E get(Layout layout) {
         try {
             for (Com5t el : this) {
-                int index = UGeo.getIndex(poly, el);
-                if (poly.getNumPoints() == 4
-                        || poly.getNumPoints() == 5) {
+                int index = UGeo.getIndex(areaS.area, el);
+                if (areaS.area.getNumPoints() == 4
+                        || areaS.area.getNumPoints() == 5) {
                     if (index == 0 && layout == Layout.LEFT) {
                         return (E) el;
                     } else if (index == 1 && layout == Layout.BOTT) {
@@ -52,28 +57,9 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
         return null;
     }
 
-    public E get(Layout layout) {
-        double angl = 0;
-        if (layout == Layout.LEFT) {
-            angl = 90;
-        } else if (layout == Layout.BOTT) {
-            angl = 0;
-        } else if (layout == Layout.RIGHT) {
-            angl = -90;
-        } else if (layout == Layout.TOP) {
-            angl = 180;
-        }
-        for (E el : this) {
-            if (angl == ((ElemSimple) el).anglHoriz()) {
-                return (E) el;
-            }
-        }
-        return null;
-    }
-
     public LinkedCom<E> filter(Type... type) {
         List tp = List.of(type);
-        LinkedCom<E> list2 = new LinkedCom();
+        LinkedCom<E> list2 = new LinkedCom(null);
         for (E el : this) {
             if (tp.contains(el.type)) {
                 list2.add(el);

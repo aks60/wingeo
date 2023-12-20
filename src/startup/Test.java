@@ -84,7 +84,7 @@ public class Test {
         String _case = "min";
 
         if (_case.equals("one")) {
-            String script = GsonScript.productJson(506642);
+            String script = GsonScript.scriptPath(506642);
             winc.build(script);
             //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
             //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
@@ -102,7 +102,7 @@ public class Test {
         } else if (_case.equals("min")) {
             List<Integer> prjList = GsonScript.productList(_case);
             for (int prj : prjList) {
-                String script = GsonScript.productJson(prj);
+                String script = GsonScript.scriptPath(prj);
                 if (script != null) {
                     winc.build(script);
                     winc.constructiv(true);
@@ -113,7 +113,7 @@ public class Test {
         } else if (_case.equals("max")) {
             List<Integer> prjList = GsonScript.productList(_case);
             for (int prj : prjList) {
-                String script = GsonScript.productJson(prj);
+                String script = GsonScript.scriptPath(prj);
                 if (script != null) {
                     winc.build(script);
                     winc.constructiv(true);

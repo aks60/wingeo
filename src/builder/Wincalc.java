@@ -66,9 +66,9 @@ public class Wincalc {
     public ArrayList<ListenerMouse> mouseDragged = new ArrayList();
     
     public HashMap<Integer, Record> mapPardef = new HashMap(); //пар. по умолчанию + наложенные пар. клиента
-    public LinkedCom<AreaSimple> listArea = new LinkedCom(); //список ареа.
-    public LinkedCom<ElemSimple> listElem = new LinkedCom(); //список элем.
-    public LinkedCom<Com5t> listAll = new LinkedCom(); //список всех компонентов (area + elem)
+    public LinkedCom<AreaSimple> listArea = new LinkedCom(root); //список ареа.
+    public LinkedCom<ElemSimple> listElem = new LinkedCom(root); //список элем.
+    public LinkedCom<Com5t> listAll = new LinkedCom(root); //список всех компонентов (area + elem)
     public ArraySpc<Specific> listSpec = new ArraySpc(); //спецификация
     public ArrayJoin listJoin = new ArrayJoin(); //список соединений рам и створок 
 

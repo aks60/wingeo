@@ -86,7 +86,7 @@ public class ParamTest {
     //601004 "KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)"
     private void iwin2() {
         iwin_2 = new builder.Wincalc(); //601004
-        iwin_2.build(builder.script.GsonScript.productJson(601004));
+        iwin_2.build(builder.script.GsonScript.scriptPath(601004));
         iwin_2.constructiv(true);
         elementVar2 = new ElementVar(iwin_2);
         elementDet2 = new ElementDet(iwin_2);
@@ -110,7 +110,7 @@ public class ParamTest {
     //604005  "Wintech\\Termotech 742\\1 ОКНА"
     private void iwin3() {
         iwin_3 = new builder.Wincalc(); //604005
-        iwin_3.build(builder.script.GsonScript.productJson(604005));
+        iwin_3.build(builder.script.GsonScript.scriptPath(604005));
         iwin_3.constructiv(true);
         elementVar3 = new ElementVar(iwin_3);
         elementDet3 = new ElementDet(iwin_3);
@@ -134,7 +134,7 @@ public class ParamTest {
     //700027  "Montblanc / Eco / 1 ОКНА (штульп)"
     private void iwin4() {
         iwin_4 = new builder.Wincalc(); //700027
-        iwin_4.build(builder.script.GsonScript.productJson(700027));
+        iwin_4.build(builder.script.GsonScript.scriptPath(700027));
         iwin_4.constructiv(true);
         elementVar4 = new ElementVar(iwin_4);
         elementDet4 = new ElementDet(iwin_4);

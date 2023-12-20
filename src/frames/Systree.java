@@ -4619,7 +4619,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 Record record = eSysprod.up.newRecord(Query.INS);
                 record.set(eSysprod.id, Conn.genId(eSysprod.up));
                 record.set(eSysprod.npp, record.get(eSysprod.id));
-                String json = GsonScript.productJson(Integer.valueOf(prj.toString()));
+                String json = GsonScript.scriptPath(Integer.valueOf(prj.toString()));
                 GsonRoot gsonRoot = new Gson().fromJson(json, GsonRoot.class);
                 record.set(eSysprod.name, "Kod:" + prj + "* " + gsonRoot.name);
                 record.set(eSysprod.script, json);

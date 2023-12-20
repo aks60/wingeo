@@ -20,9 +20,9 @@ import org.locationtech.jts.geom.Point;
 
 public class AreaSimple extends Com5t {
 
-    public LinkedCom<ElemSimple> frames = new LinkedCom(); //список рам
+    public LinkedCom<ElemSimple> frames = new LinkedCom(this); //список рам
     public LinkedList<Point2D> listSkin = new LinkedList();
-    public LinkedCom<Com5t> childs = new LinkedCom(); //дети
+    public LinkedCom<Com5t> childs = new LinkedCom(this); //дети
 
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson.id, gson, owner);
