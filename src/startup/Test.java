@@ -64,13 +64,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            //wincalc();
+            wincalc();
             //query();
             //frame();
             //json();
             //uid();
             //script();
-            geom();
+            //geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -81,7 +81,7 @@ public class Test {
 
         Conn.connection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
-        String _case = "min";
+        String _case = "one";
 
         if (_case.equals("one")) {
             String script = GsonScript.scriptPath(605001);
@@ -299,6 +299,6 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
         
-        System.out.println(Math.toDegrees(Math.sin(Math.toRadians(45))));
+        System.out.println(3 / Math.cos(Math.toRadians(45)));
     }
 }

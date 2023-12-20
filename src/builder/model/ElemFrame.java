@@ -78,7 +78,7 @@ public class ElemFrame extends ElemSimple {
         try {
             for (int i = 0; i < owner.frames.size(); i++) {
                 if (owner.frames.get(i).id == this.id) {
-                    
+
                     int k = (i == 0) ? owner.frames.size() - 1 : i - 1;
                     int j = (i == (owner.frames.size() - 1)) ? 0 : i + 1;
                     ElemSimple e1 = owner.frames.get(k);
@@ -141,8 +141,8 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void setSpecific() {  //добавление основной спецификации
         try {
-            double prip1 =  Math.toDegrees(Math.sin(Math.toRadians(winc.listJoin.get(this, 0).angl))) / winc.syssizRec.getDbl(eSyssize.prip);
-            double prip2 = winc.syssizRec.getDbl(eSyssize.prip) * Math.toDegrees(Math.sin(winc.listJoin.get(this, 1).angl));
+            double prip1 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(anglCut[0]));
+            double prip2 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(anglCut[1]));
             spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
             spcRec.setArtikl(artiklRec);
             spcRec.setColor(colorID1, colorID2, colorID3);
