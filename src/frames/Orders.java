@@ -412,11 +412,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                     ((DefTableModel) tab3.getModel()).fireTableDataChanged();
 
                     //Рама, импост...
-                } else if (winNode.com5t().type == enums.Type.FRAME_SIDE
-                        || winNode.com5t().type == enums.Type.STVORKA_SIDE
-                        || winNode.com5t().type == enums.Type.IMPOST
-                        || winNode.com5t().type == enums.Type.STOIKA
-                        || winNode.com5t().type == enums.Type.SHTULP) {
+                } else if (List.of(enums.Type.FRAME_SIDE, enums.Type.STVORKA_SIDE, enums.Type.IMPOST, 
+                        enums.Type.STOIKA, enums.Type.SHTULP).contains(winNode.com5t().type)) {
                     ((CardLayout) pan8.getLayout()).show(pan8, "card13");
                     ((TitledBorder) pan13.getBorder()).setTitle(winNode.toString());
                     txt32.setText(winNode.com5t().artiklRecAn.getStr(eArtikl.code));

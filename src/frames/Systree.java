@@ -52,6 +52,7 @@ import domain.eColor;
 import enums.Layout;
 import enums.PKjson;
 import enums.TypeOpen1;
+import enums.Type;
 import frames.dialog.DicColor;
 import frames.dialog.DicHandl;
 import frames.dialog.DicSysprof;
@@ -74,7 +75,6 @@ import domain.eJoining;
 import builder.making.Joining;
 import builder.making.UColor;
 import builder.model.AreaSimple;
-import builder.making.Cal5e;
 import builder.model.AreaStvorka;
 import builder.model.ElemGlass;
 import builder.model.ElemJoining;
@@ -449,11 +449,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     ((DefTableModel) tab7.getModel()).fireTableDataChanged();
 
                     //Рама, импост...
-                } else if (winNode.com5t().type == enums.Type.FRAME_SIDE
-                        || winNode.com5t().type == enums.Type.STVORKA_SIDE
-                        || winNode.com5t().type == enums.Type.IMPOST
-                        || winNode.com5t().type == enums.Type.STOIKA
-                        || winNode.com5t().type == enums.Type.SHTULP) {
+                } else if (List.of(enums.Type.FRAME_SIDE, enums.Type.STVORKA_SIDE, enums.Type.IMPOST, 
+                        enums.Type.STOIKA, enums.Type.SHTULP).contains(winNode.com5t().type)) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card13");
                     ((TitledBorder) pan13.getBorder()).setTitle(winNode.toString());
                     setText(txt32, winNode.com5t().artiklRec.getStr(eArtikl.code));

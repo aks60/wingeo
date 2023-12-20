@@ -87,7 +87,6 @@ public class ElemJoining {
             int lev1 = elem1.artiklRec.getInt(eArtikl.level1);
             int lev2 = elem2.artiklRec.getInt(eArtikl.level2);
 
-            //Если профиль не коробка и не створка меняем угол
             if ((lev1 == 1 && (lev2 == 1 || lev2 == 2)) == false) {
                 double ang1 = elem1.anglHoriz();
                 double ang2 = elem2.anglHoriz();
