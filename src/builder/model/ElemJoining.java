@@ -25,6 +25,8 @@ public class ElemJoining {
     public int vid = 0; //вид соединения ("0-Простое L-обр", "1-Крестовое †-обр") или ("0-Простое T-обр", "1-Крестовое †-обр", "2-Сложное Y-обр)
     public ElemSimple elem1 = null;  //элемент соединения 1
     public ElemSimple elem2 = null;  //элемент соединения 2
+    public double angl = 90;      //угол между профилями
+    Coordinate xy = new Coordinate();
     public String costs = "";     //трудозатраты, ч/ч.
 
     public ElemJoining(Wincalc winc, TypeJoin type, ElemSimple elem1, ElemSimple elem2) {
@@ -33,6 +35,7 @@ public class ElemJoining {
         this.type = type; //угол варианта вычисл. динамически см. type();
         this.elem1 = elem1;
         this.elem2 = elem2;
+        this.angl = angleBetween();
     }
 
     public void addSpecific(Specific spcAdd) { //добавление спесификаций зависимых элементов

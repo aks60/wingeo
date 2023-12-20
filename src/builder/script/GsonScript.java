@@ -121,7 +121,7 @@ public class GsonScript {
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1300.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 1300.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 350.0))
-                    .addElem(new GsonElem(Type.GLASS, "{artglasID: 5241}"));
+                    .addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 605001) {
             rootGson = new GsonRoot("2.0", Type.TRAPEZE, "KBE\\KBE 58\\1 ОКНА\\*Открывание внутрь (ств. Z77)");
@@ -248,7 +248,7 @@ public class GsonScript {
             //return Alutech3.script(prj);
 
         } else if (base_name.toLowerCase().contains("bimax")) {
-            return Bimax.script(prj);
+            return Bimax.systemScript(prj);
 
         } else if (base_name.toLowerCase().contains("vidnal")) {
             //return Vidnal.script(prj);

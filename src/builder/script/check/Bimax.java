@@ -9,7 +9,7 @@ import enums.Type;
 
 public final class Bimax {
 
-    public static String script(Integer prj) {
+    public static String systemScript(Integer prj) {
 // <editor-fold defaultstate="collapsed" desc="RECTANGL">
         if (prj == 601001) {
             rootGson = new GsonRoot("2.0", 427817, prj, 1, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)",
