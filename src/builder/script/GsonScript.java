@@ -12,7 +12,7 @@ public class GsonScript {
 
     public static GsonRoot rootGson = null;
 
-    public static String modelJson(Integer prj) {
+    public static String modelScript(Integer prj) {
 
 // <editor-fold defaultstate="collapsed" desc="RECTANGL">
         if (prj == 601001) { //PUNIC = 427817
@@ -199,7 +199,7 @@ public class GsonScript {
         return null;
     }
 
-    public static List<Integer> productList(String scale) {
+    public static List<Integer> systemList(String scale) {
         String base_name = (eProp.base_num.read().equals("1")) ? eProp.base1.read()
                 : (eProp.base_num.read().equals("2")) ? eProp.base2.read() : eProp.base3.read();
 
@@ -262,7 +262,7 @@ public class GsonScript {
         return null;
     }
 
-    public static String databasePath() {
+    public static String filePath() {
         String base_name = (eProp.base_num.read().equals("1")) ? eProp.base1.read()
                 : (eProp.base_num.read().equals("2")) ? eProp.base2.read() : eProp.base3.read();
 

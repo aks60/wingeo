@@ -5,6 +5,7 @@ import domain.eArtikl;
 import enums.Type;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.algorithm.Intersection;
@@ -72,45 +73,51 @@ public class UGeo {
 
     //Пилим многоугольник
     public static Geometry[] geoSplit(Geometry geo, double x1, double y1, double x2, double y2) {
-
-        Coordinate[] coo = geo.getCoordinates();
-        Coordinate linePoint1 = new Coordinate(x1, y1), linePoint2 = new Coordinate(x2, y2);
-        List<Coordinate> po1 = new ArrayList(), po2 = new ArrayList(),
-                cros = new ArrayList(), exp = new ArrayList(List.of(coo[0]));
         try {
+            HashSet<Coordinate> hs = new HashSet(), cros = new HashSet();
+            Coordinate[] coo = geo.getCoordinates();
+            Coordinate line1 = new Coordinate(x1, y1), line2 = new Coordinate(x2, y2);
+            List<Coordinate> pL = new ArrayList(), pR = new ArrayList(), ext = new ArrayList(List.of(coo[0]));
             for (int i = 1; i < coo.length; i++) {
-                Coordinate segmPoint1 = coo[i - 1], segmentPoint2 = coo[i];
-                Coordinate c3 = Intersection.lineSegment( //точка пересечения segmPoint и lineSegm
-                        linePoint1, linePoint2, segmPoint1, segmentPoint2);
+
+                //Точка пересечения сегмента и линии
+                Coordinate segm1 = coo[i - 1], segm2 = coo[i];
+                Coordinate c3 = Intersection.lineSegment(line1, line2, segm1, segm2);
+                hs.add(coo[i]);
                 if (c3 != null) {
-                    exp.add(c3);
+                    if (hs.add(c3)) {
+                        ext.add(c3);
+                    }
                     cros.add(c3);
                 }
-                exp.add(coo[i]);
+                ext.add(coo[i]);
             }
+
+            //Обход сегментов до точек пересечения
+            List<Coordinate> list = new ArrayList(cros);
             boolean b = true;
-            for (Coordinate c : exp) {
-                if (cros.get(0) == c || cros.get(1) == c) {
+            for (Coordinate c : ext) {
+                if (list.get(0).equals(c) || list.get(1).equals(c)) {
                     b = !b;
-                    po1.add(c);
-                    po2.add(c);
+                    pL.add(c);
+                    pR.add(c);
                 } else {
                     if (b == true) {
-                        po1.add(c);
+                        pL.add(c);
                     } else {
-                        po2.add(c);
+                        pR.add(c);
                     }
                 }
             }
             if (y1 != y2) {
-                Collections.rotate(po2, 1);
-                po2.add(po2.get(0));
+                Collections.rotate(pR, 1);
+                pR.add(pR.get(0));
             } else {
-                po2.add(po2.get(0));
+                pR.add(pR.get(0));
             }
             Geometry p0 = Com5t.gf.createLineString(cros.toArray(new Coordinate[0]));
-            Geometry p1 = Com5t.gf.createPolygon(po1.toArray(new Coordinate[0]));
-            Geometry p2 = Com5t.gf.createPolygon(po2.toArray(new Coordinate[0]));
+            Geometry p1 = Com5t.gf.createPolygon(pL.toArray(new Coordinate[0]));
+            Geometry p2 = Com5t.gf.createPolygon(pR.toArray(new Coordinate[0]));
             return new Geometry[]{p0, p1, p2};
 
         } catch (Exception e) {
@@ -170,11 +177,11 @@ public class UGeo {
     public static Point newPoint(double x, double y) {
         return Com5t.gf.createPoint(new Coordinate(x, y));
     }
-    
+
     public static LineString newLineStr(double... d) {
         return Com5t.gf.createLineString(UGeo.arrCoord(d));
     }
-    
+
     public static LineSegment newLineSegm(double x1, double y1, double x2, double y2) {
         return new LineSegment(x1, y1, x2, y2);
     }
