@@ -1,6 +1,5 @@
 package common;
 
-import builder.model.Com5t;
 import builder.model.ElemJoining;
 import builder.model.ElemSimple;
 import builder.model.UGeo;
@@ -8,11 +7,13 @@ import enums.Type;
 import enums.TypeJoin;
 import java.util.ArrayList;
 import java.util.List;
-import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Point;
 
 public class ArrayJoin extends ArrayList<ElemJoining> {
 
+    Coordinate co = new Coordinate();
+    
     public ArrayJoin() {
         super();
     }

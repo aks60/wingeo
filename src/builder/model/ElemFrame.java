@@ -141,12 +141,13 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void setSpecific() {  //добавление основной спецификации
         try {
+            double prip1 =  Math.toDegrees(Math.sin(Math.toRadians(winc.listJoin.get(this, 0).angl))) / winc.syssizRec.getDbl(eSyssize.prip);
+            double prip2 = winc.syssizRec.getDbl(eSyssize.prip) * Math.toDegrees(Math.sin(winc.listJoin.get(this, 1).angl));
             spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
             spcRec.setArtikl(artiklRec);
             spcRec.setColor(colorID1, colorID2, colorID3);
             spcRec.setAnglCut(anglCut[0], anglCut[1]);
-            double w = (winc.syssizRec == null) ? length() : length() + 2 * winc.syssizRec.getDbl(eSyssize.prip);
-            spcRec.width = w;
+            spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;
             spcRec.height = artiklRec.getDbl(eArtikl.height);
 
         } catch (Exception e) {

@@ -112,7 +112,7 @@ public class ElemJoining {
     }
 
     //Угол между профилями
-    public double angleBetween() {
+    private double angleBetween() {
         if (Type.isCross(elem1.type)) {
 
             if (UGeo.newLineStr(elem2.x1(), elem2.y1(), elem2.x2(), elem2.y2()).contains(UGeo.newPoint(elem1.x1(), elem1.y1()))) {
