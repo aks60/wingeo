@@ -141,8 +141,8 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void setSpecific() {  //добавление основной спецификации
         try {
-            double prip1 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(anglCut[0]));
-            double prip2 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(anglCut[1]));
+            double prip1 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(anglCut[0] - 45));
+            double prip2 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(anglCut[1] - 45));
             spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
             spcRec.setArtikl(artiklRec);
             spcRec.setColor(colorID1, colorID2, colorID3);

@@ -628,8 +628,8 @@ public class Tex extends javax.swing.JFrame {
 
         mn0.add(mn02);
 
+        mn09.setText("  Модели  ");
         mn09.setFont(frames.UGui.getFont(1,1));
-        mn09.setLabel("  Системы  ");
 
         mn91.setFont(frames.UGui.getFont(0,1));
         mn91.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b054.gif"))); // NOI18N

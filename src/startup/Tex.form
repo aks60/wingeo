@@ -156,10 +156,10 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="mn09">
           <Properties>
+            <Property name="text" type="java.lang.String" value="  &#x41c;&#x43e;&#x434;&#x435;&#x43b;&#x438;  "/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="frames.UGui.getFont(1,1)" type="code"/>
             </Property>
-            <Property name="label" type="java.lang.String" value="  &#x421;&#x438;&#x441;&#x442;&#x435;&#x43c;&#x44b;  "/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mn91">

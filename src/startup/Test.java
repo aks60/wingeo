@@ -84,7 +84,7 @@ public class Test {
         String _case = "one";
 
         if (_case.equals("one")) {
-            String script = GsonScript.scriptPath(605001);
+            String script = GsonScript.scriptPath(506642);
             winc.build(script);
             //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
             //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
@@ -299,6 +299,7 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
         
-        System.out.println(3 / Math.cos(Math.toRadians(45)));
+        double angl = 45;
+        System.out.println(3 / Math.cos(Math.toRadians(angl - 45)));
     }
 }
