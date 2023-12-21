@@ -64,13 +64,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            wincalc();
+            //wincalc();
             //query();
             //frame();
             //json();
             //uid();
             //script();
-            //geom();
+            geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -299,7 +299,7 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
         
-        double angl = 45;
-        System.out.println(3 / Math.cos(Math.toRadians(angl - 45)));
+        double X = 20 + 120 - 10 - 10;
+        System.out.println(X);
     }
 }

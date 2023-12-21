@@ -409,7 +409,7 @@ public class Tariffic extends Cal5e {
         places = (places == 3) ? 1 : (places == 2) ? 2 : 3;
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd.floatValue();
+        return bd.doubleValue();
     }
 
     //Фильтр на фантомы, грязные фичи...
