@@ -108,8 +108,8 @@ public class Tex extends javax.swing.JFrame {
         btn11 = new javax.swing.JButton();
         btn16 = new javax.swing.JButton();
         td5 = new javax.swing.JToolBar();
-        btn52 = new javax.swing.JButton();
         btn51 = new javax.swing.JButton();
+        btn52 = new javax.swing.JButton();
         btn53 = new javax.swing.JButton();
         tb2 = new javax.swing.JToolBar();
         btn23 = new javax.swing.JButton();
@@ -143,8 +143,8 @@ public class Tex extends javax.swing.JFrame {
         mn24 = new javax.swing.JPopupMenu.Separator();
         mn22 = new javax.swing.JMenuItem();
         mn09 = new javax.swing.JMenu();
-        mn91 = new javax.swing.JMenuItem();
         mn94 = new javax.swing.JMenuItem();
+        mn91 = new javax.swing.JMenuItem();
         mn93 = new javax.swing.JPopupMenu.Separator();
         mn92 = new javax.swing.JMenuItem();
         mn03 = new javax.swing.JMenu();
@@ -297,18 +297,6 @@ public class Tex extends javax.swing.JFrame {
         td5.setMinimumSize(new java.awt.Dimension(96, 28));
         td5.setPreferredSize(new java.awt.Dimension(94, 28));
 
-        btn52.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c012.gif"))); // NOI18N
-        btn52.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
-        btn52.setFocusable(false);
-        btn52.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btn52.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn52.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnBoxTypical(evt);
-            }
-        });
-        td5.add(btn52);
-
         btn51.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c021.gif"))); // NOI18N
         btn51.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
         btn51.setFocusable(false);
@@ -320,6 +308,18 @@ public class Tex extends javax.swing.JFrame {
             }
         });
         td5.add(btn51);
+
+        btn52.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c012.gif"))); // NOI18N
+        btn52.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
+        btn52.setFocusable(false);
+        btn52.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn52.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btn52.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnBoxTypical(evt);
+            }
+        });
+        td5.add(btn52);
 
         btn53.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c028.gif"))); // NOI18N
         btn53.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
@@ -631,16 +631,6 @@ public class Tex extends javax.swing.JFrame {
         mn09.setText("  Модели  ");
         mn09.setFont(frames.UGui.getFont(1,1));
 
-        mn91.setFont(frames.UGui.getFont(0,1));
-        mn91.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b054.gif"))); // NOI18N
-        mn91.setText("Модели");
-        mn91.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnBoxTypical(evt);
-            }
-        });
-        mn09.add(mn91);
-
         mn94.setFont(frames.UGui.getFont(0,1));
         mn94.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b054.gif"))); // NOI18N
         mn94.setText("Артикулы");
@@ -650,6 +640,16 @@ public class Tex extends javax.swing.JFrame {
             }
         });
         mn09.add(mn94);
+
+        mn91.setFont(frames.UGui.getFont(0,1));
+        mn91.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b054.gif"))); // NOI18N
+        mn91.setText("Модели");
+        mn91.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnBoxTypical(evt);
+            }
+        });
+        mn09.add(mn91);
         mn09.add(mn93);
 
         mn92.setFont(frames.UGui.getFont(0,1));
@@ -664,7 +664,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn0.add(mn09);
 
-        mn03.setText("  Конструктив  ");
+        mn03.setText("Составы  ");
         mn03.setFont(frames.UGui.getFont(1,1));
 
         mn31.setFont(frames.UGui.getFont(0,1));
