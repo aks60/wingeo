@@ -255,13 +255,13 @@ public class PSCompare extends javax.swing.JFrame {
             Map<String, Vector> hmSpc = new HashMap();
             Set<String> setSpcSa = new HashSet();
             Set<String> setSpcPs = new HashSet();
-            winc.listSpec.forEach(rec -> setSpcSa.add(rec.artikl));            
+            winc.listSpec.forEach(rec -> setSpcSa.add(rec.artikl));
             if (winc.gson.prj != null) {
                 txt21.setText(String.valueOf(winc.gson.prj));
             }
             if (winc.gson.pid != null) {
                 txt19.setText(String.valueOf(winc.gson.pid));
-            }             
+            }
             if (winc.gson.ord != null) {
                 txt20.setText(String.valueOf(winc.gson.ord));
             }
@@ -458,15 +458,11 @@ public class PSCompare extends javax.swing.JFrame {
 
             //=== Таблица 7 ===
             ((DefaultTableModel) tab7.getModel()).getDataVector().clear();
-//            rs = st.executeQuery("select c.pname, b.pname from savefup a "
-//                    + " left join parlist b on a.pnumb = b.pnumb and a.znumb = b.znumb"
-//                    + " left join parlist c on a.pnumb = c.pnumb and c.znumb = 0 "
-//                    + " where a.nel = 8 and a.punic = " + txt19.getText() + " and a.onumb = " + txt20.getText());
-            rs = st.executeQuery("select c.pname, b.pname, e.znumb from savefup a "
+            rs = st.executeQuery("select d.oname, c.pname, b.pname, e.ptext from savefup a "
                     + "left join parlist b on a.pnumb = b.pnumb and a.znumb = b.znumb "
                     + "left join parlist c on a.pnumb = c.pnumb and c.znumb = 0 "
                     + "left join listord d on a.punic = d.punic and a.onumb = d.onumb "
-                    + "left join parsysp e on d.osysp = e.psss and a.pnumb = e.pnumb and a.znumb = e.znumb "
+                    + "left join parsysp e on d.osysp = e.psss and a.pnumb = e.pnumb "
                     + "where a.nel = 0 and a.punic = " + txt19.getText() + " and a.onumb = " + txt20.getText());
             if (rs.isLast() == false) {
                 while (rs.next()) {
@@ -474,6 +470,7 @@ public class PSCompare extends javax.swing.JFrame {
                     vectorRec.add(rs.getObject(1));
                     vectorRec.add(rs.getObject(2));
                     vectorRec.add(rs.getObject(3));
+                    vectorRec.add(rs.getObject(4));
                     ((DefaultTableModel) tab7.getModel()).getDataVector().add(vectorRec);
                 }
             }
@@ -767,13 +764,13 @@ public class PSCompare extends javax.swing.JFrame {
 
         tab7.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Имя параметра", "Значение параметра", "Совпадение"
+                "Система", "Имя пар.", "Пар.издел", "Пар.сист."
             }
         ));
         tab7.setFillsViewportHeight(true);
