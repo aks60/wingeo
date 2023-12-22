@@ -4,8 +4,10 @@ import frames.swing.FrameToFile;
 import builder.Wincalc;
 import builder.making.Specific;
 import common.UCom;
+import common.listener.ListenerFrame;
 import dataset.Record;
 import domain.eArtikl;
+import frames.swing.ProgressBar;
 import frames.swing.TableFieldFilter;
 import java.awt.BasicStroke;
 import java.awt.Component;
@@ -36,6 +38,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import startup.App;
 import startup.Test;
 
 public class PSCompare extends javax.swing.JFrame {
@@ -255,13 +258,13 @@ public class PSCompare extends javax.swing.JFrame {
             Map<String, Vector> hmSpc = new HashMap();
             Set<String> setSpcSa = new HashSet();
             Set<String> setSpcPs = new HashSet();
-            winc.listSpec.forEach(rec -> setSpcSa.add(rec.artikl));            
+            winc.listSpec.forEach(rec -> setSpcSa.add(rec.artikl));
             if (winc.gson.prj != null) {
                 txt21.setText(String.valueOf(winc.gson.prj));
             }
             if (winc.gson.pid != null) {
                 txt19.setText(String.valueOf(winc.gson.pid));
-            }             
+            }
             if (winc.gson.ord != null) {
                 txt20.setText(String.valueOf(winc.gson.ord));
             }
@@ -577,6 +580,8 @@ public class PSCompare extends javax.swing.JFrame {
         lab1 = new javax.swing.JLabel();
         pan1 = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
+        pan9 = new javax.swing.JPanel();
+        btnFindArtikl = new javax.swing.JButton();
         center = new javax.swing.JPanel();
         tabb = new javax.swing.JTabbedPane();
         pan4 = new javax.swing.JPanel();
@@ -635,7 +640,9 @@ public class PSCompare extends javax.swing.JFrame {
         north.setPreferredSize(new java.awt.Dimension(800, 29));
         north.setLayout(new java.awt.BorderLayout());
 
+        pan2.setMinimumSize(new java.awt.Dimension(40, 29));
         pan2.setName(""); // NOI18N
+        pan2.setPreferredSize(new java.awt.Dimension(900, 29));
         pan2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         lab1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -679,6 +686,43 @@ public class PSCompare extends javax.swing.JFrame {
         );
 
         north.add(pan1, java.awt.BorderLayout.EAST);
+
+        pan9.setPreferredSize(new java.awt.Dimension(40, 25));
+
+        btnFindArtikl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c088.gif"))); // NOI18N
+        btnFindArtikl.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
+        btnFindArtikl.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnFindArtikl.setFocusable(false);
+        btnFindArtikl.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnFindArtikl.setMaximumSize(new java.awt.Dimension(25, 25));
+        btnFindArtikl.setMinimumSize(new java.awt.Dimension(25, 25));
+        btnFindArtikl.setPreferredSize(new java.awt.Dimension(25, 25));
+        btnFindArtikl.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btnFindArtikl.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnFindArtikl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindArtikl(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pan9Layout = new javax.swing.GroupLayout(pan9);
+        pan9.setLayout(pan9Layout);
+        pan9Layout.setHorizontalGroup(
+            pan9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pan9Layout.createSequentialGroup()
+                .addGap(0, 7, Short.MAX_VALUE)
+                .addComponent(btnFindArtikl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 8, Short.MAX_VALUE))
+        );
+        pan9Layout.setVerticalGroup(
+            pan9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pan9Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnFindArtikl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        north.add(pan9, java.awt.BorderLayout.WEST);
 
         getContentPane().add(north, java.awt.BorderLayout.NORTH);
 
@@ -1053,10 +1097,39 @@ public class PSCompare extends javax.swing.JFrame {
         loadingTabGroup1();
     }//GEN-LAST:event_btn1
 
+    private void btnFindArtikl(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindArtikl
+        if (tabb.getSelectedIndex() == 0) {
+            Object code = tab1.getValueAt(UGui.getIndexRec(tab1), 3);
+            Record record = eArtikl.find2(code.toString());
+            ProgressBar.create(this, new ListenerFrame() {
+                public void actionRequest(Object obj) {
+                    App.Artikles.createFrame(PSCompare.this, record);
+                }
+            });
+        } else if (tabb.getSelectedIndex() == 1) {
+            Object code = tab2.getValueAt(UGui.getIndexRec(tab2), 0);
+            Record record = eArtikl.find2(code.toString());
+            ProgressBar.create(this, new ListenerFrame() {
+                public void actionRequest(Object obj) {
+                    App.Artikles.createFrame(PSCompare.this, record);
+                }
+            });
+        } else if (tabb.getSelectedIndex() == 2) {
+            Object code = tab3.getValueAt(UGui.getIndexRec(tab3), 0);
+            Record record = eArtikl.find2(code.toString());
+            ProgressBar.create(this, new ListenerFrame() {
+                public void actionRequest(Object obj) {
+                    App.Artikles.createFrame(PSCompare.this, record);
+                }
+            });
+        }
+    }//GEN-LAST:event_btnFindArtikl
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn1;
     private javax.swing.JButton btnClose;
+    private javax.swing.JButton btnFindArtikl;
     private javax.swing.JPanel center;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -1078,6 +1151,7 @@ public class PSCompare extends javax.swing.JFrame {
     private javax.swing.JPanel pan6;
     private javax.swing.JPanel pan7;
     private javax.swing.JPanel pan8;
+    private javax.swing.JPanel pan9;
     private javax.swing.JScrollPane scr;
     private javax.swing.JScrollPane scr2;
     private javax.swing.JScrollPane scr3;

@@ -29,7 +29,7 @@ public final class Bimax {
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0))
                     .addElem(new GsonElem(Type.GLASS, "{artglasID:5746}")); //или R4x10x4x10x4
 
-        } else if (prj == 501004) {
+        /*} else if (prj == 501004) {
             rootGson = new GsonRoot("2.0", null, prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 900.0))
@@ -37,7 +37,7 @@ public final class Bimax {
 
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST, 200.0, 900.0, 201.0, 300.0));
-            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));*/
 
         } else if (prj == 601002) {
             rootGson = new GsonRoot("2.0", 427818, prj, 1, 29, Type.RECTANGL, "Montblanc\\Nord\\1 ОКНА", 1009, 10009, 1009);
@@ -65,22 +65,6 @@ public final class Bimax {
             area2.addArea(new GsonElem(Type.STVORKA, "{typeOpen:1, sysfurnID:389}")).addElem(new GsonElem(Type.GLASS));
             area2.addElem(new GsonElem(Type.IMPOST, 720.0, 1700.0, 720.0, 400.0));
             area2.addArea(new GsonElem(Type.STVORKA, "{typeOpen:3, sysfurnID:819}")).addElem(new GsonElem(Type.GLASS));
-
-        } else if (prj == 501006) {
-            rootGson = new GsonRoot("2.0", null, prj, 2, 8, Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
-            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1000.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 1000.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 0.0));
-
-            GsonElem area1 = rootGson.addArea(new GsonElem(Type.AREA));
-            rootGson.addElem(new GsonElem(Type.IMPOST, .0, 500.0, 1000.0, 500.0));
-            GsonElem area2 = rootGson.addArea(new GsonElem(Type.AREA));
-            area2.addElem(new GsonElem(Type.GLASS));
-
-            area1.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-            area1.addElem(new GsonElem(Type.IMPOST, 500.0, 1000.0, 500.0, 500.0));
-            area1.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 508852) {
             rootGson = new GsonRoot("2.0", 427640, prj, 1, 337, Type.RECTANGL, "Teplowin 400 / Estetic / 1 ОКНА", 1009, 1009, 1009);

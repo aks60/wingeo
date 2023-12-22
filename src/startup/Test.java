@@ -2,12 +2,12 @@ package startup;
 
 import builder.script.GsonScript;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.eProp;
 import dataset.Conn;
 import domain.eElement;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
@@ -279,6 +279,7 @@ public class Test {
 
     //Пример PathIterator
     public static void geom() {
+        //Toolkit.getDefaultToolkit().beep();//ЗВУК!!!!
         GeometryFactory gf = new GeometryFactory(); //JTSFactoryFinder.getGeometryFactory(); 
 
         Coordinate[] coord1 = new Coordinate[]{
@@ -299,7 +300,6 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
         
-        double X = 20 + 120 - 10 - 10;
-        System.out.println(X);
+        Toolkit.getDefaultToolkit().beep();
     }
 }

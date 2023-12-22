@@ -9,9 +9,10 @@ import dataset.Record;
 import java.util.Set;
 import javax.swing.table.DefaultTableModel;
 import common.listener.ListenerRecord;
-import domain.eArtikl;
+import frames.swing.DefTableModel;
 import frames.swing.ProgressBar;
 import java.util.Arrays;
+import javax.swing.table.TableRowSorter;
 import startup.App;
 
 //Справочник фурнитур
@@ -104,6 +105,7 @@ public class DicName extends javax.swing.JDialog {
             }
         });
         tab1.setFillsViewportHeight(true);
+        tab1.setRowSorter(new TableRowSorter(tab1.getModel()));
         tab1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tab1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -285,5 +287,6 @@ public class DicName extends javax.swing.JDialog {
 
         FrameToFile.setFrameSize(this);
         new FrameToFile(this, btnClose);
+        //tab1.setRowSorter(new TableRowSorter(tab1.getModel()));
     }
 }

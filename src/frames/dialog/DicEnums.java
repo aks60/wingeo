@@ -4,11 +4,10 @@ import frames.swing.FrameToFile;
 import frames.UGui;
 import dataset.Record;
 import enums.Enam;
-import enums.LayoutFurn1;
 import java.util.Arrays;
-import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import common.listener.ListenerRecord;
+import javax.swing.table.TableRowSorter;
 
 //Справочник наборов Tnum
 public class DicEnums extends javax.swing.JDialog {
@@ -166,6 +165,7 @@ public class DicEnums extends javax.swing.JDialog {
             }
         });
         tab1.setFillsViewportHeight(true);
+        tab1.setRowSorter(new TableRowSorter(tab1.getModel()));
         tab1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tab1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

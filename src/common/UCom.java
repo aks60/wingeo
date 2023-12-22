@@ -1,6 +1,5 @@
 package common;
 
-import builder.model.AreaSimple;
 import dataset.Field;
 import dataset.Query;
 import domain.eColor;
@@ -9,7 +8,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.PatternSyntaxException;
+import sun.misc.Signal;
 
 public class UCom {
 
@@ -434,5 +433,5 @@ public class UCom {
                 return 0;
             }
         }).get().getInt(field);
-    }
+    }    
 }

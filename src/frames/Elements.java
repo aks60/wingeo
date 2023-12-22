@@ -1391,9 +1391,5 @@ public class Elements extends javax.swing.JFrame {
                 }
             }
         });
-//        for (int i : List.of(3, 6, 7)) {
-//            ((DefaultTableColumnModel) tab2.getColumnModel()).getColumn(i).setMinWidth(0);
-//            ((DefaultTableColumnModel) tab2.getColumnModel()).getColumn(i).setMaxWidth(0);
-//        }
     }
 }
