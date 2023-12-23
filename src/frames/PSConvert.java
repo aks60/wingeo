@@ -56,7 +56,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import builder.script.GsonScript;
-import domain.eParams;
 import domain.eProject;
 import domain.eSysmodel;
 import domain.eSysprod;

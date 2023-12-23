@@ -1607,13 +1607,14 @@ public class Artikles extends javax.swing.JFrame {
         txt19.setEditable(false);
         txt19.setFont(frames.UGui.getFont(0,0));
         txt19.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt19.setPreferredSize(new java.awt.Dimension(40, 18));
+        txt19.setMinimumSize(new java.awt.Dimension(46, 18));
+        txt19.setPreferredSize(new java.awt.Dimension(46, 18));
         pan93.add(txt19);
 
         txt49.setEditable(false);
         txt49.setFont(frames.UGui.getFont(0,0));
         txt49.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt49.setPreferredSize(new java.awt.Dimension(159, 18));
+        txt49.setPreferredSize(new java.awt.Dimension(153, 18));
         pan93.add(txt49);
 
         btn19.setText("...");
@@ -1647,13 +1648,13 @@ public class Artikles extends javax.swing.JFrame {
         txt20.setEditable(false);
         txt20.setFont(frames.UGui.getFont(0,0));
         txt20.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt20.setPreferredSize(new java.awt.Dimension(40, 18));
+        txt20.setPreferredSize(new java.awt.Dimension(46, 18));
         pan110.add(txt20);
 
         txt50.setEditable(false);
         txt50.setFont(frames.UGui.getFont(0,0));
         txt50.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt50.setPreferredSize(new java.awt.Dimension(159, 18));
+        txt50.setPreferredSize(new java.awt.Dimension(153, 18));
         pan110.add(txt50);
 
         btn20.setText("...");

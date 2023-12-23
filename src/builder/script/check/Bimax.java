@@ -67,7 +67,7 @@ public final class Bimax {
             area2.addArea(new GsonElem(Type.STVORKA, "{typeOpen:3, sysfurnID:819}")).addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 508852) {
-            rootGson = new GsonRoot("2.0", 427640, prj, 1, 337, Type.RECTANGL, "Teplowin 400 / Estetic / 1 ОКНА", 1009, 1009, 1009);
+            rootGson = new GsonRoot("2.0", 427640, prj, 1, 237, Type.RECTANGL, "Teplowin 400 / Estetic / 1 ОКНА", 1009, 1009, 1009);
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1600.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1600.0, 1600.0))

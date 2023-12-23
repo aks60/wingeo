@@ -9,7 +9,8 @@ public enum TypeSet implements Enam {
     P4(4, "Покраска"),
     P5(5, "Состав с/п"),
     P6(6, "Кронштейн стойки"),
-    P7(7, "Дополнительно");
+    P7(7, "Дополнительно"),
+    P8(8, "Вагонка");
 
     public int id;
     public String name;

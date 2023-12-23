@@ -22,13 +22,14 @@ public class DicTypset extends javax.swing.JDialog {
         initElements();
         this.listener = listenet;
         loadingModel();
-        setVisible(true);        
+        setVisible(true);
     }
 
     public void loadingModel() {
         ((DefaultTableModel) tab1.getModel()).setRowCount(0);
-        rows = new Object[][]{{TypeSet.P1.name, TypeSet.P1.id}, {TypeSet.P2.name, TypeSet.P2.id}, {TypeSet.P3.name, TypeSet.P3.id}, 
-        {TypeSet.P4.name, TypeSet.P4.id}, {TypeSet.P5.name, TypeSet.P5.id}, {TypeSet.P6.name, TypeSet.P6.id}};
+        rows = new Object[][]{{TypeSet.P1.name, TypeSet.P1.id}, {TypeSet.P2.name, TypeSet.P2.id},
+        {TypeSet.P3.name, TypeSet.P3.id}, {TypeSet.P4.name, TypeSet.P4.id}, {TypeSet.P5.name, TypeSet.P5.id},
+        {TypeSet.P6.name, TypeSet.P6.id}, {TypeSet.P7.name, TypeSet.P7.id}, {TypeSet.P8.name, TypeSet.P8.id}};
 
         ((DefaultTableModel) tab1.getModel()).setDataVector(rows, titl);
         UGui.setSelectedRow(tab1);
@@ -219,7 +220,7 @@ public class DicTypset extends javax.swing.JDialog {
     private javax.swing.JPanel south;
     private javax.swing.JTable tab1;
     // End of variables declaration//GEN-END:variables
-    
+
     public void initElements() {
 
         FrameToFile.setFrameSize(this);

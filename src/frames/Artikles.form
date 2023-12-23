@@ -2150,8 +2150,11 @@
                                 <EtchetBorder bevelType="0"/>
                               </Border>
                             </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[46, 18]"/>
+                            </Property>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[40, 18]"/>
+                              <Dimension value="[46, 18]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -2167,7 +2170,7 @@
                               </Border>
                             </Property>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[159, 18]"/>
+                              <Dimension value="[153, 18]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -2271,7 +2274,7 @@
                               </Border>
                             </Property>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[40, 18]"/>
+                              <Dimension value="[46, 18]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -2287,7 +2290,7 @@
                               </Border>
                             </Property>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[159, 18]"/>
+                              <Dimension value="[153, 18]"/>
                             </Property>
                           </Properties>
                         </Component>
