@@ -66,7 +66,7 @@ public final class Bimax {
             area2.addElem(new GsonElem(Type.IMPOST, 720.0, 1700.0, 720.0, 400.0));
             area2.addArea(new GsonElem(Type.STVORKA, "{typeOpen:3, sysfurnID:819}")).addElem(new GsonElem(Type.GLASS));
 
-        } else if (prj == 508852) {
+        } else if (prj == 508852) { //PS перепутаны системы!
             rootGson = new GsonRoot("2.0", 427640, prj, 1, 215, Type.RECTANGL, "Teplowin 500 / Estetic / 1 ОКНА.  PS перепутаны системы!", 1009, 1009, 1009);
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1600.0))
@@ -83,7 +83,7 @@ public final class Bimax {
             area1.addElem(new GsonElem(Type.IMPOST, .0, 800.0, 800.0, 800.0));
             area1.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS, "{artglasID:715}"));
 
-        } else if (prj == 508920) {
+        } else if (prj == 508920) {//PS без стоимости
             rootGson = new GsonRoot("2.0", 427712, prj, 1, 198, Type.RECTANGL, "Montblanc / Eco / 1 ОКНА. PS без стоимости", 1009, 1009, 1009);
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1750.0))
