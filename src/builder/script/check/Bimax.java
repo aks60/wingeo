@@ -97,6 +97,21 @@ public final class Bimax {
             area.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS, "{artglasID: 4267}"));
             area.addElem(new GsonElem(Type.IMPOST, 725.0, 1750.0, 725.0, 550.0));
             area.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS, "{artglasID: 4267}")); 
+
+        } else if (prj == 508865) {//PS без стоимости
+            rootGson = new GsonRoot("2.0", 427653, prj, 3, 41, Type.RECTANGL, "Rehau / Sib / 1 ОКНА", 1009, 1009, 1009);
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0, "{sysprofID: 3055}"))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1700.0, "{sysprofID: 3055}"))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1700.0, "{sysprofID: 3055}"))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 0.0, "{sysprofID: 3055}"));
+
+            rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS, "{artglasID: 4267}")); 
+            rootGson.addElem(new GsonElem(Type.IMPOST, .0, 550.0, 1300.0, 550.0));
+            GsonElem area = rootGson.addArea(new GsonElem(Type.AREA));
+
+            area.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS, "{artglasID: 4267}"));
+            area.addElem(new GsonElem(Type.IMPOST, 650.0, 1700.0, 650.0, 550.0));
+            area.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS, "{artglasID: 4267}")); 
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="ARCH"> 
 //        } else if (prj == 501007) {

@@ -26,26 +26,35 @@ public class GsonElem {
         this.id = ++genId;
         this.type = type;
     }
-    
+
     public GsonElem(Type type, String paramJson) {
         this.id = ++genId;
         this.type = type;
         this.param = new Gson().fromJson(paramJson, JsonObject.class);
     }
-    
+
+    public GsonElem(Type type, Double x1, Double y1, String param) {
+        this(type, x1, y1, null, null, param);
+    }
+
     public GsonElem(Type type, Double x1, Double y1) {
-        this(type, x1, y1, null, null);
+        this(type, x1, y1, null, null, null);
     }
 
     public GsonElem(Type type, Double x1, Double y1, Double x2, Double y2) {
+        this(type, x1, y1, x2, y2, null);
+    }
+
+    public GsonElem(Type type, Double x1, Double y1, Double x2, Double y2, String param) {
         this.id = ++genId;
         this.type = type;
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
+        this.param = new Gson().fromJson(param, JsonObject.class); //параметры элемента
     }
-    
+
     public GsonElem addArea(GsonElem area) {
         area.owner = this;
         childs = (childs == null) ? new LinkedList() : childs;
@@ -75,5 +84,5 @@ public class GsonElem {
             System.err.println("Ошибка:GeoElem.setOwnerAndForm() " + e);
         }
     }
-    
+
 }
