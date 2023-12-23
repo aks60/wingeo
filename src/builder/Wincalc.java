@@ -58,7 +58,6 @@ public class Wincalc {
     public Canvas canvas = null;
     public GsonRoot gson = null; //объектная модель конструкции 1-го уровня
     public AreaSimple root = null; //объектная модель конструкции 2-го уровня    
-    //public Cal5e calcJoining, calcElements, calcFilling, calcFurniture, calcTariffication; //объекты калькуляции конструктива
     
     public ArrayList<ListenerKey> keyboardPressed = new ArrayList();
     public ArrayList<ListenerMouse> mousePressed = new ArrayList();
@@ -79,9 +78,8 @@ public class Wincalc {
         build(script);
     }
 
-    public void build(String script) {
-        //Для тестирования
-        //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
+    public void build(String script) {        
+        //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script))); //для тестирования
         //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
         //Инит свойств окна

@@ -379,7 +379,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             systreeID = sysNode.rec().getInt(eSystree.id);
             rsvSystree.load();
             qSysprof.select(eSysprof.up, "left join", eArtikl.up, "on", eArtikl.id, "=",
-                    eSysprof.artikl_id, "where", eSysprof.systree_id, "=", sysNode.rec().getInt(eSystree.id), "order by", eSysprof.npp);
+                    eSysprof.artikl_id, "where", eSysprof.systree_id, "=", sysNode.rec().getInt(eSystree.id), "order by", eSysprof.use_type, ",", eSysprof.npp);
             qSysfurn.select(eSysfurn.up, "left join", eFurniture.up, "on", eFurniture.id, "=",
                     eSysfurn.furniture_id, "where", eSysfurn.systree_id, "=", sysNode.rec().getInt(eSystree.id), "order by", eSysfurn.npp);
             qSyspar1a.select(eSyspar1.up, "where", eSyspar1.systree_id, "=", sysNode.rec().getInt(eSystree.id));
@@ -3847,7 +3847,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             //Список стеклопакетов
             depth = (depth != null && depth.isEmpty() == false) ? " and " + eArtikl.depth.name() + " in (" + depth + ")" : "";
             Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
-                    "where", eArtikl.level1, "= 5 and", eArtikl.level2, "in (1,2,3)", depth);
+                    "where", eArtikl.level1, "= 5 and", eArtikl.level2, "in (1,2,3)", depth, "order by", eArtikl.name);
 
             new DicArtikl(this, (artiklRec) -> {
 

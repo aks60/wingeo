@@ -26,7 +26,8 @@ public class AreaSimple extends Com5t {
 
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson.id, gson, owner);
-        initConstructiv(gson.param);
+        initConstructiv(winc.gson.param);
+        initParametr(winc.gson.param);
         winc.listArea.add(this);
         winc.listAll.add(this);
     }
@@ -49,7 +50,7 @@ public class AreaSimple extends Com5t {
      * {"ioknaParam": [-8252]}. При этом в winc.mapPardef будут изменения с
      * учётом менеджера.
      */
-    protected void parametr(JsonObject param) {
+    protected void initParametr(JsonObject param) {
         try {
             if (isJson(param, null)) {
                 //Добавим к параметрам системы конструкции параметры конкретной конструкции

@@ -73,22 +73,21 @@ public class GsonScript {
             area1.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             area1.addElem(new GsonElem(Type.IMPOST, 500.0, 1000.0, 500.0, 500.0))
                     .addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
-            //.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-
-        } else if (prj == 508852) {
-            rootGson = new GsonRoot("2.0", Type.RECTANGL, "Teplowin 400 / Estetic / 1 ОКНА");
+            
+        } else if (prj == 508920) {
+            rootGson = new GsonRoot("2.0", Type.RECTANGL, "Montblanc / Eco / 1 ОКНА. PS без стоимости");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1600.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 1600.0, 1600.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 1600.0, 0.0));
+                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1750.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1450.0, 1750.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1450.0, 0.0));
 
-            GsonElem area1 = rootGson.addArea(new GsonElem(Type.AREA));
-            rootGson.addElem(new GsonElem(Type.IMPOST, 800.0, 0.0, 800.0, 1600.0));
-            rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST, .0, 550.0, 1450.0, 550.0));
+            GsonElem area = rootGson.addArea(new GsonElem(Type.AREA));
 
-            area1.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
-            area1.addElem(new GsonElem(Type.IMPOST, .0, 800.0, 800.0, 800.0));
-            area1.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));           
+            area.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            area.addElem(new GsonElem(Type.IMPOST, 725.0, 1750.0, 725.0, 550.0));
+            area.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));            
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="ARCH">
 //        } else if (prj == 501007) {
