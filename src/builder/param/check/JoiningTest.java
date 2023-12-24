@@ -1,6 +1,6 @@
-package builder.param.test;
+package builder.param.check;
 
-import static builder.param.test.ParamTest.param;
+import static builder.param.check.ParamTest.param;
 import dataset.Record;
 import domain.eElement;
 import java.util.HashMap;

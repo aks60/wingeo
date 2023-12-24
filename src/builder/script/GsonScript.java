@@ -16,7 +16,7 @@ public class GsonScript {
 
 // <editor-fold defaultstate="collapsed" desc="RECTANGL">
         if (prj == 601001) { //PUNIC = 427817
-            rootGson = new GsonRoot("2.0", Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
+            rootGson = new GsonRoot(Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1300.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 1300.0))
@@ -25,7 +25,7 @@ public class GsonScript {
                     .addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 601002) { //PUNIC = 427818  S = 1300*1400
-            rootGson = new GsonRoot("2.0", Type.RECTANGL, "Montblanc\\Nord\\1 ОКНА");
+            rootGson = new GsonRoot(Type.RECTANGL, "Montblanc\\Nord\\1 ОКНА");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1400.0))
@@ -37,7 +37,7 @@ public class GsonScript {
                     .addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 601006) { //PUNIC = 427838
-            rootGson = new GsonRoot("1.0", Type.RECTANGL, "RAZIO \\ RAZIO 58 \\ 1 ОКНА");
+            rootGson = new GsonRoot(Type.RECTANGL, "RAZIO \\ RAZIO 58 \\ 1 ОКНА");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 1400.0))
@@ -45,7 +45,7 @@ public class GsonScript {
                     .addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 601003) { //PUNIC = 427819
-            rootGson = new GsonRoot("2.0", Type.RECTANGL, "Darrio\\DARRIO 200\\1 ОКНА");
+            rootGson = new GsonRoot(Type.RECTANGL, "Darrio\\DARRIO 200\\1 ОКНА");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1700.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1440.0, 1700.0))
@@ -60,7 +60,7 @@ public class GsonScript {
             area2.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 501006) {
-            rootGson = new GsonRoot("2.0", Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
+            rootGson = new GsonRoot(Type.RECTANGL, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1000.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 1000.0))
@@ -75,7 +75,7 @@ public class GsonScript {
                     .addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
             
         } else if (prj == 508920) {
-            rootGson = new GsonRoot("2.0", Type.RECTANGL, "Montblanc / Eco / 1 ОКНА. PS без стоимости");
+            rootGson = new GsonRoot(Type.RECTANGL, "Montblanc / Eco / 1 ОКНА. PS без стоимости");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1750.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1450.0, 1750.0))
@@ -103,7 +103,7 @@ public class GsonScript {
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="TRAPEZE">
         } else if (prj == 506642) { //Трапеции без импоста
-            rootGson = new GsonRoot("2.0", Type.TRAPEZE, "KBE / KBE Эксперт / 1 ОКНА / Открывание внутрь (ств. Z 77)");
+            rootGson = new GsonRoot(Type.TRAPEZE, "KBE / KBE Эксперт / 1 ОКНА / Открывание внутрь (ств. Z 77)");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1300.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 1300.0))
@@ -111,7 +111,7 @@ public class GsonScript {
                     .addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 605001) {
-            rootGson = new GsonRoot("2.0", Type.TRAPEZE, "KBE\\KBE 58\\1 ОКНА\\*Открывание внутрь (ств. Z77)");
+            rootGson = new GsonRoot(Type.TRAPEZE, "KBE\\KBE 58\\1 ОКНА\\*Открывание внутрь (ств. Z77)");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1500.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0))

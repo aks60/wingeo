@@ -1,4 +1,4 @@
-package builder.param.test;
+package builder.param.check;
 
 import builder.model.AreaSimple;
 import builder.model.Com5t;

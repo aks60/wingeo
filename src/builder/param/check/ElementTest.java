@@ -1,7 +1,7 @@
-package builder.param.test;
+package builder.param.check;
 
 import builder.making.UColor;
-import static builder.param.test.ParamTest.param;
+import static builder.param.check.ParamTest.param;
 import common.UCom;
 import dataset.Record;
 import domain.eArtikl;
