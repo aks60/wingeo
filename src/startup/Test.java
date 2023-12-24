@@ -70,7 +70,7 @@ public class Test {
             //json();
             //uid();
             //script();
-            //geom();
+            geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -301,5 +301,8 @@ public class Test {
         Polygon polygon2 = gf.createPolygon(coord2);
         
         Toolkit.getDefaultToolkit().beep();
+        String s = "ivanov_id";
+        String str = s.substring(s.length() - 3, s.length()).toUpperCase();
+        System.out.println(str);
     }
 }

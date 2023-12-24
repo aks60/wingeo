@@ -2,8 +2,8 @@ package frames.swing.draw;
 
 import builder.Wincalc;
 import common.listener.ListenerReload;
-import java.awt.Graphics;
 import javax.swing.JSpinner;
+import org.locationtech.jts.geom.Geometry;
 
 public class Scene extends javax.swing.JPanel {
 
@@ -11,7 +11,6 @@ public class Scene extends javax.swing.JPanel {
 
     public Scene(Canvas canvas, JSpinner spinner, ListenerReload listenerWinc) {
         initComponents();
-        initElements();
         add(canvas, java.awt.BorderLayout.CENTER);
     }
 
@@ -20,7 +19,9 @@ public class Scene extends javax.swing.JPanel {
     }
 
     //Прорисовка конструкции
-    public void draw() {
+    public void draw() {     
+        Geometry geo = winc.root.area.getEnvelope();
+        //panVert.
     }
 
     @SuppressWarnings("unchecked")
@@ -30,6 +31,7 @@ public class Scene extends javax.swing.JPanel {
         panVert = new javax.swing.JPanel();
         panHoriz = new javax.swing.JPanel();
 
+        setName(""); // NOI18N
         setLayout(new java.awt.BorderLayout());
         add(panVert, java.awt.BorderLayout.WEST);
         add(panHoriz, java.awt.BorderLayout.SOUTH);
@@ -41,8 +43,4 @@ public class Scene extends javax.swing.JPanel {
     private javax.swing.JPanel panVert;
     // End of variables declaration//GEN-END:variables
     // </editor-fold> 
-
-    private void initElements() {
-        //timerHor.addActionListener(btnMouseReleased);        
-    }
 }
