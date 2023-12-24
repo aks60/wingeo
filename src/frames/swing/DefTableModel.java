@@ -19,9 +19,8 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import startup.App;
 import common.listener.ListenerFrame;
-import java.awt.Color;
+import java.awt.event.MouseEvent;
 import java.util.List;
-import javax.swing.UIManager;
 
 public class DefTableModel extends DefaultTableModel implements ListenerFrame {
 
@@ -37,6 +36,7 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
         this.model = (DefaultTableModel) table.getModel();
         this.query = query;
 
+        eventMouseClick();
         ((DefaultCellEditor) table.getDefaultEditor(Object.class)).getComponent().setFont(table.getFont());
         Field[] newArray = Arrays.copyOf(columns, columns.length + 1);
         newArray[newArray.length - 1] = query.fields().get(0).fields()[1];
@@ -186,6 +186,30 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(App.active, "Неверный формат ввода данных", "Предупреждение", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private void eventMouseClick() {
+        if (eProp.dev == true) {
+            table.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    if (evt.getButton() == MouseEvent.BUTTON3) {
+
+                        int index = UGui.getIndexRec(table);
+                        System.out.println(query.fields().get(0).tname());
+                        for (Field f : query.fields()) {
+
+                            if ("ID".equals(f.name().toUpperCase())) {
+                                System.out.println("ID = " + query.get(index, f));
+
+                            } else if (f.name().length() > 4 && "_ID".equals(f.name()
+                                    .substring(f.name().length() - 3, f.name().length()).toUpperCase())) {
+                                System.out.println(f.name() + " = " + query.get(index, f));
+                            }
+                        }
+                    }
+                }
+            });
         }
     }
 }
