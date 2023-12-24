@@ -12,7 +12,7 @@ public class JoiningTest extends ParamTest {
     }
 
     public void joiningVar() {
-/*
+
         grup = 1005; //2005, 3005, 4005 //Контейнер имеет тип Артикула1/Артикула2
         assert true == joiningVar2.check(iwin_2.listJoin.get(frame_left_2, 0), param("1/1", grup)) : grup;
         assert true == joiningVar2.check(iwin_2.listJoin.get(imp_horiz_2, 0), param("3/1", grup)) : grup;
@@ -68,7 +68,7 @@ public class JoiningTest extends ParamTest {
 
         grup = 3002; //4002 //Вид L-образного варианта или Вид Т-образного варианта
         assert true == joiningVar4.check(iwin_4.listJoin.get(frame_right_4, 1), param("Простое L-обр", grup)) : grup;
-        assert false == joiningVar4.check(iwin_4.listJoin.get(frame_right_4, 1), param("null", grup)) : grup; */
+        assert false == joiningVar4.check(iwin_4.listJoin.get(frame_right_4, 1), param("null", grup)) : grup;
     }
 
     /**
@@ -77,7 +77,7 @@ public class JoiningTest extends ParamTest {
      * joining d on d.id = c.joining_id where a.groups_id = 11009
      */
     public void joiningDet() {
-/*        HashMap<Integer, String> mapParam = new HashMap();
+        HashMap<Integer, String> mapParam = new HashMap();
 
         grup = 11000; //12000 //Для технологического кода контейнера
         //Object o22 = iwin_2.listJoin.get(frame_right_2, 1);
@@ -112,6 +112,6 @@ public class JoiningTest extends ParamTest {
 
         grup = 11095; //12095 //Если признак системы конструкции
         assert true == joiningDet2.check(mapParam, iwin_2.listJoin.get(frame_right_2, 1), param("1;5;4;", grup)) : grup;
-        assert false == joiningDet2.check(mapParam, iwin_2.listJoin.get(frame_right_2, 1), param("5;4;", grup)) : grup; */
+        assert false == joiningDet2.check(mapParam, iwin_2.listJoin.get(frame_right_2, 1), param("5;4;", grup)) : grup;
     }
 }

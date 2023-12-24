@@ -1,7 +1,7 @@
 package builder.param.test;
 
-import builder.model.Com5t;
 import builder.model.AreaSimple;
+import builder.model.Com5t;
 import builder.model.ElemSimple;
 import builder.param.ElementDet;
 import builder.param.ElementVar;
@@ -128,7 +128,7 @@ public class ParamTest {
         imp_vert_3 = getElem(iwin_3.root, 12.0f);
         glass_top_3 = (ElemSimple) getElem(iwin_3.root, 6.0f);
         glass_left_3 = (ElemSimple) getElem(iwin_3.root, 11.0f);
-////////////////        glass_left_3.anglHoriz = 0;
+        glass_left_3.anglHoriz();
     }
 
     //700027  "Montblanc / Eco / 1 ОКНА (штульп)"
@@ -155,13 +155,13 @@ public class ParamTest {
     }
 
     //Получить элемент по ключу
-    public ElemSimple getElem(AreaSimple rootArea, double id) {
-        for (ElemSimple frm : rootArea.frames) {
+    public ElemSimple getElem(AreaSimple root, double id) {
+        for (ElemSimple frm : root.frames) {
             if (frm.id == id) {
                 return (ElemSimple) frm;
             }
         }
-        for (Com5t it1 : rootArea.childs) {
+        for (Com5t it1 : root.childs) {
             if (it1.id == id) {
                 return (ElemSimple) it1;
             }
