@@ -147,8 +147,9 @@ public class AreaStvorka extends AreaSimple {
                 Coordinate[] coo = this.area.getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
                     GsonElem gson = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y);
-                    Object o1 = PKjson.stvorkaSide[i];
-                    gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
+                    if (isJson(this.gson.param, PKjson.stvorkaSide[i])) {
+                        gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
+                    }
                     ElemFrame sideStv = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gson, this);
                     this.frames.add(sideStv);
                 }
@@ -175,7 +176,7 @@ public class AreaStvorka extends AreaSimple {
                 ElemFrame elem2 = (ElemFrame) this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1);
                 int lev1 = elem1.artiklRec.getInt(eArtikl.level1);
                 int lev2 = elem2.artiklRec.getInt(eArtikl.level2);
-                
+
                 if ((lev1 == 1 && (lev2 == 1 || lev2 == 2)) == false) { //угловое левое/правое
                     TypeJoin type = (i == 0 || i == 2) ? TypeJoin.ANG2 : TypeJoin.ANG1;
                     winc.listJoin.add(new ElemJoining(this.winc, type, elem1, elem2));

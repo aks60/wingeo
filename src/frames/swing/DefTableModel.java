@@ -36,7 +36,8 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
         this.model = (DefaultTableModel) table.getModel();
         this.query = query;
 
-        eventMouseClick();
+        //eventMouseClick();
+        
         ((DefaultCellEditor) table.getDefaultEditor(Object.class)).getComponent().setFont(table.getFont());
         Field[] newArray = Arrays.copyOf(columns, columns.length + 1);
         newArray[newArray.length - 1] = query.fields().get(0).fields()[1];
