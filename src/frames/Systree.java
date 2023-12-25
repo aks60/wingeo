@@ -3903,7 +3903,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 }
                 updateScript(elemID);
 
-            }, TypeOpen1.INVALID, TypeOpen1.LEFT, TypeOpen1.LEFTUP, TypeOpen1.LEFTMOV,
+            }, TypeOpen1.REQUEST, TypeOpen1.LEFT, TypeOpen1.LEFTUP, TypeOpen1.LEFTMOV,
                     TypeOpen1.RIGHT, TypeOpen1.RIGHTUP, TypeOpen1.RIGHTMOV, TypeOpen1.UPPER, TypeOpen1.FIXED);
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.typeOpenToStvorka() " + e);

@@ -18,6 +18,7 @@ import enums.TypeOpen1;
 import enums.TypeOpen2;
 import java.awt.Shape;
 import java.util.LinkedList;
+import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineSegment;
@@ -39,7 +40,7 @@ public class AreaStvorka extends AreaSimple {
     public int mosqColor = -3; //цвет москитки
 
     public double handleHeight = 60; //высота ручки
-    public TypeOpen1 typeOpen = TypeOpen1.INVALID; //направление открывания
+    public TypeOpen1 typeOpen = TypeOpen1.REQUEST; //направление открывания
     public LayoutHandle handleLayout = LayoutHandle.VARIAT; //положение ручки на створке      
     public boolean paramCheck[] = {true, true, true, true, true, true, true, true};
     public double offset[] = {0, 0, 0, 0};
@@ -101,7 +102,8 @@ public class AreaStvorka extends AreaSimple {
                 typeOpen = TypeOpen1.get(param.get(PKjson.typeOpen).getAsInt());
                 paramCheck[7] = false;
             } else {
-                typeOpen = (sysfurnRec.getInt(eSysfurn.side_open) == TypeOpen2.LEF.id) ? TypeOpen1.LEFT : TypeOpen1.RIGHT;
+                int index = sysfurnRec.getInt(eSysfurn.side_open);
+                typeOpen = (index == TypeOpen2.QUE.id) ? typeOpen : (index == TypeOpen2.LEF.id) ? TypeOpen1.RIGHT : TypeOpen1.LEFT;
             }
             //Положение или высота ручки на створке
             if (isJson(param, PKjson.positionHandl)) {
@@ -136,7 +138,6 @@ public class AreaStvorka extends AreaSimple {
         try {
             //Полигон векторов сторон створки
             this.area2 = (winc.listElem.filter(Type.IMPOST).isEmpty()) ? owner.area : this.area;  //случай когда створка в гл.окне 
-            //this.area2 = (owner.equals(winc.root) && this.area2 == null) ? owner.area : this.area;  //случай когда створка в гл.окне
             double delta = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
             this.area = UGeo.geoPadding(this.area2, winc.listElem, -delta); //полигон векторов сторон створки
 
@@ -160,6 +161,15 @@ public class AreaStvorka extends AreaSimple {
                     ElemSimple elem = this.frames.get(i);
                     elem.setDimension(coo[i].x, coo[i].y, coo[i + 1].x, coo[i + 1].y); //запишем координаты
                 }
+            }
+            if (handleLayout == LayoutHandle.MIDL) {
+                //handleHeight = stvLeft.height() / 2;
+            } else if (handleLayout == LayoutHandle.CONST) {
+                //handleHeight = stvLeft.height() / 2;
+            } else if (handleLayout == LayoutHandle.VARIAT) {
+                //handleHeight = stvLeft.height() / 2;
+            } else {
+                //handleHeight = stvLeft.height() / 2;
             }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.setLocation " + e);
