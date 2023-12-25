@@ -4,6 +4,7 @@ import common.LinkedCom;
 import domain.eArtikl;
 import enums.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -211,31 +212,42 @@ public class UGeo {
             return new LineSegment(coo[j], coo[k]);
         }
     }
-    
-    public static LineSegment getSegment(Polygon p, int i, char step) {
+
+    public static LineSegment getSegment2(Polygon p, int k, int step) {
+        int i = k + 1;
         Coordinate[] coo = p.getCoordinates();
+        List<Coordinate> list = new ArrayList(List.of(coo));
+        list.add(list.get(1));
+        list.add(0, list.get(coo.length - 2));
+        
         if(step == 0) {
-            return new LineSegment(coo[i], coo[i+1]);
+           return new LineSegment(list.get(i), list.get(i + 1)); 
+        } else if(step == -1) {
+           return  new LineSegment(list.get(i - 1), list.get(i)); 
+        } else if(step == 1) {
+           return  new LineSegment(list.get(i + 1), list.get(i + 2)); 
         }
-        int imax = p.getNumPoints();
-        int j = i + step;
-
-        if (j > 0 && j <= imax) {
-            j = i + imax;
-
-        } else if (i > imax) {
-            j = i - imax;
-        }
-        if (step < 0) {
-            int k = (j == 0) ? imax - 1 : j + step;
-            return new LineSegment(coo[k], coo[j]);
-
-        } else {
-            int k = (j == imax) ? 1 : j + step;
-            return new LineSegment(coo[j], coo[k]);
-        }
+        return null;
     }
 
+    public static LineSegment getSegment3(Polygon p, int k, int step) {
+        
+        Coordinate[] coo = p.getCoordinates();
+        int i = k + coo.length;
+        List<Coordinate> list = new ArrayList(List.of(coo));
+        list.addAll(List.of(coo));
+        list.addAll(List.of(Arrays.copyOfRange(coo, 1, coo.length)));
+ //System.out.println(list);
+        if(step == 0) {
+           return new LineSegment(list.get(i), list.get(i + 1)); 
+        } else if(step == -1) {
+           return  new LineSegment(list.get(i - 1), list.get(i)); 
+        } else if(step == 1) {
+           return  new LineSegment(list.get(i + 1), list.get(i + 2)); 
+        }
+        return null;
+    }
+ 
     public static int getIndex(Polygon p, Com5t e) {
         Coordinate coo[] = p.getCoordinates();
 

@@ -1,5 +1,6 @@
 package startup;
 
+import builder.model.UGeo;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -8,10 +9,11 @@ import common.eProp;
 import dataset.Conn;
 import domain.eElement;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import org.locationtech.jts.geom.*;
-import org.locationtech.jts.linearref.LengthIndexedLine;
 
 public class Test {
 
@@ -288,7 +290,7 @@ public class Test {
             new Coordinate(0, 0)};
         Coordinate[] coord2 = new Coordinate[]{
             new Coordinate(0, 0), new Coordinate(0, 1000),
-            new Coordinate(1000, 100), new Coordinate(1000, 0),
+            new Coordinate(1000, 1000), new Coordinate(1000, 0),
             new Coordinate(0, 0)};
 
         Point point1 = gf.createPoint(new Coordinate(499.9, 500));
@@ -300,8 +302,10 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
         
-        LengthIndexedLine str = new LengthIndexedLine(line2);
-        Object v = str.extractPoint(1);
-        System.out.println(v);
+        //0 0, 0 1000, 1000 1000, 1000 0, 0 0, -  0 0, 0 1000, 1000 1000, 1000 0, 0 0, -  0 0, 0 1000, 1000 1000, 1000 0, 0 0
+        
+        System.out.println(UGeo.getSegment3(polygon2, 0, -1));
+        System.out.println(UGeo.getSegment3(polygon2, 0, 0));
+        System.out.println(UGeo.getSegment3(polygon2, 0, 1));
     }
 }
