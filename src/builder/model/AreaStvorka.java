@@ -103,7 +103,7 @@ public class AreaStvorka extends AreaSimple {
                 paramCheck[7] = false;
             } else {
                 int index = sysfurnRec.getInt(eSysfurn.side_open);
-                typeOpen = (index == TypeOpen2.QUE.id) ? typeOpen : (index == TypeOpen2.LEF.id) ? TypeOpen1.RIGHT : TypeOpen1.LEFT;
+                typeOpen = (index == TypeOpen2.QUE.id) ? typeOpen : (index == TypeOpen2.LEF.id) ? TypeOpen1.RIGH : TypeOpen1.LEFT;
             }
             //Положение или высота ручки на створке
             if (isJson(param, PKjson.positionHandl)) {
