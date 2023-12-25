@@ -7,11 +7,11 @@ import com.google.gson.JsonParser;
 import common.eProp;
 import dataset.Conn;
 import domain.eElement;
-import java.awt.Toolkit;
 import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 import org.locationtech.jts.geom.*;
+import org.locationtech.jts.linearref.LengthIndexedLine;
 
 public class Test {
 
@@ -287,22 +287,21 @@ public class Test {
             new Coordinate(900, 1400), new Coordinate(900, 0),
             new Coordinate(0, 0)};
         Coordinate[] coord2 = new Coordinate[]{
-            new Coordinate(50, 50), new Coordinate(50, 900),
-            new Coordinate(900, 900), new Coordinate(900, 50),
-            new Coordinate(50, 50)};
+            new Coordinate(0, 0), new Coordinate(0, 1000),
+            new Coordinate(1000, 100), new Coordinate(1000, 0),
+            new Coordinate(0, 0)};
 
         Point point1 = gf.createPoint(new Coordinate(499.9, 500));
         Point point2 = gf.createPoint(new Coordinate(0, 500));
         LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
-        LineString line2 = gf.createLineString(new Coordinate[]{new Coordinate(93.81658797276759, 896.6494075724012), new Coordinate(199.48228309038115, 309.9099755154137)});
+        LineString line2 = gf.createLineString(coord2);
         LineSegment segm1 = new LineSegment(100, 100, 0, 0);
         LineSegment segm2 = new LineSegment(20, 20, 200, 120);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
         
-        Toolkit.getDefaultToolkit().beep();
-        String s = "ivanov_id";
-        String str = s.substring(s.length() - 3, s.length()).toUpperCase();
-        System.out.println(str);
+        LengthIndexedLine str = new LengthIndexedLine(line2);
+        Object v = str.extractPoint(1);
+        System.out.println(v);
     }
 }

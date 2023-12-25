@@ -211,8 +211,32 @@ public class UGeo {
             return new LineSegment(coo[j], coo[k]);
         }
     }
+    
+    public static LineSegment getSegment(Polygon p, int i, char step) {
+        Coordinate[] coo = p.getCoordinates();
+        if(step == 0) {
+            return new LineSegment(coo[i], coo[i+1]);
+        }
+        int imax = p.getNumPoints();
+        int j = i + step;
 
-    public static int getIndex(Polygon p, Com5t e) throws Exception {
+        if (j > 0 && j <= imax) {
+            j = i + imax;
+
+        } else if (i > imax) {
+            j = i - imax;
+        }
+        if (step < 0) {
+            int k = (j == 0) ? imax - 1 : j + step;
+            return new LineSegment(coo[k], coo[j]);
+
+        } else {
+            int k = (j == imax) ? 1 : j + step;
+            return new LineSegment(coo[j], coo[k]);
+        }
+    }
+
+    public static int getIndex(Polygon p, Com5t e) {
         Coordinate coo[] = p.getCoordinates();
 
         for (int i = 0; i < coo.length - 1; i++) {
@@ -220,7 +244,8 @@ public class UGeo {
                 return i;
             }
         }
-        throw new Exception("Ошибка:UGeo.indexPolygon()");
+        System.err.println("Ошибка:UGeo.indexPolygon()");
+        return -1;
     }
 // <editor-fold defaultstate="collapsed" desc="TEMP">    
 // </editor-fold>    

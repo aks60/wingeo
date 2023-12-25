@@ -3455,7 +3455,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                 updateScript(elemID);
 
             }, TypeOpen1.LEFT, TypeOpen1.LEFTUP, TypeOpen1.LEFMOV,
-                    TypeOpen1.RIGH, TypeOpen1.RIGHUP, TypeOpen1.RIGHMOV, TypeOpen1.UPPER, TypeOpen1.FIXED);
+                    TypeOpen1.RIGH, TypeOpen1.RIGHUP, TypeOpen1.RIGMOV, TypeOpen1.UPPER, TypeOpen1.EMPTY);
         } catch (Exception e) {
             System.err.println("Ошибка: " + e);
         }

@@ -216,7 +216,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 if (val != null) {
                     if (field == eSysfurn.side_open) {
                         int id = Integer.valueOf(val.toString());
-                        return List.of(TypeOpen2.values()).stream().filter(el -> el.id == id).findFirst().orElse(TypeOpen2.QUE).name;
+                        return List.of(TypeOpen2.values()).stream().filter(el -> el.id == id).findFirst().orElse(TypeOpen2.REQ).name;
                     } else if (field == eSysfurn.hand_pos) {
                         int id = Integer.valueOf(val.toString());
                         return List.of(LayoutHandle.values()).stream().filter(el -> el.id == id).findFirst().orElse(LayoutHandle.MIDL).name;
@@ -3527,7 +3527,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     record.set(eSysfurn.systree_id, systreeID);
                     record.setNo(eSysfurn.npp, record.get(1));
                     record.setNo(eSysfurn.replac, 0);
-                    record.setNo(eSysfurn.side_open, TypeOpen2.QUE.id);
+                    record.setNo(eSysfurn.side_open, TypeOpen2.REQ.id);
                     record.setNo(eSysfurn.hand_pos, LayoutHandle.MIDL.id);
                     int index = UGui.getIndexKeyValue(tab3, record, eSysfurn.id);
                     qSysfurn.table(eFurniture.up).add(index, eFurniture.up.newRecord());
@@ -3904,7 +3904,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 updateScript(elemID);
 
             }, TypeOpen1.REQUEST, TypeOpen1.LEFT, TypeOpen1.LEFTUP, TypeOpen1.LEFMOV,
-                    TypeOpen1.RIGH, TypeOpen1.RIGHUP, TypeOpen1.RIGHMOV, TypeOpen1.UPPER, TypeOpen1.FIXED);
+                    TypeOpen1.RIGH, TypeOpen1.RIGHUP, TypeOpen1.RIGMOV, TypeOpen1.UPPER, TypeOpen1.EMPTY);
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.typeOpenToStvorka() " + e);
         }

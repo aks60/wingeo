@@ -30,7 +30,8 @@ public class TableFieldFilter extends javax.swing.JPanel {
     private int indexColumn = 0;
     private int indexBegin = 0;
     private boolean search = false;
-
+    //Toolkit.getDefaultToolkit().beep();
+    
     public TableFieldFilter() {
         initComponents();
         initElements();

@@ -10,15 +10,18 @@ import domain.eColor;
 import domain.eElement;
 import domain.eSysfurn;
 import domain.eSyssize;
+import enums.Layout;
 import enums.LayoutHandle;
 import enums.PKjson;
 import enums.Type;
 import enums.TypeJoin;
 import enums.TypeOpen1;
 import enums.TypeOpen2;
+import frames.swing.DrawStroke;
+import java.awt.Color;
 import java.awt.Shape;
+import java.awt.geom.Line2D;
 import java.util.LinkedList;
-import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineSegment;
@@ -52,7 +55,6 @@ public class AreaStvorka extends AreaSimple {
 
     public void furniture(JsonObject param) {
         try {
-            //ElemSimple stvLeft = frames.get(Layout.LEFT);
             //Фурнитура створки, ручка, подвес
             if (isJson(param, PKjson.sysfurnID)) {
                 sysfurnRec = eSysfurn.find2(param.get(PKjson.sysfurnID).getAsInt());
@@ -103,9 +105,9 @@ public class AreaStvorka extends AreaSimple {
                 paramCheck[7] = false;
             } else {
                 int index = sysfurnRec.getInt(eSysfurn.side_open);
-                typeOpen = (index == TypeOpen2.QUE.id) ? typeOpen : (index == TypeOpen2.LEF.id) ? TypeOpen1.RIGH : TypeOpen1.LEFT;
+                typeOpen = (index == TypeOpen2.REQ.id) ? typeOpen : (index == TypeOpen2.LEF.id) ? TypeOpen1.RIGH : TypeOpen1.LEFT;
             }
-            //Положение или высота ручки на створке
+            //Положение ручки на створке
             if (isJson(param, PKjson.positionHandl)) {
                 int position = param.get(PKjson.positionHandl).getAsInt();
                 if (position == LayoutHandle.VARIAT.id) {
@@ -162,14 +164,12 @@ public class AreaStvorka extends AreaSimple {
                     elem.setDimension(coo[i].x, coo[i].y, coo[i + 1].x, coo[i + 1].y); //запишем координаты
                 }
             }
+            //Высотв ручки на створке
+            ElemSimple stv = TypeOpen1.get(this, typeOpen);
             if (handleLayout == LayoutHandle.MIDL) {
-                //handleHeight = stvLeft.height() / 2;
-            } else if (handleLayout == LayoutHandle.CONST) {
-                //handleHeight = stvLeft.height() / 2;
-            } else if (handleLayout == LayoutHandle.VARIAT) {
-                //handleHeight = stvLeft.height() / 2;
+                handleHeight = stv.length() / 2;
             } else {
-                //handleHeight = stvLeft.height() / 2;
+                handleHeight = stv.length() / 2;
             }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.setLocation " + e);
@@ -212,16 +212,36 @@ public class AreaStvorka extends AreaSimple {
     }
 
     public void paint() {
-        if (this.area != null) {
-
+        if (typeOpen != TypeOpen1.EMPTY) {
             java.awt.Color color = winc.gc2d.getColor();
-            Shape shape = new ShapeWriter().toShape(this.area);
-
-            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-            winc.gc2d.fill(shape);
-
             winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
-            winc.gc2d.draw(shape);
+            double DX = 20, DY = 60, X1, Y1;
+
+            ElemSimple stv = TypeOpen1.get(this, typeOpen);
+            int ind = UGeo.getIndex(this.area, stv);
+            Coordinate p = UGeo.getSegment(area, ind, 0).midPoint();
+            LineSegment s1 = UGeo.getSegment(area, ind, -1);
+            LineSegment s2 = UGeo.getSegment(area, ind, +1);
+            winc.gc2d.draw(new Line2D.Double(s1.p0.x, s1.p0.y, p.x, p.y));
+            winc.gc2d.draw(new Line2D.Double(s2.p1.x, s2.p1.y, p.x, p.y)); 
+            
+            X1 = stv.x1() - stv.artiklRec.getDbl(eArtikl.height) / 2;
+            Y1 = stv.y1() + (stv.y2() - stv.y1()) / 2;
+//            if (root.type == Type.DOOR) {
+//                DY = 20;
+//                winc.gc2d.rotate(Math.toRadians(-90), X1 - DX, Y1 - DY);
+//                DrawStroke.strokePolygon(winc, X1 - DX, X1 + DX, X1 + DX, X1 - DX, Y1 - DY, Y1 - DY, Y1 + DY, Y1 + DY, 0xFFFFFFFF, Color.BLACK);
+//                DX = DX - 12;
+//                Y1 = Y1 + 20;
+//                DY = 60;
+//                DrawStroke.strokePolygon(winc, X1 - DX, X1 + DX, X1 + DX, X1 - DX, Y1 - DY, Y1 - DY, Y1 + DY, Y1 + DY, 0xFFFFFFFF, Color.BLACK);
+//
+//            } else {
+//                int handlRGB = eColor.find(this.handleColor).getInt(eColor.rgb);
+//                DrawStroke.strokePolygon(winc, X1 - DX, X1 + DX, X1 + DX, X1 - DX, Y1 - DY, Y1 - DY, Y1 + DY, Y1 + DY, handlRGB, Color.BLACK);
+//                DX = DX - 12;
+//                Y1 = Y1 + 20;
+//            }
             winc.gc2d.setColor(color);
         }
     }

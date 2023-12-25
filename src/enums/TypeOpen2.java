@@ -4,7 +4,7 @@ package enums;
 import static enums.UseUnit.values;
 
 public enum TypeOpen2 implements Enam {
-    QUE(1, "Запрос"),
+    REQ(1, "Запрос"),
     LEF(2, "Левое"),
     RIG(3, "Правое");
 

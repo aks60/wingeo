@@ -194,7 +194,7 @@ class UPar {
                 return false;
             } else if (!"поворотно-откидное".equals(txt) && (stv.typeOpen == TypeOpen1.LEFTUP || stv.typeOpen == TypeOpen1.RIGHUP)) { //поворотно-откидное
                 return false;
-            } else if (!"раздвижное".equals(txt) && (stv.typeOpen == TypeOpen1.LEFMOV || stv.typeOpen == TypeOpen1.RIGHMOV)) { //раздвижное
+            } else if (!"раздвижное".equals(txt) && (stv.typeOpen == TypeOpen1.LEFMOV || stv.typeOpen == TypeOpen1.RIGMOV)) { //раздвижное
                 return false;
             }
         }
