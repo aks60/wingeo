@@ -17,14 +17,11 @@ import enums.Type;
 import enums.TypeJoin;
 import enums.TypeOpen1;
 import enums.TypeOpen2;
-import frames.swing.DrawStroke;
-import java.awt.Color;
-import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.util.LinkedList;
-import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 
 public class AreaStvorka extends AreaSimple {
@@ -214,34 +211,38 @@ public class AreaStvorka extends AreaSimple {
     public void paint() {
         if (typeOpen != TypeOpen1.EMPTY) {
             java.awt.Color color = winc.gc2d.getColor();
-            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
-            double DX = 20, DY = 60, X1, Y1;
+            winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
 
             ElemSimple stv = TypeOpen1.get(this, typeOpen);
             int ind = UGeo.getIndex(this.area, stv);
             Coordinate p = UGeo.getSegment(area, ind, 0).midPoint();
             LineSegment s1 = UGeo.getSegment(area, ind, -1);
             LineSegment s2 = UGeo.getSegment(area, ind, +1);
+
             winc.gc2d.draw(new Line2D.Double(s1.p0.x, s1.p0.y, p.x, p.y));
-            winc.gc2d.draw(new Line2D.Double(s2.p1.x, s2.p1.y, p.x, p.y)); 
+            winc.gc2d.draw(new Line2D.Double(s2.p1.x, s2.p1.y, p.x, p.y));
             
-            X1 = stv.x1() - stv.artiklRec.getDbl(eArtikl.height) / 2;
-            Y1 = stv.y1() + (stv.y2() - stv.y1()) / 2;
-//            if (root.type == Type.DOOR) {
-//                DY = 20;
-//                winc.gc2d.rotate(Math.toRadians(-90), X1 - DX, Y1 - DY);
-//                DrawStroke.strokePolygon(winc, X1 - DX, X1 + DX, X1 + DX, X1 - DX, Y1 - DY, Y1 - DY, Y1 + DY, Y1 + DY, 0xFFFFFFFF, Color.BLACK);
-//                DX = DX - 12;
-//                Y1 = Y1 + 20;
-//                DY = 60;
-//                DrawStroke.strokePolygon(winc, X1 - DX, X1 + DX, X1 + DX, X1 - DX, Y1 - DY, Y1 - DY, Y1 + DY, Y1 + DY, 0xFFFFFFFF, Color.BLACK);
-//
-//            } else {
-//                int handlRGB = eColor.find(this.handleColor).getInt(eColor.rgb);
-//                DrawStroke.strokePolygon(winc, X1 - DX, X1 + DX, X1 + DX, X1 - DX, Y1 - DY, Y1 - DY, Y1 + DY, Y1 + DY, handlRGB, Color.BLACK);
-//                DX = DX - 12;
-//                Y1 = Y1 + 20;
-//            }
+            if (typeOpen == TypeOpen1.LEFTUP || typeOpen == TypeOpen1.RIGHUP) {
+                ElemSimple stv2 = this.frames.get(Layout.TOP);
+                ind = UGeo.getIndex(this.area, stv2);
+                Coordinate p2 = UGeo.getSegment(area, ind, 0).midPoint();
+                s1 = UGeo.getSegment(area, ind, -1);
+                s2 = UGeo.getSegment(area, ind, +1);
+
+                winc.gc2d.draw(new Line2D.Double(p2.x, p2.y, s1.p0.x, s1.p0.y));
+                winc.gc2d.draw(new Line2D.Double(p2.x, p2.y, s2.p1.x, s2.p1.y));
+            }
+            double DX = 10, DY = 60;
+            double dx = stv.artiklRec.getDbl(eArtikl.height) / 2;
+            p.x = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? p.x + dx : p.x - dx;
+
+            if (root.type == Type.DOOR) {
+                 winc.gc2d.drawPolygon(new int[]{(int) (p.x - DX), (int) (p.x + DX), (int) (p.x + DX), (int) (p.x - DX)},
+                        new int[]{(int) (p.y - DY), (int) (p.y - DY), (int) (p.y + DY), (int) (p.y + DY)}, 4);
+            } else {
+                 winc.gc2d.drawPolygon(new int[]{(int) (p.x - DX), (int) (p.x + DX), (int) (p.x + DX), (int) (p.x - DX)},
+                        new int[]{(int) (p.y - DY), (int) (p.y - DY), (int) (p.y + DY), (int) (p.y + DY)}, 4);
+            }
             winc.gc2d.setColor(color);
         }
     }

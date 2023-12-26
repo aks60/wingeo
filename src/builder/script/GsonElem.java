@@ -13,7 +13,7 @@ public class GsonElem {
     public double id = 0;  //идентификатор
     public transient GsonElem owner = null;  //владелец
     public LinkedList<GsonElem> childs = null; //список детей
-    public JsonObject param = null; //параметры элемента
+    public JsonObject param = new JsonObject(); //параметры элемента
     public Type type = null; //тип элемента
     public Double x1, y1, x2, y2;
     public Double length = null; //ширина или высота добавляемой area (зависит от напрвления расположения) 
@@ -85,4 +85,17 @@ public class GsonElem {
         }
     }
 
+    public void notSerialize(GsonElem gsonElem) {
+        if (gsonElem == this && this.param != null && this.param.size() == 0) {
+            this.param = null;
+        }
+        if (this.childs != null) {
+            for (GsonElem el : this.childs) {
+                if (el.param != null && el.param.size() == 0) {
+                    el.param = null;
+                }
+                el.notSerialize(this); //рекурсия  
+            }
+        }
+    }    
 }

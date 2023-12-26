@@ -303,9 +303,29 @@ public class Test {
         Polygon polygon2 = gf.createPolygon(coord2);
         
         //0 0, 0 1000, 1000 1000, 1000 0, 0 0, -  0 0, 0 1000, 1000 1000, 1000 0, 0 0, -  0 0, 0 1000, 1000 1000, 1000 0, 0 0
+        Polygon p = UGeo.newPolygon(
+                0.0, 0.0, //1       
+                0.0, 1000.0, //2
+                1000.0, 1000.0, //3
+                1000.0, 0.0, //4
+                0.0, 0.0, //1 + 4
+                0.0, 1000.0, //2
+                1000.0, 1000.0, //3
+                1000.0, 0.0, //4
+                0.0, 0.0, //1 + 8
+                0.0, 1000.0, //2
+                1000.0, 1000.0, //3
+                1000.0, 0.0, //4
+                0.0, 0.0); //1
+        //(1000.0, 0.0, NaN), (0.0, 0.0, NaN), (0.0, 1000.0, NaN), (1000.0, 1000.0, NaN), (1000.0, 0.0, NaN), (0.0, 0.0, NaN), (0.0, 0.0, NaN)
+
+        int k = -20;
+        System.out.println(120 - k);
+        System.out.println(120 + k);
         
-        System.out.println(UGeo.getSegment3(polygon2, 0, -1));
-        System.out.println(UGeo.getSegment3(polygon2, 0, 0));
-        System.out.println(UGeo.getSegment3(polygon2, 0, 1));
+//        int k = -1;        
+//        System.out.println(UGeo.getSegment(polygon2, k, -1));
+//        System.out.println(UGeo.getSegment(polygon2, k, 0));
+//        System.out.println(UGeo.getSegment(polygon2, k, 1));
     }
 }

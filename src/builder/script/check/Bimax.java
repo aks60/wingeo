@@ -166,6 +166,6 @@ public final class Bimax {
         } else {
             return null;
         }
-        return new GsonBuilder().create().toJson(rootGson);
+        return rootGson.toJson();
     }
 }

@@ -192,62 +192,24 @@ public class UGeo {
         return Com5t.gf.createPolygon(UGeo.arrCoord(d));
     }
 
-    public static LineSegment getSegment(Polygon p, int i, int step) {
+    public static LineSegment getSegment(Polygon p, int mid, int step) {
+
         Coordinate[] coo = p.getCoordinates();
-        int imax = p.getNumPoints() - 1;
-        int j = i;
-
-        if (i < 0) {
-            j = i + imax;
-
-        } else if (i > imax) {
-            j = i - imax;
-        }
-        if (step < 0) {
-            int k = (j == 0) ? imax - 1 : j + step;
-            return new LineSegment(coo[k], coo[j]);
-
-        } else {
-            int k = (j == imax) ? 1 : j + step;
-            return new LineSegment(coo[j], coo[k]);
-        }
-    }
-
-    public static LineSegment getSegment2(Polygon p, int k, int step) {
-        int i = k + 1;
-        Coordinate[] coo = p.getCoordinates();
+        int i = mid + coo.length - 1;
         List<Coordinate> list = new ArrayList(List.of(coo));
-        list.add(list.get(1));
-        list.add(0, list.get(coo.length - 2));
-        
-        if(step == 0) {
-           return new LineSegment(list.get(i), list.get(i + 1)); 
-        } else if(step == -1) {
-           return  new LineSegment(list.get(i - 1), list.get(i)); 
-        } else if(step == 1) {
-           return  new LineSegment(list.get(i + 1), list.get(i + 2)); 
-        }
-        return null;
-    }
-
-    public static LineSegment getSegment3(Polygon p, int k, int step) {
-        
-        Coordinate[] coo = p.getCoordinates();
-        int i = k + coo.length;
-        List<Coordinate> list = new ArrayList(List.of(coo));
-        list.addAll(List.of(coo));
         list.addAll(List.of(Arrays.copyOfRange(coo, 1, coo.length)));
- //System.out.println(list);
-        if(step == 0) {
-           return new LineSegment(list.get(i), list.get(i + 1)); 
-        } else if(step == -1) {
-           return  new LineSegment(list.get(i - 1), list.get(i)); 
-        } else if(step == 1) {
-           return  new LineSegment(list.get(i + 1), list.get(i + 2)); 
+        list.addAll(List.of(Arrays.copyOfRange(coo, 1, coo.length)));
+
+        if (step == 0) {
+            return new LineSegment(list.get(i), list.get(i + 1));
+        } else if (step == -1) {
+            return new LineSegment(list.get(i - 1), list.get(i));
+        } else if (step == 1) {
+            return new LineSegment(list.get(i + 1), list.get(i + 2));
         }
         return null;
     }
- 
+
     public static int getIndex(Polygon p, Com5t e) {
         Coordinate coo[] = p.getCoordinates();
 
