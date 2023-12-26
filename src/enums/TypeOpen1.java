@@ -62,11 +62,11 @@ public enum TypeOpen1 implements Enam {
         }
     }
 
-    public static ElemSimple get(AreaStvorka areaStv, TypeOpen1 typeOpen) {
+    public static ElemSimple getKnob(AreaStvorka areaStv, TypeOpen1 typeOpen) {
         if (List.of(LEFT, LEFTUP, LEFMOV).contains(typeOpen)) {
-            return areaStv.frames.get(Layout.LEFT);
-        } else if (List.of(RIGH, RIGHUP, RIGMOV).contains(typeOpen)) {
             return areaStv.frames.get(Layout.RIGHT);
+        } else if (List.of(RIGH, RIGHUP, RIGMOV).contains(typeOpen)) {
+            return areaStv.frames.get(Layout.LEFT);
         } else if (UPPER == typeOpen) {
             return areaStv.frames.get(Layout.TOP);
         } else {

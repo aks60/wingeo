@@ -6,6 +6,7 @@ import builder.script.GsonElem;
 import common.UCom;
 import dataset.Record;
 import domain.eArtikl;
+import static domain.eArtikl.size_centr;
 import domain.eColor;
 import domain.eSysprof;
 import domain.eSyssize;
@@ -46,6 +47,12 @@ public class ElemCross extends ElemSimple {
         }
         artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
         artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true);
+        
+        //Если импост виртуальный
+        if (artiklRec.getInt(1) == -3) {
+            artiklRec.setNo(size_centr, 40);
+            artiklRecAn.setNo(size_centr, 40);
+        }
     }
 
     public void setLocation() {
@@ -82,7 +89,7 @@ public class ElemCross extends ElemSimple {
             Coordinate C2[] = UGeo.geoIntersect(areaCanvas, moveBaseSegment[1]);
 
             //Ареа импоста обрезаем areaPadding 
-            Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);           
+            Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
             this.area = (Polygon) areaExp.intersection(geoPadding); //полигон элемента конструкции
 
         } catch (Exception e) {
@@ -92,7 +99,7 @@ public class ElemCross extends ElemSimple {
 
     public Layout layout() {
         double angl = this.anglHoriz();
-        
+
         if (angl == 90 || angl == -90) {
             return Layout.VERT;
 
@@ -101,7 +108,7 @@ public class ElemCross extends ElemSimple {
         }
         return Layout.ANY;
     }
-    
+
     //Главная спецификация 
     @Override
     public void setSpecific() {
@@ -117,7 +124,7 @@ public class ElemCross extends ElemSimple {
                 //На эскизе заход импоста не показываю, сразу пишу в спецификацию
                 if (winc.syssizRec != null) {
                     double zax = winc.syssizRec.getDbl(eSyssize.zax);
-                    if (Layout.VERT == this.layout()) {  
+                    if (Layout.VERT == this.layout()) {
                         ElemSimple inTop = joinFlat(Layout.TOP), inBott = joinFlat(Layout.BOTT);
                         spcRec.width = (inBott.y1() - inBott.artiklRec.getDbl(eArtikl.height) + inBott.artiklRec.getDbl(eArtikl.size_centr))
                                 - (inTop.y2() + inTop.artiklRec.getDbl(eArtikl.height) - inTop.artiklRec.getDbl(eArtikl.size_centr))
@@ -181,8 +188,8 @@ public class ElemCross extends ElemSimple {
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.addSpecific() " + e);
         }
-    } 
-    
+    }
+
     public void paint() {
 
         if (this.area != null) {

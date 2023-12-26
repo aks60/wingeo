@@ -206,7 +206,7 @@ public class ElemFrame extends ElemSimple {
                     AreaStvorka elemStv = ((AreaStvorka) owner);
                     AreaSimple areaStv = ((AreaSimple) owner);
                     if ("по текстуре ручки".equals(spcAdd.getParam("null", 24006))) {
-                        colorID = UColor.colorFromArtikl(spcAdd.artiklRec.getInt(eArtikl.id), 1, elemStv.handleColor);
+                        colorID = UColor.colorFromArtikl(spcAdd.artiklRec.getInt(eArtikl.id), 1, elemStv.knobColor);
 
                     } else if ("по текстуре подвеса".equals(spcAdd.getParam("null", 24006))) {
                         for (ElemSimple elem : areaStv.frames) {

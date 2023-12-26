@@ -452,9 +452,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                         txt31.setEditable(false);
                         setText(txt31, "");
                     }
-                    setText(txt21, stv.handleRec.getStr(eArtikl.code) + " ÷ " + stv.handleRec.getStr(eArtikl.name));
+                    setText(txt21, stv.knobRec.getStr(eArtikl.code) + " ÷ " + stv.knobRec.getStr(eArtikl.name));
                     setIcon(btn12, stv.paramCheck[1]);
-                    setText(txt25, eColor.find(stv.handleColor).getStr(eColor.name));
+                    setText(txt25, eColor.find(stv.knobColor).getStr(eColor.name));
                     setIcon(btn14, stv.paramCheck[2]);
                     setText(txt45, stv.loopRec.getStr(eArtikl.code));
                     setText(txt58, stv.loopRec.getStr(eArtikl.name));
@@ -3465,7 +3465,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
         try {
             double selectID = winNode.com5t().id;
             AreaStvorka stv = (AreaStvorka) winNode.com5t();
-            HashSet<Record> colorSet = UGui.artiklToColorSet(stv.handleRec.getInt(eArtikl.id));
+            HashSet<Record> colorSet = UGui.artiklToColorSet(stv.knobRec.getInt(eArtikl.id));
             DicColor frame = new DicColor(this, (colorRec) -> {
 
                 GsonElem stvArea = (GsonElem) winc().listAll.gson(selectID);

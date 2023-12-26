@@ -262,9 +262,9 @@ public class ElementVar extends Par5s {
                     break;
                 case 31051:  //Если створка фурнитуры 
                     if (elem5e.owner.type == Type.STVORKA) {
-                        if ("ведущая".equals(rec.getStr(TEXT)) == true && ((AreaStvorka) elem5e.owner).handleRec.getInt(eArtikl.id) == -3) {
+                        if ("ведущая".equals(rec.getStr(TEXT)) == true && ((AreaStvorka) elem5e.owner).knobRec.getInt(eArtikl.id) == -3) {
                             return false;
-                        } else if ("ведомая".equals(rec.getStr(TEXT)) == true && ((AreaStvorka) elem5e.owner).handleRec.getInt(eArtikl.id) != -3) {
+                        } else if ("ведомая".equals(rec.getStr(TEXT)) == true && ((AreaStvorka) elem5e.owner).knobRec.getInt(eArtikl.id) != -3) {
                             return false;
                         }
                     }

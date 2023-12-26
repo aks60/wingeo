@@ -231,14 +231,14 @@ public class Furniture extends Cal5e {
             if (spcAdd.artiklRec.getInt(eArtikl.level2) == 11) {
                 if (UColor.colorFromProduct(spcAdd) == true) { //подбор по цвету
 
-                    if (stv.handleRec.getInt(eArtikl.id) == -3) {
-                        stv.handleRec = spcAdd.artiklRec;
+                    if (stv.knobRec.getInt(eArtikl.id) == -3) {
+                        stv.knobRec = spcAdd.artiklRec;
                         add_specific = true;
                     } else {
-                        add_specific = (stv.handleRec.getInt(eArtikl.id) == spcAdd.artiklRec.getInt(eArtikl.id));
+                        add_specific = (stv.knobRec.getInt(eArtikl.id) == spcAdd.artiklRec.getInt(eArtikl.id));
                     }
-                    if (add_specific == true && stv.handleColor == -3) {
-                        stv.handleColor = spcAdd.colorID1;
+                    if (add_specific == true && stv.knobColor == -3) {
+                        stv.knobColor = spcAdd.colorID1;
                     }
                 }
                 return add_specific;

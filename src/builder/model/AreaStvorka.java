@@ -21,20 +21,19 @@ import java.awt.geom.Line2D;
 import java.util.LinkedList;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineSegment;
-import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 
 public class AreaStvorka extends AreaSimple {
 
     public Record sysfurnRec = eSysfurn.up.newRecord(); //фурнитура
-    public Record handleRec = eArtikl.virtualRec(); //ручка
+    public Record knobRec = eArtikl.virtualRec(); //ручка
     public Record loopRec = eArtikl.virtualRec(); //подвес(петли)
     public Record lockRec = eArtikl.virtualRec(); //замок
     public Record mosqRec = eArtikl.virtualRec(); //москитка
     public Record elementRec = eElement.up.newRecord(); //состав москидки 
     private Polygon area2 = null; //полигон векторов сторон рамы
 
-    public int handleColor = -3; //цвет ручки
+    public int knobColor = -3; //цвет ручки
     public int loopColor = -3; //цвет подвеса
     public int lockColor = -3; //цвет замка
     public int mosqColor = -3; //цвет москитки
@@ -61,19 +60,19 @@ public class AreaStvorka extends AreaSimple {
             }
             //Ручка
             if (isJson(param, PKjson.artiklHandl)) {
-                handleRec = eArtikl.find(param.get(PKjson.artiklHandl).getAsInt(), false);
+                knobRec = eArtikl.find(param.get(PKjson.artiklHandl).getAsInt(), false);
                 paramCheck[1] = false;
             } else {
-                handleRec = eArtikl.find(sysfurnRec.getInt(eSysfurn.artikl_id1), false);
+                knobRec = eArtikl.find(sysfurnRec.getInt(eSysfurn.artikl_id1), false);
                 paramCheck[1] = true;
             }
             //Текстура ручки
             if (isJson(param, PKjson.colorHandl)) {
-                handleColor = param.get(PKjson.colorHandl).getAsInt();
+                knobColor = param.get(PKjson.colorHandl).getAsInt();
                 paramCheck[2] = false;
             } else {
-                int colorFK = eArtdet.find(handleRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk);
-                handleColor = eColor.find3(colorFK).getInt(eColor.id);
+                int colorFK = eArtdet.find(knobRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk);
+                knobColor = eColor.find3(colorFK).getInt(eColor.id);
                 paramCheck[2] = true;
             }
             //Подвес (петли)
@@ -162,7 +161,7 @@ public class AreaStvorka extends AreaSimple {
                 }
             }
             //Высотв ручки на створке
-            ElemSimple stv = TypeOpen1.get(this, typeOpen);
+            ElemSimple stv = TypeOpen1.getKnob(this, typeOpen);
             if (handleLayout == LayoutHandle.MIDL) {
                 handleHeight = stv.length() / 2;
             } else {
@@ -213,7 +212,7 @@ public class AreaStvorka extends AreaSimple {
             java.awt.Color color = winc.gc2d.getColor();
             winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
 
-            ElemSimple stv = TypeOpen1.get(this, typeOpen);
+            ElemSimple stv = TypeOpen1.getKnob(this, typeOpen);
             int ind = UGeo.getIndex(this.area, stv);
             Coordinate p = UGeo.getSegment(area, ind, 0).midPoint();
             LineSegment s1 = UGeo.getSegment(area, ind, -1);
@@ -221,7 +220,7 @@ public class AreaStvorka extends AreaSimple {
 
             winc.gc2d.draw(new Line2D.Double(s1.p0.x, s1.p0.y, p.x, p.y));
             winc.gc2d.draw(new Line2D.Double(s2.p1.x, s2.p1.y, p.x, p.y));
-            
+
             if (typeOpen == TypeOpen1.LEFTUP || typeOpen == TypeOpen1.RIGHUP) {
                 ElemSimple stv2 = this.frames.get(Layout.TOP);
                 ind = UGeo.getIndex(this.area, stv2);
@@ -234,13 +233,21 @@ public class AreaStvorka extends AreaSimple {
             }
             double DX = 10, DY = 60;
             double dx = stv.artiklRec.getDbl(eArtikl.height) / 2;
-            p.x = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? p.x + dx : p.x - dx;
+            p.x = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? p.x - dx : p.x + dx;
 
             if (root.type == Type.DOOR) {
-                 winc.gc2d.drawPolygon(new int[]{(int) (p.x - DX), (int) (p.x + DX), (int) (p.x + DX), (int) (p.x - DX)},
+                winc.gc2d.drawPolygon(new int[]{(int) (p.x - DX), (int) (p.x + DX), (int) (p.x + DX), (int) (p.x - DX)},
                         new int[]{(int) (p.y - DY), (int) (p.y - DY), (int) (p.y + DY), (int) (p.y + DY)}, 4);
             } else {
-                 winc.gc2d.drawPolygon(new int[]{(int) (p.x - DX), (int) (p.x + DX), (int) (p.x + DX), (int) (p.x - DX)},
+                Record colorRec = eColor.find(knobColor);
+                int rgb = colorRec.getInt(eColor.rgb);
+                
+                winc.gc2d.setColor(new java.awt.Color(rgb));
+                winc.gc2d.fillPolygon(new int[]{(int) (p.x - DX), (int) (p.x + DX), (int) (p.x + DX), (int) (p.x - DX)},
+                        new int[]{(int) (p.y - DY), (int) (p.y - DY), (int) (p.y + DY), (int) (p.y + DY)}, 4);
+                
+                winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
+                winc.gc2d.drawPolygon(new int[]{(int) (p.x - DX), (int) (p.x + DX), (int) (p.x + DX), (int) (p.x - DX)},
                         new int[]{(int) (p.y - DY), (int) (p.y - DY), (int) (p.y + DY), (int) (p.y + DY)}, 4);
             }
             winc.gc2d.setColor(color);

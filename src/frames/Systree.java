@@ -492,10 +492,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     setText(txt16, stv.handleLayout.name);
                     txt31.setEditable((stv.handleLayout == LayoutHandle.VARIAT) ? true : false);
                     setText(txt31, (stv.handleLayout == LayoutHandle.VARIAT) ? UCom.format(stv.handleHeight, 1) : "");
-                    setText(txt21, stv.handleRec.getStr(eArtikl.code));
-                    setText(txt59, stv.handleRec.getStr(eArtikl.name));
+                    setText(txt21, stv.knobRec.getStr(eArtikl.code));
+                    setText(txt59, stv.knobRec.getStr(eArtikl.name));
                     setIcon(btn21, stv.paramCheck[7]);
-                    setText(txt25, eColor.find(stv.handleColor).getStr(eColor.name));
+                    setText(txt25, eColor.find(stv.knobColor).getStr(eColor.name));
                     setIcon(btn14, stv.paramCheck[2]);
                     setText(txt45, stv.loopRec.getStr(eArtikl.code));
                     setText(txt57, stv.loopRec.getStr(eArtikl.name));
@@ -3976,7 +3976,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         try {
             double selectID = winNode.com5t().id;
             AreaStvorka stv = (AreaStvorka) winNode.com5t();
-            HashSet<Record> colorSet = UGui.artiklToColorSet(stv.handleRec.getInt(eArtikl.id));
+            HashSet<Record> colorSet = UGui.artiklToColorSet(stv.knobRec.getInt(eArtikl.id));
             DicColor frame = new DicColor(this, (colorRec) -> {
 
                 GsonElem stvArea = (GsonElem) wincalc().listAll.gson(selectID);
