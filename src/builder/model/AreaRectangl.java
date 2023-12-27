@@ -57,6 +57,7 @@ public class AreaRectangl extends AreaSimple {
         }
     }
 
+    
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
     // </editor-fold>     
 }

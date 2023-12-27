@@ -244,6 +244,9 @@ public class Wincalc {
     //Рисуем конструкцию
     public void draw() {
         try {
+            //Размерные линии
+            this.root.paint();
+            
             //Прорисовка стеклопакетов
             this.listElem.filter(Type.GLASS).stream().forEach(el -> el.paint());
 

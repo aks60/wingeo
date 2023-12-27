@@ -13,7 +13,7 @@ public final class Bimax {
 // <editor-fold defaultstate="collapsed" desc="RECTANGL">
 
         if (prj == 508852) { //PS перепутаны системы!
-            rootGson = new GsonRoot(427640, prj, 1, 215, Type.RECTANGL, "Teplowin 500 / Estetic / 1 ОКНА.  PS перепутаны системы!", 1009, 1009, 1009);
+            rootGson = new GsonRoot(427640, prj, 1, 237, Type.RECTANGL, "Teplowin 500 / Estetic / 1 ОКНА.  PS перепутаны системы!", 1009, 1009, 1009);
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1600.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1600.0, 1600.0))

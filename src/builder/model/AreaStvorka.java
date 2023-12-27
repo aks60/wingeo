@@ -20,11 +20,9 @@ import enums.TypeOpen1;
 import enums.TypeOpen2;
 import enums.UseSide;
 import java.awt.Shape;
-import java.awt.geom.Line2D;
 import java.util.LinkedList;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.CoordinateSequences;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
@@ -158,7 +156,7 @@ public class AreaStvorka extends AreaSimple {
                     if (isJson(this.gson.param, PKjson.stvorkaSide[i])) {
                         gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
                     }
-                    ElemFrame sideStv = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gson, this);                    
+                    ElemFrame sideStv = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gson, this);
                     this.frames.add(sideStv);
                 }
             } else {
@@ -172,7 +170,7 @@ public class AreaStvorka extends AreaSimple {
 
             //Ручка открывания
             if (typeOpen != TypeOpen1.EMPTY) {
-                
+
                 //Линии гориз. открывания
                 ElemSimple stv = TypeOpen1.getKnob(this, typeOpen);
                 int ind = UGeo.getIndex(this.area, stv);
@@ -195,7 +193,11 @@ public class AreaStvorka extends AreaSimple {
                 Record sysprofRec = eSysprof.find5(winc.nuni, stv.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
                 Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
                 double dx = artiklRec.getDbl(eArtikl.height) / 2;
-                p.x = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? p.x - dx : p.x + dx;
+                if (typeOpen == TypeOpen1.UPPER) {
+                    p.y = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? p.y - 2 * dx : p.y + 2 * dx;
+                } else {
+                    p.x = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? p.x - dx : p.x + dx;
+                }
                 if (root.type == Type.DOOR) {
                     this.knobOpen = gf.createPolygon(UGeo.arrCoord(p.x - DX, p.y - DY, p.x + DX, p.y - DY, p.x + DX, p.y + DY, p.x - DX, p.y + DY));
                 } else {
@@ -263,12 +265,12 @@ public class AreaStvorka extends AreaSimple {
                 winc.gc2d.draw(shape);
             }
             Shape shape = new ShapeWriter().toShape(this.knobOpen);
-            
+
             Record colorRec = eColor.find(knobColor);
             int rgb = colorRec.getInt(eColor.rgb);
-            winc.gc2d.setColor(new java.awt.Color(rgb));            
+            winc.gc2d.setColor(new java.awt.Color(rgb));
             winc.gc2d.fill(shape);
-            
+
             winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
             winc.gc2d.draw(shape);
 
