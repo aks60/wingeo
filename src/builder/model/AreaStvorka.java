@@ -192,7 +192,7 @@ public class AreaStvorka extends AreaSimple {
                 }
                 //Полигон ручки
                 double DX = 10, DY = 60;
-                Record sysprofRec = eSysprof.find5(winc.nuni, stv.type.id2, UseSide.ANY, UseSide.ANY); //так делать неправ...
+                Record sysprofRec = eSysprof.find5(winc.nuni, stv.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
                 Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
                 double dx = artiklRec.getDbl(eArtikl.height) / 2;
                 p.x = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? p.x - dx : p.x + dx;
