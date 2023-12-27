@@ -174,7 +174,7 @@ public class AreaStvorka extends AreaSimple {
                 //Линии гориз. открывания
                 ElemSimple stv = TypeOpen1.getKnob(this, typeOpen);
                 int ind = UGeo.getIndex(this.area, stv);
-                Coordinate p = UGeo.getSegment(area, ind, 0).midPoint();
+                Coordinate p = UGeo.getSegment(area, ind, 0).midPoint(); //высота ручки по умолчанию
                 LineSegment s1 = UGeo.getSegment(area, ind, -1);
                 LineSegment s2 = UGeo.getSegment(area, ind, +1);
                 lineOpenHor = gf.createLineString(UGeo.arrCoord(s1.p0.x, s1.p0.y, p.x, p.y, s2.p1.x, s2.p1.y, p.x, p.y));
@@ -188,12 +188,11 @@ public class AreaStvorka extends AreaSimple {
                     s2 = UGeo.getSegment(area, ind, +1);
                     lineOpenVer = gf.createLineString(UGeo.arrCoord(p2.x, p2.y, s1.p0.x, s1.p0.y, p2.x, p2.y, s2.p1.x, s2.p1.y));
                 }
-                //Полигон ручки
+                //Ручка
                 double DX = 10, DY = 60;
-
                 if (knobLayout == LayoutKnob.VAR && this.knobHeight != 0) {
                     double dy = (stv.y2() > stv.y1()) ? stv.y2() : stv.y1();
-                    p.y = dy - this.knobHeight;
+                    p.y = dy - this.knobHeight; //высота ручки на створке
                 }
                 Record sysprofRec = eSysprof.find5(winc.nuni, stv.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
                 Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
@@ -201,8 +200,6 @@ public class AreaStvorka extends AreaSimple {
                 if (typeOpen == TypeOpen1.UPPER) {
                     p.y = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? p.y - 2 * dx : p.y + 2 * dx;
                 } else {
-                    //System.out.println(stv.area.getEnvelopeInternal().getMaxY() - 300);
-                    //p.y = stv.area.getEnvelopeInternal().getMaxY()  - this.knobHeight; 
                     p.x = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? p.x - dx : p.x + dx;
                 }
                 if (root.type == Type.DOOR) {
@@ -210,12 +207,6 @@ public class AreaStvorka extends AreaSimple {
                 } else {
                     this.knobOpen = gf.createPolygon(UGeo.arrCoord(p.x - DX, p.y - DY, p.x + DX, p.y - DY, p.x + DX, p.y + DY, p.x - DX, p.y + DY));
                 }
-                //Высота ручки на створке
-//                if (knobLayout == LayoutKnob.MIDL) {
-//                    knobHeight = stv.length() / 2;
-//                } else {
-//                    knobHeight = stv.length() / 2;
-//                }
             }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.setLocation " + e);
