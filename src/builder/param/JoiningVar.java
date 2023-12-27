@@ -489,7 +489,7 @@ public class JoiningVar extends Par5s {
                 {
                     AreaStvorka stv = (AreaStvorka) elemJoin.elem1.owner;
                     ElemSimple imp = elemJoin.elem1;
-                    if (Math.abs(imp.y2() - stv.handleHeight) < rec.getDbl(TEXT)) {
+                    if (Math.abs(imp.y2() - stv.knobHeight) < rec.getDbl(TEXT)) {
                         return false;
                     }
                 }

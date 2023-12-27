@@ -2398,6 +2398,7 @@
                                 </Component>
                                 <Component class="javax.swing.JTextField" name="txt31">
                                   <Properties>
+                                    <Property name="editable" type="boolean" value="false"/>
                                     <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                       <Connection code="frames.UGui.getFont(0,0)" type="code"/>
                                     </Property>

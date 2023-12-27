@@ -183,7 +183,7 @@ public class Query extends Table {
                 nameCols = nameCols.substring(0, nameCols.length() - 1);
                 String sql = "update " + schema + fields.get(0).tname() + " set "
                         + nameCols + " where " + f[1].name() + " = " + wrapper(record, f[1]);
-                System.err.println("SQL-UPDATE " + sql);
+                System.out.println("SQL-UPDATE " + sql);
                 statement.executeUpdate(sql);
                 record.setNo(0, SEL);
             }
@@ -208,7 +208,7 @@ public class Query extends Table {
             nameCols = nameCols.substring(0, nameCols.length() - 1);
             String sql = "update " + schema + fields.get(0).tname() + " set "
                     + nameCols + " where " + f[1].name() + " = " + wrapper(record, f[1]);
-            System.err.println("SQL-UPDATE " + sql);
+            System.out.println("SQL-UPDATE " + sql);
             statement.executeUpdate(sql);
             record.setNo(0, SEL);
         }

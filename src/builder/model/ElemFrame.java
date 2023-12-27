@@ -237,7 +237,7 @@ public class ElemFrame extends ElemSimple {
                 if (spcAdd.getParam("null", 24072, 25072).equals("null") == false) {
                     if (builder.making.Furniture.determOfSide(owner) == this) {
                         AreaStvorka stv = (AreaStvorka) owner;
-                        stv.handleHeight = UCom.getDbl(spcAdd.getParam(stv.handleHeight, 24072, 25072));
+                        stv.knobHeight = UCom.getDbl(spcAdd.getParam(stv.knobHeight, 24072, 25072));
                     }
                 }
                 //Укорочение от
@@ -247,11 +247,11 @@ public class ElemFrame extends ElemSimple {
 
                     } else if ("высоты ручки".equals(spcAdd.getParam("null", 25013))) {
                         AreaStvorka stv = (AreaStvorka) owner;
-                        spcAdd.width = stv.handleHeight - UCom.getDbl(spcAdd.getParam(0, 25030)); //укорочение, мм
+                        spcAdd.width = stv.knobHeight - UCom.getDbl(spcAdd.getParam(0, 25030)); //укорочение, мм
 
                     } else if ("сторона - выс. ручки".equals(spcAdd.getParam("null", 25013))) {
                         AreaStvorka stv = (AreaStvorka) owner;
-                        spcAdd.width = lengthArch - stv.handleHeight - UCom.getDbl(spcAdd.getParam(0, 25030)); //укорочение, мм                        
+                        spcAdd.width = lengthArch - stv.knobHeight - UCom.getDbl(spcAdd.getParam(0, 25030)); //укорочение, мм                        
 
                     } else if ("половины стороны".equals(spcAdd.getParam("null", 25013))) {
                         spcAdd.width = (lengthArch / 2) - UCom.getDbl(spcAdd.getParam(0, 25030)); //укорочение, мм 

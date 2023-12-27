@@ -61,7 +61,7 @@ import domain.eSysprod;
 import domain.eSysprof;
 import domain.eSystree;
 import enums.Layout;
-import enums.LayoutHandle;
+import enums.LayoutKnob;
 import enums.PKjson;
 import enums.TypeGrup;
 import enums.TypeOpen1;
@@ -444,10 +444,10 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                     setText(txt20, eFurniture.find(id).getStr(eFurniture.name));
                     setIcon(btn10, stv.paramCheck[0]);
                     setText(txt30, stv.typeOpen.name2);
-                    setText(txt16, stv.handleLayout.name);
-                    if (stv.handleLayout == LayoutHandle.VARIAT) {
+                    setText(txt16, stv.knobLayout.name);
+                    if (stv.knobLayout == LayoutKnob.VAR) {
                         txt31.setEditable(true);
-                        setText(txt31, UCom.format(stv.handleHeight, 1));
+                        setText(txt31, UCom.format(stv.knobHeight, 1));
                     } else {
                         txt31.setEditable(false);
                         setText(txt31, "");
@@ -3470,9 +3470,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
 
                 GsonElem stvArea = (GsonElem) winc().listAll.gson(selectID);
                 if (colorRec.get(1) == null) {
-                    stvArea.param.remove(PKjson.colorHandl);
+                    stvArea.param.remove(PKjson.colorKnob);
                 } else {
-                    stvArea.param.addProperty(PKjson.colorHandl, colorRec.getStr(eColor.id));
+                    stvArea.param.addProperty(PKjson.colorKnob, colorRec.getStr(eColor.id));
                 }
                 updateScript(selectID);
 
@@ -3492,11 +3492,11 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
             new DicArtikl(this, (artiklRec) -> {
 
                 GsonElem stvArea = (GsonElem) winc().listAll.gson(stvorkaID);
-                stvArea.param.remove(PKjson.colorHandl);
+                stvArea.param.remove(PKjson.colorKnob);
                 if (artiklRec.get(1) == null) {
-                    stvArea.param.remove(PKjson.artiklHandl);
+                    stvArea.param.remove(PKjson.artiklKnob);
                 } else {
-                    stvArea.param.addProperty(PKjson.artiklHandl, artiklRec.getStr(eArtikl.id));
+                    stvArea.param.addProperty(PKjson.artiklKnob, artiklRec.getStr(eArtikl.id));
                 }
                 updateScript(stvorkaID);
 
@@ -3511,9 +3511,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
 
         AreaSimple areaStv = (AreaSimple) winNode.com5t();
         int indexLayoutHandl = 0;
-        if (LayoutHandle.CONST.name.equals(txt16.getText())) {
+        if (LayoutKnob.CONST.name.equals(txt16.getText())) {
             indexLayoutHandl = 1;
-        } else if (LayoutHandle.VARIAT.name.equals(txt16.getText())) {
+        } else if (LayoutKnob.VAR.name.equals(txt16.getText())) {
             indexLayoutHandl = 2;
         }
         new DicHandl(this, (record) -> {
@@ -3522,16 +3522,16 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                 GsonElem jsonStv = (GsonElem) winc().listAll.gson(selectID);
 
                 if (record.getInt(0) == 0) {
-                    jsonStv.param.addProperty(PKjson.positionHandl, LayoutHandle.MIDL.id);
+                    jsonStv.param.addProperty(PKjson.positionKnob, LayoutKnob.MIDL.id);
                     txt31.setEditable(false);
 
                 } else if (record.getInt(0) == 1) {
-                    jsonStv.param.addProperty(PKjson.positionHandl, LayoutHandle.CONST.id);
+                    jsonStv.param.addProperty(PKjson.positionKnob, LayoutKnob.CONST.id);
                     txt31.setEditable(false);
 
                 } else if (record.getInt(0) == 2) {
-                    jsonStv.param.addProperty(PKjson.positionHandl, LayoutHandle.VARIAT.id);
-                    jsonStv.param.addProperty(PKjson.heightHandl, record.getInt(1));
+                    jsonStv.param.addProperty(PKjson.positionKnob, LayoutKnob.VAR.id);
+                    jsonStv.param.addProperty(PKjson.heightKnob, record.getInt(1));
                     txt31.setEditable(true);
                 }
                 updateScript(selectID);

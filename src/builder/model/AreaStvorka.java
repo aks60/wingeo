@@ -12,7 +12,7 @@ import domain.eSysfurn;
 import domain.eSysprof;
 import domain.eSyssize;
 import enums.Layout;
-import enums.LayoutHandle;
+import enums.LayoutKnob;
 import enums.PKjson;
 import enums.Type;
 import enums.TypeJoin;
@@ -45,9 +45,9 @@ public class AreaStvorka extends AreaSimple {
     public int lockColor = -3; //цвет замка
     public int mosqColor = -3; //цвет москитки
 
-    public double handleHeight = 60; //высота ручки
+    public double knobHeight = 0; //высота ручки
     public TypeOpen1 typeOpen = TypeOpen1.REQUEST; //направление открывания
-    public LayoutHandle handleLayout = LayoutHandle.VARIAT; //положение ручки на створке      
+    public LayoutKnob knobLayout = LayoutKnob.VAR; //положение ручки на створке      
     public boolean paramCheck[] = {true, true, true, true, true, true, true, true};
     public double offset[] = {0, 0, 0, 0};
 
@@ -66,16 +66,16 @@ public class AreaStvorka extends AreaSimple {
                 sysfurnRec = eSysfurn.find3(winc.nuni); //ищем первую в системе
             }
             //Ручка
-            if (isJson(param, PKjson.artiklHandl)) {
-                knobRec = eArtikl.find(param.get(PKjson.artiklHandl).getAsInt(), false);
+            if (isJson(param, PKjson.artiklKnob)) {
+                knobRec = eArtikl.find(param.get(PKjson.artiklKnob).getAsInt(), false);
                 paramCheck[1] = false;
             } else {
                 knobRec = eArtikl.find(sysfurnRec.getInt(eSysfurn.artikl_id1), false);
                 paramCheck[1] = true;
             }
             //Текстура ручки
-            if (isJson(param, PKjson.colorHandl)) {
-                knobColor = param.get(PKjson.colorHandl).getAsInt();
+            if (isJson(param, PKjson.colorKnob)) {
+                knobColor = param.get(PKjson.colorKnob).getAsInt();
                 paramCheck[2] = false;
             } else {
                 int colorFK = eArtdet.find(knobRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk);
@@ -111,26 +111,26 @@ public class AreaStvorka extends AreaSimple {
                 typeOpen = (index == TypeOpen2.REQ.id) ? typeOpen : (index == TypeOpen2.LEF.id) ? TypeOpen1.RIGH : TypeOpen1.LEFT;
             }
             //Положение ручки на створке
-            if (isJson(param, PKjson.positionHandl)) {
-                int position = param.get(PKjson.positionHandl).getAsInt();
-                if (position == LayoutHandle.VARIAT.id) {
-                    handleLayout = LayoutHandle.VARIAT;
-                    handleHeight = param.get(PKjson.heightHandl).getAsInt();
+            if (isJson(param, PKjson.positionKnob)) {
+                int position = param.get(PKjson.positionKnob).getAsInt();
+                if (position == LayoutKnob.VAR.id) {
+                    knobLayout = LayoutKnob.VAR;
+                    knobHeight = param.get(PKjson.heightKnob).getAsInt();
                 } else {
-                    handleLayout = (position == LayoutHandle.MIDL.id) ? LayoutHandle.MIDL : LayoutHandle.CONST;
+                    knobLayout = (position == LayoutKnob.MIDL.id) ? LayoutKnob.MIDL : LayoutKnob.CONST;
                     //handleHeight = stvLeft.height() / 2;
                 }
-            } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutHandle.MIDL.id) {
-                handleLayout = LayoutHandle.MIDL;
+            } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.MIDL.id) {
+                knobLayout = LayoutKnob.MIDL;
                 //handleHeight = stvLeft.height() / 2;
-            } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutHandle.CONST.id) {
-                handleLayout = LayoutHandle.CONST;
+            } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.CONST.id) {
+                knobLayout = LayoutKnob.CONST;
                 //handleHeight = stvLeft.height() / 2;
-            } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutHandle.VARIAT.id) {
-                handleLayout = LayoutHandle.VARIAT;
+            } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.VAR.id) {
+                knobLayout = LayoutKnob.VAR;
                 //handleHeight = stvLeft.height() / 2;
             } else {
-                handleLayout = LayoutHandle.MIDL; //по умолчанию
+                knobLayout = LayoutKnob.MIDL; //по умолчанию
                 //handleHeight = stvLeft.height() / 2;
             }
         } catch (Exception e) {
@@ -190,12 +190,19 @@ public class AreaStvorka extends AreaSimple {
                 }
                 //Полигон ручки
                 double DX = 10, DY = 60;
+
+                if (knobLayout == LayoutKnob.VAR && this.knobHeight != 0) {
+                    double dy = (stv.y2() > stv.y1()) ? stv.y2() : stv.y1();
+                    p.y = dy - this.knobHeight;
+                }
                 Record sysprofRec = eSysprof.find5(winc.nuni, stv.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
                 Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
                 double dx = artiklRec.getDbl(eArtikl.height) / 2;
                 if (typeOpen == TypeOpen1.UPPER) {
                     p.y = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? p.y - 2 * dx : p.y + 2 * dx;
                 } else {
+                    //System.out.println(stv.area.getEnvelopeInternal().getMaxY() - 300);
+                    //p.y = stv.area.getEnvelopeInternal().getMaxY()  - this.knobHeight; 
                     p.x = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? p.x - dx : p.x + dx;
                 }
                 if (root.type == Type.DOOR) {
@@ -204,12 +211,11 @@ public class AreaStvorka extends AreaSimple {
                     this.knobOpen = gf.createPolygon(UGeo.arrCoord(p.x - DX, p.y - DY, p.x + DX, p.y - DY, p.x + DX, p.y + DY, p.x - DX, p.y + DY));
                 }
                 //Высота ручки на створке
-                stv = TypeOpen1.getKnob(this, typeOpen);
-                if (handleLayout == LayoutHandle.MIDL) {
-                    handleHeight = stv.length() / 2;
-                } else {
-                    handleHeight = stv.length() / 2;
-                }
+//                if (knobLayout == LayoutKnob.MIDL) {
+//                    knobHeight = stv.length() / 2;
+//                } else {
+//                    knobHeight = stv.length() / 2;
+//                }
             }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.setLocation " + e);

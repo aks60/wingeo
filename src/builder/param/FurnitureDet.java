@@ -16,7 +16,7 @@ import builder.model.ElemSimple;
 import common.UCom;
 import domain.eColor;
 import domain.eGroups;
-import enums.LayoutHandle;
+import enums.LayoutKnob;
 import enums.Type;
 import java.util.Map;
 
@@ -240,13 +240,13 @@ public class FurnitureDet extends Par5s {
                     if (handl.length > 1) {
                         double handl_min = UCom.getDbl(handl[0]);
                         double handl_max = UCom.getDbl(handl[1]);
-                        if (handl_min > elemStv.handleHeight || elemStv.handleHeight > handl_max) {
+                        if (handl_min > elemStv.knobHeight || elemStv.knobHeight > handl_max) {
                             return false;
                         }
                     }
                     if ("ps3".equals(versionPs)) { //Минимальная высота ручки, мм
                         double handl_min = UCom.getDbl(rec.getStr(TEXT));
-                        if (handl_min > elemStv.handleHeight) {
+                        if (handl_min > elemStv.knobHeight) {
                             return false;
                         }
                     }
@@ -255,7 +255,7 @@ public class FurnitureDet extends Par5s {
                 case 24065: //Максимальная высота ручки, мм 
                 {
                     double handl_max = UCom.getDbl(rec.getStr(TEXT));
-                    if (handl_max < elemStv.handleHeight) {
+                    if (handl_max < elemStv.knobHeight) {
                         return false;
                     }
                 }
@@ -280,13 +280,13 @@ public class FurnitureDet extends Par5s {
                     break;
                 case 24070: //Если высота ручки "по середине", "константная", "не константная", "установлена"
                 case 25070: //Если высота ручки
-                    if (LayoutHandle.CONST != elemStv.handleLayout && rec.getStr(TEXT).equals("константная")) {
+                    if (LayoutKnob.CONST != elemStv.knobLayout && rec.getStr(TEXT).equals("константная")) {
                         return false;
-                    } else if (LayoutHandle.CONST == elemStv.handleLayout && rec.getStr(TEXT).equals("не константная")) {
+                    } else if (LayoutKnob.CONST == elemStv.knobLayout && rec.getStr(TEXT).equals("не константная")) {
                         return false;
-                    } else if (LayoutHandle.MIDL != elemStv.handleLayout && rec.getStr(TEXT).equals("по середине")) {
+                    } else if (LayoutKnob.MIDL != elemStv.knobLayout && rec.getStr(TEXT).equals("по середине")) {
                         return false;
-                    } else if (LayoutHandle.VARIAT != elemStv.handleLayout && rec.getStr(TEXT).equals("установлена")) {
+                    } else if (LayoutKnob.VAR != elemStv.knobLayout && rec.getStr(TEXT).equals("установлена")) {
                         return false;
                     }
                     break;

@@ -20,7 +20,7 @@ import domain.eSysprod;
 import domain.eSysprof;
 import domain.eSystree;
 import enums.LayoutProduct;
-import enums.LayoutHandle;
+import enums.LayoutKnob;
 import enums.TypeArtikl;
 import enums.UseSide;
 import enums.TypeOpen2;
@@ -219,7 +219,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                         return List.of(TypeOpen2.values()).stream().filter(el -> el.id == id).findFirst().orElse(TypeOpen2.REQ).name;
                     } else if (field == eSysfurn.hand_pos) {
                         int id = Integer.valueOf(val.toString());
-                        return List.of(LayoutHandle.values()).stream().filter(el -> el.id == id).findFirst().orElse(LayoutHandle.MIDL).name;
+                        return List.of(LayoutKnob.values()).stream().filter(el -> el.id == id).findFirst().orElse(LayoutKnob.MIDL).name;
                     } else if (field == eSysfurn.artikl_id1) {
                         int id = Integer.valueOf(val.toString());
                         return qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == id).findFirst().orElse(eArtikl.up.newRecord()).get(eArtikl.code);
@@ -489,9 +489,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     setIcon(btn10, stv.paramCheck[0]);
                     setText(txt30, stv.typeOpen.name2);
                     setIcon(btn12, stv.paramCheck[1]);
-                    setText(txt16, stv.handleLayout.name);
-                    txt31.setEditable((stv.handleLayout == LayoutHandle.VARIAT) ? true : false);
-                    setText(txt31, (stv.handleLayout == LayoutHandle.VARIAT) ? UCom.format(stv.handleHeight, 1) : "");
+                    setText(txt16, stv.knobLayout.name);
+                    setText(txt31, (stv.knobLayout == LayoutKnob.VAR) ? UCom.format(stv.knobHeight, 1) : "");
                     setText(txt21, stv.knobRec.getStr(eArtikl.code));
                     setText(txt59, stv.knobRec.getStr(eArtikl.name));
                     setIcon(btn21, stv.paramCheck[7]);
@@ -616,7 +615,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         UGui.buttonCellEditor(tab3, 4).addActionListener(event -> {
             DicEnums frame = new DicEnums(this, (record) -> {
                 UGui.cellParamEnum(record, tab3, eSysfurn.hand_pos, tab2, tab3, tab4, tab5);
-            }, LayoutHandle.values());
+            }, LayoutKnob.values());
         });
 
         UGui.buttonCellEditor(tab3, 5).addActionListener(event -> {
@@ -2125,6 +2124,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         txt21.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         txt21.setPreferredSize(new java.awt.Dimension(180, 18));
 
+        txt31.setEditable(false);
         txt31.setFont(frames.UGui.getFont(0,0));
         txt31.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         txt31.setPreferredSize(new java.awt.Dimension(56, 18));
@@ -3528,7 +3528,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     record.setNo(eSysfurn.npp, record.get(1));
                     record.setNo(eSysfurn.replac, 0);
                     record.setNo(eSysfurn.side_open, TypeOpen2.REQ.id);
-                    record.setNo(eSysfurn.hand_pos, LayoutHandle.MIDL.id);
+                    record.setNo(eSysfurn.hand_pos, LayoutKnob.MIDL.id);
                     int index = UGui.getIndexKeyValue(tab3, record, eSysfurn.id);
                     qSysfurn.table(eFurniture.up).add(index, eFurniture.up.newRecord());
                 });
@@ -3919,12 +3919,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             new DicArtikl(this, (artiklRec) -> {
 
                 GsonElem stvArea = (GsonElem) wincalc().listAll.gson(stvorkaID);
-                stvArea.param.remove(PKjson.colorHandl);
+                stvArea.param.remove(PKjson.colorKnob);
                 if (artiklRec.get(1) == null) {
-                    stvArea.param.remove(PKjson.artiklHandl);
-                    stvArea.param.remove(PKjson.colorHandl);
+                    stvArea.param.remove(PKjson.artiklKnob);
+                    stvArea.param.remove(PKjson.colorKnob);
                 } else {
-                    stvArea.param.addProperty(PKjson.artiklHandl, artiklRec.getStr(eArtikl.id));
+                    stvArea.param.addProperty(PKjson.artiklKnob, artiklRec.getStr(eArtikl.id));
                 }
                 updateScript(stvorkaID);
 
@@ -3939,9 +3939,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
 
         AreaSimple areaStv = (AreaSimple) winNode.com5t();
         int indexLayoutHandl = 0;
-        if (LayoutHandle.CONST.name.equals(txt16.getText())) {
+        if (LayoutKnob.CONST.name.equals(txt16.getText())) {
             indexLayoutHandl = 1;
-        } else if (LayoutHandle.VARIAT.name.equals(txt16.getText())) {
+        } else if (LayoutKnob.VAR.name.equals(txt16.getText())) {
             indexLayoutHandl = 2;
         }
         new DicHandl(this, (record) -> {
@@ -3950,17 +3950,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 GsonElem stvArea = (GsonElem) wincalc().listAll.gson(selectID);
                 if (record.get(1) != null) {
                     if (record.getInt(0) == 0) {
-                        stvArea.param.addProperty(PKjson.positionHandl, LayoutHandle.MIDL.id);
-                        txt31.setEditable(false);
+                        stvArea.param.addProperty(PKjson.positionKnob, LayoutKnob.MIDL.id);
 
                     } else if (record.getInt(0) == 1) {
-                        stvArea.param.addProperty(PKjson.positionHandl, LayoutHandle.CONST.id);
-                        txt31.setEditable(false);
+                        stvArea.param.addProperty(PKjson.positionKnob, LayoutKnob.CONST.id);
 
                     } else if (record.getInt(0) == 2) {
-                        stvArea.param.addProperty(PKjson.positionHandl, LayoutHandle.VARIAT.id);
-                        stvArea.param.addProperty(PKjson.heightHandl, record.getInt(1));
-                        txt31.setEditable(true);
+                        stvArea.param.addProperty(PKjson.positionKnob, LayoutKnob.VAR.id);
+                        stvArea.param.addProperty(PKjson.heightKnob, record.getInt(1));
                     }
                     updateScript(selectID);
                 }
@@ -3981,9 +3978,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
 
                 GsonElem stvArea = (GsonElem) wincalc().listAll.gson(selectID);
                 if (colorRec.get(1) == null) {
-                    stvArea.param.remove(PKjson.colorHandl);
+                    stvArea.param.remove(PKjson.colorKnob);
                 } else {
-                    stvArea.param.addProperty(PKjson.colorHandl, colorRec.getStr(eColor.id));
+                    stvArea.param.addProperty(PKjson.colorKnob, colorRec.getStr(eColor.id));
                 }
                 updateScript(selectID);
 
