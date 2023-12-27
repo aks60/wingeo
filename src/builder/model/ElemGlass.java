@@ -207,7 +207,7 @@ public class ElemGlass extends ElemSimple {
                     spcRec.spcList.add(spcAdd);
                 }
             } else {
-                System.out.println("Элемент не обработан");
+                System.err.println("Элемент не обработан");
             }
         } catch (Exception e) {
             System.err.println("Ошибка:ElemGlass.addSpecific()  " + e);

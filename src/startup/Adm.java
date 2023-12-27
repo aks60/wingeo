@@ -1273,7 +1273,7 @@ public class Adm extends javax.swing.JFrame {
 
                 } catch (SQLException e) {
                     JOptionPane.showMessageDialog(this, "Ошибка удаления пользователя", "ВНИМАНИЕ!", 1);
-                    System.out.println("Adm.userDelete() " + e);
+                    System.err.println("Ошибка:Adm.userDelete() " + e);
                 }
             }
         }

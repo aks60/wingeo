@@ -236,7 +236,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
                         txtFilter.setText(t.getTransferData(DataFlavor.stringFlavor).toString());
                     }
                 } catch (UnsupportedFlavorException | IOException ex) {
-                    System.out.println("frames.swing.TableFilter.btn2ActiPerf()");
+                    System.err.println("frames.swing.TableFilter.btn2ActiPerf()");
                 }
             } else {
                 btn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b041.gif")));

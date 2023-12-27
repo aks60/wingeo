@@ -137,11 +137,9 @@ public class Test {
     private static void query() {
         try {
             Conn.connection(Test.connect2());
-            Object obj = eElement.find3(1386, 33);
-            //System.out.println(obj);
 
         } catch (Exception e) {
-            System.out.println("main.Test.query()");
+            System.err.println("Ошибка:main.Test.query()");
         }
         //Пересчёт
 //        try {
@@ -203,7 +201,7 @@ public class Test {
         String filterStr = "" + uid;
         str = filterStr.replaceAll("-", "");
 
-        System.out.println(Integer.parseInt(str));
+        //System.out.println(Integer.parseInt(str));
     }
 
     private static void script() throws Exception {
@@ -320,8 +318,8 @@ public class Test {
         //(1000.0, 0.0, NaN), (0.0, 0.0, NaN), (0.0, 1000.0, NaN), (1000.0, 1000.0, NaN), (1000.0, 0.0, NaN), (0.0, 0.0, NaN), (0.0, 0.0, NaN)
 
         int k = -20;
-        System.out.println(120 - k);
-        System.out.println(120 + k);
+        //System.out.println(120 - k);
+        //System.out.println(120 + k);
         
 //        int k = -1;        
 //        System.out.println(UGeo.getSegment(polygon2, k, -1));

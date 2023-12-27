@@ -115,8 +115,7 @@ public enum Entity {
                 rangcol.add(null);
                 ArrayList<String> column = newcol();
                 column.set(comment.ordinal(), rs.getString("comment"));
-                columns.put(rs.getString("name").trim().toLowerCase(), column);
-                //System.out.println(rs.getString("name").trim().toLowerCase());
+                columns.put(rs.getString("name").trim().toLowerCase(), column);;
             }
             meta(connection);
 

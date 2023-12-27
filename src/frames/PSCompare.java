@@ -276,7 +276,7 @@ public class PSCompare extends javax.swing.JFrame {
                         hmSpc.put(art_code, new Vector(List.of(art_code, artiklRec.get(eArtikl.name), 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)));
                     }
                 } catch (Exception e) {
-                    System.out.println("XXXXXXXXXXXX");
+                    System.err.println("Ошибка:PSCompare.loadingTabGroup2()");
                 }
             }
             winc.listSpec.forEach(specRec -> {

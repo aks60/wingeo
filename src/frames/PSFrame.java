@@ -454,7 +454,6 @@ public class PSFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tab1MousePressed
 
     private void tab2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tab2MousePressed
-        System.out.println("frames.TestFrame.tab2MousePressed()");
         JTable table = (JTable) evt.getSource();
         if (txt2.getText().length() == 0) {
             lab2.setText(table.getColumnName((table.getSelectedColumn() == -1 || table.getSelectedColumn() == 0) ? 0 : table.getSelectedColumn()));

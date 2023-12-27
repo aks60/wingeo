@@ -197,15 +197,15 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
                     if (evt.getButton() == MouseEvent.BUTTON3) {
 
                         int index = UGui.getIndexRec(table);
-                        System.out.println(query.fields().get(0).tname());
+                        //System.out.println(query.fields().get(0).tname());
                         for (Field f : query.fields()) {
 
                             if ("ID".equals(f.name().toUpperCase())) {
-                                System.out.println("ID = " + query.get(index, f));
+                                System.err.println("ID = " + query.get(index, f));
 
                             } else if (f.name().length() > 4 && "_ID".equals(f.name()
                                     .substring(f.name().length() - 3, f.name().length()).toUpperCase())) {
-                                System.out.println(f.name() + " = " + query.get(index, f));
+                                System.err.println(f.name() + " = " + query.get(index, f));
                             }
                         }
                     }

@@ -691,7 +691,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }//GEN-LAST:event_btnInsert
 
     private void panMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panMouseClicked
-        System.out.println(evt.getX() + " " + evt.getY());
+        //System.err.println(evt.getX() + " " + evt.getY());
     }//GEN-LAST:event_panMouseClicked
 
     private void btnChoice(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice

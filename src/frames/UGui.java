@@ -813,7 +813,7 @@ public class UGui {
             int index = getIndexRec(table);
             ((DefaultTableModel) table.getModel()).fireTableRowsUpdated(index, index);
         } catch (Exception e) {
-            System.out.println("Ошибка:UGui.cellParamNameOrValue() " + e);
+            System.err.println("Ошибка:UGui.cellParamNameOrValue() " + e);
         }
     }
 
@@ -858,7 +858,7 @@ public class UGui {
                 return ParamList.find(qXxxpar.getAs(UGui.getIndexRec(table), groups_id)).check(txt);
             }
         } catch (Exception e) {
-            System.out.println("Ошибка:UGui.cellParamTypeOrVid() " + e);
+            System.err.println("Ошибка:UGui.cellParamTypeOrVid() " + e);
         }
         return true;
     }
