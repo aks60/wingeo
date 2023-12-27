@@ -170,7 +170,7 @@ public class Wincalc {
             //Главное окно ограниченное сторонами рамы
             root.setLocation();
 
-            //Инит. артикулов
+            //Инит. конструктива артикулов
             listElem.forEach(e -> e.initConstructiv());
  
             //Пилим полигоны на ареа справа и слева
