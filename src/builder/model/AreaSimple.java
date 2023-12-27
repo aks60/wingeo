@@ -114,7 +114,7 @@ public class AreaSimple extends Com5t {
     }
 
     public void paint() {
-        System.out.println("builder.model.AreaSimple.paint()");
+//        System.out.println("builder.model.AreaSimple.paint()");
 //       for(AreaSimple area5e: winc.listArea) {
 //           System.out.println(area5e.type);
 //       }       
