@@ -23,9 +23,11 @@ import java.awt.Shape;
 import java.util.LinkedList;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.util.AffineTransformation;
 
 public class AreaStvorka extends AreaSimple {
 
@@ -191,8 +193,8 @@ public class AreaStvorka extends AreaSimple {
                 //Полигон ручки
                 double DX = 10, DY = 60;
                 if (knobLayout == LayoutKnob.VAR && this.knobHeight != 0) {
-                    double dy = (stv.y2() > stv.y1()) ? stv.y2() : stv.y1();
-                    p.y = dy - this.knobHeight; //высота ручки на створке
+                    LineSegment lineSegm = UGeo.getSegment(area, ind, 0);
+                    p = lineSegm.pointAlong(1 - (this.knobHeight / lineSegm.getLength())); //высота ручки на створке
                 }
                 Record sysprofRec = eSysprof.find5(winc.nuni, stv.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
                 Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
@@ -206,6 +208,15 @@ public class AreaStvorka extends AreaSimple {
                     this.knobOpen = gf.createPolygon(UGeo.arrCoord(p.x - DX, p.y - DY, p.x + DX, p.y - DY, p.x + DX, p.y + DY, p.x - DX, p.y + DY));
                 } else {
                     this.knobOpen = gf.createPolygon(UGeo.arrCoord(p.x - DX, p.y - DY, p.x + DX, p.y - DY, p.x + DX, p.y + DY, p.x - DX, p.y + DY));
+                }
+                //Вращение ручки
+                if (typeOpen != TypeOpen1.UPPER) {
+                    double ang = stv.anglHoriz() - 90;
+                    if (ang != 0) {
+                        AffineTransformation aff = new AffineTransformation();
+                        aff.setToRotation(Math.toRadians(ang), this.knobOpen.getCentroid().getX(), this.knobOpen.getCentroid().getY());
+                        this.knobOpen = (Polygon) aff.transform(this.knobOpen);
+                    }
                 }
             }
         } catch (Exception e) {

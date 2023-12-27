@@ -299,5 +299,9 @@ public class Test {
         LineSegment segm2 = new LineSegment(20, 20, 200, 120);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
+        
+        
+        segm1.pointAlong(.5);
+        System.out.println(segm1.pointAlong(.5));
     }
 }
