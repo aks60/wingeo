@@ -188,7 +188,7 @@ public class AreaStvorka extends AreaSimple {
                     s2 = UGeo.getSegment(area, ind, +1);
                     lineOpenVer = gf.createLineString(UGeo.arrCoord(p2.x, p2.y, s1.p0.x, s1.p0.y, p2.x, p2.y, s2.p1.x, s2.p1.y));
                 }
-                //Ручка
+                //Полигон ручки
                 double DX = 10, DY = 60;
                 if (knobLayout == LayoutKnob.VAR && this.knobHeight != 0) {
                     double dy = (stv.y2() > stv.y1()) ? stv.y2() : stv.y1();
