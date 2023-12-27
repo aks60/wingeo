@@ -210,7 +210,7 @@ public class UGeo {
         return null;
     }
 
-    public static int getIndex(Polygon p, Com5t e) {
+    public static int getIndex(Polygon p, Com5t e) throws Exception {
         Coordinate coo[] = p.getCoordinates();
 
         for (int i = 0; i < coo.length - 1; i++) {
@@ -218,6 +218,7 @@ public class UGeo {
                 return i;
             }
         }
+        //throw new Exception("Ошибка:UGeo.getIndex()");
         System.err.println("Ошибка:UGeo.indexPolygon()");
         return -1;
     }

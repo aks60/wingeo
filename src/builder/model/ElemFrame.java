@@ -41,7 +41,7 @@ public class ElemFrame extends ElemSimple {
      * если нет параметра то берём winc.color.
      */
     @Override
-    public void initConstructiv() {
+    public void initArtikle() {
         try {
             colorID1 = (isJson(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
             colorID2 = (isJson(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
@@ -68,6 +68,7 @@ public class ElemFrame extends ElemSimple {
 
             artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
             artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true); //аналог 
+            
         } catch (Exception e) {
             System.err.println("Ошибка:ElemFrame.initConstructiv() " + e);
         }

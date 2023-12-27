@@ -33,7 +33,7 @@ public class ElemCross extends ElemSimple {
     }
 
     @Override
-    public void initConstructiv() {
+    public void initArtikle() {
 
         colorID1 = (isJson(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
         colorID2 = (isJson(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : winc.colorID2;

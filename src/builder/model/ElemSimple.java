@@ -30,12 +30,12 @@ public abstract class ElemSimple extends Com5t {
         winc.listAll.add(this);
     }
 
-    public abstract void initConstructiv();
+    public abstract void initArtikle();
 
+    public abstract void setLocation();
+    
     public abstract void setSpecific();
     
-    public abstract void setLocation();
-
     public abstract void addSpecific(Specific spcAdd);
 
     /**

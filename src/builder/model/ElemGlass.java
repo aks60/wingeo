@@ -42,7 +42,7 @@ public class ElemGlass extends ElemSimple {
     }
 
     @Override
-    public void initConstructiv() {
+    public void initArtikle() {
 
         if (isJson(gson.param, PKjson.artglasID)) {
             artiklRec = eArtikl.find(gson.param.get(PKjson.artglasID).getAsInt(), false);

@@ -152,13 +152,13 @@ public class AreaStvorka extends AreaSimple {
                 //Если стороны ств. ещё не созданы
                 Coordinate[] coo = this.area.getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
-                    GsonElem gson = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y);
+                    GsonElem gson = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y); //, coo[i+1].x, coo[i+1].y);
                     if (isJson(this.gson.param, PKjson.stvorkaSide[i])) {
                         gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
                     }
-                    ElemFrame sideStv = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gson, this);
-                    sideStv.initConstructiv();
+                    ElemFrame sideStv = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gson, this);                    
                     this.frames.add(sideStv);
+                    //sideStv.initConstructiv();
                 }
             } else {
                 //Если стороны уже созданы
@@ -169,7 +169,7 @@ public class AreaStvorka extends AreaSimple {
                 }
             }
 
-            //Ручка открывания
+//            //Ручка открывания
 //            if (typeOpen != TypeOpen1.EMPTY) {
 //                
 //                //Линии гориз. открывания
@@ -256,61 +256,19 @@ public class AreaStvorka extends AreaSimple {
 //                winc.gc2d.draw(shape);
 //            }
 //            if (this.lineOpenVer != null) {
-//                Shape shape = new ShapeWriter().toShape(this.knobOpen);
+//                Shape shape = new ShapeWriter().toShape(this.lineOpenVer);
 //                winc.gc2d.draw(shape);
 //            }
+//            Shape shape = new ShapeWriter().toShape(this.knobOpen);
+//            
 //            Record colorRec = eColor.find(knobColor);
 //            int rgb = colorRec.getInt(eColor.rgb);
-//            winc.gc2d.setColor(new java.awt.Color(rgb));
-//
-//            Shape shape = new ShapeWriter().toShape(this.lineOpenVer);
+//            winc.gc2d.setColor(new java.awt.Color(rgb));            
 //            winc.gc2d.fill(shape);
+//            
+//            winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
 //            winc.gc2d.draw(shape);
 //
-//            winc.gc2d.setColor(color);
-//        }
-//        if (typeOpen != TypeOpen1.EMPTY) {
-//            java.awt.Color color = winc.gc2d.getColor();
-//            winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
-//
-//            ElemSimple stv = TypeOpen1.getKnob(this, typeOpen);
-//            int ind = UGeo.getIndex(this.area, stv);
-//            Coordinate p = UGeo.getSegment(area, ind, 0).midPoint();
-//            LineSegment s1 = UGeo.getSegment(area, ind, -1);
-//            LineSegment s2 = UGeo.getSegment(area, ind, +1);
-//
-//            winc.gc2d.draw(new Line2D.Double(s1.p0.x, s1.p0.y, p.x, p.y));
-//            winc.gc2d.draw(new Line2D.Double(s2.p1.x, s2.p1.y, p.x, p.y));
-//
-//            if (typeOpen == TypeOpen1.LEFTUP || typeOpen == TypeOpen1.RIGHUP) {
-//                ElemSimple stv2 = this.frames.get(Layout.TOP);
-//                ind = UGeo.getIndex(this.area, stv2);
-//                Coordinate p2 = UGeo.getSegment(area, ind, 0).midPoint();
-//                s1 = UGeo.getSegment(area, ind, -1);
-//                s2 = UGeo.getSegment(area, ind, +1);
-//
-//                winc.gc2d.draw(new Line2D.Double(p2.x, p2.y, s1.p0.x, s1.p0.y));
-//                winc.gc2d.draw(new Line2D.Double(p2.x, p2.y, s2.p1.x, s2.p1.y));
-//            }
-//            double DX = 10, DY = 60;
-//            double dx = stv.artiklRec.getDbl(eArtikl.height) / 2;
-//            p.x = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? p.x - dx : p.x + dx;
-//
-//            if (root.type == Type.DOOR) {
-//                winc.gc2d.drawPolygon(new int[]{(int) (p.x - DX), (int) (p.x + DX), (int) (p.x + DX), (int) (p.x - DX)},
-//                        new int[]{(int) (p.y - DY), (int) (p.y - DY), (int) (p.y + DY), (int) (p.y + DY)}, 4);
-//            } else {
-//                Record colorRec = eColor.find(knobColor);
-//                int rgb = colorRec.getInt(eColor.rgb);
-//
-//                winc.gc2d.setColor(new java.awt.Color(rgb));
-//                winc.gc2d.fillPolygon(new int[]{(int) (p.x - DX), (int) (p.x + DX), (int) (p.x + DX), (int) (p.x - DX)},
-//                        new int[]{(int) (p.y - DY), (int) (p.y - DY), (int) (p.y + DY), (int) (p.y + DY)}, 4);
-//
-//                winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
-//                winc.gc2d.drawPolygon(new int[]{(int) (p.x - DX), (int) (p.x + DX), (int) (p.x + DX), (int) (p.x - DX)},
-//                        new int[]{(int) (p.y - DY), (int) (p.y - DY), (int) (p.y + DY), (int) (p.y + DY)}, 4);
-//            }
 //            winc.gc2d.setColor(color);
 //        }
     }

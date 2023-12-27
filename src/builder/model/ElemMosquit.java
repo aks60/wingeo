@@ -20,7 +20,7 @@ public class ElemMosquit extends ElemSimple {
     }
 
     @Override
-    public void initConstructiv() {
+    public void initArtikle() {
 
         //Артикл
         if (isJson(gson.param, PKjson.artiklID)) {
