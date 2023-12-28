@@ -141,8 +141,7 @@ public class Canvas extends javax.swing.JPanel {
         Shape shape = new ShapeWriter().toShape(winc.root.area);
         Rectangle2D rect = shape.getBounds2D();
         return (getWidth() / (dx + rect.getMaxX()) > getHeight() / (dy + rect.getMaxY()))
-                ? getHeight() / (dy + rect.getMaxY()) 
-                : getWidth() / (dy + rect.getMaxX());
+                ? getHeight() / (dy + rect.getMaxY()) : getWidth() / (dy + rect.getMaxX());
     }
 
     @SuppressWarnings("unchecked")
