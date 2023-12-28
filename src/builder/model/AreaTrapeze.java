@@ -19,8 +19,6 @@ public class AreaTrapeze extends AreaSimple {
     @Override
     public void setLocation() {
         try {
-            super.setLocation();
-            
             ArrayList<Coordinate> coo = new ArrayList<Coordinate>();
 
             //Создадим вершины рамы

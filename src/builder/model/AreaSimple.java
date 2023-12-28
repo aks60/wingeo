@@ -94,18 +94,6 @@ public class AreaSimple extends Com5t {
     }
 
     public void setLocation() {
-//        HashSet<Double> hsHor = new HashSet(), hsVer = new HashSet();
-//        for (AreaSimple area5e : winc.listArea) {
-//            Polygon p = (area5e.type == Type.STVORKA) ? ((AreaStvorka) area5e).area2 : area5e.area;
-//            for (Coordinate c : List.of(p.getCoordinates())) {
-//                hsHor.add(c.x);
-//                hsVer.add(c.y);
-//            }
-//        }
-//        listHor.addAll(hsHor);
-//        listVer.addAll(hsVer);
-//        Collections.sort(listHor);
-//        Collections.sort(listVer);
     }
 
     //Т - соединения
@@ -161,6 +149,19 @@ public class AreaSimple extends Com5t {
 
     //Линии размерности
     public void paint() {
+        
+        HashSet<Double> hsHor = new HashSet(), hsVer = new HashSet();
+        for (AreaSimple area5e : winc.listArea) {
+            Polygon p = (area5e.type == Type.STVORKA) ? ((AreaStvorka) area5e).area2 : area5e.area;
+            for (Coordinate c : List.of(p.getCoordinates())) {
+                hsHor.add(c.x);
+                hsVer.add(c.y);
+            }
+        }
+        listHor.addAll(hsHor);
+        listVer.addAll(hsVer);
+        Collections.sort(listHor);
+        Collections.sort(listVer);
 
         DecimalFormat df1 = new DecimalFormat("#0.#");
         double ds = winc.canvas.ds;
