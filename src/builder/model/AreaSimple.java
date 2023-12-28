@@ -167,17 +167,20 @@ public class AreaSimple extends Com5t {
         double ds = winc.canvas.ds;
         double length = 200;
         java.awt.Color color = winc.gc2d.getColor();
+        winc.gc2d.scale(.5, .5);
         winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
-        winc.gc2d.setFont(new java.awt.Font("Tahoma", java.awt.Font.BOLD, 80));
+        winc.gc2d.setFont(new java.awt.Font("Tahoma", java.awt.Font.BOLD, 11));
 
         Shape shape = new ShapeWriter().toShape(lineTip(winc.width() + ds, 0, -90, length));
         winc.gc2d.draw(shape);
         shape = new ShapeWriter().toShape(lineTip(winc.width() + ds, winc.height(), 90, length));;
         winc.gc2d.draw(shape);
-        //winc.gc2d.rotate(Math.toRadians(-90), 11, val);
-        winc.gc2d.drawString(df1.format(777), 1700, 800);
-       // winc.gc2d.rotate(Math.toRadians(90), 11, val);
+        winc.gc2d.rotate(Math.toRadians(-90), winc.width() + ds, winc.height() / 2);
+        winc.gc2d.drawString(df1.format(777), (int) (winc.width() + ds), (int) (winc.height() / 2));
+        winc.gc2d.rotate(Math.toRadians(90), winc.width() + ds, winc.height() / 2);
 
+        double sc = winc.canvas.scale(winc);
+        winc.gc2d.scale(sc, sc);
         winc.gc2d.setColor(color);
     }
 }
