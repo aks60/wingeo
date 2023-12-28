@@ -116,6 +116,7 @@ public class AreaSimple extends Com5t {
         }
     }
 
+    //Линии размерности
     public void paint() {
         List<Double> listHor = new ArrayList(), listVer = new ArrayList();
         HashSet<Double> hsHor = new HashSet(), hsVer = new HashSet();
@@ -132,7 +133,7 @@ public class AreaSimple extends Com5t {
         Collections.sort(listVer);
         
         //listHor.forEach(c -> System.out.println(c));
-        listVer.forEach(c -> System.out.println(c));
-        System.out.println("=======================================");
+        //listVer.forEach(c -> System.out.println(c));
+        //System.out.println("=======================================");
     }
 }
