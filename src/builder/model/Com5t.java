@@ -17,7 +17,7 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
 
 public class Com5t {
-
+    
     public static GeometryFactory gf = new GeometryFactory();
     public double id;
     public Wincalc winc = null;

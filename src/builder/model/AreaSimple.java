@@ -11,12 +11,14 @@ import domain.eParams;
 import domain.eParmap;
 import domain.eSysprof;
 import enums.*;
+import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
@@ -125,15 +127,24 @@ public class AreaSimple extends Com5t {
             for (Coordinate c : List.of(p.getCoordinates())) {
                 hsHor.add(c.x);
                 hsVer.add(c.y);
-            }            
+            }
         }
         listHor.addAll(hsHor);
         listVer.addAll(hsVer);
         Collections.sort(listHor);
         Collections.sort(listVer);
-        
+        double ds = winc.canvas.ds;
+        double x = winc.width() + ds;
+        double y = winc.height() + ds;
+        java.awt.Color color = winc.gc2d.getColor();
+        winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
+        //LineString tip = 
+        LineString line = gf.createLineString(UGeo.arrCoord(x, y - ds, x, y - 300, x-20, y - 20));
+        Shape shape = new ShapeWriter().toShape(line);
+        winc.gc2d.draw(shape);
         //listHor.forEach(c -> System.out.println(c));
         //listVer.forEach(c -> System.out.println(c));
-        //System.out.println("=======================================");
+
+        winc.gc2d.setColor(color);
     }
 }

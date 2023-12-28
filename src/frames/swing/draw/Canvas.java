@@ -24,6 +24,7 @@ import org.locationtech.jts.awt.ShapeWriter;
 public class Canvas extends javax.swing.JPanel {
 
     private Wincalc winc = null;
+    public static double ds = 40;
 
     public Canvas() {
         initComponents();
@@ -137,11 +138,10 @@ public class Canvas extends javax.swing.JPanel {
     }
 
     public double scale(Wincalc winc) {
-        double dx = 4, dy = 4;
         Shape shape = new ShapeWriter().toShape(winc.root.area);
         Rectangle2D rect = shape.getBounds2D();
-        return (getWidth() / (dx + rect.getMaxX()) > getHeight() / (dy + rect.getMaxY()))
-                ? getHeight() / (dy + rect.getMaxY()) : getWidth() / (dy + rect.getMaxX());
+        return (getWidth() / (ds + rect.getMaxX()) > getHeight() / (ds + rect.getMaxY()))
+                ? getHeight() / (ds + rect.getMaxY()) : getWidth() / (ds + rect.getMaxX());
     }
 
     @SuppressWarnings("unchecked")
