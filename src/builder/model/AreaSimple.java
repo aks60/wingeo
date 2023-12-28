@@ -1,6 +1,7 @@
 package builder.model;
 
 import builder.Wincalc;
+import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -20,8 +21,10 @@ import java.util.LinkedList;
 import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.util.AffineTransformation;
 
 public class AreaSimple extends Com5t {
 
@@ -118,6 +121,17 @@ public class AreaSimple extends Com5t {
         }
     }
 
+    public Geometry lineTip(double x, double y, double angl, double length) {
+        
+        Geometry tip = gf.createLineString(new Coordinate[]{
+            new Coordinate(x - length, y), new Coordinate(x, y),
+            new Coordinate(x - 20, y - 20), new Coordinate(x, y),
+            new Coordinate(x - 20, y + 20)});
+        AffineTransformation aff = new AffineTransformation();
+        aff.setToRotation(Math.toRadians(angl), x, y);
+        return aff.transform(tip);
+    }
+    
     //Линии размерности
     public void paint() {
         List<Double> listHor = new ArrayList(), listVer = new ArrayList();
@@ -133,18 +147,17 @@ public class AreaSimple extends Com5t {
         listVer.addAll(hsVer);
         Collections.sort(listHor);
         Collections.sort(listVer);
+        
         double ds = winc.canvas.ds;
-        double x = winc.width() + ds;
-        double y = winc.height() + ds;
+        double length = 200; 
         java.awt.Color color = winc.gc2d.getColor();
         winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
-        //LineString tip = 
-        LineString line = gf.createLineString(UGeo.arrCoord(x, y - ds, x, y - 300, x-20, y - 20));
-        Shape shape = new ShapeWriter().toShape(line);
-        winc.gc2d.draw(shape);
-        //listHor.forEach(c -> System.out.println(c));
-        //listVer.forEach(c -> System.out.println(c));
 
+        Shape shape = new ShapeWriter().toShape(lineTip(winc.width() + ds, 0, -90, length));
+        winc.gc2d.draw(shape);
+        shape = new ShapeWriter().toShape(lineTip(winc.width() + ds, winc.height(), 90, length));;
+        winc.gc2d.draw(shape);
+        
         winc.gc2d.setColor(color);
     }
 }

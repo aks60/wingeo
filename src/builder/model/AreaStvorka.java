@@ -285,4 +285,5 @@ public class AreaStvorka extends AreaSimple {
             winc.gc2d.setColor(color);
         }
     }
+
 }
