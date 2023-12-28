@@ -52,7 +52,6 @@ import domain.eColor;
 import enums.Layout;
 import enums.PKjson;
 import enums.TypeOpen1;
-import enums.Type;
 import frames.dialog.DicColor;
 import frames.dialog.DicHandl;
 import frames.dialog.DicSysprof;
@@ -86,7 +85,6 @@ import com.google.gson.Gson;
 import common.LinkedCom;
 import domain.eJoinvar;
 import enums.TypeJoin;
-import frames.swing.draw.Scene;
 import common.listener.ListenerReload;
 import domain.eElement;
 import domain.eGroups;
@@ -122,7 +120,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     private int elementID = -1; //выбранная система (nuni)
     private boolean writeNuni = true;
     private Canvas canvas = new Canvas();
-    private Scene scene = null;
     private TableFieldFormat rsvSystree;
     private java.awt.Frame models = null;
     private DefMutableTreeNode sysNode = null;
@@ -131,7 +128,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
 
     public Systree() {
         initComponents();
-        scene = new Scene(canvas, spinner, this);
         initElements();
         loadingData();
         loadingModel();
@@ -142,7 +138,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
 
     public Systree(int nuni, int mode) {
         initComponents();
-        scene = new Scene(canvas, spinner, this);
         this.systreeID = nuni;
         this.writeNuni = false;
         initElements();
@@ -568,10 +563,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             Object w = sysprodRec.get(eSysprod.values().length);
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc win = (Wincalc) w; 
-                scene.init(win);
                 canvas.init(win);
                 canvas.draw();
-                scene.draw();
 
                 loadingTree2(win);
                 winTree.setSelectionInterval(0, 0);
@@ -799,9 +792,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             UGui.selectionPathWin(id, winTree);
 
             //Перерисуем конструкцию
-            scene.init(iwin);
             canvas.init(iwin);
-            scene.draw();
             canvas.draw();
 
             //Обновим поля форм
@@ -837,7 +828,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 sysprodRec.set(eSysprod.script, script);
                 sysprodRec.set(eSysprod.values().length, win);
                 canvas.draw();
-                scene.draw();
                 selectionTree2();
             }
         } catch (Exception e) {
@@ -878,8 +868,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         btnClose = new javax.swing.JButton();
         btnTest = new javax.swing.JButton();
         btnFind1 = new javax.swing.JButton();
-        panSspinner = new javax.swing.JPanel();
-        spinner = new javax.swing.JSpinner();
         btnMoveU = new javax.swing.JButton();
         btnMoveD = new javax.swing.JButton();
         btnFind2 = new javax.swing.JButton();
@@ -1206,16 +1194,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             }
         });
 
-        panSspinner.setMinimumSize(new java.awt.Dimension(50, 20));
-        panSspinner.setPreferredSize(new java.awt.Dimension(100, 24));
-        panSspinner.setLayout(new java.awt.BorderLayout());
-
-        spinner.setFont(frames.UGui.getFont(1,0));
-        spinner.setModel(new javax.swing.SpinnerNumberModel(0.0f, null, null, 1.0f));
-        spinner.setBorder(null);
-        spinner.setPreferredSize(new java.awt.Dimension(50, 24));
-        panSspinner.add(spinner, java.awt.BorderLayout.CENTER);
-
         btnMoveU.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c051.gif"))); // NOI18N
         btnMoveU.setToolTipText(bundle.getString("Переместить вверх")); // NOI18N
         btnMoveU.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -1282,9 +1260,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 .addComponent(btnMoveU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMoveD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
-                .addComponent(panSspinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 262, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 547, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnReport1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1305,7 +1281,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 .addComponent(btnMoveU, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnMoveD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(btnFind2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panSspinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         getContentPane().add(tool, java.awt.BorderLayout.PAGE_START);
@@ -4486,7 +4461,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     private javax.swing.JPanel pan6;
     private javax.swing.JPanel pan7;
     private javax.swing.JPanel panDesign;
-    private javax.swing.JPanel panSspinner;
     private javax.swing.JPopupMenu ppmCrud;
     private javax.swing.JScrollPane scr1;
     private javax.swing.JScrollPane scr2;
@@ -4498,7 +4472,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     private javax.swing.JPanel south;
     private javax.swing.JSpinner spinHor;
     private javax.swing.JSpinner spinVert;
-    private javax.swing.JSpinner spinner;
     private javax.swing.JTree sysTree;
     private javax.swing.JTable tab2;
     private javax.swing.JTable tab3;
@@ -4572,7 +4545,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         new FrameToFile(this, btnClose);
         new UColor();
 
-        panDesign.add(scene, java.awt.BorderLayout.CENTER);
+        panDesign.add(canvas, java.awt.BorderLayout.CENTER);
         UGui.setDocumentFilter(3, txt17, txt22, txt23, txt24, txt26);
         List.of(btnIns, btnDel, btnRef).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab2, tab3, tab4, tab5)));
         DefaultTreeCellRenderer rnd = (DefaultTreeCellRenderer) sysTree.getCellRenderer();

@@ -12,11 +12,14 @@ import domain.eParmap;
 import domain.eSysprof;
 import enums.*;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineString;
-import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.Polygon;
 
 public class AreaSimple extends Com5t {
 
@@ -114,9 +117,22 @@ public class AreaSimple extends Com5t {
     }
 
     public void paint() {
-//        System.out.println("builder.model.AreaSimple.paint()");
-//       for(AreaSimple area5e: winc.listArea) {
-//           System.out.println(area5e.type);
-//       }       
+        List<Double> listHor = new ArrayList(), listVer = new ArrayList();
+        HashSet<Double> hsHor = new HashSet(), hsVer = new HashSet();
+        for (AreaSimple area5e : winc.listArea) {
+            Polygon p = (area5e.type == Type.STVORKA) ? ((AreaStvorka) area5e).area2 : area5e.area;
+            for (Coordinate c : List.of(p.getCoordinates())) {
+                hsHor.add(c.x);
+                hsVer.add(c.y);
+            }            
+        }
+        listHor.addAll(hsHor);
+        listVer.addAll(hsVer);
+        Collections.sort(listHor);
+        Collections.sort(listVer);
+        
+        //listHor.forEach(c -> System.out.println(c));
+        listVer.forEach(c -> System.out.println(c));
+        System.out.println("=======================================");
     }
 }

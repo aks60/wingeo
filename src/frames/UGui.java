@@ -169,13 +169,13 @@ public class UGui {
         root.add(new DefMutableTreeNode(new Com5t(Type.PARAM)));
         //Рама
         DefMutableTreeNode frm = root.add(new DefMutableTreeNode(new Com5t(Type.FRAME)));
+        frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.LEFT)));
+        frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));        
         frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.BOTT)));
         frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
         frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.RIGHT)));
         frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
         frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.TOP)));
-        frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
-        frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.LEFT)));
         frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
 
         //Цикл по всем детям ареа

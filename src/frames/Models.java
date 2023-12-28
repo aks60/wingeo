@@ -26,7 +26,6 @@ import common.listener.ListenerFrame;
 import common.listener.ListenerReload;
 import dataset.Conn;
 import frames.swing.DefTableModel;
-import frames.swing.draw.Scene;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Collections;
@@ -44,12 +43,10 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 
     private ListenerRecord listenet = null;
     private Canvas canvas = new Canvas();
-    private Scene scene = null;
     private Query qSysmodel = new Query(eSysmodel.values());
 
     public Models() {
         initComponents();
-        scene = new Scene(canvas, spinner, this);
         initElements();
         loadingModel();
         btnChoice.setVisible(false);
@@ -58,7 +55,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 
     public Models(ListenerRecord listener) {
         initComponents();
-        scene = new Scene(canvas, spinner, this);
         initElements();
         loadingModel();
         this.listenet = listener;
@@ -114,9 +110,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             Object w = sysmodelRec.get(eSysmodel.values().length);
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc win = (Wincalc) w;
-                scene.init(win);
                 canvas.init(win);
-                scene.draw();
                 canvas.draw();
             }
         }
@@ -799,7 +793,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 
         new FrameToFile(this, btnClose);
         ((CardLayout) centr.getLayout()).show(centr, "pan18");
-        panDesign.add(scene, java.awt.BorderLayout.CENTER);
+        panDesign.add(canvas, java.awt.BorderLayout.CENTER);
         tab1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (event.getValueIsAdjusting() == false) {

@@ -9,6 +9,7 @@ public class AreaArch extends AreaSimple {
 
     public AreaArch(Wincalc winc, GsonElem gson) {
         super(winc, gson, null);
+        this.owner = this;
     }
 
 }

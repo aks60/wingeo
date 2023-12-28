@@ -11,7 +11,6 @@ import builder.making.Specific;
 import builder.making.Tariffic;
 import builder.making.UColor;
 import builder.model.AreaSimple;
-import builder.making.Cal5e;
 import builder.model.AreaStvorka;
 import builder.model.ElemJoining;
 import builder.model.ElemMosquit;
@@ -80,7 +79,6 @@ import frames.dialog.ParDefVal;
 import frames.swing.draw.Canvas;
 import frames.swing.DefMutableTreeNode;
 import frames.swing.TableFieldFilter;
-import frames.swing.draw.Scene;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
@@ -119,7 +117,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
     private Query qSyspar1 = new Query(eSyspar1.values());
     private DefMutableTreeNode winNode = null;
     private Canvas canvas = new Canvas();
-    private Scene scene = null;
     Object[] column = new String[]{"", "Скидка (%)", "Без скидок", "Со скидкой"};
     private Gson gson = new GsonBuilder().create();
     private ListenerObject<Query> listenerQuery = null;
@@ -135,7 +132,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
 
     public Orders() {
         initComponents();
-        scene = new Scene(canvas, spinner, this);
         initElements();
         loadingData();
         loadingModel();
@@ -363,17 +359,13 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
             Object w = prjprodRec.get(ePrjprod.values().length);
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc win = (Wincalc) w;
-                scene.init(win);
                 canvas.init(win);
                 canvas.draw();
-                scene.draw();
                 
                 loadingTree(win);
                 winTree.setSelectionInterval(0, 0);
             }
         } else {
-            scene.init(null);
-            scene.draw();
             canvas.draw();
             winTree.setModel(new DefaultTreeModel(new DefMutableTreeNode("")));
         }
@@ -705,9 +697,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
             loadingTree(iwin2);
 
             //Перерисуем конструкцию
-            scene.init(iwin2);
             canvas.draw();
-            scene.draw();
 
             //Обновим поля форм
             selectionTree();
@@ -732,7 +722,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
             sysprodRec.set(ePrjprod.script, script);
             sysprodRec.set(ePrjprod.values().length, win);
             canvas.draw();
-            scene.draw();
             selectionTree();
         }
     }
@@ -784,8 +773,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
         btnTest = new javax.swing.JButton();
         lab2 = new javax.swing.JLabel();
         btnFind = new javax.swing.JButton();
-        panSpinner = new javax.swing.JPanel();
-        spinner = new javax.swing.JSpinner();
         btnReport = new javax.swing.JButton();
         centr = new javax.swing.JPanel();
         tabb1 = new javax.swing.JTabbedPane();
@@ -1225,17 +1212,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
             }
         });
 
-        panSpinner.setMinimumSize(new java.awt.Dimension(50, 20));
-        panSpinner.setPreferredSize(new java.awt.Dimension(100, 24));
-        panSpinner.setLayout(new java.awt.BorderLayout());
-
-        spinner.setFont(frames.UGui.getFont(1,0));
-        spinner.setModel(new javax.swing.SpinnerNumberModel());
-        spinner.setBorder(null);
-        spinner.setEnabled(false);
-        spinner.setPreferredSize(new java.awt.Dimension(50, 24));
-        panSpinner.add(spinner, java.awt.BorderLayout.CENTER);
-
         btnReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c032.gif"))); // NOI18N
         btnReport.setToolTipText(bundle.getString("Печать")); // NOI18N
         btnReport.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -1277,11 +1253,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                 .addComponent(btnF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(panSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
                 .addComponent(lab2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 294, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1291,7 +1265,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
             northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(northLayout.createSequentialGroup()
                 .addGroup(northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                    .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
                     .addComponent(btnRef, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCalc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFind, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1307,8 +1281,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                             .addComponent(btnF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(lab2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(panSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -3196,13 +3169,10 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
     private void stateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_stateChanged
         UGui.stopCellEditing(tab1, tab2, tab4, tab3);
         if (tabb1.getSelectedIndex() == 0) {
-            spinner.setEnabled(false);
             UGui.updateBorderAndSql(tab1, List.of(tab1, tab2, tab4, tab3));
         } else if (tabb1.getSelectedIndex() == 1) {
-            spinner.setEnabled(true);
             UGui.updateBorderAndSql(tab2, List.of(tab1, tab2, tab4, tab3));
         } else if (tabb1.getSelectedIndex() == 2) {
-            spinner.setEnabled(false);
             UGui.updateBorderAndSql(tab4, List.of(tab1, tab2, tab4, tab3));
         }
     }//GEN-LAST:event_stateChanged
@@ -4102,7 +4072,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
     private javax.swing.JPanel pan8;
     private javax.swing.JPanel pan9;
     private javax.swing.JPanel panDesign;
-    private javax.swing.JPanel panSpinner;
     private javax.swing.JPopupMenu ppReport;
     private javax.swing.JPopupMenu ppmCrud;
     private javax.swing.JScrollPane scr1;
@@ -4115,7 +4084,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
     private javax.swing.JPopupMenu.Separator sep2;
     private javax.swing.JPopupMenu.Separator sep3;
     private javax.swing.JPanel south;
-    private javax.swing.JSpinner spinner;
     private javax.swing.JTable tab1;
     private javax.swing.JTable tab2;
     private javax.swing.JTable tab3;
@@ -4180,7 +4148,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
 
-        panDesign.add(scene, java.awt.BorderLayout.CENTER);
+        panDesign.add(canvas, java.awt.BorderLayout.CENTER);
         //UGui.documentFilter(3, txt7);
         List.of(btnIns, btnDel, btnRef).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab1)));
         winTree.getSelectionModel().addTreeSelectionListener(tse -> selectionTree());
