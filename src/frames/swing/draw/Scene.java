@@ -2,6 +2,7 @@ package frames.swing.draw;
 
 import builder.Wincalc;
 import common.listener.ListenerReload;
+import java.awt.Graphics;
 import javax.swing.JSpinner;
 import org.locationtech.jts.geom.Geometry;
 
@@ -24,6 +25,26 @@ public class Scene extends javax.swing.JPanel {
         //panVert.
     }
 
+    public void paintComponentHor(Graphics g) {
+        
+    }
+    
+    public void paintComponentVer(Graphics g) {
+        
+    }
+    
+    private int resizeFont() {
+        if (winc.scale > .18) {
+            return 12;
+        } else if (winc.scale > .16) {
+            return 11;
+        } else if (winc.scale > .15) {
+            return 10;
+        } else {
+            return 9;
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

@@ -30,7 +30,7 @@ public class Canvas extends javax.swing.JPanel {
         this.setFocusable(true);
     }
 
-    public void init(Wincalc winc) {        
+    public void init(Wincalc winc) {
         if (winc == null) {
             this.winc = null;
         } else {
@@ -137,10 +137,12 @@ public class Canvas extends javax.swing.JPanel {
     }
 
     public double scale(Wincalc winc) {
+        double dx = 4, dy = 4;
         Shape shape = new ShapeWriter().toShape(winc.root.area);
         Rectangle2D rect = shape.getBounds2D();
-        return (getWidth() / rect.getMaxX() > getHeight() / rect.getMaxY())
-                ? (getHeight() - 4) / rect.getMaxY() : getWidth() / rect.getMaxX();
+        return (getWidth() / (dx + rect.getMaxX()) > getHeight() / (dy + rect.getMaxY()))
+                ? getHeight() / (dy + rect.getMaxY()) 
+                : getWidth() / (dy + rect.getMaxX());
     }
 
     @SuppressWarnings("unchecked")
