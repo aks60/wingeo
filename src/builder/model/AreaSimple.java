@@ -8,13 +8,15 @@ import com.google.gson.JsonObject;
 import common.LinkedCom;
 import dataset.Record;
 import domain.eColor;
-import static domain.eGroups.val;
 import domain.eParams;
 import domain.eParmap;
 import domain.eSysprof;
 import enums.*;
+import java.awt.Font;
 import java.awt.Shape;
+import java.awt.font.FontRenderContext;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +32,7 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 
 public class AreaSimple extends Com5t {
 
+    private DecimalFormat df1 = new DecimalFormat("#0.#");
     public LinkedCom<ElemSimple> frames = new LinkedCom(this); //список рам
     public LinkedList<Point2D> listSkin = new LinkedList();
     public LinkedCom<Com5t> childs = new LinkedCom(this); //дети
@@ -149,6 +152,8 @@ public class AreaSimple extends Com5t {
 
     //Линии размерности
     public void paint() {
+
+        java.awt.Color color = winc.gc2d.getColor();
         
         HashSet<Double> hsHor = new HashSet(), hsVer = new HashSet();
         for (AreaSimple area5e : winc.listArea) {
@@ -162,25 +167,23 @@ public class AreaSimple extends Com5t {
         listVer.addAll(hsVer);
         Collections.sort(listHor);
         Collections.sort(listVer);
-
-        DecimalFormat df1 = new DecimalFormat("#0.#");
-        double ds = winc.canvas.ds;
-        double length = 200;
-        java.awt.Color color = winc.gc2d.getColor();
-        winc.gc2d.scale(.5, .5);
+        
+        System.out.println(listHor);       
+        
+        Font font = winc.gc2d.getFont(); //размер шрифта (см. canvas)  
+        FontRenderContext frc = winc.gc2d.getFontRenderContext();
         winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
-        winc.gc2d.setFont(new java.awt.Font("Tahoma", java.awt.Font.BOLD, 11));
-
-        Shape shape = new ShapeWriter().toShape(lineTip(winc.width() + ds, 0, -90, length));
+     
+        Rectangle2D rec2D = font.getStringBounds(listHor.get(1).toString(), frc);
+        Shape shape = new ShapeWriter().toShape(lineTip(winc.width() + rec2D.getHeight()/2, 0, -90, (listHor.get(1) - rec2D.getWidth()) / 2));
         winc.gc2d.draw(shape);
-        shape = new ShapeWriter().toShape(lineTip(winc.width() + ds, winc.height(), 90, length));;
+        shape = new ShapeWriter().toShape(lineTip(winc.width() + rec2D.getHeight()/2, winc.height(), 90, (listHor.get(1) - rec2D.getWidth()) / 2));
         winc.gc2d.draw(shape);
-        winc.gc2d.rotate(Math.toRadians(-90), winc.width() + ds, winc.height() / 2);
-        winc.gc2d.drawString(df1.format(777), (int) (winc.width() + ds), (int) (winc.height() / 2));
-        winc.gc2d.rotate(Math.toRadians(90), winc.width() + ds, winc.height() / 2);
+        winc.gc2d.rotate(Math.toRadians(-90), winc.width() + rec2D.getHeight(), winc.height() / 2);
 
-        double sc = winc.canvas.scale(winc);
-        winc.gc2d.scale(sc, sc);
+        winc.gc2d.drawString(df1.format(listHor.get(1).toString()), (int) (winc.width() + rec2D.getHeight()), (int) (winc.height() / 2));
+        winc.gc2d.rotate(Math.toRadians(90), winc.width() + rec2D.getHeight(), winc.height() / 2);
+
         winc.gc2d.setColor(color);
     }
 }

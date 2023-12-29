@@ -9,7 +9,6 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -101,8 +100,9 @@ public class Canvas extends javax.swing.JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (winc != null) {
+        if (winc != null) {            
             winc.gc2d = (Graphics2D) g;
+            winc.gc2d.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 60));
             winc.gc2d.setColor(getBackground());
             winc.gc2d.setStroke(new BasicStroke(2)); //толщина линии
             winc.gc2d.translate(0, 0);
