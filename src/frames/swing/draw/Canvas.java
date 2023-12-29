@@ -102,7 +102,7 @@ public class Canvas extends javax.swing.JPanel {
         super.paintComponent(g);
         if (winc != null) {            
             winc.gc2d = (Graphics2D) g;
-            winc.gc2d.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 60));
+            winc.gc2d.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 54));
             winc.gc2d.setColor(getBackground());
             winc.gc2d.setStroke(new BasicStroke(2)); //толщина линии
             winc.gc2d.translate(0, 0);

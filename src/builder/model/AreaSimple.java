@@ -37,7 +37,6 @@ public class AreaSimple extends Com5t {
     public LinkedCom<ElemSimple> frames = new LinkedCom(this); //список рам
     public LinkedList<Point2D> listSkin = new LinkedList();
     public LinkedCom<Com5t> childs = new LinkedCom(this); //дети
-    private List<Double> listHor = new ArrayList(), listVer = new ArrayList();
 
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson.id, gson, owner);
@@ -153,42 +152,39 @@ public class AreaSimple extends Com5t {
 
     //Линии размерности
     public void paint() {
-
         java.awt.Color color = winc.gc2d.getColor();
 
+        winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
         HashSet<Double> hsHor = new HashSet(), hsVer = new HashSet();
         for (AreaSimple area5e : winc.listArea) {
             Polygon p = (area5e.type == Type.STVORKA) ? ((AreaStvorka) area5e).area2 : area5e.area;
-            for (Coordinate c : List.of(p.getCoordinates())) {
-                hsHor.add(c.x);
-                hsVer.add(c.y);
-            }
+            List.of(p.getCoordinates()).forEach(c -> hsHor.add(c.x));
+            List.of(p.getCoordinates()).forEach(c -> hsVer.add(c.y));
         }
-        listHor.clear();
-        listVer.clear();
-        listHor.addAll(hsHor);
-        listVer.addAll(hsVer);
+        List<Double> listHor = new ArrayList(hsHor);
+        List<Double> listVer = new ArrayList(hsVer);
         Collections.sort(listHor);
         Collections.sort(listVer);
-        //System.out.println(listHor);
+        
+        for (int i = 1; i < listVer.size() - 1; ++i) {
+            AffineTransform orig = winc.gc2d.getTransform();
+            
+            Font font = winc.gc2d.getFont(); //размер шрифта (см. canvas)  
+            FontRenderContext frc = winc.gc2d.getFontRenderContext();            
+            Rectangle2D rec2D = font.getStringBounds(String.valueOf(winc.height() - listVer.get(i)), frc);
+            int tip[] = {(int) Math.round(winc.height() - listVer.get(i - 1)), (int) Math.round(listVer.get(i))};
+            int length = (int) Math.round((winc.height() - listVer.get(1) - rec2D.getWidth() - 20) / 2);
+            
+            Shape shape = new ShapeWriter().toShape(lineTip(winc.width() + rec2D.getHeight() / 2, tip[1], -90, length));
+            winc.gc2d.draw(shape);
+            shape = new ShapeWriter().toShape(lineTip(winc.width() + rec2D.getHeight() / 2, tip[0], 90, length));
+            winc.gc2d.draw(shape);
 
-        AffineTransform orig = winc.gc2d.getTransform();
-        Font font = winc.gc2d.getFont(); //размер шрифта (см. canvas)  
-        FontRenderContext frc = winc.gc2d.getFontRenderContext();
-        winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
-
-        Rectangle2D rec2D = font.getStringBounds(listHor.get(1).toString(), frc);
-        Shape shape = new ShapeWriter().toShape(lineTip(winc.width() + rec2D.getHeight() / 2, listHor.get(1), -90, (listHor.get(1) - rec2D.getWidth()) / 2));
-        winc.gc2d.draw(shape);
-        shape = new ShapeWriter().toShape(lineTip(winc.width() + rec2D.getHeight() / 2, winc.height(), 90, (listHor.get(1) - rec2D.getWidth()) / 2));
-        winc.gc2d.draw(shape);
-
-        System.out.println((int) winc.height() / 2);
-
-        winc.gc2d.rotate(Math.toRadians(-90), winc.width() + rec2D.getHeight(), Math.round(listHor.get(1)) / 2);
-        winc.gc2d.drawString(listHor.get(1).toString(), (int) (winc.width() + rec2D.getHeight()), Math.round(winc.height() - listHor.get(1) / 2)); // - rec2D.getWidth() / 2));       
-
+            int xy[] = {(int) (winc.width() + rec2D.getHeight() - 10), (int) Math.round(listVer.get(i) + (winc.height() - listVer.get(i) + rec2D.getWidth()) / 2)};
+            winc.gc2d.rotate(Math.toRadians(-90), xy[0], xy[1]);
+            winc.gc2d.drawString(String.valueOf(winc.height() - listVer.get(i)), xy[0], xy[1]);
+            winc.gc2d.setTransform(orig);
+        }
         winc.gc2d.setColor(color);
-        winc.gc2d.setTransform(orig);
     }
 }
