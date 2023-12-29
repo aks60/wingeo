@@ -167,8 +167,7 @@ public class AreaSimple extends Com5t {
         listVer.addAll(hsVer);
         Collections.sort(listHor);
         Collections.sort(listVer);
-        
-        System.out.println(listHor);       
+      
         
         Font font = winc.gc2d.getFont(); //размер шрифта (см. canvas)  
         FontRenderContext frc = winc.gc2d.getFontRenderContext();
@@ -184,6 +183,7 @@ public class AreaSimple extends Com5t {
         winc.gc2d.drawString(df1.format(listHor.get(1).toString()), (int) (winc.width() + rec2D.getHeight()), (int) (winc.height() / 2));
         winc.gc2d.rotate(Math.toRadians(90), winc.width() + rec2D.getHeight(), winc.height() / 2);
 
+        
         winc.gc2d.setColor(color);
     }
 }
