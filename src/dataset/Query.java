@@ -134,7 +134,7 @@ public class Query extends Table {
                 nameCols = nameCols.substring(0, nameCols.length() - 1);
                 nameVals = nameVals.substring(0, nameVals.length() - 1);
                 String sql = "insert into " + schema + fields.get(0).tname() + "(" + nameCols + ") values(" + nameVals + ")";
-                System.err.println("SQL-INSERT " + sql);
+                System.out.println("SQL-INSERT " + sql);
                 statement.executeUpdate(sql);
                 record.setNo(0, SEL);
             }
@@ -161,7 +161,7 @@ public class Query extends Table {
             nameCols = nameCols.substring(0, nameCols.length() - 1);
             nameVals = nameVals.substring(0, nameVals.length() - 1);
             String sql = "insert into " + schema + fields.get(0).tname() + "(" + nameCols + ") values(" + nameVals + ")";
-            System.err.println("SQL-INSERT " + sql);
+            System.out.println("SQL-INSERT " + sql);
             statement.executeUpdate(sql);
             record.setNo(0, SEL);
         }
@@ -220,13 +220,13 @@ public class Query extends Table {
             Statement statement = Conn.connection().createStatement();
             Field[] f = fields.get(0).fields();
             String sql = "delete from " + schema + fields.get(0).tname() + " where " + f[1].name() + " = " + wrapper(record, f[1]);
-            System.err.println("SQL-DELETE " + sql);
+            System.out.println("SQL-DELETE " + sql);
             statement.executeUpdate(sql);
             Conn.close();
             return true;
 
         } catch (SQLException e) {
-            System.err.println("Ошибка:Query.delete() " + e);
+            System.out.println("Ошибка:Query.delete() " + e);
             if (Conn.web() == false && e.getErrorCode() == 335544466) {
                 JOptionPane.showMessageDialog(App.active, "Нельзя удалить запись на которую имеются ссылки из других форм", "SQL предупреждение", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -238,7 +238,7 @@ public class Query extends Table {
         Statement statement = Conn.connection().createStatement();
         Field[] f = fields.get(0).fields();
         String sql = "delete from " + schema + fields.get(0).tname() + " where " + f[1].name() + " = " + wrapper(record, f[1]);
-        System.err.println("SQL-DELETE " + sql);
+        System.out.println("SQL-DELETE " + sql);
         int ret = statement.executeUpdate(sql);
         Conn.close();
         return ret;

@@ -165,25 +165,29 @@ public class AreaSimple extends Com5t {
         List<Double> listVer = new ArrayList(hsVer);
         Collections.sort(listHor);
         Collections.sort(listVer);
-        
-        for (int i = 1; i < listVer.size() - 1; ++i) {
-            AffineTransform orig = winc.gc2d.getTransform();
-            
-            Font font = winc.gc2d.getFont(); //размер шрифта (см. canvas)  
-            FontRenderContext frc = winc.gc2d.getFontRenderContext();            
-            Rectangle2D rec2D = font.getStringBounds(String.valueOf(winc.height() - listVer.get(i)), frc);
-            int tip[] = {(int) Math.round(winc.height() - listVer.get(i - 1)), (int) Math.round(listVer.get(i))};
-            int length = (int) Math.round((winc.height() - listVer.get(1) - rec2D.getWidth() - 20) / 2);
-            
-            Shape shape = new ShapeWriter().toShape(lineTip(winc.width() + rec2D.getHeight() / 2, tip[1], -90, length));
-            winc.gc2d.draw(shape);
-            shape = new ShapeWriter().toShape(lineTip(winc.width() + rec2D.getHeight() / 2, tip[0], 90, length));
-            winc.gc2d.draw(shape);
+        Font font = winc.gc2d.getFont(); //размер шрифта (см. canvas)
+        AffineTransform orig = winc.gc2d.getTransform();
 
-            int xy[] = {(int) (winc.width() + rec2D.getHeight() - 10), (int) Math.round(listVer.get(i) + (winc.height() - listVer.get(i) + rec2D.getWidth()) / 2)};
-            winc.gc2d.rotate(Math.toRadians(-90), xy[0], xy[1]);
-            winc.gc2d.drawString(String.valueOf(winc.height() - listVer.get(i)), xy[0], xy[1]);
+        for (int i = 1; i < listVer.size(); ++i) {
+
+            if (Math.round(listVer.get(i) - listVer.get(i - 1)) != 0) {
+                FontRenderContext frc = winc.gc2d.getFontRenderContext();
+                Rectangle2D rec2D = font.getStringBounds(df1.format(listVer.get(i) - listVer.get(i - 1)), frc);
+                int tip[] = {(int) Math.round(listVer.get(i - 1)), (int) Math.round(listVer.get(i))};
+                int length = (int) Math.round((listVer.get(i) - listVer.get(i - 1) - rec2D.getWidth() - 10) / 2);
+
+                Shape shape = new ShapeWriter().toShape(lineTip(winc.width() + rec2D.getHeight() / 2, tip[0], -90, length));
+                winc.gc2d.draw(shape);
+                shape = new ShapeWriter().toShape(lineTip(winc.width() + rec2D.getHeight() / 2, tip[1], 90, length));
+                winc.gc2d.draw(shape);
+
+                int xy[] = {(int) (winc.width() + rec2D.getHeight() - 10),
+                    (int) Math.round(listVer.get(i - 1) + (listVer.get(i) - listVer.get(i - 1) + rec2D.getWidth()) / 2)};
+                winc.gc2d.rotate(Math.toRadians(-90), xy[0], xy[1]);
+                winc.gc2d.drawString(df1.format(listVer.get(i) - listVer.get(i - 1)), xy[0], xy[1]);
+            }
             winc.gc2d.setTransform(orig);
+
         }
         winc.gc2d.setColor(color);
     }

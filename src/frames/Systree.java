@@ -357,12 +357,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 Wincalc iwin2 = new Wincalc(script);
                 iwin2.imageIcon = Canvas.createIcon(iwin2, 68);
                 record.add(iwin2);
-                
+
             } catch (Exception e) {
                 System.err.println("Ошибка:Systree.loadingTab5() " + e);
             }
         }
         ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
+        UGui.setSelectedRow(tab5);
     }
 
     public void selectionTree1() {
@@ -444,7 +445,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     ((DefTableModel) tab7.getModel()).fireTableDataChanged();
 
                     //Рама, импост...
-                } else if (List.of(enums.Type.FRAME_SIDE, enums.Type.STVORKA_SIDE, enums.Type.IMPOST, 
+                } else if (List.of(enums.Type.FRAME_SIDE, enums.Type.STVORKA_SIDE, enums.Type.IMPOST,
                         enums.Type.STOIKA, enums.Type.SHTULP).contains(winNode.com5t().type)) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card13");
                     ((TitledBorder) pan13.getBorder()).setTitle(winNode.toString());
@@ -562,12 +563,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
 
             Object w = sysprodRec.get(eSysprod.values().length);
             if (w instanceof Wincalc) { //прорисовка окна               
-                Wincalc win = (Wincalc) w; 
-                canvas.init(win);
-                canvas.draw();
-
+                Wincalc win = (Wincalc) w;
                 loadingTree2(win);
                 winTree.setSelectionInterval(0, 0);
+                canvas.init(win);
+                canvas.draw();
             }
         } else {
             winTree.setModel(new DefaultTreeModel(new DefMutableTreeNode("")));
@@ -3710,7 +3710,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 String colorKey = (evt.getSource() == btn18) ? PKjson.colorID1 : (evt.getSource() == btn19) ? PKjson.colorID2 : PKjson.colorID3;
                 double parentId = winNode.com5t().owner.id;
                 GsonElem parentArea = (GsonElem) wincalc().listAll.gson(parentId);
-                
+
                 if (winNode.com5t().type == enums.Type.STVORKA_SIDE) {
                     JsonObject paramObj = parentArea.param;
                     String stvKey = null;
@@ -4543,9 +4543,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     public final void initElements() {
 
         new FrameToFile(this, btnClose);
+        panDesign.add(canvas, java.awt.BorderLayout.CENTER);
         new UColor();
 
-        panDesign.add(canvas, java.awt.BorderLayout.CENTER);
         UGui.setDocumentFilter(3, txt17, txt22, txt23, txt24, txt26);
         List.of(btnIns, btnDel, btnRef).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab2, tab3, tab4, tab5)));
         DefaultTreeCellRenderer rnd = (DefaultTreeCellRenderer) sysTree.getCellRenderer();

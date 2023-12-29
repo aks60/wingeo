@@ -73,7 +73,7 @@ public class GsonScript {
             area1.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             area1.addElem(new GsonElem(Type.IMPOST, 500.0, 1000.0, 500.0, 500.0))
                     .addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
-            
+
         } else if (prj == 508920) {
             rootGson = new GsonRoot(Type.RECTANGL, "Montblanc / Eco / 1 ОКНА. PS без стоимости");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
@@ -87,7 +87,7 @@ public class GsonScript {
 
             area.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             area.addElem(new GsonElem(Type.IMPOST, 725.0, 1750.0, 725.0, 550.0));
-            area.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));            
+            area.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="ARCH">
 //        } else if (prj == 501007) {
@@ -128,24 +128,10 @@ public class GsonScript {
 
         } else if (prj == 700014) { // Двери
 // </editor-fold>
-
-        } // <editor-fold defaultstate="collapsed" desc="ХОЛОДНЫЙ  ТЕСТ, спецификации в базе нет">         
-        else if (prj == 1043598818) { //Прямоугольное сложное
-
-        } else if (prj == 1489528103) { //Прямоугольное сложное без створок
-
-        } else if (prj == 1620870217) { //Трапеции
-
-        } else if (prj == 905754876) { //Трапеции
-
-        } else if (prj == 1413114169) { //Трапеции
-
-        } else if (prj == 770802872) { //TEST
-
-        } else if (prj == 912042749) {
-
-        } // </editor-fold>          
-        else {
+// <editor-fold defaultstate="collapsed" desc="ТЕСТ"> 
+        } else if (prj == 1043598818) {
+// </editor-fold>  
+        } else {
             return null;
         }
         return rootGson.toJson();

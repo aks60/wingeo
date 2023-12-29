@@ -792,7 +792,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     private void initElements() {
 
         new FrameToFile(this, btnClose);
-        ((CardLayout) centr.getLayout()).show(centr, "pan18");
         panDesign.add(canvas, java.awt.BorderLayout.CENTER);
         tab1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {

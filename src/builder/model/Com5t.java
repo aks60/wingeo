@@ -57,13 +57,13 @@ public class Com5t {
                 double dY = 0;
                 if (pass[0] == true || pass[1] == true) {
                     if (evt.getKeyCode() == KeyEvent.VK_UP) {
-                        dY = -.5;
+                        dY = -.1;
                     } else if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
-                        dY = .5;
+                        dY = .1;
                     } else if (evt.getKeyCode() == KeyEvent.VK_LEFT) {
-                        dX = -.5;
+                        dX = -.1;
                     } else if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
-                        dX = .5;
+                        dX = .1;
                     }
                     if (pass[0] == true) {
                         double X1 = dX / winc.scale + x1();

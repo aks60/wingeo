@@ -27,7 +27,6 @@ public class Canvas extends javax.swing.JPanel {
 
     public Canvas() {
         initComponents();
-        this.setFocusable(true);
     }
 
     public void init(Wincalc winc) {
@@ -82,6 +81,7 @@ public class Canvas extends javax.swing.JPanel {
     public void draw() {
         if (winc != null) {;
             repaint();
+            //this.requestFocus();
         }
     }
 
@@ -148,7 +148,6 @@ public class Canvas extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setFocusable(false);
         setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
 
