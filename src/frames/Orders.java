@@ -361,7 +361,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                 Wincalc win = (Wincalc) w;
                 canvas.init(win);
                 canvas.draw();
-                
+
                 loadingTree(win);
                 winTree.setSelectionInterval(0, 0);
             }
@@ -387,10 +387,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                     setText(txt9, eColor.find(winc.colorID1).getStr(eColor.name));
                     setText(txt13, eColor.find(winc.colorID2).getStr(eColor.name));
                     setText(txt14, eColor.find(winc.colorID3).getStr(eColor.name));
-                    setText(txt17, String.valueOf(winc.width()));
-                    setText(txt22, UCom.format(333, 1)); //winc.gson.height1, 1));
-                    setText(txt23, UCom.format(333, 1)); //winc.gson.height2, 1));
-                    txt23.setEditable(List.of(enums.Type.ARCH, enums.Type.TRIANGL, enums.Type.TRAPEZE).contains(winNode.com5t().type));
+                    setText(txt17, UCom.format(winc.width(), 1));
+                    setText(txt22, UCom.format(winc.height(), 1));
                     int systreeID = qPrjprod.getAs(UGui.getIndexRec(tab2), ePrjprod.systree_id);
                     setText(txt12, eSystree.find(systreeID).getStr(eSystree.note));
 
@@ -400,11 +398,11 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                     qSyspar1.clear();
                     winc.mapPardef.forEach((pk, syspar1Rec) -> qSyspar1.add(syspar1Rec));
                     Collections.sort(qSyspar1, (o1, o2) -> qGroups.find(o1.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)
-                            .compareTo(qGroups.find(o2.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)));                    
+                            .compareTo(qGroups.find(o2.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)));
                     ((DefTableModel) tab3.getModel()).fireTableDataChanged();
 
                     //Рама, импост...
-                } else if (List.of(enums.Type.FRAME_SIDE, enums.Type.STVORKA_SIDE, enums.Type.IMPOST, 
+                } else if (List.of(enums.Type.FRAME_SIDE, enums.Type.STVORKA_SIDE, enums.Type.IMPOST,
                         enums.Type.STOIKA, enums.Type.SHTULP).contains(winNode.com5t().type)) {
                     ((CardLayout) pan8.getLayout()).show(pan8, "card13");
                     ((TitledBorder) pan13.getBorder()).setTitle(winNode.toString());
@@ -547,7 +545,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
             if (fixed != 1) {
                 Integer grup = qSyspar1.getAs(UGui.getIndexRec(tab3), eSyspar1.groups_id);
                 new ParDefVal(this, record -> {
-                    
+
                     int index = UGui.getIndexRec(tab2);
                     int index2 = UGui.getIndexRec(tab3);
                     if (index != -1) {
@@ -817,8 +815,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
         txt17 = new javax.swing.JTextField();
         lab38 = new javax.swing.JLabel();
         txt22 = new javax.swing.JTextField();
-        lab40 = new javax.swing.JLabel();
-        txt23 = new javax.swing.JTextField();
         lab69 = new javax.swing.JLabel();
         txt12 = new javax.swing.JTextArea();
         pan13 = new javax.swing.JPanel();
@@ -1783,21 +1779,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
             }
         });
 
-        lab40.setFont(frames.UGui.getFont(0,0));
-        lab40.setText("Высота2");
-        lab40.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        lab40.setPreferredSize(new java.awt.Dimension(80, 18));
-
-        txt23.setFont(frames.UGui.getFont(0,0));
-        txt23.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt23.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        txt23.setPreferredSize(new java.awt.Dimension(60, 18));
-        txt23.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtKeyEnter(evt);
-            }
-        });
-
         lab69.setFont(frames.UGui.getFont(0,0));
         lab69.setText("Примечание");
         lab69.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -1833,11 +1814,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                             .addGroup(pan12Layout.createSequentialGroup()
                                 .addComponent(lab38, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pan12Layout.createSequentialGroup()
-                                .addComponent(lab40, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txt22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -1851,14 +1828,10 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                 .addGroup(pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lab38, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lab40, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lab69, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lab69, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt12, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pan21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(56, 56, 56))
@@ -4012,7 +3985,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
     private javax.swing.JLabel lab37;
     private javax.swing.JLabel lab38;
     private javax.swing.JLabel lab39;
-    private javax.swing.JLabel lab40;
     private javax.swing.JLabel lab41;
     private javax.swing.JLabel lab42;
     private javax.swing.JLabel lab43;
@@ -4101,7 +4073,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
     private javax.swing.JTextField txt20;
     private javax.swing.JTextField txt21;
     private javax.swing.JTextField txt22;
-    private javax.swing.JTextField txt23;
     private javax.swing.JTextField txt24;
     private javax.swing.JTextField txt25;
     private javax.swing.JTextField txt26;
