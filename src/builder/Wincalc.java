@@ -11,6 +11,7 @@ import builder.model.ElemGlass;
 import builder.model.ElemSimple;
 import builder.making.Specific;
 import builder.making.UColor;
+import builder.model.AreaArch;
 import builder.model.AreaTrapeze;
 import builder.model.ElemMosquit;
 import builder.script.GsonElem;
@@ -110,8 +111,8 @@ public class Wincalc {
         } else  if (Type.TRAPEZE == gson.type) {
             root = new AreaTrapeze(this, gson);
             
-        } else {
-            root = new AreaRectangl(this, gson);
+        } else if (Type.ARCH == gson.type) {
+            root = new AreaArch(this, gson);
         }    
 
         //Элементы конструкции

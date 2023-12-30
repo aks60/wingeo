@@ -129,16 +129,16 @@ public final class Bimax {
             rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="ARCH"> 
-//        } else if (prj == 501007) {
-//            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.ARCH, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
-//            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
-//                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1000.0))
-//                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 1000.0))
-//                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 0.0));
-//
-//            rootGeo.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-//            rootGeo.addElem(new GsonElem(Type.IMPOST, .0, 500.0, 1000.0, 500.0));
-//            rootGeo.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+        } else if (prj == 604009) { //PUNIC = 427825
+            rootGson = new GsonRoot(427825, prj, 1, 8, Type.ARCH, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 10009, 1009);
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1500.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0))
+                    .addElem(new GsonElem(Type.ARCH_SIDE, 1300.0, .0));
+
+            rootGson.addElem(new GsonElem(Type.GLASS)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST));
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="TRAPEZE"> 
         } else if (prj == 506642) {
@@ -173,15 +173,15 @@ public final class Bimax {
             rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST, .0, 500.0, 1600.0, 500.0));
             GsonElem area2 = rootGson.addArea(new GsonElem(Type.AREA));
-            
+
             area2.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
             area2.addElem(new GsonElem(Type.IMPOST, .0, 1000.0, 1600.0, 1000.0));
-            GsonElem area3 = area2.addArea(new GsonElem(Type.AREA));     
-            
+            GsonElem area3 = area2.addArea(new GsonElem(Type.AREA));
+
             area3.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
             area3.addElem(new GsonElem(Type.IMPOST, .0, 1500.0, 1600.0, 1500.0));
-            area3.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS)); 
-            
+            area3.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
+
         } // </editor-fold>     
         else {
             return null;
