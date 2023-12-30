@@ -131,8 +131,8 @@ public class AreaSimple extends Com5t {
 
         Geometry tip = gf.createLineString(new Coordinate[]{
             new Coordinate(tipX - length, tipY), new Coordinate(tipX, tipY),
-            new Coordinate(tipX - 20, tipY - 20), new Coordinate(tipX, tipY),
-            new Coordinate(tipX - 20, tipY + 20)});
+            new Coordinate(tipX - 16, tipY - 16), new Coordinate(tipX, tipY),
+            new Coordinate(tipX - 16, tipY + 16)});
         AffineTransformation aff = new AffineTransformation();
         aff.setToRotation(Math.toRadians(angl), tipX, tipY);
         return aff.transform(tip);
@@ -140,9 +140,6 @@ public class AreaSimple extends Com5t {
 
     //Линии размерности
     public void paint() {
-        System.out.println(winc.scale);
-        System.out.println(winc.gc2d.getFont().getSize());
-        
         java.awt.Color color = winc.gc2d.getColor();
         winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
         HashSet<Double> hsHor = new HashSet(), hsVer = new HashSet();
