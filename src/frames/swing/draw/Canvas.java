@@ -23,7 +23,7 @@ import org.locationtech.jts.awt.ShapeWriter;
 public class Canvas extends javax.swing.JPanel {
 
     private Wincalc winc = null;
-    public static double ds = 40;
+    public static double ds = 80; //для размерных линий 
 
     public Canvas() {
         initComponents();
@@ -102,7 +102,7 @@ public class Canvas extends javax.swing.JPanel {
         super.paintComponent(g);
         if (winc != null) {            
             winc.gc2d = (Graphics2D) g;
-            winc.gc2d.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 54));
+            winc.gc2d.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, resizeFont()));
             winc.gc2d.setColor(getBackground());
             winc.gc2d.setStroke(new BasicStroke(2)); //толщина линии
             winc.gc2d.translate(0, 0);
@@ -137,6 +137,18 @@ public class Canvas extends javax.swing.JPanel {
         }
     }
 
+    private int resizeFont() {
+        if (winc.scale > .44) {
+            return 28;
+        } else if (winc.scale > .24) {
+            return 43;
+        } else if (winc.scale > .18) {
+            return 55;
+        } else {
+            return 64;
+        }
+    }
+    
     public double scale(Wincalc winc) {
         Shape shape = new ShapeWriter().toShape(winc.root.area);
         Rectangle2D rect = shape.getBounds2D();

@@ -200,7 +200,7 @@ public class ElemCross extends ElemSimple {
             winc.gc2d.fill(shape);
 
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
-            winc.gc2d.draw(new Line2D.Double(this.x1(), this.y1(), this.x2(), this.y2()));
+            //winc.gc2d.draw(new Line2D.Double(this.x1(), this.y1(), this.x2(), this.y2()));
             winc.gc2d.draw(shape);
             winc.gc2d.setColor(color);
         }

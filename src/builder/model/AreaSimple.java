@@ -13,8 +13,8 @@ import domain.eParmap;
 import domain.eSysprof;
 import enums.*;
 import java.awt.Font;
+import java.awt.Paint;
 import java.awt.Shape;
-import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -127,33 +127,23 @@ public class AreaSimple extends Com5t {
         }
     }
 
-    public Geometry lineTip(double x, double y, double angl, double length) {
+    public Geometry lineTip(double tipX, double tipY, double angl, double length) {
 
         Geometry tip = gf.createLineString(new Coordinate[]{
-            new Coordinate(x - length, y), new Coordinate(x, y),
-            new Coordinate(x - 20, y - 20), new Coordinate(x, y),
-            new Coordinate(x - 20, y + 20)});
+            new Coordinate(tipX - length, tipY), new Coordinate(tipX, tipY),
+            new Coordinate(tipX - 20, tipY - 20), new Coordinate(tipX, tipY),
+            new Coordinate(tipX - 20, tipY + 20)});
         AffineTransformation aff = new AffineTransformation();
-        aff.setToRotation(Math.toRadians(angl), x, y);
+        aff.setToRotation(Math.toRadians(angl), tipX, tipY);
         return aff.transform(tip);
-    }
-
-    private int resizeFont() {
-        if (winc.scale > .18) {
-            return 12;
-        } else if (winc.scale > .16) {
-            return 11;
-        } else if (winc.scale > .15) {
-            return 10;
-        } else {
-            return 9;
-        }
     }
 
     //Линии размерности
     public void paint() {
+        System.out.println(winc.scale);
+        System.out.println(winc.gc2d.getFont().getSize());
+        
         java.awt.Color color = winc.gc2d.getColor();
-
         winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
         HashSet<Double> hsHor = new HashSet(), hsVer = new HashSet();
         for (AreaSimple area5e : winc.listArea) {
@@ -169,22 +159,42 @@ public class AreaSimple extends Com5t {
         AffineTransform orig = winc.gc2d.getTransform();
 
         for (int i = 1; i < listVer.size(); ++i) {
-
             if (Math.round(listVer.get(i) - listVer.get(i - 1)) != 0) {
-                FontRenderContext frc = winc.gc2d.getFontRenderContext();
-                Rectangle2D rec2D = font.getStringBounds(df1.format(listVer.get(i) - listVer.get(i - 1)), frc);
-                int tip[] = {(int) Math.round(listVer.get(i - 1)), (int) Math.round(listVer.get(i))};
-                int length = (int) Math.round((listVer.get(i) - listVer.get(i - 1) - rec2D.getWidth() - 10) / 2);
 
-                Shape shape = new ShapeWriter().toShape(lineTip(winc.width() + rec2D.getHeight() / 2, tip[0], -90, length));
+                Rectangle2D rec2D = font.getStringBounds(df1.format(listVer.get(i) - listVer.get(i - 1)), winc.gc2d.getFontRenderContext());
+                int tip[] = {(int) Math.round(listVer.get(i - 1)), (int) Math.round(listVer.get(i))};  //y1, y2 кончик вращения вектора
+                int length = (int) Math.round((listVer.get(i) - listVer.get(i - 1) - rec2D.getWidth() - 10) / 2); //длина вектора
+
+                Geometry lineTip1 = lineTip(winc.width() + rec2D.getHeight() / 2, tip[0], -90, length);
+                Shape shape = new ShapeWriter().toShape(lineTip1);
                 winc.gc2d.draw(shape);
-                shape = new ShapeWriter().toShape(lineTip(winc.width() + rec2D.getHeight() / 2, tip[1], 90, length));
+                Geometry lineTip2 = lineTip(winc.width() + rec2D.getHeight() / 2, tip[1], 90, length);
+                shape = new ShapeWriter().toShape(lineTip2);
                 winc.gc2d.draw(shape);
 
-                int xy[] = {(int) (winc.width() + rec2D.getHeight() - 10),
-                    (int) Math.round(listVer.get(i - 1) + (listVer.get(i) - listVer.get(i - 1) + rec2D.getWidth()) / 2)};
+                int xy[] = {(int) (winc.width() + rec2D.getHeight() - 10), (int) Math.round(listVer.get(i - 1) + length + rec2D.getWidth() + 5)}; //точка врашения и начала текста
                 winc.gc2d.rotate(Math.toRadians(-90), xy[0], xy[1]);
                 winc.gc2d.drawString(df1.format(listVer.get(i) - listVer.get(i - 1)), xy[0], xy[1]);
+            }
+            winc.gc2d.setTransform(orig);
+
+        }
+        for (int i = 1; i < listHor.size(); ++i) {
+            if (Math.round(listHor.get(i) - listHor.get(i - 1)) != 0) {
+
+                Rectangle2D rec2D = font.getStringBounds(df1.format(listHor.get(i) - listHor.get(i - 1)), winc.gc2d.getFontRenderContext());
+                int tip[] = {(int) Math.round(listHor.get(i - 1)), (int) Math.round(listHor.get(i))}; //x1, x2 кончик вращения вектора
+                int length = (int) Math.round((listHor.get(i) - listHor.get(i - 1) - rec2D.getWidth() - 10) / 2); //длина вектора
+
+                Geometry lineTip1 = lineTip(tip[0], winc.height() + rec2D.getWidth() / 2, 180, length);
+                Shape shape = new ShapeWriter().toShape(lineTip1);
+                winc.gc2d.draw(shape);                
+                Geometry lineTip2 = lineTip(tip[1], winc.height() + rec2D.getWidth() / 2, 0, length);
+                shape = new ShapeWriter().toShape(lineTip2);
+                winc.gc2d.draw(shape);
+
+                int xy[] = {(int) Math.round(listHor.get(i - 1) + length + 5), (int) (winc.height() + rec2D.getHeight())}; //точка начала текста
+                winc.gc2d.drawString(df1.format(listHor.get(i) - listHor.get(i - 1)), xy[0], xy[1]);
             }
             winc.gc2d.setTransform(orig);
 

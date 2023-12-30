@@ -300,8 +300,7 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
         
-        
-        segm1.pointAlong(.5);
-        System.out.println(segm1.pointAlong(.5));
+       
+        System.out.println(120 - 10 - 10 - 10);
     }
 }
