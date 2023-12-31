@@ -6,7 +6,7 @@ import java.util.List;
 public enum Type implements Enam {
 
     NONE(0, 0, "Не определено"),
-    //== Type ==
+    //== TypeElem ==
     FRAME_SIDE(1, 1, "Сторона коробки"),
     STVORKA_SIDE(2, 2, "Сторона створки"),
     IMPOST(3, 3, "Импост"),
