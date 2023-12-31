@@ -134,7 +134,7 @@ public final class Bimax {
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1500.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0))
-                    .addElem(new GsonElem(Type.ARCH_SIDE, 1300.0, .0));
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, .0));
 
             rootGson.addElem(new GsonElem(Type.GLASS)).addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST));
