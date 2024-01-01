@@ -15,7 +15,7 @@ public class GsonElem {
     public LinkedList<GsonElem> childs = null; //список детей
     public JsonObject param = new JsonObject(); //параметры элемента
     public Type type = null; //тип элемента
-    public Double x1, y1, x2, y2;
+    public Double x1, y1, h, x2, y2;
     public Double length = null; //ширина или высота добавляемой area (зависит от напрвления расположения) 
 
     public GsonElem() {
@@ -33,23 +33,32 @@ public class GsonElem {
         this.param = new Gson().fromJson(paramJson, JsonObject.class);
     }
 
+    public GsonElem(Type type, Double x1, Double y1) {
+        this(type, x1, y1, null, null, null, null);
+    }
+    
+    public GsonElem(Type type, Double x1, Double y1, Double h) {
+        this(type, x1, y1, h, null, null, null);
+    }
+    
     public GsonElem(Type type, Double x1, Double y1, String param) {
-        this(type, x1, y1, null, null, param);
+        this(type, x1, y1, null, null, null, param);
     }
 
-    public GsonElem(Type type, Double x1, Double y1) {
-        this(type, x1, y1, null, null, null);
+    public GsonElem(Type type, Double x1, Double y1, Double h, String param) {
+        this(type, x1, y1, h, null, null,  param);
     }
 
     public GsonElem(Type type, Double x1, Double y1, Double x2, Double y2) {
-        this(type, x1, y1, x2, y2, null);
+        this(type, x1, y1, null, x2, y2, null);
     }
 
-    public GsonElem(Type type, Double x1, Double y1, Double x2, Double y2, String param) {
+    public GsonElem(Type type, Double x1, Double y1, Double h, Double x2, Double y2, String param) {
         this.id = ++genId;
         this.type = type;
         this.x1 = x1;
         this.y1 = y1;
+        this.h = h;
         this.x2 = x2;
         this.y2 = y2;
         this.param = new Gson().fromJson(param, JsonObject.class); //параметры элемента

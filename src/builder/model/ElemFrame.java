@@ -68,7 +68,7 @@ public class ElemFrame extends ElemSimple {
 
             artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
             artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true); //аналог 
-            
+
         } catch (Exception e) {
             System.err.println("Ошибка:ElemFrame.initConstructiv() " + e);
         }
@@ -79,36 +79,70 @@ public class ElemFrame extends ElemSimple {
         try {
             for (int i = 0; i < owner.frames.size(); i++) {
                 if (owner.frames.get(i).id == this.id) {
+                    //Арка
+                    if (this.gson.h != null) {
+                        int k = (i == 0) ? owner.frames.size() - 1 : i - 1;
+                        int j = (i == (owner.frames.size() - 1)) ? 0 : i + 1;
+                        ElemSimple e1 = owner.frames.get(k);
+                        ElemSimple e2 = owner.frames.get(j);
+                        
+                        //Ширина сегментов
+                        double w0 = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
+                        double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);
+                        double w2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr);
+                        
+                        //Входящие и выходящие сегменты
+                        LineSegment segm0 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
+                        LineSegment segm1 = new LineSegment(e1.x1(), e1.y1(), e1.x2(), e1.y2());
+                        LineSegment segm2 = new LineSegment(e2.x1(), e2.y1(), e2.x2(), e2.y2());   
+                        
+                        //Сдвиг сегментов внутрь
+                        LineSegment segm3 = segm0.offset(-w0);
+                        LineSegment segm4 = segm1.offset(-w1);
+                        LineSegment segm5 = segm2.offset(-w2);
 
-                    int k = (i == 0) ? owner.frames.size() - 1 : i - 1;
-                    int j = (i == (owner.frames.size() - 1)) ? 0 : i + 1;
-                    ElemSimple e1 = owner.frames.get(k);
-                    ElemSimple e2 = owner.frames.get(j);
+                        Coordinate c1 = Intersection.intersection(
+                                new Coordinate(segm3.p0.x, segm3.p0.y), new Coordinate(segm3.p1.x, segm3.p1.y),
+                                new Coordinate(segm4.p0.x, segm4.p0.y), new Coordinate(segm4.p1.x, segm4.p1.y));
+                        Coordinate c2 = Intersection.intersection(
+                                new Coordinate(segm3.p0.x, segm3.p0.y), new Coordinate(segm3.p1.x, segm3.p1.y),
+                                new Coordinate(segm5.p0.x, segm5.p0.y), new Coordinate(segm5.p1.x, segm5.p1.y));
 
-                    //Ширина сегментов
-                    double w0 = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
-                    double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);
-                    double w2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr);
+                        //Полигон элемента конструкции 
+                        this.area = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y); 
+                        System.out.println("H = " + this.gson.h);
+                        
+                    } else {
+                        int k = (i == 0) ? owner.frames.size() - 1 : i - 1;
+                        int j = (i == (owner.frames.size() - 1)) ? 0 : i + 1;
+                        ElemSimple e1 = owner.frames.get(k);
+                        ElemSimple e2 = owner.frames.get(j);
 
-                    //Входящие и выходящие сегменты
-                    LineSegment segm0 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
-                    LineSegment segm1 = new LineSegment(e1.x1(), e1.y1(), e1.x2(), e1.y2());
-                    LineSegment segm2 = new LineSegment(e2.x1(), e2.y1(), e2.x2(), e2.y2());
+                        //Ширина сегментов
+                        double w0 = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
+                        double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);
+                        double w2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr);
 
-                    //Сдвиг сегментов внутрь
-                    LineSegment segm3 = segm0.offset(-w0);
-                    LineSegment segm4 = segm1.offset(-w1);
-                    LineSegment segm5 = segm2.offset(-w2);
+                        //Входящие и выходящие сегменты
+                        LineSegment segm0 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
+                        LineSegment segm1 = new LineSegment(e1.x1(), e1.y1(), e1.x2(), e1.y2());
+                        LineSegment segm2 = new LineSegment(e2.x1(), e2.y1(), e2.x2(), e2.y2());
 
-                    Coordinate c1 = Intersection.intersection(
-                            new Coordinate(segm3.p0.x, segm3.p0.y), new Coordinate(segm3.p1.x, segm3.p1.y),
-                            new Coordinate(segm4.p0.x, segm4.p0.y), new Coordinate(segm4.p1.x, segm4.p1.y));
-                    Coordinate c2 = Intersection.intersection(
-                            new Coordinate(segm3.p0.x, segm3.p0.y), new Coordinate(segm3.p1.x, segm3.p1.y),
-                            new Coordinate(segm5.p0.x, segm5.p0.y), new Coordinate(segm5.p1.x, segm5.p1.y));
+                        //Сдвиг сегментов внутрь
+                        LineSegment segm3 = segm0.offset(-w0);
+                        LineSegment segm4 = segm1.offset(-w1);
+                        LineSegment segm5 = segm2.offset(-w2);
 
-                    //Полигон элемента конструкции 
-                    this.area = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y);
+                        Coordinate c1 = Intersection.intersection(
+                                new Coordinate(segm3.p0.x, segm3.p0.y), new Coordinate(segm3.p1.x, segm3.p1.y),
+                                new Coordinate(segm4.p0.x, segm4.p0.y), new Coordinate(segm4.p1.x, segm4.p1.y));
+                        Coordinate c2 = Intersection.intersection(
+                                new Coordinate(segm3.p0.x, segm3.p0.y), new Coordinate(segm3.p1.x, segm3.p1.y),
+                                new Coordinate(segm5.p0.x, segm5.p0.y), new Coordinate(segm5.p1.x, segm5.p1.y));
+
+                        //Полигон элемента конструкции 
+                        this.area = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y);
+                    }
                 }
             }
 
@@ -308,6 +342,9 @@ public class ElemFrame extends ElemSimple {
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
+//    public double h() {
+//        return (gson.h != null) ? gson.h : -1;       
+//    }
     @Override
     public double x2() {
         for (int i = 0; i < owner.frames.size(); i++) {
@@ -328,6 +365,9 @@ public class ElemFrame extends ElemSimple {
         return -1;
     }
 
+//    public void h(double h) {
+//        gson.h = h;
+//    }
     @Override
     public void x2(double v) {
         for (int i = 0; i < owner.frames.size(); i++) {
