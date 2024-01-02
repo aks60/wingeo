@@ -8,17 +8,27 @@ import com.google.gson.JsonParser;
 import common.eProp;
 import dataset.Conn;
 import domain.eElement;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
+import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Test {
 
+    private JFrame frame;
+    private Geometry geom;
     public static Integer numDb = Integer.valueOf(eProp.base_num.read());
-
     private static GeometryFactory gf = new GeometryFactory();
 
     // <editor-fold defaultstate="collapsed" desc="Connection[] connect(int numDb)">
@@ -68,7 +78,7 @@ public class Test {
             //frames.PSConvert.exec();
             //wincalc();
             //query();
-            //frame();
+            //frame(args);
             //json();
             //uid();
             //script();
@@ -125,15 +135,6 @@ public class Test {
         }
     }
 
-    private static void frame() throws Exception {
-        Main.main(new String[]{"tex"});
-//        while (App.Top.frame == null) {
-//            Thread.yield();
-//        }
-        Thread.sleep(1300);
-        App.Order.createFrame(App.Top.frame);
-    }
-
     private static void query() {
         try {
             Conn.connection(Test.connect2());
@@ -153,6 +154,32 @@ public class Test {
 //        } catch (SQLException e) {
 //            System.out.println("Query.update() " + e);
 //        }        
+    }
+
+    private void frame() {
+
+        Coordinate[] coo1 = new Coordinate[]{
+            new Coordinate(300, 300), new Coordinate(300, 600),
+            new Coordinate(600, 600), new Coordinate(600, 300),
+            new Coordinate(300, 300)};
+        Polygon poly1 = gf.createPolygon(coo1);
+
+        GeometricShapeFactory gsf = new GeometricShapeFactory();
+
+        gsf.setSize(300);
+        gsf.setNumPoints(12);
+        gsf.setBase(new Coordinate(300, 100));
+        //gsf.setRotation(0.5);
+//        Polygon rect = gsf.createArcPolygon(Math.toRadians(-180), Math.toRadians(180));
+//        LineString rect = gsf.createArc(Math.toRadians(-180), Math.toRadians(180));
+//        Polygon rect = gsf.createCircle();
+//        Polygon rect = gsf.createEllipse();
+        Polygon rect = gsf.createRectangle();
+//        Polygon rect = gsf.createSquircle();
+//        Polygon rect = gsf.createSupercircle(10);
+
+        geom = rect;
+        System.out.println(geom);        
     }
 
     private static void json() {
@@ -277,7 +304,6 @@ public class Test {
         System.out.println("3-е случайное число: " + random_number3);
     }
 
-    //Пример PathIterator
     public static void geom() {
         //Toolkit.getDefaultToolkit().beep();//ЗВУК!!!!
         GeometryFactory gf = new GeometryFactory(); //JTSFactoryFinder.getGeometryFactory(); 
@@ -299,8 +325,65 @@ public class Test {
         LineSegment segm2 = new LineSegment(20, 20, 200, 120);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
-        
-       
+
         System.out.println(120 - 10 - 10 - 10);
     }
+
+    public static Coordinate[] arrCoord(double... d) {
+        List<Coordinate> list = new ArrayList();
+        for (int i = 1; i < d.length; i = i + 2) {
+            list.add(new Coordinate(d[i - 1], d[i]));
+        }
+        list.add(new Coordinate(d[0], d[1]));
+
+        return list.toArray(new Coordinate[0]);
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="INIT">
+    //
+    public static void frame(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new Test();
+            }
+        });
+    }
+
+    //Конструктор
+    public Test() {
+        initComponents();
+        frame();
+    }
+
+    private void initComponents() {
+
+        frame = new JFrame();
+        //frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        JPanel p = new JPanel() {
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setColor(Color.BLUE);
+                g2.scale(.5, .5);
+
+                Shape shape = new ShapeWriter().toShape(geom);
+                g2.draw(shape);
+            }
+
+            @Override
+            public java.awt.Dimension getPreferredSize() {
+                return new java.awt.Dimension(600, 600);
+            }
+        };
+        frame.add(p);
+        frame.pack();
+        frame.setVisible(true);
+
+    }
+
+    // </editor-fold>   
 }
