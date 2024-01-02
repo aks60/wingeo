@@ -1,20 +1,17 @@
 package startup;
 
-import builder.model.UGeo;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.eProp;
 import dataset.Conn;
-import domain.eElement;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import javax.swing.JFrame;
@@ -28,6 +25,7 @@ public class Test {
 
     private JFrame frame;
     private Geometry geom;
+    private Polygon poly;
     public static Integer numDb = Integer.valueOf(eProp.base_num.read());
     private static GeometryFactory gf = new GeometryFactory();
 
@@ -166,20 +164,20 @@ public class Test {
 
         GeometricShapeFactory gsf = new GeometricShapeFactory();
 
-        gsf.setSize(300);
-        gsf.setNumPoints(12);
-        gsf.setBase(new Coordinate(300, 100));
+        //gsf.setSize(100);
+        gsf.setWidth(200);
+        gsf.setHeight(100);
+        //gsf.setNumPoints(12);
+        gsf.setBase(new Coordinate(0, 100));
         //gsf.setRotation(0.5);
-//        Polygon rect = gsf.createArcPolygon(Math.toRadians(-180), Math.toRadians(180));
-//        LineString rect = gsf.createArc(Math.toRadians(-180), Math.toRadians(180));
-//        Polygon rect = gsf.createCircle();
-//        Polygon rect = gsf.createEllipse();
-        Polygon rect = gsf.createRectangle();
-//        Polygon rect = gsf.createSquircle();
-//        Polygon rect = gsf.createSupercircle(10);
-
-        geom = rect;
-        System.out.println(geom);        
+        //geom = gsf.createArcPolygon(Math.toRadians(-180), Math.toRadians(180));
+        geom = gsf.createArc(Math.toRadians(0), Math.toRadians(-90));
+        //geom = gsf.createCircle();
+        //geom= gsf.createEllipse();
+        poly = gsf.createRectangle();
+        //geom = gsf.createSquircle();
+        //geom = gsf.createSupercircle(10);
+        //System.out.println(geom);        
     }
 
     private static void json() {
@@ -372,6 +370,11 @@ public class Test {
 
                 Shape shape = new ShapeWriter().toShape(geom);
                 g2.draw(shape);
+
+                if (poly != null) {
+                    shape = new ShapeWriter().toShape(poly);
+                    g2.draw(shape);
+                }
             }
 
             @Override
