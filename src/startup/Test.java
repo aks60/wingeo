@@ -171,7 +171,7 @@ public class Test {
         gsf.setBase(new Coordinate(0, 100));
         //gsf.setRotation(0.5);
         //geom = gsf.createArcPolygon(Math.toRadians(-180), Math.toRadians(180));
-        geom = gsf.createArc(Math.toRadians(0), Math.toRadians(-90));
+        geom = gsf.createArc(Math.toRadians(0), Math.toRadians(90));
         //geom = gsf.createCircle();
         //geom= gsf.createEllipse();
         poly = gsf.createRectangle();

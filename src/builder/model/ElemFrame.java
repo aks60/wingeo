@@ -27,6 +27,7 @@ import org.locationtech.jts.geom.LineSegment;
 
 public class ElemFrame extends ElemSimple {
 
+    public double radiusArch = 0; //радиус арки
     public double lengthArch = 0; //длина арки     
 
     public ElemFrame(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
@@ -80,22 +81,33 @@ public class ElemFrame extends ElemSimple {
             for (int i = 0; i < owner.frames.size(); i++) {
                 if (owner.frames.get(i).id == this.id) {
                     //Арка
-                    if (this.gson.h != null) {
+                    if (this.h() != -1) {
+                        double dh = this.artiklRec.getDbl(eArtikl.height);
+                        double r = (Math.pow(root.width() / 2, 2) + Math.pow(this.h(), 2)) / (2 * this.h());  //R = (L2 + H2) / 2H - радиус арки  
+                        double rad1 = Math.acos((root.width() / 2) / r);
+                        double rad2 = Math.acos((root.width() - 2 * dh) / ((r - dh) * 2));
+                        double a1 = r * Math.sin(rad1);
+                        double a2 = (r - dh) * Math.sin(rad2);
+                        double ang3 = 90 - Math.toDegrees(Math.atan((a1 - a2) / dh)); //угол реза рамы
+                        double ang4 = 90 - (Math.toDegrees(rad1) - (90 - ang3)); //угол реза арки
+                        radiusArch = r;
+
+                        
                         int k = (i == 0) ? owner.frames.size() - 1 : i - 1;
                         int j = (i == (owner.frames.size() - 1)) ? 0 : i + 1;
                         ElemSimple e1 = owner.frames.get(k);
                         ElemSimple e2 = owner.frames.get(j);
-                        
+
                         //Ширина сегментов
                         double w0 = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
                         double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);
                         double w2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr);
-                        
+
                         //Входящие и выходящие сегменты
                         LineSegment segm0 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                         LineSegment segm1 = new LineSegment(e1.x1(), e1.y1(), e1.x2(), e1.y2());
-                        LineSegment segm2 = new LineSegment(e2.x1(), e2.y1(), e2.x2(), e2.y2());   
-                        
+                        LineSegment segm2 = new LineSegment(e2.x1(), e2.y1(), e2.x2(), e2.y2());
+
                         //Сдвиг сегментов внутрь
                         LineSegment segm3 = segm0.offset(-w0);
                         LineSegment segm4 = segm1.offset(-w1);
@@ -109,9 +121,9 @@ public class ElemFrame extends ElemSimple {
                                 new Coordinate(segm5.p0.x, segm5.p0.y), new Coordinate(segm5.p1.x, segm5.p1.y));
 
                         //Полигон элемента конструкции 
-                        this.area = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y); 
+                        this.area = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y);
                         System.out.println("H = " + this.gson.h);
-                        
+
                     } else {
                         int k = (i == 0) ? owner.frames.size() - 1 : i - 1;
                         int j = (i == (owner.frames.size() - 1)) ? 0 : i + 1;
