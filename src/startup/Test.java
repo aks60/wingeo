@@ -23,9 +23,13 @@ import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Test {
 
-    private JFrame frame;
-    private Geometry geom;
-    private Polygon poly;
+    private JFrame frame = null;
+    
+    private Geometry geom = null;
+    private Geometry poly = null;
+    private MultiLineString mlin = null;
+    private MultiPolygon mpol = null;
+    
     public static Integer numDb = Integer.valueOf(eProp.base_num.read());
     private static GeometryFactory gf = new GeometryFactory();
 
@@ -163,24 +167,26 @@ public class Test {
         Polygon poly1 = gf.createPolygon(coo1);
 
         GeometricShapeFactory gsf = new GeometricShapeFactory();
-        Double h = 80.0;
-        Double H = 200.0;
+       // Double z = 64.0;
+        Double H = 400.0;
         Double L = 800.0;
         
-        Polygon poly = UGeo.newPolygon(0, 0, 0, H, L, H, L, 0);
+        Polygon p1 = UGeo.newPolygon(0, 0, 0, H, L, H, L, 0);
+        //Polygon p2 = UGeo.newPolygon(z, z, z, H-z, L-z, H-z, L-z, z);
+        mpol = gf.createMultiPolygon(new Polygon[] {p1});
         double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
+        
         gsf.setSize(2*R);
         gsf.setBase(new Coordinate(L/2 - R, 0));
-        Polygon arc1 = gsf.createCircle();
-        gsf.setBase(new Coordinate(L/2 - R + h/2, h/2));
-        gsf.setSize(2*R - h);
-        Geometry arc2 = gsf.createCircle();
-        geom = arc1.difference(arc2);
-        geom = geom.intersection(poly);
+        LineString arc1 = gsf.createArc(Math.toRadians(218), Math.toRadians(100));
+        
+//        gsf.setSize(2*R - 2*z);
+//        gsf.setBase(new Coordinate(L/2 - R + z, z));        
+//        LineString arc2 = gsf.createArc(Math.toRadians(225), Math.toRadians(90));
+        mlin = gf.createMultiLineString(new LineString[] {arc1});
 
-        //System.out.println(geom.getNumPoints()); 
-        //poly = UGeo.newPolygon(100, 100, 100, 200, 600, 200, 600, 100);
-        //geom = geom.intersection(poly);
+
+//        System.out.println(geom); 
     }
 
     private static void json() {
@@ -330,7 +336,7 @@ public class Test {
         System.out.println(120 - 10 - 10 - 10);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="INIT">
+    // <editor-fold defaultstate="collapsed" desc="INIT FRAME">
     //
     public static void frame(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -358,6 +364,7 @@ public class Test {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D g2 = (Graphics2D) g;
+                g2.translate(100, 100);
                 g2.setColor(Color.BLUE);
                 g2.scale(.5, .5);
 
@@ -369,6 +376,14 @@ public class Test {
                     Shape shape = new ShapeWriter().toShape(poly);
                     g2.draw(shape);
                 }
+                if (mlin != null) {
+                    Shape shape = new ShapeWriter().toShape(mlin);
+                    g2.draw(shape);
+                }                
+                if (mpol != null) {
+                    Shape shape = new ShapeWriter().toShape(mpol);
+                    g2.draw(shape);
+                }                
             }
 
             @Override
