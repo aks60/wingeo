@@ -191,6 +191,10 @@ public class Com5t {
         return (gson.y1 != null) ? gson.y1 : -1;
     }
 
+    public double h() {
+        return (gson.h != null) ? gson.h : -1;
+    }
+    
     public double x2() {
         if (gson.x2 != null) {
             return gson.x2;
@@ -231,6 +235,10 @@ public class Com5t {
         gson.x2 = v;
     }
 
+    public void h(double v) {
+        gson.h = v;
+    }
+    
     public void y2(double v) {
         gson.y2 = v;
     }

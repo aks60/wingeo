@@ -365,9 +365,6 @@ public class ElemFrame extends ElemSimple {
         return -1;
     }
 
-//    public void h(double h) {
-//        gson.h = h;
-//    }
     @Override
     public void x2(double v) {
         for (int i = 0; i < owner.frames.size(); i++) {
