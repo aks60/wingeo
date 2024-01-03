@@ -81,7 +81,7 @@ public class ElemFrame extends ElemSimple {
             for (int i = 0; i < owner.frames.size(); i++) {
                 if (owner.frames.get(i).id == this.id) {
                     //Арка
-                    if (this.h() != -1) {
+                    if (this.h() != null) {
                         double dh = this.artiklRec.getDbl(eArtikl.height);
                         double r = (Math.pow(root.width() / 2, 2) + Math.pow(this.h(), 2)) / (2 * this.h());  //R = (L2 + H2) / 2H - радиус арки  
                         double rad1 = Math.acos((root.width() / 2) / r);

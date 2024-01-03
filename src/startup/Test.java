@@ -1,5 +1,6 @@
 package startup;
 
+import builder.model.UGeo;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -11,7 +12,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.swing.JFrame;
@@ -163,21 +163,24 @@ public class Test {
         Polygon poly1 = gf.createPolygon(coo1);
 
         GeometricShapeFactory gsf = new GeometricShapeFactory();
+        Double h = 80.0;
+        Double H = 200.0;
+        Double L = 800.0;
+        
+        Polygon poly = UGeo.newPolygon(0, 0, 0, H, L, H, L, 0);
+        double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
+        gsf.setSize(2*R);
+        gsf.setBase(new Coordinate(L/2 - R, 0));
+        Polygon arc1 = gsf.createCircle();
+        gsf.setBase(new Coordinate(L/2 - R + h/2, h/2));
+        gsf.setSize(2*R - h);
+        Geometry arc2 = gsf.createCircle();
+        geom = arc1.difference(arc2);
+        geom = geom.intersection(poly);
 
-        //gsf.setSize(100);
-        gsf.setWidth(200);
-        gsf.setHeight(100);
-        //gsf.setNumPoints(12);
-        gsf.setBase(new Coordinate(0, 100));
-        //gsf.setRotation(0.5);
-        //geom = gsf.createArcPolygon(Math.toRadians(-180), Math.toRadians(180));
-        geom = gsf.createArc(Math.toRadians(0), Math.toRadians(90));
-        //geom = gsf.createCircle();
-        //geom= gsf.createEllipse();
-        poly = gsf.createRectangle();
-        //geom = gsf.createSquircle();
-        //geom = gsf.createSupercircle(10);
-        //System.out.println(geom);        
+        //System.out.println(geom.getNumPoints()); 
+        //poly = UGeo.newPolygon(100, 100, 100, 200, 600, 200, 600, 100);
+        //geom = geom.intersection(poly);
     }
 
     private static void json() {
@@ -327,16 +330,6 @@ public class Test {
         System.out.println(120 - 10 - 10 - 10);
     }
 
-    public static Coordinate[] arrCoord(double... d) {
-        List<Coordinate> list = new ArrayList();
-        for (int i = 1; i < d.length; i = i + 2) {
-            list.add(new Coordinate(d[i - 1], d[i]));
-        }
-        list.add(new Coordinate(d[0], d[1]));
-
-        return list.toArray(new Coordinate[0]);
-    }
-
     // <editor-fold defaultstate="collapsed" desc="INIT">
     //
     public static void frame(String[] args) {
@@ -368,11 +361,12 @@ public class Test {
                 g2.setColor(Color.BLUE);
                 g2.scale(.5, .5);
 
-                Shape shape = new ShapeWriter().toShape(geom);
-                g2.draw(shape);
-
+                if (geom != null) {
+                    Shape shape = new ShapeWriter().toShape(geom);
+                    g2.draw(shape);
+                }
                 if (poly != null) {
-                    shape = new ShapeWriter().toShape(poly);
+                    Shape shape = new ShapeWriter().toShape(poly);
                     g2.draw(shape);
                 }
             }

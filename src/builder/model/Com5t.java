@@ -191,8 +191,8 @@ public class Com5t {
         return (gson.y1 != null) ? gson.y1 : -1;
     }
 
-    public double h() {
-        return (gson.h != null) ? gson.h : -1;
+    public Double h() {
+        return (gson.h != null) ? gson.h : null;
     }
     
     public double x2() {
