@@ -128,7 +128,7 @@ public class UGeo {
     }
 
     //Внутренняя обводка ареа 
-    public static Polygon geoPadding(Polygon poly, LinkedCom<ElemSimple> listElem, double amend) {
+    public static Polygon geoPadding(Geometry poly, LinkedCom<ElemSimple> listElem, double amend) {
 
         Coordinate[] coo = poly.getCoordinates();
         Coordinate[] out = new Coordinate[coo.length];
@@ -192,7 +192,7 @@ public class UGeo {
         return Com5t.gf.createPolygon(UGeo.arrCoord(d));
     }
 
-    public static LineSegment getSegment(Polygon p, int mid, int step) {
+    public static LineSegment getSegment(Geometry p, int mid, int step) {
 
         Coordinate[] coo = p.getCoordinates();
         int i = mid + coo.length - 1;
@@ -210,7 +210,7 @@ public class UGeo {
         return null;
     }
 
-    public static int getIndex(Polygon p, Com5t e) throws Exception {
+    public static int getIndex(Geometry p, Com5t e) throws Exception {
         Coordinate coo[] = p.getCoordinates();
 
         for (int i = 0; i < coo.length - 1; i++) {

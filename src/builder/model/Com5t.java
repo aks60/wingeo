@@ -12,7 +12,7 @@ import enums.Type;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
 
@@ -25,7 +25,7 @@ public class Com5t {
     public AreaSimple root = null; //главный класс конструкции
     public GsonElem gson = null; //gson object конструкции    
     public Type type = Type.NONE; //тип элемента или окна
-    public Polygon area = null; //ареа компонента
+    public Geometry area = null; //ареа компонента
     private boolean pass[] = {false, false};
     private Point pointPress = null;
     public int colorID1 = -1, colorID2 = -1, colorID3 = -1; //1-базовый 2-внутренний 3-внешний 

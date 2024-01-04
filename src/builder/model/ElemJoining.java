@@ -127,10 +127,11 @@ public class ElemJoining {
                         new Coordinate(elem1.x2(), elem1.y2()),
                         new Coordinate(elem2.x1(), elem2.y1())));
             }
-        } else if (elem1.h() != null || elem2.h() != null) {
-            System.err.println("Ошибка:ElemJoining.angleBetween()");
-            return null;
-        }
+        } 
+//        else if (elem1.h() != null || elem2.h() != null) {
+//            System.err.println("Ошибка:ElemJoining.angleBetween()");
+//            return null;
+//        }
         return Angle.toDegrees(Angle.angleBetween(
                 new Coordinate(elem1.x1(), elem1.y1()),
                 new Coordinate(elem1.x2(), elem1.y2()),

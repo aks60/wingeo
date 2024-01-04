@@ -38,7 +38,7 @@ public class AreaStvorka extends AreaSimple {
     public Record mosqRec = eArtikl.virtualRec(); //москитка
     public Record elementRec = eElement.up.newRecord(); //состав москидки 
 
-    public Polygon area2 = null; //полигон векторов сторон рамы
+    public Geometry area2 = null; //полигон векторов сторон рамы
     public LineString lineOpenHor = null; //линии горизонт. открывания
     public LineString lineOpenVer = null; //линии вертик. открывания
     public Polygon knobOpen = null; //ручка открывания    

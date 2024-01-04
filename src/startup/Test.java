@@ -24,12 +24,12 @@ import org.locationtech.jts.util.GeometricShapeFactory;
 public class Test {
 
     private JFrame frame = null;
-    
+
     private Geometry geom = null;
     private Geometry poly = null;
-    private MultiLineString mlin = null;
-    private MultiPolygon mpol = null;
-    
+    private Geometry mlin = null;
+    private Geometry mpol = null;
+
     public static Integer numDb = Integer.valueOf(eProp.base_num.read());
     private static GeometryFactory gf = new GeometryFactory();
 
@@ -159,34 +159,7 @@ public class Test {
     }
 
     private void frame() {
-
-        Coordinate[] coo1 = new Coordinate[]{
-            new Coordinate(300, 300), new Coordinate(300, 600),
-            new Coordinate(600, 600), new Coordinate(600, 300),
-            new Coordinate(300, 300)};
-        Polygon poly1 = gf.createPolygon(coo1);
-
-        GeometricShapeFactory gsf = new GeometricShapeFactory();
-       // Double z = 64.0;
-        Double H = 400.0;
-        Double L = 800.0;
-        
-        Polygon p1 = UGeo.newPolygon(0, 0, 0, H, L, H, L, 0);
-        //Polygon p2 = UGeo.newPolygon(z, z, z, H-z, L-z, H-z, L-z, z);
-        mpol = gf.createMultiPolygon(new Polygon[] {p1});
-        double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
-        
-        gsf.setSize(2*R);
-        gsf.setBase(new Coordinate(L/2 - R, 0));
-        LineString arc1 = gsf.createArc(Math.toRadians(218), Math.toRadians(100));
-        
-//        gsf.setSize(2*R - 2*z);
-//        gsf.setBase(new Coordinate(L/2 - R + z, z));        
-//        LineString arc2 = gsf.createArc(Math.toRadians(225), Math.toRadians(90));
-        mlin = gf.createMultiLineString(new LineString[] {arc1});
-
-
-//        System.out.println(geom); 
+       drawAreaArch(); // прорисовка арки 
     }
 
     private static void json() {
@@ -364,7 +337,7 @@ public class Test {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D g2 = (Graphics2D) g;
-                g2.translate(100, 100);
+                g2.translate(100, 50);
                 g2.setColor(Color.BLUE);
                 g2.scale(.5, .5);
 
@@ -379,11 +352,11 @@ public class Test {
                 if (mlin != null) {
                     Shape shape = new ShapeWriter().toShape(mlin);
                     g2.draw(shape);
-                }                
+                }
                 if (mpol != null) {
                     Shape shape = new ShapeWriter().toShape(mpol);
                     g2.draw(shape);
-                }                
+                }
             }
 
             @Override
@@ -397,5 +370,33 @@ public class Test {
 
     }
 
+    private void drawAreaArch() {
+        
+        GeometricShapeFactory gsf = new GeometricShapeFactory();
+        Double z = 64.0;
+        Double H = 200.0;
+        Double L = 800.0;
+
+        Polygon p1 = UGeo.newPolygon(0, 0, 0, H, L, H, L, 0);
+        Polygon p2 = UGeo.newPolygon(0, 0, 0, H + L, z, H + L, z, 0);
+        Polygon p3 = UGeo.newPolygon(L-z, 0, L-z, H + L, L, H + L, L, 0);
+        double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
+        //double rad1 = Math.acos((L / 2) / R);
+        //double rad2 = Math.acos((L - 2 * z) / ((R - z) * 2));
+
+        gsf.setSize(2 * R);
+        gsf.setBase(new Coordinate(L/2 - R, 0));
+        //gsf.setCentre(new Coordinate(R - (R - H / 2), R));
+        Polygon arc1 = gsf.createCircle();
+       // Polygon arc2 = new LineSegment(arc1.getCoordinates()[];
+        gsf.setSize(2 * R - 2 * z);
+        gsf.setBase(new Coordinate(L/2 - R + z, z));
+        Polygon arc2 = gsf.createCircle();
+
+        mpol = gf.createMultiPolygon(new Polygon[]{arc1, arc2, p1, p2, p3});
+
+//        System.out.println(geom);         
+    }
+    
     // </editor-fold>   
 }

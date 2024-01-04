@@ -144,7 +144,7 @@ public class AreaSimple extends Com5t {
         winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
         HashSet<Double> hsHor = new HashSet(), hsVer = new HashSet();
         for (AreaSimple area5e : winc.listArea) {
-            Polygon p = (area5e.type == Type.STVORKA) ? ((AreaStvorka) area5e).area2 : area5e.area;
+            Geometry p = (area5e.type == Type.STVORKA) ? ((AreaStvorka) area5e).area2 : area5e.area;
             List.of(p.getCoordinates()).forEach(c -> hsHor.add(c.x));
             List.of(p.getCoordinates()).forEach(c -> hsVer.add(c.y));
         }

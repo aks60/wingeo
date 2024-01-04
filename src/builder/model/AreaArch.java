@@ -3,6 +3,7 @@ package builder.model;
 import builder.Wincalc;
 import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
+import domain.eArtikl;
 import enums.Type;
 import enums.TypeJoin;
 import java.util.ArrayList;
@@ -24,16 +25,18 @@ public class AreaArch extends AreaSimple {
         try {
             ArrayList<Coordinate> coo = new ArrayList<Coordinate>();
 
-            //Создадим вершины рамы
-            this.frames.forEach(line -> coo.add(new Coordinate(line.x1(), line.y1())));
-            coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1()));
-
+            //Создадим вершины арки
             for (int i = 0; i < this.frames.size(); i++) {
                 ElemFrame frame = (ElemFrame) this.frames.get(i);
-                if (frame.gson.h != null) {
-
+                if (frame.gson.h != null) {;
+                
+                   radiusArch = (Math.pow(root.width() / 2, 2) + Math.pow(this.h(), 2)) / (2 * this.h());  //R = (L2 + H2) / 2H - радиус арки  
+                   coo.add(new Coordinate(frame.x1(), frame.y1()));
+                } else {
+                    coo.add(new Coordinate(frame.x1(), frame.y1()));
                 }
             }
+            coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1()));
 
             //Создадим area рамы
             Coordinate[] arr = coo.toArray(new Coordinate[0]);

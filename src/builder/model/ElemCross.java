@@ -72,7 +72,7 @@ public class ElemCross extends ElemSimple {
             this.setDimension(lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y, lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y);
 
             //Внутренняя ареа       
-            Polygon geoPadding = UGeo.geoPadding(owner.area, winc.listElem, 0);
+            Geometry geoPadding = UGeo.geoPadding(owner.area, winc.listElem, 0);
             if (geoPadding.isValid() == false) { //исправление коллизий
                 GeometryFixer fix = new GeometryFixer(geoPadding);
                 geoPadding = (Polygon) fix.getResult().getGeometryN(0);
