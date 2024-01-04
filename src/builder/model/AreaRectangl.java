@@ -2,10 +2,13 @@ package builder.model;
 
 import builder.Wincalc;
 import builder.script.GsonElem;
+import domain.eColor;
 import enums.Type;
 import enums.TypeJoin;
+import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 
 public class AreaRectangl extends AreaSimple {
@@ -58,6 +61,20 @@ public class AreaRectangl extends AreaSimple {
         }
     }
 
+    //Линии размерности
+    @Override    
+    public void paint() {
+        super.paint();
+        if (this.area != null) {
+            Shape shape = new ShapeWriter().toShape(this.area);
+
+            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
+            winc.gc2d.fill(shape);
+
+            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
+            winc.gc2d.draw(shape);
+        }
+    }
     
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
     // </editor-fold>     

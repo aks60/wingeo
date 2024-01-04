@@ -4,10 +4,13 @@ import builder.Wincalc;
 import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
 import domain.eArtikl;
+import domain.eColor;
 import enums.Type;
 import enums.TypeJoin;
+import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 
 public class AreaArch extends AreaSimple {
@@ -28,10 +31,10 @@ public class AreaArch extends AreaSimple {
             //Создадим вершины арки
             for (int i = 0; i < this.frames.size(); i++) {
                 ElemFrame frame = (ElemFrame) this.frames.get(i);
-                
-                if (frame.gson.h != null) {;               
-                   radiusArch = (Math.pow(root.width() / 2, 2) + Math.pow(this.h(), 2)) / (2 * this.h());  //R = (L2 + H2) / 2H - радиус арки  
-                   coo.add(new Coordinate(frame.x1(), frame.y1()));
+
+                if (frame.gson.h != null) {;
+                    //radiusArch = (Math.pow(root.width() / 2, 2) + Math.pow(this.h(), 2)) / (2 * this.h());  //R = (L2 + H2) / 2H - радиус арки  
+                    coo.add(new Coordinate(frame.x1(), frame.y1()));
                 } else {
                     coo.add(new Coordinate(frame.x1(), frame.y1()));
                 }
@@ -68,6 +71,21 @@ public class AreaArch extends AreaSimple {
             }
         } catch (Exception e) {
             System.err.println("AreaRectangl.joining() " + e);
+        }
+    }
+
+    //Линии размерности
+    @Override
+    public void paint() {
+        super.paint();
+        if (this.area != null) {
+            Shape shape = new ShapeWriter().toShape(this.area);
+
+            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
+            winc.gc2d.fill(shape);
+
+            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
+            winc.gc2d.draw(shape);
         }
     }
 

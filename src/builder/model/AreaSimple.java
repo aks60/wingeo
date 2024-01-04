@@ -139,8 +139,8 @@ public class AreaSimple extends Com5t {
     }
 
     //Линии размерности
+    @Override
     public void paint() {
-        java.awt.Color color = winc.gc2d.getColor();
         winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
         HashSet<Double> hsHor = new HashSet(), hsVer = new HashSet();
         for (AreaSimple area5e : winc.listArea) {
@@ -156,7 +156,7 @@ public class AreaSimple extends Com5t {
         AffineTransform orig = winc.gc2d.getTransform();
 
         for (int i = 1; i < listVer.size(); ++i) {
-            
+
             if (Math.round(listVer.get(i) - listVer.get(i - 1)) != 0) {
                 Rectangle2D rec2D = font.getStringBounds(df1.format(listVer.get(i) - listVer.get(i - 1)), winc.gc2d.getFontRenderContext());
                 int tip[] = {(int) Math.round(listVer.get(i - 1)), (int) Math.round(listVer.get(i))};  //y1, y2 кончик вращения вектора
@@ -178,7 +178,7 @@ public class AreaSimple extends Com5t {
 
         }
         for (int i = 1; i < listHor.size(); ++i) {
-            
+
             if (Math.round(listHor.get(i) - listHor.get(i - 1)) != 0) {
                 Rectangle2D rec2D = font.getStringBounds(df1.format(listHor.get(i) - listHor.get(i - 1)), winc.gc2d.getFontRenderContext());
                 int tip[] = {(int) Math.round(listHor.get(i - 1)), (int) Math.round(listHor.get(i))}; //x1, x2 кончик вращения вектора
@@ -198,6 +198,5 @@ public class AreaSimple extends Com5t {
             winc.gc2d.setTransform(orig);
 
         }
-        winc.gc2d.setColor(color);
     }
 }

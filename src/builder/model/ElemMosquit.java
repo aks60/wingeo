@@ -110,7 +110,8 @@ public class ElemMosquit extends ElemSimple {
         }
     }
 
-    @Override
+    //Линии размерности
+    @Override  
     public void paint() {
 //        if (this.artiklRec.isVirtual() == false) {
 //            winc.gc2d.setColor(Color.getHSBColor(242, 242, 242));

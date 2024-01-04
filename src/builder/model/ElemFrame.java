@@ -339,9 +339,10 @@ public class ElemFrame extends ElemSimple {
         }
     }
 
+    //Линии размерности
+    @Override      
     public void paint() {
         if (this.area != null) {
-            java.awt.Color color = winc.gc2d.getColor();
             Shape shape = new ShapeWriter().toShape(this.area);
 
             winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
@@ -349,7 +350,6 @@ public class ElemFrame extends ElemSimple {
 
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
             winc.gc2d.draw(shape);
-            winc.gc2d.setColor(color);
         }
     }
 

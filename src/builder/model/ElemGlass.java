@@ -214,13 +214,13 @@ public class ElemGlass extends ElemSimple {
         }
     }
 
+    //Линии размерности
+    @Override      
     public void paint() {
         if (owner.area != null) {
-            java.awt.Color color = winc.gc2d.getColor();
             winc.gc2d.setColor(new java.awt.Color(eColor.find(colorID2).getInt(eColor.rgb)));
             Shape shape = new ShapeWriter().toShape(this.area);
             winc.gc2d.fill(shape);
-            winc.gc2d.setColor(color);
         }
     }
 }

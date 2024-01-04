@@ -261,7 +261,6 @@ public class AreaStvorka extends AreaSimple {
 
     public void paint() {
         if (this.knobOpen != null) {
-            java.awt.Color color = winc.gc2d.getColor();
             winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
 
             if (this.lineOpenHor != null) {
@@ -281,8 +280,6 @@ public class AreaStvorka extends AreaSimple {
 
             winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
             winc.gc2d.draw(shape);
-
-            winc.gc2d.setColor(color);
         }
     }
 
