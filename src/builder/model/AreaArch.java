@@ -28,8 +28,8 @@ public class AreaArch extends AreaSimple {
             //Создадим вершины арки
             for (int i = 0; i < this.frames.size(); i++) {
                 ElemFrame frame = (ElemFrame) this.frames.get(i);
-                if (frame.gson.h != null) {;
                 
+                if (frame.gson.h != null) {;               
                    radiusArch = (Math.pow(root.width() / 2, 2) + Math.pow(this.h(), 2)) / (2 * this.h());  //R = (L2 + H2) / 2H - радиус арки  
                    coo.add(new Coordinate(frame.x1(), frame.y1()));
                 } else {

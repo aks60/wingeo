@@ -5,8 +5,10 @@ import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import common.UCom;
 import common.eProp;
 import dataset.Conn;
+import static domain.eProject.owner;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -25,8 +27,8 @@ public class Test {
 
     private JFrame frame = null;
 
-    private Geometry geom = null;
-    private Geometry poly = null;
+    //private Geometry geom = null;
+    //private Geometry poly = null;
     private Geometry mlin = null;
     private Geometry mpol = null;
 
@@ -156,10 +158,6 @@ public class Test {
 //        } catch (SQLException e) {
 //            System.out.println("Query.update() " + e);
 //        }        
-    }
-
-    private void frame() {
-       drawAreaArch(); // прорисовка арки 
     }
 
     private static void json() {
@@ -309,8 +307,7 @@ public class Test {
         System.out.println(120 - 10 - 10 - 10);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="INIT FRAME">
-    //
+    ///////////////////////////////////////////////////////////////////////////
     public static void frame(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -322,11 +319,6 @@ public class Test {
 
     //Конструктор
     public Test() {
-        initComponents();
-        frame();
-    }
-
-    private void initComponents() {
 
         frame = new JFrame();
         //frame.setResizable(false);
@@ -339,16 +331,8 @@ public class Test {
                 Graphics2D g2 = (Graphics2D) g;
                 g2.translate(100, 50);
                 g2.setColor(Color.BLUE);
-                g2.scale(.5, .5);
+                g2.scale(.3, .3);
 
-                if (geom != null) {
-                    Shape shape = new ShapeWriter().toShape(geom);
-                    g2.draw(shape);
-                }
-                if (poly != null) {
-                    Shape shape = new ShapeWriter().toShape(poly);
-                    g2.draw(shape);
-                }
                 if (mlin != null) {
                     Shape shape = new ShapeWriter().toShape(mlin);
                     g2.draw(shape);
@@ -368,35 +352,70 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
+        drawAreaArch();
     }
 
     private void drawAreaArch() {
-        
+
         GeometricShapeFactory gsf = new GeometricShapeFactory();
-        Double z = 64.0;
-        Double H = 200.0;
-        Double L = 800.0;
+        Double dh = 64.0;
+        Double H = 300.0;
+        Double L = 1300.0;
 
         Polygon p1 = UGeo.newPolygon(0, 0, 0, H, L, H, L, 0);
-        Polygon p2 = UGeo.newPolygon(0, 0, 0, H + L, z, H + L, z, 0);
-        Polygon p3 = UGeo.newPolygon(L-z, 0, L-z, H + L, L, H + L, L, 0);
+        Polygon p2 = UGeo.newPolygon(0, 0, 0, H + L, dh, H + L, dh, 0);
+        Polygon p3 = UGeo.newPolygon(L - dh, 0, L - dh, H + L, L, H + L, L, 0);
         double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
-        //double rad1 = Math.acos((L / 2) / R);
-        //double rad2 = Math.acos((L - 2 * z) / ((R - z) * 2));
+
+        double ang1 = Math.PI / 2 - Math.asin(L / (R * 2));
+        gsf.setSize(2 * R);
+        gsf.setBase(new Coordinate(L / 2 - R, 0));
+        LineString arc1 = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1);
+
+        double ang2 = Math.PI / 2 - Math.asin((L - 2 * dh) / ((R - dh) * 2));
+        gsf.setSize(2 * R - 2 * dh);
+        gsf.setBase(new Coordinate(L / 2 - R + dh, dh));
+        LineString arc2 = gsf.createArc(Math.PI + ang2, Math.PI - 2 * ang2);
+
+        LineString lin[] = {gf.createLineString(UGeo.arrCoord(
+            arc1.getCoordinateN(0).x, arc1.getCoordinateN(0).y,
+            arc2.getCoordinateN(0).x, arc2.getCoordinateN(0).y)), 
+            gf.createLineString(UGeo.arrCoord(
+                    arc1.getCoordinateN(arc1.getNumPoints() - 1).x, arc1.getCoordinateN(arc1.getNumPoints() - 1).y, 
+                    arc2.getCoordinateN(arc2.getNumPoints() - 1).x, arc2.getCoordinateN(arc2.getNumPoints() - 1).y))};
+
+        mpol = gf.createMultiPolygon(new Polygon[]{p1, p2, p3});
+        mlin = gf.createMultiLineString(new LineString[]{arc1, arc2, lin[0], lin[1]});
+
+        System.out.println(R);
+    }
+
+    private void drawAreaArch2() {
+
+        GeometricShapeFactory gsf = new GeometricShapeFactory();
+        Double dh = 64.0;
+        Double H = 300.0;
+        Double L = 1300.0;
+
+        Polygon p1 = UGeo.newPolygon(0, 0, 0, H, L, H, L, 0);
+        Polygon p2 = UGeo.newPolygon(0, 0, 0, H + L, dh, H + L, dh, 0);
+        Polygon p3 = UGeo.newPolygon(L - dh, 0, L - dh, H + L, L, H + L, L, 0);
+        double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
+        double ang1 = 90 - Math.toDegrees(Math.asin(L / (R * 2)));
+        double ang2 = 90 - Math.toDegrees(Math.asin((L - 2 * dh) / ((R - dh) * 2)));
 
         gsf.setSize(2 * R);
-        gsf.setBase(new Coordinate(L/2 - R, 0));
+        gsf.setBase(new Coordinate(L / 2 - R, 0));
         //gsf.setCentre(new Coordinate(R - (R - H / 2), R));
         Polygon arc1 = gsf.createCircle();
-       // Polygon arc2 = new LineSegment(arc1.getCoordinates()[];
-        gsf.setSize(2 * R - 2 * z);
-        gsf.setBase(new Coordinate(L/2 - R + z, z));
+        // Polygon arc2 = new LineSegment(arc1.getCoordinates()[];
+        gsf.setSize(2 * R - 2 * dh);
+        gsf.setBase(new Coordinate(L / 2 - R + dh, dh));
         Polygon arc2 = gsf.createCircle();
 
         mpol = gf.createMultiPolygon(new Polygon[]{arc1, arc2, p1, p2, p3});
 
-//        System.out.println(geom);         
+        System.out.println(R);
     }
-    
-    // </editor-fold>   
+
 }
