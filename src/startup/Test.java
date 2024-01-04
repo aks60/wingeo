@@ -379,16 +379,17 @@ public class Test {
 
         LineString lin[] = {gf.createLineString(UGeo.arrCoord(
             arc1.getCoordinateN(0).x, arc1.getCoordinateN(0).y,
-            arc2.getCoordinateN(0).x, arc2.getCoordinateN(0).y)), 
+            arc2.getCoordinateN(0).x, arc2.getCoordinateN(0).y)),
             gf.createLineString(UGeo.arrCoord(
-                    arc1.getCoordinateN(arc1.getNumPoints() - 1).x, arc1.getCoordinateN(arc1.getNumPoints() - 1).y, 
-                    arc2.getCoordinateN(arc2.getNumPoints() - 1).x, arc2.getCoordinateN(arc2.getNumPoints() - 1).y))};
+            arc1.getCoordinateN(arc1.getNumPoints() - 1).x, arc1.getCoordinateN(arc1.getNumPoints() - 1).y,
+            arc2.getCoordinateN(arc2.getNumPoints() - 1).x, arc2.getCoordinateN(arc2.getNumPoints() - 1).y))};
 
         mpol = gf.createMultiPolygon(new Polygon[]{p1, p2, p3});
         mlin = gf.createMultiLineString(new LineString[]{arc1, arc2, lin[0], lin[1]});
 
         System.out.println(R);
     }
+
     private void drawAreaArch3() {
 
         GeometricShapeFactory gsf = new GeometricShapeFactory();
@@ -413,10 +414,10 @@ public class Test {
 
         LineString lin[] = {gf.createLineString(UGeo.arrCoord(
             arc1.getCoordinateN(0).x, arc1.getCoordinateN(0).y,
-            arc2.getCoordinateN(0).x, arc2.getCoordinateN(0).y)), 
+            arc2.getCoordinateN(0).x, arc2.getCoordinateN(0).y)),
             gf.createLineString(UGeo.arrCoord(
-                    arc1.getCoordinateN(arc1.getNumPoints() - 1).x, arc1.getCoordinateN(arc1.getNumPoints() - 1).y, 
-                    arc2.getCoordinateN(arc2.getNumPoints() - 1).x, arc2.getCoordinateN(arc2.getNumPoints() - 1).y))};
+            arc1.getCoordinateN(arc1.getNumPoints() - 1).x, arc1.getCoordinateN(arc1.getNumPoints() - 1).y,
+            arc2.getCoordinateN(arc2.getNumPoints() - 1).x, arc2.getCoordinateN(arc2.getNumPoints() - 1).y))};
 
         mpol = gf.createMultiPolygon(new Polygon[]{p1, p2, p3});
         mlin = gf.createMultiLineString(new LineString[]{arc1, arc2, lin[0], lin[1]});

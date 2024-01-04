@@ -36,13 +36,14 @@ public class AreaArch extends AreaSimple {
                 if (frame.h() != null) {
                     GeometricShapeFactory gsf = new GeometricShapeFactory();
                     double L = frame.length(), H = frame.h();
-                    double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки 
-                    
-                    double ang1 = Math.PI / 2 - Math.asin(L / (frame.radiusArc * 2));
-                    gsf.setSize(2 * R);
-                    gsf.setBase(new Coordinate(L / 2 - R, 0));                   
-                    LineString arc1 = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1);
-                    //coo.addAll(List.of(arc1.getCoordinates()));
+                    double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
+
+//                    double ang1 = Math.PI / 2 - Math.asin(L / (R * 2));
+//                    gsf.setSize(2 * R);
+//                    gsf.setBase(new Coordinate(L / 2 - R, 0));
+//                    LineString arch = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1);
+//                    System.out.println(arch);
+//                    coo.addAll(List.of(arch.getCoordinates()));
                     coo.add(new Coordinate(frame.x1(), frame.y1()));
                     frame.radiusArc = R;
                 } else {
