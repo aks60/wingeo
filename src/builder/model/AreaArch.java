@@ -3,20 +3,21 @@ package builder.model;
 import builder.Wincalc;
 import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
-import domain.eArtikl;
 import domain.eColor;
 import enums.Type;
 import enums.TypeJoin;
 import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class AreaArch extends AreaSimple {
 
-    public double radiusArch = 0; //радиус арки
-
+    //public double radarc = 0; //радиус арки
     public AreaArch(Wincalc winc, GsonElem gson) {
         super(winc, gson, null);
         this.owner = this;
@@ -32,9 +33,18 @@ public class AreaArch extends AreaSimple {
             for (int i = 0; i < this.frames.size(); i++) {
                 ElemFrame frame = (ElemFrame) this.frames.get(i);
 
-                if (frame.gson.h != null) {;
-                    //radiusArch = (Math.pow(root.width() / 2, 2) + Math.pow(this.h(), 2)) / (2 * this.h());  //R = (L2 + H2) / 2H - радиус арки  
+                if (frame.h() != null) {
+                    GeometricShapeFactory gsf = new GeometricShapeFactory();
+                    double L = frame.length(), H = frame.h();
+                    double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки 
+                    
+                    double ang1 = Math.PI / 2 - Math.asin(L / (frame.radiusArc * 2));
+                    gsf.setSize(2 * R);
+                    gsf.setBase(new Coordinate(L / 2 - R, 0));                   
+                    LineString arc1 = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1);
+                    //coo.addAll(List.of(arc1.getCoordinates()));
                     coo.add(new Coordinate(frame.x1(), frame.y1()));
+                    frame.radiusArc = R;
                 } else {
                     coo.add(new Coordinate(frame.x1(), frame.y1()));
                 }
@@ -48,7 +58,7 @@ public class AreaArch extends AreaSimple {
             this.area = gf.createPolygon(arr);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaRectangl.setLocation" + toString() + e);
+            System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
         }
     }
 
@@ -78,15 +88,11 @@ public class AreaArch extends AreaSimple {
     @Override
     public void paint() {
         super.paint();
-        if (this.area != null) {
-            Shape shape = new ShapeWriter().toShape(this.area);
-
-            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-            winc.gc2d.fill(shape);
-
-            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
-            winc.gc2d.draw(shape);
-        }
+//        if (this.area != null) {
+//            Shape shape = new ShapeWriter().toShape(this.area);
+//            winc.gc2d.setColor(new java.awt.Color(000, 255, 000));
+//            winc.gc2d.draw(shape);
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">

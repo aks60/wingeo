@@ -27,8 +27,8 @@ import org.locationtech.jts.geom.LineSegment;
 
 public class ElemFrame extends ElemSimple {
 
-    public double radiusArch = 0; //радиус арки
-    public double lengthArch = 0; //длина арки     
+    public double radiusArc = 0; //радиус арки
+    public double lengthArc = 0; //длина арки     
 
     public ElemFrame(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
         super(winc, id, gson, owner);
@@ -90,7 +90,7 @@ public class ElemFrame extends ElemSimple {
                         double a2 = (r - dh) * Math.sin(rad2);
                         double ang3 = 90 - Math.toDegrees(Math.atan((a1 - a2) / dh)); //угол реза рамы
                         double ang4 = 90 - (Math.toDegrees(rad1) - (90 - ang3)); //угол реза арки
-                        radiusArch = r;
+                        radiusArc = r;
 
                         
                         int k = (i == 0) ? owner.frames.size() - 1 : i - 1;
@@ -122,7 +122,6 @@ public class ElemFrame extends ElemSimple {
 
                         //Полигон элемента конструкции 
                         this.area = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y);
-                        System.out.println("H = " + this.gson.h);
 
                     } else {
                         int k = (i == 0) ? owner.frames.size() - 1 : i - 1;
@@ -297,10 +296,10 @@ public class ElemFrame extends ElemSimple {
 
                     } else if ("сторона - выс. ручки".equals(spcAdd.getParam("null", 25013))) {
                         AreaStvorka stv = (AreaStvorka) owner;
-                        spcAdd.width = lengthArch - stv.knobHeight - UCom.getDbl(spcAdd.getParam(0, 25030)); //укорочение, мм                        
+                        spcAdd.width = lengthArc - stv.knobHeight - UCom.getDbl(spcAdd.getParam(0, 25030)); //укорочение, мм                        
 
                     } else if ("половины стороны".equals(spcAdd.getParam("null", 25013))) {
-                        spcAdd.width = (lengthArch / 2) - UCom.getDbl(spcAdd.getParam(0, 25030)); //укорочение, мм 
+                        spcAdd.width = (lengthArc / 2) - UCom.getDbl(spcAdd.getParam(0, 25030)); //укорочение, мм 
                     }
                 }
                 //Фурнитура
