@@ -13,7 +13,6 @@ import domain.eParmap;
 import domain.eSysprof;
 import enums.*;
 import java.awt.Font;
-import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -26,9 +25,9 @@ import java.util.LinkedList;
 import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
-import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.AffineTransformation;
 
 public class AreaSimple extends Com5t {
@@ -142,6 +141,7 @@ public class AreaSimple extends Com5t {
     @Override
     public void paint() {
         winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
+        Envelope box = winc.root.area.getEnvelopeInternal();
         HashSet<Double> hsHor = new HashSet(), hsVer = new HashSet();
         for (AreaSimple area5e : winc.listArea) {
             Geometry p = (area5e.type == Type.STVORKA) ? ((AreaStvorka) area5e).area2 : area5e.area;
@@ -163,14 +163,14 @@ public class AreaSimple extends Com5t {
                 int length = (int) Math.round((listVer.get(i) - listVer.get(i - 1) - rec2D.getWidth() - 10) / 2); //длина вектора
 
                 if (Math.round(listVer.get(i) - listVer.get(i - 1)) > 20) {
-                    Geometry lineTip1 = lineTip(winc.width() + rec2D.getHeight() / 2, tip[0], -90, length);
+                    Geometry lineTip1 = lineTip(box.getMaxX() + rec2D.getHeight() / 2, tip[0], -90, length);
                     Shape shape = new ShapeWriter().toShape(lineTip1);
                     winc.gc2d.draw(shape);
-                    Geometry lineTip2 = lineTip(winc.width() + rec2D.getHeight() / 2, tip[1], 90, length);
+                    Geometry lineTip2 = lineTip(box.getMaxX() + rec2D.getHeight() / 2, tip[1], 90, length);
                     shape = new ShapeWriter().toShape(lineTip2);
                     winc.gc2d.draw(shape);
                 }
-                int xy[] = {(int) (winc.width() + rec2D.getHeight() - 10), (int) Math.round(listVer.get(i - 1) + length + rec2D.getWidth() + 5)}; //точка врашения и начала текста
+                int xy[] = {(int) (box.getMaxX() + rec2D.getHeight() - 10), (int) Math.round(listVer.get(i - 1) + length + rec2D.getWidth() + 5)}; //точка врашения и начала текста
                 winc.gc2d.rotate(Math.toRadians(-90), xy[0], xy[1]);
                 winc.gc2d.drawString(df1.format(listVer.get(i) - listVer.get(i - 1)), xy[0], xy[1]);
             }
@@ -185,14 +185,14 @@ public class AreaSimple extends Com5t {
                 int length = (int) Math.round((listHor.get(i) - listHor.get(i - 1) - rec2D.getWidth() - 10) / 2); //длина вектора
 
                 if (Math.round(listHor.get(i) - listHor.get(i - 1)) > 20) {
-                    Geometry lineTip1 = lineTip(tip[0], winc.height() + rec2D.getWidth() / 2, 180, length);
+                    Geometry lineTip1 = lineTip(tip[0], box.getMaxY() + rec2D.getHeight() / 2, 180, length);
                     Shape shape = new ShapeWriter().toShape(lineTip1);
                     winc.gc2d.draw(shape);
-                    Geometry lineTip2 = lineTip(tip[1], winc.height() + rec2D.getWidth() / 2, 0, length);
+                    Geometry lineTip2 = lineTip(tip[1], box.getMaxY() + rec2D.getHeight() / 2, 0, length);
                     shape = new ShapeWriter().toShape(lineTip2);
                     winc.gc2d.draw(shape);
                 }
-                int xy[] = {(int) Math.round(listHor.get(i - 1) + length + 5), (int) (winc.height() + rec2D.getHeight())}; //точка начала текста
+                int xy[] = {(int) Math.round(listHor.get(i - 1) + length + 5), (int) (box.getMaxY() + rec2D.getHeight() * 0.8)}; //точка начала текста
                 winc.gc2d.drawString(df1.format(listHor.get(i) - listHor.get(i - 1)), xy[0], xy[1]);
             }
             winc.gc2d.setTransform(orig);
