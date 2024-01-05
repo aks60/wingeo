@@ -3,6 +3,7 @@ package builder.model;
 import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
+import common.LinkedCom;
 import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
@@ -20,7 +21,7 @@ import enums.TypeOpen1;
 import enums.TypeOpen2;
 import enums.UseSide;
 import java.awt.Shape;
-import java.util.LinkedList;
+import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
@@ -144,7 +145,7 @@ public class AreaStvorka extends AreaSimple {
     public void setLocation() {
         try {
             //Полигон векторов сторон створки
-            this.area2 = (winc.listElem.filter(Type.IMPOST).isEmpty()) ? owner.area : this.area;  //случай когда створка в гл.окне 
+            this.area2 = (winc.listElem.filter(Type.IMPOST).isEmpty()) ? owner.area : this.area;  //случай когда створка в гл.окне             
             double delta = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
             this.area = UGeo.geoPadding(this.area2, winc.listElem, -delta); //полигон векторов сторон створки
 
@@ -226,7 +227,7 @@ public class AreaStvorka extends AreaSimple {
 
     @Override
     public void joining() {
-        LinkedList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.STOIKA);
+        LinkedCom<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.STOIKA);
         try {
             //L - соединения
             for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам створки

@@ -45,17 +45,18 @@ public class AreaArch extends AreaSimple {
                     gsf.setSize(2 * R);
                     gsf.setBase(new Coordinate(L / 2 - R, 0));
                     LineString arch = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1);
-                    //System.out.println(arch);
+                    List.of(arch.getCoordinates()).forEach(c -> c.setZ(frame.id));
                     co2.addAll(List.of(arch.getCoordinates()));
-                    coo.add(new Coordinate(frame.x1(), frame.y1()));
+                    coo.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
                     frame.radiusArc = R;
+                    
                 } else {
-                    coo.add(new Coordinate(frame.x1(), frame.y1()));
-                    co2.add(new Coordinate(frame.x1(), frame.y1()));
+                    coo.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
+                    co2.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
                 }
             }
-            coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1()));
-            co2.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1()));
+            coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
+            co2.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
 
             //Создадим area рамы
             Coordinate[] arr = coo.toArray(new Coordinate[0]);

@@ -4,6 +4,7 @@ import builder.Wincalc;
 import builder.making.Filling;
 import builder.making.Specific;
 import builder.script.GsonElem;
+import common.LinkedCom;
 import common.UCom;
 import dataset.Record;
 import domain.eArtdet;
@@ -17,7 +18,6 @@ import enums.TypeArtikl;
 import enums.UseUnit;
 import java.awt.Shape;
 import java.util.HashMap;
-import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
@@ -103,7 +103,7 @@ public class ElemGlass extends ElemSimple {
             Coordinate[] coo = owner.area.getCoordinates();
 
             Coordinate[] out = new Coordinate[coo.length];
-            List<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+            LinkedCom<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             for (int i = 0; i < coo.length; i++) {
 
                 //Сегменты полигона

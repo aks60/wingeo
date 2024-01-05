@@ -72,14 +72,14 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
         return this.stream().filter(it -> it.id == id).findFirst().get();
     }
 
-    public E find3(double angl) {
-
-        for (E el : this) {
-            if (angl == ((ElemSimple) el).anglHoriz()) {
-                return (E) el;
-            }
-        }
-        return null;
-    }
+//    public E find3(double angl) {
+//
+//        for (E el : this) {
+//            if (angl == ((ElemSimple) el).anglHoriz()) {
+//                return (E) el;
+//            }
+//        }
+//        return null;
+//    }
 
 }

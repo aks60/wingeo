@@ -28,7 +28,7 @@ public class UGeo {
     }
 
     //Отображение сегмента на элемент конструкции
-    public static ElemSimple segMapElem(List<ElemSimple> elems, LineSegment segm) {
+    public static ElemSimple segMapElem(LinkedCom<ElemSimple> elems, LineSegment segm) {
         try {
             Coordinate p = segm.midPoint(); //средн. точка
             LineSegment s = new LineSegment();
@@ -73,19 +73,25 @@ public class UGeo {
     }
 
     //Пилим многоугольник
-    public static Geometry[] geoSplit(Geometry geo, double x1, double y1, double x2, double y2) {
+    public static Geometry[] geoSplit(Geometry geo, ElemCross elem) {
         try {
             HashSet<Coordinate> hs = new HashSet(), cros = new HashSet();
             Coordinate[] coo = geo.getCoordinates();
-            Coordinate line1 = new Coordinate(x1, y1), line2 = new Coordinate(x2, y2);
+            Coordinate lineP1 = new Coordinate(elem.x1(), elem.y1()), lineP2 = new Coordinate(elem.x2(), elem.y2());
             List<Coordinate> pL = new ArrayList(), pR = new ArrayList(), ext = new ArrayList(List.of(coo[0]));
             for (int i = 1; i < coo.length; i++) {
 
                 //Точка пересечения сегмента и линии
-                Coordinate segm1 = coo[i - 1], segm2 = coo[i];
-                Coordinate c3 = Intersection.lineSegment(line1, line2, segm1, segm2);
+                Coordinate segmP1 = coo[i - 1], segmP2 = coo[i];
+                Coordinate c3 = Intersection.lineSegment(lineP1, lineP2, segmP1, segmP2);
+                
                 hs.add(coo[i]);
                 if (c3 != null) {
+                    
+                    c3.setZ(coo[i - 1].z);
+                    if (elem.x1() == c3.x && elem.y1() == c3.y) {
+                        c3.setZ(elem.id); //точку привяжем к импосту
+                    }
                     if (hs.add(c3)) {
                         ext.add(c3);
                     }
@@ -110,7 +116,7 @@ public class UGeo {
                     }
                 }
             }
-            if (y1 != y2) {
+            if (elem.y1() != elem.y2()) {
                 Collections.rotate(pR, 1);
                 pR.add(pR.get(0));
             } else {
@@ -119,6 +125,7 @@ public class UGeo {
             Geometry p0 = Com5t.gf.createLineString(cros.toArray(new Coordinate[0]));
             Geometry p1 = Com5t.gf.createPolygon(pL.toArray(new Coordinate[0]));
             Geometry p2 = Com5t.gf.createPolygon(pR.toArray(new Coordinate[0]));
+
             return new Geometry[]{p0, p1, p2};
 
         } catch (Exception e) {
@@ -126,13 +133,14 @@ public class UGeo {
             return null;
         }
     }
-
     //Внутренняя обводка ареа 
+
     public static Polygon geoPadding(Geometry poly, LinkedCom<ElemSimple> listElem, double amend) {
 
         Coordinate[] coo = poly.getCoordinates();
         Coordinate[] out = new Coordinate[coo.length];
-        List<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+        
+        LinkedCom<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
         try {
             for (int i = 0; i < coo.length; i++) {
 
@@ -144,8 +152,8 @@ public class UGeo {
                 LineSegment segm2 = new LineSegment(coo[i], coo[j]);
 
                 //Получим ширину сегментов
-                ElemSimple e1 = UGeo.segMapElem(listFrame, segm1);
-                ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
+                ElemSimple e1 = UGeo.segMapElem(listFrame, segm1); //listElem.find2(coo[k].z); //;
+                ElemSimple e2 =  UGeo.segMapElem(listFrame, segm2); //listElem.find2(coo[i].z); // 
                 double w1 = (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) + amend;
                 double w2 = (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) + amend;
 
@@ -155,6 +163,7 @@ public class UGeo {
 
                 //Точка пересечения внутренних сегментов
                 out[i] = segm4.lineIntersection(segm3);
+                out[i].z = e2.id;
             }
             return Com5t.gf.createPolygon(out);
 
@@ -222,6 +231,7 @@ public class UGeo {
         System.err.println("Ошибка:UGeo.indexPolygon()");
         return -1;
     }
+
 // <editor-fold defaultstate="collapsed" desc="TEMP">    
 // </editor-fold>    
 }
