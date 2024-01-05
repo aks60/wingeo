@@ -1306,6 +1306,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         pan2.setPreferredSize(new java.awt.Dimension(540, 200));
         pan2.setLayout(new java.awt.GridLayout(1, 2));
 
+        panDesign.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         panDesign.setLayout(new java.awt.BorderLayout());
         pan2.add(panDesign);
 

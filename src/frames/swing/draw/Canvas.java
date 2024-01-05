@@ -23,7 +23,7 @@ import org.locationtech.jts.awt.ShapeWriter;
 public class Canvas extends javax.swing.JPanel {
 
     private Wincalc winc = null;
-    public static double ds = 80; //для размерных линий 
+    public static double ds = 72; //для размерных линий 
 
     public Canvas() {
         initComponents();

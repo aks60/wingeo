@@ -34,7 +34,7 @@ public class AreaSimple extends Com5t {
 
     private DecimalFormat df1 = new DecimalFormat("#0.#");
     public LinkedCom<ElemSimple> frames = new LinkedCom(this); //список рам
-    public LinkedList<Point2D> listSkin = new LinkedList();
+    //public LinkedList<Point2D> listSkin = new LinkedList();
     public LinkedCom<Com5t> childs = new LinkedCom(this); //дети
 
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {

@@ -352,9 +352,47 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        drawAreaArch();
+        zCoordinate();
     }
 
+    private void zCoordinate() {
+
+        GeometricShapeFactory gsf = new GeometricShapeFactory();
+        Double dh = 64.0;
+        Double H = 300.0;
+        Double L = 1300.0;
+
+        Polygon p1 = UGeo.newPolygon(0, 0, 0, H, L, H, L, 0);
+        Polygon p2 = UGeo.newPolygon(0, 0, 0, H + L, dh, H + L, dh, 0);
+        Polygon p3 = UGeo.newPolygon(L - dh, 0, L - dh, H + L, L, H + L, L, 0);
+        double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
+
+        double ang1 = Math.PI / 2 - Math.asin(L / (R * 2));
+        gsf.setSize(2 * R);
+        gsf.setBase(new Coordinate(L / 2 - R, 0));
+        LineString arc1 = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1);
+        for (int i = 0; i < arc1.getCoordinates().length; i++) {
+            arc1.getCoordinateN(i).setZ(777);      
+        }
+
+        double ang2 = Math.PI / 2 - Math.asin((L - 2 * dh) / ((R - dh) * 2));
+        gsf.setSize(2 * R - 2 * dh);
+        gsf.setBase(new Coordinate(L / 2 - R + dh, dh));
+        LineString arc2 = gsf.createArc(Math.PI + ang2, Math.PI - 2 * ang2);
+
+        LineString lin[] = {gf.createLineString(UGeo.arrCoord(
+            arc1.getCoordinateN(0).x, arc1.getCoordinateN(0).y,
+            arc2.getCoordinateN(0).x, arc2.getCoordinateN(0).y)),
+            gf.createLineString(UGeo.arrCoord(
+            arc1.getCoordinateN(arc1.getNumPoints() - 1).x, arc1.getCoordinateN(arc1.getNumPoints() - 1).y,
+            arc2.getCoordinateN(arc2.getNumPoints() - 1).x, arc2.getCoordinateN(arc2.getNumPoints() - 1).y))};
+
+        mpol = gf.createMultiPolygon(new Polygon[]{p1, p2, p3});
+        mlin = gf.createMultiLineString(new LineString[]{arc1, arc2, lin[0], lin[1]});
+
+        System.out.println(R);
+    }
+    
     private void drawAreaArch() {
 
         GeometricShapeFactory gsf = new GeometricShapeFactory();
