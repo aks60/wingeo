@@ -244,15 +244,12 @@ public class AreaStvorka extends AreaSimple {
                 }
             }
             //Прилегающее
-            LineSegment segm = new LineSegment();
             Coordinate coo1[] = this.area2.getCoordinates();  //полигон векторов сторон рамы
             Coordinate coo2[] = this.area.getCoordinates(); //полигон векторов сторон створки
 
             for (int j = 0; j < coo2.length - 1; j++) {
-                segm.setCoordinates(coo1[j], coo1[j + 1]);
-                ElemSimple elemFrm = UGeo.segMapElem(elemList, segm);
-                segm.setCoordinates(coo2[j], coo2[j + 1]);
-                ElemSimple elemStv = UGeo.segMapElem(this.frames, segm);
+                ElemSimple elemFrm = elemList.find2(coo1[j].z);
+                ElemSimple elemStv = elemList.find2(coo2[j].z);
                 winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.FLAT, elemStv, elemFrm));
             }
         } catch (Exception e) {

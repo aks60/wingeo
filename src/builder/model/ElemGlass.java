@@ -113,8 +113,8 @@ public class ElemGlass extends ElemSimple {
                 LineSegment segm2 = new LineSegment(coo[i], coo[j]);
 
                 //Ширина сегментов
-                ElemSimple e1 = UGeo.segMapElem(listFrame, segm1);
-                ElemSimple e2 = UGeo.segMapElem(listFrame, segm2);
+                ElemSimple e1 = listFrame.find2(coo[k].z);
+                ElemSimple e2 = listFrame.find2(coo[i].z);
                 double falz = winc.syssizRec.getDbl(eSyssize.falz);
                 double w1 = (winc.syssizRec == null) ? e1.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(k)
                         : (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) - falz + gzazo;

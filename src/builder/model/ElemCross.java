@@ -61,11 +61,6 @@ public class ElemCross extends ElemSimple {
             owner.childs.get(0).area = (Polygon) geoSplit[1];
             owner.childs.get(2).area = (Polygon) geoSplit[2];
 
-//            PRINT("GEO", owner.area);
-//            PRINT("IMP", geoSplit[0]);
-//            PRINT("L", geoSplit[1]);
-//            PRINT("R", geoSplit[2]);
-            
             //Новые координаты импоста
             Geometry lineImp = owner.area.intersection(geoSplit[0]);
             if (lineImp.getGeometryType().equals("MultiLineString")) { //исправление коллизий
