@@ -147,7 +147,7 @@ public class UGeo {
     //Внутренняя обводка ареа 
     public static Polygon geoPadding(Geometry poly, LinkedCom<ElemSimple> listElem, double amend) {
 
-        Coordinate[] coo = poly.getCoordinates();
+        Coordinate[] coo = poly.copy().getCoordinates();
         Coordinate[] out = new Coordinate[coo.length];
         LinkedCom<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
         try {
@@ -174,8 +174,6 @@ public class UGeo {
                 out[i] = segm4.lineIntersection(segm3);
                 out[i].z = e2.id;
             }
-            //PRINT(poly);
-            //PRINT(out);
 
             return Com5t.gf.createPolygon(out);
 
