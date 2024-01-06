@@ -2,9 +2,7 @@ package builder.script.check;
 
 import builder.script.GsonElem;
 import builder.script.GsonRoot;
-import com.google.gson.GsonBuilder;
 import static builder.script.GsonScript.rootGson;
-import enums.Layout;
 import enums.Type;
 
 public final class Bimax {

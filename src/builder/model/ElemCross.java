@@ -2,9 +2,9 @@ package builder.model;
 
 import builder.Wincalc;
 import builder.making.Specific;
+import static builder.model.UGeo.PRINT;
 import builder.script.GsonElem;
 import common.UCom;
-import dataset.Record;
 import domain.eArtikl;
 import static domain.eArtikl.size_centr;
 import domain.eColor;
@@ -16,7 +16,6 @@ import enums.Type;
 import enums.TypeArtikl;
 import enums.UseSide;
 import java.awt.Shape;
-import java.awt.geom.Line2D;
 import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
@@ -47,7 +46,7 @@ public class ElemCross extends ElemSimple {
         }
         artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
         artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true);
-        
+
         //Если импост виртуальный
         if (artiklRec.getInt(1) == -3) {
             artiklRec.setNo(size_centr, 40);
@@ -61,10 +60,10 @@ public class ElemCross extends ElemSimple {
             Geometry[] geoSplit = UGeo.geoSplit(owner.area, this);
             owner.childs.get(0).area = (Polygon) geoSplit[1];
             owner.childs.get(2).area = (Polygon) geoSplit[2];
-            
-            //System.out.println(List.of(geoSplit[1].getCoordinates()));
-            //System.out.println(List.of(geoSplit[2].getCoordinates()));
 
+            PRINT(geoSplit[1]);
+            PRINT(geoSplit[2]);
+            
             //Новые координаты импоста
             Geometry lineImp = owner.area.intersection(geoSplit[0]);
             if (lineImp.getGeometryType().equals("MultiLineString")) { //исправление коллизий
@@ -194,7 +193,7 @@ public class ElemCross extends ElemSimple {
     }
 
     //Линии размерности
-    @Override    
+    @Override
     public void paint() {
         if (this.area != null) {
             Shape shape = new ShapeWriter().toShape(this.area);
