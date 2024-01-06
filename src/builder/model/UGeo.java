@@ -126,9 +126,9 @@ public class UGeo {
             Geometry p1 = Com5t.gf.createPolygon(cooL.toArray(new Coordinate[0]));
             Geometry p2 = Com5t.gf.createPolygon(cooR.toArray(new Coordinate[0]));
 
-            PRINT(geo);
-            PRINT(p1);
-            PRINT(p2);
+//            PRINT(geo);
+//            PRINT(p1);
+//            PRINT(p2);
             
             return new Geometry[]{p0, p1, p2};
 
