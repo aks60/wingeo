@@ -2,7 +2,6 @@ package builder.model;
 
 import builder.Wincalc;
 import builder.making.Specific;
-import static builder.model.UGeo.PRINT;
 import builder.script.GsonElem;
 import common.UCom;
 import domain.eArtikl;
@@ -55,14 +54,17 @@ public class ElemCross extends ElemSimple {
     }
 
     public void setLocation() {
+        //PRINT("1", owner.area);
         try {
             //Пилим полигон импостом
             Geometry[] geoSplit = UGeo.geoSplit(owner.area, this);
             owner.childs.get(0).area = (Polygon) geoSplit[1];
             owner.childs.get(2).area = (Polygon) geoSplit[2];
 
-            PRINT(geoSplit[1]);
-            PRINT(geoSplit[2]);
+//            PRINT("GEO", owner.area);
+//            PRINT("IMP", geoSplit[0]);
+//            PRINT("L", geoSplit[1]);
+//            PRINT("R", geoSplit[2]);
             
             //Новые координаты импоста
             Geometry lineImp = owner.area.intersection(geoSplit[0]);

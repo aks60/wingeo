@@ -11,13 +11,14 @@ import enums.Layout;
 import enums.Type;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
 
 public class Com5t {
-    
+
     public static GeometryFactory gf = new GeometryFactory();
     public double id;
     public Wincalc winc = null;
@@ -194,7 +195,7 @@ public class Com5t {
     public Double h() {
         return (gson.h != null) ? gson.h : null;
     }
-    
+
     public double x2() {
         if (gson.x2 != null) {
             return gson.x2;
@@ -238,7 +239,7 @@ public class Com5t {
     public void h(double v) {
         gson.h = v;
     }
-    
+
     public void y2(double v) {
         gson.y2 = v;
     }
@@ -281,6 +282,24 @@ public class Com5t {
         double ownerID = (owner == null) ? -1 : owner.id;
         return " art=" + art + ", type=" + type + ", layout=" + layout() + ", owner=" + ownerID + ", id=" + id
                 + ", x1=" + x1() + ", y1=" + y1() + ", x2=" + x2() + ", y2=" + y2();
+    }
+
+    public static void PRINT(Geometry g) {
+        Coordinate coo[] = g.getCoordinates();
+        System.out.println(List.of(coo));
+    }
+    
+    public static void PRINT(String s, Geometry g) {
+        Coordinate coo[] = g.getCoordinates();
+        System.out.println(s + " " + List.of(coo));
+    }
+
+    public static void PRINT(Coordinate... coo) {
+        System.out.println(List.of(coo));
+    }
+
+    public static void PRINT(String s, Coordinate... coo) {
+        System.out.println(s + " " + List.of(coo));
     }
     // </editor-fold>
 }

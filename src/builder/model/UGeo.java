@@ -1,5 +1,6 @@
 package builder.model;
 
+import static builder.model.Com5t.PRINT;
 import common.LinkedCom;
 import domain.eArtikl;
 import enums.Type;
@@ -76,46 +77,53 @@ public class UGeo {
     public static Geometry[] geoSplit(Geometry geo, ElemCross cross) {
         try {
             HashSet<Coordinate> hsCheck = new HashSet();
-            Coordinate[] coo = geo.getCoordinates();
-            Coordinate crosP1 = new Coordinate(cross.x1(), cross.y1()), crosP2 = new Coordinate(cross.x2(), cross.y2());
-            List<Coordinate> cooL = new ArrayList(), cooR = new ArrayList(),
-                    exten = new ArrayList(List.of(coo[0])), crosP = new ArrayList();
+            Coordinate[] coo = geo.copy().getCoordinates();
+            Coordinate crosP1 = new Coordinate(cross.x1(), cross.y1());
+            Coordinate crosP2 = new Coordinate(cross.x2(), cross.y2());
+            List<Coordinate> cooL = new ArrayList(), cooR = new ArrayList();
+            List<Coordinate> crosP = new ArrayList(), exten = new ArrayList(List.of(coo[0]));
 
             //Вставим точки пересецения в список координат
             for (int i = 1; i < coo.length; i++) {
 
                 //Точка пересечения сегмента и линии
                 Coordinate segmP1 = coo[i - 1], segmP2 = coo[i];
-                Coordinate pco = Intersection.lineSegment(crosP1, crosP2, segmP1, segmP2);
+                Coordinate crosC = Intersection.lineSegment(crosP1, crosP2, segmP1, segmP2);
+                hsCheck.add(coo[i]);
 
                 //Вставим точки
-                hsCheck.add(coo[i]);
-                if (pco != null) {
-                    crosP.add(pco);
-                    if (hsCheck.add(pco)) {
-                        exten.add(pco);
+                if (crosC != null) {
+                    crosP.add(crosC);
+                    if (hsCheck.add(crosC)) {
+                        exten.add(crosC);
                     }
                 }
                 exten.add(coo[i]);
             }
-
             //Обход сегментов до и после точек пересечения
             boolean b = true;
-            for (Coordinate c : exten) {
-
-                if (crosP.get(0).equals(c) || crosP.get(1).equals(c)) { //если попадание
+            for (int i = 0; i < exten.size(); ++i) {
+                Coordinate c = exten.get(i);
+                if (Double.isNaN(c.z)) {
                     b = !b;
-                    cooL.add(c);
-                    cooR.add(c);
+                    Coordinate cL = new Coordinate(c.x, c.y);
+                    Coordinate cR = new Coordinate(c.x, c.y);
+                    if (crosP.get(0).equals(c)) {
+
+                        cL.z = cross.id;
+                        cR.z = exten.get(i - 1).z;
+                    } else {
+                        cL.z = exten.get(i - 1).z;
+                        cR.z = cross.id;
+                    }
+                    cooL.add(cL);
+                    cooR.add(cR);
 
                 } else { //обход координат
                     if (b == true) { //ареа слева
                         cooL.add(c);
-                        c.z = (crosP.get(0).equals(c)) ? 0 : crosP.get(0).z;
-
                     } else { //ареа справа
                         cooR.add(c);
-                        c.z = (crosP.get(0).equals(c)) ? crosP.get(0).z : 0;
                     }
                 }
             }
@@ -128,10 +136,6 @@ public class UGeo {
             Geometry p0 = Com5t.gf.createLineString(crosP.toArray(new Coordinate[0]));
             Geometry p1 = Com5t.gf.createPolygon(cooL.toArray(new Coordinate[0]));
             Geometry p2 = Com5t.gf.createPolygon(cooR.toArray(new Coordinate[0]));
-
-            //PRINT(geo);
-            //PRINT(p1);
-            //PRINT(p2);
             return new Geometry[]{p0, p1, p2};
 
         } catch (Exception e) {
@@ -139,13 +143,12 @@ public class UGeo {
             return null;
         }
     }
+    
     //Внутренняя обводка ареа 
-
     public static Polygon geoPadding(Geometry poly, LinkedCom<ElemSimple> listElem, double amend) {
 
         Coordinate[] coo = poly.getCoordinates();
         Coordinate[] out = new Coordinate[coo.length];
-
         LinkedCom<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
         try {
             for (int i = 0; i < coo.length; i++) {
@@ -158,8 +161,8 @@ public class UGeo {
                 LineSegment segm2 = new LineSegment(coo[i], coo[j]);
 
                 //Получим ширину сегментов
-                ElemSimple e1 = UGeo.segMapElem(listFrame, segm1); //listElem.find2(coo[k].z); //
-                ElemSimple e2 = UGeo.segMapElem(listFrame, segm2); //listElem.find2(coo[i].z); // 
+                ElemSimple e1 = listElem.find2(coo[k].z);
+                ElemSimple e2 = listElem.find2(coo[i].z);
                 double w1 = (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) + amend;
                 double w2 = (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) + amend;
 
@@ -242,13 +245,5 @@ public class UGeo {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">    
-    public static void PRINT(Geometry g) {
-        Coordinate coo[] = g.getCoordinates();
-        System.out.println(List.of(coo));
-    }
-
-    public static void PRINT(Coordinate... coo) {
-        System.out.println(List.of(coo));
-    }
 // </editor-fold>    
 }
