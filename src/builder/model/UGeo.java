@@ -28,6 +28,24 @@ public class UGeo {
         return Math.toDegrees(Angle.angle(new Coordinate(e.x1(), e.y1()), new Coordinate(e.x2(), e.y2())));
     }
 
+    //Отображение сегмента на элемент конструкции
+    public static ElemSimple segMapElem(LinkedCom<ElemSimple> elems, LineSegment segm) {
+        try {
+            Coordinate p = segm.midPoint(); //средн. точка
+            LineSegment s = new LineSegment();
+            for (ElemSimple elem : elems) {
+
+                s.setCoordinates(new Coordinate(elem.x1(), elem.y1()), new Coordinate(elem.x2(), elem.y2()));
+                if (s.distance(p) < .001) {
+                    return elem;
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.segMapElem()" + e);
+        }
+        return null;
+    }
+    
     //Пересечение сегмента(линии) импоста с сегментами(отрезками) многоугольника
     public static Coordinate[] geoIntersect(Polygon poly, LineSegment line) {
         try {
