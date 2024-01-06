@@ -75,57 +75,61 @@ public class UGeo {
     //Пилим многоугольник
     public static Geometry[] geoSplit(Geometry geo, ElemCross elem) {
         try {
-            HashSet<Coordinate> hs = new HashSet(), cros = new HashSet();
+            HashSet<Coordinate> hsCheck = new HashSet(), hsPco = new HashSet();
             Coordinate[] coo = geo.getCoordinates();
-            Coordinate lineP1 = new Coordinate(elem.x1(), elem.y1()), lineP2 = new Coordinate(elem.x2(), elem.y2());
-            List<Coordinate> pL = new ArrayList(), pR = new ArrayList(), ext = new ArrayList(List.of(coo[0]));
+            Coordinate crosP1 = new Coordinate(elem.x1(), elem.y1()), crosP2 = new Coordinate(elem.x2(), elem.y2());
+            List<Coordinate> cooL = new ArrayList(), cooR = new ArrayList(), ext = new ArrayList(List.of(coo[0]));
             for (int i = 1; i < coo.length; i++) {
 
                 //Точка пересечения сегмента и линии
                 Coordinate segmP1 = coo[i - 1], segmP2 = coo[i];
-                Coordinate c3 = Intersection.lineSegment(lineP1, lineP2, segmP1, segmP2);
+                Coordinate pco = Intersection.lineSegment(crosP1, crosP2, segmP1, segmP2);
                 
-                hs.add(coo[i]);
-                if (c3 != null) {
+                hsCheck.add(coo[i]);
+                if (pco != null) {
                     
-                    c3.setZ(coo[i - 1].z);
-                    if (elem.x1() == c3.x && elem.y1() == c3.y) {
-                        c3.setZ(elem.id); //точку привяжем к импосту
+                    pco.setZ(coo[i - 1].z);
+                    if (elem.x1() == pco.x && elem.y1() == pco.y) {
+                        pco.setZ(elem.id); //точку привяжем к импосту
                     }
-                    if (hs.add(c3)) {
-                        ext.add(c3);
+                    if (hsCheck.add(pco)) {
+                        ext.add(pco);
                     }
-                    cros.add(c3);
+                    hsPco.add(pco);
                 }
                 ext.add(coo[i]);
             }
 
             //Обход сегментов до точек пересечения
-            List<Coordinate> list = new ArrayList(cros);
             boolean b = true;
+            List<Coordinate> list = new ArrayList(hsPco);
             for (Coordinate c : ext) {
                 if (list.get(0).equals(c) || list.get(1).equals(c)) {
                     b = !b;
-                    pL.add(c);
-                    pR.add(c);
+                    cooL.add(c);
+                    cooR.add(c);
                 } else {
                     if (b == true) {
-                        pL.add(c);
+                        cooL.add(c);
                     } else {
-                        pR.add(c);
+                        cooR.add(c);
                     }
                 }
             }
             if (elem.y1() != elem.y2()) {
-                Collections.rotate(pR, 1);
-                pR.add(pR.get(0));
+                Collections.rotate(cooR, 1);
+                cooR.add(cooR.get(0));
             } else {
-                pR.add(pR.get(0));
+                cooR.add(cooR.get(0));
             }
-            Geometry p0 = Com5t.gf.createLineString(cros.toArray(new Coordinate[0]));
-            Geometry p1 = Com5t.gf.createPolygon(pL.toArray(new Coordinate[0]));
-            Geometry p2 = Com5t.gf.createPolygon(pR.toArray(new Coordinate[0]));
+            Geometry p0 = Com5t.gf.createLineString(hsPco.toArray(new Coordinate[0]));
+            Geometry p1 = Com5t.gf.createPolygon(cooL.toArray(new Coordinate[0]));
+            Geometry p2 = Com5t.gf.createPolygon(cooR.toArray(new Coordinate[0]));
 
+            PRINT(geo);
+            PRINT(p1);
+            PRINT(p2);
+            
             return new Geometry[]{p0, p1, p2};
 
         } catch (Exception e) {
@@ -233,5 +237,9 @@ public class UGeo {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">    
+    public static void PRINT(Geometry g) {
+        Coordinate coo[] = g.getCoordinates();
+        System.out.println(List.of(coo));
+    }
 // </editor-fold>    
 }
