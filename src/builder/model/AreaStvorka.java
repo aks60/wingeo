@@ -165,7 +165,9 @@ public class AreaStvorka extends AreaSimple {
                     ElemFrame sideStv = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gson, this);
                     this.frames.add(sideStv);
                     coo[i].z = sideStv.id;
-                }              
+                }  
+                coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
+                
             } else { //если стороны уже созданы
                 Coordinate[] coo = this.area.getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
@@ -222,14 +224,7 @@ public class AreaStvorka extends AreaSimple {
                         this.knobOpen = (Polygon) aff.transform(this.knobOpen);
                     }
                 }
-            }
-            
-//            Coordinate[] c = {new Coordinate(650.0, 0.0, 7.0), new Coordinate(650.0, 1400.0, 2.0), new Coordinate(1300.0, 1400.0, 3.0),
-//                new Coordinate(1300.0, 0.0, 4.0), new Coordinate(650.0, 0.0, 7.0)};
-//            Polygon p = gf.createPolygon(c);
-//            Geometry a777 = UGeo.geoPadding(p, winc.listElem, -delta);
-//            Polygon m = gf.createPolygon(c);
-            
+            }           
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.setLocation " + e);
         }
@@ -260,9 +255,9 @@ public class AreaStvorka extends AreaSimple {
 
             for (int j = 0; j < coo2.length - 1; j++) {
                 segm.setCoordinates(coo1[j], coo1[j + 1]);
-                ElemSimple elemFrm = UGeo.segMapElem(elemList, segm);
+                ElemSimple elemFrm = elemList.find2(coo1[j].z);
                 segm.setCoordinates(coo2[j], coo2[j + 1]);
-                ElemSimple elemStv = UGeo.segMapElem(this.frames, segm);
+                ElemSimple elemStv = elemList.find2(coo1[j].z);
                 winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.FLAT, elemStv, elemFrm));
             }
         } catch (Exception e) {

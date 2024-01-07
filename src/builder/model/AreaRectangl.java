@@ -33,8 +33,6 @@ public class AreaRectangl extends AreaSimple {
             
             //Полигон векторов рамы
             this.area = gf.createPolygon(arr);
-            
-            //PRINT(this.area);
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaRectangl.setLocation" + toString() + e);

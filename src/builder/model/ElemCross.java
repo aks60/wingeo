@@ -54,7 +54,6 @@ public class ElemCross extends ElemSimple {
     }
 
     public void setLocation() {
-        //PRINT("1", owner.area);
         try {
             //Пилим полигон импостом
             Geometry[] geoSplit = UGeo.geoSplit(owner.area, this);
@@ -71,10 +70,10 @@ public class ElemCross extends ElemSimple {
             this.setDimension(lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y, lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y);
 
             //Внутренняя ареа       
-            Geometry geoPadding = UGeo.geoPadding(owner.area, winc.listElem, 0);
-            if (geoPadding.isValid() == false) { //исправление коллизий
-                GeometryFixer fix = new GeometryFixer(geoPadding);
-                geoPadding = (Polygon) fix.getResult().getGeometryN(0);
+            Geometry padding = UGeo.geoPadding(owner.area, winc.listElem, 0);
+            if (padding.isValid() == false) { //исправление коллизий
+                GeometryFixer fix = new GeometryFixer(padding);
+                padding = (Polygon) fix.getResult().getGeometryN(0);
             }
 
             //Левый и правый сегмент вдоль импоста
@@ -89,7 +88,7 @@ public class ElemCross extends ElemSimple {
 
             //Ареа импоста обрезаем areaPadding 
             Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
-            this.area = (Polygon) areaExp.intersection(geoPadding); //полигон элемента конструкции
+            this.area = (Polygon) areaExp.intersection(padding); //полигон элемента конструкции
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation " + e);
