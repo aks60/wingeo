@@ -155,12 +155,8 @@ public class UGeo {
                 out[i] = segm4.lineIntersection(segm3);
                 out[i].z = e2.id;
             }
-            try {
-                return Com5t.gf.createPolygon(out);
-            } catch (Exception e2) {
-                System.err.println("AKS builder.model.UGeo.geoPadding() " + e2);
-            }
-            return null;
+            return Com5t.gf.createPolygon(out);
+
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.geoPadding() " + e);
             return null;
