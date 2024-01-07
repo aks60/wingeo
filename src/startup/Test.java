@@ -1,14 +1,13 @@
 package startup;
 
+import static builder.model.Com5t.PRINT;
 import builder.model.UGeo;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import common.UCom;
 import common.eProp;
 import dataset.Conn;
-import static domain.eProject.owner;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -82,11 +81,11 @@ public class Test {
             //frames.PSConvert.exec();
             //wincalc();
             //query();
-            frame(args);
+            //frame(args);
             //json();
             //uid();
             //script();
-            //geom();
+            geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -290,10 +289,10 @@ public class Test {
             new Coordinate(0, 0), new Coordinate(0, 1400),
             new Coordinate(900, 1400), new Coordinate(900, 0),
             new Coordinate(0, 0)};
-         Coordinate[] coord2 = {
-            new Coordinate(0, 0), new Coordinate(0, 1000),
-            new Coordinate(1000, 1000), new Coordinate(1000, 0),
-            new Coordinate(0, 0)};
+        Coordinate[] coord2 = {
+            new Coordinate(0, 0, 1), new Coordinate(0, 1000, 2),
+            new Coordinate(1000, 1000, 3), new Coordinate(1000, 0, 4),
+            new Coordinate(0, 0, 1)};
 
         Point point1 = gf.createPoint(new Coordinate(499.9, 500));
         Point point2 = gf.createPoint(new Coordinate(0, 500));
@@ -303,10 +302,7 @@ public class Test {
         LineSegment segm2 = new LineSegment(20, 20, 200, 120);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
-        Coordinate[] c = {new Coordinate(650.0, 0.0, 7.0), new Coordinate(650.0, 1400.0, 2.0), new Coordinate(1300.0, 1400.0, 3.0),
-            new Coordinate(1300.0, 0.0, 4.0), new Coordinate(650.0, 0.0, 7.0)};
-        Polygon p = gf.createPolygon(c);
-        //[(664.0, 39.0, 7.0), (664.0, 1361.0, 2.0), (1261.0, 1361.0, 3.0), (1261.0, 39.0, 4.0), (664.0, 39.0, 7.0)]
+        
     }
 
     ///////////////////////////////////////////////////////////////////////////

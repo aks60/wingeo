@@ -147,7 +147,7 @@ public class UGeo {
     //Внутренняя обводка ареа 
     public static Polygon geoPadding(Geometry poly, LinkedCom<ElemSimple> listElem, double amend) {
         try {
-            Coordinate[] coo = poly.getCoordinates();
+            Coordinate[] coo = poly.copy().getCoordinates();
             Coordinate[] out = new Coordinate[coo.length];
             LinkedCom<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             for (int i = 0; i < coo.length; i++) {
@@ -204,10 +204,6 @@ public class UGeo {
 
     public static LineString newLineStr(double... d) {
         return Com5t.gf.createLineString(UGeo.arrCoord(d));
-    }
-
-    public static LineSegment newLineSegm(double x1, double y1, double x2, double y2) {
-        return new LineSegment(x1, y1, x2, y2);
     }
 
     //Список входн. параметров не замыкается начальной точкой как в jts!

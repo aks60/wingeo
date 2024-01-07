@@ -144,12 +144,14 @@ public class AreaStvorka extends AreaSimple {
     //Создание и коррекция сторон створки
     public void setLocation() {
         try {
-            //Полигон векторов сторон створки
-            this.area2 = (winc.listElem.filter(Type.IMPOST).isEmpty()) ? owner.area : this.area;  //случай когда створка в гл.окне   
-            //PRINT("1", this.area2);
+            //Полигон векторов сторон рамы
+            //если нет полигона створка в гл.окне, иначе 
+            //this.area получатется при распиле owner.area импостом
+            this.area2 = (winc.listElem.filter(Type.IMPOST).isEmpty()) ? owner.area : this.area;
+            
+            //Полигон створки с учётом нахлёста 
             double delta = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
             this.area = UGeo.geoPadding(this.area2, winc.listElem, -delta); //полигон векторов сторон створки            
-            //PRINT("2", this.area);
             
             //Координаты рам створок
             if (this.frames.size() == 0) { //если стороны ств. ещё не созданы                  
