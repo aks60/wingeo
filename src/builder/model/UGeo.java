@@ -45,7 +45,7 @@ public class UGeo {
         }
         return null;
     }
-    
+
     //Пересечение сегмента(линии) импоста с сегментами(отрезками) многоугольника
     public static Coordinate[] geoIntersect(Polygon poly, LineSegment line) {
         try {
@@ -143,14 +143,13 @@ public class UGeo {
             return null;
         }
     }
-    
+
     //Внутренняя обводка ареа 
     public static Polygon geoPadding(Geometry poly, LinkedCom<ElemSimple> listElem, double amend) {
-        Coordinate[] coo = poly.getCoordinates();
-        Coordinate[] out = new Coordinate[coo.length];
-        LinkedCom<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
-        PRINT("1", coo);
         try {
+            Coordinate[] coo = poly.getCoordinates();
+            Coordinate[] out = new Coordinate[coo.length];
+            LinkedCom<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             for (int i = 0; i < coo.length; i++) {
 
                 //Сегменты границ полигона
@@ -174,9 +173,14 @@ public class UGeo {
                 out[i] = segm4.lineIntersection(segm3);
                 out[i].z = e2.id;
             }
-            PRINT("2", out);
-            return Com5t.gf.createPolygon(out);
-
+            try {
+                //PRINT("1",coo);
+                //PRINT("2", out);
+                return Com5t.gf.createPolygon(out);
+            } catch (Exception e2) {
+                System.err.println("AKS builder.model.UGeo.geoPadding() " + e2);
+            }
+            return null;
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.geoPadding() " + e);
             return null;

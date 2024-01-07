@@ -84,13 +84,11 @@ public final class Bimax {
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1400.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, .0))
-                    .addArea(new GsonElem(Type.STVORKA, "{typeOpen:3, sysfurnID:860}"))
-                    .addElem(new GsonElem(Type.GLASS));
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, .0));
 
+            rootGson.addArea(new GsonElem(Type.STVORKA, "{typeOpen:3, sysfurnID:860}")).addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST, 650.0, .0, 650.0, 1400.0));
-            rootGson.addArea(new GsonElem(Type.STVORKA, "{typeOpen:4, sysfurnID:860}"))
-                    .addElem(new GsonElem(Type.GLASS));
+            rootGson.addArea(new GsonElem(Type.STVORKA, "{typeOpen:4, sysfurnID:860}")).addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 601003) {
             rootGson = new GsonRoot(427819, prj, 1, 81, Type.RECTANGL, "Darrio\\DARRIO 200\\1 ОКНА", 1009, 1009, 1009);

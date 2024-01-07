@@ -290,7 +290,7 @@ public class Test {
             new Coordinate(0, 0), new Coordinate(0, 1400),
             new Coordinate(900, 1400), new Coordinate(900, 0),
             new Coordinate(0, 0)};
-        Coordinate[] coord2 = new Coordinate[]{
+         Coordinate[] coord2 = {
             new Coordinate(0, 0), new Coordinate(0, 1000),
             new Coordinate(1000, 1000), new Coordinate(1000, 0),
             new Coordinate(0, 0)};
@@ -303,8 +303,10 @@ public class Test {
         LineSegment segm2 = new LineSegment(20, 20, 200, 120);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
-
-        System.out.println(120 - 10 - 10 - 10);
+        Coordinate[] c = {new Coordinate(650.0, 0.0, 7.0), new Coordinate(650.0, 1400.0, 2.0), new Coordinate(1300.0, 1400.0, 3.0),
+            new Coordinate(1300.0, 0.0, 4.0), new Coordinate(650.0, 0.0, 7.0)};
+        Polygon p = gf.createPolygon(c);
+        //[(664.0, 39.0, 7.0), (664.0, 1361.0, 2.0), (1261.0, 1361.0, 3.0), (1261.0, 39.0, 4.0), (664.0, 39.0, 7.0)]
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -372,7 +374,7 @@ public class Test {
         gsf.setBase(new Coordinate(L / 2 - R, 0));
         LineString arc1 = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1);
         for (int i = 0; i < arc1.getCoordinates().length; i++) {
-            arc1.getCoordinateN(i).setZ(777);      
+            arc1.getCoordinateN(i).setZ(777);
         }
 
         double ang2 = Math.PI / 2 - Math.asin((L - 2 * dh) / ((R - dh) * 2));
@@ -392,7 +394,7 @@ public class Test {
 
         System.out.println(R);
     }
-    
+
     private void drawAreaArch() {
 
         GeometricShapeFactory gsf = new GeometricShapeFactory();

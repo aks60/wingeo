@@ -146,14 +146,16 @@ public class AreaStvorka extends AreaSimple {
         try {
             //Полигон векторов сторон створки
             this.area2 = (winc.listElem.filter(Type.IMPOST).isEmpty()) ? owner.area : this.area;  //случай когда створка в гл.окне   
+            //PRINT("1", this.area2);
             double delta = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
             this.area = UGeo.geoPadding(this.area2, winc.listElem, -delta); //полигон векторов сторон створки            
-
+            //PRINT("2", this.area);
+            
             //Координаты рам створок
-            if (this.frames.size() == 0) { //если стороны ств. ещё не созданы   
-                
+            if (this.frames.size() == 0) { //если стороны ств. ещё не созданы                  
                 Coordinate[] coo = this.area.getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
+                    
                     GsonElem gson = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y); //, coo[i+1].x, coo[i+1].y);
                     if (isJson(this.gson.param, PKjson.stvorkaSide[i])) {
                         gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
@@ -161,9 +163,7 @@ public class AreaStvorka extends AreaSimple {
                     ElemFrame sideStv = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gson, this);
                     this.frames.add(sideStv);
                     coo[i].z = sideStv.id;
-                }
-                //PRINT("stv", this.area);
-                
+                }              
             } else { //если стороны уже созданы
                 Coordinate[] coo = this.area.getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
@@ -221,6 +221,13 @@ public class AreaStvorka extends AreaSimple {
                     }
                 }
             }
+            
+//            Coordinate[] c = {new Coordinate(650.0, 0.0, 7.0), new Coordinate(650.0, 1400.0, 2.0), new Coordinate(1300.0, 1400.0, 3.0),
+//                new Coordinate(1300.0, 0.0, 4.0), new Coordinate(650.0, 0.0, 7.0)};
+//            Polygon p = gf.createPolygon(c);
+//            Geometry a777 = UGeo.geoPadding(p, winc.listElem, -delta);
+//            Polygon m = gf.createPolygon(c);
+            
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.setLocation " + e);
         }
