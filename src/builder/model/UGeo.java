@@ -56,10 +56,10 @@ public class UGeo {
     }
 
     //Пилим многоугольник
-    public static Geometry[] geoSplit(Geometry geo, ElemCross cross) {
+    public static Geometry[] geoSplit(Geometry poly, ElemCross cross) {
         try {
             HashSet<Coordinate> hsCheck = new HashSet();
-            Coordinate[] coo = geo.copy().getCoordinates();
+            Coordinate[] coo = poly.copy().getCoordinates();
             Coordinate crosP1 = new Coordinate(cross.x1(), cross.y1());
             Coordinate crosP2 = new Coordinate(cross.x2(), cross.y2());
             List<Coordinate> cooL = new ArrayList(), cooR = new ArrayList();
