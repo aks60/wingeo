@@ -63,7 +63,7 @@ public class AreaArch extends AreaSimple {
             Coordinate[] ar1 = co2.toArray(new Coordinate[0]);
 
             //Полигон векторов рамы
-            this.area = gf.createPolygon(arr);
+            this.area = gf.createPolygon(ar1); //gf.createPolygon(arr);
             this.box = gf.createPolygon(ar1);
 
         } catch (Exception e) {
