@@ -39,7 +39,7 @@ public class AreaStvorka extends AreaSimple {
     public Record mosqRec = eArtikl.virtualRec(); //москитка
     public Record elementRec = eElement.up.newRecord(); //состав москидки 
 
-    public Geometry area2 = null; //полигон векторов сторон рамы
+    public Geometry areaBox = null; //полигон векторов сторон рамы
     public LineString lineOpenHor = null; //линии горизонт. открывания
     public LineString lineOpenVer = null; //линии вертик. открывания
     public Polygon knobOpen = null; //ручка открывания    
@@ -147,11 +147,11 @@ public class AreaStvorka extends AreaSimple {
             //Полигон векторов сторон рамы
             //если нет полигона створка в гл.окне, иначе 
             //this.area получатется при распиле owner.area импостом
-            this.area2 = (winc.listElem.filter(Type.IMPOST).isEmpty()) ? owner.area : this.area;
+            this.areaBox = (winc.listElem.filter(Type.IMPOST).isEmpty()) ? owner.area : this.area;
             
             //Полигон створки с учётом нахлёста 
             double delta = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            this.area = UGeo.geoPadding(this.area2, winc.listElem, -delta); //полигон векторов сторон створки            
+            this.area = UGeo.geoPadding(this.areaBox, winc.listElem, -delta); //полигон векторов сторон створки            
             
             //Координаты рам створок
             if (this.frames.size() == 0) { //если стороны ств. ещё не созданы                  
@@ -255,7 +255,7 @@ public class AreaStvorka extends AreaSimple {
             }
             //Прилегающее
             LineSegment segm = new LineSegment();
-            Coordinate coo1[] = this.area2.getCoordinates();  //полигон векторов сторон рамы
+            Coordinate coo1[] = this.areaBox.getCoordinates();  //полигон векторов сторон рамы
             Coordinate coo2[] = this.area.getCoordinates(); //полигон векторов сторон створки
 
             for (int j = 0; j < coo2.length - 1; j++) {
@@ -288,7 +288,7 @@ public class AreaStvorka extends AreaSimple {
                 }
             }
             //Прилегающее
-            Coordinate coo1[] = this.area2.getCoordinates();  //полигон векторов сторон рамы
+            Coordinate coo1[] = this.areaBox.getCoordinates();  //полигон векторов сторон рамы
             Coordinate coo2[] = this.area.getCoordinates(); //полигон векторов сторон створки
 
             for (int j = 0; j < coo2.length - 1; j++) {

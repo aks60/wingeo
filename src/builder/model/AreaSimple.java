@@ -144,7 +144,7 @@ public class AreaSimple extends Com5t {
         Envelope box = winc.root.area.getEnvelopeInternal();
         HashSet<Double> hsHor = new HashSet(), hsVer = new HashSet();
         for (AreaSimple area5e : winc.listArea) {
-            Geometry p = (area5e.type == Type.STVORKA) ? ((AreaStvorka) area5e).area2 : area5e.area;
+            Geometry p = (area5e.type == Type.STVORKA) ? ((AreaStvorka) area5e).areaBox : area5e.area;
             List.of(p.getCoordinates()).forEach(c -> hsHor.add(c.x));
             List.of(p.getCoordinates()).forEach(c -> hsVer.add(c.y));
         }
