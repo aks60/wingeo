@@ -142,8 +142,8 @@ public class UGeo {
                 LineSegment segm2 = new LineSegment(coo[i], coo[j]);
 
                 //Получим ширину сегментов
-                ElemSimple e1 = listElem.find2(coo[k].z);
-                ElemSimple e2 = listElem.find2(coo[i].z);
+                ElemSimple e1 = listElem.find(coo[k].z);
+                ElemSimple e2 = listElem.find(coo[i].z);
                 double w1 = (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) + amend;
                 double w2 = (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) + amend;
 

@@ -68,7 +68,7 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
         return list2;
     }
 
-    public E find2(double id) {
+    public E find(double id) {
         return this.stream().filter(it -> it.id == id).findFirst().get();
     }
 }

@@ -255,9 +255,9 @@ public class AreaStvorka extends AreaSimple {
 
             for (int j = 0; j < coo2.length - 1; j++) {
                 segm.setCoordinates(coo1[j], coo1[j + 1]);
-                ElemSimple elemFrm = elemList.find2(coo1[j].z);
+                ElemSimple elemFrm = elemList.find(coo1[j].z);
                 segm.setCoordinates(coo2[j], coo2[j + 1]);
-                ElemSimple elemStv = elemList.find2(coo1[j].z);
+                ElemSimple elemStv = elemList.find(coo1[j].z);
                 winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.FLAT, elemStv, elemFrm));
             }
         } catch (Exception e) {
@@ -287,8 +287,8 @@ public class AreaStvorka extends AreaSimple {
             Coordinate coo2[] = this.area.getCoordinates(); //полигон векторов сторон створки
 
             for (int j = 0; j < coo2.length - 1; j++) {
-                ElemSimple elemFrm = elemList.find2(coo1[j].z);
-                ElemSimple elemStv = elemList.find2(coo2[j].z);
+                ElemSimple elemFrm = elemList.find(coo1[j].z);
+                ElemSimple elemStv = elemList.find(coo2[j].z);
                 winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.FLAT, elemStv, elemFrm));
             }
         } catch (Exception e) {
