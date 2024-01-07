@@ -59,12 +59,12 @@ public class Wincalc {
     public Canvas canvas = null;
     public GsonRoot gson = null; //объектная модель конструкции 1-го уровня
     public AreaSimple root = null; //объектная модель конструкции 2-го уровня    
-    
+
     public ArrayList<ListenerKey> keyboardPressed = new ArrayList();
     public ArrayList<ListenerMouse> mousePressed = new ArrayList();
     public ArrayList<ListenerMouse> mouseReleased = new ArrayList();
     public ArrayList<ListenerMouse> mouseDragged = new ArrayList();
-    
+
     public HashMap<Integer, Record> mapPardef = new HashMap(); //пар. по умолчанию + наложенные пар. клиента
     public LinkedCom<AreaSimple> listArea = new LinkedCom(root); //список ареа.
     public LinkedCom<ElemSimple> listElem = new LinkedCom(root); //список элем.
@@ -79,7 +79,7 @@ public class Wincalc {
         build(script);
     }
 
-    public void build(String script) {        
+    public void build(String script) {
         //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script))); //для тестирования
         //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
@@ -107,17 +107,17 @@ public class Wincalc {
         //Главное окно
         if (Type.RECTANGL == gson.type) {
             root = new AreaRectangl(this, gson);
-            
-        } else  if (Type.TRAPEZE == gson.type) {
+
+        } else if (Type.TRAPEZE == gson.type) {
             root = new AreaTrapeze(this, gson);
-            
+
         } else if (Type.ARCH == gson.type) {
             root = new AreaArch(this, gson);
-        }    
+        }
 
         //Элементы конструкции
         elements(root, gson);
-        
+
         //Обновление конструкции
         upgrade();
     }
@@ -173,10 +173,10 @@ public class Wincalc {
 
             //Инит. артикулов элементов конструкции
             listElem.forEach(e -> e.initArtikle());
- 
+
             //Пилим полигоны на ареа справа и слева
             listElem.filter(Type.IMPOST, Type.STOIKA, Type.ERKER).forEach(e -> e.setLocation());
-             
+
             //Создание и коррекция сторон створки
             listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
 
@@ -189,20 +189,20 @@ public class Wincalc {
             //Соединения конструкции             
             root.joining();  //L и T соединения
             listArea.filter(Type.STVORKA).forEach(e -> e.joining());
-            
+
         } catch (Exception s) {
             System.err.println("Ошибка:Wincalc.location() " + s);
         }
     }
 
     //Спецификация и тарификация 
-    public void constructiv(boolean norm_otx) {
+    public void specific(boolean norm_otx) {
         weight = 0;
         price = 0;
         cost2 = 0;
         try {
             //Спецификация ведущих элементов конструкции
-            listElem.forEach(elem -> elem.setSpecific()); 
+            listElem.forEach(elem -> elem.setSpecific());
 
             //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
             new Joining(this).calc(); //соединения
@@ -247,7 +247,7 @@ public class Wincalc {
         try {
             //Размерные линии
             this.root.paint();
-            
+
             //Прорисовка стеклопакетов
             this.listElem.filter(Type.GLASS).stream().forEach(el -> el.paint());
 
@@ -265,7 +265,7 @@ public class Wincalc {
 
             //Прорисовка профилей створок
             this.listElem.filter(Type.STVORKA_SIDE).stream().forEach(el -> el.paint());
-            
+
             //Прорисока фурнитуры створок
             this.listArea.filter(Type.STVORKA).stream().forEach(el -> el.paint());
 

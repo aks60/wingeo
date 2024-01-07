@@ -105,7 +105,7 @@ public class Test {
             //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
             //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
-            winc.constructiv(true);
+            winc.specific(true);
             //new Joining(winc).calc();
             //winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
             //winc.gc2d = winc.bufferImg.createGraphics();
@@ -121,7 +121,7 @@ public class Test {
                 String script = GsonScript.scriptPath(prj);
                 if (script != null) {
                     winc.build(script);
-                    winc.constructiv(true);
+                    winc.specific(true);
                     frames.PSCompare.iwinPs4(winc, false);
                 }
             }
@@ -132,7 +132,7 @@ public class Test {
                 String script = GsonScript.scriptPath(prj);
                 if (script != null) {
                     winc.build(script);
-                    winc.constructiv(true);
+                    winc.specific(true);
                     frames.PSCompare.iwinPs4(winc, false);
                 }
             }

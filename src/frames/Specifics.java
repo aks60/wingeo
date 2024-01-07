@@ -78,7 +78,7 @@ public class Specifics extends javax.swing.JFrame {
                 je.getAsJsonObject().addProperty("nuni", sysprodRec.getInt(eSysprod.systree_id));
                 winc.build(je.toString());
                 Query.listOpenTable.forEach(q -> q.clear());
-                winc.constructiv(cbx2.getSelectedIndex() == 0);
+                winc.specific(cbx2.getSelectedIndex() == 0);
             }
 
         } else {
@@ -93,7 +93,7 @@ public class Specifics extends javax.swing.JFrame {
                 winc = new Wincalc();
                 winc.build(je.toString());
                 Query.listOpenTable.forEach(q -> q.clear());
-                winc.constructiv(true);
+                winc.specific(true);
             }
         }
     }

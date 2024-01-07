@@ -3552,7 +3552,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
 
                                 win.build(jsonElem.toString()); //калкуляция
                                 Query.listOpenTable.forEach(q -> q.clear()); //очистим кэш                                
-                                win.constructiv(true); //конструктив                                                               
+                                win.specific(true); //конструктив                                                               
 
                                 //Площадь изделий
                                 double square = prjprodRec.getDbl(ePrjprod.num, 1) * win.root.area.getArea();

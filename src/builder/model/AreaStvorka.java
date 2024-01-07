@@ -145,14 +145,13 @@ public class AreaStvorka extends AreaSimple {
     public void setLocation() {
         try {
             //Полигон векторов сторон створки
-            this.area2 = (winc.listElem.filter(Type.IMPOST).isEmpty()) ? owner.area : this.area;  //случай когда створка в гл.окне             
+            this.area2 = (winc.listElem.filter(Type.IMPOST).isEmpty()) ? owner.area : this.area;  //случай когда створка в гл.окне   
             double delta = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            this.area = UGeo.geoPadding(this.area2, winc.listElem, -delta); //полигон векторов сторон створки
+            this.area = UGeo.geoPadding(this.area2, winc.listElem, -delta); //полигон векторов сторон створки            
 
             //Координаты рам створок
-            if (this.frames.size() == 0) {
-
-                //Если стороны ств. ещё не созданы
+            if (this.frames.size() == 0) { //если стороны ств. ещё не созданы   
+                
                 Coordinate[] coo = this.area.getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
                     GsonElem gson = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y); //, coo[i+1].x, coo[i+1].y);
@@ -161,12 +160,11 @@ public class AreaStvorka extends AreaSimple {
                     }
                     ElemFrame sideStv = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gson, this);
                     this.frames.add(sideStv);
-                    //this.winc.listElem.add(sideStv);
-                    //coo[i].z = sideStv.id;
+                    coo[i].z = sideStv.id;
                 }
                 //PRINT("stv", this.area);
-            } else {
-                //Если стороны уже созданы
+                
+            } else { //если стороны уже созданы
                 Coordinate[] coo = this.area.getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
                     ElemSimple elem = this.frames.get(i);
@@ -250,8 +248,7 @@ public class AreaStvorka extends AreaSimple {
             LineSegment segm = new LineSegment();
             Coordinate coo1[] = this.area2.getCoordinates();  //полигон векторов сторон рамы
             Coordinate coo2[] = this.area.getCoordinates(); //полигон векторов сторон створки
-PRINT("1",coo1);
-PRINT("2",coo2);
+
             for (int j = 0; j < coo2.length - 1; j++) {
                 segm.setCoordinates(coo1[j], coo1[j + 1]);
                 ElemSimple elemFrm = UGeo.segMapElem(elemList, segm);
@@ -262,7 +259,8 @@ PRINT("2",coo2);
         } catch (Exception e) {
             System.err.println("AreaStvorka.joining() " + e);
         }
-    }    
+    }
+
     public void joining2() {
         LinkedCom<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.STOIKA);
         try {
