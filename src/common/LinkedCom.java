@@ -40,6 +40,7 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
                 int index = UGeo.getIndex(areaSimple.area, el);
                 if (areaSimple.area.getNumPoints() == 4
                         || areaSimple.area.getNumPoints() == 5) {
+                    
                     if (index == 0 && layout == Layout.LEFT) {
                         return (E) el;
                     } else if (index == 1 && layout == Layout.BOTT) {

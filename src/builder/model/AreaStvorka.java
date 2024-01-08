@@ -49,7 +49,7 @@ public class AreaStvorka extends AreaSimple {
     public int mosqColor = -3; //цвет москитки
 
     public double knobHeight = 0; //высота ручки
-    public TypeOpen1 typeOpen = TypeOpen1.REQUEST; //направление открывания
+    public TypeOpen1 typeOpen = TypeOpen1.EMPTY; //направление открывания
     public LayoutKnob knobLayout = LayoutKnob.VAR; //положение ручки на створке      
     public boolean paramCheck[] = {true, true, true, true, true, true, true, true};
     public double offset[] = {0, 0, 0, 0};
@@ -177,7 +177,7 @@ public class AreaStvorka extends AreaSimple {
             }
 
             //Ручка открывания
-            if (typeOpen != TypeOpen1.EMPTY) {
+            if (this.typeOpen != TypeOpen1.EMPTY) {
 
                 //Линии гориз. открывания
                 ElemSimple stv = TypeOpen1.getKnob(this, typeOpen);

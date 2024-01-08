@@ -207,15 +207,18 @@ public class UGeo {
 
     public static int getIndex(Geometry p, Com5t e) throws Exception {
         Coordinate coo[] = p.getCoordinates();
-
-        for (int i = 0; i < coo.length - 1; i++) {
-            if (e.x1() == coo[i].x && e.y1() == coo[i].y && e.x2() == coo[i + 1].x && e.y2() == coo[i + 1].y) {
-            //if (coo[i].z == e.id) {
-                return i;
+        if (coo.length > 5) {
+            System.out.println("AKS builder.model.UGeo.getIndex()");
+        } else {
+            for (int i = 0; i < coo.length - 1; i++) {
+                //if (e.x1() == coo[i].x && e.y1() == coo[i].y && e.x2() == coo[i + 1].x && e.y2() == coo[i + 1].y) {
+                if (coo[i].z == e.id) {
+                    return i;
+                }
             }
         }
         //throw new Exception("Ошибка:UGeo.getIndex()");
-        System.err.println("Ошибка:UGeo.indexPolygon()");
+        System.err.println("Ошибка:UGeo.getIndex()");
         return -1;
     }
 
