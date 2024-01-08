@@ -139,7 +139,8 @@ public class ElemJoining {
     }
 
     public String toString() {
-        return "id=" + id + ",  type=" + type + ",  elem1=(" + elem1.id + " " + elem1.type + " " + elem1.layout() + "),  "
-                + "elem2=(" + elem2.id + " " + elem2.type + " " + elem2.layout() + "), " + type.name;
+        return "id=" + id + ",  type=" + type  +  " name=" + type.name
+                + ",  elem1=(" + elem1.id + " " + elem1.type + " " + elem1.layout() + ")"
+                + ",  elem2=(" + elem2.id + " " + elem2.type + " " + elem2.layout() + ")";
     }
 }

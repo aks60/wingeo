@@ -209,8 +209,8 @@ public class UGeo {
         Coordinate coo[] = p.getCoordinates();
 
         for (int i = 0; i < coo.length - 1; i++) {
-            //if (e.x1() == coo[i].x && e.y1() == coo[i].y && e.x2() == coo[i + 1].x && e.y2() == coo[i + 1].y) {
-            if (coo[i].z == e.id) {
+            if (e.x1() == coo[i].x && e.y1() == coo[i].y && e.x2() == coo[i + 1].x && e.y2() == coo[i + 1].y) {
+            //if (coo[i].z == e.id) {
                 return i;
             }
         }

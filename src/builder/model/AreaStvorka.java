@@ -250,45 +250,12 @@ public class AreaStvorka extends AreaSimple {
             }
             //Прилегающее
             LineSegment segm = new LineSegment();
-            Coordinate coo1[] = this.areaBox.getCoordinates();  //полигон векторов сторон рамы
-            Coordinate coo2[] = this.area.getCoordinates(); //полигон векторов сторон створки
-
-            for (int j = 0; j < coo2.length - 1; j++) {
-                segm.setCoordinates(coo1[j], coo1[j + 1]);
-                ElemSimple elemFrm = elemList.find(coo1[j].z);
-                segm.setCoordinates(coo2[j], coo2[j + 1]);
+            Coordinate coo1[] = this.area.getCoordinates(); //полигон векторов сторон створки
+            Coordinate coo2[] = this.areaBox.getCoordinates(); //полигон векторов сторон рамы
+            
+            for (int j = 0; j < coo1.length - 1; j++) {
                 ElemSimple elemStv = elemList.find(coo1[j].z);
-                winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.FLAT, elemStv, elemFrm));
-            }
-        } catch (Exception e) {
-            System.err.println("AreaStvorka.joining() " + e);
-        }
-    }
-
-    public void joining2() {
-        LinkedCom<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.STOIKA);
-        try {
-            //L - соединения
-            for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам створки
-                ElemFrame elem1 = (ElemFrame) this.frames.get(i);
-                ElemFrame elem2 = (ElemFrame) this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1);
-                int lev1 = elem1.artiklRec.getInt(eArtikl.level1);
-                int lev2 = elem2.artiklRec.getInt(eArtikl.level2);
-
-                if ((lev1 == 1 && (lev2 == 1 || lev2 == 2)) == false) { //угловое левое/правое
-                    TypeJoin type = (i == 0 || i == 2) ? TypeJoin.ANG2 : TypeJoin.ANG1;
-                    winc.listJoin.add(new ElemJoining(this.winc, type, elem1, elem2));
-                } else { //угловое на ус
-                    winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.ANGL, elem1, elem2));
-                }
-            }
-            //Прилегающее
-            Coordinate coo1[] = this.areaBox.getCoordinates();  //полигон векторов сторон рамы
-            Coordinate coo2[] = this.area.getCoordinates(); //полигон векторов сторон створки
-
-            for (int j = 0; j < coo2.length - 1; j++) {
-                ElemSimple elemFrm = elemList.find(coo1[j].z);
-                ElemSimple elemStv = elemList.find(coo2[j].z);
+                ElemSimple elemFrm = elemList.find(coo2[j].z);
                 winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.FLAT, elemStv, elemFrm));
             }
         } catch (Exception e) {
