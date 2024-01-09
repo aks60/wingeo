@@ -24,6 +24,9 @@ import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class ElemFrame extends ElemSimple {
 
@@ -82,46 +85,36 @@ public class ElemFrame extends ElemSimple {
                 if (owner.frames.get(i).id == this.id) {
                     //Арка
                     if (this.h() != null) {
-                        double dh = this.artiklRec.getDbl(eArtikl.height);
-                        double r = (Math.pow(root.width() / 2, 2) + Math.pow(this.h(), 2)) / (2 * this.h());  //R = (L2 + H2) / 2H - радиус арки  
-                        double rad1 = Math.acos((root.width() / 2) / r);
-                        double rad2 = Math.acos((root.width() - 2 * dh) / ((r - dh) * 2));
-                        double a1 = r * Math.sin(rad1);
-                        double a2 = (r - dh) * Math.sin(rad2);
-                        double ang3 = 90 - Math.toDegrees(Math.atan((a1 - a2) / dh)); //угол реза рамы
-                        double ang4 = 90 - (Math.toDegrees(rad1) - (90 - ang3)); //угол реза арки
-                        radiusArc = r;
+                        GeometricShapeFactory gsf = new GeometricShapeFactory();
+                        double dH = this.artiklRec.getDbl(eArtikl.height);
+                        Double H = this.h();
+                        Double L = this.length();
+                        double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки  
+                        radiusArc = R;
+                        Polygon p1 = UGeo.newPolygon(0, 0, 0, H, L, H, L, 0);
+                        Polygon p2 = UGeo.newPolygon(0, 0, 0, H + L, dH, H + L, dH, 0);
+                        Polygon p3 = UGeo.newPolygon(L - dH, 0, L - dH, H + L, L, H + L, L, 0);
 
-                        
-                        int k = (i == 0) ? owner.frames.size() - 1 : i - 1;
-                        int j = (i == (owner.frames.size() - 1)) ? 0 : i + 1;
-                        ElemSimple e1 = owner.frames.get(k);
-                        ElemSimple e2 = owner.frames.get(j);
+                        double ang1 = Math.PI / 2 - Math.asin(L / (R * 2));
+                        gsf.setSize(2 * R);
+                        gsf.setBase(new Coordinate(L / 2 - R, 0));
+                        LineString arc1 = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1);
+                        for (int j = 0; j < arc1.getCoordinates().length; j++) {
+                            arc1.getCoordinateN(j).setZ(this.id);
+                        }
 
-                        //Ширина сегментов
-                        double w0 = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
-                        double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);
-                        double w2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr);
+                        double ang2 = Math.PI / 2 - Math.asin((L - 2 * dH) / ((R - dH) * 2));
+                        gsf.setSize(2 * R - 2 * dH);
+                        gsf.setBase(new Coordinate(L / 2 - R + dH, dH));
+                        LineString arc2 = gsf.createArc(Math.PI + ang2, Math.PI - 2 * ang2);
 
-                        //Входящие и выходящие сегменты
-                        LineSegment segm0 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
-                        LineSegment segm1 = new LineSegment(e1.x1(), e1.y1(), e1.x2(), e1.y2());
-                        LineSegment segm2 = new LineSegment(e2.x1(), e2.y1(), e2.x2(), e2.y2());
+                        LineString lin[] = {gf.createLineString(UGeo.arrCoord(
+                            arc1.getCoordinateN(0).x, arc1.getCoordinateN(0).y, arc2.getCoordinateN(0).x, arc2.getCoordinateN(0).y)),
+                            gf.createLineString(UGeo.arrCoord(
+                            arc1.getCoordinateN(arc1.getNumPoints() - 1).x, arc1.getCoordinateN(arc1.getNumPoints() - 1).y,
+                            arc2.getCoordinateN(arc2.getNumPoints() - 1).x, arc2.getCoordinateN(arc2.getNumPoints() - 1).y))};
 
-                        //Сдвиг сегментов внутрь
-                        LineSegment segm3 = segm0.offset(-w0);
-                        LineSegment segm4 = segm1.offset(-w1);
-                        LineSegment segm5 = segm2.offset(-w2);
-
-                        Coordinate c1 = Intersection.intersection(
-                                new Coordinate(segm3.p0.x, segm3.p0.y), new Coordinate(segm3.p1.x, segm3.p1.y),
-                                new Coordinate(segm4.p0.x, segm4.p0.y), new Coordinate(segm4.p1.x, segm4.p1.y));
-                        Coordinate c2 = Intersection.intersection(
-                                new Coordinate(segm3.p0.x, segm3.p0.y), new Coordinate(segm3.p1.x, segm3.p1.y),
-                                new Coordinate(segm5.p0.x, segm5.p0.y), new Coordinate(segm5.p1.x, segm5.p1.y));
-
-                        //Полигон элемента конструкции 
-                        this.area = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y);
+                        this.area = gf.createMultiLineString(new LineString[]{arc1, arc2, lin[0], lin[1]});
 
                     } else {
                         int k = (i == 0) ? owner.frames.size() - 1 : i - 1;
@@ -339,7 +332,7 @@ public class ElemFrame extends ElemSimple {
     }
 
     //Линии размерности
-    @Override      
+    @Override
     public void paint() {
         if (this.area != null) {
             Shape shape = new ShapeWriter().toShape(this.area);
