@@ -18,7 +18,7 @@ import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class AreaArch extends AreaSimple {
 
-    public Geometry box = null; //ареа арки
+    public Geometry areaArch = null; //ареа арки
     
     public AreaArch(Wincalc winc, GsonElem gson) {
         super(winc, gson, null);
@@ -58,13 +58,9 @@ public class AreaArch extends AreaSimple {
             coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
             co2.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
 
-            //Создадим area рамы
-            Coordinate[] arr = coo.toArray(new Coordinate[0]);
-            Coordinate[] ar1 = co2.toArray(new Coordinate[0]);
-
-            //Полигон векторов рамы
-            this.area = gf.createPolygon(ar1); //gf.createPolygon(arr);
-            this.box = gf.createPolygon(ar1);
+            //Полигоны векторов рамы
+            this.area = gf.createPolygon(coo.toArray(new Coordinate[0]));
+            this.areaArch = gf.createPolygon(co2.toArray(new Coordinate[0]));
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
@@ -97,8 +93,8 @@ public class AreaArch extends AreaSimple {
     @Override
     public void paint() {
         super.paint();
-        if (this.box != null) {
-            Shape shape = new ShapeWriter().toShape(this.box);
+        if (this.areaArch != null) {
+            Shape shape = new ShapeWriter().toShape(this.areaArch);
             winc.gc2d.setColor(new java.awt.Color(000, 255, 000));
             winc.gc2d.draw(shape);
         }
