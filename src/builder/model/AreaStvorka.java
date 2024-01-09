@@ -172,15 +172,17 @@ public class AreaStvorka extends AreaSimple {
                 Coordinate[] coo = this.area.getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
                     ElemSimple elem = this.frames.get(i);
+                    coo[i].z = elem.id;
                     elem.setDimension(coo[i].x, coo[i].y, coo[i + 1].x, coo[i + 1].y); //запишем координаты
                 }
+                coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
             }
 
             //Ручка открывания
             if (this.typeOpen != TypeOpen1.EMPTY) {
 
                 //Линии гориз. открывания
-                ElemSimple stv = TypeOpen1.getKnob(this, typeOpen);
+                ElemSimple stv = TypeOpen1.getKnob(this, this.typeOpen);
                 int ind = UGeo.getIndex(this.area, stv);
                 Coordinate p = UGeo.getSegment(area, ind, 0).midPoint(); //высота ручки по умолчанию
                 LineSegment s1 = UGeo.getSegment(area, ind, -1);

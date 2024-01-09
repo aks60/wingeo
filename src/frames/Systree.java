@@ -594,7 +594,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         });
 
         UGui.buttonCellEditor(tab3, 1).addActionListener(event -> {
-            DicName frame = new DicName(this, listenerFurn, new Query(eFurniture.values()).select(eFurniture.up, "where", eFurniture.types, "= 0", "order by", eFurniture.name), eFurniture.name);
+            DicName frame = new DicName(this, listenerFurn, new Query(eFurniture.values()).select(eFurniture.up, "where", eFurniture.types, "in (0, 1)", "order by", eFurniture.name), eFurniture.name);
         });
 
         UGui.buttonCellEditor(tab3, 2).addActionListener(event -> {
@@ -3393,12 +3393,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             UGui.updateBorderAndSql(tab2, List.of(tab2, tab3, tab4, tab5));
             List.of(btnMoveU, btnMoveD).forEach(btn -> btn.setEnabled(true));
             btnFind1.setEnabled(true);
-            btnFind2.setEnabled(true);
 
         } else if (tabb1.getSelectedIndex() == 2) {
             UGui.updateBorderAndSql(tab3, List.of(tab2, tab3, tab4, tab5));
             List.of(btnMoveU, btnMoveD).forEach(btn -> btn.setEnabled(true));
-            btnFind2.setEnabled(true);
 
         } else if (tabb1.getSelectedIndex() == 3) {
             UGui.updateBorderAndSql(tab4, List.of(tab2, tab3, tab4, tab5));
