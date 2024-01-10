@@ -397,15 +397,15 @@ public class Test {
         gsf.setBase(new Coordinate(L / 2 - R + dH, dH));
         LineString arc2 = gsf.createArc(Math.PI + ang2, Math.PI - 2 * ang2);
 
-        mpol = gf.createMultiPolygon(new Polygon[]{p1, p2, p3});
+        //mpol = gf.createMultiPolygon(new Polygon[]{p1, p2, p3});
 
         List<Coordinate> list1 = new ArrayList(List.of(arc1.getCoordinates()));
-        List<Coordinate> list2 = new ArrayList(List.of(arc2.reverse().getCoordinates()));
-        list2.add(list1.get(0));
-        list1.addAll(list2);
+        //List<Coordinate> list2 = new ArrayList(List.of(arc2.reverse().getCoordinates()));
+        //list2.add(list1.get(0));
+        //list1.addAll(list2);
         mlin = gf.createLineString(list1.toArray(new Coordinate[0]));
         
-       // System.out.println(list1);
+        System.out.println(list1);
     }
 
     private void drawArch2() {
