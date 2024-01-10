@@ -83,7 +83,7 @@ public class ElemFrame extends ElemSimple {
                     
                     if (this.h() != null) {  // arch
                         GeometricShapeFactory gsf = new GeometricShapeFactory();
-                        double dH = this.artiklRec.getDbl(eArtikl.height), L = this.length(), R = this.radiusArc;
+                        double R = this.radiusArc, L = this.length(), dH = this.artiklRec.getDbl(eArtikl.height);
 
                         double ang1 = Math.PI / 2 - Math.asin(L / (R * 2));
                         gsf.setSize(2 * R);
