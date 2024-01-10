@@ -52,7 +52,7 @@ public class AreaArch extends AreaSimple {
                 }
             }
             //Полигон векторов рамы
-            coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
+            //coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
             this.area = gf.createPolygon(coo.toArray(new Coordinate[0]));
             
             //Geometry arc = UGeo.geoPadding(this.area, this.frames, -163);
@@ -92,11 +92,11 @@ public class AreaArch extends AreaSimple {
         if (this.area != null) { //TEST
             winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
             Shape shape = new ShapeWriter().toShape(this.area);
-            //winc.gc2d.draw(shape);
-            if (arc != null) {
-                shape = new ShapeWriter().toShape(this.arc);
-                winc.gc2d.draw(shape);
-            }
+            winc.gc2d.draw(shape);
+//            if (arc != null) {
+//                shape = new ShapeWriter().toShape(this.arc);
+//                winc.gc2d.draw(shape);
+//            }
         }
     }
 

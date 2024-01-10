@@ -156,10 +156,10 @@ public class UGeo {
 //                Coordinate c8 = inter.intersection(segm3.p0, segm3.p1, segm4.p0, segm4.p1);
 //                Coordinate c9 = segm4.lineIntersection(segm3);
 //                out[i] = inter.intersection(segm3.p0, segm3.p1, segm4.p0, segm4.p1);
-//                if (out[i] == null) {
-//                    System.out.println("AKS nbuilder.model.UGeo.geoPadding()");
-//                }
                 out[i] = segm4.lineIntersection(segm3);
+                if (out[i] == null) {
+                    System.out.println("AKS nbuilder.model.UGeo.geoPadding()");
+                }                
                 out[i].z = e2.id;
             }
             return Com5t.gf.createPolygon(out);

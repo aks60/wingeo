@@ -1,19 +1,25 @@
 package startup;
 
+import builder.model.Com5t;
 import static builder.model.Com5t.PRINT;
+import builder.model.ElemSimple;
 import builder.model.UGeo;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import common.LinkedCom;
 import common.eProp;
 import dataset.Conn;
+import domain.eArtikl;
+import enums.Type;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import javax.swing.JFrame;
@@ -306,10 +312,9 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
 
-        
         System.out.println(segm1.intersection(segm2));
-        
-        Intersection inter = new Intersection();	
+
+        Intersection inter = new Intersection();
         Coordinate c9 = inter.intersection(segm1.p0, segm1.p1, segm2.p0, segm2.p1);
         System.out.println(c9);
     }
@@ -343,7 +348,7 @@ public class Test {
                 if (mlin != null) {
                     Shape shape = new ShapeWriter().toShape(mlin);
                     g2.draw(shape);
-                    g2.fill(shape);
+//                    g2.fill(shape);
                 }
                 if (mpol != null) {
                     Shape shape = new ShapeWriter().toShape(mpol);
@@ -370,7 +375,59 @@ public class Test {
         Double H = 300.0;
         Double L = 1300.0;
         double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
+
+        Polygon p1 = UGeo.newPolygon(0, 0, 0, H, L, H, L, 0);
+        Polygon p2 = UGeo.newPolygon(0, 0, 0, H + L, dH, H + L, dH, 0);
+        Polygon p3 = UGeo.newPolygon(L - dH, 0, L - dH, H + L, L, H + L, L, 0);
+        Polygon p4 = UGeo.newPolygon(0, 300, 0, 1300, 1300, 1300, 1300, 300, 0, 300);
+
+        double ang1 = Math.PI / 2 - Math.asin(L / (R * 2));
+        //gsf.setNumPoints(1000);
+        gsf.setSize(2 * R);
+        gsf.setBase(new Coordinate(L / 2 - R, 0));
+        LineString arc = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1).reverse();
         
+//        ArrayList<Coordinate> listArc = new ArrayList(List.of(arc.getCoordinates()));
+//        listArc.remove(0);
+//        listArc.set(listArc.size()-1, new Coordinate(0, 300));
+//        ArrayList<Coordinate> list = new ArrayList();
+//        list.add(new Coordinate(0, 300));
+//        list.add(new Coordinate(0, 1300));
+//        list.add(new Coordinate(1300, 1300));
+//        list.add(new Coordinate(1300, 300));
+//        list.addAll(listArc);
+        
+        //Coordinate co2[] = Arrays.copyOfRange(arc.getCoordinates(), 1, arc.getNumPoints() - 1);
+        //co2[co2.length - 1] = new Coordinate(0, 300);
+
+        Coordinate co2[] = arc.getCoordinates();
+        //co2[0] = new Coordinate(1300, 300);
+        //co2[co2.length - 1] = new Coordinate(0, 300);
+//        
+        ArrayList<Coordinate> list = new ArrayList();
+        list.add(new Coordinate(0, 300));
+        list.add(new Coordinate(0, 1300));
+        list.add(new Coordinate(1300, 1300));
+        list.add(new Coordinate(1300, 300));
+        list.addAll(List.of(co2));
+
+        mpol = gf.createLineString(list.toArray(new Coordinate[0]));
+        mlin = geoPadding(mpol, 263);
+
+//        LineSegment segm1 = new LineSegment(arc.getCoordinates()[0], arc.getCoordinates()[arc.getNumPoints() - 2]);
+//        LineSegment segm2 = new LineSegment(0,300, 0, 1300);
+//        Coordinate c = segm1.lineIntersection(segm2);
+        //System.out.println(c);
+    }
+
+    private void drawArch3() {
+
+        GeometricShapeFactory gsf = new GeometricShapeFactory();
+        Double dH = 64.0;
+        Double H = 300.0;
+        Double L = 1300.0;
+        double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
+
         //Угол реза
         double rad1 = Math.acos((L / 2) / R);
         double rad2 = Math.acos((L - 2 * dH) / ((R - dH) * 2));
@@ -378,7 +435,7 @@ public class Test {
         double a2 = (R - dH) * Math.sin(rad2);
         double ang3 = 90 - Math.toDegrees(Math.atan((a1 - a2) / dH)); //угол реза рамы
         double ang4 = 90 - (Math.toDegrees(rad1) - (90 - ang3)); //угол реза арки
-                        
+
         Polygon p1 = UGeo.newPolygon(0, 0, 0, H, L, H, L, 0);
         Polygon p2 = UGeo.newPolygon(0, 0, 0, H + L, dH, H + L, dH, 0);
         Polygon p3 = UGeo.newPolygon(L - dH, 0, L - dH, H + L, L, H + L, L, 0);
@@ -398,13 +455,12 @@ public class Test {
         LineString arc2 = gsf.createArc(Math.PI + ang2, Math.PI - 2 * ang2);
 
         //mpol = gf.createMultiPolygon(new Polygon[]{p1, p2, p3});
-
         List<Coordinate> list1 = new ArrayList(List.of(arc1.getCoordinates()));
         //List<Coordinate> list2 = new ArrayList(List.of(arc2.reverse().getCoordinates()));
         //list2.add(list1.get(0));
         //list1.addAll(list2);
         mlin = gf.createLineString(list1.toArray(new Coordinate[0]));
-        
+
         System.out.println(list1);
     }
 
@@ -415,7 +471,7 @@ public class Test {
         Double H = 300.0;
         Double L = 1300.0;
         double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
-        
+
         //Угол реза
         double rad1 = Math.acos((L / 2) / R);
         double rad2 = Math.acos((L - 2 * dH) / ((R - dH) * 2));
@@ -423,7 +479,7 @@ public class Test {
         double a2 = (R - dH) * Math.sin(rad2);
         double ang3 = 90 - Math.toDegrees(Math.atan((a1 - a2) / dH)); //угол реза рамы
         double ang4 = 90 - (Math.toDegrees(rad1) - (90 - ang3)); //угол реза арки
-                        
+
         Polygon p1 = UGeo.newPolygon(0, 0, 0, H, L, H, L, 0);
         Polygon p2 = UGeo.newPolygon(0, 0, 0, H + L, dH, H + L, dH, 0);
         Polygon p3 = UGeo.newPolygon(L - dH, 0, L - dH, H + L, L, H + L, L, 0);
@@ -449,7 +505,49 @@ public class Test {
         list2.add(list1.get(0));
         list1.addAll(list2);
         mlin = gf.createLineString(list1.toArray(new Coordinate[0]));
-        
-       // System.out.println(list1);
+
+        // System.out.println(list1);
+    }
+
+    public static Polygon geoPadding(Geometry poly, double amend) {
+        try {
+            Intersection inter = new Intersection();
+            Coordinate[] coo = poly.copy().getCoordinates();
+            Coordinate[] out = new Coordinate[coo.length];
+            //LinkedCom<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+            for (int i = 0; i < coo.length; i++) {
+
+                //Сегменты границ полигона
+                int j = (i == coo.length - 1) ? 1 : i + 1;
+                int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
+
+                LineSegment segm1 = new LineSegment(coo[k], coo[i]);
+                LineSegment segm2 = new LineSegment(coo[i], coo[j]);
+
+                //Получим ширину сегментов
+                //ElemSimple e1 = listElem.find(coo[k].z);
+                //ElemSimple e2 = listElem.find(coo[i].z);
+                double w1 = amend;//(e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) + amend;
+                double w2 = amend;//(e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) + amend;
+
+                //Смещение сегментов относительно границ
+                LineSegment segm3 = segm1.offset(-w1);
+                LineSegment segm4 = segm2.offset(-w2);
+
+                //Точка пересечения внутренних сегментов
+//                out[i] = inter.intersection(segm1.p0, segm1.p1, segm2.p0, segm2.p1);
+                out[i] = inter.intersection(segm3.p0, segm3.p1, segm4.p0, segm4.p1);
+                //out[i] = segm4.lineIntersection(segm3);
+                if (out[i] == null) {
+                    System.out.println("AKS nbuilder.model.UGeo.geoPadding()");
+                }
+                out[i].z = 777;
+            }
+            return Com5t.gf.createPolygon(out);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.geoPadding() " + e);
+            return null;
+        }
     }
 }
