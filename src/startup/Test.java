@@ -19,6 +19,7 @@ import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.util.GeometricShapeFactory;
@@ -81,8 +82,8 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //wincalc();
-            //query();
             frame(args);
+            //query();
             //json();
             //uid();
             //script();
@@ -300,11 +301,17 @@ public class Test {
         Point point2 = gf.createPoint(new Coordinate(0, 500));
         LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
         LineString line2 = gf.createLineString(coord2);
-        LineSegment segm1 = new LineSegment(100, 100, 0, 0);
-        LineSegment segm2 = new LineSegment(20, 20, 200, 120);
+        LineSegment segm1 = new LineSegment(100, 100, 0, 100);
+        LineSegment segm2 = new LineSegment(80, 120, 80, 400);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
 
+        
+        System.out.println(segm1.intersection(segm2));
+        
+        Intersection inter = new Intersection();	
+        Coordinate c9 = inter.intersection(segm1.p0, segm1.p1, segm2.p0, segm2.p1);
+        System.out.println(c9);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -357,6 +364,51 @@ public class Test {
     }
 
     private void drawArch() {
+
+        GeometricShapeFactory gsf = new GeometricShapeFactory();
+        Double dH = 64.0;
+        Double H = 300.0;
+        Double L = 1300.0;
+        double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
+        
+        //Угол реза
+        double rad1 = Math.acos((L / 2) / R);
+        double rad2 = Math.acos((L - 2 * dH) / ((R - dH) * 2));
+        double a1 = R * Math.sin(rad1);
+        double a2 = (R - dH) * Math.sin(rad2);
+        double ang3 = 90 - Math.toDegrees(Math.atan((a1 - a2) / dH)); //угол реза рамы
+        double ang4 = 90 - (Math.toDegrees(rad1) - (90 - ang3)); //угол реза арки
+                        
+        Polygon p1 = UGeo.newPolygon(0, 0, 0, H, L, H, L, 0);
+        Polygon p2 = UGeo.newPolygon(0, 0, 0, H + L, dH, H + L, dH, 0);
+        Polygon p3 = UGeo.newPolygon(L - dH, 0, L - dH, H + L, L, H + L, L, 0);
+
+        double ang1 = Math.PI / 2 - Math.asin(L / (R * 2));
+        gsf.setNumPoints(1000);
+        gsf.setSize(2 * R);
+        gsf.setBase(new Coordinate(L / 2 - R, 0));
+        LineString arc1 = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1);
+        for (int i = 0; i < arc1.getCoordinates().length; i++) {
+            arc1.getCoordinateN(i).setZ(777);
+        }
+
+        double ang2 = Math.PI / 2 - Math.asin((L - 2 * dH) / ((R - dH) * 2));
+        gsf.setSize(2 * R - 2 * dH);
+        gsf.setBase(new Coordinate(L / 2 - R + dH, dH));
+        LineString arc2 = gsf.createArc(Math.PI + ang2, Math.PI - 2 * ang2);
+
+        mpol = gf.createMultiPolygon(new Polygon[]{p1, p2, p3});
+
+        List<Coordinate> list1 = new ArrayList(List.of(arc1.getCoordinates()));
+        List<Coordinate> list2 = new ArrayList(List.of(arc2.reverse().getCoordinates()));
+        list2.add(list1.get(0));
+        list1.addAll(list2);
+        mlin = gf.createLineString(list1.toArray(new Coordinate[0]));
+        
+       // System.out.println(list1);
+    }
+
+    private void drawArch2() {
 
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         Double dH = 64.0;

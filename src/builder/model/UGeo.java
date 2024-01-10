@@ -1,6 +1,5 @@
 package builder.model;
 
-import static builder.model.Com5t.PRINT;
 import common.LinkedCom;
 import domain.eArtikl;
 import enums.Type;
@@ -129,6 +128,7 @@ public class UGeo {
     //Внутренняя обводка ареа 
     public static Polygon geoPadding(Geometry poly, LinkedCom<ElemSimple> listElem, double amend) {
         try {
+            Intersection inter = new Intersection();
             Coordinate[] coo = poly.copy().getCoordinates();
             Coordinate[] out = new Coordinate[coo.length];
             LinkedCom<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
@@ -152,6 +152,13 @@ public class UGeo {
                 LineSegment segm4 = segm2.offset(-w2);
 
                 //Точка пересечения внутренних сегментов
+//                Coordinate c7 = inter.intersection(segm1.p0, segm1.p1, segm2.p0, segm2.p1);
+//                Coordinate c8 = inter.intersection(segm3.p0, segm3.p1, segm4.p0, segm4.p1);
+//                Coordinate c9 = segm4.lineIntersection(segm3);
+//                out[i] = inter.intersection(segm3.p0, segm3.p1, segm4.p0, segm4.p1);
+//                if (out[i] == null) {
+//                    System.out.println("AKS nbuilder.model.UGeo.geoPadding()");
+//                }
                 out[i] = segm4.lineIntersection(segm3);
                 out[i].z = e2.id;
             }
@@ -210,12 +217,12 @@ public class UGeo {
 //        if (coo.length > 5) {
 //            System.out.println("AKS builder.model.UGeo.getIndex()");
 //        } else {
-            for (int i = 0; i < coo.length - 1; i++) {
-                //if (e.x1() == coo[i].x && e.y1() == coo[i].y && e.x2() == coo[i + 1].x && e.y2() == coo[i + 1].y) {
-                if (coo[i].z == e.id) {
-                    return i;
-                }
+        for (int i = 0; i < coo.length - 1; i++) {
+            //if (e.x1() == coo[i].x && e.y1() == coo[i].y && e.x2() == coo[i + 1].x && e.y2() == coo[i + 1].y) {
+            if (coo[i].z == e.id) {
+                return i;
             }
+        }
 //        }
         //throw new Exception("Ошибка:UGeo.getIndex()");
         System.err.println("Ошибка:UGeo.getIndex()");

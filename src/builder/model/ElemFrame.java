@@ -92,7 +92,7 @@ public class ElemFrame extends ElemSimple {
                         List.of(arc1.getCoordinates()).forEach(l -> l.setZ(this.id));
 
                         double ang2 = Math.PI / 2 - Math.asin((L - 2 * dH) / ((R - dH) * 2));
-                        gsf.setNumPoints(1000);
+                        //gsf.setNumPoints(1000);
                         gsf.setSize(2 * R - 2 * dH);
                         gsf.setBase(new Coordinate(L / 2 - R + dH, dH));
                         LineString arc2 = gsf.createArc(Math.PI + ang2, Math.PI - 2 * ang2);
