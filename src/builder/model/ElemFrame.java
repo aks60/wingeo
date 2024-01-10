@@ -80,10 +80,10 @@ public class ElemFrame extends ElemSimple {
         try {
             for (int i = 0; i < owner.frames.size(); i++) {
                 if (owner.frames.get(i).id == this.id) {
-                    //Арка
-                    if (this.h() != null) {
+                    
+                    if (this.h() != null) {  // arch
                         GeometricShapeFactory gsf = new GeometricShapeFactory();
-                        double dH = this.artiklRec.getDbl(eArtikl.height), L = this.length(), R = this.radiusArc; 
+                        double dH = this.artiklRec.getDbl(eArtikl.height), L = this.length(), R = this.radiusArc;
 
                         double ang1 = Math.PI / 2 - Math.asin(L / (R * 2));
                         gsf.setSize(2 * R);
@@ -103,7 +103,7 @@ public class ElemFrame extends ElemSimple {
                         list1.addAll(list2);
                         this.area = gf.createLineString(list1.toArray(new Coordinate[0]));
 
-                    } else {
+                    } else { //polygon
                         int k = (i == 0) ? owner.frames.size() - 1 : i - 1;
                         int j = (i == (owner.frames.size() - 1)) ? 0 : i + 1;
                         ElemSimple e1 = owner.frames.get(k);

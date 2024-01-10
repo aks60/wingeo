@@ -354,10 +354,10 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        drawAreaArch();
+        drawArch();
     }
 
-    private void drawAreaArch() {
+    private void drawArch() {
 
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         Double dH = 64.0;
