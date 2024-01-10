@@ -341,7 +341,6 @@ public class Test {
                 if (mpol != null) {
                     Shape shape = new ShapeWriter().toShape(mpol);
                     g2.draw(shape);
-                    //g2.fill(shape);
                 }
             }
 
@@ -378,6 +377,7 @@ public class Test {
         Polygon p3 = UGeo.newPolygon(L - dH, 0, L - dH, H + L, L, H + L, L, 0);
 
         double ang1 = Math.PI / 2 - Math.asin(L / (R * 2));
+        gsf.setNumPoints(1000);
         gsf.setSize(2 * R);
         gsf.setBase(new Coordinate(L / 2 - R, 0));
         LineString arc1 = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1);
@@ -398,6 +398,6 @@ public class Test {
         list1.addAll(list2);
         mlin = gf.createLineString(list1.toArray(new Coordinate[0]));
         
-        System.out.println(list1);
+       // System.out.println(list1);
     }
 }

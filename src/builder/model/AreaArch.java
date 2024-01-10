@@ -28,39 +28,32 @@ public class AreaArch extends AreaSimple {
     //Полигон рамы. Функ. выпоняется после создания рам конструкции
     @Override
     public void setLocation() {
+        ArrayList<Coordinate> coo = new ArrayList<Coordinate>();
         try {
-            ArrayList<Coordinate> coo = new ArrayList<Coordinate>();
-            ArrayList<Coordinate> co2 = new ArrayList<Coordinate>();
-
             //Создадим вершины арки
             for (int i = 0; i < this.frames.size(); i++) {
                 ElemFrame frame = (ElemFrame) this.frames.get(i);
-
+                
                 if (frame.h() != null) {
                     GeometricShapeFactory gsf = new GeometricShapeFactory();
                     double L = frame.length(), H = frame.h();
-                    double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
+                    double R = frame.radiusArc = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
 
                     double ang1 = Math.PI / 2 - Math.asin(L / (R * 2));
+                    gsf.setNumPoints(1000);
                     gsf.setSize(2 * R);
                     gsf.setBase(new Coordinate(L / 2 - R, 0));
                     LineString arch = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1);
                     List.of(arch.getCoordinates()).forEach(c -> c.setZ(frame.id));
-                    co2.addAll(List.of(arch.getCoordinates()));
-                    coo.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
-                    frame.radiusArc = R;
+                    coo.addAll(List.of(arch.getCoordinates()));
                     
                 } else {
                     coo.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
-                    co2.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
                 }
             }
+            //Полигон векторов рамы
             coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
-            co2.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
-
-            //Полигоны векторов рамы
-            this.area = gf.createPolygon(co2.toArray(new Coordinate[0]));
-            this.areaArch = gf.createPolygon(co2.toArray(new Coordinate[0]));
+            this.area = gf.createPolygon(coo.toArray(new Coordinate[0]));
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
