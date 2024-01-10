@@ -13,6 +13,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.swing.JFrame;
@@ -335,10 +336,12 @@ public class Test {
                 if (mlin != null) {
                     Shape shape = new ShapeWriter().toShape(mlin);
                     g2.draw(shape);
+                    g2.fill(shape);
                 }
                 if (mpol != null) {
                     Shape shape = new ShapeWriter().toShape(mpol);
                     g2.draw(shape);
+                    //g2.fill(shape);
                 }
             }
 
@@ -362,6 +365,7 @@ public class Test {
         Double L = 1300.0;
         double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
         
+        //Угол реза
         double rad1 = Math.acos((L / 2) / R);
         double rad2 = Math.acos((L - 2 * dH) / ((R - dH) * 2));
         double a1 = R * Math.sin(rad1);
@@ -386,16 +390,14 @@ public class Test {
         gsf.setBase(new Coordinate(L / 2 - R + dH, dH));
         LineString arc2 = gsf.createArc(Math.PI + ang2, Math.PI - 2 * ang2);
 
-        LineString lin[] = {gf.createLineString(UGeo.arrCoord(
-            arc1.getCoordinateN(0).x, arc1.getCoordinateN(0).y,
-            arc2.getCoordinateN(0).x, arc2.getCoordinateN(0).y)),
-            gf.createLineString(UGeo.arrCoord(
-            arc1.getCoordinateN(arc1.getNumPoints() - 1).x, arc1.getCoordinateN(arc1.getNumPoints() - 1).y,
-            arc2.getCoordinateN(arc2.getNumPoints() - 1).x, arc2.getCoordinateN(arc2.getNumPoints() - 1).y))};
-
         mpol = gf.createMultiPolygon(new Polygon[]{p1, p2, p3});
-        mlin = gf.createMultiLineString(new LineString[]{arc1, arc2, lin[0], lin[1]});
 
-        System.out.println(R);
+        List<Coordinate> list1 = new ArrayList(List.of(arc1.getCoordinates()));
+        List<Coordinate> list2 = new ArrayList(List.of(arc2.reverse().getCoordinates()));
+        list2.add(list1.get(0));
+        list1.addAll(list2);
+        mlin = gf.createLineString(list1.toArray(new Coordinate[0]));
+        
+        System.out.println(list1);
     }
 }

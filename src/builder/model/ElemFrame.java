@@ -4,9 +4,7 @@ import builder.Wincalc;
 import builder.making.Specific;
 import builder.making.UColor;
 import builder.script.GsonElem;
-import com.google.gson.JsonObject;
 import common.UCom;
-import dataset.Record;
 import domain.eArtikl;
 import domain.eColor;
 import domain.eSetting;
@@ -18,14 +16,13 @@ import enums.Type;
 import enums.TypeArtikl;
 import enums.UseSide;
 import java.awt.Shape;
+import java.util.ArrayList;
 import java.util.List;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
-import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class ElemFrame extends ElemSimple {
@@ -86,35 +83,25 @@ public class ElemFrame extends ElemSimple {
                     //Арка
                     if (this.h() != null) {
                         GeometricShapeFactory gsf = new GeometricShapeFactory();
-                        double dH = this.artiklRec.getDbl(eArtikl.height);
-                        Double H = this.h();
-                        Double L = this.length();
-                        double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки  
-                        radiusArc = R;
-                        Polygon p1 = UGeo.newPolygon(0, 0, 0, H, L, H, L, 0);
-                        Polygon p2 = UGeo.newPolygon(0, 0, 0, H + L, dH, H + L, dH, 0);
-                        Polygon p3 = UGeo.newPolygon(L - dH, 0, L - dH, H + L, L, H + L, L, 0);
+                        double dH = this.artiklRec.getDbl(eArtikl.height), L = this.length(), R = this.radiusArc; 
 
                         double ang1 = Math.PI / 2 - Math.asin(L / (R * 2));
                         gsf.setSize(2 * R);
                         gsf.setBase(new Coordinate(L / 2 - R, 0));
                         LineString arc1 = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1);
-                        for (int j = 0; j < arc1.getCoordinates().length; j++) {
-                            arc1.getCoordinateN(j).setZ(this.id);
-                        }
+                        List.of(arc1.getCoordinates()).forEach(l -> l.setZ(this.id));
 
                         double ang2 = Math.PI / 2 - Math.asin((L - 2 * dH) / ((R - dH) * 2));
                         gsf.setSize(2 * R - 2 * dH);
                         gsf.setBase(new Coordinate(L / 2 - R + dH, dH));
                         LineString arc2 = gsf.createArc(Math.PI + ang2, Math.PI - 2 * ang2);
+                        List.of(arc2.getCoordinates()).forEach(l -> l.setZ(this.id));
 
-                        LineString lin[] = {gf.createLineString(UGeo.arrCoord(
-                            arc1.getCoordinateN(0).x, arc1.getCoordinateN(0).y, arc2.getCoordinateN(0).x, arc2.getCoordinateN(0).y)),
-                            gf.createLineString(UGeo.arrCoord(
-                            arc1.getCoordinateN(arc1.getNumPoints() - 1).x, arc1.getCoordinateN(arc1.getNumPoints() - 1).y,
-                            arc2.getCoordinateN(arc2.getNumPoints() - 1).x, arc2.getCoordinateN(arc2.getNumPoints() - 1).y))};
-
-                        this.area = gf.createMultiLineString(new LineString[]{arc1, arc2, lin[0], lin[1]});
+                        List<Coordinate> list1 = new ArrayList(List.of(arc1.getCoordinates()));
+                        List<Coordinate> list2 = new ArrayList(List.of(arc2.reverse().getCoordinates()));
+                        list2.add(list1.get(0));
+                        list1.addAll(list2);
+                        this.area = gf.createLineString(list1.toArray(new Coordinate[0]));
 
                     } else {
                         int k = (i == 0) ? owner.frames.size() - 1 : i - 1;
