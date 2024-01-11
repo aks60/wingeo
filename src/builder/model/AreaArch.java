@@ -28,7 +28,7 @@ public class AreaArch extends AreaSimple {
     //Полигон рамы. Функ. выпоняется после создания рам конструкции
     @Override
     public void setLocation() {
-        ArrayList<Coordinate> coo = new ArrayList<Coordinate>();
+        ArrayList<Coordinate> list = new ArrayList<Coordinate>();
         try {
             //Создадим вершины арки
             for (int i = 0; i < this.frames.size(); i++) {
@@ -37,26 +37,18 @@ public class AreaArch extends AreaSimple {
                 if (frame.h() != null) {
                     GeometricShapeFactory gsf = new GeometricShapeFactory();
                     double L = frame.length(), H = frame.h();
-                    double R = frame.radiusArc = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
-
-                    double ang1 = Math.PI / 2 - Math.asin(L / (R * 2));
-                    //gsf.setNumPoints(1000);
-                    gsf.setSize(2 * R);
-                    gsf.setBase(new Coordinate(L / 2 - R, 0));
-                    LineString arch = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1).reverse();
+                    frame.radiusArc = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
+                    LineString arch = UGeo.newLineStr(0, H, 0, L);
                     List.of(arch.getCoordinates()).forEach(c -> c.setZ(frame.id));
-                    coo.addAll(List.of(arch.getCoordinates()));
+                    list.addAll(List.of(arch.getCoordinates()));
 
                 } else {
-                    coo.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
+                    list.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
                 }
             }
             //Полигон векторов рамы
-            coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
-            this.area = gf.createPolygon(coo.toArray(new Coordinate[0]));
-            
-            //Geometry arc = UGeo.geoPadding(this.area, this.frames, -163);
-            //int m = 0;
+            list.add(list.get(0));
+            this.area = gf.createPolygon(list.toArray(new Coordinate[0]));
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
@@ -89,15 +81,16 @@ public class AreaArch extends AreaSimple {
     @Override
     public void paint() {
         super.paint();
-        if (this.area != null) { //TEST
-            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
-            Shape shape = new ShapeWriter().toShape(this.area);
-            winc.gc2d.draw(shape);
+//        if (this.area != null) { //TEST
+//            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
+//            Shape shape = new ShapeWriter().toShape(this.area);
+//            winc.gc2d.draw(shape);
+//
 //            if (arc != null) {
 //                shape = new ShapeWriter().toShape(this.arc);
 //                winc.gc2d.draw(shape);
 //            }
-        }
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">

@@ -387,10 +387,72 @@ public class Test {
         list.add(list.get(0));
 
         mpol = gf.createLineString(list.toArray(new Coordinate[0]));
-        mlin = geoPadding(mpol, -363);
+        mlin = geoPadding(mpol, -63);
         //System.out.println(c);
     }
 
+    public static Polygon geoPadding(Geometry poly, double amend) {
+        List<Coordinate> out = new ArrayList();
+        try {
+            int j = 999, k = 999;
+            LineSegment segm1, segm2, segm1a, segm2a, segm1b, segm2b, segm1c, segm2c;
+            Coordinate[] coo = poly.copy().getCoordinates();
+            for (int i = 0; i < coo.length; i++) {
+
+                //Сегменты границ полигона
+                segm1 = UGeo.getLineSegment(poly, i - 1);
+                segm2 = UGeo.getLineSegment(poly, i);
+
+                //Смещение сегментов относительно границ
+                segm1a = segm1.offset(amend);
+                segm2a = segm2.offset(amend);
+
+                //Точка пересечения внутренних сегментов
+                Coordinate cross = segm2a.intersection(segm1a);
+
+                if (cross != null && i < j - 1) {
+                    out.add(cross);
+       
+                } else { //обрезаем концы арки
+                    
+                    if (segm1.p0.z == 4) {
+                        Coordinate cros2 = null;
+                        j = i - 1;
+                        do {
+                            segm1b = UGeo.getLineSegment(poly, --j);
+                            segm1c = segm1b.offset(amend);
+                            cros2 = segm2a.intersection(segm1c);
+
+                        } while (cros2 == null);
+                        out.add(cros2);
+                        j = (j < 0) ? --j + coo.length : --j;
+                        
+                    }
+                    if (segm2.p0.z == 4) {
+                        Coordinate cros3 = null;
+                        k = i;
+                        do {
+                            segm2b = UGeo.getLineSegment(poly, ++k);
+                            segm2c = segm2b.offset(amend);
+                            cros3 = segm2c.intersection(segm1a);
+
+                        } while (cros3 == null);
+                        i = k;
+                        out.add(cros3);
+                    }
+                }
+            }
+            out.add(out.get(0));
+            Polygon g = Com5t.gf.createPolygon(out.toArray(new Coordinate[0]));
+            return g;
+
+        } catch (Exception e) {
+            System.err.println("AKS Ошибка:UGeo.geoPadding() " + e);
+            return null;
+        }
+    }
+
+// <editor-fold defaultstate="collapsed" desc="TEMP">  
     private void drawArch3() {
 
         GeometricShapeFactory gsf = new GeometricShapeFactory();
@@ -480,41 +542,5 @@ public class Test {
         // System.out.println(list1);
     }
 
-    public static Polygon geoPadding(Geometry poly, double amend) {
-        List<Coordinate> out = new ArrayList();
-        try {
-            //Intersection inter = new Intersection();
-            Coordinate[] coo = poly.copy().getCoordinates();
-            for (int i = 0; i < coo.length; i++) {
-
-                //Сегменты границ полигона
-                int j = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
-                int k = (i == coo.length - 1) ? 1 : i + 1;
-
-                LineSegment segm1 = new LineSegment(coo[j], coo[i]);
-                LineSegment segm2 = new LineSegment(coo[i], coo[k]);
-
-                //Смещение сегментов относительно границ
-                LineSegment segm3 = segm1.offset(amend);
-                LineSegment segm4 = segm2.offset(amend);
-
-                //Точка пересечения внутренних сегментов
-//                out[i] = inter.intersection(segm3.p0, segm3.p1, segm4.p0, segm4.p1);
-//                out[i] = segm4.lineIntersection(segm3);
-                Coordinate cros = segm4.intersection(segm3);
-                if (cros != null) {
-                    out.add(cros);
-                } else {
-                    System.out.println("AKS2 nbuilder.model.UGeo.geoPadding()");
-                }
-            }
-            out.add(out.get(0));
-            Polygon g = Com5t.gf.createPolygon(out.toArray(new Coordinate[0]));
-            return g;
-
-        } catch (Exception e) {
-            System.err.println("AKS Ошибка:UGeo.geoPadding() " + e);
-            return null;
-        }
-    }
+// </editor-fold>        
 }

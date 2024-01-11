@@ -127,40 +127,102 @@ public class UGeo {
     }
 
     //Внутренняя обводка ареа 
-    public static Polygon geoPadding(Geometry poly, LinkedCom<ElemSimple> listElem, double amend) {
+    public static Polygon geoPadding2(Geometry poly, LinkedCom<ElemSimple> listElem, double amend) {
+        List<Coordinate> out = new ArrayList();
         try {
-            Intersection inter = new Intersection();
+            int j = 999, k = 999;
+            LineSegment segm1, segm2, segm1a, segm2a, segm1b, segm2b, segm1c, segm2c;
             Coordinate[] coo = poly.copy().getCoordinates();
-            Coordinate[] out = new Coordinate[coo.length];
-            LinkedCom<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             for (int i = 0; i < coo.length; i++) {
 
                 //Сегменты границ полигона
-                int j = (i == coo.length - 1) ? 1 : i + 1;
-                int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
+                segm1 = UGeo.getLineSegment(poly, i - 1);
+                segm2 = UGeo.getLineSegment(poly, i);
 
-                LineSegment segm1 = new LineSegment(coo[k], coo[i]);
-                LineSegment segm2 = new LineSegment(coo[i], coo[j]);
-
-                //Получим ширину сегментов
-                ElemSimple e1 = listElem.find(coo[k].z);
-                ElemSimple e2 = listElem.find(coo[i].z);
+                //Смещение сегментов относительно границ
+                ElemSimple e1 = listElem.find(segm1.p0.z);
+                ElemSimple e2 = listElem.find(segm2.p0.z);
                 double w1 = (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) + amend;
                 double w2 = (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) + amend;
 
                 //Смещение сегментов относительно границ
-                LineSegment segm3 = segm1.offset(-w1);
-                LineSegment segm4 = segm2.offset(-w2);
+                segm1a = segm1.offset(-w1);
+                segm2a = segm2.offset(-w2);
+
+                //segm1a = segm1.offset(amend);
+                //segm2a = segm2.offset(amend);                
+                //Точка пересечения внутренних сегментов
+                Coordinate cross = segm2a.intersection(segm1a);
+
+                if (cross != null && i < j - 1) {
+                    out.add(cross);
+
+                } else { //обрезаем концы арки
+
+                    if (e1.h() != null) {
+                        Coordinate cros2 = null;
+                        j = i - 1;
+                        do {
+                            segm1b = UGeo.getLineSegment(poly, --j);
+                            segm1c = segm1b.offset(amend);
+                            cros2 = segm2a.intersection(segm1c);
+
+                        } while (cros2 == null);
+                        out.add(cros2);
+                        j = (j < 0) ? --j + coo.length : --j;
+
+                    }
+                    if (e2.h() != null) {
+                        Coordinate cros3 = null;
+                        k = i;
+                        do {
+                            segm2b = UGeo.getLineSegment(poly, ++k);
+                            segm2c = segm2b.offset(amend);
+                            cros3 = segm2c.intersection(segm1a);
+
+                        } while (cros3 == null);
+                        i = k;
+                        out.add(cros3);
+                    }
+                }
+            }
+            out.add(out.get(0));
+            Polygon g = Com5t.gf.createPolygon(out.toArray(new Coordinate[0]));
+            return g;
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.geoPadding() " + e);
+            return null;
+        }
+    }
+
+    public static Polygon geoPadding(Geometry poly, LinkedCom<ElemSimple> listElem, double amend) {
+        try {
+            LineSegment segm1, segm2, segm3, segm4;
+            Coordinate[] coo = poly.copy().getCoordinates();
+            Coordinate[] out = new Coordinate[coo.length];
+            for (int i = 0; i < coo.length; i++) {
+
+                //Сегменты смещения в полигоне
+                segm1 = UGeo.getLineSegment(poly, i - 1);
+                segm2 = UGeo.getLineSegment(poly, i);
+
+                //Получим ширину сегментов
+                ElemSimple e1 = listElem.find(segm1.p0.z);
+                ElemSimple e2 = listElem.find(segm2.p0.z);
+                double w1 = (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) + amend;
+                double w2 = (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) + amend;
+
+                //Смещение сегментов относительно границ
+                segm3 = segm1.offset(-w1);
+                segm4 = segm2.offset(-w2);
 
                 //Точка пересечения внутренних сегментов
-//                Coordinate c7 = inter.intersection(segm1.p0, segm1.p1, segm2.p0, segm2.p1);
-//                Coordinate c8 = inter.intersection(segm3.p0, segm3.p1, segm4.p0, segm4.p1);
-//                Coordinate c9 = segm4.lineIntersection(segm3);
-//                out[i] = inter.intersection(segm3.p0, segm3.p1, segm4.p0, segm4.p1);
                 out[i] = segm4.lineIntersection(segm3);
+
                 if (out[i] == null) {
                     System.out.println("AKS nbuilder.model.UGeo.geoPadding()");
-                }                
+                }
                 out[i].z = e2.id;
             }
             return Com5t.gf.createPolygon(out);
@@ -196,11 +258,12 @@ public class UGeo {
         double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
         double angl = Math.PI / 2 - Math.asin(L / (R * 2));
         GeometricShapeFactory gsf = new GeometricShapeFactory();
-        //gsf.setNumPoints(100);
+        gsf.setNumPoints(100);
         gsf.setSize(2 * R);
         gsf.setBase(new Coordinate(L / 2 - R, 0));
         return gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
     }
+
     //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Polygon newPolygon(double... d) {
         return Com5t.gf.createPolygon(UGeo.arrCoord(d));
@@ -222,6 +285,16 @@ public class UGeo {
             return new LineSegment(list.get(i + 1), list.get(i + 2));
         }
         return null;
+    }
+
+    public static LineSegment getLineSegment(Geometry poly, int index) {
+
+        Coordinate[] coo = Arrays.copyOf(poly.getCoordinates(), poly.getNumPoints() - 1);
+        index = (index >= coo.length) ? index - coo.length : index;
+        int j = (index < 0) ? index + coo.length : index;
+        int k = (j + 1 >= coo.length) ? j + 1 - coo.length : j + 1;
+
+        return new LineSegment(coo[j], coo[k]);
     }
 
     public static int getIndex(Geometry p, Com5t e) throws Exception {
