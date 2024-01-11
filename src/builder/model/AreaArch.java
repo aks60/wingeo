@@ -52,7 +52,7 @@ public class AreaArch extends AreaSimple {
                 }
             }
             //Полигон векторов рамы
-            //coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
+            coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
             this.area = gf.createPolygon(coo.toArray(new Coordinate[0]));
             
             //Geometry arc = UGeo.geoPadding(this.area, this.frames, -163);

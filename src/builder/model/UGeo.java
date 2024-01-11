@@ -16,6 +16,7 @@ import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.util.GeometricShapeFactory;
 
 /**
  * Утилиты JTS
@@ -189,6 +190,17 @@ public class UGeo {
         return Com5t.gf.createLineString(UGeo.arrCoord(d));
     }
 
+    public static LineString newLineStr(double H1, double H2, double L1, double L2) {
+        double H = H2 - H1;
+        double L = L2 - L1;
+        double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
+        double angl = Math.PI / 2 - Math.asin(L / (R * 2));
+        GeometricShapeFactory gsf = new GeometricShapeFactory();
+        //gsf.setNumPoints(100);
+        gsf.setSize(2 * R);
+        gsf.setBase(new Coordinate(L / 2 - R, 0));
+        return gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
+    }
     //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Polygon newPolygon(double... d) {
         return Com5t.gf.createPolygon(UGeo.arrCoord(d));

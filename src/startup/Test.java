@@ -372,51 +372,22 @@ public class Test {
 
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         Double dH = 64.0;
-        Double H = 300.0;
-        Double L = 1300.0;
-        double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
-
-        Polygon p1 = UGeo.newPolygon(0, 0, 0, H, L, H, L, 0);
-        Polygon p2 = UGeo.newPolygon(0, 0, 0, H + L, dH, H + L, dH, 0);
-        Polygon p3 = UGeo.newPolygon(L - dH, 0, L - dH, H + L, L, H + L, L, 0);
-        Polygon p4 = UGeo.newPolygon(0, 300, 0, 1300, 1300, 1300, 1300, 300, 0, 300);
-
-        double ang1 = Math.PI / 2 - Math.asin(L / (R * 2));
-        //gsf.setNumPoints(1000);
-        gsf.setSize(2 * R);
-        gsf.setBase(new Coordinate(L / 2 - R, 0));
-        LineString arc = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1).reverse();
-        
-//        ArrayList<Coordinate> listArc = new ArrayList(List.of(arc.getCoordinates()));
-//        listArc.remove(0);
-//        listArc.set(listArc.size()-1, new Coordinate(0, 300));
-//        ArrayList<Coordinate> list = new ArrayList();
-//        list.add(new Coordinate(0, 300));
-//        list.add(new Coordinate(0, 1300));
-//        list.add(new Coordinate(1300, 1300));
-//        list.add(new Coordinate(1300, 300));
-//        list.addAll(listArc);
-        
-        //Coordinate co2[] = Arrays.copyOfRange(arc.getCoordinates(), 1, arc.getNumPoints() - 1);
-        //co2[co2.length - 1] = new Coordinate(0, 300);
+        Coordinate p = new Coordinate(1300, 300, 4);
+        LineString arc = UGeo.newLineStr(0, p.y, 0, p.x);
+        List.of(arc.getCoordinates()).forEach(c -> c.z = 4);
 
         Coordinate co2[] = arc.getCoordinates();
-        //co2[0] = new Coordinate(1300, 300);
-        //co2[co2.length - 1] = new Coordinate(0, 300);
-//        
         ArrayList<Coordinate> list = new ArrayList();
-        list.add(new Coordinate(0, 300));
-        list.add(new Coordinate(0, 1300));
-        list.add(new Coordinate(1300, 1300));
-        list.add(new Coordinate(1300, 300));
+
+        list.add(new Coordinate(0, 300, 1));
+        list.add(new Coordinate(0, 1500, 2));
+        list.add(new Coordinate(1300, 1500, 3));
+
         list.addAll(List.of(co2));
+        list.add(list.get(0));
 
         mpol = gf.createLineString(list.toArray(new Coordinate[0]));
-        mlin = geoPadding(mpol, 263);
-
-//        LineSegment segm1 = new LineSegment(arc.getCoordinates()[0], arc.getCoordinates()[arc.getNumPoints() - 2]);
-//        LineSegment segm2 = new LineSegment(0,300, 0, 1300);
-//        Coordinate c = segm1.lineIntersection(segm2);
+        mlin = geoPadding(mpol, -363);
         //System.out.println(c);
     }
 
@@ -510,43 +481,39 @@ public class Test {
     }
 
     public static Polygon geoPadding(Geometry poly, double amend) {
+        List<Coordinate> out = new ArrayList();
         try {
-            Intersection inter = new Intersection();
+            //Intersection inter = new Intersection();
             Coordinate[] coo = poly.copy().getCoordinates();
-            Coordinate[] out = new Coordinate[coo.length];
-            //LinkedCom<ElemSimple> listFrame = listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             for (int i = 0; i < coo.length; i++) {
 
                 //Сегменты границ полигона
-                int j = (i == coo.length - 1) ? 1 : i + 1;
-                int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
+                int j = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
+                int k = (i == coo.length - 1) ? 1 : i + 1;
 
-                LineSegment segm1 = new LineSegment(coo[k], coo[i]);
-                LineSegment segm2 = new LineSegment(coo[i], coo[j]);
-
-                //Получим ширину сегментов
-                //ElemSimple e1 = listElem.find(coo[k].z);
-                //ElemSimple e2 = listElem.find(coo[i].z);
-                double w1 = amend;//(e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) + amend;
-                double w2 = amend;//(e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) + amend;
+                LineSegment segm1 = new LineSegment(coo[j], coo[i]);
+                LineSegment segm2 = new LineSegment(coo[i], coo[k]);
 
                 //Смещение сегментов относительно границ
-                LineSegment segm3 = segm1.offset(-w1);
-                LineSegment segm4 = segm2.offset(-w2);
+                LineSegment segm3 = segm1.offset(amend);
+                LineSegment segm4 = segm2.offset(amend);
 
                 //Точка пересечения внутренних сегментов
-//                out[i] = inter.intersection(segm1.p0, segm1.p1, segm2.p0, segm2.p1);
-                out[i] = inter.intersection(segm3.p0, segm3.p1, segm4.p0, segm4.p1);
-                //out[i] = segm4.lineIntersection(segm3);
-                if (out[i] == null) {
-                    System.out.println("AKS nbuilder.model.UGeo.geoPadding()");
+//                out[i] = inter.intersection(segm3.p0, segm3.p1, segm4.p0, segm4.p1);
+//                out[i] = segm4.lineIntersection(segm3);
+                Coordinate cros = segm4.intersection(segm3);
+                if (cros != null) {
+                    out.add(cros);
+                } else {
+                    System.out.println("AKS2 nbuilder.model.UGeo.geoPadding()");
                 }
-                out[i].z = 777;
             }
-            return Com5t.gf.createPolygon(out);
+            out.add(out.get(0));
+            Polygon g = Com5t.gf.createPolygon(out.toArray(new Coordinate[0]));
+            return g;
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.geoPadding() " + e);
+            System.err.println("AKS Ошибка:UGeo.geoPadding() " + e);
             return null;
         }
     }
