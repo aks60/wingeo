@@ -6,7 +6,6 @@ import domain.eArtikl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import static java.util.Collections.list;
 import java.util.HashSet;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
