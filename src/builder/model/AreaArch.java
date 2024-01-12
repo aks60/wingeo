@@ -49,7 +49,7 @@ public class AreaArch extends AreaSimple {
             //Полигон векторов рамы
             list.add(list.get(0));
             this.area = gf.createPolygon(list.toArray(new Coordinate[0]));
-            this.arc = UGeo.geoPadding(area, frames, 0);
+            //this.arc = UGeo.geoPadding(area, frames, 0);
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
@@ -82,16 +82,16 @@ public class AreaArch extends AreaSimple {
     @Override
     public void paint() {
         super.paint();
-        if (this.area != null) { //TEST
-            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
-            Shape shape = new ShapeWriter().toShape(this.area);
-            winc.gc2d.draw(shape);
-
-            if (arc != null) {
-                shape = new ShapeWriter().toShape(this.arc);
-                winc.gc2d.draw(shape);
-            }
-        }
+//        if (this.area != null) { //TEST
+//            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
+//            Shape shape = new ShapeWriter().toShape(this.area);
+//            winc.gc2d.draw(shape);
+//
+//            if (arc != null) {
+//                shape = new ShapeWriter().toShape(this.arc);
+//                winc.gc2d.draw(shape);
+//            }
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
