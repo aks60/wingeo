@@ -1,11 +1,12 @@
 package builder.model;
 
 import common.LinkedCom;
+import dataset.Record;
 import domain.eArtikl;
-import enums.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import static java.util.Collections.list;
 import java.util.HashSet;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
@@ -127,11 +128,11 @@ public class UGeo {
     }
 
     //Внутренняя обводка ареа 
-    public static Polygon geoPadding2(Geometry poly, LinkedCom<ElemSimple> listElem, double amend) {
+    public static Polygon geoPadding(Geometry poly, LinkedCom<ElemSimple> list, double amend) {
+        LineSegment segm1, segm2, segm1a, segm2a, segm1b, segm2b, segm1c, segm2c;
         List<Coordinate> out = new ArrayList();
         try {
             int j = 999, k = 999;
-            LineSegment segm1, segm2, segm1a, segm2a, segm1b, segm2b, segm1c, segm2c;
             Coordinate[] coo = poly.copy().getCoordinates();
             for (int i = 0; i < coo.length; i++) {
 
@@ -139,51 +140,51 @@ public class UGeo {
                 segm1 = UGeo.getLineSegment(poly, i - 1);
                 segm2 = UGeo.getLineSegment(poly, i);
 
-                //Смещение сегментов относительно границ
-                ElemSimple e1 = listElem.find(segm1.p0.z);
-                ElemSimple e2 = listElem.find(segm2.p0.z);
-                double w1 = (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) + amend;
-                double w2 = (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) + amend;
-
-                //Смещение сегментов относительно границ
+                //Смещение сегментов относительно границ                
+                ElemSimple e1 = list.find(segm1.p0.z), e2 = list.find(segm2.p0.z);
+                Record rec1 = (e1.artiklRec == null) ? eArtikl.virtualRec() : e1.artiklRec;
+                Record rec2 = (e2.artiklRec == null) ? eArtikl.virtualRec() : e2.artiklRec;
+                double w1 = (rec1.getDbl(eArtikl.height) - rec1.getDbl(eArtikl.size_centr)) - amend;
+                double w2 = (rec2.getDbl(eArtikl.height) - rec2.getDbl(eArtikl.size_centr)) - amend;
                 segm1a = segm1.offset(-w1);
                 segm2a = segm2.offset(-w2);
 
-                //segm1a = segm1.offset(amend);
-                //segm2a = segm2.offset(amend);                
                 //Точка пересечения внутренних сегментов
                 Coordinate cross = segm2a.intersection(segm1a);
 
                 if (cross != null && i < j - 1) {
+                    cross.z = e1.id;
                     out.add(cross);
 
                 } else { //обрезаем концы арки
 
-                    if (e1.h() != null) {
-                        Coordinate cros2 = null;
-                        j = i - 1;
-                        do {
-                            segm1b = UGeo.getLineSegment(poly, --j);
-                            segm1c = segm1b.offset(amend);
-                            cros2 = segm2a.intersection(segm1c);
-
-                        } while (cros2 == null);
-                        out.add(cros2);
-                        j = (j < 0) ? --j + coo.length : --j;
-
-                    }
-                    if (e2.h() != null) {
-                        Coordinate cros3 = null;
-                        k = i;
-                        do {
-                            segm2b = UGeo.getLineSegment(poly, ++k);
-                            segm2c = segm2b.offset(amend);
-                            cros3 = segm2c.intersection(segm1a);
-
-                        } while (cros3 == null);
-                        i = k;
-                        out.add(cros3);
-                    }
+//                    if (e1.h() != null) { //слева
+//                        Coordinate cros1 = null;
+//                        j = i - 1;
+//                        do {
+//                            segm1b = UGeo.getLineSegment(poly, --j);
+//                            segm1c = segm1b.offset(-w1);
+//                            cros1 = segm2a.intersection(segm1c);
+//
+//                        } while (cros1 == null);
+//                        cros1.z = e2.id;
+//                        out.add(cros1);
+//                        j = (j < 0) ? --j + coo.length : --j;
+//
+//                    }
+//                    if (e2.h() != null) {  //справа
+//                        Coordinate cros2 = null;
+//                        k = i;
+//                        do {
+//                            segm2b = UGeo.getLineSegment(poly, ++k);
+//                            segm2c = segm2b.offset(-w2);
+//                            cros2 = segm2c.intersection(segm1a);
+//
+//                        } while (cros2 == null);
+//                        i = k;
+//                        cros2.z = e2.id;
+//                        out.add(cros2);
+//                    }
                 }
             }
             out.add(out.get(0));
@@ -191,12 +192,11 @@ public class UGeo {
             return g;
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.geoPadding() " + e);
+            System.err.println("AKS Ошибка:UGeo.geoPadding() " + e);
             return null;
         }
     }
-
-    public static Polygon geoPadding(Geometry poly, LinkedCom<ElemSimple> listElem, double amend) {
+    public static Polygon geoPadding2(Geometry poly, LinkedCom<ElemSimple> listElem, double amend) {
         try {
             LineSegment segm1, segm2, segm3, segm4;
             Coordinate[] coo = poly.copy().getCoordinates();
@@ -232,7 +232,7 @@ public class UGeo {
             return null;
         }
     }
-
+    
     //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Coordinate[] arrCoord(double... d) {
         List<Coordinate> list = new ArrayList();

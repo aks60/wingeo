@@ -130,7 +130,7 @@ public enum eArtikl implements Field {
         record.setNo(code, "@");
         record.setNo(name, "virtual");
         //для построения типовых конструкций
-        record.setNo(height, 80);
+        record.setNo(height, 68);
         record.setNo(size_centr, 0);
         record.setNo(tech_code, "");
         record.setNo(size_falz, 20);

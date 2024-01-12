@@ -411,34 +411,37 @@ public class Test {
                 Coordinate cross = segm2a.intersection(segm1a);
 
                 if (cross != null && i < j - 1) {
+                    cross.z = 4;
                     out.add(cross);
        
                 } else { //обрезаем концы арки
                     
                     if (segm1.p0.z == 4) {
-                        Coordinate cros2 = null;
+                        Coordinate cros1 = null;
                         j = i - 1;
                         do {
                             segm1b = UGeo.getLineSegment(poly, --j);
                             segm1c = segm1b.offset(amend);
-                            cros2 = segm2a.intersection(segm1c);
+                            cros1 = segm2a.intersection(segm1c);
 
-                        } while (cros2 == null);
-                        out.add(cros2);
+                        } while (cros1 == null);
+                        cros1.z = 1;
+                        out.add(cros1);
                         j = (j < 0) ? --j + coo.length : --j;
                         
                     }
                     if (segm2.p0.z == 4) {
-                        Coordinate cros3 = null;
+                        Coordinate cros2 = null;
                         k = i;
                         do {
                             segm2b = UGeo.getLineSegment(poly, ++k);
                             segm2c = segm2b.offset(amend);
-                            cros3 = segm2c.intersection(segm1a);
+                            cros2 = segm2c.intersection(segm1a);
 
-                        } while (cros3 == null);
+                        } while (cros2 == null);
                         i = k;
-                        out.add(cros3);
+                        cros2.z = 4;
+                        out.add(cros2);
                     }
                 }
             }

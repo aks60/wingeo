@@ -3,7 +3,6 @@ package builder.model;
 import builder.Wincalc;
 import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
-import domain.eColor;
 import enums.Type;
 import enums.TypeJoin;
 import java.awt.Shape;
@@ -15,6 +14,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.util.GeometricShapeFactory;
+import startup.Test;
 
 public class AreaArch extends AreaSimple {
 
@@ -49,6 +49,7 @@ public class AreaArch extends AreaSimple {
             //Полигон векторов рамы
             list.add(list.get(0));
             this.area = gf.createPolygon(list.toArray(new Coordinate[0]));
+            //this.arc = UGeo.geoPadding(area, frames, 0);
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
@@ -81,16 +82,16 @@ public class AreaArch extends AreaSimple {
     @Override
     public void paint() {
         super.paint();
-//        if (this.area != null) { //TEST
-//            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
-//            Shape shape = new ShapeWriter().toShape(this.area);
-//            winc.gc2d.draw(shape);
-//
-//            if (arc != null) {
-//                shape = new ShapeWriter().toShape(this.arc);
-//                winc.gc2d.draw(shape);
-//            }
-//        }
+        if (this.area != null) { //TEST
+            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
+            Shape shape = new ShapeWriter().toShape(this.area);
+            winc.gc2d.draw(shape);
+
+            if (arc != null) {
+                shape = new ShapeWriter().toShape(this.arc);
+                winc.gc2d.draw(shape);
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
