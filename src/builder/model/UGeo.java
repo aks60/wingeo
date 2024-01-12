@@ -153,41 +153,43 @@ public class UGeo {
                 Coordinate cross = segm2a.intersection(segm1a);
 
                 if (cross != null && i < j - 1) {
-                    cross.z = e1.id;
+                    cross.z = e2.id;
                     out.add(cross);
 
                 } else { //обрезаем концы арки
 
-//                    if (e1.h() != null) { //слева
-//                        Coordinate cros1 = null;
-//                        j = i - 1;
-//                        do {
-//                            segm1b = UGeo.getLineSegment(poly, --j);
-//                            segm1c = segm1b.offset(-w1);
-//                            cros1 = segm2a.intersection(segm1c);
-//
-//                        } while (cros1 == null);
-//                        cros1.z = e2.id;
-//                        out.add(cros1);
-//                        j = (j < 0) ? --j + coo.length : --j;
-//
-//                    }
-//                    if (e2.h() != null) {  //справа
-//                        Coordinate cros2 = null;
-//                        k = i;
-//                        do {
-//                            segm2b = UGeo.getLineSegment(poly, ++k);
-//                            segm2c = segm2b.offset(-w2);
-//                            cros2 = segm2c.intersection(segm1a);
-//
-//                        } while (cros2 == null);
-//                        i = k;
-//                        cros2.z = e2.id;
-//                        out.add(cros2);
-//                    }
+                    if (e1.h() != null) { //слева
+                        Coordinate cros1 = null;
+                        j = i - 1;
+                        do {
+                            segm1b = UGeo.getLineSegment(poly, --j);
+                            segm1c = segm1b.offset(-w1);
+                            cros1 = segm2a.intersection(segm1c);
+
+                        } while (cros1 == null);
+                        cros1.z = e2.id;
+                        out.add(cros1);
+                        j = (j < 0) ? --j + coo.length : --j;
+
+                    }
+                    if (e2.h() != null) {  //справа
+                        Coordinate cros2 = null;
+                        k = i;
+                        do {
+                            segm2b = UGeo.getLineSegment(poly, ++k);
+                            segm2c = segm2b.offset(-w2);
+                            cros2 = segm2c.intersection(segm1a);
+
+                        } while (cros2 == null);
+                        i = k;
+                        cros2.z = e2.id;
+                        out.add(cros2);
+                    }
                 }
             }
-            out.add(out.get(0));
+            if (out.get(0).equals(out.get(out.size() - 1)) == false) {
+                out.add(out.get(0));
+            }
             Polygon g = Com5t.gf.createPolygon(out.toArray(new Coordinate[0]));
             return g;
 
@@ -196,6 +198,7 @@ public class UGeo {
             return null;
         }
     }
+
     public static Polygon geoPadding2(Geometry poly, LinkedCom<ElemSimple> listElem, double amend) {
         try {
             LineSegment segm1, segm2, segm3, segm4;
@@ -232,7 +235,7 @@ public class UGeo {
             return null;
         }
     }
-    
+
     //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Coordinate[] arrCoord(double... d) {
         List<Coordinate> list = new ArrayList();

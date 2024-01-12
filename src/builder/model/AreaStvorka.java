@@ -151,7 +151,7 @@ public class AreaStvorka extends AreaSimple {
             
             //Полигон створки с учётом нахлёста 
             double delta = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            this.area = UGeo.geoPadding(this.areaBox, winc.listElem, -delta); //полигон векторов сторон створки            
+            this.area = UGeo.geoPadding(this.areaBox, winc.listElem, delta); //полигон векторов сторон створки            
             
             //Координаты рам створок
             if (this.frames.size() == 0) { //если стороны ств. ещё не созданы                  
