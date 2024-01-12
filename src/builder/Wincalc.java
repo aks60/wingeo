@@ -269,19 +269,21 @@ public class Wincalc {
             //Прорисока фурнитуры створок
             this.listArea.filter(Type.STVORKA).stream().forEach(el -> el.paint());
 
+/*            
             //Прорисовка раскладок
-            //winc.listElem.filter(Type.GLASS).stream().forEach(el -> el.rascladkaPaint());
-            //Прорисовка москиток
-            //this.listElem.filter(Type.MOSKITKA).stream().forEach(el -> el.paint());
-            //Рисунок в память
-//            if (winc.bufferImg != null) {
-//                ByteArrayOutputStream byteArrOutStream = new ByteArrayOutputStream();
-//                ImageIO.write(winc.bufferImg, "png", byteArrOutStream);
-//                if (eProp.dev == true) {
-//                    File outputfile = new File("CanvasImage.png");
-//                    ImageIO.write(winc.bufferImg, "png", outputfile);
-//                }
-//            }
+            winc.listElem.filter(Type.GLASS).stream().forEach(el -> el.rascladkaPaint());
+            Прорисовка москиток
+            this.listElem.filter(Type.MOSKITKA).stream().forEach(el -> el.paint());
+            Рисунок в память
+            if (winc.bufferImg != null) {
+                ByteArrayOutputStream byteArrOutStream = new ByteArrayOutputStream();
+                ImageIO.write(winc.bufferImg, "png", byteArrOutStream);
+                if (eProp.dev == true) {
+                    File outputfile = new File("CanvasImage.png");
+                    ImageIO.write(winc.bufferImg, "png", outputfile);
+                }
+            }
+*/
         } catch (Exception s) {
             System.err.println("Ошибка:Wincalc.draw() " + s);
         }

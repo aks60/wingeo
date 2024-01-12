@@ -128,7 +128,7 @@ public class UGeo {
     }
 
     //Внутренняя обводка ареа 
-    public static Polygon geoPadding2(Geometry poly, LinkedCom<ElemSimple> list, double amend) {
+    public static Polygon geoPadding(Geometry poly, LinkedCom<ElemSimple> list, double amend) {
         LineSegment segm1, segm2, segm1a, segm2a, segm1b, segm2b, segm1c, segm2c;
         List<Coordinate> out = new ArrayList();
         try {
@@ -146,13 +146,13 @@ public class UGeo {
                 Record rec2 = (e2.artiklRec == null) ? eArtikl.virtualRec() : e2.artiklRec;
                 double w1 = (rec1.getDbl(eArtikl.height) - rec1.getDbl(eArtikl.size_centr)) - amend;
                 double w2 = (rec2.getDbl(eArtikl.height) - rec2.getDbl(eArtikl.size_centr)) - amend;
-                
+
                 //Смещение сегментов относительно границ
                 segm1a = segm1.offset(-w1);
                 segm2a = segm2.offset(-w2);
 
                 //Точка пересечения внутренних сегментов
-                Coordinate cross = segm2a.intersection(segm1a);
+                Coordinate cross = (coo.length < 100) ? segm2a.lineIntersection(segm1a) : segm2a.intersection(segm1a);
 
                 if (cross != null && i < j - 1) {
                     cross.z = e2.id;
@@ -200,44 +200,7 @@ public class UGeo {
             return null;
         }
     }
-    public static Polygon geoPadding(Geometry poly, LinkedCom<ElemSimple> list, double amend) {
-        try {
-            LineSegment segm1, segm2, segm3, segm4;
-            Coordinate[] coo = poly.copy().getCoordinates();
-            Coordinate[] out = new Coordinate[coo.length];
-            for (int i = 0; i < coo.length; i++) {
 
-                //Сегменты смещения в полигоне
-                segm1 = UGeo.getLineSegment(poly, i - 1);
-                segm2 = UGeo.getLineSegment(poly, i);
-
-                //Получим ширину сегментов
-                ElemSimple e1 = list.find(segm1.p0.z), e2 = list.find(segm2.p0.z);
-                Record rec1 = (e1.artiklRec == null) ? eArtikl.virtualRec() : e1.artiklRec;
-                Record rec2 = (e2.artiklRec == null) ? eArtikl.virtualRec() : e2.artiklRec;
-                double w1 = (rec1.getDbl(eArtikl.height) - rec1.getDbl(eArtikl.size_centr)) - amend;
-                double w2 = (rec2.getDbl(eArtikl.height) - rec2.getDbl(eArtikl.size_centr)) - amend;
-
-                //Смещение сегментов относительно границ
-                segm3 = segm1.offset(-w1);
-                segm4 = segm2.offset(-w2);
-
-                //Точка пересечения внутренних сегментов
-                out[i] = segm4.lineIntersection(segm3);
-
-                if (out[i] == null) {
-                    System.out.println("AKS nbuilder.model.UGeo.geoPadding()");
-                }
-                out[i].z = e2.id;
-            }
-            return Com5t.gf.createPolygon(out);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.geoPadding() " + e);
-            return null;
-        }
-    }
-    
     //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Coordinate[] arrCoord(double... d) {
         List<Coordinate> list = new ArrayList();

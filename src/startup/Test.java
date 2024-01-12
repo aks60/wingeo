@@ -387,7 +387,7 @@ public class Test {
         list.add(list.get(0));
 
         mpol = gf.createLineString(list.toArray(new Coordinate[0]));
-        mlin = geoPadding(mpol, -63);
+        mlin = geoPadding(mpol, -263);
         //System.out.println(c);
     }
 
@@ -409,6 +409,8 @@ public class Test {
 
                 //Точка пересечения внутренних сегментов
                 Coordinate cross = segm2a.intersection(segm1a);
+               // Coordinate cross = segm2a.lineIntersection(segm1a);
+                
 
                 if (cross != null && i < j - 1) {
                     cross.z = 4;
