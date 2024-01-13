@@ -25,6 +25,7 @@ import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
@@ -33,9 +34,6 @@ import org.locationtech.jts.util.GeometricShapeFactory;
 public class Test {
 
     private JFrame frame = null;
-
-    //private Geometry geom = null;
-    //private Geometry poly = null;
     private Geometry mlin = null;
     private Geometry mpol = null;
 
@@ -87,13 +85,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            wincalc();
+            //wincalc();
             //frame(args);
             //query();
             //json();
             //uid();
             //script();
-            //geom();
+            geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -104,10 +102,10 @@ public class Test {
 
         Conn.connection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
-        String _case = "min";
+        String _case = "one";
 
         if (_case.equals("one")) {
-            String script = GsonScript.scriptPath(604009);
+            String script = GsonScript.scriptPath(601003);
             winc.build(script);
             //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
             //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
@@ -312,11 +310,24 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
 
-        System.out.println(segm1.intersection(segm2));
+//        System.out.println(segm1.intersection(segm2));
+//
+//        Intersection inter = new Intersection();
+//        Coordinate c9 = inter.intersection(segm1.p0, segm1.p1, segm2.p0, segm2.p1);
+//        System.out.println(c9);
+        //angleBetween(Coordinate tip1, Coordinate tail, Coordinate tip2)
+        //angleBetween(a.x2, a.y2, a.x1, a.y1, b.x1, b.y1)
+        //A= 0  400, 1440 400  B = 0  0, 0 1700 C = 1440 1700, 1440 0
+        LineSegment imp = new LineSegment(0, 400, 1440, 400);
+        LineSegment frL = new LineSegment(0, 0, 0, 1700);
+        LineSegment frR = new LineSegment(1440, 1700, 1440, 0);
 
-        Intersection inter = new Intersection();
-        Coordinate c9 = inter.intersection(segm1.p0, segm1.p1, segm2.p0, segm2.p1);
-        System.out.println(c9);
+        double angl = Angle.toDegrees(Angle.interiorAngle(imp.p1, imp.p0, frL.p1));
+        double ang2 = Angle.toDegrees(Angle.interiorAngle(imp.p1, imp.p0, frR.p1));
+
+
+        System.out.println(angl);
+        System.out.println(ang2);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -409,15 +420,14 @@ public class Test {
 
                 //Точка пересечения внутренних сегментов
                 Coordinate cross = segm2a.intersection(segm1a);
-               // Coordinate cross = segm2a.lineIntersection(segm1a);
-                
+                // Coordinate cross = segm2a.lineIntersection(segm1a);
 
                 if (cross != null && i < j - 1) {
                     cross.z = 4;
                     out.add(cross);
-       
+
                 } else { //обрезаем концы арки
-                    
+
                     if (segm1.p0.z == 4) {
                         Coordinate cros1 = null;
                         j = i - 1;
@@ -430,7 +440,7 @@ public class Test {
                         cros1.z = 1;
                         out.add(cros1);
                         j = (j < 0) ? --j + coo.length : --j;
-                        
+
                     }
                     if (segm2.p0.z == 4) {
                         Coordinate cros2 = null;

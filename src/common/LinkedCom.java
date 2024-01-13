@@ -69,6 +69,17 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
         return list2;
     }
 
+    public LinkedCom<E> filterNo(Type... type) {
+        List tp = List.of(type);
+        LinkedCom<E> list2 = new LinkedCom(null);
+        for (E el : this) {
+            if (tp.contains(el.type) == false) {
+                list2.add(el);
+            }
+        }
+        return list2;
+    }
+
     public E find(double id) {
         return this.stream().filter(it -> it.id == id).findFirst().get();
     }

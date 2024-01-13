@@ -13,9 +13,26 @@ import org.locationtech.jts.geom.Point;
 public class ArrayJoin extends ArrayList<ElemJoining> {
 
     Coordinate co = new Coordinate();
-    
+
     public ArrayJoin() {
         super();
+    }
+
+    /**
+     * Получить элемент соединения по точке
+     */
+    public ElemJoining get(double x, double y) {
+        try {
+            for (ElemJoining join : this) {
+               if(join.elem1.x1() == x && join.elem1.y1() == y) {
+                   return join;
+               }
+            }
+        } catch (Exception e) {
+            System.err.println("Неудача:Соединение не найдено. " + e);
+        }
+
+        return null;
     }
 
     /**
@@ -29,7 +46,7 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
     public ElemJoining get(ElemSimple el, int side) {
         try {
             for (ElemJoining join : this) {
-                
+
                 if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(el.type)) {
                     Point p = (side == 0) ? UGeo.newPoint(el.x1(), el.y1()) : UGeo.newPoint(el.x2(), el.y2());
                     for (ElemSimple e : el.winc.listElem) {
@@ -68,7 +85,7 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
             if (join != null) {
 
                 if (side == 0) {
-                    return (Type.isCross(el.type)== true) ? join.elem2 : join.elem1;
+                    return (Type.isCross(el.type) == true) ? join.elem2 : join.elem1;
                 } else if (side == 1) {
                     return join.elem2;
                 } else if (side == 2 && join.type() == TypeJoin.FLAT) {

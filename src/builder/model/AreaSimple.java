@@ -103,7 +103,7 @@ public class AreaSimple extends Com5t {
 
         //T - соединения
         LinkedList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.STOIKA);
-        LinkedList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.STOIKA);
+        LinkedList<ElemSimple> elemList = winc.listElem.filterNo(Type.GLASS);
 
         //Цикл по кросс элементам
         for (ElemSimple cross : crosList) {

@@ -307,7 +307,7 @@ public class JoiningVar extends Par5s {
                         if (rec.getDbl(TEXT) < elemJoin.angl) {
                             return false;
                         }
-                    } else if (UCom.containsNumbJust(rec.getStr(TEXT), elemJoin.angl) == false) { //Ограничение угла, °
+                    } else if (UCom.containsNumbJust(rec.getStr(TEXT), elemJoin.angleBetween()) == false) { //Ограничение угла, °
                         return false;
                     }
                     break;
