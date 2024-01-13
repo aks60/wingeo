@@ -236,24 +236,6 @@ public class UGeo {
         return Com5t.gf.createPolygon(UGeo.arrCoord(d));
     }
 
-    public static LineSegment getSegment(Geometry p, int mid, int step) {
-
-        Coordinate[] coo = p.getCoordinates();
-        int i = mid + coo.length - 1;
-        List<Coordinate> list = new ArrayList(List.of(coo));
-        list.addAll(List.of(Arrays.copyOfRange(coo, 1, coo.length)));
-        list.addAll(List.of(Arrays.copyOfRange(coo, 1, coo.length)));
-
-        if (step == 0) {
-            return new LineSegment(list.get(i), list.get(i + 1));
-        } else if (step == -1) {
-            return new LineSegment(list.get(i - 1), list.get(i));
-        } else if (step == 1) {
-            return new LineSegment(list.get(i + 1), list.get(i + 2));
-        }
-        return null;
-    }
-
     public static LineSegment getSegment(Geometry poly, int index) {
 
         Coordinate[] coo = Arrays.copyOf(poly.getCoordinates(), poly.getNumPoints() - 1);
@@ -282,5 +264,23 @@ public class UGeo {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">    
+
+    public static LineSegment getSegment(Geometry p, int mid, int step) {
+
+        Coordinate[] coo = p.getCoordinates();
+        int i = mid + coo.length - 1;
+        List<Coordinate> list = new ArrayList(List.of(coo));
+        list.addAll(List.of(Arrays.copyOfRange(coo, 1, coo.length)));
+        list.addAll(List.of(Arrays.copyOfRange(coo, 1, coo.length)));
+
+        if (step == 0) {
+            return new LineSegment(list.get(i), list.get(i + 1));
+        } else if (step == -1) {
+            return new LineSegment(list.get(i - 1), list.get(i));
+        } else if (step == 1) {
+            return new LineSegment(list.get(i + 1), list.get(i + 2));
+        }
+        return null;
+    }    
 // </editor-fold>    
 }

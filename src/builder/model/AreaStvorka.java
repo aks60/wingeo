@@ -148,16 +148,16 @@ public class AreaStvorka extends AreaSimple {
             //если нет полигона створка в гл.окне, иначе 
             //this.area получатется при распиле owner.area импостом
             this.areaBox = (winc.listElem.filter(Type.IMPOST).isEmpty()) ? owner.area : this.area;
-            
+
             //Полигон створки с учётом нахлёста 
             double delta = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
             this.area = UGeo.geoPadding(this.areaBox, winc.listElem, delta); //полигон векторов сторон створки            
-            
+
             //Координаты рам створок
             if (this.frames.size() == 0) { //если стороны ств. ещё не созданы                  
                 Coordinate[] coo = this.area.getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
-                    
+
                     GsonElem gson = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y); //, coo[i+1].x, coo[i+1].y);
                     if (isJson(this.gson.param, PKjson.stvorkaSide[i])) {
                         gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
@@ -165,9 +165,9 @@ public class AreaStvorka extends AreaSimple {
                     ElemFrame sideStv = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gson, this);
                     this.frames.add(sideStv);
                     coo[i].z = sideStv.id;
-                }  
+                }
                 coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
-                
+
             } else { //если стороны уже созданы
                 Coordinate[] coo = this.area.getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
@@ -184,24 +184,24 @@ public class AreaStvorka extends AreaSimple {
                 //Линии гориз. открывания
                 ElemSimple stv = TypeOpen1.getKnob(this, this.typeOpen);
                 int ind = UGeo.getIndex(this.area, stv);
-                Coordinate p = UGeo.getSegment(area, ind, 0).midPoint(); //высота ручки по умолчанию
-                LineSegment s1 = UGeo.getSegment(area, ind, -1);
-                LineSegment s2 = UGeo.getSegment(area, ind, +1);
+                Coordinate p = UGeo.getSegment(area, ind).midPoint(); //высота ручки по умолчанию
+                LineSegment s1 = UGeo.getSegment(area, ind - 1);
+                LineSegment s2 = UGeo.getSegment(area, ind + 1);
                 lineOpenHor = gf.createLineString(UGeo.arrCoord(s1.p0.x, s1.p0.y, p.x, p.y, s2.p1.x, s2.p1.y, p.x, p.y));
 
                 //Линии вертик. открывания
                 if (typeOpen == TypeOpen1.LEFTUP || typeOpen == TypeOpen1.RIGHUP) {
                     ElemSimple stv2 = this.frames.get(Layout.TOP);
                     ind = UGeo.getIndex(this.area, stv2);
-                    Coordinate p2 = UGeo.getSegment(area, ind, 0).midPoint();
-                    s1 = UGeo.getSegment(area, ind, -1);
-                    s2 = UGeo.getSegment(area, ind, +1);
+                    Coordinate p2 = UGeo.getSegment(area, ind).midPoint();
+                    s1 = UGeo.getSegment(area, ind - 1);
+                    s2 = UGeo.getSegment(area, ind + 1);
                     lineOpenVer = gf.createLineString(UGeo.arrCoord(p2.x, p2.y, s1.p0.x, s1.p0.y, p2.x, p2.y, s2.p1.x, s2.p1.y));
                 }
                 //Полигон ручки
                 double DX = 10, DY = 60;
                 if (knobLayout == LayoutKnob.VAR && this.knobHeight != 0) {
-                    LineSegment lineSegm = UGeo.getSegment(area, ind, 0);
+                    LineSegment lineSegm = UGeo.getSegment(area, ind);
                     p = lineSegm.pointAlong(1 - (this.knobHeight / lineSegm.getLength())); //высота ручки на створке
                 }
                 Record sysprofRec = eSysprof.find5(winc.nuni, stv.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
@@ -226,7 +226,7 @@ public class AreaStvorka extends AreaSimple {
                         this.knobOpen = (Polygon) aff.transform(this.knobOpen);
                     }
                 }
-            }           
+            }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.setLocation " + e);
         }
@@ -254,7 +254,7 @@ public class AreaStvorka extends AreaSimple {
             LineSegment segm = new LineSegment();
             Coordinate coo1[] = this.area.getCoordinates(); //полигон векторов сторон створки
             Coordinate coo2[] = this.areaBox.getCoordinates(); //полигон векторов сторон рамы
-            
+
             for (int j = 0; j < coo1.length - 1; j++) {
                 ElemSimple elemStv = elemList.find(coo1[j].z);
                 ElemSimple elemFrm = elemList.find(coo2[j].z);

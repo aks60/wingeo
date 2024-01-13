@@ -153,9 +153,9 @@ public class ElemGlass extends ElemSimple {
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
-                LineSegment segm1 = UGeo.getSegment(this.area, indexSegm, -1);
-                LineSegment segm2 = UGeo.getSegment(this.area, indexSegm, 1);
-                LineSegment segm3 = UGeo.getSegment(this.area, indexSegm + 1, 1);
+                LineSegment segm1 = UGeo.getSegment(this.area, indexSegm -1);
+                LineSegment segm2 = UGeo.getSegment(this.area, indexSegm + 1);
+                LineSegment segm3 = UGeo.getSegment(this.area, indexSegm + 2);
 
                 spcAdd.width += segm1.getLength() + 2 * gzazo;
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);

@@ -87,8 +87,8 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            //wincalc();
-            frame(args);
+            wincalc();
+            //frame(args);
             //query();
             //json();
             //uid();
