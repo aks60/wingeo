@@ -136,8 +136,8 @@ public class UGeo {
             for (int i = 0; i < coo.length; i++) {
 
                 //Сегменты границ полигона
-                segm1 = UGeo.getLineSegment(poly, i - 1);
-                segm2 = UGeo.getLineSegment(poly, i);
+                segm1 = UGeo.getSegment(poly, i - 1);
+                segm2 = UGeo.getSegment(poly, i);
 
                 //Получим ширину сегментов             
                 ElemSimple e1 = list.find(segm1.p0.z), e2 = list.find(segm2.p0.z);
@@ -163,7 +163,7 @@ public class UGeo {
                         Coordinate cros1 = null;
                         j = i - 1;
                         do {
-                            segm1b = UGeo.getLineSegment(poly, --j);
+                            segm1b = UGeo.getSegment(poly, --j);
                             segm1c = segm1b.offset(-w1);
                             cros1 = segm2a.intersection(segm1c);
 
@@ -177,7 +177,7 @@ public class UGeo {
                         Coordinate cros2 = null;
                         k = i;
                         do {
-                            segm2b = UGeo.getLineSegment(poly, ++k);
+                            segm2b = UGeo.getSegment(poly, ++k);
                             segm2c = segm2b.offset(-w2);
                             cros2 = segm2c.intersection(segm1a);
 
@@ -254,7 +254,7 @@ public class UGeo {
         return null;
     }
 
-    public static LineSegment getLineSegment(Geometry poly, int index) {
+    public static LineSegment getSegment(Geometry poly, int index) {
 
         Coordinate[] coo = Arrays.copyOf(poly.getCoordinates(), poly.getNumPoints() - 1);
         index = (index >= coo.length) ? index - coo.length : index;
