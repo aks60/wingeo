@@ -26,6 +26,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import org.locationtech.jts.algorithm.Angle;
+import static org.locationtech.jts.algorithm.Angle.angle;
+import static org.locationtech.jts.algorithm.Angle.diff;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
@@ -318,16 +320,20 @@ public class Test {
         //angleBetween(Coordinate tip1, Coordinate tail, Coordinate tip2)
         //angleBetween(a.x2, a.y2, a.x1, a.y1, b.x1, b.y1)
         //A= 0  400, 1440 400  B = 0  0, 0 1700 C = 1440 1700, 1440 0
-        LineSegment imp = new LineSegment(0, 400, 1440, 400);
+        LineSegment impH = new LineSegment(0, 400, 1440, 400);
+        LineSegment impV = new LineSegment(720, 1700, 720, 400);
         LineSegment frL = new LineSegment(0, 0, 0, 1700);
         LineSegment frR = new LineSegment(1440, 1700, 1440, 0);
+        LineSegment frT = new LineSegment(1440, 0, 0, 0);
 
-        double angl = Angle.toDegrees(Angle.interiorAngle(imp.p1, imp.p0, frL.p1));
-        double ang2 = Angle.toDegrees(Angle.interiorAngle(imp.p1, imp.p0, frR.p1));
-
-
-        System.out.println(angl);
-        System.out.println(ang2);
+//        double angl = anglBetbeeem(impH.p0, impH.p1, frL.p0, frL.p1);
+//        double ang2 = anglBetbeeem(impH.p0, impH.p1, frR.p0, frR.p1);
+//        double ang3 = anglBetbeeem(frT.p0, frT.p1, frR.p0, frR.p1);
+//        double ang4 = anglBetbeeem(impV.p0, impV.p1, impH.p0, impH.p1);
+//        System.out.println(angl);
+//        System.out.println(ang2);
+//        System.out.println(ang3);
+//        System.out.println(ang4);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -468,6 +474,12 @@ public class Test {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">  
+    public static double anglBetbeeem(Coordinate a1, Coordinate a2, Coordinate b1, Coordinate b2) {
+        double c1 = angle(a2, a1);
+        double c2 = angle(b2, b1);
+        return Math.toDegrees(diff(c1, c2));
+    }
+
     private void drawArch3() {
 
         GeometricShapeFactory gsf = new GeometricShapeFactory();

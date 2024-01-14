@@ -8,11 +8,9 @@ import domain.eArtikl;
 import domain.eJoining;
 import domain.eJoinvar;
 import enums.Layout;
-import enums.Type;
 import java.util.List;
-import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.LineSegment;
+import startup.Test;
 
 public class ElemJoining {
 
@@ -25,7 +23,7 @@ public class ElemJoining {
     public int vid = 0; //вид соединения ("0-Простое L-обр", "1-Крестовое †-обр") или ("0-Простое T-обр", "1-Крестовое †-обр", "2-Сложное Y-обр)
     public ElemSimple elem1 = null;  //элемент соединения 1
     public ElemSimple elem2 = null;  //элемент соединения 2
-    public double angl = 90;      //угол между профилями
+    //public double angl = 90;      //угол между профилями
     Coordinate xy = new Coordinate();
     public String costs = "";     //трудозатраты, ч/ч.
 
@@ -35,7 +33,7 @@ public class ElemJoining {
         this.type = type; //угол варианта вычисл. динамически см. type();
         this.elem1 = elem1;
         this.elem2 = elem2;
-        this.angl = angleBetween();
+        //this.angl = angleBetween();
     }
 
     public void addSpecific(Specific spcAdd) { //добавление спесификаций зависимых элементов
@@ -113,26 +111,29 @@ public class ElemJoining {
 
     //Угол между профилями
     public Double angleBetween() {
-        if (Type.isCross(elem1.type)) {
-
-            if (UGeo.newLineStr(elem2.x1(), elem2.y1(), elem2.x2(), elem2.y2()).contains(UGeo.newPoint(elem1.x1(), elem1.y1()))) {
-                return Angle.toDegrees(Angle.angleBetween(
-                        new Coordinate(elem1.x2(), elem1.y2()),
-                        new Coordinate(elem1.x1(), elem1.y1()),
-                        new Coordinate(elem2.x1(), elem2.y1())));
-
-            } else if (UGeo.newLineStr(elem2.x1(), elem2.y1(), elem2.x2(), elem2.y2()).contains(UGeo.newPoint(elem1.x2(), elem1.y2()))) {
-                return Angle.toDegrees(Angle.angleBetween(
-                        new Coordinate(elem1.x1(), elem1.y1()),
-                        new Coordinate(elem1.x2(), elem1.y2()),
-                        new Coordinate(elem2.x1(), elem2.y1())));
-            }
-        } 
-//angleBetween(a.x2, a.y2, a.x1, a.y1, b.x1, b.y1)
-        return Angle.toDegrees(Angle.angleBetween(
-                new Coordinate(elem1.x2(), elem1.y2()),
-                new Coordinate(elem1.x1(), elem1.y1()),
-                new Coordinate(elem2.x1(), elem2.y1())));
+        return UGeo.anglBetbeeem(elem1, elem2);
+        
+//        return Test.anglBetbeeem(new Coordinate(elem1.x1(), elem1.y1()), new Coordinate(elem1.x2(), elem1.y2())
+//        , new Coordinate(elem2.x1(), elem2.y1()), new Coordinate(elem2.x2(), elem2.y2()));
+        
+//        if (Type.isCross(elem1.type)) {             
+//            if (UGeo.newLineStr(elem2.x1(), elem2.y1(), elem2.x2(), elem2.y2()).contains(UGeo.newPoint(elem1.x1(), elem1.y1()))) {
+//                return Angle.toDegrees(Angle.angleBetween(
+//                        new Coordinate(elem1.x2(), elem1.y2()),
+//                        new Coordinate(elem1.x1(), elem1.y1()),
+//                        new Coordinate(elem2.x1(), elem2.y1())));
+//
+//            } else if (UGeo.newLineStr(elem2.x1(), elem2.y1(), elem2.x2(), elem2.y2()).contains(UGeo.newPoint(elem1.x2(), elem1.y2()))) {
+//                return Angle.toDegrees(Angle.angleBetween(
+//                        new Coordinate(elem1.x1(), elem1.y1()),
+//                        new Coordinate(elem1.x2(), elem1.y2()),
+//                        new Coordinate(elem2.x1(), elem2.y1())));
+//            }
+//        } 
+//        return Angle.toDegrees(Angle.angleBetween(
+//                new Coordinate(elem1.x2(), elem1.y2()),
+//                new Coordinate(elem1.x1(), elem1.y1()),
+//                new Coordinate(elem2.x1(), elem2.y1())));
     }
 
     public String toString() {

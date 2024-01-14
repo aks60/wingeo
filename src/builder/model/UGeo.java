@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
+import static org.locationtech.jts.algorithm.Angle.angle;
+import static org.locationtech.jts.algorithm.Angle.diff;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
@@ -26,6 +28,15 @@ public class UGeo {
     //Угол к горизонту
     public static double anglHor(ElemSimple e) {
         return Math.toDegrees(Angle.angle(new Coordinate(e.x1(), e.y1()), new Coordinate(e.x2(), e.y2())));
+    }
+
+    //Угол неориентированный неомежду элементами
+    public static double anglBetbeeem(ElemSimple e1, ElemSimple e2) {
+
+        double c1 = angle(new Coordinate(e1.x2(), e1.y2()), new Coordinate(e1.x1(), e1.y1()));
+        double c2 = angle(new Coordinate(e2.x2(), e2.y2()), new Coordinate(e2.x1(), e2.y1()));
+
+        return Math.toDegrees(diff(c1, c2));
     }
 
     //Пересечение сегмента(линии) импоста с сегментами(отрезками) многоугольника
@@ -264,7 +275,6 @@ public class UGeo {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">    
-
     public static LineSegment getSegment(Geometry p, int mid, int step) {
 
         Coordinate[] coo = p.getCoordinates();
@@ -281,6 +291,6 @@ public class UGeo {
             return new LineSegment(list.get(i + 1), list.get(i + 2));
         }
         return null;
-    }    
+    }
 // </editor-fold>    
 }
