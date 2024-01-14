@@ -3,12 +3,12 @@ package builder.model;
 import builder.Wincalc;
 import builder.making.Specific;
 import builder.script.GsonElem;
-import com.google.gson.JsonObject;
 import enums.Layout;
 import enums.Type;
 import java.awt.Color;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.LineSegment;
 
 public abstract class ElemSimple extends Com5t {
 
@@ -94,6 +94,10 @@ public abstract class ElemSimple extends Com5t {
         return Angle.toDegrees(Angle.angle(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2())));
     }
 
+//    public LineSegment getSegment() {
+//        return new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
+//    }
+    
     @Override
     public String toString() {
         return super.toString() + ", anglHoriz=" + anglHoriz();

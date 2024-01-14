@@ -88,12 +88,12 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //wincalc();
-            //frame(args);
+            frame(args);
             //query();
             //json();
             //uid();
             //script();
-            geom();
+            //geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
