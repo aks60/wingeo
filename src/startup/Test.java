@@ -390,7 +390,9 @@ public class Test {
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         Double dH = 64.0;
         Coordinate p = new Coordinate(1300, 300, 4);
-        LineString arc = UGeo.newLineStr(0, p.y, 0, p.x);
+        //LineString arc = UGeo.newLineArch(0, p.y, 0, p.x);
+        LineSegment ls = new LineSegment(0, 300, 1300, 800);
+        LineString arc = UGeo.newLineArch(ls.p0, ls.p1, 300.0);        
         List.of(arc.getCoordinates()).forEach(c -> c.z = 4);
 
         Coordinate co2[] = arc.getCoordinates();
@@ -404,7 +406,7 @@ public class Test {
         list.add(list.get(0));
 
         mpol = gf.createLineString(list.toArray(new Coordinate[0]));
-        mlin = geoPadding(mpol, -263);
+        mlin = geoPadding(mpol, -63);
         //System.out.println(c);
     }
 

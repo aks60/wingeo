@@ -50,7 +50,7 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
                 if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(el.type)) {
                     Point p = (side == 0) ? UGeo.newPoint(el.x1(), el.y1()) : UGeo.newPoint(el.x2(), el.y2());
                     for (ElemSimple e : el.winc.listElem) {
-                        if (UGeo.newLineStr(e.x1(), e.y1(), e.x2(), e.y2()).contains(p)) {
+                        if (UGeo.newLineArch(e.x1(), e.y1(), e.x2(), e.y2()).contains(p)) {
                             return join;
                         }
                     }

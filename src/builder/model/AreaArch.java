@@ -38,7 +38,7 @@ public class AreaArch extends AreaSimple {
                     GeometricShapeFactory gsf = new GeometricShapeFactory();
                     double L = frame.length(), H = frame.h();
                     frame.radiusArc = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
-                    LineString arch = UGeo.newLineStr(0, H, 0, L);
+                    LineString arch = UGeo.newLineArch(0, H, 0, L);
                     List.of(arch.getCoordinates()).forEach(c -> c.setZ(frame.id));
                     list.addAll(List.of(arch.getCoordinates()));
 

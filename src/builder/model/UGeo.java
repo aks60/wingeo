@@ -235,27 +235,26 @@ public class UGeo {
         return Com5t.gf.createLineString(UGeo.arrCoord(d));
     }
 
-    public static LineString newLineStr(Coordinate p0, Coordinate p1, double h) {
+    public static LineString newLineArch(Coordinate p0, Coordinate p1, double h) {
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         double anglHor = UGeo.anglHor(p0, p1);
         if(anglHor != 0) {
-            gsf.setRotation(Math.toRadians(anglHor));
+            gsf.setRotation(Math.toRadians(-anglHor));
         }
         double H = h;
         double L = p1.x - p0.x;
         double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
         double angl = Math.PI / 2 - Math.asin(L / (R * 2));
-        
         gsf.setNumPoints(100);
         gsf.setSize(2 * R);
         gsf.setBase(new Coordinate(L / 2 - R, 0));
          if(anglHor != 0) {
-            gsf.setRotation(Math.toRadians(-anglHor));
+            gsf.setRotation(Math.toRadians(anglHor));
         }       
         return gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
     }
 
-    public static LineString newLineStr2(double H1, double H2, double L1, double L2) {
+    public static LineString newLineArch(double H1, double H2, double L1, double L2) {
         double H = H2 - H1;
         double L = L2 - L1;
         double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
