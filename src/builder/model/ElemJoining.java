@@ -23,8 +23,7 @@ public class ElemJoining {
     public int vid = 0; //вид соединения ("0-Простое L-обр", "1-Крестовое †-обр") или ("0-Простое T-обр", "1-Крестовое †-обр", "2-Сложное Y-обр)
     public ElemSimple elem1 = null;  //элемент соединения 1
     public ElemSimple elem2 = null;  //элемент соединения 2
-    //public double angl = 90;      //угол между профилями
-    Coordinate xy = new Coordinate();
+    //Coordinate xy = new Coordinate();
     public String costs = "";     //трудозатраты, ч/ч.
 
     public ElemJoining(Wincalc winc, TypeJoin type, ElemSimple elem1, ElemSimple elem2) {
@@ -112,28 +111,6 @@ public class ElemJoining {
     //Угол между профилями
     public Double angleBetween() {
         return UGeo.anglBetbeeem(elem1, elem2);
-        
-//        return Test.anglBetbeeem(new Coordinate(elem1.x1(), elem1.y1()), new Coordinate(elem1.x2(), elem1.y2())
-//        , new Coordinate(elem2.x1(), elem2.y1()), new Coordinate(elem2.x2(), elem2.y2()));
-        
-//        if (Type.isCross(elem1.type)) {             
-//            if (UGeo.newLineStr(elem2.x1(), elem2.y1(), elem2.x2(), elem2.y2()).contains(UGeo.newPoint(elem1.x1(), elem1.y1()))) {
-//                return Angle.toDegrees(Angle.angleBetween(
-//                        new Coordinate(elem1.x2(), elem1.y2()),
-//                        new Coordinate(elem1.x1(), elem1.y1()),
-//                        new Coordinate(elem2.x1(), elem2.y1())));
-//
-//            } else if (UGeo.newLineStr(elem2.x1(), elem2.y1(), elem2.x2(), elem2.y2()).contains(UGeo.newPoint(elem1.x2(), elem1.y2()))) {
-//                return Angle.toDegrees(Angle.angleBetween(
-//                        new Coordinate(elem1.x1(), elem1.y1()),
-//                        new Coordinate(elem1.x2(), elem1.y2()),
-//                        new Coordinate(elem2.x1(), elem2.y1())));
-//            }
-//        } 
-//        return Angle.toDegrees(Angle.angleBetween(
-//                new Coordinate(elem1.x2(), elem1.y2()),
-//                new Coordinate(elem1.x1(), elem1.y1()),
-//                new Coordinate(elem2.x1(), elem2.y1())));
     }
 
     public String toString() {

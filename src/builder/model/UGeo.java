@@ -30,7 +30,7 @@ public class UGeo {
         return Math.toDegrees(Angle.angle(new Coordinate(e.x1(), e.y1()), new Coordinate(e.x2(), e.y2())));
     }
 
-    //Угол неориентированный неомежду элементами
+    //Угол неориентированный неомежду профилями
     public static double anglBetbeeem(ElemSimple e1, ElemSimple e2) {
 
         double c1 = angle(new Coordinate(e1.x2(), e1.y2()), new Coordinate(e1.x1(), e1.y1()));
