@@ -85,17 +85,20 @@ public class ElemFrame extends ElemSimple {
                         GeometricShapeFactory gsf = new GeometricShapeFactory();
                         double R = this.radiusArc, L = this.length(), dH = this.artiklRec.getDbl(eArtikl.height);
 
-                        double ang1 = Math.PI / 2 - Math.asin(L / (R * 2));
-                        gsf.setSize(2 * R);
-                        gsf.setBase(new Coordinate(L / 2 - R, 0));
-                        LineString arc1 = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1);
+//                        double ang1 = Math.PI / 2 - Math.asin(L / (R * 2));
+//                        gsf.setSize(2 * R);
+//                        gsf.setBase(new Coordinate(L / 2 - R, 0));
+//                        LineString arc1 = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1);
+                        LineString arc1 = UGeo.newLineArch(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()), this.h());
                         List.of(arc1.getCoordinates()).forEach(l -> l.setZ(this.id));
 
-                        double ang2 = Math.PI / 2 - Math.asin((L - 2 * dH) / ((R - dH) * 2));
-                        //gsf.setNumPoints(1000);
-                        gsf.setSize(2 * R - 2 * dH);
-                        gsf.setBase(new Coordinate(L / 2 - R + dH, dH));
-                        LineString arc2 = gsf.createArc(Math.PI + ang2, Math.PI - 2 * ang2);
+//                        double ang2 = Math.PI / 2 - Math.asin((L - 2 * dH) / ((R - dH) * 2));
+//                        //gsf.setNumPoints(1000);
+//                        gsf.setSize(2 * R - 2 * dH);
+//                        gsf.setBase(new Coordinate(L / 2 - R + dH, dH));
+//                        //LineString arc2 = gsf.createArc(Math.PI + ang2, Math.PI - 2 * ang2);
+                        LineSegment seg2 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).offset(87);    
+                        LineString arc2 = UGeo.newLineArch(new Coordinate(seg2.p0.x, seg2.p0.y), new Coordinate(seg2.p1.x, seg2.p1.y), this.h() - dH);
                         List.of(arc2.getCoordinates()).forEach(l -> l.setZ(this.id));
 
                         List<Coordinate> list1 = new ArrayList(List.of(arc1.getCoordinates()));
@@ -326,7 +329,7 @@ public class ElemFrame extends ElemSimple {
             Shape shape = new ShapeWriter().toShape(this.area);
 
             winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-            winc.gc2d.fill(shape);
+           // winc.gc2d.fill(shape);
 
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
             winc.gc2d.draw(shape);

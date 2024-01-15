@@ -388,6 +388,37 @@ public class Test {
     private void drawArch() {
 
         GeometricShapeFactory gsf = new GeometricShapeFactory();
+        Double dH = 63.0;
+        //Coordinate p = new Coordinate(1300, 300, 4);
+        //LineString arc = UGeo.newLineArch(0, p.y, 0, p.x);
+        //LineSegment lb = new LineSegment(0, 300, 1300, 300); 
+        
+        LineSegment ls = new LineSegment(0, 300, 1300, 400);
+        LineString arc = UGeo.newLineArch(ls.p1, ls.p0, 300.0);        
+        List.of(arc.getCoordinates()).forEach(c -> c.z = 4);
+
+        Coordinate co2[] = arc.getCoordinates();
+        ArrayList<Coordinate> list = new ArrayList();
+
+        list.add(new Coordinate(0, 300, 1));
+        list.add(new Coordinate(0, 1500, 2));
+        list.add(new Coordinate(1300, 1500, 3));
+
+        list.addAll(List.of(co2));
+        list.add(list.get(0));
+
+        mpol = gf.createLineString(list.toArray(new Coordinate[0]));
+        //mlin = geoPadding(mpol, -63);
+        LineSegment sd = ls.offset(87);
+        LineString sl2 = gf.createLineString(new Coordinate[]{ls.p0, ls.p1});
+        LineString sd2 = gf.createLineString(new Coordinate[]{sd.p0, sd.p1});
+        mlin = gf.createMultiLineString(new LineString[] {sl2, sd2});
+        //System.out.println(c);
+    }
+    
+    private void drawArch4() {
+
+        GeometricShapeFactory gsf = new GeometricShapeFactory();
         Double dH = 64.0;
         Coordinate p = new Coordinate(1300, 300, 4);
         //LineString arc = UGeo.newLineArch(0, p.y, 0, p.x);
