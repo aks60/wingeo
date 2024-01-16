@@ -237,9 +237,10 @@ public class UGeo {
 
     public static LineString newLineArch(Coordinate p0, Coordinate p1, double h) {
         GeometricShapeFactory gsf = new GeometricShapeFactory();
+        gsf.createRectangle();
         double anglHor = UGeo.anglHor(p0, p1);
         if(anglHor != 0 && anglHor != 180) {
-            gsf.setRotation(Math.toRadians(-anglHor));
+            //gsf.setRotation(Math.toRadians(-anglHor));
         }
         double H = h;
         double L = p0.x - p1.x;
@@ -249,7 +250,7 @@ public class UGeo {
         gsf.setSize(2 * R);
         gsf.setBase(new Coordinate(L / 2 - R, 0));
          if(anglHor != 0 && anglHor != 180) {
-            gsf.setRotation(Math.toRadians(anglHor));
+            //gsf.setRotation(Math.toRadians(anglHor));
         }       
         return gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
     }
