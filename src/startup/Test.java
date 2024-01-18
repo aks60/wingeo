@@ -375,7 +375,7 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        draw3();
+        draw();
     }
 
     private void draw() {
@@ -384,30 +384,27 @@ public class Test {
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         AffineTransformation aff = new AffineTransformation();
 
-//        LineSegment s1 = new LineSegment(0, 300, 1300, 300);
-//        aff.setToRotation(200 / s1.getLength(), 1, s1.p0.x, s1.p0.y);
-//        mpol = aff.transform(s1.toGeometry(gf));
+        //LineSegment s1 = new LineSegment(0, 300, 1300, 300);
+        //aff.setToRotation(200 / s1.getLength(), 1, s1.p0.x, s1.p0.y);
+        //mpol = aff.transform(s1.toGeometry(gf));
 
-//        Double dH = 63.0;
-//        LineString str = gf.createLineString(UGeo.arrCoord(0, 300, 1300, 300));
-//        //aff.setToRotation(0, 0)
-//        LineString arc = UGeo.newLineArch(segm.p1, segm.p0, 300.0);        
-//        List.of(arc.getCoordinates()).forEach(c -> c.z = 4);
-//
-//        Coordinate co2[] = arc.getCoordinates();
-//        ArrayList<Coordinate> list = new ArrayList();
-//
-//        list.add(new Coordinate(0, 300, 1));
-//        list.add(new Coordinate(0, 1500, 2));
-//        list.add(new Coordinate(1300, 1500, 3));
-//
-//        list.addAll(List.of(co2));
-//        list.add(list.get(0));
-//
-//        mpol = gf.createLineString(list.toArray(new Coordinate[0]));
-//        LineString sl2 = gf.createLineString(new Coordinate[]{segm.p0, segm.p1});
-//        LineString sd2 = gf.createLineString(new Coordinate[]{seg2.p0, seg2.p1});
-//        mlin = gf.createMultiLineString(new LineString[] {sl2, sd2});
+        Double dH = 63.0;
+        LineSegment s1 = new LineSegment(1300, 600, 0, 300);
+        LineString arc = UGeo.newLineArch(s1.p0, s1.p1, 300.0); 
+        
+        Coordinate co2[] = arc.getCoordinates();
+        ArrayList<Coordinate> list = new ArrayList();
+
+        list.add(new Coordinate(0, 300, 1));
+        list.add(new Coordinate(0, 1500, 2));
+        list.add(new Coordinate(1300, 1500, 3));
+
+        list.addAll(List.of(co2));
+        list.add(list.get(0));
+
+        mpol = gf.createLineString(list.toArray(new Coordinate[0]));
+
+        mlin = gf.createMultiLineString(new LineString[] {s1.toGeometry(gf)});
     }
 
     public static Polygon geoPadding(Geometry poly, double amend) {
