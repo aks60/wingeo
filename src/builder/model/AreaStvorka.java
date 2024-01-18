@@ -184,24 +184,24 @@ public class AreaStvorka extends AreaSimple {
                 //Линии гориз. открывания
                 ElemSimple stv = TypeOpen1.getKnob(this, this.typeOpen);
                 int ind = UGeo.getIndex(this.area, stv);
-                Coordinate p = UGeo.getSegment(area, ind).midPoint(); //высота ручки по умолчанию
-                LineSegment s1 = UGeo.getSegment(area, ind - 1);
-                LineSegment s2 = UGeo.getSegment(area, ind + 1);
+                Coordinate p = UGeo.newSegment(area, ind).midPoint(); //высота ручки по умолчанию
+                LineSegment s1 = UGeo.newSegment(area, ind - 1);
+                LineSegment s2 = UGeo.newSegment(area, ind + 1);
                 lineOpenHor = gf.createLineString(UGeo.arrCoord(s1.p0.x, s1.p0.y, p.x, p.y, s2.p1.x, s2.p1.y, p.x, p.y));
 
                 //Линии вертик. открывания
                 if (typeOpen == TypeOpen1.LEFTUP || typeOpen == TypeOpen1.RIGHUP) {
                     ElemSimple stv2 = this.frames.get(Layout.TOP);
                     ind = UGeo.getIndex(this.area, stv2);
-                    Coordinate p2 = UGeo.getSegment(area, ind).midPoint();
-                    s1 = UGeo.getSegment(area, ind - 1);
-                    s2 = UGeo.getSegment(area, ind + 1);
+                    Coordinate p2 = UGeo.newSegment(area, ind).midPoint();
+                    s1 = UGeo.newSegment(area, ind - 1);
+                    s2 = UGeo.newSegment(area, ind + 1);
                     lineOpenVer = gf.createLineString(UGeo.arrCoord(p2.x, p2.y, s1.p0.x, s1.p0.y, p2.x, p2.y, s2.p1.x, s2.p1.y));
                 }
                 //Полигон ручки
                 double DX = 10, DY = 60;
                 if (knobLayout == LayoutKnob.VAR && this.knobHeight != 0) {
-                    LineSegment lineSegm = UGeo.getSegment(area, ind);
+                    LineSegment lineSegm = UGeo.newSegment(area, ind);
                     p = lineSegm.pointAlong(1 - (this.knobHeight / lineSegm.getLength())); //высота ручки на створке
                 }
                 Record sysprofRec = eSysprof.find5(winc.nuni, stv.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...

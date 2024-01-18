@@ -382,10 +382,10 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        drawArch();
+        draw();
     }
 
-    private void drawArch() {
+    private void draw() {
 
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         Double dH = 63.0;
@@ -422,7 +422,7 @@ public class Test {
         //System.out.println(c);
     }
     
-    private void drawArch4() {
+    private void draw4() {
 
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         Double dH = 64.0;
@@ -456,8 +456,8 @@ public class Test {
             for (int i = 0; i < coo.length; i++) {
 
                 //Сегменты границ полигона
-                segm1 = UGeo.getSegment(poly, i - 1);
-                segm2 = UGeo.getSegment(poly, i);
+                segm1 = UGeo.newSegment(poly, i - 1);
+                segm2 = UGeo.newSegment(poly, i);
 
                 //Смещение сегментов относительно границ
                 segm1a = segm1.offset(amend);
@@ -477,7 +477,7 @@ public class Test {
                         Coordinate cros1 = null;
                         j = i - 1;
                         do {
-                            segm1b = UGeo.getSegment(poly, --j);
+                            segm1b = UGeo.newSegment(poly, --j);
                             segm1c = segm1b.offset(amend);
                             cros1 = segm2a.intersection(segm1c);
 
@@ -491,7 +491,7 @@ public class Test {
                         Coordinate cros2 = null;
                         k = i;
                         do {
-                            segm2b = UGeo.getSegment(poly, ++k);
+                            segm2b = UGeo.newSegment(poly, ++k);
                             segm2c = segm2b.offset(amend);
                             cros2 = segm2c.intersection(segm1a);
 
@@ -519,7 +519,7 @@ public class Test {
         return Math.toDegrees(diff(c1, c2));
     }
 
-    private void drawArch3() {
+    private void draw3() {
 
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         Double dH = 64.0;
@@ -563,7 +563,7 @@ public class Test {
         System.out.println(list1);
     }
 
-    private void drawArch2() {
+    private void draw2() {
 
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         Double dH = 64.0;
