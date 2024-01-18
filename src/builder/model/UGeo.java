@@ -237,21 +237,13 @@ public class UGeo {
 
     public static LineString newLineArch(Coordinate p0, Coordinate p1, double h) {
         GeometricShapeFactory gsf = new GeometricShapeFactory();
-        gsf.createRectangle();
-        double anglHor = UGeo.anglHor(p0, p1);
-        if(anglHor != 0 && anglHor != 180) {
-            //gsf.setRotation(Math.toRadians(-anglHor));
-        }
         double H = h;
-        double L = p0.x - p1.x;
+        double L = Math.abs(p0.x - p1.x);
         double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
         double angl = Math.PI / 2 - Math.asin(L / (R * 2));
         gsf.setNumPoints(100);
         gsf.setSize(2 * R);
-        gsf.setBase(new Coordinate(L / 2 - R, 0));
-         if(anglHor != 0 && anglHor != 180) {
-            //gsf.setRotation(Math.toRadians(anglHor));
-        }       
+        gsf.setBase(new Coordinate(L / 2 - R, Math.abs(p0.y - p1.y)));     
         return gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
     }
 
