@@ -16,10 +16,15 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.util.AffineTransformation;
+import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Com5t {
 
     public static GeometryFactory gf = new GeometryFactory();
+    public static GeometricShapeFactory gsf = new GeometricShapeFactory();
+    public static AffineTransformation aff = new AffineTransformation();
+    
     public double id;
     public Wincalc winc = null;
     public AreaSimple owner = null; //владелец

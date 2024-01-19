@@ -21,6 +21,7 @@ import java.util.List;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.util.GeometricShapeFactory;
@@ -80,10 +81,24 @@ public class ElemFrame extends ElemSimple {
         try {
             for (int i = 0; i < owner.frames.size(); i++) {
                 if (owner.frames.get(i).id == this.id) {
-                    
+
                     if (this.h() != null) {  // arch
-                        GeometricShapeFactory gsf = new GeometricShapeFactory();
-                        double R = this.radiusArc, L = this.length(), dH = this.artiklRec.getDbl(eArtikl.height);
+                        ArrayList<Coordinate> list = new ArrayList();
+                        LineSegment s1 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
+                        s1.normalize();
+                        double H = this.h(), DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle());
+
+                        aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации      
+                        LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
+                        l1.normalize();
+                        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y - H, H);  //созд. арки на гортзонтали      
+                        aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
+                        Geometry arc2 = aff.transform(arc1); //обратная трансформация арки
+                        
+                        Coordinate coo3[] = arc2.getCoordinates();     
+                        list.addAll(List.of(coo3));
+                        list.add(list.get(0));                        
+                        this.area = gf.createLineString(list.toArray(new Coordinate[0]));
 
 //                        double ang1 = Math.PI / 2 - Math.asin(L / (R * 2));
 //                        gsf.setSize(2 * R);
@@ -91,7 +106,6 @@ public class ElemFrame extends ElemSimple {
 //                        LineString arc1 = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1);
 //                        LineString arc1 = UGeo.newLineArch(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()), this.h());
 //                        List.of(arc1.getCoordinates()).forEach(l -> l.setZ(this.id));
-
 //                        double ang2 = Math.PI / 2 - Math.asin((L - 2 * dH) / ((R - dH) * 2));
 //                        //gsf.setNumPoints(1000);
 //                        gsf.setSize(2 * R - 2 * dH);
@@ -329,7 +343,7 @@ public class ElemFrame extends ElemSimple {
             Shape shape = new ShapeWriter().toShape(this.area);
 
             winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-           // winc.gc2d.fill(shape);
+            // winc.gc2d.fill(shape);
 
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
             winc.gc2d.draw(shape);
