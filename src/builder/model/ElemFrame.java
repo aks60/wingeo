@@ -89,23 +89,23 @@ public class ElemFrame extends ElemSimple {
 //                        gsf.setSize(2 * R);
 //                        gsf.setBase(new Coordinate(L / 2 - R, 0));
 //                        LineString arc1 = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1);
-                        LineString arc1 = UGeo.newLineArch(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()), this.h());
-                        List.of(arc1.getCoordinates()).forEach(l -> l.setZ(this.id));
+//                        LineString arc1 = UGeo.newLineArch(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()), this.h());
+//                        List.of(arc1.getCoordinates()).forEach(l -> l.setZ(this.id));
 
 //                        double ang2 = Math.PI / 2 - Math.asin((L - 2 * dH) / ((R - dH) * 2));
 //                        //gsf.setNumPoints(1000);
 //                        gsf.setSize(2 * R - 2 * dH);
 //                        gsf.setBase(new Coordinate(L / 2 - R + dH, dH));
 //                        //LineString arc2 = gsf.createArc(Math.PI + ang2, Math.PI - 2 * ang2);
-                        LineSegment seg2 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).offset(87);    
-                        LineString arc2 = UGeo.newLineArch(new Coordinate(seg2.p0.x, seg2.p0.y), new Coordinate(seg2.p1.x, seg2.p1.y), this.h() - dH);
-                        List.of(arc2.getCoordinates()).forEach(l -> l.setZ(this.id));
-
-                        List<Coordinate> list1 = new ArrayList(List.of(arc1.getCoordinates()));
-                        List<Coordinate> list2 = new ArrayList(List.of(arc2.reverse().getCoordinates()));
-                        list2.add(list1.get(0));
-                        list1.addAll(list2);
-                        this.area = gf.createLineString(list1.toArray(new Coordinate[0]));
+//                        LineSegment seg2 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).offset(87);    
+//                        LineString arc2 = UGeo.newLineArch(new Coordinate(seg2.p0.x, seg2.p0.y), new Coordinate(seg2.p1.x, seg2.p1.y), this.h() - dH);
+//                        List.of(arc2.getCoordinates()).forEach(l -> l.setZ(this.id));
+//
+//                        List<Coordinate> list1 = new ArrayList(List.of(arc1.getCoordinates()));
+//                        List<Coordinate> list2 = new ArrayList(List.of(arc2.reverse().getCoordinates()));
+//                        list2.add(list1.get(0));
+//                        list1.addAll(list2);
+//                        this.area = gf.createLineString(list1.toArray(new Coordinate[0]));
 
                     } else { //polygon
                         int k = (i == 0) ? owner.frames.size() - 1 : i - 1;

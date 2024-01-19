@@ -380,6 +380,36 @@ public class Test {
         draw();
     }
 
+    private void draw3() {
+
+        GeometryFactory gf = new GeometryFactory();
+        GeometricShapeFactory gsf = new GeometricShapeFactory();
+        AffineTransformation aff = new AffineTransformation();
+        ArrayList<Coordinate> list = new ArrayList();
+
+        LineSegment s1 = new LineSegment(1300, 100, 0, 300);
+        LineSegment s2 = new LineSegment(s1);
+        s2.normalize();
+        double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s2.angle()); 
+        
+        aff.setToRotation(Math.toRadians(-ANG), s2.p0.x, s2.p0.y); //угол ротации      
+        LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
+        l1.normalize();
+        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y - H, H);  //созд. арки на гортзонтали      
+        aff.setToRotation(Math.toRadians(ANG), s2.p0.x, s2.p0.y); //угол ротации  
+        Geometry arc2 = aff.transform(arc1); //обратная трансформация арки
+
+        Coordinate coo3[] = arc2.getCoordinates();
+        list.add(new Coordinate(0, 300, 1));
+        list.add(new Coordinate(0, 1500, 2));
+        list.add(new Coordinate(1300, 1500, 3));
+        list.addAll(List.of(coo3));
+        list.add(list.get(0));
+        
+        mpol = gf.createLineString(list.toArray(new Coordinate[0]));
+        mlin = gf.createMultiLineString(new LineString[]{s1.toGeometry(gf), l1});
+    }
+
     private void draw() {
 
         GeometryFactory gf = new GeometryFactory();
@@ -387,205 +417,29 @@ public class Test {
         AffineTransformation aff = new AffineTransformation();
         ArrayList<Coordinate> list = new ArrayList();
 
-        LineSegment s1 = new LineSegment(1300, 300, 0, 400);
-        LineSegment s2 = new LineSegment(s1);
-        s2.normalize();
-        double H = 300.0, ANG = Math.toDegrees(s2.angle()); 
+        LineSegment s1 = new LineSegment(1300, 300, 0, 500);
+        s1.normalize();
+        double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle()); 
         
-        aff.setToRotation(Math.toRadians(-ANG), s2.p0.x, s2.p0.y); //угол ротации      
+        aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации      
         LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
-        
-        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0), l1.getCoordinateN(1), H);  //созд. арки на гортзонтали      
-        aff.setToRotation(Math.toRadians(ANG), s2.p0.x, s2.p0.y); //угол ротации  
-        Geometry arc2 = aff.transform(arc1); //обратная траесформация арки
+        l1.normalize();
+        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y - H, H);  //созд. арки на гортзонтали      
+        aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
+        Geometry arc2 = aff.transform(arc1); //обратная трансформация арки
 
         Coordinate coo3[] = arc2.getCoordinates();
-
-        list.add(new Coordinate(0, 400, 1));
+        list.add(new Coordinate(0, 500, 1));
         list.add(new Coordinate(0, 1500, 2));
         list.add(new Coordinate(1300, 1500, 3));
-
         list.addAll(List.of(coo3));
         list.add(list.get(0));
         
-
         mpol = gf.createLineString(list.toArray(new Coordinate[0]));
-        //mlin = gf.createMultiLineString(new LineString[]{l1});
         mlin = gf.createMultiLineString(new LineString[]{s1.toGeometry(gf), l1});
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">  
-
-    public static Polygon geoPadding(Geometry poly, double amend) {
-        List<Coordinate> out = new ArrayList();
-        try {
-            int j = 999, k = 999;
-            LineSegment segm1, segm2, segm1a, segm2a, segm1b, segm2b, segm1c, segm2c;
-            Coordinate[] coo = poly.copy().getCoordinates();
-            for (int i = 0; i < coo.length; i++) {
-
-                //Сегменты границ полигона
-                segm1 = UGeo.newSegment(poly, i - 1);
-                segm2 = UGeo.newSegment(poly, i);
-
-                //Смещение сегментов относительно границ
-                segm1a = segm1.offset(amend);
-                segm2a = segm2.offset(amend);
-
-                //Точка пересечения внутренних сегментов
-                Coordinate cross = segm2a.intersection(segm1a);
-                // Coordinate cross = segm2a.lineIntersection(segm1a);
-
-                if (cross != null && i < j - 1) {
-                    cross.z = 4;
-                    out.add(cross);
-
-                } else { //обрезаем концы арки
-
-                    if (segm1.p0.z == 4) {
-                        Coordinate cros1 = null;
-                        j = i - 1;
-                        do {
-                            segm1b = UGeo.newSegment(poly, --j);
-                            segm1c = segm1b.offset(amend);
-                            cros1 = segm2a.intersection(segm1c);
-
-                        } while (cros1 == null);
-                        cros1.z = 1;
-                        out.add(cros1);
-                        j = (j < 0) ? --j + coo.length : --j;
-
-                    }
-                    if (segm2.p0.z == 4) {
-                        Coordinate cros2 = null;
-                        k = i;
-                        do {
-                            segm2b = UGeo.newSegment(poly, ++k);
-                            segm2c = segm2b.offset(amend);
-                            cros2 = segm2c.intersection(segm1a);
-
-                        } while (cros2 == null);
-                        i = k;
-                        cros2.z = 4;
-                        out.add(cros2);
-                    }
-                }
-            }
-            out.add(out.get(0));
-            Polygon g = Com5t.gf.createPolygon(out.toArray(new Coordinate[0]));
-            return g;
-
-        } catch (Exception e) {
-            System.err.println("AKS Ошибка:UGeo.geoPadding() " + e);
-            return null;
-        }
-    }
-    
-    public static double anglBetbeeem(Coordinate a1, Coordinate a2, Coordinate b1, Coordinate b2) {
-        double c1 = angle(a2, a1);
-        double c2 = angle(b2, b1);
-        return Math.toDegrees(diff(c1, c2));
-    }
-
-    private void draw5() {
-
-        GeometryFactory gf = new GeometryFactory();
-        GeometricShapeFactory gsf = new GeometricShapeFactory();
-        AffineTransformation aff = new AffineTransformation();
-        ArrayList<Coordinate> list = new ArrayList();
-
-        Double dH = 63.0;
-        LineSegment s1 = new LineSegment(1300, 300, 0, 300);
-        LineSegment s7 = new LineSegment(s1);
-        s7.normalize();
-        double ang = Math.toDegrees(s7.angle()); 
-        
-        aff.setToRotation(Math.toRadians(-ang), s1.p1.x, s1.p1.y);       
-        LineString l1 = (LineString) aff.transform(s1.toGeometry(gf));
-        LineString arc = UGeo.newLineArch(l1.getCoordinateN(0), l1.getCoordinateN(1), 300.0);        
-        aff.setToRotation(Math.toRadians(ang), s1.p1.x, s1.p1.y); 
-        Geometry arc2 = aff.transform(arc);
-
-        Coordinate coo3[] = arc2.getCoordinates();
-
-        list.add(new Coordinate(0, 300, 1));
-        list.add(new Coordinate(0, 1500, 2));
-        list.add(new Coordinate(1300, 1500, 3));
-
-        list.addAll(List.of(coo3));
-        list.add(list.get(0));
-        
-
-        mpol = gf.createLineString(list.toArray(new Coordinate[0]));
-        mlin = gf.createMultiLineString(new LineString[]{s1.toGeometry(gf)});
-    }
-
-    private void draw4() {
-
-        GeometricShapeFactory gsf = new GeometricShapeFactory();
-        Double dH = 64.0;
-        Coordinate p = new Coordinate(1300, 300, 4);
-        LineSegment s1 = new LineSegment(0, 300, 1300, 800);
-        LineString arc = UGeo.newLineArch(s1.p0, s1.p1, 300.0);
-        List.of(arc.getCoordinates()).forEach(c -> c.z = 4);
-
-        Coordinate co2[] = arc.getCoordinates();
-        ArrayList<Coordinate> list = new ArrayList();
-
-        list.add(new Coordinate(0, 300, 1));
-        list.add(new Coordinate(0, 1500, 2));
-        list.add(new Coordinate(1300, 1500, 3));
-
-        list.addAll(List.of(co2));
-        list.add(list.get(0));
-
-        mpol = gf.createLineString(list.toArray(new Coordinate[0]));
-        mlin = geoPadding(mpol, -63);
-        //System.out.println(c);
-    }
-
-    private void draw3() {
-
-        GeometricShapeFactory gsf = new GeometricShapeFactory();
-        Double dH = 64.0;
-        Double H = 300.0;
-        Double L = 1300.0;
-        double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
-
-        //Угол реза
-//        double rad1 = Math.acos((L / 2) / R);
-//        double rad2 = Math.acos((L - 2 * dH) / ((R - dH) * 2));
-//        double a1 = R * Math.sin(rad1);
-//        double a2 = (R - dH) * Math.sin(rad2);
-//        double ang3 = 90 - Math.toDegrees(Math.atan((a1 - a2) / dH)); //угол реза рамы
-//        double ang4 = 90 - (Math.toDegrees(rad1) - (90 - ang3)); //угол реза арки
-        Polygon p1 = UGeo.newPolygon(0, 0, 0, H, L, H, L, 0);
-        Polygon p2 = UGeo.newPolygon(0, 0, 0, H + L, dH, H + L, dH, 0);
-        Polygon p3 = UGeo.newPolygon(L - dH, 0, L - dH, H + L, L, H + L, L, 0);
-
-        double ang1 = Math.PI / 2 - Math.asin(L / (R * 2));
-        gsf.setNumPoints(1000);
-        gsf.setSize(2 * R);
-        gsf.setBase(new Coordinate(L / 2 - R, 0));
-        LineString arc1 = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1);
-        for (int i = 0; i < arc1.getCoordinates().length; i++) {
-            arc1.getCoordinateN(i).setZ(777);
-        }
-
-        double ang2 = Math.PI / 2 - Math.asin((L - 2 * dH) / ((R - dH) * 2));
-        gsf.setSize(2 * R - 2 * dH);
-        gsf.setBase(new Coordinate(L / 2 - R + dH, dH));
-        LineString arc2 = gsf.createArc(Math.PI + ang2, Math.PI - 2 * ang2);
-
-        //mpol = gf.createMultiPolygon(new Polygon[]{p1, p2, p3});
-        List<Coordinate> list1 = new ArrayList(List.of(arc1.getCoordinates()));
-        //List<Coordinate> list2 = new ArrayList(List.of(arc2.reverse().getCoordinates()));
-        //list2.add(list1.get(0));
-        //list1.addAll(list2);
-        mlin = gf.createLineString(list1.toArray(new Coordinate[0]));
-
-        System.out.println(list1);
-    }
 
     private void draw2() {
 

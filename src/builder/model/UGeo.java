@@ -235,27 +235,15 @@ public class UGeo {
         return Com5t.gf.createLineString(UGeo.arrCoord(d));
     }
 
-    public static LineString newLineArch(Coordinate p0, Coordinate p1, double h) {
-        GeometricShapeFactory gsf = new GeometricShapeFactory();
-        double H = h;
-        double L = Math.abs(p0.x - p1.x);
-        double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
-        double angl = Math.PI / 2 - Math.asin(L / (R * 2));
-        gsf.setNumPoints(100);
-        gsf.setSize(2 * R);
-        gsf.setBase(new Coordinate(L / 2 - R, Math.abs(p0.y - p1.y)));     
-        return gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
-    }
-
-    public static LineString newLineArch(double H1, double H2, double L1, double L2) {
-        double H = H2 - H1;
-        double L = L2 - L1;
+    public static LineString newLineArch(double x1, double x2, double DH,  double H) {
+        double L = x2 - x1;
         double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
         double angl = Math.PI / 2 - Math.asin(L / (R * 2));
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         gsf.setNumPoints(100);
         gsf.setSize(2 * R);
-        gsf.setBase(new Coordinate(L / 2 - R, 0));
+//        gsf.setBase(new Coordinate(L / 2 - R, Math.abs(p0.y - p1.y)));         
+        gsf.setBase(new Coordinate(x1 + L / 2 - R, DH));         
         return gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
     }
 
