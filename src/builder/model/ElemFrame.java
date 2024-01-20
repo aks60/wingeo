@@ -81,46 +81,43 @@ public class ElemFrame extends ElemSimple {
         try {
             for (int i = 0; i < owner.frames.size(); i++) {
                 if (owner.frames.get(i).id == this.id) {
+                    //if (owner.type == Type.ARCH) {
+                        if (this.h() != null) {  // arch
+                            double ah = this.artiklRecAn.getDbl(eArtikl.height);
+                            ArrayList<Coordinate> listA = new ArrayList(), listB = new ArrayList();
+                            LineSegment s1 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
+                            s1.normalize();
+                            double H = this.h(), DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle());
+                            
+                            //Ротация в горизонталь
+                            aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации в горизонт     
+                            LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
+                            l1.normalize();
+                            
+                            //Внешняя и внутренняя арка
+                            LineString arcA = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y - H, H);  //созд. арки на гортзонтали      
+                            double ang1 = Math.acos(s1.getLength() / (radiusArc * 2));
+                            double ang2 = Math.acos((s1.getLength() - 2 * ah) / ((radiusArc - ah) * 2));
+                            double dh = radiusArc * (Math.sin(ang1) - Math.sin(ang2));
+                            LineString arcB = UGeo.newLineArch(l1.getCoordinateN(0).x + ah, l1.getCoordinateN(1).x - ah, l1.getCoordinateN(0).y - H - dh, H + dh);  //созд. арки на гортзонтали                            
+                            Geometry mAB = gf.createMultiLineString(new LineString[]{arcA, arcB});
+                            
+                            //Обратная ротация
+                            aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол обратной ротации  
+                            Geometry geoAB = aff.transform(mAB); //обратная трансформация арки  
+                            
+                            
+                            Coordinate cooA[] = geoAB.getGeometryN(0).getCoordinates();                            
+                            listA.addAll(List.of(cooA));
+                            LineString areaA = gf.createLineString(listA.toArray(new Coordinate[0]));
+                            
+                            Coordinate cooB[] = geoAB.getGeometryN(1).getCoordinates();
+                            listB.addAll(List.of(cooB));
+                            LineString areaB = gf.createLineString(listB.toArray(new Coordinate[0]));                           
+                            
+                            this.area = gf.createMultiLineString(new LineString[]{areaA, areaB});
 
-                    if (this.h() != null) {  // arch
-                        ArrayList<Coordinate> list = new ArrayList();
-                        LineSegment s1 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
-                        s1.normalize();
-                        double H = this.h(), DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle());
-
-                        aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации      
-                        LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
-                        l1.normalize();
-                        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y - H, H);  //созд. арки на гортзонтали      
-                        aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
-                        Geometry arc2 = aff.transform(arc1); //обратная трансформация арки
-                        
-                        Coordinate coo3[] = arc2.getCoordinates();     
-                        list.addAll(List.of(coo3));
-                        list.add(list.get(0));                        
-                        this.area = gf.createLineString(list.toArray(new Coordinate[0]));
-
-//                        double ang1 = Math.PI / 2 - Math.asin(L / (R * 2));
-//                        gsf.setSize(2 * R);
-//                        gsf.setBase(new Coordinate(L / 2 - R, 0));
-//                        LineString arc1 = gsf.createArc(Math.PI + ang1, Math.PI - 2 * ang1);
-//                        LineString arc1 = UGeo.newLineArch(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()), this.h());
-//                        List.of(arc1.getCoordinates()).forEach(l -> l.setZ(this.id));
-//                        double ang2 = Math.PI / 2 - Math.asin((L - 2 * dH) / ((R - dH) * 2));
-//                        //gsf.setNumPoints(1000);
-//                        gsf.setSize(2 * R - 2 * dH);
-//                        gsf.setBase(new Coordinate(L / 2 - R + dH, dH));
-//                        //LineString arc2 = gsf.createArc(Math.PI + ang2, Math.PI - 2 * ang2);
-//                        LineSegment seg2 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).offset(87);    
-//                        LineString arc2 = UGeo.newLineArch(new Coordinate(seg2.p0.x, seg2.p0.y), new Coordinate(seg2.p1.x, seg2.p1.y), this.h() - dH);
-//                        List.of(arc2.getCoordinates()).forEach(l -> l.setZ(this.id));
-//
-//                        List<Coordinate> list1 = new ArrayList(List.of(arc1.getCoordinates()));
-//                        List<Coordinate> list2 = new ArrayList(List.of(arc2.reverse().getCoordinates()));
-//                        list2.add(list1.get(0));
-//                        list1.addAll(list2);
-//                        this.area = gf.createLineString(list1.toArray(new Coordinate[0]));
-
+                        //}
                     } else { //polygon
                         int k = (i == 0) ? owner.frames.size() - 1 : i - 1;
                         int j = (i == (owner.frames.size() - 1)) ? 0 : i + 1;
@@ -133,14 +130,12 @@ public class ElemFrame extends ElemSimple {
                         double w2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr);
 
                         //Входящие и выходящие сегменты
-                        LineSegment segm0 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
-                        LineSegment segm1 = new LineSegment(e1.x1(), e1.y1(), e1.x2(), e1.y2());
-                        LineSegment segm2 = new LineSegment(e2.x1(), e2.y1(), e2.x2(), e2.y2());
+                        LineSegment segm0 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()),
+                                segm1 = new LineSegment(e1.x1(), e1.y1(), e1.x2(), e1.y2()),
+                                segm2 = new LineSegment(e2.x1(), e2.y1(), e2.x2(), e2.y2());
 
                         //Сдвиг сегментов внутрь
-                        LineSegment segm3 = segm0.offset(-w0);
-                        LineSegment segm4 = segm1.offset(-w1);
-                        LineSegment segm5 = segm2.offset(-w2);
+                        LineSegment segm3 = segm0.offset(-w0), segm4 = segm1.offset(-w1), segm5 = segm2.offset(-w2);
 
                         Coordinate c1 = Intersection.intersection(
                                 new Coordinate(segm3.p0.x, segm3.p0.y), new Coordinate(segm3.p1.x, segm3.p1.y),

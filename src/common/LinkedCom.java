@@ -15,16 +15,11 @@ import org.locationtech.jts.geom.Polygon;
 public class LinkedCom<E extends Com5t> extends LinkedList<E> {
 
     AreaSimple areaSimple = null;
-    
+
     public LinkedCom(AreaSimple area) {
         super();
         this.areaSimple = area;
     }
-
-//    public LinkedCom(AreaSimple area, Collection<? extends E> c) {
-//        super(c);
-//        this.areaSimple = area;
-//    }
 
     public GsonElem gson(double id) {
         Com5t com5t = this.stream().filter(it -> it.id == id).findFirst().orElse(null);
@@ -34,13 +29,18 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
         return null;
     }
 
+    public E get(int index) {
+        index = (index < 0) ? index + size() : (index > size() - 1) ? index - size() - 1 : index;
+        return super.get(index);
+    }
+
     public E get(Layout layout) {
         try {
             for (Com5t el : this) {
                 int index = UGeo.getIndex(areaSimple.area, el);
                 if (areaSimple.area.getNumPoints() == 4
                         || areaSimple.area.getNumPoints() == 5) {
-                    
+
                     if (index == 0 && layout == Layout.LEFT) {
                         return (E) el;
                     } else if (index == 1 && layout == Layout.BOTT) {

@@ -235,16 +235,20 @@ public class UGeo {
         return Com5t.gf.createLineString(UGeo.arrCoord(d));
     }
 
-    public static LineString newLineArch(double x1, double x2, double DH,  double H) {
-        double L = x2 - x1;
-        double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
-        double angl = Math.PI / 2 - Math.asin(L / (R * 2));
-        GeometricShapeFactory gsf = new GeometricShapeFactory();
-        gsf.setNumPoints(100);
-        gsf.setSize(2 * R);
-//        gsf.setBase(new Coordinate(L / 2 - R, Math.abs(p0.y - p1.y)));         
-        gsf.setBase(new Coordinate(x1 + L / 2 - R, DH));         
-        return gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
+    public static LineString newLineArch(double x1, double x2, double DH, double H) {
+        double angl = 0;
+        try {
+            double L = x2 - x1;
+            double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
+            angl = Math.PI / 2 - Math.asin(L / (R * 2));
+            Com5t.gsf.setNumPoints(100);
+            Com5t.gsf.setSize(2 * R);
+            Com5t.gsf.setBase(new Coordinate(x1 + L / 2 - R, DH));
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.newLineArch()");
+        }
+        return Com5t.gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
     }
 
     //Список входн. параметров не замыкается начальной точкой как в jts!
