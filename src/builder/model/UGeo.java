@@ -25,14 +25,9 @@ import org.locationtech.jts.util.GeometricShapeFactory;
  */
 public class UGeo {
 
-    //Угол к горизонту
+    //Угол к горизонту. Угол нормируется в диапазоне [-Pi, Pi].
     public static double anglHor(ElemSimple e) {
         return Math.toDegrees(Angle.angle(new Coordinate(e.x1(), e.y1()), new Coordinate(e.x2(), e.y2())));
-    }
-
-    //Угол к горизонту
-    public static double anglHor(Coordinate p0, Coordinate p1) {
-        return Math.toDegrees(Angle.angle(p0, p1));
     }
 
     //Угол неориентированный неомежду профилями
@@ -235,20 +230,18 @@ public class UGeo {
         return Com5t.gf.createLineString(UGeo.arrCoord(d));
     }
 
-    public static LineString newLineArch(double x1, double x2, double DH, double H) {
-        double angl = 0;
+    public static LineString newLineArch(double x1, double x2, double y, double h) {
         try {
-            double L = x2 - x1;
-            double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
-            angl = Math.PI / 2 - Math.asin(L / (R * 2));
-            Com5t.gsf.setNumPoints(100);
+            double R = (Math.pow((x2 - x1) / 2, 2) + Math.pow(h, 2)) / (2 * h);  //R = (L2 + H2) / 2H - радиус арки
+            double angl = Math.PI / 2 - Math.asin((x2 - x1) / (R * 2));
             Com5t.gsf.setSize(2 * R);
-            Com5t.gsf.setBase(new Coordinate(x1 + L / 2 - R, DH));
+            Com5t.gsf.setBase(new Coordinate(x1 + (x2 - x1) / 2 - R, y - h));
+            return Com5t.gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.newLineArch()");
+            return null;
         }
-        return Com5t.gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
     }
 
     //Список входн. параметров не замыкается начальной точкой как в jts!
@@ -283,7 +276,12 @@ public class UGeo {
         return -1;
     }
 
-// <editor-fold defaultstate="collapsed" desc="TEMP">    
+// <editor-fold defaultstate="collapsed" desc="TEMP">   
+    //Угол к горизонту. Угол нормируется в диапазоне [-Pi, Pi].
+    public static double anglHor(Coordinate p0, Coordinate p1) {
+        return Math.toDegrees(Angle.angle(p0, p1));
+    }  
+    
     public static LineSegment getSegment(Geometry p, int mid, int step) {
 
         Coordinate[] coo = p.getCoordinates();

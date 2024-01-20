@@ -48,12 +48,13 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
             for (ElemJoining join : this) {
 
                 if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(el.type)) {
-                    Point p = (side == 0) ? UGeo.newPoint(el.x1(), el.y1()) : UGeo.newPoint(el.x2(), el.y2());
-                    for (ElemSimple e : el.winc.listElem) {
-                        if (UGeo.newLineArch(e.x1(), e.y1(), e.x2(), e.y2()).contains(p)) {
-                            return join;
-                        }
-                    }
+                    System.err.println("common.ArrayJoin.get()");
+//                    Point p = (side == 0) ? UGeo.newPoint(el.x1(), el.y1()) : UGeo.newPoint(el.x2(), el.y2());
+//                    for (ElemSimple e : el.winc.listElem) {
+//                        if (UGeo.newLineArch(e.x1(), e.y1(), e.x2(), e.y2()).contains(p)) {
+//                            return join;
+//                        }
+//                    }
                 } else if (side == 0 && el.x1() == join.elem1.x2() && el.y1() == join.elem1.y2()) { //0-пред.артикул
                     return join;
 

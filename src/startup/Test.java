@@ -394,7 +394,7 @@ public class Test {
         aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации      
         LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
         l1.normalize();
-        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y - H, H);  //созд. арки на гортзонтали      
+        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H);  //созд. арки на гортзонтали      
         aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
         Geometry arc2 = aff.transform(arc1); //обратная трансформация арки
 
