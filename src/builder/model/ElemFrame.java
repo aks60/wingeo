@@ -87,7 +87,7 @@ public class ElemFrame extends ElemSimple {
                         ArrayList<Coordinate> listA = new ArrayList(), listB = new ArrayList();
                         LineSegment s1 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                         s1.normalize();
-                        double H = this.h(), ANG = Math.toDegrees(s1.angle());
+                        double H = this.h(), L = s1.getLength(), R = radiusArc, ANG = Math.toDegrees(s1.angle());
 
                         //Ротация в горизонталь
                         aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации в горизонт     
@@ -96,9 +96,9 @@ public class ElemFrame extends ElemSimple {
                         CoordinateSequence cs = l1.getCoordinateSequence();
 
                         //Внешняя и внутренняя арка на горизонтали
-                        double ang1 = Math.acos(s1.getLength() / (radiusArc * 2));
-                        double ang2 = Math.acos((s1.getLength() - 2 * ah) / ((radiusArc - ah) * 2));
-                        double dh = radiusArc * Math.sin(ang1) -  (radiusArc - ah) *Math.sin(ang2);
+                        double ang1 = Math.acos(L / (R * 2));
+                        double ang2 = Math.acos((L - 2 * ah) / ((R - ah) * 2));
+                        double dh = R * Math.sin(ang1) - (R - ah) * Math.sin(ang2);
                         LineString arcA = UGeo.newLineArch(cs.getX(0), cs.getX(1), cs.getY(0), H);  //созд. арки на гортзонтали                                  
                         LineString arcB = UGeo.newLineArch(cs.getX(0) + ah, cs.getX(1) - ah, cs.getY(0) + dh, H + dh - ah);  //созд. арки на горизонтали                            
                         Geometry mAB = gf.createMultiLineString(new LineString[]{arcA, arcB});
@@ -115,14 +115,21 @@ public class ElemFrame extends ElemSimple {
                         arcA = gf.createLineString(listA.toArray(new Coordinate[0]));
                         arcB = gf.createLineString(listB.toArray(new Coordinate[0]));
                         this.area = gf.createMultiLineString(new LineString[]{arcA, arcB});
+                        
+                        //Угол реза
+                        double rad1 = Math.acos((L / 2) / R);
+                        double rad2 = Math.acos((L - 2 * ah) / ((R - ah) * 2));
+                        double a1 = R * Math.sin(rad1);
+                        double a2 = (R - ah) * Math.sin(rad2);
+                        double ang3 = 90 - Math.toDegrees(Math.atan((a1 - a2) / ah)); //угол реза рамы
+                        double ang4 = 90 - (Math.toDegrees(rad1) - (90 - ang3)); //угол реза арки
 
                         //}
                     } else { //polygon
-                        int k = (i == 0) ? owner.frames.size() - 1 : i - 1;
-                        int j = (i == (owner.frames.size() - 1)) ? 0 : i + 1;
-                        ElemSimple e1 = owner.frames.get(k);
-                        ElemSimple e2 = owner.frames.get(j);
 
+                        ElemSimple e1 = owner.frames.get(i - 1);
+                        ElemSimple e2 = owner.frames.get(i + 1);
+                        
                         //Ширина сегментов
                         double w0 = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
                         double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);

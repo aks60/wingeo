@@ -411,6 +411,35 @@ public class Test {
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">  
 
+    private void draw3() {
+
+        GeometryFactory gf = new GeometryFactory();
+        GeometricShapeFactory gsf = new GeometricShapeFactory();
+        AffineTransformation aff = new AffineTransformation();
+        ArrayList<Coordinate> list = new ArrayList();
+
+        LineSegment s1 = new LineSegment(1300, 300, 0, 500);
+        s1.normalize();
+        double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle()); 
+        
+        aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации      
+        LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
+        l1.normalize();
+        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H);  //созд. арки на гортзонтали      
+        aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
+        Geometry arc2 = aff.transform(arc1); //обратная трансформация арки
+
+        Coordinate coo3[] = arc2.getCoordinates();
+        list.add(new Coordinate(0, 500, 1));
+        list.add(new Coordinate(0, 1500, 2));
+        list.add(new Coordinate(1300, 1500, 3));
+        list.addAll(List.of(coo3));
+        list.add(list.get(0));
+        
+        mpol = gf.createLineString(list.toArray(new Coordinate[0]));
+        mlin = gf.createMultiLineString(new LineString[]{s1.toGeometry(gf), l1});
+    }
+
     private void draw2() {
 
         GeometricShapeFactory gsf = new GeometricShapeFactory();

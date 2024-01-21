@@ -30,7 +30,7 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
     }
 
     public E get(int index) {
-        index = (index < 0) ? index + size() : (index > size() - 1) ? index - size() - 1 : index;
+        index = (index < 0) ? index + size() : (index > size() - 1) ? index - size() : index;
         return super.get(index);
     }
 
