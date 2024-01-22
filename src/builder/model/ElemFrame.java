@@ -99,8 +99,8 @@ public class ElemFrame extends ElemSimple {
                         double ang1 = Math.acos(L / (R * 2));
                         double ang2 = Math.acos((L - 2 * ah) / ((R - ah) * 2));
                         double dh = R * Math.sin(ang1) - (R - ah) * Math.sin(ang2);
-                        LineString arcA = UGeo.newLineArch(cs.getX(0), cs.getX(1), cs.getY(0), H);  //созд. арки на гортзонтали                                  
-                        LineString arcB = UGeo.newLineArch(cs.getX(0) + ah, cs.getX(1) - ah, cs.getY(0) + dh, H + dh - ah);  //созд. арки на горизонтали                            
+                        LineString arcA = UGeo.newLineArch(cs.getX(0), cs.getX(1), cs.getY(0), H, this.id);  //созд. арки на гортзонтали                                  
+                        LineString arcB = UGeo.newLineArch(cs.getX(0) + ah, cs.getX(1) - ah, cs.getY(0) + dh, H + dh - ah, this.id);  //созд. арки на горизонтали                            
                         Geometry mAB = gf.createMultiLineString(new LineString[]{arcA, arcB});
 
                         //Обратная ротация

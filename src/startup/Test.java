@@ -1,6 +1,5 @@
 package startup;
 
-import builder.model.Com5t;
 import builder.model.UGeo;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -19,12 +18,10 @@ import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import org.locationtech.jts.algorithm.Angle;
-import static org.locationtech.jts.algorithm.Angle.angle;
-import static org.locationtech.jts.algorithm.Angle.diff;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
+import org.locationtech.jts.operation.buffer.BufferParameters;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Test {
@@ -394,7 +391,7 @@ public class Test {
         aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации      
         LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
         l1.normalize();
-        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H);  //созд. арки на гортзонтали      
+        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H, 4);  //созд. арки на гортзонтали      
         aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
         Geometry arc2 = aff.transform(arc1); //обратная трансформация арки
         Coordinate coo3[] = arc2.getCoordinates();
@@ -407,10 +404,13 @@ public class Test {
         list.add(list.get(0));
         
         LineString geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
-        Polygon geo2 = (Polygon) geo1.buffer(63, 1);
-        
+        Geometry geo2 = ((Polygon) geo1.buffer(63)).getInteriorRingN(0);
+        for (int i = 0; i < geo2.getCoordinates().length; i++) {
+            geo2.getCoordinates()[i].z = geo1.getCoordinates()[i].z;           
+        }
+        System.out.println(List.of(geo2.getCoordinates()));
         mpol = geo1;
-        mlin = gf.createPolygon(geo2.getInteriorRingN(0));       
+        mlin = geo2; 
         
 //        list.add(new Coordinate(0, 300, 1));
 //        list.add(new Coordinate(0, 1500, 2));
@@ -445,7 +445,7 @@ public class Test {
         aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации      
         LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
         l1.normalize();
-        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H);  //созд. арки на гортзонтали      
+        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H, 4);  //созд. арки на гортзонтали      
         aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
         Geometry arc2 = aff.transform(arc1); //обратная трансформация арки
 

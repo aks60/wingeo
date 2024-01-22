@@ -230,13 +230,15 @@ public class UGeo {
         return Com5t.gf.createLineString(UGeo.arrCoord(d));
     }
 
-    public static LineString newLineArch(double x1, double x2, double y, double h) {
+    public static LineString newLineArch(double x1, double x2, double y, double h, double z) {
         try {
             double R = (Math.pow((x2 - x1) / 2, 2) + Math.pow(h, 2)) / (2 * h);  //R = (L2 + H2) / 2H - радиус арки
             double angl = Math.PI / 2 - Math.asin((x2 - x1) / (R * 2));
             Com5t.gsf.setSize(2 * R);
             Com5t.gsf.setBase(new Coordinate(x1 + (x2 - x1) / 2 - R, y - h));
-            return Com5t.gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
+            LineString ls = Com5t.gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
+            List.of(ls.getCoordinates()).forEach(c -> c.z = z);
+            return ls;
 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.newLineArch()");

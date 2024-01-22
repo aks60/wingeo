@@ -18,8 +18,6 @@ import startup.Test;
 
 public class AreaArch extends AreaSimple {
 
-    private Geometry arc = null;
-
     public AreaArch(Wincalc winc, GsonElem gson) {
         super(winc, gson, null);
         this.owner = this;
@@ -31,15 +29,13 @@ public class AreaArch extends AreaSimple {
         ArrayList<Coordinate> list = new ArrayList<Coordinate>();
         try {
             //Создадим вершины арки
-            for (int i = 0; i < this.frames.size(); i++) {
-                ElemFrame frame = (ElemFrame) this.frames.get(i);
-
+            for (ElemSimple frame  : this.frames) {
+    
                 if (frame.h() != null) {
                     GeometricShapeFactory gsf = new GeometricShapeFactory();
                     double L = frame.length(), H = frame.h();
-                    frame.radiusArc = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
-                    LineString arch = UGeo.newLineArch(0, H, 0, L);
-                    List.of(arch.getCoordinates()).forEach(c -> c.setZ(frame.id));
+                    ((ElemFrame) frame).radiusArc = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
+                    LineString arch = UGeo.newLineArch(0, H, 0, L, frame.id);
                     list.addAll(List.of(arch.getCoordinates()));
 
                 } else {
@@ -49,7 +45,6 @@ public class AreaArch extends AreaSimple {
             //Полигон векторов рамы
             list.add(list.get(0));
             this.area = gf.createPolygon(list.toArray(new Coordinate[0]));
-            //this.arc = UGeo.geoPadding(area, frames, 0);
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
@@ -82,16 +77,11 @@ public class AreaArch extends AreaSimple {
     @Override
     public void paint() {
         super.paint();
-//        if (this.area != null) { //TEST
-//            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
-//            Shape shape = new ShapeWriter().toShape(this.area);
-//            winc.gc2d.draw(shape);
-//
-//            if (arc != null) {
-//                shape = new ShapeWriter().toShape(this.arc);
-//                winc.gc2d.draw(shape);
-//            }
-//        }
+        if (this.area != null) { //TEST
+            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
+            Shape shape = new ShapeWriter().toShape(this.area);
+            winc.gc2d.draw(shape);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">

@@ -171,24 +171,24 @@ public class Wincalc {
             //Главное окно ограниченное сторонами рамы
             root.setLocation();
 
-            //Инит. артикулов элементов конструкции
-            listElem.forEach(e -> e.initArtikle());
-
-            //Пилим полигоны на ареа справа и слева
-            listElem.filter(Type.IMPOST, Type.STOIKA, Type.ERKER).forEach(e -> e.setLocation());
-
-            //Создание и коррекция сторон створки
-            listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
-
-            //Инит. артикулов створки
-            listArea.filter(Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
-
-            //Рассчёт полигонов сторон рамы
-            listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
-
-            //Соединения конструкции             
-            root.joining();  //L и T соединения
-            listArea.filter(Type.STVORKA).forEach(e -> e.joining());
+//            //Инит. артикулов элементов конструкции
+//            listElem.forEach(e -> e.initArtikle());
+//
+//            //Пилим полигоны на ареа справа и слева
+//            listElem.filter(Type.IMPOST, Type.STOIKA, Type.ERKER).forEach(e -> e.setLocation());
+//
+//            //Создание и коррекция сторон створки
+//            listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
+//
+//            //Инит. артикулов створки
+//            listArea.filter(Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
+//
+//            //Рассчёт полигонов сторон рамы
+//            listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
+//
+//            //Соединения конструкции             
+//            root.joining();  //L и T соединения
+//            listArea.filter(Type.STVORKA).forEach(e -> e.joining());
 
         } catch (Exception s) {
             System.err.println("Ошибка:Wincalc.location() " + s);
