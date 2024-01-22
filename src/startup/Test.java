@@ -78,8 +78,8 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            wincalc();
-            //frame(args);
+            //wincalc();
+            frame(args);
             //query();
             //json();
             //uid();
@@ -417,13 +417,13 @@ public class Test {
         list.add(new Coordinate(1300, 300, 4));
         list.add(new Coordinate(0, 300, 1));
      
-        double distance[] = {40, 40, 80, 80, 40};
+        double distance[] = {40, 40, 80, 40, 40};
         LineString geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
-        //Polygon geo2 = (Polygon) geo1.buffer(80, 1);
+        Polygon geo3 = (Polygon) geo1.buffer(80, 1);
         
         //LineString innerLine = gf.createLineString(coordinates);
-        VariableBuffer variableBuffer = new VariableBuffer(geo1, distance);
-        Polygon geo2 = (Polygon) variableBuffer.getResult();
+        Geometry gb =  VariableBuffer.buffer(geo1, distance);
+        Polygon geo2 = (Polygon) gb;
 
         mpol = geo1;
         mlin = gf.createPolygon(geo2.getInteriorRingN(0));

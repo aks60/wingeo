@@ -3,6 +3,8 @@ package builder.model;
 import builder.Wincalc;
 import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
+import dataset.Record;
+import domain.eArtikl;
 import domain.eColor;
 import enums.Type;
 import enums.TypeJoin;
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.Polygon;
 
 public class AreaTrapeze extends AreaSimple {
   
@@ -23,16 +27,17 @@ public class AreaTrapeze extends AreaSimple {
     public void setLocation() {
         try {
             ArrayList<Coordinate> coo = new ArrayList<Coordinate>();
-
+            Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
+            double dh = artiklRec.getDbl(eArtikl.height);     
+            
             //Создадим вершины рамы
             this.frames.forEach(line -> coo.add(new Coordinate(line.x1(), line.y1(), line.id)));
             coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
             
-            //Создадим area рамы
-            Coordinate[] arr = coo.toArray(new Coordinate[0]);
-            
-            //Полигон векторов рамы
-            this.area = gf.createPolygon(arr);
+            //Создадим area рамы (предполагается, что ширина рамы одинакова со всех сторон)
+            LineString geo1 = gf.createLineString(coo.toArray(new Coordinate[0]));
+            LineString geo2 = ((Polygon) geo1.buffer(dh)).getInteriorRingN(0);
+            this.area = gf.createMultiLineString(new LineString[]{geo1});
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaRectangl.setLocation" + toString() + e);

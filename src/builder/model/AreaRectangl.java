@@ -28,17 +28,17 @@ public class AreaRectangl extends AreaSimple {
     public void setLocation() {
         try {
             ArrayList<Coordinate> coo = new ArrayList<Coordinate>();
+            Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
+            double dh = artiklRec.getDbl(eArtikl.height);            
 
             //Создадим вершины рамы
-            Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
-            double dh = artiklRec.getDbl(eArtikl.height);
             this.frames.forEach(frame -> coo.add(new Coordinate(frame.x1(), frame.y1(), frame.id)));
             coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
 
             //Создадим area рамы (предполагается, что ширина рамы одинакова со всех сторон)
             LineString geo1 = gf.createLineString(coo.toArray(new Coordinate[0]));
             LineString geo2 = ((Polygon) geo1.buffer(dh)).getInteriorRingN(0);
-            this.area = gf.createMultiLineString(new LineString[]{geo1, geo2});
+            this.area = gf.createMultiLineString(new LineString[]{geo1});
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaRectangl.setLocation" + toString() + e);

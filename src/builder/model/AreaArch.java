@@ -1,8 +1,11 @@
 package builder.model;
 
 import builder.Wincalc;
+import static builder.model.Com5t.aff;
 import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
+import dataset.Record;
+import domain.eArtikl;
 import enums.Type;
 import enums.TypeJoin;
 import java.awt.Shape;
@@ -11,7 +14,9 @@ import java.util.LinkedList;
 import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.CoordinateSequence;
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.util.GeometricShapeFactory;
 import startup.Test;
@@ -29,14 +34,29 @@ public class AreaArch extends AreaSimple {
         ArrayList<Coordinate> list = new ArrayList<Coordinate>();
         try {
             //Создадим вершины арки
-            for (ElemSimple frame  : this.frames) {
-    
+            for (ElemSimple frame : this.frames) {
+
                 if (frame.h() != null) {
-                    GeometricShapeFactory gsf = new GeometricShapeFactory();
-                    double L = frame.length(), H = frame.h();
-                    ((ElemFrame) frame).radiusArc = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
-                    LineString arch = UGeo.newLineArch(0, H, 0, L, frame.id);
-                    list.addAll(List.of(arch.getCoordinates()));
+                    Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
+                    double dh = artiklRec.getDbl(eArtikl.height);
+                    LineSegment s1 = new LineSegment(frame.x1(), frame.y1(), frame.x2(), frame.y2());
+                    s1.normalize();
+                    double L = frame.length(), H = frame.h(), ANG = Math.toDegrees(s1.angle());
+                    double R = ((ElemFrame) frame).radiusArc = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
+
+                    //Ротация в горизонталь
+                    aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации в горизонт     
+                    LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
+                    l1.normalize();
+                    CoordinateSequence cs = l1.getCoordinateSequence();
+
+                    //Внешняя арка на горизонтали
+                    LineString arcA = UGeo.newLineArch(cs.getX(0), cs.getX(1), cs.getY(0), H, this.id);  //созд. арки на гортзонтали   
+                    List.of(arcA.getCoordinates()).forEach(c -> c.setZ(frame.id));
+                    list.addAll(List.of(arcA.getCoordinates()));
+
+                    //Обратная ротация
+                    aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол обратной ротации  
 
                 } else {
                     list.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
@@ -44,7 +64,9 @@ public class AreaArch extends AreaSimple {
             }
             //Полигон векторов рамы
             list.add(list.get(0));
-            this.area = gf.createPolygon(list.toArray(new Coordinate[0]));
+
+            Geometry geo1 = gf.createPolygon(list.toArray(new Coordinate[0]));
+            this.area = geo1;
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
@@ -76,11 +98,11 @@ public class AreaArch extends AreaSimple {
     @Override
     public void paint() {
         super.paint();
-//        if (this.area != null) { //TEST
-//            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
-//            Shape shape = new ShapeWriter().toShape(this.area);
-//            winc.gc2d.draw(shape);
-//        }
+        if (this.area != null) { //TEST
+            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
+            Shape shape = new ShapeWriter().toShape(this.area);
+            winc.gc2d.draw(shape);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
