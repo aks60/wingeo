@@ -100,7 +100,7 @@ public class ElemGlass extends ElemSimple {
             new Filling(winc, true).calc(this);
 
             //Внешний полигон створки/рамы для прорисовки 
-            Coordinate[] coo = owner.area.getCoordinates();
+            Coordinate[] coo = owner.area.getGeometryN(0).getCoordinates();
 
             Coordinate[] out = new Coordinate[coo.length];
             LinkedCom<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
@@ -131,7 +131,7 @@ public class ElemGlass extends ElemSimple {
             //Полигон элемента конструкции
             this.area = Com5t.gf.createPolygon(out);
             
-            Envelope env = this.area.getEnvelopeInternal();
+            Envelope env = this.area.getGeometryN(0).getEnvelopeInternal();
             spcRec.width = env.getWidth();
             spcRec.height = env.getHeight();
 

@@ -142,7 +142,7 @@ public class AreaSimple extends Com5t {
     @Override
     public void paint() {
         winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
-        Envelope box = winc.root.area.getEnvelopeInternal();
+        Envelope box = winc.root.area.getGeometryN(0).getEnvelopeInternal();
         HashSet<Double> hsHor = new HashSet(), hsVer = new HashSet();
         for (AreaSimple area5e : winc.listArea) {
             Geometry p = (area5e.type == Type.STVORKA) ? ((AreaStvorka) area5e).areaBox : area5e.area;
@@ -205,7 +205,6 @@ public class AreaSimple extends Com5t {
                 winc.gc2d.drawString(df1.format(listVer.get(i) - listVer.get(i - 1)), xy[0], xy[1]);
             }
             winc.gc2d.setTransform(orig);
-
         }
     }
 }

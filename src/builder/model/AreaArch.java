@@ -73,7 +73,6 @@ public class AreaArch extends AreaSimple {
         }
     }
 
-    //Линии размерности
     @Override
     public void paint() {
         super.paint();

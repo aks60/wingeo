@@ -155,7 +155,7 @@ public class AreaStvorka extends AreaSimple {
 
             //Координаты рам створок
             if (this.frames.size() == 0) { //если стороны ств. ещё не созданы                  
-                Coordinate[] coo = this.area.getCoordinates();
+                Coordinate[] coo = this.area.getGeometryN(0).getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
 
                     GsonElem gson = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y); //, coo[i+1].x, coo[i+1].y);
@@ -169,7 +169,7 @@ public class AreaStvorka extends AreaSimple {
                 coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
 
             } else { //если стороны уже созданы
-                Coordinate[] coo = this.area.getCoordinates();
+                Coordinate[] coo = this.area.getGeometryN(0).getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
                     ElemSimple elem = this.frames.get(i);
                     coo[i].z = elem.id;
@@ -252,7 +252,7 @@ public class AreaStvorka extends AreaSimple {
             }
             //Прилегающее
             LineSegment segm = new LineSegment();
-            Coordinate coo1[] = this.area.getCoordinates(); //полигон векторов сторон створки
+            Coordinate coo1[] = this.area.getGeometryN(0).getCoordinates(); //полигон векторов сторон створки
             Coordinate coo2[] = this.areaBox.getCoordinates(); //полигон векторов сторон рамы
 
             for (int j = 0; j < coo1.length - 1; j++) {

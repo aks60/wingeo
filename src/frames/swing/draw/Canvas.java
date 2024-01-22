@@ -122,8 +122,8 @@ public class Canvas extends javax.swing.JPanel {
             BufferedImage bi = new BufferedImage(length, length, BufferedImage.TYPE_INT_RGB);
             winc.gc2d = bi.createGraphics();
             winc.gc2d.fillRect(0, 0, length, length);
-            double height = winc.root.area.getEnvelopeInternal().getMaxY();
-            double width = winc.root.area.getEnvelopeInternal().getMaxX();
+            double height = winc.root.area.getGeometryN(0).getEnvelopeInternal().getMaxY();
+            double width = winc.root.area.getGeometryN(0).getEnvelopeInternal().getMaxX();
             winc.scale = (length / width > length / height)
                     ? length / (height + 200) : length / (width + 200);
             winc.gc2d.scale(winc.scale, winc.scale);

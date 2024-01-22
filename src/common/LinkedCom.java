@@ -38,8 +38,8 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
         try {
             for (Com5t el : this) {
                 int index = UGeo.getIndex(areaSimple.area, el);
-                if (areaSimple.area.getNumPoints() == 4
-                        || areaSimple.area.getNumPoints() == 5) {
+                if (areaSimple.area.getGeometryN(0).getNumPoints() == 4
+                        || areaSimple.area.getGeometryN(0).getNumPoints() == 5) {
 
                     if (index == 0 && layout == Layout.LEFT) {
                         return (E) el;

@@ -21,7 +21,7 @@ import javax.swing.SwingUtilities;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
-import org.locationtech.jts.operation.buffer.BufferParameters;
+import org.locationtech.jts.operation.buffer.VariableBuffer;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Test {
@@ -78,8 +78,8 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            //wincalc();
-            frame(args);
+            wincalc();
+            //frame(args);
             //query();
             //json();
             //uid();
@@ -95,10 +95,10 @@ public class Test {
 
         Conn.connection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
-        String _case = "one";
+        String _case = "min";
 
         if (_case.equals("one")) {
-            String script = GsonScript.scriptPath(601003);
+            String script = GsonScript.scriptPath(601001);
             winc.build(script);
             //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
             //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
@@ -109,7 +109,7 @@ public class Test {
             //winc.gc2d = winc.bufferImg.createGraphics();
             //winc.root.draw(); //рисую конструкцию
 
-            frames.PSCompare.iwinPs4(winc, true);
+            frames.PSCompare.iwinPs4(winc, false);
             //winc.listElem.forEach(it -> System.out.println(it));
             //winc.listJoin.forEach(it -> System.out.println(it.joiningRec));     
             //winc.listJoin.forEach(it -> System.out.println(it));     
@@ -303,28 +303,29 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
 
-//        System.out.println(segm1.intersection(segm2));
-//
-//        Intersection inter = new Intersection();
-//        Coordinate c9 = inter.intersection(segm1.p0, segm1.p1, segm2.p0, segm2.p1);
-//        System.out.println(c9);
-        //angleBetween(Coordinate tip1, Coordinate tail, Coordinate tip2)
-        //angleBetween(a.x2, a.y2, a.x1, a.y1, b.x1, b.y1)
-        //A= 0  400, 1440 400  B = 0  0, 0 1700 C = 1440 1700, 1440 0
-        LineSegment impH = new LineSegment(0, 400, 1440, 400);
-        LineSegment impV = new LineSegment(720, 1700, 720, 400);
-        LineSegment frL = new LineSegment(0, 0, 0, 1700);
-        LineSegment frR = new LineSegment(1440, 1700, 1440, 0);
-        LineSegment frT = new LineSegment(1440, 0, 0, 0);
+        Coordinate[] coordinates = new Coordinate[]{
+            new Coordinate(200, 91.37371939),
+            new Coordinate(199.9906516, 71.396149),
+            new Coordinate(199.925198, 66.39682954),
+            new Coordinate(135.4977781, 0.125906357),
+            new Coordinate(56.41194182, 0.598175835),
+            new Coordinate(0.024520295, 69.50077743),
+            new Coordinate(0.000508719, 74.50086084),
+            new Coordinate(6.22E-22, 76.39546845),};
+        double[] widths = new double[]{
+            5.4573551091373282,
+            5.5548897583660466,
+            5.5793006151088935,
+            6.0919286067086738,
+            6.4781230068945561,
+            6.96634014175149,
+            6.9907509984943372,
+            7,};
 
-//        double angl = anglBetbeeem(impH.p0, impH.p1, frL.p0, frL.p1);
-//        double ang2 = anglBetbeeem(impH.p0, impH.p1, frR.p0, frR.p1);
-//        double ang3 = anglBetbeeem(frT.p0, frT.p1, frR.p0, frR.p1);
-//        double ang4 = anglBetbeeem(impV.p0, impV.p1, impH.p0, impH.p1);
-//        System.out.println(angl);
-//        System.out.println(ang2);
-//        System.out.println(ang3);
-//        System.out.println(ang4);
+        LineString innerLine = gf.createLineString(coordinates);
+        VariableBuffer variableBuffer = new VariableBuffer(innerLine, widths);
+        Geometry geom = variableBuffer.getResult();
+        System.out.println(geom);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -386,51 +387,53 @@ public class Test {
 
         LineSegment s1 = new LineSegment(1300, 300, 0, 300);
         s1.normalize();
-        double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle()); 
-        
-        aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации      
-        LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
-        l1.normalize();
-        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H, 4);  //созд. арки на гортзонтали      
-        aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
-        Geometry arc2 = aff.transform(arc1); //обратная трансформация арки
-        Coordinate coo3[] = arc2.getCoordinates();
-        
-        list.add(new Coordinate(0, 300, 1));
-        list.add(new Coordinate(0, 1500, 2));
-        list.add(new Coordinate(1300, 1500, 3));
-        list.add(new Coordinate(1300, 300, 4));
-        list.addAll(List.of(coo3));
-        list.add(list.get(0));
-        
-        LineString geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
-        Geometry geo2 = ((Polygon) geo1.buffer(63)).getInteriorRingN(0);
-        for (int i = 0; i < geo2.getCoordinates().length; i++) {
-            geo2.getCoordinates()[i].z = geo1.getCoordinates()[i].z;           
-        }
-        System.out.println(List.of(geo2.getCoordinates()));
-        mpol = geo1;
-        mlin = geo2; 
-        
+        double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle());
+
+//        aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации      
+//        LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
+//        l1.normalize();
+//        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H, 4);  //созд. арки на гортзонтали      
+//        aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
+//        Geometry arc2 = aff.transform(arc1); //обратная трансформация арки
+//        Coordinate coo3[] = arc2.getCoordinates();
+//        
 //        list.add(new Coordinate(0, 300, 1));
 //        list.add(new Coordinate(0, 1500, 2));
 //        list.add(new Coordinate(1300, 1500, 3));
 //        list.add(new Coordinate(1300, 300, 4));
-//        list.add(new Coordinate(0, 300, 1));
-//
-//        LineString geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
-//        Polygon geo2 = (Polygon) geo1.buffer(80, 1);
+//        list.addAll(List.of(coo3));
+//        list.add(list.get(0));
 //        
-//        mpol = geo1;
-//        mlin = gf.createPolygon(geo2.getInteriorRingN(0));
+//        LineString geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
+//        LineString geo2 = ((Polygon) geo1.buffer(63)).getInteriorRingN(0);
+//        //BufferBuilder bf = new BufferBuilder();
+//        for (int i = 0; i < geo2.getCoordinates().length; i++) {
+//            geo2.getCoordinates()[i].z = geo1.getCoordinates()[i].z;           
+//        }
+//        mpol = gf.createMultiLineString(new LineString[]{geo1, geo2});
+        list.add(new Coordinate(0, 300, 1));
+        list.add(new Coordinate(0, 1500, 2));
+        list.add(new Coordinate(1300, 1500, 3));
+        list.add(new Coordinate(1300, 300, 4));
+        list.add(new Coordinate(0, 300, 1));
+     
+        double distance[] = {40, 40, 80, 80, 40};
+        LineString geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
+        //Polygon geo2 = (Polygon) geo1.buffer(80, 1);
         
+        //LineString innerLine = gf.createLineString(coordinates);
+        VariableBuffer variableBuffer = new VariableBuffer(geo1, distance);
+        Polygon geo2 = (Polygon) variableBuffer.getResult();
+
+        mpol = geo1;
+        mlin = gf.createPolygon(geo2.getInteriorRingN(0));
+
 //        System.out.println(geo2);
 //        System.out.println(geo2.getExteriorRing());
 //        System.out.println(geo2.getInteriorRingN(0));
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">  
-
     private void draw3() {
 
         GeometryFactory gf = new GeometryFactory();
@@ -440,8 +443,8 @@ public class Test {
 
         LineSegment s1 = new LineSegment(1300, 300, 0, 500);
         s1.normalize();
-        double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle()); 
-        
+        double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle());
+
         aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации      
         LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
         l1.normalize();
@@ -455,7 +458,7 @@ public class Test {
         list.add(new Coordinate(1300, 1500, 3));
         list.addAll(List.of(coo3));
         list.add(list.get(0));
-        
+
         mpol = gf.createLineString(list.toArray(new Coordinate[0]));
         mlin = gf.createMultiLineString(new LineString[]{s1.toGeometry(gf), l1});
     }

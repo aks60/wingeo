@@ -63,7 +63,7 @@ public class Filling extends Cal5e {
             List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(winc.root.frames);  //список рам конструкции
             
             LinkedCom<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
-            Coordinate[] coo = elemGlass.owner.area.getCoordinates();
+            Coordinate[] coo = elemGlass.owner.area.getGeometryN(0).getCoordinates();
             
             //Цикл по сторонам стеклопакета
             for (int indexSegm = 0; indexSegm < coo.length - 1; indexSegm++) {              

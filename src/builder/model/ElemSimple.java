@@ -87,7 +87,7 @@ public abstract class ElemSimple extends Com5t {
             if (this.area != null) {
                 pointPress = evt.getPoint();
                 //Если клик внутри контура
-                boolean b = this.area.contains(gf.createPoint(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale)));
+                boolean b = this.area.getGeometryN(0).contains(gf.createPoint(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale)));
                 if (b == true) {
                     LineSegment segm = new LineSegment(x1(), y1(), x2(), y2());
                     double coef = segm.segmentFraction(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale));

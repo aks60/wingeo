@@ -3555,7 +3555,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                                 win.specific(true); //конструктив                                                               
 
                                 //Площадь изделий
-                                double square = prjprodRec.getDbl(ePrjprod.num, 1) * win.root.area.getArea();
+                                double square = prjprodRec.getDbl(ePrjprod.num, 1) * win.root.area.getGeometryN(0).getArea();
                                 projectRec.set(eProject.square, projectRec.getDbl(eProject.square) + square);
 
                                 //Суммируем коонструкции заказа

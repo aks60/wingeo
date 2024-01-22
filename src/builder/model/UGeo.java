@@ -40,8 +40,9 @@ public class UGeo {
     }
 
     //Пересечение сегмента(линии) импоста с сегментами(отрезками) многоугольника
-    public static Coordinate[] geoIntersect(Polygon poly, LineSegment line) {
+    public static Coordinate[] geoIntersect(Geometry poly, LineSegment line) {
         try {
+            poly = poly.getGeometryN(0);
             List<Coordinate> out = new ArrayList();
             Coordinate[] c = poly.getCoordinates();
             for (int i = 1; i < c.length; i++) {
@@ -69,6 +70,7 @@ public class UGeo {
     //Пилим многоугольник
     public static Geometry[] geoSplit(Geometry poly, ElemCross cross) {
         try {
+            poly = poly.getGeometryN(0);
             HashSet<Coordinate> hsCheck = new HashSet();
             Coordinate[] coo = poly.copy().getCoordinates();
             Coordinate crosP1 = new Coordinate(cross.x1(), cross.y1());
@@ -142,6 +144,7 @@ public class UGeo {
         LineSegment segm1, segm2, segm1a, segm2a, segm1b, segm2b, segm1c, segm2c;
         List<Coordinate> out = new ArrayList();
         try {
+            poly = poly.getGeometryN(0);
             int j = 999, k = 999;
             Coordinate[] coo = poly.copy().getCoordinates();
             for (int i = 0; i < coo.length; i++) {
@@ -252,7 +255,7 @@ public class UGeo {
     }
 
     public static LineSegment newSegment(Geometry poly, int index) {
-
+        poly = poly.getGeometryN(0);
         Coordinate[] coo = Arrays.copyOf(poly.getCoordinates(), poly.getNumPoints() - 1);
         index = (index >= coo.length) ? index - coo.length : index;
         int j = (index < 0) ? index + coo.length : index;
@@ -262,7 +265,7 @@ public class UGeo {
     }
 
     public static int getIndex(Geometry p, Com5t e) throws Exception {
-        Coordinate coo[] = p.getCoordinates();
+        Coordinate coo[] = p.getGeometryN(0).getCoordinates();
 //        if (coo.length > 5) {
 //            System.out.println("AKS builder.model.UGeo.getIndex()");
 //        } else {
