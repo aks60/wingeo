@@ -31,9 +31,7 @@ public class Com5t {
     public AreaSimple root = null; //главный класс конструкции
     public GsonElem gson = null; //gson object конструкции    
     public Type type = Type.NONE; //тип элемента или окна
-    public Geometry area = null; //ареа компонента
-    private boolean pass[] = {false, false};
-    private Point pointPress = null;
+    public Geometry area = null; //ареа компонента  
     public int colorID1 = -1, colorID2 = -1, colorID3 = -1; //1-базовый 2-внутренний 3-внешний 
     public Record sysprofRec = null, artiklRec = null, artiklRecAn = null; //профиль системы, мат.средства, аналог.мат.средств
 
@@ -51,98 +49,6 @@ public class Com5t {
     }
 
     public void paint() {
-    }
-
-    public void events() {
-
-        ListenerKey keyPressed = (evt) -> {
-            if (this.area != null) {
-                double W = winc.canvas.getWidth();
-                double H = winc.canvas.getHeight();
-                double dX = 0;
-                double dY = 0;
-                if (pass[0] == true || pass[1] == true) {
-                    if (evt.getKeyCode() == KeyEvent.VK_UP) {
-                        dY = -.1;
-                    } else if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
-                        dY = .1;
-                    } else if (evt.getKeyCode() == KeyEvent.VK_LEFT) {
-                        dX = -.1;
-                    } else if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
-                        dX = .1;
-                    }
-                    if (pass[0] == true) {
-                        double X1 = dX / winc.scale + x1();
-                        double Y1 = dY / winc.scale + y1();
-                        if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
-                            x1(X1);
-                            y1(Y1);
-                            //pointPress.setLocation(x1(), y1());
-                        }
-                    } else if (pass[1] == true) {
-                        double X2 = dX / winc.scale + x2();
-                        double Y2 = dY / winc.scale + y2();
-                        if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву
-                            x2(X2);
-                            y2(Y2);
-                            //pointPress.setLocation(x2(), y2());
-                        }
-                    }
-                }
-            }
-        };
-        ListenerMouse mousePressed = (evt) -> {
-            if (this.area != null) {
-                pointPress = evt.getPoint();
-                //Если клик внутри контура
-                boolean b = this.area.contains(gf.createPoint(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale)));
-                if (b == true) {
-                    LineSegment segm = new LineSegment(x1(), y1(), x2(), y2());
-                    double coef = segm.segmentFraction(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale));
-                    if (coef < .33) {
-                        pass[0] = true; //кликнул ближе к началу вектора
-                    } else if (coef > .67) {
-                        pass[1] = true; //кликнул ближе к концу вектора
-                    }
-                }
-            }
-        };
-        ListenerMouse mouseReleased = (evt) -> {
-
-            pass[0] = false;
-            pass[1] = false;
-        };
-        ListenerMouse mouseDragge = (evt) -> {
-            if (this.area != null) {
-                double W = winc.canvas.getWidth();
-                double H = winc.canvas.getHeight();
-                double dX = evt.getX() - pointPress.getX(); //прирощение по горизонтали
-                double dY = evt.getY() - pointPress.getY(); //прирощение по вертикали 
-
-                if (pass[0] == true) {
-                    double X1 = dX / winc.scale + x1();
-                    double Y1 = dY / winc.scale + y1();
-                    if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
-                        x1(X1);
-                        y1(Y1);
-                        pointPress = evt.getPoint();
-                    }
-                } else if (pass[1] == true) {
-                    double X2 = dX / winc.scale + x2();
-                    double Y2 = dY / winc.scale + y2();
-                    if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву                       
-                        x2(X2);
-                        y2(Y2);
-                        pointPress = evt.getPoint();
-                    }
-                }
-            }
-        };
-
-        this.winc.keyboardPressed.add(keyPressed);
-        this.winc.mousePressed.add(mousePressed);
-        this.winc.mouseReleased.add(mouseReleased);
-        this.winc.mouseDragged.add(mouseDragge);
     }
 
     /**
@@ -180,14 +86,6 @@ public class Com5t {
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
-    public void setDimension(double x1, double y1, double x2, double y2) {
-        if (pass[0] == false && pass[1] == false) {
-            gson.x1 = x1;
-            gson.y1 = y1;
-            gson.x2 = x2;
-            gson.y2 = y2;
-        }
-    }
 
     public double x1() {
         return (gson.x1 != null) ? gson.x1 : -1;

@@ -2,10 +2,15 @@ package builder.model;
 
 import builder.Wincalc;
 import builder.making.Specific;
+import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
+import common.listener.ListenerKey;
+import common.listener.ListenerMouse;
 import enums.Layout;
 import enums.Type;
 import java.awt.Color;
+import java.awt.Point;
+import java.awt.event.KeyEvent;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineSegment;
@@ -14,7 +19,9 @@ public abstract class ElemSimple extends Com5t {
 
     public double anglCut[] = {45, 45}; //угол реза
     public double[] anglFlat = {0, 0, 0, 0}; //мин/мах внутренний и мин/мах внешний угол к плоскости   
-    public double[] betweenHoriz = {0, 0}; //угол между векторами      
+    public double[] betweenHoriz = {0, 0}; //угол между векторами   
+    private Point pointPress = null;
+    private boolean pass[] = {false, false};
 
     public Specific spcRec = null; //спецификация элемента
     public Color borderColor = Color.BLACK;
@@ -33,10 +40,102 @@ public abstract class ElemSimple extends Com5t {
     public abstract void initArtikle();
 
     public abstract void setLocation();
-    
+
     public abstract void setSpecific();
-    
+
     public abstract void addSpecific(Specific spcAdd);
+
+    public void events() {
+
+        ListenerKey keyPressed = (evt) -> {
+            if (this.area != null) {
+                double W = winc.canvas.getWidth();
+                double H = winc.canvas.getHeight();
+                double dX = 0;
+                double dY = 0;
+                if (pass[0] == true || pass[1] == true) {
+                    if (evt.getKeyCode() == KeyEvent.VK_UP) {
+                        dY = -.1;
+                    } else if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
+                        dY = .1;
+                    } else if (evt.getKeyCode() == KeyEvent.VK_LEFT) {
+                        dX = -.1;
+                    } else if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
+                        dX = .1;
+                    }
+                    if (pass[0] == true) {
+                        double X1 = dX / winc.scale + x1();
+                        double Y1 = dY / winc.scale + y1();
+                        if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
+                            x1(X1);
+                            y1(Y1);
+                            //pointPress.setLocation(x1(), y1());
+                        }
+                    } else if (pass[1] == true) {
+                        double X2 = dX / winc.scale + x2();
+                        double Y2 = dY / winc.scale + y2();
+                        if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву
+                            x2(X2);
+                            y2(Y2);
+                            //pointPress.setLocation(x2(), y2());
+                        }
+                    }
+                }
+            }
+        };
+        ListenerMouse mousePressed = (evt) -> {
+            if (this.area != null) {
+                pointPress = evt.getPoint();
+                //Если клик внутри контура
+                boolean b = this.area.contains(gf.createPoint(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale)));
+                if (b == true) {
+                    LineSegment segm = new LineSegment(x1(), y1(), x2(), y2());
+                    double coef = segm.segmentFraction(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale));
+                    if (coef < .33) {
+                        pass[0] = true; //кликнул ближе к началу вектора
+                    } else if (coef > .67) {
+                        pass[1] = true; //кликнул ближе к концу вектора
+                    }
+                }
+            }
+        };
+        ListenerMouse mouseReleased = (evt) -> {
+
+            pass[0] = false;
+            pass[1] = false;
+        };
+        ListenerMouse mouseDragge = (evt) -> {
+            if (this.area != null) {
+                double W = winc.canvas.getWidth();
+                double H = winc.canvas.getHeight();
+                double dX = evt.getX() - pointPress.getX(); //прирощение по горизонтали
+                double dY = evt.getY() - pointPress.getY(); //прирощение по вертикали 
+
+                if (pass[0] == true) {
+                    double X1 = dX / winc.scale + x1();
+                    double Y1 = dY / winc.scale + y1();
+                    if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
+                        x1(X1);
+                        y1(Y1);
+                        pointPress = evt.getPoint();
+                    }
+                } else if (pass[1] == true) {
+                    double X2 = dX / winc.scale + x2();
+                    double Y2 = dY / winc.scale + y2();
+                    if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву                       
+                        x2(X2);
+                        y2(Y2);
+                        pointPress = evt.getPoint();
+                    }
+                }
+            }
+        };
+
+        this.winc.keyboardPressed.add(keyPressed);
+        this.winc.mousePressed.add(mousePressed);
+        this.winc.mouseReleased.add(mouseReleased);
+        this.winc.mouseDragged.add(mouseDragge);
+    }
 
     /**
      * Определяет прилегающий элемент по точке принадлежащей вектору. Прил.
@@ -94,9 +193,14 @@ public abstract class ElemSimple extends Com5t {
         return Angle.toDegrees(Angle.angle(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2())));
     }
 
-//    public LineSegment getSegment() {
-//        return new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
-//    }
+    public void setDimension(double x1, double y1, double x2, double y2) {
+        if (pass[0] == false && pass[1] == false) {
+            gson.x1 = x1;
+            gson.y1 = y1;
+            gson.x2 = x2;
+            gson.y2 = y2;
+        }
+    }
     
     @Override
     public String toString() {
