@@ -352,7 +352,7 @@ public class Test {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D g2 = (Graphics2D) g;
-                g2.translate(8, 8);
+                g2.translate(82, 82);
                 g2.scale(.3, .3);
 
                 if (mlin != null) {
@@ -387,7 +387,7 @@ public class Test {
         AffineTransformation aff = new AffineTransformation();
         ArrayList<Coordinate> list = new ArrayList();
 
-        LineSegment s1 = new LineSegment(1300, 300, 0, 500);
+        LineSegment s1 = new LineSegment(1300, 300, 0, 300);
         s1.normalize();
         double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle()); 
         
@@ -397,16 +397,36 @@ public class Test {
         LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H);  //созд. арки на гортзонтали      
         aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
         Geometry arc2 = aff.transform(arc1); //обратная трансформация арки
-
         Coordinate coo3[] = arc2.getCoordinates();
-        list.add(new Coordinate(0, 500, 1));
+        
+        list.add(new Coordinate(0, 300, 1));
         list.add(new Coordinate(0, 1500, 2));
         list.add(new Coordinate(1300, 1500, 3));
+        list.add(new Coordinate(1300, 300, 4));
         list.addAll(List.of(coo3));
         list.add(list.get(0));
         
-        mpol = gf.createLineString(list.toArray(new Coordinate[0]));
-        mlin = gf.createMultiLineString(new LineString[]{s1.toGeometry(gf), l1});
+        LineString geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
+        Polygon geo2 = (Polygon) geo1.buffer(63, 1);
+        
+        mpol = geo1;
+        mlin = gf.createPolygon(geo2.getInteriorRingN(0));       
+        
+//        list.add(new Coordinate(0, 300, 1));
+//        list.add(new Coordinate(0, 1500, 2));
+//        list.add(new Coordinate(1300, 1500, 3));
+//        list.add(new Coordinate(1300, 300, 4));
+//        list.add(new Coordinate(0, 300, 1));
+//
+//        LineString geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
+//        Polygon geo2 = (Polygon) geo1.buffer(80, 1);
+//        
+//        mpol = geo1;
+//        mlin = gf.createPolygon(geo2.getInteriorRingN(0));
+        
+//        System.out.println(geo2);
+//        System.out.println(geo2.getExteriorRing());
+//        System.out.println(geo2.getInteriorRingN(0));
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">  
