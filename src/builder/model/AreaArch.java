@@ -76,11 +76,11 @@ public class AreaArch extends AreaSimple {
     @Override
     public void paint() {
         super.paint();
-        if (this.area != null) { //TEST
-            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
-            Shape shape = new ShapeWriter().toShape(this.area);
-            winc.gc2d.draw(shape);
-        }
+//        if (this.area != null) { //TEST
+//            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
+//            Shape shape = new ShapeWriter().toShape(this.area);
+//            winc.gc2d.draw(shape);
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">

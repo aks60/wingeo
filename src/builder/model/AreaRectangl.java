@@ -39,7 +39,6 @@ public class AreaRectangl extends AreaSimple {
             LineString geo1 = gf.createLineString(coo.toArray(new Coordinate[0]));
             LineString geo2 = ((Polygon) geo1.buffer(dh)).getInteriorRingN(0);
             this.area = gf.createMultiLineString(new LineString[]{geo1, geo2});
-            int m = 0;
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaRectangl.setLocation" + toString() + e);
@@ -70,15 +69,15 @@ public class AreaRectangl extends AreaSimple {
     @Override
     public void paint() {
         super.paint();
-        if (this.area != null) {
-            Shape shape = new ShapeWriter().toShape(this.area);
-
-            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-            winc.gc2d.fill(shape);
-
-            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
-            winc.gc2d.draw(shape);
-        }
+//        if (this.area != null) {
+//            Shape shape = new ShapeWriter().toShape(this.area);
+//
+//            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
+//            winc.gc2d.fill(shape);
+//
+//            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
+//            winc.gc2d.draw(shape);
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">

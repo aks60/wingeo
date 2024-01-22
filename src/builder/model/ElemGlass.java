@@ -220,7 +220,7 @@ public class ElemGlass extends ElemSimple {
         if (owner.area != null) {
             winc.gc2d.setColor(new java.awt.Color(eColor.find(colorID2).getInt(eColor.rgb)));
             Shape shape = new ShapeWriter().toShape(this.area);
-            //winc.gc2d.fill(shape);
+            winc.gc2d.fill(shape);
         }
     }
 }
