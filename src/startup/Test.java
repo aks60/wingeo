@@ -5,6 +5,7 @@ import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import common.ArrayLoop;
 import common.eProp;
 import dataset.Conn;
 import java.awt.Color;
@@ -13,8 +14,10 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -389,28 +392,6 @@ public class Test {
         s1.normalize();
         double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle());
 
-//        aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации      
-//        LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
-//        l1.normalize();
-//        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H, 4);  //созд. арки на гортзонтали      
-//        aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
-//        Geometry arc2 = aff.transform(arc1); //обратная трансформация арки
-//        Coordinate coo3[] = arc2.getCoordinates();
-//        
-//        list.add(new Coordinate(0, 300, 1));
-//        list.add(new Coordinate(0, 1500, 2));
-//        list.add(new Coordinate(1300, 1500, 3));
-//        list.add(new Coordinate(1300, 300, 4));
-//        list.addAll(List.of(coo3));
-//        list.add(list.get(0));
-//        
-//        LineString geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
-//        LineString geo2 = ((Polygon) geo1.buffer(63)).getInteriorRingN(0);
-//        //BufferBuilder bf = new BufferBuilder();
-//        for (int i = 0; i < geo2.getCoordinates().length; i++) {
-//            geo2.getCoordinates()[i].z = geo1.getCoordinates()[i].z;           
-//        }
-//        mpol = gf.createMultiLineString(new LineString[]{geo1, geo2});
         list.add(new Coordinate(0, 300, 1));
         list.add(new Coordinate(0, 1500, 2));
         list.add(new Coordinate(1300, 1500, 3));
@@ -420,39 +401,37 @@ public class Test {
         ArrayList<Coordinate> list2 = new ArrayList();
         list.forEach(s -> list2.addAll(List.of(s, s)));
 
-        double distance[] = {40, 80, 80, 80, 40};
+        double distance[] = {40, 40, 80, 80, 40};
+        double distanc2[] = {40, 40, 80, 80};
 
         LineString geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
+        mpol = geo1;
 
-//        Polygon geo1 = (Polygon) geo1.buffer(80, 1);
         Geometry gb = VariableBuffer.buffer(geo1, distance);
         Polygon geo2 = (Polygon) gb;
 
-        mpol = geo1;
-        mlin = gf.createPolygon(geo2.getInteriorRingN(0));
+        //mlin = gf.createPolygon(geo2.getInteriorRingN(0));
+        mlin = buffer(geo1, distanc2);
 
-        buffer(geo1, distance);
-        
-//        System.out.println(geo2);
-//        System.out.println(geo2.getExteriorRing());
-//        System.out.println(geo2.getInteriorRingN(0));
     }
 
     public static Geometry buffer(Geometry line, double[] distance) {
-        Coordinate[] coo = line.getCoordinates();
-        List<Coordinate> list = new ArrayList();
-        List.of(coo).forEach(c -> list.addAll(List.of(c, c)));
-        List dist = new ArrayList();
-        for (int i = 1; i < distance.length; i++) {
-            dist.add(distance[i - 1]);
-            if (distance[i] == distance[i - 1]) {
-                dist.add(distance[i - 1]);
-            } else {
-                dist.add(distance[i]);
-            }
+
+        List<Double> d1 = new ArrayList(), g1 = new ArrayList();
+        List<Double> d2 = new ArrayLoop(Arrays.stream(distance).boxed().collect(Collectors.toList()));
+        for (int i = 0; i < distance.length; i++) {
+            d1.addAll(List.of(d2.get(i - 1), d2.get(i)));
         }
-        System.out.println(dist);
-        return null;
+        d1.addAll(List.of(d1.get(0), d1.get(1)));
+
+        double[] arr = new double[d1.size()];
+        for (int i = 0; i < d1.size(); i++) {
+            arr[i] = d1.get(i);          
+        }
+        Geometry geo = VariableBuffer.buffer(line, arr);
+        
+        System.out.println(d1);
+        return geo;
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">  
