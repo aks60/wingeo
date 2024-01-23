@@ -6,6 +6,7 @@ import domain.eArtikl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
@@ -18,7 +19,6 @@ import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
-import org.locationtech.jts.util.GeometricShapeFactory;
 
 /**
  * Утилиты JTS
@@ -135,6 +135,79 @@ public class UGeo {
 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.geoSplit()" + e);
+            return null;
+        }
+    }
+
+    //Внутренняя обводка ареа 
+    public static Polygon geoPadding2(Geometry poly, HashMap<Double, Double> hs, double amend) {
+        LineSegment segm1, segm2, segm1a, segm2a, segm1b, segm2b, segm1c, segm2c;
+        List<Coordinate> out = new ArrayList();
+        try {
+            poly = poly.getGeometryN(0);
+            int j = 999, k = 999;
+            Coordinate[] coo = poly.copy().getCoordinates();
+            for (int i = 0; i < coo.length; i++) {
+
+                //Сегменты границ полигона
+                segm1 = UGeo.newSegment(poly, i - 1);
+                segm2 = UGeo.newSegment(poly, i);
+
+                //Получим ширину сегментов             
+                Double e1 = hs.get(segm1.p0.z), e2 = hs.get(segm2.p0.z);
+                double w1 = e1 - amend;
+                double w2 = e2 - amend;
+
+                //Смещение сегментов относительно границ
+                segm1a = segm1.offset(-w1);
+                segm2a = segm2.offset(-w2);
+
+                //Точка пересечения внутренних сегментов
+                Coordinate cross = (coo.length < 100) ? segm2a.lineIntersection(segm1a) : segm2a.intersection(segm1a);
+
+                if (cross != null && i < j - 1) {
+                    cross.z = segm2.p0.z;
+                    out.add(cross);
+
+                } else { //обрезаем концы арки
+
+                    if (e1.h() != null) { //слева
+                        Coordinate cros1 = null;
+                        j = i - 1;
+                        do {
+                            segm1b = UGeo.newSegment(poly, --j);
+                            segm1c = segm1b.offset(-w1);
+                            cros1 = segm2a.intersection(segm1c);
+
+                        } while (cros1 == null);
+                        cros1.z = segm2.p0.z;
+                        out.add(cros1);
+                        j = (j < 0) ? --j + coo.length : --j;
+
+                    }
+                    if (e2.h() != null) {  //справа
+                        Coordinate cros2 = null;
+                        k = i;
+                        do {
+                            segm2b = UGeo.newSegment(poly, ++k);
+                            segm2c = segm2b.offset(-w2);
+                            cros2 = segm2c.intersection(segm1a);
+
+                        } while (cros2 == null);
+                        i = k;
+                        cros2.z = segm2.p0.z;
+                        out.add(cros2);
+                    }
+                }
+            }
+            if (out.get(0).equals(out.get(out.size() - 1)) == false) {
+                out.add(out.get(0));
+            }
+            Polygon g = Com5t.gf.createPolygon(out.toArray(new Coordinate[0]));
+            return g;
+
+        } catch (Exception e) {
+            System.err.println("AKS Ошибка:UGeo.geoPadding() " + e);
             return null;
         }
     }

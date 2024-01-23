@@ -378,7 +378,7 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        draw();
+        draw3();
     }
 
     private void draw() {
@@ -410,30 +410,9 @@ public class Test {
         Geometry gb = VariableBuffer.buffer(geo1, distance);
         Polygon geo2 = (Polygon) gb;
 
-        //mlin = gf.createPolygon(geo2.getInteriorRingN(0));
-        mlin = buffer(geo1, distanc2);
+        mlin = gf.createPolygon(geo2.getInteriorRingN(0));
 
     }
-
-    public static Geometry buffer(Geometry line, double[] distance) {
-
-        List<Double> d1 = new ArrayList(), g1 = new ArrayList();
-        List<Double> d2 = new ArrayLoop(Arrays.stream(distance).boxed().collect(Collectors.toList()));
-        for (int i = 0; i < distance.length; i++) {
-            d1.addAll(List.of(d2.get(i - 1), d2.get(i)));
-        }
-        d1.addAll(List.of(d1.get(0), d1.get(1)));
-
-        double[] arr = new double[d1.size()];
-        for (int i = 0; i < d1.size(); i++) {
-            arr[i] = d1.get(i);          
-        }
-        Geometry geo = VariableBuffer.buffer(line, arr);
-        
-        System.out.println(d1);
-        return geo;
-    }
-
 // <editor-fold defaultstate="collapsed" desc="TEMP">  
     private void draw3() {
 
@@ -461,7 +440,7 @@ public class Test {
         list.add(list.get(0));
 
         mpol = gf.createLineString(list.toArray(new Coordinate[0]));
-        mlin = gf.createMultiLineString(new LineString[]{s1.toGeometry(gf), l1});
+       // mlin = gf.createMultiLineString(new LineString[]{s1.toGeometry(gf), l1});
     }
 
     private void draw2() {
@@ -508,6 +487,38 @@ public class Test {
 
         // System.out.println(list1);
     }
+    
+    public static Geometry buffer(Geometry line, double[] distance) {
+
+        List<Double> d1 = new ArrayLoop(Arrays.stream(distance).boxed().collect(Collectors.toList()));
+        List<Double> d2 = new ArrayList();
+        
+        List<Coordinate> c1 = new ArrayLoop(List.of(line.getCoordinates()));
+        List<Coordinate> c2 = new ArrayList();
+        
+        for (int i = 0; i < distance.length; i++) {
+            d2.addAll(List.of(d1.get(i - 1), d1.get(i)));
+            c2.addAll(List.of(c1.get(i - 1), c1.get(i)));
+        }
+        d2.add(d2.get(0));
+        c2.add(c2.get(0));
+//        d2.addAll(List.of(d2.get(0), d2.get(1)));
+//        c2.addAll(List.of(c2.get(0), c2.get(1)));
+
+        double[] arr = new double[d2.size()];
+        for (int i = 0; i < d2.size(); i++) {
+            arr[i] = d2.get(i);          
+        }
+        
+        LineString lin2 = gf.createLineString(c2.toArray(new Coordinate[0]));
+        Geometry geo2 = VariableBuffer.buffer(lin2, arr);
+
+        System.out.println(d2);
+        System.out.println(c2);
+        
+        Geometry geo = gf.createPolygon(((Polygon) geo2).getInteriorRingN(0));
+        return lin2;
+    }   
 
 // </editor-fold>        
 }
