@@ -416,21 +416,43 @@ public class Test {
         list.add(new Coordinate(1300, 1500, 3));
         list.add(new Coordinate(1300, 300, 4));
         list.add(new Coordinate(0, 300, 1));
-     
-        double distance[] = {40, 40, 80, 40, 40};
+
+        ArrayList<Coordinate> list2 = new ArrayList();
+        list.forEach(s -> list2.addAll(List.of(s, s)));
+
+        double distance[] = {40, 80, 80, 80, 40};
+
         LineString geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
-        Polygon geo3 = (Polygon) geo1.buffer(80, 1);
-        
-        //LineString innerLine = gf.createLineString(coordinates);
-        Geometry gb =  VariableBuffer.buffer(geo1, distance);
+
+//        Polygon geo1 = (Polygon) geo1.buffer(80, 1);
+        Geometry gb = VariableBuffer.buffer(geo1, distance);
         Polygon geo2 = (Polygon) gb;
 
         mpol = geo1;
         mlin = gf.createPolygon(geo2.getInteriorRingN(0));
 
+        buffer(geo1, distance);
+        
 //        System.out.println(geo2);
 //        System.out.println(geo2.getExteriorRing());
 //        System.out.println(geo2.getInteriorRingN(0));
+    }
+
+    public static Geometry buffer(Geometry line, double[] distance) {
+        Coordinate[] coo = line.getCoordinates();
+        List<Coordinate> list = new ArrayList();
+        List.of(coo).forEach(c -> list.addAll(List.of(c, c)));
+        List dist = new ArrayList();
+        for (int i = 1; i < distance.length; i++) {
+            dist.add(distance[i - 1]);
+            if (distance[i] == distance[i - 1]) {
+                dist.add(distance[i - 1]);
+            } else {
+                dist.add(distance[i]);
+            }
+        }
+        System.out.println(dist);
+        return null;
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">  
