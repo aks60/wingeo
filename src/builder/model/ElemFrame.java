@@ -42,7 +42,6 @@ public class ElemFrame extends ElemSimple {
      * Профиль через параметр или первая запись в системе см. табл. sysprof Цвет
      * если нет параметра то берём winc.color.
      */
-    @Override
     public void initArtikle() {
         try {
             colorID1 = (isJson(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
@@ -77,6 +76,23 @@ public class ElemFrame extends ElemSimple {
     }
 
     //Рассчёт полигона стороны рамы
+    public void setLocation2() {
+        try {
+            Coordinate c1[] = owner.area.getGeometryN(0).getCoordinates();
+            Coordinate c2[] = owner.area.getGeometryN(1).getCoordinates();
+            for (int i = 0; i < c1.length; i++) {
+                if (c1[i].z == this.id && this.h() == null) {
+                    //Полигон элемента конструкции 
+                    this.area = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2[i + 1].x, c2[i + 1].y, c1[1].x, c1[1].y);
+                }
+            }
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:ElemFrame.setLocation" + toString() + e);
+        }
+    }
+
+    @Override
     public void setLocation() {
         try {
             for (int i = 0; i < owner.frames.size(); i++) {
@@ -115,7 +131,7 @@ public class ElemFrame extends ElemSimple {
                         arcA = gf.createLineString(listA.toArray(new Coordinate[0]));
                         arcB = gf.createLineString(listB.toArray(new Coordinate[0]));
                         this.area = gf.createMultiLineString(new LineString[]{arcA, arcB});
-                        
+
                         //Угол реза
                         double rad1 = Math.acos((L / 2) / R);
                         double rad2 = Math.acos((L - 2 * ah) / ((R - ah) * 2));
@@ -129,7 +145,7 @@ public class ElemFrame extends ElemSimple {
 
                         ElemSimple e1 = owner.frames.get(i - 1);
                         ElemSimple e2 = owner.frames.get(i + 1);
-                        
+
                         //Ширина сегментов
                         double w0 = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
                         double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);
