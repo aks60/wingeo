@@ -19,6 +19,7 @@ import builder.model.ElemSimple;
 import common.UCom;
 import dataset.Query;
 import enums.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import static java.util.stream.Collectors.toList;
 import javax.swing.JOptionPane;
@@ -50,7 +51,7 @@ public class Furniture extends Cal5e {
     @Override
     public void calc() {
         super.calc();
-        LinkedList<AreaSimple> stvorkaList = winc.listArea.filter(Type.STVORKA);
+        ArrayList<AreaSimple> stvorkaList = winc.listArea.filter(Type.STVORKA);
         try {
             //Цикл по створкам      
             for (AreaSimple areaStv : stvorkaList) {

@@ -11,6 +11,7 @@ import builder.model.ElemJoining;
 import builder.model.ElemSimple;
 import common.UCom;
 import enums.Type;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 //Cоединения
@@ -93,7 +94,7 @@ public class JoiningDet extends Par5s {
                 case 12028: //Диапазон веса заполнения, кг 
                 {
                     double weight = 0;
-                    LinkedList<ElemSimple> glassList = winc.listElem.filter(Type.GLASS);
+                    ArrayList<ElemSimple> glassList = winc.listElem.filter(Type.GLASS);
                     for (ElemSimple glass : glassList) {
                         if (glass.artiklRecAn.getDbl(eArtikl.density) > 0) {
                             weight += glass.width() * glass.height() * glass.artiklRecAn.getDbl(eArtikl.density) / 1000000;

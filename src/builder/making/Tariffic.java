@@ -11,7 +11,6 @@ import domain.eSystree;
 import enums.Layout;
 import enums.TypeForm;
 import enums.UseUnit;
-import java.util.LinkedList;
 import builder.Wincalc;
 import builder.model.ElemSimple;
 import common.ArraySpc;
@@ -22,6 +21,7 @@ import domain.ePrjprod;
 import enums.Type;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -314,7 +314,7 @@ public class Tariffic extends Cal5e {
                             }
 
                         } else if (rulecalcRec.getInt(eRulecalc.common) == 1) { //по использованию c расчётом общего количества по артикулу, подтипу, типу
-                            LinkedList<ElemSimple> elemList = winc.listElem;
+                            ArrayList<ElemSimple> elemList = winc.listElem;
                             double quantity3 = 0;
                             if (rulecalcRec.get(eRulecalc.artikl_id) != null) { //по артикулу
                                 for (ElemSimple elem5e : elemList) { //суммирую колич. всех элементов (например штапиков)

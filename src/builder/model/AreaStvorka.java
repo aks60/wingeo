@@ -3,7 +3,7 @@ package builder.model;
 import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
-import common.LinkedCom;
+import common.ArrayCom;
 import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
@@ -234,7 +234,7 @@ public class AreaStvorka extends AreaSimple {
 
     //@Override
     public void joining() {
-        LinkedCom<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.STOIKA);
+        ArrayCom<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.STOIKA);
         try {
             //L - соединения
             for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам створки

@@ -1,21 +1,19 @@
 package builder.making;
 
-import builder.model.Com5t;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eElemdet;
 import domain.eElement;
 import enums.TypeArtikl;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import builder.Wincalc;
 import builder.param.ElementDet;
 import builder.param.ElementVar;
 import builder.model.ElemSimple;
 import dataset.Query;
-import domain.eSysprof;
 import enums.Type;
+import java.util.ArrayList;
 
 /**
  * Составы.
@@ -35,7 +33,7 @@ public class Elements extends Cal5e {
     @Override
     public void calc() {
         super.calc();
-        LinkedList<ElemSimple> listElem = winc.listElem.filter(Type.FRAME_SIDE,
+        ArrayList<ElemSimple> listElem = winc.listElem.filter(Type.FRAME_SIDE,
                 Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA, Type.GLASS, Type.MOSKITKA); //список элементов конструкции
         try {
             //Цикл по списку элементов конструкции

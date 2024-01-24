@@ -4,7 +4,7 @@ import builder.Wincalc;
 import builder.making.Filling;
 import builder.making.Specific;
 import builder.script.GsonElem;
-import common.LinkedCom;
+import common.ArrayCom;
 import common.UCom;
 import dataset.Record;
 import domain.eArtdet;
@@ -103,7 +103,7 @@ public class ElemGlass extends ElemSimple {
             Coordinate[] coo = owner.area.getGeometryN(0).getCoordinates();
 
             Coordinate[] out = new Coordinate[coo.length];
-            LinkedCom<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+            ArrayCom<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             for (int i = 0; i < coo.length; i++) {
 
                 //Сегменты полигона

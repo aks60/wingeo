@@ -5,7 +5,7 @@ import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import common.LinkedCom;
+import common.ArrayCom;
 import dataset.Record;
 import domain.eColor;
 import domain.eParams;
@@ -33,9 +33,9 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 public class AreaSimple extends Com5t {
 
     private DecimalFormat df1 = new DecimalFormat("#0.#");
-    public LinkedCom<ElemSimple> frames = new LinkedCom(this); //список рам
+    public ArrayCom<ElemSimple> frames = new ArrayCom(this); //список рам
     //public LinkedList<Point2D> listSkin = new LinkedList();
-    public LinkedCom<Com5t> childs = new LinkedCom(this); //дети
+    public ArrayCom<Com5t> childs = new ArrayCom(this); //дети
 
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson.id, gson, owner);
@@ -102,8 +102,8 @@ public class AreaSimple extends Com5t {
     public void joining() {
 
         //T - соединения
-        LinkedList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.STOIKA);
-        LinkedList<ElemSimple> elemList = winc.listElem.filterNo(Type.GLASS);
+        ArrayList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.STOIKA);
+        ArrayList<ElemSimple> elemList = winc.listElem.filterNo(Type.GLASS);
 
         //Цикл по кросс элементам
         for (ElemSimple cross : crosList) {

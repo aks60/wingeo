@@ -19,7 +19,7 @@ import builder.script.GsonRoot;
 import com.google.gson.GsonBuilder;
 import common.ArrayJoin;
 import common.ArraySpc;
-import common.LinkedCom;
+import common.ArrayCom;
 import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
 import dataset.Record;
@@ -66,9 +66,9 @@ public class Wincalc {
     public ArrayList<ListenerMouse> mouseDragged = new ArrayList();
 
     public HashMap<Integer, Record> mapPardef = new HashMap(); //пар. по умолчанию + наложенные пар. клиента
-    public LinkedCom<AreaSimple> listArea = new LinkedCom(root); //список ареа.
-    public LinkedCom<ElemSimple> listElem = new LinkedCom(root); //список элем.
-    public LinkedCom<Com5t> listAll = new LinkedCom(root); //список всех компонентов (area + elem)
+    public ArrayCom<AreaSimple> listArea = new ArrayCom(root); //список ареа.
+    public ArrayCom<ElemSimple> listElem = new ArrayCom(root); //список элем.
+    public ArrayCom<Com5t> listAll = new ArrayCom(root); //список всех компонентов (area + elem)
     public ArraySpc<Specific> listSpec = new ArraySpc(); //спецификация
     public ArrayJoin listJoin = new ArrayJoin(); //список соединений рам и створок 
 
@@ -230,7 +230,7 @@ public class Wincalc {
             }
 
             //Вес изделия
-            LinkedList<ElemSimple> glassList = listElem.filter(Type.GLASS);
+            ArrayList<ElemSimple> glassList = listElem.filter(Type.GLASS);
             for (ElemSimple el : glassList) {
                 this.weight += el.artiklRecAn.getDbl(eArtikl.density) * el.width() * el.height() / 1000000; //уд.вес * площадь = вес
             }

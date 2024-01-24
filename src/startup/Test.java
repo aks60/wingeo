@@ -81,8 +81,8 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            //wincalc();
-            frame(args);
+            wincalc();
+            //frame(args);
             //query();
             //json();
             //uid();
@@ -439,6 +439,7 @@ public class Test {
         list.addAll(List.of(coo3));
         list.add(list.get(0));
 
+        double[][] arr = {{63, 0}, {63,0}, {63, 0}, {63, 0}};
         mpol = gf.createLineString(list.toArray(new Coordinate[0]));
        // mlin = gf.createMultiLineString(new LineString[]{s1.toGeometry(gf), l1});
     }

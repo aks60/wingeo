@@ -15,7 +15,7 @@ import builder.param.FillingDet;
 import builder.param.FillingVar;
 import builder.model.ElemSimple;
 import builder.model.UGeo;
-import common.LinkedCom;
+import common.ArrayCom;
 import common.UCom;
 import dataset.Query;
 import enums.Type;
@@ -49,7 +49,7 @@ public class Filling extends Cal5e {
 
     @Override
     public void calc() {
-        LinkedList<ElemSimple> elemGlassList = winc.listElem.filter(Type.GLASS);
+        ArrayList<ElemSimple> elemGlassList = winc.listElem.filter(Type.GLASS);
         //Цикл по списку заполнений
         for (ElemSimple elemGlass : elemGlassList) {
             calc(elemGlass);
@@ -62,7 +62,7 @@ public class Filling extends Cal5e {
             Double depth = elemGlass.artiklRec.getDbl(eArtikl.depth); //толщина стекда           
             List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(winc.root.frames);  //список рам конструкции
             
-            LinkedCom<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+            ArrayCom<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             Coordinate[] coo = elemGlass.owner.area.getGeometryN(0).getCoordinates();
             
             //Цикл по сторонам стеклопакета

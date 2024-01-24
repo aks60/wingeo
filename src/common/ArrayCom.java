@@ -2,21 +2,20 @@ package common;
 
 import builder.model.AreaSimple;
 import builder.model.Com5t;
-import builder.model.ElemSimple;
 import builder.model.UGeo;
 import builder.script.GsonElem;
 import enums.Layout;
 import enums.Type;
-import java.util.Collection;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import org.locationtech.jts.geom.Polygon;
 
-public class LinkedCom<E extends Com5t> extends LinkedList<E> {
+public class ArrayCom<E extends Com5t> extends ArrayList<E> {
 
     AreaSimple areaSimple = null;
+    HashMap<Double, E> hm = new HashMap();
 
-    public LinkedCom(AreaSimple area) {
+    public ArrayCom(AreaSimple area) {
         super();
         this.areaSimple = area;
     }
@@ -29,6 +28,15 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
         return null;
     }
 
+    public boolean add(E e) {
+        hm.put(e.id, e);
+       return super.add(e);
+    }
+    
+    public E get(double key) {
+       return hm.get(key);
+    }
+    
     public E get(int index) {
         index = (index < 0) ? index + size() : (index > size() - 1) ? index - size() : index;
         return super.get(index);
@@ -58,9 +66,9 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
         return null;
     }
 
-    public LinkedCom<E> filter(Type... type) {
+    public ArrayCom<E> filter(Type... type) {
         List tp = List.of(type);
-        LinkedCom<E> list2 = new LinkedCom(null);
+        ArrayCom<E> list2 = new ArrayCom(null);
         for (E el : this) {
             if (tp.contains(el.type)) {
                 list2.add(el);
@@ -69,9 +77,9 @@ public class LinkedCom<E extends Com5t> extends LinkedList<E> {
         return list2;
     }
 
-    public LinkedCom<E> filterNo(Type... type) {
+    public ArrayCom<E> filterNo(Type... type) {
         List tp = List.of(type);
-        LinkedCom<E> list2 = new LinkedCom(null);
+        ArrayCom<E> list2 = new ArrayCom(null);
         for (E el : this) {
             if (tp.contains(el.type) == false) {
                 list2.add(el);
