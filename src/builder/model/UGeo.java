@@ -40,7 +40,7 @@ public class UGeo {
     }
 
     //Пересечение сегмента(линии) импоста с сегментами(отрезками) многоугольника
-    public static Coordinate[] geoIntersect(Geometry poly, LineSegment line) {
+    public static Coordinate[] geoCross(Geometry poly, LineSegment line) {
         try {
             poly = poly.getGeometryN(0);
             List<Coordinate> out = new ArrayList();
@@ -140,7 +140,7 @@ public class UGeo {
     }
 
     //Внутренняя обводка ареа 
-    public static Polygon geoPadding(Geometry poly, ArrayCom<ElemSimple> list, double amend) {
+    public static Polygon geoPadding(Geometry poly, ArrayCom<? extends Com5t> list, double amend) {
         LineSegment segm1, segm2, segm1a, segm2a, segm1b, segm2b, segm1c, segm2c;
         List<Coordinate> out = new ArrayList();
         try {
@@ -154,7 +154,7 @@ public class UGeo {
                 segm2 = UGeo.newSegment(poly, i);
 
                 //Получим ширину сегментов             
-                ElemSimple e1 = list.get(segm1.p0.z), e2 = list.get(segm2.p0.z);
+                Com5t e1 = list.get(segm1.p0.z), e2 = list.get(segm2.p0.z);
                 Record rec1 = (e1.artiklRec == null) ? eArtikl.virtualRec() : e1.artiklRec;
                 Record rec2 = (e2.artiklRec == null) ? eArtikl.virtualRec() : e2.artiklRec;
                 double w1 = (rec1.getDbl(eArtikl.height) - rec1.getDbl(eArtikl.size_centr)) - amend;

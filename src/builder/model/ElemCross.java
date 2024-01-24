@@ -83,8 +83,8 @@ public class ElemCross extends ElemSimple {
 
             //Точки пересечения канвы сегментами импоста
             Polygon areaCanvas = UGeo.newPolygon(0, 0, 0, 10000, 10000, 10000, 10000, 0);
-            Coordinate C1[] = UGeo.geoIntersect(areaCanvas, moveBaseSegment[0]);
-            Coordinate C2[] = UGeo.geoIntersect(areaCanvas, moveBaseSegment[1]);
+            Coordinate C1[] = UGeo.geoCross(areaCanvas, moveBaseSegment[0]);
+            Coordinate C2[] = UGeo.geoCross(areaCanvas, moveBaseSegment[1]);
 
             //Ареа импоста обрезаем areaPadding 
             Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);

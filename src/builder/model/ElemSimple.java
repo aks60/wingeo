@@ -30,6 +30,7 @@ public abstract class ElemSimple extends Com5t {
         this(winc, gson.id, gson, owner);
     }
 
+    
     public ElemSimple(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
         super(winc, id, gson, owner);
         spcRec = new Specific(id, this);
