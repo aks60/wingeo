@@ -45,6 +45,12 @@ public class ElemCross extends ElemSimple {
         }
         artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
         artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true);
+        
+        //Сделано для коррекции ширины импостов
+        if(artiklRecAn.getDbl(eArtikl.id) == -3) {
+            artiklRec.setNo(eArtikl.height, artiklRec.getDbl(eArtikl.height) + 16);
+            artiklRecAn.setNo(eArtikl.height, artiklRec.getDbl(eArtikl.height) + 16);
+        }
 
         //Если импост виртуальный
         if (artiklRec.getInt(1) == -3) {

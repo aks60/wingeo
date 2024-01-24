@@ -35,9 +35,9 @@ public class AreaTrapeze extends AreaSimple {
             coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
             
             //Создадим area рамы (предполагается, что ширина рамы одинакова со всех сторон)
-            LineString geo1 = gf.createLineString(coo.toArray(new Coordinate[0]));
-            LineString geo2 = ((Polygon) geo1.buffer(dh)).getInteriorRingN(0);
-            this.area = gf.createMultiLineString(new LineString[]{geo1});
+            Polygon geo1 = gf.createPolygon(coo.toArray(new Coordinate[0]));
+            Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
+            this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaRectangl.setLocation" + toString() + e);
@@ -70,15 +70,16 @@ public class AreaTrapeze extends AreaSimple {
     @Override    
     public void paint() {
         super.paint();
-        if (this.area != null) {
-            Shape shape = new ShapeWriter().toShape(this.area);
-
-            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-            winc.gc2d.fill(shape);
-
-            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
-            winc.gc2d.draw(shape);
-        }
+        
+//        if (this.area != null) {
+//            Shape shape = new ShapeWriter().toShape(this.area);
+//
+//            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
+//            winc.gc2d.fill(shape);
+//
+//            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
+//            winc.gc2d.draw(shape);
+//        }
     }
     
     // <editor-fold defaultstate="collapsed" desc="GET-SET">

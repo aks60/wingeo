@@ -6,11 +6,11 @@ import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
 import dataset.Record;
 import domain.eArtikl;
+import domain.eColor;
 import enums.Type;
 import enums.TypeJoin;
 import java.awt.Shape;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
@@ -18,8 +18,7 @@ import org.locationtech.jts.geom.CoordinateSequence;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
-import org.locationtech.jts.util.GeometricShapeFactory;
-import startup.Test;
+import org.locationtech.jts.geom.Polygon;
 
 public class AreaArch extends AreaSimple {
 
@@ -65,8 +64,9 @@ public class AreaArch extends AreaSimple {
             //Полигон векторов рамы
             list.add(list.get(0));
 
-            Geometry geo1 = gf.createPolygon(list.toArray(new Coordinate[0]));
-            this.area = geo1;
+            Polygon geo1 = gf.createPolygon(list.toArray(new Coordinate[0]));
+            Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
+            this.area = gf.createMultiPolygon(new Polygon[] {geo1, geo2});
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
@@ -98,11 +98,16 @@ public class AreaArch extends AreaSimple {
     @Override
     public void paint() {
         super.paint();
-        if (this.area != null) { //TEST
-            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
-            Shape shape = new ShapeWriter().toShape(this.area);
-            winc.gc2d.draw(shape);
-        }
+        
+//        if (this.area != null) {
+//            Shape shape = new ShapeWriter().toShape(this.area);
+//
+//            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
+//            winc.gc2d.fill(shape);
+//
+//            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
+//            winc.gc2d.draw(shape);
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
