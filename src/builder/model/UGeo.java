@@ -139,8 +139,8 @@ public class UGeo {
         }
     }
 
-    //Внутренняя обводка ареа 
-    public static Polygon geoPadding2(Geometry poly, HashMap<Double, Double> hs, double amend) {
+    //Внутренняя обводка ареа. hs = шв = ширина и высота.арки
+    public static Polygon geoPadding(Geometry poly, HashMap<Double, Double[]> hs, double amend) {
         LineSegment segm1, segm2, segm1a, segm2a, segm1b, segm2b, segm1c, segm2c;
         List<Coordinate> out = new ArrayList();
         try {
@@ -152,9 +152,10 @@ public class UGeo {
                 //Сегменты границ полигона
                 segm1 = UGeo.newSegment(poly, i - 1);
                 segm2 = UGeo.newSegment(poly, i);
-
+                double ID = segm2.p0.z, H = hs.get(ID)[0];
+                
                 //Получим ширину сегментов             
-                Double e1 = hs.get(segm1.p0.z), e2 = hs.get(segm2.p0.z);
+                Double e1 = hs.get(segm1.p0.z)[0], e2 = hs.get(ID)[0];
                 double w1 = e1 - amend;
                 double w2 = e2 - amend;
 
@@ -166,12 +167,12 @@ public class UGeo {
                 Coordinate cross = (coo.length < 100) ? segm2a.lineIntersection(segm1a) : segm2a.intersection(segm1a);
 
                 if (cross != null && i < j - 1) {
-                    cross.z = segm2.p0.z;
+                    cross.z = ID;
                     out.add(cross);
 
                 } else { //обрезаем концы арки
 
-                    if (e1.h() != null) { //слева
+                    if (hs.get(ID)[1] != null) { //слева
                         Coordinate cros1 = null;
                         j = i - 1;
                         do {
@@ -180,12 +181,12 @@ public class UGeo {
                             cros1 = segm2a.intersection(segm1c);
 
                         } while (cros1 == null);
-                        cros1.z = segm2.p0.z;
+                        cros1.z = ID;
                         out.add(cros1);
                         j = (j < 0) ? --j + coo.length : --j;
 
                     }
-                    if (e2.h() != null) {  //справа
+                    if (hs.get(ID)[1] != null) {  //справа
                         Coordinate cros2 = null;
                         k = i;
                         do {
@@ -195,7 +196,7 @@ public class UGeo {
 
                         } while (cros2 == null);
                         i = k;
-                        cros2.z = segm2.p0.z;
+                        cros2.z = ID;
                         out.add(cros2);
                     }
                 }
