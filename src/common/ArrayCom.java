@@ -15,6 +15,9 @@ public class ArrayCom<E extends Com5t> extends ArrayList<E> {
     AreaSimple areaSimple = null;
     HashMap<Double, E> hm = new HashMap();
 
+    public ArrayCom() {        
+    }
+    
     public ArrayCom(AreaSimple area) {
         super();
         this.areaSimple = area;
