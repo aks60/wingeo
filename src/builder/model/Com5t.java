@@ -39,7 +39,8 @@ public class Com5t {
         this.type = type;
     }
 
-    public Com5t(GsonElem gson) {
+    public Com5t(double id, GsonElem gson) {
+        this.id = id;
         this.type = gson.type;
         this.gson = gson;
     }

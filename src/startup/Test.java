@@ -430,10 +430,10 @@ public class Test {
         ArrayList<Coordinate> list = new ArrayList();
         ArrayCom<Com5t> arr = new ArrayCom();
         
-        arr.add(new Com5t(new GsonElem(Type.FRAME_SIDE, .0, 500.0)));
-        arr.add(new Com5t(new GsonElem(Type.FRAME_SIDE, .0, 1500.0)));
-        arr.add(new Com5t(new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0)));
-        arr.add(new Com5t(new GsonElem(Type.FRAME_SIDE, 1500.0, 300.0, 300.0)));
+        arr.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, .0, 500.0)));
+        arr.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, .0, 1500.0)));
+        arr.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0)));
+        arr.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1500.0, 300.0, 300.0)));
         
         LineSegment s1 = new LineSegment(1300, 300, 0, 500);
         s1.normalize();
