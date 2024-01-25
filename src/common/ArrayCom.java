@@ -15,16 +15,16 @@ public class ArrayCom<E extends Com5t> extends ArrayList<E> {
     AreaSimple areaSimple = null;
     HashMap<Double, E> hm = new HashMap();
 
-    public ArrayCom() {        
+    public ArrayCom() {
     }
-    
+
     public ArrayCom(AreaSimple area) {
         super();
         this.areaSimple = area;
     }
 
     public GsonElem gson(double id) {
-        Com5t com5t = this.stream().filter(it -> it.id == id).findFirst().orElse(null);
+        Com5t com5t = get(id);
         if (com5t != null) {
             return com5t.gson;
         }
@@ -33,13 +33,13 @@ public class ArrayCom<E extends Com5t> extends ArrayList<E> {
 
     public boolean add(E e) {
         hm.put(e.id, e);
-       return super.add(e);
+        return super.add(e);
     }
-    
+
     public E get(double key) {
-       return hm.get(key);
+        return hm.get(key);
     }
-    
+
     public E get(int index) {
         index = (index < 0) ? index + size() : (index > size() - 1) ? index - size() : index;
         return super.get(index);
@@ -89,9 +89,5 @@ public class ArrayCom<E extends Com5t> extends ArrayList<E> {
             }
         }
         return list2;
-    }
-
-    public E find(double id) {
-        return this.stream().filter(it -> it.id == id).findFirst().get();
     }
 }

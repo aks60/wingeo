@@ -255,8 +255,8 @@ public class AreaStvorka extends AreaSimple {
             Coordinate coo2[] = this.areaBox.getCoordinates(); //полигон векторов сторон рамы
 
             for (int j = 0; j < coo1.length - 1; j++) {
-                ElemSimple elemStv = elemList.find(coo1[j].z);
-                ElemSimple elemFrm = elemList.find(coo2[j].z);
+                ElemSimple elemStv = elemList.get(coo1[j].z);
+                ElemSimple elemFrm = elemList.get(coo2[j].z);
                 winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.FLAT, elemStv, elemFrm));
             }
         } catch (Exception e) {
@@ -277,7 +277,6 @@ public class AreaStvorka extends AreaSimple {
                 winc.gc2d.draw(shape);
             }
             Shape shape = new ShapeWriter().toShape(this.knobOpen);
-
             Record colorRec = eColor.find(knobColor);
             int rgb = colorRec.getInt(eColor.rgb);
             winc.gc2d.setColor(new java.awt.Color(rgb));

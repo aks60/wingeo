@@ -14,7 +14,7 @@ public class ArrayLoop<E> extends ArrayList<E> {
     }
     
     public E get(int index) {
-        int i = (index >= size()) ? index - size() : (index < 0) ? index + size() : index;
+        int i = (index < 0) ? index + size() : (index > size() - 1) ? index - size() : index;
         return super.get(i);
     }
 }

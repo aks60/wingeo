@@ -50,7 +50,7 @@ public class AreaArch extends AreaSimple {
                     CoordinateSequence cs = l1.getCoordinateSequence();
 
                     //Внешняя арка на горизонтали
-                    LineString arcA = UGeo.newLineArch(cs.getX(0), cs.getX(1), cs.getY(0), H, this.id);  //созд. арки на гортзонтали   
+                    LineString arcA = UGeo.newLineArch(cs.getX(0), cs.getX(1), cs.getY(0), H, frame.id);  //созд. арки на гортзонтали   
                     List.of(arcA.getCoordinates()).forEach(c -> c.setZ(frame.id));
                     list.addAll(List.of(arcA.getCoordinates()));
 

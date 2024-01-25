@@ -113,8 +113,8 @@ public class ElemGlass extends ElemSimple {
                 LineSegment segm2 = new LineSegment(coo[i], coo[j]);
 
                 //Ширина сегментов
-                ElemSimple e1 = listFrame.find(coo[k].z);
-                ElemSimple e2 = listFrame.find(coo[i].z);
+                ElemSimple e1 = listFrame.get(coo[k].z);
+                ElemSimple e2 = listFrame.get(coo[i].z);
                 double falz = winc.syssizRec.getDbl(eSyssize.falz);
                 double w1 = (winc.syssizRec == null) ? e1.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(k)
                         : (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) - falz + gzazo;
@@ -220,7 +220,7 @@ public class ElemGlass extends ElemSimple {
         if (owner.area != null) {
             winc.gc2d.setColor(new java.awt.Color(eColor.find(colorID2).getInt(eColor.rgb)));
             Shape shape = new ShapeWriter().toShape(this.area);
-            winc.gc2d.fill(shape);
+            //winc.gc2d.fill(shape);
         }
     }
 }

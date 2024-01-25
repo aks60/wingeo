@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import static java.util.stream.Collectors.toList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -87,8 +88,8 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            //frame(args);
-            wincalc();
+            frame(args);
+            //wincalc();
             //query();
             //json();
             //uid();
@@ -388,7 +389,6 @@ public class Test {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">  
-    
     private void draw4() {
 
         GeometryFactory gf = new GeometryFactory();
@@ -421,40 +421,55 @@ public class Test {
         mlin = gf.createPolygon(geo2.getInteriorRingN(0));
 
     }
-        
+
     private void draw3() {
 
         GeometryFactory gf = new GeometryFactory();
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         AffineTransformation aff = new AffineTransformation();
         ArrayList<Coordinate> list = new ArrayList();
-        ArrayCom<Com5t> arr = new ArrayCom();
-        
-        arr.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, .0, 500.0)));
-        arr.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, .0, 1500.0)));
-        arr.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0)));
-        arr.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1500.0, 300.0, 300.0)));
-        
+        ArrayCom<Com5t> frame = new ArrayCom();
+        frame.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, .0, 500.0)));
+        frame.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, .0, 1500.0)));
+        frame.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0)));
+        frame.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
+
         LineSegment s1 = new LineSegment(1300, 300, 0, 500);
         s1.normalize();
         double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle());
 
+        //Траесформация линии в горизонт
         aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации      
-        LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
+        LineString l1 = (LineString) aff.transform(s1.toGeometry(gf));
         l1.normalize();
-        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H, 4);  //созд. арки на гортзонтали      
+        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H, 4);  //созд. арки на гортзонтали  
+
+        //Обратная трансформация арки
         aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
-        Geometry arc2 = aff.transform(arc1); //обратная трансформация арки
+        Geometry arc2 = aff.transform(arc1);
 
         Coordinate coo3[] = arc2.getCoordinates();
-        list.add(new Coordinate(arr.get(0).x1(), arr.get(0).y1(), arr.get(0).id));
-        list.add(new Coordinate(arr.get(1).x1(), arr.get(1).y1(), arr.get(1).id));
-        list.add(new Coordinate(arr.get(2).x1(), arr.get(2).y1(), arr.get(2).id));
+        list.add(new Coordinate(frame.get(0).x1(), frame.get(0).y1(), frame.get(0).id));
+        list.add(new Coordinate(frame.get(1).x1(), frame.get(1).y1(), frame.get(1).id));
+        list.add(new Coordinate(frame.get(2).x1(), frame.get(2).y1(), frame.get(2).id));
         list.addAll(List.of(coo3));
         list.add(list.get(0));
+
+        Geometry geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
+        Geometry geo2 = geoPadding(geo1, frame, 0);
+
+        Coordinate c1[] = geo1.getCoordinates();
+        Coordinate c2[] = geo2.getCoordinates();
+        List<Coordinate> list2 = new ArrayLoop();
+        List<Coordinate> c1a = List.of(c1).stream().filter(c -> c.z == frame.get(3).id).collect(toList());
+        List<Coordinate> c2a = List.of(c2).stream().filter(c -> c.z == frame.get(3).id).collect(toList());
+//        list2.addAll(c1a);
+//        list2.addAll(c2a);
+//        list2.add(c1a.get(0));
+//        mpol = gf.createPolygon(list2.toArray(new Coordinate[0]));
         
-        mpol = gf.createLineString(list.toArray(new Coordinate[0]));
-        mlin = geoPadding(mpol, arr, 0);   //gf.createMultiLineString(new LineString[]{s1.toGeometry(gf), l1});
+        mpol = geo1;
+        mlin = geo2; 
     }
 
     private void draw2() {
@@ -501,15 +516,15 @@ public class Test {
 
         // System.out.println(list1);
     }
-    
+
     public static Geometry buffer(Geometry line, double[] distance) {
 
         List<Double> d1 = new ArrayLoop(Arrays.stream(distance).boxed().collect(Collectors.toList()));
         List<Double> d2 = new ArrayList();
-        
+
         List<Coordinate> c1 = new ArrayLoop(List.of(line.getCoordinates()));
         List<Coordinate> c2 = new ArrayList();
-        
+
         for (int i = 0; i < distance.length; i++) {
             d2.addAll(List.of(d1.get(i - 1), d1.get(i)));
             c2.addAll(List.of(c1.get(i - 1), c1.get(i)));
@@ -521,18 +536,18 @@ public class Test {
 
         double[] arr = new double[d2.size()];
         for (int i = 0; i < d2.size(); i++) {
-            arr[i] = d2.get(i);          
+            arr[i] = d2.get(i);
         }
-        
+
         LineString lin2 = gf.createLineString(c2.toArray(new Coordinate[0]));
         Geometry geo2 = VariableBuffer.buffer(lin2, arr);
 
         System.out.println(d2);
         System.out.println(c2);
-        
+
         Geometry geo = gf.createPolygon(((Polygon) geo2).getInteriorRingN(0));
         return lin2;
-    }   
+    }
 
     public static Polygon geoPadding(Geometry poly, ArrayCom<Com5t> list, double amend) {
         LineSegment segm1, segm2, segm1a, segm2a, segm1b, segm2b, segm1c, segm2c;
@@ -607,6 +622,6 @@ public class Test {
             return null;
         }
     }
-        
+
 // </editor-fold>        
 }

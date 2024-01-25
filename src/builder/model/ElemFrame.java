@@ -4,6 +4,7 @@ import builder.Wincalc;
 import builder.making.Specific;
 import builder.making.UColor;
 import builder.script.GsonElem;
+import common.ArrayLoop;
 import common.UCom;
 import domain.eArtikl;
 import domain.eColor;
@@ -18,6 +19,7 @@ import enums.UseSide;
 import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.List;
+import static java.util.stream.Collectors.toList;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
@@ -25,6 +27,7 @@ import org.locationtech.jts.geom.CoordinateSequence;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.Polygon;
 
 public class ElemFrame extends ElemSimple {
 
@@ -76,14 +79,28 @@ public class ElemFrame extends ElemSimple {
     }
 
     //Рассчёт полигона стороны рамы
-    public void setLocation2() {
+    //@Override
+    public void setLocation() {
         try {
             Coordinate c1[] = owner.area.getGeometryN(0).getCoordinates();
             Coordinate c2[] = owner.area.getGeometryN(1).getCoordinates();
             for (int i = 0; i < c1.length; i++) {
-                if (c1[i].z == this.id && this.h() == null) {
+                if (c1[i].z == this.id) {
                     //Полигон элемента конструкции 
-                    this.area = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2[i + 1].x, c2[i + 1].y, c1[1].x, c1[1].y);
+                    if (this.h() != null) {
+                        //System.out.println(c2[0].x + " " + c2[0].y);
+                        List<Coordinate> list = new ArrayLoop();
+                        List c1a = List.of(c1).stream().filter(c -> c.z == this.id).collect(toList());
+                        List c2a = List.of(c2).stream().filter(c -> c.z == this.id).collect(toList());
+                        list.addAll(c1a);
+                        list.addAll(c2a);
+                        list.add(c1[0]);
+                        this.area = gf.createPolygon(list.toArray(new Coordinate[0]));
+
+                    } else {
+                        this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), c2[i + 1].x, c2[i + 1].y, c2[i].x, c2[i].y);
+                    }
+                    break;
                 }
             }
 
@@ -92,8 +109,8 @@ public class ElemFrame extends ElemSimple {
         }
     }
 
-    @Override
-    public void setLocation() {
+    //@Override
+    public void setLocation2() {
         try {
             for (int i = 0; i < owner.frames.size(); i++) {
                 if (owner.frames.get(i).id == this.id) {
@@ -360,7 +377,7 @@ public class ElemFrame extends ElemSimple {
             Shape shape = new ShapeWriter().toShape(this.area);
 
             winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-            winc.gc2d.fill(shape);
+            //winc.gc2d.fill(shape);
 
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
             winc.gc2d.draw(shape);

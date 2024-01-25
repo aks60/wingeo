@@ -67,7 +67,7 @@ public class Filling extends Cal5e {
             
             //Цикл по сторонам стеклопакета
             for (int indexSegm = 0; indexSegm < coo.length - 1; indexSegm++) {              
-                ElemSimple elemFrame = listFrame.find(coo[indexSegm].z); // UGeo.segMapElem(listFrame, segm);
+                ElemSimple elemFrame = listFrame.get(coo[indexSegm].z); // UGeo.segMapElem(listFrame, segm);
 
                 //Цикл по группам заполнений
                 for (Record glasgrpRec : eGlasgrp.findAll()) {

@@ -35,7 +35,7 @@ public class AreaRectangl extends AreaSimple {
             this.frames.forEach(frame -> coo.add(new Coordinate(frame.x1(), frame.y1(), frame.id)));
             coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
 
-            //Создадим area рамы (предполагается, что ширина рамы одинакова со всех сторон)
+            //Создадим area рамы
             Polygon geo1 = gf.createPolygon(coo.toArray(new Coordinate[0]));
             Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
