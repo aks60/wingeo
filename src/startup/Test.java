@@ -433,15 +433,13 @@ public class Test {
         frame.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, .0, 1500.0)));
         frame.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0)));
         frame.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
-
-        LineSegment s1 = new LineSegment(1300, 300, 0, 500);
+        LineSegment s1 = new LineSegment(frame.get(3).x1(), frame.get(3).y1(), 0, 500);        
         s1.normalize();
         double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle());
 
         //Траесформация линии в горизонт
         aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации      
         LineString l1 = (LineString) aff.transform(s1.toGeometry(gf));
-        l1.normalize();
         LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H, 4);  //созд. арки на гортзонтали  
 
         //Обратная трансформация арки
@@ -460,16 +458,18 @@ public class Test {
 
         Coordinate c1[] = geo1.getCoordinates();
         Coordinate c2[] = geo2.getCoordinates();
-        List<Coordinate> list2 = new ArrayLoop();
-        List<Coordinate> c1a = List.of(c1).stream().filter(c -> c.z == frame.get(3).id).collect(toList());
-        List<Coordinate> c2a = List.of(c2).stream().filter(c -> c.z == frame.get(3).id).collect(toList());
+
+//        List<Coordinate> list2 = new ArrayLoop();
+//        List<Coordinate> c1a = List.of(c1).stream().filter(c -> c.z == frame.get(3).id).collect(toList());
+//        List<Coordinate> c2a = List.of(c2).stream().filter(c -> c.z == frame.get(3).id).collect(toList());
 //        list2.addAll(c1a);
 //        list2.addAll(c2a);
-//        list2.add(c1a.get(0));
+//        list2.add(c2a.get(0));
 //        mpol = gf.createPolygon(list2.toArray(new Coordinate[0]));
         
         mpol = geo1;
         mlin = geo2; 
+        System.out.println("startup.Test.draw3()");
     }
 
     private void draw2() {
