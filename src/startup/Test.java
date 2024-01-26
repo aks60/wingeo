@@ -409,11 +409,11 @@ public class Test {
         AffineTransformation aff = new AffineTransformation();
         ArrayList<Coordinate> list = new ArrayList();
         ArrayCom<Com5t> frame = new ArrayCom();
-        frame.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, .0, 500.0)));
+        frame.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, .0, 300.0)));
         frame.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, .0, 1500.0)));
         frame.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0)));
-        frame.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
-        LineSegment s1 = new LineSegment(frame.get(3).x1(), frame.get(3).y1(), 0, 500);        
+        frame.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 600.0, 300.0)));
+        LineSegment s1 = new LineSegment(frame.get(3).x1(), frame.get(3).y1(), frame.get(0).x1(), frame.get(0).y1());        
         s1.normalize();
         double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle());
 
@@ -591,11 +591,11 @@ public class Test {
                         } while (cros1 == null);
                         cros1.z = e2.id;
                         out.add(cros1);
-                        j = (j < 0) ? --j + coo.length : --j;
+                        j = (j < 0) ? --j + coo.length : --j; //для обрезания кончика арки
 
                     }
                     if (cros2 == null && e2.h() != null) {  //кончик
-                        k = i + 1;
+                        k = i;
                         do {
                             segm2b = UGeo.getSegment(poly, ++k);
                             segm2c = segm2b.offset(-w2);

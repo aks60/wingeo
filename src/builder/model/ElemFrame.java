@@ -80,22 +80,21 @@ public class ElemFrame extends ElemSimple {
 
     //Рассчёт полигона стороны рамы
     //@Override
-    public void setLocation() {
+    public void setLocation3() {
         try {
-            Coordinate c1[] = owner.area.getGeometryN(0).getCoordinates();
+            Coordinate c1[] = owner.area.getGeometryN(0).reverse().getCoordinates();
             Coordinate c2[] = owner.area.getGeometryN(1).getCoordinates();
             for (int i = 0; i < c1.length; i++) {
                 if (c1[i].z == this.id) {
                     //Полигон элемента конструкции 
                     if (this.h() != null) {
-                        //System.out.println(c2[0].x + " " + c2[0].y);
-                        List<Coordinate> list = new ArrayLoop();
-                        List c1a = List.of(c1).stream().filter(c -> c.z == this.id).collect(toList());
-                        List c2a = List.of(c2).stream().filter(c -> c.z == this.id).collect(toList());
-                        list.addAll(c1a);
-                        list.addAll(c2a);
-                        list.add(c1[0]);
-                        this.area = gf.createPolygon(list.toArray(new Coordinate[0]));
+//                        List<Coordinate> list = new ArrayLoop();
+//                        List<Coordinate> c1a = List.of(c1).stream().filter(c -> c.z == this.id).collect(toList());
+//                        List<Coordinate> c2a = List.of(c2).stream().filter(c -> c.z == this.id).collect(toList());
+//                        list.addAll(c2a);
+//                        list.addAll(c1a);
+//                        list.add(c2a.get(0));
+                        //this.area = gf.createPolygon(list.toArray(new Coordinate[0]));
 
                     } else {
                         this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), c2[i + 1].x, c2[i + 1].y, c2[i].x, c2[i].y);
@@ -110,7 +109,7 @@ public class ElemFrame extends ElemSimple {
     }
 
     //@Override
-    public void setLocation2() {
+    public void setLocation() {
         try {
             for (int i = 0; i < owner.frames.size(); i++) {
                 if (owner.frames.get(i).id == this.id) {
