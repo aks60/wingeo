@@ -88,13 +88,17 @@ public class ElemFrame extends ElemSimple {
                 if (c1[i].z == this.id) {
                     //Полигон элемента конструкции 
                     if (this.h() != null) {
+                        
                         List<Coordinate> list = new ArrayLoop();
                         List<Coordinate> c1a = List.of(c1).stream().filter(c -> c.z == this.id).collect(toList());
                         List<Coordinate> c2a = List.of(c2).stream().filter(c -> c.z == this.id).collect(toList());
-                        list.addAll(c1a);
+                        c2a.add(geo2.getCoordinates()[0]);
                         Collections.reverse(c2a);
+                        
+                        list.addAll(c1a);
                         list.addAll(c2a);
                         list.add(c1a.get(0));
+                        
                         Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0]));
                         this.area = poly;
 
@@ -103,91 +107,6 @@ public class ElemFrame extends ElemSimple {
                     }
                     break;
                 }
-            }
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:ElemFrame.setLocation" + toString() + e);
-        }
-    }
-
-    //@Override
-    public void setLocation2() {
-        try {
-            for (int i = 0; i < owner.frames.size(); i++) {
-                if (owner.frames.get(i).id == this.id) {
-                    //if (owner.type == Type.ARCH) {
-//                    if (this.h() != null) {  // arch
-//                        double ah = this.artiklRecAn.getDbl(eArtikl.height);
-//                        ArrayList<Coordinate> listA = new ArrayList(), listB = new ArrayList();
-//                        LineSegment s1 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
-//                        s1.normalize();
-//                        double H = this.h(), L = s1.getLength(), R = radiusArc, ANG = Math.toDegrees(s1.angle());
-//
-//                        //Ротация в горизонталь
-//                        aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации в горизонт     
-//                        LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
-//                        l1.normalize();
-//                        CoordinateSequence cs = l1.getCoordinateSequence();
-//
-//                        //Внешняя и внутренняя арка на горизонтали
-//                        double ang1 = Math.acos(L / (R * 2));
-//                        double ang2 = Math.acos((L - 2 * ah) / ((R - ah) * 2));
-//                        double dh = R * Math.sin(ang1) - (R - ah) * Math.sin(ang2);
-//                        LineString arcA = UGeo.newLineArch(cs.getX(0), cs.getX(1), cs.getY(0), H, this.id);  //созд. арки на гортзонтали                                  
-//                        LineString arcB = UGeo.newLineArch(cs.getX(0) + ah, cs.getX(1) - ah, cs.getY(0) + dh, H + dh - ah, this.id);  //созд. арки на горизонтали                            
-//                        Geometry mAB = gf.createMultiLineString(new LineString[]{arcA, arcB});
-//
-//                        //Обратная ротация
-//                        aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол обратной ротации  
-//                        Geometry geoAB = aff.transform(mAB); //обратная трансформация арки  
-//
-//                        //Внешняя и внутренняя арка                       
-//                        Coordinate cooA[] = geoAB.getGeometryN(0).getCoordinates();
-//                        Coordinate cooB[] = geoAB.getGeometryN(1).getCoordinates();
-//                        listA.addAll(List.of(cooA));
-//                        listB.addAll(List.of(cooB));
-//                        arcA = gf.createLineString(listA.toArray(new Coordinate[0]));
-//                        arcB = gf.createLineString(listB.toArray(new Coordinate[0]));
-//                        this.area = gf.createMultiLineString(new LineString[]{arcA, arcB});
-//
-//                        //Угол реза
-//                        double rad1 = Math.acos((L / 2) / R);
-//                        double rad2 = Math.acos((L - 2 * ah) / ((R - ah) * 2));
-//                        double a1 = R * Math.sin(rad1);
-//                        double a2 = (R - ah) * Math.sin(rad2);
-//                        double ang3 = 90 - Math.toDegrees(Math.atan((a1 - a2) / ah)); //угол реза рамы
-//                        double ang4 = 90 - (Math.toDegrees(rad1) - (90 - ang3)); //угол реза арки
-
-                        //}
-                    //} else { //polygon
-
-                        ElemSimple e1 = owner.frames.get(i - 1);
-                        ElemSimple e2 = owner.frames.get(i + 1);
-
-                        //Ширина сегментов
-                        double w0 = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr);
-                        double w1 = e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr);
-                        double w2 = e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr);
-
-                        //Входящие и выходящие сегменты
-                        LineSegment segm0 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()),
-                                segm1 = new LineSegment(e1.x1(), e1.y1(), e1.x2(), e1.y2()),
-                                segm2 = new LineSegment(e2.x1(), e2.y1(), e2.x2(), e2.y2());
-
-                        //Сдвиг сегментов внутрь
-                        LineSegment segm3 = segm0.offset(-w0), segm4 = segm1.offset(-w1), segm5 = segm2.offset(-w2);
-
-                        Coordinate c1 = Intersection.intersection(
-                                new Coordinate(segm3.p0.x, segm3.p0.y), new Coordinate(segm3.p1.x, segm3.p1.y),
-                                new Coordinate(segm4.p0.x, segm4.p0.y), new Coordinate(segm4.p1.x, segm4.p1.y));
-                        Coordinate c2 = Intersection.intersection(
-                                new Coordinate(segm3.p0.x, segm3.p0.y), new Coordinate(segm3.p1.x, segm3.p1.y),
-                                new Coordinate(segm5.p0.x, segm5.p0.y), new Coordinate(segm5.p1.x, segm5.p1.y));
-
-                        //Полигон элемента конструкции 
-                        this.area = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y);
-                    }
-               // }
             }
 
         } catch (Exception e) {

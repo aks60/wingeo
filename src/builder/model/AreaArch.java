@@ -12,6 +12,7 @@ import enums.TypeJoin;
 import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.List;
+import static java.util.stream.Collectors.toList;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateSequence;
@@ -22,6 +23,8 @@ import org.locationtech.jts.geom.Polygon;
 
 public class AreaArch extends AreaSimple {
 
+    Geometry geom = null;
+    
     public AreaArch(Wincalc winc, GsonElem gson) {
         super(winc, gson, null);
         this.owner = this;
@@ -67,6 +70,12 @@ public class AreaArch extends AreaSimple {
 
             Polygon geo1 = gf.createPolygon(list.toArray(new Coordinate[0]));
             Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
+            
+            List<Coordinate> c1a = List.of(geo2.getCoordinates()).stream().filter(c -> c.z == 4).collect(toList());
+            c1a.add(geo2.getCoordinates()[0]);
+            c1a.add(c1a.get(0));
+            geom = gf.createPolygon(c1a.toArray(new Coordinate[0]));
+            
             this.area = gf.createMultiPolygon(new Polygon[] {geo1, geo2});
 
         } catch (Exception e) {
@@ -107,6 +116,11 @@ public class AreaArch extends AreaSimple {
 //            //winc.gc2d.fill(shape);
 //
 //            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
+//            winc.gc2d.draw(shape);
+//        }
+//        if (this.geom != null) {
+//            Shape shape = new ShapeWriter().toShape(this.geom);
+//            winc.gc2d.setColor(new java.awt.Color(000, 255, 000));
 //            winc.gc2d.draw(shape);
 //        }
     }
