@@ -260,9 +260,9 @@ public class Wincalc {
 //            //Прорисовка стоек
 //            this.listElem.filter(Type.STOIKA).stream().forEach(el -> el.paint());
 //
-//            //Прорисовка рам
-//            this.listElem.filter(Type.FRAME_SIDE).stream().forEach(el -> el.paint());
-//
+            //Прорисовка рам
+            this.listElem.filter(Type.FRAME_SIDE).stream().forEach(el -> el.paint());
+
 //            //Прорисовка профилей створок
 //            this.listElem.filter(Type.STVORKA_SIDE).stream().forEach(el -> el.paint());
 //

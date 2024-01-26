@@ -17,16 +17,14 @@ import enums.Type;
 import enums.TypeArtikl;
 import enums.UseSide;
 import java.awt.Shape;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.CoordinateSequence;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
-import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
 
 public class ElemFrame extends ElemSimple {
@@ -80,21 +78,25 @@ public class ElemFrame extends ElemSimple {
 
     //Рассчёт полигона стороны рамы
     //@Override
-    public void setLocation3() {
+    public void setLocation() {
         try {
-            Coordinate c1[] = owner.area.getGeometryN(0).reverse().getCoordinates();
-            Coordinate c2[] = owner.area.getGeometryN(1).getCoordinates();
+            Geometry geo1 = owner.area.getGeometryN(0);
+            Geometry geo2 = owner.area.getGeometryN(1);
+            Coordinate c1[] = geo1.getCoordinates();
+            Coordinate c2[] = geo2.getCoordinates();
             for (int i = 0; i < c1.length; i++) {
                 if (c1[i].z == this.id) {
                     //Полигон элемента конструкции 
                     if (this.h() != null) {
-//                        List<Coordinate> list = new ArrayLoop();
-//                        List<Coordinate> c1a = List.of(c1).stream().filter(c -> c.z == this.id).collect(toList());
-//                        List<Coordinate> c2a = List.of(c2).stream().filter(c -> c.z == this.id).collect(toList());
-//                        list.addAll(c2a);
-//                        list.addAll(c1a);
-//                        list.add(c2a.get(0));
-                        //this.area = gf.createPolygon(list.toArray(new Coordinate[0]));
+                        List<Coordinate> list = new ArrayLoop();
+                        List<Coordinate> c1a = List.of(c1).stream().filter(c -> c.z == this.id).collect(toList());
+                        List<Coordinate> c2a = List.of(c2).stream().filter(c -> c.z == this.id).collect(toList());
+                        list.addAll(c1a);
+                        Collections.reverse(c2a);
+                        list.addAll(c2a);
+                        list.add(c1a.get(0));
+                        Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0]));
+                        this.area = poly;
 
                     } else {
                         this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), c2[i + 1].x, c2[i + 1].y, c2[i].x, c2[i].y);
@@ -109,55 +111,55 @@ public class ElemFrame extends ElemSimple {
     }
 
     //@Override
-    public void setLocation() {
+    public void setLocation2() {
         try {
             for (int i = 0; i < owner.frames.size(); i++) {
                 if (owner.frames.get(i).id == this.id) {
                     //if (owner.type == Type.ARCH) {
-                    if (this.h() != null) {  // arch
-                        double ah = this.artiklRecAn.getDbl(eArtikl.height);
-                        ArrayList<Coordinate> listA = new ArrayList(), listB = new ArrayList();
-                        LineSegment s1 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
-                        s1.normalize();
-                        double H = this.h(), L = s1.getLength(), R = radiusArc, ANG = Math.toDegrees(s1.angle());
-
-                        //Ротация в горизонталь
-                        aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации в горизонт     
-                        LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
-                        l1.normalize();
-                        CoordinateSequence cs = l1.getCoordinateSequence();
-
-                        //Внешняя и внутренняя арка на горизонтали
-                        double ang1 = Math.acos(L / (R * 2));
-                        double ang2 = Math.acos((L - 2 * ah) / ((R - ah) * 2));
-                        double dh = R * Math.sin(ang1) - (R - ah) * Math.sin(ang2);
-                        LineString arcA = UGeo.newLineArch(cs.getX(0), cs.getX(1), cs.getY(0), H, this.id);  //созд. арки на гортзонтали                                  
-                        LineString arcB = UGeo.newLineArch(cs.getX(0) + ah, cs.getX(1) - ah, cs.getY(0) + dh, H + dh - ah, this.id);  //созд. арки на горизонтали                            
-                        Geometry mAB = gf.createMultiLineString(new LineString[]{arcA, arcB});
-
-                        //Обратная ротация
-                        aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол обратной ротации  
-                        Geometry geoAB = aff.transform(mAB); //обратная трансформация арки  
-
-                        //Внешняя и внутренняя арка                       
-                        Coordinate cooA[] = geoAB.getGeometryN(0).getCoordinates();
-                        Coordinate cooB[] = geoAB.getGeometryN(1).getCoordinates();
-                        listA.addAll(List.of(cooA));
-                        listB.addAll(List.of(cooB));
-                        arcA = gf.createLineString(listA.toArray(new Coordinate[0]));
-                        arcB = gf.createLineString(listB.toArray(new Coordinate[0]));
-                        this.area = gf.createMultiLineString(new LineString[]{arcA, arcB});
-
-                        //Угол реза
-                        double rad1 = Math.acos((L / 2) / R);
-                        double rad2 = Math.acos((L - 2 * ah) / ((R - ah) * 2));
-                        double a1 = R * Math.sin(rad1);
-                        double a2 = (R - ah) * Math.sin(rad2);
-                        double ang3 = 90 - Math.toDegrees(Math.atan((a1 - a2) / ah)); //угол реза рамы
-                        double ang4 = 90 - (Math.toDegrees(rad1) - (90 - ang3)); //угол реза арки
+//                    if (this.h() != null) {  // arch
+//                        double ah = this.artiklRecAn.getDbl(eArtikl.height);
+//                        ArrayList<Coordinate> listA = new ArrayList(), listB = new ArrayList();
+//                        LineSegment s1 = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
+//                        s1.normalize();
+//                        double H = this.h(), L = s1.getLength(), R = radiusArc, ANG = Math.toDegrees(s1.angle());
+//
+//                        //Ротация в горизонталь
+//                        aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации в горизонт     
+//                        LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
+//                        l1.normalize();
+//                        CoordinateSequence cs = l1.getCoordinateSequence();
+//
+//                        //Внешняя и внутренняя арка на горизонтали
+//                        double ang1 = Math.acos(L / (R * 2));
+//                        double ang2 = Math.acos((L - 2 * ah) / ((R - ah) * 2));
+//                        double dh = R * Math.sin(ang1) - (R - ah) * Math.sin(ang2);
+//                        LineString arcA = UGeo.newLineArch(cs.getX(0), cs.getX(1), cs.getY(0), H, this.id);  //созд. арки на гортзонтали                                  
+//                        LineString arcB = UGeo.newLineArch(cs.getX(0) + ah, cs.getX(1) - ah, cs.getY(0) + dh, H + dh - ah, this.id);  //созд. арки на горизонтали                            
+//                        Geometry mAB = gf.createMultiLineString(new LineString[]{arcA, arcB});
+//
+//                        //Обратная ротация
+//                        aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол обратной ротации  
+//                        Geometry geoAB = aff.transform(mAB); //обратная трансформация арки  
+//
+//                        //Внешняя и внутренняя арка                       
+//                        Coordinate cooA[] = geoAB.getGeometryN(0).getCoordinates();
+//                        Coordinate cooB[] = geoAB.getGeometryN(1).getCoordinates();
+//                        listA.addAll(List.of(cooA));
+//                        listB.addAll(List.of(cooB));
+//                        arcA = gf.createLineString(listA.toArray(new Coordinate[0]));
+//                        arcB = gf.createLineString(listB.toArray(new Coordinate[0]));
+//                        this.area = gf.createMultiLineString(new LineString[]{arcA, arcB});
+//
+//                        //Угол реза
+//                        double rad1 = Math.acos((L / 2) / R);
+//                        double rad2 = Math.acos((L - 2 * ah) / ((R - ah) * 2));
+//                        double a1 = R * Math.sin(rad1);
+//                        double a2 = (R - ah) * Math.sin(rad2);
+//                        double ang3 = 90 - Math.toDegrees(Math.atan((a1 - a2) / ah)); //угол реза рамы
+//                        double ang4 = 90 - (Math.toDegrees(rad1) - (90 - ang3)); //угол реза арки
 
                         //}
-                    } else { //polygon
+                    //} else { //polygon
 
                         ElemSimple e1 = owner.frames.get(i - 1);
                         ElemSimple e2 = owner.frames.get(i + 1);
@@ -185,7 +187,7 @@ public class ElemFrame extends ElemSimple {
                         //Полигон элемента конструкции 
                         this.area = UGeo.newPolygon(x1(), y1(), x2(), y2(), c2.x, c2.y, c1.x, c1.y);
                     }
-                }
+               // }
             }
 
         } catch (Exception e) {
@@ -376,7 +378,7 @@ public class ElemFrame extends ElemSimple {
             Shape shape = new ShapeWriter().toShape(this.area);
 
             winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-            //winc.gc2d.fill(shape);
+            winc.gc2d.fill(shape);
 
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
             winc.gc2d.draw(shape);

@@ -36,26 +36,27 @@ public class AreaArch extends AreaSimple {
             for (ElemSimple frame : this.frames) {
 
                 if (frame.h() != null) {
-                    Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
+                    Record artiklRec = (this.frames.get(0).artiklRecAn == null) 
+                            ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
                     double dh = artiklRec.getDbl(eArtikl.height);
                     LineSegment s1 = new LineSegment(frame.x1(), frame.y1(), frame.x2(), frame.y2());
                     s1.normalize();
                     double L = frame.length(), H = frame.h(), ANG = Math.toDegrees(s1.angle());
                     double R = ((ElemFrame) frame).radiusArc = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
 
-                    //Ротация в горизонталь
-                    aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации в горизонт     
-                    LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //траесформация линии в горизонт
+                    //Поворот в горизонталь
+                    aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y);    
+                    LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //трансформация линии в горизонт
                     l1.normalize();
                     CoordinateSequence cs = l1.getCoordinateSequence();
-
-                    //Внешняя арка на горизонтали
                     LineString arcA = UGeo.newLineArch(cs.getX(0), cs.getX(1), cs.getY(0), H, frame.id);  //созд. арки на гортзонтали   
-                    List.of(arcA.getCoordinates()).forEach(c -> c.setZ(frame.id));
-                    list.addAll(List.of(arcA.getCoordinates()));
 
-                    //Обратная ротация
-                    aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол обратной ротации  
+                    //Обратный поворот
+                    aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y);
+                    Geometry arcB = aff.transform(arcA);
+                    
+                    List.of(arcB.getCoordinates()).forEach(c -> c.setZ(frame.id));
+                    list.addAll(List.of(arcB.getCoordinates()));                    
 
                 } else {
                     list.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
@@ -99,15 +100,15 @@ public class AreaArch extends AreaSimple {
     public void paint() {
         super.paint();
         
-        if (this.area != null) {
-            Shape shape = new ShapeWriter().toShape(this.area);
-
-            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-            //winc.gc2d.fill(shape);
-
-            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
-            winc.gc2d.draw(shape);
-        }
+//        if (this.area != null) {
+//            Shape shape = new ShapeWriter().toShape(this.area);
+//
+//            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
+//            //winc.gc2d.fill(shape);
+//
+//            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
+//            winc.gc2d.draw(shape);
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
