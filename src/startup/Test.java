@@ -534,7 +534,7 @@ public class Test {
         try {
             double R = (Math.pow((x2 - x1) / 2, 2) + Math.pow(h, 2)) / (2 * h);  //R = (L2 + H2) / 2H - радиус арки
             double angl = Math.PI / 2 - Math.asin((x2 - x1) / (R * 2));
-            Com5t.gsf.setNumPoints(100);
+            Com5t.gsf.setNumPoints(1000);
             Com5t.gsf.setSize(2 * R);
             Com5t.gsf.setBase(new Coordinate(x1 + (x2 - x1) / 2 - R, y - h));
             LineString ls = Com5t.gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
@@ -558,8 +558,8 @@ public class Test {
             for (int i = 0; i < coo.length; i++) {
 
                 //Сегменты границ полигона
-                segm1 = UGeo.newSegment(poly, i - 1);
-                segm2 = UGeo.newSegment(poly, i);
+                segm1 = UGeo.getSegment(poly, i - 1);
+                segm2 = UGeo.getSegment(poly, i);
 
                 //Получим ширину сегментов             
                 Com5t e1 = list.get(segm1.p0.z), e2 = list.get(segm2.p0.z);
@@ -584,9 +584,9 @@ public class Test {
                     if (cros1 == null && e1.h() != null) { //хвост
                         j = i - 1;
                         do {
-                            segm1b = UGeo.newSegment(poly, --j);
+                            segm1b = UGeo.getSegment(poly, --j);
                             segm1c = segm1b.offset(-w1);
-                            cros1 = segm2a.lineIntersection(segm1c);
+                            cros1 = segm2a.intersection(segm1c);
 
                         } while (cros1 == null);
                         cros1.z = e2.id;
@@ -595,9 +595,9 @@ public class Test {
 
                     }
                     if (cros2 == null && e2.h() != null) {  //кончик
-                        k = i;
+                        k = i + 1;
                         do {
-                            segm2b = UGeo.newSegment(poly, ++k);
+                            segm2b = UGeo.getSegment(poly, ++k);
                             segm2c = segm2b.offset(-w2);
                             cros2 = segm2c.intersection(segm1a);
 

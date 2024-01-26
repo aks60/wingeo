@@ -150,8 +150,8 @@ public class UGeo {
             for (int i = 0; i < coo.length; i++) {
 
                 //Сегменты границ полигона
-                segm1 = UGeo.newSegment(poly, i - 1);
-                segm2 = UGeo.newSegment(poly, i);
+                segm1 = UGeo.getSegment(poly, i - 1);
+                segm2 = UGeo.getSegment(poly, i);
 
                 //Получим ширину сегментов             
                 Com5t e1 = list.get(segm1.p0.z), e2 = list.get(segm2.p0.z);
@@ -165,7 +165,7 @@ public class UGeo {
                 segm2a = segm2.offset(-w2);
 
                 //Точка пересечения внутренних сегментов
-                Coordinate cross = (coo.length < 100) ? segm2a.lineIntersection(segm1a) : segm2a.intersection(segm1a);
+                Coordinate cross = (coo.length < 100) ? segm2a.intersection(segm1a) : segm2a.intersection(segm1a);
 
                 if (cross != null && i < j - 1) {
                     cross.z = e2.id;
@@ -177,7 +177,7 @@ public class UGeo {
                         Coordinate cros1 = null;
                         j = i - 1;
                         do {
-                            segm1b = UGeo.newSegment(poly, --j);
+                            segm1b = UGeo.getSegment(poly, --j);
                             segm1c = segm1b.offset(-w1);
                             cros1 = segm2a.intersection(segm1c);
 
@@ -189,9 +189,9 @@ public class UGeo {
                     }
                     if (e2.h() != null) {  //справа
                         Coordinate cros2 = null;
-                        k = i;
+                        k = i + 1;
                         do {
-                            segm2b = UGeo.newSegment(poly, ++k);
+                            segm2b = UGeo.getSegment(poly, ++k);
                             segm2c = segm2b.offset(-w2);
                             cros2 = segm2c.intersection(segm1a);
 
@@ -254,7 +254,7 @@ public class UGeo {
         return Com5t.gf.createPolygon(UGeo.arrCoord(d));
     }
 
-    public static LineSegment newSegment(Geometry poly, int index) {
+    public static LineSegment getSegment(Geometry poly, int index) {
         poly = poly.getGeometryN(0);
         Coordinate[] coo = Arrays.copyOf(poly.getCoordinates(), poly.getNumPoints() - 1);
         index = (index >= coo.length) ? index - coo.length : index;
