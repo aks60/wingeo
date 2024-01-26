@@ -144,17 +144,17 @@ public class AreaStvorka extends AreaSimple {
     //Создание и коррекция сторон створки
     public void setLocation() {
         try {
-            //Полигон векторов сторон рамы если нет полигона створки в гл.окне, 
-            //иначе this.area получатется при распиле owner.area импостом
+            //Полигон векторов сторон рамы если нет полигона створки в гл.окне 
+            //иначе, this.area получатется при распиле owner.area импостом
             this.areaBox = (winc.listElem.filter(Type.IMPOST).isEmpty()) ? owner.area : this.area;
 
             //Полигон створки с учётом нахлёста 
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            this.area = UGeo.geoPadding(this.areaBox, winc.listElem, dh); //полигон векторов сторон створки            
+            Polygon geo1 = UGeo.geoPadding(this.areaBox, winc.listElem, dh); //полигон векторов сторон створки с учётом нахл.           
 
             //Координаты рам створок
             if (this.frames.size() == 0) { //если стороны ств. ещё не созданы                  
-                Coordinate[] coo = this.area.getGeometryN(0).getCoordinates();
+                Coordinate[] coo = geo1.getGeometryN(0).getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
 
                     GsonElem gson = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y); //, coo[i+1].x, coo[i+1].y);
@@ -168,7 +168,7 @@ public class AreaStvorka extends AreaSimple {
                 coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
 
             } else { //если стороны уже созданы
-                Coordinate[] coo = this.area.getGeometryN(0).getCoordinates();
+                Coordinate[] coo = geo1.getGeometryN(0).getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
                     ElemSimple elem = this.frames.get(i);
                     coo[i].z = elem.id;
@@ -176,6 +176,9 @@ public class AreaStvorka extends AreaSimple {
                 }
                 coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
             }
+            
+            Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
+            this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
             //Ручка открывания
             if (this.typeOpen != TypeOpen1.EMPTY) {

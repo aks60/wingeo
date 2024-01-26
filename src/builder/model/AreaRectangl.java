@@ -31,11 +31,11 @@ public class AreaRectangl extends AreaSimple {
             Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
             double dh = artiklRec.getDbl(eArtikl.height);
 
-            //Создадим вершины рамы
+            //Вершины рамы
             this.frames.forEach(frame -> coo.add(new Coordinate(frame.x1(), frame.y1(), frame.id)));
             coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
 
-            //Создадим area рамы
+            //Аrea рамы
             Polygon geo1 = gf.createPolygon(coo.toArray(new Coordinate[0]));
             Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});

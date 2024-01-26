@@ -80,29 +80,27 @@ public class ElemFrame extends ElemSimple {
     //@Override
     public void setLocation() {
         try {
-            Geometry geo1 = owner.area.getGeometryN(0);
-            Geometry geo2 = owner.area.getGeometryN(1);
-            Coordinate c1[] = geo1.getCoordinates();
-            Coordinate c2[] = geo2.getCoordinates();
+            Geometry geo1 = owner.area.getGeometryN(0), geo2 = owner.area.getGeometryN(1);
+            Coordinate c1[] = geo1.getCoordinates(), c2[] = geo2.getCoordinates();
             for (int i = 0; i < c1.length; i++) {
                 if (c1[i].z == this.id) {
-                    //Полигон элемента конструкции 
-                    if (this.h() != null) {
-                        
+
+                    if (this.h() != null) { //полигон арки
+
                         List<Coordinate> list = new ArrayLoop();
                         List<Coordinate> c1a = List.of(c1).stream().filter(c -> c.z == this.id).collect(toList());
                         List<Coordinate> c2a = List.of(c2).stream().filter(c -> c.z == this.id).collect(toList());
                         c2a.add(geo2.getCoordinates()[0]);
                         Collections.reverse(c2a);
-                        
+
                         list.addAll(c1a);
                         list.addAll(c2a);
                         list.add(c1a.get(0));
-                        
+
                         Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0]));
                         this.area = poly;
 
-                    } else {
+                    } else { //полигон рамы
                         this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), c2[i + 1].x, c2[i + 1].y, c2[i].x, c2[i].y);
                     }
                     break;

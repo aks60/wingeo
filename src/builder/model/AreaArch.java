@@ -23,8 +23,6 @@ import org.locationtech.jts.geom.Polygon;
 
 public class AreaArch extends AreaSimple {
 
-    Geometry geom = null;
-    
     public AreaArch(Wincalc winc, GsonElem gson) {
         super(winc, gson, null);
         this.owner = this;
@@ -37,8 +35,8 @@ public class AreaArch extends AreaSimple {
         try {
             //Создадим вершины арки
             for (ElemSimple frame : this.frames) {
-
                 if (frame.h() != null) {
+                    
                     Record artiklRec = (this.frames.get(0).artiklRecAn == null) 
                             ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
                     double dh = artiklRec.getDbl(eArtikl.height);
@@ -47,7 +45,7 @@ public class AreaArch extends AreaSimple {
                     double L = frame.length(), H = frame.h(), ANG = Math.toDegrees(s1.angle());
                     double R = ((ElemFrame) frame).radiusArc = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
 
-                    //Поворот в горизонталь
+                    //Поворот на горизонталь
                     aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y);    
                     LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //трансформация линии в горизонт
                     l1.normalize();
@@ -70,12 +68,6 @@ public class AreaArch extends AreaSimple {
 
             Polygon geo1 = gf.createPolygon(list.toArray(new Coordinate[0]));
             Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
-            
-            List<Coordinate> c1a = List.of(geo2.getCoordinates()).stream().filter(c -> c.z == 4).collect(toList());
-            c1a.add(geo2.getCoordinates()[0]);
-            c1a.add(c1a.get(0));
-            geom = gf.createPolygon(c1a.toArray(new Coordinate[0]));
-            
             this.area = gf.createMultiPolygon(new Polygon[] {geo1, geo2});
 
         } catch (Exception e) {
