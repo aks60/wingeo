@@ -127,18 +127,18 @@ public final class Bimax {
 // <editor-fold defaultstate="collapsed" desc="ARCH"> 
 
         } else if (prj == 604004) {
-            rootGson = new GsonRoot(427858, prj, 1, 37, Type.ARCH, "Rehau\\Delight\\1 ОКНА", 1009, 1009, 1009);
+            rootGson = new GsonRoot(427858, prj, 1, 37, Type.ARCH, "Rehau / Delight / 1 ОКНА", 1009, 1009, 1009);
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0, 650))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 0, 1050))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300, 1050))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0, 1700))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300, 1700))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300, 650, 650));
 
             rootGson.addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST, 0, 650, 1300, 650, "{sysprofID:3246}"));
             GsonElem area = rootGson.addArea(new GsonElem(Type.AREA));
 
-            area.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS, 650, 1700, 650, 400));
-            area.addElem(new GsonElem(Type.IMPOST, "{sysprofID:3246}"));
+            area.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            area.addElem(new GsonElem(Type.IMPOST, 650, 1700, 650, 650, "{sysprofID:3246}"));
             area.addArea(new GsonElem(Type.AREA)).addArea(new GsonElem(Type.STVORKA, "{typeOpen:4, sysfurnID:91}"))
                     .addElem(new GsonElem(Type.GLASS));
 

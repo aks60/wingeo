@@ -11,8 +11,6 @@ import common.ArrayCom;
 import common.ArrayLoop;
 import common.eProp;
 import dataset.Conn;
-import dataset.Record;
-import domain.eArtikl;
 import enums.Type;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -20,10 +18,8 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -399,7 +395,6 @@ public class Test {
         Polygon geo2 = (Polygon) gb;
 
         mlin = gf.createPolygon(geo2.getInteriorRingN(0));
-
     }
 
     private void draw3() {
@@ -420,7 +415,7 @@ public class Test {
         //Траесформация линии в горизонт
         aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации      
         LineString l1 = (LineString) aff.transform(s1.toGeometry(gf));
-        LineString arc1 = newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H, 4);  //созд. арки на гортзонтали  
+        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H, 4);  //созд. арки на гортзонтали  
 
         //Обратная трансформация арки
         aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
@@ -433,9 +428,10 @@ public class Test {
         list.addAll(List.of(coo3));
         list.add(list.get(0));
 
-        Geometry geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
-        Geometry geo2 = geoPadding(geo1, frame, 0);
-
+        Polygon geo1 = gf.createPolygon(list.toArray(new Coordinate[0]));
+        Polygon geo2 = UGeo.geoPadding(geo1, frame, 0);
+        this.mlin = gf.createMultiPolygon(new Polygon[] {geo1, geo2});
+        
         Coordinate c1[] = geo1.getCoordinates();
         Coordinate c2[] = geo2.getCoordinates();
 
@@ -446,10 +442,8 @@ public class Test {
 //        list2.addAll(c2a);
 //        list2.add(c2a.get(0));
 //        mpol = gf.createPolygon(list2.toArray(new Coordinate[0]));
-        
-        mpol = geo1;
-        mlin = geo2; 
-        System.out.println("startup.Test.draw3()");
+
+
     }
 
     private void draw2() {
@@ -495,129 +489,6 @@ public class Test {
         mlin = gf.createLineString(list1.toArray(new Coordinate[0]));
 
         // System.out.println(list1);
-    }
-
-    public static Geometry buffer(Geometry line, double[] distance) {
-
-        List<Double> d1 = new ArrayLoop(Arrays.stream(distance).boxed().collect(Collectors.toList()));
-        List<Double> d2 = new ArrayList();
-
-        List<Coordinate> c1 = new ArrayLoop(List.of(line.getCoordinates()));
-        List<Coordinate> c2 = new ArrayList();
-
-        for (int i = 0; i < distance.length; i++) {
-            d2.addAll(List.of(d1.get(i - 1), d1.get(i)));
-            c2.addAll(List.of(c1.get(i - 1), c1.get(i)));
-        }
-        d2.add(d2.get(0));
-        c2.add(c2.get(0));
-//        d2.addAll(List.of(d2.get(0), d2.get(1)));
-//        c2.addAll(List.of(c2.get(0), c2.get(1)));
-
-        double[] arr = new double[d2.size()];
-        for (int i = 0; i < d2.size(); i++) {
-            arr[i] = d2.get(i);
-        }
-
-        LineString lin2 = gf.createLineString(c2.toArray(new Coordinate[0]));
-        Geometry geo2 = VariableBuffer.buffer(lin2, arr);
-
-        System.out.println(d2);
-        System.out.println(c2);
-
-        Geometry geo = gf.createPolygon(((Polygon) geo2).getInteriorRingN(0));
-        return lin2;
-    }
-
-    
-    public static LineString newLineArch(double x1, double x2, double y, double h, double z) {
-        try {
-            double R = (Math.pow((x2 - x1) / 2, 2) + Math.pow(h, 2)) / (2 * h);  //R = (L2 + H2) / 2H - радиус арки
-            double angl = Math.PI / 2 - Math.asin((x2 - x1) / (R * 2));
-            Com5t.gsf.setNumPoints(1000);
-            Com5t.gsf.setSize(2 * R);
-            Com5t.gsf.setBase(new Coordinate(x1 + (x2 - x1) / 2 - R, y - h));
-            LineString ls = Com5t.gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
-            List.of(ls.getCoordinates()).forEach(c -> c.z = z);
-            return ls;
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.newLineArch()");
-            return null;
-        }
-    }
-    
-    public static Polygon geoPadding(Geometry poly, ArrayCom<Com5t> list, double amend) {
-        LineSegment segm1, segm2, segm1a, segm2a, segm1b, segm2b, segm1c, segm2c;
-        Coordinate cros1 = null, cros2 = null;
-        List<Coordinate> out = new ArrayList();
-        try {
-            poly = poly.getGeometryN(0);
-            int j = 999, k = 999;
-            Coordinate[] coo = poly.copy().getCoordinates();
-            for (int i = 0; i < coo.length; i++) {
-
-                //Сегменты границ полигона
-                segm1 = UGeo.getSegment(poly, i - 1);
-                segm2 = UGeo.getSegment(poly, i);
-
-                //Получим ширину сегментов             
-                Com5t e1 = list.get(segm1.p0.z), e2 = list.get(segm2.p0.z);
-                Record rec1 = (e1.artiklRec == null) ? eArtikl.virtualRec() : e1.artiklRec;
-                Record rec2 = (e2.artiklRec == null) ? eArtikl.virtualRec() : e2.artiklRec;
-                double w1 = (rec1.getDbl(eArtikl.height) - rec1.getDbl(eArtikl.size_centr)) - amend;
-                double w2 = (rec2.getDbl(eArtikl.height) - rec2.getDbl(eArtikl.size_centr)) - amend;
-
-                //Смещение сегментов относительно границ
-                segm1a = segm1.offset(-w1);
-                segm2a = segm2.offset(-w2);
-
-                //Точка пересечения внутренних сегментов
-                //Coordinate cross = (coo.length < 100) ? segm2a.lineIntersection(segm1a) : segm2a.intersection(segm1a);
-                Coordinate cross = segm2a.intersection(segm1a);
-
-                if (cross != null && i < j - 1) {
-                    cross.z = e2.id;
-                    out.add(cross);
-
-                } else { //обрезаем концы арки
-                    if (cros1 == null && e1.h() != null) { //хвост
-                        j = i - 1;
-                        do {
-                            segm1b = UGeo.getSegment(poly, --j);
-                            segm1c = segm1b.offset(-w1);
-                            cros1 = segm2a.intersection(segm1c);
-
-                        } while (cros1 == null);
-                        cros1.z = e2.id;
-                        out.add(cros1);
-                        j = (j < 0) ? --j + coo.length : --j; //для обрезания кончика арки
-
-                    }
-                    if (cros2 == null && e2.h() != null) {  //кончик
-                        k = i;
-                        do {
-                            segm2b = UGeo.getSegment(poly, ++k);
-                            segm2c = segm2b.offset(-w2);
-                            cros2 = segm2c.intersection(segm1a);
-
-                        } while (cros2 == null);
-                        i = k;
-                        cros2.z = e2.id;
-                        out.add(cros2);
-                    }
-                }
-            }
-            if (out.get(0).equals(out.get(out.size() - 1)) == false) {
-                out.add(out.get(0));
-            }
-            Polygon g = Com5t.gf.createPolygon(out.toArray(new Coordinate[0]));
-            return g;
-
-        } catch (Exception e) {
-            System.err.println("AKS Ошибка:UGeo.geoPadding() " + e);
-            return null;
-        }
     }
 
 // </editor-fold>        

@@ -38,7 +38,7 @@ public class GsonElem {
     }
 
     public GsonElem(Type type, Integer x1, Integer y1, Integer h) {
-        this(type, x1, y1, h, null, null, null);
+        this(type, x1, y1, null, null, h, null);
     }
 
     public GsonElem(Type type, Integer x1, Integer y1, String param) {
@@ -60,11 +60,11 @@ public class GsonElem {
     public GsonElem(Type type, Integer x1, Integer y1, Integer x2, Integer y2, Integer h, String param) {
         this.id = ++genId;
         this.type = type;
-        this.x1 = (double) x1;
-        this.y1 = (double) y1;
-        this.x2 = (double) x2;
-        this.y2 = (double) y2;
-        this.h = (double) h;
+        this.x1 = (x1 == null) ? null : (double) x1;
+        this.y1 = (y1 == null) ? null : (double) y1;
+        this.x2 = (x2 == null) ? null : (double) x2;
+        this.y2 = (y2 == null) ? null : (double) y2;
+        this.h = (h == null) ? null : (double) h;
         this.param = new Gson().fromJson(param, JsonObject.class); //параметры элемента
     }
 
