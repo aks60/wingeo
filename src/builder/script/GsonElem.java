@@ -33,34 +33,38 @@ public class GsonElem {
         this.param = new Gson().fromJson(paramJson, JsonObject.class);
     }
 
-    public GsonElem(Type type, int x1, int y1) {
+    public GsonElem(Type type, Integer x1, Integer y1) {
         this(type, x1, y1, null, null, null, null);
     }
-    
-    public GsonElem(Type type, int x1, int y1, int h) {
-        this(type, x1,y1, h, null, null, null);
+
+    public GsonElem(Type type, Integer x1, Integer y1, Integer h) {
+        this(type, x1, y1, h, null, null, null);
     }
-    
-    public GsonElem(Type type, int x1, int y1, String param) {
+
+    public GsonElem(Type type, Integer x1, Integer y1, String param) {
         this(type, x1, y1, null, null, null, param);
     }
 
-    public GsonElem(Type type, int x1, int y1, int h, String param) {
-        this(type, x1, y1, h, null, null,  param);
+    public GsonElem(Type type, Integer x1, Integer y1, Integer x2, Integer y2) {
+        this(type, x1, y1, x2, y2, null, null);
     }
 
-    public GsonElem(Type type, int x1, int y1, int x2, int y2) {
-        this(type, x1, y1, null, x2, y2, null);
+    public GsonElem(Type type, Integer x1, Integer y1, Integer h, String param) {
+        this(type, x1, y1, null, null, h, param);
     }
 
-    public GsonElem(Type type, Integer x1, Integer y1, Integer h, Integer x2, Integer y2, String param) {
+    public GsonElem(Type type, Integer x1, Integer y1, Integer x2, Integer y2, String param) {
+        this(type, x1, y1, x2, y2, null, param);
+    }
+
+    public GsonElem(Type type, Integer x1, Integer y1, Integer x2, Integer y2, Integer h, String param) {
         this.id = ++genId;
         this.type = type;
         this.x1 = (double) x1;
         this.y1 = (double) y1;
-        this.h = (double) h;
         this.x2 = (double) x2;
         this.y2 = (double) y2;
+        this.h = (double) h;
         this.param = new Gson().fromJson(param, JsonObject.class); //параметры элемента
     }
 
@@ -106,5 +110,5 @@ public class GsonElem {
                 el.notSerialize(this); //рекурсия  
             }
         }
-    }    
+    }
 }
