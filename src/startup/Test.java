@@ -28,6 +28,7 @@ import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.operation.buffer.VariableBuffer;
+import org.locationtech.jts.operation.overlay.OverlayOp;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Test {
@@ -408,7 +409,7 @@ public class Test {
         frame.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0, 1500)));
         frame.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300, 1500)));
         frame.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300, 600, 300)));
-        LineSegment s1 = new LineSegment(frame.get(3).x1(), frame.get(3).y1(), frame.get(0).x1(), frame.get(0).y1());        
+        LineSegment s1 = new LineSegment(frame.get(3).x1(), frame.get(3).y1(), frame.get(0).x1(), frame.get(0).y1());
         s1.normalize();
         double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle());
 
@@ -430,20 +431,17 @@ public class Test {
 
         Polygon geo1 = gf.createPolygon(list.toArray(new Coordinate[0]));
         Polygon geo2 = UGeo.geoPadding(geo1, frame, 0);
-        this.mlin = gf.createMultiPolygon(new Polygon[] {geo1, geo2});
+        this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
         
-        Coordinate c1[] = geo1.getCoordinates();
-        Coordinate c2[] = geo2.getCoordinates();
-
-        List<Coordinate> list2 = new ArrayLoop();
-        List<Coordinate> c1a = List.of(c1).stream().filter(c -> c.z == frame.get(3).id).collect(toList());
-        List<Coordinate> c2a = List.of(c2).stream().filter(c -> c.z == frame.get(3).id).collect(toList());
+//        List<Coordinate> list2 = new ArrayLoop();
+//        Coordinate c1[] = geo1.getCoordinates();
+//        Coordinate c2[] = geo2.getCoordinates();
+//        List<Coordinate> c1a = List.of(c1).stream().filter(c -> c.z == frame.get(3).id).collect(toList());
+//        List<Coordinate> c2a = List.of(c2).stream().filter(c -> c.z == frame.get(3).id).collect(toList());
 //        list2.addAll(c1a);
 //        list2.addAll(c2a);
 //        list2.add(c2a.get(0));
-//        mpol = gf.createPolygon(list2.toArray(new Coordinate[0]));
-
-
+//        mpol = gf.createLineString(list2.toArray(new Coordinate[0]));
     }
 
     private void draw2() {
