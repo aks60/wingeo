@@ -6,7 +6,6 @@ import domain.eArtikl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
@@ -19,11 +18,18 @@ import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.PrecisionModel;
 
 /**
  * Утилиты JTS
  */
 public class UGeo {
+
+    public static PrecisionModel pm = null;
+
+    public static void precisionModel(PrecisionModel pm) {
+        pm = new PrecisionModel(pm);
+    }
 
     //Угол к горизонту. Угол нормируется в диапазоне [-Pi, Pi].
     public static double anglHor(ElemSimple e) {

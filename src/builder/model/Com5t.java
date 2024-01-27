@@ -3,26 +3,23 @@ package builder.model;
 import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
-import common.listener.ListenerKey;
-import common.listener.ListenerMouse;
 import dataset.Record;
 import domain.eArtikl;
 import enums.Layout;
 import enums.Type;
-import java.awt.Point;
-import java.awt.event.KeyEvent;
 import java.util.List;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Com5t {
 
-    public static GeometryFactory gf = new GeometryFactory();
-    public static GeometricShapeFactory gsf = new GeometricShapeFactory();
+    public static GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING_SINGLE));
+    public static GeometricShapeFactory gsf = new GeometricShapeFactory(gf);
     public static AffineTransformation aff = new AffineTransformation();
     
     public double id;

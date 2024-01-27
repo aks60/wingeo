@@ -400,7 +400,7 @@ public class Test {
 
     private void draw3() {
 
-        GeometryFactory gf = new GeometryFactory();
+        GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING_SINGLE));
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         AffineTransformation aff = new AffineTransformation();
         ArrayList<Coordinate> list = new ArrayList();
