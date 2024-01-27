@@ -157,7 +157,7 @@ public class AreaStvorka extends AreaSimple {
                 Coordinate[] coo = geo1.getGeometryN(0).getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
 
-                    GsonElem gson = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y); //, coo[i+1].x, coo[i+1].y);
+                    GsonElem gson = new GsonElem(Type.STVORKA_SIDE, (int) coo[i].x, (int) coo[i].y); //, coo[i+1].x, coo[i+1].y);
                     if (isJson(this.gson.param, PKjson.stvorkaSide[i])) {
                         gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
                     }
