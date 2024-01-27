@@ -263,11 +263,11 @@ public class Wincalc {
             //Прорисовка рам
             this.listElem.filter(Type.FRAME_SIDE).stream().forEach(el -> el.paint());
 
-//            //Прорисовка профилей створок
-//            this.listElem.filter(Type.STVORKA_SIDE).stream().forEach(el -> el.paint());
-//
-//            //Прорисока фурнитуры створок
-//            this.listArea.filter(Type.STVORKA).stream().forEach(el -> el.paint());
+            //Прорисовка профилей створок
+            this.listElem.filter(Type.STVORKA_SIDE).stream().forEach(el -> el.paint());
+
+            //Прорисока фурнитуры створок
+            this.listArea.filter(Type.STVORKA).stream().forEach(el -> el.paint());
 
 // <editor-fold defaultstate="collapsed" desc="Раскладка"> 
 /*            
