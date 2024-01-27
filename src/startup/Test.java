@@ -422,6 +422,15 @@ public class Test {
         aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
         Geometry arc2 = aff.transform(arc1);
 
+//        Geometry line = gf.createLineString(new Coordinate[]{
+//            new Coordinate(frame.get(0).x1(), frame.get(0).y1(), frame.get(0).id),
+//            new Coordinate(frame.get(1).x1(), frame.get(1).y1(), frame.get(1).id),
+//            new Coordinate(frame.get(2).x1(), frame.get(2).y1(), frame.get(2).id),
+//            new Coordinate(frame.get(3).x1(), frame.get(3).y1(), frame.get(2).id)
+//        });
+//        Geometry geo1 = line.union(arc2);
+//        Geometry geo2 = UGeo.geoPadding(this.mpol, frame, 0);
+
         Coordinate coo3[] = arc2.getCoordinates();
         list.add(new Coordinate(frame.get(0).x1(), frame.get(0).y1(), frame.get(0).id));
         list.add(new Coordinate(frame.get(1).x1(), frame.get(1).y1(), frame.get(1).id));
