@@ -28,7 +28,6 @@ import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.operation.buffer.VariableBuffer;
-import org.locationtech.jts.operation.overlay.OverlayOp;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Test {
@@ -297,8 +296,10 @@ public class Test {
             new Coordinate(900, 1400), new Coordinate(900, 0),
             new Coordinate(0, 0)};
         Coordinate[] coord2 = {
-            new Coordinate(0, 0, 1), new Coordinate(0, 1000, 2),
-            new Coordinate(1000, 1000, 3), new Coordinate(1000, 0, 4),
+            new Coordinate(0, 0, 1),
+            new Coordinate(0, 1000, 2),
+            new Coordinate(1000, 1000, 3),
+            new Coordinate(1000, 0, 4),
             new Coordinate(0, 0, 1)};
 
         Point point1 = gf.createPoint(new Coordinate(499.9, 500));
@@ -310,9 +311,7 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
 
-        Coordinate co = segm1.intersection(segm2);
-
-        System.out.println("");
+        System.out.println("startup.Test.geom()");
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -400,7 +399,7 @@ public class Test {
 
     private void draw3() {
 
-        GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING_SINGLE));
+        GeometryFactory gf = new GeometryFactory(new PrecisionModel(10));
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         AffineTransformation aff = new AffineTransformation();
         ArrayList<Coordinate> list = new ArrayList();
@@ -422,26 +421,22 @@ public class Test {
         aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
         Geometry arc2 = aff.transform(arc1);
 
-//        Geometry line = gf.createLineString(new Coordinate[]{
-//            new Coordinate(frame.get(0).x1(), frame.get(0).y1(), frame.get(0).id),
-//            new Coordinate(frame.get(1).x1(), frame.get(1).y1(), frame.get(1).id),
-//            new Coordinate(frame.get(2).x1(), frame.get(2).y1(), frame.get(2).id),
-//            new Coordinate(frame.get(3).x1(), frame.get(3).y1(), frame.get(2).id)
-//        });
-//        Geometry geo1 = line.union(arc2);
-//        Geometry geo2 = UGeo.geoPadding(this.mpol, frame, 0);
+        Geometry line = gf.createLineString(new Coordinate[]{
+            new Coordinate(frame.get(0).x1(), frame.get(0).y1(), frame.get(0).id),
+            new Coordinate(frame.get(1).x1(), frame.get(1).y1(), frame.get(1).id),
+            new Coordinate(frame.get(2).x1(), frame.get(2).y1(), frame.get(2).id),
+            new Coordinate(frame.get(3).x1(), frame.get(3).y1(), frame.get(2).id)
+        });
 
-        Coordinate coo3[] = arc2.getCoordinates();
         list.add(new Coordinate(frame.get(0).x1(), frame.get(0).y1(), frame.get(0).id));
         list.add(new Coordinate(frame.get(1).x1(), frame.get(1).y1(), frame.get(1).id));
         list.add(new Coordinate(frame.get(2).x1(), frame.get(2).y1(), frame.get(2).id));
-        list.addAll(List.of(coo3));
-        list.add(list.get(0));
+        list.addAll(List.of(arc2.getCoordinates()));
 
         Polygon geo1 = gf.createPolygon(list.toArray(new Coordinate[0]));
         Polygon geo2 = UGeo.geoPadding(geo1, frame, 0);
         this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
-        
+
 //        List<Coordinate> list2 = new ArrayLoop();
 //        Coordinate c1[] = geo1.getCoordinates();
 //        Coordinate c2[] = geo2.getCoordinates();
@@ -449,7 +444,6 @@ public class Test {
 //        List<Coordinate> c2a = List.of(c2).stream().filter(c -> c.z == frame.get(3).id).collect(toList());
 //        list2.addAll(c1a);
 //        list2.addAll(c2a);
-//        list2.add(c2a.get(0));
 //        mpol = gf.createLineString(list2.toArray(new Coordinate[0]));
     }
 

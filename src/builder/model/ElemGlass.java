@@ -84,8 +84,9 @@ public class ElemGlass extends ElemSimple {
     }
 
     //Внутренний полигон створки/рамы для прорисовки
+    @Override
     public void setLocation() {
-        this.area = owner.area; //UGeo.geoPadding(, winc.listElem, -20);
+        this.area = UGeo.geoPadding(owner.area, winc.listElem, 20);
     }
 
     //Главная спецификация    
@@ -220,7 +221,7 @@ public class ElemGlass extends ElemSimple {
         if (owner.area != null) {
             winc.gc2d.setColor(new java.awt.Color(eColor.find(colorID2).getInt(eColor.rgb)));
             Shape shape = new ShapeWriter().toShape(this.area);
-            //winc.gc2d.fill(shape);
+            winc.gc2d.fill(shape);
         }
     }
 }

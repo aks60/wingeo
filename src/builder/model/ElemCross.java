@@ -45,9 +45,9 @@ public class ElemCross extends ElemSimple {
         }
         artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
         artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true);
-        
+
         //Сделано для коррекции ширины импостов
-        if(artiklRecAn.getDbl(eArtikl.id) == -3) {
+        if (artiklRecAn.getDbl(eArtikl.id) == -3) {
             artiklRec.setNo(eArtikl.height, artiklRec.getDbl(eArtikl.height) + 16);
             artiklRecAn.setNo(eArtikl.height, artiklRec.getDbl(eArtikl.height) + 16);
         }
@@ -59,6 +59,7 @@ public class ElemCross extends ElemSimple {
         }
     }
 
+    @Override
     public void setLocation() {
         try {
             //Пилим полигон импостом
@@ -101,18 +102,6 @@ public class ElemCross extends ElemSimple {
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation " + e);
         }
-    }
-
-    public Layout layout() {
-        double angl = this.anglHoriz();
-
-        if (angl == 90 || angl == -90) {
-            return Layout.VERT;
-
-        } else if (angl == 180 || angl == 0) {
-            return Layout.HORIZ;
-        }
-        return Layout.ANY;
     }
 
     //Главная спецификация 
@@ -212,5 +201,17 @@ public class ElemCross extends ElemSimple {
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
+    public Layout layout() {
+        double angl = this.anglHoriz();
+
+        if (angl == 90 || angl == -90) {
+            return Layout.VERT;
+
+        } else if (angl == 180 || angl == 0) {
+            return Layout.HORIZ;
+        }
+        return Layout.ANY;
+    }
+
     // </editor-fold>       
 }

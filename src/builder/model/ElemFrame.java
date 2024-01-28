@@ -43,6 +43,7 @@ public class ElemFrame extends ElemSimple {
      * Профиль через параметр или первая запись в системе см. табл. sysprof Цвет
      * если нет параметра то берём winc.color.
      */
+    @Override
     public void initArtikle() {
         try {
             colorID1 = (isJson(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
@@ -77,7 +78,7 @@ public class ElemFrame extends ElemSimple {
     }
 
     //Рассчёт полигона стороны рамы
-    //@Override
+    @Override
     public void setLocation() {
         try {
             Geometry geo1 = owner.area.getGeometryN(0), geo2 = owner.area.getGeometryN(1);
@@ -100,7 +101,7 @@ public class ElemFrame extends ElemSimple {
                         Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0]));
                         this.area = poly;
 
-                    } else { //полигон рамы
+                    } else { //полигон рамы                        
                         this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), c2[i + 1].x, c2[i + 1].y, c2[i].x, c2[i].y);
                     }
                     break;
@@ -110,27 +111,6 @@ public class ElemFrame extends ElemSimple {
         } catch (Exception e) {
             System.err.println("Ошибка:ElemFrame.setLocation" + toString() + e);
         }
-    }
-
-    public Layout layout() {
-        try {
-            if (owner.area.getGeometryN(0).getNumPoints() == 4
-                    || owner.area.getGeometryN(0).getNumPoints() == 5) {
-                int index = UGeo.getIndex(owner.area.getGeometryN(0), this);
-                if (index == 0) {
-                    return Layout.LEFT;
-                } else if (index == 1) {
-                    return Layout.BOTT;
-                } else if (index == 2) {
-                    return Layout.RIGHT;
-                } else if (index == 3) {
-                    return Layout.TOP;
-                }
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:ElemFrame.layout() " + e);
-        }
-        return Layout.ANY;
     }
 
     //Главная спецификация
@@ -303,9 +283,27 @@ public class ElemFrame extends ElemSimple {
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
-//    public double h() {
-//        return (gson.h != null) ? gson.h : -1;       
-//    }
+    public Layout layout() {
+        try {
+            if (owner.area.getGeometryN(0).getNumPoints() == 4
+                    || owner.area.getGeometryN(0).getNumPoints() == 5) {
+                int index = UGeo.getIndex(owner.area.getGeometryN(0), this);
+                if (index == 0) {
+                    return Layout.LEFT;
+                } else if (index == 1) {
+                    return Layout.BOTT;
+                } else if (index == 2) {
+                    return Layout.RIGHT;
+                } else if (index == 3) {
+                    return Layout.TOP;
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:ElemFrame.layout() " + e);
+        }
+        return Layout.ANY;
+    }
+
     @Override
     public double x2() {
         for (int i = 0; i < owner.frames.size(); i++) {

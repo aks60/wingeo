@@ -32,6 +32,7 @@ public class AreaArch extends AreaSimple {
     @Override
     public void setLocation() {
         ArrayList<Coordinate> list = new ArrayList<Coordinate>();
+        Geometry arcA = null, arcB = null;
         try {
             //Создадим вершины арки
             for (ElemSimple frame : this.frames) {
@@ -50,11 +51,11 @@ public class AreaArch extends AreaSimple {
                     LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //трансформация линии в горизонт
                     l1.normalize();
                     CoordinateSequence cs = l1.getCoordinateSequence();
-                    LineString arcA = UGeo.newLineArch(cs.getX(0), cs.getX(1), cs.getY(0), H, frame.id);  //созд. арки на гортзонтали   
+                     arcA = UGeo.newLineArch(cs.getX(0), cs.getX(1), cs.getY(0), H, frame.id);  //созд. арки на гортзонтали   
 
                     //Обратный поворот
                     aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y);
-                    Geometry arcB = aff.transform(arcA);
+                     arcB = aff.transform(arcA);
                     
                     List.of(arcB.getCoordinates()).forEach(c -> c.setZ(frame.id));
                     list.addAll(List.of(arcB.getCoordinates()));                    
@@ -63,9 +64,6 @@ public class AreaArch extends AreaSimple {
                     list.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
                 }
             }
-            //Полигон векторов рамы
-            list.add(list.get(0));
-
             Polygon geo1 = gf.createPolygon(list.toArray(new Coordinate[0]));
             Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
             this.area = gf.createMultiPolygon(new Polygon[] {geo1, geo2});
@@ -105,14 +103,9 @@ public class AreaArch extends AreaSimple {
 //            Shape shape = new ShapeWriter().toShape(this.area);
 //
 //            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-//            //winc.gc2d.fill(shape);
+//            winc.gc2d.fill(shape);
 //
 //            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
-//            winc.gc2d.draw(shape);
-//        }
-//        if (this.geom != null) {
-//            Shape shape = new ShapeWriter().toShape(this.geom);
-//            winc.gc2d.setColor(new java.awt.Color(000, 255, 000));
 //            winc.gc2d.draw(shape);
 //        }
     }

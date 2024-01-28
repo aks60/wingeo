@@ -18,7 +18,7 @@ import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Com5t {
 
-    public static GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING_SINGLE));
+    public static GeometryFactory gf = new GeometryFactory(new PrecisionModel(10));
     public static GeometricShapeFactory gsf = new GeometricShapeFactory(gf);
     public static AffineTransformation aff = new AffineTransformation();
     

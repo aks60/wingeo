@@ -70,15 +70,15 @@ public class AreaRectangl extends AreaSimple {
     public void paint() {
         super.paint();
 
-        if (this.area != null) {
-            Shape shape = new ShapeWriter().toShape(this.area);
-
-            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-            winc.gc2d.fill(shape);
-
-            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
-            winc.gc2d.draw(shape);
-        }
+//        if (this.area != null) {
+//            Shape shape = new ShapeWriter().toShape(this.area);
+//
+//            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
+//            winc.gc2d.fill(shape);
+//
+//            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
+//            winc.gc2d.draw(shape);
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
