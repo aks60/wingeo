@@ -39,6 +39,14 @@ public class ElemFrame extends ElemSimple {
         }
     }
 
+    //Test
+    public ElemFrame(double id, GsonElem gson) {
+        super(id, gson);
+        if (gson.type == Type.FRAME_SIDE) {
+            events();
+        }
+    }
+
     /**
      * Профиль через параметр или первая запись в системе см. табл. sysprof Цвет
      * если нет параметра то берём winc.color.
@@ -83,14 +91,14 @@ public class ElemFrame extends ElemSimple {
         try {
             Geometry geo1 = owner.area.getGeometryN(0), geo2 = owner.area.getGeometryN(1);
             Coordinate c1[] = geo1.getCoordinates(), c2[] = geo2.getCoordinates();
+            
             for (int i = 0; i < c1.length; i++) {
                 if (c1[i].z == this.id) {
-
                     if (this.h() != null) { //полигон арки
 
                         List<Coordinate> list = new ArrayLoop();
-                        List<Coordinate> c1a = List.of(c1).stream().filter(c -> c.z == this.id).collect(toList());
-                        List<Coordinate> c2a = List.of(c2).stream().filter(c -> c.z == this.id).collect(toList());
+                        List<Coordinate> c1a = UGeo.getSegmentArch(c1, this);
+                        List<Coordinate> c2a = UGeo.getSegmentArch(c2, this);
                         c2a.add(geo2.getCoordinates()[0]);
                         Collections.reverse(c2a);
 

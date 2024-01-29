@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import static java.util.stream.Collectors.toList;
 import org.locationtech.jts.algorithm.Angle;
 import static org.locationtech.jts.algorithm.Angle.angle;
 import static org.locationtech.jts.algorithm.Angle.diff;
@@ -251,8 +252,9 @@ public class UGeo {
             Com5t.gsf.setNumPoints(100);
             Com5t.gsf.setBase(new Coordinate(x1 + (x2 - x1) / 2 - R, y - h));
             LineString ls = Com5t.gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
-            List.of(ls.getCoordinates()).forEach(c -> c.z = z);
-            return ls;
+            Coordinate lm[] = Arrays.copyOf(ls.getCoordinates(), ls.getCoordinates().length - 1);
+            List.of(lm).forEach(c -> c.z = z);
+            return gf.createLineString(lm);
 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.newLineArch()");
@@ -265,11 +267,31 @@ public class UGeo {
         return Com5t.gf.createPolygon(UGeo.arrCoord(d));
     }
 
+    public static Polygon newPolygon(List<Coordinate> list) {
+        if (list.get(0).equals2D(list.get(list.size() - 1)) == false) {
+            list.add(list.get(0));
+        }
+        return Com5t.gf.createPolygon(list.toArray(new Coordinate[0]));
+    }
+
     public static LineSegment getSegment(Geometry line) {
         LineString line2 = (LineString) line;
         return new LineSegment(line2.getCoordinateN(0), line2.getCoordinateN(1));
     }
 
+    public static List<Coordinate> getSegmentArch(Coordinate coo[], ElemSimple elem) {
+        int index = 0;
+        List<Coordinate> list = new ArrayList();
+        for (int i = 0; i < coo.length; i++) {
+            if (coo[i].z == elem.id) {
+                list.add(coo[i]);
+                index = i;
+            }
+        }
+        list.add(coo[++index]);
+        return list;
+    }
+    
     public static LineSegment getSegment(Geometry poly, int index) {
         poly = poly.getGeometryN(0);
         Coordinate[] coo = Arrays.copyOf(poly.getCoordinates(), poly.getNumPoints() - 1);

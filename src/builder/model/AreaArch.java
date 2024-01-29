@@ -57,13 +57,14 @@ public class AreaArch extends AreaSimple {
                     }
                     List.of(arcB.getCoordinates()).forEach(c -> c.setZ(frame.id));
                     list.addAll(List.of(arcB.getCoordinates()));
+                    //list.add(list.get(0));
 
                 } else {
                     list.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
                 }
             }
-            list.add(list.get(0));
-            Polygon geo1 = gf.createPolygon(list.toArray(new Coordinate[0]));
+            //list.add(list.get(0));
+            Polygon geo1 = UGeo.newPolygon(list);
             Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 

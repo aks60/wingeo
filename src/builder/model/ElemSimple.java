@@ -30,12 +30,16 @@ public abstract class ElemSimple extends Com5t {
         this(winc, gson.id, gson, owner);
     }
 
-    
     public ElemSimple(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
         super(winc, id, gson, owner);
         spcRec = new Specific(id, this);
         winc.listElem.add(this);
         winc.listAll.add(this);
+    }
+
+    //Test
+    public ElemSimple(double id, GsonElem gson) {
+        super(id, gson);
     }
 
     public abstract void initArtikle();
@@ -202,7 +206,7 @@ public abstract class ElemSimple extends Com5t {
             gson.y2 = y2;
         }
     }
-    
+
     @Override
     public String toString() {
         return super.toString() + ", anglHoriz=" + anglHoriz();

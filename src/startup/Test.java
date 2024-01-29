@@ -441,9 +441,8 @@ public class Test {
         list.add(new Coordinate(frame.get(1).x1(), frame.get(1).y1(), frame.get(1).id));
         list.add(new Coordinate(frame.get(2).x1(), frame.get(2).y1(), frame.get(2).id));        
         list.addAll(List.of(arr2));
-        //list.add(list.get(list.size() - 1));
 
-        Polygon geo1 = gf.createPolygon(list.toArray(new Coordinate[0]));
+        Polygon geo1 = UGeo.newPolygon(list);
         Polygon geo2 = UGeo.geoPadding(geo1, frame, 0);
         this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
