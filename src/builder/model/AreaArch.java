@@ -29,16 +29,60 @@ public class AreaArch extends AreaSimple {
     }
 
     //Полигон рамы. Функ. выпоняется после создания рам конструкции
-    @Override
-    public void setLocation() {
+   // @Override
+    public void setLocation2() {
         ArrayList<Coordinate> list = new ArrayList<Coordinate>();
         Geometry arcA = null, arcB = null;
         try {
             //Создадим вершины арки
             for (ElemSimple frame : this.frames) {
                 if (frame.h() != null) {
-                    
-                    Record artiklRec = (this.frames.get(0).artiklRecAn == null) 
+
+                    Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
+                    double dh = artiklRec.getDbl(eArtikl.height);
+                    LineSegment segm = new LineSegment(frame.x1(), frame.y1(), frame.x2(), frame.y2());
+                    segm.normalize();
+                    LineString line = gf.createLineString(new Coordinate[]{segm.p0, segm.p1});
+                    double ANG = Math.toDegrees(segm.angle());
+
+                    if (ANG == 0) {
+                        arcB = UGeo.newLineArch(line.getPointN(0).getX(), line.getPointN(1).getX(), line.getPointN(0).getY(), frame.h(), frame.id);  //созд. арки на гортзонтали 
+
+                    } else {
+                        //Поворот на горизонталь
+                        aff.setToRotation(Math.toRadians(-ANG), segm.p0.x, segm.p0.y);
+                        line = (LineString) aff.transform(line); //трансформация линии в горизонт
+                        arcA = UGeo.newLineArch(line.getPointN(0).getX(), line.getPointN(1).getX(), line.getPointN(0).getY(), frame.h(), frame.id);  //созд. арки на гортзонтали   
+
+                        //Обратный поворот
+                        aff.setToRotation(Math.toRadians(ANG), segm.p0.x, segm.p0.y);
+                        arcB = aff.transform(arcA);
+                    }
+                    List.of(arcB.getCoordinates()).forEach(c -> c.setZ(frame.id));
+                    list.addAll(List.of(arcB.getCoordinates()));
+
+                } else {
+                    list.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
+                }
+            }
+            list.add(list.get(0));
+            Polygon geo1 = gf.createPolygon(list.toArray(new Coordinate[0]));
+            Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
+            this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
+        }
+    }
+
+    public void setLocation() {
+        ArrayList<Coordinate> list = new ArrayList<Coordinate>();
+        try {
+            //Создадим вершины арки
+            for (ElemSimple frame : this.frames) {
+                if (frame.h() != null) {
+
+                    Record artiklRec = (this.frames.get(0).artiklRecAn == null)
                             ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
                     double dh = artiklRec.getDbl(eArtikl.height);
                     LineSegment s1 = new LineSegment(frame.x1(), frame.y1(), frame.x2(), frame.y2());
@@ -47,26 +91,29 @@ public class AreaArch extends AreaSimple {
                     double R = ((ElemFrame) frame).radiusArc = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
 
                     //Поворот на горизонталь
-                    aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y);    
+                    aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y);
                     LineString l1 = (LineString) aff.transform(s1.toGeometry(gf)); //трансформация линии в горизонт
                     l1.normalize();
                     CoordinateSequence cs = l1.getCoordinateSequence();
-                     arcA = UGeo.newLineArch(cs.getX(0), cs.getX(1), cs.getY(0), H, frame.id);  //созд. арки на гортзонтали   
+                    LineString arcA = UGeo.newLineArch(cs.getX(0), cs.getX(1), cs.getY(0), H, frame.id);  //созд. арки на гортзонтали   
 
                     //Обратный поворот
                     aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y);
-                     arcB = aff.transform(arcA);
-                    
+                    Geometry arcB = aff.transform(arcA);
+
                     List.of(arcB.getCoordinates()).forEach(c -> c.setZ(frame.id));
-                    list.addAll(List.of(arcB.getCoordinates()));                    
+                    list.addAll(List.of(arcB.getCoordinates()));
 
                 } else {
                     list.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
                 }
             }
+            //Полигон векторов рамы
+            list.add(list.get(0));
+
             Polygon geo1 = gf.createPolygon(list.toArray(new Coordinate[0]));
             Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
-            this.area = gf.createMultiPolygon(new Polygon[] {geo1, geo2});
+            this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
@@ -98,7 +145,7 @@ public class AreaArch extends AreaSimple {
     @Override
     public void paint() {
         super.paint();
-        
+
 //        if (this.area != null) {
 //            Shape shape = new ShapeWriter().toShape(this.area);
 //

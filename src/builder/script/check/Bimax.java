@@ -127,13 +127,13 @@ public final class Bimax {
 
         } else if (prj == 604004) {
             rootGson = new GsonRoot(427858, prj, 1, 37, Type.ARCH, "Rehau / Delight / 1 ОКНА", 1009, 1009, 1009);
-            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0, 650))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 0, 1700))
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 10, 650))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 10, 1700))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300, 1700))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300, 650, 650));
 
             rootGson.addElem(new GsonElem(Type.GLASS));
-            rootGson.addElem(new GsonElem(Type.IMPOST, 0, 690, 1300, 690, "{sysprofID:3246}"));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 10, 690, 1300, 690, "{sysprofID:3246}"));
             GsonElem area = rootGson.addArea(new GsonElem(Type.AREA));
 
             area.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));

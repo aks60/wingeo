@@ -1,5 +1,7 @@
 package builder.model;
 
+import static builder.model.Com5t.aff;
+import static builder.model.Com5t.gf;
 import common.ArrayCom;
 import dataset.Record;
 import domain.eArtikl;
@@ -13,6 +15,7 @@ import static org.locationtech.jts.algorithm.Angle.angle;
 import static org.locationtech.jts.algorithm.Angle.diff;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.CoordinateSequence;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
