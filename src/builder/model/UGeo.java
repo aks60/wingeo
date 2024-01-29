@@ -265,6 +265,11 @@ public class UGeo {
         return Com5t.gf.createPolygon(UGeo.arrCoord(d));
     }
 
+    public static LineSegment getSegment(Geometry line) {
+        LineString line2 = (LineString) line;
+        return new LineSegment(line2.getCoordinateN(0), line2.getCoordinateN(1));
+    }
+
     public static LineSegment getSegment(Geometry poly, int index) {
         poly = poly.getGeometryN(0);
         Coordinate[] coo = Arrays.copyOf(poly.getCoordinates(), poly.getNumPoints() - 1);
@@ -290,6 +295,11 @@ public class UGeo {
         //throw new Exception("Ошибка:UGeo.getIndex()");
         System.err.println("Ошибка:UGeo.getIndex()");
         return -1;
+    }
+
+    public static LineSegment normalize(LineSegment segm) {
+        segm.normalize();
+        return segm;
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">   

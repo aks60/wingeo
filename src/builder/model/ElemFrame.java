@@ -101,7 +101,9 @@ public class ElemFrame extends ElemSimple {
                         Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0]));
                         this.area = poly;
 
-                    } else { //полигон рамы                        
+                    } else { //полигон рамы   
+                        Object o1 = c2[i];
+                        Object o2 = c2[i + 1];
                         this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), c2[i + 1].x, c2[i + 1].y, c2[i].x, c2[i].y);
                     }
                     break;
@@ -275,7 +277,7 @@ public class ElemFrame extends ElemSimple {
             Shape shape = new ShapeWriter().toShape(this.area);
 
             winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-            winc.gc2d.fill(shape);
+            //winc.gc2d.fill(shape);
 
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
             winc.gc2d.draw(shape);

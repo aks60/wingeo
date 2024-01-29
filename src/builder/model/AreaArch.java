@@ -29,8 +29,8 @@ public class AreaArch extends AreaSimple {
     }
 
     //Полигон рамы. Функ. выпоняется после создания рам конструкции
-   // @Override
-    public void setLocation2() {
+    @Override
+    public void setLocation() {
         ArrayList<Coordinate> list = new ArrayList<Coordinate>();
         Geometry arcA = null, arcB = null;
         try {
@@ -40,19 +40,16 @@ public class AreaArch extends AreaSimple {
 
                     Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
                     double dh = artiklRec.getDbl(eArtikl.height);
-                    LineSegment segm = new LineSegment(frame.x1(), frame.y1(), frame.x2(), frame.y2());
-                    segm.normalize();
-                    LineString line = gf.createLineString(new Coordinate[]{segm.p0, segm.p1});
+                    LineSegment segm = UGeo.normalize(new LineSegment(frame.x1(), frame.y1(), frame.x2(), frame.y2()));
                     double ANG = Math.toDegrees(segm.angle());
 
                     if (ANG == 0) {
-                        arcB = UGeo.newLineArch(line.getPointN(0).getX(), line.getPointN(1).getX(), line.getPointN(0).getY(), frame.h(), frame.id);  //созд. арки на гортзонтали 
-
+                        arcB = UGeo.newLineArch(segm.p0.x, segm.p1.x, segm.p0.y, frame.h(), frame.id);  //созд. арки на гортзонтали 
                     } else {
                         //Поворот на горизонталь
                         aff.setToRotation(Math.toRadians(-ANG), segm.p0.x, segm.p0.y);
-                        line = (LineString) aff.transform(line); //трансформация линии в горизонт
-                        arcA = UGeo.newLineArch(line.getPointN(0).getX(), line.getPointN(1).getX(), line.getPointN(0).getY(), frame.h(), frame.id);  //созд. арки на гортзонтали   
+                        segm = UGeo.getSegment(aff.transform(segm.toGeometry(gf)));//трансформация линии в горизонт
+                        arcA = UGeo.newLineArch(segm.p0.x, segm.p1.x, segm.p0.y, frame.h(), frame.id);  //созд. арки на гортзонтали   
 
                         //Обратный поворот
                         aff.setToRotation(Math.toRadians(ANG), segm.p0.x, segm.p0.y);
@@ -75,7 +72,7 @@ public class AreaArch extends AreaSimple {
         }
     }
 
-    public void setLocation() {
+    public void setLocation2() {
         ArrayList<Coordinate> list = new ArrayList<Coordinate>();
         try {
             //Создадим вершины арки

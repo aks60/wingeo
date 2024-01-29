@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
-import common.ArrayLoop;
 import common.eProp;
 import dataset.Conn;
 import enums.Type;
@@ -16,11 +15,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import static java.util.stream.Collectors.toList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -32,6 +34,7 @@ import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Test {
 
+    //public ArrayList<ListenerMouse> mouseDragged = new ArrayList();
     private JFrame frame = null;
     private Geometry mlin = null;
     private Geometry mpol = null;
@@ -326,7 +329,7 @@ public class Test {
 
     //Конструктор
     public Test() {
-
+        
         frame = new JFrame();
         //frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -358,6 +361,17 @@ public class Test {
             }
         };
         frame.add(p);
+        frame.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent event) {
+            }
+
+            public void mouseReleased(MouseEvent event) {
+            }
+        });
+        frame.addMouseMotionListener(new MouseMotionAdapter() {
+            public void mouseDragged(MouseEvent event) {
+            }
+        });        
         frame.pack();
         frame.setVisible(true);
 
@@ -402,12 +416,12 @@ public class Test {
         GeometryFactory gf = new GeometryFactory(new PrecisionModel(10));
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         AffineTransformation aff = new AffineTransformation();
-        ArrayList<Coordinate> list = new ArrayList();
+        ArrayList<Coordinate> list = new ArrayList(), list2 = new ArrayList();
         ArrayCom<Com5t> frame = new ArrayCom();
         frame.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0, 300)));
         frame.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0, 1500)));
         frame.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300, 1500)));
-        frame.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300, 600, 300)));
+        frame.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300, 300, 300)));
         LineSegment s1 = new LineSegment(frame.get(3).x1(), frame.get(3).y1(), frame.get(0).x1(), frame.get(0).y1());
         s1.normalize();
         double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle());
@@ -420,18 +434,14 @@ public class Test {
         //Обратная трансформация арки
         aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
         Geometry arc2 = aff.transform(arc1);
-
-        Geometry line = gf.createLineString(new Coordinate[]{
-            new Coordinate(frame.get(0).x1(), frame.get(0).y1(), frame.get(0).id),
-            new Coordinate(frame.get(1).x1(), frame.get(1).y1(), frame.get(1).id),
-            new Coordinate(frame.get(2).x1(), frame.get(2).y1(), frame.get(2).id),
-            new Coordinate(frame.get(3).x1(), frame.get(3).y1(), frame.get(2).id)
-        });
-
+        Coordinate arr2[] = arc2.getCoordinates(); //Arrays.copyOf(arc2.getCoordinates(), arc2.getCoordinates().length);
+        List.of(arr2).forEach(c -> c.z = 4);
+        
         list.add(new Coordinate(frame.get(0).x1(), frame.get(0).y1(), frame.get(0).id));
         list.add(new Coordinate(frame.get(1).x1(), frame.get(1).y1(), frame.get(1).id));
-        list.add(new Coordinate(frame.get(2).x1(), frame.get(2).y1(), frame.get(2).id));
-        list.addAll(List.of(arc2.getCoordinates()));
+        list.add(new Coordinate(frame.get(2).x1(), frame.get(2).y1(), frame.get(2).id));        
+        list.addAll(List.of(arr2));
+        //list.add(list.get(list.size() - 1));
 
         Polygon geo1 = gf.createPolygon(list.toArray(new Coordinate[0]));
         Polygon geo2 = UGeo.geoPadding(geo1, frame, 0);

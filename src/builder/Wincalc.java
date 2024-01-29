@@ -248,20 +248,20 @@ public class Wincalc {
             //Размерные линии
             this.root.paint();
 
-            //Прорисовка стеклопакетов
-            this.listElem.filter(Type.GLASS).stream().forEach(el -> el.paint());
-
-            //Прорисовка импостов
-            this.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA).stream().forEach(el -> el.paint());
-
+//            //Прорисовка стеклопакетов
+//            this.listElem.filter(Type.GLASS).stream().forEach(el -> el.paint());
+//
+//            //Прорисовка импостов
+//            this.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA).stream().forEach(el -> el.paint());
+//
             //Прорисовка рам
             this.listElem.filter(Type.FRAME_SIDE).stream().forEach(el -> el.paint());
-
-            //Прорисовка профилей створок
-            this.listElem.filter(Type.STVORKA_SIDE).stream().forEach(el -> el.paint());
-
-            //Прорисока фурнитуры створок
-            this.listArea.filter(Type.STVORKA).stream().forEach(el -> el.paint());
+//
+//            //Прорисовка профилей створок
+//            this.listElem.filter(Type.STVORKA_SIDE).stream().forEach(el -> el.paint());
+//
+//            //Прорисока фурнитуры створок
+//            this.listArea.filter(Type.STVORKA).stream().forEach(el -> el.paint());
 
 // <editor-fold defaultstate="collapsed" desc="Раскладка"> 
 /*            
