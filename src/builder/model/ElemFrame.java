@@ -19,6 +19,7 @@ import enums.UseSide;
 import java.awt.Shape;
 import java.util.Collections;
 import java.util.List;
+import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
@@ -284,7 +285,7 @@ public class ElemFrame extends ElemSimple {
             Shape shape = new ShapeWriter().toShape(this.area);
 
             winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-            //winc.gc2d.fill(shape);
+            winc.gc2d.fill(shape);
 
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
             winc.gc2d.draw(shape);
@@ -292,7 +293,7 @@ public class ElemFrame extends ElemSimple {
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
-    public Layout layout() {
+    public Layout layout2() {
         try {
             int count = owner.area.getGeometryN(0).getNumPoints();
             int index = UGeo.getIndex(owner.area.getGeometryN(0), this);
@@ -328,11 +329,33 @@ public class ElemFrame extends ElemSimple {
         return Layout.ANY;
     }
 
-    public Layout layout2() {
+    public Layout layout() {
         Point p0 = owner.area.getCentroid();
-        LineSegment segm = new LineSegment();
-        Coordinate c = new Coordinate();
-        if(new LineSegment(p0.getX(), p0.getY(), p0.x + 1, p0.y).)
+        for (ElemSimple f : owner.frames) {
+            LineSegment segm1 = new LineSegment(f.x1(), f.y1(), f.x2(), f.y2());
+
+            LineSegment segm2 = new LineSegment(p0.getX(), p0.getY(), p0.getX() - 10000, p0.getY());
+            if (segm1.intersection(segm2) != null) {
+                return Layout.LEFT;
+            }
+            segm2 = new LineSegment(p0.getX(), p0.getY(), p0.getX(), p0.getY() + 10000);
+            if (segm1.intersection(segm2) != null) {
+                return Layout.BOTT;
+            }
+            segm2 = new LineSegment(p0.getX(), p0.getY(), p0.getX() + 10000, p0.getY());
+            if (segm1.intersection(segm2) != null) {
+                return Layout.RIGHT;
+            }
+            if (this.root instanceof AreaArch) {
+                return Layout.TOP;
+            } else {
+                segm2 = new LineSegment(p0.getX(), p0.getY(), p0.getX(), p0.getY() - 10000);
+                if (segm1.intersection(segm2) != null) {
+                    return Layout.TOP;
+                }
+            }
+        }
+        return Layout.ANY;
     }
 
     @Override
