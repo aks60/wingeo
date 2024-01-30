@@ -35,7 +35,7 @@ public class ElemFrame extends ElemSimple {
     public ElemFrame(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
         super(winc, id, gson, owner);
         if (gson.type == Type.FRAME_SIDE) {
-            events();
+            addEvents();
         }
     }
 
@@ -43,7 +43,7 @@ public class ElemFrame extends ElemSimple {
     public ElemFrame(double id, GsonElem gson) {
         super(id, gson);
         if (gson.type == Type.FRAME_SIDE) {
-            events();
+            addEvents();
         }
     }
 
@@ -89,28 +89,26 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void setLocation() {
         try {
-            Geometry geo1 = owner.area.getGeometryN(0), geo2 = owner.area.getGeometryN(1);
+            Geometry geo1 = owner.area.getGeometryN(0), geo2 = owner.area.getGeometryN(1); //внешн. и внутр. ареа арки.
             Coordinate c1[] = geo1.getCoordinates(), c2[] = geo2.getCoordinates();
             for (int i = 0; i < c1.length; i++) {
                 if (c1[i].z == this.id) {
                     if (this.h() != null) { //полигон арки
 
                         List<Coordinate> list = new ArrayLoop();
-                        List<Coordinate> c1a = UGeo.getSegmentArch(c1, this);
-                        List<Coordinate> c2a = UGeo.getSegmentArch(c2, this);
-                        c2a.add(geo2.getCoordinates()[0]);
-                        Collections.reverse(c2a);
+                        List<Coordinate> c1a = UGeo.getSegmentArch(c1, this); //внешн.коорд.арки
+                        List<Coordinate> c2a = UGeo.getSegmentArch(c2, this); //внутр.коорд.арки
+                        c2a.add(geo2.getCoordinates()[0]); //посл.точка арки
+                        Collections.reverse(c2a); //против час.стрелки
 
                         list.addAll(c1a);
                         list.addAll(c2a);
                         list.add(c1a.get(0));
 
-                        Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0]));
+                        Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0])); //коробка арки
                         this.area = poly;
 
                     } else { //полигон рамы   
-                        Object o1 = c2[i];
-                        Object o2 = c2[i + 1];
                         this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), c2[i + 1].x, c2[i + 1].y, c2[i].x, c2[i].y);
                     }
                     break;

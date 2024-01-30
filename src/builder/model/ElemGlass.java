@@ -86,7 +86,7 @@ public class ElemGlass extends ElemSimple {
     //Внутренний полигон створки/рамы для прорисовки
     @Override
     public void setLocation() {
-        //this.area = UGeo.geoPadding(owner.area, winc.listElem, 20);
+        this.area = UGeo.geoPadding(owner.area.getGeometryN(0), winc.listElem, 20);
     }
 
     //Главная спецификация    

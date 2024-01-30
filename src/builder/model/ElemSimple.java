@@ -22,6 +22,7 @@ public abstract class ElemSimple extends Com5t {
     public double[] betweenHoriz = {0, 0}; //угол между векторами   
     private Point pointPress = null;
     private boolean pass[] = {false, false};
+    private final double delta = 3;
 
     public Specific spcRec = null; //спецификация элемента
     public Color borderColor = Color.BLACK;
@@ -50,7 +51,7 @@ public abstract class ElemSimple extends Com5t {
 
     public abstract void addSpecific(Specific spcAdd);
 
-    public void events() {
+    public void addEvents() {
 
         ListenerKey keyPressed = (evt) -> {
             if (this.area != null) {
@@ -119,18 +120,28 @@ public abstract class ElemSimple extends Com5t {
                 if (pass[0] == true) {
                     double X1 = dX / winc.scale + x1();
                     double Y1 = dY / winc.scale + y1();
-                    if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
-                        x1(X1);
-                        y1(Y1);
-                        pointPress = evt.getPoint();
+                    if (X1 > -2 && X1 <= W / winc.scale && Y1 > -2 && Y1 <= H / winc.scale) { //контроль выхода за канву
+                        //if (Math.abs(dX) > delta) {
+                            this.x1(X1);
+                            //pointPress = evt.getPoint();
+                        //}
+                        //if (Math.abs(dY) > delta) {
+                            this.y1(Y1);
+                            pointPress = evt.getPoint();
+                        //}
                     }
                 } else if (pass[1] == true) {
                     double X2 = dX / winc.scale + x2();
                     double Y2 = dY / winc.scale + y2();
-                    if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву                       
-                        x2(X2);
-                        y2(Y2);
-                        pointPress = evt.getPoint();
+                    if (X2 > -2 && X2 <= W / winc.scale && Y2 > -2 && Y2 <= H / winc.scale) { //контроль выхода за канву                       
+                       // if (Math.abs(dX) > delta) {
+                            this.x2(X2);
+                           // pointPress = evt.getPoint();
+                        //}
+                        //if (Math.abs(dY) > delta) {
+                            this.y2(Y2);
+                            pointPress = evt.getPoint();
+                        //}
                     }
                 }
             }

@@ -106,8 +106,24 @@ public class GsonScript {
             area2.addElem(new GsonElem(Type.IMPOST, 720, 400, 720, 1700));
             area2.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
 
-// </editor-fold>
+// </editor-fold>            
 // <editor-fold defaultstate="collapsed" desc="ARCH">
+        } else if (prj == 604004) {
+            rootGson = new GsonRoot(Type.ARCH, "Rehau / Delight / 1 ОКНА");
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0, 300))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0, 1700))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300, 1700))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300, 300, 300));
+                    //.addElem(new GsonElem(Type.GLASS));
+
+            rootGson.addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 0, 690, 1300, 690));
+            GsonElem area = rootGson.addArea(new GsonElem(Type.AREA));
+
+            area.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            area.addElem(new GsonElem(Type.IMPOST, 650, 1700, 650, 650));
+            area.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
+            
 //        } else if (prj == 501007) {
 //            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.ARCH, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
 //            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
