@@ -2,7 +2,6 @@ package common;
 
 import builder.model.AreaSimple;
 import builder.model.Com5t;
-import builder.model.UGeo;
 import builder.script.GsonElem;
 import enums.Layout;
 import enums.Type;
@@ -40,42 +39,15 @@ public class ArrayCom<E extends Com5t> extends ArrayList<E> {
         return hm.get(key);
     }
 
-    public E get(int index) {
-        index = (index < 0) ? index + size() : (index > size() - 1) ? index - size() : index;
-        return super.get(index);
-    }
-
     public E get(Layout layout) {
         try {
             for (Com5t el : this) {
-                int index = UGeo.getIndex(areaSimple.area, el);
-                if (areaSimple.area.getGeometryN(0).getNumPoints() == 4
-                        || areaSimple.area.getGeometryN(0).getNumPoints() == 5) {
-
-                    if (index == 0 && layout == Layout.LEFT) {
-                        return (E) el;
-                    } else if (index == 1 && layout == Layout.BOTT) {
-                        return (E) el;
-                    } else if (index == 2 && layout == Layout.RIGHT) {
-                        return (E) el;
-                    } else if (index == 3 && layout == Layout.TOP) {
-                        return (E) el;
-                    }
-                    
-                } else if(el.winc.root.type == Type.ARCH) {
-                    if (index == 0 && layout == Layout.LEFT) {
-                        return (E) el;
-                    } else if (index == 1 && layout == Layout.BOTT) {
-                        return (E) el;
-                    } else if (index == 2 && layout == Layout.RIGHT) {
-                        return (E) el;
-                    } else if (layout == Layout.TOP) {
-                        return (E) el;
-                    }
+                if(el.layout() == layout) {
+                    return (E) el;
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:LinkedCom.get()");
+            System.err.println("Ошибка:ArrayCom.get()");
         }
         return null;
     }
@@ -101,4 +73,9 @@ public class ArrayCom<E extends Com5t> extends ArrayList<E> {
         }
         return list2;
     }
+
+//    public E get(int index) {
+//        index = (index < 0) ? index + size() : (index > size() - 1) ? index - size() : index;
+//        return super.get(index);
+//    }    
 }

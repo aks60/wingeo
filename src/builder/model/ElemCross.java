@@ -185,6 +185,18 @@ public class ElemCross extends ElemSimple {
         }
     }
 
+    public Layout layout() {
+        double angl = this.anglHoriz();
+
+        if (angl == 90 || angl == -90) {
+            return Layout.VERT;
+
+        } else if (angl == 180 || angl == 0) {
+            return Layout.HORIZ;
+        }
+        return Layout.ANY;
+    }
+    
     //Линии размерности
     @Override
     public void paint() {
@@ -201,17 +213,5 @@ public class ElemCross extends ElemSimple {
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
-    public Layout layout() {
-        double angl = this.anglHoriz();
-
-        if (angl == 90 || angl == -90) {
-            return Layout.VERT;
-
-        } else if (angl == 180 || angl == 0) {
-            return Layout.HORIZ;
-        }
-        return Layout.ANY;
-    }
-
     // </editor-fold>       
 }

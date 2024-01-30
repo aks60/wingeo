@@ -91,7 +91,6 @@ public class ElemFrame extends ElemSimple {
         try {
             Geometry geo1 = owner.area.getGeometryN(0), geo2 = owner.area.getGeometryN(1);
             Coordinate c1[] = geo1.getCoordinates(), c2[] = geo2.getCoordinates();
-
             for (int i = 0; i < c1.length; i++) {
                 if (c1[i].z == this.id) {
                     if (this.h() != null) { //полигон арки
@@ -278,6 +277,32 @@ public class ElemFrame extends ElemSimple {
         }
     }
 
+    public Layout layout() {
+        try {
+            if (this.h() != null) {
+                return Layout.TOP;
+            }
+            Point pc = owner.area.getGeometryN(0).getCentroid();
+            LineSegment frame = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
+
+            if (frame.intersection(new LineSegment(pc.getX(), pc.getY(), pc.getX() - 10000, pc.getY())) != null) {
+                return Layout.LEFT;
+            }
+            if (frame.intersection(new LineSegment(pc.getX(), pc.getY(), pc.getX(), pc.getY() + 10000)) != null) {
+                return Layout.BOTT;
+            }
+            if (frame.intersection(new LineSegment(pc.getX(), pc.getY(), pc.getX() + 10000, pc.getY())) != null) {
+                return Layout.RIGHT;
+            }
+            if (frame.intersection(new LineSegment(pc.getX(), pc.getY(), pc.getX(), pc.getY() - 10000)) != null) {
+                return Layout.TOP;
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:ElemFrame.layout() " + e);
+        }
+        return Layout.ANY;
+    }   
+    
     //Линии размерности
     @Override
     public void paint() {
@@ -293,71 +318,6 @@ public class ElemFrame extends ElemSimple {
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
-    public Layout layout2() {
-        try {
-            int count = owner.area.getGeometryN(0).getNumPoints();
-            int index = UGeo.getIndex(owner.area.getGeometryN(0), this);
-
-            if (this.root instanceof AreaArch) {
-                if (count == 4 || count == 5) {
-                    if (index == 0) {
-                        return Layout.LEFT;
-                    } else if (index == 1) {
-                        return Layout.BOTT;
-                    } else if (index == 2) {
-                        return Layout.RIGHT;
-                    } else {
-                        return Layout.TOP;
-                    }
-                }
-            } else {
-                if (index == 0) {
-                    return Layout.LEFT;
-                } else if (index == 1) {
-                    return Layout.BOTT;
-                } else if (index == 2) {
-                    return Layout.RIGHT;
-                } else if (index == 3) {
-                    return Layout.TOP;
-                } else {
-                    return Layout.ANY;
-                }
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:ElemFrame.layout() " + e);
-        }
-        return Layout.ANY;
-    }
-
-    public Layout layout() {
-        Point p0 = owner.area.getCentroid();
-        for (ElemSimple f : owner.frames) {
-            LineSegment segm1 = new LineSegment(f.x1(), f.y1(), f.x2(), f.y2());
-
-            LineSegment segm2 = new LineSegment(p0.getX(), p0.getY(), p0.getX() - 10000, p0.getY());
-            if (segm1.intersection(segm2) != null) {
-                return Layout.LEFT;
-            }
-            segm2 = new LineSegment(p0.getX(), p0.getY(), p0.getX(), p0.getY() + 10000);
-            if (segm1.intersection(segm2) != null) {
-                return Layout.BOTT;
-            }
-            segm2 = new LineSegment(p0.getX(), p0.getY(), p0.getX() + 10000, p0.getY());
-            if (segm1.intersection(segm2) != null) {
-                return Layout.RIGHT;
-            }
-            if (this.root instanceof AreaArch) {
-                return Layout.TOP;
-            } else {
-                segm2 = new LineSegment(p0.getX(), p0.getY(), p0.getX(), p0.getY() - 10000);
-                if (segm1.intersection(segm2) != null) {
-                    return Layout.TOP;
-                }
-            }
-        }
-        return Layout.ANY;
-    }
-
     @Override
     public double x2() {
         for (int i = 0; i < owner.frames.size(); i++) {

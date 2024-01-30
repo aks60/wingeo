@@ -81,7 +81,7 @@ public class Wincalc {
 
     public void build(String script) {
         //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script))); //для тестирования
-        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
         //Инит свойств окна
         specificID = 0;
@@ -185,6 +185,13 @@ public class Wincalc {
 
             //Рассчёт полигонов сторон рамы
             listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
+            
+//            for (ElemSimple elem : listElem) {
+//                if(elem.type == Type.IMPOST) {
+//                    elem.layout();
+//                    System.out.println(elem.layout());
+//                }
+//            }
 
             //Соединения конструкции             
             root.joining();  //L и T соединения
