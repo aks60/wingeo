@@ -61,6 +61,17 @@ public class ArrayCom<E extends Com5t> extends ArrayList<E> {
                     } else if (index == 3 && layout == Layout.TOP) {
                         return (E) el;
                     }
+                    
+                } else if(el.winc.root.type == Type.ARCH) {
+                    if (index == 0 && layout == Layout.LEFT) {
+                        return (E) el;
+                    } else if (index == 1 && layout == Layout.BOTT) {
+                        return (E) el;
+                    } else if (index == 2 && layout == Layout.RIGHT) {
+                        return (E) el;
+                    } else if (layout == Layout.TOP) {
+                        return (E) el;
+                    }
                 }
             }
         } catch (Exception e) {

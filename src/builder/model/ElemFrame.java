@@ -19,12 +19,11 @@ import enums.UseSide;
 import java.awt.Shape;
 import java.util.Collections;
 import java.util.List;
-import static java.util.stream.Collectors.toList;
-import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 
 public class ElemFrame extends ElemSimple {
@@ -91,7 +90,7 @@ public class ElemFrame extends ElemSimple {
         try {
             Geometry geo1 = owner.area.getGeometryN(0), geo2 = owner.area.getGeometryN(1);
             Coordinate c1[] = geo1.getCoordinates(), c2[] = geo2.getCoordinates();
-            
+
             for (int i = 0; i < c1.length; i++) {
                 if (c1[i].z == this.id) {
                     if (this.h() != null) { //полигон арки
@@ -295,9 +294,22 @@ public class ElemFrame extends ElemSimple {
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
     public Layout layout() {
         try {
-            if (owner.area.getGeometryN(0).getNumPoints() == 4
-                    || owner.area.getGeometryN(0).getNumPoints() == 5) {
-                int index = UGeo.getIndex(owner.area.getGeometryN(0), this);
+            int count = owner.area.getGeometryN(0).getNumPoints();
+            int index = UGeo.getIndex(owner.area.getGeometryN(0), this);
+
+            if (this.root instanceof AreaArch) {
+                if (count == 4 || count == 5) {
+                    if (index == 0) {
+                        return Layout.LEFT;
+                    } else if (index == 1) {
+                        return Layout.BOTT;
+                    } else if (index == 2) {
+                        return Layout.RIGHT;
+                    } else {
+                        return Layout.TOP;
+                    }
+                }
+            } else {
                 if (index == 0) {
                     return Layout.LEFT;
                 } else if (index == 1) {
@@ -306,12 +318,21 @@ public class ElemFrame extends ElemSimple {
                     return Layout.RIGHT;
                 } else if (index == 3) {
                     return Layout.TOP;
+                } else {
+                    return Layout.ANY;
                 }
             }
         } catch (Exception e) {
             System.err.println("Ошибка:ElemFrame.layout() " + e);
         }
         return Layout.ANY;
+    }
+
+    public Layout layout2() {
+        Point p0 = owner.area.getCentroid();
+        LineSegment segm = new LineSegment();
+        Coordinate c = new Coordinate();
+        if(new LineSegment(p0.getX(), p0.getY(), p0.x + 1, p0.y).)
     }
 
     @Override
