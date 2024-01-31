@@ -4151,7 +4151,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
 
                 if (tabb1.getSelectedIndex() == 1) {
-                    canvas.init(winc());
+                    canvas.init(winc());  //т.к. при смене вклвдки терятся keyPressed(KeyEvent event)
 
                 } else if (tabb1.getSelectedIndex() == 2) {
                     btnSet.setEnabled(true);
