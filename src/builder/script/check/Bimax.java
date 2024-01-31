@@ -133,7 +133,7 @@ public final class Bimax {
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300, 300, 300));
                     //.addElem(new GsonElem(Type.GLASS));
 
-            rootGson.addElem(new GsonElem(Type.GLASS));
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST, 0, 690, 1300, 690, "{sysprofID:3246}"));
             GsonElem area = rootGson.addArea(new GsonElem(Type.AREA));
 
@@ -156,9 +156,10 @@ public final class Bimax {
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300, 1200))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300, 200, 200));
 
-            rootGson.addElem(new GsonElem(Type.GLASS));
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST, 0, 240, 1300, 240));
-            rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+//            rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 508035) { //СМ.PS
             rootGson = new GsonRoot(426804, prj, 1, 99, Type.ARCH, "Rehau / Blitz / 1 ОКНА / Открывание внутрь (ств. Z60)", 1009, 1009, 1009);

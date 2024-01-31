@@ -184,21 +184,20 @@ public class Wincalc {
             listArea.filter(Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
 
             //Рассчёт полигонов сторон рамы
-            listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
+            //listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
             
-//            for (ElemSimple elem : listElem) {
-//                if(elem.type == Type.IMPOST) {
-//                    elem.layout();
-//                    System.out.println(elem.layout());
-//                }
-//            }
-
+            for (ElemSimple elem : listElem) {
+                if(elem.type == Type.FRAME_SIDE || elem.type == Type.STVORKA_SIDE || elem.type == Type.GLASS) {
+                    elem.setLocation();
+                }
+            }
+            
             //Соединения конструкции             
             root.joining();  //L и T соединения
             listArea.filter(Type.STVORKA).forEach(e -> e.joining());
 
         } catch (Exception s) {
-            System.err.println("Ошибка:Wincalc.location() " + s);
+            System.err.println("Ошибка:Wincalc.upgrade() " + s);
         }
     }
 

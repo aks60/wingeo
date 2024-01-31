@@ -22,6 +22,7 @@ import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 
 public class ElemGlass extends ElemSimple {
@@ -86,7 +87,8 @@ public class ElemGlass extends ElemSimple {
     //Внутренний полигон створки/рамы для прорисовки
     @Override
     public void setLocation() {
-        this.area = UGeo.geoPadding(owner.area.getGeometryN(0), winc.listElem, 20);
+        Geometry geo = UGeo.geoPadding(owner.area.getGeometryN(0), winc.listElem, 20);
+        this.area = geo;
     }
 
     //Главная спецификация    
