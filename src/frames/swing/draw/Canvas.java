@@ -22,7 +22,7 @@ import org.locationtech.jts.awt.ShapeWriter;
 
 public class Canvas extends javax.swing.JPanel {
 
-    private Wincalc winc = null;
+    public Wincalc winc = null;
     public static double ds = 72; //для размерных линий 
 
     public Canvas() {
@@ -43,34 +43,37 @@ public class Canvas extends javax.swing.JPanel {
             List.of(getComponentListeners()).forEach(l -> removeComponentListener(l));
 
             addKeyListener(new KeyAdapter() {
-
                 public void keyPressed(KeyEvent event) {
                     winc.keyboardPressed.forEach(e -> e.keysEvent(event));
+                    //System.out.println(".keyPressed()");
                     repaint();
                 }
             });
             addMouseListener(new MouseAdapter() {
                 public void mousePressed(MouseEvent event) {
                     winc.mousePressed.forEach(e -> e.mouseEvent(event));
-                    //repaint();
+                    //System.out.println(".mousePressed()");
                 }
 
                 public void mouseReleased(MouseEvent event) {
                     winc.mouseReleased.forEach(e -> e.mouseEvent(event));
-                    repaint();
+                    //System.out.println(".mouseReleased()");
                 }
             });
             addMouseMotionListener(new MouseMotionAdapter() {
 
                 public void mouseDragged(MouseEvent event) {
                     winc.mouseDragged.forEach(e -> e.mouseEvent(event));
-                    repaint();
+                    //System.out.println(".mouseDragged()");
+                    repaint(); 
                 }
             });
             addComponentListener(new ComponentAdapter() {
 
                 public void componentResized(ComponentEvent event) {
                     winc.scale = scale(winc);
+                    //System.out.println(".componentResized()");
+                    repaint();              
                 }
             });
         }

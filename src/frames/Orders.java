@@ -81,6 +81,8 @@ import frames.swing.DefMutableTreeNode;
 import frames.swing.TableFieldFilter;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Collections;
 import java.util.List;
@@ -231,7 +233,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
             }
         };
         tab2.setDefaultRenderer(Object.class, defaultTableCellRenderer);
-        canvas.setVisible(true);
     }
 
     public void loadingTab1() {
@@ -3609,7 +3610,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
     }//GEN-LAST:event_btnFilter
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-
+        selectionTab2();
     }//GEN-LAST:event_btnTest
 
     private void loopToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loopToStvorka
@@ -4148,9 +4149,14 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
         model.reload();
         tabb1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                if (tabb1.getSelectedIndex() == 2) {
+
+                if (tabb1.getSelectedIndex() == 1) {
+                    canvas.init(winc());
+
+                } else if (tabb1.getSelectedIndex() == 2) {
                     btnSet.setEnabled(true);
                     btnFind.setEnabled(true);
+
                 } else {
                     btnSet.setEnabled(false);
                     btnFind.setEnabled(false);
