@@ -45,16 +45,13 @@ public class AreaRectangl extends AreaSimple {
         }
     }
 
-    //Соединения
+    //L - соединения
     @Override
     public void joining() {
         try {
             winc.listJoin.clear();
 
             super.joining(); //T - соединения
-
-            ArrayList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA);
-            ArrayList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
 
             //L - соединения
             for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам рамы

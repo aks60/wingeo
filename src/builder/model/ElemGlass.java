@@ -131,7 +131,7 @@ public class ElemGlass extends ElemSimple {
             }
             //Полигон элемента конструкции
             this.area = Com5t.gf.createPolygon(out);
-            
+
             Envelope env = this.area.getGeometryN(0).getEnvelopeInternal();
             spcRec.width = env.getWidth();
             spcRec.height = env.getHeight();
@@ -154,7 +154,7 @@ public class ElemGlass extends ElemSimple {
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
-                LineSegment segm1 = UGeo.getSegment(this.area, indexSegm -1);
+                LineSegment segm1 = UGeo.getSegment(this.area, indexSegm - 1);
                 LineSegment segm2 = UGeo.getSegment(this.area, indexSegm + 1);
                 LineSegment segm3 = UGeo.getSegment(this.area, indexSegm + 2);
 
@@ -163,7 +163,7 @@ public class ElemGlass extends ElemSimple {
                 spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(segm2.p1, segm2.p0, segm1.p0)) / 2;
                 spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(segm2.p0, segm2.p1, segm3.p1)) / 2;
                 spcAdd.anglHoriz = Math.abs(spcAdd.elem5e.anglHoriz()); //угол к гор. стороны стекла);
-                
+
                 spcRec.spcList.add(spcAdd);
 
                 if (anglGHoriz == 0 || anglGHoriz == 180) { //по горизонтали
@@ -216,7 +216,7 @@ public class ElemGlass extends ElemSimple {
     }
 
     //Линии размерности
-    @Override      
+    @Override
     public void paint() {
         if (this.area != null) {
             winc.gc2d.setColor(new java.awt.Color(eColor.find(colorID2).getInt(eColor.rgb)));

@@ -111,9 +111,7 @@ public class AreaSimple extends Com5t {
             //Цикл по сторонам рамы и импостам
             for (ElemSimple frame : elemList) {
                 if (cross.id != frame.id) {
-
-                    LineString line = gf.createLineString(new Coordinate[]{
-                        new Coordinate(frame.x1(), frame.y1()), new Coordinate(frame.x2(), frame.y2())});
+                    LineString line = UGeo.newLineStr(frame.x1(), frame.y1(), frame.x2(), frame.y2());
 
                     if (line.contains(UGeo.newPoint(cross.x1(), cross.y1()))) {
                         winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, cross, frame));

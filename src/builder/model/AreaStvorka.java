@@ -234,7 +234,8 @@ public class AreaStvorka extends AreaSimple {
         }
     }
 
-    //@Override
+    //L - соединения, прил.соед.
+   @Override
     public void joining() {
         ArrayCom<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.STOIKA);
         try {
@@ -255,7 +256,7 @@ public class AreaStvorka extends AreaSimple {
             //Прилегающее
             LineSegment segm = new LineSegment();
             Coordinate coo1[] = this.area.getGeometryN(0).getCoordinates(); //полигон векторов сторон створки
-            Coordinate coo2[] = this.areaBox.getCoordinates(); //полигон векторов сторон рамы
+            Coordinate coo2[] = this.areaBox.getGeometryN(0).getCoordinates(); //полигон векторов сторон рамы
 
             for (int j = 0; j < coo1.length - 1; j++) {
                 ElemSimple elemStv = elemList.get(coo1[j].z);
