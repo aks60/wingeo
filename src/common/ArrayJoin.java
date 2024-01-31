@@ -48,7 +48,7 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
             for (ElemJoining join : this) {
 
                 if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(el.type)) {
-                    System.err.println("common.ArrayJoin.get()");
+                    System.err.println("ОШИБКА:.ArrayJoin.get()");
 //                    Point p = (side == 0) ? UGeo.newPoint(el.x1(), el.y1()) : UGeo.newPoint(el.x2(), el.y2());
 //                    for (ElemSimple e : el.winc.listElem) {
 //                        if (UGeo.newLineArch(e.x1(), e.y1(), e.x2(), e.y2()).contains(p)) {
