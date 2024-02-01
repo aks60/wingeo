@@ -186,12 +186,13 @@ public class AreaSimple extends Com5t {
 
                     //Текст на линии
                     int xy[] = {(int) Math.round(listHor.get(i - 1) + len), (int) (box.getMaxY() + rec2D.getHeight() * 0.8)}; //точка начала текста
-                    if (length < rec2D.getWidth() - 4) {
-                        //winc.gc2d.setFont(new Font(font.getName(), font.getStyle(), font.getSize() - 2));
+                    Rectangle2D txt2D = font.getStringBounds("99.9", winc.gc2d.getFontRenderContext());
+                    if (length < txt2D.getWidth()) {
+                       winc.gc2d.setFont(new Font(font.getName(), font.getStyle(), font.getSize() - font.getSize() / 4));
                         winc.gc2d.rotate(Math.toRadians(90), xy[0], xy[1]);
                         double x = (length < rec2D.getHeight()) ? xy[0] + rec2D.getHeight() / 2 : xy[0];
                         winc.gc2d.drawString(txt, xy[0], xy[1]);
-                        //winc.gc2d.setFont(font);
+                        winc.gc2d.setFont(font);
                     } else {
                         winc.gc2d.drawString(txt, xy[0], xy[1]);
                     }
@@ -218,13 +219,10 @@ public class AreaSimple extends Com5t {
 
                     //Текст на линии
                     int xy[] = {(int) (box.getMaxX() + rec2D.getHeight()), (int) Math.round(listVer.get(i) - len)}; //точка врашения и начала текста
-                    
-                    System.out.println(length + " < " + rec2D.getWidth());
-                    
-                    if (length + 2 < rec2D.getWidth()) {
+                    Rectangle2D txt2D = font.getStringBounds("99.9", winc.gc2d.getFontRenderContext());
+                    if (length < txt2D.getWidth()) {
                         winc.gc2d.setFont(new Font(font.getName(), font.getStyle(), font.getSize() - font.getSize() / 4));
-                        double y = (length < rec2D.getHeight()) ? xy[1] - rec2D.getHeight() / 2 : xy[1];
-                        winc.gc2d.drawString(txt, xy[0], (int) y);
+                        winc.gc2d.drawString(txt, xy[0], (int) (xy[1] - txt2D.getHeight() / 2));
                         winc.gc2d.setFont(font);
                     } else {
                         winc.gc2d.rotate(Math.toRadians(-90), xy[0], xy[1]);

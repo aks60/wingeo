@@ -22,8 +22,9 @@ import org.locationtech.jts.awt.ShapeWriter;
 
 public class Canvas extends javax.swing.JPanel {
 
+    public static double translate[] = {2, 8};
     public Wincalc winc = null;
-    public static double ds = 72; //для размерных линий 
+    public static double ds = 150; //для размерных линий 
 
     public Canvas() {
         initComponents();
@@ -104,7 +105,7 @@ public class Canvas extends javax.swing.JPanel {
             winc.gc2d.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, resizeFont()));
             winc.gc2d.setColor(getBackground());
             winc.gc2d.setStroke(new BasicStroke(2)); //толщина линии
-            winc.gc2d.translate(0, 0);
+            winc.gc2d.translate(translate[0], translate[1]);
             winc.gc2d.scale(winc.scale, winc.scale);
             winc.upgrade();
             winc.draw();

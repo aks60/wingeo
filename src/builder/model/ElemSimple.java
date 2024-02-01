@@ -8,12 +8,12 @@ import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
 import enums.Layout;
 import enums.Type;
+import frames.swing.draw.Canvas;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineSegment;
-import org.locationtech.jts.geom.Point;
 
 public abstract class ElemSimple extends Com5t {
 
@@ -75,7 +75,6 @@ public abstract class ElemSimple extends Com5t {
                         if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
                             x1(X1);
                             y1(Y1);
-                            //pointPress.setLocation(x1(), y1());
                         }
                     } else if (pass[1] == true) {
                         double X2 = dX / winc.scale + x2();
@@ -83,7 +82,6 @@ public abstract class ElemSimple extends Com5t {
                         if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву
                             x2(X2);
                             y2(Y2);
-                            //pointPress.setLocation(x2(), y2());
                         }
                     }
                 }
@@ -93,7 +91,7 @@ public abstract class ElemSimple extends Com5t {
 
             if (this.area != null) {
                 pointPress = evt.getPoint();
-                Coordinate wincPress = new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale);
+                Coordinate wincPress = new Coordinate((evt.getX() - Canvas.translate[0]) / winc.scale, (evt.getY() - Canvas.translate[1]) / winc.scale);
                 boolean b = this.area.contains(gf.createPoint(wincPress));
 
                 //Если клик внутри контура
