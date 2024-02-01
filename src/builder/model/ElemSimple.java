@@ -9,18 +9,18 @@ import common.listener.ListenerMouse;
 import enums.Layout;
 import enums.Type;
 import java.awt.Color;
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.Point;
 
 public abstract class ElemSimple extends Com5t {
 
     public double anglCut[] = {45, 45}; //угол реза
     public double[] anglFlat = {0, 0, 0, 0}; //мин/мах внутренний и мин/мах внешний угол к плоскости   
     public double[] betweenHoriz = {0, 0}; //угол между векторами   
-    private Point pointPress = null;
+    private java.awt.Point pointPress = null;
     private boolean pass[] = {false, false};
     private final double delta = 3;
 
@@ -90,13 +90,16 @@ public abstract class ElemSimple extends Com5t {
             }
         };
         ListenerMouse mousePressed = (evt) -> {
+
             if (this.area != null) {
                 pointPress = evt.getPoint();
+                Coordinate wincPress = new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale);
+                boolean b = this.area.contains(gf.createPoint(wincPress));
+
                 //Если клик внутри контура
-                boolean b = this.area.getGeometryN(0).contains(gf.createPoint(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale)));
                 if (b == true) {
-                    LineSegment segm = new LineSegment(x1(), y1(), x2(), y2());
-                    double coef = segm.segmentFraction(new Coordinate(evt.getX() / winc.scale, evt.getY() / winc.scale));
+                    LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
+                    double coef = segm.segmentFraction(wincPress);
                     if (coef < .33) {
                         pass[0] = true; //кликнул ближе к началу вектора
                     } else if (coef > .67) {
@@ -119,37 +122,37 @@ public abstract class ElemSimple extends Com5t {
 
                 if (pass[0] == true) {
                     double X1 = dX / winc.scale + x1();
-                    double Y1 = dY / winc.scale + y1();
-                    if (X1 > -2 && X1 <= W / winc.scale && Y1 > -2 && Y1 <= H / winc.scale) { //контроль выхода за канву
-                        //if (Math.abs(dX) > delta) {
-                            this.x1(X1);
-                            //pointPress = evt.getPoint();
-                        //}
-                        //if (Math.abs(dY) > delta) {
-                            this.y1(Y1);
-                            pointPress = evt.getPoint();
-                        //}
+                    double Y1 = dY / winc.scale  + y1();
+                    if (X1 > 0) {
+                        this.x1(X1);
+                        pointPress = evt.getPoint();
                     }
+                    if (Y1 > 0) {
+                        this.y1(Y1);
+                        pointPress = evt.getPoint();
+                    }
+
                 } else if (pass[1] == true) {
                     double X2 = dX / winc.scale + x2();
                     double Y2 = dY / winc.scale + y2();
-                    if (X2 > -2 && X2 <= W / winc.scale && Y2 > -2 && Y2 <= H / winc.scale) { //контроль выхода за канву                       
-                       // if (Math.abs(dX) > delta) {
-                            this.x2(X2);
-                           // pointPress = evt.getPoint();
-                        //}
-                        //if (Math.abs(dY) > delta) {
-                            this.y2(Y2);
-                            pointPress = evt.getPoint();
-                        //}
+                    if (X2 > 0) {
+                        this.x2(X2);
+                        pointPress = evt.getPoint();
+                    }
+                    if (Y2 > 0) {
+                        this.y2(Y2);
+                        pointPress = evt.getPoint();
                     }
                 }
             }
         };
 
         this.winc.keyboardPressed.add(keyPressed);
+
         this.winc.mousePressed.add(mousePressed);
+
         this.winc.mouseReleased.add(mouseReleased);
+
         this.winc.mouseDragged.add(mouseDragge);
     }
 
@@ -161,7 +164,7 @@ public abstract class ElemSimple extends Com5t {
      * @param side - сторона прилегания
      * @return - элемент прилегания
      */
-    //@Override
+//@Override
     public ElemSimple joinFlat(Layout side) {
         boolean begin = false;
         try {
