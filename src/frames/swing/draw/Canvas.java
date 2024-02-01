@@ -45,26 +45,22 @@ public class Canvas extends javax.swing.JPanel {
             addKeyListener(new KeyAdapter() {
                 public void keyPressed(KeyEvent event) {
                     winc.keyboardPressed.forEach(e -> e.keysEvent(event));
-                    //System.out.println(".keyPressed()");
                     repaint();
                 }
             });
             addMouseListener(new MouseAdapter() {
                 public void mousePressed(MouseEvent event) {
                     winc.mousePressed.forEach(e -> e.mouseEvent(event));
-                    //System.out.println(".mousePressed()");
                 }
 
                 public void mouseReleased(MouseEvent event) {
                     winc.mouseReleased.forEach(e -> e.mouseEvent(event));
-                    //System.out.println(".mouseReleased()");
                 }
             });
             addMouseMotionListener(new MouseMotionAdapter() {
 
                 public void mouseDragged(MouseEvent event) {
                     winc.mouseDragged.forEach(e -> e.mouseEvent(event));
-                    //System.out.println(".mouseDragged()");
                     repaint(); 
                 }
             });

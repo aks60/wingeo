@@ -125,7 +125,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
     DefaultTableCellRenderer defaultTableCellRenderer = new DefaultTableCellRenderer() {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
-            value = (value instanceof Double) ? UCom.format(value, 19) : value;
+            value = (value instanceof Double) ? UCom.format(value, -9) : value;
             JLabel lab = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
             lab.setBackground(new java.awt.Color(212, 208, 200));
             return lab;

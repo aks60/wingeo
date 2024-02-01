@@ -46,9 +46,11 @@ public class UCom {
                 df.applyPattern("#0.####");
             } else if (scale == 9) {
                 df.applyPattern("#,##0.##");
-            } else if (scale == 12) {
+            } else if (scale == -1) {
+                df.applyPattern("#0.0");                
+            } else if (scale == -2) {
                 df.applyPattern("#0.00");
-            } else if (scale == 19) {
+            } else if (scale == -9) {
                 df.applyPattern("#,##0.00");
             }
             return df.format(val);

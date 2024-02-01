@@ -11,6 +11,7 @@ public class DefCellRendererNumb extends DefaultTableCellRenderer {
 
     private DecimalFormat df = null;
     protected int scale = 2;
+    
     private String pattern = null;
 
     public DefCellRendererNumb(int scale) {

@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
+import common.UCom;
 import common.eProp;
 import dataset.Conn;
 import enums.Type;
@@ -20,7 +21,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import javax.swing.JFrame;
@@ -87,13 +87,15 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            frame(args);
+            //frame(args);
             //wincalc();
             //query();
             //json();
             //uid();
             //script();
-            //geom();
+            //geom();           
+//            System.out.println(Integer.parseInt("367.7"));
+            System.out.println(UCom.format(3.060245456456, -2));
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -313,8 +315,6 @@ public class Test {
         LineSegment segm2 = new LineSegment(68.0, 500.0, 68.0, 1500.0);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
-
-        System.out.println("startup.Test.geom()");
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -329,7 +329,7 @@ public class Test {
 
     //Конструктор
     public Test() {
-        
+
         frame = new JFrame();
         //frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -338,21 +338,27 @@ public class Test {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D) g;
-                g2.translate(82, 82);
-                g2.scale(.3, .3);
+                Graphics2D gc2d = (Graphics2D) g;
+                gc2d.translate(82, 82);
+                gc2d.scale(.3, .3);
 
                 if (mlin != null) {
-                    g2.setColor(Color.BLUE);
+                    gc2d.setColor(Color.BLUE);
                     Shape shape = new ShapeWriter().toShape(mlin);
-                    g2.draw(shape);
+                    gc2d.draw(shape);
 //                    g2.fill(shape);
                 }
                 if (mpol != null) {
-                    g2.setColor(Color.RED);
+                    gc2d.setColor(Color.RED);
                     Shape shape = new ShapeWriter().toShape(mpol);
-                    g2.draw(shape);
+                    gc2d.draw(shape);
                 }
+
+//                Font font = gc2d.getFont();
+//                int textwidth = (int) (font.getStringBounds(".", gc2d.getFontRenderContext()).getWidth());
+//                int textheight = (int) (font.getStringBounds("1", gc2d.getFontRenderContext()).getHeight());
+//                System.out.println("textwidth - " + textwidth);
+//                System.out.println("textheight - " + textheight);
             }
 
             @Override
@@ -371,7 +377,7 @@ public class Test {
         frame.addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent event) {
             }
-        });        
+        });
         frame.pack();
         frame.setVisible(true);
 
@@ -436,10 +442,10 @@ public class Test {
         Geometry arc2 = aff.transform(arc1);
         Coordinate arr2[] = arc2.getCoordinates(); //Arrays.copyOf(arc2.getCoordinates(), arc2.getCoordinates().length);
         List.of(arr2).forEach(c -> c.z = 4);
-        
+
         list.add(new Coordinate(frame.get(0).x1(), frame.get(0).y1(), frame.get(0).id));
         list.add(new Coordinate(frame.get(1).x1(), frame.get(1).y1(), frame.get(1).id));
-        list.add(new Coordinate(frame.get(2).x1(), frame.get(2).y1(), frame.get(2).id));        
+        list.add(new Coordinate(frame.get(2).x1(), frame.get(2).y1(), frame.get(2).id));
         list.addAll(List.of(arr2));
 
         Polygon geo1 = UGeo.newPolygon(list);
