@@ -9,7 +9,7 @@ import java.util.LinkedList;
 
 public class GsonElem {
 
-    protected static transient double genId = 0;  //идентификатор    
+    public static transient double genId = 0;  //идентификатор    
     public double id = 0;  //идентификатор
     public transient GsonElem owner = null;  //владелец
     public LinkedList<GsonElem> childs = null; //список детей

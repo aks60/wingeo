@@ -20,6 +20,7 @@ public class GsonRoot extends GsonElem {
     public GsonRoot(Type type, String name) {
         this.name = name;
         this.type = type;
+        this.genId = 0;
     }
 
     public GsonRoot(Integer punic, Integer pnumb, Integer ord, Integer nuni, Type type, String name) {

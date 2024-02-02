@@ -299,19 +299,25 @@ public class ElemFrame extends ElemSimple {
             System.err.println("Ошибка:ElemFrame.layout() " + e);
         }
         return Layout.ANY;
-    }   
-    
+    }
+
     //Линии размерности
     @Override
     public void paint() {
         if (this.area != null) {
-            Shape shape = new ShapeWriter().toShape(this.area);
-
-            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
+            
+            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));       
+            Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(0));
             winc.gc2d.fill(shape);
 
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
             winc.gc2d.draw(shape);
+            
+            if (this.pmove != null) {
+                winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
+                shape = new ShapeWriter().toShape(this.pmove );
+                winc.gc2d.fill(shape);
+            }
         }
     }
 

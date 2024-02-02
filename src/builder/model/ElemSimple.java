@@ -14,6 +14,8 @@ import java.awt.event.KeyEvent;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.Polygon;
 
 public abstract class ElemSimple extends Com5t {
 
@@ -23,6 +25,8 @@ public abstract class ElemSimple extends Com5t {
     private java.awt.Point pointPress = null;
     private boolean pass[] = {false, false};
     private final double delta = 3;
+    private final double SIZE = 8;
+    public Polygon pmove = null;
 
     public Specific spcRec = null; //спецификация элемента
     public Color borderColor = Color.BLACK;
@@ -100,6 +104,11 @@ public abstract class ElemSimple extends Com5t {
                     double coef = segm.segmentFraction(wincPress);
                     if (coef < .33) {
                         pass[0] = true; //кликнул ближе к началу вектора
+
+                        double x = this.x1(), y = this.y1();
+                        this.pmove = UGeo.newPolygon(x, y, x, y + SIZE, x + SIZE, y + SIZE, x + SIZE, y);
+                        winc.canvas.repaint();
+                        
                     } else if (coef > .67) {
                         pass[1] = true; //кликнул ближе к концу вектора
                     }
@@ -120,7 +129,7 @@ public abstract class ElemSimple extends Com5t {
 
                 if (pass[0] == true) {
                     double X1 = dX / winc.scale + x1();
-                    double Y1 = dY / winc.scale  + y1();
+                    double Y1 = dY / winc.scale + y1();
                     if (X1 > 0) {
                         this.x1(X1);
                         pointPress = evt.getPoint();

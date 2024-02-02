@@ -83,7 +83,7 @@ public class Wincalc {
         //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script))); //для тестирования
         //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
-        //Инит свойств окна
+        //Инит свойств
         specificID = 0;
         mapPardef.clear();
         List.of((List) listArea, (List) listElem, (List) listSpec, (List) listAll, (List) listJoin).forEach(el -> el.clear());

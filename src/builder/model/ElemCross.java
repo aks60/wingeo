@@ -204,9 +204,9 @@ public class ElemCross extends ElemSimple {
     @Override
     public void paint() {
         if (this.area != null) {
-            Shape shape = new ShapeWriter().toShape(this.area);
-
             winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
+            
+            Shape shape = new ShapeWriter().toShape(this.area);
             winc.gc2d.fill(shape);
 
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
