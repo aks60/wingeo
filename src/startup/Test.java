@@ -13,6 +13,7 @@ import common.eProp;
 import dataset.Conn;
 import enums.Type;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
@@ -87,15 +88,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            //frame(args);
+            frame(args);
             //wincalc();
             //query();
             //json();
             //uid();
             //script();
             //geom();           
-//            System.out.println(Integer.parseInt("367.7"));
-            System.out.println(UCom.format(3.060245456456, -2));
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -339,7 +338,8 @@ public class Test {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D gc2d = (Graphics2D) g;
-                gc2d.translate(82, 82);
+                gc2d.rotate(Math.toRadians(-180), 0, 0);
+                gc2d.translate(-600, -600);
                 gc2d.scale(.3, .3);
 
                 if (mlin != null) {
@@ -353,7 +353,9 @@ public class Test {
                     Shape shape = new ShapeWriter().toShape(mpol);
                     gc2d.draw(shape);
                 }
-
+                
+                //gc2d.rotate(Math.PI);
+                
 //                Font font = gc2d.getFont();
 //                int textwidth = (int) (font.getStringBounds(".", gc2d.getFontRenderContext()).getWidth());
 //                int textheight = (int) (font.getStringBounds("1", gc2d.getFontRenderContext()).getHeight());
