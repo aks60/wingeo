@@ -158,10 +158,11 @@ public class AreaSimple extends Com5t {
                 Coordinate coo[] = poly.getCoordinates();
                 hsHor.add(coo[0].x);
                 hsVer.add(coo[0].y);
-//                if(this instanceof AreaArch) {
-//                    //ElemSimple frame = this.root.frames.get(Layout.TOP);
-//                    //this.area
-//                }
+                if (this instanceof AreaArch) {
+                    Geometry geo1 = this.area.getGeometryN(0);
+                    Envelope env = geo1.getEnvelopeInternal();
+                    hsVer.add(env.getMinY());
+                }
                 for (int i = 1; i < coo.length; i++) {
                     Coordinate c1 = coo[i - 1], c2 = coo[i];
 
@@ -184,13 +185,13 @@ public class AreaSimple extends Com5t {
 
             //По горизонтали
             for (int i = 1; i < listHor.size(); ++i) {
-                if (Math.round(listHor.get(i) - listHor.get(i - 1)) != 0) {
+                if (Math.round((listHor.get(i) - listHor.get(i - 1)) * 10) / 10 != 0) {
 
                     String txt = UCom.format(listHor.get(i) - listHor.get(i - 1), -1); //текст разм.линии
                     Rectangle2D rec2D = font.getStringBounds(txt, winc.gc2d.getFontRenderContext()); //логические границы строки
                     double tail[] = {listHor.get(i - 1), listHor.get(i)}; //x1, x2 хвост вращения вектора
                     int len = (int) Math.ceil(((listHor.get(i) - listHor.get(i - 1)) - (rec2D.getWidth() + 10)) / 2); //длина до начала(конца) текста
-                    int length = (int) Math.round(listHor.get(i) - listHor.get(i - 1)); //длина вектора
+                    double length = Math.round(listHor.get(i) - listHor.get(i - 1)); //длина вектора
 
                     //Размерные линии
                     Geometry lineTip1 = lineTip((i == 1), tail[0], boxRama.getMaxY() + rec2D.getHeight() / 2, 180, len);
@@ -218,13 +219,13 @@ public class AreaSimple extends Com5t {
             }
             //По вертикали
             for (int i = 1; i < listVer.size(); ++i) {
-                if (Math.round(listVer.get(i) - listVer.get(i - 1)) != 0) {
+                if (Math.round((listVer.get(i) - listVer.get(i - 1)) * 10) / 10 != 0) {
 
                     String txt = UCom.format(listVer.get(i) - listVer.get(i - 1), -1); //текст разм.линии
                     Rectangle2D rec2D = font.getStringBounds(txt, winc.gc2d.getFontRenderContext()); //логические границы строки
                     int tail[] = {(int) Math.ceil(listVer.get(i - 1)), (int) Math.ceil(listVer.get(i))};  //y1, y2 хвост вращения вектора
                     int len = (int) Math.round((listVer.get(i) - listVer.get(i - 1) - rec2D.getWidth() - 10) / 2); //длина до начала(конца) текста
-                    int length = (int) Math.round(listVer.get(i) - listVer.get(i - 1)); //длина вектора
+                    double length = Math.round(listVer.get(i) - listVer.get(i - 1)); //длина вектора
 
                     //Размерные линии
                     Geometry lineTip1 = lineTip((i == 1), boxRama.getMaxX() + rec2D.getHeight() / 2, tail[0], -90, len);

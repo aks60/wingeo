@@ -338,8 +338,8 @@ public class Test {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D gc2d = (Graphics2D) g;
-                gc2d.rotate(Math.toRadians(-180), 0, 0);
-                gc2d.translate(-600, -600);
+                //gc2d.rotate(Math.toRadians(-180), 0, 0);
+                //gc2d.translate(-400, -600);
                 gc2d.scale(.3, .3);
 
                 if (mlin != null) {
