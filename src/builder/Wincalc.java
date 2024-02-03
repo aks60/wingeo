@@ -71,7 +71,6 @@ public class Wincalc {
     public ArrayCom<Com5t> listAll = new ArrayCom(root); //список всех компонентов (area + elem)
     public ArraySpc<Specific> listSpec = new ArraySpc(); //спецификация
     public ArrayJoin listJoin = new ArrayJoin(); //список соединений рам и створок 
-    public boolean passEdit[] = {false, false, false, false, false}; //симафор редакт.конструкции
 
     public Wincalc() {
     }
