@@ -22,7 +22,7 @@ import org.locationtech.jts.awt.ShapeWriter;
 
 public class Canvas extends javax.swing.JPanel {
 
-    public static double translate[] = {2, 8};
+    public static double translate[] = {8, 8};
     public Wincalc winc = null;
     public static double ds = 150; //для размерных линий 
 

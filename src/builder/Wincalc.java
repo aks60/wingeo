@@ -251,8 +251,6 @@ public class Wincalc {
     //Рисуем конструкцию
     public void draw() {
         try {
-            //Размерные линии
-            this.root.paint();
 
             //Прорисовка стеклопакетов
             this.listElem.filter(Type.GLASS).stream().forEach(el -> el.paint());
@@ -269,6 +267,9 @@ public class Wincalc {
             //Прорисока фурнитуры створок
             this.listArea.filter(Type.STVORKA).stream().forEach(el -> el.paint());
 
+            //Размерные линии
+            this.root.paint();
+            
 // <editor-fold defaultstate="collapsed" desc="Раскладка"> 
 /*            
             //Прорисовка раскладок

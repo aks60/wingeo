@@ -11,11 +11,14 @@ import enums.Type;
 import frames.swing.draw.Canvas;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Arc2D;
+import java.awt.geom.Rectangle2D;
+import java.util.Arrays;
+import java.util.List;
+import static java.util.stream.Collectors.toList;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineSegment;
-import org.locationtech.jts.geom.LineString;
-import org.locationtech.jts.geom.Polygon;
 
 public abstract class ElemSimple extends Com5t {
 
@@ -23,10 +26,10 @@ public abstract class ElemSimple extends Com5t {
     public double[] anglFlat = {0, 0, 0, 0}; //мин/мах внутренний и мин/мах внешний угол к плоскости   
     public double[] betweenHoriz = {0, 0}; //угол между векторами   
     private java.awt.Point pointPress = null;
-    private boolean pass[] = {false, false};
-    private final double delta = 3;
-    private final double SIZE = 8;
-    public Polygon pmove = null;
+    public boolean passEdit[] = {false, false, false, false};
+    public final double delta = 3;
+    public final double SIZE = 20;
+    //public Polygon pmove = null;
 
     public Specific spcRec = null; //спецификация элемента
     public Color borderColor = Color.BLACK;
@@ -63,7 +66,7 @@ public abstract class ElemSimple extends Com5t {
                 double H = winc.canvas.getHeight();
                 double dX = 0;
                 double dY = 0;
-                if (pass[0] == true || pass[1] == true) {
+                if (passEdit[0] == true || passEdit[1] == true) {
                     if (evt.getKeyCode() == KeyEvent.VK_UP) {
                         dY = -.1;
                     } else if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
@@ -73,14 +76,14 @@ public abstract class ElemSimple extends Com5t {
                     } else if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
                         dX = .1;
                     }
-                    if (pass[0] == true) {
+                    if (passEdit[0] == true) {
                         double X1 = dX / winc.scale + x1();
                         double Y1 = dY / winc.scale + y1();
                         if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
                             x1(X1);
                             y1(Y1);
                         }
-                    } else if (pass[1] == true) {
+                    } else if (passEdit[1] == true) {
                         double X2 = dX / winc.scale + x2();
                         double Y2 = dY / winc.scale + y2();
                         if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву
@@ -97,28 +100,30 @@ public abstract class ElemSimple extends Com5t {
                 pointPress = evt.getPoint();
                 Coordinate wincPress = new Coordinate((evt.getX() - Canvas.translate[0]) / winc.scale, (evt.getY() - Canvas.translate[1]) / winc.scale);
                 boolean b = this.area.contains(gf.createPoint(wincPress));
+                passEdit[0] = false;
+                passEdit[1] = false;
+                passEdit[2] = false;
+                passEdit[3] = !passEdit[3];
 
                 //Если клик внутри контура
                 if (b == true) {
                     LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                     double coef = segm.segmentFraction(wincPress);
                     if (coef < .33) {
-                        pass[0] = true; //кликнул ближе к началу вектора
+                        passEdit[0] = true; //кликнул ближе к началу вектора
 
-                        double x = this.x1(), y = this.y1();
-                        this.pmove = UGeo.newPolygon(x, y, x, y + SIZE, x + SIZE, y + SIZE, x + SIZE, y);
-                        winc.canvas.repaint();
-                        
                     } else if (coef > .67) {
-                        pass[1] = true; //кликнул ближе к концу вектора
+                        passEdit[1] = true; //кликнул ближе к концу вектора
+
+                    } else {
+                        passEdit[2] = true; //кликнул по середине вектора
                     }
+                    winc.canvas.repaint();
                 }
             }
         };
         ListenerMouse mouseReleased = (evt) -> {
-
-            pass[0] = false;
-            pass[1] = false;
+            passEdit[3] = !passEdit[3];           
         };
         ListenerMouse mouseDragge = (evt) -> {
             if (this.area != null) {
@@ -126,29 +131,31 @@ public abstract class ElemSimple extends Com5t {
                 double H = winc.canvas.getHeight();
                 double dX = evt.getX() - pointPress.getX(); //прирощение по горизонтали
                 double dY = evt.getY() - pointPress.getY(); //прирощение по вертикали 
+                if (passEdit[3] == true) {
+                    
+                    if (passEdit[0] == true) {
+                        double X1 = dX / winc.scale + x1();
+                        double Y1 = dY / winc.scale + y1();
+                        if (X1 > 0) {
+                            this.x1(X1);
+                            pointPress = evt.getPoint();
+                        }
+                        if (Y1 > 0) {
+                            this.y1(Y1);
+                            pointPress = evt.getPoint();
+                        }
 
-                if (pass[0] == true) {
-                    double X1 = dX / winc.scale + x1();
-                    double Y1 = dY / winc.scale + y1();
-                    if (X1 > 0) {
-                        this.x1(X1);
-                        pointPress = evt.getPoint();
-                    }
-                    if (Y1 > 0) {
-                        this.y1(Y1);
-                        pointPress = evt.getPoint();
-                    }
-
-                } else if (pass[1] == true) {
-                    double X2 = dX / winc.scale + x2();
-                    double Y2 = dY / winc.scale + y2();
-                    if (X2 > 0) {
-                        this.x2(X2);
-                        pointPress = evt.getPoint();
-                    }
-                    if (Y2 > 0) {
-                        this.y2(Y2);
-                        pointPress = evt.getPoint();
+                    } else if (passEdit[1] == true) {
+                        double X2 = dX / winc.scale + x2();
+                        double Y2 = dY / winc.scale + y2();
+                        if (X2 > 0) {
+                            this.x2(X2);
+                            pointPress = evt.getPoint();
+                        }
+                        if (Y2 > 0) {
+                            this.y2(Y2);
+                            pointPress = evt.getPoint();
+                        }
                     }
                 }
             }
@@ -161,6 +168,42 @@ public abstract class ElemSimple extends Com5t {
         this.winc.mouseReleased.add(mouseReleased);
 
         this.winc.mouseDragged.add(mouseDragge);
+    }
+
+    //Пометка точек редактирования конструкции
+    @Override
+    public void paint() {
+        if (this.area != null) {
+            if (this.passEdit[0] == true || this.passEdit[1] == true || this.passEdit[2] == true) {
+                this.root.listenerPassEdit = () -> {
+
+                    winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
+                    if (this.passEdit[0] == true) {
+                        Arc2D arc = new Arc2D.Double(this.x1() - SIZE / 2, this.y1() - SIZE / 2, SIZE, SIZE, 0, 360, Arc2D.OPEN);
+                        winc.gc2d.draw(arc);
+
+                    } else if (this.passEdit[1] == true) {
+                        Arc2D arc = new Arc2D.Double(this.x2() - SIZE / 2, this.y2() - SIZE / 2, SIZE, SIZE, 0, 360, Arc2D.OPEN);
+                        winc.gc2d.draw(arc);
+
+                    } else {
+                        if (this.h() != null) {
+                            List<Coordinate> list = Arrays.asList(owner.area.getGeometryN(0).getCoordinates()).stream().filter(c -> c.z == this.id).collect(toList());
+                            int i = list.size() / 2;
+                            Coordinate c1 = list.get(i), c2 = list.get(i + 1);
+                            Coordinate smid = new LineSegment(c1.x, c1.y, c2.x, c2.y).midPoint();
+                            Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
+                            winc.gc2d.draw(rec);
+
+                        } else {
+                            Coordinate smid = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).midPoint();
+                            Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
+                            winc.gc2d.draw(rec);
+                        }
+                    }
+                };
+            }
+        }
     }
 
     /**
@@ -220,7 +263,7 @@ public abstract class ElemSimple extends Com5t {
     }
 
     public void setDimension(double x1, double y1, double x2, double y2) {
-        if (pass[0] == false && pass[1] == false) {
+        if (passEdit[0] == false && passEdit[1] == false) {
             gson.x1 = x1;
             gson.y1 = y1;
             gson.x2 = x2;

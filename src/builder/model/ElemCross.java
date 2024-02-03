@@ -15,6 +15,8 @@ import enums.Type;
 import enums.TypeArtikl;
 import enums.UseSide;
 import java.awt.Shape;
+import java.awt.geom.Arc2D;
+import java.awt.geom.Rectangle2D;
 import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
@@ -71,7 +73,6 @@ public class ElemCross extends ElemSimple {
 //            Geometry area9 = (Polygon) geoSplit[2]; 
 //            System.out.println(area8.getCoordinate() + "  " + area9.getCoordinate());
 //            System.out.println("IMP " + this.id + " id1=" + area8.getCoordinate().z  + " id2=" + area9.getCoordinate().z);
-            
             //Новые координаты импоста
             Geometry lineImp = owner.area.getGeometryN(0).intersection(geoSplit[0]);
             if (lineImp.getGeometryType().equals("MultiLineString")) { //исправление коллизий
@@ -199,18 +200,18 @@ public class ElemCross extends ElemSimple {
         }
         return Layout.ANY;
     }
-    
+
     //Линии размерности
     @Override
     public void paint() {
         if (this.area != null) {
             winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-            
+
+            super.paint();
+
             Shape shape = new ShapeWriter().toShape(this.area);
             winc.gc2d.fill(shape);
-
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
-            //winc.gc2d.draw(new Line2D.Double(this.x1(), this.y1(), this.x2(), this.y2()));
             winc.gc2d.draw(shape);
         }
     }

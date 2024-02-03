@@ -7,6 +7,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import common.ArrayCom;
 import common.UCom;
+import common.listener.ListenerPaint;
 import dataset.Record;
 import domain.eColor;
 import domain.eParams;
@@ -15,7 +16,6 @@ import domain.eSysprof;
 import enums.*;
 import java.awt.Font;
 import java.awt.Shape;
-import java.awt.font.LineMetrics;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
@@ -34,7 +34,7 @@ public class AreaSimple extends Com5t {
 
     private DecimalFormat df1 = new DecimalFormat("#0.#");
     public ArrayCom<ElemSimple> frames = new ArrayCom(this); //список рам
-    //public LinkedList<Point2D> listSkin = new LinkedList();
+    public ListenerPaint listenerPassEdit = null;
     public ArrayCom<Com5t> childs = new ArrayCom(this); //дети
 
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
@@ -124,31 +124,13 @@ public class AreaSimple extends Com5t {
         }
     }
 
-    /**
-     *
-     * @param midle
-     * @param tipX - точка поворота
-     * @param tipY - точка поворота
-     * @param angl
-     * @param length
-     * @return
-     */
-    public Geometry lineTip(boolean midle, double tipX, double tipY, double angl, double length) {
-
-        double dx = (midle == false) ? 0 : 16;
-        Geometry tip = gf.createLineString(new Coordinate[]{
-            new Coordinate(tipX - length, tipY), new Coordinate(tipX, tipY),
-            new Coordinate(tipX - dx, tipY - 16), new Coordinate(tipX, tipY),
-            new Coordinate(tipX - dx, tipY + 16)});
-        AffineTransformation aff = new AffineTransformation();
-        aff.setToRotation(Math.toRadians(angl), tipX, tipY);
-        return aff.transform(tip);
-    }
-
     //Линии размерности
     @Override
-    public void paint() {
+    public void paint() { 
         try {
+            if(listenerPassEdit != null) {
+               listenerPassEdit.paint();
+            }
             winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
             Envelope boxRama = winc.root.area.getGeometryN(0).getEnvelopeInternal();
             HashSet<Double> hsHor = new HashSet(), hsVer = new HashSet();
@@ -194,10 +176,10 @@ public class AreaSimple extends Com5t {
                     double length = Math.round(listHor.get(i) - listHor.get(i - 1)); //длина вектора
 
                     //Размерные линии
-                    Geometry lineTip1 = lineTip((i == 1), tail[0], boxRama.getMaxY() + rec2D.getHeight() / 2, 180, len);
+                    Geometry lineTip1 = UGeo.lineTip((i == 1), tail[0], boxRama.getMaxY() + rec2D.getHeight() / 2, 180, len);
                     Shape shape = new ShapeWriter().toShape(lineTip1);
                     winc.gc2d.draw(shape);
-                    Geometry lineTip2 = lineTip((i == (listHor.size() - 1)), tail[1], boxRama.getMaxY() + rec2D.getHeight() / 2, 0, len);
+                    Geometry lineTip2 = UGeo.lineTip((i == (listHor.size() - 1)), tail[1], boxRama.getMaxY() + rec2D.getHeight() / 2, 0, len);
                     shape = new ShapeWriter().toShape(lineTip2);
                     winc.gc2d.draw(shape);
 
@@ -228,10 +210,10 @@ public class AreaSimple extends Com5t {
                     double length = Math.round(listVer.get(i) - listVer.get(i - 1)); //длина вектора
 
                     //Размерные линии
-                    Geometry lineTip1 = lineTip((i == 1), boxRama.getMaxX() + rec2D.getHeight() / 2, tail[0], -90, len);
+                    Geometry lineTip1 = UGeo.lineTip((i == 1), boxRama.getMaxX() + rec2D.getHeight() / 2, tail[0], -90, len);
                     Shape shape = new ShapeWriter().toShape(lineTip1);
                     winc.gc2d.draw(shape);
-                    Geometry lineTip2 = lineTip((i == (listVer.size() - 1)), boxRama.getMaxX() + rec2D.getHeight() / 2, tail[1], 90, len);
+                    Geometry lineTip2 = UGeo.lineTip((i == (listVer.size() - 1)), boxRama.getMaxX() + rec2D.getHeight() / 2, tail[1], 90, len);
                     shape = new ShapeWriter().toShape(lineTip2);
                     winc.gc2d.draw(shape);
 

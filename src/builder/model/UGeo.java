@@ -23,6 +23,7 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.PrecisionModel;
+import org.locationtech.jts.geom.util.AffineTransformation;
 
 /**
  * Утилиты JTS
@@ -324,6 +325,26 @@ public class UGeo {
         return segm;
     }
 
+    /**
+     *
+     * @param midle
+     * @param tipX - точка поворота
+     * @param tipY - точка поворота
+     * @param angl - угол поворота
+     * @param length - длина линии
+     * @return
+     */    
+    public static Geometry lineTip(boolean midle, double tipX, double tipY, double angl, double length) {
+
+        double dx = (midle == false) ? 0 : 16;
+        Geometry tip = gf.createLineString(new Coordinate[]{
+            new Coordinate(tipX - length, tipY), new Coordinate(tipX, tipY),
+            new Coordinate(tipX - dx, tipY - 16), new Coordinate(tipX, tipY),
+            new Coordinate(tipX - dx, tipY + 16)});
+        AffineTransformation aff = new AffineTransformation();
+        aff.setToRotation(Math.toRadians(angl), tipX, tipY);
+        return aff.transform(tip);
+    }    
 // <editor-fold defaultstate="collapsed" desc="TEMP">   
     //Угол к горизонту. Угол нормируется в диапазоне [-Pi, Pi].
     //@deprecated

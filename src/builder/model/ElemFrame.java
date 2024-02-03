@@ -4,7 +4,6 @@ import builder.Wincalc;
 import builder.making.Specific;
 import builder.making.UColor;
 import builder.script.GsonElem;
-import com.google.gson.JsonElement;
 import common.ArrayLoop;
 import common.UCom;
 import domain.eArtikl;
@@ -18,6 +17,8 @@ import enums.Type;
 import enums.TypeArtikl;
 import enums.UseSide;
 import java.awt.Shape;
+import java.awt.geom.Arc2D;
+import java.awt.geom.Rectangle2D;
 import java.util.Collections;
 import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
@@ -305,19 +306,15 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void paint() {
         if (this.area != null) {
-            
-            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));       
+
+            super.paint();
+
+            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
             Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(0));
             winc.gc2d.fill(shape);
 
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
             winc.gc2d.draw(shape);
-            
-            if (this.pmove != null) {
-                winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
-                shape = new ShapeWriter().toShape(this.pmove );
-                winc.gc2d.fill(shape);
-            }
         }
     }
 
