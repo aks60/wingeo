@@ -263,12 +263,12 @@ public abstract class ElemSimple extends Com5t {
     }
 
     public void setDimension(double x1, double y1, double x2, double y2) {
-        if (passMask[1] > 1) {
+        //if (passMask[1] > 1) {
             gson.x1 = x1;
             gson.y1 = y1;
             gson.x2 = x2;
             gson.y2 = y2;
-        }
+       // }
     }
 
     @Override
