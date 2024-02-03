@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import sun.misc.Signal;
 
@@ -47,7 +48,7 @@ public class UCom {
             } else if (scale == 9) {
                 df.applyPattern("#,##0.##");
             } else if (scale == -1) {
-                df.applyPattern("#0.0");                
+                df.applyPattern("#0.0");
             } else if (scale == -2) {
                 df.applyPattern("#0.00");
             } else if (scale == -9) {
@@ -76,6 +77,11 @@ public class UCom {
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
+    }
+
+    public static boolean[] getArr(boolean... b) {
+        boolean m[] = new boolean[b.length];
+        return Arrays.copyOf(new boolean[b.length], m.length);
     }
 
     public static Integer getInt(String str) {
@@ -435,5 +441,5 @@ public class UCom {
                 return 0;
             }
         }).get().getInt(field);
-    }    
+    }
 }

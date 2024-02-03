@@ -279,6 +279,16 @@ public class UGeo {
         LineString line2 = (LineString) line;
         return new LineSegment(line2.getCoordinateN(0), line2.getCoordinateN(1));
     }
+    
+    public static LineSegment getSegment(Geometry poly, int index) {
+        poly = poly.getGeometryN(0);
+        Coordinate[] coo = Arrays.copyOf(poly.getCoordinates(), poly.getNumPoints() - 1);
+        index = (index >= coo.length) ? index - coo.length : index;
+        int j = (index < 0) ? index + coo.length : index;
+        int k = (j + 1 >= coo.length) ? j + 1 - coo.length : j + 1;
+
+        return new LineSegment(coo[j], coo[k]);
+    }
 
     public static List<Coordinate> getSegmentArch(Coordinate coo[], ElemSimple elem) {
         int index = 0;
@@ -291,16 +301,6 @@ public class UGeo {
         }
         list.add(coo[++index]);
         return list;
-    }
-    
-    public static LineSegment getSegment(Geometry poly, int index) {
-        poly = poly.getGeometryN(0);
-        Coordinate[] coo = Arrays.copyOf(poly.getCoordinates(), poly.getNumPoints() - 1);
-        index = (index >= coo.length) ? index - coo.length : index;
-        int j = (index < 0) ? index + coo.length : index;
-        int k = (j + 1 >= coo.length) ? j + 1 - coo.length : j + 1;
-
-        return new LineSegment(coo[j], coo[k]);
     }
 
     public static int getIndex(Geometry p, Com5t e) throws Exception {

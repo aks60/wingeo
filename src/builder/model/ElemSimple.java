@@ -4,6 +4,7 @@ import builder.Wincalc;
 import builder.making.Specific;
 import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
+import common.UCom;
 import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
 import enums.Layout;
@@ -26,7 +27,7 @@ public abstract class ElemSimple extends Com5t {
     public double[] anglFlat = {0, 0, 0, 0}; //мин/мах внутренний и мин/мах внешний угол к плоскости   
     public double[] betweenHoriz = {0, 0}; //угол между векторами   
     private java.awt.Point pointPress = null;
-    public boolean passEdit[] = {false, false, false, false};
+    public boolean passEdit[] = {false, false, false, false, false}; //симафор редакт.конструкции
     public final double delta = 3;
     public final double SIZE = 20;
     //public Polygon pmove = null;
@@ -100,13 +101,15 @@ public abstract class ElemSimple extends Com5t {
                 pointPress = evt.getPoint();
                 Coordinate wincPress = new Coordinate((evt.getX() - Canvas.translate[0]) / winc.scale, (evt.getY() - Canvas.translate[1]) / winc.scale);
                 boolean b = this.area.contains(gf.createPoint(wincPress));
-                passEdit[0] = false;
-                passEdit[1] = false;
-                passEdit[2] = false;
-                passEdit[3] = !passEdit[3];
 
                 //Если клик внутри контура
                 if (b == true) {
+
+                    if (passEdit[3] == true) {
+                        passEdit[4] = true;
+                    } else {
+                        passEdit = UCom.getArr(false, false, false, false, false);
+                    }
                     LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                     double coef = segm.segmentFraction(wincPress);
                     if (coef < .33) {
@@ -119,11 +122,13 @@ public abstract class ElemSimple extends Com5t {
                         passEdit[2] = true; //кликнул по середине вектора
                     }
                     winc.canvas.repaint();
+                } else {
+                    passEdit = UCom.getArr(false, false, false, false, false);
                 }
             }
         };
         ListenerMouse mouseReleased = (evt) -> {
-            passEdit[3] = !passEdit[3];           
+            passEdit[3] = !passEdit[3];
         };
         ListenerMouse mouseDragge = (evt) -> {
             if (this.area != null) {
@@ -132,7 +137,7 @@ public abstract class ElemSimple extends Com5t {
                 double dX = evt.getX() - pointPress.getX(); //прирощение по горизонтали
                 double dY = evt.getY() - pointPress.getY(); //прирощение по вертикали 
                 if (passEdit[3] == true) {
-                    
+
                     if (passEdit[0] == true) {
                         double X1 = dX / winc.scale + x1();
                         double Y1 = dY / winc.scale + y1();
