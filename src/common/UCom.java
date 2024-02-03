@@ -80,10 +80,14 @@ public class UCom {
     }
 
     public static boolean[] getArr(boolean... b) {
-        boolean m[] = new boolean[b.length];
-        return Arrays.copyOf(new boolean[b.length], m.length);
+        return Arrays.copyOf(b, b.length);
     }
 
+    public static int[] getArr(int... b) {
+        return Arrays.copyOf(b, b.length);
+    }
+
+        
     public static Integer getInt(String str) {
         try {
             if (str == null || str.isEmpty()) {

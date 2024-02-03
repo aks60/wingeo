@@ -218,7 +218,7 @@ public class AreaSimple extends Com5t {
                     winc.gc2d.draw(shape);
 
                     //Текст на линии
-                    double pxy[] = {boxRama.getMaxX() + txt2D.getHeight() - 14, listVer.get(i) - len}; //точка врашения и начала текста                    
+                    double pxy[] = {boxRama.getMaxX() + txt2D.getHeight() - 6, listVer.get(i) - len}; //точка врашения и начала текста                    
                     if (length < (txt2D.getWidth())) {
 
                         winc.gc2d.setFont(new Font(font.getName(), font.getStyle(), font.getSize() - font.getSize() / coeff));
