@@ -79,13 +79,92 @@ public class UGeo {
     }
 
     //Пилим многоугольник
-    public static Geometry[] geoSplit(Geometry poly, ElemCross cross) {
+    public static Geometry[] geoSplit(Geometry poly, ElemCross imp) {
         try {
             poly = poly.getGeometryN(0);
             HashSet<Coordinate> hsCheck = new HashSet();
             Coordinate[] coo = poly.copy().getCoordinates();
-            Coordinate lineP0 = new Coordinate(cross.x1(), cross.y1());
-            Coordinate lineP1 = new Coordinate(cross.x2(), cross.y2());
+            LineSegment line = new LineSegment(new Coordinate(imp.x1(), imp.y1()), new Coordinate(imp.x2(), imp.y2())); 
+            line.normalize();
+            List<Coordinate> cooL = new ArrayList(), cooR = new ArrayList();
+            List<Coordinate> crosP = new ArrayList(), exten = new ArrayList(List.of(coo[0]));
+
+            //Вставим точки пересецения в список координат
+            for (int i = 1; i < coo.length; i++) {
+
+                //Точка пересечения сегмента и линии
+                Coordinate segmP0 = coo[i - 1], segmP1 = coo[i];
+                Coordinate crosC = Intersection.lineSegment(line.p0, line.p1, segmP0, segmP1);
+                hsCheck.add(coo[i]);
+
+                //Вставим точки
+                if (crosC != null) {
+                    crosP.add(crosC);
+                    if (hsCheck.add(crosC)) {
+                        exten.add(crosC);
+                    }
+                }
+                exten.add(coo[i]);
+            }
+            //Обход сегментов до и после точек пересечения
+            boolean b = true;
+            for (int i = 0; i < exten.size(); ++i) {
+                Coordinate c = exten.get(i);
+                if (Double.isNaN(c.z)) {
+                    b = !b;
+                    Coordinate cL = new Coordinate(c.x, c.y);
+                    Coordinate cR = new Coordinate(c.x, c.y);
+                    if (crosP.get(0).equals(c)) {
+
+                        cL.z = imp.id;
+                        cR.z = exten.get(i - 1).z;
+                    } else {
+                        cL.z = exten.get(i - 1).z;
+                        cR.z = imp.id;
+                    }
+                    cooL.add(cL);
+                    cooR.add(cR);
+
+                } else { //обход координат
+                    if (b == true) { //ареа слева
+                        cooL.add(c);
+                    } else { //ареа справа
+                        cooR.add(c);
+                    }
+                }
+            }
+            if (imp.y1() != imp.y2()) {
+                Collections.rotate(cooR, 1);
+                cooR.add(cooR.get(0));
+            } else {
+                cooR.add(cooR.get(0));
+            }
+            //System.out.println("cooR = " + cooR);
+            //System.out.println("cooL = " + cooL);
+
+            Geometry p0 = Com5t.gf.createLineString(crosP.toArray(new Coordinate[0]));
+            Geometry p1 = Com5t.gf.createPolygon(cooL.toArray(new Coordinate[0]));
+            Geometry p2 = Com5t.gf.createPolygon(cooR.toArray(new Coordinate[0]));
+            if (imp.id == 11) {
+                System.out.println("p1= " + p1);
+                System.out.println("p2= " + p2);
+            }
+
+            return new Geometry[]{p0, p1, p2};
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.geoSplit()" + e);
+            return null;
+        }
+    }
+    
+    public static Geometry[] geoSplit2(Geometry poly, ElemCross imp) {
+        try {
+            poly = poly.getGeometryN(0);
+            HashSet<Coordinate> hsCheck = new HashSet();
+            Coordinate[] coo = poly.copy().getCoordinates();
+            Coordinate lineP0 = new Coordinate(imp.x1(), imp.y1());
+            Coordinate lineP1 = new Coordinate(imp.x2(), imp.y2());
             List<Coordinate> cooL = new ArrayList(), cooR = new ArrayList();
             List<Coordinate> crosP = new ArrayList(), exten = new ArrayList(List.of(coo[0]));
 
@@ -116,11 +195,11 @@ public class UGeo {
                     Coordinate cR = new Coordinate(c.x, c.y);
                     if (crosP.get(0).equals(c)) {
 
-                        cL.z = cross.id;
+                        cL.z = imp.id;
                         cR.z = exten.get(i - 1).z;
                     } else {
                         cL.z = exten.get(i - 1).z;
-                        cR.z = cross.id;
+                        cR.z = imp.id;
                     }
                     cooL.add(cL);
                     cooR.add(cR);
@@ -133,15 +212,23 @@ public class UGeo {
                     }
                 }
             }
-            if (cross.y1() != cross.y2()) {
+            if (imp.y1() != imp.y2()) {
                 Collections.rotate(cooR, 1);
                 cooR.add(cooR.get(0));
             } else {
                 cooR.add(cooR.get(0));
             }
+            //System.out.println("cooR = " + cooR);
+            //System.out.println("cooL = " + cooL);
+
             Geometry p0 = Com5t.gf.createLineString(crosP.toArray(new Coordinate[0]));
             Geometry p1 = Com5t.gf.createPolygon(cooL.toArray(new Coordinate[0]));
             Geometry p2 = Com5t.gf.createPolygon(cooR.toArray(new Coordinate[0]));
+            if (imp.id == 6) {
+                System.out.println("p1= " + p1);
+                System.out.println("p2= " + p2);
+            }
+
             return new Geometry[]{p0, p1, p2};
 
         } catch (Exception e) {
@@ -279,7 +366,7 @@ public class UGeo {
         LineString line2 = (LineString) line;
         return new LineSegment(line2.getCoordinateN(0), line2.getCoordinateN(1));
     }
-    
+
     public static LineSegment getSegment(Geometry poly, int index) {
         poly = poly.getGeometryN(0);
         Coordinate[] coo = Arrays.copyOf(poly.getCoordinates(), poly.getNumPoints() - 1);
@@ -333,7 +420,7 @@ public class UGeo {
      * @param angl - угол поворота
      * @param length - длина линии
      * @return
-     */    
+     */
     public static Geometry lineTip(boolean midle, double tipX, double tipY, double angl, double length) {
 
         double dx = (midle == false) ? 0 : 16;
@@ -344,10 +431,11 @@ public class UGeo {
         AffineTransformation aff = new AffineTransformation();
         aff.setToRotation(Math.toRadians(angl), tipX, tipY);
         return aff.transform(tip);
-    }    
+    }
 // <editor-fold defaultstate="collapsed" desc="TEMP">   
     //Угол к горизонту. Угол нормируется в диапазоне [-Pi, Pi].
     //@deprecated
+
     public static double anglHor(Coordinate p0, Coordinate p1) {
         return Math.toDegrees(Angle.angle(p0, p1));
     }

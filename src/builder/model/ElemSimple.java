@@ -126,6 +126,8 @@ public abstract class ElemSimple extends Com5t {
                     winc.canvas.repaint();
                 } else {
                     passMask = UCom.getArr(0, 0);
+                    root.listenerPassEdit = null;
+                     winc.canvas.repaint();
                 }
             }
         };
@@ -176,7 +178,6 @@ public abstract class ElemSimple extends Com5t {
         if (this.area != null) {
             if (this.passMask[1] > 0) {
                 this.root.listenerPassEdit = () -> {
-
                     winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
                     if (this.passMask[0] == 0) {
                         Arc2D arc = new Arc2D.Double(this.x1() - SIZE / 2, this.y1() - SIZE / 2, SIZE, SIZE, 0, 360, Arc2D.OPEN);
