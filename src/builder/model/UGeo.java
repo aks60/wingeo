@@ -84,8 +84,8 @@ public class UGeo {
             poly = poly.getGeometryN(0);
             HashSet<Coordinate> hsCheck = new HashSet();
             Coordinate[] coo = poly.copy().getCoordinates();
-            Coordinate crosP1 = new Coordinate(cross.x1(), cross.y1());
-            Coordinate crosP2 = new Coordinate(cross.x2(), cross.y2());
+            Coordinate lineP0 = new Coordinate(cross.x1(), cross.y1());
+            Coordinate lineP1 = new Coordinate(cross.x2(), cross.y2());
             List<Coordinate> cooL = new ArrayList(), cooR = new ArrayList();
             List<Coordinate> crosP = new ArrayList(), exten = new ArrayList(List.of(coo[0]));
 
@@ -94,7 +94,7 @@ public class UGeo {
 
                 //Точка пересечения сегмента и линии
                 Coordinate segmP1 = coo[i - 1], segmP2 = coo[i];
-                Coordinate crosC = Intersection.lineSegment(crosP1, crosP2, segmP1, segmP2);
+                Coordinate crosC = Intersection.lineSegment(lineP0, lineP1, segmP1, segmP2);
                 hsCheck.add(coo[i]);
 
                 //Вставим точки

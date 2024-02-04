@@ -8,12 +8,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
-import common.UCom;
 import common.eProp;
 import dataset.Conn;
 import enums.Type;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
@@ -32,6 +30,7 @@ import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.operation.buffer.VariableBuffer;
 import org.locationtech.jts.util.GeometricShapeFactory;
+import org.locationtech.jts.algorithm.Orientation;
 
 public class Test {
 
@@ -88,13 +87,13 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            frame(args);
+            //frame(args);
             //wincalc();
             //query();
             //json();
             //uid();
             //script();
-            //geom();           
+            geom();           
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -314,6 +313,9 @@ public class Test {
         LineSegment segm2 = new LineSegment(68.0, 500.0, 68.0, 1500.0);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
+        
+        int index = Orientation.index(new Coordinate(500, 300), new Coordinate(500, 30), new Coordinate(500, 30));
+        System.out.println(index);
     }
 
     ///////////////////////////////////////////////////////////////////////////
