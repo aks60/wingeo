@@ -51,6 +51,8 @@ public class UCom {
                 df.applyPattern("#0.0");
             } else if (scale == -2) {
                 df.applyPattern("#0.00");
+            } else if (scale == -3) {
+                df.applyPattern("#0.000");
             } else if (scale == -9) {
                 df.applyPattern("#,##0.00");
             }

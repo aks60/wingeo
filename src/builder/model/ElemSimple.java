@@ -69,7 +69,6 @@ public abstract class ElemSimple extends Com5t {
             if (this.area != null && passMask[1] > 0) {
                 int key = evt.getKeyCode();
                 double dx = (timer.isRunning() == true) ? 1.0 + winc.scale : 0.1 * winc.scale;
-                System.out.println("isRunning() = " + timer.isRunning() + ", dx = " + dx);
                 double dX = 0, dY = 0;
 
                 if (key == KeyEvent.VK_UP) {
