@@ -36,7 +36,7 @@ public class Canvas extends javax.swing.JPanel {
         } else {
             this.winc = winc;
             this.winc.canvas = this;
-            this.winc.scale = scale(winc);
+            this.winc.scale = scale();
 
             List.of(getKeyListeners()).forEach(l -> removeKeyListener(l));
             List.of(getMouseListeners()).forEach(l -> removeMouseListener(l));
@@ -72,7 +72,7 @@ public class Canvas extends javax.swing.JPanel {
             addComponentListener(new ComponentAdapter() {
 
                 public void componentResized(ComponentEvent event) {
-                    winc.scale = scale(winc);
+                    winc.scale = scale();
                     //System.out.println(".componentResized()");
                     repaint();              
                 }
@@ -83,7 +83,7 @@ public class Canvas extends javax.swing.JPanel {
 
     //Прорисовка конструкции
     public void draw() {
-        if (winc != null) {;
+        if (winc != null) {
             repaint();
             //this.requestFocus();
         }
@@ -110,6 +110,7 @@ public class Canvas extends javax.swing.JPanel {
             winc.gc2d.setColor(getBackground());
             winc.gc2d.setStroke(new BasicStroke(2)); //толщина линии
             winc.gc2d.translate(translate[0], translate[1]);
+            winc.scale = scale();
             winc.gc2d.scale(winc.scale, winc.scale);
             winc.upgrade();
             winc.draw();
@@ -153,7 +154,7 @@ public class Canvas extends javax.swing.JPanel {
         }
     }
     
-    public double scale(Wincalc winc) {
+    public double scale() {
         Shape shape = new ShapeWriter().toShape(winc.root.area);
         Rectangle2D rect = shape.getBounds2D();
         return (getWidth() / (ds + rect.getMaxX()) > getHeight() / (ds + rect.getMaxY()))

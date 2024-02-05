@@ -32,7 +32,6 @@ public abstract class ElemSimple extends Com5t {
     public final double delta = 3;
     public final double SIZE = 20;
     private Timer timer = new Timer(200, (evt) -> {
-        //System.out.println("Timer(200)");
     });
 
     public Specific spcRec = null; //спецификация элемента
@@ -68,38 +67,50 @@ public abstract class ElemSimple extends Com5t {
         ListenerKey keyPressed = (evt) -> {
             if (this.area != null && passMask[1] > 0) {
                 int key = evt.getKeyCode();
-                double dx = (timer.isRunning() == true) ? 1.0 + winc.scale : 0.1 * winc.scale;
+                double dxy = (timer.isRunning() == true) ? 1.0 + winc.scale : 0.1 * winc.scale;
                 double dX = 0, dY = 0;
 
                 if (key == KeyEvent.VK_UP) {
-                    dY = -dx;
+                    dY = -dxy;
                 } else if (key == KeyEvent.VK_DOWN) {
-                    dY = dx;
+                    dY = dxy;
                 } else if (key == KeyEvent.VK_LEFT) {
-                    dX = -dx;
+                    dX = -dxy;
                 } else if (key == KeyEvent.VK_RIGHT) {
-                    dX = dx;
+                    dX = dxy;
                 }
                 if (passMask[0] == 0) {
-                    double X1 = dX / winc.scale + x1();
-                    double Y1 = dY / winc.scale + y1();
+                    double X1 = dX / winc.scale + this.x1();
+                    double Y1 = dY / winc.scale + this.y1();
                     if (X1 >= 0 && X1 <= winc.canvas.getWidth() / winc.scale && Y1 >= 0
                             && Y1 <= winc.canvas.getHeight() / winc.scale) { //контроль выхода за канву
-                        x1(X1);
-                        y1(Y1);
+                        this.x1(X1);
+                        this.y1(Y1);
                     }
                 } else if (passMask[0] == 1) {
                     double X2 = dX / winc.scale + x2();
                     double Y2 = dY / winc.scale + y2();
                     if (X2 >= 0 && X2 <= winc.canvas.getWidth() / winc.scale && Y2 >= 0
                             && Y2 <= winc.canvas.getHeight() / winc.scale) { //контроль выхода за канву
-                        x2(X2);
-                        y2(Y2);
+                        this.x2(X2);
+                        this.y2(Y2);
+                    }
+                } else if (passMask[0] == 2) {
+                    double X = dX / winc.scale + x2();
+                    double Y = dY / winc.scale + y2();
+                    //if (X2 >= 0 && X2 <= winc.canvas.getWidth() / winc.scale && Y2 >= 0
+                    //        && Y2 <= winc.canvas.getHeight() / winc.scale) { //контроль выхода за канву
+                    if(Y != 0) {
+                        this.y1(Y);
+                        this.y2(Y);
+                    } else if(X != 0) {
+                        this.x1(X);
+                        this.x2(X);
                     }
                 }
             }
             timer.stop();
-            timer.start();            
+            timer.start(); 
         };
         ListenerKey keyReleased = (evt) -> {
         };
@@ -132,12 +143,11 @@ public abstract class ElemSimple extends Com5t {
                         passMask[1] = (passMask[0] != 2) ? 1 : passMask[1];
                         passMask[0] = 2;
                     }
-                    winc.canvas.repaint();
                 } else {
                     passMask = UCom.getArr(0, 0);
                     root.listenerPassEdit = null;
-                    winc.canvas.repaint();
                 }
+                winc.canvas.repaint();
             }
         };
         ListenerMouse mouseReleased = (evt) -> {
