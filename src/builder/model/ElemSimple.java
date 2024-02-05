@@ -17,6 +17,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
+import javax.swing.Timer;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineSegment;
@@ -30,6 +31,9 @@ public abstract class ElemSimple extends Com5t {
     public int passMask[] = {0, 0}; //маска редактир.конструкции
     public final double delta = 3;
     public final double SIZE = 20;
+    private Timer timer = new Timer(200, (evt) -> {
+        //System.out.println("Timer(200)");
+    });
 
     public Specific spcRec = null; //спецификация элемента
     public Color borderColor = Color.BLACK;
@@ -59,40 +63,46 @@ public abstract class ElemSimple extends Com5t {
     public abstract void addSpecific(Specific spcAdd);
 
     public void addEvents() {
+        timer.setRepeats(false);
 
         ListenerKey keyPressed = (evt) -> {
             if (this.area != null && passMask[1] > 0) {
+                int key = evt.getKeyCode();
+                double dx = (timer.isRunning() == true) ? 1.0 + winc.scale : 0.1 * winc.scale;
+                System.out.println("isRunning() = " + timer.isRunning() + ", dx = " + dx);
+                double dX = 0, dY = 0;
 
-                double W = winc.canvas.getWidth();
-                double H = winc.canvas.getHeight();
-                double dX = 0;
-                double dY = 0;
-
-                if (evt.getKeyCode() == KeyEvent.VK_UP) {
-                    dY = -.1;
-                } else if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
-                    dY = .1;
-                } else if (evt.getKeyCode() == KeyEvent.VK_LEFT) {
-                    dX = -.1;
-                } else if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    dX = .1;
+                if (key == KeyEvent.VK_UP) {
+                    dY = -dx;
+                } else if (key == KeyEvent.VK_DOWN) {
+                    dY = dx;
+                } else if (key == KeyEvent.VK_LEFT) {
+                    dX = -dx;
+                } else if (key == KeyEvent.VK_RIGHT) {
+                    dX = dx;
                 }
                 if (passMask[0] == 0) {
                     double X1 = dX / winc.scale + x1();
                     double Y1 = dY / winc.scale + y1();
-                    if (X1 >= 0 && X1 <= W / winc.scale && Y1 >= 0 && Y1 <= H / winc.scale) { //контроль выхода за канву
+                    if (X1 >= 0 && X1 <= winc.canvas.getWidth() / winc.scale && Y1 >= 0
+                            && Y1 <= winc.canvas.getHeight() / winc.scale) { //контроль выхода за канву
                         x1(X1);
                         y1(Y1);
                     }
                 } else if (passMask[0] == 1) {
                     double X2 = dX / winc.scale + x2();
                     double Y2 = dY / winc.scale + y2();
-                    if (X2 >= 0 && X2 <= W / winc.scale && Y2 >= 0 && Y2 <= H / winc.scale) { //контроль выхода за канву
+                    if (X2 >= 0 && X2 <= winc.canvas.getWidth() / winc.scale && Y2 >= 0
+                            && Y2 <= winc.canvas.getHeight() / winc.scale) { //контроль выхода за канву
                         x2(X2);
                         y2(Y2);
                     }
                 }
             }
+            timer.stop();
+            timer.start();            
+        };
+        ListenerKey keyReleased = (evt) -> {
         };
         ListenerMouse mousePressed = (evt) -> {
 
@@ -127,9 +137,11 @@ public abstract class ElemSimple extends Com5t {
                 } else {
                     passMask = UCom.getArr(0, 0);
                     root.listenerPassEdit = null;
-                     winc.canvas.repaint();
+                    winc.canvas.repaint();
                 }
             }
+        };
+        ListenerMouse mouseReleased = (evt) -> {
         };
         ListenerMouse mouseDragge = (evt) -> {
             if (this.area != null) {
@@ -168,7 +180,9 @@ public abstract class ElemSimple extends Com5t {
         };
 
         this.winc.keyboardPressed.add(keyPressed);
+        this.winc.keyboardReleased.add(keyReleased);
         this.winc.mousePressed.add(mousePressed);
+        this.winc.mouseReleased.add(mouseReleased);
         this.winc.mouseDragged.add(mouseDragge);
     }
 
@@ -265,11 +279,11 @@ public abstract class ElemSimple extends Com5t {
 
     public void setDimension(double x1, double y1, double x2, double y2) {
         //if (passMask[1] > 1) {
-            gson.x1 = x1;
-            gson.y1 = y1;
-            gson.x2 = x2;
-            gson.y2 = y2;
-       // }
+        gson.x1 = x1;
+        gson.y1 = y1;
+        gson.x2 = x2;
+        gson.y2 = y2;
+        // }
     }
 
     @Override

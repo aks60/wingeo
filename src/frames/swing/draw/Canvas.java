@@ -48,6 +48,10 @@ public class Canvas extends javax.swing.JPanel {
                     winc.keyboardPressed.forEach(e -> e.keysEvent(event));
                     repaint();
                 }
+                public void keyReleased(KeyEvent event) {
+                    winc.keyboardReleased.forEach(e -> e.keysEvent(event));
+                    repaint();
+                }
             });
             addMouseListener(new MouseAdapter() {
                 public void mousePressed(MouseEvent event) {

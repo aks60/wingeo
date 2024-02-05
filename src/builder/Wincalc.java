@@ -61,6 +61,7 @@ public class Wincalc {
     public AreaSimple root = null; //объектная модель конструкции 2-го уровня    
 
     public ArrayList<ListenerKey> keyboardPressed = new ArrayList();
+    public ArrayList<ListenerKey> keyboardReleased = new ArrayList();
     public ArrayList<ListenerMouse> mousePressed = new ArrayList();
     public ArrayList<ListenerMouse> mouseReleased = new ArrayList();
     public ArrayList<ListenerMouse> mouseDragged = new ArrayList();
