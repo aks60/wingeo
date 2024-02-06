@@ -160,7 +160,7 @@ public class AreaSimple extends Com5t {
             List<Double> listVer = new ArrayList(hsVer);
             Collections.sort(listHor);
             Collections.sort(listVer);
-            int coeff = 6;
+            int coeff = 12;
             Font font = winc.gc2d.getFont(); //размер шрифта (см. canvas)
             AffineTransform orig = winc.gc2d.getTransform();
             Rectangle2D txt2D = font.getStringBounds("999.99", winc.gc2d.getFontRenderContext());
