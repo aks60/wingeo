@@ -321,7 +321,6 @@ public class Test {
         System.out.println(index);
     }
 
-    ///////////////////////////////////////////////////////////////////////////
     public static void frame(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
