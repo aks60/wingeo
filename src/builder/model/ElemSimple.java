@@ -190,16 +190,16 @@ public abstract class ElemSimple extends Com5t {
                         double X = dX / winc.scale + x2();
                         double Y = dY / winc.scale + y2();
                         pointPress = evt.getPoint();
-                        //if ((this.anglHoriz() < -135 && this.anglHoriz() > 135)) { //Top
-                                //|| (this.anglHoriz() > -45 && this.anglHoriz() < 45)) { //Bot
-                            //this.y1(Y);
-                            //this.y2(Y);
-                        //}
-                        //if ((this.anglHoriz() > 45 && this.anglHoriz() < 135) //
-                        //        || (this.anglHoriz() > -135 && this.anglHoriz() < -45)) { //
+                        if ((this.anglHoriz() < -135 && this.anglHoriz() > -180 && this.anglHoriz() > 135 && this.anglHoriz() <= 180)//Top
+                                || (this.anglHoriz() > -45 && this.anglHoriz() < 45)) { //Bot
+                            this.y1(Y);
+                            this.y2(Y);
+                        }
+                        if ((this.anglHoriz() > 45 && this.anglHoriz() < 135) //
+                                || (this.anglHoriz() > -135 && this.anglHoriz() < -45)) { //
                             this.x1(X);
                             this.x2(X);
-                        //}
+                        }
                         if (X < 0 || Y < 0) {
                             winc.gson.translate(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
                         }                        

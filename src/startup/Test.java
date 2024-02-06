@@ -320,13 +320,13 @@ public class Test {
         
         int index = Orientation.index(new Coordinate(500, 300), new Coordinate(500, 30), new Coordinate(0, 0));
         
-        System.out.println(Math.toDegrees(Angle.angle(new Coordinate(500, 400), new Coordinate(0, 0))));
+        System.out.println(Math.toDegrees(Angle.angle(new Coordinate(500, 500), new Coordinate(0, 499.99))));
 //        double ang = -136;
 //        System.out.println(ang < -135);
         
-        if ((180 > -135 && 180 > 135)) {
-          System.out.println("vvv"); 
-        }
+//        if ((180 > -135 && 180 > 135)) {
+//          System.out.println("vvv"); 
+//        }
     }
 
     public static void frame(String[] args) {
