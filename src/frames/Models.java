@@ -508,7 +508,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         panDesign.setLayout(new java.awt.BorderLayout());
         pan17.add(panDesign, java.awt.BorderLayout.CENTER);
 
-        pan7.setPreferredSize(new java.awt.Dimension(700, 40));
+        pan7.setPreferredSize(new java.awt.Dimension(700, 26));
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c036.gif"))); // NOI18N
         btnSave.setText("Сохранить");
@@ -533,7 +533,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             pan7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan7Layout.createSequentialGroup()
                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 14, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pan17.add(pan7, java.awt.BorderLayout.NORTH);
@@ -563,7 +563,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         );
         pan9Layout.setVerticalGroup(
             pan9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 510, Short.MAX_VALUE)
+            .addGap(0, 524, Short.MAX_VALUE)
         );
 
         pan17.add(pan9, java.awt.BorderLayout.EAST);
@@ -578,7 +578,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         );
         pan10Layout.setVerticalGroup(
             pan10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 510, Short.MAX_VALUE)
+            .addGap(0, 524, Short.MAX_VALUE)
         );
 
         pan17.add(pan10, java.awt.BorderLayout.WEST);

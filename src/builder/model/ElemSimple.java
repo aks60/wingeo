@@ -68,6 +68,7 @@ public abstract class ElemSimple extends Com5t {
 
         ListenerKey keyPressed = (evt) -> {
             if (this.area != null && passMask[1] > 0) {
+                LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                 int key = evt.getKeyCode();
                 double dxy = (timer.isRunning() == true) ? 1.0 + winc.scale : 0.1 * winc.scale;
                 double dX = 0, dY = 0;
@@ -102,10 +103,11 @@ public abstract class ElemSimple extends Com5t {
                     double Y = dY / winc.scale + y2();
                     //if (X2 >= 0 && X2 <= winc.canvas.getWidth() / winc.scale && Y2 >= 0
                     //        && Y2 <= winc.canvas.getHeight() / winc.scale) { //контроль выхода за канву
-                    if (Y != 0) {
+                    //System.out.println("X=" + X + " Y="+ Y);
+                    if (dY != 0) {
                         this.y1(Y);
                         this.y2(Y);
-                    } else if (X != 0) {
+                    } else if (dX != 0) {
                         this.x1(X);
                         this.x2(X);
                     }
@@ -216,19 +218,22 @@ public abstract class ElemSimple extends Com5t {
     public void paint() {
         if (this.area != null) {
             if (this.passMask[1] > 0) {
+                
                 this.root.listenerPassEdit = () -> {
+                    
                     winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
-                    if (this.passMask[0] == 0) {
+                    if (this.passMask[0] == 0) { //хвост вектора
                         Arc2D arc = new Arc2D.Double(this.x1() - SIZE / 2, this.y1() - SIZE / 2, SIZE, SIZE, 0, 360, Arc2D.OPEN);
                         winc.gc2d.draw(arc);
 
-                    } else if (this.passMask[0] == 1) {
+                    } else if (this.passMask[0] == 1) { //начало вектора
                         Arc2D arc = new Arc2D.Double(this.x2() - SIZE / 2, this.y2() - SIZE / 2, SIZE, SIZE, 0, 360, Arc2D.OPEN);
                         winc.gc2d.draw(arc);
 
-                    } else if (this.passMask[0] == 2) {
+                    } else if (this.passMask[0] == 2) { //середина вектора
                         if (this.h() != null) {
-                            List<Coordinate> list = Arrays.asList(owner.area.getGeometryN(0).getCoordinates()).stream().filter(c -> c.z == this.id).collect(toList());
+                            List<Coordinate> list = Arrays.asList(owner.area.getGeometryN(0).getCoordinates())
+                                    .stream().filter(c -> c.z == this.id).collect(toList());
                             int i = list.size() / 2;
                             Coordinate c1 = list.get(i), c2 = list.get(i + 1);
                             Coordinate smid = new LineSegment(c1.x, c1.y, c2.x, c2.y).midPoint();

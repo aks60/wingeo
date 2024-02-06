@@ -19,12 +19,13 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import org.locationtech.jts.awt.ShapeWriter;
+import org.locationtech.jts.geom.Envelope;
 
 public class Canvas extends javax.swing.JPanel {
 
     public static double translate[] = {8, 8};
     public Wincalc winc = null;
-    public static double ds = 150; //для размерных линий 
+    public static double margin = 150; //для размерных линий 
 
     public Canvas() {
         initComponents();
@@ -111,6 +112,9 @@ public class Canvas extends javax.swing.JPanel {
             winc.gc2d.setStroke(new BasicStroke(2)); //толщина линии
             winc.gc2d.translate(translate[0], translate[1]);
             winc.scale = scale();
+            
+            //System.out.println("scale=" + winc.scale);
+            
             winc.gc2d.scale(winc.scale, winc.scale);
             winc.upgrade();
             winc.draw();
@@ -155,10 +159,10 @@ public class Canvas extends javax.swing.JPanel {
     }
     
     public double scale() {
-        Shape shape = new ShapeWriter().toShape(winc.root.area);
-        Rectangle2D rect = shape.getBounds2D();
-        return (getWidth() / (ds + rect.getMaxX()) > getHeight() / (ds + rect.getMaxY()))
-                ? getHeight() / (ds + rect.getMaxY()) : getWidth() / (ds + rect.getMaxX());
+        Envelope env = winc.root.area.getGeometryN(0).getEnvelopeInternal();
+        double dX = env.getMaxX() - env.getMinX(), dY = env.getMaxY() - env.getMinY();
+        return (getWidth() / (margin + dX) > getHeight() / (margin + dY))
+                ? getHeight() / (margin + dY) : getWidth() / (margin + dX);
     }
 
     @SuppressWarnings("unchecked")
