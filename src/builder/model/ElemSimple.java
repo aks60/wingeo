@@ -84,19 +84,19 @@ public abstract class ElemSimple extends Com5t {
                 if (passMask[0] == 0) {
                     double X1 = dX / winc.scale + this.x1();
                     double Y1 = dY / winc.scale + this.y1();
-                    //if (X1 >= 0 && X1 <= winc.canvas.getWidth() / winc.scale && Y1 >= 0
-                            //&& Y1 <= winc.canvas.getHeight() / winc.scale) { //контроль выхода за канву
+                    if (X1 >= 0 && X1 <= winc.canvas.getWidth() / winc.scale && Y1 >= 0
+                            && Y1 <= winc.canvas.getHeight() / winc.scale) { //контроль выхода за канву
                         this.x1(X1);
                         this.y1(Y1);
-                    //}
+                    }
                 } else if (passMask[0] == 1) {
                     double X2 = dX / winc.scale + x2();
                     double Y2 = dY / winc.scale + y2();
-                    //if (X2 >= 0 && X2 <= winc.canvas.getWidth() / winc.scale && Y2 >= 0
-                            //&& Y2 <= winc.canvas.getHeight() / winc.scale) { //контроль выхода за канву
+                    if (X2 >= 0 && X2 <= winc.canvas.getWidth() / winc.scale && Y2 >= 0
+                            && Y2 <= winc.canvas.getHeight() / winc.scale) { //контроль выхода за канву
                         this.x2(X2);
                         this.y2(Y2);
-                    //}
+                    }
                 } else if (passMask[0] == 2) {
                     double X = dX / winc.scale + x2();
                     double Y = dY / winc.scale + y2();
