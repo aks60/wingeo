@@ -10,7 +10,9 @@ import common.listener.ListenerMouse;
 import enums.Layout;
 import enums.Type;
 import frames.swing.draw.Canvas;
+import java.awt.AWTException;
 import java.awt.Color;
+import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Rectangle2D;
@@ -100,17 +102,17 @@ public abstract class ElemSimple extends Com5t {
                     double Y = dY / winc.scale + y2();
                     //if (X2 >= 0 && X2 <= winc.canvas.getWidth() / winc.scale && Y2 >= 0
                     //        && Y2 <= winc.canvas.getHeight() / winc.scale) { //контроль выхода за канву
-                    if(Y != 0) {
+                    if (Y != 0) {
                         this.y1(Y);
                         this.y2(Y);
-                    } else if(X != 0) {
+                    } else if (X != 0) {
                         this.x1(X);
                         this.x2(X);
                     }
                 }
             }
             timer.stop();
-            timer.start(); 
+            timer.start();
         };
         ListenerKey keyReleased = (evt) -> {
         };
@@ -163,25 +165,39 @@ public abstract class ElemSimple extends Com5t {
                     if (passMask[0] == 0) { //начало вектора
                         double X1 = dX / winc.scale + x1();
                         double Y1 = dY / winc.scale + y1();
+                        pointPress = evt.getPoint();
                         if (X1 > 0) {
                             this.x1(X1);
-                            pointPress = evt.getPoint();
                         }
                         if (Y1 > 0) {
                             this.y1(Y1);
-                            pointPress = evt.getPoint();
                         }
 
                     } else if (passMask[0] == 1) { //конец вектора
                         double X2 = dX / winc.scale + x2();
                         double Y2 = dY / winc.scale + y2();
+                        pointPress = evt.getPoint();
                         if (X2 > 0) {
                             this.x2(X2);
-                            pointPress = evt.getPoint();
                         }
                         if (Y2 > 0) {
                             this.y2(Y2);
-                            pointPress = evt.getPoint();
+                        }
+
+                    } else if (passMask[0] == 2) { //конец вектора
+                        double X = dX / winc.scale + x2();
+                        double Y = dY / winc.scale + y2();
+                        pointPress = evt.getPoint();
+
+                        if ((this.anglHoriz() > -45 && this.anglHoriz() < 45) 
+                                || (this.anglHoriz() > 135 && this.anglHoriz() < -135)) {
+                            this.y1(Y);
+                            this.y2(Y);
+                        }
+                        if ((this.anglHoriz() > 45 && this.anglHoriz() < 135) 
+                                || (this.anglHoriz() > -135 && this.anglHoriz() < -45)) {
+                            this.x1(X);
+                            this.x2(X);
                         }
                     }
                 }

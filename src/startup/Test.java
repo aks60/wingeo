@@ -93,7 +93,7 @@ public class Test {
             //json();
             //uid();
             //script();
-            geom();           
+            //geom();           
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
