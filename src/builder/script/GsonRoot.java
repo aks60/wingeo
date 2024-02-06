@@ -51,25 +51,36 @@ public class GsonRoot extends GsonElem {
         }
     }
 
-    public void translate(GsonElem gson, Double dx, Double dy) {
-        for (GsonElem el : gson.childs) {
-            if (List.of(Type.IMPOST, Type.STOIKA, Type.SHTULP).contains(el.type)) {
-                if (dx != null) {
-                    el.x1 += dx;
-                    el.x2 += dx;
+    public void translate(GsonElem gson, Double dx, Double dy, Double scale) {
+        if (gson.childs != null) {
+            dx = (dx == 0) ? 0 : dx / scale;
+            dy = (dy == 0) ? 0 : dy / scale;            
+            for (GsonElem el : gson.childs) {
+                if (List.of(Type.IMPOST, Type.STOIKA, Type.SHTULP).contains(el.type)) {
+                    if (dx != 0) {
+                        el.x1 += dx;
+                        el.x2 += dx;
+                    }
+                    if (dy != 0) {
+                        el.y1 += dy;
+                        el.y2 += dy;
+                    }
+                } else if (List.of(Type.FRAME_SIDE, Type.STVORKA_SIDE).contains(el.type)) {
+                    if (dx != 0) {
+                        el.x1 = el.x1 + dx;
+                    }
+                    if (dy != 0) {
+                        el.y1 += dy;
+                    }
+                } if (List.of(Type.AREA, Type.STVORKA).contains(el.type)) {
+                    translate(el, dx, dy, scale);
                 }
-                if (dy != null) {
-                    el.y1 += dy;
-                    el.y2 += dy;
-                }
-            } else {
-                translate(el, dx, dy);
             }
         }
     }
 
     public String toJson() {
-        this.noSerialize(this);
+        this.noserialize(this);
         return new GsonBuilder().create().toJson(this);
     }
 }

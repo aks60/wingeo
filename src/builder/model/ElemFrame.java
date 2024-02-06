@@ -115,6 +115,9 @@ public class ElemFrame extends ElemSimple {
                     break;
                 }
             }
+//            if(this.id == 1) {
+//                System.out.println("id=" + id + " x1=" + this.x1());
+//            }
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemFrame.setLocation" + toString() + e);

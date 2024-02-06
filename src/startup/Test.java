@@ -25,6 +25,7 @@ import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
@@ -93,7 +94,7 @@ public class Test {
             //json();
             //uid();
             //script();
-            //geom();           
+            geom();           
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -317,8 +318,15 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
         
-        int index = Orientation.index(new Coordinate(500, 300), new Coordinate(500, 30), new Coordinate(500, 30));
-        System.out.println(index);
+        int index = Orientation.index(new Coordinate(500, 300), new Coordinate(500, 30), new Coordinate(0, 0));
+        
+        System.out.println(Math.toDegrees(Angle.angle(new Coordinate(500, 400), new Coordinate(0, 0))));
+//        double ang = -136;
+//        System.out.println(ang < -135);
+        
+        if ((180 > -135 && 180 > 135)) {
+          System.out.println("vvv"); 
+        }
     }
 
     public static void frame(String[] args) {
