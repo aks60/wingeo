@@ -3,16 +3,16 @@ package builder.script;
 import builder.Wincalc;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import enums.Layout;
 import enums.Type;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GsonElem {
 
     public static transient double genId = 0;  //идентификатор    
     public double id = 0;  //идентификатор
     public transient GsonElem owner = null;  //владелец
-    public LinkedList<GsonElem> childs = null; //список детей
+    public List<GsonElem> childs = null; //список детей
     public JsonObject param = new JsonObject(); //параметры элемента
     public Type type = null; //тип элемента
     public Double x1, y1, h, x2, y2;
@@ -70,14 +70,14 @@ public class GsonElem {
 
     public GsonElem addArea(GsonElem area) {
         area.owner = this;
-        childs = (childs == null) ? new LinkedList() : childs;
+        childs = (childs == null) ? new ArrayList() : childs;
         this.childs.add(area);
         return area;
     }
 
     public GsonElem addElem(GsonElem elem) {
         elem.owner = this;
-        childs = (childs == null) ? new LinkedList() : childs;
+        childs = (childs == null) ? new ArrayList() : childs;
         this.childs.add(elem);
         return this;
     }
@@ -98,7 +98,7 @@ public class GsonElem {
         }
     }
 
-    public void notSerialize(GsonElem gsonElem) {
+    public void noSerialize(GsonElem gsonElem) {
         if (gsonElem == this && this.param != null && this.param.size() == 0) {
             this.param = null;
         }
@@ -107,7 +107,7 @@ public class GsonElem {
                 if (el.param != null && el.param.size() == 0) {
                     el.param = null;
                 }
-                el.notSerialize(this); //рекурсия  
+                el.noSerialize(this); //рекурсия  
             }
         }
     }

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import enums.Type;
+import java.util.List;
 
 public class GsonRoot extends GsonElem {
 
@@ -50,8 +51,25 @@ public class GsonRoot extends GsonElem {
         }
     }
 
+    public void translate(GsonElem gson, Double dx, Double dy) {
+        for (GsonElem el : gson.childs) {
+            if (List.of(Type.IMPOST, Type.STOIKA, Type.SHTULP).contains(el.type)) {
+                if (dx != null) {
+                    el.x1 += dx;
+                    el.x2 += dx;
+                }
+                if (dy != null) {
+                    el.y1 += dy;
+                    el.y2 += dy;
+                }
+            } else {
+                translate(el, dx, dy);
+            }
+        }
+    }
+
     public String toJson() {
-        this.notSerialize(this);
+        this.noSerialize(this);
         return new GsonBuilder().create().toJson(this);
     }
 }
