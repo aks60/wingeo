@@ -121,13 +121,13 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         try {
             int index = UGui.getIndexRec(tab1);
             if (index != -1) {
-                Wincalc win = wincalc();
-                String script = win.gson.toJson();
-                win.build(script);
-                win.imageIcon = Canvas.createIcon(win, 68);
+                Wincalc winc = wincalc();
+                String script = winc.gson.toJson();
+                winc.build(script);
+                winc.imageIcon = Canvas.createIcon(winc, 68);
                 Record sysmodelRec = qSysmodel.get(index);
                 sysmodelRec.set(eSysmodel.script, script);
-                sysmodelRec.set(eSysmodel.values().length, win);
+                sysmodelRec.set(eSysmodel.values().length, winc);
                 ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
                 UGui.setSelectedIndex(tab1, index);
             }
