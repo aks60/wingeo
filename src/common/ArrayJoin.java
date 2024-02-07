@@ -21,7 +21,7 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
     }
 
     /**
-     * Получить элемент соединения по точке
+     * Получить элемент соединения по коорд. точки
      */
     public ElemJoining get(double x, double y) {
         try {
