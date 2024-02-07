@@ -33,8 +33,6 @@ public abstract class ElemSimple extends Com5t {
     public int passMask[] = {0, 0}; //маска редактир.конструкции
     public final double delta = 3;
     public final double SIZE = 20;
-    private Timer timer = new Timer(160, (evt) -> {
-    });
 
     public Specific spcRec = null; //спецификация элемента
     public Color borderColor = Color.BLACK;
@@ -64,13 +62,12 @@ public abstract class ElemSimple extends Com5t {
     public abstract void addSpecific(Specific spcAdd);
 
     public void addEvents() {
-        timer.setRepeats(false);
 
         ListenerKey keyPressed = (evt) -> {
             if (this.area != null && passMask[1] > 0) {
                 LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                 int key = evt.getKeyCode();
-                double dxy = (timer.isRunning() == true) ? 1.0 + winc.scale : 0.1 * winc.scale;
+                double dxy = 0.1; //(timer.isRunning() == true) ? 0.01 + winc.scale : 0.1 * winc.scale;
                 double dX = 0, dY = 0;
 
                 if (key == KeyEvent.VK_UP) {
@@ -101,9 +98,6 @@ public abstract class ElemSimple extends Com5t {
                 } else if (passMask[0] == 2) {
                     double X = dX / winc.scale + x2();
                     double Y = dY / winc.scale + y2();
-                    //if (X2 >= 0 && X2 <= winc.canvas.getWidth() / winc.scale && Y2 >= 0
-                    //        && Y2 <= winc.canvas.getHeight() / winc.scale) { //контроль выхода за канву
-                    //System.out.println("X=" + X + " Y="+ Y);
                     if (dY != 0) {
                         this.y1(Y);
                         this.y2(Y);
@@ -113,8 +107,6 @@ public abstract class ElemSimple extends Com5t {
                     }
                 }
             }
-            timer.stop();
-            timer.start();
         };
         ListenerKey keyReleased = (evt) -> {
         };
@@ -144,8 +136,13 @@ public abstract class ElemSimple extends Com5t {
                         passMask[0] = 1;
 
                     } else {//кликнул середина вектора 
-                        passMask[1] = (passMask[0] != 2) ? 1 : passMask[1];
-                        passMask[0] = 2;
+                        if ((this.anglHoriz() > -45 && this.anglHoriz() < 45) //Bot
+                                || (this.anglHoriz() > -135 && this.anglHoriz() < -45)) { //Right
+                            passMask[1] = (passMask[0] != 2) ? 1 : passMask[1];
+                            passMask[0] = 2;
+                        } else {
+                            passMask = UCom.getArr(0, 0);
+                        }
                     }
                 } else {
                     passMask = UCom.getArr(0, 0);
@@ -190,19 +187,17 @@ public abstract class ElemSimple extends Com5t {
                         double X = dX / winc.scale + x2();
                         double Y = dY / winc.scale + y2();
                         pointPress = evt.getPoint();
-                        if ((this.anglHoriz() < -135 && this.anglHoriz() > -180 && this.anglHoriz() > 135 && this.anglHoriz() <= 180)//Top
-                                || (this.anglHoriz() > -45 && this.anglHoriz() < 45)) { //Bot
+                        if (this.anglHoriz() > -45 && this.anglHoriz() < 45) { //Bot
                             this.y1(Y);
                             this.y2(Y);
                         }
-                        if ((this.anglHoriz() > 45 && this.anglHoriz() < 135) //
-                                || (this.anglHoriz() > -135 && this.anglHoriz() < -45)) { //
+                        if (this.anglHoriz() > -135 && this.anglHoriz() < -45) { //Right
                             this.x1(X);
                             this.x2(X);
                         }
                         if (X < 0 || Y < 0) {
                             winc.gson.translate(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
-                        }                        
+                        }
                     }
                 }
             }
