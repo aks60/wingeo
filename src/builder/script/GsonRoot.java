@@ -80,7 +80,7 @@ public class GsonRoot extends GsonElem {
     }
 
     public String toJson() {
-        this.noserialize(this);
+        this.serialize(this);
         return new GsonBuilder().create().toJson(this);
     }
 }

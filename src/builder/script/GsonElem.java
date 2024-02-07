@@ -98,7 +98,7 @@ public class GsonElem {
         }
     }
 
-    public void noserialize(GsonElem gsonElem) {
+    public void serialize(GsonElem gsonElem) {
         if (gsonElem == this && this.param != null && this.param.size() == 0) {
             this.param = null;
         }
@@ -107,7 +107,7 @@ public class GsonElem {
                 if (el.param != null && el.param.size() == 0) {
                     el.param = null;
                 }
-                el.noserialize(this); //рекурсия  
+                el.serialize(this); //рекурсия  
             }
         }
     }
