@@ -1,4 +1,4 @@
-package frames.swing.draw;
+package frames.swing;
 
 import builder.Wincalc;
 import java.awt.BasicStroke;
@@ -23,9 +23,9 @@ import org.locationtech.jts.geom.Envelope;
 
 public class Canvas extends javax.swing.JPanel {
 
-    public static double translate[] = {12, 8};
+    public static double translate[] = {4, 2};
     public Wincalc winc = null;
-    public static double margin = 150; //для размерных линий 
+    public static double margin = 120; //для размерных линий 
 
     public Canvas() {
         initComponents();
@@ -86,7 +86,6 @@ public class Canvas extends javax.swing.JPanel {
     public void draw() {
         if (winc != null) {
             repaint();
-            //this.requestFocus();
         }
     }
 

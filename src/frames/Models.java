@@ -19,7 +19,7 @@ import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import common.eProp;
-import frames.swing.draw.Canvas;
+import frames.swing.Canvas;
 import java.awt.CardLayout;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
@@ -748,7 +748,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }//GEN-LAST:event_btnMove
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-
+        wincalc().gson.translate(wincalc().gson, .0, 2.0, wincalc().scale);
+        wincalc().canvas.repaint();
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed

@@ -20,6 +20,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -124,7 +125,7 @@ public class AreaSimple extends Com5t {
         }
     }
 
-    //Линии размерности
+    //Линии и координаты размерности
     @Override
     public void paint() {
         try {

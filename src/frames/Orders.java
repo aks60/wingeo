@@ -76,7 +76,7 @@ import frames.dialog.DicPrjprod;
 import frames.dialog.DicSyspod;
 import frames.dialog.DicSysprof;
 import frames.dialog.ParDefVal;
-import frames.swing.draw.Canvas;
+import frames.swing.Canvas;
 import frames.swing.DefMutableTreeNode;
 import frames.swing.TableFieldFilter;
 import java.awt.CardLayout;

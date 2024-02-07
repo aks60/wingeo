@@ -9,7 +9,7 @@ import dataset.Record;
 import domain.eSysprod;
 import domain.eSystree;
 import frames.UGui;
-import frames.swing.draw.Canvas;
+import frames.swing.Canvas;
 import frames.swing.DefMutableTreeNode;
 import java.awt.Component;
 import java.util.ArrayList;

@@ -9,7 +9,7 @@ import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
 import enums.Layout;
 import enums.Type;
-import frames.swing.draw.Canvas;
+import frames.swing.Canvas;
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Robot;
@@ -91,22 +91,32 @@ public abstract class ElemSimple extends Com5t {
                         this.y1(Y1);
                     }
                 } else if (passMask[0] == 1) {
-                    double X2 = dX / winc.scale + x2();
-                    double Y2 = dY / winc.scale + y2();
+                    double X2 = dX / winc.scale + this.x2();
+                    double Y2 = dY / winc.scale + this.y2();
                     if (X2 >= 0 && X2 <= winc.canvas.getWidth() / winc.scale && Y2 >= 0
                             && Y2 <= winc.canvas.getHeight() / winc.scale) { //контроль выхода за канву
                         this.x2(X2);
                         this.y2(Y2);
                     }
                 } else if (passMask[0] == 2) {
-                    double X = dX / winc.scale + x2();
-                    double Y = dY / winc.scale + y2();
-                    if (dY != 0) {
-                        this.y1(Y);
-                        this.y2(Y);
-                    } else if (dX != 0) {
-                        this.x1(X);
-                        this.x2(X);
+
+                    if (this.h() != null) {
+                        this.h(this.h() + dY / winc.scale);
+                        this.y1(this.h() + dY / winc.scale);
+                        this.y2(this.h() + dY / winc.scale);
+                        
+                    } else {
+                        double X = dX / winc.scale + this.x2();
+                        double Y = dY / winc.scale + this.y2();
+                        
+                        if (dY != 0 && this.anglHoriz() > -45 && this.anglHoriz() < 45) { //Bot
+                            this.y1(Y);
+                            this.y2(Y);
+                            
+                        } else if (dX != 0 && this.anglHoriz() > -135 && this.anglHoriz() < -45) { //Right ) {
+                            this.x1(X);
+                            this.x2(X);
+                        }
                     }
                 }
             }
@@ -140,11 +150,20 @@ public abstract class ElemSimple extends Com5t {
                         passMask[1] = (passMask[0] != 1) ? 1 : passMask[1];
                         passMask[0] = 1;
 
-                    } else {//кликнул середина вектора 
+                    } else {//кликнул, середина вектора 
+
+                        //Не арка
                         if ((this.anglHoriz() > -45 && this.anglHoriz() < 45) //Bot
-                                || (this.anglHoriz() > -135 && this.anglHoriz() < -45)) { //Right
+                                || (this.anglHoriz() > -135 && this.anglHoriz() < -45)) { //Right                   
                             passMask[1] = (passMask[0] != 2) ? 1 : passMask[1];
                             passMask[0] = 2;
+
+                            //Арка
+                        } else if (this.h() != null) {
+                            passMask[1] = (passMask[0] != 2) ? 1 : passMask[1];
+                            passMask[0] = 2;
+
+                            //Промах
                         } else {
                             passMask = UCom.getArr(0, 0);
                         }
@@ -215,28 +234,31 @@ public abstract class ElemSimple extends Com5t {
         this.winc.mouseDragged.add(mouseDragge);
     }
 
-    //Пометка точек редактирования конструкции
+    //Точка редактирования конструкции
     @Override
     public void paint() {
         if (this.area != null) {
             if (this.passMask[1] > 0) {
 
                 this.root.listenerPassEdit = () -> {
-
                     winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
-                    if (this.passMask[0] == 0) { //хвост вектора
+
+                    //Хвост вектора, точка круг
+                    if (this.passMask[0] == 0) {
                         Arc2D arc = new Arc2D.Double(this.x1() - SIZE / 2, this.y1() - SIZE / 2, SIZE, SIZE, 0, 360, Arc2D.OPEN);
                         winc.gc2d.draw(arc);
 
-                    } else if (this.passMask[0] == 1) { //начало вектора
+                        //Начало вектора. точка круг
+                    } else if (this.passMask[0] == 1) {
                         Arc2D arc = new Arc2D.Double(this.x2() - SIZE / 2, this.y2() - SIZE / 2, SIZE, SIZE, 0, 360, Arc2D.OPEN);
                         winc.gc2d.draw(arc);
 
-                    } else if (this.passMask[0] == 2) { //середина вектора
-                        if (this.h() != null) {
+                        //Середина вектора. точка квадрат
+                    } else if (this.passMask[0] == 2) {
+                        if (this.h() != null) { //арка
                             List<Coordinate> list = Arrays.asList(owner.area.getGeometryN(0).getCoordinates())
                                     .stream().filter(c -> c.z == this.id).collect(toList());
-                            int i = list.size() / 2;
+                            int i = list.size() / 2; //index середины дуги
                             Coordinate c1 = list.get(i), c2 = list.get(i + 1);
                             Coordinate smid = new LineSegment(c1.x, c1.y, c2.x, c2.y).midPoint();
                             Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);

@@ -14,7 +14,7 @@ import domain.eProject;
 import domain.eSysuser;
 import enums.Type;
 import frames.UGui;
-import frames.swing.draw.Canvas;
+import frames.swing.Canvas;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;

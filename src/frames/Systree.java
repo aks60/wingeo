@@ -55,7 +55,7 @@ import enums.TypeOpen1;
 import frames.dialog.DicColor;
 import frames.dialog.DicHandl;
 import frames.dialog.DicSysprof;
-import frames.swing.draw.Canvas;
+import frames.swing.Canvas;
 import frames.swing.DefMutableTreeNode;
 import java.awt.CardLayout;
 import java.awt.Component;
