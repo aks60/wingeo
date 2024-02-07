@@ -23,7 +23,7 @@ import org.locationtech.jts.geom.Envelope;
 
 public class Canvas extends javax.swing.JPanel {
 
-    public static double translate[] = {40, 8};
+    public static double translate[] = {12, 8};
     public Wincalc winc = null;
     public static double margin = 150; //для размерных линий 
 
@@ -112,9 +112,6 @@ public class Canvas extends javax.swing.JPanel {
             winc.gc2d.setStroke(new BasicStroke(2)); //толщина линии
             winc.gc2d.translate(translate[0], translate[1]);
             winc.scale = scale();
-            
-            //System.out.println("scale=" + winc.scale);
-            
             winc.gc2d.scale(winc.scale, winc.scale);
             winc.upgrade();
             winc.draw();

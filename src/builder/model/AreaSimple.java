@@ -188,12 +188,10 @@ public class AreaSimple extends Com5t {
                     double pxy[] = {listHor.get(i - 1) + len + 8, boxRama.getMaxY() + txt2D.getHeight() * .86}; //точка начала текста
                     if (length < txt2D.getWidth()) {
 
-                        //txt = UCom.format(dx, -2); //текст разм.линии
                         winc.gc2d.setFont(new Font(font.getName(), font.getStyle(), font.getSize() - font.getSize() / coeff));
                         pxy[1] = pxy[1] + txt2D.getHeight() / 2;
                         winc.gc2d.drawString(txt, (int) pxy[0], (int) (pxy[1]));
                     } else {
-                        //txt = UCom.format(dx, -2); //текст разм.линии
                         winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);
                     }
                     winc.gc2d.setFont(font);
@@ -224,11 +222,9 @@ public class AreaSimple extends Com5t {
                     double pxy[] = {boxRama.getMaxX() + txt2D.getHeight() - 6, listVer.get(i) - len}; //точка врашения и начала текста                    
                     if (length < (txt2D.getWidth())) {
 
-                        //txt = UCom.format(dy, -2); //текст разм.линии
                         winc.gc2d.setFont(new Font(font.getName(), font.getStyle(), font.getSize() - font.getSize() / coeff));
                         winc.gc2d.drawString(txt, (int) (pxy[0] + txt2D.getHeight() / 2), (int) (pxy[1] - txt2D.getHeight() / 2));
                     } else {
-                        //txt = UCom.format(dy, -2); //текст разм.линии
                         winc.gc2d.rotate(Math.toRadians(-90), pxy[0], pxy[1]);
                         winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);
                     }

@@ -51,6 +51,7 @@ public class GsonRoot extends GsonElem {
         }
     }
 
+    //Перемещение на канве
     public void translate(GsonElem gson, Double dx, Double dy, Double scale) {
         if (gson.childs != null) {
             dx = (dx == 0) ? 0 : dx / scale;

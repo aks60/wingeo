@@ -101,9 +101,6 @@ public abstract class ElemSimple extends Com5t {
                 } else if (passMask[0] == 2) {
                     double X = dX / winc.scale + x2();
                     double Y = dY / winc.scale + y2();
-                    //if (X2 >= 0 && X2 <= winc.canvas.getWidth() / winc.scale && Y2 >= 0
-                    //        && Y2 <= winc.canvas.getHeight() / winc.scale) { //контроль выхода за канву
-                    //System.out.println("X=" + X + " Y="+ Y);
                     if (dY != 0) {
                         this.y1(Y);
                         this.y2(Y);

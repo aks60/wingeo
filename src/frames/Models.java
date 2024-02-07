@@ -121,7 +121,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         try {
             int index = UGui.getIndexRec(tab1);
             if (index != -1) {
-                Wincalc win = winc();
+                Wincalc win = wincalc();
                 String script = win.gson.toJson();
                 win.build(script);
                 win.imageIcon = Canvas.createIcon(win, 68);
@@ -136,7 +136,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         }
     }
 
-    private Wincalc winc() {
+    private Wincalc wincalc() {
         int index = UGui.getIndexRec(tab1);
         if (index != -1) {
             Record sysmodelRec = qSysmodel.table(eSysmodel.up).get(index);
