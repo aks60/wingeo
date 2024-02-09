@@ -95,6 +95,7 @@ public class Test {
             //frame(args);
             //wincalc();
             param();
+            wincalc();
             //query();
             //json();
             //uid();
