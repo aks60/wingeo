@@ -14,7 +14,7 @@ import builder.param.JoiningVar;
 import dataset.Record;
 import java.util.HashMap;
 
-public class ParamTest {
+public class ParamImit {
 
     protected HashMap<Integer, String> hmParam = new HashMap();
     protected int grup = -1;
@@ -73,7 +73,7 @@ public class ParamTest {
     protected FurnitureVar furnitureVar4 = null;
     protected FurnitureDet furnitureDet4 = null;
 
-    public ParamTest() {
+    public ParamImit() {
         try {
             iwin2();
             iwin3();
@@ -97,14 +97,14 @@ public class ParamTest {
         joiningDet2 = new JoiningDet(iwin_2);
         furnitureVar2 = new FurnitureVar(iwin_2);
         furnitureDet2 = new FurnitureDet(iwin_2);
-        frame_left_2 = getElem(iwin_2.root, 1.0f);
-        frame_right_2 = getElem(iwin_2.root, 2.0f);
-        stv_right_2 = getElem(iwin_2.root, 10.2f);
-        imp_vert_2 = getElem(iwin_2.root, 12.0f);
-        imp_horiz_2 = getElem(iwin_2.root, 7.0f);
-        glass_top_2 = (ElemSimple) getElem(iwin_2.root, 6.0f);
-        glass_left_2 = (ElemSimple) getElem(iwin_2.root, 11.0f);
-        glass_right_2 = (ElemSimple) getElem(iwin_2.root, 15.0f);
+        frame_left_2 = getElem(iwin_2.root, 1.0);
+        frame_right_2 = getElem(iwin_2.root, 3.0);
+        stv_right_2 = getElem(iwin_2.root, 9.3);
+        imp_vert_2 = getElem(iwin_2.root, 11.0);
+        imp_horiz_2 = getElem(iwin_2.root, 7.0);
+        glass_top_2 = (ElemSimple) getElem(iwin_2.root, 6.0);
+        glass_left_2 = (ElemSimple) getElem(iwin_2.root, 10.0);
+        glass_right_2 = (ElemSimple) getElem(iwin_2.root, 13.0);
     }
 
     //604005  "Wintech\\Termotech 742\\1 ОКНА"
@@ -217,7 +217,7 @@ public class ParamTest {
         }
         return null;
     }
-
+    
     public static Record param(String txt, int grup) {
         Record record = new Record();
         record.add("SEL");

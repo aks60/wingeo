@@ -2,7 +2,7 @@ package builder.param.check;
 
 import java.util.HashMap;
 
-public class FillingTest extends ParamTest {
+public class FillingTest extends ParamImit {
 
     public FillingTest() {
         super();

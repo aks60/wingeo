@@ -161,7 +161,7 @@ public class AreaStvorka extends AreaSimple {
                     if (isJson(this.gson.param, PKjson.stvorkaSide[i])) {
                         gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
                     }
-                    ElemFrame sideStv = new ElemFrame(this.winc, gson.id + (.1 + Double.valueOf(i) / 10), gson, this);
+                    ElemFrame sideStv = new ElemFrame(this.winc, this.id + (.1 + Double.valueOf(i) / 10), gson, this);
                     this.frames.add(sideStv);
                     coo[i].z = sideStv.id;
                 }

@@ -95,12 +95,11 @@ public class Test {
             //frame(args);
             //wincalc();
             param();
-            wincalc();
             //query();
             //json();
             //uid();
             //script();
-            geom();           
+            //geom();           
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -160,16 +159,16 @@ public class Test {
 
         ElementTest et = new ElementTest();
         et.elementVar();
-        et.elementDet();
-        JoiningTest jt = new JoiningTest();
-        jt.joiningVar();
-        jt.joiningDet();
-        FillingTest gt = new FillingTest();
-        gt.fillingVar();
-        gt.fillingDet();
-        FurnitureTest ft = new FurnitureTest();
-        ft.furnitureVar();
-        ft.furnitureDet();
+//        et.elementDet();
+//        JoiningTest jt = new JoiningTest();
+//        jt.joiningVar();
+//        jt.joiningDet();
+//        FillingTest gt = new FillingTest();
+//        gt.fillingVar();
+//        gt.fillingDet();
+//        FurnitureTest ft = new FurnitureTest();
+//        ft.furnitureVar();
+//        ft.furnitureDet();
 
 //        Query.connection = Test.connect2();
 //        Set set = new HashSet();

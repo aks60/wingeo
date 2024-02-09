@@ -1,14 +1,14 @@
 package builder.param.check;
 
 import builder.making.UColor;
-import static builder.param.check.ParamTest.param;
+import static builder.param.check.ParamImit.param;
 import common.UCom;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eElement;
 import java.util.HashMap;
 
-public class ElementTest extends ParamTest {
+public class ElementTest extends ParamImit {
 
     public ElementTest() {
         super();
