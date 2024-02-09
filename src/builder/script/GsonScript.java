@@ -106,6 +106,20 @@ public class GsonScript {
             area2.addElem(new GsonElem(Type.IMPOST, 720, 400, 720, 1700));
             area2.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
 
+        } else if (prj == 601004) {
+            rootGson = new GsonRoot(Type.RECTANGL, "KBE 58\\ОКНА\\Открывание внутрь");
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0,0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0,1700))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1440, 1700))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1440, 0));
+            
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 1440, 400, 0 , 400));
+            GsonElem area = rootGson.addArea(new GsonElem(Type.AREA));
+            
+            area.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
+            area.addElem(new GsonElem(Type.IMPOST, 720, 1700, 720, 1300))
+                    .addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));            
 // </editor-fold>            
 // <editor-fold defaultstate="collapsed" desc="ARCH">
         } else if (prj == 604004) {

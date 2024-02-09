@@ -2,6 +2,10 @@ package startup;
 
 import builder.model.Com5t;
 import builder.model.UGeo;
+import builder.param.check.ElementTest;
+import builder.param.check.FillingTest;
+import builder.param.check.FurnitureTest;
+import builder.param.check.JoiningTest;
 import builder.script.GsonElem;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -90,6 +94,7 @@ public class Test {
             //frames.PSConvert.exec();
             //frame(args);
             //wincalc();
+            param();
             //query();
             //json();
             //uid();
@@ -148,6 +153,38 @@ public class Test {
         }
     }
 
+    private static void param() {
+
+        Conn.connection(Test.connect2());
+
+        ElementTest et = new ElementTest();
+        et.elementVar();
+        et.elementDet();
+        JoiningTest jt = new JoiningTest();
+        jt.joiningVar();
+        jt.joiningDet();
+        FillingTest gt = new FillingTest();
+        gt.fillingVar();
+        gt.fillingDet();
+        FurnitureTest ft = new FurnitureTest();
+        ft.furnitureVar();
+        ft.furnitureDet();
+
+//        Query.connection = Test.connect2();
+//        Set set = new HashSet();
+//        Map<String, Set> map = new HashMap();
+//        for (Enam en : ParamList.values()) {
+//            Set set2 = map.getOrDefault(en.text(), new HashSet());
+//            set2.add(en.numb());
+//            map.put(en.text(), set2);
+//        }
+//        for (Map.Entry<String, Set> entry : map.entrySet()) {
+//            String key = entry.getKey();
+//            Set value = entry.getValue();
+//            System.out.println(key + " " + value);
+//        }
+    }
+    
     private static void query() {
         try {
             Conn.connection(Test.connect2());
