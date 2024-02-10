@@ -1,5 +1,6 @@
 package builder.param.check;
 
+import builder.Wincalc;
 import builder.model.AreaSimple;
 import builder.model.Com5t;
 import builder.model.ElemSimple;
@@ -11,82 +12,83 @@ import builder.param.FurnitureDet;
 import builder.param.FurnitureVar;
 import builder.param.JoiningDet;
 import builder.param.JoiningVar;
+import builder.script.GsonScript;
 import dataset.Record;
 import java.util.HashMap;
 
-public class ParamImit {
+public class WincalcTest {
 
-    protected HashMap<Integer, String> hmParam = new HashMap();
-    protected int grup = -1;
-    protected Record record = null;
+    static HashMap<Integer, String> hmParam = new HashMap();
+    static int grup = -1;
+    static Record record = null;
 
-    protected ElemSimple frame_left_2 = null;
-    protected ElemSimple frame_right_2 = null;
-    protected ElemSimple stv_right_2 = null;
-    protected ElemSimple imp_horiz_2 = null;
-    protected ElemSimple imp_vert_2 = null;
-    protected ElemSimple glass_top_2 = null;
-    protected ElemSimple glass_left_2 = null;
-    protected ElemSimple glass_right_2 = null;
+    static ElemSimple frame_left_2 = null;
+    static ElemSimple frame_right_2 = null;
+    static ElemSimple stv_right_2 = null;
+    static ElemSimple imp_horiz_2 = null;
+    static ElemSimple imp_vert_2 = null;
+    static ElemSimple glass_top_2 = null;
+    static ElemSimple glass_left_2 = null;
+    static ElemSimple glass_right_2 = null;
 
-    protected ElemSimple frame_left_3 = null;
-    protected ElemSimple frame_right_3 = null;
-    protected ElemSimple stv_right_3 = null;
-    protected ElemSimple imp_vert_3 = null;
-    protected ElemSimple glass_top_3 = null;
-    protected ElemSimple glass_left_3 = null;
+    static ElemSimple frame_left_3 = null;
+    static ElemSimple frame_right_3 = null;
+    static ElemSimple stv_right_3 = null;
+    static ElemSimple imp_vert_3 = null;
+    static ElemSimple glass_top_3 = null;
+    static ElemSimple glass_left_3 = null;
 
-    protected ElemSimple frame_left_4 = null;
-    protected ElemSimple frame_right_4 = null;
-    protected ElemSimple stv_left_4 = null;
-    protected ElemSimple stv_right_4 = null;
-    protected ElemSimple glass_right_4 = null;
-    protected ElemSimple glass_left_4 = null;
+    static ElemSimple frame_left_4 = null;
+    static ElemSimple frame_right_4 = null;
+    static ElemSimple stv_left_4 = null;
+    static ElemSimple stv_right_4 = null;
+    static ElemSimple glass_right_4 = null;
+    static ElemSimple glass_left_4 = null;
 
-    builder.Wincalc iwin_2 = null; //601004
-    protected ElementVar elementVar2 = null;
-    protected ElementDet elementDet2 = null;
-    protected JoiningVar joiningVar2 = null;
-    protected JoiningDet joiningDet2 = null;
-    protected FillingVar fillingVar2 = null;
-    protected FillingDet fillingDet2 = null;
-    protected FurnitureVar furnitureVar2 = null;
-    protected FurnitureDet furnitureDet2 = null;
+    static Wincalc iwin_2 = null; //601004
+    static ElementVar elementVar2 = null;
+    static ElementDet elementDet2 = null;
+    static JoiningVar joiningVar2 = null;
+    static JoiningDet joiningDet2 = null;
+    static FillingVar fillingVar2 = null;
+    static FillingDet fillingDet2 = null;
+    static FurnitureVar furnitureVar2 = null;
+    static FurnitureDet furnitureDet2 = null;
 
-    builder.Wincalc iwin_3 = null; //604005
-    protected ElementVar elementVar3 = null;
-    protected ElementDet elementDet3 = null;
-    protected JoiningVar joiningVar3 = null;
-    protected JoiningDet joiningDet3 = null;
-    protected FillingVar fillingVar3 = null;
-    protected FillingDet fillingDet3 = null;
-    protected FurnitureVar furnitureVar3 = null;
-    protected FurnitureDet furnitureDet3 = null;
+    static Wincalc iwin_3 = null; //604005
+    static ElementVar elementVar3 = null;
+    static ElementDet elementDet3 = null;
+    static JoiningVar joiningVar3 = null;
+    static JoiningDet joiningDet3 = null;
+    static FillingVar fillingVar3 = null;
+    static FillingDet fillingDet3 = null;
+    static FurnitureVar furnitureVar3 = null;
+    static FurnitureDet furnitureDet3 = null;
 
-    builder.Wincalc iwin_4 = null; //700027
-    protected ElementVar elementVar4 = null;
-    protected ElementDet elementDet4 = null;
-    protected JoiningVar joiningVar4 = null;
-    protected JoiningDet joiningDet4 = null;
-    protected FillingVar fillingVar4 = null;
-    protected FillingDet fillingDet4 = null;
-    protected FurnitureVar furnitureVar4 = null;
-    protected FurnitureDet furnitureDet4 = null;
+    static builder.Wincalc iwin_4 = null; //700027
+    static ElementVar elementVar4 = null;
+    static ElementDet elementDet4 = null;
+    static JoiningVar joiningVar4 = null;
+    static JoiningDet joiningDet4 = null;
+    static FillingVar fillingVar4 = null;
+    static FillingDet fillingDet4 = null;
+    static FurnitureVar furnitureVar4 = null;
+    static FurnitureDet furnitureDet4 = null;
 
-    public ParamImit() {
+    public WincalcTest() {
         try {
             iwin2();
             iwin3();
             iwin4();
         } catch (Exception e) {
-            System.err.println("ОШИБКА:param.test.ParamTest() " + e);
+            System.err.println("ОШИБКА:param.test.WinacalcTest() " + e);
         }
     }
 
     //601004 "KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)"
     private void iwin2() {
         iwin_2 = new builder.Wincalc(); //601004
-        iwin_2.build(builder.script.GsonScript.scriptPath(601004));
+        iwin_2.build(GsonScript.scriptPath(601004));
         iwin_2.specific(true);
         elementVar2 = new ElementVar(iwin_2);
         elementDet2 = new ElementDet(iwin_2);
@@ -110,7 +112,7 @@ public class ParamImit {
     //604005  "Wintech\\Termotech 742\\1 ОКНА"
     private void iwin3() {
         iwin_3 = new builder.Wincalc(); //604005
-        iwin_3.build(builder.script.GsonScript.scriptPath(604005));
+        iwin_3.build(GsonScript.scriptPath(604005));
         iwin_3.specific(true);
         elementVar3 = new ElementVar(iwin_3);
         elementDet3 = new ElementDet(iwin_3);
@@ -123,18 +125,17 @@ public class ParamImit {
         furnitureVar3 = new FurnitureVar(iwin_3);
         furnitureDet3 = new FurnitureDet(iwin_3);
         frame_left_3 = getElem(iwin_3.root, 1.0f);
-        frame_right_3 = getElem(iwin_3.root, 2.0f);
-        stv_right_3 = getElem(iwin_3.root, 10.2f);
-        imp_vert_3 = getElem(iwin_3.root, 12.0f);
+        frame_right_3 = getElem(iwin_3.root, 3.0f);
+        stv_right_3 = getElem(iwin_3.root, 12.3f);
+        imp_vert_3 = getElem(iwin_3.root, 11.0f);
         glass_top_3 = (ElemSimple) getElem(iwin_3.root, 6.0f);
-        glass_left_3 = (ElemSimple) getElem(iwin_3.root, 11.0f);
-        glass_left_3.anglHoriz();
+        glass_left_3 = (ElemSimple) getElem(iwin_3.root, 10.0f);
     }
 
     //700027  "Montblanc / Eco / 1 ОКНА (штульп)"
     private void iwin4() {
         iwin_4 = new builder.Wincalc(); //700027
-        iwin_4.build(builder.script.GsonScript.scriptPath(700027));
+        iwin_4.build(GsonScript.scriptPath(700027));
         iwin_4.specific(true);
         elementVar4 = new ElementVar(iwin_4);
         elementDet4 = new ElementDet(iwin_4);

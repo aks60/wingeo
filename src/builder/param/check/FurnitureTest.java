@@ -3,7 +3,7 @@ package builder.param.check;
 import builder.model.AreaSimple;
 import java.util.HashMap;
 
-public class FurnitureTest extends ParamImit {
+public class FurnitureTest extends WincalcTest {
 
     public FurnitureTest() {
         super();

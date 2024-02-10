@@ -1,17 +1,69 @@
 package builder.param.check;
 
 import builder.making.UColor;
-import static builder.param.check.ParamImit.param;
-import common.UCom;
-import dataset.Record;
-import domain.eArtikl;
-import domain.eElement;
 import java.util.HashMap;
 
-public class ElementTest extends ParamImit {
+import static builder.param.check.WincalcTest.param;
+import static builder.param.check.WincalcTest.hmParam;
+import static builder.param.check.WincalcTest.grup;
+import static builder.param.check.WincalcTest.record;
+
+import static builder.param.check.WincalcTest.frame_left_2;
+import static builder.param.check.WincalcTest.frame_right_2;
+import static builder.param.check.WincalcTest.stv_right_2;
+import static builder.param.check.WincalcTest.imp_horiz_2;
+import static builder.param.check.WincalcTest.imp_vert_2;
+import static builder.param.check.WincalcTest.glass_top_2;
+import static builder.param.check.WincalcTest.glass_left_2;
+import static builder.param.check.WincalcTest.glass_right_2;
+
+import static builder.param.check.WincalcTest.frame_left_3;
+import static builder.param.check.WincalcTest.frame_right_3;
+import static builder.param.check.WincalcTest.stv_right_3;
+import static builder.param.check.WincalcTest.imp_vert_3;
+import static builder.param.check.WincalcTest.glass_top_3;
+import static builder.param.check.WincalcTest.glass_left_3;
+
+import static builder.param.check.WincalcTest.frame_left_4;
+import static builder.param.check.WincalcTest.frame_right_4;
+import static builder.param.check.WincalcTest.stv_left_4;
+import static builder.param.check.WincalcTest.stv_right_4;
+import static builder.param.check.WincalcTest.glass_right_4;
+import static builder.param.check.WincalcTest.glass_left_4;
+
+import static builder.param.check.WincalcTest.iwin_2; //601004
+import static builder.param.check.WincalcTest.elementVar2;
+import static builder.param.check.WincalcTest.elementDet2;
+import static builder.param.check.WincalcTest.joiningVar2;
+import static builder.param.check.WincalcTest.joiningDet2;
+import static builder.param.check.WincalcTest.fillingVar2;
+import static builder.param.check.WincalcTest.fillingDet2;
+import static builder.param.check.WincalcTest.furnitureVar2;
+import static builder.param.check.WincalcTest.furnitureDet2;
+
+import static builder.param.check.WincalcTest.iwin_3; //604005
+import static builder.param.check.WincalcTest.elementVar3;
+import static builder.param.check.WincalcTest.elementDet3;
+import static builder.param.check.WincalcTest.joiningVar3;
+import static builder.param.check.WincalcTest.joiningDet3;
+import static builder.param.check.WincalcTest.fillingVar3;
+import static builder.param.check.WincalcTest.fillingDet3;
+import static builder.param.check.WincalcTest.furnitureVar3;
+import static builder.param.check.WincalcTest.furnitureDet3;
+
+import static builder.param.check.WincalcTest.iwin_4; //700027
+import static builder.param.check.WincalcTest.elementVar4;
+import static builder.param.check.WincalcTest.elementDet4;
+import static builder.param.check.WincalcTest.joiningVar4;
+import static builder.param.check.WincalcTest.joiningDet4;
+import static builder.param.check.WincalcTest.fillingVar4;
+import static builder.param.check.WincalcTest.fillingDet4;
+import static builder.param.check.WincalcTest.furnitureVar4;
+import static builder.param.check.WincalcTest.furnitureDet4;
+
+public class ElementTest {
 
     public ElementTest() {
-        super();
     }
 
     /**

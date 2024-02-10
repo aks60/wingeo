@@ -3,9 +3,7 @@ package startup;
 import builder.model.Com5t;
 import builder.model.UGeo;
 import builder.param.check.ElementTest;
-import builder.param.check.FillingTest;
-import builder.param.check.FurnitureTest;
-import builder.param.check.JoiningTest;
+import builder.param.check.WincalcTest;
 import builder.script.GsonElem;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -110,10 +108,10 @@ public class Test {
 
         Conn.connection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
-        String _case = "min";
+        String _case = "one";
 
         if (_case.equals("one")) {
-            String script = GsonScript.scriptPath(601001);
+            String script = GsonScript.scriptPath(601004);
             winc.build(script);
             //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
             //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
@@ -157,6 +155,7 @@ public class Test {
 
         Conn.connection(Test.connect2());
 
+        WincalcTest iwin = new WincalcTest();
         ElementTest et = new ElementTest();
         et.elementVar();
 //        et.elementDet();

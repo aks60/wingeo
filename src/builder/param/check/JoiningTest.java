@@ -1,11 +1,11 @@
 package builder.param.check;
 
-import static builder.param.check.ParamImit.param;
+import static builder.param.check.WincalcTest.param;
 import dataset.Record;
 import domain.eElement;
 import java.util.HashMap;
 
-public class JoiningTest extends ParamImit {
+public class JoiningTest extends WincalcTest {
 
     public JoiningTest() {
         super();
