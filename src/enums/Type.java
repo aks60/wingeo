@@ -54,7 +54,7 @@ public enum Type implements Enam {
     }
 
     public static boolean isCross(Type type) {
-        if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER).contains(type)) {
+        if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).contains(type)) {
             return true;
         }
         return false;

@@ -144,9 +144,9 @@ public class AreaStvorka extends AreaSimple {
     //Создание и коррекция сторон створки
     public void setLocation() {
         try {
-            //Полигон векторов сторон рамы если нет полигона створки в гл.окне 
-            //иначе, this.area получатется при распиле owner.area импостом
-            this.areaBox = (winc.listElem.filter(Type.IMPOST).isEmpty()) ? owner.area : this.area;
+            //Полигон векторов сторон рамы owner.area - если нет полигона створки в гл.окне 
+            //иначе, this.area  получатется при распиле owner.area импостом
+            this.areaBox = ((Type.isCross(this.type) == true)) ? owner.area : this.area;
 
             //Полигон створки с учётом нахлёста 
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);

@@ -176,7 +176,7 @@ public class Wincalc {
             listElem.forEach(e -> e.initArtikle());
 
             //Пилим полигоны на ареа справа и слева
-            listElem.filter(Type.IMPOST, Type.STOIKA, Type.ERKER).forEach(e -> e.setLocation());
+            listElem.filter(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).forEach(e -> e.setLocation());
 
             //Создание и коррекция сторон створки
             listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
