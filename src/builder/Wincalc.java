@@ -195,6 +195,7 @@ public class Wincalc {
             
             //Соединения конструкции             
             root.joining();  //L и T соединения
+            listElem.filter(Type.SHTULP).forEach(e -> ((ElemCross) e).joining()); //прилегающ.
             listArea.filter(Type.STVORKA).forEach(e -> e.joining());
 
         } catch (Exception s) {

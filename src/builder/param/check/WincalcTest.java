@@ -99,14 +99,15 @@ public class WincalcTest {
         joiningDet2 = new JoiningDet(iwin_2);
         furnitureVar2 = new FurnitureVar(iwin_2);
         furnitureDet2 = new FurnitureDet(iwin_2);
-        frame_left_2 = getElem(iwin_2.root, 1.0);
-        frame_right_2 = getElem(iwin_2.root, 3.0);
-        stv_right_2 = getElem(iwin_2.root, 9.3);
-        imp_vert_2 = getElem(iwin_2.root, 11.0);
-        imp_horiz_2 = getElem(iwin_2.root, 7.0);
-        glass_top_2 = (ElemSimple) getElem(iwin_2.root, 6.0);
-        glass_left_2 = (ElemSimple) getElem(iwin_2.root, 10.0);
-        glass_right_2 = (ElemSimple) getElem(iwin_2.root, 13.0);
+        frame_left_2 = getElem(iwin_2.root, 1);
+        
+        frame_right_2 = getElem(iwin_2.root, 3);
+        stv_right_2 = getElem(iwin_2.root, 12.3);
+        imp_vert_2 = getElem(iwin_2.root, 11);
+        imp_horiz_2 = getElem(iwin_2.root, 7);
+        glass_top_2 = (ElemSimple) getElem(iwin_2.root, 6);
+        glass_left_2 = (ElemSimple) getElem(iwin_2.root, 10);
+        glass_right_2 = (ElemSimple) getElem(iwin_2.root, 13);
     }
 
     //604005  "Wintech\\Termotech 742\\1 ОКНА"
@@ -124,12 +125,13 @@ public class WincalcTest {
         joiningDet3 = new JoiningDet(iwin_3);
         furnitureVar3 = new FurnitureVar(iwin_3);
         furnitureDet3 = new FurnitureDet(iwin_3);
-        frame_left_3 = getElem(iwin_3.root, 1.0f);
-        frame_right_3 = getElem(iwin_3.root, 3.0f);
-        stv_right_3 = getElem(iwin_3.root, 12.3f);
-        imp_vert_3 = getElem(iwin_3.root, 11.0f);
-        glass_top_3 = (ElemSimple) getElem(iwin_3.root, 6.0f);
-        glass_left_3 = (ElemSimple) getElem(iwin_3.root, 10.0f);
+        
+        frame_left_3 = getElem(iwin_3.root, 1);
+        frame_right_3 = getElem(iwin_3.root, 3);
+        stv_right_3 = getElem(iwin_3.root, 12.3);
+        imp_vert_3 = getElem(iwin_3.root, 11);
+        glass_top_3 = (ElemSimple) getElem(iwin_3.root, 6);
+        glass_left_3 = (ElemSimple) getElem(iwin_3.root, 10);
     }
 
     //700027  "Montblanc / Eco / 1 ОКНА (штульп)"
@@ -147,12 +149,13 @@ public class WincalcTest {
         joiningDet4 = new JoiningDet(iwin_4);
         furnitureVar4 = new FurnitureVar(iwin_4);
         furnitureDet4 = new FurnitureDet(iwin_4);
-        frame_left_4 = getElem(iwin_4.root, 1.0f);
-        frame_right_4 = getElem(iwin_4.root, 2.0f);
-        stv_left_4 = getElem(iwin_4.root, 6.4f);
-        stv_right_4 = getElem(iwin_4.root, 6.2f);
-        glass_right_4 = (ElemSimple) getElem(iwin_4.root, 11.0f);
-        glass_left_4 = (ElemSimple) getElem(iwin_4.root, 7.0f);
+        
+        frame_left_4 = getElem(iwin_4.root, 1);
+        frame_right_4 = getElem(iwin_4.root, 3);
+        stv_left_4 = getElem(iwin_4.root, 5.1);
+        stv_right_4 = getElem(iwin_4.root, 8.3);
+        glass_right_4 = (ElemSimple) getElem(iwin_4.root, 6);
+        glass_left_4 = (ElemSimple) getElem(iwin_4.root, 9);
     }
 
     //Получить элемент по ключу

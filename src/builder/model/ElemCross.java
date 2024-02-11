@@ -13,15 +13,16 @@ import enums.Layout;
 import enums.PKjson;
 import enums.Type;
 import enums.TypeArtikl;
+import enums.TypeJoin;
 import enums.UseSide;
 import java.awt.Shape;
-import java.awt.geom.Arc2D;
-import java.awt.geom.Rectangle2D;
 import java.util.List;
+import org.locationtech.jts.algorithm.PointLocation;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.GeometryFixer;
 
@@ -182,6 +183,22 @@ public class ElemCross extends ElemSimple {
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.addSpecific() " + e);
+        }
+    }
+
+    public void joining() {
+
+        if (this.type == Type.SHTULP) {
+            for (ElemSimple elem : winc.listElem) {
+                if (elem.type == Type.STVORKA_SIDE) {
+                    Coordinate coo[] = elem.area.getCoordinates();
+                    LineSegment segm = UGeo.getSegment(area, 0);
+                    boolean b = PointLocation.isInRing(segm.midPoint(), coo);
+                    if (b) {
+                        winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.FLAT, this, elem));
+                    }
+                }
+            }
         }
     }
 
