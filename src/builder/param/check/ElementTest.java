@@ -86,9 +86,9 @@ public class ElementTest {
         assert false == elementVar2.check(frame_left_2, param("арочный", grup)) : grup;
 
         grup = 31003; //Если соединенный артикул  T-обр.
-        assert true == elementVar2.check(imp_vert_2, param("807", grup)) : grup;
-        assert true == elementVar2.check(imp_vert_2, param("937", grup)) : grup;
-        assert true == elementVar2.check(imp_horiz_2, param("807", grup)) : grup;
+        assert true == elementVar2.check(imp_vert_2, param("907.07", grup)) : grup;
+        assert true == elementVar2.check(imp_vert_2, param("937.77", grup)) : grup;
+        assert true == elementVar2.check(imp_horiz_2, param("907.07", grup)) : grup;
         assert false == elementVar2.check(imp_horiz_2, param("XXX", grup)) : grup;
 
         grup = 31004; //Если прилегающий артикул
