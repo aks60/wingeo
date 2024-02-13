@@ -72,7 +72,7 @@ public class ElementVar extends Par5s {
                         return false;
                     }
                     break;
-                case 31003:  //Если соединенный артикул  T-обр.
+                case 31003:  //Если сосединенный артикул  T-обр.
                     if (rec.getStr(TEXT).equals(winc.listJoin.elem(elem5e, 0).artiklRecAn.getStr(eArtikl.code)) == true) {
                         if (winc.listJoin.get(elem5e, 0).type() != TypeJoin.TIMP && winc.listJoin.get(elem5e, 0).type() != TypeJoin.TCON) {
                             return false;

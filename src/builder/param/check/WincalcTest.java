@@ -18,6 +18,10 @@ import java.util.HashMap;
 
 public class WincalcTest {
 
+    static Wincalc iwin_2 = null; //601004
+    static Wincalc iwin_3 = null; //604005
+    static Wincalc iwin_4 = null; //700027
+
     static HashMap<Integer, String> hmParam = new HashMap();
     static int grup = -1;
     static Record record = null;
@@ -45,7 +49,6 @@ public class WincalcTest {
     static ElemSimple glass_right_4 = null;
     static ElemSimple glass_left_4 = null;
 
-    static Wincalc iwin_2 = null; //601004
     static ElementVar elementVar2 = null;
     static ElementDet elementDet2 = null;
     static JoiningVar joiningVar2 = null;
@@ -55,7 +58,6 @@ public class WincalcTest {
     static FurnitureVar furnitureVar2 = null;
     static FurnitureDet furnitureDet2 = null;
 
-    static Wincalc iwin_3 = null; //604005
     static ElementVar elementVar3 = null;
     static ElementDet elementDet3 = null;
     static JoiningVar joiningVar3 = null;
@@ -65,7 +67,6 @@ public class WincalcTest {
     static FurnitureVar furnitureVar3 = null;
     static FurnitureDet furnitureDet3 = null;
 
-    static builder.Wincalc iwin_4 = null; //700027
     static ElementVar elementVar4 = null;
     static ElementDet elementDet4 = null;
     static JoiningVar joiningVar4 = null;
@@ -80,7 +81,7 @@ public class WincalcTest {
             iwin2();
             iwin3();
             iwin4();
-            
+
         } catch (Exception e) {
             System.err.println("ОШИБКА:param.test.WinacalcTest() " + e);
         }

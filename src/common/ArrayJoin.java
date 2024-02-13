@@ -52,7 +52,6 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
 
                 //T- соединение 
                 if (Type.isCross(elem.type) == true) {
-                    System.err.println("ОШИБКА:ArrayJoin.get()");
                     Coordinate c = (side == 0) ? new Coordinate(elem.x1(), elem.y1()) : new Coordinate(elem.x2(), elem.y2());
                     for (ElemSimple e : elem.winc.listElem) {
                         Coordinate[] arr = UGeo.arrCoord(e.x1(), e.y1(), e.x2(), e.y2());
