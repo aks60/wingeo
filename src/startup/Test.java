@@ -101,8 +101,8 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //frame(args);
-            //wincalc();
-            param();
+            wincalc();
+            //param();
             //query();
             //json();
             //uid();
@@ -121,7 +121,7 @@ public class Test {
         String _case = "one";
 
         if (_case.equals("one")) {
-            String script = GsonScript.scriptPath(700027);
+            String script = GsonScript.scriptPath(508865);
             winc.build(script);
             //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
             //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
@@ -130,7 +130,7 @@ public class Test {
             //new Joining(winc).calc();
             //winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
             //winc.gc2d = winc.bufferImg.createGraphics();
-            //winc.root.draw(); //рисую конструкцию
+            winc.draw(); //рисую конструкцию
 
             frames.PSCompare.iwinPs4(winc, true);
             //winc.listElem.forEach(it -> System.out.println(it));
