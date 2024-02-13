@@ -176,7 +176,7 @@ public class AreaStvorka extends AreaSimple {
                 }
                 coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
             }
-            
+
             Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
@@ -235,7 +235,7 @@ public class AreaStvorka extends AreaSimple {
     }
 
     //L - соединения, прил.соед.
-   @Override
+    @Override
     public void joining() {
         ArrayCom<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.STOIKA);
         try {
@@ -261,10 +261,12 @@ public class AreaStvorka extends AreaSimple {
             for (int j = 0; j < coo1.length - 1; j++) {
                 ElemSimple elemStv = elemList.get(coo1[j].z);
                 ElemSimple elemFrm = elemList.get(coo2[j].z);
-                winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.FLAT, elemStv, elemFrm));
+                if (elemFrm != null) {
+                    winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.FLAT, elemStv, elemFrm));
+                }
             }
         } catch (Exception e) {
-            System.err.println("AreaStvorka.joining() " + e);
+            System.err.println("Ошибка:AreaStvorka.joining() " + e);
         }
     }
 

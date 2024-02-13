@@ -175,7 +175,8 @@ public class FurnitureDet extends Par5s {
                     if (rec.getStr(TEXT).equals("Да")) {
                         boolean ret = false;
                         for (ElemSimple entry : areaStv.frames) {
-                            if (winc.listJoin.elem(entry, 2).type == Type.SHTULP) {
+                            //if (winc.listJoin.elem(entry, 2).type == Type.SHTULP) {
+                            if(entry.type == Type.SHTULP) {
                                 ret = true;
                             }
                         }
@@ -185,7 +186,8 @@ public class FurnitureDet extends Par5s {
                     } else if (rec.getStr(TEXT).equals("Нет")) {
                         boolean ret = false;
                         for (ElemSimple entry : areaStv.frames) {
-                            if (winc.listJoin.elem(entry, 2).type == Type.SHTULP) {
+                            //if (winc.listJoin.elem(entry, 2).type == Type.SHTULP) {
+                            if(entry.type == Type.SHTULP) {
                                 ret = true;
                             }
                         }

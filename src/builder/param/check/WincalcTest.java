@@ -80,6 +80,7 @@ public class WincalcTest {
             iwin2();
             iwin3();
             iwin4();
+            
         } catch (Exception e) {
             System.err.println("ОШИБКА:param.test.WinacalcTest() " + e);
         }
@@ -100,7 +101,7 @@ public class WincalcTest {
         furnitureVar2 = new FurnitureVar(iwin_2);
         furnitureDet2 = new FurnitureDet(iwin_2);
         frame_left_2 = getElem(iwin_2.root, 1);
-        
+
         frame_right_2 = getElem(iwin_2.root, 3);
         stv_right_2 = getElem(iwin_2.root, 12.3);
         imp_vert_2 = getElem(iwin_2.root, 11);
@@ -125,7 +126,7 @@ public class WincalcTest {
         joiningDet3 = new JoiningDet(iwin_3);
         furnitureVar3 = new FurnitureVar(iwin_3);
         furnitureDet3 = new FurnitureDet(iwin_3);
-        
+
         frame_left_3 = getElem(iwin_3.root, 1);
         frame_right_3 = getElem(iwin_3.root, 3);
         stv_right_3 = getElem(iwin_3.root, 12.3);
@@ -149,7 +150,7 @@ public class WincalcTest {
         joiningDet4 = new JoiningDet(iwin_4);
         furnitureVar4 = new FurnitureVar(iwin_4);
         furnitureDet4 = new FurnitureDet(iwin_4);
-        
+
         frame_left_4 = getElem(iwin_4.root, 1);
         frame_right_4 = getElem(iwin_4.root, 3);
         stv_left_4 = getElem(iwin_4.root, 5.1);
@@ -221,7 +222,7 @@ public class WincalcTest {
         }
         return null;
     }
-    
+
     public static Record param(String txt, int grup) {
         Record record = new Record();
         record.add("SEL");

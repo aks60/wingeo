@@ -2,7 +2,11 @@ package startup;
 
 import builder.model.Com5t;
 import builder.model.UGeo;
+import builder.param.ParamList;
 import builder.param.check.ElementTest;
+import builder.param.check.FillingTest;
+import builder.param.check.FurnitureTest;
+import builder.param.check.JoiningTest;
 import builder.param.check.WincalcTest;
 import builder.script.GsonElem;
 import builder.script.GsonScript;
@@ -12,6 +16,8 @@ import com.google.gson.JsonParser;
 import common.ArrayCom;
 import common.eProp;
 import dataset.Conn;
+import dataset.Query;
+import enums.Enam;
 import enums.Type;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -22,7 +28,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -91,8 +101,8 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //frame(args);
-            wincalc();
-            //param();
+            //wincalc();
+            param();
             //query();
             //json();
             //uid();
@@ -116,16 +126,16 @@ public class Test {
             //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
             //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
-            //winc.specific(true);
+            winc.specific(true);
             //new Joining(winc).calc();
             //winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
             //winc.gc2d = winc.bufferImg.createGraphics();
             //winc.root.draw(); //рисую конструкцию
 
-            //frames.PSCompare.iwinPs4(winc, false);
+            frames.PSCompare.iwinPs4(winc, true);
             //winc.listElem.forEach(it -> System.out.println(it));
             //winc.listJoin.forEach(it -> System.out.println(it.joiningRec));     
-            winc.listJoin.forEach(it -> System.out.println(it));     
+            //winc.listJoin.forEach(it -> System.out.println(it));     
 
         } else if (_case.equals("min")) {
             List<Integer> prjList = GsonScript.systemList(_case);
@@ -154,22 +164,24 @@ public class Test {
     private static void param() {
 
         Conn.connection(Test.connect2());
-
         WincalcTest iwin = new WincalcTest();
-//        ElementTest et = new ElementTest();
-//        et.elementVar();
-//        et.elementDet();
-//        JoiningTest jt = new JoiningTest();
-//        jt.joiningVar();
-//        jt.joiningDet();
-//        FillingTest gt = new FillingTest();
-//        gt.fillingVar();
-//        gt.fillingDet();
-//        FurnitureTest ft = new FurnitureTest();
-//        ft.furnitureVar();
-//        ft.furnitureDet();
+        
+        ElementTest t1 = new ElementTest();
+        t1.elementVar();
+        t1.elementDet();
+        
+        JoiningTest t2 = new JoiningTest();
+        t2.joiningVar();
+        t2.joiningDet();
+        
+        FillingTest t3 = new FillingTest();
+        t3.fillingVar();
+        t3.fillingDet();
+        
+        FurnitureTest t4 = new FurnitureTest();
+        t4.furnitureVar();
+        t4.furnitureDet();
 
-//        Query.connection = Test.connect2();
 //        Set set = new HashSet();
 //        Map<String, Set> map = new HashMap();
 //        for (Enam en : ParamList.values()) {
