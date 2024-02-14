@@ -261,7 +261,7 @@ public class AreaStvorka extends AreaSimple {
             for (int j = 0; j < coo1.length - 1; j++) {
                 ElemSimple elemStv = elemList.get(coo1[j].z);
                 ElemSimple elemFrm = elemList.get(coo2[j].z);
-                if (elemFrm != null) {
+                if (elemStv != null && elemFrm != null) {
                     winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.FLAT, elemStv, elemFrm));
                 }
             }

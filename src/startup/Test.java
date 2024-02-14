@@ -44,6 +44,7 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.operation.buffer.VariableBuffer;
 import org.locationtech.jts.util.GeometricShapeFactory;
 import org.locationtech.jts.algorithm.Orientation;
+import org.locationtech.jts.algorithm.PointLocation;
 
 public class Test {
 
@@ -101,8 +102,8 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //frame(args);
-            //wincalc();
-            param();
+            wincalc();
+            //param();
             //query();
             //json();
             //uid();
@@ -118,7 +119,7 @@ public class Test {
 
         Conn.connection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
-        String _case = "one";
+        String _case = "min";
 
         if (_case.equals("one")) {
             String script = GsonScript.scriptPath(601004);
@@ -168,8 +169,8 @@ public class Test {
         
         ElementTest t1 = new ElementTest();
         t1.elementVar();
-        t1.elementDet();
-        
+//        t1.elementDet();
+//        
 //        JoiningTest t2 = new JoiningTest();
 //        t2.joiningVar();
 //        t2.joiningDet();
@@ -357,7 +358,7 @@ public class Test {
             new Coordinate(1000, 0, 4),
             new Coordinate(0, 0, 1)};
 
-        Point point1 = gf.createPoint(new Coordinate(499.9, 500));
+        Point point1 = gf.createPoint(new Coordinate(500, 500));
         Point point2 = gf.createPoint(new Coordinate(0, 500));
         LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
         LineString line2 = gf.createLineString(coord2);
@@ -366,15 +367,11 @@ public class Test {
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
         
-        int index = Orientation.index(new Coordinate(500, 300), new Coordinate(500, 30), new Coordinate(0, 0));
-        
-        System.out.println(Math.toDegrees(Angle.angle(new Coordinate(500, 500), new Coordinate(0, 499.99))));
-//        double ang = -136;
-//        System.out.println(ang < -135);
-        
-//        if ((180 > -135 && 180 > 135)) {
-//          System.out.println("vvv"); 
-//        }
+        Coordinate p = new Coordinate(200, 501);
+        Coordinate c[] = new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)};
+        boolean b = PointLocation.isOnLine(p, c);       
+        System.out.println(b);
+
     }
 
     public static void frame(String[] args) {

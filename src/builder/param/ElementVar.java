@@ -73,14 +73,12 @@ public class ElementVar extends Par5s {
                     }
                     break;
                 case 31003:  //Если сосединенный артикул  T-обр.
-                    Object o1 = winc.listJoin.elem(elem5e, 0);
-                    Object o2 = winc.listJoin.elem(elem5e, 0).artiklRecAn.getStr(eArtikl.code);
                     if (rec.getStr(TEXT).equals(winc.listJoin.elem(elem5e, 0).artiklRecAn.getStr(eArtikl.code)) == true) {
-                        if (winc.listJoin.get(elem5e, 0).type() != TypeJoin.TIMP && winc.listJoin.get(elem5e, 0).type() != TypeJoin.TCON) {
+                        if (winc.listJoin.join(elem5e, 0).type() != TypeJoin.TIMP && winc.listJoin.join(elem5e, 0).type() != TypeJoin.TCON) {
                             return false;
                         }
                     } else if (rec.getStr(TEXT).equals(winc.listJoin.elem(elem5e, 1).artiklRecAn.getStr(eArtikl.code))) {
-                        if (winc.listJoin.get(elem5e, 1).type() != TypeJoin.TIMP && winc.listJoin.get(elem5e, 1).type() != TypeJoin.TCON) {
+                        if (winc.listJoin.join(elem5e, 1).type() != TypeJoin.TIMP && winc.listJoin.join(elem5e, 1).type() != TypeJoin.TCON) {
                             return false;
                         }
                     } else {
@@ -88,11 +86,15 @@ public class ElementVar extends Par5s {
                     }
                     break;
                 case 31004: //Если прилегающий артикул 
-                {
+                {                    
+//                    ElemSimple el = winc.listJoin.elem(elem5e, 2);
+//                    if(rec.getStr(TEXT).equals(el.artiklRecAn.getStr(eArtikl.code))) {
+//                        
+//                    }
                     boolean ret = false;
-                    for (ElemJoining elemJoining : winc.listJoin) {
-                        if (elemJoining.elem2.artiklRecAn.getInt(1) == elem5e.artiklRecAn.getInt(1)
-                                && rec.getStr(TEXT).equals(elemJoining.elem1.artiklRecAn.getStr(eArtikl.code))) {
+                    for (ElemJoining join : winc.listJoin) {
+                        if (join.elem2.artiklRecAn.getInt(1) == elem5e.artiklRecAn.getInt(1)
+                                && rec.getStr(TEXT).equals(join.elem1.artiklRecAn.getStr(eArtikl.code))) {
                             ret = true;
                         }
                     }
@@ -302,8 +304,8 @@ public class ElementVar extends Par5s {
                     }
                     break;
                 case 31060:  //Допустимый угол между плоскостями, ° 
-                    if ((UCom.containsNumbJust(rec.getStr(TEXT), winc.listJoin.get(elem5e, 0).angleBetween()) == true
-                            || UCom.containsNumbJust(rec.getStr(TEXT), winc.listJoin.get(elem5e, 1).angleBetween()) == true) == false) {
+                    if ((UCom.containsNumbJust(rec.getStr(TEXT), winc.listJoin.join(elem5e, 0).angleBetween()) == true
+                            || UCom.containsNumbJust(rec.getStr(TEXT), winc.listJoin.join(elem5e, 1).angleBetween()) == true) == false) {
                         return false;
                     }
                     break;

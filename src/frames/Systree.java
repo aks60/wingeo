@@ -516,9 +516,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                     ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
                     new Joining(winc, true).calc();//заполним соединения из конструктива                                        
-                    ElemJoining ej1 = winc.listJoin.get(elem5e, 0);
-                    ElemJoining ej2 = winc.listJoin.get(elem5e, 1);
-                    ElemJoining ej3 = winc.listJoin.get(elem5e, 2);
+                    ElemJoining ej1 = winc.listJoin.join(elem5e, 0);
+                    ElemJoining ej2 = winc.listJoin.join(elem5e, 1);
+                    ElemJoining ej3 = winc.listJoin.join(elem5e, 2);
                     List.of(lab55, lab56, lab57).forEach(it -> it.setIcon(null));
                     List.of(txt36, txt37, txt38, txt39, txt40, txt41, txt42, txt43, txt44).forEach(it -> it.setText(""));
                     if (ej1 != null) {
@@ -3946,7 +3946,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
                 JButton btn = (JButton) evt.getSource();
                 int point = (btn.getName().equals("btn26")) ? 0 : (btn.getName().equals("btn27")) ? 1 : 2;
-                ElemJoining elemJoin = winc.listJoin.get(elem5e, point);
+                ElemJoining elemJoin = winc.listJoin.join(elem5e, point);
                 App.Joining.createFrame(Systree.this, elemJoin);
             }
         } catch (Exception e) {
