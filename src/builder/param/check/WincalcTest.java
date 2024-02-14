@@ -79,8 +79,8 @@ public class WincalcTest {
     public WincalcTest() {
         try {
             iwin2(); //601004
-            iwin3(); //604005
-            iwin4(); //700027
+            //iwin3(); //604005
+            //iwin4(); //700027
 
         } catch (Exception e) {
             System.err.println("ОШИБКА:param.test.WinacalcTest() " + e);

@@ -30,7 +30,7 @@ public class ElemCross extends ElemSimple {
 
     public ElemCross(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
-        addEvents();
+        this.addEvents();
     }
 
     @Override
@@ -76,6 +76,7 @@ public class ElemCross extends ElemSimple {
                 int index = (lineImp.getGeometryN(0).getLength() > lineImp.getGeometryN(1).getLength()) ? 0 : 1;
                 lineImp = lineImp.getGeometryN(index);
             }
+            lineImp.normalize();
             //Присваиваю нов. коорд.
             this.setDimension(lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y, lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y);
 

@@ -234,7 +234,7 @@ public final class Bimax {
             GsonElem area = rootGson.addArea(new GsonElem(Type.AREA));
 
             area.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
-            area.addElem(new GsonElem(Type.IMPOST, 720, 1300, 720, 1700))
+            area.addElem(new GsonElem(Type.IMPOST, 720, 400, 720, 1700))
                     .addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 604005) {
