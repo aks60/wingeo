@@ -156,9 +156,9 @@ public class Test {
         WincalcTest.init();
         //WincalcTest.iwin4.listJoin.elem(WincalcTest.stv_right4, 2);
         
-        //ElementTest t1 = new ElementTest();
-        //t1.elementVar();
-        //t1.elementDet();
+        ElementTest t1 = new ElementTest();
+        t1.elementVar();
+        t1.elementDet();
 //        
 //        JoiningTest t2 = new JoiningTest();
 //        t2.joiningVar();
