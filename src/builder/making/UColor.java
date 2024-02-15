@@ -99,7 +99,10 @@ public class UColor {
         try {
             int elemColorUS = (side == 1) ? typesUS & 0x0000000f : (side == 2) ? (typesUS & 0x000000f0) >> 4 : (typesUS & 0x00000f00) >> 8; //тип подбора                
             int elemArtID = spcAdd.artiklRec.getInt(eArtikl.id);
+            
+////////////////////////////////////////////////////////////////////////////////            
             int profSideColorID = getColorFromProfile(spcAdd, elemColorUS); //цвет из варианта подбора 
+////////////////////////////////////////////////////////////////////////////////
 
             ////= ВРУЧНУЮ =////
             if (elemColorFk > 0 && elemColorFk != 100000) {
@@ -178,7 +181,7 @@ public class UColor {
                 return false;
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:UColor.colorFromProduct() " + e);
+            System.err.println("Ошибка:UColor.colorFromProduct(3) " + e);
         }
         return true;
     }
