@@ -86,21 +86,15 @@ public class ElementVar extends Par5s {
                     }
                     break;
                 case 31004: //Если прилегающий артикул 
-                {                    
-//                    ElemSimple el = winc.listJoin.elem(elem5e, 2);
-//                    if(rec.getStr(TEXT).equals(el.artiklRecAn.getStr(eArtikl.code))) {
-//                        
-//                    }
+                {        
                     boolean ret = false;
-                    for (ElemJoining join : winc.listJoin) {
-                        if (join.elem2.artiklRecAn.getInt(1) == elem5e.artiklRecAn.getInt(1)
-                                && rec.getStr(TEXT).equals(join.elem1.artiklRecAn.getStr(eArtikl.code))) {
-                            ret = true;
-                        }
+                    ElemSimple el = winc.listJoin.elem(elem5e, 2);
+                    if(rec.getStr(TEXT).equals(el.artiklRecAn.getStr(eArtikl.code))) {
+                       ret = true; 
                     }
                     if (ret == false) {
                         return false;
-                    }
+                    }                  
                 }
                 break;
                 case 31005:  //Коды основной текстуры контейнера 

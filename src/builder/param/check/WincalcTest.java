@@ -18,77 +18,77 @@ import java.util.HashMap;
 
 public class WincalcTest {
 
-    static Wincalc iwin_2 = null; //601004
-    static Wincalc iwin_3 = null; //604005
-    static Wincalc iwin_4 = null; //700027
+    public static Wincalc iwin_2 = null; //601004
+    public static Wincalc iwin_3 = null; //604005
+    public static Wincalc iwin_4 = null; //700027
 
-    static HashMap<Integer, String> hmParam = new HashMap();
-    static int grup = -1;
-    static Record record = null;
+    public static HashMap<Integer, String> hmParam = new HashMap();
+    public static int grup = -1;
+    public static Record record = null;
 
-    static ElemSimple frame_left_2 = null;
-    static ElemSimple frame_right_2 = null;
-    static ElemSimple stv_right_2 = null;
-    static ElemSimple imp_horiz_2 = null;
-    static ElemSimple imp_vert_2 = null;
-    static ElemSimple glass_top_2 = null;
-    static ElemSimple glass_left_2 = null;
-    static ElemSimple glass_right_2 = null;
+    public static ElemSimple frame_left_2 = null;
+    public static ElemSimple frame_right_2 = null;
+    public static ElemSimple stv_right_2 = null;
+    public static ElemSimple imp_horiz_2 = null;
+    public static ElemSimple imp_vert_2 = null;
+    public static ElemSimple glass_top_2 = null;
+    public static ElemSimple glass_left_2 = null;
+    public static ElemSimple glass_right_2 = null;
 
-    static ElemSimple frame_left_3 = null;
-    static ElemSimple frame_right_3 = null;
-    static ElemSimple stv_right_3 = null;
-    static ElemSimple imp_vert_3 = null;
-    static ElemSimple glass_top_3 = null;
-    static ElemSimple glass_left_3 = null;
+    public static ElemSimple frame_left_3 = null;
+    public static ElemSimple frame_right_3 = null;
+    public static ElemSimple stv_right_3 = null;
+    public static ElemSimple imp_vert_3 = null;
+    public static ElemSimple glass_top_3 = null;
+    public static ElemSimple glass_left_3 = null;
 
-    static ElemSimple frame_left_4 = null;
-    static ElemSimple frame_right_4 = null;
-    static ElemSimple stv_left_4 = null;
-    static ElemSimple stv_right_4 = null;
-    static ElemSimple glass_right_4 = null;
-    static ElemSimple glass_left_4 = null;
+    public static ElemSimple frame_left_4 = null;
+    public static ElemSimple frame_right_4 = null;
+    public static ElemSimple stv_left_4 = null;
+    public static ElemSimple stv_right_4 = null;
+    public static ElemSimple glass_right_4 = null;
+    public static ElemSimple glass_left_4 = null;
 
-    static ElementVar elementVar2 = null;
-    static ElementDet elementDet2 = null;
-    static JoiningVar joiningVar2 = null;
-    static JoiningDet joiningDet2 = null;
-    static FillingVar fillingVar2 = null;
-    static FillingDet fillingDet2 = null;
-    static FurnitureVar furnitureVar2 = null;
-    static FurnitureDet furnitureDet2 = null;
+    public static ElementVar elementVar2 = null;
+    public static ElementDet elementDet2 = null;
+    public static JoiningVar joiningVar2 = null;
+    public static JoiningDet joiningDet2 = null;
+    public static FillingVar fillingVar2 = null;
+    public static FillingDet fillingDet2 = null;
+    public static FurnitureVar furnitureVar2 = null;
+    public static FurnitureDet furnitureDet2 = null;
 
-    static ElementVar elementVar3 = null;
-    static ElementDet elementDet3 = null;
-    static JoiningVar joiningVar3 = null;
-    static JoiningDet joiningDet3 = null;
-    static FillingVar fillingVar3 = null;
-    static FillingDet fillingDet3 = null;
-    static FurnitureVar furnitureVar3 = null;
-    static FurnitureDet furnitureDet3 = null;
+    public static ElementVar elementVar3 = null;
+    public static ElementDet elementDet3 = null;
+    public static JoiningVar joiningVar3 = null;
+    public static JoiningDet joiningDet3 = null;
+    public static FillingVar fillingVar3 = null;
+    public static FillingDet fillingDet3 = null;
+    public static FurnitureVar furnitureVar3 = null;
+    public static FurnitureDet furnitureDet3 = null;
 
-    static ElementVar elementVar4 = null;
-    static ElementDet elementDet4 = null;
-    static JoiningVar joiningVar4 = null;
-    static JoiningDet joiningDet4 = null;
-    static FillingVar fillingVar4 = null;
-    static FillingDet fillingDet4 = null;
-    static FurnitureVar furnitureVar4 = null;
-    static FurnitureDet furnitureDet4 = null;
+    public static ElementVar elementVar4 = null;
+    public static ElementDet elementDet4 = null;
+    public static JoiningVar joiningVar4 = null;
+    public static JoiningDet joiningDet4 = null;
+    public static FillingVar fillingVar4 = null;
+    public static FillingDet fillingDet4 = null;
+    public static FurnitureVar furnitureVar4 = null;
+    public static FurnitureDet furnitureDet4 = null;
 
-    public WincalcTest() {
+    public static void init() {
         try {
             iwin2(); //601004
-            //iwin3(); //604005
-            //iwin4(); //700027
+            iwin3(); //604005
+            iwin4(); //700027
 
         } catch (Exception e) {
             System.err.println("ОШИБКА:param.test.WinacalcTest() " + e);
-        }
+        }        
     }
-
+    
     //601004 "KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)"
-    private void iwin2() {
+    private static void iwin2() {
         iwin_2 = new builder.Wincalc(); //601004
         iwin_2.build(GsonScript.scriptPath(601004));
         iwin_2.specific(true);
@@ -104,7 +104,7 @@ public class WincalcTest {
         frame_left_2 = getElem(iwin_2.root, 1);
 
         frame_right_2 = getElem(iwin_2.root, 3);
-        stv_right_2 = getElem(iwin_2.root, 12.3);
+        stv_right_2 = getElem(iwin_2.root, 9.3);
         imp_vert_2 = getElem(iwin_2.root, 11);
         imp_horiz_2 = getElem(iwin_2.root, 7);
         glass_top_2 = (ElemSimple) getElem(iwin_2.root, 6);
@@ -113,7 +113,7 @@ public class WincalcTest {
     }
 
     //604005  "Wintech\\Termotech 742\\1 ОКНА"
-    private void iwin3() {
+    private static void iwin3() {
         iwin_3 = new builder.Wincalc(); //604005
         iwin_3.build(GsonScript.scriptPath(604005));
         iwin_3.specific(true);
@@ -137,7 +137,7 @@ public class WincalcTest {
     }
 
     //700027  "Montblanc / Eco / 1 ОКНА (штульп)"
-    private void iwin4() {
+    private static void iwin4() {
         iwin_4 = new builder.Wincalc(); //700027
         iwin_4.build(GsonScript.scriptPath(700027));
         iwin_4.specific(true);
@@ -161,7 +161,7 @@ public class WincalcTest {
     }
 
     //Получить элемент по ключу
-    public ElemSimple getElem(AreaSimple root, double id) {
+    public static ElemSimple getElem(AreaSimple root, double id) {
         for (ElemSimple frm : root.frames) {
             if (frm.id == id) {
                 return (ElemSimple) frm;

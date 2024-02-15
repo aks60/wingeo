@@ -92,7 +92,7 @@ public class ElementTest {
         assert false == elementVar2.check(imp_horiz_2, param("XXX", grup)) : grup;
 
         grup = 31004; //Если прилегающий артикул
-        assert true == elementVar2.check(stv_right_2, param("907", grup)) : grup;
+        assert true == elementVar2.check(stv_right_2, param("937", grup)) : grup;
         assert false == elementVar2.check(stv_right_2, param("XXX", grup)) : grup;
 
         grup = 31005; //33005, 33005, 37005 //Коды основной текстуры контейнера
@@ -218,7 +218,6 @@ public class ElementTest {
         grup = 37056; //Коды внут. или внеш. текстуры изд.
         assert true == elementVar4.check(stv_right_4, param("1000-10010;", grup)) : grup;
         assert true == elementVar3.check(stv_right_3, param("1000-1010;", grup)) : grup;
-
     }
 
     /**

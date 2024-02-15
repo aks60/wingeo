@@ -102,8 +102,8 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //frame(args);
-            wincalc();
-            //param();
+            //wincalc();
+            param();
             //query();
             //json();
             //uid();
@@ -119,7 +119,7 @@ public class Test {
 
         Conn.connection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
-        String _case = "min";
+        String _case = "one";
 
         if (_case.equals("one")) {
             String script = GsonScript.scriptPath(601004);
@@ -133,10 +133,10 @@ public class Test {
             //winc.gc2d = winc.bufferImg.createGraphics();
             //winc.draw(); //рисую конструкцию
 
-            frames.PSCompare.iwinPs4(winc, true);
+            //frames.PSCompare.iwinPs4(winc, true);
             //winc.listElem.forEach(it -> System.out.println(it));
             //winc.listJoin.forEach(it -> System.out.println(it.joiningRec));     
-            //winc.listJoin.forEach(it -> System.out.println(it));     
+            winc.listJoin.forEach(it -> System.out.println(it));     
 
         } else if (_case.equals("min")) {
             List<Integer> prjList = GsonScript.systemList(_case);
@@ -165,10 +165,11 @@ public class Test {
     private static void param() {
 
         Conn.connection(Test.connect2());
-        WincalcTest iwin = new WincalcTest();
+        WincalcTest.init();
+        //WincalcTest.iwin_2.listJoin.elem(WincalcTest.imp_horiz_2, 2);
         
-        ElementTest t1 = new ElementTest();
-        t1.elementVar();
+//        ElementTest t1 = new ElementTest();
+//        t1.elementVar();
 //        t1.elementDet();
 //        
 //        JoiningTest t2 = new JoiningTest();
