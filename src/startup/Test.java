@@ -2,22 +2,16 @@ package startup;
 
 import builder.model.Com5t;
 import builder.model.UGeo;
-import builder.param.ParamList;
-import builder.param.check.ElementTest;
-import builder.param.check.FillingTest;
-import builder.param.check.FurnitureTest;
-import builder.param.check.JoiningTest;
 import builder.param.check.WincalcTest;
 import builder.script.GsonElem;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
 import common.eProp;
 import dataset.Conn;
-import dataset.Query;
-import enums.Enam;
 import enums.Type;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -28,22 +22,16 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.operation.buffer.VariableBuffer;
 import org.locationtech.jts.util.GeometricShapeFactory;
-import org.locationtech.jts.algorithm.Orientation;
 import org.locationtech.jts.algorithm.PointLocation;
 
 public class Test {
@@ -102,8 +90,8 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //frame(args);
-            //wincalc();
-            param();
+            wincalc();
+            //param();
             //query();
             //json();
             //uid();
@@ -122,10 +110,10 @@ public class Test {
         String _case = "one";
 
         if (_case.equals("one")) {
-            String script = GsonScript.scriptPath(601004);
+            String script = GsonScript.scriptPath(700027);
             winc.build(script);
             //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
-            //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+            System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
             winc.specific(true);
             //new Joining(winc).calc();
