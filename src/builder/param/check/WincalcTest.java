@@ -18,36 +18,36 @@ import java.util.HashMap;
 
 public class WincalcTest {
 
-    public static Wincalc iwin_2 = null; //601004
-    public static Wincalc iwin_3 = null; //604005
-    public static Wincalc iwin_4 = null; //700027
+    public static Wincalc iwin2 = null; //601004
+    public static Wincalc iwin3 = null; //604005
+    public static Wincalc iwin4 = null; //700027
 
     public static HashMap<Integer, String> hmParam = new HashMap();
     public static int grup = -1;
     public static Record record = null;
 
-    public static ElemSimple frame_left_2 = null;
-    public static ElemSimple frame_right_2 = null;
-    public static ElemSimple stv_right_2 = null;
-    public static ElemSimple imp_horiz_2 = null;
-    public static ElemSimple imp_vert_2 = null;
-    public static ElemSimple glass_top_2 = null;
-    public static ElemSimple glass_left_2 = null;
-    public static ElemSimple glass_right_2 = null;
+    public static ElemSimple frame_left2 = null;
+    public static ElemSimple frame_right2 = null;
+    public static ElemSimple stv_right2 = null;
+    public static ElemSimple imp_horiz2 = null;
+    public static ElemSimple imp_vert2 = null;
+    public static ElemSimple glass_top2 = null;
+    public static ElemSimple glass_left2 = null;
+    public static ElemSimple glass_right2 = null;
 
-    public static ElemSimple frame_left_3 = null;
-    public static ElemSimple frame_right_3 = null;
-    public static ElemSimple stv_right_3 = null;
-    public static ElemSimple imp_vert_3 = null;
-    public static ElemSimple glass_top_3 = null;
-    public static ElemSimple glass_left_3 = null;
+    public static ElemSimple frame_left3 = null;
+    public static ElemSimple frame_right3 = null;
+    public static ElemSimple stv_right3 = null;
+    public static ElemSimple imp_vert3 = null;
+    public static ElemSimple glass_top3 = null;
+    public static ElemSimple glass_left3 = null;
 
-    public static ElemSimple frame_left_4 = null;
-    public static ElemSimple frame_right_4 = null;
-    public static ElemSimple stv_left_4 = null;
-    public static ElemSimple stv_right_4 = null;
-    public static ElemSimple glass_right_4 = null;
-    public static ElemSimple glass_left_4 = null;
+    public static ElemSimple frame_left4 = null;
+    public static ElemSimple frame_right4 = null;
+    public static ElemSimple stv_left4 = null;
+    public static ElemSimple stv_right4 = null;
+    public static ElemSimple glass_right4 = null;
+    public static ElemSimple glass_left4 = null;
 
     public static ElementVar elementVar2 = null;
     public static ElementDet elementDet2 = null;
@@ -89,75 +89,75 @@ public class WincalcTest {
     
     //601004 "KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)"
     private static void iwin2() {
-        iwin_2 = new builder.Wincalc(); //601004
-        iwin_2.build(GsonScript.scriptPath(601004));
-        iwin_2.specific(true);
-        elementVar2 = new ElementVar(iwin_2);
-        elementDet2 = new ElementDet(iwin_2);
-        joiningVar2 = new JoiningVar(iwin_2);
-        fillingVar2 = new FillingVar(iwin_2);
-        fillingDet2 = new FillingDet(iwin_2);
-        joiningVar2 = new JoiningVar(iwin_2);
-        joiningDet2 = new JoiningDet(iwin_2);
-        furnitureVar2 = new FurnitureVar(iwin_2);
-        furnitureDet2 = new FurnitureDet(iwin_2);
-        frame_left_2 = getElem(iwin_2.root, 1);
+        iwin2 = new builder.Wincalc(); //601004
+        iwin2.build(GsonScript.scriptPath(601004));
+        iwin2.specific(true);
+        elementVar2 = new ElementVar(iwin2);
+        elementDet2 = new ElementDet(iwin2);
+        joiningVar2 = new JoiningVar(iwin2);
+        fillingVar2 = new FillingVar(iwin2);
+        fillingDet2 = new FillingDet(iwin2);
+        joiningVar2 = new JoiningVar(iwin2);
+        joiningDet2 = new JoiningDet(iwin2);
+        furnitureVar2 = new FurnitureVar(iwin2);
+        furnitureDet2 = new FurnitureDet(iwin2);
+        frame_left2 = getElem(iwin2.root, 1);
 
-        frame_right_2 = getElem(iwin_2.root, 3);
-        stv_right_2 = getElem(iwin_2.root, 9.3);
-        imp_vert_2 = getElem(iwin_2.root, 11);
-        imp_horiz_2 = getElem(iwin_2.root, 7);
-        glass_top_2 = (ElemSimple) getElem(iwin_2.root, 6);
-        glass_left_2 = (ElemSimple) getElem(iwin_2.root, 10);
-        glass_right_2 = (ElemSimple) getElem(iwin_2.root, 13);
+        frame_right2 = getElem(iwin2.root, 3);
+        stv_right2 = getElem(iwin2.root, 9.3);
+        imp_vert2 = getElem(iwin2.root, 11);
+        imp_horiz2 = getElem(iwin2.root, 7);
+        glass_top2 = (ElemSimple) getElem(iwin2.root, 6);
+        glass_left2 = (ElemSimple) getElem(iwin2.root, 10);
+        glass_right2 = (ElemSimple) getElem(iwin2.root, 13);
     }
 
     //604005  "Wintech\\Termotech 742\\1 ОКНА"
     private static void iwin3() {
-        iwin_3 = new builder.Wincalc(); //604005
-        iwin_3.build(GsonScript.scriptPath(604005));
-        iwin_3.specific(true);
-        elementVar3 = new ElementVar(iwin_3);
-        elementDet3 = new ElementDet(iwin_3);
-        joiningVar3 = new JoiningVar(iwin_3);
-        joiningDet3 = new JoiningDet(iwin_3);
-        fillingVar3 = new FillingVar(iwin_3);
-        fillingDet3 = new FillingDet(iwin_3);
-        joiningVar3 = new JoiningVar(iwin_3);
-        joiningDet3 = new JoiningDet(iwin_3);
-        furnitureVar3 = new FurnitureVar(iwin_3);
-        furnitureDet3 = new FurnitureDet(iwin_3);
+        iwin3 = new builder.Wincalc(); //604005
+        iwin3.build(GsonScript.scriptPath(604005));
+        iwin3.specific(true);
+        elementVar3 = new ElementVar(iwin3);
+        elementDet3 = new ElementDet(iwin3);
+        joiningVar3 = new JoiningVar(iwin3);
+        joiningDet3 = new JoiningDet(iwin3);
+        fillingVar3 = new FillingVar(iwin3);
+        fillingDet3 = new FillingDet(iwin3);
+        joiningVar3 = new JoiningVar(iwin3);
+        joiningDet3 = new JoiningDet(iwin3);
+        furnitureVar3 = new FurnitureVar(iwin3);
+        furnitureDet3 = new FurnitureDet(iwin3);
 
-        frame_left_3 = getElem(iwin_3.root, 1);
-        frame_right_3 = getElem(iwin_3.root, 3);
-        stv_right_3 = getElem(iwin_3.root, 12.3);
-        imp_vert_3 = getElem(iwin_3.root, 11);
-        glass_top_3 = (ElemSimple) getElem(iwin_3.root, 6);
-        glass_left_3 = (ElemSimple) getElem(iwin_3.root, 10);
+        frame_left3 = getElem(iwin3.root, 1);
+        frame_right3 = getElem(iwin3.root, 3);
+        stv_right3 = getElem(iwin3.root, 12.3);
+        imp_vert3 = getElem(iwin3.root, 11);
+        glass_top3 = (ElemSimple) getElem(iwin3.root, 6);
+        glass_left3 = (ElemSimple) getElem(iwin3.root, 10);
     }
 
     //700027  "Montblanc / Eco / 1 ОКНА (штульп)"
     private static void iwin4() {
-        iwin_4 = new builder.Wincalc(); //700027
-        iwin_4.build(GsonScript.scriptPath(700027));
-        iwin_4.specific(true);
-        elementVar4 = new ElementVar(iwin_4);
-        elementDet4 = new ElementDet(iwin_4);
-        joiningVar4 = new JoiningVar(iwin_4);
-        joiningDet4 = new JoiningDet(iwin_4);
-        fillingVar4 = new FillingVar(iwin_4);
-        fillingDet4 = new FillingDet(iwin_4);
-        joiningVar4 = new JoiningVar(iwin_4);
-        joiningDet4 = new JoiningDet(iwin_4);
-        furnitureVar4 = new FurnitureVar(iwin_4);
-        furnitureDet4 = new FurnitureDet(iwin_4);
+        iwin4 = new builder.Wincalc(); //700027
+        iwin4.build(GsonScript.scriptPath(700027));
+        iwin4.specific(true);
+        elementVar4 = new ElementVar(iwin4);
+        elementDet4 = new ElementDet(iwin4);
+        joiningVar4 = new JoiningVar(iwin4);
+        joiningDet4 = new JoiningDet(iwin4);
+        fillingVar4 = new FillingVar(iwin4);
+        fillingDet4 = new FillingDet(iwin4);
+        joiningVar4 = new JoiningVar(iwin4);
+        joiningDet4 = new JoiningDet(iwin4);
+        furnitureVar4 = new FurnitureVar(iwin4);
+        furnitureDet4 = new FurnitureDet(iwin4);
 
-        frame_left_4 = getElem(iwin_4.root, 1);
-        frame_right_4 = getElem(iwin_4.root, 3);
-        stv_left_4 = getElem(iwin_4.root, 5.1);
-        stv_right_4 = getElem(iwin_4.root, 8.3);
-        glass_right_4 = (ElemSimple) getElem(iwin_4.root, 6);
-        glass_left_4 = (ElemSimple) getElem(iwin_4.root, 9);
+        frame_left4 = getElem(iwin4.root, 1);
+        frame_right4 = getElem(iwin4.root, 3);
+        stv_left4 = getElem(iwin4.root, 5.1);
+        stv_right4 = getElem(iwin4.root, 8.3);
+        glass_right4 = (ElemSimple) getElem(iwin4.root, 6);
+        glass_left4 = (ElemSimple) getElem(iwin4.root, 9);
     }
 
     //Получить элемент по ключу
