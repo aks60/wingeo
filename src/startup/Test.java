@@ -2,11 +2,11 @@ package startup;
 
 import builder.model.Com5t;
 import builder.model.UGeo;
+import builder.param.check.ElementTest;
 import builder.param.check.WincalcTest;
 import builder.script.GsonElem;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
@@ -90,8 +90,8 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //frame(args);
-            wincalc();
-            //param();
+            //wincalc();
+            param();
             //query();
             //json();
             //uid();
@@ -113,9 +113,9 @@ public class Test {
             String script = GsonScript.scriptPath(700027);
             winc.build(script);
             //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
-            System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+            //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
-            winc.specific(true);
+            //winc.specific(true);
             //new Joining(winc).calc();
             //winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
             //winc.gc2d = winc.bufferImg.createGraphics();
@@ -154,11 +154,11 @@ public class Test {
 
         Conn.connection(Test.connect2());
         WincalcTest.init();
-        //WincalcTest.iwin_2.listJoin.elem(WincalcTest.imp_horiz_2, 2);
+        //WincalcTest.iwin4.listJoin.elem(WincalcTest.stv_right4, 2);
         
-//        ElementTest t1 = new ElementTest();
-//        t1.elementVar();
-//        t1.elementDet();
+        //ElementTest t1 = new ElementTest();
+        //t1.elementVar();
+        //t1.elementDet();
 //        
 //        JoiningTest t2 = new JoiningTest();
 //        t2.joiningVar();

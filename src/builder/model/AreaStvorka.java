@@ -152,12 +152,13 @@ public class AreaStvorka extends AreaSimple {
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
             Polygon geo1 = UGeo.geoPadding(this.areaBox, winc.listElem, dh); //полигон векторов сторон створки с учётом нахл.           
 
-            //Координаты рам створок
-            if (this.frames.size() == 0) { //если стороны ств. ещё не созданы                  
+            //Если стороны ств. ещё не созданы 
+            if (this.frames.size() == 0) {                  
                 Coordinate[] coo = geo1.getGeometryN(0).getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
 
-                    GsonElem gson = new GsonElem(Type.STVORKA_SIDE, (int) coo[i].x, (int) coo[i].y); //, coo[i+1].x, coo[i+1].y);
+                    //Координаты рам створок
+                    GsonElem gson = new GsonElem(Type.STVORKA_SIDE, (int) coo[i].x, (int) coo[i].y);
                     if (isJson(this.gson.param, PKjson.stvorkaSide[i])) {
                         gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
                     }
@@ -167,7 +168,7 @@ public class AreaStvorka extends AreaSimple {
                 }
                 coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
 
-            } else { //если стороны уже созданы
+            } else { //Если стороны уже созданы
                 Coordinate[] coo = geo1.getGeometryN(0).getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
                     ElemSimple elem = this.frames.get(i);
@@ -237,7 +238,7 @@ public class AreaStvorka extends AreaSimple {
     //L - соединения, прил.соед.
     @Override
     public void joining() {
-        ArrayCom<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.STOIKA);
+        ArrayCom<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.STOIKA, Type.SHTULP);
         try {
             //L - соединения
             for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам створки
