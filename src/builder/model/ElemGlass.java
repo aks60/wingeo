@@ -17,7 +17,9 @@ import enums.Type;
 import enums.TypeArtikl;
 import enums.UseUnit;
 import java.awt.Shape;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
@@ -88,6 +90,13 @@ public class ElemGlass extends ElemSimple {
     @Override
     public void setLocation() {
         Geometry geo = UGeo.geoPadding(owner.area.getGeometryN(0), winc.listElem, 20);
+        Envelope env = geo.getEnvelopeInternal();
+        setDimension(env.getMinX(), env.getMinY(), env.getMaxX(), env.getMaxY());
+//        List<Coordinate> z = new ArrayList();
+//        for(Coordinate c: geo.getCoordinates()) {
+//            z.add(c);
+//        }
+//        System.out.println(z);
         this.area = geo;
     }
 
@@ -130,6 +139,7 @@ public class ElemGlass extends ElemSimple {
 
                 //Точка пересечения внутренних сегментов
                 out[i] = segm4.lineIntersection(segm3);
+                out[i].z = e2.id;
             }
             //Полигон элемента конструкции
             this.area = Com5t.gf.createPolygon(out);

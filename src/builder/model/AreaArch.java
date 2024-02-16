@@ -6,13 +6,13 @@ import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
 import dataset.Record;
 import domain.eArtikl;
-import enums.Type;
 import enums.TypeJoin;
 import java.util.ArrayList;
 import java.util.List;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
 
 public class AreaArch extends AreaSimple {
@@ -42,7 +42,7 @@ public class AreaArch extends AreaSimple {
                     } else {
                         //Поворот на горизонталь
                         aff.setToRotation(Math.toRadians(-ANG), segm.p0.x, segm.p0.y);
-                        segm = UGeo.getSegment(aff.transform(segm.toGeometry(gf)));//трансформация линии в горизонт
+                        segm = UGeo.getSegment((LineString) aff.transform(segm.toGeometry(gf)));//трансформация линии в горизонт
                         arcA = UGeo.newLineArch(segm.p0.x, segm.p1.x, segm.p0.y, frame.h(), frame.id);  //созд. арки на гортзонтали   
 
                         //Обратный поворот

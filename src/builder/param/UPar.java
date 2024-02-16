@@ -3,6 +3,7 @@ package builder.param;
 import builder.Wincalc;
 import builder.model.AreaStvorka;
 import builder.model.ElemSimple;
+import builder.model.UGeo;
 import common.UCom;
 import dataset.Record;
 import domain.eArtikl;
@@ -16,6 +17,7 @@ import enums.Layout;
 import enums.Type;
 import enums.TypeOpen1;
 import java.util.List;
+import org.locationtech.jts.geom.LineSegment;
 
 /**
  * Участвует в допустимости элемента в конструкции 
@@ -28,19 +30,21 @@ class UPar {
         ElemSimple glass1 = null, glass2 = null;
         for (ElemSimple el : elem5e.winc.listElem) {
             if (el.type == Type.GLASS) {
+                int index = UGeo.getIndex(el.area, elem5e);
+                LineSegment segm = UGeo.getSegment(el.area, index);
                 if (elem5e.layout() == Layout.VERT) {
-                    if (el.inside(elem5e.x1() - 200, elem5e.y1() + elem5e.height() / 2)) {
+                    if (el.inside(elem5e.x1() - 200, elem5e.y1() + elem5e.height() / 2)) { //внутренний
                         glass1 = el;
                     }
-                    if (el.inside(elem5e.x2() + 200, elem5e.y1() + elem5e.height() / 2)) {
+                    if (el.inside(elem5e.x2() + 200, elem5e.y1() + elem5e.height() / 2)) { //внешний
                         glass2 = el;
                     }
                 }
                 if (elem5e.layout() == Layout.HORIZ) {
-                    if (el.inside(elem5e.y1() - 200, elem5e.x1() + elem5e.width() / 2)) {
+                    if (el.inside(elem5e.y1() - 200, elem5e.x1() + elem5e.width() / 2)) { //внутренний
                         glass1 = el;
                     }
-                    if (el.inside(elem5e.y2() + 200, elem5e.x1() + elem5e.width() / 2)) {
+                    if (el.inside(elem5e.y2() + 200, elem5e.x1() + elem5e.width() / 2)) { //внешний
                         glass2 = el;
                     }
                 }

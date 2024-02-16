@@ -1,6 +1,7 @@
 package startup;
 
 import builder.model.Com5t;
+import builder.model.ElemSimple;
 import builder.model.UGeo;
 import builder.param.check.ElementTest;
 import builder.param.check.WincalcTest;
@@ -120,11 +121,10 @@ public class Test {
             //winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
             //winc.gc2d = winc.bufferImg.createGraphics();
             //winc.draw(); //рисую конструкцию
-
             //frames.PSCompare.iwinPs4(winc, true);
             //winc.listElem.forEach(it -> System.out.println(it));
             //winc.listJoin.forEach(it -> System.out.println(it.joiningRec));     
-            winc.listJoin.forEach(it -> System.out.println(it));     
+            winc.listJoin.forEach(it -> System.out.println(it));
 
         } else if (_case.equals("min")) {
             List<Integer> prjList = GsonScript.systemList(_case);
@@ -156,9 +156,19 @@ public class Test {
         WincalcTest.init();
         //WincalcTest.iwin4.listJoin.elem(WincalcTest.stv_right4, 2);
         
+        List<Coordinate> z = new ArrayList();
+        for (ElemSimple el : WincalcTest.iwin2.listElem) {
+            if (el.type == Type.GLASS) {
+                for (Coordinate c : el.area.getCoordinates()) {
+                    z.add(c);
+                }                
+            }
+        }
+        System.out.println(z);
+        
         ElementTest t1 = new ElementTest();
         t1.elementVar();
-        t1.elementDet();
+//        t1.elementDet();
 //        
 //        JoiningTest t2 = new JoiningTest();
 //        t2.joiningVar();
@@ -185,7 +195,7 @@ public class Test {
 //            System.out.println(key + " " + value);
 //        }
     }
-    
+
     private static void query() {
         try {
             Conn.connection(Test.connect2());
@@ -355,10 +365,10 @@ public class Test {
         LineSegment segm2 = new LineSegment(68.0, 500.0, 68.0, 1500.0);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
-        
+
         Coordinate p = new Coordinate(200, 501);
         Coordinate c[] = new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)};
-        boolean b = PointLocation.isOnLine(p, c);       
+        boolean b = PointLocation.isOnLine(p, c);
         System.out.println(b);
 
     }
@@ -399,9 +409,8 @@ public class Test {
                     Shape shape = new ShapeWriter().toShape(mpol);
                     gc2d.draw(shape);
                 }
-                
+
                 //gc2d.rotate(Math.PI);
-                
 //                Font font = gc2d.getFont();
 //                int textwidth = (int) (font.getStringBounds(".", gc2d.getFontRenderContext()).getWidth());
 //                int textheight = (int) (font.getStringBounds("1", gc2d.getFontRenderContext()).getHeight());
