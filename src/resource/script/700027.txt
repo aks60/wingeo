@@ -56,3 +56,89 @@ Name                                                            Artikl          
 Artikl                          Value               
 Лишние: 319465                  63,09           
 Prj=700027        PS=13296,18       SA=13152,26       dx=143,92 
+{
+  "version": "2.0",
+  "prj": 700027,
+  "pid": 427872,
+  "ord": 1,
+  "nuni": 198,
+  "name": "Montblanc / Eco / 1 ОКНА (штульп)",
+  "color1": 1009,
+  "color2": 1009,
+  "color3": 1009,
+  "id": 0.0,
+  "childs": [
+    {
+      "id": 1.0,
+      "type": "FRAME_SIDE",
+      "x1": 0.0,
+      "y1": 0.0
+    },
+    {
+      "id": 2.0,
+      "type": "FRAME_SIDE",
+      "x1": 0.0,
+      "y1": 1400.0
+    },
+    {
+      "id": 3.0,
+      "type": "FRAME_SIDE",
+      "x1": 1300.0,
+      "y1": 1400.0
+    },
+    {
+      "id": 4.0,
+      "type": "FRAME_SIDE",
+      "x1": 1300.0,
+      "y1": 0.0
+    },
+    {
+      "id": 5.0,
+      "childs": [
+        {
+          "id": 6.0,
+          "param": {
+            "artglasID": 3293
+          },
+          "type": "GLASS"
+        }
+      ],
+      "param": {
+        "typeOpen": 1,
+        "sysfurnID": 2915
+      },
+      "type": "STVORKA"
+    },
+    {
+      "id": 7.0,
+      "type": "SHTULP",
+      "x1": 450.0,
+      "y1": 0.0,
+      "x2": 450.0,
+      "y2": 1400.0
+    },
+    {
+      "id": 8.0,
+      "childs": [
+        {
+          "id": 9.0,
+          "param": {
+            "artglasID": 4267
+          },
+          "type": "GLASS"
+        }
+      ],
+      "param": {
+        "typeOpen": 4,
+        "sysfurnID": 2913
+      },
+      "type": "STVORKA"
+    }
+  ],
+  "param": {
+    "ioknaParam": [
+      -8252
+    ]
+  },
+  "type": "RECTANGL"
+}

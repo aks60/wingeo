@@ -40,7 +40,6 @@ import static builder.param.check.WincalcTest.iwin2;
 import static builder.param.check.WincalcTest.iwin3;
 import static builder.param.check.WincalcTest.iwin4;
 import static builder.param.check.WincalcTest.frame2_right;
-import static builder.param.check.WincalcTest.stv2_right;
 import static builder.param.check.WincalcTest.imp2_horiz;
 import static builder.param.check.WincalcTest.imp2_vert;
 import static builder.param.check.WincalcTest.glass2_top;
@@ -59,6 +58,7 @@ import static builder.param.check.WincalcTest.stv4_left;
 import static builder.param.check.WincalcTest.stv4_right;
 import static builder.param.check.WincalcTest.glass4_right;
 import static builder.param.check.WincalcTest.glass4_left;
+import static builder.param.check.WincalcTest.stv2_left3;
 
 public class FillingTest {
 
@@ -79,8 +79,8 @@ public class FillingTest {
         //assert false == fillingVar2.check(frame_left_2, param("KBE 5X", grup)) : grup;
 
         grup = 13003; //Тип проема
-        assert false == fillingVar2.check(stv2_right, param("глухой", grup)) : grup;
-        assert true == fillingVar2.check(stv2_right, param("не глухой", grup)) : grup;
+        assert false == fillingVar2.check(stv2_left3, param("глухой", grup)) : grup;
+        assert true == fillingVar2.check(stv2_left3, param("не глухой", grup)) : grup;
 
         grup = 13005; //Заполнение типа
         assert true == fillingVar3.check(glass3_top, param("Стеклопакет", grup)) : grup;

@@ -43,7 +43,6 @@ import static builder.param.check.WincalcTest.iwin2;
 import static builder.param.check.WincalcTest.iwin3;
 import static builder.param.check.WincalcTest.iwin4;
 import static builder.param.check.WincalcTest.frame2_right;
-import static builder.param.check.WincalcTest.stv2_right;
 import static builder.param.check.WincalcTest.imp2_horiz;
 import static builder.param.check.WincalcTest.imp2_vert;
 import static builder.param.check.WincalcTest.glass2_top;
@@ -62,6 +61,7 @@ import static builder.param.check.WincalcTest.stv4_left;
 import static builder.param.check.WincalcTest.stv4_right;
 import static builder.param.check.WincalcTest.glass4_right;
 import static builder.param.check.WincalcTest.glass4_left;
+import static builder.param.check.WincalcTest.stv2_left3;
 
 
 public class JoiningTest {
@@ -91,8 +91,8 @@ public class JoiningTest {
         assert false == joiningVar4.check(iwin4.listJoin.join(stv4_right, 1), param("90", grup)) : grup;
 
         grup = 1039; //Для типа открывания 
-        assert true == joiningVar2.check(iwin2.listJoin.join(stv2_right, 1), param("поворотное", grup)) : grup;
-        assert false == joiningVar2.check(iwin2.listJoin.join(stv2_right, 1), param("поворотно-откидное", grup)) : grup;
+        assert true == joiningVar2.check(iwin2.listJoin.join(stv2_left3, 1), param("поворотное", grup)) : grup;
+        assert false == joiningVar2.check(iwin2.listJoin.join(stv2_left3, 1), param("поворотно-откидное", grup)) : grup;
 
         grup = 1043; //Ограничение габарита контура, мм 
         assert true == joiningVar2.check(iwin2.listJoin.join(frame3_left, 1), param("2,45", grup)) : grup;

@@ -41,7 +41,6 @@ import static builder.param.check.WincalcTest.iwin2;
 import static builder.param.check.WincalcTest.iwin3;
 import static builder.param.check.WincalcTest.iwin4;
 import static builder.param.check.WincalcTest.frame2_right;
-import static builder.param.check.WincalcTest.stv2_right;
 import static builder.param.check.WincalcTest.imp2_horiz;
 import static builder.param.check.WincalcTest.imp2_vert;
 import static builder.param.check.WincalcTest.glass2_top;
@@ -60,6 +59,7 @@ import static builder.param.check.WincalcTest.stv4_left;
 import static builder.param.check.WincalcTest.stv4_right;
 import static builder.param.check.WincalcTest.glass4_right;
 import static builder.param.check.WincalcTest.glass4_left;
+import static builder.param.check.WincalcTest.stv2_left3;
 
 public class ElementTest {
 
@@ -92,23 +92,23 @@ public class ElementTest {
         assert false == elementVar2.check(imp2_horiz, param("XXX", grup)) : grup;
 
         grup = 31004; //Если прилегающий артикул
-        assert true == elementVar2.check(stv2_right, param("937", grup)) : grup;
-        assert false == elementVar2.check(stv2_right, param("XXX", grup)) : grup;
+        assert true == elementVar2.check(stv2_left3, param("937", grup)) : grup;
+        assert false == elementVar2.check(stv2_left3, param("XXX", grup)) : grup;
 
         grup = 31005; //33005, 33005, 37005 //Коды основной текстуры контейнера
         assert true == elementVar2.check(frame2_left, param("0-800;990;1009;1600-2000;", grup)) : grup;
-        assert true == elementVar2.check(stv2_right, param("0-1008;1009", grup)) : grup;
-        assert false == elementVar2.check(stv2_right, param("0-1008;1010", grup)) : grup;
+        assert true == elementVar2.check(stv2_left3, param("0-1008;1009", grup)) : grup;
+        assert false == elementVar2.check(stv2_left3, param("0-1008;1010", grup)) : grup;
 
         grup = 31006; //33006, 34006, 37006 //Коды внутр. текстуры контейнера
         assert true == elementVar2.check(frame2_left, param("0-800;990;1009;1600-2000;", grup)) : grup;
-        assert true == elementVar2.check(stv2_right, param("0-1008;1009", grup)) : grup;
-        assert false == elementVar2.check(stv2_right, param("0-1008;1010", grup)) : grup;
+        assert true == elementVar2.check(stv2_left3, param("0-1008;1009", grup)) : grup;
+        assert false == elementVar2.check(stv2_left3, param("0-1008;1010", grup)) : grup;
 
         grup = 31007; //33007, 34007, 37007 //Коды внешн. текстуры контейнера 
         assert true == elementVar2.check(frame2_left, param("0-800;990;1009;1600-2000;", grup)) : grup;
-        assert true == elementVar2.check(stv2_right, param("0-1008;1009", grup)) : grup;
-        assert false == elementVar2.check(stv2_right, param("0-1008;1010", grup)) : grup;
+        assert true == elementVar2.check(stv2_left3, param("0-1008;1009", grup)) : grup;
+        assert false == elementVar2.check(stv2_left3, param("0-1008;1010", grup)) : grup;
 
         grup = 31008; //Эффективное заполнение изделия, мм
         assert true == elementVar2.check(frame2_left, param("30", grup)) : grup;
@@ -141,17 +141,17 @@ public class ElementTest {
         assert true == elementVar2.check(imp2_vert, param("807", grup)) : grup;
 
         grup = 31037; //38037, 39037, 40037 //Название фурнитуры содержит
-        assert true == elementVar2.check(stv2_right, param("ROTO NT Повортные окна/двери", grup)) : grup;
-        assert false == elementVar2.check(stv2_right, param("ROTO NT Повортные", grup)) : grup;
-        assert false == elementVar2.check(stv2_right, param("ACCADO NT Повортные", grup)) : grup;
+        assert true == elementVar2.check(stv2_left3, param("ROTO NT Повортные окна/двери", grup)) : grup;
+        assert false == elementVar2.check(stv2_left3, param("ROTO NT Повортные", grup)) : grup;
+        assert false == elementVar2.check(stv2_left3, param("ACCADO NT Повортные", grup)) : grup;
 
         grup = 31041; //Ограничение длины профиля, мм
-        assert true == elementVar2.check(stv2_right, param("400,1-10000", grup)) : grup;
-        assert false == elementVar2.check(stv2_right, param("400,1-800", grup)) : grup;
+        assert true == elementVar2.check(stv2_left3, param("400,1-10000", grup)) : grup;
+        assert false == elementVar2.check(stv2_left3, param("400,1-800", grup)) : grup;
 
         grup = 31050; //Контейнер имеет тип 
-        assert true == elementVar2.check(stv2_right, param("2", grup)) : grup;
-        assert false == elementVar2.check(stv2_right, param("1", grup)) : grup;
+        assert true == elementVar2.check(stv2_left3, param("2", grup)) : grup;
+        assert false == elementVar2.check(stv2_left3, param("1", grup)) : grup;
 
         grup = 31051; //Если створка фурнитуры
         assert true == elementVar4.check(stv4_right, param("ведомая", grup)) : grup;
@@ -187,13 +187,13 @@ public class ElementTest {
         assert false == elementVar2.check(frame2_left, param("800", grup)) : grup;
 
         grup = 37008; //Тип проема
-        assert false == elementVar2.check(stv2_right, param("глухой", grup)) : grup;
-        assert true == elementVar2.check(stv2_right, param("не глухой", grup)) : grup;
+        assert false == elementVar2.check(stv2_left3, param("глухой", grup)) : grup;
+        assert true == elementVar2.check(stv2_left3, param("не глухой", grup)) : grup;
 
         grup = 37009; //Тип заполнения
-        assert true == elementVar2.check(stv2_right, param("Прямоугольное", grup)) : grup;
-        assert false == elementVar2.check(stv2_right, param("Арочное", grup)) : grup;
-        assert false == elementVar2.check(stv2_right, param("Произвольное", grup)) : grup;
+        assert true == elementVar2.check(stv2_left3, param("Прямоугольное", grup)) : grup;
+        assert false == elementVar2.check(stv2_left3, param("Арочное", grup)) : grup;
+        assert false == elementVar2.check(stv2_left3, param("Произвольное", grup)) : grup;
 
         grup = 37010; //Ограничение ширины/высоты листа, мм
         assert true == elementVar2.check(glass2_top, param("0-3000/0-334", grup)) : grup;
@@ -208,8 +208,8 @@ public class ElementTest {
         assert false == elementVar2.check(glass2_left, param("1-2", grup)) : grup;
 
         grup = 37054; //Коды основной текстуры изделия
-        assert false == elementVar2.check(stv2_right, param("10000-10999;17000-21999;23000-28999", grup)) : grup;
-        assert true == elementVar2.check(stv2_right, param("1;3;35-37;55;70;1009", grup)) : grup;
+        assert false == elementVar2.check(stv2_left3, param("10000-10999;17000-21999;23000-28999", grup)) : grup;
+        assert true == elementVar2.check(stv2_left3, param("1;3;35-37;55;70;1009", grup)) : grup;
 
         grup = 37055; //Коды внутр. и внешн. текстуры изд.
         assert true == elementVar3.check(stv3_right, param("1000-10010;", grup)) : grup;
@@ -238,18 +238,18 @@ public class ElementTest {
 
         grup = 33005; //31005, 37005 //Коды основной текстуры контейнера
         assert true == elementDet2.check(mapParam, frame2_left, param("0-800;990;1009;1600-2000;", grup)) : grup;
-        assert true == elementDet2.check(mapParam, stv2_right, param("0-1008;1009", grup)) : grup;
-        assert false == elementDet2.check(mapParam, stv2_right, param("0-1008;1010", grup)) : grup;
+        assert true == elementDet2.check(mapParam, stv2_left3, param("0-1008;1009", grup)) : grup;
+        assert false == elementDet2.check(mapParam, stv2_left3, param("0-1008;1010", grup)) : grup;
 
         grup = 33006; //31006, 34006, 37006 //Коды внутр. текстуры контейнера
         assert true == elementDet2.check(mapParam, frame2_left, param("0-800;990;1009;1600-2000;", grup)) : grup;
-        assert true == elementDet2.check(mapParam, stv2_right, param("0-1008;1009", grup)) : grup;
-        assert false == elementDet2.check(mapParam, stv2_right, param("0-1008;1010", grup)) : grup;
+        assert true == elementDet2.check(mapParam, stv2_left3, param("0-1008;1009", grup)) : grup;
+        assert false == elementDet2.check(mapParam, stv2_left3, param("0-1008;1010", grup)) : grup;
 
         grup = 33007; //31007, 34007, 37007 //Коды внешн. текстуры контейнера
         assert true == elementDet2.check(mapParam, frame2_left, param("0-800;990;1009;1600-2000;", grup)) : grup;
-        assert true == elementDet2.check(mapParam, stv2_right, param("0-1008;1009", grup)) : grup;
-        assert false == elementDet2.check(mapParam, stv2_right, param("0-1008;1010", grup)) : grup;
+        assert true == elementDet2.check(mapParam, stv2_left3, param("0-1008;1009", grup)) : grup;
+        assert false == elementDet2.check(mapParam, stv2_left3, param("0-1008;1010", grup)) : grup;
 
         grup = 33008; //Эффективное заполнение изд., мм
         assert true == elementDet2.check(mapParam, frame2_left, param("30", grup)) : grup;
@@ -265,34 +265,34 @@ public class ElementTest {
         assert false == elementDet2.check(mapParam, frame2_left, param("КП-40", grup)) : grup;
 
         grup = 33063; //34063 //Диапазон веса створки, кг
-        assert true == elementDet2.check(mapParam, stv2_right, param("3-40", grup)) : grup;
-        assert true == elementDet2.check(mapParam, stv2_right, param("40", grup)) : grup;
-        assert false == elementDet2.check(mapParam, stv2_right, param("1-12", grup)) : grup;
+        assert true == elementDet2.check(mapParam, stv2_left3, param("3-40", grup)) : grup;
+        assert true == elementDet2.check(mapParam, stv2_left3, param("40", grup)) : grup;
+        assert false == elementDet2.check(mapParam, stv2_left3, param("1-12", grup)) : grup;
 
         grup = 33066; //34066 //Если номер стороны в контуре
         assert true == elementDet3.check(mapParam, frame3_left, param("4", grup)) : grup;
         assert false == elementDet3.check(mapParam, frame3_left, param("1", grup)) : grup;
 
         grup = 33067; //34067, 38067, 39067, 40067 //Коды основной текстуры изделия 
-        assert true == elementDet2.check(mapParam, stv2_right, param("1009", grup)) : grup;
-        assert false == elementDet2.check(mapParam, stv2_right, param("109", grup)) : grup;
+        assert true == elementDet2.check(mapParam, stv2_left3, param("1009", grup)) : grup;
+        assert false == elementDet2.check(mapParam, stv2_left3, param("109", grup)) : grup;
 
         grup = 33068; //34068, 38068, 39068, 40068 //Коды внутр. текстуры изделия
-        assert true == elementDet2.check(mapParam, stv2_right, param("1009", grup)) : grup;
-        assert false == elementDet2.check(mapParam, stv2_right, param("109", grup)) : grup;
+        assert true == elementDet2.check(mapParam, stv2_left3, param("1009", grup)) : grup;
+        assert false == elementDet2.check(mapParam, stv2_left3, param("109", grup)) : grup;
 
         grup = 33069; //34069, 38069, 39069, 40069 //Коды внешн. текстуры изделия
-        assert true == elementDet2.check(mapParam, stv2_right, param("1009", grup)) : grup;
-        assert false == elementDet2.check(mapParam, stv2_right, param("109", grup)) : grup;
+        assert true == elementDet2.check(mapParam, stv2_left3, param("1009", grup)) : grup;
+        assert false == elementDet2.check(mapParam, stv2_left3, param("109", grup)) : grup;
 
         grup = 33071;  //34071 //Контейнер типа
-        assert true == elementDet2.check(mapParam, stv2_right, param("1;2;3", grup)) : grup;
-        assert true == elementDet2.check(mapParam, stv2_right, param("1-3", grup)) : grup;
-        assert false == elementDet2.check(mapParam, stv2_right, param("1", grup)) : grup;
+        assert true == elementDet2.check(mapParam, stv2_left3, param("1;2;3", grup)) : grup;
+        assert true == elementDet2.check(mapParam, stv2_left3, param("1-3", grup)) : grup;
+        assert false == elementDet2.check(mapParam, stv2_left3, param("1", grup)) : grup;
 
         grup = 33095; //34095, 38095, 39095, 40095 //Если признак системы конструкции
-        assert true == elementDet2.check(mapParam, stv2_right, param("1;5;4;", grup)) : grup;
-        assert false == elementDet2.check(mapParam, stv2_right, param("5;4;", grup)) : grup;
+        assert true == elementDet2.check(mapParam, stv2_left3, param("1;5;4;", grup)) : grup;
+        assert false == elementDet2.check(mapParam, stv2_left3, param("5;4;", grup)) : grup;
 
         grup = 34008; //Эффективное заполнение изделия, мм
         assert true == elementDet2.check(mapParam, frame2_left, param("30", grup)) : grup;

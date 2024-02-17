@@ -56,4 +56,102 @@ Name                                                            Artikl          
 ЭТИКЕТКА ПОЛИПРОПИЛЕНОВАЯ 100 х 24 мм                           Этикетка штрихкод       13,86           13,87           0,01            
 Artikl                          Value               
 Лишние: 258058                  616,88          
-Prj=601004        PS=18145,02       SA=18509,33       dx=364,31 
+Prj=601004        PS=18145,02       SA=18509,33       dx=364,31 {
+  "version": "2.0",
+  "prj": 601004,
+  "pid": 427820,
+  "ord": 1,
+  "nuni": 8,
+  "name": "KBE 58\\ОКНА\\Открывание внутрь",
+  "color1": -3,
+  "color2": -3,
+  "color3": -3,
+  "id": 0.0,
+  "childs": [
+    {
+      "id": 1.0,
+      "type": "FRAME_SIDE",
+      "x1": 0.0,
+      "y1": 0.0
+    },
+    {
+      "id": 2.0,
+      "type": "FRAME_SIDE",
+      "x1": 0.0,
+      "y1": 1700.0
+    },
+    {
+      "id": 3.0,
+      "type": "FRAME_SIDE",
+      "x1": 1440.0,
+      "y1": 1700.0
+    },
+    {
+      "id": 4.0,
+      "type": "FRAME_SIDE",
+      "x1": 1440.0,
+      "y1": 0.0
+    },
+    {
+      "id": 5.0,
+      "childs": [
+        {
+          "id": 6.0,
+          "type": "GLASS"
+        }
+      ],
+      "type": "AREA"
+    },
+    {
+      "id": 7.0,
+      "type": "IMPOST",
+      "x1": 0.0,
+      "y1": 400.0,
+      "x2": 1440.0,
+      "y2": 400.0
+    },
+    {
+      "id": 8.0,
+      "childs": [
+        {
+          "id": 9.0,
+          "childs": [
+            {
+              "id": 10.0,
+              "type": "GLASS"
+            }
+          ],
+          "param": {
+            "typeOpen": 1,
+            "sysfurnID": 1634
+          },
+          "type": "STVORKA"
+        },
+        {
+          "id": 11.0,
+          "type": "IMPOST",
+          "x1": 720.0,
+          "y1": 400.0,
+          "x2": 720.0,
+          "y2": 1700.0
+        },
+        {
+          "id": 12.0,
+          "childs": [
+            {
+              "id": 13.0,
+              "type": "GLASS"
+            }
+          ],
+          "param": {
+            "typeOpen": 4,
+            "sysfurnID": 1633
+          },
+          "type": "STVORKA"
+        }
+      ],
+      "type": "AREA"
+    }
+  ],
+  "type": "RECTANGL"
+}

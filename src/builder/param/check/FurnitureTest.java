@@ -41,7 +41,6 @@ import static builder.param.check.WincalcTest.iwin2;
 import static builder.param.check.WincalcTest.iwin3;
 import static builder.param.check.WincalcTest.iwin4;
 import static builder.param.check.WincalcTest.frame2_right;
-import static builder.param.check.WincalcTest.stv2_right;
 import static builder.param.check.WincalcTest.imp2_horiz;
 import static builder.param.check.WincalcTest.imp2_vert;
 import static builder.param.check.WincalcTest.glass2_top;
@@ -60,6 +59,7 @@ import static builder.param.check.WincalcTest.stv4_left;
 import static builder.param.check.WincalcTest.stv4_right;
 import static builder.param.check.WincalcTest.glass4_right;
 import static builder.param.check.WincalcTest.glass4_left;
+import static builder.param.check.WincalcTest.stv2_left3;
 
 public class FurnitureTest {
 
@@ -76,7 +76,7 @@ public class FurnitureTest {
         assert false == furnitureVar3.check(frame3_left, param("не арочная", grup)) : grup;
 
         grup = 21004;  //Артикул створки 
-        assert true == furnitureVar2.check(stv2_right, param("917", grup)) : grup;
+        assert true == furnitureVar2.check(stv2_left3, param("917", grup)) : grup;
         assert true == furnitureVar3.check(stv3_right, param("21316-05000", grup)) : grup;
         assert false == furnitureVar3.check(stv3_right, param("21316*05000", grup)) : grup;
 
@@ -93,12 +93,12 @@ public class FurnitureTest {
         assert false == furnitureVar3.check(stv3_right, param("500", grup)) : grup;
 
         grup = 21016; //Допустимое соотношение габаритов (б/м)
-        assert true == furnitureVar2.check(stv2_right, param("1,1-2,0", grup)) : grup;
-        assert false == furnitureVar2.check(stv2_right, param("1-1,09", grup)) : grup;
+        assert true == furnitureVar2.check(stv2_left3, param("1,1-2,0", grup)) : grup;
+        assert false == furnitureVar2.check(stv2_left3, param("1-1,09", grup)) : grup;
 
         grup = 21040;  //Ограничение угла
-        assert true == furnitureVar2.check(stv2_right, param("74-360", grup)) : grup;
-        assert false == furnitureVar2.check(stv2_right, param("12-55", grup)) : grup;
+        assert true == furnitureVar2.check(stv2_left3, param("74-360", grup)) : grup;
+        assert false == furnitureVar2.check(stv2_left3, param("12-55", grup)) : grup;
     }
 
     /**
@@ -110,7 +110,7 @@ public class FurnitureTest {
     public void furnitureDet() {
         HashMap<Integer, String> mapParam = new HashMap();
         AreaSimple area_stv_3 = (AreaSimple) stv3_right.owner;
-        AreaSimple area_stv_2 = (AreaSimple) stv2_right.owner;
+        AreaSimple area_stv_2 = (AreaSimple) stv2_left3.owner;
         AreaSimple area_stv_4 = (AreaSimple) stv4_right.owner;
 
         grup = 24001; //25001 //Форма контура
