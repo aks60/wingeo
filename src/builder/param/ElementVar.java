@@ -366,14 +366,15 @@ public class ElementVar extends Par5s {
                     break;
                 case 37009: //Тип заполнения 
                 {
-                    ElemGlass glass = (ElemGlass) elem5e.owner.childs.stream().filter(it -> it.type == Type.GLASS).findFirst().orElse(null);
-                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && winc.root.area.getGeometryN(0).isRectangle() == true) {
+                    //ElemGlass glass = (ElemGlass) elem5e.owner.childs.stream().filter(it -> it.type == Type.GLASS).findFirst().orElse(null);
+                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && winc.root.area.getGeometryN(0).isRectangle() == false) {
                         return false;
 
-                    } else if ("Арочное".equals(rec.getStr(TEXT)) && glass.radiusGlass != 0) {
+                    } else if ("Арочное".equals(rec.getStr(TEXT)) && winc.root.area.getGeometryN(0).getNumPoints() > 40 == false) {
                         return false;
 
-                    } else if ("Произвольное".equals(rec.getStr(TEXT))) {
+                    } else if ("Произвольное".equals(rec.getStr(TEXT)) && 
+                            (winc.root.area.getGeometryN(0).isRectangle() == true || winc.root.area.getGeometryN(0).getNumPoints() > 40 == true)) {
                         return false;
                     }
                 }

@@ -44,6 +44,7 @@ public class WincalcTest {
 
     public static ElemSimple frame4_left = null;
     public static ElemSimple frame4_right = null;
+    public static ElemSimple frame4_top = null;
     public static ElemSimple stv4_left_1 = null;
     public static ElemSimple stv4_right_3 = null;
     public static ElemSimple glass4_right = null;
@@ -79,8 +80,8 @@ public class WincalcTest {
     public static void init() {
         try {
             iwin2(); //601004
-           // iwin3(); //604005
-           // iwin4(); //700027
+            iwin3(); //604005
+            iwin4(); //700027
 
         } catch (Exception e) {
             System.err.println("ОШИБКА:param.test.WinacalcTest() " + e);
@@ -154,6 +155,7 @@ public class WincalcTest {
 
         frame4_left = getElem(iwin4.root, 1);
         frame4_right = getElem(iwin4.root, 3);
+        frame4_top = getElem(iwin4.root, 4);
         stv4_left_1 = getElem(iwin4.root, 5.1);
         stv4_right_3 = getElem(iwin4.root, 8.3);
         glass4_right = (ElemSimple) getElem(iwin4.root, 6);

@@ -94,8 +94,8 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //frame(args);
-            wincalc();
-            //param();
+            //wincalc();
+            param();
             //query();
             //json();
             //uid();
@@ -111,7 +111,7 @@ public class Test {
 
         Conn.connection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
-        String _case = "one";
+        String _case = "min";
 
         if (_case.equals("one")) {
             String script = GsonScript.scriptPath(601004);
@@ -160,15 +160,15 @@ public class Test {
         WincalcTest.init();
         //WincalcTest.iwin4.listJoin.elem(WincalcTest.stv_right4, 2);
         
-        List<Coordinate> z = new ArrayList();
-        for (ElemSimple el : WincalcTest.iwin2.listElem) {
-            if (el.type == Type.GLASS) {
-                for (Coordinate c : el.area.getCoordinates()) {
-                    z.add(c);
-                }                
-            }
-        }
-        System.out.println(z);
+//        List<Coordinate> z = new ArrayList();
+//        for (ElemSimple el : WincalcTest.iwin2.listElem) {
+//            if (el.type == Type.GLASS) {
+//                for (Coordinate c : el.area.getCoordinates()) {
+//                    z.add(c);
+//                }                
+//            }
+//        }
+//        System.out.println(z);
         
         ElementTest t1 = new ElementTest();
         t1.elementVar();

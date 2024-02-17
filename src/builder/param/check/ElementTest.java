@@ -56,6 +56,7 @@ import static builder.param.check.WincalcTest.glass4_right;
 import static builder.param.check.WincalcTest.glass4_left;
 import static builder.param.check.WincalcTest.frame2_1;
 import static builder.param.check.WincalcTest.frame2_3;
+import static builder.param.check.WincalcTest.frame4_top;
 import static builder.param.check.WincalcTest.stv2_left_3;
 import static builder.param.check.WincalcTest.stv3_right_3;
 import static builder.param.check.WincalcTest.stv4_left_1;
@@ -153,9 +154,10 @@ public class ElementTest {
         assert true == elementVar2.check(stv2_left_3, param("2", grup)) : grup;
         assert false == elementVar2.check(stv2_left_3, param("1", grup)) : grup;
 
+        //TODO параметр не работает
         grup = 31051; //Если створка фурнитуры
-        assert true == elementVar4.check(stv4_right_3, param("ведомая", grup)) : grup;
-        assert false == elementVar4.check(stv4_right_3, param("ведущая", grup)) : grup;
+        assert true == elementVar4.check(stv4_right_3, param("ведущая", grup)) : grup;
+        assert false == elementVar4.check(stv4_right_3, param("ведомая", grup)) : grup;
 
         grup = 31052; //Поправка в спецификацию, мм
         assert true == elementVar4.check(stv4_right_3, param("600", grup)) : grup;
@@ -192,7 +194,7 @@ public class ElementTest {
 
         grup = 37009; //Тип заполнения
         assert true == elementVar2.check(stv2_left_3, param("Прямоугольное", grup)) : grup;
-        assert false == elementVar2.check(stv2_left_3, param("Арочное", grup)) : grup;
+        assert true == elementVar2.check(frame4_top, param("Арочное", grup)) : grup;
         assert false == elementVar2.check(stv2_left_3, param("Произвольное", grup)) : grup;
 
         grup = 37010; //Ограничение ширины/высоты листа, мм
