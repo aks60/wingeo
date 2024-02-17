@@ -8,11 +8,12 @@ import domain.eArtikl;
 import enums.Layout;
 import enums.Type;
 import java.util.List;
+import org.locationtech.jts.algorithm.PointLocation;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
-import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.util.GeometricShapeFactory;
@@ -22,7 +23,7 @@ public class Com5t {
     public static GeometryFactory gf = new GeometryFactory(new PrecisionModel(10));
     public static GeometricShapeFactory gsf = new GeometricShapeFactory(gf);
     public static AffineTransformation aff = new AffineTransformation();
-    
+
     public double id;
     public Wincalc winc = null;
     public AreaSimple owner = null; //владелец
@@ -90,7 +91,6 @@ public class Com5t {
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
-
     public double x1() {
         return (gson.x1 != null) ? gson.x1 : -1;
     }
@@ -159,28 +159,15 @@ public class Com5t {
         return (y2() > y1()) ? y2() - y1() : y1() - y2();
     }
 
-    public boolean inside(double x, double y) {
-        int X = (int) x, Y = (int) y;
-        int X1 = (int) x1(), Y1 = (int) y1(), X2 = (int) x2(), Y2 = (int) y2();
+    public Boolean inside(double x, double y) {
+        try {
+            Coordinate c = new Coordinate(x, y);
+            return PointLocation.isInRing(c, this.area.getGeometryN(0).getCoordinates());
 
-        if ((X2 | Y2) < 0) {
-            return false;
+        } catch (Exception e) {
+            System.err.println("Ошибка:Com5t.inside()");
+            return null;
         }
-
-        if (x1() > x2()) {
-            X1 = (int) x2();
-            X2 = (int) x1();
-        }
-
-        if (y1() > y2()) {
-            Y1 = (int) y2();
-            Y2 = (int) y1();
-        }
-
-        if (X < X1 || Y < Y1) {
-            return false;
-        }
-        return ((X2 >= X) && (Y2 >= Y));
     }
 
     @Override
@@ -195,7 +182,7 @@ public class Com5t {
         Coordinate coo[] = g.getCoordinates();
         System.out.println(List.of(coo));
     }
-    
+
     public static void PRINT(String s, Geometry g) {
         Coordinate coo[] = g.getCoordinates();
         System.out.println(s + " " + List.of(coo));

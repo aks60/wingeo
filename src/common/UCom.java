@@ -9,7 +9,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import sun.misc.Signal;
 
 public class UCom {
 
@@ -154,7 +153,7 @@ public class UCom {
         if (txt.isEmpty()) {
             return new Integer[]{};
         }
-        ArrayList<Object> arrList = new ArrayList();
+        ArrayList<Object> arrList = new ArrayList<Object>();
         try {
             txt = (txt.charAt(txt.length() - 1) == '@') ? txt.substring(0, txt.length() - 1) : txt;
             String[] arr = txt.split(";");
@@ -181,7 +180,7 @@ public class UCom {
             }
         } catch (Exception e) {
             System.err.println("Ошибка:UCom.parserInt() " + e);
-            arrList = new ArrayList(List.of(-1, -1));
+            arrList = new ArrayList<Object>(List.of(-1, -1));
         }
         return arrList.stream().toArray(Integer[]::new);
     }
@@ -191,7 +190,7 @@ public class UCom {
         if (str.isEmpty()) {
             return new Double[]{};
         }
-        ArrayList<Object> arrList = new ArrayList();
+        ArrayList<Object> arrList = new ArrayList<Object>();
         try {
             str = str.replace(",", ".");
             String[] arr = str.split(";");
@@ -218,7 +217,7 @@ public class UCom {
             }
         } catch (Exception e) {
             System.err.println("Ошибка:UCom.parserFloat() " + e);
-            arrList = new ArrayList(List.of(-1, -1));
+            arrList = new ArrayList<Object>(List.of(-1, -1));
         }
         return arrList.stream().toArray(Double[]::new);
     }
@@ -231,7 +230,7 @@ public class UCom {
                 return true;
             }
             int code = eColor.get(value).getInt(eColor.code);
-            ArrayList<Integer> arrList = new ArrayList();
+            ArrayList<Integer> arrList = new ArrayList<Integer>();
             txt = txt.replace(",", ".");
             String[] arr = txt.split(";");
             if (arr.length == 1) {
@@ -275,7 +274,7 @@ public class UCom {
             if (txt == null || txt.isEmpty() || txt.equals("*")) {
                 return true;
             }
-            ArrayList<Double> arrList = new ArrayList();
+            ArrayList<Double> arrList = new ArrayList<Double>();
             txt = txt.replace(",", ".");
             String[] arr = txt.split(";");
             if (arr.length == 1) {
@@ -320,7 +319,7 @@ public class UCom {
             if (txt == null || txt.isEmpty() || txt.equals("*")) {
                 return true;
             }
-            ArrayList<Double> arrList = new ArrayList();
+            ArrayList<Double> arrList = new ArrayList<Double>();
             txt = txt.replace(",", ".");
             String[] arr = txt.split(";");
             if (arr.length == 1) {

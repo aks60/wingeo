@@ -15,6 +15,7 @@ import org.locationtech.jts.algorithm.Angle;
 import static org.locationtech.jts.algorithm.Angle.angle;
 import static org.locationtech.jts.algorithm.Angle.diff;
 import org.locationtech.jts.algorithm.Intersection;
+import org.locationtech.jts.algorithm.PointLocation;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateSequence;
 import org.locationtech.jts.geom.Geometry;
@@ -34,6 +35,17 @@ public class UGeo {
 
     public static void precisionModel(PrecisionModel pm) {
         pm = new PrecisionModel(pm);
+    }
+
+    public boolean inside(double x, double y, Geometry g) {
+        try {
+            Coordinate c = new Coordinate(x, y);
+            return PointLocation.isInRing(c, g.getGeometryN(0).getCoordinates());
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:Com5t.inside()");
+            return false;
+        }
     }
 
     //Угол к горизонту. Угол нормируется в диапазоне [-Pi, Pi].
@@ -84,7 +96,7 @@ public class UGeo {
             poly = poly.getGeometryN(0);
             HashSet<Coordinate> hsCheck = new HashSet();
             Coordinate[] coo = poly.copy().getCoordinates();
-            LineSegment imp = new LineSegment(new Coordinate(impost.x1(), impost.y1()), new Coordinate(impost.x2(), impost.y2())); 
+            LineSegment imp = new LineSegment(new Coordinate(impost.x1(), impost.y1()), new Coordinate(impost.x2(), impost.y2()));
             imp.normalize();
             List<Coordinate> cooL = new ArrayList(), cooR = new ArrayList();
             List<Coordinate> crosP = new ArrayList(), exten = new ArrayList(List.of(coo[0]));

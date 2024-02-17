@@ -3,6 +3,9 @@ package startup;
 import builder.model.Com5t;
 import builder.model.UGeo;
 import builder.param.check.ElementTest;
+import builder.param.check.FillingTest;
+import builder.param.check.FurnitureTest;
+import builder.param.check.JoiningTest;
 import builder.param.check.WincalcTest;
 import builder.script.GsonElem;
 import builder.script.GsonScript;
@@ -90,8 +93,8 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //frame(args);
-            //wincalc();
-            param();
+            wincalc();
+            //param();
             //query();
             //json();
             //uid();
@@ -107,7 +110,7 @@ public class Test {
 
         Conn.connection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
-        String _case = "one";
+        String _case = "min";
 
         if (_case.equals("one")) {
             String script = GsonScript.scriptPath(700027);
@@ -159,18 +162,18 @@ public class Test {
         ElementTest t1 = new ElementTest();
         t1.elementVar();
         t1.elementDet();
-//        
-//        JoiningTest t2 = new JoiningTest();
-//        t2.joiningVar();
-//        t2.joiningDet();
-//        
-//        FillingTest t3 = new FillingTest();
-//        t3.fillingVar();
-//        t3.fillingDet();
-//        
-//        FurnitureTest t4 = new FurnitureTest();
-//        t4.furnitureVar();
-//        t4.furnitureDet();
+        
+        JoiningTest t2 = new JoiningTest();
+        t2.joiningVar();
+        t2.joiningDet();
+        
+        FillingTest t3 = new FillingTest();
+        t3.fillingVar();
+        t3.fillingDet();
+        
+        FurnitureTest t4 = new FurnitureTest();
+        t4.furnitureVar();
+        t4.furnitureDet();
 
 //        Set set = new HashSet();
 //        Map<String, Set> map = new HashMap();
