@@ -1,6 +1,7 @@
 package startup;
 
 import builder.model.Com5t;
+import builder.model.ElemSimple;
 import builder.model.UGeo;
 import builder.param.check.ElementTest;
 import builder.param.check.FillingTest;
@@ -159,6 +160,16 @@ public class Test {
         WincalcTest.init();
         //WincalcTest.iwin4.listJoin.elem(WincalcTest.stv_right4, 2);
         
+        List<Coordinate> z = new ArrayList();
+        for (ElemSimple el : WincalcTest.iwin2.listElem) {
+            if (el.type == Type.GLASS) {
+                for (Coordinate c : el.area.getCoordinates()) {
+                    z.add(c);
+                }                
+            }
+        }
+        System.out.println(z);
+        
         ElementTest t1 = new ElementTest();
         t1.elementVar();
         t1.elementDet();
@@ -188,7 +199,7 @@ public class Test {
 //            System.out.println(key + " " + value);
 //        }
     }
-    
+
     private static void query() {
         try {
             Conn.connection(Test.connect2());
@@ -358,10 +369,10 @@ public class Test {
         LineSegment segm2 = new LineSegment(68.0, 500.0, 68.0, 1500.0);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
-        
+
         Coordinate p = new Coordinate(200, 501);
         Coordinate c[] = new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)};
-        boolean b = PointLocation.isOnLine(p, c);       
+        boolean b = PointLocation.isOnLine(p, c);
         System.out.println(b);
 
     }
@@ -402,9 +413,8 @@ public class Test {
                     Shape shape = new ShapeWriter().toShape(mpol);
                     gc2d.draw(shape);
                 }
-                
+
                 //gc2d.rotate(Math.PI);
-                
 //                Font font = gc2d.getFont();
 //                int textwidth = (int) (font.getStringBounds(".", gc2d.getFontRenderContext()).getWidth());
 //                int textheight = (int) (font.getStringBounds("1", gc2d.getFontRenderContext()).getHeight());

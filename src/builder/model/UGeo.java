@@ -290,9 +290,8 @@ public class UGeo {
         return Com5t.gf.createPolygon(list.toArray(new Coordinate[0]));
     }
 
-    public static LineSegment getSegment(Geometry line) {
-        LineString line2 = (LineString) line;
-        return new LineSegment(line2.getCoordinateN(0), line2.getCoordinateN(1));
+    public static LineSegment getSegment(LineString line) {
+        return new LineSegment(line.getCoordinateN(0), line.getCoordinateN(1));
     }
 
     public static LineSegment getSegment(Geometry poly, int index) {
@@ -318,13 +317,9 @@ public class UGeo {
         return list;
     }
 
-    public static int getIndex(Geometry p, Com5t e) throws Exception {
+    public static int getIndex(Geometry p, Com5t e) {
         Coordinate coo[] = p.getGeometryN(0).getCoordinates();
-//        if (coo.length > 5) {
-//            System.out.println("AKS builder.model.UGeo.getIndex()");
-//        } else {
         for (int i = 0; i < coo.length - 1; i++) {
-            //if (e.x1() == coo[i].x && e.y1() == coo[i].y && e.x2() == coo[i + 1].x && e.y2() == coo[i + 1].y) {
             if (coo[i].z == e.id) {
                 return i;
             }

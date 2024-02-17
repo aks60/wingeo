@@ -17,6 +17,7 @@ import enums.Layout;
 import enums.Type;
 import enums.TypeOpen1;
 import java.util.List;
+import org.locationtech.jts.geom.LineSegment;
 
 /**
  * Участвует в допустимости элемента в конструкции 
