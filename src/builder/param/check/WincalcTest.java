@@ -26,9 +26,9 @@ public class WincalcTest {
     public static int grup = -1;
     public static Record record = null;
 
-    public static ElemSimple frame2_left = null;
-    public static ElemSimple frame2_right = null;
-    public static ElemSimple stv2_left3 = null;
+    public static ElemSimple frame2_1 = null;
+    public static ElemSimple frame2_3 = null;
+    public static ElemSimple stv2_left_3 = null;
     public static ElemSimple imp2_horiz = null;
     public static ElemSimple imp2_vert = null;
     public static ElemSimple glass2_top = null;
@@ -37,15 +37,15 @@ public class WincalcTest {
 
     public static ElemSimple frame3_left = null;
     public static ElemSimple frame3_right = null;
-    public static ElemSimple stv3_right = null;
+    public static ElemSimple stv3_right_3 = null;
     public static ElemSimple imp3_vert = null;
     public static ElemSimple glass3_top = null;
     public static ElemSimple glass3_left = null;
 
     public static ElemSimple frame4_left = null;
     public static ElemSimple frame4_right = null;
-    public static ElemSimple stv4_left = null;
-    public static ElemSimple stv4_right = null;
+    public static ElemSimple stv4_left_1 = null;
+    public static ElemSimple stv4_right_3 = null;
     public static ElemSimple glass4_right = null;
     public static ElemSimple glass4_left = null;
 
@@ -101,10 +101,10 @@ public class WincalcTest {
         joiningDet2 = new JoiningDet(iwin2);
         furnitureVar2 = new FurnitureVar(iwin2);
         furnitureDet2 = new FurnitureDet(iwin2);
-        frame2_left = getElem(iwin2.root, 1);
+        frame2_1 = getElem(iwin2.root, 1);
 
-        frame2_right = getElem(iwin2.root, 3);
-        stv2_left3 = getElem(iwin2.root, 9.3);
+        frame2_3 = getElem(iwin2.root, 3);
+        stv2_left_3 = getElem(iwin2.root, 9.3);
         imp2_vert = getElem(iwin2.root, 11);
         imp2_horiz = getElem(iwin2.root, 7);
         glass2_top = (ElemSimple) getElem(iwin2.root, 6);
@@ -130,7 +130,7 @@ public class WincalcTest {
 
         frame3_left = getElem(iwin3.root, 1);
         frame3_right = getElem(iwin3.root, 3);
-        stv3_right = getElem(iwin3.root, 12.3);
+        stv3_right_3 = getElem(iwin3.root, 12.3);
         imp3_vert = getElem(iwin3.root, 11);
         glass3_top = (ElemSimple) getElem(iwin3.root, 6);
         glass3_left = (ElemSimple) getElem(iwin3.root, 10);
@@ -154,8 +154,8 @@ public class WincalcTest {
 
         frame4_left = getElem(iwin4.root, 1);
         frame4_right = getElem(iwin4.root, 3);
-        stv4_left = getElem(iwin4.root, 5.1);
-        stv4_right = getElem(iwin4.root, 8.3);
+        stv4_left_1 = getElem(iwin4.root, 5.1);
+        stv4_right_3 = getElem(iwin4.root, 8.3);
         glass4_right = (ElemSimple) getElem(iwin4.root, 6);
         glass4_left = (ElemSimple) getElem(iwin4.root, 9);
     }
