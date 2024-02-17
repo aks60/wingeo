@@ -93,8 +93,8 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //frame(args);
-            wincalc();
-            //param();
+            //wincalc();
+            param();
             //query();
             //json();
             //uid();
@@ -110,24 +110,24 @@ public class Test {
 
         Conn.connection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
-        String _case = "min";
+        String _case = "one";
 
         if (_case.equals("one")) {
-            String script = GsonScript.scriptPath(700027);
+            String script = GsonScript.scriptPath(601004);
             winc.build(script);
             //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
             //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
-            //winc.specific(true);
+            winc.specific(true);
             //new Joining(winc).calc();
             //winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
             //winc.gc2d = winc.bufferImg.createGraphics();
             //winc.draw(); //рисую конструкцию
 
-            //frames.PSCompare.iwinPs4(winc, true);
+            frames.PSCompare.iwinPs4(winc, true);
             //winc.listElem.forEach(it -> System.out.println(it));
             //winc.listJoin.forEach(it -> System.out.println(it.joiningRec));     
-            winc.listJoin.forEach(it -> System.out.println(it));     
+            //winc.listJoin.forEach(it -> System.out.println(it));     
 
         } else if (_case.equals("min")) {
             List<Integer> prjList = GsonScript.systemList(_case);

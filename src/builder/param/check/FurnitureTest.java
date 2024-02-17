@@ -40,26 +40,26 @@ import static builder.param.check.WincalcTest.furnitureDet4;
 import static builder.param.check.WincalcTest.iwin2;
 import static builder.param.check.WincalcTest.iwin3;
 import static builder.param.check.WincalcTest.iwin4;
-import static builder.param.check.WincalcTest.frame_left2;
-import static builder.param.check.WincalcTest.frame_right2;
-import static builder.param.check.WincalcTest.stv_right2;
-import static builder.param.check.WincalcTest.imp_horiz2;
-import static builder.param.check.WincalcTest.imp_vert2;
-import static builder.param.check.WincalcTest.glass_top2;
-import static builder.param.check.WincalcTest.glass_left2;
-import static builder.param.check.WincalcTest.glass_right2;
-import static builder.param.check.WincalcTest.frame_left3;
-import static builder.param.check.WincalcTest.frame_right3;
-import static builder.param.check.WincalcTest.stv_right3;
-import static builder.param.check.WincalcTest.imp_vert3;
-import static builder.param.check.WincalcTest.glass_top3;
-import static builder.param.check.WincalcTest.glass_left3;
-import static builder.param.check.WincalcTest.frame_left4;
-import static builder.param.check.WincalcTest.frame_right4;
-import static builder.param.check.WincalcTest.stv_left4;
-import static builder.param.check.WincalcTest.stv_right4;
-import static builder.param.check.WincalcTest.glass_right4;
-import static builder.param.check.WincalcTest.glass_left4;
+import static builder.param.check.WincalcTest.frame2_right;
+import static builder.param.check.WincalcTest.stv2_right;
+import static builder.param.check.WincalcTest.imp2_horiz;
+import static builder.param.check.WincalcTest.imp2_vert;
+import static builder.param.check.WincalcTest.glass2_top;
+import static builder.param.check.WincalcTest.glass2_left;
+import static builder.param.check.WincalcTest.glass2_right;
+import static builder.param.check.WincalcTest.frame3_left;
+import static builder.param.check.WincalcTest.frame3_right;
+import static builder.param.check.WincalcTest.stv3_right;
+import static builder.param.check.WincalcTest.imp3_vert;
+import static builder.param.check.WincalcTest.glass3_top;
+import static builder.param.check.WincalcTest.glass3_left;
+import static builder.param.check.WincalcTest.frame4_left;
+import static builder.param.check.WincalcTest.frame2_left;
+import static builder.param.check.WincalcTest.frame4_right;
+import static builder.param.check.WincalcTest.stv4_left;
+import static builder.param.check.WincalcTest.stv4_right;
+import static builder.param.check.WincalcTest.glass4_right;
+import static builder.param.check.WincalcTest.glass4_left;
 
 public class FurnitureTest {
 
@@ -70,35 +70,35 @@ public class FurnitureTest {
     public void furnitureVar() {
 
         grup = 21001; //Форма контура
-        assert true == furnitureVar2.check(frame_left2, param("прямоугольная", grup)) : grup;
-        assert false == furnitureVar3.check(frame_left3, param("прямоугольная", grup)) : grup;
-        assert true == furnitureVar3.check(frame_left3, param("арочная", grup)) : grup;
-        assert false == furnitureVar3.check(frame_left3, param("не арочная", grup)) : grup;
+        assert true == furnitureVar2.check(frame2_left, param("прямоугольная", grup)) : grup;
+        assert false == furnitureVar3.check(frame3_left, param("прямоугольная", grup)) : grup;
+        assert true == furnitureVar3.check(frame3_left, param("арочная", grup)) : grup;
+        assert false == furnitureVar3.check(frame3_left, param("не арочная", grup)) : grup;
 
         grup = 21004;  //Артикул створки 
-        assert true == furnitureVar2.check(stv_right2, param("917", grup)) : grup;
-        assert true == furnitureVar3.check(stv_right3, param("21316-05000", grup)) : grup;
-        assert false == furnitureVar3.check(stv_right3, param("21316*05000", grup)) : grup;
+        assert true == furnitureVar2.check(stv2_right, param("917", grup)) : grup;
+        assert true == furnitureVar3.check(stv3_right, param("21316-05000", grup)) : grup;
+        assert false == furnitureVar3.check(stv3_right, param("21316*05000", grup)) : grup;
 
         grup = 21005;  //Артикул заполнения по умолчанию  
-        assert true == furnitureVar3.check(stv_right3, param("4x10x4x10x4", grup)) : grup;
-        assert false == furnitureVar3.check(stv_right3, param("xxx", grup)) : grup;
+        assert true == furnitureVar3.check(stv3_right, param("4x10x4x10x4", grup)) : grup;
+        assert false == furnitureVar3.check(stv3_right, param("xxx", grup)) : grup;
 
         grup = 21010; //Ограничение длины стороны, мм 
-        assert true == furnitureVar3.check(stv_right3, param("0-6000", grup)) : grup;
-        assert false == furnitureVar3.check(stv_right3, param("5000-6000", grup)) : grup;
+        assert true == furnitureVar3.check(stv3_right, param("0-6000", grup)) : grup;
+        assert false == furnitureVar3.check(stv3_right, param("5000-6000", grup)) : grup;
 
         grup = 21013; //Ограничение длины ручка по середине, мм
-        assert true == furnitureVar3.check(stv_right3, param("940-1200", grup)) : grup;
-        assert false == furnitureVar3.check(stv_right3, param("500", grup)) : grup;
+        assert true == furnitureVar3.check(stv3_right, param("940-1200", grup)) : grup;
+        assert false == furnitureVar3.check(stv3_right, param("500", grup)) : grup;
 
         grup = 21016; //Допустимое соотношение габаритов (б/м)
-        assert true == furnitureVar2.check(stv_right2, param("1,1-2,0", grup)) : grup;
-        assert false == furnitureVar2.check(stv_right2, param("1-1,09", grup)) : grup;
+        assert true == furnitureVar2.check(stv2_right, param("1,1-2,0", grup)) : grup;
+        assert false == furnitureVar2.check(stv2_right, param("1-1,09", grup)) : grup;
 
         grup = 21040;  //Ограничение угла
-        assert true == furnitureVar2.check(stv_right2, param("74-360", grup)) : grup;
-        assert false == furnitureVar2.check(stv_right2, param("12-55", grup)) : grup;
+        assert true == furnitureVar2.check(stv2_right, param("74-360", grup)) : grup;
+        assert false == furnitureVar2.check(stv2_right, param("12-55", grup)) : grup;
     }
 
     /**
@@ -109,9 +109,9 @@ public class FurnitureTest {
      */
     public void furnitureDet() {
         HashMap<Integer, String> mapParam = new HashMap();
-        AreaSimple area_stv_3 = (AreaSimple) stv_right3.owner;
-        AreaSimple area_stv_2 = (AreaSimple) stv_right2.owner;
-        AreaSimple area_stv_4 = (AreaSimple) stv_right4.owner;
+        AreaSimple area_stv_3 = (AreaSimple) stv3_right.owner;
+        AreaSimple area_stv_2 = (AreaSimple) stv2_right.owner;
+        AreaSimple area_stv_4 = (AreaSimple) stv4_right.owner;
 
         grup = 24001; //25001 //Форма контура
         //assert true == furnitureDet3.check(mapParam, area_stv_3, param("арочная", grup)) : grup;

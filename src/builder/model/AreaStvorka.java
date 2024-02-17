@@ -275,11 +275,11 @@ public class AreaStvorka extends AreaSimple {
         if (this.knobOpen != null) {
             winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
 
-            if (this.lineOpenHor != null) {
+            if (this.lineOpenHor != null) { //линии горизонт. открывания
                 Shape shape = new ShapeWriter().toShape(this.lineOpenHor);
                 winc.gc2d.draw(shape);
             }
-            if (this.lineOpenVer != null) {
+            if (this.lineOpenVer != null) { //линии вертик. открывания
                 Shape shape = new ShapeWriter().toShape(this.lineOpenVer);
                 winc.gc2d.draw(shape);
             }

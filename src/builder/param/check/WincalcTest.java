@@ -26,28 +26,28 @@ public class WincalcTest {
     public static int grup = -1;
     public static Record record = null;
 
-    public static ElemSimple frame_left2 = null;
-    public static ElemSimple frame_right2 = null;
-    public static ElemSimple stv_right2 = null;
-    public static ElemSimple imp_horiz2 = null;
-    public static ElemSimple imp_vert2 = null;
-    public static ElemSimple glass_top2 = null;
-    public static ElemSimple glass_left2 = null;
-    public static ElemSimple glass_right2 = null;
+    public static ElemSimple frame2_left = null;
+    public static ElemSimple frame2_right = null;
+    public static ElemSimple stv2_right = null;
+    public static ElemSimple imp2_horiz = null;
+    public static ElemSimple imp2_vert = null;
+    public static ElemSimple glass2_top = null;
+    public static ElemSimple glass2_left = null;
+    public static ElemSimple glass2_right = null;
 
-    public static ElemSimple frame_left3 = null;
-    public static ElemSimple frame_right3 = null;
-    public static ElemSimple stv_right3 = null;
-    public static ElemSimple imp_vert3 = null;
-    public static ElemSimple glass_top3 = null;
-    public static ElemSimple glass_left3 = null;
+    public static ElemSimple frame3_left = null;
+    public static ElemSimple frame3_right = null;
+    public static ElemSimple stv3_right = null;
+    public static ElemSimple imp3_vert = null;
+    public static ElemSimple glass3_top = null;
+    public static ElemSimple glass3_left = null;
 
-    public static ElemSimple frame_left4 = null;
-    public static ElemSimple frame_right4 = null;
-    public static ElemSimple stv_left4 = null;
-    public static ElemSimple stv_right4 = null;
-    public static ElemSimple glass_right4 = null;
-    public static ElemSimple glass_left4 = null;
+    public static ElemSimple frame4_left = null;
+    public static ElemSimple frame4_right = null;
+    public static ElemSimple stv4_left = null;
+    public static ElemSimple stv4_right = null;
+    public static ElemSimple glass4_right = null;
+    public static ElemSimple glass4_left = null;
 
     public static ElementVar elementVar2 = null;
     public static ElementDet elementDet2 = null;
@@ -101,15 +101,15 @@ public class WincalcTest {
         joiningDet2 = new JoiningDet(iwin2);
         furnitureVar2 = new FurnitureVar(iwin2);
         furnitureDet2 = new FurnitureDet(iwin2);
-        frame_left2 = getElem(iwin2.root, 1);
+        frame2_left = getElem(iwin2.root, 1);
 
-        frame_right2 = getElem(iwin2.root, 3);
-        stv_right2 = getElem(iwin2.root, 9.3);
-        imp_vert2 = getElem(iwin2.root, 11);
-        imp_horiz2 = getElem(iwin2.root, 7);
-        glass_top2 = (ElemSimple) getElem(iwin2.root, 6);
-        glass_left2 = (ElemSimple) getElem(iwin2.root, 10);
-        glass_right2 = (ElemSimple) getElem(iwin2.root, 13);
+        frame2_right = getElem(iwin2.root, 3);
+        stv2_right = getElem(iwin2.root, 9.3);
+        imp2_vert = getElem(iwin2.root, 11);
+        imp2_horiz = getElem(iwin2.root, 7);
+        glass2_top = (ElemSimple) getElem(iwin2.root, 6);
+        glass2_left = (ElemSimple) getElem(iwin2.root, 10);
+        glass2_right = (ElemSimple) getElem(iwin2.root, 13);
     }
 
     //604005  "Wintech\\Termotech 742\\1 ОКНА"
@@ -128,12 +128,12 @@ public class WincalcTest {
         furnitureVar3 = new FurnitureVar(iwin3);
         furnitureDet3 = new FurnitureDet(iwin3);
 
-        frame_left3 = getElem(iwin3.root, 1);
-        frame_right3 = getElem(iwin3.root, 3);
-        stv_right3 = getElem(iwin3.root, 12.3);
-        imp_vert3 = getElem(iwin3.root, 11);
-        glass_top3 = (ElemSimple) getElem(iwin3.root, 6);
-        glass_left3 = (ElemSimple) getElem(iwin3.root, 10);
+        frame3_left = getElem(iwin3.root, 1);
+        frame3_right = getElem(iwin3.root, 3);
+        stv3_right = getElem(iwin3.root, 12.3);
+        imp3_vert = getElem(iwin3.root, 11);
+        glass3_top = (ElemSimple) getElem(iwin3.root, 6);
+        glass3_left = (ElemSimple) getElem(iwin3.root, 10);
     }
 
     //700027  "Montblanc / Eco / 1 ОКНА (штульп)"
@@ -152,12 +152,12 @@ public class WincalcTest {
         furnitureVar4 = new FurnitureVar(iwin4);
         furnitureDet4 = new FurnitureDet(iwin4);
 
-        frame_left4 = getElem(iwin4.root, 1);
-        frame_right4 = getElem(iwin4.root, 3);
-        stv_left4 = getElem(iwin4.root, 5.1);
-        stv_right4 = getElem(iwin4.root, 8.3);
-        glass_right4 = (ElemSimple) getElem(iwin4.root, 6);
-        glass_left4 = (ElemSimple) getElem(iwin4.root, 9);
+        frame4_left = getElem(iwin4.root, 1);
+        frame4_right = getElem(iwin4.root, 3);
+        stv4_left = getElem(iwin4.root, 5.1);
+        stv4_right = getElem(iwin4.root, 8.3);
+        glass4_right = (ElemSimple) getElem(iwin4.root, 6);
+        glass4_left = (ElemSimple) getElem(iwin4.root, 9);
     }
 
     //Получить элемент по ключу
