@@ -159,17 +159,6 @@ public class Com5t {
         return (y2() > y1()) ? y2() - y1() : y1() - y2();
     }
 
-    public Boolean inside(double x, double y) {
-        try {
-            Coordinate c = new Coordinate(x, y);
-            return PointLocation.isInRing(c, this.area.getGeometryN(0).getCoordinates());
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Com5t.inside()");
-            return null;
-        }
-    }
-
     @Override
     public String toString() {
         String art = (artiklRecAn == null) ? "null" : artiklRecAn.getStr(eArtikl.code);

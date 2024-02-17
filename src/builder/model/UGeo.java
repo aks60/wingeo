@@ -37,7 +37,7 @@ public class UGeo {
         pm = new PrecisionModel(pm);
     }
 
-    public boolean inside(double x, double y, Geometry g) {
+    public static boolean isInRing(double x, double y, Geometry g) {
         try {
             Coordinate c = new Coordinate(x, y);
             return PointLocation.isInRing(c, g.getGeometryN(0).getCoordinates());

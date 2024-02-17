@@ -295,20 +295,20 @@ public abstract class ElemSimple extends Com5t {
                     //Проверка начинает выполняться после появления в обратном цикле самого элемента(this) 
                     if (Layout.BOTT == side && el.layout() != Layout.VERT) {
                         double Y2 = (y2() > y1()) ? y2() : y1();
-                        if (el.inside(x1() + (x2() - x1()) / 2, Y2) == true) {
+                        if (UGeo.isInRing(x1() + (x2() - x1()) / 2, Y2, el.area) == true) {
                             return (ElemSimple) el;
                         }
                     } else if (Layout.LEFT == side && el.layout() != Layout.HORIZ) {
-                        if (el.inside(x1(), y1() + (y2() - y1()) / 2) == true) {
+                        if (UGeo.isInRing(x1(), y1() + (y2() - y1()) / 2, el.area) == true) {
                             return (ElemSimple) el;
                         }
                     } else if (Layout.TOP == side && el.layout() != Layout.VERT) {
                         double Y1 = (y2() > y1()) ? y1() : y2();
-                        if (el.inside(x1() + (x2() - x1()) / 2, Y1) == true && (el.owner.type == Type.ARCH && el.layout() == Layout.TOP) == false) {
+                        if (UGeo.isInRing(x1() + (x2() - x1()) / 2, Y1, el.area) == true && (el.owner.type == Type.ARCH && el.layout() == Layout.TOP) == false) {
                             return (ElemSimple) el;
                         }
                     } else if (Layout.RIGHT == side && el.layout() != Layout.HORIZ) {
-                        if (el.inside(x2(), y1() + (y2() - y1()) / 2)) {
+                        if (UGeo.isInRing(x2(), y1() + (y2() - y1()) / 2, el.area)) {
                             return (ElemSimple) el;
                         }
                     }

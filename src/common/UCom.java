@@ -88,7 +88,6 @@ public class UCom {
         return Arrays.copyOf(b, b.length);
     }
 
-        
     public static Integer getInt(String str) {
         try {
             if (str == null || str.isEmpty()) {
@@ -357,7 +356,7 @@ public class UCom {
         return false;
     }
 
-    //"288-488/1028,01-1128", "2000,2-3000/0-1250@", "55;/*"
+    //"288-488/1028,01-1128",  "2000,2-3000/0-1250@",  "55;/*"
     //TODO необходимо учесть такой вариант -27,5/-27,5 см. 34049
     public static boolean containsNumb(String txt, Number val1, Number val2) {
         try {
@@ -377,7 +376,8 @@ public class UCom {
                     return true;
                 }
             } else {
-                if (containsNumbJust(arr[0], val1) == true && containsNumbJust(arr[1], val2) == true) {
+                if ((arr[0].equals("*") || containsNumbJust(arr[0], val1)) == true
+                        && (arr[1].equals("*") || containsNumbJust(arr[1], val2) == true)) {
                     return true;
                 }
             }
@@ -403,8 +403,8 @@ public class UCom {
         }
         return false;
     }
+    
     //"Стойка 172;Стойка 240;
-
     public static boolean containsStr(String str, String val) {
         try {
             String[] arr = str.split(";");
@@ -419,7 +419,7 @@ public class UCom {
         return false;
     }
 
-    //"Стойка 100;Стойка 200/*", "Slidors 60;@/Slidors 60;@"
+    //"Стойка 100;Стойка 200/*",  "Slidors 60;@/Slidors 60;@"
     public static boolean containsStr(String str, String val1, String val2) {
         try {
             if (str == null || str.isEmpty()) {

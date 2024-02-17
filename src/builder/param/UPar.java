@@ -3,6 +3,7 @@ package builder.param;
 import builder.Wincalc;
 import builder.model.AreaStvorka;
 import builder.model.ElemSimple;
+import builder.model.UGeo;
 import common.UCom;
 import dataset.Record;
 import domain.eArtikl;
@@ -26,21 +27,23 @@ class UPar {
     //Толщина внешнего/внутреннего заполнения, мм
     static List<ElemSimple> getGlassDepth(ElemSimple elem5e) {
         ElemSimple glass1 = null, glass2 = null;
+        //Цыкл по списку элементов
         for (ElemSimple el : elem5e.winc.listElem) {
             if (el.type == Type.GLASS) {
+                
                 if (elem5e.layout() == Layout.VERT) {
-                    if (el.inside(elem5e.x1() - 200, elem5e.y1() + elem5e.height() / 2)) {
+                    if (UGeo.isInRing(elem5e.x1() - 200, elem5e.y1() + elem5e.height() / 2, el.area)) {
                         glass1 = el;
                     }
-                    if (el.inside(elem5e.x2() + 200, elem5e.y1() + elem5e.height() / 2)) {
+                    if (UGeo.isInRing(elem5e.x2() + 200, elem5e.y1() + elem5e.height() / 2, el.area)) {
                         glass2 = el;
                     }
                 }
                 if (elem5e.layout() == Layout.HORIZ) {
-                    if (el.inside(elem5e.y1() - 200, elem5e.x1() + elem5e.width() / 2)) {
+                    if (UGeo.isInRing(elem5e.y1() - 200, elem5e.x1() + elem5e.width() / 2, el.area)) {
                         glass1 = el;
                     }
-                    if (el.inside(elem5e.y2() + 200, elem5e.x1() + elem5e.width() / 2)) {
+                    if (UGeo.isInRing(elem5e.y2() + 200, elem5e.x1() + elem5e.width() / 2, el.area)) {
                         glass2 = el;
                     }
                 }

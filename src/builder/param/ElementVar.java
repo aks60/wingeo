@@ -125,6 +125,7 @@ public class ElementVar extends Par5s {
                     List<ElemSimple> glassList = UPar.getGlassDepth(elem5e);
                     if (glassList.get(0).type == Type.GLASS && glassList.get(1).type == Type.GLASS) {
                         if ("ps3".equals(eSetting.val(2))) { //Толщина заполнения, мм
+                            
                             if (UCom.containsNumbAny(rec.getStr(TEXT),
                                     glassList.get(0).artiklRec.getDbl(eArtikl.depth),
                                     glassList.get(1).artiklRec.getDbl(eArtikl.depth)) == false) {
