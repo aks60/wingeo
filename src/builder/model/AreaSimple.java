@@ -34,9 +34,9 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 public class AreaSimple extends Com5t {
 
     private DecimalFormat df1 = new DecimalFormat("#0.#");
-    public ArrayCom<ElemSimple> frames = new ArrayCom(this); //список рам
+    public ArrayCom<ElemSimple> frames = new ArrayCom<ElemSimple>(this); //список рам
     public ListenerPaint listenerPassEdit = null;
-    public ArrayCom<Com5t> childs = new ArrayCom(this); //дети
+    public ArrayCom<Com5t> childs = new ArrayCom<Com5t>(this); //дети
 
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson.id, gson, owner);
