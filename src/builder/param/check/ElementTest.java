@@ -194,7 +194,7 @@ public class ElementTest {
 
         grup = 37009; //Тип заполнения
         assert true == elementVar2.check(stv2_left_3, param("Прямоугольное", grup)) : grup;
-        assert true == elementVar2.check(frame4_top, param("Арочное", grup)) : grup;
+        assert true == elementVar3.check(frame3_left, param("Арочное", grup)) : grup;
         assert false == elementVar2.check(stv2_left_3, param("Произвольное", grup)) : grup;
 
         grup = 37010; //Ограничение ширины/высоты листа, мм
@@ -301,8 +301,8 @@ public class ElementTest {
         assert false == elementDet2.check(mapParam, frame2_1, param("32", grup)) : grup;
 
         grup = 38039; //39039 //Для типа открывания 
-        assert true == elementDet4.check(mapParam, stv4_right_3, param("поворотное", grup)) : grup;
-        assert false == elementDet4.check(mapParam, stv4_right_3, param("поворотно-откидное", grup)) : grup;
+        assert true == elementDet4.check(mapParam, stv4_right_3, param("поворотно-откидное", grup)) : grup;
+        assert false == elementDet4.check(mapParam, stv4_right_3, param("поворотное", grup)) : grup;
 
     }
 

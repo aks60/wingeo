@@ -9,13 +9,12 @@ import enums.Layout;
 import java.util.List;
 import builder.Wincalc;
 import builder.model.AreaStvorka;
-import builder.model.ElemGlass;
-import builder.model.ElemJoining;
 import builder.model.ElemSimple;
 import common.UCom;
 import enums.Type;
 import enums.TypeJoin;
 import java.util.ArrayList;
+import org.locationtech.jts.geom.Envelope;
 
 //Составы 31000, 37000
 public class ElementVar extends Par5s {
@@ -384,13 +383,16 @@ public class ElementVar extends Par5s {
                         return false;
                     }
                     break;
-                case 37030:  //Ограничение площади, кв.м.                                      
+                case 37030:  //Ограничение площади, кв.м. 
+                    Envelope env = elem5e.area.getEnvelopeInternal();
                     if ("ps3".equals(versionPs)) { //Минимальная площадь, кв.м.
-                        if (rec.getDbl(TEXT) > elem5e.root.width() / 1000 * elem5e.root.height() / 1000) {
+                        if (rec.getDbl(TEXT) > env.getWidth() / 1000 * env.getHeight() / 1000) {
                             return false;
                         }
                     } else {
-                        if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.root.width() / 1000 * elem5e.root.height() / 1000) == false) {
+                        Object o1 = env.getWidth() / 1000;
+                        Object o2 = env.getWidth() / 1000;
+                        if (UCom.containsNumbJust(rec.getStr(TEXT), env.getWidth() / 1000 * env.getHeight() / 1000) == false) {
                             return false;
                         }
                     }
