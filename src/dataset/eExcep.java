@@ -21,7 +21,7 @@ public enum eExcep {
     noTable("Не найдена таблица в базе данных", 335544569);
     public int id = 0;
     public String mes;
-    private HashSet<Integer> code = new HashSet();
+    private HashSet<Integer> code = new HashSet<Integer>();
     public static int countErr = 0;
 
     eExcep(String mes, int... codes) {

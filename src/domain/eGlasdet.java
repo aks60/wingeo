@@ -46,7 +46,7 @@ public enum eGlasdet implements Field {
             return query().stream().filter(rec -> rec.getInt(glasgrp_id) == _id && rec.getDbl(depth) == _depth).collect(Collectors.toList());
         }
         Query recordList = new Query(values()).select(up, "where", glasgrp_id, "=", _id, "and", depth, "=", _depth);
-        return (recordList.isEmpty() == true) ? new ArrayList() : recordList;
+        return (recordList.isEmpty() == true) ? new ArrayList<Record>() : recordList;
     }
 
     public String toString() {

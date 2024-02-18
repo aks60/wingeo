@@ -137,9 +137,9 @@ public class Specifics extends javax.swing.JFrame {
     }
 
     public static List<Specific> groups(List<Specific> listSpec, int num) {
-        HashSet<String> hs = new HashSet();
-        List<Specific> list = new ArrayList();
-        Map<String, Specific> map = new HashMap();
+        HashSet<String> hs = new HashSet<String>();
+        List<Specific> list = new ArrayList<Specific>();
+        Map<String, Specific> map = new HashMap<String, Specific>();
 
         for (Specific spc : listSpec) {
             String key = (num == 1)

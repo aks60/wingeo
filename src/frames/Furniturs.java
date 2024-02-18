@@ -1725,14 +1725,14 @@ public class Furniturs extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTest
 
     private void btnFindSystree(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindSystree
-        List<String> pathList = new ArrayList();
-        List<Integer> keyList = new ArrayList();
+        List<String> pathList = new ArrayList<String>();
+        List<Integer> keyList = new ArrayList<Integer>();
         StringBuffer bufferPath = new StringBuffer();
 
         int index = UGui.getIndexRec(tab1);
         Record furnitureRec = qFurniture.get(index);
         List<Record> sysfurnList1 = eSysfurn.query().stream().filter(rec -> furnitureRec.getInt(eFurniture.id) == rec.getInt(eSysfurn.furniture_id)).collect(Collectors.toList());
-        Set<Integer> systreeList = new HashSet();
+        Set<Integer> systreeList = new HashSet<Integer>();
         sysfurnList1.forEach(rec -> systreeList.add(rec.getInt(eSysfurn.systree_id)));
 
         for (Record rec : eSystree.query()) {
@@ -1794,9 +1794,9 @@ public class Furniturs extends javax.swing.JFrame {
         if (indexTab1 != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
                 "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 
-            List<Record> furnside1List = new ArrayList();
+            List<Record> furnside1List = new ArrayList<Record>();
             Map<Record, Integer> furnside2Map = new HashMap<>();
-            List<Record> furndet2aList = new ArrayList();
+            List<Record> furndet2aList = new ArrayList<Record>();
             Map<Record, Integer> furndet2bMap = new HashMap<>();
             Map<Record, Integer> furndet2cMap = new HashMap<>();
             Map<Record, Integer> furnpar1Map = new HashMap<>();

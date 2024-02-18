@@ -66,7 +66,7 @@ public class UGeo {
     public static Coordinate[] geoCross(Geometry poly, LineSegment line) {
         try {
             poly = poly.getGeometryN(0);
-            List<Coordinate> out = new ArrayList();
+            List<Coordinate> out = new ArrayList<Coordinate>();
             Coordinate[] c = poly.getCoordinates();
             for (int i = 1; i < c.length; i++) {
 
@@ -94,12 +94,12 @@ public class UGeo {
     public static Geometry[] geoSplit(Geometry poly, ElemCross impost) {
         try {
             poly = poly.getGeometryN(0);
-            HashSet<Coordinate> hsCheck = new HashSet();
+            HashSet<Coordinate> hsCheck = new HashSet<Coordinate>();
             Coordinate[] coo = poly.copy().getCoordinates();
             LineSegment imp = new LineSegment(new Coordinate(impost.x1(), impost.y1()), new Coordinate(impost.x2(), impost.y2()));
             imp.normalize();
-            List<Coordinate> cooL = new ArrayList(), cooR = new ArrayList();
-            List<Coordinate> crosP = new ArrayList(), exten = new ArrayList(List.of(coo[0]));
+            List<Coordinate> cooL = new ArrayList<Coordinate>(), cooR = new ArrayList<Coordinate>();
+            List<Coordinate> crosP = new ArrayList<Coordinate>(), exten = new ArrayList<Coordinate>(List.of(coo[0]));
 
             //Вставим точки пересецения в список координат
             for (int i = 1; i < coo.length; i++) {
@@ -169,7 +169,7 @@ public class UGeo {
     public static Polygon geoPadding(Geometry poly, ArrayCom<? extends Com5t> list, double amend) {
         LineSegment segm1, segm2, segm1a = null, segm2a = null, segm1b, segm2b, segm1c, segm2c;
         Coordinate cros1 = null, cros2 = null;
-        List<Coordinate> out = new ArrayList();
+        List<Coordinate> out = new ArrayList<Coordinate>();
         try {
             poly = poly.getGeometryN(0);
             int j = 999, k = 999;
@@ -243,7 +243,7 @@ public class UGeo {
 
     //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Coordinate[] arrCoord(double... d) {
-        List<Coordinate> list = new ArrayList();
+        List<Coordinate> list = new ArrayList<Coordinate>();
         for (int i = 1; i < d.length; i = i + 2) {
             list.add(new Coordinate(d[i - 1], d[i]));
         }
@@ -306,7 +306,7 @@ public class UGeo {
 
     public static List<Coordinate> getSegmentArch(Coordinate coo[], ElemSimple elem) {
         int index = 0;
-        List<Coordinate> list = new ArrayList();
+        List<Coordinate> list = new ArrayList<Coordinate>();
         for (int i = 0; i < coo.length; i++) {
             if (coo[i].z == elem.id) {
                 list.add(coo[i]);
@@ -368,7 +368,7 @@ public class UGeo {
 
         Coordinate[] coo = p.getCoordinates();
         int i = mid + coo.length - 1;
-        List<Coordinate> list = new ArrayList(List.of(coo));
+        List<Coordinate> list = new ArrayList<Coordinate>(List.of(coo));
         list.addAll(List.of(Arrays.copyOfRange(coo, 1, coo.length)));
         list.addAll(List.of(Arrays.copyOfRange(coo, 1, coo.length)));
 

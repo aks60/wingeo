@@ -163,7 +163,7 @@ public class ExecuteCmd {
     public static String replacePath(String src) {
         int index = 0;
         int index2 = 0;
-        List<String> list = new ArrayList();
+        List<String> list = new ArrayList<String>();
         while (index2 != -1) {
             index2 = src.indexOf("\\", index);
             if (index2 != -1) {

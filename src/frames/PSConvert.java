@@ -185,7 +185,7 @@ public class PSConvert {
             }
 
             println(Color.GREEN, "Секция создания ролей");
-            Set<String> set = new HashSet();
+            Set<String> set = new HashSet<String>();
             ResultSet rs = st2.executeQuery("select a.rdb$role_name from rdb$roles a where a.rdb$role_name != 'RDB$ADMIN'");
             while (rs.next()) {
                 set.add(rs.getString("rdb$role_name"));
@@ -234,7 +234,7 @@ public class PSConvert {
 
     public static ArrayList<String> createTable(Field... f) {
 
-        ArrayList<String> batch = new ArrayList();
+        ArrayList<String> batch = new ArrayList<String>();
         String ddl = "CREATE TABLE " + f[0].tname() + " (";
         for (int i = 1; i < f.length; ++i) {
 
@@ -348,7 +348,7 @@ public class PSConvert {
 
     public static HashMap<String, String[]> deltaColumn(DatabaseMetaData mdb1, Field fieldUp) {
         try {
-            HashMap<String, String[]> hmDeltaCol = new HashMap(); //поля не вошедшие в eEnum.values(), в последствии будут использоваться для sql update
+            HashMap<String, String[]> hmDeltaCol = new HashMap<String, String[]>(); //поля не вошедшие в eEnum.values(), в последствии будут использоваться для sql update
             ResultSet rsc1 = mdb1.getColumns(null, null, fieldUp.meta().fname, null);
             while (rsc1.next()) {
                 String table_name = rsc1.getString("TABLE_NAME");
@@ -824,8 +824,8 @@ public class PSConvert {
     }
 
     public static int checkKeyColor(int max) {
-        List<Integer[]> recordList = new ArrayList();
-        Set<Integer> set = new HashSet();
+        List<Integer[]> recordList = new ArrayList<Integer[]>();
+        Set<Integer> set = new HashSet<Integer>();
         try {
             ResultSet rs = st2.executeQuery("select * from COLOR");
             while (rs.next()) {
@@ -874,7 +874,7 @@ public class PSConvert {
     public static void updateSql(Field table1, Field fk1, String id1, Field table2, String id2) {
         try {
             int recordUpdate = 0, recordCount = 0;
-            Set<Object[]> set = new HashSet();
+            Set<Object[]> set = new HashSet<Object[]>();
             ResultSet rs = st2.executeQuery("select id, " + id2 + " from " + table2.tname());
             while (rs.next()) {
                 Object[] arr = {rs.getObject("id"), rs.getObject(id2)};

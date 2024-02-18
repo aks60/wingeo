@@ -40,7 +40,7 @@ import org.locationtech.jts.algorithm.PointLocation;
 
 public class Test {
 
-    //public ArrayList<ListenerMouse> mouseDragged = new ArrayList();
+    //public ArrayList<ListenerMouse> mouseDragged = new ArrayList<ListenerMouse>();
     private JFrame frame = null;
     private Geometry mlin = null;
     private Geometry mpol = null;
@@ -160,7 +160,7 @@ public class Test {
         WincalcTest.init();
         //WincalcTest.iwin4.listJoin.elem(WincalcTest.stv_right4, 2);
         
-//        List<Coordinate> z = new ArrayList();
+//        List<Coordinate> z = new ArrayList<Coordinate>();
 //        for (ElemSimple el : WincalcTest.iwin2.listElem) {
 //            if (el.type == Type.GLASS) {
 //                for (Coordinate c : el.area.getCoordinates()) {
@@ -187,7 +187,7 @@ public class Test {
         t4.furnitureDet();
 
 //        Set set = new HashSet();
-//        Map<String, Set> map = new HashMap();
+//        Map<String, Set> map = new HashMap<String, Set>();
 //        for (Enam en : ParamList.values()) {
 //            Set set2 = map.getOrDefault(en.text(), new HashSet());
 //            set2.add(en.numb());
@@ -451,7 +451,7 @@ public class Test {
         GeometryFactory gf = new GeometryFactory();
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         AffineTransformation aff = new AffineTransformation();
-        ArrayList<Coordinate> list = new ArrayList();
+        ArrayList<Coordinate> list = new ArrayList<Coordinate>();
 
         LineSegment s1 = new LineSegment(1300, 300, 0, 300);
         s1.normalize();
@@ -463,7 +463,7 @@ public class Test {
         list.add(new Coordinate(1300, 300, 4));
         list.add(new Coordinate(0, 300, 1));
 
-        ArrayList<Coordinate> list2 = new ArrayList();
+        ArrayList<Coordinate> list2 = new ArrayList<Coordinate>();
         list.forEach(s -> list2.addAll(List.of(s, s)));
 
         double distance[] = {40, 40, 80, 80, 40};
@@ -483,7 +483,7 @@ public class Test {
         GeometryFactory gf = new GeometryFactory(new PrecisionModel(10));
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         AffineTransformation aff = new AffineTransformation();
-        ArrayList<Coordinate> list = new ArrayList(), list2 = new ArrayList();
+        ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayCom<Com5t> frame = new ArrayCom();
         frame.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0, 300)));
         frame.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0, 1500)));
@@ -559,8 +559,8 @@ public class Test {
 
         mpol = gf.createMultiPolygon(new Polygon[]{p1, p2, p3});
 
-        List<Coordinate> list1 = new ArrayList(List.of(arc1.getCoordinates()));
-        List<Coordinate> list2 = new ArrayList(List.of(arc2.reverse().getCoordinates()));
+        List<Coordinate> list1 = new ArrayList<Coordinate>(List.of(arc1.getCoordinates()));
+        List<Coordinate> list2 = new ArrayList<Coordinate>(List.of(arc2.reverse().getCoordinates()));
         list2.add(list1.get(0));
         list1.addAll(list2);
         mlin = gf.createLineString(list1.toArray(new Coordinate[0]));

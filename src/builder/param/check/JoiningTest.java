@@ -136,7 +136,7 @@ public class JoiningTest {
      * joining d on d.id = c.joining_id where a.groups_id = 11009
      */
     public void joiningDet() {
-        HashMap<Integer, String> mapParam = new HashMap();
+        HashMap<Integer, String> mapParam = new HashMap<Integer, String>();
 
         grup = 11000; //12000 //Для технологического кода контейнера
         //Object o22 = iwin_2.listJoin.get(frame_right_2, 1);

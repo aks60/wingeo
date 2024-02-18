@@ -130,7 +130,7 @@ public class HtmlOfOffer {
     }
 
     private static List<Wincalc> wincList(List<Record> prjprodList, int length) {
-        List<Wincalc> list = new ArrayList();
+        List<Wincalc> list = new ArrayList<Wincalc>();
 //        try {
 //            for (int index = 0; index < prjprodList.size(); ++index) {
 //                Record prjprodRec = prjprodList.get(index);

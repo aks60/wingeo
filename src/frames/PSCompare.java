@@ -57,7 +57,7 @@ public class PSCompare extends javax.swing.JFrame {
     private Graphics2D gc2d = null;
     private DecimalFormat df1 = new DecimalFormat("#0.0");
     private DecimalFormat df2 = new DecimalFormat("#0.00");
-    private HashMap<Integer, String> hmColor = new HashMap();
+    private HashMap<Integer, String> hmColor = new HashMap<Integer, String>();
     private JPanel paintPanel = new JPanel() {
 
         public void paintComponent(Graphics g) {
@@ -255,9 +255,9 @@ public class PSCompare extends javax.swing.JFrame {
 
     public void loadingTabGroup2(Wincalc winc) {
         try {
-            Map<String, Vector> hmSpc = new HashMap();
-            Set<String> setSpcSa = new HashSet();
-            Set<String> setSpcPs = new HashSet();
+            Map<String, Vector> hmSpc = new HashMap<String, Vector>();
+            Set<String> setSpcSa = new HashSet<String>();
+            Set<String> setSpcPs = new HashSet<String>();
             winc.listSpec.forEach(rec -> setSpcSa.add(rec.artikl));
             if (winc.gson.prj != null) {
                 txt21.setText(String.valueOf(winc.gson.prj));
@@ -335,8 +335,8 @@ public class PSCompare extends javax.swing.JFrame {
 
             //=== Таблица 2 ===
             ((DefaultTableModel) tab2.getModel()).getDataVector().clear();
-            Set<String> setSpc1x = new HashSet(setSpcSa);
-            Set<String> setSpc2x = new HashSet(setSpcPs);
+            Set<String> setSpc1x = new HashSet<String>(setSpcSa);
+            Set<String> setSpc2x = new HashSet<String>(setSpcPs);
             setSpc1x.removeAll(setSpcPs);
             setSpc2x.removeAll(setSpcSa);
             ((DefaultTableModel) tab2.getModel()).getDataVector().add(new Vector(List.of("--- ЛИШНИЕ SAOkna  за.выч.Профстрой ---")));

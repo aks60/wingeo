@@ -13,6 +13,7 @@ import builder.model.AreaStvorka;
 import builder.model.ElemJoining;
 import builder.model.ElemSimple;
 import common.UCom;
+import common.listener.ListenerParam;
 import enums.Layout;
 import enums.Type;
 import enums.TypeJoin;
@@ -23,12 +24,12 @@ public class JoiningVar extends Par5s {
 
     public JoiningVar(Wincalc winc) {
         super(winc);
-        listenerList = new ArrayList();
+        listenerList = new ArrayList<ListenerParam>();
     }
 
     public JoiningVar(Wincalc winc, boolean shortPass) {
         super(winc);
-        listenerList = new ArrayList();
+        listenerList = new ArrayList<ListenerParam>();
         this.shortPass = shortPass;
     }
 

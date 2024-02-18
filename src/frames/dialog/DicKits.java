@@ -686,7 +686,7 @@ public class DicKits extends javax.swing.JDialog {
         double L = UCom.getDbl(txt2.getText(), 0.0);
         double Q = UCom.getDbl(txt3.getText(), 1.0);
 
-        HashMap<Integer, String> mapParam = new HashMap();
+        HashMap<Integer, String> mapParam = new HashMap<Integer, String>();
         KitDet kitDet = new KitDet(Q, L, H);
         //Цикл по списку детализации
         for (Record kitdetRec : qKitdet) {
@@ -807,7 +807,7 @@ public class DicKits extends javax.swing.JDialog {
 //            }
             if (kitdetRec != null) {
                 int id = kitdetRec.getInt(eKitdet.artikl_id);
-                HashSet<Record> colorSet = new HashSet();
+                HashSet<Record> colorSet = new HashSet<Record>();
 //                Query artdetList = new Query(eArtdet.values()).select(eArtdet.up, "where", eArtdet.artikl_id, "=", id);
 //                artdetList.forEach(rec -> {
 //

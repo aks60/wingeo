@@ -46,7 +46,7 @@ public enum eGlasprof implements Field {
             return query();
         }
         Query recordList = new Query(values()).select(up);
-        return (recordList.isEmpty() == true) ? new ArrayList() : recordList;
+        return (recordList.isEmpty() == true) ? new ArrayList<Record>() : recordList;
     }
 
     public static List<Record> find(int glasgrpId) {
@@ -54,7 +54,7 @@ public enum eGlasprof implements Field {
             return query().stream().filter(rec -> rec.getInt(glasgrp_id) == glasgrpId).collect(Collectors.toList());
         }
         Query recordList = new Query(values()).select(up, "where", glasgrp_id, "=", glasgrpId);
-        return (recordList.isEmpty() == true) ? new ArrayList() : recordList;
+        return (recordList.isEmpty() == true) ? new ArrayList<Record>() : recordList;
     }
 
     public static Record find2(int artiklId) {

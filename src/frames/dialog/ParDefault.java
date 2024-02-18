@@ -31,7 +31,7 @@ public class ParDefault extends javax.swing.JDialog {
     private Query qGroups = new Query(eGroups.values());
     private Query qParmap = new Query(eParmap.color_id1, eParmap.id, eParmap.groups_id).select(eParmap.up);
     private Query qParams = new Query(eParams.text, eParams.id, eParams.groups_id).select(eParams.up);
-    private List<Vector> parList = new ArrayList();
+    private List<Vector> parList = new ArrayList<Vector>();
     private DefaultTableModel dm = null;
 
     public ParDefault(Frame parent, ListenerRecord listener) {

@@ -268,7 +268,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
 
         rsvSystree = new TableFieldFormat(sysTree) {
 
-            public Set<JTextField> set = new HashSet();
+            public Set<JTextField> set = new HashSet<JTextField>();
 
             public void setTxt(JTextField jtf, String str) {
                 set.add(jtf);
@@ -315,7 +315,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         recordRoot.set(eSystree.parent_id, -1);
         recordRoot.set(eSystree.name, "Дерево системы профилей");
         DefMutableTreeNode rootTree = new DefMutableTreeNode(recordRoot);
-        ArrayList<DefMutableTreeNode> nodeList = new ArrayList();
+        ArrayList<DefMutableTreeNode> nodeList = new ArrayList<DefMutableTreeNode>();
 
         for (Record record : qSystree) { //первый уровень
             if (record.getInt(eSystree.parent_id) == record.getInt(eSystree.id)) {
@@ -3659,7 +3659,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     private void colorToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToFrame
         try {
             double selectID = winNode.com5t().id;
-            HashSet<Record> colorSet = new HashSet();
+            HashSet<Record> colorSet = new HashSet<Record>();
             //Все текстуры артикула элемента конструкции
             Field field = (evt.getSource() == btn18) ? eArtdet.mark_c1 : (evt.getSource() == btn19) ? eArtdet.mark_c2 : eArtdet.mark_c3;
             Query artdetList = new Query(eArtdet.values()).select(eArtdet.up, "where", eArtdet.artikl_id, "=", winNode.com5t().artiklRec.getInt(eArtikl.id));
@@ -3738,7 +3738,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     private void colorToWindows(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToWindows
         try {
             double selectID = winNode.com5t().id;
-            HashSet<Record> colorSet = new HashSet();
+            HashSet<Record> colorSet = new HashSet<Record>();
 
             String colorTxt = (evt.getSource() == btn9) ? txt3.getText() : (evt.getSource() == btn13) ? txt4.getText() : txt5.getText();
             Integer[] colorArr = UCom.parserInt(colorTxt);

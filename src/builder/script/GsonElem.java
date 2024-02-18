@@ -70,14 +70,14 @@ public class GsonElem {
 
     public GsonElem addArea(GsonElem area) {
         area.owner = this;
-        childs = (childs == null) ? new ArrayList() : childs;
+        childs = (childs == null) ? new ArrayList<GsonElem>() : childs;
         this.childs.add(area);
         return area;
     }
 
     public GsonElem addElem(GsonElem elem) {
         elem.owner = this;
-        childs = (childs == null) ? new ArrayList() : childs;
+        childs = (childs == null) ? new ArrayList<GsonElem>() : childs;
         this.childs.add(elem);
         return this;
     }

@@ -33,7 +33,7 @@ public class ElemGlass extends ElemSimple {
     public double anglGHoriz = 0; //угол к горизонту
     public double gzazo = 0; //зазор между фальцем и стеклопакетом 
     //public double gaxis = 0; //размер от оси до стеклопакета
-    public HashMap<Integer, Double> gaxisMap = new HashMap(); //размер от оси до стеклопакета
+    public HashMap<Integer, Double> gaxisMap = new HashMap<Integer, Double>(); //размер от оси до стеклопакета
     public int indexSegm = 0;
 
     public Record rasclRec = eArtikl.virtualRec(); //раскладка
@@ -92,7 +92,7 @@ public class ElemGlass extends ElemSimple {
         Geometry geo = UGeo.geoPadding(owner.area.getGeometryN(0), winc.listElem, 20);
         Envelope env = geo.getEnvelopeInternal();
         setDimension(env.getMinX(), env.getMinY(), env.getMaxX(), env.getMaxY());
-//        List<Coordinate> z = new ArrayList();
+//        List<Coordinate> z = new ArrayList<Coordinate>();
 //        for(Coordinate c: geo.getCoordinates()) {
 //            z.add(c);
 //        }

@@ -1146,11 +1146,11 @@ public class Joinings extends javax.swing.JFrame {
         if (index != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
                 "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 
-            List<Record> joinvarList = new ArrayList<>();
-            List<Record> joindetList = new ArrayList<>();
-            Map<Record, Integer> joindetMap = new HashMap<>();
-            Map<Record, Integer> joinpar1Map = new HashMap<>();
-            Map<Record, Integer> joinpar2Map = new HashMap<>();
+            List<Record> joinvarList = new ArrayList<Record>();
+            List<Record> joindetList = new ArrayList<Record>();
+            Map<Record, Integer> joindetMap = new HashMap<Record, Integer>();
+            Map<Record, Integer> joinpar1Map = new HashMap<Record, Integer>();
+            Map<Record, Integer> joinpar2Map = new HashMap<Record, Integer>();
             qJoinvar.forEach(rec -> joinvarList.add(rec));
 
             Record joiningClon = (Record) qJoining.get(index).clone();

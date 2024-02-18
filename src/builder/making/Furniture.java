@@ -133,7 +133,7 @@ public class Furniture extends Cal5e {
     protected boolean detail(AreaSimple areaStv, Record furndetRec, int countKit) {
         try {
             Record artiklRec = eArtikl.find(furndetRec.getInt(eFurndet.artikl_id), false);
-            HashMap<Integer, String> mapParam = new HashMap(); //тут накапливаются параметры element и specific
+            HashMap<Integer, String> mapParam = new HashMap<Integer, String> (); //тут накапливаются параметры element и specific
 
             //Сделано для убыстрения поиска ручки, подвеса, замка при конструировании окна
             if (shortPass == true) {

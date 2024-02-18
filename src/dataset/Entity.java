@@ -25,8 +25,8 @@ public enum Entity {
     type, size, nullable, comment, fname;
 
     private static String table = null;
-    private static HashMap<String, ArrayList<String>> columns = new HashMap();
-    private static ArrayList<String> rangcol = new ArrayList();
+    private static HashMap<String, ArrayList<String>> columns = new HashMap<String, ArrayList<String>>();
+    private static ArrayList<String> rangcol = new ArrayList<String>();
 
     private static void script() { //throws FileNotFoundException, UnsupportedEncodingException{
 
@@ -172,7 +172,7 @@ public enum Entity {
     }
 
     private static ArrayList<String> newcol() {
-        ArrayList<String> column = new ArrayList();
+        ArrayList<String> column = new ArrayList<String>();
         for (Object en : Entity.values()) {
             column.add(null);
         }

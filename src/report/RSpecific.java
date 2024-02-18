@@ -96,9 +96,9 @@ public class RSpecific {
 
     //--------------------------------------------------------------------------  
     public static List<RSpecific> groups(List<RSpecific> listSpr) {
-        HashSet<String> hs = new HashSet();
-        List<RSpecific> list = new ArrayList();
-        Map<String, RSpecific> map = new HashMap();
+        HashSet<String> hs = new HashSet<String>();
+        List<RSpecific> list = new ArrayList<RSpecific>();
+        Map<String, RSpecific> map = new HashMap<String, RSpecific>();
 
         for (RSpecific sr : listSpr) {
             String key = sr.spc.artikl + sr.spc.colorID1 + sr.spc.colorID2 + sr.spc.colorID3;

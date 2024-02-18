@@ -108,7 +108,7 @@ public class FurnitureTest {
      * a.groups_id in (24003)
      */
     public void furnitureDet() {
-        HashMap<Integer, String> mapParam = new HashMap();
+        HashMap<Integer, String> mapParam = new HashMap<Integer, String>();
         AreaSimple area_stv_3 = (AreaSimple) stv3_right_3.owner;
         AreaSimple area_stv_2 = (AreaSimple) stv2_left_3.owner;
         AreaSimple area_stv_4 = (AreaSimple) stv4_right_3.owner;

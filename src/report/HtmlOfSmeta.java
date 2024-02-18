@@ -93,7 +93,7 @@ public class HtmlOfSmeta {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
             List<Record> prjprodList = ePrjprod.find2(projectRec.getInt(eProject.id));
-            List<Record> prjkitAll = new ArrayList();
+            List<Record> prjkitAll = new ArrayList<Record>();
 
             doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
 
@@ -157,7 +157,7 @@ public class HtmlOfSmeta {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
             List<Record> prjprodList = ePrjprod.find2(projectRec.getInt(eProject.id));
-            List<Record> prjkitAll = new ArrayList();
+            List<Record> prjkitAll = new ArrayList<Record>();
 
             doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
 
@@ -313,7 +313,7 @@ public class HtmlOfSmeta {
     }
 
     private static List<Wincalc> wincList(List<Record> prjprodList, int length) {
-        List<Wincalc> list = new ArrayList();
+        List<Wincalc> list = new ArrayList<Wincalc>();
 //        try {
 //            for (int index = 0; index < prjprodList.size(); ++index) {
 //                Record prjprodRec = prjprodList.get(index);

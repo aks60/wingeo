@@ -20,7 +20,7 @@ public class Par5s {
     protected Wincalc winc = null;
     public boolean shortPass = false;
     protected String versionPs = eSetting.val(2);
-    public HashMap<Integer, String> mapParamTmp = new HashMap();
+    public HashMap<Integer, String> mapParamTmp = new HashMap<Integer, String>();
     public Record detailRec = null; //текущий элемент детализации
     protected ArrayList<ListenerParam> listenerList = null;
 

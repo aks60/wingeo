@@ -10,7 +10,7 @@ public class RColumn {
     //владелец узла
     private DefaultMutableTreeNode parent;
     //это поля колонки в последовательности выбора на печать
-    private ArrayList<Field> fields = new ArrayList();
+    private ArrayList<Field> fields = new ArrayList<Field>();
 
     RColumn(Field field, DefaultMutableTreeNode parent) {
         this.parent = parent;

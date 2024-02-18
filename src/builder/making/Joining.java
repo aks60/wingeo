@@ -29,7 +29,7 @@ public class Joining extends Cal5e {
     private JoiningVar joiningVar = null;
     private JoiningDet joiningDet = null;
     private ElementDet elementDet = null;
-    private HashMap<ElemJoining, Integer> mapJoinvar = new HashMap();
+    private HashMap<ElemJoining, Integer> mapJoinvar = new HashMap<ElemJoining, Integer>();
     private boolean ps3 = "ps3".equals(eSetting.val(2));
 
     public Joining(Wincalc winc) {
@@ -135,7 +135,7 @@ public class Joining extends Cal5e {
 
             //Цикл по детализации соединений
             for (Record joindetRec : joindetList) {
-                HashMap<Integer, String> mapParam = new HashMap(); //тут накапливаются параметры
+                HashMap<Integer, String> mapParam = new HashMap<Integer, String>(); //тут накапливаются параметры
 
                 //ФИЛЬТР детализации 
                 if (joiningDet.filter(mapParam, elemJoin, joindetRec) == true) {
@@ -152,7 +152,7 @@ public class Joining extends Cal5e {
     }
 
     public List<Record> varList(ElemJoining elemJoin) {
-        List<Record> list = new ArrayList();
+        List<Record> list = new ArrayList<Record>();
 
         Record joiningRec = eJoining.find(elemJoin.elem1.artiklRecAn, elemJoin.elem2.artiklRecAn);
         //Список вариантов соединения для артикула1 и артикула2

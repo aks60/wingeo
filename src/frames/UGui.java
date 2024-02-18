@@ -914,7 +914,7 @@ public class UGui {
     //Список для выбора ручек, подвесов, накладок в створке   
     public static Query artTypeToFurndetList(int furnitureID, Query qArtikl) {
         try {
-            HashSet<Integer> filterSet = new HashSet();
+            HashSet<Integer> filterSet = new HashSet<Integer>();
             Query qResult = new Query(eArtikl.values());
             Query qFurndet = new Query(eFurndet.values()).select(eFurndet.up); //вся детализация фурнитуры
 
@@ -950,7 +950,7 @@ public class UGui {
     }
 
     public static HashSet<Record> artiklToColorSet(int artiklID) {
-        HashSet<Record> colorSet = new HashSet();
+        HashSet<Record> colorSet = new HashSet<Record>();
         Query artdetList = new Query(eArtdet.values()).select(eArtdet.up, "where", eArtdet.artikl_id, "=", artiklID);
         artdetList.stream().forEach(rec -> {
 
@@ -968,7 +968,7 @@ public class UGui {
     }
 
     public static HashSet<Record> artiklToColorSet(int artiklID, int side) {
-        HashSet<Record> colorSet = new HashSet();
+        HashSet<Record> colorSet = new HashSet<Record>();
         Field field = (side == 1) ? eArtdet.mark_c1 : (side == 2) ? eArtdet.mark_c2 : eArtdet.mark_c3;
         Query artdetList = new Query(eArtdet.values()).select(eArtdet.up, "where", eArtdet.artikl_id, "=", artiklID, "and", field, "= 1");
         artdetList.stream().forEach(rec -> {

@@ -43,7 +43,7 @@ public enum eFurnside1 implements Field {
             return query().stream().filter(rec -> rec.getInt(furniture_id) == _id).collect(Collectors.toList());
         }
         Query recordList = new Query(values()).select(up, "where", furniture_id, "=", _id);
-        return (recordList.isEmpty() == true) ? new ArrayList() : recordList;
+        return (recordList.isEmpty() == true) ? new ArrayList<Record>() : recordList;
     }
 
     public String toString() {

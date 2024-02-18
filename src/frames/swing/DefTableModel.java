@@ -47,10 +47,10 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
         for (int index = 0; index < model.getColumnCount(); index++) {
             editable[index] = model.isCellEditable(0, index);
         }
-        ArrayList<Boolean> resizableList = new ArrayList();
-        ArrayList<Integer> prefWidthList = new ArrayList();
-        ArrayList<Integer> maxWidthList = new ArrayList();
-        ArrayList<Integer> minWidthList = new ArrayList();
+        ArrayList<Boolean> resizableList = new ArrayList<Boolean>();
+        ArrayList<Integer> prefWidthList = new ArrayList<Integer>();
+        ArrayList<Integer> maxWidthList = new ArrayList<Integer>();
+        ArrayList<Integer> minWidthList = new ArrayList<Integer>();
         DefaultTableColumnModel columnModel = (DefaultTableColumnModel) table.getColumnModel();
 
         for (int index = 0; index < columnModel.getColumnCount(); index++) {

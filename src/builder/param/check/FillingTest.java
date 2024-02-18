@@ -110,7 +110,7 @@ public class FillingTest {
      * artikl d on b.artikl_id = d.id where a.groups_id in (14065, 15055)
      */
     public void fillingDet() {
-        HashMap<Integer, String> mapParam = new HashMap();
+        HashMap<Integer, String> mapParam = new HashMap<Integer, String>();
 
         grup = 14000; //15000 //Для технологического кода контейнера
         assert true == fillingDet2.check(mapParam, glass2_left, param("KBE 58", grup)) : grup;

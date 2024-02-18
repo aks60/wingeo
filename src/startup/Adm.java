@@ -51,7 +51,7 @@ public class Adm extends javax.swing.JFrame {
     private char card = 'I';
     private Queue<Object[]> listQue = new ConcurrentLinkedQueue<Object[]>();
     private Query qSysuser = new Query(eSysuser.values()).select(eSysuser.up);
-    private HashMap<String, JCheckBoxMenuItem> hmLookAndFill = new HashMap();
+    private HashMap<String, JCheckBoxMenuItem> hmLookAndFill = new HashMap<String, JCheckBoxMenuItem>();
     javax.swing.Timer timer = new Timer(100, new ActionListener() {
 
         public void actionPerformed(ActionEvent ev) {

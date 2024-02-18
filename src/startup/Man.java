@@ -21,7 +21,7 @@ public class Man extends javax.swing.JFrame {
 
     private javax.swing.Timer timer = null;
     private ListenerFrame listenerMenu;
-    private HashMap<String, JCheckBoxMenuItem> hmLookAndFill = new HashMap();
+    private HashMap<String, JCheckBoxMenuItem> hmLookAndFill = new HashMap<String, JCheckBoxMenuItem>();
 
     public Man() {
         initComponents();

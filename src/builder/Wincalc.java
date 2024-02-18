@@ -46,7 +46,7 @@ public class Wincalc {
     public Integer nuni = 0; //код системы  
     public double specificID = 0; //для генерации ключа в спецификации
     public int colorID1 = -1, colorID2 = 1, colorID3 = -1; //базовый,внутр,внещний 
-    public Record syssizRec; //система констант
+    public Record syssizRec = null; //система констант
     public double costpric1 = 0; //себест. за ед. без отхода     
     public double costpric2 = 0; //себест. за ед. с отходом
     public double price = 0; //стоимость без скидки
@@ -60,17 +60,17 @@ public class Wincalc {
     public GsonRoot gson = null; //объектная модель конструкции 1-го уровня
     public AreaSimple root = null; //объектная модель конструкции 2-го уровня    
 
-    public ArrayList<ListenerKey> keyboardPressed = new ArrayList();
-    public ArrayList<ListenerKey> keyboardReleased = new ArrayList();
-    public ArrayList<ListenerMouse> mousePressed = new ArrayList();
-    public ArrayList<ListenerMouse> mouseReleased = new ArrayList();
-    public ArrayList<ListenerMouse> mouseDragged = new ArrayList();
+    public ArrayList<ListenerKey> keyboardPressed = new ArrayList<ListenerKey>();
+    public ArrayList<ListenerKey> keyboardReleased = new ArrayList<ListenerKey>();
+    public ArrayList<ListenerMouse> mousePressed = new ArrayList<ListenerMouse>();
+    public ArrayList<ListenerMouse> mouseReleased = new ArrayList<ListenerMouse>();
+    public ArrayList<ListenerMouse> mouseDragged = new ArrayList<ListenerMouse>();
 
-    public HashMap<Integer, Record> mapPardef = new HashMap(); //пар. по умолчанию + наложенные пар. клиента
-    public ArrayCom<AreaSimple> listArea = new ArrayCom(root); //список ареа.
-    public ArrayCom<ElemSimple> listElem = new ArrayCom(root); //список элем.
-    public ArrayCom<Com5t> listAll = new ArrayCom(root); //список всех компонентов (area + elem)
-    public ArraySpc<Specific> listSpec = new ArraySpc(); //спецификация
+    public HashMap<Integer, Record> mapPardef = new HashMap<>(); //пар. по умолчанию + наложенные пар. клиента
+    public ArrayCom<AreaSimple> listArea = new ArrayCom<AreaSimple>(root); //список ареа.
+    public ArrayCom<ElemSimple> listElem = new ArrayCom<ElemSimple>(root); //список элем.
+    public ArrayCom<Com5t> listAll = new ArrayCom<Com5t>(root); //список всех компонентов (area + elem)
+    public ArraySpc<Specific> listSpec = new ArraySpc<Specific>(); //спецификация
     public ArrayJoin listJoin = new ArrayJoin(); //список соединений рам и створок 
 
     public Wincalc() {

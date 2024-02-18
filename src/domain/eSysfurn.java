@@ -48,7 +48,7 @@ public enum eSysfurn implements Field {
             return query().stream().filter(rec -> rec.getInt(systree_id) == _nuni).collect(Collectors.toList());
         }
         Query recordList = new Query(values()).select(up, "where", systree_id, "=", _nuni, "order by", npp);
-        return (recordList.isEmpty() == true) ? new ArrayList() : recordList;
+        return (recordList.isEmpty() == true) ? new ArrayList<Record>() : recordList;
     }
 
     public static Record find2(int _id) {

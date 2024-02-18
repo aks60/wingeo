@@ -110,7 +110,7 @@ public class Filling extends Cal5e {
             //Цикл по списку детализации
             for (Record glasdetRec : glasdetList) {
 
-                HashMap<Integer, String> mapParam = new HashMap(); //тут накапливаются параметры element и specific                        
+                HashMap<Integer, String> mapParam = new HashMap<Integer, String>(); //тут накапливаются параметры element и specific                        
 
                 //ФИЛЬТР детализации, параметры накапливаются в mapParam
                 if (fillingDet.filter(mapParam, elemGlass, glasdetRec) == true) {

@@ -24,6 +24,6 @@ public enum eProfile {
     eProfile(String title, String... role) {
         this.title = title;
         List list = List.of(role);
-        this.roleSet = new HashSet(list);
+        this.roleSet = new HashSet<String>(list);
     }
 }

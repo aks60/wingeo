@@ -202,7 +202,7 @@ public class HtmlOfInvoice {
     }
 
     private static List<Wincalc> wincList(List<Record> prjprodList) {
-        List<Wincalc> list = new ArrayList();
+        List<Wincalc> list = new ArrayList<Wincalc>();
         try {
             for (int index = 0; index < prjprodList.size(); ++index) {
                 Record prjprodRec = prjprodList.get(index);

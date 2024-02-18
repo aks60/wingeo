@@ -70,7 +70,7 @@ public class Artikles extends javax.swing.JFrame {
 
     private TableFieldFormat rsvArtikl;
     private TableFieldFilter filterTable = null;
-    private HashSet<JTextField> jtf = new HashSet();
+    private HashSet<JTextField> jtf = new HashSet<JTextField>();
     private DefaultMutableTreeNode nodeRoot = null;
     private Window owner = null;
     private ListenerRecord listenerSeries, listenerCateg, listenerColor, listenerUnit, listenerCurrenc1,
@@ -178,7 +178,7 @@ public class Artikles extends javax.swing.JFrame {
 
         rsvArtikl = new TableFieldFormat(tab1) {
 
-            public Set<JTextField> set = new HashSet();
+            public Set<JTextField> set = new HashSet<JTextField>();
             private DecimalFormat df = (DecimalFormat) NumberFormat.getNumberInstance(eProp.locale);
 
             public void setText(JTextField jtf, String val) {
@@ -2659,7 +2659,7 @@ public class Artikles extends javax.swing.JFrame {
         if (index != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
                 "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 
-            List<Record> artdetList = new ArrayList<>();
+            List<Record> artdetList = new ArrayList<Record>();
             qArtdet.forEach(rec -> artdetList.add(rec));
 
             Record artiklClon = (Record) qArtikl.get(index).clone();

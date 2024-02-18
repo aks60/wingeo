@@ -44,7 +44,7 @@ public enum eGlaspar2 implements Field {
             return query().stream().filter(rec -> rec.getInt(glasdet_id) == _id).collect(Collectors.toList());
         }
         Query recordList = new Query(values()).select(up, "where", glasdet_id, "=", _id);
-        return (recordList.isEmpty() == true) ? new ArrayList() : recordList;
+        return (recordList.isEmpty() == true) ? new ArrayList<Record>() : recordList;
     }
 
     public String toString() {

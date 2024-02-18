@@ -43,7 +43,7 @@ public enum eSysprof implements Field {
 
 //    public static ArrayList<Record> find(int _nuni) {
 //        if (Query.conf.equals("calc")) {
-//            ArrayList<Record> sysproaList = new ArrayList();
+//            ArrayList<Record> sysproaList = new ArrayList<Record>();
 //            query().stream().filter(rec -> _nuni == rec.getInt(systree_id)).forEach(rec -> sysproaList.add(rec));
 //            return sysproaList;
 //        }
@@ -55,7 +55,7 @@ public enum eSysprof implements Field {
             return virtualRec(_type.id);
         }
         if (Query.conf.equals("calc")) {
-            HashMap<Integer, Record> mapPrio = new HashMap();
+            HashMap<Integer, Record> mapPrio = new HashMap<Integer, Record>();
             query().stream().filter(rec -> rec.getInt(systree_id) == _nuni && rec.getInt(use_type) == _type.id)
                     .forEach(rec -> mapPrio.put(rec.getInt(npp), rec));
             int minLevel = 32767;

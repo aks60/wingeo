@@ -11,6 +11,7 @@ import builder.Wincalc;
 import builder.model.AreaStvorka;
 import builder.model.ElemSimple;
 import common.UCom;
+import common.listener.ListenerParam;
 import enums.Type;
 import enums.TypeJoin;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class ElementVar extends Par5s {
 
     public ElementVar(Wincalc winc) {
         super(winc);
-        listenerList = new ArrayList();
+        listenerList = new ArrayList<ListenerParam>();
     }
 
     public boolean filter(ElemSimple elem5e, Record elementRec) {

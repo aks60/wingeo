@@ -39,7 +39,7 @@ public class Tex extends javax.swing.JFrame {
     private Wincalc winc = new Wincalc();
     private javax.swing.Timer timer = null;
     private ListenerFrame listenerMenu;
-    private HashMap<String, JCheckBoxMenuItem> hmLookAndFill = new HashMap();
+    private HashMap<String, JCheckBoxMenuItem> hmLookAndFill = new HashMap<String, JCheckBoxMenuItem>();
 
     public Tex() {
 

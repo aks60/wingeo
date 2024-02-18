@@ -1181,10 +1181,10 @@ public class Elements extends javax.swing.JFrame {
         int index = UGui.getIndexRec(tab2);
         Record record = qElement.get(index);
         List<Record> sysprofList1 = eSysprof.query().stream().filter(rec -> record.getInt(eElement.artikl_id) == rec.getInt(eSysprof.artikl_id)).collect(Collectors.toList());
-        Set<Integer> sysprofList2 = new HashSet();
+        Set<Integer> sysprofList2 = new HashSet<Integer>();
         sysprofList1.forEach(rec -> sysprofList2.add(rec.getInt(eSysprof.systree_id)));
-        List<String> pathList = new ArrayList();
-        List<Integer> keyList = new ArrayList();
+        List<String> pathList = new ArrayList<String>();
+        List<Integer> keyList = new ArrayList<Integer>();
         StringBuffer path = new StringBuffer();
         for (Record rec : eSystree.query()) {
             if (sysprofList2.contains(rec.get(eSystree.id))) {
@@ -1223,9 +1223,9 @@ public class Elements extends javax.swing.JFrame {
         if (index != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
                 "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 
-            Map<Record, Integer> elempar2Map = new HashMap<>();
-            List<Record> elempar1List = new ArrayList<>();
-            List<Record> elemdetList = new ArrayList<>();
+            Map<Record, Integer> elempar2Map = new HashMap<Record, Integer>();
+            List<Record> elempar1List = new ArrayList<Record>();
+            List<Record> elemdetList = new ArrayList<Record>();
             qElempar1.forEach(rec -> elempar1List.add(rec));
             qElemdet.forEach(rec -> elemdetList.add(rec));
 

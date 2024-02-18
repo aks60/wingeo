@@ -60,7 +60,7 @@ public enum eElempar2 implements Field {
             return query().stream().filter(rec -> _elemdet_id == rec.getInt(elemdet_id)).collect(toList());
         }
         Query recordList = new Query(values()).select(up, "where", elemdet_id, "=", _elemdet_id);
-        return (recordList.isEmpty() == true) ? new ArrayList() : recordList;
+        return (recordList.isEmpty() == true) ? new ArrayList<Record>() : recordList;
     }
     
     public String toString() {

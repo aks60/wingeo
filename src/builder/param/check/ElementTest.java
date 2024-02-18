@@ -228,7 +228,7 @@ public class ElementTest {
      * d on c.artikl_id = d.id where a.groups_id in (31017, 37017)
      */
     public void elementDet() {
-        HashMap<Integer, String> mapParam = new HashMap();
+        HashMap<Integer, String> mapParam = new HashMap<Integer, String>();
 
         grup = 33000; //34000 //Для технологического кода контейнера
         assert true == elementDet2.check(mapParam, frame2_1, param("KBE 58;XXX 58;", grup)) : grup;

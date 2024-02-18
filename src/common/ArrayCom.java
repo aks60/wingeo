@@ -12,7 +12,7 @@ import java.util.List;
 public class ArrayCom<E extends Com5t> extends ArrayList<E> {
 
     AreaSimple areaSimple = null;
-    HashMap<Double, E> hm = new HashMap();
+    HashMap<Double, E> hm = new HashMap<Double, E>();
 
     public ArrayCom() {
     }

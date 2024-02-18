@@ -48,7 +48,7 @@ public enum eArtikl implements Field {
 
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());
-    private static HashMap<Integer, Record> map = new HashMap();
+    private static HashMap<Integer, Record> map = new HashMap<Integer, Record>();
 
     eArtikl(Object... p) {
         meta.init(p);

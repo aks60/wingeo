@@ -49,7 +49,7 @@ public class HtmlOfSpecific {
     }
 
     private static void load1(Record projectRec, Document doc) {
-        List<Specific> spcList2 = new ArrayList();
+        List<Specific> spcList2 = new ArrayList<Specific>();
         List<Record> prjprodList = ePrjprod.find2(projectRec.getInt(eProject.id));
         Wincalc winc = new builder.Wincalc();
 
@@ -63,7 +63,7 @@ public class HtmlOfSpecific {
             spcList2.addAll(kitList); //добавим комплекты
         }
         
-        List<RSpecific> spcList3 = new ArrayList();
+        List<RSpecific> spcList3 = new ArrayList<RSpecific>();
         spcList2.forEach(el -> spcList3.add(new RSpecific(el)));
         String num = projectRec.getStr(eProject.num_ord);
         String date = UGui.simpleFormat.format(projectRec.get(eProject.date4));

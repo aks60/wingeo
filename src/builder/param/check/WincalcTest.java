@@ -22,7 +22,7 @@ public class WincalcTest {
     public static Wincalc iwin3 = null; //604005
     public static Wincalc iwin4 = null; //700027
 
-    public static HashMap<Integer, String> hmParam = new HashMap();
+    public static HashMap<Integer, String> hmParam = new HashMap<Integer, String>();
     public static int grup = -1;
     public static Record record = null;
 

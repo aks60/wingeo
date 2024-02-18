@@ -45,7 +45,7 @@ public class HtmlOfMaterial {
 
     private static void load(Record projectRec, Document doc) {
 
-        List<Specific> spcList2 = new ArrayList();
+        List<Specific> spcList2 = new ArrayList<Specific>();
         List<Record> prjprodList = ePrjprod.find2(projectRec.getInt(eProject.id));
         for (Record prjprodRec : prjprodList) {
             String script = prjprodRec.getStr(ePrjprod.script);
@@ -53,7 +53,7 @@ public class HtmlOfMaterial {
             winc.specific(true);
             spcList2.addAll(winc.listSpec);
         }
-        List<RSpecific> spcList3 = new ArrayList();
+        List<RSpecific> spcList3 = new ArrayList<RSpecific>();
         spcList2.forEach(el -> spcList3.add(new RSpecific(el)));
         double total = spcList3.stream().mapToDouble(spc -> spc.getCost1()).sum();
         

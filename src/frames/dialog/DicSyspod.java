@@ -84,7 +84,7 @@ public class DicSyspod extends javax.swing.JDialog {
         recordRoot.set(eSystree.parent_id, -1);
         recordRoot.set(eSystree.name, "Дерево системы профилей");
         rootTree = new DefMutableTreeNode(recordRoot);
-        ArrayList<DefMutableTreeNode> treeList = new ArrayList();
+        ArrayList<DefMutableTreeNode> treeList = new ArrayList<DefMutableTreeNode>();
 
         for (Record record : qSystree) {
             if (record.getInt(eSystree.parent_id) == record.getInt(eSystree.id)) {
@@ -93,11 +93,11 @@ public class DicSyspod extends javax.swing.JDialog {
                 rootTree.add(node2);
             }
         }
-        ArrayList<DefMutableTreeNode> treeList2 = addChild(treeList, new ArrayList());
-        ArrayList<DefMutableTreeNode> treeList3 = addChild(treeList2, new ArrayList());
-        ArrayList<DefMutableTreeNode> treeList4 = addChild(treeList3, new ArrayList());
-        ArrayList<DefMutableTreeNode> treeList5 = addChild(treeList4, new ArrayList());
-        ArrayList<DefMutableTreeNode> treeList6 = addChild(treeList5, new ArrayList());
+        ArrayList<DefMutableTreeNode> treeList2 = addChild(treeList, new ArrayList<DefMutableTreeNode>());
+        ArrayList<DefMutableTreeNode> treeList3 = addChild(treeList2, new ArrayList<DefMutableTreeNode>());
+        ArrayList<DefMutableTreeNode> treeList4 = addChild(treeList3, new ArrayList<DefMutableTreeNode>());
+        ArrayList<DefMutableTreeNode> treeList5 = addChild(treeList4, new ArrayList<DefMutableTreeNode>());
+        ArrayList<DefMutableTreeNode> treeList6 = addChild(treeList5, new ArrayList<DefMutableTreeNode>());
         tree1.setModel(new DefaultTreeModel(rootTree));
         scr1.setViewportView(tree1);
     }

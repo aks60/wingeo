@@ -134,7 +134,7 @@ public class AreaSimple extends Com5t {
             }
             winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
             Envelope boxRama = winc.root.area.getGeometryN(0).getEnvelopeInternal();
-            HashSet<Double> hsHor = new HashSet(), hsVer = new HashSet();
+            HashSet<Double> hsHor = new HashSet<Double>(), hsVer = new HashSet<Double>();
 
             for (AreaSimple area5e : winc.listArea) {
                 Geometry poly = (area5e.type == Type.STVORKA) ? ((AreaStvorka) area5e).areaBox.getGeometryN(0) : area5e.area.getGeometryN(0);
@@ -157,8 +157,8 @@ public class AreaSimple extends Com5t {
                     }
                 }
             }
-            List<Double> listHor = new ArrayList(hsHor);
-            List<Double> listVer = new ArrayList(hsVer);
+            List<Double> listHor = new ArrayList<Double>(hsHor);
+            List<Double> listVer = new ArrayList<Double>(hsVer);
             Collections.sort(listHor);
             Collections.sort(listVer);
             int coeff = 12;

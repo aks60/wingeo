@@ -3168,7 +3168,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
         try {
             if (winNode != null) {
                 double selectID = winNode.com5t().id;
-                HashSet<Record> colorSet = new HashSet();
+                HashSet<Record> colorSet = new HashSet<Record>();
                 int systreeID = qPrjprod.getAs(UGui.getIndexRec(tab2), ePrjprod.systree_id);
                 Record systreeRec = eSystree.find(systreeID);
                 eSystree col = (evt.getSource() == btn9) ? eSystree.col1 : (evt.getSource() == btn13) ? eSystree.col2 : eSystree.col3;
@@ -3287,7 +3287,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
     private void colorToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToFrame
         try {
             double selectID = winNode.com5t().id;
-            HashSet<Record> colorSet = new HashSet();
+            HashSet<Record> colorSet = new HashSet<Record>();
             Query artdetList = new Query(eArtdet.values()).select(eArtdet.up, "where", eArtdet.artikl_id, "=", winNode.com5t().artiklRec.getInt(eArtikl.id));
             artdetList.forEach(rec -> {
 
