@@ -1795,12 +1795,12 @@ public class Furniturs extends javax.swing.JFrame {
                 "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 
             List<Record> furnside1List = new ArrayList<Record>();
-            Map<Record, Integer> furnside2Map = new HashMap<>();
+            Map<Record, Integer> furnside2Map = new HashMap<Record, Integer>();
             List<Record> furndet2aList = new ArrayList<Record>();
-            Map<Record, Integer> furndet2bMap = new HashMap<>();
-            Map<Record, Integer> furndet2cMap = new HashMap<>();
-            Map<Record, Integer> furnpar1Map = new HashMap<>();
-            Map<Record, Integer> furnpar2Map = new HashMap<>();
+            Map<Record, Integer> furndet2bMap = new HashMap<Record, Integer>();
+            Map<Record, Integer> furndet2cMap = new HashMap<Record, Integer>();
+            Map<Record, Integer> furnpar1Map = new HashMap<Record, Integer>();
+            Map<Record, Integer> furnpar2Map = new HashMap<Record, Integer>();
 
             Record furnitureRec = qFurniture.get(indexTab1);
             Record furnitureClon = furnitureRec;
