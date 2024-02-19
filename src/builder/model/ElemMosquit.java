@@ -83,9 +83,9 @@ public class ElemMosquit extends ElemSimple {
             //Профиль в составе  М/С
             //if (TypeArtikl.isType(spcAdd.artiklRec, TypeArtikl.X120)) {
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) { //пог.м.    
-                if (anglHoriz() == 0 || anglHoriz() == 180) {
+                if (this.anglHoriz() == 0 || this.anglHoriz() == 180) {
                     spcAdd.width += spcAdd.elem5e.owner.width();
-                } else if (anglHoriz() == 90 || anglHoriz() == 270) {
+                } else if (this.anglHoriz() == 90 || this.anglHoriz() == 270) {
                     spcAdd.width += spcAdd.elem5e.owner.height();
                 }
             }

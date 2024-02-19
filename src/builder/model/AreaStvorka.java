@@ -222,7 +222,7 @@ public class AreaStvorka extends AreaSimple {
                 }
                 //Направление открывания
                 if (typeOpen != TypeOpen1.UPPER) {
-                    double ang = stv.anglHoriz() - 90;
+                    double ang = stv.anglHoriz();
                     if (ang != 0) {
                         AffineTransformation aff = new AffineTransformation();
                         aff.setToRotation(Math.toRadians(ang), this.knobOpen.getCentroid().getX(), this.knobOpen.getCentroid().getY());

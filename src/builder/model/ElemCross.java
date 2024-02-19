@@ -115,7 +115,7 @@ public class ElemCross extends ElemSimple {
             spcRec.setArtikl(artiklRec);
             spcRec.setColor(colorID1, colorID2, colorID3);
             spcRec.setAnglCut(90, 90);
-            spcRec.anglHoriz = Math.abs(anglHoriz());
+            spcRec.anglHoriz = this.anglHoriz();
 
             if (type == Type.IMPOST) {
                 //На эскизе заход импоста не показываю, сразу пишу в спецификацию
@@ -206,7 +206,7 @@ public class ElemCross extends ElemSimple {
     public Layout layout() {
         double angl = this.anglHoriz();
 
-        if (angl == 90 || angl == -90) {
+        if (angl == 90 || angl == 270) {
             return Layout.VERT;
 
         } else if (angl == 180 || angl == 0) {

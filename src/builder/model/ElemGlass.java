@@ -174,7 +174,7 @@ public class ElemGlass extends ElemSimple {
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
                 spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(segm2.p1, segm2.p0, segm1.p0)) / 2;
                 spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(segm2.p0, segm2.p1, segm3.p1)) / 2;
-                spcAdd.anglHoriz = Math.abs(spcAdd.elem5e.anglHoriz()); //угол к гор. стороны стекла);
+                spcAdd.anglHoriz = spcAdd.elem5e.anglHoriz(); //угол к гор. сторон стекла;
 
                 spcRec.spcList.add(spcAdd);
 

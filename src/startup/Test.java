@@ -1,7 +1,6 @@
 package startup;
 
 import builder.model.Com5t;
-import builder.model.ElemSimple;
 import builder.model.UGeo;
 import builder.param.check.ElementTest;
 import builder.param.check.FillingTest;
@@ -158,17 +157,6 @@ public class Test {
 
         Conn.connection(Test.connect2());
         WincalcTest.init();
-        //WincalcTest.iwin4.listJoin.elem(WincalcTest.stv_right4, 2);
-        
-//        List<Coordinate> z = new ArrayList<Coordinate>();
-//        for (ElemSimple el : WincalcTest.iwin2.listElem) {
-//            if (el.type == Type.GLASS) {
-//                for (Coordinate c : el.area.getCoordinates()) {
-//                    z.add(c);
-//                }                
-//            }
-//        }
-//        System.out.println(z);
         
         ElementTest t1 = new ElementTest();
         t1.elementVar();

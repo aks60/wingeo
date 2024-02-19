@@ -104,16 +104,16 @@ public abstract class ElemSimple extends Com5t {
                         this.h(this.h() + dY / winc.scale);
                         this.y1(this.h() + dY / winc.scale);
                         this.y2(this.h() + dY / winc.scale);
-                        
+
                     } else {
                         double X = dX / winc.scale + this.x2();
                         double Y = dY / winc.scale + this.y2();
-                        
-                        if (dY != 0 && this.anglHoriz() > -45 && this.anglHoriz() < 45) { //Bot
+
+                        if (dY != 0 && UGeo.anglHor(this) > -45 && UGeo.anglHor(this) < 45) { //Bot
                             this.y1(Y);
                             this.y2(Y);
-                            
-                        } else if (dX != 0 && this.anglHoriz() > -135 && this.anglHoriz() < -45) { //Right ) {
+
+                        } else if (dX != 0 && UGeo.anglHor(this) > -135 && UGeo.anglHor(this) < -45) { //Right ) {
                             this.x1(X);
                             this.x2(X);
                         }
@@ -153,8 +153,8 @@ public abstract class ElemSimple extends Com5t {
                     } else {//кликнул, середина вектора 
 
                         //Не арка
-                        if ((this.anglHoriz() > -45 && this.anglHoriz() < 45) //Bot
-                                || (this.anglHoriz() > -135 && this.anglHoriz() < -45)) { //Right                   
+                        if ((UGeo.anglHor(this) > -45 && UGeo.anglHor(this) < 45) //Bot
+                                || (UGeo.anglHor(this) > -135 && UGeo.anglHor(this) < -45)) { //Right                   
                             passMask[1] = (passMask[0] != 2) ? 1 : passMask[1];
                             passMask[0] = 2;
 
@@ -211,11 +211,11 @@ public abstract class ElemSimple extends Com5t {
                         double X = dX / winc.scale + x2();
                         double Y = dY / winc.scale + y2();
                         pointPress = evt.getPoint();
-                        if (this.anglHoriz() > -45 && this.anglHoriz() < 45) { //Bot
+                        if (UGeo.anglHor(this) > -45 && UGeo.anglHor(this) < 45) { //Bot
                             this.y1(Y);
                             this.y2(Y);
                         }
-                        if (this.anglHoriz() > -135 && this.anglHoriz() < -45) { //Right
+                        if (UGeo.anglHor(this) > -135 && UGeo.anglHor(this) < -45) { //Right
                             this.x1(X);
                             this.x2(X);
                         }
@@ -328,7 +328,8 @@ public abstract class ElemSimple extends Com5t {
 
     //Угол к горизонту 
     public double anglHoriz() {
-        return Angle.toDegrees(Angle.angle(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2())));
+        double ang = UGeo.anglHor(this);
+        return (ang > 0) ? 360 - ang : Math.abs(ang);
     }
 
     public void setDimension(double x1, double y1, double x2, double y2) {
@@ -342,6 +343,6 @@ public abstract class ElemSimple extends Com5t {
 
     @Override
     public String toString() {
-        return super.toString() + ", anglHoriz=" + anglHoriz();
+        return super.toString() + ", anglHoriz=" + UGeo.anglHor(this);
     }
 }
