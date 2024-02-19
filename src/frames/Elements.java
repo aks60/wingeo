@@ -1364,7 +1364,7 @@ public class Elements extends javax.swing.JFrame {
 
         new FrameToFile(this, btnClose);
 
-        TableFieldFilter filterTable = new TableFieldFilter(0, tab2, tab3);
+        TableFieldFilter filterTable = new TableFieldFilter(0, tab2, tab3, tab4, tab5);
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
 

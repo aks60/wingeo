@@ -93,16 +93,17 @@ public class JoiningVar extends Par5s {
                     }
                     break;
                 case 1010:  //Внешнее соединение 
-                case 4010:  //Внешнее соединение                     
-//                    if ("Да".equals(rec.getStr(TEXT))) {
-//                        if (winc.listJoin.get(winc.root.x2() + ":" + winc.root.y1()) != elemJoin
-//                                && winc.listJoin.get(winc.root.x2() + ":" + winc.root.y2()) != elemJoin
-//                                && winc.listJoin.get(winc.root.x2() + ":" + winc.root.y1()) != elemJoin
-//                                && winc.listJoin.get(winc.root.x1() + ":" + winc.root.y1()) != elemJoin) {
-//                            return false;
-//                        }
-//                    }
-                    message(rec.getInt(GRUP));
+                case 4010:  //Внешнее соединение   
+                    if ("Да".equals(rec.getStr(TEXT))) {
+                        if ((winc.root.frames.contains(elemJoin.elem1) && winc.root.frames.contains(elemJoin.elem2)) == false) {
+                            return false;
+                        }
+
+                    } else if ("Нет".equals(rec.getStr(TEXT))) {
+                        if ((winc.root.frames.contains(elemJoin.elem1) && winc.root.frames.contains(elemJoin.elem2)) == false) {
+                            return false;
+                        }
+                    }
                     break;
                 case 1011: //Для Артикула 1 указан состав 
                 case 4011: //Для Артикула 1 указан состав     
@@ -299,7 +300,7 @@ public class JoiningVar extends Par5s {
                                 return false;
                             }
                         }
-                    } 
+                    }
                     break;
                 case 2010:  //Угол минимальный, °
                 case 3010:  //Угол минимальный, °

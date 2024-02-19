@@ -74,13 +74,13 @@ public class Record<E> extends ArrayList<E> {
     }
 
     public static Object getDev(Object num, Object val) {
-//        if (eProp.dev == true) {
-//            return num + " " + val;
-//            //String v = (Integer.parseInt(num.toString()) < 0) ? num.toString() : " #" + num;
-//            //return val + " " + v;
-//        } else {
-        return val;
-//        }
+        if (eProp.dev == true) {
+            return num + " " + val;
+            //String v = (Integer.parseInt(num.toString()) < 0) ? num.toString() : " #" + num;
+            //return val + " " + v;
+        } else {
+            return val;
+        }
     }
 
     public Object get(Field field) {

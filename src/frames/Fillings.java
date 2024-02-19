@@ -1088,7 +1088,7 @@ public class Fillings extends javax.swing.JFrame {
     private void initElements() {
         new FrameToFile(this, btnClose);
 
-        TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2, tab5);
+        TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2, tab3, tab4, tab5);
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
 

@@ -1978,7 +1978,7 @@ public class Furniturs extends javax.swing.JFrame {
 
         new FrameToFile(this, btnClose);
 
-        TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2a, tab2b, tab2c);
+        TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2a, tab2b, tab2c, tab4, tab6);
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
 

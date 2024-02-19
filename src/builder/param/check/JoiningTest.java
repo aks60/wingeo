@@ -81,10 +81,10 @@ public class JoiningTest {
         assert false == joiningVar2.check(iwin2.listJoin.join(frame2_1, 1), param("32", grup)) : grup;
 
         grup = 1010; //4010 //Внешнее соединение
-        //assert true == joiningVar4.check(iwin_4.listJoin.get(iwin_4.rootArea.x1() + ":" + iwin_4.rootArea.y1()), param("Да", grup)) : grup;
         assert true == joiningVar4.check(iwin4.listJoin.join(frame4_left, 0), param("Да", grup)) : grup;
-        //assert true == joiningVar4.check(iwin4.listJoin.join(stv4_right_3, 0), param("Нет", grup)) : grup;
-        //assert false == joiningVar4.check(iwin4.listJoin.join(stv4_right_3, 0), param("Да", grup)) : grup;
+        assert false == joiningVar4.check(iwin4.listJoin.join(stv4_right_3, 0), param("Нет", grup)) : grup;
+        assert false == joiningVar4.check(iwin4.listJoin.join(stv4_right_3, 0), param("Да", grup)) : grup;
+        assert true == joiningVar4.check(iwin4.listJoin.join(stv4_right_3, 0), param("Xx", grup)) : grup;
 
         grup = 1020; //Ограничение угла к горизонту, °
         assert true == joiningVar4.check(iwin4.listJoin.join(stv4_right_3, 1), param("30;270", grup)) : grup;
