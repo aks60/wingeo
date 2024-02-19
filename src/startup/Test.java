@@ -168,11 +168,11 @@ public class Test {
         
         FillingTest t3 = new FillingTest();
         t3.fillingVar();
-        t3.fillingDet();
-        
-        FurnitureTest t4 = new FurnitureTest();
-        t4.furnitureVar();
-        t4.furnitureDet();
+//        t3.fillingDet();
+//        
+//        FurnitureTest t4 = new FurnitureTest();
+//        t4.furnitureVar();
+//        t4.furnitureDet();
 
 //        Set set = new HashSet();
 //        Map<String, Set> map = new HashMap<String, Set>();

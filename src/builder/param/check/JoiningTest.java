@@ -95,9 +95,9 @@ public class JoiningTest {
         assert false == joiningVar2.check(iwin2.listJoin.join(stv2_left_3, 1), param("поворотно-откидное", grup)) : grup;
 
         grup = 1043; //Ограничение габарита контура, мм 
-        assert true == joiningVar2.check(iwin2.listJoin.join(frame3_left, 1), param("2,45", grup)) : grup;
-        assert true == joiningVar2.check(iwin2.listJoin.join(frame3_left, 1), param("2,0-3,0", grup)) : grup;
-        assert false == joiningVar2.check(iwin2.listJoin.join(frame3_left, 1), param("2,0", grup)) : grup;
+        assert false == joiningVar3.check(iwin3.listJoin.join(frame3_left, 1), param("1,81", grup)) : grup;
+        assert true == joiningVar3.check(iwin3.listJoin.join(frame3_left, 1), param("1,0-3,0", grup)) : grup;
+        assert true == joiningVar3.check(iwin3.listJoin.join(frame3_left, 1), param("2,0", grup)) : grup;
 
         grup = 1095; //2095, 3095, 4095; //Если признак системы конструкции
         assert true == joiningVar4.check(iwin4.listJoin.join(stv4_right_3, 1), param("1;2;", grup)) : grup;
@@ -157,13 +157,13 @@ public class JoiningTest {
         assert false == joiningDet3.check(mapParam, iwin3.listJoin.join(frame3_right, 1), param("4", grup)) : grup;
 
         grup = 11008; //Эффективное заполнение изделия, мм
-        assert true == joiningDet3.check(mapParam, iwin2.listJoin.join(frame3_right, 1), param("32", grup)) : grup;
-        assert false == joiningDet3.check(mapParam, iwin2.listJoin.join(frame3_right, 1), param("30", grup)) : grup;
+        assert true == joiningDet3.check(mapParam, iwin3.listJoin.join(frame3_right, 1), param("32", grup)) : grup;
+        assert false == joiningDet3.check(mapParam, iwin3.listJoin.join(frame3_right, 1), param("30", grup)) : grup;
 
         grup = 11028; //12028 //Диапазон веса заполнения, кг
-        assert true == joiningDet3.check(mapParam, iwin2.listJoin.join(frame3_right, 1), param("30-140;", grup)) : grup;
-        assert true == joiningDet3.check(mapParam, iwin2.listJoin.join(frame3_right, 1), param("140;", grup)) : grup;
-        assert false == joiningDet3.check(mapParam, iwin2.listJoin.join(frame3_right, 1), param("30;", grup)) : grup;
+        assert true == joiningDet3.check(mapParam, iwin3.listJoin.join(frame3_right, 1), param("30-140;", grup)) : grup;
+        assert true == joiningDet3.check(mapParam, iwin3.listJoin.join(frame3_right, 1), param("140;", grup)) : grup;
+        assert false == joiningDet3.check(mapParam, iwin3.listJoin.join(frame3_right, 1), param("30;", grup)) : grup;
 
         grup = 11066; //Если текстура профиля Арт.1 
         assert true == joiningDet2.check(mapParam, iwin2.listJoin.join(frame2_3, 1), param("1009-1010", grup)) : grup;
