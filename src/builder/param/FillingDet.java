@@ -99,20 +99,8 @@ public class FillingDet extends Par5s {
                     break;
                 case 14065:  //Ограничение угла, ° или Точный угол 
                 case 15055:  //Ограничение угла, ° или Точный угол  
-                    if ("ps3".equals(eSetting.val(2))) {
-                        if (rec.getDbl(TEXT) != elem5e.anglHoriz()) {
-                            return false;
-                        }
-                    } else if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.anglHoriz()) == false) {
+                    if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.anglHoriz()) == false) {
                         return false;
-                    }
-                    break;
-                case 14066: //Исключить угол, °
-                case 15056:
-                    if ("ps3".equals(eSetting.val(2))) {
-                        if (rec.getDbl(TEXT) == elem5e.anglHoriz()) {
-                            return false;
-                        }
                     }
                     break;
                 case 14067:  //Коды основной текстуры изделия 

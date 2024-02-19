@@ -115,10 +115,6 @@ public class UColor {
                     } else {
                         resultColorID = scanFromProfSide(elemArtID, elemColorFk, side); //теоритически это должно железно работать!!!
                         if (resultColorID == -1) {
-                            //System.err.println("Коллизия определения явного указания цвета");
-                            if ("ps3".equals(eSetting.val(2))) {
-                                return false;
-                            }
                             if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2 && (spcAdd.artiklRec.getInt(eArtikl.level2) == 11 || spcAdd.artiklRec.getInt(eArtikl.level2) == 13)) {
                                 return false;
                             }

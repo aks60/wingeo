@@ -94,30 +94,8 @@ public class FillingVar extends Par5s {
                     }
                     break;
                 case 13081:  //Для внешнего/внутреннего угла плоскости, ° или Мин. внутр. угол плоскости, ° 
-                    if ("ps3".equals(eSetting.val(2))) {
-                        if (elem5e.anglFlat[0] > rec.getDbl(TEXT)) {
-                            return false;
-                        }
-                    } else if (UPar.is_13081_13082_13086_13087(elem5e, rec.getStr(TEXT))) {
+                    if (UPar.is_13081_13082_13086_13087(elem5e, rec.getStr(TEXT))) {
                         return false;
-                    }
-                case 13082:  //Макс. внутр. угол плоскости, °
-                    if ("ps3".equals(eSetting.val(2))) {
-                        if (elem5e.anglFlat[1] > rec.getDbl(TEXT)) {
-                            return false;
-                        }
-                    }
-                case 13086:  //Мин. внешний угол плоскости, °
-                    if ("ps3".equals(eSetting.val(2))) {
-                        if (elem5e.anglFlat[2] > rec.getDbl(TEXT)) {
-                            return false;
-                        }
-                    }
-                case 13087:  //Макс. внешний угол плоскости, °
-                    if ("ps3".equals(eSetting.val(2))) {
-                        if (elem5e.anglFlat[3] > rec.getDbl(TEXT)) {
-                            return false;
-                        }
                     }
                 case 13095:  //Если признак системы конструкции 
                     if (!UPar.is_11095_12095_31095_33095_34095_37095_38095_39095_40095(rec.getStr(TEXT), winc.nuni)) {

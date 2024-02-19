@@ -175,22 +175,13 @@ public class UPar {
 
     //Задать Угол_реза_1/Угол_реза_2, °
     public static void to_34077_39077(Specific spcAdd) {
-        if ("ps3".equals(eSetting.val(2))) {
-            if (spcAdd.getParam("-361", 34077).equals("-361") == false) {
-                spcAdd.anglCut0 = UCom.getDbl(spcAdd.getParam("-1", 34077));
+        if (spcAdd.getParam("-361", 34077, 39077).equals("-361") == false) {
+            String[] arr = spcAdd.getParam("-1", 34077, 39077).split("/");
+            if (arr[0].equals("*") == false) {
+                spcAdd.anglCut0 = UCom.getDbl(arr[0]);
             }
-            if (spcAdd.getParam("-361", 34078).equals("-361") == false) {
-                spcAdd.anglCut1 = UCom.getDbl(spcAdd.getParam("-1", 34078));
-            }
-        } else {
-            if (spcAdd.getParam("-361", 34077, 39077).equals("-361") == false) {
-                String[] arr = spcAdd.getParam("-1", 34077, 39077).split("/");
-                if (arr[0].equals("*") == false) {
-                    spcAdd.anglCut0 = UCom.getDbl(arr[0]);
-                }
-                if (arr[1].equals("*") == false) {
-                    spcAdd.anglCut1 = UCom.getDbl(arr[1]);
-                }
+            if (arr[1].equals("*") == false) {
+                spcAdd.anglCut1 = UCom.getDbl(arr[1]);
             }
         }
     }

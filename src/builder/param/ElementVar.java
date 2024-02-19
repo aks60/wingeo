@@ -86,15 +86,15 @@ public class ElementVar extends Par5s {
                     }
                     break;
                 case 31004: //Если прилегающий артикул 
-                {        
+                {
                     boolean ret = false;
                     ElemSimple el = winc.listJoin.elem(elem5e, 2);
-                    if(rec.getStr(TEXT).equals(el.artiklRecAn.getStr(eArtikl.code))) {
-                       ret = true; 
+                    if (rec.getStr(TEXT).equals(el.artiklRecAn.getStr(eArtikl.code))) {
+                        ret = true;
                     }
                     if (ret == false) {
                         return false;
-                    }                  
+                    }
                 }
                 break;
                 case 31005:  //Коды основной текстуры контейнера 
@@ -124,14 +124,7 @@ public class ElementVar extends Par5s {
                 {
                     List<ElemSimple> glassList = UPar.getGlassDepth(elem5e);
                     if (glassList.get(0).type == Type.GLASS && glassList.get(1).type == Type.GLASS) {
-                        if ("ps3".equals(eSetting.val(2))) { //Толщина заполнения, мм
-                            
-                            if (UCom.containsNumbAny(rec.getStr(TEXT),
-                                    glassList.get(0).artiklRec.getDbl(eArtikl.depth),
-                                    glassList.get(1).artiklRec.getDbl(eArtikl.depth)) == false) {
-                                return false;
-                            }
-                        } else if (UCom.containsNumb(rec.getStr(TEXT),
+                        if (UCom.containsNumb(rec.getStr(TEXT),
                                 glassList.get(0).artiklRec.getDbl(eArtikl.depth),
                                 glassList.get(1).artiklRec.getDbl(eArtikl.depth)) == false) {
                             return false;
@@ -194,35 +187,8 @@ public class ElementVar extends Par5s {
                     elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
                 case 31020:  //Ограничение угла к горизонту, °
-                    if ("ps3".equals(eSetting.val(2))) { //Угол к горизонту минимальный, °
-                        if (elem5e.anglHoriz() < rec.getDbl(TEXT)) {
-                            return false;
-                        }
-                    } else {
-                        if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.anglHoriz()) == false) {
-                            return false;
-                        }
-                    }
-                    break;
-                case 31030:  //Угол к горизонту максимальный, °
-                    if ("ps3".equals(eSetting.val(2))) {
-                        if (rec.getDbl(TEXT) < elem5e.anglHoriz()) {
-                            return false;
-                        }
-                    }
-                    break;
-                case 31031:  //Точный угол к горизонту
-                    if ("ps3".equals(eSetting.val(2))) {
-                        if (rec.getDbl(TEXT) != elem5e.anglHoriz()) {
-                            return false;
-                        }
-                    }
-                    break;
-                case 31032:  //Исключить угол к горизонту, °
-                    if ("ps3".equals(eSetting.val(2))) {
-                        if (rec.getDbl(TEXT) == elem5e.anglHoriz()) {
-                            return false;
-                        }
+                    if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.anglHoriz()) == false) {
+                        return false;
                     }
                     break;
                 case 31033: //Если предыдущий артикул 
@@ -373,8 +339,8 @@ public class ElementVar extends Par5s {
                     } else if ("Арочное".equals(rec.getStr(TEXT)) && winc.root.area.getGeometryN(0).getNumPoints() > 40 == false) {
                         return false;
 
-                    } else if ("Произвольное".equals(rec.getStr(TEXT)) && 
-                            (winc.root.area.getGeometryN(0).isRectangle() == true || winc.root.area.getGeometryN(0).getNumPoints() > 40 == true)) {
+                    } else if ("Произвольное".equals(rec.getStr(TEXT))
+                            && (winc.root.area.getGeometryN(0).isRectangle() == true || winc.root.area.getGeometryN(0).getNumPoints() > 40 == true)) {
                         return false;
                     }
                 }
@@ -386,40 +352,19 @@ public class ElementVar extends Par5s {
                     break;
                 case 37030:  //Ограничение площади, кв.м. 
                     Envelope env = elem5e.area.getEnvelopeInternal();
-                    if ("ps3".equals(versionPs)) { //Минимальная площадь, кв.м.
-                        if (rec.getDbl(TEXT) > env.getWidth() / 1000 * env.getHeight() / 1000) {
-                            return false;
-                        }
-                    } else {
-                        Object o1 = env.getWidth() / 1000;
-                        Object o2 = env.getWidth() / 1000;
-                        if (UCom.containsNumbJust(rec.getStr(TEXT), env.getWidth() / 1000 * env.getHeight() / 1000) == false) {
-                            return false;
-                        }
+                    if (UCom.containsNumbJust(rec.getStr(TEXT), env.getWidth() / 1000 * env.getHeight() / 1000) == false) {
+                        return false;
                     }
                     break;
-                case 37031:  //Максимальная площадь 
-                    if ("ps3".equals(versionPs)) {
-                        if (rec.getDbl(TEXT) < elem5e.width() / 1000 * elem5e.height() / 1000) {
-                            return false;
-                        }
+                case 37042: //Допустимое соотношение габаритов б/м
+                {
+                    double max = (elem5e.width() > elem5e.height()) ? elem5e.width() : elem5e.height();
+                    double min = (elem5e.width() > elem5e.height()) ? elem5e.height() : elem5e.width();
+                    if (UCom.containsNumbJust(rec.getStr(TEXT), max / min) == false) {
+                        return false;
                     }
-                    break;
-                case 37042:  //Допустимое соотношение габаритов б/м
-                    if ("ps3".equals(versionPs)) { //Мин. соотношение габаритов (б/м)
-                        double max = (elem5e.width() > elem5e.height()) ? elem5e.width() : elem5e.height();
-                        double min = (elem5e.width() > elem5e.height()) ? elem5e.height() : elem5e.width();
-                        if (rec.getDbl(TEXT) > max / min) {
-                            return false;
-                        }
-                    } else {
-                        double max = (elem5e.width() > elem5e.height()) ? elem5e.width() : elem5e.height();
-                        double min = (elem5e.width() > elem5e.height()) ? elem5e.height() : elem5e.width();
-                        if (UCom.containsNumbJust(rec.getStr(TEXT), max / min) == false) {
-                            return false;
-                        }
-                    }
-                    break;
+                }
+                break;
                 case 37043: //Макс. соотношение габаритов (б/м)
                 {
                     double max = (elem5e.width() > elem5e.height()) ? elem5e.width() : elem5e.height();

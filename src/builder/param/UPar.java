@@ -20,8 +20,7 @@ import java.util.List;
 import org.locationtech.jts.geom.LineSegment;
 
 /**
- * Участвует в допустимости элемента в конструкции 
- * через параметр
+ * Участвует в допустимости элемента в конструкции через параметр
  */
 class UPar {
 
@@ -31,7 +30,7 @@ class UPar {
         //Цыкл по списку элементов
         for (ElemSimple el : elem5e.winc.listElem) {
             if (el.type == Type.GLASS) {
-                
+
                 if (elem5e.layout() == Layout.VERT) {
                     if (UGeo.isInRing(elem5e.x1() - 200, elem5e.y1() + elem5e.height() / 2, el.area)) {
                         glass1 = el;
@@ -65,18 +64,9 @@ class UPar {
 
     //Контейнер типа
     static boolean is_1005x6_2005x6_3005_4005_11005_12005_31050_33071_34071(String txt, ElemSimple elem5e) {
-        if ("ps3".equals(eSetting.val(2))) {
-            String[] arr = {"коробка", "створка", "импост", "стойка", "эркер"};
-            int[] index = {1, 2, 3, 5, 19};
-            for (int i = 0; i < arr.length; i++) {
-                if (arr.equals(txt) && UCom.containsNumbJust(String.valueOf(index[i]), elem5e.type.id) == false) {
-                    return false;
-                }
-            }
-        } else {
-            if (UCom.containsNumbJust(txt, elem5e.type.id) == false) {
-                return false;
-            }
+
+        if (UCom.containsNumbJust(txt, elem5e.type.id) == false) {
+            return false;
         }
         return true;
     }

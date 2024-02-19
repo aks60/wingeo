@@ -93,13 +93,7 @@ public class ElementDet extends Par5s {
                 case 34011: //Толщина внешнего/внутреннего заполнения, мм
                     List<ElemSimple> glassList = UPar.getGlassDepth(elem5e);
                     if (glassList.get(0).type == Type.GLASS && glassList.get(1).type == Type.GLASS) {
-                        if ("ps3".equals(eSetting.val(2))) { //Толщина заполнения, мм
-                            if (UCom.containsNumbAny(rec.getStr(TEXT),
-                                    glassList.get(0).artiklRec.getDbl(eArtikl.depth),
-                                    glassList.get(1).artiklRec.getDbl(eArtikl.depth)) == false) {
-                                return false;
-                            }
-                        } else if (UCom.containsNumb(rec.getStr(TEXT),
+                        if (UCom.containsNumb(rec.getStr(TEXT),
                                 glassList.get(0).artiklRec.getDbl(eArtikl.depth),
                                 glassList.get(1).artiklRec.getDbl(eArtikl.depth)) == false) {
                             return false;
@@ -370,7 +364,7 @@ public class ElementDet extends Par5s {
                     break;
                 case 40005:  //Поправка ширины/высоты, мм 
                 case 40010:  //Поправка на стороны четные/нечетные, мм 
-                       mapParam.put(grup, rec.getStr(TEXT));                   
+                    mapParam.put(grup, rec.getStr(TEXT));
                     break;
                 case 40006:  //Высота заполнения, мм 
                     mapParam.put(grup, rec.getStr(TEXT));

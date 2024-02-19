@@ -176,7 +176,7 @@ public class FurnitureDet extends Par5s {
                         boolean ret = false;
                         for (ElemSimple entry : areaStv.frames) {
                             //if (winc.listJoin.elem(entry, 2).type == Type.SHTULP) {
-                            if(entry.type == Type.SHTULP) {
+                            if (entry.type == Type.SHTULP) {
                                 ret = true;
                             }
                         }
@@ -187,7 +187,7 @@ public class FurnitureDet extends Par5s {
                         boolean ret = false;
                         for (ElemSimple entry : areaStv.frames) {
                             //if (winc.listJoin.elem(entry, 2).type == Type.SHTULP) {
-                            if(entry.type == Type.SHTULP) {
+                            if (entry.type == Type.SHTULP) {
                                 ret = true;
                             }
                         }
@@ -243,12 +243,6 @@ public class FurnitureDet extends Par5s {
                         double handl_min = UCom.getDbl(handl[0]);
                         double handl_max = UCom.getDbl(handl[1]);
                         if (handl_min > elemStv.knobHeight || elemStv.knobHeight > handl_max) {
-                            return false;
-                        }
-                    }
-                    if ("ps3".equals(versionPs)) { //Минимальная высота ручки, мм
-                        double handl_min = UCom.getDbl(rec.getStr(TEXT));
-                        if (handl_min > elemStv.knobHeight) {
                             return false;
                         }
                     }
