@@ -92,11 +92,6 @@ public class ElemGlass extends ElemSimple {
         Geometry geo = UGeo.geoPadding(owner.area.getGeometryN(0), winc.listElem, 20);
         Envelope env = geo.getEnvelopeInternal();
         setDimension(env.getMinX(), env.getMinY(), env.getMaxX(), env.getMaxY());
-//        List<Coordinate> z = new ArrayList<Coordinate>();
-//        for(Coordinate c: geo.getCoordinates()) {
-//            z.add(c);
-//        }
-//        System.out.println(z);
         this.area = geo;
     }
 

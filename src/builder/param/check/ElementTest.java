@@ -191,7 +191,7 @@ public class ElementTest {
         grup = 37008; //Тип проема
         assert false == elementVar2.check(stv2_left_3, param("глухой", grup)) : grup;
         assert true == elementVar2.check(stv2_left_3, param("не глухой", grup)) : grup;
-
+        System.out.println(glass2_top.area);
         grup = 37009; //Тип заполнения
         assert true == elementVar2.check(glass2_left, param("Прямоугольное", grup)) : grup;
         assert true == elementVar3.check(glass2_top, param("Арочное", grup)) : grup;
