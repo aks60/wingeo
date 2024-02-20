@@ -6,10 +6,13 @@ import domain.eGlaspar1;
 import java.util.List;
 import builder.Wincalc;
 import builder.model.ElemSimple;
+import builder.model.UGeo;
 import common.UCom;
 import domain.eArtikl;
-import domain.eSetting;
 import enums.Type;
+import java.util.Arrays;
+import java.util.Collections;
+import org.locationtech.jts.geom.LineSegment;
 
 //Заполнения
 public class FillingVar extends Par5s {
@@ -41,6 +44,7 @@ public class FillingVar extends Par5s {
         try {
             switch (grup) {
                 case 13001:  //Если признак состава 
+                    
                     if (UPar.is_11001_11002_12001_12002_13001_14001_15001_33001_34001(rec.getStr(TEXT), elem5e) == false) {
                         return false;
                     }
@@ -69,22 +73,33 @@ public class FillingVar extends Par5s {
                         return false;
                     }
                     break;
-                case 13014:  //Углы ориентации стороны, ° 
-                    if (UCom.containsNumbJust(rec.getStr(TEXT), ((ElemSimple) elem5e).anglHoriz()) == false) {
-                        return false;
+                case 13014: //Углы ориентации стороны, ° 
+                {
+                    List<String> list = Arrays.asList(rec.getStr(TEXT).split(";"));
+                    if (list.size() + 1 != elem5e.area.getNumPoints()) {
+                        return true;
                     }
-                    break;
+                    Collections.rotate(list, 1);
+                    for (int i = 0; i < elem5e.area.getNumPoints() - 1; ++i) {
+
+                        LineSegment l = UGeo.getSegment(elem5e.area, i);
+                        double ang = Math.toDegrees(l.angle());
+                        double angle = (ang > 0) ? 360 - ang : Math.abs(ang);
+                        if (UCom.containsNumbJust(list.get(i), angle) == false) {
+                            return false;
+                        }
+                    }
+                }
+                break;
                 case 13015:  //Форма заполнения 
                     //"Прямоугольное", "Не прямоугольное", "Не арочное", "Арочное" (TypeElem.AREA - глухарь)
-                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && Type.RECTANGL.equals(elem5e.owner.type) == false
-                            && Type.AREA.equals(elem5e.owner.type) == false && Type.STVORKA.equals(elem5e.owner.type) == false) {
+                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && elem5e.area.getGeometryN(0).isRectangle() == false) {
                         return false;
-                    } else if ("Не прямоугольное".equals(rec.getStr(TEXT)) && (Type.TRAPEZE.equals(elem5e.owner.type) == false
-                            && Type.TRIANGL.equals(elem5e.owner.type) == false)) {
+                    } else if ("Не прямоугольное".equals(rec.getStr(TEXT)) && elem5e.area.getGeometryN(0).isRectangle() == true) {
                         return false;
-                    } else if ("Арочное".equals(rec.getStr(TEXT)) && Type.ARCH.equals(elem5e.owner.type) == false) {
+                    } else if ("Арочное".equals(rec.getStr(TEXT)) && elem5e.area.getGeometryN(0).getNumPoints() > 40 == false) {
                         return false;
-                    } else if ("Не арочное".equals(rec.getStr(TEXT)) && Type.ARCH.equals(elem5e.owner.type) == true) {
+                    } else if ("Не арочное".equals(rec.getStr(TEXT)) && elem5e.area.getGeometryN(0).getNumPoints() > 40 == true) {
                         return false;
                     }
                     break;

@@ -75,8 +75,8 @@ public class FillingTest {
     public void fillingVar() {
 
         grup = 13001; //Если признак состава 
-        //assert true == fillingVar2.check(frame_left_2, param("KBE 58", grup)) : grup;
-        //assert false == fillingVar2.check(frame_left_2, param("KBE 5X", grup)) : grup;
+        assert true == fillingVar2.check(glass2_left, param("KBE 58", grup)) : grup;
+        assert false == fillingVar2.check(glass2_left, param("KBE 5X", grup)) : grup;
 
         grup = 13003; //Тип проема
         assert false == fillingVar2.check(stv2_left_3, param("глухой", grup)) : grup;
@@ -88,11 +88,12 @@ public class FillingTest {
 
         grup = 13014; //Углы ориентации стороны, ° 
         assert true == fillingVar3.check(glass3_left, param("0;90;180;270", grup));
-        assert false == fillingVar3.check(glass3_left, param("10;20;30", grup));
+        assert false == fillingVar3.check(glass3_left, param("0;9.1;180;270", grup));
 
         grup = 13015;  //Форма заполнения
         assert true == fillingVar3.check(glass3_left, param("Прямоугольное", grup)) : grup;
         assert true == fillingVar3.check(glass3_top, param("Арочное", grup)) : grup;
+        assert false == fillingVar3.check(glass3_top, param("Не арочное", grup)) : grup;
         assert false == fillingVar3.check(glass3_left, param("Не прямоугольное", grup)) : grup;
 
         grup = 13017; //Код системы содержит строку
@@ -156,7 +157,7 @@ public class FillingTest {
         assert true == fillingDet3.check(mapParam, glass3_left, param("21316-05000", grup)) : grup;
         assert false == fillingDet3.check(mapParam, glass3_left, param("21316=05000", grup)) : grup;
 
-        grup = 15027; //12027  //Рассчитывать для профиля ++++
+        grup = 15027; //12027  //Рассчитывать для профиля
         assert true == fillingDet4.check(mapParam, glass4_left, param("без уплотнителя", grup)) : grup;
         assert false == fillingDet4.check(mapParam, glass4_left, param("с уплотнителем", grup)) : grup;
     }

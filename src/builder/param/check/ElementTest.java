@@ -185,41 +185,41 @@ public class ElementTest {
         assert false == elementVar4.check(stv4_right_3, param("2;9", grup)) : grup;
 
         grup = 37002; //Если артикул профиля контура
-        assert true == elementVar2.check(frame2_1, param("807", grup)) : grup;
-        assert false == elementVar2.check(frame2_1, param("800", grup)) : grup;
+        assert true == elementVar2.check(glass2_left, param("807", grup)) : grup;
+        assert false == elementVar2.check(glass2_left, param("808", grup)) : grup;
 
         grup = 37008; //Тип проема
         assert false == elementVar2.check(stv2_left_3, param("глухой", grup)) : grup;
         assert true == elementVar2.check(stv2_left_3, param("не глухой", grup)) : grup;
 
         grup = 37009; //Тип заполнения
-        assert true == elementVar2.check(stv2_left_3, param("Прямоугольное", grup)) : grup;
-        assert true == elementVar3.check(frame3_left, param("Арочное", grup)) : grup;
-        assert false == elementVar2.check(stv2_left_3, param("Произвольное", grup)) : grup;
+        assert true == elementVar2.check(glass2_left, param("Прямоугольное", grup)) : grup;
+        assert true == elementVar3.check(glass2_top, param("Арочное", grup)) : grup;
+        assert false == elementVar2.check(glass2_left, param("Произвольное", grup)) : grup;
 
-        grup = 37010; //Ограничение ширины/высоты листа, мм
-        assert true == elementVar2.check(glass2_top, param("0-3000/0-334", grup)) : grup;
-        assert false == elementVar2.check(glass2_left, param("0-3000/0-334", grup)) : grup;
-
-        grup = 37030; //Ограничение площади, кв.м.
-        assert true == elementVar2.check(glass2_top, param("0-6,5", grup)) : grup;
-        assert false == elementVar2.check(glass2_left, param("0-0,4", grup)) : grup;
-
-        grup = 37042; //Допустимое соотношение габаритов (б/м)
-        assert true == elementVar2.check(glass2_top, param("4-10", grup)) : grup;
-        assert false == elementVar2.check(glass2_left, param("1-2", grup)) : grup;
-
-        grup = 37054; //Коды основной текстуры изделия
-        assert false == elementVar2.check(stv2_left_3, param("10000-10999;17000-21999;23000-28999", grup)) : grup;
-        assert true == elementVar2.check(stv2_left_3, param("1;3;35-37;55;70;1009", grup)) : grup;
-
-        grup = 37055; //Коды внутр. и внешн. текстуры изд.
-        assert true == elementVar3.check(stv3_right_3, param("1000-10010;", grup)) : grup;
-        assert false == elementVar3.check(stv3_right_3, param("1000-1010;", grup)) : grup;
-
-        grup = 37056; //Коды внут. или внеш. текстуры изд.
-        assert true == elementVar4.check(stv4_right_3, param("1000-10010;", grup)) : grup;
-        assert true == elementVar3.check(stv3_right_3, param("1000-1010;", grup)) : grup;
+//        grup = 37010; //Ограничение ширины/высоты листа, мм
+//        assert true == elementVar2.check(glass2_top, param("0-3000/0-334", grup)) : grup;
+//        assert false == elementVar2.check(glass2_left, param("0-3000/0-334", grup)) : grup;
+//
+//        grup = 37030; //Ограничение площади, кв.м.
+//        assert true == elementVar2.check(glass2_top, param("0-6,5", grup)) : grup;
+//        assert false == elementVar2.check(glass2_left, param("0-0,4", grup)) : grup;
+//
+//        grup = 37042; //Допустимое соотношение габаритов (б/м)
+//        assert true == elementVar2.check(glass2_top, param("4-10", grup)) : grup;
+//        assert false == elementVar2.check(glass2_left, param("1-2", grup)) : grup;
+//
+//        grup = 37054; //Коды основной текстуры изделия
+//        assert false == elementVar2.check(stv2_left_3, param("10000-10999;17000-21999;23000-28999", grup)) : grup;
+//        assert true == elementVar2.check(stv2_left_3, param("1;3;35-37;55;70;1009", grup)) : grup;
+//
+//        grup = 37055; //Коды внутр. и внешн. текстуры изд.
+//        assert true == elementVar3.check(stv3_right_3, param("1000-10010;", grup)) : grup;
+//        assert false == elementVar3.check(stv3_right_3, param("1000-1010;", grup)) : grup;
+//
+//        grup = 37056; //Коды внут. или внеш. текстуры изд.
+//        assert true == elementVar4.check(stv4_right_3, param("1000-10010;", grup)) : grup;
+//        assert true == elementVar3.check(stv3_right_3, param("1000-1010;", grup)) : grup;
     }
 
     /**

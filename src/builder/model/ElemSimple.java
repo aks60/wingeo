@@ -343,6 +343,6 @@ public abstract class ElemSimple extends Com5t {
 
     @Override
     public String toString() {
-        return super.toString() + ", anglHoriz=" + UGeo.anglHor(this);
+        return super.toString() + ", anglHoriz=" + this.anglHoriz();
     }
 }

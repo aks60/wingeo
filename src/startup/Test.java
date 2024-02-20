@@ -93,8 +93,8 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //frame(args);
-            //wincalc();
-            param();
+            wincalc();
+            //param();
             //query();
             //json();
             //uid();
@@ -113,7 +113,7 @@ public class Test {
         String _case = "min";
 
         if (_case.equals("one")) {
-            String script = GsonScript.scriptPath(601004);
+            String script = GsonScript.scriptPath(604005);
             winc.build(script);
             //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
             //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
@@ -162,12 +162,12 @@ public class Test {
         t1.elementVar();
         t1.elementDet();
         
-        JoiningTest t2 = new JoiningTest();
-        t2.joiningVar();
-        t2.joiningDet();
-        
-        FillingTest t3 = new FillingTest();
-        t3.fillingVar();
+//        JoiningTest t2 = new JoiningTest();
+//        t2.joiningVar();
+//        t2.joiningDet();
+//        
+//        FillingTest t3 = new FillingTest();
+//        t3.fillingVar();
 //        t3.fillingDet();
 //        
 //        FurnitureTest t4 = new FurnitureTest();

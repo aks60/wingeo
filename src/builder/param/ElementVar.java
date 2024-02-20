@@ -320,10 +320,13 @@ public class ElementVar extends Par5s {
                 case 37001:  //Установка жалюзи 
                     message(grup);
                     break;
-                case 37002:  //Если артикул профиля контура 
-                    if (elem5e.artiklRecAn.getStr(eArtikl.code).equals(rec.getStr(TEXT)) == false) {
+                case 37002:  //Если артикул профиля контура
+                {
+                    Object r = elem5e.root.frames.stream().filter(f -> f.artiklRecAn.getStr(eArtikl.code).equals(rec.getStr(TEXT))).findFirst().orElse(null);
+                    if (r == null) {
                         return false;
                     }
+                }
                     break;
                 case 37008:  //Тип проема 
                     if (!UPar.is_13003_14005_15005_37008(rec.getStr(TEXT), elem5e)) {
@@ -332,15 +335,14 @@ public class ElementVar extends Par5s {
                     break;
                 case 37009: //Тип заполнения 
                 {
-                    //ElemGlass glass = (ElemGlass) elem5e.owner.childs.stream().filter(it -> it.type == Type.GLASS).findFirst().orElse(null);
-                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && winc.root.area.getGeometryN(0).isRectangle() == false) {
+                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && elem5e.area.isRectangle() == false) {
                         return false;
 
-                    } else if ("Арочное".equals(rec.getStr(TEXT)) && winc.root.area.getGeometryN(0).getNumPoints() > 40 == false) {
+                    } else if ("Арочное".equals(rec.getStr(TEXT)) && elem5e.area.getNumPoints() > 40 == false) {
                         return false;
 
                     } else if ("Произвольное".equals(rec.getStr(TEXT))
-                            && (winc.root.area.getGeometryN(0).isRectangle() == true || winc.root.area.getGeometryN(0).getNumPoints() > 40 == true)) {
+                            && (elem5e.area.isRectangle() == true || elem5e.area.getNumPoints() > 40 == true)) {
                         return false;
                     }
                 }
