@@ -241,21 +241,21 @@ public class ElementVar extends Par5s {
                     break;
                 case 31054:  //Коды основной текстуры изделия
                 case 37054:  //Коды основной текстуры изделия    
-                    if (UCom.containsColor(rec.getStr(TEXT), winc.colorID1) == false) {
+                    if (UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID1) == false) {
                         return false;
                     }
                     break;
                 case 31055:  //Коды внутр. и внешн. текстуры изд.
                 case 37055:  //Коды внутр. и внешн. текстуры изд. 
-                    if ((UCom.containsColor(rec.getStr(TEXT), elem5e.colorID2) == true
-                            && UCom.containsColor(rec.getStr(TEXT), elem5e.colorID3) == true) == false) {
+                    if ((UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID2) == true
+                            && UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID3) == true) == false) {
                         return false;
                     }
                     break;
                 case 31056:  //Коды внутр. или внеш. текстуры изд. 
                 case 37056:  //Коды внут. или внеш. текстуры изд. 
-                    if ((UCom.containsColor(rec.getStr(TEXT), elem5e.colorID2) == true
-                            || UCom.containsColor(rec.getStr(TEXT), elem5e.colorID3) == true) == false) {
+                    if (UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID2) == false
+                            && UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID3) == false) {
                         return false;
                     }
                     break;

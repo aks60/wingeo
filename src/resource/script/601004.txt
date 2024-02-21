@@ -57,15 +57,16 @@ Name                                                            Artikl          
 Artikl                          Value               
 Лишние: 258058                  616,88          
 Prj=601004        PS=18145,02       SA=18509,33       dx=364,31 {
+{
   "version": "2.0",
   "prj": 601004,
   "pid": 427820,
   "ord": 1,
   "nuni": 8,
   "name": "KBE 58\\ОКНА\\Открывание внутрь",
-  "color1": -3,
-  "color2": -3,
-  "color3": -3,
+  "color1": 1009,
+  "color2": 10009,
+  "color3": 1009,
   "id": 0.0,
   "childs": [
     {

@@ -72,13 +72,13 @@ public class ElementDet extends Par5s {
                     break;
                 case 33006:  //Коды внутр. текстуры контейнера
                 case 34006:  //Коды внутр. текстуры контейнера 
-                    if (UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID2) == false) {
+                    if (UCom.containsColor(rec.getStr(TEXT), elem5e.colorID2) == false) {
                         return false;
                     }
                     break;
                 case 33007:  //Коды внешн. текстуры контейнера 
                 case 34007:  //Коды внешн. текстуры контейнера     
-                    if (UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID3) == false) {
+                    if (UCom.containsColor(rec.getStr(TEXT), elem5e.colorID3) == false) {
                         return false;
                     }
                     break;
