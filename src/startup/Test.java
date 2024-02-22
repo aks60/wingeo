@@ -162,8 +162,8 @@ public class Test {
         t1.elementVar();
         t1.elementDet();
         
-//        JoiningTest t2 = new JoiningTest();
-//        t2.joiningVar();
+        JoiningTest t2 = new JoiningTest();
+        t2.joiningVar();
 //        t2.joiningDet();
 //        
 //        FillingTest t3 = new FillingTest();

@@ -108,11 +108,6 @@ public class JoiningTest {
 //        assert true == joiningVar4.check(iwin_4.listJoin.get(stv_right_4, 1), param("левый", grup)) : grup;
 //        assert false == joiningVar4.check(iwin_4.listJoin.get(stv_right_4, 1), param("правый", grup)) : grup;
 
-        grup = 4020; //Угол варианта
-        assert false == joiningVar4.check(iwin4.listJoin.join(stv4_right_3, 1), param("30-89,98;90,11-179,9;180,1-269,9;270,1-359,9;", grup)) : grup;
-        assert true == joiningVar4.check(iwin4.listJoin.join(stv4_right_3, 1), param("89,98-90,1", grup)) : grup;
-        assert true == joiningVar4.check(iwin4.listJoin.join(stv4_right_3, 1), param("90", grup)) : grup;
-
         grup = 2012; //3012; //Для Артикулов указан состав
         assert true == joiningVar4.check(iwin4.listJoin.join(frame4_right, 1), param("Армирование", grup)) : grup;
         assert false == joiningVar4.check(iwin4.listJoin.join(stv4_right_3, 1), param("_Армирование", grup)) : grup;
@@ -128,6 +123,11 @@ public class JoiningTest {
         grup = 3002; //4002 //Вид L-образного варианта или Вид Т-образного варианта
         assert true == joiningVar4.check(iwin4.listJoin.join(frame4_right, 1), param("Простое L-обр", grup)) : grup;
         assert false == joiningVar4.check(iwin4.listJoin.join(frame4_right, 1), param("null", grup)) : grup;
+
+        grup = 4020; //Угол варианта
+        assert false == joiningVar4.check(iwin4.listJoin.join(stv4_right_3, 1), param("30-89,98;90,11-179,9;180,1-269,9;270,1-359,9;", grup)) : grup;
+        assert true == joiningVar4.check(iwin4.listJoin.join(stv4_right_3, 1), param("89,98-90,1", grup)) : grup;
+        assert true == joiningVar4.check(iwin4.listJoin.join(stv4_right_3, 1), param("90", grup)) : grup;        
     }
 
     /**
