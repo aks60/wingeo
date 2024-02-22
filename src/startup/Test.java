@@ -168,8 +168,8 @@ public class Test {
         
         FillingTest t3 = new FillingTest();
         t3.fillingVar();
-//        t3.fillingDet();
-//        
+        t3.fillingDet();
+        
 //        FurnitureTest t4 = new FurnitureTest();
 //        t4.furnitureVar();
 //        t4.furnitureDet();

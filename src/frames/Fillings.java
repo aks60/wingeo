@@ -266,7 +266,7 @@ public class Fillings extends javax.swing.JFrame {
             if (index != -1) {
                 Record record = qGlasdet.table(eArtikl.up).get(index);
                 int paramPart = record.getInt(eArtikl.level1);
-                paramPart = (paramPart == 1 || paramPart == 4) ? 15000 : 14000;
+                paramPart = (paramPart == 1 || paramPart == 3) ? 15000 : 14000;
 
                 if (qGlaspar2.get(UGui.getIndexRec(tab4), eGlaspar2.groups_id) == null) {
                     new ParName(this, listenerPar2, eParams.glas, paramPart);
@@ -427,7 +427,7 @@ public class Fillings extends javax.swing.JFrame {
         btnRef = new javax.swing.JButton();
         btnDel = new javax.swing.JButton();
         btnIns = new javax.swing.JButton();
-        btnConstructiv = new javax.swing.JButton();
+        btnFind1 = new javax.swing.JButton();
         btnTest = new javax.swing.JButton();
         btnReport = new javax.swing.JButton();
         centr = new javax.swing.JPanel();
@@ -546,19 +546,19 @@ public class Fillings extends javax.swing.JFrame {
             }
         });
 
-        btnConstructiv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c090.gif"))); // NOI18N
-        btnConstructiv.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
-        btnConstructiv.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btnConstructiv.setFocusable(false);
-        btnConstructiv.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnConstructiv.setMaximumSize(new java.awt.Dimension(25, 25));
-        btnConstructiv.setMinimumSize(new java.awt.Dimension(25, 25));
-        btnConstructiv.setPreferredSize(new java.awt.Dimension(25, 25));
-        btnConstructiv.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btnConstructiv.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnConstructiv.addActionListener(new java.awt.event.ActionListener() {
+        btnFind1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c090.gif"))); // NOI18N
+        btnFind1.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
+        btnFind1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnFind1.setFocusable(false);
+        btnFind1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnFind1.setMaximumSize(new java.awt.Dimension(25, 25));
+        btnFind1.setMinimumSize(new java.awt.Dimension(25, 25));
+        btnFind1.setPreferredSize(new java.awt.Dimension(25, 25));
+        btnFind1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btnFind1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnFind1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConstructiv(evt);
+                btnFind1(evt);
             }
         });
 
@@ -601,7 +601,7 @@ public class Fillings extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnConstructiv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnFind1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 546, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -624,7 +624,7 @@ public class Fillings extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(btnClose, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRef, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConstructiv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnFind1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnReport, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -675,9 +675,6 @@ public class Fillings extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabMouseClicked(evt);
             }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                Fillings.this.mousePressed(evt);
-            }
         });
         scr1.setViewportView(tab1);
         if (tab1.getColumnModel().getColumnCount() > 0) {
@@ -713,9 +710,6 @@ public class Fillings extends javax.swing.JFrame {
         tab3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                Fillings.this.mousePressed(evt);
             }
         });
         scr3.setViewportView(tab3);
@@ -772,9 +766,6 @@ public class Fillings extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabMouseClicked(evt);
             }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                Fillings.this.mousePressed(evt);
-            }
         });
         scr2.setViewportView(tab2);
         if (tab2.getColumnModel().getColumnCount() > 0) {
@@ -818,9 +809,6 @@ public class Fillings extends javax.swing.JFrame {
         tab4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                Fillings.this.mousePressed(evt);
             }
         });
         scr4.setViewportView(tab4);
@@ -870,9 +858,6 @@ public class Fillings extends javax.swing.JFrame {
         tab5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                Fillings.this.mousePressed(evt);
             }
         });
         scr5.setViewportView(tab5);
@@ -1003,12 +988,7 @@ public class Fillings extends javax.swing.JFrame {
         List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
     }//GEN-LAST:event_windowClosed
 
-    private void mousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mousePressed
-        JTable table = (JTable) evt.getSource();
-        UGui.updateBorderAndSql(table, List.of(tab1, tab2, tab3, tab4, tab5));
-    }//GEN-LAST:event_mousePressed
-
-    private void btnConstructiv(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConstructiv
+    private void btnFind1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind1
         if (tab2.getBorder() != null) {
             Record record = ((DefTableModel) tab2.getModel()).getQuery().get(UGui.getIndexRec(tab2));
             Record record2 = eArtikl.find(record.getInt(eElemdet.artikl_id), false);
@@ -1026,7 +1006,7 @@ public class Fillings extends javax.swing.JFrame {
                 }
             });
         }
-    }//GEN-LAST:event_btnConstructiv
+    }//GEN-LAST:event_btnFind1
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
         // 
@@ -1051,13 +1031,27 @@ public class Fillings extends javax.swing.JFrame {
             List.of(tab1, tab2, tab3, tab4).forEach(tab -> tab.setBorder(null));
             table.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
             ppmCrud.show(table, evt.getX(), evt.getY());
+            
+        } else if (evt.getButton() == MouseEvent.BUTTON1) {
+            JTable table = (JTable) evt.getSource();
+            UGui.updateBorderAndSql(table, List.of(tab1, tab2, tab3, tab4, tab5));
+
+            btnFind1.setEnabled(false);
+            if (tab1.getBorder() != null) {
+                btnFind1.setEnabled(true);
+            } else if (tab2.getBorder() != null) {
+                btnFind1.setEnabled(true);
+            } else if (tab5.getBorder() != null) {
+                btnFind1.setEnabled(true);
+            }
         }
+        
     }//GEN-LAST:event_tabMouseClicked
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
-    private javax.swing.JButton btnConstructiv;
     private javax.swing.JButton btnDel;
+    private javax.swing.JButton btnFind1;
     private javax.swing.JButton btnIns;
     private javax.swing.JButton btnRef;
     private javax.swing.JButton btnReport;

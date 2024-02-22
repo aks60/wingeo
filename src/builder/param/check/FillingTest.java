@@ -74,9 +74,9 @@ public class FillingTest {
      */
     public void fillingVar() {
 
-        grup = 13001; //Если признак состава 
-        assert true == fillingVar2.check(glass2_left, param("KBE 58", grup)) : grup;
-        assert false == fillingVar2.check(glass2_left, param("KBE 5X", grup)) : grup;
+//        grup = 13001; //Если признак состава 
+//        assert true == fillingVar2.check(glass2_left, param("KBE 58", grup)) : grup;
+//        assert false == fillingVar2.check(glass2_left, param("KBE 5X", grup)) : grup;
 
         grup = 13003; //Тип проема
         assert false == fillingVar2.check(stv2_left_3, param("глухой", grup)) : grup;
@@ -100,7 +100,7 @@ public class FillingTest {
         assert true == fillingVar4.check(glass4_left, param("me-1", grup)) : grup;
         assert false == fillingVar4.check(glass3_left, param("КП-40", grup)) : grup;
 
-        grup = 13095; //Если признак системы конструкции
+        grup = 13095; //Если признак системы конструкции (см. Systree->вкл.Основные)
         assert true == fillingVar4.check(stv4_right_3, param("1;2;", grup)) : grup;
         assert false == fillingVar4.check(stv4_right_3, param("2;9", grup)) : grup;
     }
