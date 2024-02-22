@@ -21,7 +21,7 @@ public abstract class Cal5e {
         Query.conf = "calc";
     }
 
-    public static void artype(Specific spcAdd, ElemSimple elem5e) {
+    public static void artype(SpcRecord spcAdd, ElemSimple elem5e) {
         TypeArtikl typ = TypeArtikl.find(spcAdd.artiklRec);
         switch (typ) {
             case X100:;

@@ -26,20 +26,20 @@ import org.locationtech.jts.geom.LineSegment;
 /**
  * Заполнения
  */
-public class Filling extends Cal5e {
+public class FillingSpc extends Cal5e {
 
     private FillingVar fillingVar = null;
     private FillingDet fillingDet = null;
     private ElementDet elementDet = null;
 
-    public Filling(Wincalc winc) {
+    public FillingSpc(Wincalc winc) {
         super(winc);
         fillingVar = new FillingVar(winc);
         fillingDet = new FillingDet(winc);
         elementDet = new ElementDet(winc);
     }
 
-    public Filling(Wincalc winc, boolean shortPass) {
+    public FillingSpc(Wincalc winc, boolean shortPass) {
         super(winc);
         fillingVar = new FillingVar(winc);
         fillingDet = new FillingDet(winc);
@@ -115,7 +115,7 @@ public class Filling extends Cal5e {
                 //ФИЛЬТР детализации, параметры накапливаются в mapParam
                 if (fillingDet.filter(mapParam, elemGlass, glasdetRec) == true) {
                     Record artiklRec = eArtikl.find(glasdetRec.getInt(eGlasdet.artikl_id), false);
-                    Specific spcAdd = new Specific("ЗАП", glasdetRec, artiklRec, elemGlass, mapParam);
+                    SpcRecord spcAdd = new SpcRecord("ЗАП", glasdetRec, artiklRec, elemGlass, mapParam);
 
                     //Подбор текстуры
                     if (UColor.colorFromProduct(spcAdd)) {

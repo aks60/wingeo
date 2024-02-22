@@ -3,7 +3,7 @@ package builder.model;
 import builder.Wincalc;
 import dataset.Record;
 import enums.TypeJoin;
-import builder.making.Specific;
+import builder.making.SpcRecord;
 import domain.eArtikl;
 import domain.eJoining;
 import domain.eJoinvar;
@@ -34,9 +34,9 @@ public class ElemJoining {
         //this.angl = angleBetween();
     }
 
-    public void addSpecific(Specific spcAdd) { //добавление спесификаций зависимых элементов
+    public void addSpecific(SpcRecord spcAdd) { //добавление спесификаций зависимых элементов
         try {
-            Specific spcRec = elem1.spcRec;
+            SpcRecord spcRec = elem1.spcRec;
 
             String sideCalc = spcAdd.getParam("null", 11072, 12072);
             if (sideCalc != null && "большей".equals(sideCalc)) {

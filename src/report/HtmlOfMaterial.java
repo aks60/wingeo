@@ -1,7 +1,7 @@
 package report;
 
 import builder.Wincalc;
-import builder.making.Specific;
+import builder.making.SpcRecord;
 import dataset.Record;
 import domain.eColor;
 import domain.ePrjprod;
@@ -45,7 +45,7 @@ public class HtmlOfMaterial {
 
     private static void load(Record projectRec, Document doc) {
 
-        List<Specific> spcList2 = new ArrayList<Specific>();
+        List<SpcRecord> spcList2 = new ArrayList<SpcRecord>();
         List<Record> prjprodList = ePrjprod.find2(projectRec.getInt(eProject.id));
         for (Record prjprodRec : prjprodList) {
             String script = prjprodRec.getStr(ePrjprod.script);

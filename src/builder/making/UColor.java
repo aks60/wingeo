@@ -57,9 +57,9 @@ public class UColor {
      * @param spcAdd - спецификацм элемента
      * @param side - строна элемента по которой ведётся подбор текстуры
      */
-    public static boolean colorFromProduct(Specific spcAdd) {  //см. http://help.profsegment.ru/?id=1107 
+    public static boolean colorFromProduct(SpcRecord spcAdd) {  //см. http://help.profsegment.ru/?id=1107 
 
-        Specific spcClon = new Specific().clon(spcAdd);
+        SpcRecord spcClon = new SpcRecord().clon(spcAdd);
         int typesUS = spcClon.detailRec.getInt(COLOR_US);
         if (UseColor.isSeries(typesUS)) { //если серия
 
@@ -87,7 +87,7 @@ public class UColor {
         return false;
     }
 
-    private static boolean colorFromProduct(Specific spcAdd, int side, boolean seri) {  //см. http://help.profsegment.ru/?id=1107        
+    private static boolean colorFromProduct(SpcRecord spcAdd, int side, boolean seri) {  //см. http://help.profsegment.ru/?id=1107        
 
         int elemColorFk = spcAdd.detailRec.getInt(COLOR_FK);
         int typesUS = spcAdd.detailRec.getInt(COLOR_US);
@@ -354,7 +354,7 @@ public class UColor {
     }
 
     //Первая в списке запись цвета элемента
-    private static int scanFromColorFirst(Specific spc) {
+    private static int scanFromColorFirst(SpcRecord spc) {
         Record artdetRec = eArtdet.find(spc.detailRec.getInt(ARTIKL_ID));
         if (artdetRec != null) {
             int colorFK2 = artdetRec.getInt(eArtdet.color_fk);
@@ -374,7 +374,7 @@ public class UColor {
     }
 
     //Выдает цвет проф. в соответствии с заданным вариантом подбора текстуры   
-    private static int getColorFromProfile(Specific spcAdd, int elemColorUS) {
+    private static int getColorFromProfile(SpcRecord spcAdd, int elemColorUS) {
         try {
             switch (elemColorUS) {
                 case 0:
@@ -411,7 +411,7 @@ public class UColor {
     }
 
     //Сообщение неудачи
-    private static void colorFromMes(Specific spc) {  //см. http://help.profsegment.ru/?id=1107        
+    private static void colorFromMes(SpcRecord spc) {  //см. http://help.profsegment.ru/?id=1107        
         String place = "---";
         if ("ВСТ".equals(spc.place)) {
             place = "Вставки";

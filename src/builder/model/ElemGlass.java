@@ -1,8 +1,8 @@
 package builder.model;
 
 import builder.Wincalc;
-import builder.making.Filling;
-import builder.making.Specific;
+import builder.making.FillingSpc;
+import builder.making.SpcRecord;
 import builder.script.GsonElem;
 import common.ArrayCom;
 import common.UCom;
@@ -104,7 +104,7 @@ public class ElemGlass extends ElemSimple {
             spcRec.setColor(colorID1, colorID2, colorID3);
 
             //Фича определения gzazo и gaxis на раннем этапе построения. 
-            new Filling(winc, true).calc(this);
+            new FillingSpc(winc, true).calc(this);
 
             //Внешний полигон створки/рамы для прорисовки 
             Coordinate[] coo = owner.area.getGeometryN(0).getCoordinates();
@@ -150,7 +150,7 @@ public class ElemGlass extends ElemSimple {
 
     //Вложенная спецификация
     @Override
-    public void addSpecific(Specific spcAdd) {
+    public void addSpecific(SpcRecord spcAdd) {
         try {
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом

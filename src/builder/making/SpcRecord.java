@@ -15,9 +15,9 @@ import java.util.List;
 /**
  * Спецификация элемента окна
  */
-public class Specific {
+public class SpcRecord {
 
-    public ArraySpc<Specific> spcList = new ArraySpc();  //список составов, фурнитур и т.д.
+    public ArraySpc<SpcRecord> spcList = new ArraySpc();  //список составов, фурнитур и т.д.
     public HashMap<Integer, String> mapParam = null;  //параметры спецификации
     public ElemSimple elem5e = null;  //элемент пораждающий спецификацию (контейнер)
     public Record variantRec = null;  //вариант в конструктиве
@@ -48,17 +48,17 @@ public class Specific {
     public double price = 0;  //Стоимость без скидки
     public double cost2 = 0;  //Стоимость с технологической скидкой
 
-    public Specific() {        
+    public SpcRecord() {        
     }
     
-    public Specific(double id, ElemSimple elem5e) {
+    public SpcRecord(double id, ElemSimple elem5e) {
         ++elem5e.winc.specificID;
         this.id = id;
         this.elem5e = elem5e;
         this.mapParam = new HashMap();
     }
 
-    public Specific(String place, Record detailRec, Record artiklRec, ElemSimple elem5e, HashMap<Integer, String> mapParam) {
+    public SpcRecord(String place, Record detailRec, Record artiklRec, ElemSimple elem5e, HashMap<Integer, String> mapParam) {
         this.id = ++elem5e.winc.specificID;
         this.elem5e = elem5e;
         this.mapParam = mapParam;
@@ -67,7 +67,7 @@ public class Specific {
         setArtikl(artiklRec);
     }
 
-    public Specific(String place, double id, Record detailRec, Record artiklRec, HashMap<Integer, String> mapParam) {
+    public SpcRecord(String place, double id, Record detailRec, Record artiklRec, HashMap<Integer, String> mapParam) {
         this.id = id;
         this.mapParam = mapParam;
         this.detailRec = detailRec;
@@ -90,7 +90,7 @@ public class Specific {
         this.colorID3 = colorID3;
     }
     
-    public Specific clon(Specific spec) {
+    public SpcRecord clon(SpcRecord spec) {
         this.id = spec.id;
         this.place = spec.place;
         this.artikl = spec.artikl;
@@ -169,11 +169,11 @@ public class Specific {
         return String.valueOf(def);
     }
 
-    public static void write_csv(ArrayList<Specific> spcList) {
+    public static void write_csv(ArrayList<SpcRecord> spcList) {
         //См. историю
     }
 
-    public static void write_txt(ArrayList<Specific> specList) {
+    public static void write_txt(ArrayList<SpcRecord> specList) {
         //См. историю
     }
 

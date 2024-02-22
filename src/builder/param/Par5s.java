@@ -5,7 +5,7 @@ import domain.eSetting;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
-import builder.making.Specific;
+import builder.making.SpcRecord;
 import common.listener.ListenerParam;
 import domain.eSyspar1;
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ public class Par5s {
     }
 
     //Необработанные параметры
-    protected void message(Specific spc, int code) {
+    protected void message(SpcRecord spc, int code) {
         if (code >= 0) {
             if (ParamList.find(code).pass() != 0) {
                 System.err.println("ВНИМАНИЕ! ID " + spc.id + " ПАРААМЕТР " + code + " VALUE " + spc.getParam("-1", code) + " В РАЗРАБОТКЕ.");

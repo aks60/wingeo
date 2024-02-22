@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import org.locationtech.jts.geom.Coordinate;
 
 //Соединения
-public class Joining extends Cal5e {
+public class JoiningSpc extends Cal5e {
 
     private JoiningVar joiningVar = null;
     private JoiningDet joiningDet = null;
@@ -32,14 +32,14 @@ public class Joining extends Cal5e {
     private HashMap<ElemJoining, Integer> mapJoinvar = new HashMap<ElemJoining, Integer>();
     private boolean ps3 = "ps3".equals(eSetting.val(2));
 
-    public Joining(Wincalc winc) {
+    public JoiningSpc(Wincalc winc) {
         super(winc);
         joiningVar = new JoiningVar(winc);
         joiningDet = new JoiningDet(winc);
         elementDet = new ElementDet(winc);
     }
 
-    public Joining(Wincalc winc, boolean shortPass) {
+    public JoiningSpc(Wincalc winc, boolean shortPass) {
         super(winc);
         joiningVar = new JoiningVar(winc);
         joiningDet = new JoiningDet(winc);
@@ -140,7 +140,7 @@ public class Joining extends Cal5e {
                 //ФИЛЬТР детализации 
                 if (joiningDet.filter(mapParam, elemJoin, joindetRec) == true) {
                     Record artiklRec = eArtikl.find(joindetRec.getInt(eJoindet.artikl_id), false);
-                    Specific spcAdd = new Specific("СОЕД", joindetRec, artiklRec, elemJoin.elem1, mapParam);
+                    SpcRecord spcAdd = new SpcRecord("СОЕД", joindetRec, artiklRec, elemJoin.elem1, mapParam);
                     
                     //Подбор текстуры
                     if (UColor.colorFromProduct(spcAdd)) {

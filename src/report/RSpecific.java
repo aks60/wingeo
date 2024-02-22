@@ -1,6 +1,6 @@
 package report;
 
-import builder.making.Specific;
+import builder.making.SpcRecord;
 import domain.eColor;
 import enums.UseUnit;
 import java.text.DecimalFormat;
@@ -15,19 +15,19 @@ public class RSpecific {
 
     private static DecimalFormat df1 = new DecimalFormat("#0.0");
     private static DecimalFormat df2 = new DecimalFormat("#0.00");
-    private Specific spc;
+    private SpcRecord spc;
     private boolean otx = true;
 
-    public RSpecific(Specific spc) {
+    public RSpecific(SpcRecord spc) {
         this.spc = spc;
     }
 
-    public RSpecific(Specific spc, boolean otx) {
+    public RSpecific(SpcRecord spc, boolean otx) {
         this.spc = spc;
         this.otx = otx;
     }
 
-    public Specific spc() {
+    public SpcRecord spc() {
         return spc;
     }
 

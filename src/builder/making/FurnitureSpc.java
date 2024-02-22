@@ -27,20 +27,20 @@ import javax.swing.JOptionPane;
 /**
  * Фурнитура
  */
-public class Furniture extends Cal5e {
+public class FurnitureSpc extends Cal5e {
 
     private FurnitureVar furnitureVar = null;
     private FurnitureDet furnitureDet = null;
     private final List list = List.of(9, 11, 12);
     private boolean max_size_message = true;
 
-    public Furniture(Wincalc winc) {
+    public FurnitureSpc(Wincalc winc) {
         super(winc);
         furnitureVar = new FurnitureVar(winc);
         furnitureDet = new FurnitureDet(winc);
     }
 
-    public Furniture(Wincalc winc, boolean shortPass) {
+    public FurnitureSpc(Wincalc winc, boolean shortPass) {
         super(winc);
         furnitureVar = new FurnitureVar(winc);
         furnitureDet = new FurnitureDet(winc);
@@ -194,7 +194,7 @@ public class Furniture extends Cal5e {
             if (furndetRec.get(eFurndet.furniture_id2) == null) {
                 if (artiklRec.getInt(eArtikl.id) != -1) {
                     ElemSimple sideStv = determOfSide(mapParam, areaStv);
-                    Specific spcAdd = new Specific("ФУРН", furndetRec, artiklRec, sideStv, mapParam);
+                    SpcRecord spcAdd = new SpcRecord("ФУРН", furndetRec, artiklRec, sideStv, mapParam);
 
                     //Ловим ручку, подвес, замок
                     if (propertyStv(areaStv, spcAdd)) {
@@ -224,7 +224,7 @@ public class Furniture extends Cal5e {
         }
     }
 
-    private boolean propertyStv(AreaSimple areaStv, Specific spcAdd) {
+    private boolean propertyStv(AreaSimple areaStv, SpcRecord spcAdd) {
         AreaStvorka stv = (AreaStvorka) areaStv;
         if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2) {
             boolean add_specific = true;

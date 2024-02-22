@@ -2,7 +2,7 @@ package frames;
 
 import frames.swing.FrameToFile;
 import builder.Wincalc;
-import builder.making.Specific;
+import builder.making.SpcRecord;
 import common.UCom;
 import common.listener.ListenerFrame;
 import dataset.Record;
@@ -512,7 +512,7 @@ public class PSCompare extends javax.swing.JFrame {
             }
             conn.close();
 
-            for (Specific spc : winc.listSpec) {
+            for (SpcRecord spc : winc.listSpec) {
                 String key = spc.artikl;
                 Double val = hmDbSa.getOrDefault(key, 0.0);
                 hmDbSa.put(key, val + spc.price); //стоимость без скидки

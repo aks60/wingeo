@@ -18,12 +18,12 @@ import java.util.ArrayList;
 /**
  * Составы.
  */
-public class Elements extends Cal5e {
+public class ElementSpc extends Cal5e {
 
     private ElementVar elementVar = null;
     private ElementDet elementDet = null;
 
-    public Elements(Wincalc winc) {
+    public ElementSpc(Wincalc winc) {
         super(winc);
         elementVar = new ElementVar(winc);
         elementDet = new ElementDet(winc);
@@ -88,7 +88,7 @@ public class Elements extends Cal5e {
                         if (elementDet.filter(mapParam, elem5e, elemdetRec) == true) {
 
                             Record artiklRec = eArtikl.get(elemdetRec.getInt(eElemdet.artikl_id));
-                            Specific spcAdd = new Specific("ВСТ", elemdetRec, artiklRec, elem5e, mapParam);
+                            SpcRecord spcAdd = new SpcRecord("ВСТ", elemdetRec, artiklRec, elem5e, mapParam);
 
                             //Подбор текстуры
                             if (UColor.colorFromProduct(spcAdd)) {

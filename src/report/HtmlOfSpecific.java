@@ -1,8 +1,8 @@
 package report;
 
 import builder.Wincalc;
-import builder.making.Specific;
-import builder.making.Tariffic;
+import builder.making.SpcRecord;
+import builder.making.TarifficSpc;
 import common.ArraySpc;
 import dataset.Record;
 import domain.eArtikl;
@@ -49,7 +49,7 @@ public class HtmlOfSpecific {
     }
 
     private static void load1(Record projectRec, Document doc) {
-        List<Specific> spcList2 = new ArrayList<Specific>();
+        List<SpcRecord> spcList2 = new ArrayList<SpcRecord>();
         List<Record> prjprodList = ePrjprod.find2(projectRec.getInt(eProject.id));
         Wincalc winc = new builder.Wincalc();
 
@@ -59,7 +59,7 @@ public class HtmlOfSpecific {
             winc.build(script);
             winc.specific(true);
             spcList2.addAll(winc.listSpec); //добавим спецификацию
-            ArraySpc<Specific> kitList = Tariffic.kits(prjprodRec, winc, true); 
+            ArraySpc<SpcRecord> kitList = TarifficSpc.kits(prjprodRec, winc, true); 
             spcList2.addAll(kitList); //добавим комплекты
         }
         

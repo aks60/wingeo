@@ -5,10 +5,10 @@ import frames.swing.FrameToFile;
 import frames.dialog.DicCurrenc;
 import builder.model.Com5t;
 import builder.Wincalc;
-import builder.making.Furniture;
-import builder.making.Joining;
-import builder.making.Specific;
-import builder.making.Tariffic;
+import builder.making.FurnitureSpc;
+import builder.making.JoiningSpc;
+import builder.making.SpcRecord;
+import builder.making.TarifficSpc;
 import builder.making.UColor;
 import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
@@ -424,7 +424,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
 
                     //Створка
                 } else if (winNode.com5t().type == enums.Type.STVORKA) {
-                    new Furniture(wincalc(), true); //найдём ручку створки
+                    new FurnitureSpc(wincalc(), true); //найдём ручку створки
                     ((CardLayout) pan8.getLayout()).show(pan8, "card16");
                     AreaStvorka stv = (AreaStvorka) winNode.com5t();
                     AreaSimple sta = (AreaSimple) winNode.com5t();
@@ -473,7 +473,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                     DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                     ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
                     List.of(txt36, txt37, txt38, txt39, txt40, txt41, txt42, txt43, txt44).forEach(it -> it.setText(""));
-                    new Joining(winc, true).calc();//заполним соединения из конструктива 
+                    new JoiningSpc(winc, true).calc();//заполним соединения из конструктива 
                     ElemJoining ej1 = winc.listJoin.join(elem5e, 0);
                     ElemJoining ej2 = winc.listJoin.join(elem5e, 1);
                     ElemJoining ej3 = winc.listJoin.join(elem5e, 2);
@@ -3565,8 +3565,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
                                 projectRec.set(eProject.cost2, projectRec.getDbl(eProject.cost2) + win.cost2); //стоимость со скидками
 
                                 //Комплектация
-                                ArraySpc<Specific> kitList = Tariffic.kits(prjprodRec, win, true); //комплекты
-                                for (Specific spc : kitList) {
+                                ArraySpc<SpcRecord> kitList = TarifficSpc.kits(prjprodRec, win, true); //комплекты
+                                for (SpcRecord spc : kitList) {
                                     projectRec.set(eProject.price3, projectRec.getDbl(eProject.price3) + spc.price * spc.count);
                                     projectRec.set(eProject.cost3, projectRec.getDbl(eProject.cost3) + spc.cost2 * spc.count);
                                 }
