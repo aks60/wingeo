@@ -164,10 +164,10 @@ public class Test {
         
         JoiningTest t2 = new JoiningTest();
         t2.joiningVar();
-//        t2.joiningDet();
-//        
-//        FillingTest t3 = new FillingTest();
-//        t3.fillingVar();
+        t2.joiningDet();
+        
+        FillingTest t3 = new FillingTest();
+        t3.fillingVar();
 //        t3.fillingDet();
 //        
 //        FurnitureTest t4 = new FurnitureTest();

@@ -201,6 +201,7 @@ class UPar {
         return true;
     }
 
+    //Если признак состава 
     static boolean is_11001_11002_12001_12002_13001_14001_15001_33001_34001(String txt, ElemSimple elem5e) {
         Record record = eElement.query().stream().filter(rec
                 -> elem5e.artiklRecAn.getInt(eArtikl.id) == rec.getInt(eElement.artikl_id)
