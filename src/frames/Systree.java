@@ -4541,7 +4541,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         ((DefaultMutableTreeNode) model.getRoot()).removeAllChildren();
         model.reload();
 
-        TableFieldFilter filterTable = new TableFieldFilter(0, tab5, tab3, tab4, tab5, tab7);
+        TableFieldFilter filterTable = new TableFieldFilter(0, tab2, tab5, tab3, tab4, tab5, tab7);
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
     }

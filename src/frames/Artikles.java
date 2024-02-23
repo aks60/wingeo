@@ -116,7 +116,7 @@ public class Artikles extends javax.swing.JFrame {
     public void loadingModel() {
 
         new DefTableModel(tab1, qArtikl, eArtikl.code, eArtikl.name, eArtikl.groups1_id,
-                eArtikl.groups2_id, eArtikl.groups3_id, eArtikl.groups4_id, eArtikl.depth, eArtikl.height, eArtikl.otx_norm) {
+                eArtikl.groups2_id, eArtikl.groups3_id, eArtikl.groups4_id, eArtikl.depth, eArtikl.height, eArtikl.otx_norm, eArtikl.tech_code) {
             @Override
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
@@ -523,6 +523,7 @@ public class Artikles extends javax.swing.JFrame {
         groups2_id = new javax.swing.JMenuItem();
         groups3_id = new javax.swing.JMenuItem();
         groups4_id = new javax.swing.JMenuItem();
+        texcod = new javax.swing.JMenuItem();
         separator2 = new javax.swing.JPopupMenu.Separator();
         height = new javax.swing.JMenuItem();
         depth = new javax.swing.JMenuItem();
@@ -798,6 +799,16 @@ public class Artikles extends javax.swing.JFrame {
             }
         });
         ppmGrid.add(groups4_id);
+
+        texcod.setFont(frames.UGui.getFont(1,0));
+        texcod.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c085.gif"))); // NOI18N
+        texcod.setText("Тех-ий код");
+        texcod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppmClick(evt);
+            }
+        });
+        ppmGrid.add(texcod);
         ppmGrid.add(separator2);
 
         height.setFont(frames.UGui.getFont(1,0));
@@ -1061,18 +1072,18 @@ public class Artikles extends javax.swing.JFrame {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "111", null, null, null, null, null, null, null, null},
-                {"2", "222", null, null, null, null, null, null, null, null}
+                {"1", "111", null, null, null, null, null, null, null, null, null},
+                {"2", "222", null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Актикул", "Название", "Наценки", "Скидки", "Группы", "Серии", "Ширина", "Толщина", "Отход %", "ID"
+                "Актикул", "Название", "Наценки", "Скидки", "Группы", "Серии", "Ширина", "Толщина", "Отход %", "Тех. код", "ID"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Object.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, false, false, false, false, false, false, true, false
+                true, true, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1121,8 +1132,8 @@ public class Artikles extends javax.swing.JFrame {
             tab1.getColumnModel().getColumn(7).setMaxWidth(0);
             tab1.getColumnModel().getColumn(8).setPreferredWidth(26);
             tab1.getColumnModel().getColumn(8).setMaxWidth(120);
-            tab1.getColumnModel().getColumn(9).setPreferredWidth(40);
-            tab1.getColumnModel().getColumn(9).setMaxWidth(60);
+            tab1.getColumnModel().getColumn(10).setPreferredWidth(40);
+            tab1.getColumnModel().getColumn(10).setMaxWidth(60);
         }
 
         pan5.add(scr1, java.awt.BorderLayout.CENTER);
@@ -2637,6 +2648,8 @@ public class Artikles extends javax.swing.JFrame {
             index = 4;
         } else if (ppm == groups4_id) {
             index = 5;
+        } else if (ppm == texcod) {
+            index = 8;
         } else if (ppm == height) {
             index = 6;
         } else if (ppm == depth) {
@@ -2887,6 +2900,7 @@ public class Artikles extends javax.swing.JFrame {
     private javax.swing.JPanel south;
     private javax.swing.JTable tab1;
     private javax.swing.JTable tab2;
+    private javax.swing.JMenuItem texcod;
     public javax.swing.JTree tree;
     private javax.swing.JTextField txt1;
     private javax.swing.JTextField txt10;
