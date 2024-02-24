@@ -43,22 +43,25 @@ public class FurnitureVar extends Par5s {
 
                 case 21001:  //Форма контура 
                     //"Прямоугольное", "Не прямоугольное", "Не арочное", "Арочное" (Type.AREA - глухарь)
-                    if ("прямоугольная".equals(rec.getStr(TEXT)) && Type.RECTANGL.equals(elem5e.owner.type) == false
-                            && Type.AREA.equals(elem5e.owner.type) == false && Type.STVORKA.equals(elem5e.owner.type) == false) {
+                    if ("прямоугольная".equals(rec.getStr(TEXT)) && Type.RECTANGL.equals(winc.root.type) == false
+                            && Type.AREA.equals(winc.root.type) == false && Type.STVORKA.equals(winc.root.type) == false) {
                         return false;
-                    } else if ("трапециевидная".equals(rec.getStr(TEXT)) && Type.TRAPEZE.equals(elem5e.owner.type) == false) {
+                    } else if ("трапециевидная".equals(rec.getStr(TEXT)) && Type.TRAPEZE.equals(winc.root.type) == false) {
                         return false;
-                    } else if ("арочная".equals(rec.getStr(TEXT)) && Type.ARCH.equals(elem5e.owner.type) == false) {
+                    } else if ("арочная".equals(rec.getStr(TEXT)) && Type.ARCH.equals(winc.root.type) == false) {
                         return false;
-                    } else if ("не арочная".equals(rec.getStr(TEXT)) && Type.ARCH.equals(elem5e.owner.type) == true) {
-                        return false;
-                    }
-                    break;
-                case 21004:  //Артикул створки 
-                    if (elem5e.artiklRecAn.getStr(eArtikl.code).equals(rec.getStr(TEXT)) == false) {
+                    } else if ("не арочная".equals(rec.getStr(TEXT)) && Type.ARCH.equals(winc.root.type) == true) {
                         return false;
                     }
                     break;
+                case 21004: //Артикул створки 
+                {
+                    ElemSimple stv = winc.listElem.filter(Type.STVORKA_SIDE).get(0);
+                    if (stv.artiklRecAn.getStr(eArtikl.code).equals(rec.getStr(TEXT)) == false) {
+                        return false;
+                    }
+                }
+                break;
                 case 21005: //Артикул заполнения по умолчанию 
                 {
                     Record sysreeRec = eSystree.find(winc.nuni); //по умолчанию стеклопакет

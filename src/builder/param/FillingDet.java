@@ -4,15 +4,20 @@ import dataset.Record;
 import domain.eArtikl;
 import domain.eGlasdet;
 import domain.eGlaspar2;
-import domain.eSetting;
 import domain.eSystree;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
 import builder.model.ElemSimple;
+import builder.model.UGeo;
 import common.UCom;
 import enums.Layout;
 import enums.Type;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineSegment;
 
 //Заполнения
 public class FillingDet extends Par5s {
@@ -53,8 +58,8 @@ public class FillingDet extends Par5s {
                 case 14001: //Если признак состава 
                 case 15001: //Если признак состава    
                 {
-                    ElemSimple elem = winc.root.frames.get(Layout.BOTT);
-                    if (UPar.is_11001_11002_12001_12002_13001_14001_15001_33001_34001(rec.getStr(TEXT), elem) == false) {
+                    ElemSimple e = winc.root.frames.get(Layout.BOTT);
+                    if (UPar.is_11001_11002_12001_12002_13001_14001_15001_33001_34001(rec.getStr(TEXT), e) == false) {
                         return false;
                     }
                 }
@@ -98,11 +103,19 @@ public class FillingDet extends Par5s {
                     mapParam.put(rec.getInt(GRUP), rec.getStr(TEXT));
                     break;
                 case 14065:  //Ограничение угла, ° или Точный угол 
-                case 15055:  //Ограничение угла, ° или Точный угол  
-                    if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.anglHoriz()) == false) {
-                        return false;
+                case 15055: //Ограничение угла, ° или Точный угол  
+                {
+                    Geometry g = elem5e.area.getGeometryN(0);
+                    for (int i = 0; i < g.getNumPoints(); i++) {
+                        LineSegment seg = UGeo.getSegment(g, i);
+                        double ang = seg.angle();
+                        double angHor = (ang > 0) ? 360 - ang : Math.abs(ang);
+                        if (UCom.containsNumbJust(rec.getStr(TEXT), angHor) == true) {
+                            return true;
+                        }
                     }
-                    break;
+                    return false;
+                }
                 case 14067:  //Коды основной текстуры изделия 
                 case 15067:  //Коды основной текстуры изделия    
                     if (UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID1) == false) {
@@ -110,7 +123,7 @@ public class FillingDet extends Par5s {
                     }
                     break;
                 case 14068:  //Коды внутр. текстуры изделия 
-                case 15068:  //Коды внутр. текстуры изделия     
+                case 15068:  //Коды внутр. текстуры изделия   
                     if (UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID2) == false) {
                         return false;
                     }

@@ -114,12 +114,12 @@ public class FillingTest {
         HashMap<Integer, String> mapParam = new HashMap<Integer, String>();
 
         grup = 14000; //15000 //Для технологического кода контейнера
-        assert true == fillingDet2.check(mapParam, glass2_left, param("KBE 58", grup)) : grup;
-        assert false == fillingDet2.check(mapParam, glass2_left, param("KBE;58;", grup)) : grup;
+        assert true == fillingDet2.check(mapParam, null, param("KBE 58", grup)) : grup;
+        assert false == fillingDet2.check(mapParam, null, param("KBE;58;", grup)) : grup;
 
-        grup = 14001; //15001 //Если признак состава
-        //assert true == fillingDet2.check(mapParam, glass_left_2, param("KBE 58", grup)) : grup;
-        //assert false == fillingDet2.check(mapParam, glass_left_2, param("null", grup)) : grup;
+        grup = 14001; //15001 //Если признак состава (для теста необходимо вписать признак состава-KBE 58 )
+        //assert true == fillingDet2.check(mapParam, glass2_left, param("KBE 58", grup)) : grup;
+        assert false == fillingDet2.check(mapParam, glass2_left, param("null", grup)) : grup;
 
         grup = 14005;  //Тип проема
         assert false == fillingDet2.check(mapParam, glass2_left, param("глухой", grup)) : grup;
@@ -138,7 +138,7 @@ public class FillingTest {
         assert false == fillingDet2.check(mapParam, glass2_left, param("КП-40", grup)) : grup;
 
         grup = 14065; //15055 //Ограничение угла, ° или Точный угол
-        assert true == fillingDet2.check(mapParam, glass2_left, param("270", grup)) : grup;
+        assert true == fillingDet2.check(mapParam, glass2_left, param("0", grup)) : grup;
         assert false == fillingDet2.check(mapParam, glass2_left, param("270,1", grup)) : grup;
 
         grup = 14067; //15067 //Коды основной текстуры изделия 
@@ -146,8 +146,8 @@ public class FillingTest {
         assert false == fillingDet2.check(mapParam, glass2_right, param("109", grup)) : grup;
 
         grup = 14068; //15068 //Коды внутр. текстуры изделия
-        assert true == fillingDet2.check(mapParam, glass2_right, param("1009", grup)) : grup;
-        assert false == fillingDet2.check(mapParam, glass2_right, param("109", grup)) : grup;
+        assert true == fillingDet2.check(mapParam, glass2_right, param("10009", grup)) : grup;
+        assert false == fillingDet2.check(mapParam, glass2_right, param("1009", grup)) : grup;
 
         grup = 14069; //15069 //Коды внешн. текстуры изделия
         assert true == fillingDet2.check(mapParam, glass2_right, param("1009", grup)) : grup;

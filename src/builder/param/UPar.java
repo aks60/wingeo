@@ -73,16 +73,16 @@ class UPar {
 
     //Для технологического кода контейнера 
     static boolean is_STRING_XX000(String txt, ElemSimple elem5e) {
-        Record sysprofRec = elem5e.sysprofRec;
-        if (elem5e.type == Type.GLASS) {
-            sysprofRec = elem5e.owner.frames.get(Layout.BOTT).sysprofRec;
-        }
-        Record artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
-        if (artiklRecAn.get(eArtikl.tech_code) == null) {
+//        Record sysprofRec = elem5e.sysprofRec;
+//        if (elem5e.type == Type.GLASS) {
+//            sysprofRec = elem5e.owner.frames.get(Layout.BOTT).sysprofRec;
+//        }
+//        Record artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
+        if (elem5e.artiklRecAn.get(eArtikl.tech_code) == null) {
             return false;
         }
         String[] strList = txt.split(";");
-        String[] strList2 = artiklRecAn.getStr(eArtikl.tech_code).split(";");
+        String[] strList2 = elem5e.artiklRecAn.getStr(eArtikl.tech_code).split(";");
         boolean ret2 = false;
         for (String str : strList) {
             for (String str2 : strList2) {
@@ -94,10 +94,6 @@ class UPar {
             }
         }
         return ret2;
-//        if (ret2 == false) {
-//            return false;
-//        }
-//        return true;
     }
 
     //Если признак системы конструкции

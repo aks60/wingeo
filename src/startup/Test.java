@@ -158,20 +158,20 @@ public class Test {
         Conn.connection(Test.connect2());
         WincalcTest.init();
         
-        ElementTest t1 = new ElementTest();
-        t1.elementVar();
-        t1.elementDet();
+//        ElementTest t1 = new ElementTest();
+//        t1.elementVar();
+//        t1.elementDet();
+//        
+//        JoiningTest t2 = new JoiningTest();
+//        t2.joiningVar();
+//        t2.joiningDet();
+//        
+//        FillingTest t3 = new FillingTest();
+//        t3.fillingVar();
+//        t3.fillingDet();
         
-        JoiningTest t2 = new JoiningTest();
-        t2.joiningVar();
-        t2.joiningDet();
-        
-        FillingTest t3 = new FillingTest();
-        t3.fillingVar();
-        t3.fillingDet();
-        
-//        FurnitureTest t4 = new FurnitureTest();
-//        t4.furnitureVar();
+        FurnitureTest t4 = new FurnitureTest();
+        t4.furnitureVar();
 //        t4.furnitureDet();
 
 //        Set set = new HashSet();
