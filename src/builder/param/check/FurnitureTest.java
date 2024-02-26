@@ -90,13 +90,13 @@ public class FurnitureTest {
         assert false == furnitureVar3.check(frame3_left, param("5000-6000", grup)) : grup;
 
         grup = 21013; //Ограничение высоты ручки по середине, мм
-        assert true == furnitureVar3.check(null, param("940-1200", grup)) : grup;
-        assert false == furnitureVar3.check(null, param("500", grup)) : grup;
+        assert true == furnitureVar3.check(stv3_right_3, param("940-1200", grup)) : grup;
+        assert false == furnitureVar3.check(stv3_right_3, param("500-501", grup)) : grup;
 
-//        grup = 21016; //Допустимое соотношение габаритов (б/м)
-//        assert true == furnitureVar2.check(null, param("1,1-2,0", grup)) : grup;
-//        assert false == furnitureVar2.check(null, param("1-1,09", grup)) : grup;
-//
+        grup = 21016; //Допустимое соотношение габаритов (б/м)
+        assert true == furnitureVar2.check(stv2_left_3, param("1,1-2,0", grup)) : grup;
+        assert false == furnitureVar2.check(stv2_left_3, param("1-1,09", grup)) : grup;
+
 //        grup = 21040;  //Ограничение угла
 //        assert true == furnitureVar2.check(null, param("74-360", grup)) : grup;
 //        assert false == furnitureVar2.check(null, param("12-55", grup)) : grup;

@@ -71,11 +71,9 @@ public class FurnitureVar extends Par5s {
                 }
                 break;
                 case 21010: //Ограничение длины стороны, мм 
-                    //for (ElemSimple frame : winc.root.frames) {
                         if (UPar.is_21010_21011_21012_21013(rec.getStr(TEXT), elem5e) == false) {
                             return false;
                         }
-                    //}
                     break;
                 case 21011: //Ограничение длины ручка константа, мм 
                 {
