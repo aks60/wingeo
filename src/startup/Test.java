@@ -110,7 +110,7 @@ public class Test {
 
         Conn.connection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
-        String _case = "min";
+        String _case = "one";
 
         if (_case.equals("one")) {
             String script = GsonScript.scriptPath(601001);

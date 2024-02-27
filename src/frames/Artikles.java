@@ -116,7 +116,7 @@ public class Artikles extends javax.swing.JFrame {
     public void loadingModel() {
 
         new DefTableModel(tab1, qArtikl, eArtikl.code, eArtikl.name, eArtikl.groups1_id,
-                eArtikl.groups2_id, eArtikl.groups3_id, eArtikl.groups4_id, eArtikl.depth, eArtikl.height, eArtikl.otx_norm, eArtikl.tech_code) {
+                eArtikl.groups2_id, eArtikl.groups3_id, eArtikl.groups4_id, eArtikl.depth, eArtikl.height, eArtikl.otx_norm, eArtikl.tech_code, eArtikl.analog_id) {
             @Override
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
@@ -136,6 +136,12 @@ public class Artikles extends javax.swing.JFrame {
                 } else if (field == eArtikl.groups4_id) {
                     Record artiklRec = qArtikl.get(row);
                     return qGroups.find(artiklRec.get(eArtikl.groups4_id), eGroups.id).get(eGroups.name);
+
+                } else if (field == eArtikl.analog_id) {
+                    int analogId = qArtikl.get(row).getInt(eArtikl.analog_id);
+                    if (analogId != -1) {
+                        return eArtikl.get(analogId).get(eArtikl.code);
+                    }
                 }
                 return val;
             }
@@ -426,10 +432,10 @@ public class Artikles extends javax.swing.JFrame {
                     qArtdet.set(record.getInt(eColor.id), UGui.getIndexRec(tab2), eArtdet.color_fk);
                     qArtdet.set(1, UGui.getIndexRec(tab2), eArtdet.mark_c1);
                     qArtdet.set(0, UGui.getIndexRec(tab2), eArtdet.mark_c2);
-                    qArtdet.set(0, UGui.getIndexRec(tab2), eArtdet.mark_c3);                    
+                    qArtdet.set(0, UGui.getIndexRec(tab2), eArtdet.mark_c3);
                     qArtdet.set(100, UGui.getIndexRec(tab2), eArtdet.cost_c1);
                     qArtdet.set(0, UGui.getIndexRec(tab2), eArtdet.cost_c2);
-                    qArtdet.set(0, UGui.getIndexRec(tab2), eArtdet.cost_c3);                    
+                    qArtdet.set(0, UGui.getIndexRec(tab2), eArtdet.cost_c3);
                 }
                 ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
                 UGui.stopCellEditing(tab1, tab2);
@@ -524,6 +530,7 @@ public class Artikles extends javax.swing.JFrame {
         groups3_id = new javax.swing.JMenuItem();
         groups4_id = new javax.swing.JMenuItem();
         texcod = new javax.swing.JMenuItem();
+        analog = new javax.swing.JMenuItem();
         separator2 = new javax.swing.JPopupMenu.Separator();
         height = new javax.swing.JMenuItem();
         depth = new javax.swing.JMenuItem();
@@ -809,6 +816,16 @@ public class Artikles extends javax.swing.JFrame {
             }
         });
         ppmGrid.add(texcod);
+
+        analog.setFont(frames.UGui.getFont(1,0));
+        analog.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c085.gif"))); // NOI18N
+        analog.setText("Аналог");
+        analog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppmClick(evt);
+            }
+        });
+        ppmGrid.add(analog);
         ppmGrid.add(separator2);
 
         height.setFont(frames.UGui.getFont(1,0));
@@ -1072,18 +1089,18 @@ public class Artikles extends javax.swing.JFrame {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "111", null, null, null, null, null, null, null, null, null},
-                {"2", "222", null, null, null, null, null, null, null, null, null}
+                {"1", "111", null, null, null, null, null, null, null, null, null, null},
+                {"2", "222", null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Актикул", "Название", "Наценки", "Скидки", "Группы", "Серии", "Ширина", "Толщина", "Отход %", "Тех. код", "ID"
+                "Актикул", "Название", "Наценки", "Скидки", "Группы", "Серии", "Ширина", "Толщина", "Отход %", "Тех. код", "Аналог", "ID"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Object.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, false, false, false, false, false, false, false, false, false
+                true, true, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1132,8 +1149,14 @@ public class Artikles extends javax.swing.JFrame {
             tab1.getColumnModel().getColumn(7).setMaxWidth(0);
             tab1.getColumnModel().getColumn(8).setPreferredWidth(26);
             tab1.getColumnModel().getColumn(8).setMaxWidth(120);
-            tab1.getColumnModel().getColumn(10).setPreferredWidth(40);
-            tab1.getColumnModel().getColumn(10).setMaxWidth(60);
+            tab1.getColumnModel().getColumn(9).setMinWidth(0);
+            tab1.getColumnModel().getColumn(9).setPreferredWidth(0);
+            tab1.getColumnModel().getColumn(9).setMaxWidth(0);
+            tab1.getColumnModel().getColumn(10).setMinWidth(0);
+            tab1.getColumnModel().getColumn(10).setPreferredWidth(0);
+            tab1.getColumnModel().getColumn(10).setMaxWidth(0);
+            tab1.getColumnModel().getColumn(11).setPreferredWidth(40);
+            tab1.getColumnModel().getColumn(11).setMaxWidth(60);
         }
 
         pan5.add(scr1, java.awt.BorderLayout.CENTER);
@@ -2447,9 +2470,9 @@ public class Artikles extends javax.swing.JFrame {
                     record.setNo(eArtdet.id, Conn.genId(eArtdet.up));
                     record.setNo(eArtdet.artikl_id, artiklRec.get(eArtikl.id));
                     record.setNo(eArtdet.mark_c1, 1);
-                    if(artiklRec.getInt(eArtikl.level1) == 1 && List.of(1, 2, 3, 4, 5).contains(artiklRec.getInt(eArtikl.level2))) {
-                      record.setNo(eArtdet.mark_c2, 1);  
-                      record.setNo(eArtdet.mark_c3, 1);  
+                    if (artiklRec.getInt(eArtikl.level1) == 1 && List.of(1, 2, 3, 4, 5).contains(artiklRec.getInt(eArtikl.level2))) {
+                        record.setNo(eArtdet.mark_c2, 1);
+                        record.setNo(eArtdet.mark_c3, 1);
                     }
                     record.setNo(eArtdet.cost_c1, 100);
                     record.setNo(eArtdet.cost_c2, 0);
@@ -2649,7 +2672,9 @@ public class Artikles extends javax.swing.JFrame {
         } else if (ppm == groups4_id) {
             index = 5;
         } else if (ppm == texcod) {
-            index = 8;
+            index = 9;
+        } else if (ppm == analog) {
+            index = 10;
         } else if (ppm == height) {
             index = 6;
         } else if (ppm == depth) {
@@ -2725,6 +2750,7 @@ public class Artikles extends javax.swing.JFrame {
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem analog;
     private javax.swing.JButton btn10;
     private javax.swing.JButton btn11;
     private javax.swing.JButton btn16;

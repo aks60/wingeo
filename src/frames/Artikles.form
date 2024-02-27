@@ -108,6 +108,20 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ppmClick"/>
           </Events>
         </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="analog">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="frames.UGui.getFont(1,0)" type="code"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resource/img24/c085.gif"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="&#x410;&#x43d;&#x430;&#x43b;&#x43e;&#x433;"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ppmClick"/>
+          </Events>
+        </MenuItem>
         <Component class="javax.swing.JPopupMenu$Separator" name="separator2">
         </Component>
         <MenuItem class="javax.swing.JMenuItem" name="height">
@@ -664,7 +678,7 @@
                           <Connection code="frames.UGui.getFont(0,0)" type="code"/>
                         </Property>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="11" rowCount="2">
+                          <Table columnCount="12" rowCount="2">
                             <Column editable="true" title="&#x410;&#x43a;&#x442;&#x438;&#x43a;&#x443;&#x43b;" type="java.lang.String">
                               <Data value="1"/>
                               <Data value="2"/>
@@ -680,7 +694,8 @@
                             <Column editable="false" title="&#x428;&#x438;&#x440;&#x438;&#x43d;&#x430;" type="java.lang.Object"/>
                             <Column editable="false" title="&#x422;&#x43e;&#x43b;&#x449;&#x438;&#x43d;&#x430;" type="java.lang.Object"/>
                             <Column editable="false" title="&#x41e;&#x442;&#x445;&#x43e;&#x434; %" type="java.lang.Double"/>
-                            <Column editable="false" title="&#x422;&#x435;&#x445;. &#x43a;&#x43e;&#x434;" type="java.lang.Object"/>
+                            <Column editable="false" title="&#x422;&#x435;&#x445;. &#x43a;&#x43e;&#x434;" type="java.lang.String"/>
+                            <Column editable="false" title="&#x410;&#x43d;&#x430;&#x43b;&#x43e;&#x433;" type="java.lang.Integer"/>
                             <Column editable="false" title="ID" type="java.lang.Integer"/>
                           </Table>
                         </Property>
@@ -731,7 +746,12 @@
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="0" minWidth="0" prefWidth="0" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="0" minWidth="0" prefWidth="0" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
