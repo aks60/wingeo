@@ -185,17 +185,10 @@ public class Wincalc {
             listArea.filter(Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
 
             //Рассчёт полигонов сторон рамы
-            //listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
-            
-            for (ElemSimple elem : listElem) {
-                if(elem.type == Type.FRAME_SIDE || elem.type == Type.STVORKA_SIDE || elem.type == Type.GLASS) {
-                    elem.setLocation();
-                }
-            }
+            listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
             
             //Соединения конструкции             
             root.joining();  //L и T соединения
-            //listElem.filter(Type.SHTULP).forEach(e -> ((ElemCross) e).joining()); //прилегающ.
             listArea.filter(Type.STVORKA).forEach(e -> e.joining());
 
         } catch (Exception s) {
