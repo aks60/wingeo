@@ -317,10 +317,10 @@ public class UGeo {
         return list;
     }
 
-    public static int getIndex(Geometry p, Com5t e) {
+    public static int getIndex(Geometry p, double id) {
         Coordinate coo[] = p.getGeometryN(0).getCoordinates();
         for (int i = 0; i < coo.length - 1; i++) {
-            if (coo[i].z == e.id) {
+            if (coo[i].z == id) {
                 return i;
             }
         }

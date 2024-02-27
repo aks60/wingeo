@@ -82,6 +82,7 @@ public abstract class ElemSimple extends Com5t {
                 } else if (key == KeyEvent.VK_RIGHT) {
                     dX = dxy;
                 }
+                //Кликнул начало вектора
                 if (passMask[0] == 0) {
                     double X1 = dX / winc.scale + this.x1();
                     double Y1 = dY / winc.scale + this.y1();
@@ -90,6 +91,7 @@ public abstract class ElemSimple extends Com5t {
                         this.x1(X1);
                         this.y1(Y1);
                     }
+                    //Кликнул конец вектора
                 } else if (passMask[0] == 1) {
                     double X2 = dX / winc.scale + this.x2();
                     double Y2 = dY / winc.scale + this.y2();
@@ -98,6 +100,7 @@ public abstract class ElemSimple extends Com5t {
                         this.x2(X2);
                         this.y2(Y2);
                     }
+                    //Кликнул по середине вектора 
                 } else if (passMask[0] == 2) {
 
                     if (this.h() != null) {
@@ -113,9 +116,11 @@ public abstract class ElemSimple extends Com5t {
                             this.y1(Y);
                             this.y2(Y);
 
-                        } else if (dX != 0 && UGeo.anglHor(this) > -135 && UGeo.anglHor(this) < -45) { //Right ) {
+                        } else if (dX != 0 && UGeo.anglHor(this) > -135 && UGeo.anglHor(this) < -45
+                                || (UGeo.anglHor(this) > 45 && UGeo.anglHor(this) < 135 && this.type == Type.IMPOST)) { //Right
                             this.x1(X);
                             this.x2(X);
+
                         }
                     }
                 }
@@ -142,6 +147,7 @@ public abstract class ElemSimple extends Com5t {
                     }
                     LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                     double coef = segm.segmentFraction(wincPress);
+
                     if (coef < .33) { //кликнул начало вектора
                         passMask[1] = (passMask[0] != 0) ? 1 : passMask[1];
                         passMask[0] = 0;
@@ -150,11 +156,11 @@ public abstract class ElemSimple extends Com5t {
                         passMask[1] = (passMask[0] != 1) ? 1 : passMask[1];
                         passMask[0] = 1;
 
-                    } else {//кликнул, середина вектора 
-
+                    } else {//кликнул по середине вектора 
                         //Не арка
                         if ((UGeo.anglHor(this) > -45 && UGeo.anglHor(this) < 45) //Bot
-                                || (UGeo.anglHor(this) > -135 && UGeo.anglHor(this) < -45)) { //Right                   
+                                || (UGeo.anglHor(this) > -135 && UGeo.anglHor(this) < -45) //Right 
+                                || this.type == Type.IMPOST) { //импост                  
                             passMask[1] = (passMask[0] != 2) ? 1 : passMask[1];
                             passMask[0] = 2;
 
@@ -215,7 +221,8 @@ public abstract class ElemSimple extends Com5t {
                             this.y1(Y);
                             this.y2(Y);
                         }
-                        if (UGeo.anglHor(this) > -135 && UGeo.anglHor(this) < -45) { //Right
+                        if (UGeo.anglHor(this) > -135 && UGeo.anglHor(this) < -45 
+                                || (UGeo.anglHor(this) > 45 && UGeo.anglHor(this) < 135 && this.type == Type.IMPOST)) { //Right
                             this.x1(X);
                             this.x2(X);
                         }

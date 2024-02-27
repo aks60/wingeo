@@ -50,7 +50,7 @@ public class AreaStvorka extends AreaSimple {
 
     public double knobHeight = 0; //высота ручки
     public TypeOpen1 typeOpen = TypeOpen1.EMPTY; //направление открывания
-    public LayoutKnob knobLayout = LayoutKnob.VAR; //положение ручки на створке      
+    public LayoutKnob knobLayout = LayoutKnob.MIDL; //положение ручки на створке      
     public boolean paramCheck[] = {true, true, true, true, true, true, true, true};
     public double offset[] = {0, 0, 0, 0};
 
@@ -114,29 +114,42 @@ public class AreaStvorka extends AreaSimple {
                 int index = sysfurnRec.getInt(eSysfurn.side_open);
                 typeOpen = (index == TypeOpen2.REQ.id) ? typeOpen : (index == TypeOpen2.LEF.id) ? TypeOpen1.RIGH : TypeOpen1.LEFT;
             }
-            //Положение ручки на створке
+            //Положение ручки на створке, ручка задана параметром
             if (isJson(param, PKjson.positionKnob)) {
                 int position = param.get(PKjson.positionKnob).getAsInt();
-                if (position == LayoutKnob.VAR.id) {
+                if (position == LayoutKnob.VAR.id) { //вариационная
                     knobLayout = LayoutKnob.VAR;
-                    //knobHeight = param.get(PKjson.heightKnob).getAsInt();
-                } else {
+                    if (isJson(param, PKjson.heightKnob)) {
+                        knobHeight = param.get(PKjson.heightKnob).getAsInt();
+                        if (isJson(param, PKjson.heightKnob)) {
+                            knobHeight = param.get(PKjson.heightKnob).getAsInt();
+                        }
+                    }
+                } else { //по середине или константная
                     knobLayout = (position == LayoutKnob.MIDL.id) ? LayoutKnob.MIDL : LayoutKnob.CONST;
-                    //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
+                    //knobHeight = owner.area.getEnvelopeInternal().getHeight() / 2;
                 }
-            } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.MIDL.id) {
-                knobLayout = LayoutKnob.MIDL;
-                //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
-            } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.CONST.id) {
-                knobLayout = LayoutKnob.CONST;
-                //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
-            } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.VAR.id) {
-                knobLayout = LayoutKnob.VAR;
-                //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
-            } else {
-                knobLayout = LayoutKnob.MIDL; //по умолчанию
-                //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
             }
+//            //По середине
+//            else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.MIDL.id) {
+//                knobLayout = LayoutKnob.MIDL;
+//                //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
+//
+//                //Константная
+//            } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.CONST.id) {
+//                knobLayout = LayoutKnob.CONST;
+//                //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
+//
+//                //Установлена
+//            } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.VAR.id) {
+//                knobLayout = LayoutKnob.VAR;
+//                //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
+//
+//                //По умолчанию по середине
+//            } else {
+//                knobLayout = LayoutKnob.MIDL; //по умолчанию
+//                //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
+//            }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.furniture " + e);
         }
@@ -154,7 +167,7 @@ public class AreaStvorka extends AreaSimple {
             Polygon geo1 = UGeo.geoPadding(this.areaBox, winc.listElem, dh); //полигон векторов сторон створки с учётом нахл.           
 
             //Если стороны ств. ещё не созданы 
-            if (this.frames.size() == 0) {                  
+            if (this.frames.isEmpty()) {
                 Coordinate[] coo = geo1.getGeometryN(0).getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
 
@@ -182,21 +195,31 @@ public class AreaStvorka extends AreaSimple {
             Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
-            //Ручка открывания
+            //Высота ручки, линии открывания
             if (this.typeOpen != TypeOpen1.EMPTY) {
 
+                if (isJson(gson.param, PKjson.positionKnob) == false) {
+                    if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.MIDL.id) { //по середине
+                        knobLayout = LayoutKnob.MIDL;
+                        knobHeight = this.area.getEnvelopeInternal().getHeight() / 2;
+                    } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.CONST.id) { //константная
+                        knobLayout = LayoutKnob.CONST;
+                        knobHeight = this.area.getEnvelopeInternal().getHeight() / 2;
+                    }
+                }
+
                 //Линии гориз. открывания
-                ElemSimple stv = TypeOpen1.getKnob(this, this.typeOpen);
-                int ind = UGeo.getIndex(this.area, stv);
-                Coordinate p = UGeo.getSegment(area, ind).midPoint(); //высота ручки по умолчанию
+                ElemSimple stvside = TypeOpen1.getKnob(this, this.typeOpen);
+                int ind = UGeo.getIndex(this.area, stvside.id);
+                Coordinate h = UGeo.getSegment(area, ind).midPoint(); //высота ручки по умолчанию
                 LineSegment s1 = UGeo.getSegment(area, ind - 1);
                 LineSegment s2 = UGeo.getSegment(area, ind + 1);
-                lineOpenHor = gf.createLineString(UGeo.arrCoord(s1.p0.x, s1.p0.y, p.x, p.y, s2.p1.x, s2.p1.y, p.x, p.y));
+                lineOpenHor = gf.createLineString(UGeo.arrCoord(s1.p0.x, s1.p0.y, h.x, h.y, s2.p1.x, s2.p1.y, h.x, h.y));
 
                 //Линии вертик. открывания
                 if (typeOpen == TypeOpen1.LEFTUP || typeOpen == TypeOpen1.RIGHUP) {
                     ElemSimple stv2 = this.frames.get(Layout.TOP);
-                    ind = UGeo.getIndex(this.area, stv2);
+                    ind = UGeo.getIndex(this.area, stv2.id);
                     Coordinate p2 = UGeo.getSegment(area, ind).midPoint();
                     s1 = UGeo.getSegment(area, ind - 1);
                     s2 = UGeo.getSegment(area, ind + 1);
@@ -206,27 +229,27 @@ public class AreaStvorka extends AreaSimple {
                 double DX = 10, DY = 60;
                 if (knobLayout == LayoutKnob.VAR && this.knobHeight != 0) {
                     LineSegment lineSegm = UGeo.getSegment(area, ind);
-                    p = lineSegm.pointAlong(1 - (this.knobHeight / lineSegm.getLength())); //высота ручки на створке
+                    h = lineSegm.pointAlong(1 - (this.knobHeight / lineSegm.getLength())); //высота ручки на створке
                 }
-                Record sysprofRec = eSysprof.find5(winc.nuni, stv.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
+                Record sysprofRec = eSysprof.find5(winc.nuni, stvside.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
                 Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
                 double dx = artiklRec.getDbl(eArtikl.height) / 2;
                 if (typeOpen == TypeOpen1.UPPER) {
-                    p.y = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? p.y - 2 * dx : p.y + 2 * dx;
+                    h.y = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? h.y - 2 * dx : h.y + 2 * dx;
                 } else {
-                    p.x = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? p.x - dx : p.x + dx;
+                    h.x = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? h.x - dx : h.x + dx;
                 }
                 if (root.type == Type.DOOR) {
-                    this.knobOpen = gf.createPolygon(UGeo.arrCoord(p.x - DX, p.y - DY, p.x + DX, p.y - DY, p.x + DX, p.y + DY, p.x - DX, p.y + DY));
+                    this.knobOpen = gf.createPolygon(UGeo.arrCoord(h.x - DX, h.y - DY, h.x + DX, h.y - DY, h.x + DX, h.y + DY, h.x - DX, h.y + DY));
                 } else {
-                    this.knobOpen = gf.createPolygon(UGeo.arrCoord(p.x - DX, p.y - DY, p.x + DX, p.y - DY, p.x + DX, p.y + DY, p.x - DX, p.y + DY));
+                    this.knobOpen = gf.createPolygon(UGeo.arrCoord(h.x - DX, h.y - DY, h.x + DX, h.y - DY, h.x + DX, h.y + DY, h.x - DX, h.y + DY));
                 }
                 //Направление открывания
                 if (typeOpen != TypeOpen1.UPPER) {
-                    double ang = stv.anglHoriz();
-                    if (ang != 0) {
+                    double anglHoriz = stvside.anglHoriz();
+                    if (!(anglHoriz == 90 || anglHoriz == 270)) {
                         AffineTransformation aff = new AffineTransformation();
-                        aff.setToRotation(Math.toRadians(ang), this.knobOpen.getCentroid().getX(), this.knobOpen.getCentroid().getY());
+                        aff.setToRotation(Math.toRadians(anglHoriz), this.knobOpen.getCentroid().getX(), this.knobOpen.getCentroid().getY());
                         this.knobOpen = (Polygon) aff.transform(this.knobOpen);
                     }
                 }
