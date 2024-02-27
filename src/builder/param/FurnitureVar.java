@@ -4,7 +4,6 @@ import dataset.Record;
 import domain.eArtikl;
 import domain.eFurnpar1;
 import domain.eFurnside1;
-import domain.eSetting;
 import java.util.List;
 import builder.Wincalc;
 import builder.model.AreaStvorka;
@@ -13,6 +12,7 @@ import common.UCom;
 import domain.eSystree;
 import enums.LayoutKnob;
 import enums.Type;
+import org.locationtech.jts.geom.Envelope;
 
 //Фурнитура
 public class FurnitureVar extends Par5s {
@@ -106,8 +106,9 @@ public class FurnitureVar extends Par5s {
                 }
                 break;
                 case 21016:  //Допустимое соотношение габаритов б/м) 
-                    double max = (elem5e.owner.width() > elem5e.owner.height()) ? elem5e.owner.width() : elem5e.owner.height();
-                    double min = (elem5e.owner.width() > elem5e.owner.height()) ? elem5e.owner.height() : elem5e.owner.width();
+                    Envelope env = elem5e.owner.area.getGeometryN(0).getEnvelopeInternal();
+                    double max = (env.getWidth() > env.getHeight()) ? env.getWidth() : env.getHeight();
+                    double min = (env.getWidth() < env.getHeight()) ? env.getWidth() : env.getHeight();
                     if (UCom.containsNumbJust(rec.getStr(TEXT), max / min) == false) {
                         return false;
                     }
@@ -123,7 +124,7 @@ public class FurnitureVar extends Par5s {
                     }
                 }
                 break;
-                case 21040:  //Ограничение угла, ° или Угол максимальный, ° для ps3 
+                case 21040:  //Ограничение угла
                     if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.anglHoriz()) == false) {
                         return false;
                     }

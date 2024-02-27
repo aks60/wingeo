@@ -105,7 +105,7 @@ public class FurnitureDet extends Par5s {
                 case 24007: //Коды текстуры ручки 
                 case 25007: //Коды текстуры ручки                  
                 {
-                    String name = eColor.find(areaStv.colorID1).getStr(eColor.name);
+                    String name = eColor.find(((AreaStvorka) areaStv).knobColor).getStr(eColor.name);
                     if (name.equals(rec.getStr(TEXT)) == false) {
                         return false;
                     }
@@ -171,32 +171,23 @@ public class FurnitureDet extends Par5s {
                     break;
                 case 24033: //Фурнитура штульповая 
                 case 25033: //Фурнитура штульповая 
-                {
+
                     if (rec.getStr(TEXT).equals("Да")) {
-                        boolean ret = false;
-                        for (ElemSimple entry : areaStv.frames) {
-                            //if (winc.listJoin.elem(entry, 2).type == Type.SHTULP) {
+                        for (Com5t entry : areaStv.owner.childs) {
                             if (entry.type == Type.SHTULP) {
-                                ret = true;
+                                return true;
                             }
                         }
-                        if (ret == false) {
-                            return false;
-                        }
+                        return false;
+
                     } else if (rec.getStr(TEXT).equals("Нет")) {
-                        boolean ret = false;
-                        for (ElemSimple entry : areaStv.frames) {
-                            //if (winc.listJoin.elem(entry, 2).type == Type.SHTULP) {
+                        for (Com5t entry : areaStv.owner.childs) {
                             if (entry.type == Type.SHTULP) {
-                                ret = true;
+                                return false;
                             }
-                        }
-                        if (ret == true) {
-                            return false;
                         }
                     }
-                }
-                break;
+                    break;
                 case 24036:  //Номер Стороны_X/Стороны_Y набора 
                 case 25036:  //Номер Стороны_X/Стороны_Y набора 
                     message(rec.getInt(GRUP));
@@ -237,17 +228,10 @@ public class FurnitureDet extends Par5s {
                 break;
                 case 24064: //Ограничение высоты ручки, мм 
                 case 25064: //Ограничение высоты ручки, мм 
-                {
-                    String handl[] = rec.getStr(TEXT).split("-");
-                    if (handl.length > 1) {
-                        double handl_min = UCom.getDbl(handl[0]);
-                        double handl_max = UCom.getDbl(handl[1]);
-                        if (handl_min > elemStv.knobHeight || elemStv.knobHeight > handl_max) {
-                            return false;
-                        }
+                    if (elemStv.knobHeight > rec.getInt(TEXT)) {
+                        return false;
                     }
-                }
-                break;
+                    break;
                 case 24065: //Максимальная высота ручки, мм 
                 {
                     double handl_max = UCom.getDbl(rec.getStr(TEXT));

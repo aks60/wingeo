@@ -56,6 +56,7 @@ public class AreaStvorka extends AreaSimple {
 
     public AreaStvorka(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
+        //setLocation();
         furniture(gson.param);
     }
 
@@ -118,23 +119,23 @@ public class AreaStvorka extends AreaSimple {
                 int position = param.get(PKjson.positionKnob).getAsInt();
                 if (position == LayoutKnob.VAR.id) {
                     knobLayout = LayoutKnob.VAR;
-                    knobHeight = param.get(PKjson.heightKnob).getAsInt();
+                    //knobHeight = param.get(PKjson.heightKnob).getAsInt();
                 } else {
                     knobLayout = (position == LayoutKnob.MIDL.id) ? LayoutKnob.MIDL : LayoutKnob.CONST;
-                    //handleHeight = stvLeft.height() / 2;
+                    //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
                 }
             } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.MIDL.id) {
                 knobLayout = LayoutKnob.MIDL;
-                //handleHeight = stvLeft.height() / 2;
+                //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
             } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.CONST.id) {
                 knobLayout = LayoutKnob.CONST;
-                //handleHeight = stvLeft.height() / 2;
+                //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
             } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.VAR.id) {
                 knobLayout = LayoutKnob.VAR;
-                //handleHeight = stvLeft.height() / 2;
+                //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
             } else {
                 knobLayout = LayoutKnob.MIDL; //по умолчанию
-                //handleHeight = stvLeft.height() / 2;
+                //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
             }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.furniture " + e);

@@ -31,6 +31,7 @@ public class WincalcTest {
     public static ElemSimple frame2_3 = null;
     public static ElemSimple frame2_4 = null;
     public static ElemSimple stv2_left_3 = null;
+    public static ElemSimple stv2_left_4 = null;
     public static ElemSimple imp2_horiz = null;
     public static ElemSimple imp2_vert = null;
     public static ElemSimple glass2_top = null;
@@ -111,6 +112,7 @@ public class WincalcTest {
         frame2_3 = getElem(iwin2.root, 3);
         frame2_4 = getElem(iwin2.root, 4);
         stv2_left_3 = getElem(iwin2.root, 9.3);
+        stv2_left_4 = getElem(iwin2.root, 9.4);
         imp2_vert = getElem(iwin2.root, 11);
         imp2_horiz = getElem(iwin2.root, 7);
         glass2_top = (ElemSimple) getElem(iwin2.root, 6);
