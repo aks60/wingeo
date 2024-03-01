@@ -93,14 +93,14 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            //frame(args);
+            frame(args);
             //wincalc();
             //param();
             //query();
             //json();
             //uid();
             //script();
-            geom();             
+            //geom();             
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -472,12 +472,12 @@ public class Test {
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         AffineTransformation aff = new AffineTransformation();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
-        ArrayCom<Com5t> frame = new ArrayCom();
-        frame.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0, 300)));
-        frame.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0, 1500)));
-        frame.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300, 1500)));
-        frame.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300, 300, 300)));
-        LineSegment s1 = new LineSegment(frame.get(3).x1(), frame.get(3).y1(), frame.get(0).x1(), frame.get(0).y1());
+        ArrayCom<Com5t> frames = new ArrayCom();
+        frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0, 300)));
+        frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0, 1500)));
+        frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300, 1500)));
+        frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300, 300, 300)));
+        LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
         s1.normalize();
         double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle());
 
@@ -492,15 +492,16 @@ public class Test {
         Coordinate arr2[] = arc2.getCoordinates(); //Arrays.copyOf(arc2.getCoordinates(), arc2.getCoordinates().length);
         List.of(arr2).forEach(c -> c.z = 4);
 
-        list.add(new Coordinate(frame.get(0).x1(), frame.get(0).y1(), frame.get(0).id));
-        list.add(new Coordinate(frame.get(1).x1(), frame.get(1).y1(), frame.get(1).id));
-        list.add(new Coordinate(frame.get(2).x1(), frame.get(2).y1(), frame.get(2).id));
+        list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
+        list.add(new Coordinate(frames.get(1).x1(), frames.get(1).y1(), frames.get(1).id));
+        list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
         list.addAll(List.of(arr2));
 
         Polygon geo1 = UGeo.newPolygon(list);
-        Polygon geo2 = UGeo.geoPadding(geo1, frame, 0);
+        Polygon geo2 = UGeo.geoPadding(geo1, frames, 0);
         this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
+        this.mpol = null;
 //        List<Coordinate> list2 = new ArrayLoop();
 //        Coordinate c1[] = geo1.getCoordinates();
 //        Coordinate c2[] = geo2.getCoordinates();

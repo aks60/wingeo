@@ -122,8 +122,8 @@ public class WincalcTest {
 
     //604005  "Wintech\\Termotech 742\\1 ОКНА"
     private static void iwin3() {
-        iwin3 = new builder.Wincalc(); //604005
-        iwin3.build(GsonScript.scriptPath(604005));
+        iwin3 = new builder.Wincalc(); //-604005
+        iwin3.build(GsonScript.scriptPath(-604005));
         iwin3.specific(true);
         elementVar3 = new ElementVar(iwin3);
         elementDet3 = new ElementDet(iwin3);
