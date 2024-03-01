@@ -355,10 +355,10 @@ public class UGeo {
         aff.setToRotation(Math.toRadians(angl), tipX, tipY);
         return aff.transform(tip);
     }
-// <editor-fold defaultstate="collapsed" desc="TEMP">   
+// <editor-fold defaultstate="collapsed" desc="TEMP">  
+
     //Угол к горизонту. Угол нормируется в диапазоне [-Pi, Pi].
     //@deprecated
-
     public static double anglHor(Coordinate p0, Coordinate p1) {
         return Math.toDegrees(Angle.angle(p0, p1));
     }

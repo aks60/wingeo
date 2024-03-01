@@ -21,6 +21,7 @@ import java.awt.geom.Arc2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Collections;
 import java.util.List;
+import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
@@ -136,6 +137,15 @@ public class ElemFrame extends ElemSimple {
             spcRec.setAnglCut(anglCut[0], anglCut[1]);
             spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;
             spcRec.height = artiklRec.getDbl(eArtikl.height);
+            Coordinate c[] = this.area.getCoordinates();
+            if (this.h() == null) {
+                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(c[c.length - 1], c[0], c[1]));
+                spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(c[c.length - 5], c[1], c[2]));
+            } 
+//            else {
+//                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(c[3], c[0], c[1]));
+//                spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(c[0], c[1], c[2]));                
+//            }
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemFrame.setSpecific() " + e);

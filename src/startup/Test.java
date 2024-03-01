@@ -30,6 +30,7 @@ import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
@@ -93,13 +94,13 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //frame(args);
-            wincalc();
+            //wincalc();
             //param();
             //query();
             //json();
             //uid();
             //script();
-            //geom();             
+            geom();             
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -353,15 +354,14 @@ public class Test {
         Point point2 = gf.createPoint(new Coordinate(0, 500));
         LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
         LineString line2 = gf.createLineString(coord2);
-        LineSegment segm1 = new LineSegment(55.7, 538.99, 55.7, 538.99);
-        LineSegment segm2 = new LineSegment(68.0, 500.0, 68.0, 1500.0);
+        LineSegment segm1 = new LineSegment(1,1,0,1);
+        LineSegment segm2 = new LineSegment(0, 10, 12, 10);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
-
-        Coordinate p = new Coordinate(200, 501);
-        Coordinate c[] = new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)};
-        boolean b = PointLocation.isOnLine(p, c);
-        System.out.println(b);
+        Polygon p = UGeo.newPolygon(0,0, 0,10, 1,6, 1,1);
+        double ang1 = Math.toDegrees(Angle.angleBetween(p.getCoordinates()[3], p.getCoordinates()[0], p.getCoordinates()[1]));
+        double ang2 = Math.toDegrees(Angle.angleBetween(p.getCoordinates()[0], p.getCoordinates()[1], p.getCoordinates()[2]));
+        System.out.println(ang2);
 
     }
 

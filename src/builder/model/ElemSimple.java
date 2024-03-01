@@ -26,7 +26,7 @@ import org.locationtech.jts.geom.LineSegment;
 
 public abstract class ElemSimple extends Com5t {
 
-    public double anglCut[] = {45, 45}; //угол реза
+    public double anglCut[] = {77, 77}; //угол реза
     public double[] anglFlat = {0, 0, 0, 0}; //мин/мах внутренний и мин/мах внешний угол к плоскости   
     public double[] betweenHoriz = {0, 0}; //угол между векторами   
     private java.awt.Point pointPress = null;
