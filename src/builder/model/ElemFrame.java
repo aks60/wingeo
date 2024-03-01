@@ -138,27 +138,28 @@ public class ElemFrame extends ElemSimple {
             spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;
             spcRec.height = artiklRec.getDbl(eArtikl.height);
             Coordinate c[] = this.area.getCoordinates();
-            spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(c[c.length - 2], c[0], c[1]));
-            spcRec.anglCut1 = 77; //Math.toDegrees(Angle.angleBetween(c[c.length - 5], c[c.length - 4], c[c.length - 3]));
-
-            if (this.h() != null) {
-                System.out.println("spcRec.anglCut0 = " + spcRec.anglCut0 + "  c = " + c[c.length - 2] + "  " + c[0] + "  " + c[c.length - 3]);
-                System.out.println("spcRec.anglCut1 = " + spcRec.anglCut1 + "  c = " + c[c.length - 5] + "  " + c[c.length - 4] + "  " + c[c.length - 3]);
-            }
+            if (this.h() == null) {
+                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(c[c.length - 2], c[0], c[1]));
+                spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(c[0], c[1], c[2]));
 //            } else {
-//                double dh = this.artiklRecAn.getDbl(eArtikl.height);
-//                double h = this.h();
-//                double w = root.width();
-//                double r = (Math.pow(w / 2, 2) + Math.pow(h, 2)) / (2 * h);  //R = (L2 + H2) / 2H - радиус арки        
-//                double rad1 = Math.acos((w / 2) / r);
-//                double rad2 = Math.acos((w - 2 * dh) / ((r - dh) * 2));
-//                double a1 = r * Math.sin(rad1);
-//                double a2 = (r - dh) * Math.sin(rad2);
-//                double ang3 = 90 - Math.toDegrees(Math.atan((a1 - a2) / dh)); //угол реза рамы
-//                double ang4 = 90 - (Math.toDegrees(rad1) - (90 - ang3)); //угол реза арки
-//                spcRec.anglCut0 = ang4;  //угол реза арки
-//                spcRec.anglCut1 = ang3;  //угол реза рамы  
+//                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(c[c.length - 2], c[0], c[1]));
+//                spcRec.anglCut1 = 77;//Math.toDegrees(Angle.angleBetween(c[c.length - 5], c[c.length - 4], c[c.length - 3]));
+//                System.out.println("spcRec.anglCut0 = " + spcRec.anglCut0 + "  c = " + c[c.length - 2] + "  " + c[0] + "  " + c[1]);
 //            }
+            } else {
+                double dh = this.artiklRecAn.getDbl(eArtikl.height);
+                double h = this.h();
+                double w = root.width();
+                double r = (Math.pow(w / 2, 2) + Math.pow(h, 2)) / (2 * h);  //R = (L2 + H2) / 2H - радиус арки        
+                double rad1 = Math.acos((w / 2) / r);
+                double rad2 = Math.acos((w - 2 * dh) / ((r - dh) * 2));
+                double a1 = r * Math.sin(rad1);
+                double a2 = (r - dh) * Math.sin(rad2);
+                double ang3 = 90 - Math.toDegrees(Math.atan((a1 - a2) / dh)); //угол реза рамы
+                double ang4 = 90 - (Math.toDegrees(rad1) - (90 - ang3)); //угол реза арки
+                spcRec.anglCut0 = ang4;  //угол реза арки
+                spcRec.anglCut1 = ang3;  //угол реза рамы  
+            }
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemFrame.setSpecific() " + e);
