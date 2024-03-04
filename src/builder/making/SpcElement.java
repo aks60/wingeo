@@ -19,12 +19,12 @@ import java.util.ArrayList;
 /**
  * Составы.
  */
-public class ElementSpc extends Cal5e {
+public class SpcElement extends Cal5e {
 
     private ElementVar elementVar = null;
     private ElementDet elementDet = null;
 
-    public ElementSpc(Wincalc winc) {
+    public SpcElement(Wincalc winc) {
         super(winc);
         elementVar = new ElementVar(winc);
         elementDet = new ElementDet(winc);

@@ -1,6 +1,6 @@
 package builder;
 
-import builder.making.JoiningSpc;
+import builder.making.SpcJoining;
 import builder.model.AreaRectangl;
 import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
@@ -206,11 +206,11 @@ public class Wincalc {
             listElem.forEach(elem -> elem.setSpecific());
 
             //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
-            new JoiningSpc(this).calc(); //соединения
-            new builder.making.ElementSpc(this).calc(); //вставки
-            new builder.making.FillingSpc(this).calc(); //заполнения
-            new builder.making.FurnitureSpc(this).calc(); //фурнитура 
-            new builder.making.TarifficSpc(this, norm_otx).calc(); //тарификация 
+            new SpcJoining(this).calc(); //соединения
+            new builder.making.SpcElement(this).calc(); //вставки
+            new builder.making.SpcFilling(this).calc(); //заполнения
+            new builder.making.SpcFurniture(this).calc(); //фурнитура 
+            new builder.making.SpcTariffic(this, norm_otx).calc(); //тарификация 
 
             //Строим список спецификации
             for (ElemSimple elem5e : listElem) {

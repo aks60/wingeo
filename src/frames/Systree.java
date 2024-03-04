@@ -42,7 +42,7 @@ import frames.swing.DefCellRendererBool;
 import frames.swing.TableFieldFormat;
 import frames.swing.DefTableModel;
 import builder.Wincalc;
-import builder.making.FurnitureSpc;
+import builder.making.SpcFurniture;
 import builder.script.GsonElem;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -71,7 +71,7 @@ import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
 import common.eProfile;
 import domain.eJoining;
-import builder.making.JoiningSpc;
+import builder.making.SpcJoining;
 import builder.making.UColor;
 import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
@@ -471,7 +471,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
 
                     //Створка
                 } else if (winNode.com5t().type == enums.Type.STVORKA) {
-                    new FurnitureSpc(wincalc(), true); //найдём ручку створки
+                    new SpcFurniture(wincalc(), true); //найдём ручку створки
                     ((CardLayout) pan7.getLayout()).show(pan7, "card16");
                     AreaStvorka stv = (AreaStvorka) winNode.com5t();
                     AreaSimple sta = (AreaSimple) winNode.com5t();
@@ -515,7 +515,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card17");
                     DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                     ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
-                    new JoiningSpc(winc, true).calc();//заполним соединения из конструктива                                        
+                    new SpcJoining(winc, true).calc();//заполним соединения из конструктива                                        
                     ElemJoining ej1 = winc.listJoin.join(elem5e, 0);
                     ElemJoining ej2 = winc.listJoin.join(elem5e, 1);
                     ElemJoining ej3 = winc.listJoin.join(elem5e, 2);

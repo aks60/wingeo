@@ -226,7 +226,7 @@ public class ElemFrame extends ElemSimple {
                 }
                 //Ручка от низа створки, мм 
                 if (spcAdd.getParam("null", 24072, 25072).equals("null") == false) {
-                    if (builder.making.FurnitureSpc.determOfSide(owner) == this) {
+                    if (builder.making.SpcFurniture.determOfSide(owner) == this) {
                         AreaStvorka stv = (AreaStvorka) owner;
                         stv.knobHeight = UCom.getDbl(spcAdd.getParam(stv.knobHeight, 24072, 25072));
                     }

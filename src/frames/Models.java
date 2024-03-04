@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import builder.Wincalc;
 import builder.making.Cal5e;
-import builder.making.JoiningSpc;
+import builder.making.SpcJoining;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -90,7 +90,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             try {
                 String script = record.getStr(eSysmodel.script);
                 Wincalc iwin2 = new Wincalc(script);
-                Cal5e joining = new JoiningSpc(iwin2, true);//заполним соединения из конструктива
+                Cal5e joining = new SpcJoining(iwin2, true);//заполним соединения из конструктива
                 joining.calc();
                 iwin2.imageIcon = Canvas.createIcon(iwin2, 68);
                 record.add(iwin2);

@@ -1,7 +1,7 @@
 package builder.model;
 
 import builder.Wincalc;
-import builder.making.FillingSpc;
+import builder.making.SpcFilling;
 import builder.making.SpcRecord;
 import builder.script.GsonElem;
 import common.ArrayCom;
@@ -103,7 +103,7 @@ public class ElemGlass extends ElemSimple {
             spcRec.setColor(colorID1, colorID2, colorID3);
 
             //Фича определения gzazo и gaxis на раннем этапе построения. 
-            new FillingSpc(winc, true).calc(this);
+            new SpcFilling(winc, true).calc(this);
 
             //Внешний полигон створки/рамы для прорисовки 
             Coordinate[] coo = owner.area.getGeometryN(0).getCoordinates();

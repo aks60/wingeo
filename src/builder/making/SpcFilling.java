@@ -26,20 +26,20 @@ import org.locationtech.jts.geom.LineSegment;
 /**
  * Заполнения
  */
-public class FillingSpc extends Cal5e {
+public class SpcFilling extends Cal5e {
 
     private FillingVar fillingVar = null;
     private FillingDet fillingDet = null;
     private ElementDet elementDet = null;
 
-    public FillingSpc(Wincalc winc) {
+    public SpcFilling(Wincalc winc) {
         super(winc);
         fillingVar = new FillingVar(winc);
         fillingDet = new FillingDet(winc);
         elementDet = new ElementDet(winc);
     }
 
-    public FillingSpc(Wincalc winc, boolean shortPass) {
+    public SpcFilling(Wincalc winc, boolean shortPass) {
         super(winc);
         fillingVar = new FillingVar(winc);
         fillingDet = new FillingDet(winc);

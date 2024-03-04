@@ -4,11 +4,11 @@ import builder.Wincalc;
 import builder.param.KitDet;
 import dataset.Query;
 
-public class KitsSpc extends Cal5e {
+public class SpcKits extends Cal5e {
 
     private KitDet kitDet = null;
 
-    public KitsSpc(Wincalc winc) {
+    public SpcKits(Wincalc winc) {
         super(winc);
     }
 
