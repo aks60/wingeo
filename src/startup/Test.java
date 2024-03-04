@@ -94,7 +94,7 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //frame(args);
-            wincalc();
+            //wincalc();
             //param();
             //query();
             //json();
@@ -111,7 +111,7 @@ public class Test {
 
         Conn.connection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
-        String _case = "one";
+        String _case = "min";
 
         if (_case.equals("one")) {
             String script = GsonScript.scriptPath(601001);
