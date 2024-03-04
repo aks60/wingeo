@@ -30,11 +30,10 @@ import org.locationtech.jts.geom.LineSegment;
 public class ElemGlass extends ElemSimple {
 
     public double radiusGlass = 0; //радиус стекла
-    public double anglGHoriz = 0; //угол к горизонту
     public double gzazo = 0; //зазор между фальцем и стеклопакетом 
     //public double gaxis = 0; //размер от оси до стеклопакета
     public HashMap<Integer, Double> gaxisMap = new HashMap<Integer, Double>(); //размер от оси до стеклопакета
-    public int indexSegm = 0;
+    public int indexSegmClass = 0;
 
     public Record rasclRec = eArtikl.virtualRec(); //раскладка
     public int rasclColor = -3; //цвет раскладки
@@ -158,22 +157,27 @@ public class ElemGlass extends ElemSimple {
             if (TypeArtikl.X502.isType(spcAdd.artiklRec)) {
                 return;  //если стеклопакет сразу выход
             }
+            LineSegment segment = UGeo.getSegment(this.area, indexSegmClass);
+            double anglGlassHor = Math.toDegrees(segment.angle()); //угол к горизонту
+            
+            //System.out.println(indexSegmClass);
+            //System.out.println(anglGlassHor);
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
-                LineSegment segm1 = UGeo.getSegment(this.area, indexSegm - 1);
-                LineSegment segm2 = UGeo.getSegment(this.area, indexSegm + 1);
-                LineSegment segm3 = UGeo.getSegment(this.area, indexSegm + 2);
+                LineSegment segm1 = UGeo.getSegment(this.area, indexSegmClass - 1);
+                LineSegment segm2 = UGeo.getSegment(this.area, indexSegmClass + 1);
+                LineSegment segm3 = UGeo.getSegment(this.area, indexSegmClass + 2);
 
                 spcAdd.width += segm1.getLength() + 2 * gzazo;
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
                 spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(segm1.p1, segm1.p0, segm2.p1)) / 2;
                 spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(segm2.p0, segm2.p1, segm3.p1)) / 2;
-                spcAdd.anglHoriz = spcAdd.elem5e.anglHoriz(); //угол к гор. сторон стекла;
+                spcAdd.anglHoriz = anglGlassHor; //spcAdd.elem5e.anglHoriz(); //угол к гор. сторон стекла;
 
                 spcRec.spcList.add(spcAdd);
 
-                if (anglGHoriz == 0 || anglGHoriz == 180) { //по горизонтали
+                if (anglGlassHor == 0 || anglGlassHor == 180) { //по горизонтали
                     if (spcAdd.mapParam.get(15010) != null) {
                         if ("Нет".equals(spcAdd.mapParam.get(15010)) == false) { //Усекать нижний штапик
                             spcAdd.width = spcAdd.width - 2 * spcAdd.height;
@@ -185,7 +189,7 @@ public class ElemGlass extends ElemSimple {
                         }
                     }
 
-                } else if (anglGHoriz == 90 || anglGHoriz == 270) { //по вертикали
+                } else if (anglGlassHor == 90 || anglGlassHor == 270) { //по вертикали
                     if (spcAdd.mapParam.get(15010) != null) {
                         if ("Да".equals(spcAdd.mapParam.get(15010)) == false) { //Усекать нижний штапик
                             spcAdd.width = spcAdd.width - 2 * spcAdd.height;
@@ -208,7 +212,7 @@ public class ElemGlass extends ElemSimple {
             } else if (UseUnit.PIE.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
                 if (spcAdd.mapParam.get(13014) != null) {
-                    if (UCom.containsNumbJust(spcAdd.mapParam.get(13014), anglGHoriz) == true) { //Углы ориентации стороны
+                    if (UCom.containsNumbJust(spcAdd.mapParam.get(13014), anglGlassHor) == true) { //Углы ориентации стороны
                         spcRec.spcList.add(spcAdd);
                     }
                 } else {

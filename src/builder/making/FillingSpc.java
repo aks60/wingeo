@@ -66,7 +66,9 @@ public class FillingSpc extends Cal5e {
             Coordinate[] coo = elemGlass.owner.area.getGeometryN(0).getCoordinates();
             
             //Цикл по сторонам стеклопакета
-            for (int indexSegm = 0; indexSegm < coo.length - 1; indexSegm++) {              
+            for (int indexSegm = 0; indexSegm < coo.length - 1; indexSegm++) { 
+                
+                ((ElemGlass) elemGlass).indexSegmClass = indexSegm; //индекс стороны стеклопакета 
                 ElemSimple elemFrame = listFrame.get(coo[indexSegm].z);
 
                 //Цикл по группам заполнений
@@ -83,8 +85,7 @@ public class FillingSpc extends Cal5e {
 
                                     //ФИЛЬТР вариантов, параметры накапливаются в спецификации элемента
                                     if (fillingVar.filter(elemGlass, glasgrpRec) == true) {
-
-                                        ((ElemGlass) elemGlass).indexSegm = indexSegm;                                                                                
+                                                                             
                                         ((ElemGlass) elemGlass).gaxisMap.put(indexSegm, glasprofRec.getDbl(eGlasprof.gsize)); //размер от оси до стеклопакета
 
                                         if (shortPass == false) {

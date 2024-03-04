@@ -48,7 +48,13 @@ public class UGeo {
         }
     }
 
-    //Угол к горизонту. Угол нормируется в диапазоне [-Pi, Pi].
+    //Угол ненормированный к горизонту. Угол нормируется в диапазоне [0, 2Pi].
+    public static double anglHoriz(double x1, double y1, double x2, double y2) {
+        double ang = Math.toDegrees(Angle.angle(new Coordinate(x1, y1), new Coordinate(x2, y2)));
+        return (ang > 0) ? 360 - ang : Math.abs(ang);
+    }
+
+    //Угол нормированный к горизонту. Угол нормируется в диапазоне [-Pi, Pi].
     public static double anglHor(ElemSimple e) {
         return Math.toDegrees(Angle.angle(new Coordinate(e.x1(), e.y1()), new Coordinate(e.x2(), e.y2())));
     }

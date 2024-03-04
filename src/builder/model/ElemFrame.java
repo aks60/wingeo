@@ -126,13 +126,9 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void setSpecific() {  //добавление основной спецификации
         try {
-            double prip1 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(spcRec.anglCut0 - 45));
-            double prip2 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(spcRec.anglCut1 - 45));
             spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
             spcRec.setArtikl(artiklRec);
             spcRec.setColor(colorID1, colorID2, colorID3);
-            spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;
-            spcRec.height = artiklRec.getDbl(eArtikl.height);
             Coordinate c[] = this.area.getCoordinates();
 
             //Углы реза
@@ -150,6 +146,10 @@ public class ElemFrame extends ElemSimple {
                     }
                 }           
             }
+            double prip1 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(spcRec.anglCut0 - 45));
+            double prip2 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(spcRec.anglCut1 - 45));
+            spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;
+            spcRec.height = artiklRec.getDbl(eArtikl.height);
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemFrame.setSpecific() " + e);
