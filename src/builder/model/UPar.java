@@ -199,12 +199,11 @@ public class UPar {
     public static void to_12075_34075_39075(ElemSimple elem5e, SpcRecord spcAdd) {
         String txt = spcAdd.getParam("null", 12075, 34075, 39075);
         if (!"null".equals(txt)) {
-//            if ("по контейнерам".equals(txt)) {
-//                spcAdd.anglCut0 = elem5e.anglCut[0];
-//                spcAdd.anglCut1 = elem5e.anglCut[1];
-//
-//            } else 
-            if ("установить (90° x 90°)".equals(txt)) {
+            if ("по контейнерам".equals(txt)) {
+                spcAdd.anglCut0 = elem5e.spcRec.anglCut0;
+                spcAdd.anglCut1 = elem5e.spcRec.anglCut1;
+
+            } else  if ("установить (90° x 90°)".equals(txt)) {
                 spcAdd.anglCut0 = 90;
                 spcAdd.anglCut1 = 90;
 

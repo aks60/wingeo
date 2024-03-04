@@ -94,7 +94,7 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //frame(args);
-            //wincalc();
+            wincalc();
             //param();
             //query();
             //json();
