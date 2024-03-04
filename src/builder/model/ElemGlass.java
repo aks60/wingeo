@@ -29,9 +29,8 @@ import org.locationtech.jts.geom.LineSegment;
 
 public class ElemGlass extends ElemSimple {
 
-    public double radiusGlass = 0; //радиус стекла
+    public double radius = 0; //радиус стекла
     public double gzazo = 0; //зазор между фальцем и стеклопакетом 
-    //public double gaxis = 0; //размер от оси до стеклопакета
     public HashMap<Integer, Double> gaxisMap = new HashMap<Integer, Double>(); //размер от оси до стеклопакета
     public int indexSegmClass = 0;
 
@@ -158,10 +157,8 @@ public class ElemGlass extends ElemSimple {
                 return;  //если стеклопакет сразу выход
             }
             LineSegment segment = UGeo.getSegment(this.area, indexSegmClass);
-            double anglGlassHor = Math.toDegrees(segment.angle()); //угол к горизонту
+            double anglGlassHor = UGeo.anglHoriz(segment.p0.x, segment.p0.y, segment.p1.x, segment.p1.y); //угол к горизонту
             
-            //System.out.println(indexSegmClass);
-            //System.out.println(anglGlassHor);
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
@@ -173,7 +170,7 @@ public class ElemGlass extends ElemSimple {
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
                 spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(segm1.p1, segm1.p0, segm2.p1)) / 2;
                 spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(segm2.p0, segm2.p1, segm3.p1)) / 2;
-                spcAdd.anglHoriz = anglGlassHor; //spcAdd.elem5e.anglHoriz(); //угол к гор. сторон стекла;
+                spcAdd.anglHoriz = anglGlassHor; //угол к гор. сторон стекла;
 
                 spcRec.spcList.add(spcAdd);
 
