@@ -87,8 +87,8 @@ public class ElemJoining {
             int lev2 = elem2.artiklRec.getInt(eArtikl.level2);
 
             if ((lev1 == 1 && (lev2 == 1 || lev2 == 2)) == false) {
-                double ang1 = elem1.anglHoriz();
-                double ang2 = elem2.anglHoriz();
+                double ang1 = UGeo.anglHoriz(elem1.x1(), elem1.y1(), elem1.x2(), elem1.y2());
+                double ang2 = UGeo.anglHoriz(elem2.x1(), elem2.y1(), elem2.x2(), elem2.y2());
 
                 if ((ang1 == -90 && ang2 == 180) || (ang1 == 90 && ang2 == 0)) {
                     return TypeJoin.ANG1;

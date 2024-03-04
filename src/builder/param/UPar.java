@@ -148,13 +148,15 @@ class UPar {
 
     //Номер стороны 
     static boolean is_38010_39002(ElemSimple elem5e, String txt) {
-        if (elem5e.anglHoriz() == 0 && "1".equals(txt) == false) {
+        double anglHor = UGeo.anglHoriz(elem5e.x1(), elem5e.y1(), elem5e.x2(), elem5e.y2());
+        
+        if (anglHor == 0 && "1".equals(txt) == false) {
             return false;
-        } else if (elem5e.anglHoriz() == 90 && "2".equals(txt) == false) {
+        } else if (anglHor == 90 && "2".equals(txt) == false) {
             return false;
-        } else if (elem5e.anglHoriz() == 180 && "3".equals(txt) == false) {
+        } else if (anglHor == 180 && "3".equals(txt) == false) {
             return false;
-        } else if (elem5e.anglHoriz() == 270 && "4".equals(txt) == false) {
+        } else if (anglHor == 270 && "4".equals(txt) == false) {
             return false;
         }
         return true;

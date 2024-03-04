@@ -167,7 +167,7 @@ public class ElemFrame extends ElemSimple {
             if (TypeArtikl.isType(spcAdd.artiklRec, TypeArtikl.X107)) {
                 spcAdd.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
                 spcAdd.setAnglCut(90, 90);
-                spcRec.anglHoriz = this.anglHoriz();
+                spcRec.anglHoriz = UGeo.anglHoriz(x1(), y1(), x2(), y2());
 
                 spcAdd.width += length();
 

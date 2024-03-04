@@ -116,7 +116,7 @@ public class ElemCross extends ElemSimple {
             spcRec.setArtikl(artiklRec);
             spcRec.setColor(colorID1, colorID2, colorID3);
             spcRec.setAnglCut(90, 90);
-            spcRec.anglHoriz = this.anglHoriz();
+            spcRec.anglHoriz = UGeo.anglHoriz(x1(), y1(), x2(), y2());
 
             if (type == Type.IMPOST) {
                 
@@ -209,7 +209,7 @@ public class ElemCross extends ElemSimple {
     }
 
     public Layout layout() {
-        double angl = this.anglHoriz();
+        double angl = UGeo.anglHoriz(x1(), y1(), x2(), y2());
 
         if (angl == 90 || angl == 270) {
             return Layout.VERT;

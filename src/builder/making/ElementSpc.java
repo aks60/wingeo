@@ -11,6 +11,7 @@ import builder.Wincalc;
 import builder.param.ElementDet;
 import builder.param.ElementVar;
 import builder.model.ElemSimple;
+import builder.model.UGeo;
 import dataset.Query;
 import enums.Type;
 import java.util.ArrayList;
@@ -106,7 +107,7 @@ public class ElementSpc extends Cal5e {
 
                                     //Контейнер маскитка не учавствует в цикле сторон
                                 } else if (TypeArtikl.isType(artiklRec, TypeArtikl.X520)) {
-                                    if (elem5e.anglHoriz() == 0) {
+                                    if (UGeo.anglHoriz(elem5e.x1(), elem5e.y1(), elem5e.x2(), elem5e.y2()) == 0) {
                                         elem5e.spcRec.setArtikl(spcAdd.artiklRec); //подмена артикула в основной спецификации
                                         elem5e.spcRec.setColor(1, spcAdd.colorID1);
                                         elem5e.spcRec.setColor(2, spcAdd.colorID2);

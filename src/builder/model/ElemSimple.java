@@ -332,12 +332,6 @@ public abstract class ElemSimple extends Com5t {
         }
     }
 
-    //Угол к горизонту 
-    public double anglHoriz() {
-        double ang = UGeo.anglHor(this);
-        return (ang > 0) ? 360 - ang : Math.abs(ang);
-    }
-
     public void setDimension(double x1, double y1, double x2, double y2) {
         //if (passMask[1] > 1) {
         gson.x1 = x1;
@@ -349,6 +343,6 @@ public abstract class ElemSimple extends Com5t {
 
     @Override
     public String toString() {
-        return super.toString() + ", anglHoriz=" + this.anglHoriz();
+        return super.toString() + ", anglHoriz=" + UGeo.anglHoriz(x1(), y1(), x2(), y2());
     }
 }

@@ -246,7 +246,7 @@ public class AreaStvorka extends AreaSimple {
                 }
                 //Направление открывания
                 if (typeOpen != TypeOpen1.UPPER) {
-                    double anglHoriz = stvside.anglHoriz();
+                    double anglHoriz = UGeo.anglHoriz(stvside.x1(), stvside.y1(), stvside.x2(), stvside.y2());
                     if (!(anglHoriz == 90 || anglHoriz == 270)) {
                         AffineTransformation aff = new AffineTransformation();
                         aff.setToRotation(Math.toRadians(anglHoriz), this.knobOpen.getCentroid().getX(), this.knobOpen.getCentroid().getY());

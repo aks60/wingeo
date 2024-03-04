@@ -5,13 +5,13 @@ import domain.eArtikl;
 import domain.eElement;
 import domain.eJoinpar1;
 import domain.eJoinvar;
-import domain.eSetting;
 import domain.eSystree;
 import java.util.List;
 import builder.Wincalc;
 import builder.model.AreaStvorka;
 import builder.model.ElemJoining;
 import builder.model.ElemSimple;
+import builder.model.UGeo;
 import common.UCom;
 import common.listener.ListenerParam;
 import enums.Layout;
@@ -140,7 +140,8 @@ public class JoiningVar extends Par5s {
                 }
                 break;
                 case 1020:  //Ограничение угла к горизонту, °
-                    if (UCom.containsNumbJust(rec.getStr(TEXT), elemJoin.elem1.anglHoriz()) == true) {
+                    if (UCom.containsNumbJust(rec.getStr(TEXT),
+                            UGeo.anglHoriz(elemJoin.elem1.x1(), elemJoin.elem1.y1(), elemJoin.elem1.x2(), elemJoin.elem1.y2())) == true) {
                         return false;
                     }
                     break;
@@ -269,7 +270,9 @@ public class JoiningVar extends Par5s {
                 case 2015:  //Ориентация Артикула1/Артикула2, ° 
                 case 3015:  //Ориентация Артикула1/Артикула2, °
                 case 4015:  //Ориентация Артикула1/Артикула2, °
-                    if (UCom.containsNumb(rec.getStr(TEXT), elemJoin.elem1.anglHoriz(), elemJoin.elem2.anglHoriz()) == false) {
+                    if (UCom.containsNumb(rec.getStr(TEXT),
+                            UGeo.anglHoriz(elemJoin.elem1.x1(), elemJoin.elem1.y1(), elemJoin.elem1.x2(), elemJoin.elem1.y2()),
+                            UGeo.anglHoriz(elemJoin.elem2.x1(), elemJoin.elem2.y1(), elemJoin.elem2.x2(), elemJoin.elem2.y2())) == false) {
                         return false;
                     }
                     break;

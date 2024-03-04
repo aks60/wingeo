@@ -82,10 +82,12 @@ public class ElemMosquit extends ElemSimple {
 
             //Профиль в составе  М/С
             //if (TypeArtikl.isType(spcAdd.artiklRec, TypeArtikl.X120)) {
-            if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) { //пог.м.    
-                if (this.anglHoriz() == 0 || this.anglHoriz() == 180) {
+            double anglHor = UGeo.anglHoriz(x1(), y1(), x2(), y2());
+            if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) { //пог.м.  
+                
+                if (anglHor == 0 || anglHor == 180) {
                     spcAdd.width += spcAdd.elem5e.owner.width();
-                } else if (this.anglHoriz() == 90 || this.anglHoriz() == 270) {
+                } else if (anglHor == 90 || anglHor == 270) {
                     spcAdd.width += spcAdd.elem5e.owner.height();
                 }
             }

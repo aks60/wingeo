@@ -8,6 +8,7 @@ import java.util.List;
 import builder.Wincalc;
 import builder.model.AreaStvorka;
 import builder.model.ElemSimple;
+import builder.model.UGeo;
 import common.UCom;
 import domain.eSystree;
 import enums.LayoutKnob;
@@ -125,12 +126,12 @@ public class FurnitureVar extends Par5s {
                 }
                 break;
                 case 21040:  //Ограничение угла
-                    if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.anglHoriz()) == false) {
+                    if (UCom.containsNumbJust(rec.getStr(TEXT), UGeo.anglHoriz(elem5e.x1(), elem5e.y1(), elem5e.x2(), elem5e.y2())) == false) {
                         return false;
                     }
                     break;
                 case 21050:  //Ориентация стороны, ° 
-                    if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.anglHoriz()) == false) {
+                    if (UCom.containsNumbJust(rec.getStr(TEXT), UGeo.anglHoriz(elem5e.x1(), elem5e.y1(), elem5e.x2(), elem5e.y2())) == false) {
                         return false;
                     }
                     break;
