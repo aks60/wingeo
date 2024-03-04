@@ -126,16 +126,16 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void setSpecific() {  //добавление основной спецификации
         try {
-            double prip1 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(anglCut[0] - 45));
-            double prip2 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(anglCut[1] - 45));
+            double prip1 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(spcRec.anglCut0 - 45));
+            double prip2 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(spcRec.anglCut1 - 45));
             spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
             spcRec.setArtikl(artiklRec);
             spcRec.setColor(colorID1, colorID2, colorID3);
-            spcRec.setAnglCut(anglCut[0], anglCut[1]);
             spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;
             spcRec.height = artiklRec.getDbl(eArtikl.height);
             Coordinate c[] = this.area.getCoordinates();
 
+            //Углы реза
             if (this.h() == null) {
                 spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(c[c.length - 2], c[0], c[1]));
                 spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(c[c.length - 5], c[c.length - 4], c[c.length - 3]));
@@ -166,20 +166,19 @@ public class ElemFrame extends ElemSimple {
             //Армирование
             if (TypeArtikl.isType(spcAdd.artiklRec, TypeArtikl.X107)) {
                 spcAdd.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
-                spcAdd.anglCut0 = 90;
-                spcAdd.anglCut1 = 90;
+                spcAdd.setAnglCut(90, 90);
                 spcRec.anglHoriz = this.anglHoriz();
 
                 spcAdd.width += length();
 
                 if ("от внутреннего угла".equals(spcAdd.getParam(null, 34010))) {
-                    double dw1 = artiklRec.getDbl(eArtikl.height) / Math.tan(Math.toRadians(anglCut[0]));
-                    double dw2 = artiklRec.getDbl(eArtikl.height) / Math.tan(Math.toRadians(anglCut[1]));
+                    double dw1 = artiklRec.getDbl(eArtikl.height) / Math.tan(Math.toRadians(spcRec.anglCut0));
+                    double dw2 = artiklRec.getDbl(eArtikl.height) / Math.tan(Math.toRadians(spcRec.anglCut1));
                     spcAdd.width = spcAdd.width + 2 * winc.syssizRec.getDbl(eSyssize.prip) - dw1 - dw2;
 
                 } else if ("от внутреннего фальца".equals(spcAdd.getParam(null, 34010))) {
-                    Double dw1 = (artiklRec.getDbl(eArtikl.height) - artiklRec.getDbl(eArtikl.size_falz)) / Math.tan(Math.toRadians(anglCut[0]));
-                    Double dw2 = (artiklRec.getDbl(eArtikl.height) - artiklRec.getDbl(eArtikl.size_falz)) / Math.tan(Math.toRadians(anglCut[1]));
+                    Double dw1 = (artiklRec.getDbl(eArtikl.height) - artiklRec.getDbl(eArtikl.size_falz)) / Math.tan(Math.toRadians(spcRec.anglCut0));
+                    Double dw2 = (artiklRec.getDbl(eArtikl.height) - artiklRec.getDbl(eArtikl.size_falz)) / Math.tan(Math.toRadians(spcRec.anglCut1));
                     spcAdd.width = spcAdd.width + 2 * winc.syssizRec.getDbl(eSyssize.prip) - dw1 - dw2;
                 }
 

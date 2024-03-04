@@ -17,6 +17,7 @@ import enums.TypeJoin;
 import enums.UseSide;
 import java.awt.Shape;
 import java.util.List;
+import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.algorithm.PointLocation;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
@@ -118,6 +119,11 @@ public class ElemCross extends ElemSimple {
             spcRec.anglHoriz = this.anglHoriz();
 
             if (type == Type.IMPOST) {
+                
+                Coordinate c[] = this.area.getCoordinates();
+                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(c[c.length - 2], c[0], c[1]));
+                spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(c[c.length - 5], c[c.length - 4], c[c.length - 3]));
+                
                 //На эскизе заход импоста не показываю, сразу пишу в спецификацию
                 if (winc.syssizRec != null) {
                     double zax = winc.syssizRec.getDbl(eSyssize.zax);
@@ -160,8 +166,7 @@ public class ElemCross extends ElemSimple {
             //Армирование
             if (TypeArtikl.isType(spcAdd.artiklRec, TypeArtikl.X107)) {
                 spcAdd.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
-                spcAdd.anglCut0 = 90;
-                spcAdd.anglCut1 = 90;
+                spcAdd.setAnglCut(90, 90);
             }
             if (List.of(1, 3, 5).contains(spcAdd.artiklRec.getInt(eArtikl.level1)) && spcRec.id != spcAdd.id) {
                 spcAdd.width += spcRec.width;
