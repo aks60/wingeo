@@ -137,17 +137,23 @@ public class GsonScript {
             area.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             area.addElem(new GsonElem(Type.IMPOST, 650, 650, 650, 1700));
             area.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
+            
+        } else if (prj == 604005) {
+            rootGson = new GsonRoot(Type.ARCH, "Wintech\\Termotech 742\\1 ОКНА");
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0, 300))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0, 1500))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300, 1500))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300, 300, 300));
 
-//        } else if (prj == 501007) {
-//            rootGeo = new GsonRoot("2.0", prj, 2, 8, Type.ARCH, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)");
-//            rootGeo.addElem(new GsonElem(Type.FRAME_SIDE, .0, .0))
-//                    .addElem(new GsonElem(Type.FRAME_SIDE, .0, 1000.0))
-//                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 1000.0))
-//                    .addElem(new GsonElem(Type.FRAME_SIDE, 1000.0, 0.0));
-//
-//            rootGeo.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-//            rootGeo.addElem(new GsonElem(Type.IMPOST, .0, 500.0, 1000.0, 500.0));
-//            rootGeo.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 0, 350, 1300, 350));
+            GsonElem area = rootGson.addArea(new GsonElem(Type.AREA));
+
+            area.addArea(new GsonElem(Type.STVORKA))
+                    .addElem(new GsonElem(Type.GLASS));
+            area.addElem(new GsonElem(Type.IMPOST, 650, 350, 650, 1500));
+            area.addArea(new GsonElem(Type.STVORKA))
+                    .addElem(new GsonElem(Type.GLASS));
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="TRAPEZE">
         } else if (prj == 506642) { //Трапеции без импоста

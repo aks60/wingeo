@@ -100,7 +100,7 @@ public class Test {
             //json();
             //uid();
             //script();
-            //geom();             
+            //geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -158,19 +158,19 @@ public class Test {
 
         Conn.connection(Test.connect2());
         WincalcTest.init();
-        
+
         ElementTest t1 = new ElementTest();
         t1.elementVar();
         t1.elementDet();
-        
+
         JoiningTest t2 = new JoiningTest();
         t2.joiningVar();
         t2.joiningDet();
-        
+
         FillingTest t3 = new FillingTest();
         t3.fillingVar();
         t3.fillingDet();
-        
+
         FurnitureTest t4 = new FurnitureTest();
         t4.furnitureVar();
         t4.furnitureDet();
@@ -354,15 +354,17 @@ public class Test {
         Point point2 = gf.createPoint(new Coordinate(0, 500));
         LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
         LineString line2 = gf.createLineString(coord2);
-        LineSegment segm1 = new LineSegment(1,1,0,1);
+        LineSegment segm1 = new LineSegment(1, 1, 0, 1);
         LineSegment segm2 = new LineSegment(0, 10, 12, 10);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
-        Polygon p = UGeo.newPolygon(0,0, 0,10, 1,6, 1,1);
-        double ang1 = Math.toDegrees(Angle.angleBetween(p.getCoordinates()[3], p.getCoordinates()[0], p.getCoordinates()[1]));
-        double ang2 = Math.toDegrees(Angle.angleBetween(p.getCoordinates()[0], p.getCoordinates()[1], p.getCoordinates()[2]));
-        System.out.println(ang2);
 
+        
+        LineSegment segm3 = new LineSegment( 1195.275369491179, 261.08709355970325, 1189.775369491179, 256.08709355970325);
+        LineSegment segm4 = new LineSegment(1200.775369491179, 266.08709355970325, 1195.275369491179, 261.08709355970325);
+        Object o1 = segm3.lineIntersection(segm4);
+        System.out.println(o1);
+        
     }
 
     public static void frame(String[] args) {
@@ -387,8 +389,8 @@ public class Test {
                 super.paintComponent(g);
                 Graphics2D gc2d = (Graphics2D) g;
                 //gc2d.rotate(Math.toRadians(-180), 0, 0);
-                //gc2d.translate(-400, -600);
-                gc2d.scale(.3, .3);
+                //gc2d.translate(-2000, -200);
+                gc2d.scale(.4, .4);
 
                 if (mlin != null) {
                     gc2d.setColor(Color.BLUE);
@@ -430,10 +432,22 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        draw3();
+        draw4();
     }
 
-// <editor-fold defaultstate="collapsed" desc="TEMP">  
+// <editor-fold defaultstate="collapsed" desc="TEMP"> 
+    private void draw5()  {
+//                gc2d.translate(-2000, -200);
+//                gc2d.scale(2, 2);        
+        LineString geo1 = UGeo.newLineStr(1233.4, 230.2, 1227.9, 225.2);
+        LineString geo2 = UGeo.newLineStr(1227.9, 225.2, 1222.4, 220.2); 
+        
+        LineString geo1a = UGeo.newLineStr(1200.7, 266.0, 1195.2, 261.0);
+        LineString geo2a = UGeo.newLineStr(1195.2, 261.0, 1189.7, 256.0); 
+    
+        this.mlin = gf.createMultiLineString(new LineString[]{geo1, geo1a});
+        this.mpol = gf.createMultiLineString(new LineString[]{geo2, geo2a});
+    }
     private void draw4() {
 
         GeometryFactory gf = new GeometryFactory();

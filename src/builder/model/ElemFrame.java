@@ -8,7 +8,6 @@ import common.ArrayLoop;
 import common.UCom;
 import domain.eArtikl;
 import domain.eColor;
-import domain.eSetting;
 import domain.eSysprof;
 import domain.eSyssize;
 import enums.Layout;
@@ -17,8 +16,6 @@ import enums.Type;
 import enums.TypeArtikl;
 import enums.UseSide;
 import java.awt.Shape;
-import java.awt.geom.Arc2D;
-import java.awt.geom.Rectangle2D;
 import java.util.Collections;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
@@ -141,17 +138,17 @@ public class ElemFrame extends ElemSimple {
 
             if (this.h() == null) {
                 spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(c[c.length - 2], c[0], c[1]));
-                spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(c[c.length - 5], c[c.length - 4], c[c.length - 3]));                
+                spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(c[c.length - 5], c[c.length - 4], c[c.length - 3]));
             } else {
-                double dh = this.artiklRecAn.getDbl(eArtikl.height);
-                double r = (Math.pow(length() / 2, 2) + Math.pow(h(), 2)) / (2 * h());  //R = (L2 + H2) / 2H - радиус арки        
-                double rad1 = Math.acos((length() / 2) / r);
-                double rad2 = Math.acos((length() - 2 * dh) / ((r - dh) * 2));
-                double a1 = r * Math.sin(rad1), a2 = (r - dh) * Math.sin(rad2);
-                double ang3 = 90 - Math.toDegrees(Math.atan((a1 - a2) / dh)); //угол реза рамы
-                double ang4 = 90 - (Math.toDegrees(rad1) - (90 - ang3)); //угол реза арки
-                spcRec.anglCut0 = ang4;  //угол реза арки
-                spcRec.anglCut1 = ang4; 
+                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(c[c.length - 2], c[0], c[1]));
+                LineSegment seg = new LineSegment();
+                for (int i = 1; i < c.length; i++) {
+                    seg.setCoordinates(c[i - 1], c[i]);
+                    if (seg.getLength() > this.artiklRecAn.getDbl(eArtikl.height)) {
+                        spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(c[i - 2], c[i - 1], c[i]));
+                        break;
+                    }
+                }           
             }
 
         } catch (Exception e) {
@@ -327,6 +324,13 @@ public class ElemFrame extends ElemSimple {
 
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
             winc.gc2d.draw(shape);
+
+//            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
+//            for (Coordinate c: this.area.getCoordinates()) {
+//                Geometry p = UGeo.newPoint(c.x, c.y);
+//                Shape pe = new ShapeWriter().toShape(p);
+//                winc.gc2d.draw(pe);
+//            }
         }
     }
 
