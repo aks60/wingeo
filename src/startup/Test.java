@@ -95,13 +95,13 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //frame(args);
-            wincalc();
+            //wincalc();
             //param();
             //query();
             //json();
             //uid();
             //script();
-            //geom();
+            geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -359,12 +359,10 @@ public class Test {
         LineSegment segm2 = new LineSegment(0, 10, 12, 10);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
-
         
-        LineSegment segm3 = new LineSegment( 1195.275369491179, 261.08709355970325, 1189.775369491179, 256.08709355970325);
-        LineSegment segm4 = new LineSegment(1200.775369491179, 266.08709355970325, 1195.275369491179, 261.08709355970325);
-        Object o1 = segm3.lineIntersection(segm4);
-        System.out.println(o1);
+        
+        System.out.println(UGeo.anglHoriz(0, 0, 0, 100));
+        System.out.println(Math.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(0, 100))));
         
     }
 
