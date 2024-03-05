@@ -128,6 +128,7 @@ public abstract class ElemSimple extends Com5t {
         ListenerMouse mousePressed = (evt) -> {
 
             if (this.area != null) {
+                System.out.println("++++builder.model.ElemSimple.addEvents()+++");
                 pointPress = evt.getPoint();
                 Coordinate wincPress = new Coordinate((evt.getX() - Canvas.translate[0]) / winc.scale, (evt.getY() - Canvas.translate[1]) / winc.scale);
                 boolean b = this.area.contains(gf.createPoint(wincPress));
@@ -188,7 +189,7 @@ public abstract class ElemSimple extends Com5t {
                         double X1 = dX / winc.scale + x1();
                         double Y1 = dY / winc.scale + y1();
                         pointPress = evt.getPoint();
-                        moveCoordinate(X1, Y1);
+                        moveCoo(X1, Y1);
 //                        if (X1 > 0) {
 //                            this.x1(X1);
 //                        }
@@ -200,7 +201,7 @@ public abstract class ElemSimple extends Com5t {
                         double X2 = dX / winc.scale + x2();
                         double Y2 = dY / winc.scale + y2();
                         pointPress = evt.getPoint();
-                        moveCoordinate(X2, Y2);
+                        moveCoo(X2, Y2);
 //                        if (X2 > 0) {
 //                            this.x2(X2);
 //                        }
@@ -212,12 +213,11 @@ public abstract class ElemSimple extends Com5t {
                         double X = dX / winc.scale + x2();
                         double Y = dY / winc.scale + y2();
                         pointPress = evt.getPoint();
-                        if (UGeo.anglHor(this) > -45 && UGeo.anglHor(this) < 45) { //Bot
+                        if (List.of(Layout.BOTT, Layout.TOP, Layout.HORIZ).contains(layout())) {
                             this.y1(Y);
                             this.y2(Y);
                         }
-                        if (UGeo.anglHor(this) > -135 && UGeo.anglHor(this) < -45
-                                || (UGeo.anglHor(this) > 45 && UGeo.anglHor(this) < 135 && this.type == Type.IMPOST)) {
+                        if (List.of(Layout.LEFT, Layout.RIGHT, Layout.VERT).contains(layout())) {
                             this.x1(X);
                             this.x2(X);
                         }
@@ -234,28 +234,27 @@ public abstract class ElemSimple extends Com5t {
         this.winc.mouseDragged.add(mouseDragge);
     }
 
-    private void moveCoordinate(double x, double y) {
-        double anglHor = UGeo.anglHoriz(x1(), y1(), x2(), y2());
-        System.out.println(anglHor);
-        if (anglHor > 315 && anglHor < 360 || anglHor >= 0 && anglHor < 45) { //Bottom
+    private void moveCoo(double x, double y) {
+        
+        if (List.of(Layout.BOTT, Layout.HORIZ).contains(layout())) { //Bottom
             if (passMask[0] == 0) {
                 this.y1(y);
             } else if (passMask[0] == 1) {
                 this.y2(y);
             }
-        } else if (anglHor > 225 && anglHor < 315) { //Right
+        } else if (List.of(Layout.RIGHT, Layout.VERT).contains(layout())) { //Right
             if (passMask[0] == 0) {
                 this.x1(x);
             } else if (passMask[0] == 1) {
                 this.x2(x);
             }
-        } else if (anglHor > 135 && anglHor < 225) { //Top
+        } else if (List.of(Layout.TOP, Layout.HORIZ).contains(layout())) { //Top
             if (passMask[0] == 0) {
                 this.y1(y);
             } else if (passMask[0] == 1) {
                 this.y2(y);
             }
-        } else if (anglHor > 45 && anglHor < 135) { //Left
+        } else if (List.of(Layout.LEFT, Layout.VERT).contains(layout())) { //Left
             if (passMask[0] == 0) {
                 this.x1(x);
             } else if (passMask[0] == 1) {
