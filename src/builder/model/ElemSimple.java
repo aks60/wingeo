@@ -26,7 +26,8 @@ public abstract class ElemSimple extends Com5t {
     public double[] anglFlat = {0, 0, 0, 0}; //мин/мах внутренний и мин/мах внешний угол к плоскости   
     public double[] betweenHoriz = {0, 0}; //угол между векторами   
     private java.awt.Point pointPress = null;
-    public int passMask[] = {0, 0}; //маска редактир.конструкции
+    public int passMask[] = {0, 0}; //маска редактир. [0]=0 -начало, [0]=1 -конец, [0]=2 -середина вектора, 
+                                    //[1] > 0 -вешаем обр. прорисовки кружка и разр. редактиров. x,y
     public final double delta = 3;
     public final double SIZE = 20;
     private Timer timer = new Timer(160, (evt) -> {
@@ -63,6 +64,9 @@ public abstract class ElemSimple extends Com5t {
         timer.setRepeats(false);
 
         ListenerKey keyPressed = (evt) -> {
+            
+            System.out.println(this.passMask[0] + "  " + this.passMask[1]);
+            
             if (this.area != null && passMask[1] > 0) {
                 LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                 int key = evt.getKeyCode();
@@ -128,7 +132,6 @@ public abstract class ElemSimple extends Com5t {
         ListenerMouse mousePressed = (evt) -> {
 
             if (this.area != null) {
-                System.out.println("++++builder.model.ElemSimple.addEvents()+++");
                 pointPress = evt.getPoint();
                 Coordinate wincPress = new Coordinate((evt.getX() - Canvas.translate[0]) / winc.scale, (evt.getY() - Canvas.translate[1]) / winc.scale);
                 boolean b = this.area.contains(gf.createPoint(wincPress));
@@ -137,7 +140,7 @@ public abstract class ElemSimple extends Com5t {
                 if (b == true) {
 
                     if (passMask[1] == 1) {
-                        passMask[1] = 2;
+                        passMask[1] = 2; //фильтр движухи вкл.
                     } else {
                         passMask = UCom.getArr(0, 1);
                     }
@@ -154,23 +157,24 @@ public abstract class ElemSimple extends Com5t {
 
                     } else {//кликнул по середине вектора 
                         //Не арка
-                        if ((UGeo.anglHor(this) > -45 && UGeo.anglHor(this) < 45) //Bot
-                                || (UGeo.anglHor(this) > -135 && UGeo.anglHor(this) < -45) //Right 
-                                || this.type == Type.IMPOST) { //импост                  
-                            passMask[1] = (passMask[0] != 2) ? 1 : passMask[1];
-                            passMask[0] = 2;
-
-                            //Арка
-                        } else if (this.h() != null) {
-                            passMask[1] = (passMask[0] != 2) ? 1 : passMask[1];
-                            passMask[0] = 2;
-
-                            //Промах
-                        } else {
-                            passMask = UCom.getArr(0, 0);
-                        }
+//                        if ((UGeo.anglHor(this) > -45 && UGeo.anglHor(this) < 45) //Bot
+//                                || (UGeo.anglHor(this) > -135 && UGeo.anglHor(this) < -45) //Right 
+//                                || this.type == Type.IMPOST) { //импост                  
+//                            passMask[1] = (passMask[0] != 2) ? 1 : passMask[1];
+//                            passMask[0] = 2;
+//
+//                            //Арка
+//                        } else if (this.h() != null) {
+//                            passMask[1] = (passMask[0] != 2) ? 1 : passMask[1];
+//                            passMask[0] = 2;
+//
+//                            //Промах
+//                        } else {
+//                            passMask = UCom.getArr(0, 0);
+//                        }
                     }
                 } else {
+                    //Если промах всё обнуляю
                     passMask = UCom.getArr(0, 0);
                     root.listenerPassEdit = null;
                 }
@@ -182,32 +186,23 @@ public abstract class ElemSimple extends Com5t {
                 double W = winc.canvas.getWidth();
                 double H = winc.canvas.getHeight();
                 double dX = evt.getX() - pointPress.getX(); //прирощение по горизонтали
-                double dY = evt.getY() - pointPress.getY(); //прирощение по вертикали                 
+                double dY = evt.getY() - pointPress.getY(); //прирощение по вертикали 
+                
+                //Фильтр движухи вкл-ся когда passMask[1] > 1 !!! 
                 if (passMask[1] > 1) {
 
                     if (passMask[0] == 0) { //начало вектора
                         double X1 = dX / winc.scale + x1();
                         double Y1 = dY / winc.scale + y1();
                         pointPress = evt.getPoint();
-                        moveCoo(X1, Y1);
-//                        if (X1 > 0) {
-//                            this.x1(X1);
-//                        }
-//                        if (Y1 > 0) {
-//                            this.y1(Y1);
-//                        }
+                        moveXY(X1, Y1);
+
 
                     } else if (passMask[0] == 1) { //конец вектора
                         double X2 = dX / winc.scale + x2();
                         double Y2 = dY / winc.scale + y2();
                         pointPress = evt.getPoint();
-                        moveCoo(X2, Y2);
-//                        if (X2 > 0) {
-//                            this.x2(X2);
-//                        }
-//                        if (Y2 > 0) {
-//                            this.y2(Y2);
-//                        }
+                        moveXY(X2, Y2);
 
                     } else if (passMask[0] == 2) { //середина вектора
                         double X = dX / winc.scale + x2();
@@ -234,27 +229,27 @@ public abstract class ElemSimple extends Com5t {
         this.winc.mouseDragged.add(mouseDragge);
     }
 
-    private void moveCoo(double x, double y) {
-        
-        if (List.of(Layout.BOTT, Layout.HORIZ).contains(layout())) { //Bottom
+    private void moveXY(double x, double y) {
+        Object o1 = layout();
+        if (List.of(Layout.BOTT, Layout.HORIZ).contains(layout())) {
             if (passMask[0] == 0) {
                 this.y1(y);
             } else if (passMask[0] == 1) {
                 this.y2(y);
             }
-        } else if (List.of(Layout.RIGHT, Layout.VERT).contains(layout())) { //Right
+        } else if (List.of(Layout.RIGHT).contains(layout())) {
             if (passMask[0] == 0) {
                 this.x1(x);
             } else if (passMask[0] == 1) {
                 this.x2(x);
             }
-        } else if (List.of(Layout.TOP, Layout.HORIZ).contains(layout())) { //Top
+        } else if (List.of(Layout.TOP).contains(layout())) {
             if (passMask[0] == 0) {
                 this.y1(y);
             } else if (passMask[0] == 1) {
                 this.y2(y);
             }
-        } else if (List.of(Layout.LEFT, Layout.VERT).contains(layout())) { //Left
+        } else if (List.of(Layout.LEFT, Layout.VERT).contains(layout())) {
             if (passMask[0] == 0) {
                 this.x1(x);
             } else if (passMask[0] == 1) {
@@ -263,15 +258,20 @@ public abstract class ElemSimple extends Com5t {
         }
     }
 
+    @Override
     public Layout layout() {
         try {            
             double anglHor = UGeo.anglHoriz(x1(), y1(), x2(), y2());
+            
             if (anglHor > 315 && anglHor < 360 || anglHor >= 0 && anglHor < 45) {
                 return (this.type == Type.IMPOST) ? Layout.HORIZ : Layout.BOTT;
-            } else if (anglHor > 225 && anglHor < 315) {
-                return (this.type == Type.IMPOST) ? Layout.VERT : Layout.RIGHT;
-            } else if (anglHor > 135 && anglHor < 225) {
-                return (this.type == Type.IMPOST) ? Layout.HORIZ : Layout.TOP;
+                
+            } else if (anglHor > 225 && anglHor < 315 && this.type != Type.IMPOST) {
+                return Layout.RIGHT;
+                
+            } else if (anglHor > 135 && anglHor < 225 && this.type != Type.IMPOST) {
+                return Layout.TOP;
+                
             } else if (anglHor > 45 && anglHor < 135) {
                 return (this.type == Type.IMPOST) ? Layout.VERT : Layout.LEFT;
             }
@@ -285,9 +285,9 @@ public abstract class ElemSimple extends Com5t {
     @Override
     public void paint() {
         if (this.area != null) {
-            if (this.passMask[1] > 0) {
+            if (this.passMask[1] > 0) { 
 
-                this.root.listenerPassEdit = () -> {
+                this.root.listenerPassEdit = () -> {  //вешаем глобальный обработчик!
                     winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
 
                     //Хвост вектора, точка круг
