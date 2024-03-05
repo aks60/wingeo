@@ -118,7 +118,6 @@ public abstract class ElemSimple extends Com5t {
                         } else if (dX != 0) { //Right
                             this.x1(X);
                             this.x2(X);
-
                         }
                     }
                 }
@@ -136,19 +135,10 @@ public abstract class ElemSimple extends Com5t {
                 //Если клик внутри контура
                 if (b == true) {
                     ++passMask[1];
-
                     LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                     double coef = segm.segmentFraction(wincPress); //доля расстояния (в [0,0, 1,0] ) вдоль этого отрезка.
+                    passMask[0] = (coef < .33) ? 0 : (coef > .67) ? 1 : 2;  //кликнул начало, конец, середина вектора 
 
-                    if (coef < .33) { //кликнул начало вектора
-                        passMask[0] = 0;
-
-                    } else if (coef > .67) {//кликнул конец вектора
-                        passMask[0] = 1;
-
-                    } else {//кликнул по середине вектора 
-                        passMask[0] = 2;
-                    }
                 } else { //Промах, всё обнуляю
                     passMask = UCom.getArr(0, 0);
                     root.listenerPassEdit = null;
