@@ -61,9 +61,7 @@ public class Wincalc {
     public AreaSimple root = null; //объектная модель конструкции 2-го уровня    
 
     public ArrayList<ListenerKey> keyboardPressed = new ArrayList<ListenerKey>();
-    public ArrayList<ListenerKey> keyboardReleased = new ArrayList<ListenerKey>();
     public ArrayList<ListenerMouse> mousePressed = new ArrayList<ListenerMouse>();
-    public ArrayList<ListenerMouse> mouseReleased = new ArrayList<ListenerMouse>();
     public ArrayList<ListenerMouse> mouseDragged = new ArrayList<ListenerMouse>();
 
     public HashMap<Integer, Record> mapPardef = new HashMap<>(); //пар. по умолчанию + наложенные пар. клиента

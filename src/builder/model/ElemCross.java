@@ -111,7 +111,6 @@ public class ElemCross extends ElemSimple {
     @Override
     public void setSpecific() {
         try {
-            //spcRec.place = (Layout.HORIZ == owner.layout()) ? "ВСТ.в" : "ВСТ.г";
             spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
             spcRec.setArtikl(artiklRec);
             spcRec.setColor(colorID1, colorID2, colorID3);
@@ -206,18 +205,6 @@ public class ElemCross extends ElemSimple {
                 }
             }
         }
-    }
-
-    public Layout layout() {
-        double angl = UGeo.anglHoriz(x1(), y1(), x2(), y2());
-
-        if (angl == 90 || angl == 270) {
-            return Layout.VERT;
-
-        } else if (angl == 180 || angl == 0) {
-            return Layout.HORIZ;
-        }
-        return Layout.ANY;
     }
 
     //Линии размерности

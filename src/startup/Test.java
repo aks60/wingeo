@@ -47,6 +47,7 @@ public class Test {
 
     public static Integer numDb = Integer.valueOf(eProp.base_num.read());
     private static GeometryFactory gf = new GeometryFactory();
+    AffineTransformation aff = new AffineTransformation();
 
     // <editor-fold defaultstate="collapsed" desc="Connection[] connect(int numDb)">
     public static Connection connect1() {
@@ -432,22 +433,29 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        draw4();
+        draw5();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
     private void draw5()  {
 //                gc2d.translate(-2000, -200);
 //                gc2d.scale(2, 2);        
-        LineString geo1 = UGeo.newLineStr(1233.4, 230.2, 1227.9, 225.2);
-        LineString geo2 = UGeo.newLineStr(1227.9, 225.2, 1222.4, 220.2); 
+//        LineString geo1 = UGeo.newLineStr(1233.4, 230.2, 1227.9, 225.2);
+//        LineString geo2 = UGeo.newLineStr(1227.9, 225.2, 1222.4, 220.2); 
+//        
+//        LineString geo1a = UGeo.newLineStr(1200.7, 266.0, 1195.2, 261.0);
+//        LineString geo2a = UGeo.newLineStr(1195.2, 261.0, 1189.7, 256.0); 
+//    
+//        this.mlin = gf.createMultiLineString(new LineString[]{geo1, geo1a});
+//        this.mpol = gf.createMultiLineString(new LineString[]{geo2, geo2a});
         
-        LineString geo1a = UGeo.newLineStr(1200.7, 266.0, 1195.2, 261.0);
-        LineString geo2a = UGeo.newLineStr(1195.2, 261.0, 1189.7, 256.0); 
-    
-        this.mlin = gf.createMultiLineString(new LineString[]{geo1, geo1a});
-        this.mpol = gf.createMultiLineString(new LineString[]{geo2, geo2a});
+        LineString geo1 = UGeo.newLineStr(60, 60, 120, 60);
+        aff.setToRotation(Math.toRadians(-30), 0, 0); //угол ротации  
+        Geometry geo2 = aff.transform(geo1);        
+        this.mlin = gf.createMultiLineString(new LineString[]{geo1, (LineString) geo2});
+        
     }
+    
     private void draw4() {
 
         GeometryFactory gf = new GeometryFactory();
@@ -483,8 +491,7 @@ public class Test {
     private void draw3() {
 
         GeometryFactory gf = new GeometryFactory(new PrecisionModel(10));
-        GeometricShapeFactory gsf = new GeometricShapeFactory();
-        AffineTransformation aff = new AffineTransformation();
+        GeometricShapeFactory gsf = new GeometricShapeFactory();        
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayCom<Com5t> frames = new ArrayCom();
         frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0, 300)));

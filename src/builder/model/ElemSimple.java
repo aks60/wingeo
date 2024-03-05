@@ -10,9 +10,7 @@ import common.listener.ListenerMouse;
 import enums.Layout;
 import enums.Type;
 import frames.swing.Canvas;
-import java.awt.AWTException;
 import java.awt.Color;
-import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Rectangle2D;
@@ -20,7 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 import javax.swing.Timer;
-import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineSegment;
 
@@ -69,6 +66,7 @@ public abstract class ElemSimple extends Com5t {
             if (this.area != null && passMask[1] > 0) {
                 LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                 int key = evt.getKeyCode();
+                double anglHor = UGeo.anglHor(this);
                 double dxy = (timer.isRunning() == true) ? 0.14 + winc.scale : 0.1 * winc.scale;
                 double dX = 0, dY = 0;
 
@@ -111,12 +109,12 @@ public abstract class ElemSimple extends Com5t {
                         double X = dX / winc.scale + this.x2();
                         double Y = dY / winc.scale + this.y2();
 
-                        if (dY != 0 && UGeo.anglHor(this) > -45 && UGeo.anglHor(this) < 45) { //Bot
+                        if (dY != 0 && anglHor > -45 && anglHor < 45) { //Bot
                             this.y1(Y);
                             this.y2(Y);
 
-                        } else if (dX != 0 && UGeo.anglHor(this) > -135 && UGeo.anglHor(this) < -45
-                                || (UGeo.anglHor(this) > 45 && UGeo.anglHor(this) < 135 && this.type == Type.IMPOST)) { //Right
+                        } else if (dX != 0 && anglHor > -135 && anglHor < -45
+                                || (anglHor > 45 && anglHor < 135 && this.type == Type.IMPOST)) { //Right
                             this.x1(X);
                             this.x2(X);
 
@@ -126,8 +124,6 @@ public abstract class ElemSimple extends Com5t {
             }
             timer.stop();
             timer.start();
-        };
-        ListenerKey keyReleased = (evt) -> {
         };
         ListenerMouse mousePressed = (evt) -> {
 
@@ -145,7 +141,7 @@ public abstract class ElemSimple extends Com5t {
                         passMask = UCom.getArr(0, 1);
                     }
                     LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
-                    double coef = segm.segmentFraction(wincPress);
+                    double coef = segm.segmentFraction(wincPress); //доля расстояния (в [0,0, 1,0] ) вдоль этого отрезка.
 
                     if (coef < .33) { //кликнул начало вектора
                         passMask[1] = (passMask[0] != 0) ? 1 : passMask[1];
@@ -180,39 +176,39 @@ public abstract class ElemSimple extends Com5t {
                 winc.canvas.repaint();
             }
         };
-        ListenerMouse mouseReleased = (evt) -> {
-        };
         ListenerMouse mouseDragge = (evt) -> {
             if (this.area != null) {
                 double W = winc.canvas.getWidth();
                 double H = winc.canvas.getHeight();
                 double dX = evt.getX() - pointPress.getX(); //прирощение по горизонтали
-                double dY = evt.getY() - pointPress.getY(); //прирощение по вертикали 
+                double dY = evt.getY() - pointPress.getY(); //прирощение по вертикали                 
                 if (passMask[1] > 1) {
 
                     if (passMask[0] == 0) { //начало вектора
                         double X1 = dX / winc.scale + x1();
                         double Y1 = dY / winc.scale + y1();
                         pointPress = evt.getPoint();
-                        if (X1 > 0) {
-                            this.x1(X1);
-                        }
-                        if (Y1 > 0) {
-                            this.y1(Y1);
-                        }
+                        moveCoordinate(X1, Y1);
+//                        if (X1 > 0) {
+//                            this.x1(X1);
+//                        }
+//                        if (Y1 > 0) {
+//                            this.y1(Y1);
+//                        }
 
                     } else if (passMask[0] == 1) { //конец вектора
                         double X2 = dX / winc.scale + x2();
                         double Y2 = dY / winc.scale + y2();
                         pointPress = evt.getPoint();
-                        if (X2 > 0) {
-                            this.x2(X2);
-                        }
-                        if (Y2 > 0) {
-                            this.y2(Y2);
-                        }
+                        moveCoordinate(X2, Y2);
+//                        if (X2 > 0) {
+//                            this.x2(X2);
+//                        }
+//                        if (Y2 > 0) {
+//                            this.y2(Y2);
+//                        }
 
-                    } else if (passMask[0] == 2) { //конец вектора
+                    } else if (passMask[0] == 2) { //середина вектора
                         double X = dX / winc.scale + x2();
                         double Y = dY / winc.scale + y2();
                         pointPress = evt.getPoint();
@@ -220,8 +216,8 @@ public abstract class ElemSimple extends Com5t {
                             this.y1(Y);
                             this.y2(Y);
                         }
-                        if (UGeo.anglHor(this) > -135 && UGeo.anglHor(this) < -45 
-                                || (UGeo.anglHor(this) > 45 && UGeo.anglHor(this) < 135 && this.type == Type.IMPOST)) { //Right
+                        if (UGeo.anglHor(this) > -135 && UGeo.anglHor(this) < -45
+                                || (UGeo.anglHor(this) > 45 && UGeo.anglHor(this) < 135 && this.type == Type.IMPOST)) {
                             this.x1(X);
                             this.x2(X);
                         }
@@ -234,10 +230,56 @@ public abstract class ElemSimple extends Com5t {
         };
 
         this.winc.keyboardPressed.add(keyPressed);
-        this.winc.keyboardReleased.add(keyReleased);
         this.winc.mousePressed.add(mousePressed);
-        this.winc.mouseReleased.add(mouseReleased);
         this.winc.mouseDragged.add(mouseDragge);
+    }
+
+    private void moveCoordinate(double x, double y) {
+        double anglHor = UGeo.anglHoriz(x1(), y1(), x2(), y2());
+        System.out.println(anglHor);
+        if (anglHor > 315 && anglHor < 360 || anglHor >= 0 && anglHor < 45) { //Bottom
+            if (passMask[0] == 0) {
+                this.y1(y);
+            } else if (passMask[0] == 1) {
+                this.y2(y);
+            }
+        } else if (anglHor > 225 && anglHor < 315) { //Right
+            if (passMask[0] == 0) {
+                this.x1(x);
+            } else if (passMask[0] == 1) {
+                this.x2(x);
+            }
+        } else if (anglHor > 135 && anglHor < 225) { //Top
+            if (passMask[0] == 0) {
+                this.y1(y);
+            } else if (passMask[0] == 1) {
+                this.y2(y);
+            }
+        } else if (anglHor > 45 && anglHor < 135) { //Left
+            if (passMask[0] == 0) {
+                this.x1(x);
+            } else if (passMask[0] == 1) {
+                this.x2(x);
+            }
+        }
+    }
+
+    public Layout layout() {
+        try {            
+            double anglHor = UGeo.anglHoriz(x1(), y1(), x2(), y2());
+            if (anglHor > 315 && anglHor < 360 || anglHor >= 0 && anglHor < 45) {
+                return (this.type == Type.IMPOST) ? Layout.HORIZ : Layout.BOTT;
+            } else if (anglHor > 225 && anglHor < 315) {
+                return (this.type == Type.IMPOST) ? Layout.VERT : Layout.RIGHT;
+            } else if (anglHor > 135 && anglHor < 225) {
+                return (this.type == Type.IMPOST) ? Layout.HORIZ : Layout.TOP;
+            } else if (anglHor > 45 && anglHor < 135) {
+                return (this.type == Type.IMPOST) ? Layout.VERT : Layout.LEFT;
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:ElemSimple.layout() " + e);
+        }
+        return Layout.ANY;
     }
 
     //Точка редактирования конструкции

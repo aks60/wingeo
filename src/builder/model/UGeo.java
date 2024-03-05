@@ -48,13 +48,13 @@ public class UGeo {
         }
     }
 
-    //Угол ненормированный к горизонту. Угол нормируется в диапазоне [0, 2Pi].
+    //Угол неориентированный к горизонту. Угол нормируется в диапазоне [0, 2Pi].
     public static double anglHoriz(double x1, double y1, double x2, double y2) {
         double ang = Math.toDegrees(Angle.angle(new Coordinate(x1, y1), new Coordinate(x2, y2)));
         return (ang > 0) ? 360 - ang : Math.abs(ang);
     }
 
-    //Угол нормированный к горизонту. Угол нормируется в диапазоне [-Pi, Pi].
+    //Угол ориентированный к горизонту. Угол нормируется в диапазоне [-Pi, Pi].
     public static double anglHor(ElemSimple e) {
         return Math.toDegrees(Angle.angle(new Coordinate(e.x1(), e.y1()), new Coordinate(e.x2(), e.y2())));
     }
@@ -362,12 +362,6 @@ public class UGeo {
         return aff.transform(tip);
     }
 // <editor-fold defaultstate="collapsed" desc="TEMP">  
-
-    //Угол к горизонту. Угол нормируется в диапазоне [-Pi, Pi].
-    //@deprecated
-    public static double anglHor(Coordinate p0, Coordinate p1) {
-        return Math.toDegrees(Angle.angle(p0, p1));
-    }
 
     //@deprecated
     public static LineSegment getSegment(Geometry p, int mid, int step) {

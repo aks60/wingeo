@@ -284,32 +284,6 @@ public class ElemFrame extends ElemSimple {
         }
     }
 
-    public Layout layout() {
-        try {
-            if (this.h() != null) {
-                return Layout.TOP;
-            }
-            Point pc = owner.area.getGeometryN(0).getCentroid();
-            LineSegment frame = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
-
-            if (frame.intersection(new LineSegment(pc.getX(), pc.getY(), pc.getX() - 10000, pc.getY())) != null) {
-                return Layout.LEFT;
-            }
-            if (frame.intersection(new LineSegment(pc.getX(), pc.getY(), pc.getX(), pc.getY() + 10000)) != null) {
-                return Layout.BOTT;
-            }
-            if (frame.intersection(new LineSegment(pc.getX(), pc.getY(), pc.getX() + 10000, pc.getY())) != null) {
-                return Layout.RIGHT;
-            }
-            if (frame.intersection(new LineSegment(pc.getX(), pc.getY(), pc.getX(), pc.getY() - 10000)) != null) {
-                return Layout.TOP;
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:ElemFrame.layout() " + e);
-        }
-        return Layout.ANY;
-    }
-
     //Линии размерности
     @Override
     public void paint() {
