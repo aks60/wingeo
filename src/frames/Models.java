@@ -748,8 +748,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }//GEN-LAST:event_btnMove
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        wincalc().gson.translate(wincalc().gson, .0, 2.0, wincalc().scale);
-        wincalc().canvas.repaint();
+        Wincalc win = wincalc();
+        win.gson.translate(win.gson, .0, .03, win.scale);
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
