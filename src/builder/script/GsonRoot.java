@@ -54,24 +54,24 @@ public class GsonRoot extends GsonElem {
     //Перемещение на канве
     public void translate(GsonElem gson, Double dx, Double dy, Double scale) {
         if (gson.childs != null) {
-            dx = (dx == 0) ? 0 : dx / scale;
-            dy = (dy == 0) ? 0 : dy / scale;            
+            Double dX = (dx == 0) ? 0 : dx / scale;
+            Double dY = (dy == 0) ? 0 : dy / scale;            
             for (GsonElem gs : gson.childs) {
                 if (List.of(Type.IMPOST, Type.STOIKA, Type.SHTULP).contains(gs.type)) {
-                    if (dx != 0) {
-                        gs.x1 += dx;
-                        gs.x2 += dx;
+                    if (dX != 0) {
+                        gs.x1 += dX;
+                        gs.x2 += dX;
                     }
-                    if (dy != 0) {
-                        gs.y1 += dy;
-                        gs.y2 += dy;
+                    if (dY != 0) {
+                        gs.y1 += dY;
+                        gs.y2 += dY;
                     }
                 } else if (List.of(Type.FRAME_SIDE, Type.STVORKA_SIDE).contains(gs.type)) {
-                    if (dx != 0) {
-                        gs.x1 += + dx;
+                    if (dX != 0) {
+                        gs.x1 += + dX;
                     }
-                    if (dy != 0) {
-                        gs.y1 += dy;
+                    if (dY != 0) {
+                        gs.y1 += dY;
                     }
                 } if (List.of(Type.AREA, Type.STVORKA).contains(gs.type)) {
                     translate(gs, dx, dy, scale);
