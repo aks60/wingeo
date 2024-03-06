@@ -78,6 +78,7 @@ import frames.dialog.DicSysprof;
 import frames.dialog.ParDefVal;
 import frames.swing.Canvas;
 import frames.swing.DefMutableTreeNode;
+import frames.swing.Scene;
 import frames.swing.TableFieldFilter;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -119,6 +120,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
     private Query qSyspar1 = new Query(eSyspar1.values());
     private DefMutableTreeNode winNode = null;
     private Canvas canvas = new Canvas();
+    private Scene scene = null;
     Object[] column = new String[]{"", "Скидка (%)", "Без скидок", "Со скидкой"};
     private Gson gson = new GsonBuilder().create();
     private ListenerObject<Query> listenerQuery = null;
@@ -134,6 +136,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
 
     public Orders() {
         initComponents();
+        scene = new Scene(canvas, this);
         initElements();
         loadingData();
         loadingModel();
@@ -360,7 +363,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
             Object w = prjprodRec.get(ePrjprod.values().length);
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc win = (Wincalc) w;
-                canvas.init(win);
+                scene.init(win);
                 canvas.draw();
 
                 loadingTree(win);
@@ -4120,7 +4123,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
 
-        panDesign.add(canvas, java.awt.BorderLayout.CENTER);
+        panDesign.add(scene, java.awt.BorderLayout.CENTER);
         //UGui.documentFilter(3, txt7);
         List.of(btnIns, btnDel, btnRef).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab1)));
         winTree.getSelectionModel().addTreeSelectionListener(tse -> selectionTree());

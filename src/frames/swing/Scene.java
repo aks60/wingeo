@@ -3,12 +3,14 @@ package frames.swing;
 import builder.Wincalc;
 import common.listener.ListenerReload;
 import javax.swing.JButton;
+import javax.swing.Timer;
 
 public class Scene extends javax.swing.JPanel {
 
     private Canvas canvas = null;
     private ListenerReload listenerReload = null;
     public Wincalc winc = null;
+    private Timer timer = new Timer(500, null);
 
     public Scene(Canvas canvas, ListenerReload listenerReload) {
         initComponents();
@@ -138,16 +140,20 @@ public class Scene extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMove
+        timer.setRepeats(false);
         JButton btn = (JButton) evt.getSource();
+        double dxy = (timer.isRunning() == true) ? 3 : 1;        
         if (btn == btnMovDo) {
-            winc.gson.translate(winc.gson, .0, 1.0, winc.scale);
+            winc.gson.translate(winc.gson, .0, dxy, winc.scale);
         } else if (btn == btnMovUp) {
-            winc.gson.translate(winc.gson, .0, -1.0, winc.scale);
+            winc.gson.translate(winc.gson, .0, -dxy, winc.scale);
         } else if (btn == btnMovLe) {
-            winc.gson.translate(winc.gson, -1.0, .0, winc.scale);
+            winc.gson.translate(winc.gson, -dxy, .0, winc.scale);
         } else if (btn == btnMovRi) {
-            winc.gson.translate(winc.gson, 1.0, .0, winc.scale);
+            winc.gson.translate(winc.gson, dxy, .0, winc.scale);
         }
+        timer.stop();
+        timer.start();
         listenerReload.reload();
     }//GEN-LAST:event_btnMove
 

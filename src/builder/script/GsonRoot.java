@@ -56,25 +56,25 @@ public class GsonRoot extends GsonElem {
         if (gson.childs != null) {
             dx = (dx == 0) ? 0 : dx / scale;
             dy = (dy == 0) ? 0 : dy / scale;            
-            for (GsonElem el : gson.childs) {
-                if (List.of(Type.IMPOST, Type.STOIKA, Type.SHTULP).contains(el.type)) {
+            for (GsonElem gs : gson.childs) {
+                if (List.of(Type.IMPOST, Type.STOIKA, Type.SHTULP).contains(gs.type)) {
                     if (dx != 0) {
-                        el.x1 += dx;
-                        el.x2 += dx;
+                        gs.x1 += dx;
+                        gs.x2 += dx;
                     }
                     if (dy != 0) {
-                        el.y1 += dy;
-                        el.y2 += dy;
+                        gs.y1 += dy;
+                        gs.y2 += dy;
                     }
-                } else if (List.of(Type.FRAME_SIDE, Type.STVORKA_SIDE).contains(el.type)) {
+                } else if (List.of(Type.FRAME_SIDE, Type.STVORKA_SIDE).contains(gs.type)) {
                     if (dx != 0) {
-                        el.x1 = el.x1 + dx;
+                        gs.x1 += + dx;
                     }
                     if (dy != 0) {
-                        el.y1 += dy;
+                        gs.y1 += dy;
                     }
-                } if (List.of(Type.AREA, Type.STVORKA).contains(el.type)) {
-                    translate(el, dx, dy, scale);
+                } if (List.of(Type.AREA, Type.STVORKA).contains(gs.type)) {
+                    translate(gs, dx, dy, scale);
                 }
             }
         }

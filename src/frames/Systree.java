@@ -91,6 +91,7 @@ import domain.eGroups;
 import enums.TypeGrup;
 import frames.dialog.ParDefVal;
 import frames.dialog.ParDefault;
+import frames.swing.Scene;
 import frames.swing.TableFieldFilter;
 import java.awt.event.MouseEvent;
 import java.util.Collections;
@@ -120,6 +121,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     private int elementID = -1; //выбранная система (nuni)
     private boolean writeNuni = true;
     private Canvas canvas = new Canvas();
+    private Scene scene = null;
     private TableFieldFormat rsvSystree;
     private java.awt.Frame models = null;
     private DefMutableTreeNode sysNode = null;
@@ -128,6 +130,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
 
     public Systree() {
         initComponents();
+        scene = new Scene(canvas, this);
         initElements();
         loadingData();
         loadingModel();
@@ -138,6 +141,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
 
     public Systree(int nuni, int mode) {
         initComponents();
+        scene = new Scene(canvas, this);
         this.systreeID = nuni;
         this.writeNuni = false;
         initElements();
@@ -564,7 +568,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 Wincalc win = (Wincalc) w;
                 loadingTree2(win);
                 winTree.setSelectionInterval(0, 0);
-                canvas.init(win);
+                scene.init(win);
                 canvas.draw();
             }
         } else {
@@ -4507,7 +4511,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     public final void initElements() {
 
         new FrameToFile(this, btnClose);
-        panDesign.add(canvas, java.awt.BorderLayout.CENTER);
+        panDesign.add(scene, java.awt.BorderLayout.CENTER);
         new UColor();
 
         UGui.setDocumentFilter(3, txt17, txt22, txt24, txt26);
