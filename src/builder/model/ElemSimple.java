@@ -19,6 +19,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 import javax.swing.Timer;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.LineSegment;
 
 public abstract class ElemSimple extends Com5t {
@@ -70,7 +71,7 @@ public abstract class ElemSimple extends Com5t {
                 int key = evt.getKeyCode();
                 double anglHor = UGeo.anglHor(this);
                 double dxy = (timer.isRunning() == true) ? 0.14 + winc.scale : 0.1 * winc.scale;
-                double dX = 0, dY = 0;
+                double X = 0, Y = 0, dX = 0, dY = 0;
 
                 if (key == KeyEvent.VK_UP) {
                     dY = -dxy;
@@ -83,22 +84,16 @@ public abstract class ElemSimple extends Com5t {
                 }
                 //Кликнул начало вектора
                 if (passMask[0] == 0) {
-                    double X1 = dX / winc.scale + this.x1();
-                    double Y1 = dY / winc.scale + this.y1();
-                    if (X1 >= 0 && X1 <= winc.canvas.getWidth() / winc.scale && Y1 >= 0
-                            && Y1 <= winc.canvas.getHeight() / winc.scale) { //контроль выхода за канву
-                        this.x1(X1);
-                        this.y1(Y1);
-                    }
+                    X = dX / winc.scale + this.x1();
+                    Y = dY / winc.scale + this.y1();
+                    moveXY(X, Y);
+
                     //Кликнул конец вектора
                 } else if (passMask[0] == 1) {
-                    double X2 = dX / winc.scale + this.x2();
-                    double Y2 = dY / winc.scale + this.y2();
-                    if (X2 >= 0 && X2 <= winc.canvas.getWidth() / winc.scale && Y2 >= 0
-                            && Y2 <= winc.canvas.getHeight() / winc.scale) { //контроль выхода за канву
-                        this.x2(X2);
-                        this.y2(Y2);
-                    }
+                    X = dX / winc.scale + this.x2();
+                    Y = dY / winc.scale + this.y2();
+                    moveXY(X, Y);
+
                     //Кликнул по середине вектора 
                 } else if (passMask[0] == 2) {
 
@@ -108,19 +103,28 @@ public abstract class ElemSimple extends Com5t {
                         this.y2(this.h() + dY / winc.scale);
 
                     } else {
-                        double X = dX / winc.scale + this.x2();
-                        double Y = dY / winc.scale + this.y2();
+                        X = dX / winc.scale + this.x2();
+                        Y = dY / winc.scale + this.y2();
 
-                        if (dY != 0) { //Bot
+                        if (List.of(Layout.BOTT, Layout.TOP, Layout.HORIZ).contains(layout())) {
                             this.y1(Y);
                             this.y2(Y);
-
-                        } else if (dX != 0) { //Right
+                        }
+                        if (List.of(Layout.LEFT, Layout.RIGHT, Layout.VERT).contains(layout())) {
                             this.x1(X);
                             this.x2(X);
                         }
                     }
                 }
+                if (X < 0 || Y < 0) {
+                    winc.gson.translate(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
+                }
+//                else {
+//                    Envelope env = root.area.getGeometryN(0).getEnvelopeInternal();
+//                    if (env.getMinX() > 0 || env.getMinY() > 0) {
+//                        winc.gson.translate(winc.gson, -dX, -dY, winc.scale);
+//                    }
+//                }
             }
             timer.stop();
             timer.start();
@@ -137,8 +141,19 @@ public abstract class ElemSimple extends Com5t {
                     ++passMask[1];
                     LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                     double coef = segm.segmentFraction(wincPress); //доля расстояния (в [0,0, 1,0] ) вдоль этого отрезка.
-                    passMask[0] = (coef < .33) ? 0 : (coef > .67) ? 1 : 2;  //кликнул начало, конец, середина вектора 
+                    //passMask[0] = (coef < .33) ? 0 : (coef > .67) ? 1 : 2;  //кликнул начало, конец, середина вектора 
+                    if (coef < .33) { //кликнул начало вектора
+                        passMask[1] = (passMask[0] != 0) ? 1 : passMask[1];
+                        passMask[0] = 0;
 
+                    } else if (coef > .67) {//кликнул конец вектора
+                        passMask[1] = (passMask[0] != 1) ? 1 : passMask[1];
+                        passMask[0] = 1;
+
+                    } else {//кликнул по середине вектора                 
+                        passMask[1] = (passMask[0] != 2) ? 1 : passMask[1];
+                        passMask[0] = 2;
+                    }
                 } else { //Промах, всё обнуляю
                     passMask = UCom.getArr(0, 0);
                     root.listenerPassEdit = null;
@@ -148,29 +163,28 @@ public abstract class ElemSimple extends Com5t {
         };
         ListenerMouse mouseDragge = (evt) -> {
             if (this.area != null) {
+                double X = 0, Y = 0;
                 double W = winc.canvas.getWidth(), H = winc.canvas.getHeight();
                 double dX = evt.getX() - pointPress.getX(); //прирощение по горизонтали
                 double dY = evt.getY() - pointPress.getY(); //прирощение по вертикали 
 
                 //Фильтр движухи вкл-ся когда passMask[1] > 1 !!! 
                 if (passMask[1] > 1) {
+                    pointPress = evt.getPoint();
 
                     if (passMask[0] == 0) { //начало вектора
-                        double X1 = dX / winc.scale + x1();
-                        double Y1 = dY / winc.scale + y1();
-                        pointPress = evt.getPoint();
-                        moveXY(X1, Y1);
+                        X = dX / winc.scale + x1();
+                        Y = dY / winc.scale + y1();
+                        moveXY(X, Y);
 
                     } else if (passMask[0] == 1) { //конец вектора
-                        double X2 = dX / winc.scale + x2();
-                        double Y2 = dY / winc.scale + y2();
-                        pointPress = evt.getPoint();
-                        moveXY(X2, Y2);
+                        X = dX / winc.scale + x2();
+                        Y = dY / winc.scale + y2();
+                        moveXY(X, Y);
 
                     } else if (passMask[0] == 2) { //середина вектора
-                        double X = dX / winc.scale + x2();
-                        double Y = dY / winc.scale + y2();
-                        pointPress = evt.getPoint();
+                        X = dX / winc.scale + x2();
+                        Y = dY / winc.scale + y2();
                         if (List.of(Layout.BOTT, Layout.TOP, Layout.HORIZ).contains(layout())) {
                             this.y1(Y);
                             this.y2(Y);
@@ -179,10 +193,17 @@ public abstract class ElemSimple extends Com5t {
                             this.x1(X);
                             this.x2(X);
                         }
-                        if (X < 0 || Y < 0) {
-                            winc.gson.translate(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
-                        }
                     }
+//                    if (X < 0 || Y < 0) {
+//                        winc.gson.translate(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
+//                    }
+//                    else {
+//                        Envelope env = root.area.getGeometryN(0).getEnvelopeInternal();
+//                         System.out.println(env.getMinX() + "  " + env.getMinY());
+//                        if (env.getMinX() > 0 || env.getMinY() > 0) {
+//                            winc.gson.translate(winc.gson, -dX, -dY, winc.scale);
+//                        }
+//                    }
                 }
             }
         };
@@ -193,30 +214,31 @@ public abstract class ElemSimple extends Com5t {
     }
 
     private void moveXY(double x, double y) {
-        Object o1 = layout();
-        if (List.of(Layout.BOTT, Layout.HORIZ).contains(layout())) {
-            if (passMask[0] == 0) {
-                this.y1(y);
-            } else if (passMask[0] == 1) {
-                this.y2(y);
-            }
-        } else if (List.of(Layout.RIGHT).contains(layout())) {
-            if (passMask[0] == 0) {
-                this.x1(x);
-            } else if (passMask[0] == 1) {
-                this.x2(x);
-            }
-        } else if (List.of(Layout.TOP).contains(layout())) {
-            if (passMask[0] == 0) {
-                this.y1(y);
-            } else if (passMask[0] == 1) {
-                this.y2(y);
-            }
-        } else if (List.of(Layout.LEFT, Layout.VERT).contains(layout())) {
-            if (passMask[0] == 0) {
-                this.x1(x);
-            } else if (passMask[0] == 1) {
-                this.x2(x);
+        if (x > -0.5 && y > -0.5) {
+            if (List.of(Layout.BOTT, Layout.HORIZ).contains(layout())) {
+                if (passMask[0] == 0) {
+                    this.y1(y);
+                } else if (passMask[0] == 1) {
+                    this.y2(y);
+                }
+            } else if (List.of(Layout.RIGHT).contains(layout())) {
+                if (passMask[0] == 0) {
+                    this.x1(x);
+                } else if (passMask[0] == 1) {
+                    this.x2(x);
+                }
+            } else if (List.of(Layout.TOP).contains(layout())) {
+                if (passMask[0] == 0) {
+                    this.y1(y);
+                } else if (passMask[0] == 1) {
+                    this.y2(y);
+                }
+            } else if (List.of(Layout.LEFT, Layout.VERT).contains(layout())) {
+                if (passMask[0] == 0) {
+                    this.x1(x);
+                } else if (passMask[0] == 1) {
+                    this.x2(x);
+                }
             }
         }
     }
