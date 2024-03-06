@@ -86,13 +86,13 @@ public abstract class ElemSimple extends Com5t {
                 if (passMask[0] == 0) {
                     X = dX / winc.scale + this.x1();
                     Y = dY / winc.scale + this.y1();
-                    moveXY(X, Y);
+                        moveXY(X, Y);
 
                     //Кликнул конец вектора
                 } else if (passMask[0] == 1) {
                     X = dX / winc.scale + this.x2();
                     Y = dY / winc.scale + this.y2();
-                    moveXY(X, Y);
+                        moveXY(X, Y);
 
                     //Кликнул по середине вектора 
                 } else if (passMask[0] == 2) {
@@ -106,11 +106,11 @@ public abstract class ElemSimple extends Com5t {
                         X = dX / winc.scale + this.x2();
                         Y = dY / winc.scale + this.y2();
 
-                        if (List.of(Layout.BOTT, Layout.TOP, Layout.HORIZ).contains(layout())) {
+                        if (Y > 0 && List.of(Layout.BOTT, Layout.TOP, Layout.HORIZ).contains(layout())) {
                             this.y1(Y);
                             this.y2(Y);
                         }
-                        if (List.of(Layout.LEFT, Layout.RIGHT, Layout.VERT).contains(layout())) {
+                        if (X > 0 && List.of(Layout.LEFT, Layout.RIGHT, Layout.VERT).contains(layout())) {
                             this.x1(X);
                             this.x2(X);
                         }
@@ -119,12 +119,6 @@ public abstract class ElemSimple extends Com5t {
                 if (X < 0 || Y < 0) {
                     winc.gson.translate(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
                 }
-//                else {
-//                    Envelope env = root.area.getGeometryN(0).getEnvelopeInternal();
-//                    if (env.getMinX() > 0 || env.getMinY() > 0) {
-//                        winc.gson.translate(winc.gson, -dX, -dY, winc.scale);
-//                    }
-//                }
             }
             timer.stop();
             timer.start();
@@ -141,7 +135,7 @@ public abstract class ElemSimple extends Com5t {
                     ++passMask[1];
                     LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                     double coef = segm.segmentFraction(wincPress); //доля расстояния (в [0,0, 1,0] ) вдоль этого отрезка.
-                    //passMask[0] = (coef < .33) ? 0 : (coef > .67) ? 1 : 2;  //кликнул начало, конец, середина вектора 
+
                     if (coef < .33) { //кликнул начало вектора
                         passMask[1] = (passMask[0] != 0) ? 1 : passMask[1];
                         passMask[0] = 0;
@@ -185,25 +179,18 @@ public abstract class ElemSimple extends Com5t {
                     } else if (passMask[0] == 2) { //середина вектора
                         X = dX / winc.scale + x2();
                         Y = dY / winc.scale + y2();
-                        if (List.of(Layout.BOTT, Layout.TOP, Layout.HORIZ).contains(layout())) {
+                        if (Y > 0 && List.of(Layout.BOTT, Layout.TOP, Layout.HORIZ).contains(layout())) {
                             this.y1(Y);
                             this.y2(Y);
                         }
-                        if (List.of(Layout.LEFT, Layout.RIGHT, Layout.VERT).contains(layout())) {
+                        if (X > 0 && List.of(Layout.LEFT, Layout.RIGHT, Layout.VERT).contains(layout())) {
                             this.x1(X);
                             this.x2(X);
                         }
                     }
-//                    if (X < 0 || Y < 0) {
-//                        winc.gson.translate(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
-//                    }
-//                    else {
-//                        Envelope env = root.area.getGeometryN(0).getEnvelopeInternal();
-//                         System.out.println(env.getMinX() + "  " + env.getMinY());
-//                        if (env.getMinX() > 0 || env.getMinY() > 0) {
-//                            winc.gson.translate(winc.gson, -dX, -dY, winc.scale);
-//                        }
-//                    }
+                    if (X < 0 || Y < 0) {
+                        winc.gson.translate(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
+                    }
                 }
             }
         };
@@ -214,7 +201,7 @@ public abstract class ElemSimple extends Com5t {
     }
 
     private void moveXY(double x, double y) {
-        if (x > -0.5 && y > -0.5) {
+        if (x > 0 && y > 0) {
             if (List.of(Layout.BOTT, Layout.HORIZ).contains(layout())) {
                 if (passMask[0] == 0) {
                     this.y1(y);

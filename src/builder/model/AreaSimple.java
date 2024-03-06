@@ -224,7 +224,7 @@ public class AreaSimple extends Com5t {
                     if (length < (txt2D.getWidth())) {
 
                         winc.gc2d.setFont(new Font(font.getName(), font.getStyle(), font.getSize() - font.getSize() / coeff));
-                        winc.gc2d.drawString(txt, (int) (pxy[0] + txt2D.getHeight() / 2), (int) (pxy[1] - txt2D.getHeight() / 2));
+                        winc.gc2d.drawString(txt, (int) (pxy[0] - txt2D.getHeight() / 2), (int) (pxy[1] - txt2D.getHeight() / 2));
                     } else {
                         winc.gc2d.rotate(Math.toRadians(-90), pxy[0], pxy[1]);
                         winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);

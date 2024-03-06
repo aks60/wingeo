@@ -152,7 +152,7 @@ public class Scene extends javax.swing.JPanel {
     }//GEN-LAST:event_btnMove
 
     private void btnSave(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave
-        // TODO add your handling code here:
+        listenerReload.reload();
     }//GEN-LAST:event_btnSave
 
 
