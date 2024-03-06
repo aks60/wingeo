@@ -23,7 +23,7 @@ import org.locationtech.jts.geom.Envelope;
 
 public class Canvas extends javax.swing.JPanel {
 
-    public static double translate[] = {4, 2};
+    public static double translate[] = {2, 2};
     public Wincalc winc = null;
     public static double margin = 120; //для размерных линий 
 

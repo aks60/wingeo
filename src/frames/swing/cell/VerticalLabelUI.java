@@ -1,4 +1,4 @@
-package frames.swing.cellvert;
+package frames.swing.cell;
 
 import java.awt.Dimension;
 import java.awt.FontMetrics;
