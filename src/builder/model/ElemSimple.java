@@ -235,7 +235,7 @@ public abstract class ElemSimple extends Com5t {
             double anglHor = UGeo.anglHoriz(x1(), y1(), x2(), y2());
 
             if (anglHor > 315 && anglHor < 360 || anglHor >= 0 && anglHor < 45) {
-                return (this.type == Type.IMPOST) ? Layout.HORIZ : Layout.BOTT;
+                return (this.type == Type.IMPOST || this.type == Type.SHTULP) ? Layout.HORIZ : Layout.BOTT;
 
             } else if (anglHor > 45 && anglHor < 135) {
                 return Layout.RIGHT;
@@ -244,7 +244,7 @@ public abstract class ElemSimple extends Com5t {
                 return Layout.TOP;
 
             } else if (anglHor > 225 && anglHor < 315) {
-                return (this.type == Type.IMPOST) ? Layout.VERT : Layout.LEFT;
+                return (this.type == Type.IMPOST || this.type == Type.SHTULP) ? Layout.VERT : Layout.LEFT;
             }
         } catch (Exception e) {
             System.err.println("Ошибка:ElemSimple.layout() " + e);

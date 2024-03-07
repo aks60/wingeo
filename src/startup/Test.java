@@ -10,6 +10,7 @@ import builder.param.check.WincalcTest;
 import builder.script.GsonElem;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
@@ -36,7 +37,6 @@ import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.operation.buffer.VariableBuffer;
 import org.locationtech.jts.util.GeometricShapeFactory;
-import org.locationtech.jts.algorithm.PointLocation;
 
 public class Test {
 
@@ -115,7 +115,7 @@ public class Test {
         String _case = "min";
 
         if (_case.equals("one")) {
-            String script = GsonScript.scriptPath(601001);
+            String script = GsonScript.scriptPath(601006);
             winc.build(script);
             //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
             //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));

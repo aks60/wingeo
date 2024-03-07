@@ -105,7 +105,7 @@ public class ElementTest {
 
         grup = 31006; //33006, 34006, 37006 //Коды внутр. текстуры контейнера
         assert true == elementVar2.check(frame2_1, param("0-800;1000-20000;", grup)) : grup;
-        assert true == elementVar2.check(stv2_left_3, param("0-1008;10009", grup)) : grup;
+        assert true == elementVar2.check(stv2_left_3, param("0-1008;1009", grup)) : grup;
         assert false == elementVar2.check(stv2_left_3, param("0-1008;1010", grup)) : grup;
 
         grup = 31007; //33007, 34007, 37007 //Коды внешн. текстуры контейнера 
@@ -217,7 +217,7 @@ public class ElementTest {
 
         grup = 37055; //Коды внутр. и внешн. текстуры изд.
         assert true == elementVar3.check(glass2_top, param("1000-10010;", grup)) : grup;
-        assert false == elementVar3.check(glass2_top, param("1000-1010;", grup)) : grup;
+        assert false == elementVar3.check(glass2_top, param("1000-1008;", grup)) : grup;
 
         grup = 37056; //Коды внут. или внеш. текстуры изд.
         assert true == elementVar4.check(glass4_left, param("1000-10010;", grup)) : grup;
@@ -264,9 +264,9 @@ public class ElementTest {
         assert true == elementDet4.check(mapParam, shtulp4_hor, param("*/4-32", grup)) : grup;
         assert false == elementDet4.check(mapParam, shtulp4_hor, param("3;31;12/4-32", grup)) : grup;
 
-//        grup = 33017; //34017 //Код системы содержит строку 
-//        assert true == elementDet4.check(mapParam, stv2_left_3, param("et-1", grup)) : grup;
-//        assert false == elementDet4.check(mapParam, stv2_left_3, param("КП-40", grup)) : grup;
+//       // grup = 33017; //34017 //Код системы содержит строку 
+//       // assert true == elementDet4.check(mapParam, stv2_left_3, param("et-1", grup)) : grup;
+//       // assert false == elementDet4.check(mapParam, stv2_left_3, param("КП-40", grup)) : grup;
 
         grup = 33063; //34063 //Диапазон веса створки, кг
         assert true == elementDet2.check(mapParam, stv2_left_3, param("3-40", grup)) : grup;
@@ -282,7 +282,7 @@ public class ElementTest {
         assert false == elementDet2.check(mapParam, stv2_left_3, param("109", grup)) : grup;
 
         grup = 33068; //34068, 38068, 39068, 40068 //Коды внутр. текстуры изделия
-        assert true == elementDet2.check(mapParam, stv2_left_3, param("10009", grup)) : grup;
+        assert true == elementDet2.check(mapParam, stv2_left_3, param("1009", grup)) : grup;
         assert false == elementDet2.check(mapParam, stv2_left_3, param("109", grup)) : grup;
 
         grup = 33069; //34069, 38069, 39069, 40069 //Коды внешн. текстуры изделия

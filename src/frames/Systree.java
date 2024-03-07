@@ -3539,8 +3539,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
         } else if (tab5.getBorder() != null) {
             if (UGui.isDeleteRecord(tab5, this) == 0) {
                 UGui.deleteRecord(tab5);
-                canvas.init(null);
-                canvas.repaint();
             }
         }
     }//GEN-LAST:event_btnDelete
@@ -4289,7 +4287,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             btnInsert(new java.awt.event.ActionEvent(mInsert, -1, ""));
         } else if (evt.getSource() == mDelit) {
             btnDelete(new java.awt.event.ActionEvent(btnDel, -1, ""));
-        }
+        }  
     }//GEN-LAST:event_ppmActionItems
 
     private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked

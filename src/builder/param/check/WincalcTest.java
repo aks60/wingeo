@@ -120,7 +120,7 @@ public class WincalcTest {
         glass2_right = (ElemSimple) getElem(iwin2.root, 13);
     }
 
-    //604005  "Wintech\\Termotech 742\\1 ОКНА"
+    //-604005  "Wintech\\Termotech 742\\1 ОКНА"
     private static void iwin3() {
         iwin3 = new builder.Wincalc(); //-604005
         iwin3.build(GsonScript.scriptPath(-604005));

@@ -146,8 +146,8 @@ public class FillingTest {
         assert false == fillingDet2.check(mapParam, glass2_right, param("109", grup)) : grup;
 
         grup = 14068; //15068 //Коды внутр. текстуры изделия
-        assert true == fillingDet2.check(mapParam, glass2_right, param("10009", grup)) : grup;
-        assert false == fillingDet2.check(mapParam, glass2_right, param("1009", grup)) : grup;
+        assert true == fillingDet2.check(mapParam, glass2_right, param("100-1009", grup)) : grup;
+        assert false == fillingDet2.check(mapParam, glass2_right, param("109", grup)) : grup;
 
         grup = 14069; //15069 //Коды внешн. текстуры изделия
         assert true == fillingDet2.check(mapParam, glass2_right, param("1009", grup)) : grup;
