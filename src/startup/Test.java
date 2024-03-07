@@ -492,10 +492,10 @@ public class Test {
         GeometricShapeFactory gsf = new GeometricShapeFactory();        
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayCom<Com5t> frames = new ArrayCom();
-        frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0, 300)));
-        frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0, 1500)));
-        frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300, 1500)));
-        frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300, 300, 300)));
+        frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
+        frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, 1500.0)));
+        frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0)));
+        frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
         LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
         s1.normalize();
         double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle());
