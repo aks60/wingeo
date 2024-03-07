@@ -172,7 +172,7 @@ public class AreaStvorka extends AreaSimple {
                 for (int i = 0; i < coo.length - 1; i++) {
 
                     //Координаты рам створок
-                    GsonElem gson = new GsonElem(Type.STVORKA_SIDE, (int) coo[i].x, (int) coo[i].y);
+                    GsonElem gson = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y);
                     if (isJson(this.gson.param, PKjson.stvorkaSide[i])) {
                         gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
                     }
