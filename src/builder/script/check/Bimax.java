@@ -167,18 +167,21 @@ public final class Bimax {
                     .addElem(new GsonElem(Type.FRAME_SIDE, 700.0, 0.0))
                     .addElem(new GsonElem(Type.GLASS, "{artglasID:4663}")); //или 4x12x4x12x4
 
-            //Тут просочилась ручка не подходящая по параметру. Возможно ошибка ПрофСтроя4
+            //Тут просочилась ручка не подходящая по параметру. Возможно ошибка ПрофСтроя4}
         } else if (prj == 601010) { 
-            rootGson = new GsonRoot(427852, prj, 1, 54, Type.RECTANGL, "KBE\\KBE Эксперт\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 1009, 1009, "{ioknaParam:[-8558]}"); //параметр недействительный, подогнал для ps спецификации
+            rootGson = new GsonRoot(427852, prj, 1, 54, Type.RECTANGL, "KBE\\KBE Эксперт\\1 ОКНА\\Открывание внутрь (ств. Z77)"
+                    , 1009, 1009, 1009, "{ioknaParam:[-8545]}"); //параметр подогнал для ps спецификации
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 0.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 0.0));
 
-            rootGson.addArea(new GsonElem(Type.STVORKA, "{sysprofID:1121, typeOpen:1, sysfurnID:2335}")) //,artiklHandl:2159,colorHandl:1009}"))
+            rootGson.addArea(new GsonElem(Type.STVORKA, "{stvorkaBot: {sysprofID: 1121}, stvorkaLef: {sysprofID: 1121}"
+                    + ", stvorkaRig: {sysprofID: 1121}, stvorkaTop: {sysprofID: 1121}, typeOpen:1, sysfurnID:2335}")) //,artiklHandl:2159,colorHandl:1009}"))
                     .addElem(new GsonElem(Type.GLASS, "{artglasID:4663}"));
             rootGson.addElem(new GsonElem(Type.IMPOST, 650.0, 0.0, 650.0, 1400.0));
-            rootGson.addArea(new GsonElem(Type.STVORKA, "{sysprofID:1121, typeOpen:4, sysfurnID:2916}")) //,artiklHandl:5058,colorHandl:1009}"))
+            rootGson.addArea(new GsonElem(Type.STVORKA, "{stvorkaBot: {sysprofID: 1121}, stvorkaLef: {sysprofID: 1121}"
+                    + ", stvorkaRig: {sysprofID: 1121}, stvorkaTop: {sysprofID: 1121}, sysprofID:1121, typeOpen:4, sysfurnID:2916}")) //,artiklHandl:5058,colorHandl:1009}"))
                     .addElem(new GsonElem(Type.GLASS, "{artglasID:4663}"));
 
         } else if (prj == 700032) {

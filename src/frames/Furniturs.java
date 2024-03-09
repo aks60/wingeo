@@ -1114,7 +1114,7 @@ public class Furniturs extends javax.swing.JFrame {
         pan5.setPreferredSize(new java.awt.Dimension(260, 200));
         pan5.setLayout(new javax.swing.BoxLayout(pan5, javax.swing.BoxLayout.PAGE_AXIS));
 
-        lab2.setText("                  Описаниея сторон");
+        lab2.setText("                  Описание сторон");
         lab2.setMaximumSize(new java.awt.Dimension(300, 46));
         lab2.setMinimumSize(new java.awt.Dimension(170, 26));
         lab2.setPreferredSize(new java.awt.Dimension(200, 26));

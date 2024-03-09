@@ -780,7 +780,7 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="lab2">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="                  &#x41e;&#x43f;&#x438;&#x441;&#x430;&#x43d;&#x438;&#x435;&#x44f; &#x441;&#x442;&#x43e;&#x440;&#x43e;&#x43d;"/>
+                    <Property name="text" type="java.lang.String" value="                  &#x41e;&#x43f;&#x438;&#x441;&#x430;&#x43d;&#x438;&#x435; &#x441;&#x442;&#x43e;&#x440;&#x43e;&#x43d;"/>
                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[300, 46]"/>
                     </Property>

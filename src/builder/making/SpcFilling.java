@@ -75,8 +75,6 @@ public class SpcFilling extends Cal5e {
                 for (Record glasgrpRec : eGlasgrp.findAll()) {
                     if (UCom.containsNumbJust(glasgrpRec.getStr(eGlasgrp.depth), depth) == true) { //доступные толщины 
                         List<Record> glasprofList = eGlasprof.find(glasgrpRec.getInt(eGlasgrp.id)); //список профилей в группе заполнений
-                        
-                        ((ElemGlass) elemGlass).gzazo = glasgrpRec.getDbl(eGlasgrp.gap); //зазор между фальцем и стеклопакетом
 
                         //Цикл по профилям в группах заполнений
                         for (Record glasprofRec : glasprofList) {
@@ -85,7 +83,8 @@ public class SpcFilling extends Cal5e {
 
                                     //ФИЛЬТР вариантов, параметры накапливаются в спецификации элемента
                                     if (fillingVar.filter(elemGlass, glasgrpRec) == true) {
-                                                                             
+                                                  
+                                        ((ElemGlass) elemGlass).gzazo = glasgrpRec.getDbl(eGlasgrp.gap); //зазор между фальцем и стеклопакетом
                                         ((ElemGlass) elemGlass).gaxisMap.put(indexSegm, glasprofRec.getDbl(eGlasprof.gsize)); //размер от оси до стеклопакета
 
                                         if (shortPass == false) {

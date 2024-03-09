@@ -3619,13 +3619,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                         JsonObject paramObj = stvArea.param;
                         String stvKey = null;
                         if (layout == Layout.BOTT) {
-                            stvKey = PKjson.stvorkaBottom;
+                            stvKey = PKjson.stvorkaBot;
                         } else if (layout == Layout.RIGHT) {
-                            stvKey = PKjson.stvorkaRight;
+                            stvKey = PKjson.stvorkaRig;
                         } else if (layout == Layout.TOP) {
                             stvKey = PKjson.stvorkaTop;
                         } else if (layout == Layout.LEFT) {
-                            stvKey = PKjson.stvorkaLeft;
+                            stvKey = PKjson.stvorkaLef;
                         }
                         JsonObject jso = UGui.getAsJsonObject(paramObj, stvKey);
                         if (sysprofRec.get(1) == null) {
@@ -3683,13 +3683,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     JsonObject paramObj = parentArea.param;
                     String stvKey = null;
                     if (winNode.com5t().layout() == Layout.BOTT) {
-                        stvKey = PKjson.stvorkaBottom;
+                        stvKey = PKjson.stvorkaBot;
                     } else if (winNode.com5t().layout() == Layout.RIGHT) {
-                        stvKey = PKjson.stvorkaRight;
+                        stvKey = PKjson.stvorkaRig;
                     } else if (winNode.com5t().layout() == Layout.TOP) {
                         stvKey = PKjson.stvorkaTop;
                     } else if (winNode.com5t().layout() == Layout.LEFT) {
-                        stvKey = PKjson.stvorkaLeft;
+                        stvKey = PKjson.stvorkaLef;
                     }
 
                     JsonObject jso = UGui.getAsJsonObject(paramObj, stvKey);

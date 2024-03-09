@@ -115,7 +115,7 @@ public class Test {
         String _case = "min";
 
         if (_case.equals("one")) {
-            String script = GsonScript.scriptPath(601006);
+            String script = GsonScript.scriptPath(601010);
             winc.build(script);
             //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
             //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));

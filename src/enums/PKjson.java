@@ -28,11 +28,11 @@ public class PKjson {
     public final static String positionKnob = "positionKnob"; //Положение ручки на створке      
     public final static String heightKnob = "heightKnob"; //Высота ручки на створке 
     
-    public final static String stvorkaBottom = "stvorkaBottom"; //Элемент    
-    public final static String stvorkaRight = "stvorkaRight"; //Элемент    
+    public final static String stvorkaBot = "stvorkaBot"; //Элемент    
+    public final static String stvorkaRig = "stvorkaRig"; //Элемент    
     public final static String stvorkaTop = "stvorkaTop"; //Элемент    
-    public final static String stvorkaLeft = "stvorkaLeft"; //Элемент 
-    public final static String stvorkaSide[] = {PKjson.stvorkaLeft, PKjson.stvorkaBottom, PKjson.stvorkaRight, PKjson.stvorkaTop};
+    public final static String stvorkaLef = "stvorkaLef"; //Элемент 
+    public final static String stvorkaSide[] = {PKjson.stvorkaLef, PKjson.stvorkaBot, PKjson.stvorkaRig, PKjson.stvorkaTop};
 
     
     public final static String rasclHor = "rasclHor"; //количество проёмов раскладки
