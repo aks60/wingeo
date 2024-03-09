@@ -121,9 +121,9 @@ public class ElemGlass extends ElemSimple {
                 ElemSimple e1 = listFrame.get(coo[k].z);
                 ElemSimple e2 = listFrame.get(coo[i].z);
                 double falz = winc.syssizRec.getDbl(eSyssize.falz);
-                double w1 = (winc.syssizRec == null) ? e1.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(k)
+                double w1 = (winc.syssizRec.getInt(eSyssize.id) == -1) ? e1.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(k)
                         : (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) - falz + gzazo;
-                double w2 = (winc.syssizRec == null) ? e2.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(i)
+                double w2 = (winc.syssizRec.getInt(eSyssize.id) == -1) ? e2.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(i)
                         : (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) - falz + gzazo;
 
                 //Смещение сегментов

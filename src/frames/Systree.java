@@ -367,7 +367,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             }
         }
         ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
-        UGui.setSelectedRow(tab5);
     }
 
     public void selectionTree1() {
@@ -546,7 +545,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 } else {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card18");
                 }
-                lab2.setText("ID = " + winNode.com5t().id);
+                lab2.setText("ID = " + UCom.format(winNode.com5t().id, 2));
                 List.of(pan12, pan13, pan15, pan16).forEach(it -> it.repaint());
             }
         } catch (Exception e) {
