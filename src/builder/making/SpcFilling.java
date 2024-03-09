@@ -6,7 +6,6 @@ import domain.eGlasdet;
 import domain.eGlasgrp;
 import domain.eGlasprof;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import builder.Wincalc;
 import builder.model.ElemGlass;
@@ -14,14 +13,14 @@ import builder.param.ElementDet;
 import builder.param.FillingDet;
 import builder.param.FillingVar;
 import builder.model.ElemSimple;
-import builder.model.UGeo;
 import common.ArrayCom;
 import common.UCom;
 import dataset.Query;
 import enums.Type;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.LineSegment;
 
 /**
  * Заполнения
@@ -64,9 +63,11 @@ public class SpcFilling extends Cal5e {
             
             ArrayCom<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             Coordinate[] coo = elemGlass.owner.area.getGeometryN(0).getCoordinates();
+            Set hs = new HashSet();
+            List.of(coo).forEach(p -> hs.add(p.z));
             
             //Цикл по сторонам стеклопакета
-            for (int indexSegm = 0; indexSegm < coo.length - 1; indexSegm++) { 
+            for (int indexSegm = 0; indexSegm < hs.size(); indexSegm++) { 
                 
                 ((ElemGlass) elemGlass).indexSegmClass = indexSegm; //индекс стороны стеклопакета 
                 ElemSimple elemFrame = listFrame.get(coo[indexSegm].z);
