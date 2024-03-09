@@ -74,6 +74,9 @@ import frames.PSFrame;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.swing.JFrame;
 
 public enum App {
@@ -154,6 +157,12 @@ public enum App {
                         frame = new Fillings();
                     } else if (param.length == 1) {
                         frame = new Fillings((int) param[0]);
+                    } else if (param.length > 1) {
+                        int p[] = new int[param.length];
+                        for (int i = 0; i < param.length; ++i) {
+                            p[i] = (int) param[i];
+                        }
+                        frame = new Fillings(p);
                     }
                     break;
                 case Furniture:

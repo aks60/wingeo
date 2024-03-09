@@ -72,14 +72,18 @@ public class Fillings extends javax.swing.JFrame {
         listenerAdd();
     }
 
-    public Fillings(int deteilID) {
+    public Fillings(int... ids) {
         initComponents();
         initElements();
         loadingData();
         listenerSet();
         loadingModel();
         listenerAdd();
-        deteilFind(deteilID);
+        if (ids.length == 1) {
+            deteilFind(ids[0]);
+        } else if (ids.length > 1) {
+            profileFind(ids);
+        }
     }
 
     public void loadingData() {
@@ -405,7 +409,7 @@ public class Fillings extends javax.swing.JFrame {
             int glasgrp_id = qGlasgrp.get(index).getInt(eGlasgrp.id);
             qGlasdet2.select(eGlasdet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eGlasdet.artikl_id, "where", eGlasdet.glasgrp_id, "=", glasgrp_id, "order by", eGlasdet.depth);
             for (int index2 = 0; index2 < qGlasdet2.size(); index2++) {
-                if (qGlasdet2.get(index2).getInt(eGlasdet.id) == deteilID) {
+                if (qGlasdet2.get(index2).getInt(eGlasdet.id) == deteilID) {                    
                     UGui.setSelectedIndex(tab1, index);
                     UGui.scrollRectToRow(index, tab1);
                     UGui.setSelectedIndex(tab2, index2);
@@ -413,6 +417,10 @@ public class Fillings extends javax.swing.JFrame {
                 }
             }
         }
+    }
+
+    public void profileFind(int... deteilID) {
+
     }
 
     @SuppressWarnings("unchecked")
@@ -1031,7 +1039,7 @@ public class Fillings extends javax.swing.JFrame {
             List.of(tab1, tab2, tab3, tab4).forEach(tab -> tab.setBorder(null));
             table.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
             ppmCrud.show(table, evt.getX(), evt.getY());
-            
+
         } else if (evt.getButton() == MouseEvent.BUTTON1) {
             JTable table = (JTable) evt.getSource();
             UGui.updateBorderAndSql(table, List.of(tab1, tab2, tab3, tab4, tab5));
@@ -1045,7 +1053,7 @@ public class Fillings extends javax.swing.JFrame {
                 btnFind1.setEnabled(true);
             }
         }
-        
+
     }//GEN-LAST:event_tabMouseClicked
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     // Variables declaration - do not modify//GEN-BEGIN:variables
