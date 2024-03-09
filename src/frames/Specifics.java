@@ -457,6 +457,7 @@ public class Specifics extends javax.swing.JFrame {
         double id = UCom.getDbl(tab1.getValueAt(tab1.getSelectedRow(), 1).toString());
         String str = tab1.getValueAt(tab1.getSelectedRow(), 3).toString().substring(0, 3);
         SpcRecord specificRec = winc.listSpec.find(id);
+        Record variantRec = specificRec.variantRec;
         Record detailRec = specificRec.detailRec;
         if (detailRec != null) {
             ProgressBar.create(Specifics.this, new ListenerFrame() {
