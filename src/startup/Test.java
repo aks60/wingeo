@@ -10,11 +10,11 @@ import builder.param.check.WincalcTest;
 import builder.script.GsonElem;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
 import common.eProp;
+import common.listener.ListenerDouble;
 import dataset.Conn;
 import enums.Type;
 import java.awt.Color;
@@ -95,13 +95,12 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //frame(args);
-            wincalc();
+            //wincalc();
             //param();
             //query();
             //json();
             //uid();
             //script();
-            //geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -359,18 +358,18 @@ public class Test {
         LineSegment segm2 = new LineSegment(0, 10, 12, 10);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
-        
-        
+
         System.out.println(UGeo.anglHoriz(0, 0, 0, 100));
         System.out.println(Math.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(0, 100))));
-        
+
     }
 
     public static void frame(String[] args) {
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Test();
+                Test test = new Test();
             }
         });
     }
@@ -389,7 +388,7 @@ public class Test {
                 Graphics2D gc2d = (Graphics2D) g;
                 //gc2d.rotate(Math.toRadians(-180), 0, 0);
                 //gc2d.translate(-2000, -200);
-                gc2d.scale(.4, .4);
+                //gc2d.scale(.4, .4);
 
                 if (mlin != null) {
                     gc2d.setColor(Color.BLUE);
@@ -431,11 +430,11 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        draw5();
+        //draw5();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
-    private void draw5()  {
+    public void draw5(Geometry geo) {
 //                gc2d.translate(-2000, -200);
 //                gc2d.scale(2, 2);        
 //        LineString geo1 = UGeo.newLineStr(1233.4, 230.2, 1227.9, 225.2);
@@ -446,14 +445,15 @@ public class Test {
 //    
 //        this.mlin = gf.createMultiLineString(new LineString[]{geo1, geo1a});
 //        this.mpol = gf.createMultiLineString(new LineString[]{geo2, geo2a});
-        
-        LineString geo1 = UGeo.newLineStr(60, 60, 120, 60);
-        aff.setToRotation(Math.toRadians(-30), 0, 0); //угол ротации  
-        Geometry geo2 = aff.transform(geo1);        
-        this.mlin = gf.createMultiLineString(new LineString[]{geo1, (LineString) geo2});
-        
+//        
+//        LineString geo1 = UGeo.newLineStr(60, 60, 120, 60);
+//        aff.setToRotation(Math.toRadians(-30), 0, 0); //угол ротации  
+//        Geometry geo2 = aff.transform(geo1);        
+//        this.mlin = gf.createMultiLineString(new LineString[]{geo1, (LineString) geo2});
+        this.mpol = gf.createMultiPolygon(new Polygon[]{(Polygon) geo});
+
     }
-    
+
     private void draw4() {
 
         GeometryFactory gf = new GeometryFactory();
@@ -489,7 +489,7 @@ public class Test {
     private void draw3() {
 
         GeometryFactory gf = new GeometryFactory(new PrecisionModel(10));
-        GeometricShapeFactory gsf = new GeometricShapeFactory();        
+        GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayCom<Com5t> frames = new ArrayCom();
         frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
