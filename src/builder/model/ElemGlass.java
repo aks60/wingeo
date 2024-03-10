@@ -103,65 +103,22 @@ public class ElemGlass extends ElemSimple {
             //Фича определения gzazo и gaxis на раннем этапе построения. 
             new SpcFilling(winc, true).calc(this);
 
-            //Внешний полигон створки/рамы для прорисовки 
-            
+            ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             Coordinate[] coo = owner.area.getGeometryN(0).getCoordinates();
 
-            Coordinate[] out = new Coordinate[coo.length];
-            ArrayCom<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
-//            for (int i = 0; i < coo.length; i++) {
-//
-//                //Сегменты полигона
-//                int j = (i == coo.length - 1) ? 1 : i + 1;
-//                int k = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
-//                LineSegment segm1 = new LineSegment(coo[k], coo[i]);
-//                LineSegment segm2 = new LineSegment(coo[i], coo[j]);
-//
-//                //Ширина сегментов
-//                ElemSimple e1 = listFrame.get(coo[k].z);
-//                ElemSimple e2 = listFrame.get(coo[i].z);
-//
-//                double w1 = (winc.syssizRec.getInt(eSyssize.id) == -1) ? e1.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(k)
-//                        : (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) - winc.syssizRec.getDbl(eSyssize.falz) + gzazo;
-//                double w2 = (winc.syssizRec.getInt(eSyssize.id) == -1) ? e2.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(i)
-//                        : (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) - winc.syssizRec.getDbl(eSyssize.falz) + gzazo;                
-//
-//                //Смещение сегментов
-//                LineSegment segm3 = segm1.offset(-w1);
-//                LineSegment segm4 = segm2.offset(-w2);
-//
-//                //Точка пересечения внутренних сегментов
-//                out[i] = segm4.lineIntersection(segm3);
-//                out[i].z = e2.id;
-//            }
+            //Внешний полигон створки/рамы для прорисовки 
+            this.area = UGeo.geoPadding(owner.area, list, 0, (e1, e2, i, n) -> {
 
-               UGeo.geoPadding(owner.area, listFrame, 0);
-
-            //Полигон элемента конструкции
-            this.area = Com5t.gf.createPolygon(out);
-
-            Coordinate[] coo2 = this.area.getGeometryN(0).getCoordinates();
-            double minY = 10000;
-            double X1 = 0;
-            double maxY = 0;
-            double X2 = 0;
-            if (this.id == 6.0) {
-                for (Coordinate co : coo2) {
-                    if (co.y < minY) {
-                        minY = co.y;
-                        X1 = co.x;
-                    }
-                    if (co.y > maxY) {
-                        maxY = co.y;
-                        X2 = co.x;
-                    }
-                }
-               System.out.println(minY + " " +  X1+ "--" + maxY + " " + X2); 
+                double w1 = (winc.syssizRec.getInt(eSyssize.id) == -1) ? e1.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(n)
+                        : (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) - winc.syssizRec.getDbl(eSyssize.falz) + gzazo;
+                double w2 = (winc.syssizRec.getInt(eSyssize.id) == -1) ? e2.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(i)
+                        : (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) - winc.syssizRec.getDbl(eSyssize.falz) + gzazo;
+                return new double[]{w1, w2};
+            });
+            if (coo.length > 500) {
+                Test test = new Test();
+                test.draw5(this.area);
             }
-            
-            Test test = new Test();
-            test.draw5(this.area);
-            
             Envelope env = this.area.getGeometryN(0).getEnvelopeInternal();
             spcRec.width = env.getWidth();
             spcRec.height = env.getHeight();

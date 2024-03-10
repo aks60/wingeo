@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
 import builder.making.SpcRecord;
+import common.listener.ListenerAction;
 import domain.eSyspar1;
 import java.util.ArrayList;
 import javax.script.ScriptEngine;
@@ -22,7 +23,7 @@ public class Par5s {
     protected String versionPs = eSetting.val(2);
     public HashMap<Integer, String> mapParamTmp = new HashMap<Integer, String>();
     public Record detailRec = null; //текущий элемент детализации
-    protected ArrayList<ListenerOffset> listenerList = null;
+    protected ArrayList<ListenerAction> listenerList = null;
 
     public Par5s(Wincalc winc) {
         this.winc = winc;
@@ -74,7 +75,7 @@ public class Par5s {
     }
 
     public void listenerFire() {
-        for (ListenerOffset lp : listenerList) {
+        for (ListenerAction lp : listenerList) {
             lp.action();
         }
     }

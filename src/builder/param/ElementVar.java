@@ -11,18 +11,18 @@ import builder.model.AreaStvorka;
 import builder.model.ElemSimple;
 import builder.model.UGeo;
 import common.UCom;
+import common.listener.ListenerAction;
 import enums.Type;
 import enums.TypeJoin;
 import java.util.ArrayList;
 import org.locationtech.jts.geom.Envelope;
-import common.listener.ListenerOffset;
 
 //Составы 31000, 37000
 public class ElementVar extends Par5s {
 
     public ElementVar(Wincalc winc) {
         super(winc);
-        listenerList = new ArrayList<ListenerOffset>();
+        listenerList = new ArrayList<ListenerAction>();
     }
 
     public boolean filter(ElemSimple elem5e, Record elementRec) {

@@ -14,7 +14,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
 import common.eProp;
-import common.listener.ListenerDouble;
 import dataset.Conn;
 import enums.Type;
 import java.awt.Color;
@@ -37,6 +36,7 @@ import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.operation.buffer.VariableBuffer;
 import org.locationtech.jts.util.GeometricShapeFactory;
+import common.listener.ListenerAction;
 
 public class Test {
 
@@ -95,7 +95,7 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //frame(args);
-            //wincalc();
+            wincalc();
             //param();
             //query();
             //json();
@@ -387,8 +387,8 @@ public class Test {
                 super.paintComponent(g);
                 Graphics2D gc2d = (Graphics2D) g;
                 //gc2d.rotate(Math.toRadians(-180), 0, 0);
-                //gc2d.translate(-2000, -200);
-                //gc2d.scale(.4, .4);
+                gc2d.translate(-80, -200);
+                gc2d.scale(2.0, 2.0);
 
                 if (mlin != null) {
                     gc2d.setColor(Color.BLUE);

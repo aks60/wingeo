@@ -245,7 +245,7 @@ public class UGeo {
         }
     }
 
-    public static Polygon geoPadding(Geometry poly, ArrayCom<? extends Com5t> list, double amend, ListenerOffset lisoffset) {
+    public static Polygon geoPadding(Geometry poly, ArrayCom<? extends Com5t> list, double amend, ListenerOffset listenerOffset) {
         LineSegment segm1, segm2, segm1a = null, segm2a = null, segm1b, segm2b, segm1c, segm2c;
         Coordinate cros1 = null, cros2 = null;
         List<Coordinate> out = new ArrayList<Coordinate>();
@@ -261,17 +261,15 @@ public class UGeo {
 
                 //Получим ширину сегментов             
                 Com5t e1 = list.get(segm1.p0.z), e2 = list.get(segm2.p0.z);
-
-                Record rec1 = (e1.artiklRec == null) ? eArtikl.virtualRec() : e1.artiklRec;
-                Record rec2 = (e2.artiklRec == null) ? eArtikl.virtualRec() : e2.artiklRec;
-
-                
                 double dxy[] = {.0, .0};
-                if (lisoffset == null) {
+                if (listenerOffset == null) {
+                    Record rec1 = (e1.artiklRec == null) ? eArtikl.virtualRec() : e1.artiklRec;
+                    Record rec2 = (e2.artiklRec == null) ? eArtikl.virtualRec() : e2.artiklRec;
                     dxy[0] = (rec1.getDbl(eArtikl.height) - rec1.getDbl(eArtikl.size_centr)) - amend;
-                    dxy[1] = (rec2.getDbl(eArtikl.height) - rec2.getDbl(eArtikl.size_centr)) - amend;
+                    dxy[1] = (rec2.getDbl(eArtikl.height) - rec2.getDbl(eArtikl.size_centr)) - amend;                   
                 } else {
-                   dxy = lisoffset.action(rec1, rec2); 
+                    int n = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
+                    dxy = listenerOffset.action(e1, e2, i, n);
                 }
 
                 //Смещение сегментов относительно границ
@@ -288,7 +286,7 @@ public class UGeo {
 
                     } else { //обрезаем концы арки
 
-                        if (cros1 == null && e1.h() != null) { //хвост
+                        if (cros1 == null && e1.h() != null) { //начало
                             j = i - 1;
                             do {
                                 segm1b = UGeo.getSegment(poly, --j);
@@ -301,7 +299,7 @@ public class UGeo {
                             j = (j < 0) ? --j + coo.length : --j; //для обрезания кончика арки
 
                         }
-                        if (cros2 == null && e2.h() != null) {  //кончик
+                        if (cros2 == null && e2.h() != null) {  //конец
                             k = i;
                             do {
                                 segm2b = UGeo.getSegment(poly, ++k);
