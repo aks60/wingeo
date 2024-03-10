@@ -36,7 +36,7 @@ import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.operation.buffer.VariableBuffer;
 import org.locationtech.jts.util.GeometricShapeFactory;
-import common.listener.ListenerAction;
+import org.locationtech.jts.operation.buffer.BufferParameters;
 
 public class Test {
 
@@ -94,8 +94,8 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            //frame(args);
-            wincalc();
+            frame(args);
+            //wincalc();
             //param();
             //query();
             //json();
@@ -387,8 +387,10 @@ public class Test {
                 super.paintComponent(g);
                 Graphics2D gc2d = (Graphics2D) g;
                 //gc2d.rotate(Math.toRadians(-180), 0, 0);
-                gc2d.translate(-80, -200);
+                gc2d.translate(+20, -200);
+                //gc2d.translate(+40, 0);
                 gc2d.scale(2.0, 2.0);
+                //gc2d.scale(.4, .4);
 
                 if (mlin != null) {
                     gc2d.setColor(Color.BLUE);
@@ -434,7 +436,7 @@ public class Test {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
-    public void draw5(Geometry geo) {
+    public void draw5(Geometry geo1, Geometry geo2) {
 //                gc2d.translate(-2000, -200);
 //                gc2d.scale(2, 2);        
 //        LineString geo1 = UGeo.newLineStr(1233.4, 230.2, 1227.9, 225.2);
@@ -450,7 +452,7 @@ public class Test {
 //        aff.setToRotation(Math.toRadians(-30), 0, 0); //угол ротации  
 //        Geometry geo2 = aff.transform(geo1);        
 //        this.mlin = gf.createMultiLineString(new LineString[]{geo1, (LineString) geo2});
-        this.mpol = gf.createMultiPolygon(new Polygon[]{(Polygon) geo});
+        this.mpol = gf.createMultiPolygon(new Polygon[]{(Polygon) geo1, (Polygon) geo2});
 
     }
 
@@ -517,7 +519,8 @@ public class Test {
         list.addAll(List.of(arr2));
 
         Polygon geo1 = UGeo.newPolygon(list);
-        Polygon geo2 = UGeo.geoPadding(geo1, frames, 0);
+//        Polygon geo2 = UGeo.geoPadding(geo1, frames, 0);
+        Polygon geo2 = (Polygon) geo1.buffer(-60, 1000);
         this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         this.mpol = null;

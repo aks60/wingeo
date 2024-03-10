@@ -38,7 +38,7 @@ public class AreaArch extends AreaSimple {
                     double ANG = Math.toDegrees(segm.angle());
 
                     if (ANG == 0) {
-                        arcB = UGeo.newLineArch(segm.p0.x, segm.p1.x, segm.p0.y, frame.h(), frame.id);  //созд. арки на гортзонтали 
+                        arcB = UGeo.newLineArch(segm.p0.x, segm.p1.x, segm.p0.y, frame.h(), frame.id);  //созд. арки на горизонтали 
                     } else {
                         //Поворот на горизонталь
                         aff.setToRotation(Math.toRadians(-ANG), segm.p0.x, segm.p0.y);
@@ -51,7 +51,6 @@ public class AreaArch extends AreaSimple {
                     }
                     List.of(arcB.getCoordinates()).forEach(c -> c.setZ(frame.id));
                     list.addAll(List.of(arcB.getCoordinates()));
-                    //list.add(list.get(0));
 
                 } else {
                     list.add(new Coordinate(frame.x1(), frame.y1(), frame.id));

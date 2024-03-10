@@ -29,7 +29,7 @@ public class AreaRectangl extends AreaSimple {
         try {
             ArrayList<Coordinate> coo = new ArrayList<Coordinate>();
             Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
-            double dh = artiklRec.getDbl(eArtikl.height);
+           // double dh = artiklRec.getDbl(eArtikl.height);
 
             //Вершины рамы
             this.frames.forEach(frame -> coo.add(new Coordinate(frame.x1(), frame.y1(), frame.id)));

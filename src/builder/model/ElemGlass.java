@@ -115,9 +115,10 @@ public class ElemGlass extends ElemSimple {
                         : (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) - winc.syssizRec.getDbl(eSyssize.falz) + gzazo;
                 return new double[]{w1, w2};
             });
-            if (coo.length > 500) {
+            if (coo.length > 9) {
+                Geometry geom = owner.area.buffer(-60, 1000);
                 Test test = new Test();
-                test.draw5(this.area);
+                test.draw5(owner.area, geom);
             }
             Envelope env = this.area.getGeometryN(0).getEnvelopeInternal();
             spcRec.width = env.getWidth();

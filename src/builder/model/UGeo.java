@@ -326,6 +326,11 @@ public class UGeo {
         }
     }
 
+    public static Polygon geoBuffer(ArrayCom<? extends Com5t> list, double amend) {
+        
+        return null;
+    }
+    
     //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Coordinate[] arrCoord(double... d) {
         List<Coordinate> list = new ArrayList<Coordinate>();
