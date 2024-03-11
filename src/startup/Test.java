@@ -387,10 +387,10 @@ public class Test {
                 super.paintComponent(g);
                 Graphics2D gc2d = (Graphics2D) g;
                 //gc2d.rotate(Math.toRadians(-180), 0, 0);
-                gc2d.translate(+20, -200);
+                gc2d.translate(+40, -40);
                 //gc2d.translate(+40, 0);
-                gc2d.scale(2.0, 2.0);
-                //gc2d.scale(.4, .4);
+                //gc2d.scale(2.0, 2.0);
+                gc2d.scale(.4, .4);
 
                 if (mlin != null) {
                     gc2d.setColor(Color.BLUE);
@@ -432,10 +432,40 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        //draw5();
+        draw6();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
+    private void draw6() {
+
+        GeometryFactory gf = new GeometryFactory(new PrecisionModel(10));
+        GeometricShapeFactory gsf = new GeometricShapeFactory();
+        ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
+        ArrayCom<Com5t> frames = new ArrayCom();
+        frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 100.0, 300.0)));
+        frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, 1500.0)));
+        frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0)));
+        frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
+
+        list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
+        list.add(new Coordinate(frames.get(1).x1(), frames.get(1).y1(), frames.get(1).id));
+        list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
+        list.add(new Coordinate(frames.get(3).x1(), frames.get(3).y1(), frames.get(3).id));
+
+        Polygon geo1 = UGeo.newPolygon(list);
+        Polygon clone = (Polygon) geo1.copy();
+        Coordinate coo[] = clone.getCoordinates();
+        CoordinateFilter coordinateFilter = (c) -> {
+            if (c.z == frames.get(1).id || c.z == frames.get(2).id) {
+                //c.x = c.x + 40;
+                c.y = c.y + 20;
+            }
+        };
+        clone.apply(coordinateFilter);
+        Polygon geo1x = Com5t.gf.createPolygon(coo);
+        this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo1x});
+    }
+
     public void draw5(Geometry geo1, Geometry geo2) {
 //                gc2d.translate(-2000, -200);
 //                gc2d.scale(2, 2);        
@@ -502,7 +532,7 @@ public class Test {
         s1.normalize();
         double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle());
 
-        //Траесформация линии в горизонт
+        //Трансформация линии в горизонт
         aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации      
         LineString l1 = (LineString) aff.transform(s1.toGeometry(gf));
         LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H, 4);  //созд. арки на гортзонтали  
