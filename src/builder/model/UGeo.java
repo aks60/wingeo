@@ -98,9 +98,9 @@ public class UGeo {
     //Пилим многоугольник
     public static Geometry[] geoSplit(Geometry poly, ElemCross impost) {
         try {
-            poly = poly.getGeometryN(0);
+            Geometry poly2 = poly.getGeometryN(0);
             HashSet<Coordinate> hsCheck = new HashSet<Coordinate>();
-            Coordinate[] coo = poly.copy().getCoordinates();
+            Coordinate[] coo = poly2.copy().getCoordinates();
             LineSegment imp = new LineSegment(new Coordinate(impost.x1(), impost.y1()), new Coordinate(impost.x2(), impost.y2()));
             imp.normalize();
             List<Coordinate> cooL = new ArrayList<Coordinate>(), cooR = new ArrayList<Coordinate>();
