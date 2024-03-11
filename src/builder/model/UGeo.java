@@ -23,6 +23,7 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import common.listener.ListenerOffset;
+import java.util.Set;
 
 /**
  * Утилиты JTS
@@ -266,7 +267,7 @@ public class UGeo {
                     Record rec1 = (e1.artiklRec == null) ? eArtikl.virtualRec() : e1.artiklRec;
                     Record rec2 = (e2.artiklRec == null) ? eArtikl.virtualRec() : e2.artiklRec;
                     dxy[0] = (rec1.getDbl(eArtikl.height) - rec1.getDbl(eArtikl.size_centr)) - amend;
-                    dxy[1] = (rec2.getDbl(eArtikl.height) - rec2.getDbl(eArtikl.size_centr)) - amend;                   
+                    dxy[1] = (rec2.getDbl(eArtikl.height) - rec2.getDbl(eArtikl.size_centr)) - amend;
                 } else {
                     int n = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
                     dxy = listenerOffset.action(e1, e2, i, n);
@@ -326,11 +327,22 @@ public class UGeo {
         }
     }
 
-    public static Polygon geoBuffer(ArrayCom<? extends Com5t> list, double amend) {
-        
+    public static Geometry geoBuffer(Geometry geom, ArrayCom<? extends Com5t> list) {
+        Coordinate coo[] = geom.getGeometryN(0).getCoordinates();
+        Set<Double> hs = new HashSet();
+        double delta = 0;
+        for (Coordinate c : coo) {
+            Com5t e = list.get(c.z);
+            Record artiklRecAn = (e.artiklRecAn == null) ? eArtikl.virtualRec() : e.artiklRecAn;
+            delta = artiklRecAn.getDbl(eArtikl.height) - artiklRecAn.getDbl(eArtikl.size_centr);
+            hs.add(delta);
+        }
+        if (hs.size() == 1) {
+           return geom.buffer(-delta, 1000);
+        } 
         return null;
     }
-    
+
     //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Coordinate[] arrCoord(double... d) {
         List<Coordinate> list = new ArrayList<Coordinate>();

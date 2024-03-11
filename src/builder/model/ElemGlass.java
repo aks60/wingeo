@@ -117,8 +117,8 @@ public class ElemGlass extends ElemSimple {
             });
             if (coo.length > 9) {
                 Geometry geom = owner.area.buffer(-60, 1000);
-                Test test = new Test();
-                test.draw5(owner.area, geom);
+                //Test test = new Test();
+                //test.draw5(owner.area, geom);
             }
             Envelope env = this.area.getGeometryN(0).getEnvelopeInternal();
             spcRec.width = env.getWidth();
