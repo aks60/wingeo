@@ -457,8 +457,8 @@ public class Test {
         Coordinate coo[] = clone.getCoordinates();
         CoordinateFilter coordinateFilter = (c) -> {
             if (c.z == frames.get(1).id || c.z == frames.get(2).id) {
-                //c.x = c.x + 40;
-                c.y = c.y + 20;
+                c.x = c.x + 40;
+                //c.y = c.y + 20;
             }
         };
         clone.apply(coordinateFilter);
