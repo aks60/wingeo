@@ -25,18 +25,18 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.operation.buffer.VariableBuffer;
 import org.locationtech.jts.util.GeometricShapeFactory;
-import org.locationtech.jts.operation.buffer.BufferParameters;
 
 public class Test {
 
@@ -449,8 +449,15 @@ public class Test {
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
 
+        
+        Map<Double, Integer[]> hmOffset = new HashMap();
+        hmOffset.put(1.0, new Integer[] {63, 0, 21});
+        hmOffset.put(2.0, new Integer[] {63, 0, 21});
+        hmOffset.put(3.0, new Integer[] {63, 0, 21});
+        hmOffset.put(4.0, new Integer[] {63, 0, 21});
+        
         ArrayCom<Com5t> frames = new ArrayCom();
-        frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 400.0, 300.0)));
+        frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 400.0, 500.0)));
         frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, 1500.0)));
         frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0)));
         frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
@@ -461,17 +468,9 @@ public class Test {
         list.add(new Coordinate(frames.get(3).x1(), frames.get(3).y1(), frames.get(3).id));
 
         Polygon geo1 = UGeo.newPolygon(list);
-        Polygon clone = (Polygon) geo1.copy();
-        Coordinate coo[] = clone.getCoordinates();
-        //CoordinateFilter coordinateFilter = (c) -> {
-        //if (c.z == frames.get(1).id || c.z == frames.get(2).id) {
-        //c.x = c.x + 40;
-        //c.y = c.y + 20;
-        //}
-        //};
-        //clone.apply(coordinateFilter);
-        //Polygon geo1x = Com5t.gf.createPolygon(coo);
-        Polygon geo2 = (Polygon) geo1.buffer(-80);
+        geo1.setUserData(hmOffset);
+
+        Polygon geo2 = (Polygon) geo1.buffer(-60, 1000);
         this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
     }
 
@@ -559,7 +558,7 @@ public class Test {
 
         Polygon geo1 = UGeo.newPolygon(list);
 //        Polygon geo2 = UGeo.geoPadding(geo1, frames, 0);
-        Polygon geo2 = (Polygon) geo1.buffer(-60, 1000);
+        Polygon geo2 = (Polygon) geo1.buffer(-20, 1000);
         this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         this.mpol = null;

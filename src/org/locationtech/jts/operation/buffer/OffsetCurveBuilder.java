@@ -36,6 +36,7 @@ import org.locationtech.jts.geom.PrecisionModel;
  */
 public class OffsetCurveBuilder 
 {  
+    public Geometry geomaks;
   private double distance = 0.0;
   private PrecisionModel precisionModel;
   private BufferParameters bufParams;
@@ -48,6 +49,18 @@ public class OffsetCurveBuilder
     this.precisionModel = precisionModel;
     this.bufParams = bufParams;
   }
+  
+  public OffsetCurveBuilder(
+                Geometry geomaks,
+                PrecisionModel precisionModel,
+                BufferParameters bufParams
+                )
+  {
+    this.geomaks = geomaks;
+    this.precisionModel = precisionModel;
+    this.bufParams = bufParams;
+  }
+
 
   /**
    * Gets the buffer parameters being used to generate the curve.
@@ -174,7 +187,7 @@ public class OffsetCurveBuilder
     
   private OffsetSegmentGenerator getSegGen(double distance)
   {
-    return new OffsetSegmentGenerator(precisionModel, bufParams, distance);
+    return new OffsetSegmentGenerator(geomaks, precisionModel, bufParams, distance);
   }
   
   /**

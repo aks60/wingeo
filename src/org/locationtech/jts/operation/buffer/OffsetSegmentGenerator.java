@@ -11,6 +11,7 @@
  */
 package org.locationtech.jts.operation.buffer;
 
+import java.util.HashMap;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.algorithm.Distance;
 import org.locationtech.jts.algorithm.Intersection;
@@ -18,6 +19,7 @@ import org.locationtech.jts.algorithm.LineIntersector;
 import org.locationtech.jts.algorithm.Orientation;
 import org.locationtech.jts.algorithm.RobustLineIntersector;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Position;
 import org.locationtech.jts.geom.PrecisionModel;
@@ -85,6 +87,8 @@ class OffsetSegmentGenerator {
      */
     private int closingSegLengthFactor = 1;
 
+    public Geometry geomaks;
+    public HashMap<Double, Integer[]> hmOffset = null;
     private OffsetSegmentString segList;
     private double distance = 0.0;
     private PrecisionModel precisionModel;
@@ -99,11 +103,13 @@ class OffsetSegmentGenerator {
     private int side = 0;
     private boolean hasNarrowConcaveAngle = false;
 
-    public OffsetSegmentGenerator(PrecisionModel precisionModel,
+    public OffsetSegmentGenerator(Geometry geomaks, PrecisionModel precisionModel,
             BufferParameters bufParams, double distance) {
+        this.geomaks = geomaks;
         this.precisionModel = precisionModel;
         this.bufParams = bufParams;
-
+        this.hmOffset = (HashMap) geomaks.getUserData();
+        
         // compute intersections in full precision, to provide accuracy
         // the points are rounded as they are inserted into the curve line
         li = new RobustLineIntersector();
@@ -371,8 +377,8 @@ class OffsetSegmentGenerator {
      * @param distance the offset distance
      * @param offset the points computed for the offset segment
      */
-    static void computeOffsetSegment(LineSegment seg, int side, double distance, LineSegment offset) {
-        double delta = 40;
+    private void computeOffsetSegment(LineSegment seg, int side, double distance, LineSegment offset) {
+
         int sideSign = side == Position.LEFT ? 1 : -1;
         double dx = seg.p1.x - seg.p0.x;
         double dy = seg.p1.y - seg.p0.y;
@@ -381,34 +387,43 @@ class OffsetSegmentGenerator {
         double ux = sideSign * distance * dx / len;
         double uy = sideSign * distance * dy / len;
 
-        //System.out.println("seg.p0.z = " + seg.p0.z);
-        offset.p0.x = seg.p0.x - uy;
-//        if (seg.p0.z == 1) {
-//            offset.p0.x = seg.p0.x - (uy - delta);
-//        } else {
-//            offset.p0.x = seg.p0.x - uy;
-//        }
+        if (hmOffset == null) {
+            offset.p0.x = seg.p0.x - uy;
+            offset.p0.y = seg.p0.y + ux;
+            offset.p1.x = seg.p1.x - uy;
+            offset.p1.y = seg.p1.y + ux;
+            
+        } else {
+            Integer hm[] = hmOffset.get(seg.p0.z);
+            
+            if (seg.p0.z == 1) {
+                double delta = hm[0];
+                offset.p0.x = seg.p0.x - (uy - delta);
+            } else {
+                offset.p0.x = seg.p0.x - uy;
+            }
 
-        offset.p0.y = seg.p0.y + ux;
-//        if (seg.p0.z == 4) {
-//            offset.p0.y = seg.p0.y + (ux + delta);
-//        } else {
-//            offset.p0.y = seg.p0.y + ux;
-//        }
+            if (seg.p0.z == 4) {
+                double delta = hm[0];
+                offset.p0.y = seg.p0.y + (ux + delta);
+            } else {
+                offset.p0.y = seg.p0.y + ux;
+            }
 
-        offset.p1.x = seg.p1.x - uy;
-//        if (seg.p0.z == 1) {
-//            offset.p1.x = seg.p1.x - (uy - delta);
-//        } else {
-//            offset.p1.x = seg.p1.x - uy;
-//        }        
+            if (seg.p0.z == 1) {
+                double delta = hm[0];
+                offset.p1.x = seg.p1.x - (uy - delta);
+            } else {
+                offset.p1.x = seg.p1.x - uy;
+            }
 
-        offset.p1.y = seg.p1.y + ux;
-//        if (seg.p0.z == 4) {
-//            offset.p1.y = seg.p1.y + (ux + delta);
-//        } else {
-//            offset.p1.y = seg.p1.y + ux;
-//        }        
+            if (seg.p0.z == 4) {
+                double delta = hm[0];
+                offset.p1.y = seg.p1.y + (ux + delta);
+            } else {
+                offset.p1.y = seg.p1.y + ux;
+            }
+        }
     }
 
     /**

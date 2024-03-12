@@ -270,7 +270,7 @@ public class UGeo {
                     dxy[1] = (rec2.getDbl(eArtikl.height) - rec2.getDbl(eArtikl.size_centr)) - amend;
                 } else {
                     int n = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
-                    dxy = listenerOffset.action(e1, e2, i, n);
+                    dxy = listenerOffset.offset(e1, e2, i, n);
                 }
 
                 //Смещение сегментов относительно границ

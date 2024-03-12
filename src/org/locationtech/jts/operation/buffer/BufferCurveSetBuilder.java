@@ -56,14 +56,14 @@ public class BufferCurveSetBuilder {
   private boolean isInvertOrientation = false;
 
   public BufferCurveSetBuilder(
-      Geometry inputGeom,
+         Geometry inputGeom,
           double distance,
           PrecisionModel precisionModel,
           BufferParameters bufParams)
   {
     this.inputGeom = inputGeom;
     this.distance = distance;
-    this.curveBuilder = new OffsetCurveBuilder(precisionModel, bufParams);
+    this.curveBuilder = new OffsetCurveBuilder(inputGeom,  precisionModel, bufParams);
   }
 
   /**
