@@ -439,7 +439,7 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        draw3();
+        draw6();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
@@ -454,7 +454,7 @@ public class Test {
         hmOffset.put(1.0, new Integer[] {63, 0, 21});
         hmOffset.put(2.0, new Integer[] {63, 0, 21});
         hmOffset.put(3.0, new Integer[] {63, 0, 21});
-        hmOffset.put(4.0, new Integer[] {63, 0, 21});
+        hmOffset.put(4.0, new Integer[] {84, 42, 21});
         
         ArrayCom<Com5t> frames = new ArrayCom();
         frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 400.0, 500.0)));
