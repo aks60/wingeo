@@ -101,6 +101,7 @@ public class Test {
             //json();
             //uid();
             //script();
+            //geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -350,17 +351,23 @@ public class Test {
             new Coordinate(1000, 0, 4),
             new Coordinate(0, 0, 1)};
 
-        Point point1 = gf.createPoint(new Coordinate(500, 500));
-        Point point2 = gf.createPoint(new Coordinate(0, 500));
-        LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
-        LineString line2 = gf.createLineString(coord2);
-        LineSegment segm1 = new LineSegment(1, 1, 0, 1);
-        LineSegment segm2 = new LineSegment(0, 10, 12, 10);
-        Polygon polygon1 = gf.createPolygon(coord1);
-        Polygon polygon2 = gf.createPolygon(coord2);
-
-        System.out.println(UGeo.anglHoriz(0, 0, 0, 100));
-        System.out.println(Math.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(0, 100))));
+//        Point point1 = gf.createPoint(new Coordinate(500, 500));
+//        Point point2 = gf.createPoint(new Coordinate(0, 500));
+//        LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
+//        LineString line2 = gf.createLineString(coord2);
+//        LineSegment segm1 = new LineSegment(1, 1, 0, 1);
+//        LineSegment segm2 = new LineSegment(0, 10, 12, 10);
+//        Polygon polygon1 = gf.createPolygon(coord1);
+//        Polygon polygon2 = gf.createPolygon(coord2);
+//
+//        System.out.println(UGeo.anglHoriz(0, 0, 0, 100));
+//        System.out.println(Math.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(0, 100))));
+        Coordinate c1;
+        Coordinate c2 = new Coordinate(500, 500);
+        c2.z = 7;
+        c1 = c2;
+        System.out.println(c1);
+        
 
     }
 
@@ -432,7 +439,7 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        draw6();
+        draw3();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
@@ -441,8 +448,9 @@ public class Test {
         GeometryFactory gf = new GeometryFactory(new PrecisionModel(10));
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
+
         ArrayCom<Com5t> frames = new ArrayCom();
-        frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 100.0, 300.0)));
+        frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 400.0, 300.0)));
         frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, 1500.0)));
         frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0)));
         frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
@@ -455,15 +463,16 @@ public class Test {
         Polygon geo1 = UGeo.newPolygon(list);
         Polygon clone = (Polygon) geo1.copy();
         Coordinate coo[] = clone.getCoordinates();
-        CoordinateFilter coordinateFilter = (c) -> {
-            if (c.z == frames.get(1).id || c.z == frames.get(2).id) {
-                c.x = c.x + 40;
-                //c.y = c.y + 20;
-            }
-        };
-        clone.apply(coordinateFilter);
-        Polygon geo1x = Com5t.gf.createPolygon(coo);
-        this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo1x});
+        //CoordinateFilter coordinateFilter = (c) -> {
+        //if (c.z == frames.get(1).id || c.z == frames.get(2).id) {
+        //c.x = c.x + 40;
+        //c.y = c.y + 20;
+        //}
+        //};
+        //clone.apply(coordinateFilter);
+        //Polygon geo1x = Com5t.gf.createPolygon(coo);
+        Polygon geo2 = (Polygon) geo1.buffer(-80);
+        this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
     }
 
     public void draw5(Geometry geo1, Geometry geo2) {
