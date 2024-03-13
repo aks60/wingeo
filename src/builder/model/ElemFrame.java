@@ -97,7 +97,7 @@ public class ElemFrame extends ElemSimple {
                         List<Coordinate> list = new ArrayLoop();
                         List<Coordinate> c1a = UGeo.getSegmentArch(c1, this); //внешн.коорд.арки
                         List<Coordinate> c2a = UGeo.getSegmentArch(c2, this); //внутр.коорд.арки
-                        //c2a.add(geo2.getCoordinates()[0]); //посл.точка арки
+                        c2a.add(geo2.getCoordinates()[0]); //посл.точка арки
                         Collections.reverse(c2a); //против час.стрелки
 
                         list.addAll(c1a);
@@ -106,7 +106,7 @@ public class ElemFrame extends ElemSimple {
 
                         Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0])); //коробка арки
                         this.area = poly;
-                        new Test().mpol = gf.createMultiPolygon(new Polygon[]{poly});
+                        //new Test().mpol = gf.createMultiPolygon(new Polygon[]{(Polygon) geo1, (Polygon) geo2});
 
                     } else { //полигон рамы   
                         this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), c2[i + 1].x, c2[i + 1].y, c2[i].x, c2[i].y);

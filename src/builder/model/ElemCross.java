@@ -87,6 +87,7 @@ public class ElemCross extends ElemSimple {
 
             //Внутренняя ареа       
             Geometry padding = UGeo.geoPadding(owner.area, winc.listElem, 0);
+            //Geometry padding = UGeo.geoBuffer(owner.area, winc.listElem, 0, 0, eArtikl.height, eArtikl.size_centr);
             if (padding.isValid() == false) { //исправление коллизий
                 GeometryFixer fix = new GeometryFixer(padding);
                 padding = (Polygon) fix.getResult().getGeometryN(0);

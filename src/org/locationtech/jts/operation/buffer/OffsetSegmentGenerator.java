@@ -399,6 +399,9 @@ class OffsetSegmentGenerator {
         offset.p1.x = seg.p1.x - uy;
         offset.p0.y = seg.p0.y + ux;
         offset.p1.y = seg.p1.y + ux;
+
+        offset.p0.z = seg.p0.z;
+        offset.p1.z = seg.p1.z;
     }
 
     /**
