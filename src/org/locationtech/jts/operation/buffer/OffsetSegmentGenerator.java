@@ -88,7 +88,7 @@ class OffsetSegmentGenerator {
     private int closingSegLengthFactor = 1;
 
     public Geometry geomaks;
-    public HashMap<Double, Integer[]> hmOffset = null;
+    public HashMap<Double, Double[]> hmOffset = null;
     private OffsetSegmentString segList;
     private double distance = 0.0;
     private PrecisionModel precisionModel;
@@ -109,7 +109,7 @@ class OffsetSegmentGenerator {
         this.precisionModel = precisionModel;
         this.bufParams = bufParams;
         this.hmOffset = (HashMap) geomaks.getUserData();
-        
+
         // compute intersections in full precision, to provide accuracy
         // the points are rounded as they are inserted into the curve line
         li = new RobustLineIntersector();
@@ -380,50 +380,25 @@ class OffsetSegmentGenerator {
     private void computeOffsetSegment(LineSegment seg, int side, double distance, LineSegment offset) {
 
         int sideSign = side == Position.LEFT ? 1 : -1;
+        distance = (distance <= 1) ? 0 : distance;
         double dx = seg.p1.x - seg.p0.x;
         double dy = seg.p1.y - seg.p0.y;
         double len = Math.hypot(dx, dy);
-        // u is the vector that is the length of the offset, in the direction of the segment
-        double ux = sideSign * distance * dx / len;
-        double uy = sideSign * distance * dy / len;
 
-        if (hmOffset == null) {
-            offset.p0.x = seg.p0.x - uy;
-            offset.p0.y = seg.p0.y + ux;
-            offset.p1.x = seg.p1.x - uy;
-            offset.p1.y = seg.p1.y + ux;
-            
+        double ux, uy;
+        if (hmOffset != null) {
+            Double hm[] = hmOffset.get(seg.p0.z);
+            double delta = hm[0] - hm[1];
+            ux = sideSign * (distance + delta) * dx / len;
+            uy = sideSign * (distance + delta) * dy / len;
         } else {
-            Integer hm[] = hmOffset.get(seg.p0.z);
-            
-            if (seg.p0.z == 1) {
-                double delta = hm[0];
-                offset.p0.x = seg.p0.x - (uy - delta);
-            } else {
-                offset.p0.x = seg.p0.x - uy;
-            }
-
-            if (seg.p0.z == 4) {
-                double delta = hm[0];
-                offset.p0.y = seg.p0.y + (ux + delta);
-            } else {
-                offset.p0.y = seg.p0.y + ux;
-            }
-
-            if (seg.p0.z == 1) {
-                double delta = hm[0];
-                offset.p1.x = seg.p1.x - (uy - delta);
-            } else {
-                offset.p1.x = seg.p1.x - uy;
-            }
-
-            if (seg.p0.z == 4) {
-                double delta = hm[0];
-                offset.p1.y = seg.p1.y + (ux + delta);
-            } else {
-                offset.p1.y = seg.p1.y + ux;
-            }
+            ux = sideSign * distance * dx / len;
+            uy = sideSign * distance * dy / len;
         }
+        offset.p0.x = seg.p0.x - uy;
+        offset.p1.x = seg.p1.x - uy;
+        offset.p0.y = seg.p0.y + ux;
+        offset.p1.y = seg.p1.y + ux;
     }
 
     /**

@@ -172,6 +172,140 @@ public class UGeo {
         }
     }
 
+    //Список входн. параметров не замыкается начальной точкой как в jts!
+    public static Coordinate[] arrCoord(double... d) {
+        List<Coordinate> list = new ArrayList<Coordinate>();
+        for (int i = 1; i < d.length; i = i + 2) {
+            list.add(new Coordinate(d[i - 1], d[i]));
+        }
+        list.add(new Coordinate(d[0], d[1]));
+
+        return list.toArray(new Coordinate[0]);
+    }
+
+    public static Point newPoint(double x, double y) {
+        return Com5t.gf.createPoint(new Coordinate(x, y));
+    }
+
+    public static LineString newLineStr(double... d) {
+        return Com5t.gf.createLineString(UGeo.arrCoord(d));
+    }
+
+    public static LineString newLineArch(double x1, double x2, double y, double h, double z) {
+        try {
+            double R = (Math.pow((x2 - x1) / 2, 2) + Math.pow(h, 2)) / (2 * h);  //R = (L2 + H2) / 2H - радиус арки
+            double angl = Math.PI / 2 - Math.asin((x2 - x1) / (R * 2));
+            Com5t.gsf.setSize(2 * R);
+            Com5t.gsf.setNumPoints(1000);
+            Com5t.gsf.setBase(new Coordinate(x1 + (x2 - x1) / 2 - R, y - h));
+            LineString ls = Com5t.gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
+            Coordinate lm[] = Arrays.copyOf(ls.getCoordinates(), ls.getCoordinates().length - 1);
+            List.of(lm).forEach(c -> c.z = z);
+            return gf.createLineString(lm);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.newLineArch()");
+            return null;
+        }
+    }
+
+    //Список входн. параметров не замыкается начальной точкой как в jts!
+    public static Polygon newPolygon(double... d) {
+        return Com5t.gf.createPolygon(UGeo.arrCoord(d));
+    }
+
+    public static Polygon newPolygon(List<Coordinate> list) {
+        if (list.get(0).equals2D(list.get(list.size() - 1)) == false) {
+            list.add(list.get(0));
+        }
+        return Com5t.gf.createPolygon(list.toArray(new Coordinate[0]));
+    }
+
+    public static LineSegment getSegment(LineString line) {
+        return new LineSegment(line.getCoordinateN(0), line.getCoordinateN(1));
+    }
+
+    public static LineSegment getSegment(Geometry poly, int index) {
+        poly = poly.getGeometryN(0);
+        Coordinate[] coo = Arrays.copyOf(poly.getCoordinates(), poly.getNumPoints() - 1);
+        index = (index >= coo.length) ? index - coo.length : index;
+        int j = (index < 0) ? index + coo.length : index;
+        int k = (j + 1 >= coo.length) ? j + 1 - coo.length : j + 1;
+
+        return new LineSegment(coo[j], coo[k]);
+    }
+
+    public static List<Coordinate> getSegmentArch(Coordinate coo[], ElemSimple elem) {
+        int index = 0;
+        List<Coordinate> list = new ArrayList<Coordinate>();
+        for (int i = 0; i < coo.length; i++) {
+            if (coo[i].z == elem.id) {
+                list.add(coo[i]);
+                index = i;
+            }
+        }
+        list.add(coo[++index]);
+        return list;
+    }
+
+    public static int getIndex(Geometry p, double id) {
+        Coordinate coo[] = p.getGeometryN(0).getCoordinates();
+        for (int i = 0; i < coo.length - 1; i++) {
+            if (coo[i].z == id) {
+                return i;
+            }
+        }
+//        }
+        //throw new Exception("Ошибка:UGeo.getIndex()");
+        System.err.println("Ошибка:UGeo.getIndex()");
+        return -1;
+    }
+
+    public static LineSegment normalize(LineSegment segm) {
+        segm.normalize();
+        return segm;
+    }
+
+    /**
+     *
+     * @param midle
+     * @param tipX - точка поворота
+     * @param tipY - точка поворота
+     * @param angl - угол поворота
+     * @param length - длина линии
+     * @return
+     */
+    public static Geometry lineTip(boolean midle, double tipX, double tipY, double angl, double length) {
+
+        double dx = (midle == false) ? 0 : 16;
+        Geometry tip = gf.createLineString(new Coordinate[]{
+            new Coordinate(tipX - length, tipY), new Coordinate(tipX, tipY),
+            new Coordinate(tipX - dx, tipY - 16), new Coordinate(tipX, tipY),
+            new Coordinate(tipX - dx, tipY + 16)});
+        AffineTransformation aff = new AffineTransformation();
+        aff.setToRotation(Math.toRadians(angl), tipX, tipY);
+        return aff.transform(tip);
+    }
+
+    public static Map<Double, Double[]> geoOffset(ArrayCom<? extends Com5t> listElem) {
+        Map<Double, Double[]> hm = new HashMap();
+        for (Com5t el : listElem) {
+            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+            hm.put(el.id, new Double[]{rec.getDbl(eArtikl.height), rec.getDbl(eArtikl.size_centr)});
+        }
+        return hm;
+    }
+
+// <editor-fold defaultstate="collapsed" desc="TEMP"> 
+    public static Map<Double, Double[]> geoOffset2(ArrayCom<ElemSimple> listElem) {
+        Map<Double, Double[]> hm = new HashMap();
+        for (ElemSimple el : listElem) {
+            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+            hm.put(el.id, new Double[]{rec.getDbl(eArtikl.height), rec.getDbl(eArtikl.size_centr)});
+        }
+        return hm;
+    }
+
     //Внутренняя обводка ареа 
     public static Polygon geoPadding(Geometry poly, ArrayCom<? extends Com5t> list, double amend) {
         LineSegment segm1, segm2, segm1a = null, segm2a = null, segm1b, segm2b, segm1c, segm2c;
@@ -328,148 +462,6 @@ public class UGeo {
             return null;
         }
     }
-
-    public static Geometry geoBuffer(Geometry geom, ArrayCom<? extends Com5t> list) {
-        Coordinate coo[] = geom.getGeometryN(0).getCoordinates();
-        Set<Double> hs = new HashSet();
-        double delta = 0;
-        for (Coordinate c : coo) {
-            Com5t e = list.get(c.z);
-            Record artiklRecAn = (e.artiklRecAn == null) ? eArtikl.virtualRec() : e.artiklRecAn;
-            delta = artiklRecAn.getDbl(eArtikl.height) - artiklRecAn.getDbl(eArtikl.size_centr);
-            hs.add(delta);
-        }
-        if (hs.size() == 1) {
-           return geom.buffer(-delta, 1000);
-        } 
-        return null;
-    }
-
-    //Список входн. параметров не замыкается начальной точкой как в jts!
-    public static Coordinate[] arrCoord(double... d) {
-        List<Coordinate> list = new ArrayList<Coordinate>();
-        for (int i = 1; i < d.length; i = i + 2) {
-            list.add(new Coordinate(d[i - 1], d[i]));
-        }
-        list.add(new Coordinate(d[0], d[1]));
-
-        return list.toArray(new Coordinate[0]);
-    }
-
-    public static Point newPoint(double x, double y) {
-        return Com5t.gf.createPoint(new Coordinate(x, y));
-    }
-
-    public static LineString newLineStr(double... d) {
-        return Com5t.gf.createLineString(UGeo.arrCoord(d));
-    }
-
-    public static LineString newLineArch(double x1, double x2, double y, double h, double z) {
-        try {
-            double R = (Math.pow((x2 - x1) / 2, 2) + Math.pow(h, 2)) / (2 * h);  //R = (L2 + H2) / 2H - радиус арки
-            double angl = Math.PI / 2 - Math.asin((x2 - x1) / (R * 2));
-            Com5t.gsf.setSize(2 * R);
-            Com5t.gsf.setNumPoints(1000);
-            Com5t.gsf.setBase(new Coordinate(x1 + (x2 - x1) / 2 - R, y - h));
-            LineString ls = Com5t.gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
-            Coordinate lm[] = Arrays.copyOf(ls.getCoordinates(), ls.getCoordinates().length - 1);
-            List.of(lm).forEach(c -> c.z = z);
-            return gf.createLineString(lm);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.newLineArch()");
-            return null;
-        }
-    }
-
-    //Список входн. параметров не замыкается начальной точкой как в jts!
-    public static Polygon newPolygon(double... d) {
-        return Com5t.gf.createPolygon(UGeo.arrCoord(d));
-    }
-
-    public static Polygon newPolygon(List<Coordinate> list) {
-        if (list.get(0).equals2D(list.get(list.size() - 1)) == false) {
-            list.add(list.get(0));
-        }
-        return Com5t.gf.createPolygon(list.toArray(new Coordinate[0]));
-    }
-
-    public static LineSegment getSegment(LineString line) {
-        return new LineSegment(line.getCoordinateN(0), line.getCoordinateN(1));
-    }
-
-    public static LineSegment getSegment(Geometry poly, int index) {
-        poly = poly.getGeometryN(0);
-        Coordinate[] coo = Arrays.copyOf(poly.getCoordinates(), poly.getNumPoints() - 1);
-        index = (index >= coo.length) ? index - coo.length : index;
-        int j = (index < 0) ? index + coo.length : index;
-        int k = (j + 1 >= coo.length) ? j + 1 - coo.length : j + 1;
-
-        return new LineSegment(coo[j], coo[k]);
-    }
-
-    public static List<Coordinate> getSegmentArch(Coordinate coo[], ElemSimple elem) {
-        int index = 0;
-        List<Coordinate> list = new ArrayList<Coordinate>();
-        for (int i = 0; i < coo.length; i++) {
-            if (coo[i].z == elem.id) {
-                list.add(coo[i]);
-                index = i;
-            }
-        }
-        list.add(coo[++index]);
-        return list;
-    }
-
-    public static int getIndex(Geometry p, double id) {
-        Coordinate coo[] = p.getGeometryN(0).getCoordinates();
-        for (int i = 0; i < coo.length - 1; i++) {
-            if (coo[i].z == id) {
-                return i;
-            }
-        }
-//        }
-        //throw new Exception("Ошибка:UGeo.getIndex()");
-        System.err.println("Ошибка:UGeo.getIndex()");
-        return -1;
-    }
-
-    public static LineSegment normalize(LineSegment segm) {
-        segm.normalize();
-        return segm;
-    }
-
-    /**
-     *
-     * @param midle
-     * @param tipX - точка поворота
-     * @param tipY - точка поворота
-     * @param angl - угол поворота
-     * @param length - длина линии
-     * @return
-     */
-    public static Geometry lineTip(boolean midle, double tipX, double tipY, double angl, double length) {
-
-        double dx = (midle == false) ? 0 : 16;
-        Geometry tip = gf.createLineString(new Coordinate[]{
-            new Coordinate(tipX - length, tipY), new Coordinate(tipX, tipY),
-            new Coordinate(tipX - dx, tipY - 16), new Coordinate(tipX, tipY),
-            new Coordinate(tipX - dx, tipY + 16)});
-        AffineTransformation aff = new AffineTransformation();
-        aff.setToRotation(Math.toRadians(angl), tipX, tipY);
-        return aff.transform(tip);
-    }
-    
-    public static Map<Double, Double[]> geoOffset(ArrayCom<ElemSimple> listElem) {
-           Map<Double, Double[]> hm = new HashMap();
-           for (ElemSimple el : listElem) {
-             Record rec = el.artiklRecAn;
-             hm.put(el.id, new Double[] {rec.getDbl(eArtikl.height), rec.getDbl(eArtikl.size_centr)});
-           }
-           return hm;
-    }
-    
-// <editor-fold defaultstate="collapsed" desc="TEMP">  
 
     //@deprecated
     public static LineSegment getSegment(Geometry p, int mid, int step) {

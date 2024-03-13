@@ -4,16 +4,10 @@ import builder.Wincalc;
 import builder.script.GsonElem;
 import dataset.Record;
 import domain.eArtikl;
-import domain.eColor;
-import enums.Type;
 import enums.TypeJoin;
-import java.awt.Shape;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import org.locationtech.jts.awt.ShapeWriter;
+import java.util.Map;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
 
 public class AreaRectangl extends AreaSimple {
@@ -37,9 +31,11 @@ public class AreaRectangl extends AreaSimple {
 
             //Аrea рамы
             Polygon geo1 = gf.createPolygon(coo.toArray(new Coordinate[0]));
+            Map<Double, Double[]> hmOffset = UGeo.geoOffset(this.frames);
+            
             geo1.setUserData(UGeo.geoOffset(this.frames));
-            //Polygon geo2 = (Polygon) geo1.buffer(.0);
-            Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
+            Polygon geo2 = (Polygon) geo1.buffer(-1);
+            //Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         } catch (Exception e) {

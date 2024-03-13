@@ -32,6 +32,7 @@ import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
@@ -351,24 +352,30 @@ public class Test {
             new Coordinate(1000, 0, 4),
             new Coordinate(0, 0, 1)};
 
-//        Point point1 = gf.createPoint(new Coordinate(500, 500));
-//        Point point2 = gf.createPoint(new Coordinate(0, 500));
-//        LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
-//        LineString line2 = gf.createLineString(coord2);
-//        LineSegment segm1 = new LineSegment(1, 1, 0, 1);
-//        LineSegment segm2 = new LineSegment(0, 10, 12, 10);
-//        Polygon polygon1 = gf.createPolygon(coord1);
-//        Polygon polygon2 = gf.createPolygon(coord2);
-//
-//        System.out.println(UGeo.anglHoriz(0, 0, 0, 100));
-//        System.out.println(Math.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(0, 100))));
-        Coordinate c1;
-        Coordinate c2 = new Coordinate(500, 500);
-        c2.z = 7;
-        c1 = c2;
-        System.out.println(c1);
-        
+        Point point1 = gf.createPoint(new Coordinate(500, 500));
+        Point point2 = gf.createPoint(new Coordinate(0, 500));
+        LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
+        LineString line2 = gf.createLineString(coord2);
+        LineSegment segm1 = new LineSegment(1, 1, 0, 1);
+        LineSegment segm2 = new LineSegment(0, 10, 12, 10);
+        Polygon polygon1 = gf.createPolygon(coord1);
+        Polygon polygon2 = gf.createPolygon(coord2);
 
+        double ang = Math.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(-100, -100)));
+        System.out.println(ang);
+        
+        if (ang >= 45 && ang <= 135) { //LEFT, VERT
+            System.out.println("LEFT, VERT");
+
+        } else if (ang >= -45 && ang <= +45) { //BOTT, HORIZ
+            System.out.println("BOTT, HORIZ");
+
+        } else if (ang <= -45 && ang >= -135) { //RIGH
+            System.out.println("RIGH");
+
+        } else if (ang <= -135 && ang >= -180 || ang >= 135 && ang <= 180) { //TOP
+            System.out.println("TOP");
+        }
     }
 
     public static void frame(String[] args) {
@@ -394,7 +401,7 @@ public class Test {
                 super.paintComponent(g);
                 Graphics2D gc2d = (Graphics2D) g;
                 //gc2d.rotate(Math.toRadians(-180), 0, 0);
-                gc2d.translate(+40, -40);
+                gc2d.translate(0, -40);
                 //gc2d.translate(+40, 0);
                 //gc2d.scale(2.0, 2.0);
                 gc2d.scale(.4, .4);
@@ -449,13 +456,12 @@ public class Test {
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
 
-        
-        Map<Double, Integer[]> hmOffset = new HashMap();
-        hmOffset.put(1.0, new Integer[] {63, 0, 21});
-        hmOffset.put(2.0, new Integer[] {63, 0, 21});
-        hmOffset.put(3.0, new Integer[] {63, 0, 21});
-        hmOffset.put(4.0, new Integer[] {84, 42, 21});
-        
+        Map<Double, Double[]> hmOffset = new HashMap();
+        hmOffset.put(1.0, new Double[]{63.0, .0, .0});
+        hmOffset.put(2.0, new Double[]{63.0, .0, 21.0});
+        hmOffset.put(3.0, new Double[]{63.0, .0, 21.0});
+        hmOffset.put(4.0, new Double[]{84.0, 42.0, 21.0});
+
         ArrayCom<Com5t> frames = new ArrayCom();
         frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 400.0, 500.0)));
         frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, 1500.0)));
@@ -468,9 +474,10 @@ public class Test {
         list.add(new Coordinate(frames.get(3).x1(), frames.get(3).y1(), frames.get(3).id));
 
         Polygon geo1 = UGeo.newPolygon(list);
+        Map<Double, Double[]> hmOffset2 = UGeo.geoOffset(frames);
         geo1.setUserData(hmOffset);
 
-        Polygon geo2 = (Polygon) geo1.buffer(-60, 1000);
+        Polygon geo2 = (Polygon) geo1.buffer(-20);
         this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
     }
 
@@ -558,7 +565,7 @@ public class Test {
 
         Polygon geo1 = UGeo.newPolygon(list);
 //        Polygon geo2 = UGeo.geoPadding(geo1, frames, 0);
-        Polygon geo2 = (Polygon) geo1.buffer(-20, 1000);
+        Polygon geo2 = (Polygon) geo1.buffer(-60, 1000);
         this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         this.mpol = null;
