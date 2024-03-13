@@ -291,7 +291,7 @@ public class UGeo {
         Map<Double, Double[]> hm = new HashMap();
         for (Com5t el : listElem) {
             Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-            hm.put(el.id, new Double[]{rec.getDbl(eArtikl.height), rec.getDbl(eArtikl.size_centr)});
+            hm.put(el.id, new Double[]{rec.getDbl(eArtikl.height), rec.getDbl(eArtikl.size_centr), 0.0});
         }
         return hm;
     }

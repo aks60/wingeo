@@ -10,7 +10,6 @@ import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
-import domain.eSyssize;
 import domain.eSystree;
 import enums.PKjson;
 import enums.Type;
@@ -24,6 +23,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.Polygon;
 import startup.Test;
 
 public class ElemGlass extends ElemSimple {
@@ -107,19 +107,13 @@ public class ElemGlass extends ElemSimple {
             Coordinate[] coo = owner.area.getGeometryN(0).getCoordinates();
 
             //Внешний полигон створки/рамы для прорисовки 
-            this.area = UGeo.geoPadding(owner.area, list, 0, (e1, e2, i, n) -> {
+            //this.area = UGeo.geoPadding(owner.area, list, 0);
+            owner.area.setUserData(UGeo.geoOffset(list));
+            this.area = owner.area.buffer(-.001, 1000);
 
-                double w1 = (winc.syssizRec.getInt(eSyssize.id) == -1) ? e1.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(n)
-                        : (e1.artiklRec.getDbl(eArtikl.height) - e1.artiklRec.getDbl(eArtikl.size_centr)) - winc.syssizRec.getDbl(eSyssize.falz) + gzazo;
-                double w2 = (winc.syssizRec.getInt(eSyssize.id) == -1) ? e2.artiklRec.getDbl(eArtikl.size_centr) + gaxisMap.get(i)
-                        : (e2.artiklRec.getDbl(eArtikl.height) - e2.artiklRec.getDbl(eArtikl.size_centr)) - winc.syssizRec.getDbl(eSyssize.falz) + gzazo;
-                return new double[]{w1, w2};
-            });
-            //if (coo.length > 9) {
-                //Geometry geom = owner.area.buffer(-60, 1000);
-                //Test test = new Test();
-                //test.draw5(owner.area, geom);
-            //}
+            if (coo.length > 9) {
+                new Test().mpol = gf.createMultiPolygon(new Polygon[]{(Polygon) owner.area, (Polygon) this.area});
+            }
             Envelope env = this.area.getGeometryN(0).getEnvelopeInternal();
             spcRec.width = env.getWidth();
             spcRec.height = env.getHeight();

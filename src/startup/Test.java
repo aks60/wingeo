@@ -42,9 +42,9 @@ import org.locationtech.jts.util.GeometricShapeFactory;
 public class Test {
 
     //public ArrayList<ListenerMouse> mouseDragged = new ArrayList<ListenerMouse>();
-    private JFrame frame = null;
-    private Geometry mlin = null;
-    private Geometry mpol = null;
+    public JFrame frame = null;
+    public Geometry mlin = null;
+    public Geometry mpol = null;
 
     public static Integer numDb = Integer.valueOf(eProp.base_num.read());
     private static GeometryFactory gf = new GeometryFactory();
@@ -383,7 +383,7 @@ public class Test {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Test test = new Test();
+                Test test = new Test();                
             }
         });
     }
@@ -401,10 +401,9 @@ public class Test {
                 super.paintComponent(g);
                 Graphics2D gc2d = (Graphics2D) g;
                 //gc2d.rotate(Math.toRadians(-180), 0, 0);
-                gc2d.translate(0, -40);
-                //gc2d.translate(+40, 0);
-                //gc2d.scale(2.0, 2.0);
-                gc2d.scale(.4, .4);
+                gc2d.translate(+40, -40);
+                gc2d.scale(2.0, 2.0);
+                //gc2d.scale(.4, .4);
 
                 if (mlin != null) {
                     gc2d.setColor(Color.BLUE);
@@ -446,7 +445,7 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        draw6();
+        //draw6();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
@@ -458,9 +457,9 @@ public class Test {
 
         Map<Double, Double[]> hmOffset = new HashMap();
         hmOffset.put(1.0, new Double[]{63.0, .0, .0});
-        hmOffset.put(2.0, new Double[]{63.0, .0, 21.0});
-        hmOffset.put(3.0, new Double[]{63.0, .0, 21.0});
-        hmOffset.put(4.0, new Double[]{84.0, 42.0, 21.0});
+        hmOffset.put(2.0, new Double[]{63.0, .0, .0});
+        hmOffset.put(3.0, new Double[]{63.0, .0, .0});
+        hmOffset.put(4.0, new Double[]{84.0, .0, .0});
 
         ArrayCom<Com5t> frames = new ArrayCom();
         frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 400.0, 500.0)));
@@ -479,26 +478,6 @@ public class Test {
 
         Polygon geo2 = (Polygon) geo1.buffer(-.001);
         this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
-    }
-
-    public void draw5(Geometry geo1, Geometry geo2) {
-//                gc2d.translate(-2000, -200);
-//                gc2d.scale(2, 2);        
-//        LineString geo1 = UGeo.newLineStr(1233.4, 230.2, 1227.9, 225.2);
-//        LineString geo2 = UGeo.newLineStr(1227.9, 225.2, 1222.4, 220.2); 
-//        
-//        LineString geo1a = UGeo.newLineStr(1200.7, 266.0, 1195.2, 261.0);
-//        LineString geo2a = UGeo.newLineStr(1195.2, 261.0, 1189.7, 256.0); 
-//    
-//        this.mlin = gf.createMultiLineString(new LineString[]{geo1, geo1a});
-//        this.mpol = gf.createMultiLineString(new LineString[]{geo2, geo2a});
-//        
-//        LineString geo1 = UGeo.newLineStr(60, 60, 120, 60);
-//        aff.setToRotation(Math.toRadians(-30), 0, 0); //угол ротации  
-//        Geometry geo2 = aff.transform(geo1);        
-//        this.mlin = gf.createMultiLineString(new LineString[]{geo1, (LineString) geo2});
-        this.mpol = gf.createMultiPolygon(new Polygon[]{(Polygon) geo1, (Polygon) geo2});
-
     }
 
     private void draw4() {

@@ -14,6 +14,7 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
+import startup.Test;
 
 public class AreaArch extends AreaSimple {
 
@@ -56,11 +57,11 @@ public class AreaArch extends AreaSimple {
                     list.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
                 }
             }
-            //list.add(list.get(0));
             Polygon geo1 = UGeo.newPolygon(list);
             Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
-            geo1.setUserData(UGeo.geoOffset(this.frames));
-            Polygon geo3 = (Polygon) geo1.buffer(-.001, 1000);            
+            //geo1.setUserData(UGeo.geoOffset(this.frames));
+            //Polygon geo3 = (Polygon) geo1.buffer(-.001, 1000);     
+            //new Test().mpol = gf.createMultiPolygon(new Polygon[]{geo3});           
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         } catch (Exception e) {

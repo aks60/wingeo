@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
+import startup.Test;
 
 public class AreaRectangl extends AreaSimple {
 
@@ -36,6 +37,7 @@ public class AreaRectangl extends AreaSimple {
             geo1.setUserData(UGeo.geoOffset(this.frames));
             Polygon geo2 = (Polygon) geo1.buffer(-.001);
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
+            //new Test().mpol = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaRectangl.setLocation" + toString() + e);
