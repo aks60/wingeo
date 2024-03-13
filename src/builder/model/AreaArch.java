@@ -57,11 +57,8 @@ public class AreaArch extends AreaSimple {
                     list.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
                 }
             }
-            Polygon geo1 = UGeo.newPolygon(list);
-            Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
-            //geo1.setUserData(UGeo.geoOffset(this.frames));
-            //Polygon geo3 = (Polygon) geo1.buffer(-.001, 1000);     
-            //new Test().mpol = gf.createMultiPolygon(new Polygon[]{geo3});           
+            Polygon geo1 = UGeo.newPolygon(list);   
+            Polygon geo2 = (Polygon) UGeo.geoBuffer(geo1, this.frames, 0, 1000, eArtikl.height, eArtikl.size_centr);
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         } catch (Exception e) {

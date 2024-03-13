@@ -31,13 +31,9 @@ public class AreaRectangl extends AreaSimple {
             coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
 
             //Аrea рамы
-            Polygon geo1 = gf.createPolygon(coo.toArray(new Coordinate[0]));
-            Map<Double, Double[]> hmOffset = UGeo.geoOffset(this.frames);
-            
-            geo1.setUserData(UGeo.geoOffset(this.frames));
-            Polygon geo2 = (Polygon) geo1.buffer(-.001);
+            Polygon geo1 = gf.createPolygon(coo.toArray(new Coordinate[0]));           
+            Polygon geo2 = (Polygon) UGeo.geoBuffer(geo1, this.frames, 0, 0, eArtikl.height, eArtikl.size_centr);
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
-            //new Test().mpol = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaRectangl.setLocation" + toString() + e);

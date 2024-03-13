@@ -388,9 +388,9 @@ class OffsetSegmentGenerator {
         double ux, uy;
         if (hmOffset != null) {
             Double hm[] = hmOffset.get(seg.p0.z);
-            double delta = hm[0] - hm[1];
-            ux = sideSign * (distance + delta) * dx / len;
-            uy = sideSign * (distance + delta) * dy / len;
+            double delta = hm[0] - hm[1] - hm[2];
+            ux = sideSign * (delta + distance) * dx / len;
+            uy = sideSign * (delta + distance) * dy / len;
         } else {
             ux = sideSign * distance * dx / len;
             uy = sideSign * distance * dy / len;

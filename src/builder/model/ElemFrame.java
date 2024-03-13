@@ -23,8 +23,8 @@ import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
-import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
+import startup.Test;
 
 public class ElemFrame extends ElemSimple {
 
@@ -106,9 +106,11 @@ public class ElemFrame extends ElemSimple {
 
                         Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0])); //коробка арки
                         this.area = poly;
+                        //new Test().mpol = gf.createMultiPolygon(new Polygon[]{poly});
 
                     } else { //полигон рамы   
                         this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), c2[i + 1].x, c2[i + 1].y, c2[i].x, c2[i].y);
+                       // new Test().mpol = gf.createMultiPolygon(new Polygon[]{(Polygon) this.area});
                     }
                     break;
                 }
@@ -290,7 +292,7 @@ public class ElemFrame extends ElemSimple {
         if (this.area != null) {
 
             super.paint();
-//if(this.h() == null) {
+//if(this.id != 4) {
             winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
             Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(0));
             winc.gc2d.fill(shape);

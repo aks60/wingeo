@@ -23,9 +23,9 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import common.listener.ListenerOffset;
+import dataset.Field;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Утилиты JTS
@@ -287,13 +287,21 @@ public class UGeo {
         return aff.transform(tip);
     }
 
-    public static Map<Double, Double[]> geoOffset(ArrayCom<? extends Com5t> listElem) {
+    public static Geometry geoBuffer(Geometry geom, ArrayCom<? extends Com5t> list, double offset, int quadrantSegments, Field... field) {
         Map<Double, Double[]> hm = new HashMap();
-        for (Com5t el : listElem) {
+        for (Com5t el : list) {
             Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-            hm.put(el.id, new Double[]{rec.getDbl(eArtikl.height), rec.getDbl(eArtikl.size_centr), 0.0});
+            Double data[] = {.0, .0, .0};
+            for (int i = 0; i < field.length; ++i) {
+                data[i] = rec.getDbl(field[i]);
+            }
+            hm.put(el.id, data);
         }
-        return hm;
+        geom.setUserData(hm);
+        double offset2 = (offset == 0) ? -.001 : offset;
+        int quadrantSegments2 = (quadrantSegments == 0) ? 8 : quadrantSegments;
+        Polygon geo = (Polygon) geom.buffer(offset2, quadrantSegments2);
+        return geo;
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
@@ -481,5 +489,19 @@ public class UGeo {
         }
         return null;
     }
+    
+
+    public static Map<Double, Double[]> geoOffset(ArrayCom<? extends Com5t> listElem, Field... field) {
+        Map<Double, Double[]> hm = new HashMap();
+        for (Com5t el : listElem) {
+            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+            Double data[] = {.0, .0, .0};
+            for (int i = 0; i < field.length; ++i) {
+                data[i] = rec.getDbl(field[i]);
+            }
+            hm.put(el.id, data);
+        }
+        return hm;
+    }    
 // </editor-fold>    
 }

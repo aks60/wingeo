@@ -15,6 +15,7 @@ import com.google.gson.JsonParser;
 import common.ArrayCom;
 import common.eProp;
 import dataset.Conn;
+import domain.eArtikl;
 import enums.Type;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -400,9 +401,8 @@ public class Test {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D gc2d = (Graphics2D) g;
-                //gc2d.rotate(Math.toRadians(-180), 0, 0);
-                gc2d.translate(+40, -40);
-                gc2d.scale(2.0, 2.0);
+                gc2d.translate(40, -40);
+                //gc2d.scale(2.0, 2.0);
                 //gc2d.scale(.4, .4);
 
                 if (mlin != null) {
@@ -445,6 +445,8 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
+        //ПРИМЕР - new Test().mpol = gf.createMultiPolygon(new Polygon[]{geo1, geo2}); 
+        
         //draw6();
     }
 
@@ -473,7 +475,7 @@ public class Test {
         list.add(new Coordinate(frames.get(3).x1(), frames.get(3).y1(), frames.get(3).id));
 
         Polygon geo1 = UGeo.newPolygon(list);
-        Map<Double, Double[]> hmOffset2 = UGeo.geoOffset(frames);
+        Map<Double, Double[]> hmOffset2 = UGeo.geoOffset(frames, eArtikl.height, eArtikl.size_centr);
         geo1.setUserData(hmOffset);
 
         Polygon geo2 = (Polygon) geo1.buffer(-.001);

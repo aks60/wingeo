@@ -106,14 +106,10 @@ public class ElemGlass extends ElemSimple {
             ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             Coordinate[] coo = owner.area.getGeometryN(0).getCoordinates();
 
-            //Внешний полигон створки/рамы для прорисовки 
-            //this.area = UGeo.geoPadding(owner.area, list, 0);
-            owner.area.setUserData(UGeo.geoOffset(list));
-            this.area = owner.area.buffer(-.001, 1000);
+            this.area  = (Polygon) UGeo.geoBuffer(owner.area, list, -6.5, 1000, eArtikl.height, eArtikl.size_centr, eArtikl.size_falz);
+            //new Test().mpol = gf.createMultiPolygon(new Polygon[]{(Polygon)  this.area});
 
-            if (coo.length > 9) {
-                new Test().mpol = gf.createMultiPolygon(new Polygon[]{(Polygon) owner.area, (Polygon) this.area});
-            }
+
             Envelope env = this.area.getGeometryN(0).getEnvelopeInternal();
             spcRec.width = env.getWidth();
             spcRec.height = env.getHeight();
