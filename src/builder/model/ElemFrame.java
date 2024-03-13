@@ -106,7 +106,7 @@ public class ElemFrame extends ElemSimple {
 
                         Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0])); //коробка арки
                         this.area = poly;
-                        //new Test().mpol = gf.createMultiPolygon(new Polygon[]{poly});
+                        new Test().mpol = gf.createMultiPolygon(new Polygon[]{poly});
 
                     } else { //полигон рамы   
                         this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), c2[i + 1].x, c2[i + 1].y, c2[i].x, c2[i].y);

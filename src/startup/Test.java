@@ -96,14 +96,14 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            frame(args);
+            //frame(args);
             //wincalc();
             //param();
             //query();
             //json();
             //uid();
             //script();
-            //geom();
+            geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -357,26 +357,29 @@ public class Test {
         Point point2 = gf.createPoint(new Coordinate(0, 500));
         LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
         LineString line2 = gf.createLineString(coord2);
-        LineSegment segm1 = new LineSegment(1, 1, 0, 1);
+        LineSegment segm1 = new LineSegment(10, 10, 80, 80);
         LineSegment segm2 = new LineSegment(0, 10, 12, 10);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
 
-        double ang = Math.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(-100, -100)));
-        System.out.println(ang);
-        
-        if (ang >= 45 && ang <= 135) { //LEFT, VERT
-            System.out.println("LEFT, VERT");
-
-        } else if (ang >= -45 && ang <= +45) { //BOTT, HORIZ
-            System.out.println("BOTT, HORIZ");
-
-        } else if (ang <= -45 && ang >= -135) { //RIGH
-            System.out.println("RIGH");
-
-        } else if (ang <= -135 && ang >= -180 || ang >= 135 && ang <= 180) { //TOP
-            System.out.println("TOP");
-        }
+//        double ang = Math.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(-100, -100)));
+//        System.out.println(ang);
+//        
+//        if (ang >= 45 && ang <= 135) { //LEFT, VERT
+//            System.out.println("LEFT, VERT");
+//
+//        } else if (ang >= -45 && ang <= +45) { //BOTT, HORIZ
+//            System.out.println("BOTT, HORIZ");
+//
+//        } else if (ang <= -45 && ang >= -135) { //RIGH
+//            System.out.println("RIGH");
+//
+//        } else if (ang <= -135 && ang >= -180 || ang >= 135 && ang <= 180) { //TOP
+//            System.out.println("TOP");
+//        }
+          LineSegment seg1 = new LineSegment(10, 10, 80, 80);
+          LineSegment seg2 = seg1.offset(10);
+          System.out.println(seg2);
     }
 
     public static void frame(String[] args) {
