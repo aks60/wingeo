@@ -23,6 +23,8 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import common.listener.ListenerOffset;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -457,6 +459,16 @@ public class UGeo {
         aff.setToRotation(Math.toRadians(angl), tipX, tipY);
         return aff.transform(tip);
     }
+    
+    public static Map<Double, Double[]> geoOffset(ArrayCom<ElemSimple> listElem) {
+           Map<Double, Double[]> hm = new HashMap();
+           for (ElemSimple el : listElem) {
+             Record rec = el.artiklRecAn;
+             hm.put(el.id, new Double[] {rec.getDbl(eArtikl.height), rec.getDbl(eArtikl.size_centr)});
+           }
+           return hm;
+    }
+    
 // <editor-fold defaultstate="collapsed" desc="TEMP">  
 
     //@deprecated
