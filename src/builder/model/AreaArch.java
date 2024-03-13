@@ -59,6 +59,8 @@ public class AreaArch extends AreaSimple {
             //list.add(list.get(0));
             Polygon geo1 = UGeo.newPolygon(list);
             Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
+            geo1.setUserData(UGeo.geoOffset(this.frames));
+            Polygon geo3 = (Polygon) geo1.buffer(-.001, 1000);            
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         } catch (Exception e) {

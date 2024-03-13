@@ -477,7 +477,7 @@ public class Test {
         Map<Double, Double[]> hmOffset2 = UGeo.geoOffset(frames);
         geo1.setUserData(hmOffset);
 
-        Polygon geo2 = (Polygon) geo1.buffer(-20);
+        Polygon geo2 = (Polygon) geo1.buffer(-.001);
         this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
     }
 
