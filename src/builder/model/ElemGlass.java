@@ -87,8 +87,7 @@ public class ElemGlass extends ElemSimple {
     //Внутренний полигон створки/рамы для прорисовки
     @Override
     public void setLocation() {
-        Polygon geo = UGeo.geoPadding(owner.area.getGeometryN(0), winc.listElem, 0);
-        //Geometry geo = UGeo.geoBuffer(owner.area.getGeometryN(0), winc.listElem, 0, 1000, eArtikl.height, eArtikl.size_centr);
+        Geometry geo = UGeo.geoBuffer(owner.area.getGeometryN(0), winc.listElem, 0, 1000, eArtikl.height, eArtikl.size_centr);
         Envelope env = geo.getEnvelopeInternal();
         setDimension(env.getMinX(), env.getMinY(), env.getMaxX(), env.getMaxY());
         this.area = geo;

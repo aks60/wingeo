@@ -22,6 +22,7 @@ import enums.TypeOpen2;
 import enums.UseSide;
 import java.awt.Shape;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
@@ -164,14 +165,9 @@ public class AreaStvorka extends AreaSimple {
             this.areaBox = (winc.listElem.filter(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).isEmpty()) ? owner.area : this.area;
 
             //Полигон створки с учётом нахлёста 
-            Object o3 = winc.syssizRec.getDbl(eSyssize.falz);
-            Object o4 = winc.syssizRec.getDbl(eSyssize.naxl);
-            
-//            double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-//            Polygon geo1 = UGeo.geoPadding(this.areaBox, winc.listElem, dh); //полигон векторов сторон створки с учётом нахл. 
-            
             Map<Double, Double[]> hm = new HashMap();
-            winc.listElem.forEach(e -> hm.put(e.id, new Double[] {e.artiklRecAn.getDbl(eArtikl.height)
+            ArrayCom<ElemSimple> listElem = winc.listElem.filter(Type.FRAME_SIDE, Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP);
+            listElem.forEach(e -> hm.put(e.id, new Double[] {e.artiklRecAn.getDbl(eArtikl.height)
                     , e.artiklRecAn.getDbl(eArtikl.size_centr) + winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl), .0}));
             this.areaBox.getGeometryN(0).setUserData(hm);
             Polygon geo1 = (Polygon) this.areaBox.getGeometryN(0).buffer(-.001, 0);
