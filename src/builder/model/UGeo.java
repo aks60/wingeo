@@ -298,7 +298,7 @@ public class UGeo {
             hm.put(el.id, data);
         }
         geom.setUserData(hm);
-        double offset2 = (offset == 0) ? -.001 : offset;
+        double offset2 = (offset == 0) ? -.000001 : offset;
         int quadrantSegments2 = (quadrantSegments == 0) ? 8 : quadrantSegments;
         Polygon geo = (Polygon) geom.buffer(offset2, quadrantSegments2);
         return geo;
@@ -368,87 +368,6 @@ public class UGeo {
                             do {
                                 segm2b = UGeo.getSegment(poly, ++k);
                                 segm2c = segm2b.offset(-w2);
-                                cros2 = segm2c.intersection(segm1a);
-
-                            } while (cros2 == null);
-                            i = k;
-                            cros2.z = e2.id;
-                            out.add(cros2);
-                        }
-                    }
-                }
-            }
-            if (out.get(0).equals(out.get(out.size() - 1)) == false) {
-                out.add(out.get(0));
-            }
-            Polygon g = Com5t.gf.createPolygon(out.toArray(new Coordinate[0]));
-            return g;
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.geoPadding() " + e);
-            return null;
-        }
-    }
-
-    public static Polygon geoPadding(Geometry poly, ArrayCom<? extends Com5t> list, double amend, ListenerOffset listenerOffset) {
-        LineSegment segm1, segm2, segm1a = null, segm2a = null, segm1b, segm2b, segm1c, segm2c;
-        Coordinate cros1 = null, cros2 = null;
-        List<Coordinate> out = new ArrayList<Coordinate>();
-        try {
-            poly = poly.getGeometryN(0);
-            int j = 999, k = 999;
-            Coordinate[] coo = poly.copy().getCoordinates();
-            for (int i = 0; i < coo.length; i++) {
-
-                //Сегменты границ полигона
-                segm1 = UGeo.getSegment(poly, i - 1);
-                segm2 = UGeo.getSegment(poly, i);
-
-                //Получим ширину сегментов             
-                Com5t e1 = list.get(segm1.p0.z), e2 = list.get(segm2.p0.z);
-                double dxy[] = {.0, .0};
-                if (listenerOffset == null) {
-                    Record rec1 = (e1.artiklRec == null) ? eArtikl.virtualRec() : e1.artiklRec;
-                    Record rec2 = (e2.artiklRec == null) ? eArtikl.virtualRec() : e2.artiklRec;
-                    dxy[0] = (rec1.getDbl(eArtikl.height) - rec1.getDbl(eArtikl.size_centr)) - amend;
-                    dxy[1] = (rec2.getDbl(eArtikl.height) - rec2.getDbl(eArtikl.size_centr)) - amend;
-                } else {
-                    int n = (i == 0 || i == coo.length - 1) ? coo.length - 2 : i - 1;
-                    dxy = listenerOffset.offset(e1, e2, i, n);
-                }
-
-                //Смещение сегментов относительно границ
-                if (segm1.getLength() != 0 && segm2.getLength() != 0) {
-                    segm1a = segm1.offset(-dxy[0]);
-                    segm2a = segm2.offset(-dxy[1]);
-
-                    //Точка пересечения внутренних сегментов
-                    Coordinate cross = segm2a.intersection(segm1a);
-
-                    if (cross != null && i < j - 1) {
-                        cross.z = e2.id;
-                        out.add(cross);
-
-                    } else { //обрезаем концы арки
-
-                        if (cros1 == null && e1.h() != null) { //начало
-                            j = i - 1;
-                            do {
-                                segm1b = UGeo.getSegment(poly, --j);
-                                segm1c = segm1b.offset(-dxy[0]);
-                                cros1 = segm2a.intersection(segm1c);
-
-                            } while (cros1 == null);
-                            cros1.z = e2.id;
-                            out.add(cros1);
-                            j = (j < 0) ? --j + coo.length : --j; //для обрезания кончика арки
-
-                        }
-                        if (cros2 == null && e2.h() != null) {  //конец
-                            k = i;
-                            do {
-                                segm2b = UGeo.getSegment(poly, ++k);
-                                segm2c = segm2b.offset(-dxy[1]);
                                 cros2 = segm2c.intersection(segm1a);
 
                             } while (cros2 == null);

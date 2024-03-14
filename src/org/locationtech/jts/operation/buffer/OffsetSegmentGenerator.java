@@ -380,7 +380,7 @@ class OffsetSegmentGenerator {
     private void computeOffsetSegment(LineSegment seg, int side, double distance, LineSegment offset) {
 
         int sideSign = side == Position.LEFT ? 1 : -1;
-        distance = (distance == Math.abs(.001)) ? 0 : distance;
+        distance = (distance == Math.abs(-.000001)) ? 0 : distance;
         double dx = seg.p1.x - seg.p0.x;
         double dy = seg.p1.y - seg.p0.y;
         double len = Math.hypot(dx, dy);

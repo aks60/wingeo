@@ -4,6 +4,7 @@ import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import common.ArrayCom;
+import dataset.Field;
 import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
@@ -21,7 +22,6 @@ import enums.TypeOpen1;
 import enums.TypeOpen2;
 import enums.UseSide;
 import java.awt.Shape;
-import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
@@ -164,8 +164,10 @@ public class AreaStvorka extends AreaSimple {
 
             //Полигон створки с учётом нахлёста 
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            //Polygon geo1 = UGeo.geoPadding(this.areaBox, winc.listElem, dh); //полигон векторов сторон створки с учётом нахл. 
-            Polygon geo1 = (Polygon) UGeo.geoBuffer((Polygon) this.areaBox, winc.listElem, -dh, 0);
+            Polygon geo1 = UGeo.geoPadding(this.areaBox, winc.listElem, dh); //полигон векторов сторон створки с учётом нахл. 
+            double dh2 = winc.syssizRec.getDbl(eSyssize.naxl);
+            //List<Double> list = winc.listElem.stream().filter(e -> )
+            Polygon geoTest = (Polygon) UGeo.geoBuffer(this.areaBox.getGeometryN(0), winc.listElem, 0, 0, eArtikl.height, eArtikl.size_centr, eArtikl.size_falz);
 
             //Если стороны ств. ещё не созданы 
             if (this.frames.isEmpty()) {
