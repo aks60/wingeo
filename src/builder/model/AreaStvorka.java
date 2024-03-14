@@ -4,7 +4,6 @@ import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import common.ArrayCom;
-import dataset.Field;
 import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
@@ -22,6 +21,8 @@ import enums.TypeOpen1;
 import enums.TypeOpen2;
 import enums.UseSide;
 import java.awt.Shape;
+import java.util.HashMap;
+import java.util.Map;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
@@ -163,11 +164,17 @@ public class AreaStvorka extends AreaSimple {
             this.areaBox = (winc.listElem.filter(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).isEmpty()) ? owner.area : this.area;
 
             //Полигон створки с учётом нахлёста 
+            Object o3 = winc.syssizRec.getDbl(eSyssize.falz);
+            Object o4 = winc.syssizRec.getDbl(eSyssize.naxl);
+            
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
             Polygon geo1 = UGeo.geoPadding(this.areaBox, winc.listElem, dh); //полигон векторов сторон створки с учётом нахл. 
-            double dh2 = winc.syssizRec.getDbl(eSyssize.naxl);
-            //List<Double> list = winc.listElem.stream().filter(e -> )
-            Polygon geoTest = (Polygon) UGeo.geoBuffer(this.areaBox.getGeometryN(0), winc.listElem, 0, 0, eArtikl.height, eArtikl.size_centr, eArtikl.size_falz);
+            
+            Map<Double, Double[]> hm = new HashMap();
+            winc.listElem.forEach(e -> hm.put(e.id, new Double[] {e.artiklRecAn.getDbl(eArtikl.height)
+                    , e.artiklRecAn.getDbl(eArtikl.size_centr) + winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl), .0}));
+            this.areaBox.getGeometryN(0).setUserData(hm);
+            Polygon geo777 = (Polygon) this.areaBox.getGeometryN(0).buffer(-.001, 0);
 
             //Если стороны ств. ещё не созданы 
             if (this.frames.isEmpty()) {
