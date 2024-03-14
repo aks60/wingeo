@@ -167,14 +167,14 @@ public class AreaStvorka extends AreaSimple {
             Object o3 = winc.syssizRec.getDbl(eSyssize.falz);
             Object o4 = winc.syssizRec.getDbl(eSyssize.naxl);
             
-            double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            Polygon geo1 = UGeo.geoPadding(this.areaBox, winc.listElem, dh); //полигон векторов сторон створки с учётом нахл. 
+//            double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
+//            Polygon geo1 = UGeo.geoPadding(this.areaBox, winc.listElem, dh); //полигон векторов сторон створки с учётом нахл. 
             
             Map<Double, Double[]> hm = new HashMap();
             winc.listElem.forEach(e -> hm.put(e.id, new Double[] {e.artiklRecAn.getDbl(eArtikl.height)
                     , e.artiklRecAn.getDbl(eArtikl.size_centr) + winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl), .0}));
             this.areaBox.getGeometryN(0).setUserData(hm);
-            Polygon geo777 = (Polygon) this.areaBox.getGeometryN(0).buffer(-.001, 0);
+            Polygon geo1 = (Polygon) this.areaBox.getGeometryN(0).buffer(-.001, 0);
 
             //Если стороны ств. ещё не созданы 
             if (this.frames.isEmpty()) {

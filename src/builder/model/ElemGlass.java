@@ -10,6 +10,7 @@ import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
+import domain.eSyssize;
 import domain.eSystree;
 import enums.PKjson;
 import enums.Type;
@@ -86,8 +87,8 @@ public class ElemGlass extends ElemSimple {
     //Внутренний полигон створки/рамы для прорисовки
     @Override
     public void setLocation() {
-        //Polygon geo = UGeo.geoPadding(owner.area.getGeometryN(0), winc.listElem, 0);
-        Geometry geo = UGeo.geoBuffer(owner.area.getGeometryN(0), winc.listElem, 0, 1000, eArtikl.height, eArtikl.size_centr);
+        Polygon geo = UGeo.geoPadding(owner.area.getGeometryN(0), winc.listElem, 0);
+        //Geometry geo = UGeo.geoBuffer(owner.area.getGeometryN(0), winc.listElem, 0, 1000, eArtikl.height, eArtikl.size_centr);
         Envelope env = geo.getEnvelopeInternal();
         setDimension(env.getMinX(), env.getMinY(), env.getMaxX(), env.getMaxY());
         this.area = geo;
@@ -104,10 +105,10 @@ public class ElemGlass extends ElemSimple {
             //Фича определения gzazo и gaxis на раннем этапе построения. 
             new SpcFilling(winc, true).calc(this);
 
-            ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
-            Coordinate[] coo = owner.area.getGeometryN(0).getCoordinates();
+            //ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+            //Coordinate[] coo = owner.area.getGeometryN(0).getCoordinates();
 
-            this.area  = (Polygon) UGeo.geoBuffer(owner.area, list, -6.5, 1000, eArtikl.height, eArtikl.size_centr, eArtikl.size_falz);
+            this.area  = (Polygon) UGeo.geoBuffer(owner.area.getGeometryN(0), winc.listElem, -gzazo, 1000, eArtikl.height, eArtikl.size_centr, eArtikl.size_falz);
             //new Test().mpol = gf.createMultiPolygon(new Polygon[]{(Polygon)  this.area});
 
 
