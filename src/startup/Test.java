@@ -387,33 +387,24 @@ public class Test {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D gc2d = (Graphics2D) g;
-                //gc2d.rotate(Math.toRadians(-180), 0, 0);
-                //gc2d.translate(-2000, -200);
-                gc2d.scale(.4, .4);
+                gc2d.translate(0, -100);
+                gc2d.scale(1, 1);
 
                 if (mlin != null) {
                     gc2d.setColor(Color.BLUE);
                     Shape shape = new ShapeWriter().toShape(mlin);
                     gc2d.draw(shape);
-//                    g2.fill(shape);
                 }
                 if (mpol != null) {
                     gc2d.setColor(Color.RED);
                     Shape shape = new ShapeWriter().toShape(mpol);
                     gc2d.draw(shape);
                 }
-
-                //gc2d.rotate(Math.PI);
-//                Font font = gc2d.getFont();
-//                int textwidth = (int) (font.getStringBounds(".", gc2d.getFontRenderContext()).getWidth());
-//                int textheight = (int) (font.getStringBounds("1", gc2d.getFontRenderContext()).getHeight());
-//                System.out.println("textwidth - " + textwidth);
-//                System.out.println("textheight - " + textheight);
             }
 
             @Override
             public java.awt.Dimension getPreferredSize() {
-                return new java.awt.Dimension(600, 600);
+                return new java.awt.Dimension(1400, 600);
             }
         };
         frame.add(p);
@@ -431,26 +422,68 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        draw2();
+        draw6();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
-    private void draw5()  {
-//                gc2d.translate(-2000, -200);
-//                gc2d.scale(2, 2);        
-//        LineString geo1 = UGeo.newLineStr(1233.4, 230.2, 1227.9, 225.2);
-//        LineString geo2 = UGeo.newLineStr(1227.9, 225.2, 1222.4, 220.2); 
-//        
-//        LineString geo1a = UGeo.newLineStr(1200.7, 266.0, 1195.2, 261.0);
-//        LineString geo2a = UGeo.newLineStr(1195.2, 261.0, 1189.7, 256.0); 
-//    
-//        this.mlin = gf.createMultiLineString(new LineString[]{geo1, geo1a});
-//        this.mpol = gf.createMultiLineString(new LineString[]{geo2, geo2a});
+    private void draw6()  {
+        double M = 370;
+        GeometricShapeFactory gsf = new GeometricShapeFactory();        
+        ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
+        ArrayCom<Com5t> frames = new ArrayCom();
+        frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
+        frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, M)));
+        frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, M)));
+        frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
         
-        LineString geo1 = UGeo.newLineStr(60, 60, 120, 60);
-        aff.setToRotation(Math.toRadians(-30), 0, 0); //угол ротации  
-        Geometry geo2 = aff.transform(geo1);        
-        this.mlin = gf.createMultiLineString(new LineString[]{geo1, (LineString) geo2});
+        LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
+        LineString arc1 = UGeo.newLineArch(s1.p1.x, s1.p0.x, s1.p0.y, 300, 4);
+        Coordinate arr[] = arc1.getCoordinates();
+        List.of(arr).forEach(c -> c.z = 4);        
+        
+        list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
+        list.add(new Coordinate(frames.get(1).x1(), frames.get(1).y1(), frames.get(1).id));
+        list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
+        //list.add(new Coordinate(frames.get(3).x1(), frames.get(3).y1(), frames.get(3).id));
+        list.addAll(List.of(arr));
+
+        this.mpol = UGeo.newPolygon(list);
+        this.mlin = UGeo.geoPadding(this.mpol, frames, 0);
+        
+    }  
+    
+    private void draw5()  {      
+        ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
+        ArrayCom<Com5t> frames = new ArrayCom();
+        frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
+        frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, 350.0)));
+        frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, 350.0)));
+        frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
+        
+        //Траесформация линии в горизонт
+        LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
+        //s1.normalize();
+        //double H = 300.0, ANG = Math.toDegrees(s1.angle());
+        //aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации 
+        //LineString l1 = (LineString) aff.transform(s1.toGeometry(gf));
+        //LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H, 4);  //созд. арки на гортзонтали 
+        LineString arc1 = UGeo.newLineArch(s1.p1.x, s1.p0.x, s1.p0.y, 300, 4); 
+        Coordinate arr1[] = arc1.getCoordinates();
+        List.of(arr1).forEach(c -> c.z = 4);
+
+        //Обратная трансформация арки
+//        aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
+//        Geometry arc2 = aff.transform(arc1);
+//        Coordinate arr2[] = arc2.getCoordinates(); //Arrays.copyOf(arc2.getCoordinates(), arc2.getCoordinates().length);
+//        List.of(arr2).forEach(c -> c.z = 4);
+        
+        list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
+        list.add(new Coordinate(frames.get(1).x1(), frames.get(1).y1(), frames.get(1).id));
+        list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
+        list.addAll(List.of(arr1));
+
+        this.mpol = UGeo.newPolygon(list);
+        this.mlin = UGeo.geoPadding(this.mpol, frames, 20);
         
     }
     

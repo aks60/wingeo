@@ -197,38 +197,38 @@ public class UGeo {
                     Coordinate cross = segm1a.intersection(segm0a);
 
                     if (cross != null && i < j - 1) {
-                        cross.z = segm0.p0.z;
+                        cross.z = segm1.p0.z;
                         out.add(cross);
                     } 
                     
-//                    else { //обрезаем концы арки
+                    else { //обрезаем концы арки
 
-//                        if (cros1 == null && e1.h() != null) { //хвост
-//                            j = i - 1;
-//                            do {
-//                                segm0b = UGeo.getSegment(poly, --j);
-//                                segm0c = segm0b.offset(-w1);
-//                                cros1 = segm1a.intersection(segm0c);
-//
-//                            } while (cros1 == null);
-//                            cros1.z = e2.id;
-//                            out.add(cros1);
-//                            j = (j < 0) ? --j + coo.length : --j; //для обрезания кончика арки
-//
-//                        }
-//                        if (cros2 == null && e2.h() != null) {  //кончик
-//                            k = i;
-//                            do {
-//                                segm1b = UGeo.getSegment(poly, ++k);
-//                                segm1c = segm1b.offset(-w2);
-//                                cros2 = segm1c.intersection(segm0a);
-//
-//                            } while (cros2 == null);
-//                            i = k;
-//                            cros2.z = e2.id;
-//                            out.add(cros2);
-//                        }
-//                    }
+                        if (cros1 == null && segm1.p0.z == 4) { //хвост
+                            j = i - 1;
+                            do {
+                                segm0b = UGeo.getSegment(poly, --j);
+                                segm0c = segm0b.offset(-w1);
+                                cros1 = segm1a.intersection(segm0c);
+
+                            } while (cros1 == null);
+                            cros1.z = segm1.p0.z;
+                            out.add(cros1);
+                            j = (j < 0) ? --j + coo.length : --j; //для обрезания кончика арки
+
+                        }
+                        if (cros2 == null && segm1.p0.z == 4) {  //кончик
+                            k = i;
+                            do {
+                                segm1b = UGeo.getSegment(poly, ++k);
+                                segm1c = segm1b.offset(-w2);
+                                cros2 = segm1c.intersection(segm0a);
+
+                            } while (cros2 == null);
+                            i = k;
+                            cros2.z = segm1.p0.z;
+                            out.add(cros2);
+                        }
+                    }
                 }
             }
             if (out.get(0).equals(out.get(out.size() - 1)) == false) {
@@ -264,7 +264,7 @@ public class UGeo {
                 Record rec2 = (e2.artiklRec == null) ? eArtikl.virtualRec() : e2.artiklRec;
                 double w1 = (rec1.getDbl(eArtikl.height) - rec1.getDbl(eArtikl.size_centr)) - amend;
                 double w2 = (rec2.getDbl(eArtikl.height) - rec2.getDbl(eArtikl.size_centr)) - amend;
-
+                System.out.println(w1 + "  " + w2);
                 //Смещение сегментов относительно границ
                 if (segm1.getLength() != 0 && segm2.getLength() != 0) {
                     segm1a = segm1.offset(-w1);
