@@ -96,14 +96,14 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            //frame(args);
+            frame(args);
             //wincalc();
             //param();
             //query();
             //json();
             //uid();
             //script();
-            geom();
+            //geom();
 
         } catch (Exception e) {
             System.err.println("AKSENOV TEST-MAIN: " + e);
@@ -406,7 +406,7 @@ public class Test {
                 Graphics2D gc2d = (Graphics2D) g;
                 gc2d.translate(40, -40);
                 //gc2d.scale(2.0, 2.0);
-                //gc2d.scale(.4, .4);
+                gc2d.scale(.4, .4);
 
                 if (mlin != null) {
                     gc2d.setColor(Color.BLUE);
@@ -450,7 +450,7 @@ public class Test {
 
         //ПРИМЕР - new Test().mpol = gf.createMultiPolygon(new Polygon[]{geo1, geo2}); 
         
-        //draw6();
+        draw4();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
@@ -506,12 +506,11 @@ public class Test {
         list.forEach(s -> list2.addAll(List.of(s, s)));
 
         double distance[] = {40, 40, 80, 80, 40};
-        double distanc2[] = {40, 40, 80, 80};
 
         LineString geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
         mpol = geo1;
 
-        Geometry gb = VariableBuffer.buffer(geo1, distance);
+        Geometry gb = VariableBuffer.buffer(geo1, 20, 40, 200);
         Polygon geo2 = (Polygon) gb;
 
         mlin = gf.createPolygon(geo2.getInteriorRingN(0));

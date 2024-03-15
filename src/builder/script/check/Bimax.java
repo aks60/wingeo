@@ -168,9 +168,9 @@ public final class Bimax {
                     .addElem(new GsonElem(Type.GLASS, "{artglasID:4663}")); //или 4x12x4x12x4
 
             //Тут просочилась ручка не подходящая по параметру. Возможно ошибка ПрофСтроя4}
-        } else if (prj == 601010) { 
-            rootGson = new GsonRoot(427852, prj, 1, 54, Type.RECTANGL, "KBE\\KBE Эксперт\\1 ОКНА\\Открывание внутрь (ств. Z77)"
-                    , 1009, 1009, 1009, "{ioknaParam:[-8545]}"); //параметр подогнал для ps спецификации
+        } else if (prj == 601010) {
+            rootGson = new GsonRoot(427852, prj, 1, 54, Type.RECTANGL, "KBE\\KBE Эксперт\\1 ОКНА\\Открывание внутрь (ств. Z77)",
+                     1009, 1009, 1009, "{ioknaParam:[-8545]}"); //параметр подогнал для ps спецификации
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 0.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1400.0))
@@ -214,7 +214,17 @@ public final class Bimax {
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 240.0, 1300.0, 240.0));
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-//            rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
+
+        } else if (prj == 604009) {
+            rootGson = new GsonRoot(427825, prj, 1, 8, Type.ARCH, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 10009, 1009);
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 300.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1500.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0));
+
+            rootGson.addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 343.5, 1300.0, 343.5));
+            rootGson.addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 508035) { //СМ.PS
             rootGson = new GsonRoot(426804, prj, 1, 99, Type.ARCH, "Rehau / Blitz / 1 ОКНА / Открывание внутрь (ств. Z60)", 1009, 1009, 1009);

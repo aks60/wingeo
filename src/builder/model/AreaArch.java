@@ -38,18 +38,18 @@ public class AreaArch extends AreaSimple {
                     LineSegment segm = UGeo.normalize(new LineSegment(frame.x1(), frame.y1(), frame.x2(), frame.y2()));
                     double ANG = Math.toDegrees(segm.angle());
 
-                    if (ANG == 0) {
+//                    if (ANG == 0) {
                         arcB = UGeo.newLineArch(segm.p0.x, segm.p1.x, segm.p0.y, frame.h(), frame.id);  //созд. арки на горизонтали 
-                    } else {
-                        //Поворот на горизонталь
-                        aff.setToRotation(Math.toRadians(-ANG), segm.p0.x, segm.p0.y);
-                        segm = UGeo.getSegment((LineString) aff.transform(segm.toGeometry(gf)));//трансформация линии в горизонт
-                        arcA = UGeo.newLineArch(segm.p0.x, segm.p1.x, segm.p0.y, frame.h(), frame.id);  //созд. арки на гортзонтали   
-
-                        //Обратный поворот
-                        aff.setToRotation(Math.toRadians(ANG), segm.p0.x, segm.p0.y);
-                        arcB = aff.transform(arcA);
-                    }
+//                    } else {
+//                        //Поворот на горизонталь
+//                        aff.setToRotation(Math.toRadians(-ANG), segm.p0.x, segm.p0.y);
+//                        segm = UGeo.getSegment((LineString) aff.transform(segm.toGeometry(gf)));//трансформация линии в горизонт
+//                        arcA = UGeo.newLineArch(segm.p0.x, segm.p1.x, segm.p0.y, frame.h(), frame.id);  //созд. арки на гортзонтали   
+//
+//                        //Обратный поворот
+//                        aff.setToRotation(Math.toRadians(ANG), segm.p0.x, segm.p0.y);
+//                        arcB = aff.transform(arcA);
+//                    }
                     List.of(arcB.getCoordinates()).forEach(c -> c.setZ(frame.id));
                     list.addAll(List.of(arcB.getCoordinates()));
 
@@ -57,8 +57,10 @@ public class AreaArch extends AreaSimple {
                     list.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
                 }
             }
-            Polygon geo1 = UGeo.newPolygon(list);   
-            Polygon geo2 = (Polygon) UGeo.geoBuffer(geo1, this.frames, 0, 1000, eArtikl.height, eArtikl.size_centr);
+            Polygon geo1 = UGeo.newPolygon(list); 
+            Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
+//            Polygon geo3 = (Polygon) UGeo.geoBuffer(geo1, this.frames, 0, 1000, eArtikl.height, eArtikl.size_centr);
+//            Polygon geo4 = (Polygon) geo1.buffer(-60, 1000);
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         } catch (Exception e) {

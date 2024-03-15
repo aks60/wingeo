@@ -287,33 +287,6 @@ public class UGeo {
         return aff.transform(tip);
     }
 
-    public static Geometry geoBuffer(Geometry geom, ArrayCom<? extends Com5t> list, double offset, int quadrantSegments, Field... field) {
-        Map<Double, Double[]> hm = new HashMap();
-        for (Com5t el : list) {
-            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-            Double data[] = {.0, .0, .0};
-            for (int i = 0; i < field.length; ++i) {
-                data[i] = rec.getDbl(field[i]);
-            }
-            hm.put(el.id, data);
-        }
-        geom.setUserData(hm);
-        double offset2 = (offset == 0) ? -.000001 : offset;
-        int quadrantSegments2 = (quadrantSegments == 0) ? 8 : quadrantSegments;
-        Polygon geo = (Polygon) geom.buffer(offset2, quadrantSegments2);
-        return geo;
-    }
-
-// <editor-fold defaultstate="collapsed" desc="TEMP"> 
-    public static Map<Double, Double[]> geoOffset2(ArrayCom<ElemSimple> listElem) {
-        Map<Double, Double[]> hm = new HashMap();
-        for (ElemSimple el : listElem) {
-            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-            hm.put(el.id, new Double[]{rec.getDbl(eArtikl.height), rec.getDbl(eArtikl.size_centr)});
-        }
-        return hm;
-    }
-
     //Внутренняя обводка ареа 
     public static Polygon geoPadding(Geometry poly, ArrayCom<? extends Com5t> list, double amend) {
         LineSegment segm1, segm2, segm1a = null, segm2a = null, segm1b, segm2b, segm1c, segm2c;
@@ -388,6 +361,33 @@ public class UGeo {
             System.err.println("Ошибка:UGeo.geoPadding() " + e);
             return null;
         }
+    }
+
+    public static Geometry geoBuffer(Geometry geom, ArrayCom<? extends Com5t> list, double offset, int quadrantSegments, Field... field) {
+        Map<Double, Double[]> hm = new HashMap();
+        for (Com5t el : list) {
+            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+            Double data[] = {.0, .0, .0};
+            for (int i = 0; i < field.length; ++i) {
+                data[i] = rec.getDbl(field[i]);
+            }
+            hm.put(el.id, data);
+        }
+        geom.setUserData(hm);
+        double offset2 = (offset == 0) ? -.000001 : offset;
+        int quadrantSegments2 = (quadrantSegments == 0) ? 8 : quadrantSegments;
+        Polygon geo = (Polygon) geom.buffer(offset2, quadrantSegments2);
+        return geo;
+    }
+
+// <editor-fold defaultstate="collapsed" desc="TEMP"> 
+    public static Map<Double, Double[]> geoOffset2(ArrayCom<ElemSimple> listElem) {
+        Map<Double, Double[]> hm = new HashMap();
+        for (ElemSimple el : listElem) {
+            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+            hm.put(el.id, new Double[]{rec.getDbl(eArtikl.height), rec.getDbl(eArtikl.size_centr)});
+        }
+        return hm;
     }
 
     //@deprecated
