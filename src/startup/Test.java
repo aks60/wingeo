@@ -10,7 +10,6 @@ import builder.param.check.WincalcTest;
 import builder.script.GsonElem;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
@@ -26,7 +25,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -387,8 +388,8 @@ public class Test {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D gc2d = (Graphics2D) g;
-                gc2d.translate(0, -100);
-                gc2d.scale(1, 1);
+                gc2d.translate(20, -20);
+                gc2d.scale(.4, .4);
 
                 if (mlin != null) {
                     gc2d.setColor(Color.BLUE);
@@ -404,7 +405,7 @@ public class Test {
 
             @Override
             public java.awt.Dimension getPreferredSize() {
-                return new java.awt.Dimension(1400, 600);
+                return new java.awt.Dimension(800, 600);
             }
         };
         frame.add(p);
@@ -426,6 +427,39 @@ public class Test {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
+    private void draw7() {
+        double M = 1500;
+        GeometricShapeFactory gsf = new GeometricShapeFactory();        
+        ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
+        ArrayCom<Com5t> frames = new ArrayCom();
+        frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
+        frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, M)));
+        frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, M)));
+        frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
+        
+        LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
+        LineString arc1 = UGeo.newLineArch(s1.p1.x, s1.p0.x, s1.p0.y, 300, 4);
+        Coordinate arr[] = arc1.getCoordinates();
+        List.of(arr).forEach(c -> c.z = 4);        
+        
+        list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
+        list.add(new Coordinate(frames.get(1).x1(), frames.get(1).y1(), frames.get(1).id));
+        list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
+        list.addAll(List.of(arr));
+
+        Map<Double, Double[]> hm = new HashMap();
+        hm.put(1.0, new Double[] {68.0, .0, .0});
+        hm.put(2.0, new Double[] {68.0, .0, .0});
+        hm.put(3.0, new Double[] {68.0, .0, .0});
+        hm.put(4.0, new Double[] {68.0, .0, .0});
+        
+        Polygon geo1 = UGeo.newPolygon(list);
+        Polygon geo2 = UGeo.geoBuffer(geo1, hm, 0);
+        
+        this.mpol = geo1;
+        this.mlin = geo1.intersection(geo2);
+    }
+    
     private void draw6()  {
         double M = 370;
         GeometricShapeFactory gsf = new GeometricShapeFactory();        
@@ -446,10 +480,9 @@ public class Test {
         list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
         //list.add(new Coordinate(frames.get(3).x1(), frames.get(3).y1(), frames.get(3).id));
         list.addAll(List.of(arr));
-
-        this.mpol = UGeo.newPolygon(list);
-        this.mlin = UGeo.geoPadding(this.mpol, frames, 0);
         
+        this.mpol = UGeo.newPolygon(list);
+        this.mlin = UGeo.geoPadding(this.mpol, frames, 0);       
     }  
     
     private void draw5()  {      
