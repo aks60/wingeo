@@ -2,6 +2,7 @@ package startup;
 
 import builder.model.Com5t;
 import builder.model.UGeo;
+import static builder.model.UGeo.geoBuffer;
 import builder.param.check.ElementTest;
 import builder.param.check.FillingTest;
 import builder.param.check.FurnitureTest;
@@ -423,7 +424,7 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        draw6();
+        draw4();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
@@ -461,7 +462,7 @@ public class Test {
     }
     
     private void draw6()  {
-        double M = 370;
+        double M = 800;
         GeometricShapeFactory gsf = new GeometricShapeFactory();        
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayCom<Com5t> frames = new ArrayCom();
@@ -470,19 +471,28 @@ public class Test {
         frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, M)));
         frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
         
-        LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
-        LineString arc1 = UGeo.newLineArch(s1.p1.x, s1.p0.x, s1.p0.y, 300, 4);
-        Coordinate arr[] = arc1.getCoordinates();
-        List.of(arr).forEach(c -> c.z = 4);        
+//        LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
+//        LineString arc1 = UGeo.newLineArch(s1.p1.x, s1.p0.x, s1.p0.y, 300, 4);
+//        Coordinate arr[] = arc1.getCoordinates();
+//        List.of(arr).forEach(c -> c.z = 4);        
         
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
         list.add(new Coordinate(frames.get(1).x1(), frames.get(1).y1(), frames.get(1).id));
         list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
-        //list.add(new Coordinate(frames.get(3).x1(), frames.get(3).y1(), frames.get(3).id));
-        list.addAll(List.of(arr));
+        list.add(new Coordinate(frames.get(3).x1(), frames.get(3).y1(), frames.get(3).id));
+        //list.addAll(List.of(arr));
         
-        this.mpol = UGeo.newPolygon(list);
-        this.mlin = UGeo.geoPadding(this.mpol, frames, 0);       
+        list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
+        
+        this.mpol = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
+        //this.mlin = UGeo.geoPadding(this.mpol, frames, 0);
+        
+        double distance[] = new double[list.size()];
+        for (int i = 0; i < 10; i++) {
+           distance[i] = 68; 
+        }
+        //this.mlin = common.geoBuffer.buffer(lineStr, distance);
+        this.mlin = VariableBuffer.buffer(this.mpol, distance);
     }  
     
     private void draw5()  {      
@@ -521,10 +531,7 @@ public class Test {
     }
     
     private void draw4() {
-
-        GeometryFactory gf = new GeometryFactory();
-        GeometricShapeFactory gsf = new GeometricShapeFactory();
-        AffineTransformation aff = new AffineTransformation();
+        
         ArrayList<Coordinate> list = new ArrayList<Coordinate>();
 
         LineSegment s1 = new LineSegment(1300, 300, 0, 300);
@@ -537,19 +544,13 @@ public class Test {
         list.add(new Coordinate(1300, 300, 4));
         list.add(new Coordinate(0, 300, 1));
 
-        ArrayList<Coordinate> list2 = new ArrayList<Coordinate>();
-        list.forEach(s -> list2.addAll(List.of(s, s)));
-
         double distance[] = {40, 40, 80, 80, 40};
-        double distanc2[] = {40, 40, 80, 80};
 
-        LineString geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
+        Geometry geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
+        Geometry geo2 = VariableBuffer.buffer(geo1, distance);
+        
         mpol = geo1;
-
-        Geometry gb = VariableBuffer.buffer(geo1, distance);
-        Polygon geo2 = (Polygon) gb;
-
-        mlin = gf.createPolygon(geo2.getInteriorRingN(0));
+        mlin = geo1.intersection(geo2);
     }
 
     private void draw3() {
