@@ -2,7 +2,6 @@ package startup;
 
 import builder.model.Com5t;
 import builder.model.UGeo;
-import static builder.model.UGeo.geoBuffer;
 import builder.param.check.ElementTest;
 import builder.param.check.FillingTest;
 import builder.param.check.FurnitureTest;
@@ -424,7 +423,7 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        draw4();
+        draw6();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
@@ -471,28 +470,28 @@ public class Test {
         frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, M)));
         frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
         
-//        LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
-//        LineString arc1 = UGeo.newLineArch(s1.p1.x, s1.p0.x, s1.p0.y, 300, 4);
-//        Coordinate arr[] = arc1.getCoordinates();
-//        List.of(arr).forEach(c -> c.z = 4);        
+        LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
+        LineString arc1 = UGeo.newLineArch(s1.p1.x, s1.p0.x, s1.p0.y, 300, 4);
+        Coordinate arr[] = arc1.getCoordinates();
+        List.of(arr).forEach(c -> c.z = 4);        
         
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
         list.add(new Coordinate(frames.get(1).x1(), frames.get(1).y1(), frames.get(1).id));
         list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
-        list.add(new Coordinate(frames.get(3).x1(), frames.get(3).y1(), frames.get(3).id));
-        //list.addAll(List.of(arr));
+        //list.add(new Coordinate(frames.get(3).x1(), frames.get(3).y1(), frames.get(3).id));
+        list.addAll(List.of(arr));
         
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
-        
-        this.mpol = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
-        //this.mlin = UGeo.geoPadding(this.mpol, frames, 0);
-        
         double distance[] = new double[list.size()];
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < list.size(); i++) {
            distance[i] = 68; 
         }
-        //this.mlin = common.geoBuffer.buffer(lineStr, distance);
-        this.mlin = VariableBuffer.buffer(this.mpol, distance);
+        
+        Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
+        Geometry geo2 = VariableBuffer.buffer(geo1, distance);
+        
+        mlin = geo1;
+        mpol = gf.createLineString(geo2.get);
     }  
     
     private void draw5()  {      
@@ -547,10 +546,10 @@ public class Test {
         double distance[] = {40, 40, 80, 80, 40};
 
         Geometry geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
-        Geometry geo2 = VariableBuffer.buffer(geo1, distance);
+        Polygon geo2 = (Polygon) VariableBuffer.buffer(geo1, distance);
         
         mpol = geo1;
-        mlin = geo1.intersection(geo2);
+        mlin = gf.createPolygon(geo2.getInteriorRingN(0));       
     }
 
     private void draw3() {

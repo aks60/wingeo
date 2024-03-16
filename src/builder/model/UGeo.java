@@ -30,8 +30,6 @@ import org.locationtech.jts.geom.util.AffineTransformation;
  */
 public class UGeo {
 
-    public static PrecisionModel pm = null;
-
     public static void precisionModel(PrecisionModel pm) {
         pm = new PrecisionModel(pm);
     }
