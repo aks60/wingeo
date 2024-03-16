@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
+import common.GeoBuffer;
 import common.eProp;
 import dataset.Conn;
 import enums.Type;
@@ -488,10 +489,11 @@ public class Test {
         }
         
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
-        Geometry geo2 = VariableBuffer.buffer(geo1, distance);
+        Geometry geo2 = GeoBuffer.buffer(geo1, distance);
         
         mlin = geo1;
-        mpol = gf.createLineString(geo2.get);
+        mpol = gf.createPolygon(((Polygon) geo2).getInteriorRingN(0));
+        //gf.createPolygon(geo2.getInteriorRingN(0)); 
     }  
     
     private void draw5()  {      
