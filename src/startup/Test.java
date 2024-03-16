@@ -16,6 +16,8 @@ import common.ArrayCom;
 import common.GeoBuffer;
 import common.eProp;
 import dataset.Conn;
+import dataset.Record;
+import domain.eArtikl;
 import enums.Type;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -388,8 +390,8 @@ public class Test {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D gc2d = (Graphics2D) g;
-                gc2d.translate(20, -10);
-                gc2d.scale(.4, .4);
+                gc2d.translate(80, -20);
+                gc2d.scale(.5, .5);
 
                 if (mlin != null) {
                     gc2d.setColor(Color.BLUE);
@@ -479,16 +481,25 @@ public class Test {
         list.add(new Coordinate(frames.get(1).x1(), frames.get(1).y1(), frames.get(1).id));
         list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
         //list.add(new Coordinate(frames.get(3).x1(), frames.get(3).y1(), frames.get(3).id));
-        list.addAll(List.of(arr));
-        
+        list.addAll(List.of(arr));        
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
-        double distance[] = new double[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-           distance[i] = 68; 
-        }
-        
+      
+//        Map<Double, Double> hm = new HashMap();
+//        for (Com5t el : list) {
+//            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+//            Double delta = rec.getDbl(field[0]);
+//            for (int i = 1; i < field.length; ++i) {
+//                delta = delta - rec.getDbl(field[i]);
+//            }
+//            hm.put(el.id, delta + offset);
+//        }
+        Map<Double, Double> hm = new HashMap();
+        hm.put(1.0, 32.0);
+        hm.put(2.0, 68.0);
+        hm.put(3.0, 32.0);
+        hm.put(4.0, 68.0);
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
-        Geometry geo2 = GeoBuffer.buffer(geo1, distance);
+        Geometry geo2 = GeoBuffer.buffer(geo1, hm);
         
         mlin = geo1;
         mpol = geo2;
@@ -533,20 +544,20 @@ public class Test {
         
         ArrayList<Coordinate> list = new ArrayList<Coordinate>();
 
-        LineSegment s1 = new LineSegment(1300, 300, 0, 300);
-        s1.normalize();
-        double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle());
-
-        list.add(new Coordinate(0, 300, 1));
+        list.add(new Coordinate(0, 600, 1));
         list.add(new Coordinate(0, 1500, 2));
         list.add(new Coordinate(1300, 1500, 3));
         list.add(new Coordinate(1300, 300, 4));
-        list.add(new Coordinate(0, 300, 1));
+        list.add(new Coordinate(0, 600, 1));
 
-        double distance[] = {40, 40, 80, 80, 40};
+        Map<Double, Double> hm = new HashMap();
+        hm.put(1.0, 32.0);
+        hm.put(2.0, 68.0);
+        hm.put(3.0, 32.0);
+        hm.put(4.0, 68.0);
 
-        Geometry geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
-        Geometry geo2 = GeoBuffer.buffer(geo1, distance);
+        Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
+        Geometry geo2 = GeoBuffer.buffer(geo1, hm);
         
         mpol = geo1;
         mlin = geo2;       

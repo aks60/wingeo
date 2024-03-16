@@ -1,7 +1,13 @@
 package common;
 
+import builder.model.Com5t;
+import dataset.Field;
+import dataset.Record;
+import domain.eArtikl;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.Coordinate;
@@ -75,8 +81,16 @@ public class GeoBuffer {
      * @param distance the buffer distance for each vertex of the line
      * @return the variable-distance buffer polygon
      */
-    public static Geometry buffer(Geometry line, double[] distance) {
-        GeoBuffer vb = new GeoBuffer(line, distance);
+    //public static Geometry buffer(Geometry line, double[] distance) {
+    //public static Geometry buffer(Geometry geom, ArrayCom<? extends Com5t> list, double offset, Field... field) {
+    public static Geometry buffer(Geometry geom, Map<Double, Double> hm) {
+        
+        Coordinate coo[] = geom.getCoordinates();
+        double distance[] = new double[coo.length];
+        for (int i = 0; i < coo.length; ++i) {
+            distance[i] = hm.get(coo[i].z);
+        }
+        GeoBuffer vb = new GeoBuffer(geom, distance);
         return ((Polygon) vb.getResult()).getInteriorRingN(0);
     }
 
