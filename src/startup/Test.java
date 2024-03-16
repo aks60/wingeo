@@ -13,9 +13,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
+import common.GeoBuffer;
 import common.eProp;
 import dataset.Conn;
-import domain.eArtikl;
 import enums.Type;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -37,15 +37,14 @@ import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
-import org.locationtech.jts.operation.buffer.VariableBuffer;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Test {
 
     //public ArrayList<ListenerMouse> mouseDragged = new ArrayList<ListenerMouse>();
-    public JFrame frame = null;
-    public Geometry mlin = null;
-    public Geometry mpol = null;
+    private JFrame frame = null;
+    private Geometry mlin = null;
+    private Geometry mpol = null;
 
     public static Integer numDb = Integer.valueOf(eProp.base_num.read());
     private static GeometryFactory gf = new GeometryFactory();
@@ -96,7 +95,7 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            //frame(args);
+            frame(args);
             //wincalc();
             //param();
             //query();
@@ -357,37 +356,22 @@ public class Test {
         Point point2 = gf.createPoint(new Coordinate(0, 500));
         LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
         LineString line2 = gf.createLineString(coord2);
-        LineSegment segm1 = new LineSegment(10, 10, 80, 80);
+        LineSegment segm1 = new LineSegment(1, 1, 0, 1);
         LineSegment segm2 = new LineSegment(0, 10, 12, 10);
         Polygon polygon1 = gf.createPolygon(coord1);
         Polygon polygon2 = gf.createPolygon(coord2);
-
-//        double ang = Math.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(-100, -100)));
-//        System.out.println(ang);
-//        
-//        if (ang >= 45 && ang <= 135) { //LEFT, VERT
-//            System.out.println("LEFT, VERT");
-//
-//        } else if (ang >= -45 && ang <= +45) { //BOTT, HORIZ
-//            System.out.println("BOTT, HORIZ");
-//
-//        } else if (ang <= -45 && ang >= -135) { //RIGH
-//            System.out.println("RIGH");
-//
-//        } else if (ang <= -135 && ang >= -180 || ang >= 135 && ang <= 180) { //TOP
-//            System.out.println("TOP");
-//        }
-          LineSegment seg1 = new LineSegment(10, 10, 80, 80);
-          LineSegment seg2 = seg1.offset(10);
-          System.out.println(seg2);
+        
+        
+        System.out.println(UGeo.anglHoriz(0, 0, 0, 100));
+        System.out.println(Math.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(0, 100))));
+        
     }
 
     public static void frame(String[] args) {
-
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Test test = new Test();                
+                new Test();
             }
         });
     }
@@ -404,33 +388,24 @@ public class Test {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D gc2d = (Graphics2D) g;
-                gc2d.translate(40, -40);
-                //gc2d.scale(2.0, 2.0);
+                gc2d.translate(20, -10);
                 gc2d.scale(.4, .4);
 
                 if (mlin != null) {
                     gc2d.setColor(Color.BLUE);
                     Shape shape = new ShapeWriter().toShape(mlin);
                     gc2d.draw(shape);
-//                    g2.fill(shape);
                 }
                 if (mpol != null) {
                     gc2d.setColor(Color.RED);
                     Shape shape = new ShapeWriter().toShape(mpol);
                     gc2d.draw(shape);
                 }
-
-                //gc2d.rotate(Math.PI);
-//                Font font = gc2d.getFont();
-//                int textwidth = (int) (font.getStringBounds(".", gc2d.getFontRenderContext()).getWidth());
-//                int textheight = (int) (font.getStringBounds("1", gc2d.getFontRenderContext()).getHeight());
-//                System.out.println("textwidth - " + textwidth);
-//                System.out.println("textheight - " + textheight);
             }
 
             @Override
             public java.awt.Dimension getPreferredSize() {
-                return new java.awt.Dimension(600, 600);
+                return new java.awt.Dimension(800, 600);
             }
         };
         frame.add(p);
@@ -448,48 +423,114 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        //ПРИМЕР - new Test().mpol = gf.createMultiPolygon(new Polygon[]{geo1, geo2}); 
-        
-        draw4();
+        draw6();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
-    private void draw6() {
-
-        GeometryFactory gf = new GeometryFactory(new PrecisionModel(10));
-        GeometricShapeFactory gsf = new GeometricShapeFactory();
+    private void draw7() {
+        double M = 1500;
+        GeometricShapeFactory gsf = new GeometricShapeFactory();        
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
-
-        Map<Double, Double[]> hmOffset = new HashMap();
-        hmOffset.put(1.0, new Double[]{63.0, .0, .0});
-        hmOffset.put(2.0, new Double[]{63.0, .0, .0});
-        hmOffset.put(3.0, new Double[]{63.0, .0, .0});
-        hmOffset.put(4.0, new Double[]{84.0, .0, .0});
-
         ArrayCom<Com5t> frames = new ArrayCom();
-        frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 400.0, 500.0)));
-        frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, 1500.0)));
-        frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0)));
+        frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
+        frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, M)));
+        frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, M)));
         frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
-
+        
+        LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
+        LineString arc1 = UGeo.newLineArch(s1.p1.x, s1.p0.x, s1.p0.y, 300, 4);
+        Coordinate arr[] = arc1.getCoordinates();
+        List.of(arr).forEach(c -> c.z = 4);        
+        
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
         list.add(new Coordinate(frames.get(1).x1(), frames.get(1).y1(), frames.get(1).id));
         list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
-        list.add(new Coordinate(frames.get(3).x1(), frames.get(3).y1(), frames.get(3).id));
+        list.addAll(List.of(arr));
 
+        Map<Double, Double[]> hm = new HashMap();
+        hm.put(1.0, new Double[] {68.0, .0, .0});
+        hm.put(2.0, new Double[] {68.0, .0, .0});
+        hm.put(3.0, new Double[] {68.0, .0, .0});
+        hm.put(4.0, new Double[] {68.0, .0, .0});
+        
         Polygon geo1 = UGeo.newPolygon(list);
-        Map<Double, Double[]> hmOffset2 = UGeo.geoOffset(frames, eArtikl.height, eArtikl.size_centr);
-        geo1.setUserData(hmOffset);
-
-        Polygon geo2 = (Polygon) geo1.buffer(-.001);
-        this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
+        //Polygon geo2 = UGeo.geoBuffer(geo1, hm, 0);
+        
+        this.mpol = geo1;
+        //this.mlin = geo1.intersection(geo2);
     }
+    
+    private void draw6()  {
+        double M = 800;
+        GeometricShapeFactory gsf = new GeometricShapeFactory();        
+        ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
+        ArrayCom<Com5t> frames = new ArrayCom();
+        frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
+        frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, M)));
+        frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, M)));
+        frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
+        
+        LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
+        LineString arc1 = UGeo.newLineArch(s1.p1.x, s1.p0.x, s1.p0.y, 300, 4);
+        Coordinate arr[] = arc1.getCoordinates();
+        List.of(arr).forEach(c -> c.z = 4);        
+        
+        list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
+        list.add(new Coordinate(frames.get(1).x1(), frames.get(1).y1(), frames.get(1).id));
+        list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
+        //list.add(new Coordinate(frames.get(3).x1(), frames.get(3).y1(), frames.get(3).id));
+        list.addAll(List.of(arr));
+        
+        list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
+        double distance[] = new double[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+           distance[i] = 68; 
+        }
+        
+        Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
+        Geometry geo2 = GeoBuffer.buffer(geo1, distance);
+        
+        mlin = geo1;
+        mpol = geo2;
+    }  
+    
+    private void draw5()  {      
+        ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
+        ArrayCom<Com5t> frames = new ArrayCom();
+        frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
+        frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, 350.0)));
+        frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, 350.0)));
+        frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
+        
+        //Траесформация линии в горизонт
+        LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
+        //s1.normalize();
+        //double H = 300.0, ANG = Math.toDegrees(s1.angle());
+        //aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации 
+        //LineString l1 = (LineString) aff.transform(s1.toGeometry(gf));
+        //LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H, 4);  //созд. арки на гортзонтали 
+        LineString arc1 = UGeo.newLineArch(s1.p1.x, s1.p0.x, s1.p0.y, 300, 4); 
+        Coordinate arr1[] = arc1.getCoordinates();
+        List.of(arr1).forEach(c -> c.z = 4);
 
+        //Обратная трансформация арки
+//        aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
+//        Geometry arc2 = aff.transform(arc1);
+//        Coordinate arr2[] = arc2.getCoordinates(); //Arrays.copyOf(arc2.getCoordinates(), arc2.getCoordinates().length);
+//        List.of(arr2).forEach(c -> c.z = 4);
+        
+        list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
+        list.add(new Coordinate(frames.get(1).x1(), frames.get(1).y1(), frames.get(1).id));
+        list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
+        list.addAll(List.of(arr1));
+
+        this.mpol = UGeo.newPolygon(list);
+        this.mlin = UGeo.geoPadding(this.mpol, frames, 20);
+        
+    }
+    
     private void draw4() {
-
-        GeometryFactory gf = new GeometryFactory();
-        GeometricShapeFactory gsf = new GeometricShapeFactory();
-        AffineTransformation aff = new AffineTransformation();
+        
         ArrayList<Coordinate> list = new ArrayList<Coordinate>();
 
         LineSegment s1 = new LineSegment(1300, 300, 0, 300);
@@ -502,24 +543,19 @@ public class Test {
         list.add(new Coordinate(1300, 300, 4));
         list.add(new Coordinate(0, 300, 1));
 
-        ArrayList<Coordinate> list2 = new ArrayList<Coordinate>();
-        list.forEach(s -> list2.addAll(List.of(s, s)));
-
         double distance[] = {40, 40, 80, 80, 40};
 
-        LineString geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
+        Geometry geo1 = gf.createLineString(list.toArray(new Coordinate[0]));
+        Geometry geo2 = GeoBuffer.buffer(geo1, distance);
+        
         mpol = geo1;
-
-        Geometry gb = VariableBuffer.buffer(geo1, 20, 40, 200);
-        Polygon geo2 = (Polygon) gb;
-
-        mlin = gf.createPolygon(geo2.getInteriorRingN(0));
+        mlin = geo2;       
     }
 
     private void draw3() {
 
         GeometryFactory gf = new GeometryFactory(new PrecisionModel(10));
-        GeometricShapeFactory gsf = new GeometricShapeFactory();
+        GeometricShapeFactory gsf = new GeometricShapeFactory();        
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayCom<Com5t> frames = new ArrayCom();
         frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
@@ -530,7 +566,7 @@ public class Test {
         s1.normalize();
         double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle());
 
-        //Трансформация линии в горизонт
+        //Траесформация линии в горизонт
         aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации      
         LineString l1 = (LineString) aff.transform(s1.toGeometry(gf));
         LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H, 4);  //созд. арки на гортзонтали  
@@ -547,8 +583,7 @@ public class Test {
         list.addAll(List.of(arr2));
 
         Polygon geo1 = UGeo.newPolygon(list);
-//        Polygon geo2 = UGeo.geoPadding(geo1, frames, 0);
-        Polygon geo2 = (Polygon) geo1.buffer(-60, 1000);
+        Polygon geo2 = UGeo.geoPadding(geo1, frames, 0);
         this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         this.mpol = null;
