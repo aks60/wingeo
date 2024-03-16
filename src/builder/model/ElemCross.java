@@ -86,12 +86,12 @@ public class ElemCross extends ElemSimple {
             }
 
             //Внутренняя ареа       
-            //Geometry padding = UGeo.geoPadding(owner.area.getGeometryN(0), winc.listElem, 0);
+            Geometry padding = UGeo.geoPadding(owner.area.getGeometryN(0), winc.listElem, 0);
             //Geometry padding = UGeo.geoBuffer(owner.area.getGeometryN(0), winc.listElem, 0, 0, eArtikl.height, eArtikl.size_centr);
-//             if (owner.area.getGeometryN(1).isValid() == false) { //исправление коллизий
-//                GeometryFixer fix = new GeometryFixer(owner.area.getGeometryN(1));
-//                padding = (Polygon) fix.getResult().getGeometryN(0);
-//            }
+             if (owner.area.getGeometryN(1).isValid() == false) { //исправление коллизий
+                GeometryFixer fix = new GeometryFixer(owner.area.getGeometryN(1));
+                padding = (Polygon) fix.getResult().getGeometryN(0);
+            }
 
             //Левый и правый сегмент вдоль импоста
             double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr); //ширина
@@ -105,7 +105,7 @@ public class ElemCross extends ElemSimple {
 
             //Ареа импоста обрезаем areaPadding 
             Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
-            this.area = (Polygon) areaExp.intersection(owner.area.getGeometryN(1)); //полигон элемента конструкции
+            this.area = (Polygon) areaExp.intersection(padding); //полигон элемента конструкции
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation " + e);
