@@ -35,8 +35,9 @@ public class AreaTrapeze extends AreaSimple {
             coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
             
             //Аrea рамы (предполагается, что ширина рамы одинакова со всех сторон)
-            Polygon geo1 = gf.createPolygon(coo.toArray(new Coordinate[0]));
-            Polygon geo2 = (Polygon) UGeo.geoBuffer(geo1, this.frames, 0, 0, eArtikl.height, eArtikl.size_centr);
+            Polygon geo1 = gf.createPolygon(coo.toArray(new Coordinate[0]));   
+            Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
+                        
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         } catch (Exception e) {

@@ -81,8 +81,18 @@ public class GeoBuffer {
      * @param distance the buffer distance for each vertex of the line
      * @return the variable-distance buffer polygon
      */
-    //public static Geometry buffer(Geometry line, double[] distance) {
-    //public static Geometry buffer(Geometry geom, ArrayCom<? extends Com5t> list, double offset, Field... field) {
+    /**
+     * Creates a buffer polygon along a line with the distance specified at each
+     * vertex.
+     *
+     * @param line the line to buffer
+     * @param distance the buffer distance for each vertex of the line
+     * @return the variable-distance buffer polygon
+     */
+  /*public static Geometry buffer(Geometry line, double[] distance) {
+    VariableBuffer vb = new VariableBuffer(line, distance);
+    return vb.getResult();
+  }*/
     public static Geometry buffer(Geometry geom, Map<Double, Double> hm) {
         
         Coordinate coo[] = geom.getCoordinates();
@@ -92,6 +102,26 @@ public class GeoBuffer {
         }
         GeoBuffer vb = new GeoBuffer(geom, distance);
         return ((Polygon) vb.getResult()).getInteriorRingN(0);
+    }
+    
+    public static Polygon buffer(Geometry geom, ArrayCom<? extends Com5t> list, double amend) {
+
+        Map<Double, Double> hm = new HashMap();
+        for (Com5t el : list) {
+            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+            Double delta1 = rec.getDbl(eArtikl.height);
+            Double delta2 = rec.getDbl(eArtikl.size_centr);
+            hm.put(el.id, delta1 - delta2 + amend);
+        }
+        Coordinate coo[] = geom.getCoordinates();
+        double distance[] = new double[coo.length];
+        for (int i = 0; i < coo.length; ++i) {
+            distance[i] = hm.get(coo[i].z);
+        }
+        LineString line = geom.getFactory().createLineString(geom.getCoordinates());
+        GeoBuffer vb = new GeoBuffer(line, distance);
+        LinearRing linering =  ((Polygon) vb.getResult()).getInteriorRingN(0);
+        return geom.getFactory().createPolygon(linering.getCoordinates());
     }
 
     /**

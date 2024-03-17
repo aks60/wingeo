@@ -45,8 +45,8 @@ public class Test {
 
     //public ArrayList<ListenerMouse> mouseDragged = new ArrayList<ListenerMouse>();
     private JFrame frame = null;
-    private Geometry mlin = null;
-    private Geometry mpol = null;
+    public Geometry mlin = null;
+    public Geometry mpol = null;
 
     public static Integer numDb = Integer.valueOf(eProp.base_num.read());
     private static GeometryFactory gf = new GeometryFactory();
@@ -91,6 +91,7 @@ public class Test {
     }
 
     // </editor-fold>     
+    
     //java -jar C:\\Okna\\winapp\\dist\\winapp.jar dev loc
     public static void main(String[] args) throws Exception {
 
@@ -552,7 +553,7 @@ public class Test {
         Geometry geo2 = GeoBuffer.buffer(geo1, hm);
 
         mpol = geo1;
-        mlin = geo2;
+       // mlin = geo2;
     }
 
     private void draw3() {

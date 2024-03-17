@@ -109,6 +109,7 @@ public class ElemFrame extends ElemSimple {
                         //new Test().mpol = gf.createMultiPolygon(new Polygon[]{(Polygon) geo1, (Polygon) geo2});
 
                     } else { //полигон рамы   
+                        Polygon area7 = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), c2[i + 1].x, c2[i + 1].y, c2[i].x, c2[i].y);
                         this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), c2[i + 1].x, c2[i + 1].y, c2[i].x, c2[i].y);
                        // new Test().mpol = gf.createMultiPolygon(new Polygon[]{(Polygon) this.area});
                     }

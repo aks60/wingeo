@@ -165,12 +165,8 @@ public class AreaStvorka extends AreaSimple {
             this.areaBox = (winc.listElem.filter(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).isEmpty()) ? owner.area : this.area;
 
             //Полигон створки с учётом нахлёста 
-            Map<Double, Double[]> hm = new HashMap();
-            ArrayCom<ElemSimple> listElem = winc.listElem.filter(Type.FRAME_SIDE, Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP);
-            listElem.forEach(e -> hm.put(e.id, new Double[] {e.artiklRecAn.getDbl(eArtikl.height)
-                    , e.artiklRecAn.getDbl(eArtikl.size_centr) + winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl), .0}));
-            this.areaBox.getGeometryN(0).setUserData(hm);
-            Polygon geo1 = (Polygon) this.areaBox.getGeometryN(0).buffer(-.001, 0);
+            double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
+            Polygon geo1 = UGeo.geoPadding(this.areaBox, winc.listElem, dh); //полигон векторов сторон створки с учётом нахл. 
 
             //Если стороны ств. ещё не созданы 
             if (this.frames.isEmpty()) {
@@ -199,8 +195,7 @@ public class AreaStvorka extends AreaSimple {
                 coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
             }
 
-            //Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
-            Polygon geo2 = (Polygon) UGeo.geoBuffer(geo1, this.frames, 0, 0, eArtikl.height);
+            Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
             //Высота ручки, линии открывания

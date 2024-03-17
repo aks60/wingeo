@@ -2,14 +2,13 @@ package builder.model;
 
 import builder.Wincalc;
 import builder.script.GsonElem;
+import common.GeoBuffer;
 import dataset.Record;
 import domain.eArtikl;
 import enums.TypeJoin;
 import java.util.ArrayList;
-import java.util.Map;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
-import startup.Test;
 
 public class AreaRectangl extends AreaSimple {
 
@@ -31,12 +30,9 @@ public class AreaRectangl extends AreaSimple {
 
             //Аrea рамы
             Polygon geo1 = gf.createPolygon(coo.toArray(new Coordinate[0]));           
-            Polygon geo2 = (Polygon) UGeo.geoBuffer(geo1, this.frames, 0, 0, eArtikl.height, eArtikl.size_centr);
+            Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);           
+            Polygon geo2v = GeoBuffer.buffer(geo1, this.frames, 0); 
             
-            double distance[] = new double[geo1.getNumPoints()];
-            for (int i = 0; i < distance.length; i++) {
-                //distance[i] = ;               
-            }
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         } catch (Exception e) {

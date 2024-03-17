@@ -17,6 +17,7 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
+import startup.Test;
 
 public class AreaArch extends AreaSimple {
 
@@ -59,20 +60,11 @@ public class AreaArch extends AreaSimple {
                     list.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
                 }
             }
-            Polygon geo1 = UGeo.newPolygon(list);            
-//            Map<Double, Double> hm = new HashMap();
-//            for (Com5t el : this.frames) {
-//                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-//                Double delta1 = rec.getDbl(eArtikl.height);
-//                Double delta2 = rec.getDbl(eArtikl.size_centr);
-//                hm.put(el.id, delta1 - delta2);
-//            }
-//            Geometry geo2 = GeoBuffer.buffer(geo1, hm);
-            
-            Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);           
-//            Polygon geo3 = (Polygon) UGeo.geoBuffer(geo1, this.frames, 0, 1000, eArtikl.height, eArtikl.size_centr);
-//            Polygon geo4 = (Polygon) geo1.buffer(-60, 1000);
-            this.area = gf.createMultiPolygon(new Polygon[]{geo1, (Polygon) geo2});
+            list.add(list.get(0));
+
+            Polygon geo1 = gf.createPolygon(list.toArray(new Coordinate[0]));
+            Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);          
+            this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
