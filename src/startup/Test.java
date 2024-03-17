@@ -411,15 +411,17 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        draw6();
+        draw4();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
     public void paintComp(Graphics g) {
         
         Graphics2D gc2d = (Graphics2D) g;
-        gc2d.translate(-800, -180);
-        gc2d.scale(1.2, 1.2);
+        gc2d.translate(40, 40);
+        gc2d.scale(.4, .4);
+//        gc2d.translate(-800, -180);
+//        gc2d.scale(1.2, 1.2);
 
         if (mlin != null) {
             gc2d.setColor(Color.BLUE);
@@ -491,8 +493,6 @@ public class Test {
 
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
         Polygon geo2 = UGeo.geoPadding(geo1, frames, 0);
-
-        //Object o1 = geo2.getInteriorRingN(0);
         
         mlin = geo1;
         mpol = geo2;

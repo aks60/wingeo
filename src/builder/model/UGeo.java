@@ -341,7 +341,6 @@ public class UGeo {
                             k = i;
                             do {
                                 segm2b = UGeo.getSegment(poly, ++k);
-                                //coo[k].z = 777;
                                 segm2c = segm2b.offset(-w2);
                                 cros2 = segm2c.intersection(segm1a);
 
@@ -367,6 +366,61 @@ public class UGeo {
             }
             //System.out.println(cros1 + "  " + cros2);
             Polygon g = Com5t.gf.createPolygon(arr.toArray(new Coordinate[0]));
+            return g;
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.geoPadding() " + e);
+            return null;
+        }
+    }
+    public static Polygon geoPadding2(Geometry poly, ArrayCom<? extends Com5t> list, double amend) {
+        LineSegment segm1, segm2, segm1a = null, segm2a = null, segm1b, segm2b, segm1c, segm2c, segm3, segm3a;
+        Coordinate cros1 = null, cros2 = null;
+        List<Coordinate> top = new ArrayList<Coordinate>(), bot = new ArrayList<Coordinate>();
+        try {
+            poly = poly.getGeometryN(0);
+            int j = 999, k = 999;
+            Coordinate[] coo = poly.copy().getCoordinates();
+            for (int i = 0; i < coo.length; i++) {
+
+                //Сегменты границ полигона
+                segm1 = UGeo.getSegment(poly, i - 1);
+                segm2 = UGeo.getSegment(poly, i);
+
+                //Получим ширину сегментов             
+                Com5t e1 = list.get(segm1.p0.z), e2 = list.get(segm2.p0.z);
+                Record rec1 = (e1.artiklRec == null) ? eArtikl.virtualRec() : e1.artiklRec;
+                Record rec2 = (e2.artiklRec == null) ? eArtikl.virtualRec() : e2.artiklRec;
+                double w1 = (rec1.getDbl(eArtikl.height) - rec1.getDbl(eArtikl.size_centr)) - amend;
+                double w2 = (rec2.getDbl(eArtikl.height) - rec2.getDbl(eArtikl.size_centr)) - amend;
+
+                //Смещение сегментов относительно границ
+                if (segm1.getLength() != 0 && segm2.getLength() != 0) {
+                    segm1a = segm1.offset(-w1);
+                    segm2a = segm2.offset(-w2);
+
+                    //Точка пересечения внутренних сегментов
+                    Coordinate cross = segm2a.intersection(segm1a);
+
+                    if (cross != null && i < j - 1) {
+                        cross.z = e2.id;
+                        top.add(cross);
+                    }
+                }
+            }
+            
+//            segm3 = new LineSegment(coo[1], coo[2]);
+//            segm3a = segm3.offset(-70);
+//            Polygon g2 = gf.createPolygon(new Coordinate[] {segm3a.p0, segm3.p0, segm3.p1, segm3a.p1,segm3a.p0});
+
+            if (top.get(0).equals(top.get(top.size() - 1)) == false) {
+                top.add(top.get(0));
+            }
+            Polygon g = Com5t.gf.createPolygon(top.toArray(new Coordinate[0]));
+//            LineString g5 = Com5t.gf.createLineString(top.toArray(new Coordinate[0]));
+//            g5.intersects(g2);
+//            Polygon g = Com5t.gf.createPolygon(g5.getCoordinates());
+            
             return g;
 
         } catch (Exception e) {
