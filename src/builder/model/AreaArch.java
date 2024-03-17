@@ -4,17 +4,19 @@ import builder.Wincalc;
 import static builder.model.Com5t.aff;
 import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
+import common.GeoBuffer;
 import dataset.Record;
 import domain.eArtikl;
 import enums.TypeJoin;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
-import startup.Test;
 
 public class AreaArch extends AreaSimple {
 
@@ -38,18 +40,18 @@ public class AreaArch extends AreaSimple {
                     LineSegment segm = UGeo.normalize(new LineSegment(frame.x1(), frame.y1(), frame.x2(), frame.y2()));
                     double ANG = Math.toDegrees(segm.angle());
 
-//                    if (ANG == 0) {
+                    if (ANG == 0) {
                         arcB = UGeo.newLineArch(segm.p0.x, segm.p1.x, segm.p0.y, frame.h(), frame.id);  //созд. арки на горизонтали 
-//                    } else {
-//                        //Поворот на горизонталь
-//                        aff.setToRotation(Math.toRadians(-ANG), segm.p0.x, segm.p0.y);
-//                        segm = UGeo.getSegment((LineString) aff.transform(segm.toGeometry(gf)));//трансформация линии в горизонт
-//                        arcA = UGeo.newLineArch(segm.p0.x, segm.p1.x, segm.p0.y, frame.h(), frame.id);  //созд. арки на гортзонтали   
-//
-//                        //Обратный поворот
-//                        aff.setToRotation(Math.toRadians(ANG), segm.p0.x, segm.p0.y);
-//                        arcB = aff.transform(arcA);
-//                    }
+                    } else {
+                        //Поворот на горизонталь
+                        aff.setToRotation(Math.toRadians(-ANG), segm.p0.x, segm.p0.y);
+                        segm = UGeo.getSegment((LineString) aff.transform(segm.toGeometry(gf)));//трансформация линии в горизонт
+                        arcA = UGeo.newLineArch(segm.p0.x, segm.p1.x, segm.p0.y, frame.h(), frame.id);  //созд. арки на гортзонтали   
+
+                        //Обратный поворот
+                        aff.setToRotation(Math.toRadians(ANG), segm.p0.x, segm.p0.y);
+                        arcB = aff.transform(arcA);
+                    }
                     List.of(arcB.getCoordinates()).forEach(c -> c.setZ(frame.id));
                     list.addAll(List.of(arcB.getCoordinates()));
 
@@ -57,11 +59,20 @@ public class AreaArch extends AreaSimple {
                     list.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
                 }
             }
-            Polygon geo1 = UGeo.newPolygon(list); 
-            Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
+            Polygon geo1 = UGeo.newPolygon(list);            
+//            Map<Double, Double> hm = new HashMap();
+//            for (Com5t el : this.frames) {
+//                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+//                Double delta1 = rec.getDbl(eArtikl.height);
+//                Double delta2 = rec.getDbl(eArtikl.size_centr);
+//                hm.put(el.id, delta1 - delta2);
+//            }
+//            Geometry geo2 = GeoBuffer.buffer(geo1, hm);
+            
+            Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);           
 //            Polygon geo3 = (Polygon) UGeo.geoBuffer(geo1, this.frames, 0, 1000, eArtikl.height, eArtikl.size_centr);
 //            Polygon geo4 = (Polygon) geo1.buffer(-60, 1000);
-            this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
+            this.area = gf.createMultiPolygon(new Polygon[]{geo1, (Polygon) geo2});
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);

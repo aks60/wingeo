@@ -22,10 +22,10 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.util.AffineTransformation;
-import common.listener.ListenerOffset;
 import dataset.Field;
 import java.util.HashMap;
 import java.util.Map;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Утилиты JTS
@@ -326,6 +326,7 @@ public class UGeo {
                         if (cros1 == null && e1.h() != null) { //хвост
                             j = i - 1;
                             do {
+                                //coo[j].z = 777;
                                 segm1b = UGeo.getSegment(poly, --j);
                                 segm1c = segm1b.offset(-w1);
                                 cros1 = segm2a.intersection(segm1c);
@@ -340,6 +341,7 @@ public class UGeo {
                             k = i;
                             do {
                                 segm2b = UGeo.getSegment(poly, ++k);
+                                //coo[k].z = 777;
                                 segm2c = segm2b.offset(-w2);
                                 cros2 = segm2c.intersection(segm1a);
 
@@ -351,10 +353,20 @@ public class UGeo {
                     }
                 }
             }
-            if (out.get(0).equals(out.get(out.size() - 1)) == false) {
-                out.add(out.get(0));
+//            List<Coordinate> arr = out.stream().filter(c -> c.z != 777).collect(toList());
+            List<Coordinate> arr = new ArrayList();
+            for (Coordinate c : out) {
+                if (c.z != 777) {
+                    arr.add(c);
+                } else {
+                    System.out.println("c = " + c);
+                }
             }
-            Polygon g = Com5t.gf.createPolygon(out.toArray(new Coordinate[0]));
+            if (arr.get(0).equals(arr.get(arr.size() - 1)) == false) {
+                arr.add(arr.get(0));
+            }
+            //System.out.println(cros1 + "  " + cros2);
+            Polygon g = Com5t.gf.createPolygon(arr.toArray(new Coordinate[0]));
             return g;
 
         } catch (Exception e) {
@@ -408,7 +420,6 @@ public class UGeo {
         }
         return null;
     }
-    
 
     public static Map<Double, Double[]> geoOffset(ArrayCom<? extends Com5t> listElem, Field... field) {
         Map<Double, Double[]> hm = new HashMap();
@@ -421,6 +432,6 @@ public class UGeo {
             hm.put(el.id, data);
         }
         return hm;
-    }    
+    }
 // </editor-fold>    
 }

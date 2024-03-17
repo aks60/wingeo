@@ -131,19 +131,19 @@ public class ElemFrame extends ElemSimple {
             spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
             spcRec.setArtikl(artiklRec);
             spcRec.setColor(colorID1, colorID2, colorID3);
-            Coordinate c[] = this.area.getCoordinates();
+            Coordinate coo[] = this.area.getCoordinates();
 
             //Углы реза
             if (this.h() == null) {
-                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(c[c.length - 2], c[0], c[1]));
-                spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(c[c.length - 5], c[c.length - 4], c[c.length - 3]));
+                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
+                spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 5], coo[coo.length - 4], coo[coo.length - 3]));
             } else {
-                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(c[c.length - 2], c[0], c[1]));
+                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
                 LineSegment seg = new LineSegment();
-                for (int i = 1; i < c.length; i++) {
-                    seg.setCoordinates(c[i - 1], c[i]);
+                for (int i = 1; i < coo.length; i++) {
+                    seg.setCoordinates(coo[i - 1], coo[i]);
                     if (seg.getLength() > this.artiklRecAn.getDbl(eArtikl.height)) {
-                        spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(c[i - 2], c[i - 1], c[i]));
+                        spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[i - 2], coo[i - 1], coo[i]));
                         break;
                     }
                 }           
