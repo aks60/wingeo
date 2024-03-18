@@ -4,6 +4,7 @@ import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import common.ArrayCom;
+import common.GeoBuffer;
 import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
@@ -21,9 +22,6 @@ import enums.TypeOpen1;
 import enums.TypeOpen2;
 import enums.UseSide;
 import java.awt.Shape;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
@@ -162,11 +160,12 @@ public class AreaStvorka extends AreaSimple {
         try {
             //Полигон векторов сторон рамы owner.area - если нет полигона створки в гл.окне 
             //иначе, this.area  получатется при распиле owner.area импостом
-            this.areaBox = (winc.listElem.filter(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).isEmpty()) ? owner.area : this.area;
+            this.areaBox = (winc.listElem.filter(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).isEmpty()) 
+                    ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
 
             //Полигон створки с учётом нахлёста 
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            Polygon geo1 = UGeo.geoPadding(this.areaBox, winc.listElem, dh); //полигон векторов сторон створки с учётом нахл. 
+            Polygon geo1 = GeoBuffer.buffer(this.areaBox, winc.listElem, -dh); //полигон векторов сторон створки с учётом нахл. 
 
             //Если стороны ств. ещё не созданы 
             if (this.frames.isEmpty()) {
@@ -195,7 +194,7 @@ public class AreaStvorka extends AreaSimple {
                 coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
             }
 
-            Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
+            Polygon geo2 = GeoBuffer.buffer(geo1, this.frames, 0);
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
             //Высота ручки, линии открывания

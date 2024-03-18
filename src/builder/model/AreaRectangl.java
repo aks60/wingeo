@@ -8,6 +8,7 @@ import domain.eArtikl;
 import enums.TypeJoin;
 import java.util.ArrayList;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Polygon;
 
 public class AreaRectangl extends AreaSimple {
@@ -29,10 +30,8 @@ public class AreaRectangl extends AreaSimple {
             coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
 
             //Аrea рамы
-            Polygon geo1 = gf.createPolygon(coo.toArray(new Coordinate[0]));           
-            Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);           
-            Polygon geo2v = GeoBuffer.buffer(geo1, this.frames, 0); 
-            
+            Polygon geo1 = gf.createPolygon(coo.toArray(new Coordinate[0]));                      
+            Polygon geo2 = GeoBuffer.buffer(geo1, this.frames, 0);            
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         } catch (Exception e) {

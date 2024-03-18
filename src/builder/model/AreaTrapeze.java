@@ -3,17 +3,12 @@ package builder.model;
 import builder.Wincalc;
 import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
+import common.GeoBuffer;
 import dataset.Record;
 import domain.eArtikl;
-import domain.eColor;
-import enums.Type;
 import enums.TypeJoin;
-import java.awt.Shape;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
 
 public class AreaTrapeze extends AreaSimple {
@@ -34,10 +29,9 @@ public class AreaTrapeze extends AreaSimple {
             this.frames.forEach(line -> coo.add(new Coordinate(line.x1(), line.y1(), line.id)));
             coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
             
-            //Аrea рамы (предполагается, что ширина рамы одинакова со всех сторон)
+            //Аrea рамы
             Polygon geo1 = gf.createPolygon(coo.toArray(new Coordinate[0]));   
-            Polygon geo2 = UGeo.geoPadding(geo1, this.frames, 0);
-                        
+            Polygon geo2 = GeoBuffer.buffer(geo1, this.frames, 0);                        
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         } catch (Exception e) {

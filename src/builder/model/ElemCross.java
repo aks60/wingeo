@@ -3,6 +3,7 @@ package builder.model;
 import builder.Wincalc;
 import builder.making.SpcRecord;
 import builder.script.GsonElem;
+import common.GeoBuffer;
 import common.UCom;
 import domain.eArtikl;
 import static domain.eArtikl.size_centr;
@@ -23,9 +24,9 @@ import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
-import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.GeometryFixer;
+import startup.Test;
 
 public class ElemCross extends ElemSimple {
 
@@ -86,11 +87,11 @@ public class ElemCross extends ElemSimple {
             }
 
             //Внутренняя ареа       
-            Geometry padding = UGeo.geoPadding(owner.area.getGeometryN(0), winc.listElem, 0);
-            //Geometry padding = UGeo.geoBuffer(owner.area.getGeometryN(0), winc.listElem, 0, 0, eArtikl.height, eArtikl.size_centr);
+            //Geometry geo2x = UGeo.geoPadding(owner.area.getGeometryN(0), winc.listElem, 0);
+            Geometry geo2 = GeoBuffer.buffer(owner.area.getGeometryN(0), winc.listElem, .0);
              if (owner.area.getGeometryN(1).isValid() == false) { //исправление коллизий
                 GeometryFixer fix = new GeometryFixer(owner.area.getGeometryN(1));
-                padding = (Polygon) fix.getResult().getGeometryN(0);
+                geo2 = (Polygon) fix.getResult().getGeometryN(0);
             }
 
             //Левый и правый сегмент вдоль импоста
@@ -105,7 +106,8 @@ public class ElemCross extends ElemSimple {
 
             //Ареа импоста обрезаем areaPadding 
             Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
-            this.area = (Polygon) areaExp.intersection(padding); //полигон элемента конструкции
+            this.area = (Polygon) areaExp.intersection(geo2); //полигон элемента конструкции
+            //new Test().mpol = this.area;
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation " + e);
