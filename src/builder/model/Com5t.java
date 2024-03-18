@@ -8,12 +8,12 @@ import domain.eArtikl;
 import enums.Layout;
 import enums.Type;
 import java.util.List;
-import org.locationtech.jts.algorithm.PointLocation;
+import static java.util.stream.Collectors.toList;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
-import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.util.GeometricShapeFactory;
@@ -60,7 +60,14 @@ public class Com5t {
      * Длина компонента
      */
     public double length() {
-        return new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).getLength();
+        
+        if(this.h() == null) {
+            return new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).getLength();
+        } else {
+           List<Coordinate> list = List.of(owner.area.getGeometryN(0).getCoordinates()).stream().filter(c -> c.z == id).collect(toList());
+           LineString ls = gf.createLineString(list.toArray(new Coordinate[0]));
+           return ls.getLength();
+        }
     }
 
     public Layout layout() {
