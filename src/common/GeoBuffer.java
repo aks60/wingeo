@@ -122,7 +122,6 @@ public class GeoBuffer {
         return vb.ringToPolygon(line, geo);
     }
 
-
     public Polygon ringToPolygon(Geometry line, Geometry geom) {
         
         Coordinate coo[] = line.getGeometryN(0).getCoordinates();
