@@ -19,6 +19,7 @@ import enums.TypeArtikl;
 import enums.UseUnit;
 import java.awt.Shape;
 import java.util.HashMap;
+import java.util.Map;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
@@ -107,8 +108,12 @@ public class ElemGlass extends ElemSimple {
             new SpcFilling(winc, true).calc(this);
 
             ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
-            this.area  = (Polygon) UGeo.geoBuffer(owner.area.getGeometryN(0), winc.listElem, -gzazo, 1000, eArtikl.height, eArtikl.size_centr, eArtikl.size_falz);
-
+            Map<Double, Double> hm = new HashMap();
+            for (Com5t el : list) {
+                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+                hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + gzazo);
+            }
+            this.area = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);
 
             Envelope env = this.area.getGeometryN(0).getEnvelopeInternal();
             spcRec.width = env.getWidth();
