@@ -415,24 +415,6 @@ public class UGeo {
             return null;
         }
     }
-    
-    //Внутренняя обводка ареа 
-//    public static Geometry geoBuffer(Geometry geom, ArrayCom<? extends Com5t> list, double offset, int quadrantSegments, Field... field) {
-//        Map<Double, Double[]> hm = new HashMap();
-//        for (Com5t el : list) {
-//            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-//            Double data[] = {.0, .0, .0};
-//            for (int i = 0; i < field.length; ++i) {
-//                data[i] = rec.getDbl(field[i]);
-//            }
-//            hm.put(el.id, data);
-//        }
-//        geom.setUserData(hm);
-//        double offset2 = (offset == 0) ? -.000001 : offset;
-//        int quadrantSegments2 = (quadrantSegments == 0) ? 8 : quadrantSegments;
-//        Polygon geo = (Polygon) geom.buffer(offset2, quadrantSegments2);
-//        return geo;
-//    }
-    
+
 // </editor-fold>    
 }
