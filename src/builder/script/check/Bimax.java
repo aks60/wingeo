@@ -170,7 +170,7 @@ public final class Bimax {
             //Тут просочилась ручка не подходящая по параметру. Возможно ошибка ПрофСтроя4}
         } else if (prj == 601010) {
             rootGson = new GsonRoot(427852, prj, 1, 54, Type.RECTANGL, "KBE\\KBE Эксперт\\1 ОКНА\\Открывание внутрь (ств. Z77)",
-                     1009, 1009, 1009, "{ioknaParam:[-8545]}"); //параметр подогнал для ps спецификации
+                    1009, 1009, 1009, "{ioknaParam:[-8545]}"); //параметр подогнал для ps спецификации
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 0.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1400.0))
@@ -215,6 +215,31 @@ public final class Bimax {
             rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 240.0, 1300.0, 240.0));
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
 
+        } else if (prj == 505072) { //СМ.PS 2015-07 г. (стеклопакет)
+            rootGson = new GsonRoot(423775, prj, 1, 4, Type.ARCH, "Стеклопакеты", 1009, 1009, 1009);
+
+        //} else if (prj == 507830) { //СМ.PS (Нет ветки в системе но Test неплохой)
+        //    rootGson = new GsonRoot(426594, prj, 1, 000, Type.ARCH, "KBE / KBE Эталон / 1 ОКНА / Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
+
+        } else if (prj == 507965) { //СМ.PS (Нет ветки в системе но Test неплохой)
+            rootGson = new GsonRoot(426733, prj, 1, 000, Type.ARCH, "KBE / KBE Эталон / 1 ОКНА / Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 350.0, 1400 - 1319.94))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 90.0, 1400 - 1109.97))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1400 - 790.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1400 - 0.0))            
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1030.0, 1400 - 0.0))            
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1030.0, 1400 - 790.0))            
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 940.0, 1400 - 1109.99))            
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 350.0, 1400 - 1319.94))
+                    .addElem(new GsonElem(Type.GLASS));
+
+        } else if (prj == 507998) { //СМ.PS
+            rootGson = new GsonRoot(426766, prj, 1, 198, Type.ARCH, "Montblanc / Eco / 1 ОКНА", 1009, 1009, 1009);
+
+        } else if (prj == 508035) { //СМ.PS (с раскладкой)
+            rootGson = new GsonRoot(426804, prj, 1, 99, Type.ARCH, "Rehau / Blitz / 1 ОКНА / Открывание внутрь (ств. Z60)", 1009, 1009, 1009);
+            //КОНЕЦ  2015-07 г.    
+
         } else if (prj == 604009) {
             rootGson = new GsonRoot(427825, prj, 1, 8, Type.ARCH, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 10009, 1009);
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 300.0))
@@ -225,25 +250,6 @@ public final class Bimax {
             rootGson.addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 343.5, 1300.0, 343.5));
             rootGson.addElem(new GsonElem(Type.GLASS));
-
-        } else if (prj == 508035) { //СМ.PS
-            rootGson = new GsonRoot(426804, prj, 1, 99, Type.ARCH, "Rehau / Blitz / 1 ОКНА / Открывание внутрь (ств. Z60)", 1009, 1009, 1009);
-
-        } else if (prj == 507998) { //СМ.PS
-            rootGson = new GsonRoot(426766, prj, 1, 198, Type.ARCH, "Montblanc / Eco / 1 ОКНА", 1009, 1009, 1009);
-
-        } else if (prj == 507830) { //СМ.PS (Нет ветки в системе но Test неплохой)
-            rootGson = new GsonRoot(426594, prj, 1, 000, Type.ARCH, "KBE / KBE Эталон / 1 ОКНА / Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
-
-        } else if (prj == 507965) { //СМ.PS (Нет ветки в системе но Test неплохой)
-            rootGson = new GsonRoot(426733, prj, 1, 000, Type.ARCH, "KBE / KBE Эталон / 1 ОКНА / Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
-
-        } else if (prj == 508035) { //СМ.PS
-            rootGson = new GsonRoot(424982, prj, 1, 198, Type.ARCH, "Montblanc / Eco / 1 ОКНА", 1009, 1009, 1009);
-
-        } else if (prj == 505072) { //СМ.PS 2015-07 г.
-            rootGson = new GsonRoot(423775, prj, 1, 4, Type.ARCH, "Стеклопакеты", 1009, 1009, 1009);
-            //КОНЕЦ  2015-07 г.    
 
         } else if (prj == 604004) {
             rootGson = new GsonRoot(427858, prj, 1, 37, Type.ARCH, "Rehau / Delight / 1 ОКНА", 1009, 1009, 1009);
