@@ -475,7 +475,7 @@ public class Test {
 
     private void draw6() {
         //double M =380;
-        double M = 380;
+        double M = 1400;
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayCom<Com5t> frames = new ArrayCom();
@@ -497,7 +497,8 @@ public class Test {
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
 
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
-        Polygon geo2 = UGeo.geoBuffer(geo1, frames, 60);
+        Polygon geo2 = UGeo.geoBuffer(geo1, frames, 0);
+        //Polygon geo2 = UGeo.geoPadding(geo1, frames, 0);
         
         mlin = geo1;
         mpol = geo2;
