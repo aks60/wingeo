@@ -25,6 +25,7 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 import dataset.Field;
 import java.util.HashMap;
 import java.util.Map;
+import org.locationtech.jts.geom.LinearRing;
 
 /**
  * Утилиты JTS
@@ -288,12 +289,12 @@ public class UGeo {
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
     //Внутренняя обводка горизонтальной ареа 
-    public static Geometry geoPadding(Geometry geom, ArrayCom<? extends Com5t> list, double amend) {
+    public static Polygon geoBuffer(Geometry geom, ArrayCom<? extends Com5t> list, double amend) {
 
-        double arcID= 4;
+        double arcID = 4;
         List<Geometry> geoList = new ArrayList();
         LineSegment segm1, segm2, segm1a = null, segm2a = null;
-        List<Coordinate> out = new ArrayList<Coordinate>();
+        List<Coordinate> coo1List = new ArrayList<Coordinate>(), coo2List = new ArrayList();;
         try {
             Coordinate[] coo = geom.getCoordinates();
             for (int i = 1; i < coo.length; i++) {
@@ -301,29 +302,75 @@ public class UGeo {
                 segm1a = segm1.offset(-amend);
 
                 if (coo[i].z == arcID && coo[i - 1].z == arcID) {
+                    coo1List.add(segm1.p0);
                     segm2 = UGeo.getSegment(geom, i);
                     segm2a = segm2.offset(-amend);
                     Coordinate cross = segm2a.intersection(segm1a);
                     cross.z = arcID;
-                    out.add(cross);
+                    coo2List.add(cross);
 
-                } else if(coo[i - 1].z != arcID) {
+                } else if (coo[i - 1].z != arcID) {
                     segm1a.p0.z = arcID;
                     segm1a.p1.z = arcID;
-                    LineString ls = gf.createLineString(new Coordinate[]{segm1.p0, segm1.p1, segm1a.p1, segm1a.p0, segm1.p0});
+                    Polygon ls = gf.createPolygon(new Coordinate[]{segm1.p0, segm1.p1, segm1a.p1, segm1a.p0, segm1.p0});
                     geoList.add(ls);
                 }
             }
-            out.add(out.get(0));
-            Geometry geo2 = gf.createPolygon(out.toArray(new Coordinate[0]));
-            Geometry geo3 = geo2.union(geoList.get(0));
-            
-            //Geometry geo4 = geo3.union(geoList.get(1));
-            //Geometry geo5 = geo4.union(geoList.get(2))
-            Coordinate pc[] = new Coordinate[geo3.getNumPoints() + 1];
-            pc[geo3.getNumPoints()] = pc[0];
-            
-            Polygon poly = gf.createPolygon(pc);
+            Collections.reverse(coo2List);
+            coo1List.addAll(coo2List);
+            coo1List.add(coo1List.get(0));
+            Geometry geo2 = gf.createPolygon(coo1List.toArray(new Coordinate[0]));
+
+            for (Geometry g : geoList) {
+                geo2 = geo2.union(g);
+            }
+            LinearRing ring = ((Polygon) geo2).getInteriorRingN(0);
+            Polygon poly = (Polygon) gf.createPolygon(ring);
+            return poly;
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.geoPadding() " + e);
+            return null;
+        }
+    }
+    
+    public static Polygon geoBuffer2(Geometry geom, ArrayCom<? extends Com5t> list, double amend) {
+
+        double arcID = 4;
+        List<Geometry> geoList = new ArrayList();
+        LineSegment segm1, segm2, segm1a = null, segm2a = null;
+        List<Coordinate> coo1List = new ArrayList<Coordinate>(), coo2List = new ArrayList();;
+        try {
+            Coordinate[] coo = geom.getCoordinates();
+            for (int i = 1; i < coo.length; i++) {
+                segm1 = UGeo.getSegment(geom, i - 1);
+                segm1a = segm1.offset(-amend);
+
+                if (coo[i].z == arcID && coo[i - 1].z == arcID) {
+                    coo1List.add(segm1.p0);
+                    segm2 = UGeo.getSegment(geom, i);
+                    segm2a = segm2.offset(-amend);
+                    Coordinate cross = segm2a.intersection(segm1a);
+                    cross.z = arcID;
+                    coo2List.add(cross);
+
+                } else if (coo[i - 1].z != arcID) {
+                    segm1a.p0.z = arcID;
+                    segm1a.p1.z = arcID;
+                    Polygon ls = gf.createPolygon(new Coordinate[]{segm1.p0, segm1.p1, segm1a.p1, segm1a.p0, segm1.p0});
+                    geoList.add(ls);
+                }
+            }
+            Collections.reverse(coo2List);
+            coo1List.addAll(coo2List);
+            coo1List.add(coo1List.get(0));
+            Geometry geo2 = gf.createPolygon(coo1List.toArray(new Coordinate[0]));
+
+            for (Geometry g : geoList) {
+                geo2 = geo2.union(g);
+            }
+            LinearRing ring = ((Polygon) geo2).getInteriorRingN(0);
+            Polygon poly = (Polygon) gf.createPolygon(ring);
             return poly;
 
         } catch (Exception e) {
@@ -332,7 +379,7 @@ public class UGeo {
         }
     }
 
-    public static Polygon geoPadding2(Geometry poly, ArrayCom<? extends Com5t> list, double amend) {
+    public static Polygon geoPadding(Geometry poly, ArrayCom<? extends Com5t> list, double amend) {
         LineSegment segm1, segm2, segm1a = null, segm2a = null, segm1b, segm2b, segm1c, segm2c;
         Coordinate cros1 = null, cros2 = null;
         List<Coordinate> out = new ArrayList<Coordinate>();
@@ -398,7 +445,6 @@ public class UGeo {
             if (out.get(0).equals(out.get(out.size() - 1)) == false) {
                 out.add(out.get(0));
             }
-            System.out.println(cros1 + "  " + cros2);
             Polygon g = Com5t.gf.createPolygon(out.toArray(new Coordinate[0]));
             return g;
 

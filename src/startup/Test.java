@@ -345,15 +345,15 @@ public class Test {
         GeometryFactory gf = new GeometryFactory(); //JTSFactoryFinder.getGeometryFactory(); 
 
         Coordinate[] coord1 = new Coordinate[]{
-            new Coordinate(0, 0), new Coordinate(0, 1400),
-            new Coordinate(900, 1400), new Coordinate(900, 0),
+            new Coordinate(0, 0), new Coordinate(0, 100),
+            new Coordinate(100, 100), new Coordinate(100, 0),
             new Coordinate(0, 0)};
         Coordinate[] coord2 = {
-            new Coordinate(0, 0, 1),
-            new Coordinate(0, 1000, 2),
-            new Coordinate(1000, 1000, 3),
-            new Coordinate(1000, 0, 4),
-            new Coordinate(0, 0, 1)};
+            new Coordinate(100, 0, 1),
+            new Coordinate(100, 200, 2),
+            new Coordinate(300, 200, 3),
+            new Coordinate(300, 0, 4),
+            new Coordinate(100, 0, 1)};
 
         Point point1 = gf.createPoint(new Coordinate(500, 500));
         Point point2 = gf.createPoint(new Coordinate(0, 500));
@@ -361,11 +361,15 @@ public class Test {
         LineString line2 = gf.createLineString(coord2);
         LineSegment segm1 = new LineSegment(1, 1, 0, 1);
         LineSegment segm2 = new LineSegment(0, 10, 12, 10);
-        Polygon polygon1 = gf.createPolygon(coord1);
-        Polygon polygon2 = gf.createPolygon(coord2);
+        Polygon poly1 = gf.createPolygon(coord1);
+        Polygon poly2 = gf.createPolygon(coord2);
 
-        System.out.println(UGeo.anglHoriz(0, 0, 0, 100));
-        System.out.println(Math.toDegrees(Angle.angle(new Coordinate(0, 0), new Coordinate(0, 100))));
+        Geometry p = poly1.union(poly2);
+        
+        Geometry geo1 = UGeo.newPolygon(0, 300, 0, 1370, 68, 1370, 68, 300, 0, 300);
+        Geometry geo2 = UGeo.newPolygon(0, 1370, 1300, 1370, 1300, 1302, 0, 1302, 0, 1370);
+        
+        new Test().mpol = geo1.union(geo2);
 
     }
 
@@ -412,7 +416,7 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        draw3();
+        draw6();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
@@ -493,10 +497,10 @@ public class Test {
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
 
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
-        //Polygon geo2 = UGeo.geoPadding(geo1, frames, 0);
+        Polygon geo2 = UGeo.geoBuffer(geo1, frames, 60);
         
         mlin = geo1;
-        //mpol = geo2;
+        mpol = geo2;
     }
 
     private void draw5() {
@@ -549,24 +553,26 @@ public class Test {
         hm.put(3.0, 32.0);
         hm.put(4.0, 68.0);
 
+//        Geometry geo1 = UGeo.newLineStr(0, 300, 0, 1370, 68, 1370, 68, 300, 0, 300);
+//        Geometry geo2 = UGeo.newLineStr(0, 1370, 1300, 1370, 1300, 1302, 0, 1302, 0, 1370);
+
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
         Geometry geo2 = GeoBuffer.buffer(geo1, hm);
 
-        mpol = geo1;
+        mpol = geo1.union(geo2);
        // mlin = geo2;
     }
 
     private void draw3() {
 
+        double M = 1500;
         GeometryFactory gf = new GeometryFactory(new PrecisionModel(10));
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
-        double M = 1370;
-//        double M = 370;
         ArrayCom<Com5t> frames = new ArrayCom();
         frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
         frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, M)));
-        frames.add(new Com5t(3, new GsonElem(Type.IMPOST, 1300.0, M)));
+        frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, M)));
         frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
         LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
         s1.normalize();
@@ -580,7 +586,7 @@ public class Test {
         //Обратная трансформация арки
         aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
         Geometry arc2 = aff.transform(arc1);
-        Coordinate arr2[] = arc2.getCoordinates();
+        Coordinate arr2[] = arc2.getCoordinates(); //Arrays.copyOf(arc2.getCoordinates(), arc2.getCoordinates().length);
         List.of(arr2).forEach(c -> c.z = 4);
 
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
@@ -588,10 +594,11 @@ public class Test {
         list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
         list.addAll(List.of(arr2));
 
-        Geometry geo1 = UGeo.newPolygon(list);
-        Geometry geo2 = UGeo.geoPadding(geo1, frames, 68);
-        //this.mpol = geo1;
-        this.mlin = geo2;
+        Polygon geo1 = UGeo.newPolygon(list);
+        Polygon geo2 = UGeo.geoPadding(geo1, frames, 0);
+        this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
+
+        this.mpol = null;
     }
 
     private void draw2() {
