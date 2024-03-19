@@ -98,8 +98,8 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            //frame(args);
-            wincalc();
+            frame(args);
+            //wincalc();
             //param();
             //query();
             //json();
@@ -412,7 +412,7 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        draw4();
+        draw3();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
@@ -493,10 +493,10 @@ public class Test {
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
 
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
-        Polygon geo2 = UGeo.geoPadding(geo1, frames, 0);
+        //Polygon geo2 = UGeo.geoPadding(geo1, frames, 0);
         
         mlin = geo1;
-        mpol = geo2;
+        //mpol = geo2;
     }
 
     private void draw5() {
@@ -561,10 +561,12 @@ public class Test {
         GeometryFactory gf = new GeometryFactory(new PrecisionModel(10));
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
+        double M = 1370;
+//        double M = 370;
         ArrayCom<Com5t> frames = new ArrayCom();
         frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
-        frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, 1500.0)));
-        frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, 1500.0)));
+        frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, M)));
+        frames.add(new Com5t(3, new GsonElem(Type.IMPOST, 1300.0, M)));
         frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
         LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
         s1.normalize();
@@ -578,7 +580,7 @@ public class Test {
         //Обратная трансформация арки
         aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
         Geometry arc2 = aff.transform(arc1);
-        Coordinate arr2[] = arc2.getCoordinates(); //Arrays.copyOf(arc2.getCoordinates(), arc2.getCoordinates().length);
+        Coordinate arr2[] = arc2.getCoordinates();
         List.of(arr2).forEach(c -> c.z = 4);
 
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
@@ -586,19 +588,10 @@ public class Test {
         list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
         list.addAll(List.of(arr2));
 
-        Polygon geo1 = UGeo.newPolygon(list);
-        Polygon geo2 = UGeo.geoPadding(geo1, frames, 0);
-        this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
-
-        this.mpol = null;
-//        List<Coordinate> list2 = new ArrayLoop();
-//        Coordinate c1[] = geo1.getCoordinates();
-//        Coordinate c2[] = geo2.getCoordinates();
-//        List<Coordinate> c1a = List.of(c1).stream().filter(c -> c.z == frame.get(3).id).collect(toList());
-//        List<Coordinate> c2a = List.of(c2).stream().filter(c -> c.z == frame.get(3).id).collect(toList());
-//        list2.addAll(c1a);
-//        list2.addAll(c2a);
-//        mpol = gf.createLineString(list2.toArray(new Coordinate[0]));
+        Geometry geo1 = UGeo.newPolygon(list);
+        Geometry geo2 = UGeo.geoPadding(geo1, frames, 68);
+        //this.mpol = geo1;
+        this.mlin = geo2;
     }
 
     private void draw2() {
