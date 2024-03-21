@@ -13,10 +13,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
-import common.GeoBuffer;
 import common.eProp;
+import common.GeoBuffer;
 import dataset.Conn;
-import dataset.Record;
 import domain.eArtikl;
 import enums.Type;
 import java.awt.Color;
@@ -91,7 +90,6 @@ public class Test {
     }
 
     // </editor-fold>     
-    
     //java -jar C:\\Okna\\winapp\\dist\\winapp.jar dev loc
     public static void main(String[] args) throws Exception {
 
@@ -357,20 +355,22 @@ public class Test {
 
         Point point1 = gf.createPoint(new Coordinate(500, 500));
         Point point2 = gf.createPoint(new Coordinate(0, 500));
-        LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(0, 500), new Coordinate(500, 500)});
+        LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(200, 0), new Coordinate(200, 500)});
         LineString line2 = gf.createLineString(coord2);
-        LineSegment segm1 = new LineSegment(1, 1, 0, 1);
+        LineSegment segm1 = new LineSegment(100, 600, 100, 0);
         LineSegment segm2 = new LineSegment(0, 10, 12, 10);
         Polygon poly1 = gf.createPolygon(coord1);
         Polygon poly2 = gf.createPolygon(coord2);
 
         Geometry p = poly1.union(poly2);
-        
+
         Geometry geo1 = UGeo.newPolygon(0, 300, 0, 1370, 68, 1370, 68, 300, 0, 300);
         Geometry geo2 = UGeo.newPolygon(0, 1370, 1300, 1370, 1300, 1302, 0, 1302, 0, 1370);
-        
-        new Test().mpol = geo1.union(geo2);
 
+        LineSegment seg = segm1.offset(-68);
+        LineSegment se2 = segm1.offset(-68);
+
+        //new Test().mpol = geo1.union(geo2);
     }
 
     public static void frame(String[] args) {
@@ -421,7 +421,7 @@ public class Test {
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
     public void paintComp(Graphics g) {
-        
+
         Graphics2D gc2d = (Graphics2D) g;
         gc2d.translate(40, 40);
         gc2d.scale(.4, .4);
@@ -487,7 +487,6 @@ public class Test {
         LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
         LineString arc1 = UGeo.newLineArch(s1.p1.x, s1.p0.x, s1.p0.y, 300, 4);
         Coordinate arr[] = arc1.getCoordinates();
-        List.of(arr).forEach(c -> c.z = 4);
 
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
         list.add(new Coordinate(frames.get(1).x1(), frames.get(1).y1(), frames.get(1).id));
@@ -497,9 +496,8 @@ public class Test {
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
 
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
-        Polygon geo2 = UGeo.geoBuffer(geo1, frames, 0);
-        //Polygon geo2 = UGeo.geoPadding(geo1, frames, 0);
-        
+        Polygon geo2 = GeoBuffer.buffer(geo1, frames, 0);
+
         mlin = geo1;
         mpol = geo2;
     }
@@ -556,12 +554,11 @@ public class Test {
 
 //        Geometry geo1 = UGeo.newLineStr(0, 300, 0, 1370, 68, 1370, 68, 300, 0, 300);
 //        Geometry geo2 = UGeo.newLineStr(0, 1370, 1300, 1370, 1300, 1302, 0, 1302, 0, 1370);
-
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
         Geometry geo2 = GeoBuffer.buffer(geo1, hm);
 
         mpol = geo1.union(geo2);
-       // mlin = geo2;
+        // mlin = geo2;
     }
 
     private void draw3() {
@@ -646,6 +643,5 @@ public class Test {
 
         // System.out.println(list1);
     }
-
 // </editor-fold>        
 }

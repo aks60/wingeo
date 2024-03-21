@@ -172,61 +172,6 @@ public class UGeo {
         }
     }
 
-    //Внутренняя обводка горизонтальной аrch 
-    public static Polygon geoBuffer(Geometry geom, ArrayCom<? extends Com5t> list, double amend) {
-
-        Map<Double, Double> hm = new HashMap();
-        for (Com5t el : list) {
-            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-            hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
-        }
-        List<Geometry> geoList = new ArrayList();
-        LineSegment segm1, segm2, segm1a = null, segm2a = null;
-        List<Coordinate> coo1List = new ArrayList<Coordinate>(), coo2List = new ArrayList();
-        try {
-            Coordinate[] coo = geom.getCoordinates();
-            for (int i = 1; i < coo.length; i++) {
-
-                Com5t e1 = list.get(coo[i - 1].z);
-                Com5t e2 = list.get(coo[i].z);
-                segm1 = UGeo.getSegment(geom, i - 1);
-                segm1a = segm1.offset(-hm.get(e1.id));
-//System.out.println(e1.h() + "  " + e2.h());
-                if (e1.h() != null && e2.h() != null) {
-                    coo1List.add(segm1.p0);
-                    segm2 = UGeo.getSegment(geom, i);
-                    segm2a = segm2.offset(-hm.get(e2.id));
-                    Coordinate cross = segm2a.intersection(segm1a);
-                    cross.z = e2.id;
-                    coo2List.add(cross);
-
-                } else if (e1.h() == null) {
-                    segm1a.p0.z = e1.id;
-                    segm1a.p1.z = e1.id;
-                    Polygon ls = gf.createPolygon(new Coordinate[]{segm1.p0, segm1.p1, segm1a.p1, segm1a.p0, segm1.p0});
-                    geoList.add(ls);
-                }
-            }
-            Geometry geo2 = gf.createPolygon();
-            if (coo2List.isEmpty() == false) {
-                Collections.reverse(coo2List);
-                coo1List.addAll(coo2List);
-                coo1List.add(coo1List.get(0));
-                geo2 = gf.createPolygon(coo1List.toArray(new Coordinate[0]));
-            }
-            for (Geometry geo3 : geoList) {
-                geo2 = geo2.union(geo3);
-            }
-            LinearRing ring = ((Polygon) geo2).getInteriorRingN(0);
-            Polygon poly = (Polygon) gf.createPolygon(ring.getCoordinates()).norm();
-            return poly;
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.geoPadding() " + e);
-            return null;
-        }
-    }
-
     //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Coordinate[] arrCoord(double... d) {
         List<Coordinate> list = new ArrayList<Coordinate>();
@@ -343,6 +288,7 @@ public class UGeo {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
+    //В разработке
     public static Polygon geoPadding(Geometry poly, ArrayCom<? extends Com5t> list, double amend) {
         LineSegment segm1, segm2, segm1a = null, segm2a = null, segm1b, segm2b, segm1c, segm2c;
         Coordinate cros1 = null, cros2 = null;
@@ -417,6 +363,65 @@ public class UGeo {
             return null;
         }
     }
+    //В разработке
+    public static Polygon geoBuffer(Geometry geom, ArrayCom<? extends Com5t> list, double amend) {
 
+        Map<Double, Double> hm = new HashMap();
+        for (Com5t el : list) {
+            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+            hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
+        }
+        Coordinate cross;
+        List<Geometry> geoList = new ArrayList();
+        LineSegment segm1, segm2, segm1a = null, segm2a = null;
+        List<Coordinate> coo1List = new ArrayList<Coordinate>(), coo2List = new ArrayList();
+        try {
+            Coordinate[] coo = geom.getCoordinates();
+            for (int i = 1; i < coo.length; i++) {
+
+                Com5t e1 = list.get(coo[i - 1].z);
+                Com5t e2 = list.get(coo[i].z);
+                segm1 = UGeo.getSegment(geom, i - 1);
+                segm1a = segm1.offset(-hm.get(e1.id));
+
+                if (e1.h() != null && e2.h() != null) {
+                    //if (coo[i].z == 4) {
+                    coo1List.add(segm1.p0);
+                    segm2 = UGeo.getSegment(geom, i);
+                    segm2a = segm2.offset(-hm.get(e2.id));                                    
+                    //if(segm1a.getLength() > hm.get(e2.id) || segm2a.getLength() > hm.get(e2.id)) {
+                      //  cross = segm2a.lineIntersection(segm1a);
+                    //} else {
+                        cross = segm2a.intersection(segm1a);
+                    //}
+                    cross.z = e2.id;
+                    coo2List.add(cross);
+
+                } else if (e1.h() == null) {
+                    segm1a.p0.z = e1.id;
+                    segm1a.p1.z = e1.id;
+                    Polygon ls = gf.createPolygon(new Coordinate[]{segm1.p0, segm1.p1, segm1a.p1, segm1a.p0, segm1.p0});
+                    geoList.add(ls);
+                }
+            }
+            Geometry geo2 = gf.createPolygon();
+            if (coo2List.isEmpty() == false) {
+                Collections.reverse(coo2List);
+                coo1List.addAll(coo2List);
+                coo1List.add(coo1List.get(0));
+                geo2 = gf.createPolygon(coo1List.toArray(new Coordinate[0]));
+            }
+            for (Geometry geo3 : geoList) {
+                geo2 = geo2.union(geo3);
+            }
+            LinearRing ring = ((Polygon) geo2).getInteriorRingN(0);
+            Polygon poly = (Polygon) gf.createPolygon(ring.getCoordinates()).norm();
+            return poly;
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.geoPadding() " + e);
+            return null;
+        }
+    }
 // </editor-fold>    
 }
