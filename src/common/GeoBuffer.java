@@ -310,6 +310,8 @@ public class GeoBuffer {
      */
     private Polygon segmentBuffer(Coordinate p0, Coordinate p1,
             double dist0, double dist1) {
+        //double Z = p0.z;
+
         /**
          * Skip polygon if both distances are zero
          */
@@ -320,9 +322,9 @@ public class GeoBuffer {
         /**
          * Compute for increasing distance only, so flip if needed
          */
-        if (dist0 > dist1) {
-            return segmentBuffer(p1, p0, dist1, dist0);
-        }
+        //if (dist0 > dist1) {
+        //    return segmentBuffer(p1, p0, dist1, dist0);
+        //}
 
         // forward tangent line
         LineSegment tangent = outerTangent(p0, dist0, p1, dist1);
@@ -366,6 +368,7 @@ public class GeoBuffer {
         // close
         coords.add(t0, false);
 
+        //coords.forEach(c -> c.z = Z);
         Coordinate[] pts = coords.toCoordinateArray();
         Polygon polygon = geomFactory.createPolygon(pts);
         return polygon;

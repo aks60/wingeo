@@ -367,13 +367,19 @@ public class Test {
         Geometry geo1 = UGeo.newPolygon(0, 300, 0, 380, 50, 380, 50, 300, 0, 300);
         Geometry geo2 = UGeo.newPolygon(0, 300, 0, 380, 150, 380, 150, 300, 0, 300);
         
+        Polygon p1 = gf.createPolygon(new Coordinate[]{
+            new Coordinate(0, 300, 8), new Coordinate(0, 380, 8),
+            new Coordinate(50, 380, 8), new Coordinate(50, 300, 8), new Coordinate(0, 300, 8)});
+        Polygon p2 = gf.createPolygon(new Coordinate[]{
+            new Coordinate(0, 300, 9), new Coordinate(0, 380, 9),
+            new Coordinate(150, 380, 9), new Coordinate(150, 300, 9), new Coordinate(0, 300, 9)});
+
 //        Geometry geo1 = UGeo.newPolygon(0, 300, 0, 1370, 68, 1370, 68, 300, 0, 300);
 //        Geometry geo2 = UGeo.newPolygon(0, 1370, 1300, 1370, 1300, 1302, 0, 1302, 0, 1370);
-
         //LineSegment seg = segm1.offset(-68);
-       // LineSegment se2 = segm1.offset(-68);
-
-        new Test().mpol = geo2; //geo1.union(geo2);
+        // LineSegment se2 = segm1.offset(-68);
+        Geometry p3 = p1.union(p2);
+        new Test().mpol = p3;
     }
 
     public static void frame(String[] args) {
@@ -419,7 +425,7 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-       // draw6();
+        // draw6();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
