@@ -96,14 +96,14 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            frame(args);
+            //frame(args);
             //wincalc();
             //param();
             //query();
             //json();
             //uid();
             //script();
-            //geom();
+            geom();
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
@@ -364,13 +364,16 @@ public class Test {
 
         Geometry p = poly1.union(poly2);
 
-        Geometry geo1 = UGeo.newPolygon(0, 300, 0, 1370, 68, 1370, 68, 300, 0, 300);
-        Geometry geo2 = UGeo.newPolygon(0, 1370, 1300, 1370, 1300, 1302, 0, 1302, 0, 1370);
+        Geometry geo1 = UGeo.newPolygon(0, 300, 0, 380, 50, 380, 50, 300, 0, 300);
+        Geometry geo2 = UGeo.newPolygon(0, 300, 0, 380, 150, 380, 150, 300, 0, 300);
+        
+//        Geometry geo1 = UGeo.newPolygon(0, 300, 0, 1370, 68, 1370, 68, 300, 0, 300);
+//        Geometry geo2 = UGeo.newPolygon(0, 1370, 1300, 1370, 1300, 1302, 0, 1302, 0, 1370);
 
-        LineSegment seg = segm1.offset(-68);
-        LineSegment se2 = segm1.offset(-68);
+        //LineSegment seg = segm1.offset(-68);
+       // LineSegment se2 = segm1.offset(-68);
 
-        //new Test().mpol = geo1.union(geo2);
+        new Test().mpol = geo2; //geo1.union(geo2);
     }
 
     public static void frame(String[] args) {
@@ -416,7 +419,7 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        draw6();
+       // draw6();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
@@ -475,7 +478,7 @@ public class Test {
 
     private void draw6() {
         //double M =380;
-        double M = 1400;
+        double M = 1500;
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayCom<Com5t> frames = new ArrayCom();

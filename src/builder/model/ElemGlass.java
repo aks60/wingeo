@@ -33,7 +33,7 @@ public class ElemGlass extends ElemSimple {
 
     public double radius = 0; //радиус стекла
     public double gzazo = 0; //зазор между фальцем и стеклопакетом 
-    public HashMap<Integer, Double> gaxisMap = new HashMap<Integer, Double>(); //размер от оси до стеклопакета
+    public HashMap<Integer, Double> axisMap = new HashMap<Integer, Double>(); //размер от оси до стеклопакета
     public int indexSegmClass = 0;
 
     public Record rasclRec = eArtikl.virtualRec(); //раскладка

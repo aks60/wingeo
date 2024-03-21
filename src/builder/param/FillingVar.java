@@ -93,15 +93,15 @@ public class FillingVar extends Par5s {
                 break;
                 case 13015:  //Форма заполнения 
                     //"Прямоугольное", "Не прямоугольное", "Не арочное", "Арочное" (TypeElem.AREA - глухарь)
-                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && elem5e.area.getGeometryN(0).isRectangle() == false) {
+                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && Type.RECTANGL.equals(winc.root.type) == false) {
                         return false;
-                    } else if ("Не прямоугольное".equals(rec.getStr(TEXT)) && elem5e.area.getGeometryN(0).isRectangle() == true) {
+                    } else if ("Не прямоугольное".equals(rec.getStr(TEXT)) && (Type.TRAPEZE.equals(winc.root.type) == false)) {
                         return false;
-                    } else if ("Арочное".equals(rec.getStr(TEXT)) && elem5e.area.getGeometryN(0).getNumPoints() > 40 == false) {
+                    } else if ("Арочное".equals(rec.getStr(TEXT)) && Type.ARCH.equals(winc.root.type) == false) {
                         return false;
-                    } else if ("Не арочное".equals(rec.getStr(TEXT)) && elem5e.area.getGeometryN(0).getNumPoints() > 40 == true) {
+                    } else if ("Не арочное".equals(rec.getStr(TEXT)) && Type.ARCH.equals(winc.root.type) == true) {
                         return false;
-                    }
+                    }                    
                     break;
                 case 13017: //Код системы содержит строку 
                     if (UPar.is_13017_14017_24017_25017_31017_33017_34017_37017_38017(rec.getStr(TEXT), winc) == false) {

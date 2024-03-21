@@ -104,6 +104,7 @@ public class GeoBuffer {
 
     public static Polygon buffer(Geometry line, ArrayCom<? extends Com5t> list, double amend) {
 
+        //Map дистанций
         Map<Double, Double> hm = new HashMap();
         for (Com5t el : list) {
             Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
@@ -111,6 +112,7 @@ public class GeoBuffer {
             Double delta2 = rec.getDbl(eArtikl.size_centr);
             hm.put(el.id, delta1 - delta2 + amend);
         }
+        //Array дистанций
         Coordinate coo[] = line.getGeometryN(0).getCoordinates();
         double distance[] = new double[coo.length];
         for (int i = 0; i < coo.length; ++i) {
