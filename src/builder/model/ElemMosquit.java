@@ -82,7 +82,7 @@ public class ElemMosquit extends ElemSimple {
 
             //Профиль в составе  М/С
             //if (TypeArtikl.isType(spcAdd.artiklRec, TypeArtikl.X120)) {
-            double anglHor = UGeo.anglHoriz(x1(), y1(), x2(), y2());
+            double anglHor = UGeo.anglHor(x1(), y1(), x2(), y2());
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) { //пог.м.  
                 
                 if (anglHor == 0 || anglHor == 180) {

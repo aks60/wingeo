@@ -134,7 +134,7 @@ public class ElemGlass extends ElemSimple {
                 return;  //если стеклопакет сразу выход
             }
             LineSegment segment = UGeo.getSegment(this.area, indexSegmClass);
-            double anglGlassHor = UGeo.anglHoriz(segment.p0.x, segment.p0.y, segment.p1.x, segment.p1.y); //угол к горизонту
+            double anglGlassHor = UGeo.anglHor(segment.p0.x, segment.p0.y, segment.p1.x, segment.p1.y); //угол к горизонту
 
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {

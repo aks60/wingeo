@@ -23,6 +23,8 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import dataset.Field;
+import enums.Layout;
+import enums.Type;
 import java.util.HashMap;
 import java.util.Map;
 import org.locationtech.jts.geom.LinearRing;
@@ -50,7 +52,7 @@ public class UGeo {
     }
 
     //Угол неориентированный к горизонту. Угол нормируется в диапазоне [0, 2Pi].
-    public static double anglHoriz(double x1, double y1, double x2, double y2) {
+    public static double anglHor(double x1, double y1, double x2, double y2) {
         double ang = Math.toDegrees(Angle.angle(new Coordinate(x1, y1), new Coordinate(x2, y2)));
         return (ang > 0) ? 360 - ang : Math.abs(ang);
     }
@@ -69,6 +71,28 @@ public class UGeo {
         return Math.toDegrees(diff(c1, c2));
     }
 
+    public static Layout geoLayout(Type type, double x1, double y1, double x2, double y2) {
+        try {
+            double anglHor = UGeo.anglHor(x1, y1, x2, y2);
+
+            if (anglHor > 315 && anglHor < 360 || anglHor >= 0 && anglHor < 45) {
+                return (type == Type.IMPOST || type == Type.SHTULP) ? Layout.HORIZ : Layout.BOTT;
+
+            } else if (anglHor > 45 && anglHor < 135) {
+                return Layout.RIGHT;
+
+            } else if (anglHor > 135 && anglHor < 225) {
+                return Layout.TOP;
+
+            } else if (anglHor > 225 && anglHor < 315) {
+                return (type == Type.IMPOST || type == Type.SHTULP) ? Layout.VERT : Layout.LEFT;
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.layout() " + e);
+        }
+        return Layout.ANY;
+    }
+    
     //Пересечение сегмента(линии) импоста с сегментами(отрезками) многоугольника
     public static Coordinate[] geoCross(Geometry poly, LineSegment line) {
         try {

@@ -141,7 +141,7 @@ public class JoiningVar extends Par5s {
                 break;
                 case 1020:  //Ограничение угла к горизонту, °
                     if (UCom.containsNumbJust(rec.getStr(TEXT),
-                            UGeo.anglHoriz(elemJoin.elem1.x1(), elemJoin.elem1.y1(), elemJoin.elem1.x2(), elemJoin.elem1.y2())) == true) {
+                            UGeo.anglHor(elemJoin.elem1.x1(), elemJoin.elem1.y1(), elemJoin.elem1.x2(), elemJoin.elem1.y2())) == true) {
                         return false;
                     }
                     break;
@@ -271,8 +271,8 @@ public class JoiningVar extends Par5s {
                 case 3015:  //Ориентация Артикула1/Артикула2, °
                 case 4015:  //Ориентация Артикула1/Артикула2, °
                     if (UCom.containsNumb(rec.getStr(TEXT),
-                            UGeo.anglHoriz(elemJoin.elem1.x1(), elemJoin.elem1.y1(), elemJoin.elem1.x2(), elemJoin.elem1.y2()),
-                            UGeo.anglHoriz(elemJoin.elem2.x1(), elemJoin.elem2.y1(), elemJoin.elem2.x2(), elemJoin.elem2.y2())) == false) {
+                            UGeo.anglHor(elemJoin.elem1.x1(), elemJoin.elem1.y1(), elemJoin.elem1.x2(), elemJoin.elem1.y2()),
+                            UGeo.anglHor(elemJoin.elem2.x1(), elemJoin.elem2.y1(), elemJoin.elem2.x2(), elemJoin.elem2.y2())) == false) {
                         return false;
                     }
                     break;

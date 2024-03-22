@@ -231,25 +231,7 @@ public abstract class ElemSimple extends Com5t {
 
     @Override
     public Layout layout() {
-        try {
-            double anglHor = UGeo.anglHoriz(x1(), y1(), x2(), y2());
-
-            if (anglHor > 315 && anglHor < 360 || anglHor >= 0 && anglHor < 45) {
-                return (this.type == Type.IMPOST || this.type == Type.SHTULP) ? Layout.HORIZ : Layout.BOTT;
-
-            } else if (anglHor > 45 && anglHor < 135) {
-                return Layout.RIGHT;
-
-            } else if (anglHor > 135 && anglHor < 225) {
-                return Layout.TOP;
-
-            } else if (anglHor > 225 && anglHor < 315) {
-                return (this.type == Type.IMPOST || this.type == Type.SHTULP) ? Layout.VERT : Layout.LEFT;
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:ElemSimple.layout() " + e);
-        }
-        return Layout.ANY;
+       return UGeo.geoLayout(this.type, x1(), y1(), x2(), y2());
     }
 
     //Точка редактирования конструкции
@@ -355,6 +337,6 @@ public abstract class ElemSimple extends Com5t {
 
     @Override
     public String toString() {
-        return super.toString() + ", anglHoriz=" + UGeo.anglHoriz(x1(), y1(), x2(), y2());
+        return super.toString() + ", anglHoriz=" + UGeo.anglHor(x1(), y1(), x2(), y2());
     }
 }

@@ -126,12 +126,12 @@ public class FurnitureVar extends Par5s {
                 }
                 break;
                 case 21040:  //Ограничение угла
-                    if (UCom.containsNumbJust(rec.getStr(TEXT), UGeo.anglHoriz(elem5e.x1(), elem5e.y1(), elem5e.x2(), elem5e.y2())) == false) {
+                    if (UCom.containsNumbJust(rec.getStr(TEXT), UGeo.anglHor(elem5e.x1(), elem5e.y1(), elem5e.x2(), elem5e.y2())) == false) {
                         return false;
                     }
                     break;
                 case 21050:  //Ориентация стороны, ° 
-                    if (UCom.containsNumbJust(rec.getStr(TEXT), UGeo.anglHoriz(elem5e.x1(), elem5e.y1(), elem5e.x2(), elem5e.y2())) == false) {
+                    if (UCom.containsNumbJust(rec.getStr(TEXT), UGeo.anglHor(elem5e.x1(), elem5e.y1(), elem5e.x2(), elem5e.y2())) == false) {
                         return false;
                     }
                     break;

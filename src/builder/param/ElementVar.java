@@ -187,7 +187,7 @@ public class ElementVar extends Par5s {
                     elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
                 case 31020:  //Ограничение угла к горизонту, °
-                    if (UCom.containsNumbJust(rec.getStr(TEXT), UGeo.anglHoriz(elem5e.x1(), elem5e.y1(), elem5e.x2(), elem5e.y2())) == false) {
+                    if (UCom.containsNumbJust(rec.getStr(TEXT), UGeo.anglHor(elem5e.x1(), elem5e.y1(), elem5e.x2(), elem5e.y2())) == false) {
                         return false;
                     }
                     break;
