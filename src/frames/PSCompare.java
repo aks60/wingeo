@@ -208,7 +208,7 @@ public class PSCompare extends javax.swing.JFrame {
             Vector vectorData = new Vector();
             Vector vectorColumn = new Vector(List.of("PUNIC", "PNUMB", "ONUMB", "ONAME", "PDATE", "BPICT"));
             ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, b.pdate, a.bpict from listord a, listprj b "
-                    + "where a.punic = b.punic and b.pdate > '01.06.2005' and b.pdate < '01.01.2024' and pnumb = 507965 order by b.pdate");
+                    + "where a.punic = b.punic and b.pdate > '01.06.2005' and b.pdate < '01.01.2024' order by b.pdate");
 //            ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, b.pdate, a.bpict from listord a, listprj b where a.punic = b.punic and b.punic in "
 //                    + "(412463, 427595, 427597, 427761, 427817, 427818 ,427819, 427820, 427840, 427838, 427842, 427848, 427851, 427852, 427858, 427872, 427422, 427565, "
 //                    + "427833, 427832, 427831, 427830, 427825, 427826, 427779, 425392, 425392, 427850, 427708, 427737, 427629, 427847, 427856,"

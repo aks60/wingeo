@@ -11,7 +11,6 @@ import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
-import domain.eSyssize;
 import domain.eSystree;
 import enums.PKjson;
 import enums.Type;
@@ -27,14 +26,13 @@ import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
-import startup.Test;
 
 public class ElemGlass extends ElemSimple {
 
     public double radius = 0; //радиус стекла
     public double gzazo = 0; //зазор между фальцем и стеклопакетом 
     public HashMap<Integer, Double> axisMap = new HashMap<Integer, Double>(); //размер от оси до стеклопакета
-    public ElemSimple frameClass = null;
+    public ElemSimple frameGlass = null;
     public int sideClass = 0;
 
     public Record rasclRec = eArtikl.virtualRec(); //раскладка
@@ -91,13 +89,9 @@ public class ElemGlass extends ElemSimple {
     @Override
     public void setLocation() {
         ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
-        Polygon geo = GeoBuffer.buffer(owner.area.getGeometryN(0), list, 80);
-        Envelope env = geo.getEnvelopeInternal();
-        //System.out.println(env.getMaxX() - env.getMinX());
-        Geometry env2 = geo.getEnvelope();
-
-        setDimension(env.getMinX(), env.getMinY(), env.getMaxX(), env.getMaxY());
-        this.area = geo;
+        this.area = GeoBuffer.buffer(owner.area.getGeometryN(0), list, 0); //полигон для прорисовки
+        //Envelope env = this.area.getEnvelopeInternal();
+        //setDimension(env.getMinX(), env.getMinY(), env.getMaxX(), env.getMaxY());
     }
 
     //Главная спецификация    
@@ -144,7 +138,7 @@ public class ElemGlass extends ElemSimple {
 
                 Coordinate coo[] = this.area.getCoordinates();
 
-                if (frameClass.h() == null) { //не арка
+                if (this.area.getCoordinates().length < MAXSIDE) { //не арка
                     LineSegment s1 = UGeo.getSegment(this.area, sideClass - 1);
                     LineSegment s2 = UGeo.getSegment(this.area, sideClass);
                     spcAdd.anglHoriz = UGeo.anglHor(s2.p0.x, s2.p0.y, s2.p1.x, s2.p1.y); //угол к горизонту                    
@@ -152,17 +146,22 @@ public class ElemGlass extends ElemSimple {
                     spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 5], coo[coo.length - 4], coo[coo.length - 3]));
                     spcAdd.width += s1.getLength() + 2 * gzazo;
 
-                } 
-                if(frameClass.h() != null) { //арка
-                    spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
-                    LineSegment seg = new LineSegment();
-                    for (int i = 1; i < coo.length; i++) {
-                        seg.setCoordinates(coo[i - 1], coo[i]);
-                        if (seg.getLength() > this.artiklRecAn.getDbl(eArtikl.height)) {
-                            spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[i - 2], coo[i - 1], coo[i]));
-                        }
-                        if (coo[i - 1].z == coo[coo.length / 2].z) {
-                            spcAdd.width += seg.getLength();
+                } else { //арка
+                    //double angHor = UGeo.anglHor(frameGlass);
+                    if (this.frameGlass.h() == null) {
+                        LineSegment s = new LineSegment(coo[sideClass], coo[sideClass + 1]);
+                        spcAdd.width += s.getLength();
+                    } else {
+                        spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
+                        LineSegment seg = new LineSegment();
+                        for (int i = 1; i < coo.length; i++) {
+                            seg.setCoordinates(coo[i - 1], coo[i]);
+                            if (seg.getLength() > this.artiklRecAn.getDbl(eArtikl.height)) {
+                                spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[i - 2], coo[i - 1], coo[i]));
+                            }
+                            if (coo[i - 1].z == this.frameGlass.id) {
+                                spcAdd.width += seg.getLength();
+                            }
                         }
                     }
                 }

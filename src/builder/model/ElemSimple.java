@@ -24,7 +24,7 @@ import org.locationtech.jts.geom.LineSegment;
 
 public abstract class ElemSimple extends Com5t {
 
-    public double[] anglFlat = {0, 0, 0, 0}; //мин/мах внутренний и мин/мах внешний угол к плоскости   
+    //public double[] anglFlat = {0, 0, 0, 0}; //мин/мах внутренний и мин/мах внешний угол к плоскости   
     public double[] betweenHoriz = {0, 0}; //угол между векторами   
     private java.awt.Point pointPress = null;
     public int passMask[] = {0, 0}; //маска редактир. [0]=0 -начало, [0]=1 -конец, 

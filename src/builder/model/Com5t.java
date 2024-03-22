@@ -20,6 +20,8 @@ import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Com5t {
 
+    public static int MAXSIDE = 80;
+
     public static GeometryFactory gf = new GeometryFactory(new PrecisionModel());
     public static GeometricShapeFactory gsf = new GeometricShapeFactory(gf);
     public static AffineTransformation aff = new AffineTransformation();
@@ -60,13 +62,13 @@ public class Com5t {
      * Длина компонента
      */
     public double length() {
-        
-        if(this.h() == null) {
+
+        if (this.h() == null) {
             return new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).getLength();
         } else {
-           List<Coordinate> list = List.of(owner.area.getGeometryN(0).getCoordinates()).stream().filter(c -> c.z == id).collect(toList());
-           LineString ls = gf.createLineString(list.toArray(new Coordinate[0]));
-           return ls.getLength();
+            List<Coordinate> list = List.of(owner.area.getGeometryN(0).getCoordinates()).stream().filter(c -> c.z == id).collect(toList());
+            LineString ls = gf.createLineString(list.toArray(new Coordinate[0]));
+            return ls.getLength();
         }
     }
 

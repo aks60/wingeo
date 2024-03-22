@@ -8,6 +8,7 @@ import enums.Layout;
 import java.util.List;
 import builder.Wincalc;
 import builder.model.AreaStvorka;
+import builder.model.Com5t;
 import builder.model.ElemSimple;
 import builder.model.UGeo;
 import common.UCom;
@@ -338,11 +339,11 @@ public class ElementVar extends Par5s {
                     if ("Прямоугольное".equals(rec.getStr(TEXT)) && elem5e.area.isRectangle() == false) {
                         return false;
 
-                    } else if ("Арочное".equals(rec.getStr(TEXT)) && elem5e.area.getNumPoints() > 40 == false) {
+                    } else if ("Арочное".equals(rec.getStr(TEXT)) && elem5e.area.getNumPoints() > Com5t.MAXSIDE == false) {
                         return false;
 
                     } else if ("Произвольное".equals(rec.getStr(TEXT))
-                            && (elem5e.area.isRectangle() == true || elem5e.area.getNumPoints() > 40 == true)) {
+                            && (elem5e.area.isRectangle() == true || elem5e.area.getNumPoints() > Com5t.MAXSIDE == true)) {
                         return false;
                     }
                 }
