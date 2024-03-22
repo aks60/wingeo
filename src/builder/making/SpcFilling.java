@@ -64,11 +64,16 @@ public class SpcFilling extends Cal5e {
 
             ArrayCom<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             Coordinate[] coo = elemGlass.area.getGeometryN(0).getCoordinates();
+            if (elemGlass.area.getGeometryN(0).getEnvelopeInternal().getMaxY() <= coo[0].y) {
+                coo[0].z = coo[1].z;
+                coo[2].z = coo[1].z;
+                coo[coo.length - 1].z = coo[1].z;               
+            }
             Set hs = new HashSet();
             List.of(elemGlass.area.getCoordinates()).forEach(p -> hs.add(p.z));
-            if (elemGlass.id == 6) {
+            //if (elemGlass.id == 6) {
                 //new Test().mpol = elemGlass.area.getGeometryN(0);
-            }
+            //}
             //Цикл по сторонам стеклопакета
             for (int indexSegm = 0; indexSegm < hs.size(); indexSegm++) {
 
