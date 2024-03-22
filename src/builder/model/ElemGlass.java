@@ -34,6 +34,7 @@ public class ElemGlass extends ElemSimple {
     public double radius = 0; //радиус стекла
     public double gzazo = 0; //зазор между фальцем и стеклопакетом 
     public HashMap<Integer, Double> axisMap = new HashMap<Integer, Double>(); //размер от оси до стеклопакета
+    public ElemSimple frameClass = null;
     public int sideClass = 0;
 
     public Record rasclRec = eArtikl.virtualRec(); //раскладка
@@ -143,7 +144,7 @@ public class ElemGlass extends ElemSimple {
 
                 Coordinate coo[] = this.area.getCoordinates();
 
-                if (this.area.getNumPoints() < 80) {
+                if (frameClass.h() == null) { //не арка
                     LineSegment s1 = UGeo.getSegment(this.area, sideClass - 1);
                     LineSegment s2 = UGeo.getSegment(this.area, sideClass);
                     spcAdd.anglHoriz = UGeo.anglHor(s2.p0.x, s2.p0.y, s2.p1.x, s2.p1.y); //угол к горизонту                    
@@ -151,7 +152,8 @@ public class ElemGlass extends ElemSimple {
                     spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 5], coo[coo.length - 4], coo[coo.length - 3]));
                     spcAdd.width += s1.getLength() + 2 * gzazo;
 
-                } else { //арка
+                } 
+                if(frameClass.h() != null) { //арка
                     spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
                     LineSegment seg = new LineSegment();
                     for (int i = 1; i < coo.length; i++) {
@@ -210,7 +212,9 @@ public class ElemGlass extends ElemSimple {
             } else if (UseUnit.PIE.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
                 if (spcAdd.mapParam.get(13014) != null) {
-                    if (UCom.containsNumbJust(spcAdd.mapParam.get(13014), anglHor) == true) { //Углы ориентации стороны
+                    LineSegment s2 = UGeo.getSegment(this.area, sideClass);
+                    spcAdd.anglHoriz = UGeo.anglHor(s2.p0.x, s2.p0.y, s2.p1.x, s2.p1.y); //угол к горизонту                     
+                    if (UCom.containsNumbJust(spcAdd.mapParam.get(13014), spcAdd.anglHoriz) == true) { //Углы ориентации стороны
                         spcRec.spcList.add(spcAdd);
                     }
                 } else {
