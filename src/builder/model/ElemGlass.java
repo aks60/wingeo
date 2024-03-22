@@ -134,7 +134,9 @@ public class ElemGlass extends ElemSimple {
                 return;  //если стеклопакет сразу выход
             }
             LineSegment segment = UGeo.getSegment(this.area, indexSegmClass);
-            double anglGlassHor = UGeo.anglHor(segment.p0.x, segment.p0.y, segment.p1.x, segment.p1.y); //угол к горизонту
+            double anglHor = UGeo.anglHor(segment.p0.x, segment.p0.y, segment.p1.x, segment.p1.y); //угол к горизонту
+            
+            //Layout layout = UGeo.layout(type, id, id, id, id)
 
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
@@ -147,11 +149,12 @@ public class ElemGlass extends ElemSimple {
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
                 spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(segm1.p1, segm1.p0, segm2.p1)) / 2;
                 spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(segm2.p0, segm2.p1, segm3.p1)) / 2;
-                spcAdd.anglHoriz = anglGlassHor; //угол к гор. сторон стекла;
+                spcAdd.anglHoriz = anglHor; //угол к гор. сторон стекла;
 
                 spcRec.spcList.add(spcAdd);
 
-                if (anglGlassHor == 0 || anglGlassHor == 180) { //по горизонтали
+                //По горизонтали
+                if ((anglHor > 315 && anglHor < 360 || anglHor >= 0 && anglHor < 45) || (anglHor > 135 && anglHor < 225)) {
                     if (spcAdd.mapParam.get(15010) != null) {
                         if ("Нет".equals(spcAdd.mapParam.get(15010)) == false) { //Усекать нижний штапик
                             spcAdd.width = spcAdd.width - 2 * spcAdd.height;
@@ -163,7 +166,8 @@ public class ElemGlass extends ElemSimple {
                         }
                     }
 
-                } else if (anglGlassHor == 90 || anglGlassHor == 270) { //по вертикали
+                    //По вертикали
+                } else if ((anglHor > 225 && anglHor < 315) || (anglHor > 45 && anglHor < 135)) { 
                     if (spcAdd.mapParam.get(15010) != null) {
                         if ("Да".equals(spcAdd.mapParam.get(15010)) == false) { //Усекать нижний штапик
                             spcAdd.width = spcAdd.width - 2 * spcAdd.height;
@@ -186,7 +190,7 @@ public class ElemGlass extends ElemSimple {
             } else if (UseUnit.PIE.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
                 if (spcAdd.mapParam.get(13014) != null) {
-                    if (UCom.containsNumbJust(spcAdd.mapParam.get(13014), anglGlassHor) == true) { //Углы ориентации стороны
+                    if (UCom.containsNumbJust(spcAdd.mapParam.get(13014), anglHor) == true) { //Углы ориентации стороны
                         spcRec.spcList.add(spcAdd);
                     }
                 } else {

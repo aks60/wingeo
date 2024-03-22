@@ -70,28 +70,6 @@ public class UGeo {
 
         return Math.toDegrees(diff(c1, c2));
     }
-
-    public static Layout geoLayout(Type type, double x1, double y1, double x2, double y2) {
-        try {
-            double anglHor = UGeo.anglHor(x1, y1, x2, y2);
-
-            if (anglHor > 315 && anglHor < 360 || anglHor >= 0 && anglHor < 45) {
-                return (type == Type.IMPOST || type == Type.SHTULP) ? Layout.HORIZ : Layout.BOTT;
-
-            } else if (anglHor > 45 && anglHor < 135) {
-                return Layout.RIGHT;
-
-            } else if (anglHor > 135 && anglHor < 225) {
-                return Layout.TOP;
-
-            } else if (anglHor > 225 && anglHor < 315) {
-                return (type == Type.IMPOST || type == Type.SHTULP) ? Layout.VERT : Layout.LEFT;
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.layout() " + e);
-        }
-        return Layout.ANY;
-    }
     
     //Пересечение сегмента(линии) импоста с сегментами(отрезками) многоугольника
     public static Coordinate[] geoCross(Geometry poly, LineSegment line) {
