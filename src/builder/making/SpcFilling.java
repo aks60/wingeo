@@ -77,7 +77,7 @@ public class SpcFilling extends Cal5e {
             //Цикл по сторонам стеклопакета
             for (int indexSegm = 0; indexSegm < hs.size(); indexSegm++) {
 
-                ((ElemGlass) elemGlass).indexSegmClass = indexSegm; //индекс стороны стеклопакета 
+                ((ElemGlass) elemGlass).sideClass = indexSegm; //индекс стороны стеклопакета 
                 ElemSimple elemFrame = listFrame.get(coo[indexSegm].z);
 
                 //Цикл по группам заполнений

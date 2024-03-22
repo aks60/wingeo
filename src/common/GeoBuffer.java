@@ -134,10 +134,6 @@ public class GeoBuffer {
             cor[i].z = coo[i].z;
         }
         cor[cor.length - 1].z = cor[0].z;
-        if(geom.getEnvelopeInternal().getMaxY() == cor[0].y) {
-            cor[0].z = cor[1].z;
-            cor[2].z = cor[1].z;
-        }
         return (Polygon) geomFactory.createPolygon(cor);        
     }
     
