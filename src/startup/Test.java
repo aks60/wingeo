@@ -96,8 +96,8 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            //frame(args);
-            wincalc();
+            frame(args);
+            //wincalc();
             //param();
             //query();
             //json();
@@ -425,7 +425,7 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        // draw6();
+         draw6();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 

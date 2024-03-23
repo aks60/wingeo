@@ -18,10 +18,9 @@ import common.UCom;
 import dataset.Query;
 import enums.Type;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import org.locationtech.jts.geom.Coordinate;
-import startup.Test;
 
 /**
  * Заполнения
@@ -69,7 +68,8 @@ public class SpcFilling extends Cal5e {
                 coo[2].z = coo[1].z;
                 coo[coo.length - 1].z = coo[1].z;               
             }
-            Set<Double> hs = new HashSet();
+            Set<Double> hs = new LinkedHashSet();
+            elemGlass.area.setUserData(hs);
             List.of(elemGlass.area.getCoordinates()).forEach(p -> hs.add(p.z));
             //if (elemGlass.id == 6) {
                 //new Test().mpol = elemGlass.area.getGeometryN(0);

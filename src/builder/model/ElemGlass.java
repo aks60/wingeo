@@ -18,14 +18,15 @@ import enums.TypeArtikl;
 import enums.UseUnit;
 import java.awt.Shape;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
-import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
-import org.locationtech.jts.geom.Polygon;
 
 public class ElemGlass extends ElemSimple {
 
@@ -137,7 +138,7 @@ public class ElemGlass extends ElemSimple {
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
                 Coordinate coo[] = this.area.getCoordinates();
-                System.out.println(this.frameGlass.id);
+                //System.out.println(this.frameGlass.id);
 
                 if (this.area.getCoordinates().length < MAXSIDE) { //не арка
                     LineSegment s1 = UGeo.getSegment(this.area, sideClass - 1);
@@ -148,10 +149,15 @@ public class ElemGlass extends ElemSimple {
                     spcAdd.width += s1.getLength() + 2 * gzazo;
 
                 } else { //арка
-                    //double angHor = UGeo.anglHor(frameGlass);
                     if (this.frameGlass.h() == null) {
-                        LineSegment s = new LineSegment(coo[sideClass], coo[sideClass + 1]);
-                        spcAdd.width += s.getLength();
+                        Set hs = (Set) this.area.getUserData();
+                        if (hs.size() == 2) {
+                            LineSegment s = new LineSegment(coo[0], coo[1]);
+                            spcAdd.width += s.getLength() + 2 * gzazo;
+                        } else {
+                            LineSegment s = new LineSegment(coo[sideClass], coo[sideClass + 1]);
+                            spcAdd.width += s.getLength() + 2 * gzazo;
+                        }
                     } else {
                         spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
                         LineSegment seg = new LineSegment();
@@ -161,10 +167,9 @@ public class ElemGlass extends ElemSimple {
                                 spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[i - 2], coo[i - 1], coo[i]));
                             }
                             if (coo[i - 1].z == this.frameGlass.id) {
-                                spcAdd.width += seg.getLength();
+                                spcAdd.width += seg.getLength() + 2 * gzazo;
                             }
                         }
-                        //spcAdd.width = 777;
                     }
                 }
 
