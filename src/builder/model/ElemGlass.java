@@ -149,8 +149,8 @@ public class ElemGlass extends ElemSimple {
                     spcAdd.width += s1.getLength() + 2 * gzazo;
 
                 } else { //арка
+                    Set hs = (Set) this.area.getUserData();
                     if (this.frameGlass.h() == null) {
-                        Set hs = (Set) this.area.getUserData();
                         if (hs.size() == 2) {
                             LineSegment s = new LineSegment(coo[0], coo[1]);
                             spcAdd.width += s.getLength() + 2 * gzazo;
@@ -163,11 +163,15 @@ public class ElemGlass extends ElemSimple {
                         LineSegment seg = new LineSegment();
                         for (int i = 1; i < coo.length; i++) {
                             seg.setCoordinates(coo[i - 1], coo[i]);
-                            if (seg.getLength() > this.artiklRecAn.getDbl(eArtikl.height)) {
-                                spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[i - 2], coo[i - 1], coo[i]));
+                            if (seg.getLength() > this.frameGlass.artiklRecAn.getDbl(eArtikl.height)) {
+                                if (hs.size() == 2) {
+                                    spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[0], coo[1], coo[2]));
+                                } else {
+                                    spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[i - 2], coo[i - 1], coo[i]));
+                                }
                             }
                             if (coo[i - 1].z == this.frameGlass.id) {
-                                spcAdd.width += seg.getLength() + 2 * gzazo;
+                                spcAdd.width += seg.getLength();
                             }
                         }
                     }

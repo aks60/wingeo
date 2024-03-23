@@ -59,13 +59,13 @@ public class SpcFilling extends Cal5e {
         super.calc();
         try {
             Double depth = elemGlass.artiklRec.getDbl(eArtikl.depth); //толщина стекда           
-            List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(winc.root.frames);  //список рам конструкции
+            //List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(winc.root.frames);  //список рам конструкции
 
             ArrayCom<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             Coordinate[] coo = elemGlass.area.getGeometryN(0).getCoordinates();
             if (elemGlass.area.getGeometryN(0).getEnvelopeInternal().getMaxY() <= coo[0].y) {
                 coo[0].z = coo[1].z;
-                coo[2].z = coo[1].z;
+                coo[2].z = coo[coo.length - 2].z;
                 coo[coo.length - 1].z = coo[1].z;               
             }
             Set<Double> hs = new LinkedHashSet();
