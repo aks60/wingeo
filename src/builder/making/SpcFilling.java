@@ -69,17 +69,18 @@ public class SpcFilling extends Cal5e {
                 coo[2].z = coo[1].z;
                 coo[coo.length - 1].z = coo[1].z;               
             }
-            Set hs = new HashSet();
+            Set<Double> hs = new HashSet();
             List.of(elemGlass.area.getCoordinates()).forEach(p -> hs.add(p.z));
             //if (elemGlass.id == 6) {
                 //new Test().mpol = elemGlass.area.getGeometryN(0);
             //}
             //Цикл по сторонам стеклопакета
-            for (int indexSegm = 0; indexSegm < hs.size(); indexSegm++) {
+            Double arr[] = hs.toArray(new Double[0]);
+            for (int indexSegm = 0; indexSegm < arr.length; indexSegm++) {
 
                 ElemGlass elGlass = (ElemGlass) elemGlass;
                 elGlass.sideClass = indexSegm; //индекс стороны стеклопакета 
-                elGlass.frameGlass = listFrame.get(coo[indexSegm].z);
+                elGlass.frameGlass = listFrame.get(arr[indexSegm]);
 
                 //Цикл по группам заполнений
                 for (Record glasgrpRec : eGlasgrp.findAll()) {

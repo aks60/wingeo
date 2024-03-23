@@ -137,6 +137,7 @@ public class ElemGlass extends ElemSimple {
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
                 Coordinate coo[] = this.area.getCoordinates();
+                System.out.println(this.frameGlass.id);
 
                 if (this.area.getCoordinates().length < MAXSIDE) { //не арка
                     LineSegment s1 = UGeo.getSegment(this.area, sideClass - 1);
@@ -163,6 +164,7 @@ public class ElemGlass extends ElemSimple {
                                 spcAdd.width += seg.getLength();
                             }
                         }
+                        //spcAdd.width = 777;
                     }
                 }
 
