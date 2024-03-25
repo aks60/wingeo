@@ -166,6 +166,7 @@ public class ElemGlass extends ElemSimple {
                             if (seg.getLength() > this.frameGlass.artiklRecAn.getDbl(eArtikl.height)) {
                                 if (hs.size() == 2) {
                                     spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[0], coo[1], coo[2]));
+                                    //spcAdd.artiklRec.getDbl(eArtikl.height)
                                 } else {
                                     spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[i - 2], coo[i - 1], coo[i]));
                                 }
