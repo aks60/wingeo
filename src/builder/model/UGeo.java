@@ -468,11 +468,14 @@ public class UGeo {
                 seg2a = new LineSegm(coo[i], coo[i + 1], coo[i].z);
                 seg2b = seg2a.offset(-hm.get(e2.id));
 
-                cross = seg2b.intersection(seg1b);
-                
+                if (cross != null) {
+                    cross = seg2b.intersection(seg1b);
+                } else {
+                    cross = seg2b.intersection(seg1b);
+                }
                 if (cross != null) {
                     deqList.addLast(cross);
-                    
+
                 } else {
                     if (e2.h() == null) {
                         List<Coordinate> loop = new ArrayList(deqList);
