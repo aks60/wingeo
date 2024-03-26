@@ -5,9 +5,11 @@ import common.ArrayCom;
 import common.jts.LineSegm;
 import dataset.Record;
 import domain.eArtikl;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
@@ -376,7 +378,7 @@ public class UGeo {
 
     //В разработке
     //Проблема union, при union теряет координату z! 
-    public static Polygon geoBuffer(Geometry lstr, ArrayCom<? extends Com5t> list, double amend) {
+    public static Polygon geoBuffer(Geometry str, ArrayCom<? extends Com5t> list, double amend) {
 
         Map<Double, Double> hm = new HashMap();
         for (Com5t el : list) {
@@ -385,9 +387,9 @@ public class UGeo {
         }
         List<Geometry> geoList = new ArrayList();
         List<Coordinate> cooList = new ArrayList<Coordinate>(), arcList = new ArrayList<Coordinate>();
-        
+
         try {
-            Coordinate[] coo = lstr.getCoordinates();
+            Coordinate[] coo = str.getCoordinates();
             for (int i = 1; i < coo.length; i++) {
 
                 Com5t e1 = list.get(coo[i - 1].z);
@@ -408,7 +410,7 @@ public class UGeo {
                     segm1a.p0.z = e1.id;
                     segm1a.p1.z = e1.id;
                     segm1.p0.z = e1.id;
-                    segm1.p1.z = e1.id;                   
+                    segm1.p1.z = e1.id;
                     Polygon ls = gf.createPolygon(new Coordinate[]{segm1.p0, segm1.p1, segm1a.p1, segm1a.p0, segm1.p0});
                     geoList.add(ls);
                 }
@@ -420,13 +422,13 @@ public class UGeo {
                 cooList.add(cooList.get(0));
                 geo2 = gf.createPolygon(cooList.toArray(new Coordinate[0]));
             }
-            
-            for (Geometry geo3 : geoList) { 
+
+            for (Geometry geo3 : geoList) {
                 geo2 = geo2.union(geo3);
-            }  
-            
+            }
+
             LinearRing ring = ((Polygon) geo2).getInteriorRingN(0);
-            Coordinate cor[] = ring.getCoordinates();          
+            Coordinate cor[] = ring.getCoordinates();
 //            if (geo2.getEnvelopeInternal().getMaxY() <= coo[0].y) { //вырождение полигона
 //                cor[0].z = coo[1].z;
 //                cor[2].z = coo[coo.length - 2].z;
@@ -439,6 +441,63 @@ public class UGeo {
             System.err.println("Ошибка:UGeo.geoPadding() " + e);
             return null;
         }
+    }
+
+    public static Polygon geoBuffer2(Geometry str, ArrayCom<? extends Com5t> list, double amend) {
+        try {
+            Map<Double, Double> hm = new HashMap();
+            for (Com5t el : list) {
+                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+                hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
+            }
+            Deque<Coordinate> deqList = new ArrayDeque<Coordinate>();
+            List<Coordinate> cooList = new ArrayList<Coordinate>();
+            LineSegment seg1a, seg1b = null, seg2a, seg2b = null;
+            Coordinate[] coo = str.getCoordinates();
+            Coordinate cross = new Coordinate();
+            Com5t e1, e2;
+
+            for (int i = 1; i < coo.length; i++) {
+
+                if (cross != null) { //если пересечение было двигаемся дальше
+                    e1 = list.get(coo[i - 1].z);
+                    seg1a = new LineSegm(coo[i - 1], coo[i], coo[i - 1].z);
+                    seg1b = seg1a.offset(-hm.get(e1.id));
+                }
+                e2 = list.get(coo[i].z);
+                seg2a = new LineSegm(coo[i], coo[i + 1], coo[i].z);
+                seg2b = seg2a.offset(-hm.get(e2.id));
+
+                cross = seg2b.intersection(seg1b);
+                
+                if (cross != null) {
+                    deqList.addLast(cross);
+                    
+                } else {
+                    if (e2.h() == null) {
+                        List<Coordinate> loop = new ArrayList(deqList);
+                        for (int j = 0; j < loop.size(); ++j) {
+
+                            if (seg1b.orientationIndex(loop.get(i)) == 1) {
+                                seg2b = new LineSegm(loop.get(i), loop.get(i + 1), loop.get(i).z);
+                                cross = seg2b.intersection(seg1b);
+                                deqList.addLast(cross);
+                            } else {
+                                deqList.peekLast();
+                            }
+                        }
+                    }
+                }
+            }
+            while (deqList.size() > 20) {
+                cooList.add(deqList.getLast());
+            }
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.geoPadding() " + e);
+        }
+        return null;
+
     }
 // </editor-fold>    
 }
