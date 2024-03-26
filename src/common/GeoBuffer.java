@@ -1,6 +1,8 @@
 package common;
 
 import builder.model.Com5t;
+import builder.model.UGeo;
+import common.ArrayCom;
 import dataset.Record;
 import domain.eArtikl;
 import java.util.ArrayList;
@@ -104,6 +106,8 @@ public class GeoBuffer {
 
     public static Polygon buffer(Geometry line, ArrayCom<? extends Com5t> list, double amend) {
 
+        //return UGeo.geoBuffer(line, list, amend);
+        
         //Map дистанций
         Map<Double, Double> hm = new HashMap();
         for (Com5t el : list) {

@@ -8,7 +8,6 @@ import domain.eArtikl;
 import enums.TypeJoin;
 import java.util.ArrayList;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Polygon;
 
 public class AreaRectangl extends AreaSimple {

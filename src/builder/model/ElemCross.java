@@ -3,8 +3,8 @@ package builder.model;
 import builder.Wincalc;
 import builder.making.SpcRecord;
 import builder.script.GsonElem;
-import common.GeoBuffer;
 import common.UCom;
+import common.GeoBuffer;
 import domain.eArtikl;
 import static domain.eArtikl.size_centr;
 import domain.eColor;
@@ -26,7 +26,6 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.GeometryFixer;
-import startup.Test;
 
 public class ElemCross extends ElemSimple {
 

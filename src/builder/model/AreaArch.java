@@ -9,15 +9,12 @@ import dataset.Record;
 import domain.eArtikl;
 import enums.TypeJoin;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
-import startup.Test;
 
 public class AreaArch extends AreaSimple {
 

@@ -13,10 +13,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
-import common.eProp;
 import common.GeoBuffer;
+import common.eProp;
 import dataset.Conn;
-import domain.eArtikl;
 import enums.Type;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -34,7 +33,6 @@ import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
@@ -366,7 +364,7 @@ public class Test {
 
         Geometry geo1 = UGeo.newPolygon(0, 300, 0, 380, 50, 380, 50, 300, 0, 300);
         Geometry geo2 = UGeo.newPolygon(0, 300, 0, 380, 150, 380, 150, 300, 0, 300);
-        
+
         Polygon p1 = gf.createPolygon(new Coordinate[]{
             new Coordinate(0, 300, 8), new Coordinate(0, 380, 8),
             new Coordinate(50, 380, 8), new Coordinate(50, 300, 8), new Coordinate(0, 300, 8)});
@@ -379,6 +377,7 @@ public class Test {
         //LineSegment seg = segm1.offset(-68);
         // LineSegment se2 = segm1.offset(-68);
         Geometry p3 = p1.union(p2);
+        Coordinate coo[] = p3.getCoordinates();
         new Test().mpol = p3;
     }
 
@@ -425,15 +424,15 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-         draw6();
+        draw6();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
     public void paintComp(Graphics g) {
 
         Graphics2D gc2d = (Graphics2D) g;
-        gc2d.translate(10, -260);
-        gc2d.scale(2.0, 2.0);
+        gc2d.translate(10, 100);
+        gc2d.scale(.4, .4);
 //        gc2d.translate(-800, -180);
 //        gc2d.scale(1.2, 1.2);
 
@@ -483,8 +482,8 @@ public class Test {
     }
 
     private void draw6() {
-        double M = 392;
-        //double M = 1500;
+        //double M = 392;
+        double M = 1500;
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayCom<Com5t> frames = new ArrayCom();
@@ -506,12 +505,14 @@ public class Test {
 
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
         Polygon geo2 = GeoBuffer.buffer(geo1, frames, 0);
-        
+        Polygon geo3 = UGeo.geoBuffer(geo1, frames, 0);
+
         Coordinate coo1[] = geo1.getCoordinates();
         Coordinate coo2[] = geo2.getCoordinates();
+        Coordinate coo3[] = geo3.getCoordinates();
 
         mlin = geo1;
-        mpol = geo2;
+        mpol = geo3;
     }
 
     private void draw5() {
