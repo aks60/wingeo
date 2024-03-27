@@ -526,14 +526,12 @@ public class Test {
         mlin = geo1;
         mpol = geo3;
 
-        long startTime = System.currentTimeMillis();
-        
-        //GeoBuffer.buffer(geo1, frames, 0);
-        UGeo.geoBuffer2(geo1, frames, 0);
-
-        long endTime = System.currentTimeMillis();
-        long elapsedTime = endTime - startTime;
-        System.out.println(elapsedTime);
+//        long startTime = System.currentTimeMillis();       
+//        //GeoBuffer.buffer(geo1, frames, 0);
+//        //UGeo.geoBuffer2(geo1, frames, 0);
+//        long endTime = System.currentTimeMillis();
+//        long elapsedTime = endTime - startTime;
+//        System.out.println(elapsedTime);
 
     }
 
