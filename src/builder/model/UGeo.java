@@ -444,63 +444,81 @@ public class UGeo {
     }
 
     public static Polygon geoBuffer2(Geometry str, ArrayCom<? extends Com5t> list, double amend) {
+        int i = 0;
+        Com5t e1 = null, e2 = null;
+        Deque<Coordinate> deqList = new ArrayDeque<Coordinate>();
+        List<Coordinate> cooList = new ArrayList<Coordinate>();
+        LineSegment seg1a = null, seg1b = null, seg2a = null, seg2b = null;
+        Coordinate[] coo = str.getCoordinates();
+        Coordinate cross = new Coordinate();
         try {
             Map<Double, Double> hm = new HashMap();
             for (Com5t el : list) {
                 Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
                 hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
             }
-            Deque<Coordinate> deqList = new ArrayDeque<Coordinate>();
-            List<Coordinate> cooList = new ArrayList<Coordinate>();
-            LineSegment seg1a, seg1b = null, seg2a, seg2b = null;
-            Coordinate[] coo = str.getCoordinates();
-            Coordinate cross = new Coordinate();
-            Com5t e1, e2;
+            for (i = 1; i < coo.length; i++) {
 
-            for (int i = 1; i < coo.length; i++) {
+                if (i < Com5t.MAXSIDE) {
+                    if (cross != null) {
+                        e1 = list.get(coo[i - 1].z);
+                        seg1a = new LineSegm(coo[i - 1], coo[i], coo[i - 1].z);
+                        seg1b = seg1a.offset(-hm.get(e1.id));
+                    }
+                    int j = (i == coo.length - 1) ? 1 : i + 1;
+                    e2 = list.get(coo[i].z);
+                    seg2a = new LineSegm(coo[i], coo[j], coo[i].z);
+                    seg2b = seg2a.offset(-hm.get(e2.id));
+                    cross = seg2b.intersection(seg1b);
 
-                if (cross != null) { //если пересечение было двигаемся дальше
+                }
+                if (i > Com5t.MAXSIDE) {
                     e1 = list.get(coo[i - 1].z);
                     seg1a = new LineSegm(coo[i - 1], coo[i], coo[i - 1].z);
                     seg1b = seg1a.offset(-hm.get(e1.id));
+                    if (cross != null) {
+                        int j = (i == coo.length - 1) ? 1 : i + 1;
+                        e2 = list.get(coo[i].z);
+                        seg2a = new LineSegm(coo[i], coo[j], coo[i].z);
+                        seg2b = seg2a.offset(-hm.get(e2.id));
+                        cross = seg2b.intersection(seg1b);
+                    }
                 }
-                e2 = list.get(coo[i].z);
-                seg2a = new LineSegm(coo[i], coo[i + 1], coo[i].z);
-                seg2b = seg2a.offset(-hm.get(e2.id));
 
-                if (cross != null) {
-                    cross = seg2b.intersection(seg1b);
-                } else {
-                    cross = seg2b.intersection(seg1b);
-                }
                 if (cross != null) {
                     deqList.addLast(cross);
 
                 } else {
                     if (e2.h() == null) {
                         List<Coordinate> loop = new ArrayList(deqList);
-                        for (int j = 0; j < loop.size(); ++j) {
+                        for (int k = loop.size() - 1; k >= 0; --k) {
 
-                            if (seg1b.orientationIndex(loop.get(i)) == 1) {
-                                seg2b = new LineSegm(loop.get(i), loop.get(i + 1), loop.get(i).z);
-                                cross = seg2b.intersection(seg1b);
-                                deqList.addLast(cross);
+                            seg1b = new LineSegm(loop.get(k), loop.get(k - 1), loop.get(k).z);
+                            cross = seg2b.intersection(seg1b);
+                            if (cross != null) {
+                                //deqList.pollLast();
+                                //deqList.addFirst(cross);
+                                break;
                             } else {
-                                deqList.peekLast();
+                                deqList.pollLast();
                             }
                         }
                     }
                 }
+                while (deqList.size() > 60) {
+                    cooList.add(deqList.pollFirst());
+                }
             }
-            while (deqList.size() > 20) {
-                cooList.add(deqList.getLast());
+            while (deqList.isEmpty() == false) {
+                cooList.add(deqList.pollFirst());
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.geoPadding() " + e);
+            System.err.println("Ошибка:UGeo.geoBuffer() " + e);
         }
-        return null;
-
+        cooList.add(cooList.get(0));
+        Polygon result = (Polygon) gf.createPolygon(cooList.toArray(new Coordinate[0])).norm();
+        return result;
     }
 // </editor-fold>    
 }

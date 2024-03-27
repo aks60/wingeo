@@ -431,10 +431,10 @@ public class Test {
     public void paintComp(Graphics g) {
 
         Graphics2D gc2d = (Graphics2D) g;
-        gc2d.translate(10, 100);
-        gc2d.scale(.4, .4);
-//        gc2d.translate(-800, -180);
-//        gc2d.scale(1.2, 1.2);
+        gc2d.translate(0, -400);
+        gc2d.scale(3, 3);
+        //gc2d.translate(10, 0);
+        //gc2d.scale(.4, .4);
 
         if (mlin != null) {
             gc2d.setColor(Color.BLUE);
@@ -482,8 +482,8 @@ public class Test {
     }
 
     private void draw6() {
-        //double M = 392;
-        double M = 1500;
+        double M = 368.1;
+        //double M = 1500;
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayCom<Com5t> frames = new ArrayCom();
@@ -505,8 +505,7 @@ public class Test {
 
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
         Polygon geo2 = GeoBuffer.buffer(geo1, frames, 0);
-        Polygon geo3 = UGeo.geoBuffer(geo1, frames, 0);
-        Polygon geo4 = UGeo.geoBuffer2(geo1, frames, 0);
+        Polygon geo3 = UGeo.geoBuffer2(geo1, frames, 0);
 
         Coordinate coo1[] = geo1.getCoordinates();
         Coordinate coo2[] = geo2.getCoordinates();
