@@ -431,10 +431,10 @@ public class Test {
     public void paintComp(Graphics g) {
 
         Graphics2D gc2d = (Graphics2D) g;
-        gc2d.translate(0, -400);
-        gc2d.scale(3, 3);
-        //gc2d.translate(10, 0);
-        //gc2d.scale(.4, .4);
+        //gc2d.translate(-2000, -400);
+        //gc2d.scale(3, 3);
+        gc2d.translate(10, 0);
+        gc2d.scale(.4, .4);
 
         if (mlin != null) {
             gc2d.setColor(Color.BLUE);
@@ -482,11 +482,23 @@ public class Test {
     }
 
     private void draw6() {
-        double M = 368.1;
-        //double M = 1500;
+        //double M = 368.1;
+        double M = 1500;
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayCom<Com5t> frames = new ArrayCom();
+        /*
+        frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
+        frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
+        
+        LineSegment s1 = new LineSegment(frames.get(1).x1(), frames.get(1).y1(), frames.get(0).x1(), frames.get(0).y1());
+        LineString arc1 = UGeo.newLineArch(s1.p1.x, s1.p0.x, s1.p0.y, 300, 4);
+        Coordinate arr[] = arc1.getCoordinates();
+
+        list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
+        list.addAll(List.of(arr));
+        list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
+         */
         frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
         frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, M)));
         frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, M)));
@@ -513,6 +525,16 @@ public class Test {
 
         mlin = geo1;
         mpol = geo3;
+
+        long startTime = System.currentTimeMillis();
+        
+        //GeoBuffer.buffer(geo1, frames, 0);
+        UGeo.geoBuffer2(geo1, frames, 0);
+
+        long endTime = System.currentTimeMillis();
+        long elapsedTime = endTime - startTime;
+        System.out.println(elapsedTime);
+
     }
 
     private void draw5() {

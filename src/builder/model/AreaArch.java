@@ -15,6 +15,7 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
+import startup.Test;
 
 public class AreaArch extends AreaSimple {
 
@@ -61,6 +62,7 @@ public class AreaArch extends AreaSimple {
             Polygon geo1 = gf.createPolygon(list.toArray(new Coordinate[0])); 
             Polygon geo2 = GeoBuffer.buffer(geo1, this.frames, 0); 
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
+            //new Test().mpol = this.area;
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);

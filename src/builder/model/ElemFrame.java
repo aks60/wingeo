@@ -88,6 +88,7 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void setLocation() {
         try {
+            //new Test().mpol = owner.area;
             Geometry geo1 = owner.area.getGeometryN(0), geo2 = owner.area.getGeometryN(1); //внешн. и внутр. ареа арки.
             Coordinate c1[] = geo1.getCoordinates(), c2[] = geo2.getCoordinates();
             for (int i = 0; i < c1.length; i++) {

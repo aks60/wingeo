@@ -377,7 +377,7 @@ public class UGeo {
     }
 
     //В разработке
-    //Проблема union, при union теряет координату z! 
+    //Проблема union, при union теряетcя координата z! 
     public static Polygon geoBuffer(Geometry str, ArrayCom<? extends Com5t> list, double amend) {
 
         Map<Double, Double> hm = new HashMap();
@@ -459,45 +459,32 @@ public class UGeo {
             }
             for (i = 1; i < coo.length; i++) {
 
-                if (i < Com5t.MAXSIDE) {
-                    if (cross != null) {
-                        e1 = list.get(coo[i - 1].z);
-                        seg1a = new LineSegm(coo[i - 1], coo[i], coo[i - 1].z);
-                        seg1b = seg1a.offset(-hm.get(e1.id));
-                    }
+                //Перебор сегментов для вычисления точки пересечения
+                if (i > Com5t.MAXSIDE || (cross != null && i < Com5t.MAXSIDE)) {
+                    e1 = list.get(coo[i - 1].z);
+                    seg1a = new LineSegm(coo[i - 1], coo[i], coo[i - 1].z);
+                    seg1b = seg1a.offset(-hm.get(e1.id));
+                }
+                if (i < Com5t.MAXSIDE || (cross != null && i > Com5t.MAXSIDE)) {
                     int j = (i == coo.length - 1) ? 1 : i + 1;
                     e2 = list.get(coo[i].z);
                     seg2a = new LineSegm(coo[i], coo[j], coo[i].z);
                     seg2b = seg2a.offset(-hm.get(e2.id));
                     cross = seg2b.intersection(seg1b);
-
                 }
-                if (i > Com5t.MAXSIDE) {
-                    e1 = list.get(coo[i - 1].z);
-                    seg1a = new LineSegm(coo[i - 1], coo[i], coo[i - 1].z);
-                    seg1b = seg1a.offset(-hm.get(e1.id));
-                    if (cross != null) {
-                        int j = (i == coo.length - 1) ? 1 : i + 1;
-                        e2 = list.get(coo[i].z);
-                        seg2a = new LineSegm(coo[i], coo[j], coo[i].z);
-                        seg2b = seg2a.offset(-hm.get(e2.id));
-                        cross = seg2b.intersection(seg1b);
-                    }
-                }
-
-                if (cross != null) {
+                
+                if (cross != null) { //заполнение очереди
                     deqList.addLast(cross);
+                    cross.z = seg1a.p0.z;
 
                 } else {
-                    if (e2.h() == null) {
+                    if (e2.h() == null) { //обрезание хвоста слева
                         List<Coordinate> loop = new ArrayList(deqList);
                         for (int k = loop.size() - 1; k >= 0; --k) {
 
                             seg1b = new LineSegm(loop.get(k), loop.get(k - 1), loop.get(k).z);
                             cross = seg2b.intersection(seg1b);
                             if (cross != null) {
-                                //deqList.pollLast();
-                                //deqList.addFirst(cross);
                                 break;
                             } else {
                                 deqList.pollLast();
@@ -505,7 +492,7 @@ public class UGeo {
                         }
                     }
                 }
-                while (deqList.size() > 60) {
+                while (deqList.size() > 200) {
                     cooList.add(deqList.pollFirst());
                 }
             }
