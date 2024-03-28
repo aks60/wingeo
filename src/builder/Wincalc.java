@@ -195,7 +195,7 @@ public class Wincalc {
     }
 
     //Спецификация и тарификация 
-    public void specific(boolean norm_otx) {
+    public void specification(boolean norm_otx) {
         weight = 0;
         price = 0;
         cost2 = 0;

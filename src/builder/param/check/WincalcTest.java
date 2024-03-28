@@ -96,7 +96,7 @@ public class WincalcTest {
     private static void iwin2() {
         iwin2 = new builder.Wincalc(); //601004
         iwin2.build(GsonScript.scriptPath(601004));
-        iwin2.specific(true);
+        iwin2.specification(true);
         elementVar2 = new ElementVar(iwin2);
         elementDet2 = new ElementDet(iwin2);
         joiningVar2 = new JoiningVar(iwin2);
@@ -124,7 +124,7 @@ public class WincalcTest {
     private static void iwin3() {
         iwin3 = new builder.Wincalc(); //-604005
         iwin3.build(GsonScript.scriptPath(-604005));
-        iwin3.specific(true);
+        iwin3.specification(true);
         elementVar3 = new ElementVar(iwin3);
         elementDet3 = new ElementDet(iwin3);
         joiningVar3 = new JoiningVar(iwin3);
@@ -148,7 +148,7 @@ public class WincalcTest {
     private static void iwin4() {
         iwin4 = new builder.Wincalc(); //700027
         iwin4.build(GsonScript.scriptPath(700027));
-        iwin4.specific(true);
+        iwin4.specification(true);
         elementVar4 = new ElementVar(iwin4);
         elementDet4 = new ElementDet(iwin4);
         joiningVar4 = new JoiningVar(iwin4);

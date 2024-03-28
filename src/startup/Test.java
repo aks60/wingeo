@@ -120,7 +120,7 @@ public class Test {
             //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
             //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
-            winc.specific(true);
+            winc.specification(true);
             //new Joining(winc).calc();
             //winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
             //winc.gc2d = winc.bufferImg.createGraphics();
@@ -137,7 +137,7 @@ public class Test {
                 String script = GsonScript.scriptPath(prj);
                 if (script != null) {
                     winc.build(script);
-                    winc.specific(true);
+                    winc.specification(true);
                     frames.PSCompare.iwinPs4(winc, false);
                 }
             }
@@ -148,7 +148,7 @@ public class Test {
                 String script = GsonScript.scriptPath(prj);
                 if (script != null) {
                     winc.build(script);
-                    winc.specific(true);
+                    winc.specification(true);
                     frames.PSCompare.iwinPs4(winc, false);
                 }
             }
@@ -517,7 +517,7 @@ public class Test {
 
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
         Polygon geo2 = GeoBuffer.buffer(geo1, frames, 0);
-        Polygon geo3 = UGeo.geoBuffer2(geo1, frames, 0);
+        Polygon geo3 = UGeo.buffeCrossr(geo1, frames, 0);
 
         Coordinate coo1[] = geo1.getCoordinates();
         Coordinate coo2[] = geo2.getCoordinates();
@@ -565,7 +565,7 @@ public class Test {
         list.addAll(List.of(arr1));
 
         this.mpol = UGeo.newPolygon(list);
-        this.mlin = UGeo.geoPadding(this.mpol, frames, 20);
+        this.mlin = UGeo.bufferPadding(this.mpol, frames, 20);
 
     }
 
@@ -626,7 +626,7 @@ public class Test {
         list.addAll(List.of(arr2));
 
         Polygon geo1 = UGeo.newPolygon(list);
-        Polygon geo2 = UGeo.geoPadding(geo1, frames, 0);
+        Polygon geo2 = UGeo.bufferPadding(geo1, frames, 0);
         this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         this.mpol = null;

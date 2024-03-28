@@ -106,7 +106,7 @@ public class GeoBuffer {
 
     public static Polygon buffer(Geometry line, ArrayCom<? extends Com5t> list, double amend) {
 
-        return UGeo.geoBuffer2(line, list, amend);
+        return UGeo.buffeCrossr(line, list, amend);
         
 //        //Map дистанций
 //        Map<Double, Double> hm = new HashMap();

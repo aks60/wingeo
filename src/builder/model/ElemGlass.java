@@ -89,8 +89,6 @@ public class ElemGlass extends ElemSimple {
     public void setLocation() {
         ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
         this.area = GeoBuffer.buffer(owner.area.getGeometryN(0), list, 0); //полигон для прорисовки
-        //Envelope env = this.area.getEnvelopeInternal();
-        //setDimension(env.getMinX(), env.getMinY(), env.getMaxX(), env.getMaxY());
     }
 
     //Главная спецификация    
