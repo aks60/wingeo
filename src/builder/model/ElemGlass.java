@@ -88,7 +88,7 @@ public class ElemGlass extends ElemSimple {
     @Override
     public void setLocation() {
         ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
-        this.area = GeoBuffer.buffer(owner.area.getGeometryN(0), list, 0); //полигон для прорисовки
+        this.area = UGeo.bufferCross(owner.area.getGeometryN(0), list, 0); //полигон для прорисовки
     }
 
     //Главная спецификация    

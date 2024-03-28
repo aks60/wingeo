@@ -81,18 +81,18 @@ public class UGeo {
         return Math.toDegrees(diff(c1, c2));
     }
 
-    //Обводка полигона (работает быстро)
-    public static Polygon buffeCrossr(Geometry str, ArrayCom<? extends Com5t> list, double amend) {
+    //Обводка полигона (работает быстро. Но при вырождении полигона загибы на концах арки
+    public static Polygon bufferCross(Geometry str, ArrayCom<? extends Com5t> list, double amend) {
         int i = 0;
         Polygon result = gf.createPolygon();
         Com5t e1 = null, e2 = null;
         Deque<Coordinate> deqList = new ArrayDeque<Coordinate>();
         List<Coordinate> cooList = new ArrayList<Coordinate>();
-        LineSegment seg1a = null, seg1b = null, seg2a = null, seg2b = null;
+        LineSegment seg1a = new LineSegm(), seg2a = new LineSegm(), seg1b = null, seg2b = null;
         Coordinate[] coo = str.getCoordinates();
         Coordinate cross = new Coordinate();
+        Map<Double, Double> hm = new HashMap();
         try {
-            Map<Double, Double> hm = new HashMap();
             for (Com5t el : list) {
                 Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
                 hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
@@ -102,21 +102,22 @@ public class UGeo {
                 //Перебор сегментов для вычисления точки пересечения
                 if (i > Com5t.MAXSIDE || (cross != null && i < Com5t.MAXSIDE)) {
                     e1 = list.get(coo[i - 1].z);
-                    seg1a = new LineSegm(coo[i - 1], coo[i], coo[i].z);
+                    seg1a.setCoordinates(coo[i - 1], coo[i]);
                     seg1b = seg1a.offset(-hm.get(e1.id));
                 }
                 if (i < Com5t.MAXSIDE || (cross != null && i > Com5t.MAXSIDE)) {
                     int j = (i == coo.length - 1) ? 1 : i + 1;
                     e2 = list.get(coo[i].z);
-                    seg2a = new LineSegm(coo[i], coo[j], coo[i].z);
+                    seg2a.setCoordinates(coo[i], coo[j]);
                     seg2b = seg2a.offset(-hm.get(e2.id));
                 }
 
+                //Точка пересечения сегментов
                 cross = seg2b.intersection(seg1b);
-                
+
                 if (cross != null) { //заполнение очереди
                     deqList.addLast(cross);
-                    cross.z = seg1a.p0.z;
+                    cross.z = coo[i].z;
 
                 } else {
                     if (e2.h() == null) { //обрезание хвоста слева
@@ -128,7 +129,7 @@ public class UGeo {
 
                             if (cross != null) {
                                 deqList.addLast(cross);
-                                cross.z = seg1a.p0.z;
+                                cross.z = coo[i].z;
                                 break;
                             } else {
                                 deqList.pollLast();
