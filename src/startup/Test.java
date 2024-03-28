@@ -431,10 +431,10 @@ public class Test {
     public void paintComp(Graphics g) {
 
         Graphics2D gc2d = (Graphics2D) g;
-        gc2d.translate(-2400, -400);
-        gc2d.scale(3, 3);
-        //gc2d.translate(10, 0);
-        //gc2d.scale(.4, .4);
+        //gc2d.translate(-2400, -400);
+        //gc2d.scale(3, 3);
+        gc2d.translate(10, 0);
+        gc2d.scale(.4, .4);
 
         if (mlin != null) {
             gc2d.setColor(Color.BLUE);
@@ -483,7 +483,7 @@ public class Test {
 
     private void draw6() {
         //double M = 368.1;
-        double M = 394;
+        double M = 1500;
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayCom<Com5t> frames = new ArrayCom();
@@ -518,14 +518,17 @@ public class Test {
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
         Polygon geo2 = GeoBuffer.buffer(geo1, frames, 0);
         Polygon geo3 = UGeo.bufferCross(geo1, frames, 0);
-        Polygon geo4 = UGeo.bufferCros2(geo1, frames, 0);
+        Polygon geo4 = UGeo.bufferPaddin(geo1, frames, 0);
+        Polygon geo5 = UGeo.bufferUnion(geo1, frames, 0);
 
         Coordinate coo1[] = geo1.getCoordinates();
         Coordinate coo2[] = geo2.getCoordinates();
         Coordinate coo3[] = geo3.getCoordinates();
+        Coordinate coo4[] = geo3.getCoordinates();
+        Coordinate coo5[] = geo3.getCoordinates();
 
         mlin = geo1;
-        mpol = geo3;
+        mpol = geo5;
 
 //        long startTime = System.currentTimeMillis();       
 //        //GeoBuffer.buffer(geo1, frames, 0);
@@ -566,7 +569,7 @@ public class Test {
         list.addAll(List.of(arr1));
 
         this.mpol = UGeo.newPolygon(list);
-        this.mlin = UGeo.bufferCros2(this.mpol, frames, 20);
+        this.mlin = UGeo.bufferPaddin(this.mpol, frames, 20);
 
     }
 
@@ -627,7 +630,7 @@ public class Test {
         list.addAll(List.of(arr2));
 
         Polygon geo1 = UGeo.newPolygon(list);
-        Polygon geo2 = UGeo.bufferCros2(geo1, frames, 0);
+        Polygon geo2 = UGeo.bufferPaddin(geo1, frames, 0);
         this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         this.mpol = null;

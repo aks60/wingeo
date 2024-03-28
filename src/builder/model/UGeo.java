@@ -154,7 +154,7 @@ public class UGeo {
     }
 
     //При вырождении полигона загибы на концах арки
-    public static Polygon bufferCros2(Geometry poly, ArrayCom<? extends Com5t> list, double amend) {
+    public static Polygon bufferPaddin(Geometry poly, ArrayCom<? extends Com5t> list, double amend) {
         LineSegment segm1, segm2, segm1a = null, segm2a = null, segm1b, segm2b, segm1c, segm2c;
         Coordinate cros1 = null, cros2 = null;
         List<Coordinate> outList = new ArrayList<Coordinate>();
@@ -468,6 +468,9 @@ public class UGeo {
                 Com5t e1 = list.get(coo[i - 1].z);
                 Com5t e2 = list.get(coo[i].z);
 
+//                if (e1.h() == null && e2.h() != null) {
+//                    arcList.add(coo[i]);
+//                }
                 LineSegment segm1 = new LineSegm(coo[i - 1], coo[i], coo[i - 1].z);
                 LineSegment segm1a = segm1.offset(-hm.get(e1.id));
 
