@@ -106,26 +106,26 @@ public class GeoBuffer {
 
     public static Polygon buffer(Geometry line, ArrayCom<? extends Com5t> list, double amend) {
 
-        //return UGeo.geoBuffer2(line, list, amend);
+        return UGeo.geoBuffer2(line, list, amend);
         
-        //Map дистанций
-        Map<Double, Double> hm = new HashMap();
-        for (Com5t el : list) {
-            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-            Double delta1 = rec.getDbl(eArtikl.height);
-            Double delta2 = rec.getDbl(eArtikl.size_centr);
-            hm.put(el.id, delta1 - delta2 + amend);
-        }
-        //Array дистанций
-        Coordinate coo[] = line.getGeometryN(0).getCoordinates();
-        double distance[] = new double[coo.length];
-        for (int i = 0; i < coo.length; ++i) {
-            distance[i] = hm.get(coo[i].z);
-        }
-        LineString ls = line.getFactory().createLineString(line.getCoordinates());
-        GeoBuffer vb = new GeoBuffer(ls, distance);
-        Geometry geo = vb.getResult();
-        return vb.ringToPolygon(line, geo);
+//        //Map дистанций
+//        Map<Double, Double> hm = new HashMap();
+//        for (Com5t el : list) {
+//            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+//            Double delta1 = rec.getDbl(eArtikl.height);
+//            Double delta2 = rec.getDbl(eArtikl.size_centr);
+//            hm.put(el.id, delta1 - delta2 + amend);
+//        }
+//        //Array дистанций
+//        Coordinate coo[] = line.getGeometryN(0).getCoordinates();
+//        double distance[] = new double[coo.length];
+//        for (int i = 0; i < coo.length; ++i) {
+//            distance[i] = hm.get(coo[i].z);
+//        }
+//        LineString ls = line.getFactory().createLineString(line.getCoordinates());
+//        GeoBuffer vb = new GeoBuffer(ls, distance);
+//        Geometry geo = vb.getResult();
+//        return vb.ringToPolygon(line, geo);
     }
 
     public Polygon ringToPolygon(Geometry line, Geometry geom) {
