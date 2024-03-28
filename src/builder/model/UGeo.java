@@ -461,6 +461,7 @@ public class UGeo {
 
                 //Перебор сегментов для вычисления точки пересечения
                 if (i > Com5t.MAXSIDE || (cross != null && i < Com5t.MAXSIDE)) {
+                    //int f = (i - 1 < 0) ? coo.length - 2 : i - 1;
                     e1 = list.get(coo[i - 1].z);
                     seg1a = new LineSegm(coo[i - 1], coo[i], coo[i].z);
                     seg1b = seg1a.offset(-hm.get(e1.id));
@@ -484,7 +485,10 @@ public class UGeo {
 
                             seg1b = new LineSegm(loop.get(k), loop.get(k - 1), loop.get(k).z);
                             cross = seg2b.intersection(seg1b);
+
                             if (cross != null) {
+                                deqList.addLast(cross);
+                                cross.z = seg1a.p0.z;
                                 break;
                             } else {
                                 deqList.pollLast();
@@ -499,18 +503,18 @@ public class UGeo {
             while (deqList.isEmpty() == false) {
                 cooList.add(deqList.pollFirst());
             }
+            cooList.add(0, cooList.get(cooList.size() - 1));
+//            if (cooList.size() > 0) {
+//                Coordinate c = cooList.get(cooList.size() - 1);
+//                cooList.add(0, new Coordinate(c.x, c.y, list.get(0).id));
+//            }
 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.geoBuffer2() " + e);
         }
-        if (cooList.size() > 0) {
-            Coordinate c = cooList.get(cooList.size() - 1);
-            cooList.add(0, new Coordinate(c.x, c.y, list.get(0).id));
-            cooList.get(cooList.size() - 1).z = list.get(0).id;
-            Polygon result = (Polygon) gf.createPolygon(cooList.toArray(new Coordinate[0]));
-            return result;
-        }
-        return gf.createPolygon();
+        Polygon result = (Polygon) gf.createPolygon(cooList.toArray(new Coordinate[0]));
+        return result;
+
     }
 
     public static Polygon geoBuffer3(Geometry str, ArrayCom<? extends Com5t> list, double amend) {
