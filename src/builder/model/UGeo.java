@@ -28,6 +28,7 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 import java.util.HashMap;
 import java.util.Map;
 import org.locationtech.jts.geom.LinearRing;
+import startup.Test;
 
 /**
  * Утилиты JTS
@@ -83,6 +84,7 @@ public class UGeo {
     //Обводка полигона (работает быстро)
     public static Polygon buffeCrossr(Geometry str, ArrayCom<? extends Com5t> list, double amend) {
         int i = 0;
+        Polygon result = gf.createPolygon();
         Com5t e1 = null, e2 = null;
         Deque<Coordinate> deqList = new ArrayDeque<Coordinate>();
         List<Coordinate> cooList = new ArrayList<Coordinate>();
@@ -142,11 +144,11 @@ public class UGeo {
                 cooList.add(deqList.pollFirst());
             }
             cooList.add(0, cooList.get(cooList.size() - 1));
+            result = gf.createPolygon(cooList.toArray(new Coordinate[0]));
 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.buffeCrossr() " + e);
         }
-        Polygon result = (Polygon) gf.createPolygon(cooList.toArray(new Coordinate[0]));
         return result;
     }
 
@@ -179,15 +181,16 @@ public class UGeo {
     }
 
     //Пилим многоугольник
-    public static Geometry[] geoSplit(Geometry poly, ElemCross impost) {
+    public static Geometry[] geoSplit(Geometry geom, ElemCross impost) {
         try {
-            Geometry poly2 = poly.getGeometryN(0);
+            Geometry poly = geom.getGeometryN(0);
             HashSet<Coordinate> hsCheck = new HashSet<Coordinate>();
-            Coordinate[] coo = poly2.copy().getCoordinates();
+            Coordinate[] coo = poly.copy().getCoordinates();
             LineSegment imp = new LineSegment(new Coordinate(impost.x1(), impost.y1()), new Coordinate(impost.x2(), impost.y2()));
             imp.normalize();
             List<Coordinate> cooL = new ArrayList<Coordinate>(), cooR = new ArrayList<Coordinate>();
             List<Coordinate> crosP = new ArrayList<Coordinate>(), exten = new ArrayList<Coordinate>(List.of(coo[0]));
+//new Test().mpol = poly;
 
             //Вставим точки пересецения в список координат
             for (int i = 1; i < coo.length; i++) {
