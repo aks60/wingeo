@@ -518,7 +518,7 @@ public class Test {
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
         Polygon geo2 = GeoBuffer.buffer(geo1, frames, 0);
         Polygon geo3 = UGeo.bufferCross(geo1, frames, 0);
-        Polygon geo4 = UGeo.bufferPadding(geo1, frames, 0);
+        Polygon geo4 = UGeo.bufferCros2(geo1, frames, 0);
 
         Coordinate coo1[] = geo1.getCoordinates();
         Coordinate coo2[] = geo2.getCoordinates();
@@ -566,7 +566,7 @@ public class Test {
         list.addAll(List.of(arr1));
 
         this.mpol = UGeo.newPolygon(list);
-        this.mlin = UGeo.bufferPadding(this.mpol, frames, 20);
+        this.mlin = UGeo.bufferCros2(this.mpol, frames, 20);
 
     }
 
@@ -627,7 +627,7 @@ public class Test {
         list.addAll(List.of(arr2));
 
         Polygon geo1 = UGeo.newPolygon(list);
-        Polygon geo2 = UGeo.bufferPadding(geo1, frames, 0);
+        Polygon geo2 = UGeo.bufferCros2(geo1, frames, 0);
         this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         this.mpol = null;
