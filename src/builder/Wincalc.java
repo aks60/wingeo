@@ -115,13 +115,13 @@ public class Wincalc {
         }
 
         //Элементы конструкции
-        elements(root, gson);
+        constructor(root, gson);
 
         //Обновление конструкции
-        upgrade();
+        location();
     }
 
-    private void elements(AreaSimple owner, GsonElem gson) {
+    private void constructor(AreaSimple owner, GsonElem gson) {
         try {
             if (gson.childs != null) {
                 LinkedHashMap<AreaSimple, GsonElem> hm = new LinkedHashMap();
@@ -156,7 +156,7 @@ public class Wincalc {
                 }
                 //Теперь вложенные элементы
                 for (Map.Entry<AreaSimple, GsonElem> entry : hm.entrySet()) {
-                    elements(entry.getKey(), entry.getValue());
+                    constructor(entry.getKey(), entry.getValue());
                 }
             }
         } catch (Exception e) {
@@ -165,7 +165,7 @@ public class Wincalc {
     }
 
     //Кальк.коорд. элементов конструкции
-    public void upgrade() {
+    public void location() {
         try {
             //Главное окно ограниченное сторонами рамы
             root.setLocation();

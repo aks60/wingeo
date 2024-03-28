@@ -104,7 +104,7 @@ public class Canvas extends javax.swing.JPanel {
             winc.gc2d.translate(translate[0], translate[1]);
             winc.scale = scale();
             winc.gc2d.scale(winc.scale, winc.scale);
-            winc.upgrade();
+            winc.location();
             winc.draw();
 
         } else {
