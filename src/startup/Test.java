@@ -519,7 +519,7 @@ public class Test {
         Polygon geo2 = GeoBuffer.buffer(geo1, frames, 0);
         Polygon geo3 = UGeo.bufferCross(geo1, frames, 0);
         Polygon geo4 = UGeo.bufferPaddin(geo1, frames, 0);
-        Geometry geo5 = UGeo.bufferUnion(geo1, frames, 0);
+        Polygon geo5 = UGeo.bufferUnion(geo1, frames, 0);
 
         Coordinate coo1[] = geo1.getCoordinates();
         Coordinate coo2[] = geo2.getCoordinates();
@@ -527,17 +527,13 @@ public class Test {
         Coordinate coo4[] = geo3.getCoordinates();
         Coordinate coo5[] = geo3.getCoordinates();
 
-        mlin = geo5;
-        //mpol = geo1;
-        
-//        double d1 = 1247.369662228536;
-//        double d2 = 1300 - d1;
-//        System.out.println(d2);
+        mlin = geo1;
+        mpol = geo5;
 
-//        long startTime = System.currentTimeMillis();       
-//        //GeoBuffer.buffer(geo1, frames, 0);
-//        //UGeo.geoBuffer2(geo1, frames, 0);
-//        long endTime = System.currentTimeMillis();
+//        long startTime = System.nanoTime();       
+//        GeoBuffer.buffer(geo1, frames, 0);
+//        //UGeo.bufferUnion(geo1, frames, 0);
+//        long endTime = System.nanoTime();
 //        long elapsedTime = endTime - startTime;
 //        System.out.println(elapsedTime);
 
