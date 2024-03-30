@@ -25,8 +25,8 @@ public class Com5t {
 
     public static int MAXSIDE = 200;
 
-    //public static GeometryFactory gf = new GeometryFactory(new PrecisionModel(10000));
-    public static GeometryFactory gf = new GeometryFactory(new PrecisionModel());
+    public static GeometryFactory gf = new GeometryFactory(new PrecisionModel(1000000));
+    //public static GeometryFactory gf = new GeometryFactory(new PrecisionModel());
     public static GeometricShapeFactory gsf = new GeometricShapeFactory(gf);
     public static AffineTransformation aff = new AffineTransformation();
 
