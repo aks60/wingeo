@@ -323,9 +323,8 @@ public class UGeo {
             imp.normalize();
             List<Coordinate> cooL = new ArrayList<Coordinate>(), cooR = new ArrayList<Coordinate>();
             List<Coordinate> crosP = new ArrayList<Coordinate>(), exten = new ArrayList<Coordinate>(List.of(coo[0]));
-//new Test().mpol = poly;
 
-            //Вставим точки пересецения в список координат
+            //Вставим точки пересечения в список координат
             for (int i = 1; i < coo.length; i++) {
 
                 //Точка пересечения сегмента и линии
