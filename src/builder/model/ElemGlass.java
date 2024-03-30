@@ -25,6 +25,7 @@ import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.LineSegment;
+import startup.Test;
 
 public class ElemGlass extends ElemSimple {
 
@@ -88,7 +89,9 @@ public class ElemGlass extends ElemSimple {
     @Override
     public void setLocation() {
         ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
-        this.area = GeoBuffer.buffer(owner.area.getGeometryN(0), list, 0); //полигон для прорисовки
+        //this.area = GeoBuffer.buffer(owner.area.getGeometryN(0), list, 0); //полигон для прорисовки
+        this.area = UGeo.bufferUnion(owner.area.getGeometryN(0), list, 0); //полигон для прорисовки
+        //if(id == 6) new Test().mpol = this.area;
     }
 
     //Главная спецификация    

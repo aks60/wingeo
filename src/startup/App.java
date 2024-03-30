@@ -4,6 +4,7 @@ import builder.Wincalc;
 import builder.model.ElemJoining;
 import frames.swing.FrameToFile;
 import common.eProfile;
+import common.eProp;
 import common.listener.ListenerRecord;
 import dataset.Conn;
 import dataset.Field;
@@ -86,12 +87,16 @@ public enum App {
     Specification, Syssize, RuleCalc, PSFrame, PSCompare;
     public javax.swing.JFrame frame;
     public static javax.swing.JFrame active;
+    long startTime = 0, endTime;
 
     public void createFrame(java.awt.Window parent, Object... param) {
         if (frame != null) {
             frame.dispose();
         }
         try {
+            if (eProp.dev == true) {
+                startTime = System.currentTimeMillis();
+            }
             switch (this) {
 
                 case PSFrame:
@@ -220,6 +225,11 @@ public enum App {
             });
             frame.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage());
             frame.setVisible(true);
+            if (eProp.dev == true) {
+                endTime = System.currentTimeMillis();
+                long elapsedTime = endTime - startTime;
+                System.out.println("Время запуска " + this.name() + " - " + elapsedTime);
+            }
         } catch (Exception e) {
             //frame.dispose();
             //frame = null;

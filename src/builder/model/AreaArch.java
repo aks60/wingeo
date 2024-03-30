@@ -60,7 +60,7 @@ public class AreaArch extends AreaSimple {
             list.add(list.get(0));
 
             Polygon geo1 = gf.createPolygon(list.toArray(new Coordinate[0])); 
-            Polygon geo2 = GeoBuffer.buffer(geo1, this.frames, 0); 
+            Polygon geo2 = buffer(geo1, this.frames, 0); 
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
             //new Test().mpol = this.area;
 

@@ -102,6 +102,7 @@ import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import startup.Test;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload {
 
@@ -4045,7 +4046,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     }//GEN-LAST:event_colorFromLock
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        split1.setDividerLocation(300);
+        new Test().mpol = wincalc().listElem.get(6.0).area;
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void colorFromGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromGlass

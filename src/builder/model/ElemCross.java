@@ -86,7 +86,7 @@ public class ElemCross extends ElemSimple {
             }
 
             //Внутренняя ареа       
-            Geometry geo2 = GeoBuffer.buffer(owner.area.getGeometryN(0), winc.listElem, .0);
+            Geometry geo2 = buffer(owner.area.getGeometryN(0), winc.listElem, .0);
              if (owner.area.getGeometryN(1).isValid() == false) { //исправление коллизий
                 GeometryFixer fix = new GeometryFixer(owner.area.getGeometryN(1));
                 geo2 = (Polygon) fix.getResult().getGeometryN(0);
