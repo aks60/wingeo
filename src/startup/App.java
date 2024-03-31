@@ -94,9 +94,9 @@ public enum App {
             frame.dispose();
         }
         try {
-            if (eProp.dev == true) {
-                startTime = System.currentTimeMillis();
-            }
+//            if (eProp.dev == true) {
+//                startTime = System.currentTimeMillis();
+//            }
             switch (this) {
 
                 case PSFrame:
@@ -225,11 +225,11 @@ public enum App {
             });
             frame.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage());
             frame.setVisible(true);
-            if (eProp.dev == true) {
-                endTime = System.currentTimeMillis();
-                long elapsedTime = endTime - startTime;
-                System.out.println("Время запуска " + this.name() + " - " + elapsedTime);
-            }
+//            if (eProp.dev == true) {
+//                endTime = System.currentTimeMillis();
+//                long elapsedTime = endTime - startTime;
+//                System.err.println(this.name() + " - " + elapsedTime + " мс");
+//            }
         } catch (Exception e) {
             //frame.dispose();
             //frame = null;
