@@ -482,6 +482,13 @@ public class UGeo {
         return segm;
     }
 
+    public static Coordinate offset(LineSegment s1, LineSegment s2, double d) {
+        LineSegment s3 = s1.offset(d);
+        LineSegment s4 = s2.offset(d);
+        Coordinate c = s3.intersection(s4);
+        return c;
+    }    
+    
     /**
      *
      * @param midle

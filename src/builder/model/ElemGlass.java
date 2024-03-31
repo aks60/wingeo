@@ -136,6 +136,7 @@ public class ElemGlass extends ElemSimple {
 
                 Set hs = (Set) this.area.getUserData();
                 Coordinate coo[] = this.area.getCoordinates();
+                spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
 
                 //Арка
                 if (this.area.getCoordinates().length > MAXSIDE) {
@@ -149,13 +150,23 @@ public class ElemGlass extends ElemSimple {
                     }
                     double angBetween0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[index1], coo[1]));
                     double angBetween1 = Math.toDegrees(Angle.angleBetween(coo[index2 - 2], coo[index2 - 1], coo[index2]));
-                    if (this.frameGlass.h() == null) { //дуга
-                        spcAdd.anglCut0 = angBetween0;
-                        spcAdd.anglCut1 = angBetween1;
+
+                    //Основание арки
+                    if (this.frameGlass.h() == null) {
+                        LineSegment s1 = new LineSegment(coo[coo.length - 2], coo[0]);
+                        LineSegment s2 = new LineSegment(coo[0], coo[1]);
+                        LineSegment s3 = new LineSegment(coo[1], coo[2]);
+                        Coordinate c1 = UGeo.offset(s1, s2, spcAdd.height);
+                        Coordinate c2 = UGeo.offset(s2, s3, spcAdd.height);
+                        double length1 = new LineSegment(s2.p0, c1).getLength();
+                        double length2 = new LineSegment(s2.p1, c2).getLength();
+//                        spcAdd.anglCut0 = angBetween0 - Math.toDegrees(Math.asin(spcAdd.height / length1));
+//                        spcAdd.anglCut1 = angBetween1 - Math.toDegrees(Math.asin(spcAdd.height / length2));
                         LineSegment s = new LineSegment(coo[0], coo[1]);
                         spcAdd.width += s.getLength() + 2 * gzazo;
 
-                    } else { //основание
+                        //Дуга арки
+                    } else {
                         spcAdd.anglCut0 = angBetween0;
                         spcAdd.anglCut1 = angBetween1;
                         LineSegment s = new LineSegment();
@@ -167,24 +178,23 @@ public class ElemGlass extends ElemSimple {
                         }
                     }
 
-                    //Не арка
+                    //Остальное
                 } else {
                     LineSegment s1 = UGeo.getSegment(this.area, sideGlass - 1);
                     LineSegment s2 = UGeo.getSegment(this.area, sideGlass);
                     LineSegment s3 = UGeo.getSegment(this.area, sideGlass + 1);
                     double angBetween0 = Math.toDegrees(Angle.angleBetween(s1.p0, s1.p1, s2.p0));
-                    double angBetween1 = Math.toDegrees(Angle.angleBetween(s2.p0, s2.p1, s3.p1));                                                           
+                    double angBetween1 = Math.toDegrees(Angle.angleBetween(s2.p0, s2.p1, s3.p1));
                     spcAdd.anglCut0 = angBetween0 / 2;
                     spcAdd.anglCut1 = angBetween1 / 2;
                     spcAdd.anglHoriz = UGeo.anglHor(s2.p0.x, s2.p0.y, s2.p1.x, s2.p1.y); //угол к горизонту 
                     spcAdd.width += s1.getLength() + 2 * gzazo;
                 }
-                spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
 
                 spcRec.spcList.add(spcAdd);
 
-                double angHor = spcAdd.anglHoriz;
                 //По горизонтали
+                double angHor = spcAdd.anglHoriz;
                 if ((angHor > 315 && angHor < 360 || angHor >= 0 && angHor < 45) || (angHor > 135 && angHor < 225)) {
                     if (spcAdd.mapParam.get(15010) != null) {
                         if ("Нет".equals(spcAdd.mapParam.get(15010)) == false) { //Усекать нижний штапик
@@ -216,7 +226,7 @@ public class ElemGlass extends ElemSimple {
                 spcAdd.width = UPar.to_12065_15045_25040_34070_39070(spcAdd); //длина мм
                 spcAdd.width = spcAdd.width * UPar.to_12030_15030_25035_34030_39030(spcAdd); //"[ * коэф-т ]"
                 spcAdd.width = spcAdd.width / UPar.to_12040_15031_25036_34040_39040(spcAdd); //"[ / коэф-т ]" 
-
+                
                 //Штуки   
             } else if (UseUnit.PIE.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 

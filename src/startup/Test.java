@@ -1,6 +1,7 @@
 package startup;
 
 import builder.model.Com5t;
+import static builder.model.Com5t.gf;
 import builder.model.UGeo;
 import builder.param.check.ElementTest;
 import builder.param.check.FillingTest;
@@ -94,8 +95,8 @@ public class Test {
         eProp.dev = true;
         try {
             //frames.PSConvert.exec();
-            //frame(args);
-            wincalc();
+            frame(args);
+            //wincalc();
             //param();
             //query();
             //json();
@@ -431,10 +432,10 @@ public class Test {
     public void paintComp(Graphics g) {
 
         Graphics2D gc2d = (Graphics2D) g;
-        //gc2d.translate(-2400, -400);
-        //gc2d.scale(3, 3);
-        gc2d.translate(10, 0);
-        gc2d.scale(.4, .4);
+        gc2d.translate(-2, -800);
+        gc2d.scale(4, 4);
+        //gc2d.translate(10, 0);
+        //gc2d.scale(.4, .4);
 
         if (mlin != null) {
             gc2d.setColor(Color.BLUE);
@@ -527,8 +528,18 @@ public class Test {
         Coordinate coo4[] = geo3.getCoordinates();
         Coordinate coo5[] = geo3.getCoordinates();
 
-        mlin = geo1;
-        mpol = geo5;
+        LineString str1 = UGeo.newLineStr(52.555392, 313.64961, 51.787369, 314.5);
+        LineString str2 = UGeo.newLineStr(51.787369, 314.5, 1248.212631, 314.5);
+        LineSegment s11 = new LineSegment(52.555392, 313.64961, 51.787369, 314.5);
+        LineSegment s22 = new LineSegment(51.787369, 314.5, 1248.212631, 314.5);
+        
+        LineSegment s3 = s11.offset(20);
+        LineSegment s4 = s22.offset(20);
+        
+        Coordinate c33 = s3.intersection(s4);
+        Geometry geom = str1.intersection(str2);
+        mlin = gf.createMultiLineString(new LineString[]{str1, str2});
+        //mpol = geo5;
 
 //        long startTime = System.nanoTime();       
 //        GeoBuffer.buffer(geo1, frames, 0);
@@ -536,7 +547,6 @@ public class Test {
 //        long endTime = System.nanoTime();
 //        long elapsedTime = endTime - startTime;
 //        System.out.println(elapsedTime);
-
     }
 
     private void draw5() {
