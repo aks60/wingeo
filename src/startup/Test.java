@@ -425,17 +425,17 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        draw6();
+        //draw6();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
     public void paintComp(Graphics g) {
 
         Graphics2D gc2d = (Graphics2D) g;
-        gc2d.translate(-2, -800);
-        gc2d.scale(4, 4);
-        //gc2d.translate(10, 0);
-        //gc2d.scale(.4, .4);
+        //gc2d.translate(-2, -800);
+        //gc2d.scale(4, 4);
+        gc2d.translate(10, 0);
+        gc2d.scale(.4, .4);
 
         if (mlin != null) {
             gc2d.setColor(Color.BLUE);

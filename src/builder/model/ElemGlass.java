@@ -11,6 +11,7 @@ import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
+import domain.eGlasgrp;
 import domain.eSystree;
 import enums.PKjson;
 import enums.Type;
@@ -18,7 +19,6 @@ import enums.TypeArtikl;
 import enums.UseUnit;
 import java.awt.Shape;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.locationtech.jts.algorithm.Angle;
@@ -26,6 +26,8 @@ import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.Polygon;
+import startup.Test;
 
 public class ElemGlass extends ElemSimple {
 
@@ -134,6 +136,15 @@ public class ElemGlass extends ElemSimple {
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
+                if(this.area.getNumGeometries() == 1) {
+                    ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
+                    double gap = spcAdd.variantRec.getDbl(eGlasgrp.gap);                   
+                    Polygon geo = UGeo.bufferUnion(owner.area.getGeometryN(0), list, gap); //полигон для прорисовки
+                    this.area = gf.createMultiPolygon(new Polygon[]{(Polygon) this.area, geo});
+                    new Test().mpol = this.area;
+                }
+                
+                
                 Set hs = (Set) this.area.getUserData();
                 Coordinate coo[] = this.area.getCoordinates();
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);

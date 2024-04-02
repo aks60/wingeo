@@ -127,7 +127,7 @@ public class SpcFilling extends Cal5e {
                 if (fillingDet.filter(mapParam, elemGlass, glasdetRec) == true) {
                     Record artiklRec = eArtikl.find(glasdetRec.getInt(eGlasdet.artikl_id), false);
                     SpcRecord spcAdd = new SpcRecord("ЗАП", glasdetRec, artiklRec, elemGlass, mapParam);
-
+                    spcAdd.variantRec = glasgrpRec;
                     //Подбор текстуры
                     if (UColor.colorFromProduct(spcAdd)) {
                         elemGlass.addSpecific(spcAdd);
