@@ -1,7 +1,6 @@
 package startup;
 
 import builder.model.Com5t;
-import static builder.model.Com5t.gf;
 import builder.model.UGeo;
 import builder.param.check.ElementTest;
 import builder.param.check.FillingTest;
@@ -37,6 +36,7 @@ import javax.swing.SwingUtilities;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
+import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Test {
@@ -380,6 +380,11 @@ public class Test {
         Geometry p3 = p1.union(p2);
         Coordinate coo[] = p3.getCoordinates();
         new Test().mpol = p3;
+
+        GeometryFactory geometryFactory = new GeometryFactory(); //JTSFactoryFinder.getGeometryFactory(null);
+
+        WKTReader reader = new WKTReader(geometryFactory);
+        LineString line = (LineString) reader.read("LINESTRING(0 2, 2 0, 8 6)");
     }
 
     public static void frame(String[] args) {
@@ -532,10 +537,10 @@ public class Test {
         LineString str2 = UGeo.newLineStr(51.787369, 314.5, 1248.212631, 314.5);
         LineSegment s11 = new LineSegment(52.555392, 313.64961, 51.787369, 314.5);
         LineSegment s22 = new LineSegment(51.787369, 314.5, 1248.212631, 314.5);
-        
+
         LineSegment s3 = s11.offset(20);
         LineSegment s4 = s22.offset(20);
-        
+
         Coordinate c33 = s3.intersection(s4);
         Geometry geom = str1.intersection(str2);
         mlin = gf.createMultiLineString(new LineString[]{str1, str2});
