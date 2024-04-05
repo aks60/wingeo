@@ -136,6 +136,8 @@ public class ElemGlass extends ElemSimple {
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
+                
+                
                 if(this.area.getNumGeometries() == 1) {
                     ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
                     double gap = spcAdd.variantRec.getDbl(eGlasgrp.gap);                   
@@ -144,14 +146,25 @@ public class ElemGlass extends ElemSimple {
                     new Test().mpol = this.area;
                 }
                 
+                double arcID = winc.listElem.stream().filter(e -> e.h() != null).findFirst().get().id;
+                Coordinate coo[] = owner.area.getGeometryN(0).getCoordinates();
+                Coordinate co2[] = owner.area.getGeometryN(1).getCoordinates();
+                
+                double angHor1 = UGeo.anglHor(coo[sideGlass - 1].x, coo[sideGlass - 1].y, coo[sideGlass].x, coo[sideGlass].y);
+                for (int i = 1; i < co2.length; i++) {
+                    double angHor2 = UGeo.anglHor(co2[i - 1].x, co2[i - 1].y, co2[i].x, co2[i].y);
+                    if(arcID != coo[i - 1].z && angHor1 == angHor2) {
+                      Polygon p = UGeo.newPolygon();
+                    }
+                }
+                
                 
                 Set hs = (Set) this.area.getUserData();
-                Coordinate coo[] = this.area.getCoordinates();
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
 
                 //Арка
                 if (this.area.getCoordinates().length > MAXSIDE) {
-                    double arcID = winc.listElem.stream().filter(e -> e.h() != null).findFirst().get().id;
+                    //double arcID = winc.listElem.stream().filter(e -> e.h() != null).findFirst().get().id;
                     int index1 = 0, index2 = 0;
                     for (int i = 0; i < coo.length; i++) {
                         if (coo[i].z == arcID) {

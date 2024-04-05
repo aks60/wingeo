@@ -381,10 +381,13 @@ public class Test {
         Coordinate coo[] = p3.getCoordinates();
         new Test().mpol = p3;
 
-        GeometryFactory geometryFactory = new GeometryFactory(); //JTSFactoryFinder.getGeometryFactory(null);
-
+        GeometryFactory geometryFactory = new GeometryFactory();
         WKTReader reader = new WKTReader(geometryFactory);
-        LineString line = (LineString) reader.read("LINESTRING(0 2, 2 0, 8 6)");
+        try {
+            LineString line = (LineString) reader.read("LINESTRING(0 2, 2 0, 8 6)");
+        } catch (Exception e) {
+            System.err.println("Ошибка:Test.geom " + e);
+        };
     }
 
     public static void frame(String[] args) {
