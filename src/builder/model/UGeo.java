@@ -155,7 +155,7 @@ public class UGeo {
         return result;
     }
 
-    //Обводка полигона, работает быстро. При вырождении полигона загибов нет
+    //Обводка полигона, работает быстро. При вырождении полигона теряются p.z
     public static Polygon bufferUnion(Geometry str, ArrayCom<? extends Com5t> list, double amend) {
         try {
             Map<Double, Double> hm = new HashMap();
