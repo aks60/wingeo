@@ -19,15 +19,17 @@ import enums.TypeArtikl;
 import enums.UseUnit;
 import java.awt.Shape;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
-import startup.Test;
 
 public class ElemGlass extends ElemSimple {
 
@@ -137,22 +139,30 @@ public class ElemGlass extends ElemSimple {
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
                 Coordinate coo[] = this.area.getCoordinates();
-                double angHor1 = UGeo.anglHor(winc.listElem.get(coo[sideGlass].z));
-                Set hs = (Set) this.area.getUserData();
+                double angHor1 = UGeo.anglHor(frameGlass);
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
-                
-                int index1 = (sideGlass == 0) ? coo.length - 2 : sideGlass - 1,
-                        index2 = sideGlass, index3 = sideGlass + 1;
+
+                int index1 = (sideGlass == 0) ? coo.length - 2 : sideGlass - 1;
+                int index2 = sideGlass, index3 = sideGlass + 1;
                 LineSegment s1 = UGeo.getSegment(this.area, index1);
                 LineSegment s2 = UGeo.getSegment(this.area, index2);
                 LineSegment s3 = UGeo.getSegment(this.area, index3);
                 double angBetween0 = Math.toDegrees(Angle.angleBetween(s1.p0, s1.p1, s2.p0));
                 double angBetween1 = Math.toDegrees(Angle.angleBetween(s2.p0, s2.p1, s3.p1));
-                
+
                 spcAdd.anglCut0 = angBetween0 / 2;
                 spcAdd.anglCut1 = angBetween1 / 2;
                 spcAdd.anglHoriz = UGeo.anglHor(s2.p0.x, s2.p0.y, s2.p1.x, s2.p1.y); //угол к горизонту 
-                spcAdd.width += s2.getLength() + 2 * gzazo;
+                if (frameGlass.h() == null) {
+                    spcAdd.width += s2.getLength() + 2 * gzazo;
+                } else {
+                    for (int i = 1; i < coo.length; ++i) {
+                        if (coo[i - 1].z == frameGlass.id) {
+                            spcAdd.width += 777;
+                        }
+                    }
+                    spcAdd.width += gzazo;
+                }
 
                 spcRec.spcList.add(spcAdd);
 
