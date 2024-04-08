@@ -143,31 +143,40 @@ public class ElemGlass extends ElemSimple {
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
                 spcAdd.anglHoriz = UGeo.anglHor(frameGlass); //угол к горизонту 
 
-                int index1 = (sideGlass == 0) ? coo.length - 2 : sideGlass - 1;
-                int index2 = sideGlass, index3 = sideGlass + 1;
-                LineSegment s1 = UGeo.getSegment(this.area, index1);
-                LineSegment s2 = UGeo.getSegment(this.area, index2);
-                LineSegment s3 = UGeo.getSegment(this.area, index3);
-                
-                double angBetween0 = Math.toDegrees(Angle.angleBetween(s1.p0, s1.p1, s2.p0));
-                double angBetween1 = Math.toDegrees(Angle.angleBetween(s2.p0, s2.p1, s3.p1));
-                spcAdd.anglCut0 = angBetween0 / 2;
-                spcAdd.anglCut1 = angBetween1 / 2;
-                
                 if (frameGlass.h() == null) {
+                    int index1 = (sideGlass == 0) ? coo.length - 2 : sideGlass - 1;
+                    int index2 = sideGlass, index3 = sideGlass + 1;
+                    LineSegment s1 = UGeo.getSegment(this.area.getGeometryN(1), index1);
+                    LineSegment s2 = UGeo.getSegment(this.area.getGeometryN(1), index2);
+                    LineSegment s3 = UGeo.getSegment(this.area.getGeometryN(1), index3);
+
+                    double angBetween0 = Math.toDegrees(Angle.angleBetween(s1.p0, s1.p1, s2.p0));
+                    double angBetween1 = Math.toDegrees(Angle.angleBetween(s2.p0, s2.p1, s3.p1));
+                    spcAdd.anglCut0 = angBetween0 / 2;
+                    spcAdd.anglCut1 = angBetween1 / 2;
                     spcAdd.width += s2.getLength() + 2 * gzazo;
+                    
                 } else {
-                    for (int i = 1; i < coo.length; ++i) {
+                    spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1])) / 2;
+//                    for (int i = coo.length - 2; i > 0; i--) {
+//                        if (coo[i].z != frameGlass.id) {
+//                            spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[i - 2], coo[i - 1], coo[i]));
+//                            break;
+//                        }
+//                    }
+                    for (int i = 1; i < coo.length; i++) {
                         if (coo[i - 1].z == frameGlass.id) {
                             spcAdd.width += coo[i - 1].distance(coo[i]);
-                        }
+                        }                        
                     }
                 }
-                if(id == 6) {
-                   // new Test().mpol = this.area.getGeometryN(1);
+
+                if (id == 6) {
+                    // new Test().mpol = this.area.getGeometryN(1);
+                    int m = 0;
                 }
                 spcRec.spcList.add(spcAdd);
-               
+
                 //Параметры по горизонтали
                 double angHor = spcAdd.anglHoriz;
                 if ((angHor > 315 && angHor < 360 || angHor >= 0 && angHor < 45) || (angHor > 135 && angHor < 225)) {
