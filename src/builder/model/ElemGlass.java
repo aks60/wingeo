@@ -144,12 +144,9 @@ public class ElemGlass extends ElemSimple {
                 spcAdd.anglHoriz = UGeo.anglHor(frameGlass); //угол к горизонту 
 
                 if (frameGlass.h() == null) {
-                    //int index1 = (sideGlass == 0) ? coo.length - 2 : sideGlass - 1;
-                    //int index2 = sideGlass, index3 = sideGlass + 1;
                     LineSegment s1 = UGeo.getSegment(this.area.getGeometryN(1), sideGlass - 1);
                     LineSegment s2 = UGeo.getSegment(this.area.getGeometryN(1), sideGlass);
                     LineSegment s3 = UGeo.getSegment(this.area.getGeometryN(1), sideGlass + 1);
-
                     spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(s1.p0, s1.p1, s2.p0)) / 2;
                     spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(s2.p0, s2.p1, s3.p1)) / 2;
                     spcAdd.width += s2.getLength() + 2 * gzazo;
@@ -159,8 +156,7 @@ public class ElemGlass extends ElemSimple {
                         if (coo[i].z != frameGlass.id) {
                             LineSegment s1 = UGeo.getSegment(this.area.getGeometryN(1), i - 1);
                             LineSegment s2 = UGeo.getSegment(this.area.getGeometryN(1), i);
-                            LineSegment s3 = UGeo.getSegment(this.area.getGeometryN(1), i + 1);
-                            
+                            LineSegment s3 = UGeo.getSegment(this.area.getGeometryN(1), i + 1);                           
                             spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1])) / 2;
                             spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(s1.p0, s1.p1, s2.p1)) / 2;
                             break;
