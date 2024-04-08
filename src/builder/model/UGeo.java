@@ -164,7 +164,9 @@ public class UGeo {
                 hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
             }
             List<Geometry> geoList = new ArrayList();
-            List<Coordinate> cooList = new ArrayList<Coordinate>(), arcList = new ArrayList<Coordinate>();
+            List<Coordinate> arcStr = new ArrayList<Coordinate>(), 
+                    arcTop = new ArrayList<Coordinate>(), 
+                    arcBot = new ArrayList<Coordinate>();
 
             Coordinate[] coo = str.getCoordinates();
             for (int i = 1; i < coo.length; i++) {
@@ -178,28 +180,29 @@ public class UGeo {
                     LineSegment seg2a = new LineSegm(coo[i], coo[i + 1], coo[i].z);
                     LineSegment seg2b = seg2a.offset(-hm.get(e2.id));
                     Coordinate cross = seg2b.intersection(seg1b);
-                    cooList.add(seg2a.p0);
-                    arcList.add(cross);
+                    arcTop.add(seg2a.p0);
+                    arcBot.add(cross);
 
                 } else if (e1.h() == null) {
                     Polygon ls = gf.createPolygon(new Coordinate[]{seg1a.p0, seg1a.p1, seg1b.p1, seg1b.p0, seg1a.p0});
                     geoList.add(ls);
                 }
             }
-            Geometry arc = gf.createLineString();
-            if (arcList.isEmpty() == false) {
-                Collections.reverse(arcList);
-                cooList.addAll(arcList);
-                cooList.add(cooList.get(0));
-                arc = gf.createPolygon(cooList.toArray(new Coordinate[0]));
+            Geometry arcGeo = gf.createLineString();
+            if (arcBot.isEmpty() == false) {
+                Collections.reverse(arcBot);
+                arcStr.addAll(arcBot);
+                arcStr.addAll(arcTop);
+                arcStr.add(arcStr.get(0));
+                arcGeo = gf.createPolygon(arcStr.toArray(new Coordinate[0]));
             }
             GeometryCollection partsGeom = gf.createGeometryCollection(GeometryFactory.toGeometryArray(geoList));
-            Geometry buffer = partsGeom.union().union(arc);
+            Geometry buffer = partsGeom.union().union(arcGeo);
 
             LinearRing ring = ((Polygon) buffer).getInteriorRingN(0);
             Coordinate coord[] = ring.getCoordinates();
             for (int i = 0; i < coord.length; i++) {
-                coord[i].z = coo[i].z;
+                coord[i].z = coo[i].z; //при вырождении полигона будет неправильно переносится z
             }
             return gf.createPolygon(coord);
 

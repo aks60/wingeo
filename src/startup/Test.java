@@ -533,8 +533,8 @@ public class Test {
         Coordinate coo1[] = geo1.getCoordinates();
         Coordinate coo2[] = geo2.getCoordinates();
         Coordinate coo3[] = geo3.getCoordinates();
-        Coordinate coo4[] = geo3.getCoordinates();
-        Coordinate coo5[] = geo3.getCoordinates();
+        Coordinate coo4[] = geo4.getCoordinates();
+        Coordinate coo5[] = geo5.getCoordinates();
 
         mlin = gf.createMultiLineString(new LineString[]{geo1});
         mpol = geo5;
