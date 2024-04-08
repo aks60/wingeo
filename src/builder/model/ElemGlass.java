@@ -144,36 +144,37 @@ public class ElemGlass extends ElemSimple {
                 spcAdd.anglHoriz = UGeo.anglHor(frameGlass); //угол к горизонту 
 
                 if (frameGlass.h() == null) {
-                    int index1 = (sideGlass == 0) ? coo.length - 2 : sideGlass - 1;
-                    int index2 = sideGlass, index3 = sideGlass + 1;
-                    LineSegment s1 = UGeo.getSegment(this.area.getGeometryN(1), index1);
-                    LineSegment s2 = UGeo.getSegment(this.area.getGeometryN(1), index2);
-                    LineSegment s3 = UGeo.getSegment(this.area.getGeometryN(1), index3);
+                    //int index1 = (sideGlass == 0) ? coo.length - 2 : sideGlass - 1;
+                    //int index2 = sideGlass, index3 = sideGlass + 1;
+                    LineSegment s1 = UGeo.getSegment(this.area.getGeometryN(1), sideGlass - 1);
+                    LineSegment s2 = UGeo.getSegment(this.area.getGeometryN(1), sideGlass);
+                    LineSegment s3 = UGeo.getSegment(this.area.getGeometryN(1), sideGlass + 1);
 
-                    double angBetween0 = Math.toDegrees(Angle.angleBetween(s1.p0, s1.p1, s2.p0));
-                    double angBetween1 = Math.toDegrees(Angle.angleBetween(s2.p0, s2.p1, s3.p1));
-                    spcAdd.anglCut0 = angBetween0 / 2;
-                    spcAdd.anglCut1 = angBetween1 / 2;
+                    spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(s1.p0, s1.p1, s2.p0)) / 2;
+                    spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(s2.p0, s2.p1, s3.p1)) / 2;
                     spcAdd.width += s2.getLength() + 2 * gzazo;
-                    
+
                 } else {
-                    spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1])) / 2;
-//                    for (int i = coo.length - 2; i > 0; i--) {
-//                        if (coo[i].z != frameGlass.id) {
-//                            spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[i - 2], coo[i - 1], coo[i]));
-//                            break;
-//                        }
-//                    }
+                    for (int i = coo.length - 2; i > 0; i--) {
+                        if (coo[i].z != frameGlass.id) {
+                            LineSegment s1 = UGeo.getSegment(this.area.getGeometryN(1), i - 1);
+                            LineSegment s2 = UGeo.getSegment(this.area.getGeometryN(1), i);
+                            LineSegment s3 = UGeo.getSegment(this.area.getGeometryN(1), i + 1);
+                            
+                            spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1])) / 2;
+                            spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(s1.p0, s1.p1, s2.p1)) / 2;
+                            break;
+                        }
+                    }
                     for (int i = 1; i < coo.length; i++) {
                         if (coo[i - 1].z == frameGlass.id) {
                             spcAdd.width += coo[i - 1].distance(coo[i]);
-                        }                        
+                        }
                     }
                 }
 
                 if (id == 6) {
-                    // new Test().mpol = this.area.getGeometryN(1);
-                    int m = 0;
+                    System.out.println("");
                 }
                 spcRec.spcList.add(spcAdd);
 
