@@ -433,7 +433,7 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        //draw6();
+        draw6();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
@@ -442,7 +442,7 @@ public class Test {
         Graphics2D gc2d = (Graphics2D) g;
         //gc2d.translate(-2, -800);
         //gc2d.scale(4, 4);
-        gc2d.translate(10, 0);
+        gc2d.translate(10, -10);
         gc2d.scale(.4, .4);
 
         if (mlin != null) {
@@ -496,21 +496,11 @@ public class Test {
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayCom<Com5t> frames = new ArrayCom();
-        /*
-        frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
-        frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
-        
-        LineSegment s1 = new LineSegment(frames.get(1).x1(), frames.get(1).y1(), frames.get(0).x1(), frames.get(0).y1());
-        LineString arc1 = UGeo.newLineArch(s1.p1.x, s1.p0.x, s1.p0.y, 300, 4);
-        Coordinate arr[] = arc1.getCoordinates();
 
-        list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
-        list.addAll(List.of(arr));
-        list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
-         */
         frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
         frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, M)));
         frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, M)));
+        //frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0)));
         frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
 
         LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());

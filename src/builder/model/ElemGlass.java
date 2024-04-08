@@ -164,7 +164,7 @@ public class ElemGlass extends ElemSimple {
                     }
                 }
                 if(id == 6) {
-                    new Test().mpol = this.area.getGeometryN(1);
+                   // new Test().mpol = this.area.getGeometryN(1);
                 }
                 spcRec.spcList.add(spcAdd);
                

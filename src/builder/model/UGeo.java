@@ -164,8 +164,8 @@ public class UGeo {
                 hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
             }
             List<Geometry> geoList = new ArrayList();
-            List<Coordinate> arcStr = new ArrayList<Coordinate>(), 
-                    arcTop = new ArrayList<Coordinate>(), 
+            List<Coordinate> arcStr = new ArrayList<Coordinate>(),
+                    arcTop = new ArrayList<Coordinate>(),
                     arcBot = new ArrayList<Coordinate>();
 
             Coordinate[] coo = str.getCoordinates();
@@ -200,11 +200,13 @@ public class UGeo {
             Geometry buffer = partsGeom.union().union(arcGeo);
 
             LinearRing ring = ((Polygon) buffer).getInteriorRingN(0);
-            Coordinate coord[] = ring.getCoordinates();
-            for (int i = 0; i < coord.length; i++) {
-                coord[i].z = coo[i].z; //при вырождении полигона будет неправильно переносится z
+            Polygon poly = (Polygon) gf.createPolygon(ring).norm();
+            Coordinate cor[] = poly.getCoordinates();
+            for (int i = 0; i < cor.length - 1; ++i) {
+                cor[i].z = coo[i].z;
             }
-            return gf.createPolygon(coord);
+            cor[cor.length - 1].z = cor[0].z;
+            return gf.createPolygon(cor);
 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.bufferUnion() " + e);
@@ -490,8 +492,8 @@ public class UGeo {
         LineSegment s4 = s2.offset(d);
         Coordinate c = s3.intersection(s4);
         return c;
-    }    
-    
+    }
+
     /**
      *
      * @param midle
