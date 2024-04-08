@@ -19,17 +19,16 @@ import enums.TypeArtikl;
 import enums.UseUnit;
 import java.awt.Shape;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
+import startup.Test;
 
 public class ElemGlass extends ElemSimple {
 
@@ -93,7 +92,8 @@ public class ElemGlass extends ElemSimple {
     @Override
     public void setLocation() {
         ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
-        this.area = UGeo.bufferUnion(owner.area.getGeometryN(0), list, 0); //полигон для прорисовки
+        Geometry areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, 0); //полигон по фальяу для прорисовки
+        this.area = areaFalz; //полигон по фальяу для прорисовки
     }
 
     //Главная спецификация    
@@ -113,7 +113,8 @@ public class ElemGlass extends ElemSimple {
                 Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
                 hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + gzazo);
             }
-            this.area = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);
+            Polygon glass = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);
+            this.area = gf.createMultiPolygon(new Polygon[]{glass, (Polygon) this.area});
 
             Envelope env = this.area.getGeometryN(0).getEnvelopeInternal();
             spcRec.width = env.getWidth();
@@ -138,35 +139,36 @@ public class ElemGlass extends ElemSimple {
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
-                Coordinate coo[] = this.area.getCoordinates();
-                double angHor1 = UGeo.anglHor(frameGlass);
+                Coordinate coo[] = this.area.getGeometryN(1).getCoordinates();
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
+                spcAdd.anglHoriz = UGeo.anglHor(frameGlass); //угол к горизонту 
 
                 int index1 = (sideGlass == 0) ? coo.length - 2 : sideGlass - 1;
                 int index2 = sideGlass, index3 = sideGlass + 1;
                 LineSegment s1 = UGeo.getSegment(this.area, index1);
                 LineSegment s2 = UGeo.getSegment(this.area, index2);
                 LineSegment s3 = UGeo.getSegment(this.area, index3);
+                
                 double angBetween0 = Math.toDegrees(Angle.angleBetween(s1.p0, s1.p1, s2.p0));
                 double angBetween1 = Math.toDegrees(Angle.angleBetween(s2.p0, s2.p1, s3.p1));
-
                 spcAdd.anglCut0 = angBetween0 / 2;
                 spcAdd.anglCut1 = angBetween1 / 2;
-                spcAdd.anglHoriz = UGeo.anglHor(s2.p0.x, s2.p0.y, s2.p1.x, s2.p1.y); //угол к горизонту 
+                
                 if (frameGlass.h() == null) {
                     spcAdd.width += s2.getLength() + 2 * gzazo;
                 } else {
                     for (int i = 1; i < coo.length; ++i) {
                         if (coo[i - 1].z == frameGlass.id) {
-                            spcAdd.width += 777;
+                            spcAdd.width += coo[i - 1].distance(coo[i]);
                         }
                     }
-                    spcAdd.width += gzazo;
                 }
-
+                if(id == 6) {
+                    new Test().mpol = this.area.getGeometryN(1);
+                }
                 spcRec.spcList.add(spcAdd);
-
-                //По горизонтали
+               
+                //Параметры по горизонтали
                 double angHor = spcAdd.anglHoriz;
                 if ((angHor > 315 && angHor < 360 || angHor >= 0 && angHor < 45) || (angHor > 135 && angHor < 225)) {
                     if (spcAdd.mapParam.get(15010) != null) {
@@ -180,7 +182,7 @@ public class ElemGlass extends ElemSimple {
                         }
                     }
 
-                    //По вертикали
+                    //Параметры по вертикали
                 } else if ((angHor > 225 && angHor < 315) || (angHor > 45 && angHor < 135)) {
                     if (spcAdd.mapParam.get(15010) != null) {
                         if ("Да".equals(spcAdd.mapParam.get(15010)) == false) { //Усекать нижний штапик
