@@ -238,8 +238,18 @@ public final class Bimax {
 
         } else if (prj == 508035) { //СМ.PS (с раскладкой)
             rootGson = new GsonRoot(426804, prj, 1, 99, Type.ARCH, "Rehau / Blitz / 1 ОКНА / Открывание внутрь (ств. Z60)", 1009, 1009, 1009);
-            //КОНЕЦ  2015-07 г.    
+            
+        } else if(prj == 700022) { //ХЕРНЯ 
+            rootGson = new GsonRoot(427866, prj, 1, 8, Type.ARCH, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 43.5))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1300.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1300.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 43.5, 43.5));
 
+            rootGson.addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 243.5, 1300.0, 243.5));
+            rootGson.addElem(new GsonElem(Type.GLASS));            
+            
         } else if (prj == 604009) {
             rootGson = new GsonRoot(427825, prj, 1, 8, Type.ARCH, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 10009, 1009);
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 300.0))
