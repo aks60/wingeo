@@ -156,6 +156,60 @@ public class UGeo {
     }
 
     //Обводка полигона, работает быстро. При вырождении полигона теряются p.z
+    public static Polygon bufferUnion(Geometry str, ArrayCom<? extends Com5t> list, Map<Double, Double> hm) {
+        try {
+            List<Geometry> geoList = new ArrayList();
+            List<Coordinate> arcStr = new ArrayList<Coordinate>(),
+                    arcTop = new ArrayList<Coordinate>(),
+                    arcBot = new ArrayList<Coordinate>();
+
+            Coordinate[] coo = str.getCoordinates();
+            for (int i = 1; i < coo.length; i++) {
+
+                Com5t e1 = list.get(coo[i - 1].z);
+                Com5t e2 = list.get(coo[i].z);
+                LineSegment seg1a = new LineSegm(coo[i - 1], coo[i], coo[i - 1].z);
+                LineSegment seg1b = seg1a.offset(-hm.get(e1.id));
+
+                if (e1.h() != null && e2.h() != null) {
+                    LineSegment seg2a = new LineSegm(coo[i], coo[i + 1], coo[i].z);
+                    LineSegment seg2b = seg2a.offset(-hm.get(e2.id));
+                    Coordinate cross = seg2b.intersection(seg1b);
+                    arcTop.add(seg2a.p0);
+                    arcBot.add(cross);
+
+                } else if (e1.h() == null) {
+                    Polygon ls = gf.createPolygon(new Coordinate[]{seg1a.p0, seg1a.p1, seg1b.p1, seg1b.p0, seg1a.p0});
+                    geoList.add(ls);
+                }
+            }
+            Geometry arcGeo = gf.createLineString();
+            if (arcBot.isEmpty() == false) {
+                Collections.reverse(arcBot);
+                arcStr.addAll(arcBot);
+                arcStr.addAll(arcTop);
+                arcStr.add(arcStr.get(0));
+                arcGeo = gf.createPolygon(arcStr.toArray(new Coordinate[0]));
+            }
+            GeometryCollection partsGeom = gf.createGeometryCollection(GeometryFactory.toGeometryArray(geoList));
+            Geometry buffer = partsGeom.union().union(arcGeo);
+
+            LinearRing ring = ((Polygon) buffer).getInteriorRingN(0);
+            Polygon poly = (Polygon) gf.createPolygon(ring).norm();
+            Coordinate cor[] = poly.getCoordinates();
+            for (int i = 0; i < cor.length - 1; ++i) {
+                cor[i].z = coo[i].z;
+            }
+            cor[cor.length - 1].z = cor[0].z;
+            return gf.createPolygon(cor);
+            //return (Polygon) arcGeo;
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.bufferUnion() " + e);
+            return gf.createPolygon();
+        }
+    }
+    
     public static Polygon bufferUnion(Geometry str, ArrayCom<? extends Com5t> list, double amend) {
         try {
             Map<Double, Double> hm = new HashMap();
@@ -207,6 +261,7 @@ public class UGeo {
             }
             cor[cor.length - 1].z = cor[0].z;
             return gf.createPolygon(cor);
+            //return (Polygon) arcGeo;
 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.bufferUnion() " + e);

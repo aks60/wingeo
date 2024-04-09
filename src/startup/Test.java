@@ -33,6 +33,7 @@ import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
@@ -433,17 +434,17 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        draw6();
+        //draw6();
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
     public void paintComp(Graphics g) {
 
         Graphics2D gc2d = (Graphics2D) g;
-        //gc2d.translate(-2, -800);
-        //gc2d.scale(4, 4);
-        gc2d.translate(10, -10);
-        gc2d.scale(.4, .4);
+        gc2d.translate(-2, -800);
+        gc2d.scale(4, 4);
+        //gc2d.translate(10, -10);
+        //gc2d.scale(.4, .4);
 
         if (mlin != null) {
             gc2d.setColor(Color.BLUE);
@@ -525,6 +526,19 @@ public class Test {
         Coordinate coo3[] = geo3.getCoordinates();
         Coordinate coo4[] = geo4.getCoordinates();
         Coordinate coo5[] = geo5.getCoordinates();
+
+        double ang1 = Math.toDegrees(Angle.angleBetween(coo5[coo5.length - 2], coo5[0], coo5[1]));
+        System.out.println(ang1);
+
+        double r1 = 854.16 - 63 + 21; //внешний радиус штапика
+        double h1 = 342 - 84 + 42 + 21 - 63 + 21;
+        double w1 = Math.sqrt((2 * r1 * h1) - (h1 * h1)); //длина нижней стороны штапика
+        double r2 = r1 - 25.5; //внутренний радиус
+        double h2 = h1 - 2 * 25.5;
+        double w2 = Math.sqrt((2 * r2 * h2) - (h2 * h2)); //длина верхней стороны штапика
+        double ang2 = Math.toDegrees(Math.atan(25.5 / (w1 - w2))); //угол реза
+        double width = (2 * w1);
+        System.out.println(ang2 + "  " + width);
 
         mlin = gf.createMultiLineString(new LineString[]{geo1});
         mpol = geo5;

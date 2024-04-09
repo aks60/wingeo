@@ -92,8 +92,16 @@ public class ElemGlass extends ElemSimple {
     @Override
     public void setLocation() {
         ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
-        Geometry areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, 0); //полигон по фальяу для прорисовки
-        this.area = areaFalz; //полигон по фальяу для прорисовки
+            Map<Double, Double> hm = new HashMap();
+            for (Com5t el : list) {
+                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+                hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - rec.getDbl(eArtikl.size_falz));
+            }        
+        Geometry areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон по фальцу для прорисовки и рассчёта штапиков...
+        this.area = areaFalz;
+        if(id == 6) {
+            new Test().mpol = areaFalz;
+        }
     }
 
     //Главная спецификация    
@@ -113,10 +121,10 @@ public class ElemGlass extends ElemSimple {
                 Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
                 hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + gzazo);
             }
-            Polygon glass = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);
-            this.area = gf.createMultiPolygon(new Polygon[]{glass, (Polygon) this.area});
+            Polygon areaGlass = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm); //полигон стеклопакета
+            this.area = gf.createMultiPolygon(new Polygon[]{areaGlass, (Polygon) this.area});
 
-            Envelope env = this.area.getGeometryN(0).getEnvelopeInternal();
+            Envelope env = areaGlass.getGeometryN(0).getEnvelopeInternal();
             spcRec.width = env.getWidth();
             spcRec.height = env.getHeight();
 
