@@ -29,13 +29,13 @@ public class Scene extends javax.swing.JPanel {
     private void initComponents() {
 
         Tooll = new javax.swing.JPanel();
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(10, 8), new java.awt.Dimension(0, 32767));
         btnSave = new javax.swing.JButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(10, 8), new java.awt.Dimension(0, 32767));
         btnMovUp = new javax.swing.JButton();
         btnMovDo = new javax.swing.JButton();
         btnMovLe = new javax.swing.JButton();
         btnMovRi = new javax.swing.JButton();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(10, 8), new java.awt.Dimension(0, 32767));
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 4, 0, 0));
         setName(""); // NOI18N
@@ -47,7 +47,6 @@ public class Scene extends javax.swing.JPanel {
         Tooll.setMinimumSize(new java.awt.Dimension(20, 20));
         Tooll.setPreferredSize(new java.awt.Dimension(29, 300));
         Tooll.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 0));
-        Tooll.add(filler2);
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c036.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
@@ -135,6 +134,7 @@ public class Scene extends javax.swing.JPanel {
             }
         });
         Tooll.add(btnMovRi);
+        Tooll.add(filler2);
 
         add(Tooll, java.awt.BorderLayout.WEST);
     }// </editor-fold>//GEN-END:initComponents

@@ -68,7 +68,7 @@ public abstract class ElemSimple extends Com5t {
             if (this.area != null && passMask[1] > 0) {
                 LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                 int key = evt.getKeyCode();
-                double anglHor = UGeo.anglHor(this);
+                //double anglHor = UGeo.anglHor(this);
                 double dxy = (timer.isRunning() == true) ? 0.14 + winc.scale : 0.1 * winc.scale;
                 double X = 0, Y = 0, dX = 0, dY = 0;
 
