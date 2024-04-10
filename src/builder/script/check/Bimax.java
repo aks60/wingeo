@@ -195,7 +195,25 @@ public final class Bimax {
             rootGson.addElem(new GsonElem(Type.IMPOST, 650.0, 0.0, 650.0, 1400.0));
             rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="ARCH">             
+// <editor-fold defaultstate="collapsed" desc="ARCH">  
+            
+        } else if(prj == 499391) { //ХЕРНЯ 
+            rootGson = new GsonRoot(417938, prj, 1, 37, Type.ARCH, "Rehau / Delight / 1 ОКНА", 1009, 1009, 1009);
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 659.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1500.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1450.0, 1500.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1450.0, 659.0, 659.0));
+
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 659.0, 1450.0, 659.0));
+            GsonElem area = rootGson.addArea(new GsonElem(Type.AREA));
+
+            area.addArea(new GsonElem(Type.STVORKA, "{typeOpen:1, sysfurnID:2745}"))
+                    .addElem(new GsonElem(Type.GLASS));
+            area.addElem(new GsonElem(Type.IMPOST, 725.0, 659.0, 725.0, 1500.0));
+            area.addArea(new GsonElem(Type.STVORKA, "{typeOpen:4, sysfurnID:2744}"))
+                    .addElem(new GsonElem(Type.GLASS));   
+            
         } else if (prj == 508908) {
             rootGson = new GsonRoot(427696, prj, 1, 17, Type.ARCH, "KBE / KBE 58 / 3 НЕПРЯМОУГОЛЬНЫЕ ОКНА/ДВЕРИ / АРКИ", 1009, 10010, 10000);
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 300.0))
@@ -237,18 +255,7 @@ public final class Bimax {
             rootGson = new GsonRoot(426766, prj, 1, 198, Type.ARCH, "Montblanc / Eco / 1 ОКНА", 1009, 1009, 1009);
 
         } else if (prj == 508035) { //СМ.PS (с раскладкой)
-            rootGson = new GsonRoot(426804, prj, 1, 99, Type.ARCH, "Rehau / Blitz / 1 ОКНА / Открывание внутрь (ств. Z60)", 1009, 1009, 1009);
-            
-        } else if(prj == 700022) { //ХЕРНЯ 
-            rootGson = new GsonRoot(427866, prj, 1, 8, Type.ARCH, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 1009, 1009);
-            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 43.5))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1300.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1300.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 43.5, 43.5));
-
-            rootGson.addElem(new GsonElem(Type.GLASS));
-            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 243.5, 1300.0, 243.5));
-            rootGson.addElem(new GsonElem(Type.GLASS));            
+            rootGson = new GsonRoot(426804, prj, 1, 99, Type.ARCH, "Rehau / Blitz / 1 ОКНА / Открывание внутрь (ств. Z60)", 1009, 1009, 1009);         
             
         } else if (prj == 604009) {
             rootGson = new GsonRoot(427825, prj, 1, 8, Type.ARCH, "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)", 1009, 10009, 1009);

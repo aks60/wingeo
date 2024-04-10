@@ -100,7 +100,7 @@ public class ElemGlass extends ElemSimple {
         Geometry areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон по фальцу для прорисовки и рассчёта штапиков...
         this.area = areaFalz;
         if(id == 6) {
-            new Test().mpol = areaFalz;
+            //new Test().mpol = areaFalz;
         }
     }
 
