@@ -206,8 +206,8 @@ public class PSCompare extends javax.swing.JFrame {
             }
             //=== Таблица 6 ===
             Vector vectorData = new Vector();
-            Vector vectorColumn = new Vector(List.of("PUNIC", "PNUMB", "ONUMB", "ONAME", "PDATE", "BPICT"));
-            ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, b.pdate, a.bpict from listord a, listprj b "
+            Vector vectorColumn = new Vector(List.of("PUNIC", "PNUMB", "ONUMB", "ONAME", "OLENG", "OHEIG", "PDATE", "BPICT"));
+            ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, a.oleng, a.oheig, b.pdate, a.bpict from listord a, listprj b "
                     + "where a.punic = b.punic and b.pdate > '01.06.2005' and b.pdate < '01.01.2024' order by b.pdate");
 //            ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, b.pdate, a.bpict from listord a, listprj b where a.punic = b.punic and b.punic in "
 //                    + "(412463, 427595, 427597, 427761, 427817, 427818 ,427819, 427820, 427840, 427838, 427842, 427848, 427851, 427852, 427858, 427872, 427422, 427565, "
@@ -220,6 +220,8 @@ public class PSCompare extends javax.swing.JFrame {
                     vectorRec.add(rs.getObject("PNUMB"));
                     vectorRec.add(rs.getObject("ONUMB"));
                     vectorRec.add(rs.getObject("ONAME"));
+                    vectorRec.add(rs.getObject("OLENG"));
+                    vectorRec.add(rs.getObject("OHEIG"));                    
                     vectorRec.add(rs.getObject("PDATE"));
                     try {
                         Blob blob = rs.getBlob("BPICT");
@@ -239,7 +241,7 @@ public class PSCompare extends javax.swing.JFrame {
             }
             DefaultTableModel model = new DefaultTableModel(vectorData, vectorColumn) {
                 public Class getColumnClass(int column) {
-                    return (column == 5) ? ImageIcon.class : Object.class;
+                    return (column == 7) ? ImageIcon.class : Object.class;
                     //return Object.class;
                 }
             };
@@ -420,8 +422,8 @@ public class PSCompare extends javax.swing.JFrame {
 
             //=== Таблица 6 ===
             Vector vectorData = new Vector();
-            Vector vectorColumn = new Vector(List.of("PUNIC", "PNUMB", "ONUMB", "ONAME", "PDATE", "BPICT"));
-            rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, b.pdate, a.bpict from listord a, listprj b "
+            Vector vectorColumn = new Vector(List.of("PUNIC", "PNUMB", "ONUMB", "ONAME", "OLENG", "OHEIG", "PDATE", "BPICT"));
+            rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, a.oleng, a.oheig, b.pdate, a.bpict from listord a, listprj b "
                     + "where  a.punic = b.punic and a.punic = " + txt19.getText() + " and a.onumb = " + txt20.getText() + " order by b.pnumb");
             if (rs.isLast() == false) {
                 while (rs.next()) {
@@ -430,6 +432,8 @@ public class PSCompare extends javax.swing.JFrame {
                     vectorRec.add(rs.getObject("PNUMB"));
                     vectorRec.add(rs.getObject("ONUMB"));
                     vectorRec.add(rs.getObject("ONAME"));
+                    vectorRec.add(rs.getObject("OLENG"));
+                    vectorRec.add(rs.getObject("OHEIG"));
                     vectorRec.add(rs.getObject("PDATE"));
                     try {
                         Blob blob = rs.getBlob("BPICT");
@@ -449,7 +453,7 @@ public class PSCompare extends javax.swing.JFrame {
             }
             DefaultTableModel model = new DefaultTableModel(vectorData, vectorColumn) {
                 public Class getColumnClass(int column) {
-                    return (column == 5) ? ImageIcon.class : Object.class;
+                    return (column == 7) ? ImageIcon.class : Object.class;
                     //return Object.class;
                 }
             };
@@ -1044,11 +1048,11 @@ public class PSCompare extends javax.swing.JFrame {
 
         tab6.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Номер проекта", "Номер заказа", "Имя заказа", "Рисунок"
+                "ID", "Номер проекта", "Номер заказа", "Имя заказа", "Ширина", "Высота", "Рисунок"
             }
         ));
         tab6.setFillsViewportHeight(true);

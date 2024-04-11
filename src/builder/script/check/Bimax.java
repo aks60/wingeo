@@ -197,20 +197,20 @@ public final class Bimax {
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="ARCH">  
             
-        } else if(prj == 499391) { //ХЕРНЯ 
+        } else if(prj == 499391) { //PS - удалены артикулы
             rootGson = new GsonRoot(417938, prj, 1, 37, Type.ARCH, "Rehau / Delight / 1 ОКНА", 1009, 1009, 1009);
-            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 659.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1500.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 1450.0, 1500.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 1450.0, 659.0, 659.0));
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 490.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1990.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1450.0, 1990.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1450.0, 490.0, 490.0));
 
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 659.0, 1450.0, 659.0));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 490.01, 1450.0, 490.01));
             GsonElem area = rootGson.addArea(new GsonElem(Type.AREA));
 
             area.addArea(new GsonElem(Type.STVORKA, "{typeOpen:1, sysfurnID:2745}"))
                     .addElem(new GsonElem(Type.GLASS));
-            area.addElem(new GsonElem(Type.IMPOST, 725.0, 659.0, 725.0, 1500.0));
+            area.addElem(new GsonElem(Type.IMPOST, 725.0, 490.01, 725.0, 1990.0));
             area.addArea(new GsonElem(Type.STVORKA, "{typeOpen:4, sysfurnID:2744}"))
                     .addElem(new GsonElem(Type.GLASS));   
             
