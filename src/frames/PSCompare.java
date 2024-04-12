@@ -249,6 +249,8 @@ public class PSCompare extends javax.swing.JFrame {
             tab6.getColumnModel().getColumn(0).setMaxWidth(80);
             tab6.getColumnModel().getColumn(1).setMaxWidth(80);
             tab6.getColumnModel().getColumn(2).setMaxWidth(80);
+            tab6.getColumnModel().getColumn(4).setMaxWidth(80);
+            tab6.getColumnModel().getColumn(5).setMaxWidth(80);
             rs.close();
         } catch (SQLException e) {
             System.err.println("Ошибка: DBCompare.loadingTab4().  " + e);
@@ -461,6 +463,8 @@ public class PSCompare extends javax.swing.JFrame {
             tab6.getColumnModel().getColumn(0).setMaxWidth(80);
             tab6.getColumnModel().getColumn(1).setMaxWidth(80);
             tab6.getColumnModel().getColumn(2).setMaxWidth(80);
+            tab6.getColumnModel().getColumn(4).setMaxWidth(80);
+            tab6.getColumnModel().getColumn(5).setMaxWidth(80);
             rs.close();
 
             //=== Таблица 7 ===
