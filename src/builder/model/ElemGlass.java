@@ -92,14 +92,14 @@ public class ElemGlass extends ElemSimple {
     @Override
     public void setLocation() {
         ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
-            Map<Double, Double> hm = new HashMap();
-            for (Com5t el : list) {
-                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-                hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - 25.5);//rec.getDbl(eArtikl.size_falz));
-            }        
+        Map<Double, Double> hm = new HashMap();
+        for (Com5t el : list) {
+            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+            hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - 25.5);//rec.getDbl(eArtikl.size_falz));
+        }
         Geometry areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон по фальцу для прорисовки и рассчёта штапиков...
         this.area = areaFalz;
-        if(id == 6) {
+        if (id == 6) {
             //new Test().mpol = areaFalz;
         }
     }
@@ -147,19 +147,30 @@ public class ElemGlass extends ElemSimple {
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
-                Coordinate coo[] = this.area.getGeometryN(1).getCoordinates();
+                Geometry areaHt = this.area.getGeometryN(1);
+                Coordinate coo[] = areaHt.getCoordinates();
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
                 spcAdd.anglHoriz = UGeo.anglHor(frameGlass); //угол к горизонту 
 
                 //Арка
                 if (frameGlass.h() != null) {
-                    spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1])) / 2;
+                    LineSegment s1a = UGeo.getSegment(areaHt, coo.length - 2);
+                    LineSegment s2a = UGeo.getSegment(areaHt, 0);
+                    LineSegment s1b = s1a.offset(-spcAdd.height);
+                    LineSegment s2b = s2a.offset(-spcAdd.height);
+                    Coordinate cross = s1b.lineIntersection(s2b);
+                    double hpt = s2a.p0.distance(cross);
+                    spcAdd.anglCut0 = Math.toDegrees(Math.asin(spcAdd.height / hpt));
+
                     for (int i = coo.length - 2; i > 0; i--) {
                         if (coo[i].z != frameGlass.id) {
-                            LineSegment s1 = UGeo.getSegment(this.area.getGeometryN(1), i - 1);
-                            LineSegment s2 = UGeo.getSegment(this.area.getGeometryN(1), i);
-                            LineSegment s3 = UGeo.getSegment(this.area.getGeometryN(1), i + 1);                           
-                            spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(s1.p0, s1.p1, s2.p1)) / 2;
+                            s1a = UGeo.getSegment(areaHt, i - 1);
+                            s2a = UGeo.getSegment(areaHt, i);
+                            s1b = s1a.offset(-spcAdd.height);
+                            s2b = s2a.offset(-spcAdd.height);
+                            cross = s1b.lineIntersection(s2b);
+                            hpt = s2a.p0.distance(cross);
+                            spcAdd.anglCut1 = Math.toDegrees(Math.asin(spcAdd.height / hpt));
                             break;
                         }
                     }
@@ -167,16 +178,20 @@ public class ElemGlass extends ElemSimple {
                         if (coo[i - 1].z == frameGlass.id) {
                             spcAdd.width += coo[i - 1].distance(coo[i]);
                         }
-                    } 
-                    
+                    }
+
                     //Остальное
                 } else {
-                    LineSegment s1 = UGeo.getSegment(this.area.getGeometryN(1), sideGlass - 1);
-                    LineSegment s2 = UGeo.getSegment(this.area.getGeometryN(1), sideGlass);
-                    LineSegment s3 = UGeo.getSegment(this.area.getGeometryN(1), sideGlass + 1);
-                    spcAdd.anglCut0 = Math.toDegrees(Angle.angleBetween(s1.p0, s1.p1, s2.p0)) / 2;
-                    spcAdd.anglCut1 = Math.toDegrees(Angle.angleBetween(s2.p0, s2.p1, s3.p1)) / 2;
-                    spcAdd.width += s2.getLength() + 2 * gzazo;
+                    int index1 = (sideGlass == 0) ?coo.length - 2 : sideGlass , index2 = sideGlass;
+                    LineSegment s1a = UGeo.getSegment(areaHt, index1);
+                    LineSegment s2a = UGeo.getSegment(areaHt, index2);
+                    LineSegment s1b = s1a.offset(-spcAdd.height);
+                    LineSegment s2b = s2a.offset(-spcAdd.height);
+                    Coordinate cross = s1b.lineIntersection(s2b);
+                    double hpt = s2a.p0.distance(cross);
+                    spcAdd.anglCut0 = Math.toDegrees(Math.asin(spcAdd.height / hpt));
+
+                    spcAdd.width += s2a.getLength() + 2 * gzazo;
                 }
 
                 if (id == 6) {
