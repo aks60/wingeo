@@ -62,18 +62,16 @@ public class SpcFilling extends Cal5e {
             //List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(winc.root.frames);  //список рам конструкции
 
             ArrayCom<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
-            Coordinate[] coo = elemGlass.area.getGeometryN(0).getCoordinates();
-            if (elemGlass.area.getGeometryN(0).getEnvelopeInternal().getMaxY() <= coo[0].y) {
+            Coordinate[] coo = ((ElemGlass) elemGlass).areaFalz.getCoordinates();
+            if (((ElemGlass) elemGlass).areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
                 coo[0].z = coo[1].z;
                 coo[2].z = coo[coo.length - 2].z;
                 coo[coo.length - 1].z = coo[1].z;               
             }
             Set<Double> hs = new LinkedHashSet();
-            elemGlass.area.setUserData(hs);
-            List.of(elemGlass.area.getCoordinates()).forEach(p -> hs.add(p.z));
-            //if (elemGlass.id == 6) {
-                //new Test().mpol = elemGlass.area.getGeometryN(0);
-            //}
+            ((ElemGlass) elemGlass).areaFalz.setUserData(hs);
+            List.of(((ElemGlass) elemGlass).areaFalz.getCoordinates()).forEach(p -> hs.add(p.z));
+
             //Цикл по сторонам стеклопакета
             Double arr[] = hs.toArray(new Double[0]);
             for (int indexSegm = 0; indexSegm < arr.length; indexSegm++) {

@@ -32,6 +32,8 @@ import startup.Test;
 
 public class ElemGlass extends ElemSimple {
 
+    public Geometry areaStap = null;
+    public Geometry areaFalz = null;
     public double radius = 0; //радиус стекла
     public double gzazo = 0; //зазор между фальцем и стеклопакетом 
     public HashMap<Integer, Double> axisMap = new HashMap<Integer, Double>(); //размер от оси до стеклопакета
@@ -97,11 +99,7 @@ public class ElemGlass extends ElemSimple {
             Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
             hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - 25.5);//rec.getDbl(eArtikl.size_falz));
         }
-        Geometry areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон по фальцу для прорисовки и рассчёта штапиков...
-        this.area = areaFalz;
-        if (id == 6) {
-            //new Test().mpol = areaFalz;
-        }
+        this.areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон по фальцу для прорисовки
     }
 
     //Главная спецификация    
@@ -121,10 +119,9 @@ public class ElemGlass extends ElemSimple {
                 Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
                 hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + gzazo);
             }
-            Polygon areaGlass = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm); //полигон стеклопакета
-            this.area = gf.createMultiPolygon(new Polygon[]{areaGlass, (Polygon) this.area});
+            this.area = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm); //полигон стеклопакета
 
-            Envelope env = areaGlass.getGeometryN(0).getEnvelopeInternal();
+            Envelope env = this.area.getGeometryN(0).getEnvelopeInternal();
             spcRec.width = env.getWidth();
             spcRec.height = env.getHeight();
 
@@ -147,33 +144,44 @@ public class ElemGlass extends ElemSimple {
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
-                Geometry areaHt = this.area.getGeometryN(1);
-                Coordinate coo[] = areaHt.getCoordinates();
+                //if (spcAdd.artiklRec.getInt(eArtikl.level2) == 8) {
+                    if (this.areaStap == null) {
+                        ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
+                        Map<Double, Double> hm = new HashMap();
+                        for (Com5t el : list) {
+                            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+                            hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - spcAdd.artiklRec.getInt(eArtikl.height));
+                        }
+                        this.areaStap = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон для рассчёта штапиков...                
+                    }
+               // }
+
+                Coordinate coo[] = this.areaStap.getCoordinates();
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
                 spcAdd.anglHoriz = UGeo.anglHor(frameGlass); //угол к горизонту 
 
                 //Арка
                 if (frameGlass.h() != null) {
-                    LineSegment s1a = UGeo.getSegment(areaHt, coo.length - 2);
-                    LineSegment s2a = UGeo.getSegment(areaHt, 0);
-                    LineSegment s1b = s1a.offset(-spcAdd.height);
-                    LineSegment s2b = s2a.offset(-spcAdd.height);
-                    Coordinate cross = s1b.lineIntersection(s2b);
-                    double hpt = s2a.p0.distance(cross);
-                    spcAdd.anglCut0 = Math.toDegrees(Math.asin(spcAdd.height / hpt));
-
-                    for (int i = coo.length - 2; i > 0; i--) {
-                        if (coo[i].z != frameGlass.id) {
-                            s1a = UGeo.getSegment(areaHt, i - 1);
-                            s2a = UGeo.getSegment(areaHt, i);
-                            s1b = s1a.offset(-spcAdd.height);
-                            s2b = s2a.offset(-spcAdd.height);
-                            cross = s1b.lineIntersection(s2b);
-                            hpt = s2a.p0.distance(cross);
-                            spcAdd.anglCut1 = Math.toDegrees(Math.asin(spcAdd.height / hpt));
-                            break;
-                        }
-                    }
+//                    LineSegment s1a = UGeo.getSegment(this.areaStap, coo.length - 2);
+//                    LineSegment s2a = UGeo.getSegment(this.areaStap, 0);
+//                    LineSegment s1b = s1a.offset(-spcAdd.height);
+//                    LineSegment s2b = s2a.offset(-spcAdd.height);
+//                    Coordinate cross = s1b.lineIntersection(s2b);
+//                    double hpt = s2a.p0.distance(cross);
+//                    spcAdd.anglCut0 = Math.toDegrees(Math.asin(spcAdd.height / hpt));
+//
+//                    for (int i = coo.length - 2; i > 0; i--) {
+//                        if (coo[i].z != frameGlass.id) {
+//                            s1a = UGeo.getSegment(this.areaStap, i - 1);
+//                            s2a = UGeo.getSegment(this.areaStap, i);
+//                            s1b = s1a.offset(-spcAdd.height);
+//                            s2b = s2a.offset(-spcAdd.height);
+//                            cross = s1b.lineIntersection(s2b);
+//                            hpt = s2a.p0.distance(cross);
+//                            spcAdd.anglCut1 = Math.toDegrees(Math.asin(spcAdd.height / hpt));
+//                            break;
+//                        }
+//                    }
                     for (int i = 1; i < coo.length; i++) {
                         if (coo[i - 1].z == frameGlass.id) {
                             spcAdd.width += coo[i - 1].distance(coo[i]);
@@ -182,14 +190,14 @@ public class ElemGlass extends ElemSimple {
 
                     //Остальное
                 } else {
-                    int index1 = (sideGlass == 0) ?coo.length - 2 : sideGlass , index2 = sideGlass;
-                    LineSegment s1a = UGeo.getSegment(areaHt, index1);
-                    LineSegment s2a = UGeo.getSegment(areaHt, index2);
-                    LineSegment s1b = s1a.offset(-spcAdd.height);
-                    LineSegment s2b = s2a.offset(-spcAdd.height);
-                    Coordinate cross = s1b.lineIntersection(s2b);
-                    double hpt = s2a.p0.distance(cross);
-                    spcAdd.anglCut0 = Math.toDegrees(Math.asin(spcAdd.height / hpt));
+                    int index1 = (sideGlass == 0) ? coo.length - 2 : sideGlass, index2 = sideGlass;
+//                    LineSegment s1a = UGeo.getSegment(this.areaStap, index1);
+                    LineSegment s2a = UGeo.getSegment(this.areaStap, index2);
+//                    LineSegment s1b = s1a.offset(-spcAdd.height);
+//                    LineSegment s2b = s2a.offset(-spcAdd.height);
+//                    Coordinate cross = s1b.lineIntersection(s2b);
+//                    double hpt = s2a.p0.distance(cross);
+//                    spcAdd.anglCut0 = Math.toDegrees(Math.asin(spcAdd.height / hpt));
 
                     spcAdd.width += s2a.getLength() + 2 * gzazo;
                 }
@@ -384,7 +392,7 @@ public class ElemGlass extends ElemSimple {
         }
     }
 
-public void addSpecific3(SpcRecord spcAdd) {
+    public void addSpecific3(SpcRecord spcAdd) {
         try {
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
@@ -433,21 +441,21 @@ public void addSpecific3(SpcRecord spcAdd) {
 
                     //Остальное
                 } else {
-                    int index1 = (sideGlass == 0) ?coo.length - 2 : sideGlass - 1;
+                    int index1 = (sideGlass == 0) ? coo.length - 2 : sideGlass - 1;
                     int index3 = (sideGlass == coo.length - 1) ? 0 : sideGlass + 1;
-                    
+
                     LineSegment s1a = UGeo.getSegment(areaHt, index1);
                     LineSegment s2a = UGeo.getSegment(areaHt, sideGlass);
                     LineSegment s3a = UGeo.getSegment(areaHt, index3);
-                    
+
                     LineSegment s1b = s1a.offset(-spcAdd.height);
                     LineSegment s2b = s2a.offset(-spcAdd.height);
                     LineSegment s3b = s3a.offset(-spcAdd.height);
-                    
+
                     Coordinate crosL = s1b.lineIntersection(s2b);
                     double hpt1 = s2a.p0.distance(crosL);
                     spcAdd.anglCut0 = Math.toDegrees(Math.asin(spcAdd.height / hpt1));
-                    
+
                     Coordinate crosR = s2b.lineIntersection(s3b);
                     double hpt2 = s2a.p1.distance(crosR);
                     spcAdd.anglCut1 = Math.toDegrees(Math.asin(spcAdd.height / hpt2));
@@ -509,13 +517,13 @@ public void addSpecific3(SpcRecord spcAdd) {
             System.err.println("Ошибка:ElemGlass.addSpecific()  " + e);
         }
     }
-    
+
     //Линии размерности
     @Override
     public void paint() {
-        if (this.area != null) {
+        if (areaFalz != null) {
             winc.gc2d.setColor(new java.awt.Color(eColor.find(colorID1).getInt(eColor.rgb)));
-            Shape shape = new ShapeWriter().toShape(this.area);
+            Shape shape = new ShapeWriter().toShape(areaFalz);
             winc.gc2d.fill(shape);
         }
     }
