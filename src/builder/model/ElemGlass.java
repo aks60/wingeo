@@ -384,6 +384,132 @@ public class ElemGlass extends ElemSimple {
         }
     }
 
+public void addSpecific3(SpcRecord spcAdd) {
+        try {
+            spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
+            spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
+            spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм         
+            if (TypeArtikl.X502.isType(spcAdd.artiklRec)) {
+                return;  //если стеклопакет сразу выход
+            }
+
+            //Погонные метры.
+            if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
+
+                Geometry areaHt = this.area.getGeometryN(1);
+                Coordinate coo[] = areaHt.getCoordinates();
+                spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
+                spcAdd.anglHoriz = UGeo.anglHor(frameGlass); //угол к горизонту 
+
+                //Арка
+                if (frameGlass.h() != null) {
+                    LineSegment s1a = UGeo.getSegment(areaHt, coo.length - 2);
+                    LineSegment s2a = UGeo.getSegment(areaHt, 0);
+                    LineSegment s1b = s1a.offset(-spcAdd.height);
+                    LineSegment s2b = s2a.offset(-spcAdd.height);
+                    double anglBetw = Math.toDegrees(Angle.angleBetween(s1a.p0, s1a.p1, s2a.p1));
+                    Coordinate cross = s1b.lineIntersection(s2b);
+                    double hpt = s2a.p0.distance(cross);
+                    spcAdd.anglCut0 = anglBetw - Math.toDegrees(Math.asin(spcAdd.height / hpt));
+
+                    for (int i = coo.length - 2; i > 0; i--) {
+                        if (coo[i].z != frameGlass.id) {
+                            s1a = UGeo.getSegment(areaHt, i - 1);
+                            s2a = UGeo.getSegment(areaHt, i);
+                            s1b = s1a.offset(-spcAdd.height);
+                            s2b = s2a.offset(-spcAdd.height);
+                            anglBetw = Math.toDegrees(Angle.angleBetween(s1a.p0, s1a.p1, s2a.p1));
+                            cross = s1b.lineIntersection(s2b);
+                            hpt = s2a.p0.distance(cross);
+                            spcAdd.anglCut1 = anglBetw - Math.toDegrees(Math.asin(spcAdd.height / hpt));
+                            break;
+                        }
+                    }
+                    for (int i = 1; i < coo.length; i++) {
+                        if (coo[i - 1].z == frameGlass.id) {
+                            spcAdd.width += coo[i - 1].distance(coo[i]);
+                        }
+                    }
+
+                    //Остальное
+                } else {
+                    int index1 = (sideGlass == 0) ?coo.length - 2 : sideGlass - 1;
+                    int index3 = (sideGlass == coo.length - 1) ? 0 : sideGlass + 1;
+                    
+                    LineSegment s1a = UGeo.getSegment(areaHt, index1);
+                    LineSegment s2a = UGeo.getSegment(areaHt, sideGlass);
+                    LineSegment s3a = UGeo.getSegment(areaHt, index3);
+                    
+                    LineSegment s1b = s1a.offset(-spcAdd.height);
+                    LineSegment s2b = s2a.offset(-spcAdd.height);
+                    LineSegment s3b = s3a.offset(-spcAdd.height);
+                    
+                    Coordinate crosL = s1b.lineIntersection(s2b);
+                    double hpt1 = s2a.p0.distance(crosL);
+                    spcAdd.anglCut0 = Math.toDegrees(Math.asin(spcAdd.height / hpt1));
+                    
+                    Coordinate crosR = s2b.lineIntersection(s3b);
+                    double hpt2 = s2a.p1.distance(crosR);
+                    spcAdd.anglCut1 = Math.toDegrees(Math.asin(spcAdd.height / hpt2));
+
+                    spcAdd.width += s2a.getLength() + 2 * gzazo;
+                }
+                spcRec.spcList.add(spcAdd);
+
+                //Параметры по горизонтали
+                double angHor = spcAdd.anglHoriz;
+                if ((angHor > 315 && angHor < 360 || angHor >= 0 && angHor < 45) || (angHor > 135 && angHor < 225)) {
+                    if (spcAdd.mapParam.get(15010) != null) {
+                        if ("Нет".equals(spcAdd.mapParam.get(15010)) == false) { //Усекать нижний штапик
+                            spcAdd.width = spcAdd.width - 2 * spcAdd.height;
+                        }
+                    }
+                    if (spcAdd.mapParam.get(15011) != null) {
+                        if ("усекать боковой".equals(spcAdd.mapParam.get(15011))) { //Расчет реза штапика
+                            spcAdd.width = spcAdd.width - 2 * spcAdd.height;
+                        }
+                    }
+
+                    //Параметры по вертикали
+                } else if ((angHor > 225 && angHor < 315) || (angHor > 45 && angHor < 135)) {
+                    if (spcAdd.mapParam.get(15010) != null) {
+                        if ("Да".equals(spcAdd.mapParam.get(15010)) == false) { //Усекать нижний штапик
+                            spcAdd.width = spcAdd.width - 2 * spcAdd.height;
+                        }
+                    }
+                    if (spcAdd.mapParam.get(15011) != null) {
+                        if ("усекать нижний".equals(spcAdd.mapParam.get(15011))) { //Расчет реза штапика
+                            spcAdd.width = spcAdd.width - 2 * spcAdd.height;
+                        }
+                    }
+                }
+                if ("по биссектрисе".equals(spcAdd.mapParam.get(15011))) { //Расчет реза штапика
+                    //
+                }
+                spcAdd.width = UPar.to_12065_15045_25040_34070_39070(spcAdd); //длина мм
+                spcAdd.width = spcAdd.width * UPar.to_12030_15030_25035_34030_39030(spcAdd); //"[ * коэф-т ]"
+                spcAdd.width = spcAdd.width / UPar.to_12040_15031_25036_34040_39040(spcAdd); //"[ / коэф-т ]" 
+
+                //Штуки   
+            } else if (UseUnit.PIE.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
+
+                if (spcAdd.mapParam.get(13014) != null) {
+                    LineSegment s2 = UGeo.getSegment(this.area, sideGlass);
+                    spcAdd.anglHoriz = UGeo.anglHor(s2.p0.x, s2.p0.y, s2.p1.x, s2.p1.y); //угол к горизонту                     
+                    if (UCom.containsNumbJust(spcAdd.mapParam.get(13014), spcAdd.anglHoriz) == true) { //Углы ориентации стороны
+                        spcRec.spcList.add(spcAdd);
+                    }
+                } else {
+                    spcRec.spcList.add(spcAdd);
+                }
+            } else {
+                System.err.println("Элемент не обработан");
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:ElemGlass.addSpecific()  " + e);
+        }
+    }
+    
     //Линии размерности
     @Override
     public void paint() {
