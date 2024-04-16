@@ -121,7 +121,7 @@ public class ElemGlass extends ElemSimple {
             }
             this.area = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm); //полигон стеклопакета
 
-            Envelope env = this.area.getGeometryN(0).getEnvelopeInternal();
+            Envelope env = this.area.getEnvelopeInternal();
             spcRec.width = env.getWidth();
             spcRec.height = env.getHeight();
 

@@ -120,7 +120,7 @@ public class Specifics extends javax.swing.JFrame {
                 sum1 = sum1 + (Double) v.get(indexLast - 1);
                 sum2 = sum2 + (Double) v.get(indexLast - 2);
                 sum9 = sum9 + (Double) v.get(indexLast - 9);
-                sum13 = sum13 + (Double) v.get(indexLast - 13); 
+                sum13 = sum13 + (Double) v.get(indexLast - 13);
             }
             Vector vectorLast = new Vector();
             vectorLast.add(listSpec.size());
@@ -180,6 +180,12 @@ public class Specifics extends javax.swing.JFrame {
         cbx2 = new javax.swing.JComboBox<>();
         btnTest = new javax.swing.JButton();
         btnRefresh = new javax.swing.JButton();
+        btn23 = new javax.swing.JButton();
+        btn24 = new javax.swing.JButton();
+        btn25 = new javax.swing.JButton();
+        btn26 = new javax.swing.JButton();
+        btn27 = new javax.swing.JButton();
+        btn21 = new javax.swing.JButton();
         centr = new javax.swing.JPanel();
         scr1 = new javax.swing.JScrollPane();
         tab1 = new javax.swing.JTable() {
@@ -311,6 +317,72 @@ public class Specifics extends javax.swing.JFrame {
             }
         });
 
+        btn23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c023.gif"))); // NOI18N
+        btn23.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
+        btn23.setFocusable(false);
+        btn23.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn23.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btn23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn23mnKits(evt);
+            }
+        });
+
+        btn24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c024.gif"))); // NOI18N
+        btn24.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
+        btn24.setFocusable(false);
+        btn24.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn24.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btn24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn24mnJoining(evt);
+            }
+        });
+
+        btn25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c025.gif"))); // NOI18N
+        btn25.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
+        btn25.setFocusable(false);
+        btn25.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn25.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btn25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn25mnElement(evt);
+            }
+        });
+
+        btn26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c026.gif"))); // NOI18N
+        btn26.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
+        btn26.setFocusable(false);
+        btn26.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn26.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btn26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn26mnGlass(evt);
+            }
+        });
+
+        btn27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c027.gif"))); // NOI18N
+        btn27.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
+        btn27.setFocusable(false);
+        btn27.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn27.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btn27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn27mnFurnityra(evt);
+            }
+        });
+
+        btn21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c016.gif"))); // NOI18N
+        btn21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
+        btn21.setFocusable(false);
+        btn21.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn21.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btn21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn21mnSpecif(evt);
+            }
+        });
+
         javax.swing.GroupLayout northLayout = new javax.swing.GroupLayout(north);
         north.setLayout(northLayout);
         northLayout.setHorizontalGroup(
@@ -326,7 +398,19 @@ public class Specifics extends javax.swing.JFrame {
                 .addComponent(cbx2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(cbx1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 307, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btn23)
+                .addGap(0, 0, 0)
+                .addComponent(btn24)
+                .addGap(0, 0, 0)
+                .addComponent(btn25)
+                .addGap(0, 0, 0)
+                .addComponent(btn26)
+                .addGap(0, 0, 0)
+                .addComponent(btn27)
+                .addGap(0, 0, 0)
+                .addComponent(btn21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -347,9 +431,16 @@ public class Specifics extends javax.swing.JFrame {
                     .addComponent(btnFind2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(northLayout.createSequentialGroup()
-                        .addGroup(northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbx1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbx2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbx1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbx2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btn23, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn24, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn25, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn26, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn27, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn21, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -554,8 +645,42 @@ public class Specifics extends javax.swing.JFrame {
         UGui.setSelectedIndex(tab1, index);
     }//GEN-LAST:event_btnRefresh
 
+    private void btn23mnKits(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn23mnKits
+
+    }//GEN-LAST:event_btn23mnKits
+
+    private void btn24mnJoining(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn24mnJoining
+        List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec -> "СОЕ".equals(rec.place.substring(0, 3))).collect(toList());
+        loadingTab1(listSpec);
+    }//GEN-LAST:event_btn24mnJoining
+
+    private void btn25mnElement(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn25mnElement
+        List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec -> "ВСТ".equals(rec.place.substring(0, 3))).collect(toList());
+        loadingTab1(listSpec);
+    }//GEN-LAST:event_btn25mnElement
+
+    private void btn26mnGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn26mnGlass
+        List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec -> "ЗАП".equals(rec.place.substring(0, 3))).collect(toList());
+        loadingTab1(listSpec);
+    }//GEN-LAST:event_btn26mnGlass
+
+    private void btn27mnFurnityra(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn27mnFurnityra
+        List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec -> "ФУР".equals(rec.place.substring(0, 3))).collect(toList());
+        loadingTab1(listSpec);
+    }//GEN-LAST:event_btn27mnFurnityra
+
+    private void btn21mnSpecif(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn21mnSpecif
+        loadingTab1(winc.listSpec);
+    }//GEN-LAST:event_btn21mnSpecif
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code">     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn21;
+    private javax.swing.JButton btn23;
+    private javax.swing.JButton btn24;
+    private javax.swing.JButton btn25;
+    private javax.swing.JButton btn26;
+    private javax.swing.JButton btn27;
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnFind1;
     private javax.swing.JButton btnFind2;
@@ -576,10 +701,10 @@ public class Specifics extends javax.swing.JFrame {
 // </editor-fold> 
     public void initElements() {
         new FrameToFile(this, btnClose);
-       
+
         filterTable = new TableFieldFilter(4, tab1);
         south.add(filterTable, 0);
-        filterTable.getTxt().grabFocus();        
+        filterTable.getTxt().grabFocus();
 
         TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tab1.getModel());
         tab1.setRowSorter(sorter);
@@ -627,7 +752,7 @@ public class Specifics extends javax.swing.JFrame {
 
         });
 
-        tab1.getTableHeader().setFont(frames.UGui.getFont(0,0));
+        tab1.getTableHeader().setFont(frames.UGui.getFont(0, 0));
         TableColumnModel cm = tab1.getColumnModel();
         ColumnGroup angl = new ColumnGroup("Угол");
         angl.add(cm.getColumn(12));
@@ -643,5 +768,6 @@ public class Specifics extends javax.swing.JFrame {
         header.addColumnGroup(sebe);
         header.addColumnGroup(angl);
         header.addColumnGroup(cost);
+        cbx1.setVisible(false);
     }
 }
