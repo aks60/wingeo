@@ -1,5 +1,6 @@
 package builder.model;
 
+import builder.making.SpcRecord;
 import static builder.model.Com5t.gf;
 import common.ArrayCom;
 import common.LineSegm;
@@ -67,12 +68,25 @@ public class UGeo {
     }
 
     //Угол реза
-    public static double angCut(Coordinate c1, Coordinate c2, Coordinate c3, double delta) {
-        LineSegment seg1 = new LineSegment(c1, c2);
-        LineSegment seg2 = new LineSegment(c2, c3);
-        Coordinate c4 = seg1.offset(delta).lineIntersection(seg2.offset(delta));
-        LineSegment seg3 = new LineSegment(c2, c4);
-        return Math.toDegrees(Math.asin(delta / seg3.getLength()));
+    public static double anglCut(SpcRecord spcAdd, Geometry area, int index1, int index2, char direction) {
+        LineSegment s1a = UGeo.getSegment(area, index1);
+        LineSegment s2a = UGeo.getSegment(area, index2);
+        LineSegment s1b = s1a.offset(-spcAdd.height);
+        LineSegment s2b = s2a.offset(-spcAdd.height);
+        Coordinate cross = s1b.intersection(s2b);
+        while (cross == null) {
+            if (direction == '-') {
+                s1a = UGeo.getSegment(area, --index1);
+                s1b = s1a.offset(-spcAdd.height);
+                cross = s1b.intersection(s2b);
+            } else {
+                s2a = UGeo.getSegment(area, ++index2);
+                s2b = s2a.offset(-spcAdd.height);
+                cross = s1b.intersection(s2b);
+            }
+        }
+        double gip = s2a.p0.distance(cross);
+        return Math.toDegrees(Math.asin(spcAdd.height / gip));
     }
 
     //Угол неориентированный неомежду профилями
@@ -572,5 +586,13 @@ public class UGeo {
         }
     }
 
+    //Угол реза
+    public static double angCut(Coordinate c1, Coordinate c2, Coordinate c3, double delta) {
+        LineSegment seg1 = new LineSegment(c1, c2);
+        LineSegment seg2 = new LineSegment(c2, c3);
+        Coordinate c4 = seg1.offset(delta).lineIntersection(seg2.offset(delta));
+        LineSegment seg3 = new LineSegment(c2, c4);
+        return Math.toDegrees(Math.asin(delta / seg3.getLength()));
+    }
 // </editor-fold>    
 }

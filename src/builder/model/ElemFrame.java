@@ -16,6 +16,7 @@ import enums.Type;
 import enums.TypeArtikl;
 import enums.UseSide;
 import java.awt.Shape;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
@@ -24,7 +25,6 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
-import startup.Test;
 
 public class ElemFrame extends ElemSimple {
 
@@ -133,12 +133,12 @@ public class ElemFrame extends ElemSimple {
                 spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
                 spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 5], coo[coo.length - 4], coo[coo.length - 3]));
             } else {
-                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
+                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));             
                 LineSegment seg = new LineSegment();
-                for (int i = 1; i < coo.length; i++) {
-                    seg.setCoordinates(coo[i - 1], coo[i]);
+                for (int j = 1; j < coo.length; j++) {
+                    seg.setCoordinates(coo[j - 1], coo[j]);
                     if (seg.getLength() > this.artiklRecAn.getDbl(eArtikl.height)) {
-                        spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[i - 2], coo[i - 1], coo[i]));
+                        spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[j - 2], coo[j - 1], coo[j]));
                         break;
                     }
                 }           

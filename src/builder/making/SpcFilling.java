@@ -77,8 +77,8 @@ public class SpcFilling extends Cal5e {
             for (int indexSegm = 0; indexSegm < arr.length; indexSegm++) {
 
                 ElemGlass elGlass = (ElemGlass) elemGlass;
-                elGlass.sideGlass = indexSegm; //индекс стороны стеклопакета 
-                elGlass.frameGlass = listFrame.get(arr[indexSegm]);
+                elGlass.sideglass = indexSegm; //индекс стороны стеклопакета 
+                elGlass.elemglass = listFrame.get(arr[indexSegm]);
 
                 //Цикл по группам заполнений
                 for (Record glasgrpRec : eGlasgrp.findAll()) {
@@ -87,7 +87,7 @@ public class SpcFilling extends Cal5e {
                         //Цикл по профилям в группах заполнений
                         List<Record> glasprofList = eGlasprof.find(glasgrpRec.getInt(eGlasgrp.id)); //список профилей в группе заполнений
                         for (Record glasprofRec : glasprofList) {
-                            if (elGlass.frameGlass.artiklRecAn.getInt(eArtikl.id) == glasprofRec.getInt(eGlasprof.artikl_id)) { //если артикулы совпали
+                            if (elGlass.elemglass.artiklRecAn.getInt(eArtikl.id) == glasprofRec.getInt(eGlasprof.artikl_id)) { //если артикулы совпали
                                 if (List.of(1, 2, 3, 4).contains(glasprofRec.getInt(eGlasprof.inside))) {  //внутреннее заполнение допустимо
 
                                     //ФИЛЬТР вариантов, параметры накапливаются в спецификации элемента
@@ -107,6 +107,8 @@ public class SpcFilling extends Cal5e {
                     }
                 }
             }
+            //((ElemGlass) elemGlass).frameGlass = null;
+            
         } catch (Exception e) {
             System.err.println("Ошибка:Filling.calc() " + e);
         } finally {

@@ -160,7 +160,7 @@ public class Test {
     public void paincomp(Graphics g) {
 
         Graphics2D gc2d = (Graphics2D) g;
-        gc2d.translate(20, -840);
+        gc2d.translate(-200, -1440);
         gc2d.scale(4, 4);
         //gc2d.translate(10, -10);
         //gc2d.scale(.4, .4);
