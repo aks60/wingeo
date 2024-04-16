@@ -100,6 +100,7 @@ public class ElemGlass extends ElemSimple {
             hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - 25.5);//rec.getDbl(eArtikl.size_falz));
         }
         this.areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон по фальцу для прорисовки и рассчёта штапик...
+        this.areaSht = this.areaFalz; 
     }
 
     //Главная спецификация    
@@ -144,16 +145,16 @@ public class ElemGlass extends ElemSimple {
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
                 
-                if (spcAdd.artiklRec.getInt(eArtikl.level2) == 8) {
-                    double heightSht = spcAdd.artiklRec.getDbl(eArtikl.height);
-                    ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
-                    Map<Double, Double> hm = new HashMap();
-                    for (Com5t el : list) {
-                        Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-                        hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - heightSht);
-                    }
-                    this.areaSht = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон для рассчёта штапик...    
-                }
+//                if (spcAdd.artiklRec.getInt(eArtikl.level2) == 8) {
+//                    double heightSht = spcAdd.artiklRec.getDbl(eArtikl.height);
+//                    ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
+//                    Map<Double, Double> hm = new HashMap();
+//                    for (Com5t el : list) {
+//                        Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+//                        hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - heightSht);
+//                    }
+//                    this.areaSht = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон для рассчёта штапик...    
+//                }
                 Coordinate coo[] = this.areaSht.getCoordinates();
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
                 spcAdd.anglHoriz = UGeo.anglHor(elemglass); //угол к горизонту 
