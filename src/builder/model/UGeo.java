@@ -85,7 +85,7 @@ public class UGeo {
                 cross = s1b.intersection(s2b);
             }
         }
-        double gip = s2a.p0.distance(cross);
+        double gip = (direction == '-') ? s2a.p0.distance(cross) : s1a.p1.distance(cross);
         return Math.toDegrees(Math.asin(spcAdd.height / gip));
     }
 
@@ -463,8 +463,8 @@ public class UGeo {
         return list;
     }
 
-    public static int getIndex(Geometry p, double id) {
-        Coordinate coo[] = p.getGeometryN(0).getCoordinates();
+    public static int getIndex(Geometry geo, double id) {
+        Coordinate coo[] = geo.getGeometryN(0).getCoordinates();
         for (int i = 0; i < coo.length - 1; i++) {
             if (coo[i].z == id) {
                 return i;
@@ -474,6 +474,17 @@ public class UGeo {
         //throw new Exception("Ошибка:UGeo.getIndex()");
         System.err.println("Ошибка:UGeo.getIndex()");
         return -1;
+    }
+
+    public static int getIndex(Coordinate[] coo, int index) {
+        
+        if (index > coo.length - 1) {
+            return index - coo.length;
+        }
+        if (index < 0) {
+            return coo.length + index - 1;
+        }
+        return index;
     }
 
     public static LineSegment normalize(LineSegment segm) {
