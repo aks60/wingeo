@@ -1132,6 +1132,14 @@ public class PSCompare extends javax.swing.JFrame {
                     App.Artikles.createFrame(PSCompare.this, record);
                 }
             });
+        } else if (tabb.getSelectedIndex() == 3) {
+            Object code = tab4.getValueAt(UGui.getIndexRec(tab4), 3);
+            Record record = eArtikl.find2(code.toString());
+            ProgressBar.create(this, new ListenerFrame() {
+                public void actionRequest(Object obj) {
+                    App.Artikles.createFrame(PSCompare.this, record);
+                }
+            });
         }
     }//GEN-LAST:event_btnFindArtikl
 

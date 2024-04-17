@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
@@ -29,6 +28,7 @@ import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
+import startup.Test;
 
 public class ElemGlass extends ElemSimple {
 
@@ -169,6 +169,8 @@ public class ElemGlass extends ElemSimple {
                             spcAdd.width += coo[j - 1].distance(coo[j]);
                         }
                     }
+                    System.out.println(coo[0].distance(coo[1]));
+                    //new Test().mpol = this.areaSht;
 
                     //Остальное
                 } else {

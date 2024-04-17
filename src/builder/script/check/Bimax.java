@@ -197,6 +197,23 @@ public final class Bimax {
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="ARCH">  
             
+        } else if(prj == 498590) { 
+            rootGson = new GsonRoot(417116, prj, 1, 37, Type.ARCH, "KBE / KBE 76 / 1 ОКНА", 1009, 1009, 1009);
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 590.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1760.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1670.0, 1760.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1670.0, 590.0, 590.0));
+
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 619.001, 1670.0, 619.001));
+            GsonElem area = rootGson.addArea(new GsonElem(Type.AREA));
+
+            area.addArea(new GsonElem(Type.STVORKA, "{typeOpen:1, sysfurnID:2745}"))
+                    .addElem(new GsonElem(Type.GLASS));
+            area.addElem(new GsonElem(Type.IMPOST, 835.0, 619.001, 835.0, 1760.0));
+            area.addArea(new GsonElem(Type.STVORKA, "{typeOpen:4, sysfurnID:2744}"))
+                    .addElem(new GsonElem(Type.GLASS));  
+            
         } else if(prj == 499391) { //PS - удалены артикулы
             rootGson = new GsonRoot(417938, prj, 1, 37, Type.ARCH, "Rehau / Delight / 1 ОКНА", 1009, 1009, 1009);
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 490.0))
