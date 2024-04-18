@@ -170,7 +170,7 @@ public class ElemGlass extends ElemSimple {
                         }
                     }
                     System.out.println(coo[0].distance(coo[1]));
-                    //new Test().mpol = this.areaSht;
+                   // new Test().mpol = this.areaSht;
 
                     //Остальное
                 } else {

@@ -25,7 +25,7 @@ public class Canvas extends javax.swing.JPanel {
 
     public static double translate[] = {2, 2};
     public Wincalc winc = null;
-    public static double margin = 100; //для размерных линий 
+    public static double margin = 180; //для размерных линий 
 
     public Canvas() {
         initComponents();
