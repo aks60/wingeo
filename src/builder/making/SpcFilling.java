@@ -132,6 +132,7 @@ public class SpcFilling extends Cal5e {
                     if (UColor.colorFromProduct(spcAdd)) {
                         elemGlass.addSpecific(spcAdd);
                     }
+                    break;
                 }
             }
         } catch (Exception e) {

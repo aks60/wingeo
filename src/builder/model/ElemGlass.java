@@ -100,7 +100,7 @@ public class ElemGlass extends ElemSimple {
             hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - 25.5);//rec.getDbl(eArtikl.size_falz));
         }
         this.areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон по фальцу для прорисовки и рассчёта штапик...
-        this.areaSht = this.areaFalz; 
+        this.areaSht = this.areaFalz;
     }
 
     //Главная спецификация    
@@ -135,6 +135,9 @@ public class ElemGlass extends ElemSimple {
     @Override
     public void addSpecific(SpcRecord spcAdd) {
         try {
+            if (spcAdd.artiklRec.getInt(eArtikl.level2) == 8) {
+                System.out.println("");
+            }
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм         
@@ -144,17 +147,7 @@ public class ElemGlass extends ElemSimple {
 
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
-                
-//                if (spcAdd.artiklRec.getInt(eArtikl.level2) == 8) {
-//                    double heightSht = spcAdd.artiklRec.getDbl(eArtikl.height);
-//                    ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
-//                    Map<Double, Double> hm = new HashMap();
-//                    for (Com5t el : list) {
-//                        Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-//                        hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - heightSht);
-//                    }
-//                    this.areaSht = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон для рассчёта штапик...    
-//                }
+
                 Coordinate coo[] = this.areaSht.getCoordinates();
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
                 spcAdd.anglHoriz = UGeo.anglHor(elemglass); //угол к горизонту 
@@ -169,8 +162,8 @@ public class ElemGlass extends ElemSimple {
                             spcAdd.width += coo[j - 1].distance(coo[j]);
                         }
                     }
-                    System.out.println(coo[0].distance(coo[1]));
-                   // new Test().mpol = this.areaSht;
+                    //System.out.println(coo[0].distance(coo[1]));
+                    new Test().mpol = this.areaSht;
 
                     //Остальное
                 } else {
