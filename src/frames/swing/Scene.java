@@ -1,11 +1,11 @@
 package frames.swing;
 
 import builder.Wincalc;
-import common.listener.ListenerReload;
 import dataset.Query;
 import domain.eSysprod;
 import javax.swing.JButton;
 import javax.swing.Timer;
+import common.listener.ListenerReload;
 
 public class Scene extends javax.swing.JPanel {
 
@@ -144,7 +144,7 @@ public class Scene extends javax.swing.JPanel {
     private void btnMove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMove
         timer.setRepeats(false);
         JButton btn = (JButton) evt.getSource();
-        double dxy = (timer.isRunning() == true) ? 3 : 1;        
+        double dxy = (timer.isRunning() == true) ? 3 : 1;
         if (btn == btnMovDo) {
             winc.gson.translate(winc.gson, .0, dxy, winc.scale);
         } else if (btn == btnMovUp) {
@@ -160,9 +160,7 @@ public class Scene extends javax.swing.JPanel {
     }//GEN-LAST:event_btnMove
 
     private void btnSave(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave
-        listenerReload.reload();
-        //Query.listOpenTable.forEach(q -> q.execsql());
-        //eSysprod.query().execsql();
+        listenerReload.reload().execsql();
     }//GEN-LAST:event_btnSave
 
 

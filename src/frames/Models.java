@@ -22,7 +22,6 @@ import common.eProp;
 import frames.swing.Canvas;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
-import common.listener.ListenerReload;
 import dataset.Conn;
 import frames.swing.DefTableModel;
 import frames.swing.Scene;
@@ -36,6 +35,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import common.listener.ListenerReload;
 
 public final class Models extends javax.swing.JFrame implements ListenerFrame<Object, Object>, ListenerReload {
 
@@ -121,7 +121,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }
 
     @Override
-    public void reload() {
+    public Query reload() {
         try {
             int index = UGui.getIndexRec(tab1);
             if (index != -1) {
@@ -138,6 +138,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         } catch (Exception e) {
             System.err.println("Ошибка:Models.reload() " + e);
         }
+        return null;
     }
 
     private Wincalc wincalc() {

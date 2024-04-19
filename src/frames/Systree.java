@@ -85,7 +85,6 @@ import com.google.gson.Gson;
 import common.ArrayCom;
 import domain.eJoinvar;
 import enums.TypeJoin;
-import common.listener.ListenerReload;
 import domain.eElement;
 import domain.eGroups;
 import enums.TypeGrup;
@@ -103,6 +102,7 @@ import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import startup.Test;
+import common.listener.ListenerReload;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload {
 
@@ -818,7 +818,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     }
 
     @Override
-    public void reload() {
+    public Query reload() {
         try {
             Wincalc win = wincalc();
             int index = UGui.getIndexRec(tab5);
@@ -831,10 +831,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 sysprodRec.set(eSysprod.values().length, win);
                 canvas.draw();
                 selectionTree2();
-            }
+            }                        
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.reload() " + e);
         }
+        return qSysprod;
     }
 
     private void setText(JTextField comp, Object txt) {

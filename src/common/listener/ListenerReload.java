@@ -1,6 +1,8 @@
 package common.listener;
 
+import dataset.Query;
+
 public interface ListenerReload {
 
-    public void reload();
+    public Query reload();
 }

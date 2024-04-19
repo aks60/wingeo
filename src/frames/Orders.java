@@ -40,7 +40,6 @@ import common.eProp;
 import common.listener.ListenerFrame;
 import common.listener.ListenerObject;
 import common.listener.ListenerRecord;
-import common.listener.ListenerReload;
 import dataset.Conn;
 import domain.eArtdet;
 import domain.eArtikl;
@@ -82,8 +81,6 @@ import frames.swing.Scene;
 import frames.swing.TableFieldFilter;
 import java.awt.CardLayout;
 import java.awt.Component;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Collections;
 import java.util.List;
@@ -105,6 +102,7 @@ import report.HtmlOfOffer;
 import report.HtmlOfSmeta;
 import report.HtmlOfSpecific;
 import startup.App;
+import common.listener.ListenerReload;
 
 public class Orders extends javax.swing.JFrame implements ListenerReload {
 
@@ -713,7 +711,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
     }
 
     @Override
-    public void reload() {
+    public Query reload() {
         Wincalc win = wincalc();
         int index = UGui.getIndexRec(tab2);
         if (index != -1) {
@@ -726,6 +724,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
             canvas.draw();
             selectionTree();
         }
+        return qPrjprod;
     }
 
     private void setText(JTextComponent comp, String txt) {
