@@ -3,6 +3,7 @@ package frames.swing;
 import builder.Wincalc;
 import common.listener.ListenerReload;
 import dataset.Query;
+import domain.eSysprod;
 import javax.swing.JButton;
 import javax.swing.Timer;
 
@@ -160,7 +161,8 @@ public class Scene extends javax.swing.JPanel {
 
     private void btnSave(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave
         listenerReload.reload();
-        Query.listOpenTable.forEach(q -> q.execsql());
+        //Query.listOpenTable.forEach(q -> q.execsql());
+        //eSysprod.query().execsql();
     }//GEN-LAST:event_btnSave
 
 
