@@ -33,12 +33,12 @@ import startup.Test;
 public class ElemGlass extends ElemSimple {
 
     public Geometry areaFalz = null;
-    public Geometry areaSht = null;
     public double radius = 0; //радиус стекла
     public double gzazo = 0; //зазор между фальцем и стеклопакетом 
     public HashMap<Integer, Double> axisMap = new HashMap<Integer, Double>(); //размер от оси до стеклопакета
-    public ElemSimple elemglass = null;
+    public ElemSimple frameglass = null;
     public int sideglass = 0;
+    public String dy = null;
 
     public Record rasclRec = eArtikl.virtualRec(); //раскладка
     public int rasclColor = -3; //цвет раскладки
@@ -97,12 +97,12 @@ public class ElemGlass extends ElemSimple {
         Map<Double, Double> hm = new HashMap();
         for (Com5t el : list) {
             Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-            hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - 25.5);//rec.getDbl(eArtikl.size_falz));
+            hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - rec.getDbl(eArtikl.size_falz));
         }
-        this.areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон по фальцу для прорисовки и рассчёта штапик...
-        //Coordinate[] coo = this.areaFalz.getCoordinates();
-        //int index = IntStream.range(1, coo.length).filter(j -> coo[j].z == elemglass.id).findFirst().getAsInt();
-        this.areaSht = this.areaFalz;
+        this.areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон по фальцу для прорисовки и рассчёта штапик...        
+        if(owner.area.getNumPoints() > Com5t.MAXSIDE) {
+            dy = UCom.format(this.areaFalz.getCoordinate().y - owner.area.getCoordinate().y, 1);
+        }               
     }
 
     //Главная спецификация    
@@ -137,9 +137,6 @@ public class ElemGlass extends ElemSimple {
     @Override
     public void addSpecific(SpcRecord spcAdd) {
         try {
-            if (spcAdd.artiklRec.getInt(eArtikl.level2) == 8) {
-                //System.out.println("");
-            }
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм         
@@ -150,23 +147,21 @@ public class ElemGlass extends ElemSimple {
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
-                Coordinate coo[] = this.areaSht.getCoordinates();
+                Coordinate coo[] = this.areaFalz.getCoordinates();
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
-                spcAdd.anglHoriz = UGeo.anglHor(elemglass); //угол к горизонту 
+                spcAdd.anglHoriz = UGeo.anglHor(frameglass); //угол к горизонту 
 
                 //Арка
-                if (elemglass.h() != null) {
-                    int index = IntStream.range(1, coo.length).filter(j -> coo[j].z == elemglass.id).findFirst().getAsInt();
-                    spcAdd.anglCut0 = UGeo.anglCut(spcAdd, this.areaSht, coo.length - 2, 0, '-');
-                    spcAdd.anglCut1 = UGeo.anglCut(spcAdd, this.areaSht, index - 2, index - 1, '+');
+                if (frameglass.h() != null) {
+                    int index = IntStream.range(1, coo.length).filter(j -> coo[j].z == frameglass.id).findFirst().getAsInt();
+                    spcAdd.anglCut0 = UGeo.anglCut(spcAdd, this.areaFalz, coo.length - 2, 0, '-');
+                    spcAdd.anglCut1 = UGeo.anglCut(spcAdd, this.areaFalz, index - 2, index - 1, '+');
                     for (int j = 1; j < coo.length; j++) {
-                        if (coo[j - 1].z == elemglass.id) {
+                        if (coo[j - 1].z == frameglass.id) {
                             spcAdd.width += coo[j - 1].distance(coo[j]);
                         }
                     }
-//                    System.out.println(coo[0].distance(coo[1]));
-//                    System.out.println(coo[0].z);
-//                    new Test().mpol = this.areaSht;
+                    //System.out.println(coo[0].z);
 
                     //Остальное
                 } else {
@@ -174,8 +169,8 @@ public class ElemGlass extends ElemSimple {
                     Coordinate[] c2 = {coo[sideglass], coo[UGeo.getIndex(coo, sideglass + 1)], coo[UGeo.getIndex(coo, sideglass + 2)]};
                     double angBetween0 = Math.toDegrees(Angle.angleBetween(c1[0], c1[1], c1[2]));
                     double angBetween1 = Math.toDegrees(Angle.angleBetween(c2[0], c2[1], c2[2]));
-                    spcAdd.anglCut0 = angBetween0 - UGeo.anglCut(spcAdd, this.areaSht, UGeo.getIndex(coo, sideglass - 1), sideglass, '-');
-                    spcAdd.anglCut1 = angBetween1 - UGeo.anglCut(spcAdd, this.areaSht, UGeo.getIndex(coo, sideglass), UGeo.getIndex(coo, sideglass + 1), '+');
+                    spcAdd.anglCut0 = angBetween0 - UGeo.anglCut(spcAdd, this.areaFalz, UGeo.getIndex(coo, sideglass - 1), sideglass, '-');
+                    spcAdd.anglCut1 = angBetween1 - UGeo.anglCut(spcAdd, this.areaFalz, UGeo.getIndex(coo, sideglass), UGeo.getIndex(coo, sideglass + 1), '+');
                     spcAdd.width += coo[sideglass].distance(coo[sideglass + 1]) + 2 * gzazo; //Тут надо учитывать наклон штапика
                 }
 
@@ -219,264 +214,7 @@ public class ElemGlass extends ElemSimple {
             } else if (UseUnit.PIE.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
                 if (spcAdd.mapParam.get(13014) != null) {
-                    LineSegment s2 = UGeo.getSegment(this.areaSht, sideglass);
-                    spcAdd.anglHoriz = UGeo.anglHor(s2.p0.x, s2.p0.y, s2.p1.x, s2.p1.y); //угол к горизонту                     
-                    if (UCom.containsNumbJust(spcAdd.mapParam.get(13014), spcAdd.anglHoriz) == true) { //Углы ориентации стороны
-                        spcRec.spcList.add(spcAdd);
-                    }
-                } else {
-                    spcRec.spcList.add(spcAdd);
-                }
-            } else {
-                System.err.println("Элемент не обработан");
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:ElemGlass.addSpecific()  " + e);
-        }
-    }
-
-    public void addSpecific2(SpcRecord spcAdd) {
-        try {
-            spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
-            spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
-            spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм         
-            if (TypeArtikl.X502.isType(spcAdd.artiklRec)) {
-                return;  //если стеклопакет сразу выход
-            }
-
-            //Погонные метры.
-            if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
-
-                //Создание геометрии штапиков
-                if (this.area.getNumGeometries() == 1) {
-                    ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
-                    double gap = spcAdd.variantRec.getDbl(eGlasgrp.gap);
-                    Polygon geo = UGeo.bufferUnion(owner.area.getGeometryN(0), list, gap); //полигон для прорисовки
-                    this.area = gf.createMultiPolygon(new Polygon[]{(Polygon) this.area, geo});
-                    //new Test().mpol = this.area;
-                }
-
-                //double arcID = winc.listElem.stream().filter(e -> e.h() != null).findFirst().get().id;
-                Coordinate coo[] = owner.area.getGeometryN(0).getCoordinates();
-                Coordinate co2[] = owner.area.getGeometryN(1).getCoordinates();
-                double angHor1 = UGeo.anglHor(winc.listElem.get(coo[sideglass].z));
-
-                Set hs = (Set) this.area.getUserData();
-                spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
-
-                //Арка
-                if (this.area.getCoordinates().length > MAXSIDE) {
-                    double arcID = winc.listElem.stream().filter(e -> e.h() != null).findFirst().get().id;
-                    double angBetween0 = 0;//Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[index1], coo[1]));
-                    double angBetween1 = 0;//Math.toDegrees(Angle.angleBetween(coo[index2 - 2], coo[index2 - 1], coo[index2]));
-
-                    //Основание арки
-                    if (this.elemglass.h() == null) {
-//                        LineSegment s1 = new LineSegment(coo[coo.length - 2], coo[0]);
-//                        LineSegment s2 = new LineSegment(coo[0], coo[1]);
-//                        LineSegment s3 = new LineSegment(coo[1], coo[2]);
-//                        Coordinate c1 = UGeo.offset(s1, s2, spcAdd.height);
-//                        Coordinate c2 = UGeo.offset(s2, s3, spcAdd.height);
-//                        double length1 = new LineSegment(s2.p0, c1).getLength();
-//                        double length2 = new LineSegment(s2.p1, c2).getLength();
-////                        spcAdd.anglCut0 = angBetween0 - Math.toDegrees(Math.asin(spcAdd.height / length1));
-////                        spcAdd.anglCut1 = angBetween1 - Math.toDegrees(Math.asin(spcAdd.height / length2));
-//                        LineSegment s = new LineSegment(coo[0], coo[1]);
-//                        spcAdd.width += s.getLength() + 2 * gzazo;
-//
-                        //Дуга арки
-                    } else {
-                        spcAdd.anglCut0 = angBetween0;
-                        spcAdd.anglCut1 = angBetween1;
-                        LineSegment s = new LineSegment();
-                        for (int i = 1; i < coo.length; i++) {
-                            if (coo[i - 1].z == this.elemglass.id) {
-                                s.setCoordinates(coo[i - 1], coo[i]);
-                                spcAdd.width += s.getLength();
-                            }
-                        }
-                    }
-
-                    //Остальное
-                } else {
-                    LineSegment s1 = UGeo.getSegment(this.area, sideglass - 1);
-                    LineSegment s2 = UGeo.getSegment(this.area, sideglass);
-                    LineSegment s3 = UGeo.getSegment(this.area, sideglass + 1);
-                    double angBetween0 = Math.toDegrees(Angle.angleBetween(s1.p0, s1.p1, s2.p0));
-                    double angBetween1 = Math.toDegrees(Angle.angleBetween(s2.p0, s2.p1, s3.p1));
-                    spcAdd.anglCut0 = angBetween0 / 2;
-                    spcAdd.anglCut1 = angBetween1 / 2;
-                    spcAdd.anglHoriz = UGeo.anglHor(s2.p0.x, s2.p0.y, s2.p1.x, s2.p1.y); //угол к горизонту 
-                    spcAdd.width += s1.getLength() + 2 * gzazo;
-                }
-
-                spcRec.spcList.add(spcAdd);
-
-                //По горизонтали
-                double angHor = spcAdd.anglHoriz;
-                if ((angHor > 315 && angHor < 360 || angHor >= 0 && angHor < 45) || (angHor > 135 && angHor < 225)) {
-                    if (spcAdd.mapParam.get(15010) != null) {
-                        if ("Нет".equals(spcAdd.mapParam.get(15010)) == false) { //Усекать нижний штапик
-                            spcAdd.width = spcAdd.width - 2 * spcAdd.height;
-                        }
-                    }
-                    if (spcAdd.mapParam.get(15011) != null) {
-                        if ("усекать боковой".equals(spcAdd.mapParam.get(15011))) { //Расчет реза штапика
-                            spcAdd.width = spcAdd.width - 2 * spcAdd.height;
-                        }
-                    }
-
-                    //По вертикали
-                } else if ((angHor > 225 && angHor < 315) || (angHor > 45 && angHor < 135)) {
-                    if (spcAdd.mapParam.get(15010) != null) {
-                        if ("Да".equals(spcAdd.mapParam.get(15010)) == false) { //Усекать нижний штапик
-                            spcAdd.width = spcAdd.width - 2 * spcAdd.height;
-                        }
-                    }
-                    if (spcAdd.mapParam.get(15011) != null) {
-                        if ("усекать нижний".equals(spcAdd.mapParam.get(15011))) { //Расчет реза штапика
-                            spcAdd.width = spcAdd.width - 2 * spcAdd.height;
-                        }
-                    }
-                }
-                if ("по биссектрисе".equals(spcAdd.mapParam.get(15011))) { //Расчет реза штапика
-                    //
-                }
-                spcAdd.width = UPar.to_12065_15045_25040_34070_39070(spcAdd); //длина мм
-                spcAdd.width = spcAdd.width * UPar.to_12030_15030_25035_34030_39030(spcAdd); //"[ * коэф-т ]"
-                spcAdd.width = spcAdd.width / UPar.to_12040_15031_25036_34040_39040(spcAdd); //"[ / коэф-т ]" 
-
-                //Штуки   
-            } else if (UseUnit.PIE.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
-
-                if (spcAdd.mapParam.get(13014) != null) {
-                    LineSegment s2 = UGeo.getSegment(this.area, sideglass);
-                    spcAdd.anglHoriz = UGeo.anglHor(s2.p0.x, s2.p0.y, s2.p1.x, s2.p1.y); //угол к горизонту                     
-                    if (UCom.containsNumbJust(spcAdd.mapParam.get(13014), spcAdd.anglHoriz) == true) { //Углы ориентации стороны
-                        spcRec.spcList.add(spcAdd);
-                    }
-                } else {
-                    spcRec.spcList.add(spcAdd);
-                }
-            } else {
-                System.err.println("Элемент не обработан");
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:ElemGlass.addSpecific()  " + e);
-        }
-    }
-
-    public void addSpecific3(SpcRecord spcAdd) {
-        try {
-            spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
-            spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
-            spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм         
-            if (TypeArtikl.X502.isType(spcAdd.artiklRec)) {
-                return;  //если стеклопакет сразу выход
-            }
-
-            //Погонные метры.
-            if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
-
-                Geometry areaHt = this.area.getGeometryN(1);
-                Coordinate coo[] = areaHt.getCoordinates();
-                spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
-                spcAdd.anglHoriz = UGeo.anglHor(elemglass); //угол к горизонту 
-
-                //Арка
-                if (elemglass.h() != null) {
-                    LineSegment s1a = UGeo.getSegment(areaHt, coo.length - 2);
-                    LineSegment s2a = UGeo.getSegment(areaHt, 0);
-                    LineSegment s1b = s1a.offset(-spcAdd.height);
-                    LineSegment s2b = s2a.offset(-spcAdd.height);
-                    double anglBetw = Math.toDegrees(Angle.angleBetween(s1a.p0, s1a.p1, s2a.p1));
-                    Coordinate cross = s1b.lineIntersection(s2b);
-                    double hpt = s2a.p0.distance(cross);
-                    spcAdd.anglCut0 = anglBetw - Math.toDegrees(Math.asin(spcAdd.height / hpt));
-
-                    for (int i = coo.length - 2; i > 0; i--) {
-                        if (coo[i].z != elemglass.id) {
-                            s1a = UGeo.getSegment(areaHt, i - 1);
-                            s2a = UGeo.getSegment(areaHt, i);
-                            s1b = s1a.offset(-spcAdd.height);
-                            s2b = s2a.offset(-spcAdd.height);
-                            anglBetw = Math.toDegrees(Angle.angleBetween(s1a.p0, s1a.p1, s2a.p1));
-                            cross = s1b.lineIntersection(s2b);
-                            hpt = s2a.p0.distance(cross);
-                            spcAdd.anglCut1 = anglBetw - Math.toDegrees(Math.asin(spcAdd.height / hpt));
-                            break;
-                        }
-                    }
-                    for (int i = 1; i < coo.length; i++) {
-                        if (coo[i - 1].z == elemglass.id) {
-                            spcAdd.width += coo[i - 1].distance(coo[i]);
-                        }
-                    }
-
-                    //Остальное
-                } else {
-                    int index1 = (sideglass == 0) ? coo.length - 2 : sideglass - 1;
-                    int index3 = (sideglass == coo.length - 1) ? 0 : sideglass + 1;
-
-                    LineSegment s1a = UGeo.getSegment(areaHt, index1);
-                    LineSegment s2a = UGeo.getSegment(areaHt, sideglass);
-                    LineSegment s3a = UGeo.getSegment(areaHt, index3);
-
-                    LineSegment s1b = s1a.offset(-spcAdd.height);
-                    LineSegment s2b = s2a.offset(-spcAdd.height);
-                    LineSegment s3b = s3a.offset(-spcAdd.height);
-
-                    Coordinate crosL = s1b.lineIntersection(s2b);
-                    double hpt1 = s2a.p0.distance(crosL);
-                    spcAdd.anglCut0 = Math.toDegrees(Math.asin(spcAdd.height / hpt1));
-
-                    Coordinate crosR = s2b.lineIntersection(s3b);
-                    double hpt2 = s2a.p1.distance(crosR);
-                    spcAdd.anglCut1 = Math.toDegrees(Math.asin(spcAdd.height / hpt2));
-
-                    spcAdd.width += s2a.getLength() + 2 * gzazo;
-                }
-                spcRec.spcList.add(spcAdd);
-
-                //Параметры по горизонтали
-                double angHor = spcAdd.anglHoriz;
-                if ((angHor > 315 && angHor < 360 || angHor >= 0 && angHor < 45) || (angHor > 135 && angHor < 225)) {
-                    if (spcAdd.mapParam.get(15010) != null) {
-                        if ("Нет".equals(spcAdd.mapParam.get(15010)) == false) { //Усекать нижний штапик
-                            spcAdd.width = spcAdd.width - 2 * spcAdd.height;
-                        }
-                    }
-                    if (spcAdd.mapParam.get(15011) != null) {
-                        if ("усекать боковой".equals(spcAdd.mapParam.get(15011))) { //Расчет реза штапика
-                            spcAdd.width = spcAdd.width - 2 * spcAdd.height;
-                        }
-                    }
-
-                    //Параметры по вертикали
-                } else if ((angHor > 225 && angHor < 315) || (angHor > 45 && angHor < 135)) {
-                    if (spcAdd.mapParam.get(15010) != null) {
-                        if ("Да".equals(spcAdd.mapParam.get(15010)) == false) { //Усекать нижний штапик
-                            spcAdd.width = spcAdd.width - 2 * spcAdd.height;
-                        }
-                    }
-                    if (spcAdd.mapParam.get(15011) != null) {
-                        if ("усекать нижний".equals(spcAdd.mapParam.get(15011))) { //Расчет реза штапика
-                            spcAdd.width = spcAdd.width - 2 * spcAdd.height;
-                        }
-                    }
-                }
-                if ("по биссектрисе".equals(spcAdd.mapParam.get(15011))) { //Расчет реза штапика
-                    //
-                }
-                spcAdd.width = UPar.to_12065_15045_25040_34070_39070(spcAdd); //длина мм
-                spcAdd.width = spcAdd.width * UPar.to_12030_15030_25035_34030_39030(spcAdd); //"[ * коэф-т ]"
-                spcAdd.width = spcAdd.width / UPar.to_12040_15031_25036_34040_39040(spcAdd); //"[ / коэф-т ]" 
-
-                //Штуки   
-            } else if (UseUnit.PIE.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
-
-                if (spcAdd.mapParam.get(13014) != null) {
-                    LineSegment s2 = UGeo.getSegment(this.area, sideglass);
+                    LineSegment s2 = UGeo.getSegment(this.areaFalz, sideglass);
                     spcAdd.anglHoriz = UGeo.anglHor(s2.p0.x, s2.p0.y, s2.p1.x, s2.p1.y); //угол к горизонту                     
                     if (UCom.containsNumbJust(spcAdd.mapParam.get(13014), spcAdd.anglHoriz) == true) { //Углы ориентации стороны
                         spcRec.spcList.add(spcAdd);

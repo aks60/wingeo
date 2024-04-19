@@ -68,25 +68,25 @@ public class UGeo {
     }
 
     //Угол реза
-    public static double anglCut(SpcRecord spcAdd, Geometry area, int index1, int index2, char direction) {
+    public static double anglCut(SpcRecord spcRec, Geometry area, int index1, int index2, char direction) {
         LineSegment s1a = UGeo.getSegment(area, index1);
         LineSegment s2a = UGeo.getSegment(area, index2);
-        LineSegment s1b = s1a.offset(-spcAdd.height);
-        LineSegment s2b = s2a.offset(-spcAdd.height);
+        LineSegment s1b = s1a.offset(-spcRec.height);
+        LineSegment s2b = s2a.offset(-spcRec.height);
         Coordinate cross = s1b.intersection(s2b);
         while (cross == null) {
             if (direction == '-') {
                 s1a = UGeo.getSegment(area, --index1);
-                s1b = s1a.offset(-spcAdd.height);
+                s1b = s1a.offset(-spcRec.height);
                 cross = s1b.intersection(s2b);
             } else {
                 s2a = UGeo.getSegment(area, ++index2);
-                s2b = s2a.offset(-spcAdd.height);
+                s2b = s2a.offset(-spcRec.height);
                 cross = s1b.intersection(s2b);
             }
         }
         double gip = (direction == '-') ? s2a.p0.distance(cross) : s1a.p1.distance(cross);
-        return Math.toDegrees(Math.asin(spcAdd.height / gip));
+        return Math.toDegrees(Math.asin(spcRec.height / gip));
     }
 
     //Угол неориентированный неомежду профилями

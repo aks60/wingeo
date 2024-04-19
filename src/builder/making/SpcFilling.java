@@ -78,7 +78,7 @@ public class SpcFilling extends Cal5e {
 
                 ElemGlass elGlass = (ElemGlass) elemGlass;
                 elGlass.sideglass = indexSegm; //индекс стороны стеклопакета 
-                elGlass.elemglass = listFrame.get(arr[indexSegm]);
+                elGlass.frameglass = listFrame.get(arr[indexSegm]);
 
                 //Цикл по группам заполнений
                 for (Record glasgrpRec : eGlasgrp.findAll()) {
@@ -87,7 +87,7 @@ public class SpcFilling extends Cal5e {
                         //Цикл по профилям в группах заполнений
                         List<Record> glasprofList = eGlasprof.find(glasgrpRec.getInt(eGlasgrp.id)); //список профилей в группе заполнений
                         for (Record glasprofRec : glasprofList) {
-                            if (elGlass.elemglass.artiklRecAn.getInt(eArtikl.id) == glasprofRec.getInt(eGlasprof.artikl_id)) { //если артикулы совпали
+                            if (elGlass.frameglass.artiklRecAn.getInt(eArtikl.id) == glasprofRec.getInt(eGlasprof.artikl_id)) { //если артикулы совпали
                                 if (List.of(1, 2, 3, 4).contains(glasprofRec.getInt(eGlasprof.inside))) {  //внутреннее заполнение допустимо
 
                                     //ФИЛЬТР вариантов, параметры накапливаются в спецификации элемента
@@ -131,7 +131,6 @@ public class SpcFilling extends Cal5e {
                     //Подбор текстуры
                     if (UColor.colorFromProduct(spcAdd)) {
                         elemGlass.addSpecific(spcAdd);
-                        break;
                     }
                 }
             }

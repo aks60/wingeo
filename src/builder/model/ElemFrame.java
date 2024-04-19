@@ -19,6 +19,7 @@ import java.awt.Shape;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
@@ -29,7 +30,7 @@ import org.locationtech.jts.geom.Polygon;
 public class ElemFrame extends ElemSimple {
 
     public double radiusArc = 0; //радиус арки
-    public double lengthArc = 0; //длина арки     
+    public double lengthArc = 0; //длина арки  
 
     public ElemFrame(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
         super(winc, id, gson, owner);
@@ -107,6 +108,7 @@ public class ElemFrame extends ElemSimple {
 
                         Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0])); //полигон рамы арки
                         this.area = poly;
+                        Coordinate coo[] = this.area.getCoordinates();                       
 
                     } else { //полигон рамы   
                         this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), c2[i + 1].x, c2[i + 1].y, c2[i].x, c2[i].y);
@@ -114,6 +116,7 @@ public class ElemFrame extends ElemSimple {
                     break;
                 }
             }
+
         } catch (Exception e) {
             System.err.println("Ошибка:ElemFrame.setLocation" + toString() + e);
         }
@@ -134,18 +137,13 @@ public class ElemFrame extends ElemSimple {
                 spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 5], coo[coo.length - 4], coo[coo.length - 3]));
             } else {
                 spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
-                LineSegment seg = new LineSegment();
                 for (int j = 1; j < coo.length; j++) {
-                    seg.setCoordinates(coo[j - 1], coo[j]);
-                    if (seg.getLength() > this.artiklRecAn.getDbl(eArtikl.height)) {
+                    if (coo[j - 1].distance(coo[j]) > this.artiklRecAn.getDbl(eArtikl.height)) {
                         spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[j - 2], coo[j - 1], coo[j]));
                         break;
                     }
                 }
             }
-//            if (this.id == 1.0) {
-//                System.out.println(coo[3].y - coo[0].y);
-//            }
             double prip1 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(spcRec.anglCut0 - 45));
             double prip2 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(spcRec.anglCut1 - 45));
             spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;

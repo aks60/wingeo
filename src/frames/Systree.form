@@ -1041,9 +1041,10 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
+                              <Component id="pan22" alignment="0" pref="309" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="lab33" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
@@ -1059,7 +1060,6 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
-                              <Component id="pan22" alignment="0" pref="309" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
@@ -1441,13 +1441,13 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
+                              <Group type="102" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="lab29" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="txt19" pref="0" max="32767" attributes="0"/>
+                                          <Component id="txt19" pref="184" max="32767" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="btn3" min="-2" max="-2" attributes="0"/>
                                       </Group>
@@ -1497,10 +1497,15 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="btn29" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="lab67" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="spinHor" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="lab67" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="spinHor" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Component id="lab4" alignment="0" min="-2" pref="260" max="-2" attributes="0"/>
+                                          </Group>
                                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -1554,7 +1559,9 @@
                                       <Component id="lab68" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="spinVert" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="0" pref="177" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="lab4" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="153" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -1936,6 +1943,14 @@
                           <Events>
                             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="spinVertStateChanged"/>
                           </Events>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="lab4">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="123"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[260, 18]"/>
+                            </Property>
+                          </Properties>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -2553,7 +2568,7 @@
                                                   <Component id="btn15" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel1" max="-2" attributes="0"/>
+                                                  <Component id="lab71" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="txt46" pref="0" max="32767" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
@@ -2579,7 +2594,7 @@
                                                   <Component id="btn24" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel2" max="-2" attributes="0"/>
+                                                  <Component id="lab3" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="txt58" pref="211" max="32767" attributes="0"/>
                                               </Group>
@@ -2614,11 +2629,11 @@
                                                   <Component id="txt46" alignment="3" min="-2" max="-2" attributes="0"/>
                                                   <Component id="btn23" alignment="3" min="-2" max="-2" attributes="0"/>
                                               </Group>
-                                              <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lab71" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lab3" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="txt58" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
@@ -2649,7 +2664,7 @@
                                     </Property>
                                   </Properties>
                                 </Component>
-                                <Component class="javax.swing.JLabel" name="jLabel1">
+                                <Component class="javax.swing.JLabel" name="lab71">
                                   <Properties>
                                     <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                       <Connection code="frames.UGui.getFont(0,0)" type="code"/>
@@ -2931,7 +2946,7 @@
                                     </Property>
                                   </Properties>
                                 </Component>
-                                <Component class="javax.swing.JLabel" name="jLabel2">
+                                <Component class="javax.swing.JLabel" name="lab3">
                                   <Properties>
                                     <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                       <Connection code="frames.UGui.getFont(0,0)" type="code"/>
@@ -4787,6 +4802,9 @@
                           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
                             <EtchetBorder bevelType="0"/>
                           </Border>
+                        </Property>
+                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[180, 400]"/>
                         </Property>
                       </Properties>
                       <AuxValues>

@@ -190,7 +190,7 @@ public class Wincalc {
             listArea.filter(Type.STVORKA).forEach(e -> e.joining());
 
         } catch (Exception s) {
-            System.err.println("Ошибка:Wincalc.upgrade() " + s);
+            System.err.println("Ошибка:Wincalc.location() " + s);
         }
     }
 

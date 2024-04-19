@@ -104,7 +104,10 @@ public class ElemCross extends ElemSimple {
 
             //Ареа импоста обрезаем areaPadding 
             Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
-            this.area = (Polygon) areaExp.intersection(geo2); //полигон элемента конструкции
+            Polygon areaImp = (Polygon) areaExp.intersection(geo2); //полигон элемента конструкции
+            if(areaImp != null) {
+                this.area = areaImp;
+            }
             //new Test().mpol = this.area;
 
         } catch (Exception e) {
