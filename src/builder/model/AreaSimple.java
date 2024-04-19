@@ -161,10 +161,11 @@ public class AreaSimple extends Com5t {
             List<Double> listVer = new ArrayList<Double>(hsVer);
             Collections.sort(listHor);
             Collections.sort(listVer);
-            int coeff = 12;
+
             Font font = winc.gc2d.getFont(); //размер шрифта (см. canvas)
             AffineTransform orig = winc.gc2d.getTransform();
             Rectangle2D txt2D = font.getStringBounds("999.99", winc.gc2d.getFontRenderContext());
+            winc.gc2d.setFont(new Font(font.getName(), font.getStyle(), font.getSize() + 10));
 
             //По горизонтали
             for (int i = 1; i < listHor.size(); ++i) {
@@ -195,7 +196,7 @@ public class AreaSimple extends Com5t {
                     } else {
                         winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);
                     }
-                    winc.gc2d.setFont(font);
+                    //winc.gc2d.setFont(font);
                     winc.gc2d.setTransform(orig);
                 }
             }
@@ -230,10 +231,11 @@ public class AreaSimple extends Com5t {
                         winc.gc2d.rotate(Math.toRadians(-90), pxy[0], pxy[1]);
                         winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);
                     }
-                    winc.gc2d.setFont(font);
+                    //winc.gc2d.setFont(font);
                     winc.gc2d.setTransform(orig);
                 }
             }
+            winc.gc2d.setFont(font);
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.paint()");

@@ -105,7 +105,7 @@ public class ElemFrame extends ElemSimple {
                         list.addAll(c2a);
                         list.add(c1a.get(0));
 
-                        Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0])); //коробка арки
+                        Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0])); //полигон рамы арки
                         this.area = poly;
 
                     } else { //полигон рамы   
@@ -128,12 +128,12 @@ public class ElemFrame extends ElemSimple {
             spcRec.setColor(colorID1, colorID2, colorID3);
             Coordinate coo[] = this.area.getCoordinates();
 
-            //Углы реза
+            //Углы реза (у рамы всегда 4 вершины)
             if (this.h() == null) {
                 spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
                 spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 5], coo[coo.length - 4], coo[coo.length - 3]));
             } else {
-                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));             
+                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
                 LineSegment seg = new LineSegment();
                 for (int j = 1; j < coo.length; j++) {
                     seg.setCoordinates(coo[j - 1], coo[j]);
@@ -141,8 +141,11 @@ public class ElemFrame extends ElemSimple {
                         spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[j - 2], coo[j - 1], coo[j]));
                         break;
                     }
-                }           
+                }
             }
+//            if (this.id == 1.0) {
+//                System.out.println(coo[3].y - coo[0].y);
+//            }
             double prip1 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(spcRec.anglCut0 - 45));
             double prip2 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(spcRec.anglCut1 - 45));
             spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;

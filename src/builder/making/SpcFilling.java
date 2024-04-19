@@ -131,8 +131,8 @@ public class SpcFilling extends Cal5e {
                     //Подбор текстуры
                     if (UColor.colorFromProduct(spcAdd)) {
                         elemGlass.addSpecific(spcAdd);
+                        break;
                     }
-                    break;
                 }
             }
         } catch (Exception e) {

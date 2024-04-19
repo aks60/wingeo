@@ -100,6 +100,8 @@ public class ElemGlass extends ElemSimple {
             hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - 25.5);//rec.getDbl(eArtikl.size_falz));
         }
         this.areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон по фальцу для прорисовки и рассчёта штапик...
+        //Coordinate[] coo = this.areaFalz.getCoordinates();
+        //int index = IntStream.range(1, coo.length).filter(j -> coo[j].z == elemglass.id).findFirst().getAsInt();
         this.areaSht = this.areaFalz;
     }
 
@@ -136,7 +138,7 @@ public class ElemGlass extends ElemSimple {
     public void addSpecific(SpcRecord spcAdd) {
         try {
             if (spcAdd.artiklRec.getInt(eArtikl.level2) == 8) {
-                System.out.println("");
+                //System.out.println("");
             }
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
@@ -154,16 +156,17 @@ public class ElemGlass extends ElemSimple {
 
                 //Арка
                 if (elemglass.h() != null) {
-                    int index2 = IntStream.range(0, coo.length).filter(j -> coo[j].z == elemglass.id).findFirst().getAsInt();
+                    int index = IntStream.range(1, coo.length).filter(j -> coo[j].z == elemglass.id).findFirst().getAsInt();
                     spcAdd.anglCut0 = UGeo.anglCut(spcAdd, this.areaSht, coo.length - 2, 0, '-');
-                    spcAdd.anglCut1 = UGeo.anglCut(spcAdd, this.areaSht, index2 - 2, index2 - 1, '+');
+                    spcAdd.anglCut1 = UGeo.anglCut(spcAdd, this.areaSht, index - 2, index - 1, '+');
                     for (int j = 1; j < coo.length; j++) {
                         if (coo[j - 1].z == elemglass.id) {
                             spcAdd.width += coo[j - 1].distance(coo[j]);
                         }
                     }
-                    //System.out.println(coo[0].distance(coo[1]));
-                    new Test().mpol = this.areaSht;
+//                    System.out.println(coo[0].distance(coo[1]));
+//                    System.out.println(coo[0].z);
+//                    new Test().mpol = this.areaSht;
 
                     //Остальное
                 } else {
