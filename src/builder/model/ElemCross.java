@@ -127,14 +127,13 @@ public class ElemCross extends ElemSimple {
 
             if (type == Type.IMPOST) {
 
-                Coordinate c[] = this.area.getCoordinates();
-                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(c[c.length - 2], c[0], c[1]));
-                spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(c[c.length - 5], c[c.length - 4], c[c.length - 3]));
+                Coordinate coo[] = this.area.getCoordinates();
+                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
+                spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 5], coo[coo.length - 4], coo[coo.length - 3]));
 
                 //На эскизе заход импоста не показываю, сразу пишу в спецификацию
                 if (winc.syssizRec != null) {
                     double zax = winc.syssizRec.getDbl(eSyssize.zax);
-                    Object o1 = this.layout();
                     if (Layout.VERT == this.layout()) {
                         ElemSimple inTop = joinFlat(Layout.TOP), inBott = joinFlat(Layout.BOTT);
                         spcRec.width = (inBott.y1() - inBott.artiklRec.getDbl(eArtikl.height) + inBott.artiklRec.getDbl(eArtikl.size_centr))

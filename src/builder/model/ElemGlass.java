@@ -171,7 +171,8 @@ public class ElemGlass extends ElemSimple {
                     double angBetween1 = Math.toDegrees(Angle.angleBetween(c2[0], c2[1], c2[2]));
                     spcAdd.anglCut0 = angBetween0 - UGeo.anglCut(spcAdd, this.areaFalz, UGeo.getIndex(coo, sideglass - 1), sideglass, '-');
                     spcAdd.anglCut1 = angBetween1 - UGeo.anglCut(spcAdd, this.areaFalz, UGeo.getIndex(coo, sideglass), UGeo.getIndex(coo, sideglass + 1), '+');
-                    spcAdd.width += coo[sideglass].distance(coo[sideglass + 1]) + 2 * gzazo; //Тут надо учитывать наклон штапика
+//                    spcAdd.width += coo[sideglass].distance(coo[sideglass + 1]) + 2 * gzazo; //Тут надо учитывать наклон штапика
+                    spcAdd.width += coo[sideglass].distance(coo[sideglass + 1]); //Тут надо учитывать наклон штапика
                 }
 
                 spcRec.spcList.add(spcAdd);

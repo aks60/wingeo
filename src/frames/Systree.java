@@ -449,8 +449,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
 
                     //Рама, импост...
                 } else if (List.of(enums.Type.FRAME_SIDE, enums.Type.STVORKA_SIDE, enums.Type.IMPOST,
-                        enums.Type.STOIKA, enums.Type.SHTULP).contains(winNode.com5t().type)) {
-                    ElemFrame elem = (ElemFrame) winNode.com5t();
+                        enums.Type.STOIKA, enums.Type.SHTULP).contains(winNode.com5t().type)) {                    
                     ((CardLayout) pan7.getLayout()).show(pan7, "card13");
                     ((TitledBorder) pan13.getBorder()).setTitle(winNode.toString());
                     setText(txt32, winNode.com5t().artiklRec.getStr(eArtikl.code));
