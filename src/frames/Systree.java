@@ -75,7 +75,6 @@ import builder.making.SpcJoining;
 import builder.making.UColor;
 import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
-import builder.model.ElemFrame;
 import builder.model.ElemGlass;
 import builder.model.ElemJoining;
 import builder.model.ElemMosquit;
@@ -449,7 +448,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
 
                     //Рама, импост...
                 } else if (List.of(enums.Type.FRAME_SIDE, enums.Type.STVORKA_SIDE, enums.Type.IMPOST,
-                        enums.Type.STOIKA, enums.Type.SHTULP).contains(winNode.com5t().type)) {                    
+                        enums.Type.STOIKA, enums.Type.SHTULP).contains(winNode.com5t().type)) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card13");
                     ((TitledBorder) pan13.getBorder()).setTitle(winNode.toString());
                     setText(txt32, winNode.com5t().artiklRec.getStr(eArtikl.code));
@@ -474,7 +473,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     setText(txt51, colorRascl.getStr(eColor.name));
                     spinHor.setValue(((ElemGlass) winNode.com5t()).rasclNumber[0]);
                     spinVert.setValue(((ElemGlass) winNode.com5t()).rasclNumber[1]);
-                    lab4.setText((elem.dy != null) ? "DY = " + elem.dy + " мм" : ""); 
+                    ElemSimple el = winc.listElem.stream().filter(e -> e.type == enums.Type.IMPOST).findFirst().get();
+                    double s1 = el.artiklRec.getDbl(eArtikl.height), s2 = el.artiklRec.getDbl(eArtikl.size_centr),
+                            s3 = el.artiklRec.getDbl(eArtikl.size_falz);
+                    lab4.setText((elem.deltaDY != null) ? "DY: " + s1 + " - " + s2 + " - " + s3 + " + "
+                            + UCom.format(elem.deltaDY, 1) + " = " + UCom.format(s1 - s2 - s3 + elem.deltaDY, 1) + " мм." : "");
 
                     //Створка
                 } else if (winNode.com5t().type == enums.Type.STVORKA) {
@@ -834,7 +837,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                 sysprodRec.set(eSysprod.values().length, win);
                 canvas.draw();
                 selectionTree2();
-            }                        
+            }
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.reload() " + e);
         }
@@ -4302,7 +4305,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             btnInsert(new java.awt.event.ActionEvent(mInsert, -1, ""));
         } else if (evt.getSource() == mDelit) {
             btnDelete(new java.awt.event.ActionEvent(btnDel, -1, ""));
-        }  
+        }
     }//GEN-LAST:event_ppmActionItems
 
     private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked

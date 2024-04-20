@@ -38,7 +38,7 @@ public class ElemGlass extends ElemSimple {
     public HashMap<Integer, Double> axisMap = new HashMap<Integer, Double>(); //размер от оси до стеклопакета
     public ElemSimple frameglass = null;
     public int sideglass = 0;
-    public String dy = null;
+    public Double deltaDY = null;
 
     public Record rasclRec = eArtikl.virtualRec(); //раскладка
     public int rasclColor = -3; //цвет раскладки
@@ -99,10 +99,17 @@ public class ElemGlass extends ElemSimple {
             Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
             hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - rec.getDbl(eArtikl.size_falz));
         }
-        this.areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон по фальцу для прорисовки и рассчёта штапик...        
-        if(owner.area.getNumPoints() > Com5t.MAXSIDE) {
-            dy = UCom.format(this.areaFalz.getCoordinate().y - owner.area.getCoordinate().y, 1);
-        }               
+        this.areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
+        Coordinate[] coo = this.areaFalz.getCoordinates();
+        if (this.areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
+            coo[0].z = coo[1].z;
+            coo[2].z = coo[coo.length - 2].z;
+            coo[coo.length - 1].z = coo[1].z;
+        }
+        if (owner.area.getNumPoints() > Com5t.MAXSIDE) {
+            deltaDY = coo[0].y - owner.area.getCoordinate().y;
+            System.out.println("ФОРМА КОНТУРА = " + coo[0].z);
+        }
     }
 
     //Главная спецификация    
@@ -161,7 +168,6 @@ public class ElemGlass extends ElemSimple {
                             spcAdd.width += coo[j - 1].distance(coo[j]);
                         }
                     }
-                    System.out.println(coo[0].z);
 
                     //Остальное
                 } else {

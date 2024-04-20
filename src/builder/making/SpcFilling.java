@@ -62,12 +62,6 @@ public class SpcFilling extends Cal5e {
             //List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(winc.root.frames);  //список рам конструкции
 
             ArrayCom<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
-            Coordinate[] coo = ((ElemGlass) elemGlass).areaFalz.getCoordinates();
-            if (((ElemGlass) elemGlass).areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
-                coo[0].z = coo[1].z;
-                coo[2].z = coo[coo.length - 2].z;
-                coo[coo.length - 1].z = coo[1].z;               
-            }
             Set<Double> hs = new LinkedHashSet();
             ((ElemGlass) elemGlass).areaFalz.setUserData(hs);
             List.of(((ElemGlass) elemGlass).areaFalz.getCoordinates()).forEach(p -> hs.add(p.z));
