@@ -162,10 +162,10 @@ public class AreaSimple extends Com5t {
             Collections.sort(listHor);
             Collections.sort(listVer);
 
-            Font font = winc.gc2d.getFont(); //размер шрифта (см. canvas)
+            Font font = new Font("Dialog", 0, UCom.scaleFont(winc.scale)); //размер шрифта (см. canvas)
+            winc.gc2d.setFont(font);           
             AffineTransform orig = winc.gc2d.getTransform();
-            Rectangle2D txt2D = font.getStringBounds("999.99", winc.gc2d.getFontRenderContext());
-            winc.gc2d.setFont(new Font(font.getName(), font.getStyle(), font.getSize() + 10));
+            Rectangle2D txt2D = font.getStringBounds("999.99", winc.gc2d.getFontRenderContext());            
 
             //По горизонтали
             for (int i = 1; i < listHor.size(); ++i) {
@@ -188,15 +188,12 @@ public class AreaSimple extends Com5t {
 
                     //Текст на линии
                     double pxy[] = {listHor.get(i - 1) + len + 8, boxRama.getMaxY() + txt2D.getHeight() * .86}; //точка начала текста
-                    if (length < txt2D.getWidth()) {
-
-                        //winc.gc2d.setFont(new Font(font.getName(), font.getStyle(), font.getSize() - font.getSize() / coeff));
+                    if (length < txt2D.getWidth()) {                       
                         pxy[1] = pxy[1] + txt2D.getHeight() / 2;
                         winc.gc2d.drawString(txt, (int) pxy[0], (int) (pxy[1]));
                     } else {
                         winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);
                     }
-                    //winc.gc2d.setFont(font);
                     winc.gc2d.setTransform(orig);
                 }
             }
@@ -223,19 +220,14 @@ public class AreaSimple extends Com5t {
                     //Текст на линии
                     double pxy[] = {boxRama.getMaxX() + txt2D.getHeight() - 6, listVer.get(i) - len}; //точка врашения и начала текста                    
                     if (length < (txt2D.getWidth())) {
-
-                        //winc.gc2d.setFont(new Font(font.getName(), font.getStyle(), font.getSize() - font.getSize() / coeff));
-                        //winc.gc2d.drawString(txt, (int) (pxy[0] - txt2D.getHeight() / 2), (int) (pxy[1] - txt2D.getHeight() / 2));
                         winc.gc2d.drawString(txt, (int) (pxy[0] + 4), (int) (pxy[1] - txt2D.getHeight() / 2));
                     } else {
                         winc.gc2d.rotate(Math.toRadians(-90), pxy[0], pxy[1]);
                         winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);
                     }
-                    //winc.gc2d.setFont(font);
                     winc.gc2d.setTransform(orig);
                 }
             }
-            winc.gc2d.setFont(font);
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.paint()");

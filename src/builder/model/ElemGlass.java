@@ -161,7 +161,7 @@ public class ElemGlass extends ElemSimple {
                             spcAdd.width += coo[j - 1].distance(coo[j]);
                         }
                     }
-                    //System.out.println(coo[0].z);
+                    System.out.println(coo[0].z);
 
                     //Остальное
                 } else {

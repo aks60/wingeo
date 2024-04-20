@@ -446,5 +446,17 @@ public class UCom {
                 return 0;
             }
         }).get().getInt(field);
-    }
+    } 
+
+    public static int scaleFont(double scale) {
+        if (scale > .44) {
+            return 50;
+        } else if (scale > .24) {
+            return 55;
+        } else if (scale > .18) {
+            return 62;
+        } else {
+            return 64;
+        }
+    }           
 }

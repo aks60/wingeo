@@ -1,10 +1,10 @@
 package frames.swing;
 
 import builder.Wincalc;
+import common.UCom;
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
@@ -12,13 +12,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Envelope;
 
 public class Canvas extends javax.swing.JPanel {
@@ -98,7 +96,7 @@ public class Canvas extends javax.swing.JPanel {
         super.paintComponent(g);
         if (winc != null) {            
             winc.gc2d = (Graphics2D) g;
-            winc.gc2d.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, resizeFont()));
+            winc.gc2d.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, UCom.scaleFont(winc.scale)));
             winc.gc2d.setColor(getBackground());
             winc.gc2d.setStroke(new BasicStroke(2)); //толщина линии
             winc.gc2d.translate(translate[0], translate[1]);
@@ -131,18 +129,6 @@ public class Canvas extends javax.swing.JPanel {
         } catch (Exception e) {
             System.err.println("Canvas.createImageIcon() " + e);
             return new ImageIcon();
-        }
-    }
-
-    private int resizeFont() {
-        if (winc.scale > .44) {
-            return 28;
-        } else if (winc.scale > .24) {
-            return 43;
-        } else if (winc.scale > .18) {
-            return 55;
-        } else {
-            return 64;
         }
     }
     
