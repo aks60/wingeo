@@ -108,7 +108,7 @@ public class ElemGlass extends ElemSimple {
         }
         if (owner.area.getNumPoints() > Com5t.MAXSIDE) {
             deltaDY = coo[0].y - owner.area.getCoordinate().y;
-            System.out.println("ФОРМА КОНТУРА = " + coo[0].z);
+            //System.out.println("ФОРМА КОНТУРА = " + coo[0].z);
         }
     }
 
