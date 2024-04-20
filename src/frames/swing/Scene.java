@@ -144,7 +144,7 @@ public class Scene extends javax.swing.JPanel {
     private void btnMove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMove
         timer.setRepeats(false);
         JButton btn = (JButton) evt.getSource();
-        double dxy = (timer.isRunning() == true) ? 3 : 1;
+        double dxy = (timer.isRunning() == true) ? 2 : 1;
         if (btn == btnMovDo) {
             winc.gson.translate(winc.gson, .0, dxy, winc.scale);
         } else if (btn == btnMovUp) {

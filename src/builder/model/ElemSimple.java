@@ -123,7 +123,6 @@ public abstract class ElemSimple extends Com5t {
             timer.start();
         };
         ListenerMouse mousePressed = (evt) -> {
-
             if (this.area != null) {
                 pointPress = evt.getPoint();
                 Coordinate wincPress = new Coordinate((evt.getX() - Canvas.translate[0]) / winc.scale, (evt.getY() - Canvas.translate[1]) / winc.scale);
@@ -151,6 +150,7 @@ public abstract class ElemSimple extends Com5t {
                     passMask = UCom.getArr(0, 0);
                     root.listenerPassEdit = null;
                 }
+                winc.canvas.requestFocusInWindow();
                 winc.canvas.repaint();
             }
         };
