@@ -100,7 +100,7 @@ public class ElemGlass extends ElemSimple {
             hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - rec.getDbl(eArtikl.size_falz));
         }
         this.areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
-        Coordinate[] coo = this.areaFalz.getCoordinates();
+        Coordinate[] coo = this.areaFalz.getGeometryN(0).getCoordinates();
         if (this.areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
             coo[0].z = coo[1].z;
             coo[2].z = coo[coo.length - 2].z;

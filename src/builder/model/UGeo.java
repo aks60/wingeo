@@ -209,6 +209,8 @@ public class UGeo {
             GeometryCollection partsGeom = gf.createGeometryCollection(GeometryFactory.toGeometryArray(geoList));
             Geometry buffer = partsGeom.union().union(arcGeo);
 
+            Geometry ggg = (Polygon) buffer.getGeometryN(0);
+                    
             LinearRing ring = ((Polygon) buffer).getInteriorRingN(0);
             Polygon poly = (Polygon) gf.createPolygon(ring).norm();
             Coordinate cor[] = poly.getCoordinates();
