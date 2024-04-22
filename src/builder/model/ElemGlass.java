@@ -96,14 +96,14 @@ public class ElemGlass extends ElemSimple {
             Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
             hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - rec.getDbl(eArtikl.size_falz));
         }
-        this.areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
+        //this.areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
 
 //        Map<Double, Double> hm = new HashMap();
 //        for (Com5t el : list) {
 //            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
 //            hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz));
 //        }
-        this.area = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);
+        this.areaFalz = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);
 
         Coordinate[] coo = this.areaFalz.getGeometryN(0).getCoordinates();
         if (this.areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
