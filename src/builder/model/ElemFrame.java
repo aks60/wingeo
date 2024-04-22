@@ -144,7 +144,6 @@ public class ElemFrame extends ElemSimple {
             double prip1 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(spcRec.anglCut0 - 45));
             double prip2 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(spcRec.anglCut1 - 45));
             spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;
-            //spcRec.width = (winc.syssizRec == null) ? length() : length() + 2 * winc.syssizRec.getDbl(eSyssize.prip);
             spcRec.height = artiklRec.getDbl(eArtikl.height);
 
         } catch (Exception e) {
