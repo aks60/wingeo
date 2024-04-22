@@ -136,17 +136,15 @@ public class ElemFrame extends ElemSimple {
                 spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
                 spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 5], coo[coo.length - 4], coo[coo.length - 3]));
             } else {
-                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
-                for (int j = 1; j < coo.length; j++) {
-                    if (coo[j - 1].distance(coo[j]) > this.artiklRecAn.getDbl(eArtikl.height)) {
-                        spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[j - 2], coo[j - 1], coo[j]));
-                        break;
-                    }
-                }
+                double h = this.artiklRecAn.getDbl(eArtikl.height);
+                int index = IntStream.range(1, coo.length).filter(j -> coo[j - 1].distance(coo[j]) > h).findFirst().getAsInt();
+                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1])); 
+                spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[index - 2], coo[index - 1], coo[index]));
             }
             double prip1 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(spcRec.anglCut0 - 45));
             double prip2 = winc.syssizRec.getDbl(eSyssize.prip) / Math.cos(Math.toRadians(spcRec.anglCut1 - 45));
             spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;
+            //spcRec.width = (winc.syssizRec == null) ? length() : length() + 2 * winc.syssizRec.getDbl(eSyssize.prip);
             spcRec.height = artiklRec.getDbl(eArtikl.height);
 
         } catch (Exception e) {
