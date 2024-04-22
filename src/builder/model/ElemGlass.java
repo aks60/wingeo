@@ -96,14 +96,8 @@ public class ElemGlass extends ElemSimple {
             Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
             hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - rec.getDbl(eArtikl.size_falz));
         }
-        //this.areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
 
-//        Map<Double, Double> hm = new HashMap();
-//        for (Com5t el : list) {
-//            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-//            hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz));
-//        }
-        this.areaFalz = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);
+        this.areaFalz = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
 
         Coordinate[] coo = this.areaFalz.getGeometryN(0).getCoordinates();
         if (this.areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
@@ -134,7 +128,7 @@ public class ElemGlass extends ElemSimple {
                 Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
                 hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + gzazo);
             }
-            this.area = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm); //полигон стеклопакета
+            this.area = GeoBuffer.buffer(owner.area.getGeometryN(0), hm); //полигон стеклопакета
 
             Envelope env = this.area.getEnvelopeInternal();
             spcRec.width = env.getWidth();
@@ -168,6 +162,8 @@ public class ElemGlass extends ElemSimple {
                     int index = IntStream.range(1, coo.length).filter(j -> coo[j].z == frameglass.id).findFirst().getAsInt();
                     spcAdd.anglCut0 = UGeo.anglCut(spcAdd, this.areaFalz, coo.length - 2, 0, '-');
                     spcAdd.anglCut1 = UGeo.anglCut(spcAdd, this.areaFalz, index - 2, index - 1, '+');
+                    //spcAdd.anglCut1 = UGeo.anglCut(spcAdd, this.areaFalz, index - 1, index, '+');
+
                     for (int j = 1; j < coo.length; j++) {
                         if (coo[j - 1].z == frameglass.id) {
                             spcAdd.width += coo[j - 1].distance(coo[j]);

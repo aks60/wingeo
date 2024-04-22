@@ -714,8 +714,8 @@ public class Specifics extends javax.swing.JFrame {
         tab1.getColumnModel().getColumn(9).setCellRenderer(new DefCellRendererNumb(1));
         tab1.getColumnModel().getColumn(10).setCellRenderer(new DefCellRendererNumb(1));
         tab1.getColumnModel().getColumn(11).setCellRenderer(new DefCellRendererNumb(3));
-        tab1.getColumnModel().getColumn(12).setCellRenderer(new DefCellRendererNumb(2));
-        tab1.getColumnModel().getColumn(13).setCellRenderer(new DefCellRendererNumb(2));
+        tab1.getColumnModel().getColumn(12).setCellRenderer(new DefCellRendererNumb(1));
+        tab1.getColumnModel().getColumn(13).setCellRenderer(new DefCellRendererNumb(1));
         tab1.getColumnModel().getColumn(14).setCellRenderer(new DefCellRendererNumb(1));
         tab1.getColumnModel().getColumn(15).setCellRenderer(new DefCellRendererNumb(1));
         tab1.getColumnModel().getColumn(18).setCellRenderer(new DefCellRendererNumb(2));

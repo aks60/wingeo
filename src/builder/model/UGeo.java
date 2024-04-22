@@ -535,7 +535,7 @@ public class UGeo {
             //return (Polygon) arcGeo;
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.bufferUnion() " + e);
+            System.err.println("Ошибка:UGeo.bufferUnion()  " + e);
             return gf.createPolygon();
         }
     }
