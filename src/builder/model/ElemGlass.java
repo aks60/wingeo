@@ -5,12 +5,12 @@ import builder.making.SpcFilling;
 import builder.making.SpcRecord;
 import builder.script.GsonElem;
 import common.ArrayCom;
+import common.GeoBuffer;
 import common.UCom;
 import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
-import domain.eGlasgrp;
 import domain.eSystree;
 import enums.PKjson;
 import enums.Type;
@@ -19,7 +19,6 @@ import enums.UseUnit;
 import java.awt.Shape;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.IntStream;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
@@ -27,8 +26,6 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
-import org.locationtech.jts.geom.Polygon;
-import startup.Test;
 
 public class ElemGlass extends ElemSimple {
 
@@ -100,6 +97,14 @@ public class ElemGlass extends ElemSimple {
             hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - rec.getDbl(eArtikl.size_falz));
         }
         this.areaFalz = UGeo.bufferUnion(owner.area.getGeometryN(0), list, hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
+
+//        Map<Double, Double> hm = new HashMap();
+//        for (Com5t el : list) {
+//            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+//            hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz));
+//        }
+        this.area = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);
+
         Coordinate[] coo = this.areaFalz.getGeometryN(0).getCoordinates();
         if (this.areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
             coo[0].z = coo[1].z;
