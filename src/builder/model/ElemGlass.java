@@ -169,6 +169,7 @@ public class ElemGlass extends ElemSimple {
                             spcAdd.width += coo[j - 1].distance(coo[j]);
                         }
                     }
+                } else if (frameglass.h() == -1) {
 
                     //Остальное
                 } else {
@@ -176,8 +177,8 @@ public class ElemGlass extends ElemSimple {
                     Coordinate[] c2 = {coo[sideglass], coo[UGeo.getIndex(coo, sideglass + 1)], coo[UGeo.getIndex(coo, sideglass + 2)]};
                     double angBetween0 = Math.toDegrees(Angle.angleBetween(c1[0], c1[1], c1[2]));
                     double angBetween1 = Math.toDegrees(Angle.angleBetween(c2[0], c2[1], c2[2]));
-                    spcAdd.anglCut0 = angBetween0 - UGeo.anglCut(spcAdd, this.areaFalz, UGeo.getIndex(coo, sideglass - 1), sideglass, '-');
-                    spcAdd.anglCut1 = angBetween1 - UGeo.anglCut(spcAdd, this.areaFalz, UGeo.getIndex(coo, sideglass), UGeo.getIndex(coo, sideglass + 1), '+');
+                    spcAdd.anglCut0 = Math.abs(angBetween0 - UGeo.anglCut(spcAdd, this.areaFalz, UGeo.getIndex(coo, sideglass - 1), sideglass, '-'));
+                    spcAdd.anglCut1 = Math.abs(angBetween1 - UGeo.anglCut(spcAdd, this.areaFalz, UGeo.getIndex(coo, sideglass), UGeo.getIndex(coo, sideglass + 1), '+'));
                     spcAdd.width += coo[sideglass].distance(coo[sideglass + 1]); //Тут надо учитывать наклон штапика
                 }
 
