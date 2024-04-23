@@ -141,9 +141,9 @@ public class ElemFrame extends ElemSimple {
                 spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1])); 
                 spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[index - 2], coo[index - 1], coo[index]));
             }
-            double delta = winc.syssizRec.getDbl(eSyssize.prip) / Math.sin(Math.toRadians(45));
-            double prip1 = delta / Math.cos(Math.toRadians(spcRec.anglCut0));
-            double prip2 = delta / Math.cos(Math.toRadians(spcRec.anglCut1));
+            double delta = winc.syssizRec.getDbl(eSyssize.prip) * Math.sin(Math.toRadians(45));
+            double prip1 = delta / Math.sin(Math.toRadians(spcRec.anglCut0));
+            double prip2 = delta / Math.sin(Math.toRadians(spcRec.anglCut1));
             spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;
             spcRec.height = artiklRec.getDbl(eArtikl.height);
 
