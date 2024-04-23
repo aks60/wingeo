@@ -11,6 +11,7 @@ import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
+import static domain.eProject.owner;
 import domain.eSystree;
 import enums.PKjson;
 import enums.Type;
@@ -26,6 +27,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
+import startup.Test;
 
 public class ElemGlass extends ElemSimple {
 
@@ -99,17 +101,20 @@ public class ElemGlass extends ElemSimple {
 
         this.areaFalz = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
 
-        Coordinate[] coo = this.areaFalz.getGeometryN(0).getCoordinates();
+        Coordinate[] coo = this.areaFalz.getCoordinates();
+        Coordinate[] coo7 = owner.area.getCoordinates();
         if (this.areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
             coo[0].z = coo[1].z;
             coo[1].z = coo[coo.length - 2].z;
             coo[2].z = coo[coo.length - 2].z;
             coo[coo.length - 1].z = coo[1].z;
         }
-        if (owner.area.getNumPoints() > Com5t.MAXSIDE) {
-            deltaDY = coo[0].y - owner.area.getCoordinate().y;
+       // if (owner.area.getNumPoints() > Com5t.MAXSIDE) {
+            //int index = IntStream.range(1, coo.length).filter(j -> coo[j - 1].distance(coo[j]) > h).findFirst().getAsInt();
+            this.deltaDY = this.areaFalz.getCoordinate().y - owner.area.getCoordinate().y;
             //System.out.println("ФОРМА КОНТУРА = " + coo[0].z);
-        }
+            //new Test().mpol = this.areaFalz;
+        //}
     }
 
     //Главная спецификация    

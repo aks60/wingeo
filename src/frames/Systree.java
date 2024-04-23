@@ -473,11 +473,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     setText(txt51, colorRascl.getStr(eColor.name));
                     spinHor.setValue(((ElemGlass) winNode.com5t()).rasclNumber[0]);
                     spinVert.setValue(((ElemGlass) winNode.com5t()).rasclNumber[1]);
-                    ElemSimple el = winc.listElem.stream().filter(e -> e.type == enums.Type.IMPOST).findFirst().get();
-                    double s1 = el.artiklRec.getDbl(eArtikl.height), s2 = el.artiklRec.getDbl(eArtikl.size_centr),
-                            s3 = el.artiklRec.getDbl(eArtikl.size_falz);
-                    lab4.setText((elem.deltaDY != null) ? "DY: " + s1 + " - " + s2 + " - " + s3 + " + "
-                            + UCom.format(elem.deltaDY, 1) + " = " + UCom.format(s1 - s2 - s3 + elem.deltaDY, 1) + " мм." : "");
+                    ElemSimple el = winc.listElem.stream().filter(e -> e.type == enums.Type.IMPOST).findFirst().orElse(null);
+                    if (el != null) {
+                        double s1 = el.artiklRec.getDbl(eArtikl.height)
+                                , s2 = el.artiklRec.getDbl(eArtikl.size_centr), s3 = el.artiklRec.getDbl(eArtikl.size_falz);
+                        lab4.setText((elem.deltaDY != null) ? "DY: " + s1 + " - " + s2 + " - " + s3 + " + "
+                                + UCom.format(elem.deltaDY, 1) + " = " + UCom.format(s1 - s2 - s3 + elem.deltaDY, 1) + " мм." : "");
+                    }
 
                     //Створка
                 } else if (winNode.com5t().type == enums.Type.STVORKA) {
@@ -1891,7 +1893,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             }
         });
 
-        lab4.setText("123");
         lab4.setMaximumSize(new java.awt.Dimension(260, 18));
 
         javax.swing.GroupLayout pan15Layout = new javax.swing.GroupLayout(pan15);
@@ -1992,7 +1993,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                     .addComponent(spinVert, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lab4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 59, Short.MAX_VALUE))
+                .addGap(0, 171, Short.MAX_VALUE))
         );
 
         txt19.getAccessibleContext().setAccessibleName("");
@@ -3126,7 +3127,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                         .addGroup(pan6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lab17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tabb1.addTab("   Основные   ", pan6);
