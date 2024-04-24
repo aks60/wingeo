@@ -109,12 +109,12 @@ public class ElemGlass extends ElemSimple {
             coo[2].z = coo[coo.length - 2].z;
             coo[coo.length - 1].z = coo[1].z;
         }
-       // if (owner.area.getNumPoints() > Com5t.MAXSIDE) {
+        if (owner.area.getNumPoints() > Com5t.MAXSIDE) {
             //int index = IntStream.range(1, coo.length).filter(j -> coo[j - 1].distance(coo[j]) > h).findFirst().getAsInt();
             this.deltaDY = this.areaFalz.getCoordinate().y - owner.area.getCoordinate().y;
             //System.out.println("ФОРМА КОНТУРА = " + coo[0].z);
             //new Test().mpol = this.areaFalz;
-        //}
+        }
     }
 
     //Главная спецификация    
@@ -174,7 +174,6 @@ public class ElemGlass extends ElemSimple {
                             spcAdd.width += coo[j - 1].distance(coo[j]);
                         }
                     }
-                } else if (frameglass.h() == -1) {
 
                     //Остальное
                 } else {
