@@ -664,7 +664,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn0.add(mn09);
 
-        mn03.setText("Составы  ");
+        mn03.setText(" Составы  ");
         mn03.setFont(frames.UGui.getFont(1,1));
 
         mn31.setFont(frames.UGui.getFont(0,1));
@@ -768,8 +768,9 @@ public class Tex extends javax.swing.JFrame {
 
         mn0.add(mn07);
 
+        mn06.setText("   Сервис  ");
+        mn06.setActionCommand("   Сервис  ");
         mn06.setFont(frames.UGui.getFont(1,1));
-        mn06.setLabel("  Сервис  ");
 
         mn63.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b028.gif"))); // NOI18N
         mn63.setText("Установка соединения");

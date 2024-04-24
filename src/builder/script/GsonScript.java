@@ -174,6 +174,18 @@ public class GsonScript {
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 400.0, 1300.0, 400.0));
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            
+        } else if (prj == 508916) {
+            rootGson = new GsonRoot(Type.TRAPEZE, "KBE 58\\ОКНА\\Открывание внутрь");
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 0.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1400.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 1400.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 400.0));
+
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 450.0, 900.0, 450.0));
+            rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
+            
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="DOOR">
         } else if (prj == 508841) { //Двери

@@ -11,8 +11,8 @@ import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
-import static domain.eProject.owner;
 import domain.eSystree;
+import enums.Layout;
 import enums.PKjson;
 import enums.Type;
 import enums.TypeArtikl;
@@ -27,7 +27,6 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
-import startup.Test;
 
 public class ElemGlass extends ElemSimple {
 
@@ -110,11 +109,15 @@ public class ElemGlass extends ElemSimple {
             coo[coo.length - 1].z = coo[1].z;
         }
         if (owner.area.getNumPoints() > Com5t.MAXSIDE) {
-            //int index = IntStream.range(1, coo.length).filter(j -> coo[j - 1].distance(coo[j]) > h).findFirst().getAsInt();
             this.deltaDY = this.areaFalz.getCoordinate().y - owner.area.getCoordinate().y;
             //System.out.println("ФОРМА КОНТУРА = " + coo[0].z);
             //new Test().mpol = this.areaFalz;
-        }
+        } 
+//        else if(root.type == Type.TRAPEZE) {
+//            if(winc.listElem.stream().filter(e -> Type.isCross(e.type) && e.layout() == Layout.HORIZ).findFirst().orElse(null) != null) {
+//                
+//            }
+//        }
     }
 
     //Главная спецификация    

@@ -210,7 +210,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="mn03">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&#x421;&#x43e;&#x441;&#x442;&#x430;&#x432;&#x44b;  "/>
+            <Property name="text" type="java.lang.String" value=" &#x421;&#x43e;&#x441;&#x442;&#x430;&#x432;&#x44b;  "/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="frames.UGui.getFont(1,1)" type="code"/>
             </Property>
@@ -364,10 +364,11 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="mn06">
           <Properties>
+            <Property name="text" type="java.lang.String" value="   &#x421;&#x435;&#x440;&#x432;&#x438;&#x441;  "/>
+            <Property name="actionCommand" type="java.lang.String" value="   &#x421;&#x435;&#x440;&#x432;&#x438;&#x441;  "/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="frames.UGui.getFont(1,1)" type="code"/>
             </Property>
-            <Property name="label" type="java.lang.String" value="  &#x421;&#x435;&#x440;&#x432;&#x438;&#x441;  "/>
           </Properties>
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="mn63">

@@ -83,6 +83,7 @@ import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import common.ArrayCom;
+import common.listener.ListenerAction;
 import domain.eJoinvar;
 import enums.TypeJoin;
 import domain.eElement;
@@ -101,10 +102,9 @@ import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import startup.Test;
 import common.listener.ListenerReload;
 
-public class Systree extends javax.swing.JFrame implements ListenerReload {
+public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
     private ListenerRecord listenerArtikl, listenerModel, listenerFurn,
@@ -131,7 +131,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
 
     public Systree() {
         initComponents();
-        scene = new Scene(canvas, this);
+        scene = new Scene(canvas, this, this);
         initElements();
         loadingData();
         loadingModel();
@@ -478,7 +478,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
                         double s1 = el.artiklRec.getDbl(eArtikl.height)
                                 , s2 = el.artiklRec.getDbl(eArtikl.size_centr), s3 = el.artiklRec.getDbl(eArtikl.size_falz);
                         lab4.setText((elem.deltaDY != null) ? "DY: " + s1 + " - " + s2 + " - " + s3 + " + "
-                                + UCom.format(elem.deltaDY, 1) + " = " + UCom.format(s1 - s2 - s3 + elem.deltaDY, 1) + " мм." : "");
+                                + UCom.format(elem.deltaDY, 2) + " = " + UCom.format(s1 - s2 - s3 + elem.deltaDY, 2) + " мм." : "");
                     }
 
                     //Створка
@@ -844,6 +844,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
             System.err.println("Ошибка:Systree.reload() " + e);
         }
         return qSysprod;
+    }
+    
+    @Override
+    public void action() {
+        selectionTree1();
     }
 
     private void setText(JTextField comp, Object txt) {
@@ -4065,7 +4070,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload {
     }//GEN-LAST:event_colorFromLock
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        new Test().mpol = wincalc().listElem.get(6.0).area;
+        //new Test().mpol = wincalc().listElem.get(6.0).area;
+        selectionTree1();
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void colorFromGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromGlass

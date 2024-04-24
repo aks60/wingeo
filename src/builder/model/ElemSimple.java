@@ -68,8 +68,8 @@ public abstract class ElemSimple extends Com5t {
             if (this.area != null && passMask[1] > 0) {
                 LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                 int key = evt.getKeyCode();
-                //double anglHor = UGeo.anglHor(this);
-                double dxy = (timer.isRunning() == true) ? 0.14 + winc.scale : 0.1 * winc.scale;
+                //double dxy = (timer.isRunning() == true) ? 0.14 + winc.scale : 0.1 * winc.scale;
+                double dxy = (timer.isRunning() == true) ? 0.04 : 0.1 * winc.scale;
                 double X = 0, Y = 0, dX = 0, dY = 0;
 
                 if (key == KeyEvent.VK_UP) {
@@ -105,11 +105,11 @@ public abstract class ElemSimple extends Com5t {
                         X = dX / winc.scale + this.x2();
                         Y = dY / winc.scale + this.y2();
 
-                        if (Y > 0 && List.of(Layout.BOTT, Layout.TOP, Layout.HORIZ).contains(layout())) {
+                        if (Y > 0 && List.of(Layout.BOTT, Layout.TOP, Layout.HORIZ).contains(this.layout())) {
                             this.y1(Y);
                             this.y2(Y);
                         }
-                        if (X > 0 && List.of(Layout.LEFT, Layout.RIGHT, Layout.VERT).contains(layout())) {
+                        if (X > 0 && List.of(Layout.LEFT, Layout.RIGHT, Layout.VERT).contains(this.layout())) {
                             this.x1(X);
                             this.x2(X);
                         }
@@ -234,16 +234,16 @@ public abstract class ElemSimple extends Com5t {
         try {
             double anglHor = UGeo.anglHor(x1(), y1(), x2(), y2());
 
-            if (anglHor > 315 && anglHor < 360 || anglHor >= 0 && anglHor < 45) {
+            if (anglHor > 315 && anglHor <= 360 || anglHor >= 0 && anglHor < 45) {
                 return (this.type == Type.IMPOST || this.type == Type.SHTULP) ? Layout.HORIZ : Layout.BOTT;
 
-            } else if (anglHor > 45 && anglHor < 135) {
+            } else if (anglHor >= 45 && anglHor < 135) {
                 return Layout.RIGHT;
 
-            } else if (anglHor > 135 && anglHor < 225) {
+            } else if (anglHor >= 135 && anglHor < 225) {
                 return Layout.TOP;
 
-            } else if (anglHor > 225 && anglHor < 315) {
+            } else if (anglHor >= 225 && anglHor <= 315) {
                 return (this.type == Type.IMPOST || this.type == Type.SHTULP) ? Layout.VERT : Layout.LEFT;
             }
         } catch (Exception e) {

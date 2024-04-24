@@ -1,6 +1,7 @@
 package frames.swing;
 
 import builder.Wincalc;
+import common.listener.ListenerAction;
 import dataset.Query;
 import domain.eSysprod;
 import javax.swing.JButton;
@@ -11,9 +12,18 @@ public class Scene extends javax.swing.JPanel {
 
     private Canvas canvas = null;
     private ListenerReload listenerReload = null;
+    private ListenerAction listenerAction = null;
     public Wincalc winc = null;
     private Timer timer = new Timer(500, null);
 
+    public Scene(Canvas canvas, ListenerReload listenerReload, ListenerAction listenerAction) {
+        initComponents();
+        this.canvas = canvas;
+        this.listenerReload = listenerReload;
+        this.listenerAction = listenerAction;
+        add(canvas, java.awt.BorderLayout.CENTER);
+    }
+    
     public Scene(Canvas canvas, ListenerReload listenerReload) {
         initComponents();
         this.canvas = canvas;
@@ -32,11 +42,12 @@ public class Scene extends javax.swing.JPanel {
 
         Tooll = new javax.swing.JPanel();
         btnSave = new javax.swing.JButton();
+        btnRevert = new javax.swing.JButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(10, 8), new java.awt.Dimension(0, 32767));
         btnMovUp = new javax.swing.JButton();
         btnMovDo = new javax.swing.JButton();
-        btnMovLe = new javax.swing.JButton();
         btnMovRi = new javax.swing.JButton();
+        btnMovLe = new javax.swing.JButton();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(10, 8), new java.awt.Dimension(0, 32767));
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 4, 0, 0));
@@ -67,6 +78,23 @@ public class Scene extends javax.swing.JPanel {
             }
         });
         Tooll.add(btnSave);
+
+        btnRevert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c039.gif"))); // NOI18N
+        btnRevert.setToolTipText(bundle.getString("Переместить вниз")); // NOI18N
+        btnRevert.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnRevert.setFocusable(false);
+        btnRevert.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnRevert.setMaximumSize(new java.awt.Dimension(25, 25));
+        btnRevert.setMinimumSize(new java.awt.Dimension(25, 25));
+        btnRevert.setPreferredSize(new java.awt.Dimension(25, 25));
+        btnRevert.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btnRevert.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnRevert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRevert(evt);
+            }
+        });
+        Tooll.add(btnRevert);
         Tooll.add(filler1);
 
         btnMovUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c051.gif"))); // NOI18N
@@ -103,23 +131,6 @@ public class Scene extends javax.swing.JPanel {
         });
         Tooll.add(btnMovDo);
 
-        btnMovLe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c048.gif"))); // NOI18N
-        btnMovLe.setToolTipText(bundle.getString("Переместить вниз")); // NOI18N
-        btnMovLe.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btnMovLe.setFocusable(false);
-        btnMovLe.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnMovLe.setMaximumSize(new java.awt.Dimension(25, 25));
-        btnMovLe.setMinimumSize(new java.awt.Dimension(25, 25));
-        btnMovLe.setPreferredSize(new java.awt.Dimension(25, 25));
-        btnMovLe.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btnMovLe.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnMovLe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMove(evt);
-            }
-        });
-        Tooll.add(btnMovLe);
-
         btnMovRi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c046.gif"))); // NOI18N
         btnMovRi.setToolTipText(bundle.getString("Переместить вниз")); // NOI18N
         btnMovRi.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -136,6 +147,23 @@ public class Scene extends javax.swing.JPanel {
             }
         });
         Tooll.add(btnMovRi);
+
+        btnMovLe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c048.gif"))); // NOI18N
+        btnMovLe.setToolTipText(bundle.getString("Переместить вниз")); // NOI18N
+        btnMovLe.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnMovLe.setFocusable(false);
+        btnMovLe.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnMovLe.setMaximumSize(new java.awt.Dimension(25, 25));
+        btnMovLe.setMinimumSize(new java.awt.Dimension(25, 25));
+        btnMovLe.setPreferredSize(new java.awt.Dimension(25, 25));
+        btnMovLe.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btnMovLe.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnMovLe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMove(evt);
+            }
+        });
+        Tooll.add(btnMovLe);
         Tooll.add(filler2);
 
         add(Tooll, java.awt.BorderLayout.WEST);
@@ -163,6 +191,10 @@ public class Scene extends javax.swing.JPanel {
         listenerReload.reload().execsql();
     }//GEN-LAST:event_btnSave
 
+    private void btnRevert(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRevert
+        listenerAction.action();
+    }//GEN-LAST:event_btnRevert
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Tooll;
@@ -170,6 +202,7 @@ public class Scene extends javax.swing.JPanel {
     private javax.swing.JButton btnMovLe;
     private javax.swing.JButton btnMovRi;
     private javax.swing.JButton btnMovUp;
+    private javax.swing.JButton btnRevert;
     private javax.swing.JButton btnSave;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
