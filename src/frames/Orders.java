@@ -37,6 +37,7 @@ import java.util.HashSet;
 import javax.swing.table.DefaultTableModel;
 import common.eProfile;
 import common.eProp;
+import common.listener.ListenerAction;
 import common.listener.ListenerFrame;
 import common.listener.ListenerObject;
 import common.listener.ListenerRecord;
@@ -104,7 +105,7 @@ import report.HtmlOfSpecific;
 import startup.App;
 import common.listener.ListenerReload;
 
-public class Orders extends javax.swing.JFrame implements ListenerReload {
+public class Orders extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
     private Query qGroups = new Query(eGroups.values());
@@ -134,7 +135,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
 
     public Orders() {
         initComponents();
-        scene = new Scene(canvas, this);
+        scene = new Scene(canvas, this, this);
         initElements();
         loadingData();
         loadingModel();
@@ -727,6 +728,15 @@ public class Orders extends javax.swing.JFrame implements ListenerReload {
         return qPrjprod;
     }
 
+    @Override
+    public void action() {
+        //int index = UGui.getIndexRec(tab1);
+        //if (index != -1) {
+            loadingTab2();
+           // UGui.setSelectedIndex(tab1, index);
+        //}
+    }
+    
     private void setText(JTextComponent comp, String txt) {
         comp.setText(txt);
         comp.setCaretPosition(0);
