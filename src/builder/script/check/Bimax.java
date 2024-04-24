@@ -272,6 +272,15 @@ public final class Bimax {
 
         } else if (prj == 507998) { //СМ.PS
             rootGson = new GsonRoot(426766, prj, 1, 198, Type.ARCH, "Montblanc / Eco / 1 ОКНА", 1009, 1009, 1009);
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 400.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1780.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 800.0, 1780.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 800.0, 400.0, 400.0));
+
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 440.0, 800.0, 440.0));
+            rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
+         
 
         } else if (prj == 508035) { //СМ.PS (с раскладкой)
             rootGson = new GsonRoot(426804, prj, 1, 99, Type.ARCH, "Rehau / Blitz / 1 ОКНА / Открывание внутрь (ств. Z60)", 1009, 1009, 1009);         

@@ -120,8 +120,20 @@ public class GsonScript {
             area.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
             area.addElem(new GsonElem(Type.IMPOST, 720.0, 1300.0, 720.0, 1700.0))
                     .addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
-// </editor-fold>            
+// </editor-fold>   
+
 // <editor-fold defaultstate="collapsed" desc="ARCH">
+        } else if (prj == 507998) { 
+            rootGson = new GsonRoot(Type.ARCH, "Montblanc / Eco / 1 ОКНА");
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 400.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1780.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 800.0, 1780.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 800.0, 400.0, 400.0));
+
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 440.0, 800.0, 440.0));
+            rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
+            
         } else if (prj == 604004) {
             rootGson = new GsonRoot(Type.ARCH, "Rehau / Delight / 1 ОКНА");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 300.0))
@@ -155,6 +167,7 @@ public class GsonScript {
             area.addArea(new GsonElem(Type.STVORKA))
                     .addElem(new GsonElem(Type.GLASS));
 // </editor-fold>
+
 // <editor-fold defaultstate="collapsed" desc="TRAPEZE">
         } else if (prj == 506642) { //Трапеции без импоста
             rootGson = new GsonRoot(Type.TRAPEZE, "KBE / KBE Эксперт / 1 ОКНА / Открывание внутрь (ств. Z 77)");
@@ -187,6 +200,7 @@ public class GsonScript {
             rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
             
 // </editor-fold>
+
 // <editor-fold defaultstate="collapsed" desc="DOOR">
         } else if (prj == 508841) { //Двери
 
@@ -194,6 +208,7 @@ public class GsonScript {
 
         } else if (prj == 700014) { // Двери
 // </editor-fold>
+
 // <editor-fold defaultstate="collapsed" desc="ТЕСТ"> 
         } else if (prj == 1043598818) {
 // </editor-fold>  

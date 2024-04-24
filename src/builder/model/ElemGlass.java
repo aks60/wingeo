@@ -100,24 +100,24 @@ public class ElemGlass extends ElemSimple {
 
         this.areaFalz = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
 
-        Coordinate[] coo = this.areaFalz.getCoordinates();
-        Coordinate[] coo7 = owner.area.getCoordinates();
+        Coordinate[] coo = this.areaFalz.getCoordinates();        
         if (this.areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
             coo[0].z = coo[1].z;
             coo[1].z = coo[coo.length - 2].z;
             coo[2].z = coo[coo.length - 2].z;
             coo[coo.length - 1].z = coo[1].z;
         }
+        //Для тестирования
         if (owner.area.getNumPoints() > Com5t.MAXSIDE) {
             this.deltaDY = this.areaFalz.getCoordinate().y - owner.area.getCoordinate().y;
-            //System.out.println("ФОРМА КОНТУРА = " + coo[0].z);
-            //new Test().mpol = this.areaFalz;
-        } 
-//        else if(root.type == Type.TRAPEZE) {
-//            if(winc.listElem.stream().filter(e -> Type.isCross(e.type) && e.layout() == Layout.HORIZ).findFirst().orElse(null) != null) {
-//                
-//            }
-//        }
+            System.out.println("ФОРМА КОНТУРА = " + coo[0].z);
+        } else if (root.type == Type.TRAPEZE && owner.area.isRectangle() == false)  {
+            Coordinate[] co2 = owner.area.getCoordinates();
+            if (winc.listElem.stream().filter(e -> e.type == Type.IMPOST && e.layout() == Layout.HORIZ).findFirst().orElse(null) != null) {
+                this.deltaDY = coo[coo.length - 2].y - co2[co2.length - 2].y;
+                System.out.println("ФОРМА КОНТУРА = " + coo.length);
+            }
+        }
     }
 
     //Главная спецификация    

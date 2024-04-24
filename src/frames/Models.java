@@ -19,6 +19,7 @@ import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import common.eProp;
+import common.listener.ListenerAction;
 import frames.swing.Canvas;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
@@ -37,7 +38,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import common.listener.ListenerReload;
 
-public final class Models extends javax.swing.JFrame implements ListenerFrame<Object, Object>, ListenerReload {
+public final class Models extends javax.swing.JFrame implements ListenerFrame<Object, Object>, ListenerReload, ListenerAction {
 
     private Icon ico = new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"));
 
@@ -48,7 +49,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 
     public Models() {
         initComponents();
-        scene = new Scene(canvas, this);
+        scene = new Scene(canvas, this, this);
         initElements();
         loadingModel();
         btnChoice.setVisible(false);
@@ -139,6 +140,15 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             System.err.println("Ошибка:Models.reload() " + e);
         }
         return null;
+    }
+
+    @Override
+    public void action() {
+        int index = UGui.getIndexRec(tab1);
+        if (index != -1) {
+            btnToggl(null);
+            UGui.setSelectedIndex(tab1, index);
+        }
     }
 
     private Wincalc wincalc() {
@@ -715,6 +725,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                     selectionTab1(tab1);
                 }
             }
-        });       
+        });
     }
 }

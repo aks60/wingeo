@@ -473,12 +473,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     setText(txt51, colorRascl.getStr(eColor.name));
                     spinHor.setValue(((ElemGlass) winNode.com5t()).rasclNumber[0]);
                     spinVert.setValue(((ElemGlass) winNode.com5t()).rasclNumber[1]);
-                    ElemSimple el = winc.listElem.stream().filter(e -> e.type == enums.Type.IMPOST).findFirst().orElse(null);
-                    if (el != null) {
-                        double s1 = el.artiklRec.getDbl(eArtikl.height)
-                                , s2 = el.artiklRec.getDbl(eArtikl.size_centr), s3 = el.artiklRec.getDbl(eArtikl.size_falz);
-                        lab4.setText((elem.deltaDY != null) ? "DY: " + s1 + " - " + s2 + " - " + s3 + " + "
-                                + UCom.format(elem.deltaDY, 2) + " = " + UCom.format(s1 - s2 - s3 + elem.deltaDY, 2) + " мм." : "");
+                    if (elem.deltaDY != null) {
+                        ElemSimple el = winc.listElem.stream().filter(e -> e.type == enums.Type.IMPOST).findFirst().orElse(null);
+                        double s1 = el.artiklRec.getDbl(eArtikl.height), s2 = el.artiklRec.getDbl(eArtikl.size_centr), s3 = el.artiklRec.getDbl(eArtikl.size_falz);
+                        lab4.setText("DY: " + s1 + " - " + s2 + " - " + s3 + " + "
+                                + UCom.format(elem.deltaDY, 2) + " = " + UCom.format(s1 - s2 - s3 + elem.deltaDY, 2) + " мм.");
                     }
 
                     //Створка
@@ -845,7 +844,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
         return qSysprod;
     }
-    
+
     @Override
     public void action() {
         selectionTree1();
