@@ -12,6 +12,7 @@ import builder.model.ElemSimple;
 import builder.making.SpcRecord;
 import builder.making.UColor;
 import builder.model.AreaArch;
+import builder.model.AreaDoor;
 import builder.model.AreaTrapeze;
 import builder.model.ElemMosquit;
 import builder.script.GsonElem;
@@ -36,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
@@ -112,6 +112,9 @@ public class Wincalc {
 
         } else if (Type.ARCH == gson.type) {
             root = new AreaArch(this, gson);
+
+        } else if (Type.DOOR == gson.type) {
+            root = new AreaDoor(this, gson);
         }
 
         //Элементы конструкции

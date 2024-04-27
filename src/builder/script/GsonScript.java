@@ -202,8 +202,17 @@ public class GsonScript {
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="DOOR">
-        } else if (prj == 508841) { //Двери
-
+        } else if (prj == 508841) { //427629 Двери
+            rootGson = new GsonRoot(Type.DOOR, "KBE / KBE Эксперт / 6 ВХОДНЫЕ ДВЕРИ / Дверь наружу");
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 0.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 2100.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 2100.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0));
+            
+            rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 800.0, 900.0, 800.0));
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            
         } else if (prj == 700009) { //Двери
 
         } else if (prj == 700014) { // Двери
