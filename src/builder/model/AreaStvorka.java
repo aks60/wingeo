@@ -158,9 +158,8 @@ public class AreaStvorka extends AreaSimple {
         try {
             //Полигон векторов сторон рамы owner.area - если нет полигона створки в гл.окне 
             //иначе, this.area  получатется при распиле owner.area импостом
-            this.frameBox = (winc.listElem.filter(Type.IMPOST, Type.STOIKA, 
-                    Type.ERKER, Type.SHTULP).isEmpty()) || (root.type == Type.DOOR) 
-                    ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
+            this.frameBox = (winc.listElem.filter(Type.IMPOST).isEmpty()) 
+                    || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
             
             //Полигон створки с учётом нахлёста 
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
