@@ -180,8 +180,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         btnT4 = new javax.swing.JToggleButton();
         btnMoveU = new javax.swing.JButton();
         btnMoveD = new javax.swing.JButton();
-        panSspinner = new javax.swing.JPanel();
-        spinner = new javax.swing.JSpinner();
         btnTest = new javax.swing.JButton();
         west = new javax.swing.JPanel();
         pan13 = new javax.swing.JPanel();
@@ -373,16 +371,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             }
         });
 
-        panSspinner.setMinimumSize(new java.awt.Dimension(50, 20));
-        panSspinner.setPreferredSize(new java.awt.Dimension(100, 24));
-        panSspinner.setLayout(new java.awt.BorderLayout());
-
-        spinner.setFont(frames.UGui.getFont(1,0));
-        spinner.setModel(new javax.swing.SpinnerNumberModel(0.0f, null, null, 1.0f));
-        spinner.setBorder(null);
-        spinner.setPreferredSize(new java.awt.Dimension(50, 24));
-        panSspinner.add(spinner, java.awt.BorderLayout.CENTER);
-
         btnTest.setText("Test");
         btnTest.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnTest.setMaximumSize(new java.awt.Dimension(25, 25));
@@ -419,9 +407,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 .addComponent(btnT4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
                 .addComponent(btnChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(131, 131, 131)
-                .addComponent(panSspinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 227, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 458, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -445,8 +431,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                             .addComponent(btnT1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnT2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnT3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnT4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(panSspinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnT4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -707,10 +692,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     private javax.swing.JPanel pan13;
     private javax.swing.JPanel pan17;
     private javax.swing.JPanel panDesign;
-    private javax.swing.JPanel panSspinner;
     private javax.swing.JScrollPane scr1;
     private javax.swing.JPanel south;
-    private javax.swing.JSpinner spinner;
     private javax.swing.JTable tab1;
     private javax.swing.JPanel west;
     // End of variables declaration//GEN-END:variables
