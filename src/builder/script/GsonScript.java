@@ -210,12 +210,31 @@ public class GsonScript {
             
             GsonElem stv = rootGson.addArea(new GsonElem(Type.STVORKA));
             stv.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-            stv.addElem(new GsonElem(Type.IMPOST, 0.0, 1300.0, 900.0, 1300.0));
-            stv.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-            
-        } else if (prj == 700009) { //Двери
+            stv.addElem(new GsonElem(Type.IMPOST, 0.0, 1300.0, 900.0, 1300.0));           
 
-        } else if (prj == 700014) { // Двери
+        } else if (prj == 700009) { //PUNIC = 427847 Двери
+            rootGson = new GsonRoot(Type.DOOR, "Darrio / Двери DARRIO / Дверь внутрь");
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 0.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 2000.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 2000.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0));
+            
+            GsonElem stv = rootGson.addArea(new GsonElem(Type.STVORKA));
+            stv.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            stv.addElem(new GsonElem(Type.IMPOST, 0.0, 1400.0, 900.0, 1400.0));
+            stv.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+
+        } else if (prj == 700014) { //PUNIC = 427856  Двери
+            rootGson = new GsonRoot(Type.DOOR, "Rehau\\Brilliant\\4 ДВЕРИ ВХОДНЫЕ\\Дверь наружу");
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 0.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 2100.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 2100.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0));
+            
+            GsonElem stv = rootGson.addArea(new GsonElem(Type.STVORKA));
+            stv.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            stv.addElem(new GsonElem(Type.IMPOST, 0.0, 1500.0, 900.0, 1500.0));
+            stv.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="ТЕСТ"> 
