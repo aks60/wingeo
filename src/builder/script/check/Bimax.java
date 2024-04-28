@@ -384,7 +384,7 @@ public final class Bimax {
             stv.addElem(new GsonElem(Type.IMPOST, 0.0, 1400.0, 900.0, 1400.0));
             stv.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
 
-        } else if (prj == 700014) { //PUNIC = 427856  Двери
+        } else if (prj == 700014) {
             rootGson = new GsonRoot(427856, prj, 1, 66, Type.DOOR, "Rehau\\Brilliant\\4 ДВЕРИ ВХОДНЫЕ\\Дверь наружу", 1009, 1009, 1009);
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 0.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 2100.0))
