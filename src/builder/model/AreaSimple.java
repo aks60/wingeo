@@ -129,7 +129,7 @@ public class AreaSimple extends Com5t {
     @Override
     public void paint() {
         try {
-      /*      if (listenerPassEdit != null) {
+            if (listenerPassEdit != null) {
                 listenerPassEdit.paint();
             }
             winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
@@ -137,7 +137,7 @@ public class AreaSimple extends Com5t {
             HashSet<Double> hsHor = new HashSet<Double>(), hsVer = new HashSet<Double>();
 
             for (AreaSimple area5e : winc.listArea) {
-                Geometry poly = (area5e.type == Type.STVORKA) ? ((AreaStvorka) area5e).areaBox.getGeometryN(0) : area5e.area.getGeometryN(0);
+                Geometry poly = (area5e.type == Type.STVORKA) ? ((AreaStvorka) area5e).frameBox.getGeometryN(0) : area5e.area.getGeometryN(0);
                 Coordinate coo[] = poly.getCoordinates();
                 hsHor.add(coo[0].x);
                 hsVer.add(coo[0].y);
@@ -227,7 +227,7 @@ public class AreaSimple extends Com5t {
                     }
                     winc.gc2d.setTransform(orig);
                 }
-            } */
+            }
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.paint()");
