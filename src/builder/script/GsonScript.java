@@ -77,11 +77,10 @@ public class GsonScript {
                     .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 0.0))
-                    .addArea(new GsonElem(Type.STVORKA))
-                    .addElem(new GsonElem(Type.GLASS));
-            rootGson.addElem(new GsonElem(Type.IMPOST, 650.0, 0.0, 650.0, 1400.0));
-            rootGson.addArea(new GsonElem(Type.STVORKA))
-                    .addElem(new GsonElem(Type.GLASS));
+                    
+                    .addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS))
+                    .addElem(new GsonElem(Type.IMPOST, 650.0, 0.0, 650.0, 1400.0))
+                    .addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 601006) { //PUNIC = 427838
             rootGson = new GsonRoot(Type.RECTANGL, "RAZIO \\ RAZIO 58 \\ 1 ОКНА");

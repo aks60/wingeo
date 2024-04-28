@@ -4,7 +4,6 @@ import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import common.ArrayCom;
-import common.GeoBuffer;
 import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
