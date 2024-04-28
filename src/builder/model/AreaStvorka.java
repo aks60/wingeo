@@ -39,7 +39,7 @@ public class AreaStvorka extends AreaSimple {
     public Record mosqRec = eArtikl.virtualRec(); //москитка
     public Record elementRec = eElement.up.newRecord(); //состав москидки 
 
-    public Geometry areaBox = null; //полигон векторов сторон рамы
+    public Geometry frameBox = null; //полигон векторов сторон рамы
     public LineString lineOpenHor = null; //линии горизонт. открывания
     public LineString lineOpenVer = null; //линии вертик. открывания
     public Polygon knobOpen = null; //ручка открывания    
@@ -56,11 +56,10 @@ public class AreaStvorka extends AreaSimple {
 
     public AreaStvorka(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
-        //setLocation();
-        furniture(gson.param);
+        initArtikle(gson.param);
     }
 
-    public void furniture(JsonObject param) {
+    public void initArtikle(JsonObject param) {
         try {
             //Фурнитура створки, ручка, подвес
             if (isJson(param, PKjson.sysfurnID)) {
@@ -160,16 +159,17 @@ public class AreaStvorka extends AreaSimple {
         try {
             //Полигон векторов сторон рамы owner.area - если нет полигона створки в гл.окне 
             //иначе, this.area  получатется при распиле owner.area импостом
-            this.areaBox = (winc.listElem.filter(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).isEmpty()) 
+            this.frameBox = (winc.listElem.filter(Type.IMPOST, Type.STOIKA, 
+                    Type.ERKER, Type.SHTULP).isEmpty()) || (root.type == Type.DOOR) 
                     ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
-
+            
             //Полигон створки с учётом нахлёста 
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            Polygon geo1 = buffer(this.areaBox, winc.listElem, -dh); //полигон векторов сторон створки с учётом нахл. 
+            Polygon stvBox = buffer(this.frameBox, winc.listElem, -dh); //полигон векторов сторон створки с учётом нахл. 
 
             //Если стороны ств. ещё не созданы 
             if (this.frames.isEmpty()) {
-                Coordinate[] coo = geo1.getGeometryN(0).getCoordinates();
+                Coordinate[] coo = stvBox.getGeometryN(0).getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
 
                     //Координаты рам створок
@@ -185,7 +185,7 @@ public class AreaStvorka extends AreaSimple {
                 coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
 
             } else { //Если стороны уже созданы
-                Coordinate[] coo = geo1.getGeometryN(0).getCoordinates();
+                Coordinate[] coo = stvBox.getGeometryN(0).getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
                     ElemSimple elem = this.frames.get(i);
                     coo[i].z = elem.id;
@@ -194,8 +194,8 @@ public class AreaStvorka extends AreaSimple {
                 coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
             }
 
-            Polygon geo2 = buffer(geo1, this.frames, 0);
-            this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
+            Polygon geo2 = buffer(stvBox, this.frames, 0);
+            this.area = gf.createMultiPolygon(new Polygon[]{stvBox, geo2});
 
             //Высота ручки, линии открывания
             if (this.typeOpen != TypeOpen1.EMPTY) {
@@ -283,7 +283,7 @@ public class AreaStvorka extends AreaSimple {
             //Прилегающее
             LineSegment segm = new LineSegment();
             Coordinate coo1[] = this.area.getGeometryN(0).getCoordinates(); //полигон векторов сторон створки
-            Coordinate coo2[] = this.areaBox.getGeometryN(0).getCoordinates(); //полигон векторов сторон рамы
+            Coordinate coo2[] = this.frameBox.getGeometryN(0).getCoordinates(); //полигон векторов сторон рамы
 
             for (int j = 0; j < coo1.length - 1; j++) {
                 ElemSimple elemStv = elemList.get(coo1[j].z);

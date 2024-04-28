@@ -129,7 +129,7 @@ public class AreaSimple extends Com5t {
     @Override
     public void paint() {
         try {
-            if (listenerPassEdit != null) {
+      /*      if (listenerPassEdit != null) {
                 listenerPassEdit.paint();
             }
             winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
@@ -227,7 +227,7 @@ public class AreaSimple extends Com5t {
                     }
                     winc.gc2d.setTransform(orig);
                 }
-            }
+            } */
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.paint()");

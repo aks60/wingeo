@@ -176,18 +176,31 @@ public class Wincalc {
             //Инит. артикулов элементов конструкции
             listElem.forEach(e -> e.initArtikle());
 
-            //Пилим полигоны на ареа справа и слева
+            //Создание и коррекция сторон створки
+            if (root.type == Type.DOOR) {
+                listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
+            }
+
+            //Пилим полигоны на ареа и рассчёт полигона импостов
             listElem.filter(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).forEach(e -> e.setLocation());
 
             //Создание и коррекция сторон створки
-            listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
+            if (root.type != Type.DOOR) {
+                listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
+            }
 
             //Инит. артикулов створки
             listArea.filter(Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
 
             //Рассчёт полигонов сторон рамы
-            listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
-            
+            if (root.type == Type.DOOR) {
+                for (ElemSimple elemSimple : listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS)) {
+                    elemSimple.setLocation();
+                }
+            } else {
+               listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation()); 
+            }
+
             //Соединения конструкции             
             root.joining();  //L и T соединения
             listArea.filter(Type.STVORKA).forEach(e -> e.joining());
@@ -265,7 +278,7 @@ public class Wincalc {
 
             //Размерные линии
             this.root.paint();
-            
+
 // <editor-fold defaultstate="collapsed" desc="Раскладка"> 
 /*            
             //Прорисовка раскладок

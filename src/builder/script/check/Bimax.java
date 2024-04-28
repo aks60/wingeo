@@ -325,6 +325,7 @@ public final class Bimax {
                     .addElem(new GsonElem(Type.GLASS));
 
 // </editor-fold>
+
 // <editor-fold defaultstate="collapsed" desc="TRAPEZE"> 
         } else if (prj == 506642) {
             rootGson = new GsonRoot(425392, prj, 1, 54, Type.TRAPEZE, "KBE / KBE Эксперт / 1 ОКНА / Открывание внутрь (ств. Z 77)", 1009, 10009, 1009);
@@ -367,7 +368,7 @@ public final class Bimax {
 
             GsonElem stv = rootGson.addArea(new GsonElem(Type.STVORKA));
             stv.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-            stv.addElem(new GsonElem(Type.IMPOST, 0.0, 800.0, 900.0, 800.0));
+            stv.addElem(new GsonElem(Type.IMPOST, 0.0, 1300.0, 900.0, 1300.0));
             stv.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 700009) { //PUNIC = 427847 Двери
