@@ -133,14 +133,21 @@ public class AreaSimple extends Com5t {
                 listenerPassEdit.paint();
             }
             winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
-            Envelope boxRama = winc.root.area.getGeometryN(0).getEnvelopeInternal();
+            Envelope frameEnv = winc.root.area.getGeometryN(0).getEnvelopeInternal();
             HashSet<Double> hsHor = new HashSet<Double>(), hsVer = new HashSet<Double>();
 
-            for (AreaSimple area5e : winc.listArea) {
-                Geometry poly = (area5e.type == Type.STVORKA) ? ((AreaStvorka) area5e).frameBox.getGeometryN(0) : area5e.area.getGeometryN(0);
-                Coordinate coo[] = poly.getCoordinates();
+//            Object o1 = winc.listArea.filterNo(Type.STVORKA);
+            //if(root.type == null){
+               //System.out.println(root.type );
+            //}
+                        
+            for (AreaSimple area5e : winc.listArea.filterNo(Type.STVORKA)) {
+//                Geometry frameBox = (area5e.type == Type.STVORKA) ? ((AreaStvorka) area5e).frameBox.getGeometryN(0) : area5e.area.getGeometryN(0);
+                Geometry frameBox =  area5e.area.getGeometryN(0);
+                Coordinate coo[] = frameBox.getCoordinates();
                 hsHor.add(coo[0].x);
                 hsVer.add(coo[0].y);
+                
                 if (this instanceof AreaArch) {
                     Geometry geo1 = this.area.getGeometryN(0);
                     Envelope env = geo1.getEnvelopeInternal();
@@ -149,7 +156,7 @@ public class AreaSimple extends Com5t {
                 for (int i = 1; i < coo.length; i++) {
                     Coordinate c1 = coo[i - 1], c2 = coo[i];
 
-                    if (c2.z != c1.z) {
+                    if (c2.z != c1.z && Math.abs(c2.x - c1.x) > 0.09) {
                         hsHor.add(c2.x);
                     }
                     if (c2.z != c1.z && Math.abs(c2.y - c1.y) > 0.09) {
@@ -163,9 +170,9 @@ public class AreaSimple extends Com5t {
             Collections.sort(listVer);
 
             Font font = new Font("Dialog", 0, UCom.scaleFont(winc.scale)); //размер шрифта (см. canvas)
-            winc.gc2d.setFont(font);           
+            winc.gc2d.setFont(font);
             AffineTransform orig = winc.gc2d.getTransform();
-            Rectangle2D txt2D = font.getStringBounds("999.99", winc.gc2d.getFontRenderContext());            
+            Rectangle2D txt2D = font.getStringBounds("999.99", winc.gc2d.getFontRenderContext());
 
             //По горизонтали
             for (int i = 1; i < listHor.size(); ++i) {
@@ -179,16 +186,16 @@ public class AreaSimple extends Com5t {
                     double length = Math.round(dx); //длина вектора
 
                     //Размерные линии
-                    Geometry lineTip1 = UGeo.lineTip((i == 1), tail[0], boxRama.getMaxY() + rec2D.getHeight() / 2, 180, len);
+                    Geometry lineTip1 = UGeo.lineTip((i == 1), tail[0], frameEnv.getMaxY() + rec2D.getHeight() / 2, 180, len);
                     Shape shape = new ShapeWriter().toShape(lineTip1);
                     winc.gc2d.draw(shape);
-                    Geometry lineTip2 = UGeo.lineTip((i == (listHor.size() - 1)), tail[1], boxRama.getMaxY() + rec2D.getHeight() / 2, 0, len);
+                    Geometry lineTip2 = UGeo.lineTip((i == (listHor.size() - 1)), tail[1], frameEnv.getMaxY() + rec2D.getHeight() / 2, 0, len);
                     shape = new ShapeWriter().toShape(lineTip2);
                     winc.gc2d.draw(shape);
 
                     //Текст на линии
-                    double pxy[] = {listHor.get(i - 1) + len + 8, boxRama.getMaxY() + txt2D.getHeight() * .86}; //точка начала текста
-                    if (length < txt2D.getWidth()) {                       
+                    double pxy[] = {listHor.get(i - 1) + len + 8, frameEnv.getMaxY() + txt2D.getHeight() * .86}; //точка начала текста
+                    if (length < txt2D.getWidth()) {
                         pxy[1] = pxy[1] + txt2D.getHeight() / 2;
                         winc.gc2d.drawString(txt, (int) pxy[0], (int) (pxy[1]));
                     } else {
@@ -210,15 +217,15 @@ public class AreaSimple extends Com5t {
                     double length = Math.round(dy); //длина вектора
 
                     //Размерные линии
-                    Geometry lineTip1 = UGeo.lineTip((i == 1), boxRama.getMaxX() + rec2D.getHeight() / 2, tail[0], -90, len);
+                    Geometry lineTip1 = UGeo.lineTip((i == 1), frameEnv.getMaxX() + rec2D.getHeight() / 2, tail[0], -90, len);
                     Shape shape = new ShapeWriter().toShape(lineTip1);
                     winc.gc2d.draw(shape);
-                    Geometry lineTip2 = UGeo.lineTip((i == (listVer.size() - 1)), boxRama.getMaxX() + rec2D.getHeight() / 2, tail[1], 90, len);
+                    Geometry lineTip2 = UGeo.lineTip((i == (listVer.size() - 1)), frameEnv.getMaxX() + rec2D.getHeight() / 2, tail[1], 90, len);
                     shape = new ShapeWriter().toShape(lineTip2);
                     winc.gc2d.draw(shape);
 
                     //Текст на линии
-                    double pxy[] = {boxRama.getMaxX() + txt2D.getHeight() - 6, listVer.get(i) - len}; //точка врашения и начала текста                    
+                    double pxy[] = {frameEnv.getMaxX() + txt2D.getHeight() - 6, listVer.get(i) - len}; //точка врашения и начала текста                    
                     if (length < (txt2D.getWidth())) {
                         winc.gc2d.drawString(txt, (int) (pxy[0] + 4), (int) (pxy[1] - txt2D.getHeight() / 2));
                     } else {

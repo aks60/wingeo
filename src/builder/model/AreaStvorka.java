@@ -156,8 +156,8 @@ public class AreaStvorka extends AreaSimple {
     //Создание и коррекция сторон створки
     public void setLocation() {
         try {
-            //Полигон векторов сторон рамы owner.area - если нет полигона створки в гл.окне 
-            //иначе, this.area  получатется при распиле owner.area импостом
+            //owner.area - если нет полигона створки в гл.окне 
+            //this.area  - получатется при распиле owner.area импостом
             this.frameBox = (winc.listElem.filter(Type.IMPOST).isEmpty()) 
                     || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
             
