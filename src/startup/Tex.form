@@ -365,7 +365,6 @@
         <Menu class="javax.swing.JMenu" name="mn06">
           <Properties>
             <Property name="text" type="java.lang.String" value="   &#x421;&#x435;&#x440;&#x432;&#x438;&#x441;  "/>
-            <Property name="actionCommand" type="java.lang.String" value="   &#x421;&#x435;&#x440;&#x432;&#x438;&#x441;  "/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="frames.UGui.getFont(1,1)" type="code"/>
             </Property>

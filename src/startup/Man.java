@@ -587,7 +587,7 @@ public class Man extends javax.swing.JFrame {
 // </editor-fold>
     
     private void initElements() {
-        setTitle(eProfile.profile.title + UGui.designTitle());
+        setTitle(UGui.designTitle());
         LookAndFeel lookAndFeel = UIManager.getLookAndFeel();
         for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
             JCheckBoxMenuItem mnIt = new javax.swing.JCheckBoxMenuItem();

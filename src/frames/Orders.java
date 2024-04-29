@@ -358,7 +358,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         if (index != -1) {
             Record prjprodRec = qPrjprod.get(index);
             eProp.prjprodID.write(prjprodRec.getStr(ePrjprod.id)); //запишем текущий prjprodID в файл
-            App.Top.frame.setTitle(eProfile.profile.title + UGui.designTitle());
+            App.Top.frame.setTitle(UGui.designTitle());
             Object w = prjprodRec.get(ePrjprod.values().length);
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc win = (Wincalc) w;

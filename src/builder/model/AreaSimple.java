@@ -135,24 +135,33 @@ public class AreaSimple extends Com5t {
             winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
             Envelope frameEnv = winc.root.area.getGeometryN(0).getEnvelopeInternal();
             HashSet<Double> hsHor = new HashSet<Double>(), hsVer = new HashSet<Double>();
+            if (this.type != Type.DOOR) {
+                for (AreaSimple area5e : winc.listArea.filterNo(Type.STVORKA)) {
+                    Geometry frameBox = area5e.area.getGeometryN(0);
+                    Coordinate coo[] = frameBox.getCoordinates();
+                    //hsHor.add(coo[0].x);
+                    //hsVer.add(coo[0].y);
 
-//            Object o1 = winc.listArea.filterNo(Type.STVORKA);
-            //if(root.type == null){
-               //System.out.println(root.type );
-            //}
-                        
-            for (AreaSimple area5e : winc.listArea.filterNo(Type.STVORKA)) {
-//                Geometry frameBox = (area5e.type == Type.STVORKA) ? ((AreaStvorka) area5e).frameBox.getGeometryN(0) : area5e.area.getGeometryN(0);
-                Geometry frameBox =  area5e.area.getGeometryN(0);
-                Coordinate coo[] = frameBox.getCoordinates();
-                hsHor.add(coo[0].x);
-                hsVer.add(coo[0].y);
-                
-                if (this instanceof AreaArch) {
-                    Geometry geo1 = this.area.getGeometryN(0);
-                    Envelope env = geo1.getEnvelopeInternal();
-                    hsVer.add(env.getMinY());
+                    if (this instanceof AreaArch) {
+                        Geometry geo1 = this.area.getGeometryN(0);
+                        Envelope env = geo1.getEnvelopeInternal();
+                        hsVer.add(env.getMinY());
+                    }
+                    for (int i = 1; i < coo.length; i++) {
+                        Coordinate c1 = coo[i - 1], c2 = coo[i];
+
+                        if (c2.z != c1.z && Math.abs(c2.x - c1.x) > 0.09) {
+                            hsHor.add(c2.x);
+                        }
+                        if (c2.z != c1.z && Math.abs(c2.y - c1.y) > 0.09) {
+                            hsVer.add(c2.y);
+                        }
+                    }
+                    
                 }
+            } else {
+                Geometry frameBox = this.area.getGeometryN(0);
+                Coordinate coo[] = frameBox.getCoordinates();
                 for (int i = 1; i < coo.length; i++) {
                     Coordinate c1 = coo[i - 1], c2 = coo[i];
 
@@ -162,6 +171,9 @@ public class AreaSimple extends Com5t {
                     if (c2.z != c1.z && Math.abs(c2.y - c1.y) > 0.09) {
                         hsVer.add(c2.y);
                     }
+                }
+                for (ElemSimple elem5e : winc.listElem.filter(Type.IMPOST)) {
+                    hsVer.add(elem5e.y1());
                 }
             }
             List<Double> listHor = new ArrayList<Double>(hsHor);

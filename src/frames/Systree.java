@@ -568,7 +568,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             if (writeNuni == true) {
                 eProp.sysprodID.write(sysprodRec.getStr(eSysprod.id)); //запишем текущий sysprodID в файл
             }
-            App.Top.frame.setTitle(eProfile.profile.title + UGui.designTitle());
+            App.Top.frame.setTitle(UGui.designTitle());
 
             Object w = sysprodRec.get(eSysprod.values().length);
             if (w instanceof Wincalc) { //прорисовка окна               

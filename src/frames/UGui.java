@@ -376,7 +376,7 @@ public class UGui {
                             str = str.substring(6, 128);
                         }
                     }
-                    return "   Изделие: " + eSystree.patch(productRec.getInt(eSysprod.systree_id), "") + "/" + str;
+                    return eProfile.profile.title + "   Изделие: " + eSystree.patch(productRec.getInt(eSysprod.systree_id), "") + "/" + str;
                 }
 
             } else if (eProfile.profile == eProfile.P03) {
@@ -392,7 +392,7 @@ public class UGui {
                             str = str.substring(6, 128);
                         }
                     }
-                    return "   Изделие: " + eSystree.patch(productRec.getInt(ePrjprod.systree_id), "") + "/" + str;
+                    return eProfile.profile.title + "   Изделие: " + eSystree.patch(productRec.getInt(ePrjprod.systree_id), "") + "/" + str;
                 }
             }
             return "";
