@@ -4267,7 +4267,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 updateScript(selectID);
 
             }, qArtikl);
-            //this.reload().execsql();
 
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.rascladkaToGlass() " + e);
