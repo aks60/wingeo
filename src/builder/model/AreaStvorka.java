@@ -197,8 +197,8 @@ public class AreaStvorka extends AreaSimple {
                 coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
             }
 
-            Polygon geo2 = buffer(stvBox, this.frames, 0);
-            this.area = gf.createMultiPolygon(new Polygon[]{stvBox, geo2});
+            Polygon stvProf = buffer(stvBox, this.frames, 0);
+            this.area = gf.createMultiPolygon(new Polygon[]{stvBox, stvProf});
 
             //Высота ручки, линии открывания
             if (this.typeOpen != TypeOpen1.EMPTY) {
@@ -301,18 +301,18 @@ public class AreaStvorka extends AreaSimple {
     }
 
     public void mosquitPaint() {
-        if (this.mosqRec.isVirtual() == false) {
-            Envelope envMosq = this.frameBox.getEnvelopeInternal();
+        if (this.mosqRec.isVirtual() == false) {     
+            Envelope envMosq = this.area.getGeometryN(1).getEnvelopeInternal();
             int z = (winc.scale < 0.1) ? 80 : 30;
             int h = 0, w = 0;
-            Record colorRasc = eColor.find(this.mosqColor);
-            winc.gc2d.setColor(new Color(colorRasc.getInt(eColor.rgb)));
+            Record colorMosq = eColor.find(this.mosqColor);
+            winc.gc2d.setColor(new Color(colorMosq.getInt(eColor.rgb)));
 
-            for (int i = 1; i < (envMosq.getMinY() - envMosq.getMaxY()) / z; i++) {
+            for (int i = 1; i < (envMosq.getMaxY() - envMosq.getMinY()) / z; i++) {
                 h = h + z;
                 winc.gc2d.drawLine((int) envMosq.getMinX(), (int) (envMosq.getMinY() + h), (int) envMosq.getMaxX(), (int) (envMosq.getMinY() + h));
             }
-            for (int i = 1; i < (envMosq.getMinX() - envMosq.getMaxX()) / z; i++) {
+            for (int i = 1; i < (envMosq.getMaxX() - envMosq.getMinX()) / z; i++) {
                 w = w + z;
                 winc.gc2d.drawLine((int) (envMosq.getMinX() + w), (int) envMosq.getMinY(), (int) (envMosq.getMinX() + w), (int) envMosq.getMaxY());
             }
