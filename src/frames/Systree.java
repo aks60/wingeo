@@ -4259,8 +4259,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 if (artiklRec.get(eArtikl.id) != null) {
                     classElem.gson.param.addProperty(PKjson.artiklRasc, artiklRec.getStr(eArtikl.id));
                 } else {
-                    classElem.rascRec = eArtikl.virtualRec(); //раскладка
-                    classElem.rascColor = -3; //цвет раскладки
                     classElem.gson.param.remove(PKjson.artiklRasc);
                     classElem.gson.param.remove(PKjson.colorRasc);
                     classElem.gson.param.remove(PKjson.horRasc);
