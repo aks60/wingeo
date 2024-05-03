@@ -263,6 +263,9 @@ public class Wincalc {
 
             //Прорисовка стеклопакетов
             this.listElem.filter(Type.GLASS).stream().forEach(el -> el.paint());
+            
+            //Прорисовка раскладок
+            this.listElem.filter(Type.GLASS).stream().forEach(el -> el.rascladkaPaint());
 
             //Прорисовка импостов
             this.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA).stream().forEach(el -> el.paint());
@@ -273,6 +276,9 @@ public class Wincalc {
             //Прорисовка профилей створок
             this.listElem.filter(Type.STVORKA_SIDE).stream().forEach(el -> el.paint());
 
+            //Прорисовка 
+            //this.listElem.filter(Type.GLASS).stream().forEach(el -> el.rascladkaPaint());
+            
             //Прорисока фурнитуры створок
             this.listArea.filter(Type.STVORKA).stream().forEach(el -> el.paint());
 

@@ -62,6 +62,9 @@ public class Com5t {
     public void paint() {
     }
 
+    public void rascladkaPaint() {
+    }
+    
     /**
      * Длина компонента
      */

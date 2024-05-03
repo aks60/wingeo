@@ -7,6 +7,7 @@ import builder.script.GsonElem;
 import common.ArrayCom;
 import common.GeoBuffer;
 import common.UCom;
+import common.listener.ListenerReload;
 import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
@@ -17,8 +18,10 @@ import enums.PKjson;
 import enums.Type;
 import enums.TypeArtikl;
 import enums.UseUnit;
+import java.awt.Color;
 import java.awt.Shape;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 import org.locationtech.jts.algorithm.Angle;
@@ -27,6 +30,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.Polygon;
 
 public class ElemGlass extends ElemSimple {
 
@@ -38,9 +42,10 @@ public class ElemGlass extends ElemSimple {
     public int sideglass = 0;
     public Double deltaDY = null;
 
-    public Record rasclRec = eArtikl.virtualRec(); //раскладка
-    public int rasclColor = -3; //цвет раскладки
-    public int rasclNumber[] = {2, 2}; //количество проёмов раскладки     
+    public Record rascRec = eArtikl.virtualRec(); //раскладка
+    public int rascColor = -3; //цвет раскладки
+    //public List<LineSegment> rascList = null;
+    public int[] rascNumber = {2, 2}; //количество проёмов раскладки     
 
     public ElemGlass(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
@@ -69,21 +74,21 @@ public class ElemGlass extends ElemSimple {
         }
 
         //Раскладка
-        if (isJson(gson.param, PKjson.artiklRascl)) {
-            rasclRec = eArtikl.find(gson.param.get(PKjson.artiklRascl).getAsInt(), false);
+        if (isJson(gson.param, PKjson.artiklRasc)) {
+            rascRec = eArtikl.find(gson.param.get(PKjson.artiklRasc).getAsInt(), false);
             //Текстура
-            if (isJson(gson.param, PKjson.colorRascl)) {
-                rasclColor = eColor.get(gson.param.get(PKjson.colorRascl).getAsInt()).getInt(eColor.id);
+            if (isJson(gson.param, PKjson.colorRasc)) {
+                rascColor = eColor.get(gson.param.get(PKjson.colorRasc).getAsInt()).getInt(eColor.id);
             } else {
-                rasclColor = eArtdet.find(rasclRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk); //цвет по умолчанию
+                rascColor = eArtdet.find(rascRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk); //цвет по умолчанию
             }
             //Проёмы гориз.
-            if (isJson(gson.param, PKjson.rasclHor)) {
-                rasclNumber[0] = gson.param.get(PKjson.rasclHor).getAsInt();
+            if (isJson(gson.param, PKjson.horRasc)) {
+                rascNumber[0] = gson.param.get(PKjson.horRasc).getAsInt();
             }
             //Проёмы вертик.
-            if (isJson(gson.param, PKjson.rasclVert)) {
-                rasclNumber[1] = gson.param.get(PKjson.rasclVert).getAsInt();
+            if (isJson(gson.param, PKjson.verRasc)) {
+                rascNumber[1] = gson.param.get(PKjson.verRasc).getAsInt();
             }
         }
     }
@@ -100,7 +105,7 @@ public class ElemGlass extends ElemSimple {
 
         this.areaFalz = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
 
-        Coordinate[] coo = this.areaFalz.getCoordinates();        
+        Coordinate[] coo = this.areaFalz.getCoordinates();
         if (this.areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
             coo[0].z = coo[1].z;
             coo[1].z = coo[coo.length - 2].z;
@@ -110,12 +115,12 @@ public class ElemGlass extends ElemSimple {
         //Для тестирования
         if (owner.area.getNumPoints() > Com5t.MAXSIDE) {
             this.deltaDY = this.areaFalz.getCoordinate().y - owner.area.getCoordinate().y;
-            System.out.println("ФОРМА КОНТУРА = " + coo[0].z);
-        } else if (root.type == Type.TRAPEZE && owner.area.isRectangle() == false)  {
+            //System.out.println("ФОРМА КОНТУРА = " + coo[0].z);
+        } else if (root.type == Type.TRAPEZE && owner.area.isRectangle() == false) {
             Coordinate[] co2 = owner.area.getCoordinates();
             if (winc.listElem.stream().filter(e -> e.type == Type.IMPOST && e.layout() == Layout.HORIZ).findFirst().orElse(null) != null) {
                 this.deltaDY = coo[coo.length - 2].y - co2[co2.length - 2].y;
-                System.out.println("ФОРМА КОНТУРА = " + coo.length);
+                //System.out.println("ФОРМА КОНТУРА = " + coo.length);
             }
         }
     }
@@ -242,6 +247,40 @@ public class ElemGlass extends ElemSimple {
             }
         } catch (Exception e) {
             System.err.println("Ошибка:ElemGlass.addSpecific()  " + e);
+        }
+    }
+
+    public void rascladkaPaint() {
+        if (this.rascRec.isVirtual() == false) {
+
+            ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
+            Map<Double, Double> hm = new HashMap();
+            for (Com5t el : list) {
+                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+                hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr));
+            }
+            Polygon areaRasc = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);  //полигон внут. по ширине профиля для прорисовки раскладки
+            Envelope envRasc = areaRasc.getEnvelopeInternal();
+
+            double artH = Math.round(this.rascRec.getDbl(eArtikl.height));
+            final int numX = (gson.param.get(PKjson.horRasc) == null) ? 2 : gson.param.get(PKjson.horRasc).getAsInt();
+            final int numY = (gson.param.get(PKjson.verRasc) == null) ? 2 : gson.param.get(PKjson.verRasc).getAsInt();
+            final double dy = (envRasc.getMaxY() - envRasc.getMinY()) / numY, dx = (envRasc.getMaxX() - envRasc.getMinX()) / numX;
+            Record colorRasc = eColor.find(this.rascColor);
+            winc.gc2d.setColor(new Color(colorRasc.getInt(eColor.rgb)));
+
+            double h = 0;
+            for (int i = 1; i < numY; i++) {
+                h = h + dy;
+                winc.gc2d.fillRect((int) envRasc.getMinX(), (int) Math.round(envRasc.getMinY() + h - artH / 2), (int) (envRasc.getMaxX() - envRasc.getMinX()), (int) artH);
+            }
+
+            double w = 0;
+            for (int i = 1; i < numX; i++) {
+                w = w + dx;
+                winc.gc2d.fillRect((int) Math.round(envRasc.getMinX() + w - artH / 2), (int) envRasc.getMinY(), (int) artH, (int) (envRasc.getMaxY() - envRasc.getMinY()));
+            }
+
         }
     }
 

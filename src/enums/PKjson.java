@@ -12,13 +12,13 @@ public class PKjson {
     public final static String artiklKnob = "artiklKnob"; //Ручка на створке
     public final static String artiklLoop = "artiklLoop"; //Подвес на створке
     public final static String artiklLock = "artiklLock"; //Замок на створке
-    public final static String artiklRascl = "artiklRascl"; //Раскладка
+    public final static String artiklRasc = "artiklRasc"; //Раскладка
     
     public final static String colorKnob = "colorKnob"; //Цвет ручки створки 
     public final static String colorLoop = "colorLoop"; //Цвет подвеса
     public final static String colorLock = "colorLock"; //Цвет замка
     public final static String colorGlass = "colorGlass"; //Цвет стекла
-    public final static String colorRascl = "colorRascl"; //Цвет раскладки
+    public final static String colorRasc = "colorRasc"; //Цвет раскладки
 
     public final static String colorID1 = "colorID1"; //Текстура
     public final static String colorID2 = "colorID2"; //Текстура
@@ -35,6 +35,6 @@ public class PKjson {
     public final static String stvorkaSide[] = {PKjson.stvorkaLef, PKjson.stvorkaBot, PKjson.stvorkaRig, PKjson.stvorkaTop};
 
     
-    public final static String rasclHor = "rasclHor"; //количество проёмов раскладки
-    public final static String rasclVert = "rasclVert"; //количество проёмов раскладки
+    public final static String horRasc = "horRasc"; //количество проёмов раскладки
+    public final static String verRasc = "verRasc"; //количество проёмов раскладки
 }

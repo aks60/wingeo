@@ -466,13 +466,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     setText(txt18, artiklRec.getStr(eArtikl.name));
                     Record colorRec = eColor.find(winNode.com5t().colorID1);
                     setText(txt34, colorRec.getStr(eColor.name));
-                    Record rasclRec = ((ElemGlass) winNode.com5t()).rasclRec;
+                    Record rasclRec = ((ElemGlass) winNode.com5t()).rascRec;
                     setText(txt49, rasclRec.getStr(eArtikl.code));
                     setText(txt50, rasclRec.getStr(eArtikl.name));
-                    Record colorRascl = eColor.find(((ElemGlass) winNode.com5t()).rasclColor);
+                    Record colorRascl = eColor.find(((ElemGlass) winNode.com5t()).rascColor);
                     setText(txt51, colorRascl.getStr(eColor.name));
-                    spinHor.setValue(((ElemGlass) winNode.com5t()).rasclNumber[0]);
-                    spinVert.setValue(((ElemGlass) winNode.com5t()).rasclNumber[1]);
+                    spinHor.setValue(((ElemGlass) winNode.com5t()).rascNumber[0]);
+                    spinVert.setValue(((ElemGlass) winNode.com5t()).rascNumber[1]);
                     if (elem.deltaDY != null) {
                         ElemSimple el = winc.listElem.stream().filter(e -> e.type == enums.Type.IMPOST).findFirst().orElse(null);
                         double s1 = el.artiklRec.getDbl(eArtikl.height), s2 = el.artiklRec.getDbl(eArtikl.size_centr), s3 = el.artiklRec.getDbl(eArtikl.size_falz);
@@ -884,6 +884,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btnTest = new javax.swing.JButton();
         btnFind1 = new javax.swing.JButton();
         btnMoveU = new javax.swing.JButton();
+        btnTree = new javax.swing.JButton();
         btnMoveD = new javax.swing.JButton();
         btnFind2 = new javax.swing.JButton();
         centr = new javax.swing.JPanel();
@@ -1224,6 +1225,22 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         });
 
+        btnTree.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c086.gif"))); // NOI18N
+        btnTree.setToolTipText(bundle.getString("Переместить вниз")); // NOI18N
+        btnTree.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnTree.setFocusable(false);
+        btnTree.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnTree.setMaximumSize(new java.awt.Dimension(25, 25));
+        btnTree.setMinimumSize(new java.awt.Dimension(25, 25));
+        btnTree.setPreferredSize(new java.awt.Dimension(25, 25));
+        btnTree.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btnTree.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnTree.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTreebtnMove(evt);
+            }
+        });
+
         btnMoveD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c052.gif"))); // NOI18N
         btnMoveD.setToolTipText(bundle.getString("Переместить вниз")); // NOI18N
         btnMoveD.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -1271,10 +1288,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnFind2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTree, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMoveU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMoveD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 553, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 522, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnReport1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1293,7 +1312,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 .addComponent(btnTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnFind1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnMoveU, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnMoveD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnMoveD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnTree, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(btnFind2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -4229,17 +4249,27 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     private void rascladkaToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rascladkaToGlass
         try {
-            ElemSimple classElem = (ElemSimple) winNode.com5t();
+            ElemGlass classElem = (ElemGlass) winNode.com5t();
             double selectID = winNode.com5t().id;
             Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
                     "where", eArtikl.level1, "= 1 and", eArtikl.level2, "= 12");
 
             new DicArtikl(this, (artiklRec) -> {
 
-                classElem.gson.param.addProperty(PKjson.artiklRascl, artiklRec.getStr(eArtikl.id));
+                if (artiklRec.get(eArtikl.id) != null) {
+                    classElem.gson.param.addProperty(PKjson.artiklRasc, artiklRec.getStr(eArtikl.id));
+                } else {
+                    classElem.rascRec = eArtikl.virtualRec(); //раскладка
+                    classElem.rascColor = -3; //цвет раскладки
+                    classElem.gson.param.remove(PKjson.artiklRasc);
+                    classElem.gson.param.remove(PKjson.colorRasc);
+                    classElem.gson.param.remove(PKjson.horRasc);
+                    classElem.gson.param.remove(PKjson.verRasc);     
+                }
                 updateScript(selectID);
 
             }, qArtikl);
+            //this.reload().execsql();
 
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.rascladkaToGlass() " + e);
@@ -4250,14 +4280,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         try {
             double selectID = winNode.com5t().id;
             ElemSimple glas = (ElemSimple) winNode.com5t();
-            HashSet<Record> colorSet = UGui.artiklToColorSet(((ElemGlass) glas).rasclRec.getInt(eArtikl.id));
+            HashSet<Record> colorSet = UGui.artiklToColorSet(((ElemGlass) glas).rascRec.getInt(eArtikl.id));
             DicColor frame = new DicColor(this, (colorRec) -> {
 
                 GsonElem glassElem = (GsonElem) wincalc().listAll.gson(selectID);
                 if (colorRec.get(1) == null) {
-                    glassElem.param.remove(PKjson.colorRascl);
+                    glassElem.param.remove(PKjson.colorRasc);
                 } else {
-                    glassElem.param.addProperty(PKjson.colorRascl, colorRec.getStr(eColor.id));
+                    glassElem.param.addProperty(PKjson.colorRasc, colorRec.getStr(eColor.id));
                 }
                 updateScript(selectID);
 
@@ -4271,14 +4301,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private void spinHorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinHorStateChanged
         double selectID = winNode.com5t().id;
         GsonElem glassElem = (GsonElem) wincalc().listAll.gson(selectID);
-        glassElem.param.addProperty(PKjson.rasclHor, spinHor.getValue().toString());
+        glassElem.param.addProperty(PKjson.horRasc, spinHor.getValue().toString());
         updateScript(selectID);
     }//GEN-LAST:event_spinHorStateChanged
 
     private void spinVertStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinVertStateChanged
         double selectID = winNode.com5t().id;
         GsonElem glassElem = (GsonElem) wincalc().listAll.gson(selectID);
-        glassElem.param.addProperty(PKjson.rasclVert, spinVert.getValue().toString());
+        glassElem.param.addProperty(PKjson.verRasc, spinVert.getValue().toString());
         updateScript(selectID);
     }//GEN-LAST:event_spinVertStateChanged
 
@@ -4326,6 +4356,15 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }//GEN-LAST:event_tabMouseClicked
 
+    private void btnTreebtnMove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTreebtnMove
+        if (scr1.isVisible() == true) {
+            scr1.setVisible(false);
+        } else {
+            scr1.setVisible(true);
+        }
+        this.pack();
+    }//GEN-LAST:event_btnTreebtnMove
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn10;
@@ -4367,6 +4406,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private javax.swing.JButton btnRef;
     private javax.swing.JButton btnReport1;
     private javax.swing.JButton btnTest;
+    private javax.swing.JButton btnTree;
     private javax.swing.JPanel centr;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
