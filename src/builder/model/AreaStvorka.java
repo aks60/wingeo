@@ -4,6 +4,7 @@ import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import common.ArrayCom;
+import common.GeoBuffer;
 import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
@@ -20,9 +21,13 @@ import enums.TypeJoin;
 import enums.TypeOpen1;
 import enums.TypeOpen2;
 import enums.UseSide;
+import java.awt.Color;
 import java.awt.Shape;
+import java.util.HashMap;
+import java.util.Map;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
@@ -158,9 +163,9 @@ public class AreaStvorka extends AreaSimple {
         try {
             //owner.area - если нет полигона створки в гл.окне 
             //this.area  - получатется при распиле owner.area импостом
-            this.frameBox = (winc.listElem.filter(Type.IMPOST).isEmpty()) 
+            this.frameBox = (winc.listElem.filter(Type.IMPOST).isEmpty())
                     || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
-            
+
             //Полигон створки с учётом нахлёста 
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
             Polygon stvBox = buffer(this.frameBox, winc.listElem, -dh); //полигон векторов сторон створки с учётом нахл. 
@@ -292,6 +297,25 @@ public class AreaStvorka extends AreaSimple {
             }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.joining() " + e);
+        }
+    }
+
+    public void mosquitPaint() {
+        if (this.mosqRec.isVirtual() == false) {
+            Envelope envMosq = this.frameBox.getEnvelopeInternal();
+            int z = (winc.scale < 0.1) ? 80 : 30;
+            int h = 0, w = 0;
+            Record colorRasc = eColor.find(this.mosqColor);
+            winc.gc2d.setColor(new Color(colorRasc.getInt(eColor.rgb)));
+
+            for (int i = 1; i < (envMosq.getMinY() - envMosq.getMaxY()) / z; i++) {
+                h = h + z;
+                winc.gc2d.drawLine((int) envMosq.getMinX(), (int) (envMosq.getMinY() + h), (int) envMosq.getMaxX(), (int) (envMosq.getMinY() + h));
+            }
+            for (int i = 1; i < (envMosq.getMinX() - envMosq.getMaxX()) / z; i++) {
+                w = w + z;
+                winc.gc2d.drawLine((int) (envMosq.getMinX() + w), (int) envMosq.getMinY(), (int) (envMosq.getMinX() + w), (int) envMosq.getMaxY());
+            }
         }
     }
 

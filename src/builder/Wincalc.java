@@ -80,7 +80,7 @@ public class Wincalc {
 
     public void build(String script) {
         //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script))); //для тестирования
-        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
         //Инит свойств
         specificID = 0;
@@ -265,8 +265,11 @@ public class Wincalc {
             this.listElem.filter(Type.GLASS).stream().forEach(el -> el.paint());
             
             //Прорисовка раскладок
-            this.listElem.filter(Type.GLASS).stream().forEach(el -> el.rascladkaPaint());
+            this.listElem.filter(Type.GLASS).stream().forEach(el -> ((ElemGlass) el).rascladkaPaint());
 
+            //Прорисовка москиток
+            this.listArea.filter(Type.STVORKA).stream().forEach(el -> ((AreaStvorka) el).mosquitPaint());
+            
             //Прорисовка импостов
             this.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA).stream().forEach(el -> el.paint());
 
@@ -276,9 +279,6 @@ public class Wincalc {
             //Прорисовка профилей створок
             this.listElem.filter(Type.STVORKA_SIDE).stream().forEach(el -> el.paint());
 
-            //Прорисовка 
-            //this.listElem.filter(Type.GLASS).stream().forEach(el -> el.rascladkaPaint());
-            
             //Прорисока фурнитуры створок
             this.listArea.filter(Type.STVORKA).stream().forEach(el -> el.paint());
 

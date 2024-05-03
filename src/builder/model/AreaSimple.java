@@ -124,7 +124,7 @@ public class AreaSimple extends Com5t {
             }
         }
     }
-
+    
     //Линии и координаты размерности
     @Override
     public void paint() {

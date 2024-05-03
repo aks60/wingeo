@@ -85,13 +85,13 @@ public abstract class ElemSimple extends Com5t {
                 if (passMask[0] == 0) {
                     X = dX / winc.scale + this.x1();
                     Y = dY / winc.scale + this.y1();
-                        moveXY(X, Y);
+                    moveXY(X, Y);
 
                     //Кликнул конец вектора
                 } else if (passMask[0] == 1) {
                     X = dX / winc.scale + this.x2();
                     Y = dY / winc.scale + this.y2();
-                        moveXY(X, Y);
+                    moveXY(X, Y);
 
                     //Кликнул по середине вектора 
                 } else if (passMask[0] == 2) {

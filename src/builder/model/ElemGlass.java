@@ -7,7 +7,6 @@ import builder.script.GsonElem;
 import common.ArrayCom;
 import common.GeoBuffer;
 import common.UCom;
-import common.listener.ListenerReload;
 import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
@@ -23,7 +22,9 @@ import java.awt.Shape;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import static java.util.stream.Collectors.toList;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
@@ -252,15 +253,14 @@ public class ElemGlass extends ElemSimple {
 
     public void rascladkaPaint() {
         if (this.rascRec.isVirtual() == false) {
-
             ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
             Map<Double, Double> hm = new HashMap();
             for (Com5t el : list) {
                 Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
                 hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr));
             }
-            Polygon areaRasc = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);  //полигон внут. по ширине профиля для прорисовки раскладки
-            Envelope envRasc = areaRasc.getEnvelopeInternal();
+            Polygon areaProf = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);  //полигон внут. по ширине профиля для прорисовки раскладки
+            Envelope envRasc = areaProf.getEnvelopeInternal();
 
             double artH = Math.round(this.rascRec.getDbl(eArtikl.height));
             final int numX = (gson.param.get(PKjson.horRasc) == null) ? 2 : gson.param.get(PKjson.horRasc).getAsInt();
@@ -269,18 +269,30 @@ public class ElemGlass extends ElemSimple {
             Record colorRasc = eColor.find(this.rascColor);
             winc.gc2d.setColor(new Color(colorRasc.getInt(eColor.rgb)));
 
-            double h = 0;
-            for (int i = 1; i < numY; i++) {
-                h = h + dy;
-                winc.gc2d.fillRect((int) envRasc.getMinX(), (int) Math.round(envRasc.getMinY() + h - artH / 2), (int) (envRasc.getMaxX() - envRasc.getMinX()), (int) artH);
-            }
+            if (owner.area.getNumPoints() > Com5t.MAXSIDE) {
+                double arcID = winc.listElem.stream().filter(e -> e.h() != null).findFirst().get().id;
+                List listC = Stream.of(areaProf.getCoordinates()).filter(c -> c.z == arcID).collect(toList());
+                double w = 0;
+                for (int i = 1; i < numX; i++) {
+                    w = w + dx;
+                    Polygon p = UGeo.newPolygon(Math.round(envRasc.getMinX() + w - artH / 2), envRasc.getMinY(), artH, (envRasc.getMaxY() - envRasc.getMinY()));
+                    Shape shape = new ShapeWriter().toShape(p);
+                    winc.gc2d.fill(shape);
+                    winc.gc2d.fillRect((int) Math.round(envRasc.getMinX() + w - artH / 2), (int) envRasc.getMinY(), (int) artH, (int) (envRasc.getMaxY() - envRasc.getMinY()));
+                }
+            } else {
+                double h = 0;
+                for (int i = 1; i < numY; i++) {
+                    h = h + dy;
+                    winc.gc2d.fillRect((int) envRasc.getMinX(), (int) Math.round(envRasc.getMinY() + h - artH / 2), (int) (envRasc.getMaxX() - envRasc.getMinX()), (int) artH);
+                }
 
-            double w = 0;
-            for (int i = 1; i < numX; i++) {
-                w = w + dx;
-                winc.gc2d.fillRect((int) Math.round(envRasc.getMinX() + w - artH / 2), (int) envRasc.getMinY(), (int) artH, (int) (envRasc.getMaxY() - envRasc.getMinY()));
+                double w = 0;
+                for (int i = 1; i < numX; i++) {
+                    w = w + dx;
+                    winc.gc2d.fillRect((int) Math.round(envRasc.getMinX() + w - artH / 2), (int) envRasc.getMinY(), (int) artH, (int) (envRasc.getMaxY() - envRasc.getMinY()));
+                }
             }
-
         }
     }
 

@@ -3,7 +3,6 @@ package builder.model;
 import builder.Wincalc;
 import builder.making.SpcRecord;
 import builder.script.GsonElem;
-import com.google.gson.JsonObject;
 import common.UCom;
 import dataset.Record;
 import domain.eArtikl;
@@ -11,6 +10,7 @@ import domain.eElement;
 import enums.PKjson;
 import enums.UseUnit;
 import frames.UGui;
+import java.awt.Color;
 import java.util.HashSet;
 
 public class ElemMosquit extends ElemSimple {
@@ -115,9 +115,10 @@ public class ElemMosquit extends ElemSimple {
     //Линии размерности
     @Override  
     public void paint() {
-//        if (this.artiklRec.isVirtual() == false) {
-//            winc.gc2d.setColor(Color.getHSBColor(242, 242, 242));
-//            ElemSimple bott = owner.frames.get(Layout.BOTT), right = owner.frames.get(Layout.RIGHT), top = owner.frames.get(Layout.TOP), left = owner.frames.get(Layout.LEFT);
+        if (this.artiklRec.isVirtual() == false) {
+            winc.gc2d.setColor(Color.getHSBColor(242, 242, 242));
+//            //ElemSimple bott = owner.frames.get(Layout.BOTT), right = owner.frames.get(Layout.RIGHT), top = owner.frames.get(Layout.TOP), left = owner.frames.get(Layout.LEFT);
+//                    
 //            int z = (winc.scale < 0.1) ? 80 : 30;
 //            int h = 0, w = 0;
 //
@@ -129,7 +130,7 @@ public class ElemMosquit extends ElemSimple {
 //                w = w + z;
 //                winc.gc2d.drawLine((int) (left.x2() + w), (int) top.y2(), (int) (left.x2() + w), (int) bott.y1());
 //            }
-//        }
+        }
     }
 
     @Override
