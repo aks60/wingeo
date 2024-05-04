@@ -485,7 +485,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     new SpcFurniture(wincalc(), true); //найдём ручку створки
                     ((CardLayout) pan7.getLayout()).show(pan7, "card16");
                     AreaStvorka stv = (AreaStvorka) winNode.com5t();
-                    AreaSimple sta = (AreaSimple) winNode.com5t();
                     int id = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
                     AreaSimple own = winNode.com5t().owner;
                     setText(txt24, own.width());
@@ -512,14 +511,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     setText(txt48, eColor.find(stv.lockColor).getStr(eColor.name));
                     setIcon(btn24, stv.paramCheck[6]);
                     //Москитка
-                    ArrayCom<Com5t> mosqList = ((AreaSimple) stv).childs.filter(enums.Type.MOSKITKA);
-                    if (mosqList.isEmpty() == false) {
-                        ElemSimple mosq = (ElemSimple) mosqList.get(0);
-                        setText(txt54, mosq.artiklRec.getStr(eArtikl.code));
-                        setText(txt55, mosq.artiklRec.getStr(eArtikl.name));
-                        setText(txt60, eColor.find(mosq.colorID1).getStr(eColor.name));
-                        setText(txt56, mosq.sysprofRec.getStr(eElement.name));
-                    }
+                    Record mosqRec = ((AreaStvorka) winNode.com5t()).mosqRec;
+                    setText(txt54, mosqRec.getStr(eArtikl.code));
+                    setText(txt55, mosqRec.getStr(eArtikl.name));
+                    Record colorMosq = eColor.find(stv.mosqColor);
+                    setText(txt60, colorMosq.getStr(eColor.name));
+                    setText(txt56, stv.elementRec.getStr(eElement.name));
 
                     //Соединения
                 } else if (winNode.com5t().type == enums.Type.JOINING) {
@@ -4195,9 +4192,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         try {
             double selectID = winNode.com5t().id;
             AreaStvorka stvElem = (AreaStvorka) winNode.com5t();
-                Record elemRec = stvElem.elementRec;
+                Record elemRec = stvElem.mosqRec;
                 Query qElements = new Query(eElement.values()).select(eElement.up,
-                        "where", eElement.artikl_id, "=", elemRec.getInt(eElement.id));
+                        "where", eElement.artikl_id, "=", elemRec.getInt(eArtikl.id));
 
                 new DicName(this, (elementRec) -> {
 

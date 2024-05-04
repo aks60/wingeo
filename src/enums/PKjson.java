@@ -13,7 +13,7 @@ public class PKjson {
     public final static String artiklLoop = "artiklLoop"; //Подвес на створке
     public final static String artiklLock = "artiklLock"; //Замок на створке
     public final static String artiklRasc = "artiklRasc"; //Раскладка
-    public final static String artiklMosq = "artiklRasc"; //Москидка
+    public final static String artiklMosq = "artiklMosq"; //Москидка
     
     public final static String colorKnob = "colorKnob"; //Цвет ручки створки 
     public final static String colorLoop = "colorLoop"; //Цвет подвеса

@@ -153,6 +153,19 @@ public class AreaStvorka extends AreaSimple {
 //                knobLayout = LayoutKnob.MIDL; //по умолчанию
 //                //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
 //            }
+            //Москидка
+            if (isJson(gson.param, PKjson.artiklMosq)) {
+                mosqRec = eArtikl.find(gson.param.get(PKjson.artiklMosq).getAsInt(), false);
+                //Текстура
+                if (isJson(gson.param, PKjson.colorMosq)) {
+                    mosqColor = eColor.get(gson.param.get(PKjson.colorMosq).getAsInt()).getInt(eColor.id);
+                } else {
+                    mosqColor = eArtdet.find(mosqRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk); //цвет по умолчанию
+                }
+                if (isJson(gson.param, PKjson.elementID)) {
+                    this.elementRec = eElement.find4(gson.param.get(PKjson.elementID).getAsInt());
+                }
+            }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.furniture " + e);
         }
@@ -301,7 +314,7 @@ public class AreaStvorka extends AreaSimple {
     }
 
     public void mosquitPaint() {
-        if (this.mosqRec.isVirtual() == false) {     
+        if (this.mosqRec.isVirtual() == false) {
             Envelope envMosq = this.area.getGeometryN(1).getEnvelopeInternal();
             int z = (winc.scale < 0.1) ? 80 : 30;
             int h = 0, w = 0;
