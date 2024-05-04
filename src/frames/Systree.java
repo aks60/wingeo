@@ -4175,22 +4175,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
             new DicArtikl(this, (artiklRec) -> {
 
-                GsonElem gsonElem = null;
-                ArrayCom<Com5t> mosqList = ((AreaSimple) stvElem).childs.filter(enums.Type.MOSKITKA);
-
-                if (mosqList.isEmpty() == false) {
-                    ElemSimple mosqElem = (ElemSimple) mosqList.get(0);
-                    gsonElem = mosqElem.gson;
+                if (artiklRec.get(eArtikl.id) != null) {
+                    stvElem.gson.param.addProperty(PKjson.artiklMosq, artiklRec.getStr(eArtikl.id));
                 } else {
-                    gsonElem = new GsonElem(enums.Type.MOSKITKA);
-                    GsonElem stvArea = stvElem.gson;
-                    stvArea.childs.add(gsonElem);
-                }
-                if (artiklRec.get(1) == null) {
-                    gsonElem.param.remove(PKjson.artiklID);
-                    gsonElem.param.remove(PKjson.elementID);
-                } else {
-                    gsonElem.param.addProperty(PKjson.artiklID, artiklRec.getStr(eArtikl.id));
+                    stvElem.gson.param.remove(PKjson.artiklMosq);
+                    stvElem.gson.param.remove(PKjson.colorMosq);
+                    stvElem.gson.param.remove(PKjson.elementID);                    
                 }
                 updateScript(selectID);
 
@@ -4204,25 +4194,22 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private void mosqToElements(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mosqToElements
         try {
             double selectID = winNode.com5t().id;
-            AreaSimple stvElem = (AreaSimple) winNode.com5t();
-            ArrayCom<Com5t> mosqList = ((AreaSimple) stvElem).childs.filter(enums.Type.MOSKITKA);
-            if (mosqList.isEmpty() == false) {
-                ElemSimple mosqElem = (ElemSimple) mosqList.get(0);
-                Record artiklRec = mosqElem.artiklRec;
+            AreaStvorka stvElem = (AreaStvorka) winNode.com5t();
+                Record elemRec = stvElem.elementRec;
                 Query qElements = new Query(eElement.values()).select(eElement.up,
-                        "where", eElement.artikl_id, "=", artiklRec.getInt(eArtikl.id));
+                        "where", eElement.artikl_id, "=", elemRec.getInt(eElement.id));
 
                 new DicName(this, (elementRec) -> {
 
                     if (elementRec.get(1) == null) {
-                        mosqElem.gson.param.remove(PKjson.elementID);
+                        stvElem.gson.param.remove(PKjson.elementID);
                     } else {
-                        mosqElem.gson.param.addProperty(PKjson.elementID, elementRec.getStr(eElement.id));
+                        stvElem.gson.param.addProperty(PKjson.elementID, elementRec.getStr(eElement.id));
                     }
                     updateScript(selectID);
 
                 }, qElements, eElement.name);
-            }
+                
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.mosqToElements() " + e);
         }
@@ -4313,21 +4300,18 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         try {
             double selectID = winNode.com5t().id;
             AreaStvorka stvElem = (AreaStvorka) winNode.com5t();
-            ArrayCom<Com5t> mosqList = ((AreaSimple) stvElem).childs.filter(enums.Type.MOSKITKA);
-            if (mosqList.isEmpty() == false) {
-                ElemMosquit mosqElem = (ElemMosquit) mosqList.get(0);
-                HashSet<Record> colorSet = UGui.artiklToColorSet(mosqElem.artiklRec.getInt(eArtikl.id));
+            HashSet<Record> colorSet = UGui.artiklToColorSet(stvElem.mosqRec.getInt(eArtikl.id));
                 DicColor frame = new DicColor(this, (colorRec) -> {
 
                     if (colorRec.get(1) == null) {
-                        mosqElem.gson.param.remove(PKjson.colorID1);
+                       stvElem.gson.param.remove(PKjson.colorID1);    
                     } else {
-                        mosqElem.gson.param.addProperty(PKjson.colorID1, colorRec.getStr(eColor.id));
+                       stvElem.gson.param.addProperty(PKjson.colorID1, colorRec.getStr(eColor.id));     
                     }
                     updateScript(selectID);
 
                 }, colorSet, true, false);
-            }
+                
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.colorToHandl() " + e);
         }
