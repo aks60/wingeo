@@ -4164,7 +4164,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_btnMove
 
     private void mosquitToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mosquitToStvorka
-        try {
+/*        try {
             AreaSimple stvElem = (AreaSimple) winNode.com5t();
             double selectID = winNode.com5t().id;
             Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
@@ -4178,6 +4178,39 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     stvElem.gson.param.remove(PKjson.artiklMosq);
                     stvElem.gson.param.remove(PKjson.colorMosq);
                     stvElem.gson.param.remove(PKjson.elementID);                    
+                }
+                updateScript(selectID);
+
+            }, qArtikl);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:Systree.mosquitToStvorka() " + e);
+        }
+*/
+        try {
+            AreaStvorka stvElem = (AreaStvorka) winNode.com5t();
+            double selectID = winNode.com5t().id;
+            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
+                    "where", eArtikl.level1, "= 5 and", eArtikl.level2, "= 20");
+
+            new DicArtikl(this, (artiklRec) -> {
+
+                GsonElem gsonElem = null;
+                ArrayCom<Com5t> mosqList = ((AreaStvorka) stvElem).childs.filter(enums.Type.MOSKITKA);
+
+                if (mosqList.isEmpty() == false) {
+                    AreaStvorka mosqElem = (AreaStvorka) mosqList.get(0);
+                    gsonElem = mosqElem.gson;
+                } else {
+                    gsonElem = new GsonElem(enums.Type.MOSKITKA);
+                    GsonElem stvArea = stvElem.gson;
+                    stvArea.childs.add(gsonElem);
+                }
+                if (artiklRec.get(1) == null) {
+                    gsonElem.param.remove(PKjson.artiklID);
+                    gsonElem.param.remove(PKjson.elementID);
+                } else {
+                    gsonElem.param.addProperty(PKjson.artiklID, artiklRec.getStr(eArtikl.id));
                 }
                 updateScript(selectID);
 
