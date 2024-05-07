@@ -15,6 +15,8 @@ import java.util.HashSet;
 
 public class ElemMosquit extends ElemSimple {
 
+    public double anglHoriz = 0;
+    
     public ElemMosquit(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(owner.winc, gson, owner);
     }

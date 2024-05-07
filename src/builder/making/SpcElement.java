@@ -8,11 +8,14 @@ import enums.TypeArtikl;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
+import builder.model.Com5t;
+import builder.model.ElemMosquit;
 import builder.param.ElementDet;
 import builder.param.ElementVar;
 import builder.model.ElemSimple;
 import builder.model.UGeo;
 import dataset.Query;
+import domain.eSysprof;
 import enums.Type;
 import java.util.ArrayList;
 
@@ -42,12 +45,12 @@ public class SpcElement extends Cal5e {
 
                 if (elem5e.type == Type.MOSKITKA) {
                     //По id - профиля
-                    //List<Record> elementList4 = List.of(eElement.find4(((Com5t) elem5e).sysprofRec.getInt(eSysprof.id)));
+                    List<Record> elementList4 = List.of(eElement.find4(((Com5t) elem5e).sysprofRec.getInt(eSysprof.id)));
                     //Цикл по списку элементов сторон маскитки
-                    //for (int side : List.of(0, 90, 180, 270)) {
-                    //    elem5e.anglHoriz = side; //устан. угол. проверяемой стороны
-                    //    detail(elementList4, elem5e);
-                    //}
+                    for (int side : List.of(0, 90, 180, 270)) {
+                        ((ElemMosquit) elem5e).anglHoriz = side; //устан. угол. проверяемой стороны
+                        detail(elementList4, elem5e);
+                    }
                 } else {
                     //По artikl_id - артикулу профилей
                     int artiklID = elem5e.artiklRecAn.getInt(eArtikl.id);
