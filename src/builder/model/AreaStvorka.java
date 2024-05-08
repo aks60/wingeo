@@ -157,19 +157,19 @@ public class AreaStvorka extends AreaSimple {
 //                knobLayout = LayoutKnob.MIDL; //по умолчанию
 //                //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
 //            }
-            //Москидка
-            if (isJson(gson.param, PKjson.artiklMosq)) {
-                mosqRec = eArtikl.find(gson.param.get(PKjson.artiklMosq).getAsInt(), false);
-                //Текстура
-                if (isJson(gson.param, PKjson.colorMosq)) {
-                    mosqColor = eColor.get(gson.param.get(PKjson.colorMosq).getAsInt()).getInt(eColor.id);
-                } else {
-                    mosqColor = eArtdet.find(mosqRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk); //цвет по умолчанию
-                }
-                if (isJson(gson.param, PKjson.elementID)) {
-                    this.elementRec = eElement.find4(gson.param.get(PKjson.elementID).getAsInt());
-                }
-            }
+//            //Москидка
+//            if (isJson(gson.param, PKjson.artiklMosq)) {
+//                mosqRec = eArtikl.find(gson.param.get(PKjson.artiklMosq).getAsInt(), false);
+//                //Текстура
+//                if (isJson(gson.param, PKjson.colorMosq)) {
+//                    mosqColor = eColor.get(gson.param.get(PKjson.colorMosq).getAsInt()).getInt(eColor.id);
+//                } else {
+//                    mosqColor = eArtdet.find(mosqRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk); //цвет по умолчанию
+//                }
+//                if (isJson(gson.param, PKjson.elementID)) {
+//                    this.elementRec = eElement.find4(gson.param.get(PKjson.elementID).getAsInt());
+//                }
+//            }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.furniture " + e);
         }
@@ -368,25 +368,6 @@ public class AreaStvorka extends AreaSimple {
             }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.joining() " + e);
-        }
-    }
-
-    public void mosquitPaint() {
-        if (this.mosqRec.isVirtual() == false) {
-            Envelope envMosq = this.area.getGeometryN(1).getEnvelopeInternal();
-            int z = (winc.scale < 0.1) ? 80 : 30;
-            int h = 0, w = 0;
-            Record colorMosq = eColor.find(this.mosqColor);
-            winc.gc2d.setColor(new Color(colorMosq.getInt(eColor.rgb)));
-
-            for (int i = 1; i < (envMosq.getMaxY() - envMosq.getMinY()) / z; i++) {
-                h = h + z;
-                winc.gc2d.drawLine((int) envMosq.getMinX(), (int) (envMosq.getMinY() + h), (int) envMosq.getMaxX(), (int) (envMosq.getMinY() + h));
-            }
-            for (int i = 1; i < (envMosq.getMaxX() - envMosq.getMinX()) / z; i++) {
-                w = w + z;
-                winc.gc2d.drawLine((int) (envMosq.getMinX() + w), (int) envMosq.getMinY(), (int) (envMosq.getMinX() + w), (int) envMosq.getMaxY());
-            }
         }
     }
 

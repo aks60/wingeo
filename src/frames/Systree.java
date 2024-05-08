@@ -69,7 +69,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import startup.App;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
-import common.eProfile;
 import domain.eJoining;
 import builder.making.SpcJoining;
 import builder.making.UColor;
@@ -511,13 +510,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     setText(txt48, eColor.find(stv.lockColor).getStr(eColor.name));
                     setIcon(btn24, stv.paramCheck[6]);
                     //Москитка
-                    Record mosqRec = ((AreaStvorka) winNode.com5t()).mosqRec;
-                    setText(txt54, mosqRec.getStr(eArtikl.code));
-                    setText(txt55, mosqRec.getStr(eArtikl.name));
-                    Record colorMosq = eColor.find(stv.mosqColor);
-                    setText(txt60, colorMosq.getStr(eColor.name));
-                    setText(txt56, stv.elementRec.getStr(eElement.name));
-
+                    Com5t mosquit = stv.childs.stream().filter(e -> e.type == enums.Type.MOSKITKA).findFirst().orElse(null);
+                    if (mosquit != null) {
+                        ElemMosquit mosq = (ElemMosquit) mosquit;
+                        setText(txt54, mosq.artiklRec.getStr(eArtikl.code));
+                        setText(txt55, mosq.artiklRec.getStr(eArtikl.name));
+                        setText(txt60, eColor.find(mosq.colorID1).getStr(eColor.name));
+                        setText(txt56, mosq.sysprofRec.getStr(eElement.name));
+                    }
                     //Соединения
                 } else if (winNode.com5t().type == enums.Type.JOINING) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card17");
@@ -4164,54 +4164,28 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_btnMove
 
     private void mosquitToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mosquitToStvorka
-/*        try {
-            AreaSimple stvElem = (AreaSimple) winNode.com5t();
-            double selectID = winNode.com5t().id;
-            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
-                    "where", eArtikl.level1, "= 5 and", eArtikl.level2, "= 20");
-
-            new DicArtikl(this, (artiklRec) -> {
-
-                if (artiklRec.get(eArtikl.id) != null) {
-                    stvElem.gson.param.addProperty(PKjson.artiklMosq, artiklRec.getStr(eArtikl.id));
-                } else {
-                    stvElem.gson.param.remove(PKjson.artiklMosq);
-                    stvElem.gson.param.remove(PKjson.colorMosq);
-                    stvElem.gson.param.remove(PKjson.elementID);                    
-                }
-                updateScript(selectID);
-
-            }, qArtikl);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.mosquitToStvorka() " + e);
-        }
-*/
         try {
-            AreaStvorka stvElem = (AreaStvorka) winNode.com5t();
+            AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
             double selectID = winNode.com5t().id;
             Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
                     "where", eArtikl.level1, "= 5 and", eArtikl.level2, "= 20");
 
             new DicArtikl(this, (artiklRec) -> {
 
-                GsonElem gsonElem = null;
-                ArrayCom<Com5t> mosqList = ((AreaStvorka) stvElem).childs.filter(enums.Type.MOSKITKA);
+                GsonElem gsonMosq = null;
+                Com5t mosq = areaStv.childs.stream().filter(e -> e.type == enums.Type.MOSKITKA).findFirst().orElse(null);
 
-                if (mosqList.isEmpty() == false) {
-                    AreaStvorka mosqElem = (AreaStvorka) mosqList.get(0);
-                    gsonElem = mosqElem.gson;
-                } else {
-                    gsonElem = new GsonElem(enums.Type.MOSKITKA);
-                    GsonElem stvArea = stvElem.gson;
-                    stvArea.childs.add(gsonElem);
+                if (mosq == null) {
+                    gsonMosq = new GsonElem(enums.Type.MOSKITKA);
+                    GsonElem gsonStv = areaStv.gson;
+                    gsonStv.childs.add(gsonMosq);
                 }
                 if (artiklRec.get(1) == null) {
-                    gsonElem.param.remove(PKjson.artiklID);
-                    gsonElem.param.remove(PKjson.colorMosq);
-                    gsonElem.param.remove(PKjson.elementID);
+                    gsonMosq.param.remove(PKjson.artiklID);
+                    gsonMosq.param.remove(PKjson.colorID1);
+                    gsonMosq.param.remove(PKjson.elementID);
                 } else {
-                    gsonElem.param.addProperty(PKjson.artiklID, artiklRec.getStr(eArtikl.id));
+                    gsonMosq.param.addProperty(PKjson.artiklID, artiklRec.getStr(eArtikl.id));
                 }
                 updateScript(selectID);
 
@@ -4225,22 +4199,25 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private void mosqToElements(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mosqToElements
         try {
             double selectID = winNode.com5t().id;
-            AreaStvorka stvElem = (AreaStvorka) winNode.com5t();
-                Record elemRec = stvElem.mosqRec;
+            AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
+            Com5t mosq = areaStv.childs.stream().filter(e -> e.type == enums.Type.MOSKITKA).findFirst().orElse(null);
+            if (mosq != null) {
+                ElemMosquit mosqElem = (ElemMosquit) mosq;
+                Record artiklRec = mosqElem.artiklRec;
                 Query qElements = new Query(eElement.values()).select(eElement.up,
-                        "where", eElement.artikl_id, "=", elemRec.getInt(eArtikl.id));
+                        "where", eElement.artikl_id, "=", artiklRec.getInt(eArtikl.id));
 
                 new DicName(this, (elementRec) -> {
 
                     if (elementRec.get(1) == null) {
-                        stvElem.gson.param.remove(PKjson.elementID);
+                        mosqElem.gson.param.remove(PKjson.elementID);
                     } else {
-                        stvElem.gson.param.addProperty(PKjson.elementID, elementRec.getStr(eElement.id));
+                        mosqElem.gson.param.addProperty(PKjson.elementID, elementRec.getStr(eElement.id));
                     }
                     updateScript(selectID);
 
                 }, qElements, eElement.name);
-                
+            }
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.mosqToElements() " + e);
         }
@@ -4280,7 +4257,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     classElem.gson.param.remove(PKjson.artiklRasc);
                     classElem.gson.param.remove(PKjson.colorRasc);
                     classElem.gson.param.remove(PKjson.horRasc);
-                    classElem.gson.param.remove(PKjson.verRasc);     
+                    classElem.gson.param.remove(PKjson.verRasc);
                 }
                 updateScript(selectID);
 
@@ -4330,19 +4307,22 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private void mosqToColor(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mosqToColor
         try {
             double selectID = winNode.com5t().id;
-            AreaStvorka stvElem = (AreaStvorka) winNode.com5t();
-            HashSet<Record> colorSet = UGui.artiklToColorSet(stvElem.mosqRec.getInt(eArtikl.id));
+            AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
+            Com5t mosq = areaStv.childs.stream().filter(e -> e.type == enums.Type.MOSKITKA).findFirst().orElse(null);
+            if (mosq != null) {
+                ElemMosquit elemMosq = (ElemMosquit) mosq;
+                HashSet<Record> colorSet = UGui.artiklToColorSet(elemMosq.artiklRec.getInt(eArtikl.id));
                 DicColor frame = new DicColor(this, (colorRec) -> {
 
                     if (colorRec.get(1) == null) {
-                       stvElem.gson.param.remove(PKjson.colorID1);    
+                        elemMosq.gson.param.remove(PKjson.colorID1);
                     } else {
-                       stvElem.gson.param.addProperty(PKjson.colorID1, colorRec.getStr(eColor.id));     
+                        elemMosq.gson.param.addProperty(PKjson.colorID1, colorRec.getStr(eColor.id));
                     }
                     updateScript(selectID);
 
                 }, colorSet, true, false);
-                
+            }
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.colorToHandl() " + e);
         }

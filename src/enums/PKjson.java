@@ -13,14 +13,12 @@ public class PKjson {
     public final static String artiklLoop = "artiklLoop"; //Подвес на створке
     public final static String artiklLock = "artiklLock"; //Замок на створке
     public final static String artiklRasc = "artiklRasc"; //Раскладка
-    public final static String artiklMosq = "artiklMosq"; //Москидка
     
     public final static String colorKnob = "colorKnob"; //Цвет ручки створки 
     public final static String colorLoop = "colorLoop"; //Цвет подвеса
     public final static String colorLock = "colorLock"; //Цвет замка
     public final static String colorGlass = "colorGlass"; //Цвет стекла
     public final static String colorRasc = "colorRasc"; //Цвет раскладки
-    public final static String colorMosq = "colorMosq"; //Цвет москидки
 
     public final static String colorID1 = "colorID1"; //Текстура
     public final static String colorID2 = "colorID2"; //Текстура

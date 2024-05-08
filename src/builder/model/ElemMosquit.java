@@ -6,12 +6,13 @@ import builder.script.GsonElem;
 import common.UCom;
 import dataset.Record;
 import domain.eArtikl;
+import domain.eColor;
 import domain.eElement;
 import enums.PKjson;
 import enums.UseUnit;
-import frames.UGui;
+import java.awt.BasicStroke;
 import java.awt.Color;
-import java.util.HashSet;
+import org.locationtech.jts.geom.Envelope;
 
 public class ElemMosquit extends ElemSimple {
 
@@ -23,41 +24,34 @@ public class ElemMosquit extends ElemSimple {
 
     @Override
     public void initArtikle() {
-
         //Артикл
         if (isJson(gson.param, PKjson.artiklID)) {
-            artiklRec = eArtikl.find(gson.param.get(PKjson.artiklID).getAsInt(), false);
+            this.artiklRec = eArtikl.find(gson.param.get(PKjson.artiklID).getAsInt(), false);
         } else {
-            artiklRec = eArtikl.virtualRec();
+            this.artiklRec= eArtikl.virtualRec();
         }
-        artiklRecAn = artiklRec;
+        this.artiklRecAn = artiklRec;
 
         //Цвет
         if (isJson(gson.param, PKjson.colorID1)) {
-            colorID1 = gson.param.get(PKjson.colorID1).getAsInt();
-        }
-        if (colorID1 == -1) {
-            HashSet<Record> hsColor = UGui.artiklToColorSet(artiklRec.getInt(eArtikl.id));
-            if (hsColor.isEmpty() == false) {
-                colorID1 = hsColor.iterator().next().getInt(eArtikl.id);
-            }
-        }
-        if (colorID1 == -1) {
-            colorID1 = -3;
+            this.colorID1 = gson.param.get(PKjson.colorID1).getAsInt();
+        } else {
+            this.colorID1 = -3;
         }
 
         //Состав москитки. ВНИМАЕИЕ! elementID подменён на sysprofRec
         if (isJson(gson.param, PKjson.elementID)) {
-            sysprofRec = eElement.find4(gson.param.get(PKjson.elementID).getAsInt());
+            this.sysprofRec = eElement.find4(gson.param.get(PKjson.elementID).getAsInt());
         } else {
-            sysprofRec = eElement.up.newRecord();
+            this.sysprofRec = eElement.up.newRecord();
         }
     }
 
     //Установка координат элементов окна
     public void setLocation() {
-//        ElemSimple bott = owner.frames.get(Layout.BOTT), right = owner.frames.get(Layout.RIGHT), top = owner.frames.get(Layout.TOP), left = owner.frames.get(Layout.LEFT);
-//        setDimension(left.x2(), top.y2(), right.x1(), bott.y1());
+            spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase(); 
+            Envelope envMosq = owner.area.getGeometryN(1).getEnvelopeInternal();
+            setDimension(envMosq.getMinX(), envMosq.getMinY(), envMosq.getMaxX(), envMosq.getMaxY());
     }
 
     //Главная спецификация    
@@ -66,8 +60,9 @@ public class ElemMosquit extends ElemSimple {
             spcRec.place = "ВСТ";
             spcRec.setArtikl(artiklRec);
             spcRec.setColor(colorID1, colorID2, colorID3);
-            spcRec.width = width();
-            spcRec.height = height();
+            spcRec.width = this.x2() - this.x1();
+            spcRec.height = this.y2() - this.y1();
+            
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemMosquit.setSpecific() " + e);
@@ -82,8 +77,6 @@ public class ElemMosquit extends ElemSimple {
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм            
 
-            //Профиль в составе  М/С
-            //if (TypeArtikl.isType(spcAdd.artiklRec, TypeArtikl.X120)) {
             double anglHor = UGeo.anglHor(x1(), y1(), x2(), y2());
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) { //пог.м.  
                 
@@ -118,20 +111,21 @@ public class ElemMosquit extends ElemSimple {
     @Override  
     public void paint() {
         if (this.artiklRec.isVirtual() == false) {
-            winc.gc2d.setColor(Color.getHSBColor(242, 242, 242));
-//            //ElemSimple bott = owner.frames.get(Layout.BOTT), right = owner.frames.get(Layout.RIGHT), top = owner.frames.get(Layout.TOP), left = owner.frames.get(Layout.LEFT);
-//                    
-//            int z = (winc.scale < 0.1) ? 80 : 30;
-//            int h = 0, w = 0;
-//
-//            for (int i = 1; i < (bott.y1() - top.y2()) / z; i++) {
-//                h = h + z;
-//                winc.gc2d.drawLine((int) left.x2(), (int) (top.y2() + h), (int) right.x1(), (int) (top.y2() + h));
-//            }
-//            for (int i = 1; i < (right.x1() - left.x2()) / z; i++) {
-//                w = w + z;
-//                winc.gc2d.drawLine((int) (left.x2() + w), (int) top.y2(), (int) (left.x2() + w), (int) bott.y1());
-//            }
+            Envelope envMosq = owner.area.getGeometryN(1).getEnvelopeInternal();
+            int z = (winc.scale < 0.1) ? 80 : 30;
+            int h = 0, w = 0;
+            Record colorMosq = eColor.find(this.colorID1);
+            winc.gc2d.setColor(new Color(colorMosq.getInt(eColor.rgb)));
+            winc.gc2d.setStroke(new BasicStroke(1));
+
+            for (int i = 1; i < (envMosq.getMaxY() - envMosq.getMinY()) / z; i++) {
+                h = h + z;
+                winc.gc2d.drawLine((int) envMosq.getMinX(), (int) (envMosq.getMinY() + h), (int) envMosq.getMaxX(), (int) (envMosq.getMinY() + h));
+            }
+            for (int i = 1; i < (envMosq.getMaxX() - envMosq.getMinX()) / z; i++) {
+                w = w + z;
+                winc.gc2d.drawLine((int) (envMosq.getMinX() + w), (int) envMosq.getMinY(), (int) (envMosq.getMinX() + w), (int) envMosq.getMaxY());
+            }
         }
     }
 

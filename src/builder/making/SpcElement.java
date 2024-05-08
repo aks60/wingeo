@@ -44,17 +44,18 @@ public class SpcElement extends Cal5e {
             for (ElemSimple elem5e : listElem) {
 
                 if (elem5e.type == Type.MOSKITKA) {
+                    ElemMosquit elemMosq = (ElemMosquit)elem5e;
                     //По id - профиля
-                    List<Record> elementList4 = List.of(eElement.find4(((Com5t) elem5e).sysprofRec.getInt(eSysprof.id)));
+                    List<Record> elementList4 = List.of(eElement.find4(elemMosq.sysprofRec.getInt(eElement.id)));
                     //Цикл по списку элементов сторон маскитки
                     for (int side : List.of(0, 90, 180, 270)) {
-                        ((ElemMosquit) elem5e).anglHoriz = side; //устан. угол. проверяемой стороны
-                        detail(elementList4, elem5e);
+                        elemMosq.anglHoriz = side; //устан. угол. проверяемой стороны
+                        detail(elementList4, elemMosq);
                     }
                 } else {
-                    //По artikl_id - артикулу профилей
+                    //По artikl_id - артикула профилей
                     int artiklID = elem5e.artiklRecAn.getInt(eArtikl.id);
-                    List<Record> elementList3 = eElement.find2(artiklID); //список элементов в артикуле
+                    List<Record> elementList3 = eElement.find2(artiklID);
                     detail(elementList3, elem5e);
 
                     //По groups1_id - серии профилей
@@ -64,10 +65,10 @@ public class SpcElement extends Cal5e {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Elements.calc() " + e);
+            System.err.println("Ошибка:SpcElement.calc() " + e);
         } finally {
             Query.conf = conf;
-        }
+        }        
     }
 
     protected void detail(List<Record> elementList, ElemSimple elem5e) {

@@ -268,7 +268,7 @@ public class Wincalc {
             this.listElem.filter(Type.GLASS).stream().forEach(el -> ((ElemGlass) el).rascladkaPaint());
 
             //Прорисовка москиток
-            this.listArea.filter(Type.STVORKA).stream().forEach(el -> ((AreaStvorka) el).mosquitPaint());
+            this.listElem.filter(Type.MOSKITKA).stream().forEach(el -> ((ElemMosquit) el).paint());
             
             //Прорисовка импостов
             this.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA).stream().forEach(el -> el.paint());
