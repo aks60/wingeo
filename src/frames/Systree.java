@@ -4208,6 +4208,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }
                 if (artiklRec.get(1) == null) {
                     gsonElem.param.remove(PKjson.artiklID);
+                    gsonElem.param.remove(PKjson.colorMosq);
                     gsonElem.param.remove(PKjson.elementID);
                 } else {
                     gsonElem.param.addProperty(PKjson.artiklID, artiklRec.getStr(eArtikl.id));
