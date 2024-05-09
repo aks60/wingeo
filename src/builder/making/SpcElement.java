@@ -100,7 +100,6 @@ public class SpcElement extends Cal5e {
 
                                 //Если (контейнер) в списке детализации, 
                                 //например профиль с префиксом @ в осн. специф.
-                                //Свойства контейнера менять нельзя!!!
                                 if (TypeArtikl.isType(artiklRec, TypeArtikl.X101, TypeArtikl.X102,
                                         TypeArtikl.X103, TypeArtikl.X104, TypeArtikl.X105)) {
                                     elem5e.spcRec.setArtikl(spcAdd.artiklRec); //подмена артикула в основной спецификации
