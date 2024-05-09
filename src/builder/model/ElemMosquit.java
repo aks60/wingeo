@@ -9,6 +9,7 @@ import domain.eArtikl;
 import domain.eColor;
 import domain.eElement;
 import enums.PKjson;
+import enums.TypeArtikl;
 import enums.UseUnit;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -50,8 +51,8 @@ public class ElemMosquit extends ElemSimple {
     //Установка координат элементов окна
     public void setLocation() {
             spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase(); 
-            Envelope envMosq = owner.area.getGeometryN(1).getEnvelopeInternal();
-            setDimension(envMosq.getMinX(), envMosq.getMinY(), envMosq.getMaxX(), envMosq.getMaxY());
+            //Envelope envMosq = owner.area.getGeometryN(1).getEnvelopeInternal();
+            //setDimension(envMosq.getMinX(), envMosq.getMinY(), envMosq.getMaxX(), envMosq.getMaxY());
     }
 
     //Главная спецификация    
@@ -59,9 +60,10 @@ public class ElemMosquit extends ElemSimple {
         try {
             spcRec.place = "ВСТ";
             spcRec.setArtikl(artiklRec);
-            spcRec.setColor(colorID1, colorID2, colorID3);
-            spcRec.width = this.x2() - this.x1();
-            spcRec.height = this.y2() - this.y1();
+            spcRec.colorID1 = this.colorID1;
+            Envelope envMosq = owner.area.getGeometryN(0).getEnvelopeInternal();
+            spcRec.width = envMosq.getMaxX() - envMosq.getMinX() - 50;
+            spcRec.height = envMosq.getMaxY() - envMosq.getMinY() - 50;
             
 
         } catch (Exception e) {
@@ -73,6 +75,9 @@ public class ElemMosquit extends ElemSimple {
     @Override
     public void addSpecific(SpcRecord spcAdd) {
         try {
+            if (TypeArtikl.X520.isType(spcAdd.artiklRec)) {
+                return; 
+            }
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам.
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм            

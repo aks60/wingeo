@@ -185,11 +185,11 @@ public class AreaStvorka extends AreaSimple {
 
             //Полигон створки с учётом нахлёста 
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            Polygon stvBox = buffer(this.frameBox, winc.listElem, -dh); //полигон векторов сторон створки с учётом нахл. 
+            Polygon stvOuter = buffer(this.frameBox, winc.listElem, -dh); //полигон векторов сторон створки с учётом нахл. 
 
             //Если стороны ств. ещё не созданы 
             if (this.frames.isEmpty()) {
-                Coordinate[] coo = stvBox.getGeometryN(0).getCoordinates();
+                Coordinate[] coo = stvOuter.getGeometryN(0).getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
 
                     //Координаты рам створок
@@ -205,7 +205,7 @@ public class AreaStvorka extends AreaSimple {
                 coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
 
             } else { //Если стороны уже созданы
-                Coordinate[] coo = stvBox.getGeometryN(0).getCoordinates();
+                Coordinate[] coo = stvOuter.getGeometryN(0).getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
                     ElemSimple elem = this.frames.get(i);
                     coo[i].z = elem.id;
@@ -214,8 +214,8 @@ public class AreaStvorka extends AreaSimple {
                 coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
             }
 
-            Polygon stvProf = buffer(stvBox, this.frames, 0);
-            this.area = gf.createMultiPolygon(new Polygon[]{stvBox, stvProf});
+            Polygon stvInner = buffer(stvOuter, this.frames, 0);
+            this.area = gf.createMultiPolygon(new Polygon[]{stvOuter, stvInner});
 
             //Высота ручки, линии открывания
             if (this.typeOpen != TypeOpen1.EMPTY) {
@@ -280,60 +280,6 @@ public class AreaStvorka extends AreaSimple {
             System.err.println("Ошибка:AreaStvorka.setLocation " + e);
         }
     }
-
-/**    
-//    //Главная спецификация    
-//    public void setSpecific() {
-//        try {
-//            spcRec.place = "ВСТ";
-//            spcRec.setArtikl(artiklRec);
-//            spcRec.setColor(colorID1, colorID2, colorID3);
-//            spcRec.width = width();
-//            spcRec.height = height();
-//
-//        } catch (Exception e) {
-//            System.err.println("Ошибка:ElemMosquit.setSpecific() " + e);
-//        }
-//    }
-//
-//    //Вложенная спецификация
-//    public void addSpecific(SpcRecord spcAdd) {
-//        try {
-//            spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам.
-//            spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
-//            spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм            
-//
-//            double anglHor = UGeo.anglHor(x1(), y1(), x2(), y2());
-//            if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) { //пог.м.  
-//                
-//                if (anglHor == 0 || anglHor == 180) {
-//                    spcAdd.width += spcAdd.elem5e.owner.width();
-//                } else if (anglHor == 90 || anglHor == 270) {
-//                    spcAdd.width += spcAdd.elem5e.owner.height();
-//                }
-//            }
-//            //перенос кода//UPar.to_12075_34075_39075(this, spcAdd); //углы реза
-//            
-//            UPar.to_34077_39077(spcAdd); //задать Угол_реза_1/Угол_реза_2
-//            spcAdd.height = UCom.getDbl(spcAdd.getParam(spcAdd.height, 40006)); //высота заполнения, мм 
-//            spcAdd.width = UPar.to_12065_15045_25040_34070_39070(spcAdd); //длина мм
-//            spcAdd.width = UCom.getDbl(spcAdd.getParam(spcAdd.width, 40004)); //ширина заполнения, мм        
-//            spcAdd.width = spcAdd.width * UPar.to_12030_15030_25035_34030_39030(spcAdd);//"[ * коэф-т ]"
-//            spcAdd.width = spcAdd.width / UPar.to_12040_15031_25036_34040_39040(spcAdd);//"[ / коэф-т ]"
-//            UPar.to_40005_40010(spcAdd); //Поправка на стороны четные/нечетные (ширины/высоты), мм
-//            UPar.to_40007(spcAdd); //высоту сделать длиной
-//            spcAdd.count = UPar.to_11070_12070_33078_34078(spcAdd); //ставить однократно
-//            spcAdd.count = UPar.to_39063(spcAdd); //округлять количество до ближайшего 
-//
-//            if (spcRec.id != spcAdd.id) {
-//                spcRec.spcList.add(spcAdd);
-//            }
-//
-//        } catch (Exception e) {
-//            System.err.println("Ошибка:ElemMosquit.addSpecific() " + e);
-//        }
-//    }
-*/   
     
     //L - соединения, прил.соед.
     @Override
