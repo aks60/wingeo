@@ -20,7 +20,7 @@ public class GsonRoot extends GsonElem {
 
     public GsonRoot(Type type, String name) {
         super();
-        GsonElem.genId = 0;
+        GsonElem.gsonId = 0;
         this.id = 0;        
         this.name = name;
         this.type = type;
@@ -38,7 +38,7 @@ public class GsonRoot extends GsonElem {
     public GsonRoot(Integer punic, Integer pnumb, Integer ord, Integer nuni, Type type,
             String name, Integer color1, Integer color2, Integer color3, String paramJson) {
         super();
-        GsonElem.genId = 0;
+        GsonElem.gsonId = 0;
         this.id = 0;
         this.prj = pnumb;
         this.pid = punic;

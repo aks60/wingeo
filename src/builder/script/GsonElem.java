@@ -9,7 +9,7 @@ import java.util.List;
 
 public class GsonElem {
 
-    public static transient double genId = 0;  //идентификатор    
+    public static transient double gsonId = 0;  //идентификатор    
     public double id = 0;  //идентификатор
     public transient GsonElem owner = null;  //владелец
     public List<GsonElem> childs = null; //список детей
@@ -23,13 +23,13 @@ public class GsonElem {
 
     //Use class Bimax, GsonScript, GsonElem, москитка 
     public GsonElem(Type type) {
-        this.id = ++genId;
+        this.id = ++gsonId;
         this.type = type;
     }
 
     //Use class Bimax
     public GsonElem(Type type, String paramJson) {
-        this.id = ++genId;
+        this.id = ++gsonId;
         this.type = type;
         this.param = new Gson().fromJson(paramJson, JsonObject.class);
     }
@@ -64,7 +64,7 @@ public class GsonElem {
     }
 
     public GsonElem(Type type, Double x1, Double y1, Double x2, Double y2, Double h, String param) {
-        this.id = ++genId;
+        this.id = ++gsonId;
         this.type = type;
         this.x1 = (x1 == null) ? null : (double) x1;
         this.y1 = (y1 == null) ? null : (double) y1;

@@ -167,7 +167,7 @@ public class SpcTariffic extends Cal5e {
                 for (Record prjkitRec : prjkitList) {
                     Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.artikl_id), true);
                     if (artiklRec != null) {
-                        SpcRecord spc = new SpcRecord("КОМП", ++winc.specificID, prjkitRec, artiklRec, null);
+                        SpcRecord spc = new SpcRecord("КОМП", ++winc.spcId, prjkitRec, artiklRec, null);
                         spc.width = prjkitRec.getDbl(ePrjkit.width);
                         spc.height = prjkitRec.getDbl(ePrjkit.height);
                         spc.count = prjkitRec.getDbl(ePrjkit.numb);

@@ -52,14 +52,14 @@ public class SpcRecord {
     }
     
     public SpcRecord(double id, ElemSimple elem5e) {
-        ++elem5e.winc.specificID;
+        ++elem5e.winc.spcId;
         this.id = id;
         this.elem5e = elem5e;
         this.mapParam = new HashMap();
     }
 
     public SpcRecord(String place, Record detailRec, Record artiklRec, ElemSimple elem5e, HashMap<Integer, String> mapParam) {
-        this.id = ++elem5e.winc.specificID;
+        this.id = ++elem5e.winc.spcId;
         this.elem5e = elem5e;
         this.mapParam = mapParam;
         this.detailRec = detailRec;

@@ -26,7 +26,7 @@ public class ElemJoining {
     public String costs = "";     //трудозатраты, ч/ч.
 
     public ElemJoining(Wincalc winc, TypeJoin type, ElemSimple elem1, ElemSimple elem2) {
-        this.id = ++winc.specificID;
+        this.id = ++winc.spcId;
         this.winc = winc;
         this.type = type; //угол варианта вычисл. динамически см. type();
         this.elem1 = elem1;
