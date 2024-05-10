@@ -7,7 +7,7 @@ import enums.Type;
 import java.util.List;
 
 public class GsonRoot extends GsonElem {
-
+ 
     public String version = "2.0"; //версия
     public Integer prj = null; //PNUMB - номер тестируемого проекта, поле пока нужно только для тестов при сравнении с PS4
     public Integer pid = null; //PNUMB - номер тестируемого проекта, поле пока нужно только для тестов при сравнении с PS4    
@@ -19,9 +19,11 @@ public class GsonRoot extends GsonElem {
     public Integer color3 = -3;  //внешняя текстура       
 
     public GsonRoot(Type type, String name) {
+        super();
+        GsonElem.genId = 0;
+        this.id = 0;        
         this.name = name;
         this.type = type;
-        this.genId = 0;
     }
 
     public GsonRoot(Integer punic, Integer pnumb, Integer ord, Integer nuni, Type type, String name) {
@@ -35,7 +37,8 @@ public class GsonRoot extends GsonElem {
 
     public GsonRoot(Integer punic, Integer pnumb, Integer ord, Integer nuni, Type type,
             String name, Integer color1, Integer color2, Integer color3, String paramJson) {
-        genId = 0;
+        super();
+        GsonElem.genId = 0;
         this.id = 0;
         this.prj = pnumb;
         this.pid = punic;

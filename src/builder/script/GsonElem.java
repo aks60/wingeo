@@ -16,35 +16,40 @@ public class GsonElem {
     public JsonObject param = new JsonObject(); //параметры элемента
     public Type type = null; //тип элемента
     public Double x1, y1, h, x2, y2;
-    public Double length = null; //ширина или высота добавляемой area (зависит от напрвления расположения) 
 
+    //Use GsonRoot
     public GsonElem() {
-        ++genId;
     }
 
+    //Use class Bimax, GsonScript, GsonElem, москитка 
     public GsonElem(Type type) {
         this.id = ++genId;
         this.type = type;
     }
 
+    //Use class Bimax
     public GsonElem(Type type, String paramJson) {
         this.id = ++genId;
         this.type = type;
         this.param = new Gson().fromJson(paramJson, JsonObject.class);
     }
 
+    //Use class Bimax, GsonScript, Test
     public GsonElem(Type type, Double x1, Double y1) {
         this(type, x1, y1, null, null, null, null);
     }
 
+    //Use class Bimax, GsonScript, Test
     public GsonElem(Type type, Double x1, Double y1, Double h) {
         this(type, x1, y1, null, null, h, null);
     }
 
+    //Use Bimax
     public GsonElem(Type type, Double x1, Double y1, String param) {
         this(type, x1, y1, null, null, null, param);
     }
 
+    //Use class Bimax, GsonScript, GsonElem 
     public GsonElem(Type type, Double x1, Double y1, Double x2, Double y2) {
         this(type, x1, y1, x2, y2, null, null);
     }
@@ -53,6 +58,7 @@ public class GsonElem {
         this(type, x1, y1, null, null, h, param);
     }
 
+    //Use class Bimax
     public GsonElem(Type type, Double x1, Double y1, Double x2, Double y2, String param) {
         this(type, x1, y1, x2, y2, null, param);
     }
