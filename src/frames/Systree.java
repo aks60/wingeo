@@ -4176,6 +4176,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 Com5t mosq = areaStv.childs.stream().filter(e -> e.type == enums.Type.MOSKITKA).findFirst().orElse(null);
 
                 if (mosq == null) {
+                    wincalc().gson.setMaxId(wincalc());
                     gsonMosq = new GsonElem(enums.Type.MOSKITKA);
                     GsonElem gsonStv = areaStv.gson;
                     gsonStv.childs.add(gsonMosq);

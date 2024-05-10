@@ -21,7 +21,7 @@ public class GsonElem {
     public GsonElem() {
     }
 
-    //Use class Bimax, GsonScript, GsonElem, москитка 
+    //Use class Bimax, GsonScript, GsonElem, МОСКИТКА
     public GsonElem(Type type) {
         this.id = ++gsonId;
         this.type = type;
