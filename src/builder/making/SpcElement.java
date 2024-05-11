@@ -44,7 +44,7 @@ public class SpcElement extends Cal5e {
             for (ElemSimple elem5e : listElem) {
 
                 if (elem5e.type == Type.MOSKITKA) {
-                    ElemMosquit elemMosq = (ElemMosquit)elem5e;
+                    ElemMosquit elemMosq = (ElemMosquit) elem5e;
                     //По id - профиля
                     List<Record> elementList4 = List.of(eElement.find4(elemMosq.sysprofRec.getInt(eElement.id)));
                     //Цикл по списку элементов сторон маскитки
@@ -68,7 +68,7 @@ public class SpcElement extends Cal5e {
             System.err.println("Ошибка:SpcElement.calc() " + e);
         } finally {
             Query.conf = conf;
-        }        
+        }
     }
 
     protected void detail(List<Record> elementList, ElemSimple elem5e) {
@@ -98,20 +98,21 @@ public class SpcElement extends Cal5e {
                             //Подбор текстуры
                             if (UColor.colorFromProduct(spcAdd)) {
 
-                                //Если (контейнер) в списке детализации, 
+                                //Если в списке детализации элем.контейнер, 
                                 //например профиль с префиксом @ в осн. специф.
                                 if (TypeArt.isType(artiklRec, TypeArt.X101, TypeArt.X102,
                                         TypeArt.X103, TypeArt.X104, TypeArt.X105)) {
-                                    elem5e.spcRec.setArtikl(spcAdd.artiklRec); //подмена артикула в основной спецификации
+                                    elem5e.spcRec.setArtikl(spcAdd.artiklRec); //подмена артикула в осн.спец.
                                     elem5e.spcRec.setColor(1, spcAdd.colorID1);
                                     elem5e.spcRec.setColor(2, spcAdd.colorID2);
                                     elem5e.spcRec.setColor(3, spcAdd.colorID3);
-                                    elem5e.addSpecific(elem5e.spcRec);
+                                    elem5e.addSpecific(elem5e.spcRec); //в спецификацию 
 
                                     //Контейнер маскитка не учавствует в цикле сторон
                                 } else if (TypeArt.isType(artiklRec, TypeArt.X520)) {
-                                    if (UGeo.anglHor(elem5e.x1(), elem5e.y1(), elem5e.x2(), elem5e.y2()) == 0) {
-                                        elem5e.spcRec.setArtikl(spcAdd.artiklRec); //подмена артикула в основной спецификации
+                                    ElemMosquit alemMosq = (ElemMosquit) elem5e;
+                                    if (alemMosq.anglHoriz == 0) {
+                                        elem5e.spcRec.setArtikl(spcAdd.artiklRec); //подмена артикула в осн.спец.
                                         elem5e.spcRec.setColor(1, spcAdd.colorID1);
                                         elem5e.spcRec.setColor(2, spcAdd.colorID2);
                                         elem5e.spcRec.setColor(3, spcAdd.colorID3);

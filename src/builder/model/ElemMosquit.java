@@ -18,7 +18,7 @@ import org.locationtech.jts.geom.Envelope;
 public class ElemMosquit extends ElemSimple {
 
     public double anglHoriz = 0;
-    
+
     public ElemMosquit(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(owner.winc, gson, owner);
     }
@@ -29,7 +29,7 @@ public class ElemMosquit extends ElemSimple {
         if (isJson(gson.param, PKjson.artiklID)) {
             this.artiklRec = eArtikl.find(gson.param.get(PKjson.artiklID).getAsInt(), false);
         } else {
-            this.artiklRec= eArtikl.virtualRec();
+            this.artiklRec = eArtikl.virtualRec();
         }
         this.artiklRecAn = artiklRec;
 
@@ -50,9 +50,9 @@ public class ElemMosquit extends ElemSimple {
 
     //Установка координат элементов окна
     public void setLocation() {
-            spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase(); 
-            //Envelope envMosq = owner.area.getGeometryN(1).getEnvelopeInternal();
-            //setDimension(envMosq.getMinX(), envMosq.getMinY(), envMosq.getMaxX(), envMosq.getMaxY());
+        spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
+        //Envelope envMosq = owner.area.getGeometryN(1).getEnvelopeInternal();
+        //setDimension(envMosq.getMinX(), envMosq.getMinY(), envMosq.getMaxX(), envMosq.getMaxY());
     }
 
     //Главная спецификация    
@@ -62,9 +62,14 @@ public class ElemMosquit extends ElemSimple {
             spcRec.setArtikl(this.artiklRec);
             spcRec.colorID1 = this.colorID1;
             Envelope envMosq = owner.area.getGeometryN(0).getEnvelopeInternal();
-            spcRec.width = envMosq.getMaxX() - envMosq.getMinX() - 50;
-            spcRec.height = envMosq.getMaxY() - envMosq.getMinY() - 50;
-            
+            double dXY = 25;
+            this.area = UGeo.newPolygon(
+                    envMosq.getMinX() + dXY, envMosq.getMinY() + dXY,
+                    envMosq.getMinX() + dXY, envMosq.getMaxY() - dXY,
+                    envMosq.getMaxX() - dXY, envMosq.getMaxY() - dXY,
+                    envMosq.getMaxX() - dXY, envMosq.getMinY() + dXY);
+            spcRec.width = envMosq.getMaxX() - envMosq.getMinX() - 2 * dXY;
+            spcRec.height = envMosq.getMaxY() - envMosq.getMinY() - 2 * dXY;
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemMosquit.setSpecific() " + e);
@@ -81,7 +86,7 @@ public class ElemMosquit extends ElemSimple {
 
             double anglHor = UGeo.anglHor(x1(), y1(), x2(), y2());
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) { //пог.м.  
-                
+
                 if (anglHor == 0 || anglHor == 180) {
                     spcAdd.width += spcAdd.elem5e.owner.width();
                 } else if (anglHor == 90 || anglHor == 270) {
@@ -110,7 +115,7 @@ public class ElemMosquit extends ElemSimple {
     }
 
     //Линии размерности
-    @Override  
+    @Override
     public void paint() {
         if (this.artiklRec.isVirtual() == false) {
             Envelope envMosq = owner.area.getGeometryN(1).getEnvelopeInternal();
