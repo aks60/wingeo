@@ -63,7 +63,7 @@ public class ElemMosquit extends ElemSimple {
             spcRec.colorID1 = this.colorID1;
             Envelope envMosq = owner.area.getGeometryN(0).getEnvelopeInternal();
             double dXY = 25;
-            this.area = UGeo.newPolygon(
+            this.area = UGeo.newPolygon( //москитка всегда прямоугольная
                     envMosq.getMinX() + dXY, envMosq.getMinY() + dXY,
                     envMosq.getMinX() + dXY, envMosq.getMaxY() - dXY,
                     envMosq.getMaxX() - dXY, envMosq.getMaxY() - dXY,
