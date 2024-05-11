@@ -51,8 +51,6 @@ public class ElemMosquit extends ElemSimple {
     //Установка координат элементов окна
     public void setLocation() {
         spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
-        //Envelope envMosq = owner.area.getGeometryN(1).getEnvelopeInternal();
-        //setDimension(envMosq.getMinX(), envMosq.getMinY(), envMosq.getMaxX(), envMosq.getMaxY());
     }
 
     //Главная спецификация    
