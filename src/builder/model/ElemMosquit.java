@@ -59,15 +59,15 @@ public class ElemMosquit extends ElemSimple {
             spcRec.place = "ВСТ";
             spcRec.setArtikl(this.artiklRec);
             spcRec.colorID1 = this.colorID1;
-            Envelope envMosq = owner.area.getGeometryN(0).getEnvelopeInternal();
+            Envelope envMosq = owner.owner.area.getGeometryN(1).getEnvelopeInternal();
             double dXY = 25;
             this.area = UGeo.newPolygon( //москитка всегда прямоугольная
-                    envMosq.getMinX() + dXY, envMosq.getMinY() + dXY,
-                    envMosq.getMinX() + dXY, envMosq.getMaxY() - dXY,
-                    envMosq.getMaxX() - dXY, envMosq.getMaxY() - dXY,
-                    envMosq.getMaxX() - dXY, envMosq.getMinY() + dXY);
-            spcRec.width = envMosq.getMaxX() - envMosq.getMinX() - 2 * dXY;
-            spcRec.height = envMosq.getMaxY() - envMosq.getMinY() - 2 * dXY;
+                    envMosq.getMinX() - dXY, envMosq.getMinY() - dXY,
+                    envMosq.getMinX() - dXY, envMosq.getMaxY() + dXY,
+                    envMosq.getMaxX() + dXY, envMosq.getMaxY() + dXY,
+                    envMosq.getMaxX() + dXY, envMosq.getMinY() - dXY);
+            spcRec.width = (envMosq.getMaxX() - envMosq.getMinX()) + 2 * dXY;
+            spcRec.height = (envMosq.getMaxY() - envMosq.getMinY()) + 2 * dXY;
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemMosquit.setSpecific() " + e);

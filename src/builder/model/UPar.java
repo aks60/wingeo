@@ -146,7 +146,7 @@ public class UPar {
         if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) { //пог.м.
             return UCom.getDbl(spcAdd.getParam(0, 12050, 15050, 34050, 34051, 39020)); //Поправка, мм
         }
-        return spcAdd.width;
+        return 0; //spcAdd.width;
     }
 
     //Длина, мм
