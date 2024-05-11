@@ -13,7 +13,7 @@ import domain.eSyssize;
 import enums.Layout;
 import enums.PKjson;
 import enums.Type;
-import enums.TypeArtikl;
+import enums.TypeArt;
 import enums.UseSide;
 import java.awt.Shape;
 import java.util.Arrays;
@@ -160,7 +160,7 @@ public class ElemFrame extends ElemSimple {
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм
             //Армирование
-            if (TypeArtikl.isType(spcAdd.artiklRec, TypeArtikl.X107)) {
+            if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X107)) {
                 spcAdd.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
                 spcAdd.setAnglCut(90, 90);
                 spcRec.anglHoriz = UGeo.anglHor(x1(), y1(), x2(), y2());
@@ -245,7 +245,7 @@ public class ElemFrame extends ElemSimple {
                     }
                 }
                 //Фурнитура
-                if (TypeArtikl.isType(spcAdd.artiklRec, TypeArtikl.X109)) {
+                if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X109)) {
                     if (layout().id == Integer.valueOf(spcAdd.getParam("0", 24010, 25010, 38010, 39002))) {  //"номер стороны"   
                         if ("null".equals(spcAdd.getParam("null", 25013)) == false //"укорочение от"
                                 && spcAdd.getParam(0, 25030).equals(0) == false) { //"укорочение, мм"  

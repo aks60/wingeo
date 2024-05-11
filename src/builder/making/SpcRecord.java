@@ -4,7 +4,7 @@ import dataset.Record;
 import domain.eArtikl;
 import domain.eColor;
 import enums.UseUnit;
-import enums.TypeArtikl;
+import enums.TypeArt;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
@@ -142,14 +142,14 @@ public class SpcRecord {
     }
     
     protected void setAnglCut() {
-        if (TypeArtikl.X109.isType(artiklRec)
-                || TypeArtikl.X135.isType(artiklRec)
-                || TypeArtikl.X117.isType(artiklRec)
-                || TypeArtikl.X136.isType(artiklRec)) {
+        if (TypeArt.X109.isType(artiklRec)
+                || TypeArt.X135.isType(artiklRec)
+                || TypeArt.X117.isType(artiklRec)
+                || TypeArt.X136.isType(artiklRec)) {
             anglCut1 = 90;
             anglCut0 = 90;
 
-        } else if (TypeArtikl.X109.isType(artiklRec)) {
+        } else if (TypeArt.X109.isType(artiklRec)) {
             anglCut1 = 0;
             anglCut0 = 0;
         }

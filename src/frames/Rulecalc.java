@@ -9,7 +9,7 @@ import dataset.Query;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eRulecalc;
-import enums.TypeArtikl;
+import enums.TypeArt;
 import enums.TypeForm;
 import frames.dialog.DicArtikl2;
 import frames.dialog.DicEnums;
@@ -55,7 +55,7 @@ public class Rulecalc extends javax.swing.JFrame {
                     Field field = columns[col];
                     if (eRulecalc.type == field) {
                         int val2 = Integer.valueOf(val.toString());
-                        return TypeArtikl.find(val2 / 100, 0) + "." + TypeArtikl.find(val2 / 100, val2 % 10);
+                        return TypeArt.find(val2 / 100, 0) + "." + TypeArt.find(val2 / 100, val2 % 10);
 
                     } else if (eRulecalc.form == field) {
                         int val2 = (val.equals(0) == true) ? 1 : Integer.valueOf(val.toString());

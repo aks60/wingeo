@@ -9,7 +9,7 @@ import domain.eArtikl;
 import domain.eColor;
 import domain.eElement;
 import enums.PKjson;
-import enums.TypeArtikl;
+import enums.TypeArt;
 import enums.UseUnit;
 import java.awt.BasicStroke;
 import java.awt.Color;

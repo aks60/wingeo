@@ -13,7 +13,7 @@ import domain.eSyssize;
 import enums.Layout;
 import enums.PKjson;
 import enums.Type;
-import enums.TypeArtikl;
+import enums.TypeArt;
 import enums.TypeJoin;
 import enums.UseSide;
 import java.awt.Shape;
@@ -171,7 +171,7 @@ public class ElemCross extends ElemSimple {
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм 
 
             //Армирование
-            if (TypeArtikl.isType(spcAdd.artiklRec, TypeArtikl.X107)) {
+            if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X107)) {
                 spcAdd.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
                 spcAdd.setAnglCut(90, 90);
             }

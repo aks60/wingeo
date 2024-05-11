@@ -19,9 +19,9 @@ import domain.eSyspar1;
 import domain.eSysprod;
 import domain.eSysprof;
 import domain.eSystree;
-import enums.LayoutProduct;
+import enums.LayoutProd;
 import enums.LayoutKnob;
-import enums.TypeArtikl;
+import enums.TypeArt;
 import enums.UseSide;
 import enums.TypeOpen2;
 import enums.UseArtiklTo;
@@ -285,7 +285,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 int typesID = sysNode.rec().getInt(eSystree.types);
                 int imgviewID = sysNode.rec().getInt(eSystree.imgview);
                 TypeUse typeUse = Stream.of(TypeUse.values()).filter(en -> en.numb() == typesID).findFirst().orElse(TypeUse.EMPTY);
-                LayoutProduct layoutProduct = Stream.of(LayoutProduct.values()).filter(en -> en.numb() == imgviewID).findFirst().orElse(LayoutProduct.P1);
+                LayoutProd layoutProduct = Stream.of(LayoutProd.values()).filter(en -> en.numb() == imgviewID).findFirst().orElse(LayoutProd.P1);
                 setTxt(txt7, typeUse.name);
                 setTxt(txt11, layoutProduct.name);
             }
@@ -619,12 +619,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         UGui.buttonCellEditor(tab3, 5).addActionListener(event -> {
             int furnityreId = qSysfurn.getAs(UGui.getIndexRec(tab3), eSysfurn.furniture_id);
-            new DicArtikl(this, listenerArt211, false, furnityreId, TypeArtikl.X211.id1, TypeArtikl.X211.id2);
+            new DicArtikl(this, listenerArt211, false, furnityreId, TypeArt.X211.id1, TypeArt.X211.id2);
         });
 
         UGui.buttonCellEditor(tab3, 6).addActionListener(event -> {
             int furnityreId = qSysfurn.getAs(UGui.getIndexRec(tab3), eSysfurn.furniture_id);
-            new DicArtikl(this, listenerArt212, false, furnityreId, TypeArtikl.X212.id1, TypeArtikl.X212.id2);
+            new DicArtikl(this, listenerArt212, false, furnityreId, TypeArt.X212.id1, TypeArt.X212.id2);
         });
 
         UGui.buttonCellEditor(tab4, 0).addActionListener(event -> {
@@ -3464,7 +3464,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             sysNode.rec().set(eSystree.imgview, record.getInt(0));
             rsvSystree.load();
 
-        }, LayoutProduct.values());
+        }, LayoutProd.values());
     }//GEN-LAST:event_imageviewToSystree
 
     private void typeToSystree(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeToSystree

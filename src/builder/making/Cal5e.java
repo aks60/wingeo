@@ -4,7 +4,7 @@ import builder.Wincalc;
 import builder.model.AreaSimple;
 import builder.model.ElemSimple;
 import dataset.Query;
-import enums.TypeArtikl;
+import enums.TypeArt;
 
 public abstract class Cal5e {
 
@@ -22,7 +22,7 @@ public abstract class Cal5e {
     }
 
     public static void artype(SpcRecord spcAdd, ElemSimple elem5e) {
-        TypeArtikl typ = TypeArtikl.find(spcAdd.artiklRec);
+        TypeArt typ = TypeArt.find(spcAdd.artiklRec);
         switch (typ) {
             case X100:;
             case X101:

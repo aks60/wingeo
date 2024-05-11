@@ -4,7 +4,7 @@ import dataset.Record;
 import domain.eArtikl;
 import domain.eElemdet;
 import domain.eElement;
-import enums.TypeArtikl;
+import enums.TypeArt;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
@@ -100,8 +100,8 @@ public class SpcElement extends Cal5e {
 
                                 //Если (контейнер) в списке детализации, 
                                 //например профиль с префиксом @ в осн. специф.
-                                if (TypeArtikl.isType(artiklRec, TypeArtikl.X101, TypeArtikl.X102,
-                                        TypeArtikl.X103, TypeArtikl.X104, TypeArtikl.X105)) {
+                                if (TypeArt.isType(artiklRec, TypeArt.X101, TypeArt.X102,
+                                        TypeArt.X103, TypeArt.X104, TypeArt.X105)) {
                                     elem5e.spcRec.setArtikl(spcAdd.artiklRec); //подмена артикула в основной спецификации
                                     elem5e.spcRec.setColor(1, spcAdd.colorID1);
                                     elem5e.spcRec.setColor(2, spcAdd.colorID2);
@@ -109,7 +109,7 @@ public class SpcElement extends Cal5e {
                                     elem5e.addSpecific(elem5e.spcRec);
 
                                     //Контейнер маскитка не учавствует в цикле сторон
-                                } else if (TypeArtikl.isType(artiklRec, TypeArtikl.X520)) {
+                                } else if (TypeArt.isType(artiklRec, TypeArt.X520)) {
                                     if (UGeo.anglHor(elem5e.x1(), elem5e.y1(), elem5e.x2(), elem5e.y2()) == 0) {
                                         elem5e.spcRec.setArtikl(spcAdd.artiklRec); //подмена артикула в основной спецификации
                                         elem5e.spcRec.setColor(1, spcAdd.colorID1);

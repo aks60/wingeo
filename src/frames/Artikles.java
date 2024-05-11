@@ -13,7 +13,7 @@ import domain.eArtikl;
 import domain.eArtdet;
 import domain.eColor;
 import domain.eCurrenc;
-import enums.TypeArtikl;
+import enums.TypeArt;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -282,31 +282,31 @@ public class Artikles extends javax.swing.JFrame {
 
     public void loadingTree() {
 
-        nodeRoot = new DefaultMutableTreeNode(TypeArtikl.ROOT);
+        nodeRoot = new DefaultMutableTreeNode(TypeArt.ROOT);
         DefaultMutableTreeNode node = null;
-        for (TypeArtikl it : TypeArtikl.values()) {
+        for (TypeArt it : TypeArt.values()) {
             if (it.id1 == 1 && it.id2 == 0) {
-                node = new DefaultMutableTreeNode(TypeArtikl.X100); //"Профили"
+                node = new DefaultMutableTreeNode(TypeArt.X100); //"Профили"
 
             } else if (it.id1 == 2 && it.id2 == 0) {
                 nodeRoot.add(node);
-                node = new DefaultMutableTreeNode(TypeArtikl.X200); //"Аксессуары"
+                node = new DefaultMutableTreeNode(TypeArt.X200); //"Аксессуары"
 
             } else if (it.id1 == 3 && it.id2 == 0) {
                 nodeRoot.add(node);
-                node = new DefaultMutableTreeNode(TypeArtikl.X300); //"Погонаж"
+                node = new DefaultMutableTreeNode(TypeArt.X300); //"Погонаж"
 
             } else if (it.id1 == 4 && it.id2 == 0) {
                 nodeRoot.add(node);
-                node = new DefaultMutableTreeNode(TypeArtikl.X400); //"Инструмент"
+                node = new DefaultMutableTreeNode(TypeArt.X400); //"Инструмент"
 
             } else if (it.id1 == 5 && it.id2 == 0) {
                 nodeRoot.add(node);
-                node = new DefaultMutableTreeNode(TypeArtikl.X500); //"Заполнения"
+                node = new DefaultMutableTreeNode(TypeArt.X500); //"Заполнения"
 
             } else if (it.id1 == 6 && it.id2 == 0) {
                 nodeRoot.add(node);
-                node = new DefaultMutableTreeNode(TypeArtikl.X600); //"Наборы"                
+                node = new DefaultMutableTreeNode(TypeArt.X600); //"Наборы"                
 
             } else if (it.id2 > 0) {   //остальное       
                 nodeRoot.add(node);
@@ -328,11 +328,11 @@ public class Artikles extends javax.swing.JFrame {
         UGui.stopCellEditing(tab1, tab2);
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
         if (node != null) {
-            TypeArtikl e = (TypeArtikl) node.getUserObject();
+            TypeArt e = (TypeArt) node.getUserObject();
             String name = (e.id1 > 4) ? "pan8" : (e.id1 > 1) ? "pan7" : "pan2";
             ((CardLayout) pan6.getLayout()).show(pan6, name);
 
-            if (e == TypeArtikl.ROOT) {
+            if (e == TypeArt.ROOT) {
                 qArtikl.select(eArtikl.up, "order by", eArtikl.level1, ",", eArtikl.code);
             } else if (node.isLeaf()) {
                 qArtikl.select(eArtikl.up, "where", eArtikl.level1, "=", e.id1 + "and", eArtikl.level2, "=", e.id2, "order by", eArtikl.level1, ",", eArtikl.code);
@@ -340,8 +340,8 @@ public class Artikles extends javax.swing.JFrame {
                 qArtikl.select(eArtikl.up, "where", eArtikl.level1, "=", e.id1, "order by", eArtikl.level1, ",", eArtikl.code);
             }
             DefaultMutableTreeNode node2 = (DefaultMutableTreeNode) node.getParent();
-            lab1.setText((node2 != null && node.getParent() != null) ? " Тип: " + ((TypeArtikl) node2.getUserObject()).id1
-                    + "  подтип: " + ((TypeArtikl) node.getUserObject()).id2 : "");
+            lab1.setText((node2 != null && node.getParent() != null) ? " Тип: " + ((TypeArt) node2.getUserObject()).id1
+                    + "  подтип: " + ((TypeArt) node.getUserObject()).id2 : "");
             ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
         }
         UGui.setSelectedRow(tab1);
@@ -373,7 +373,7 @@ public class Artikles extends javax.swing.JFrame {
         DefaultMutableTreeNode node = nodeRoot;
         node = node.getNextNode();
         do {
-            TypeArtikl typeArt = (TypeArtikl) node.getUserObject();
+            TypeArt typeArt = (TypeArt) node.getUserObject();
             if (typeArt.id1 == artiklRec.getInt(eArtikl.level1)
                     && typeArt.id2 == artiklRec.getInt(eArtikl.level2)) {
                 TreePath path = new TreePath(node.getPath());
@@ -2436,7 +2436,7 @@ public class Artikles extends javax.swing.JFrame {
         if (tab1.getBorder() != null) {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
             if (node != null && node.isLeaf()) {
-                TypeArtikl typeArtikl = (TypeArtikl) node.getUserObject();
+                TypeArt typeArtikl = (TypeArt) node.getUserObject();
                 UGui.insertRecordCur(tab1, eArtikl.up, (record) -> {
                     record.setNo(eArtikl.level1, typeArtikl.id1);
                     record.setNo(eArtikl.level2, typeArtikl.id2);
@@ -2612,7 +2612,7 @@ public class Artikles extends javax.swing.JFrame {
         if (index != -1) {
             Record artiklRec = qArtikl.get(index);
             List list = new LinkedList();
-            for (TypeArtikl typeArt : TypeArtikl.values()) {
+            for (TypeArt typeArt : TypeArt.values()) {
                 String str = (typeArt.id2 == 0) ? typeArt.name + ":" : "      " + typeArt.name;
                 list.add(str);
             }
@@ -2620,8 +2620,8 @@ public class Artikles extends javax.swing.JFrame {
                     "Изменение типа артикула", JOptionPane.QUESTION_MESSAGE, null, list.toArray(), list.toArray()[0]);
 
             if (result != null) {
-                for (TypeArtikl enam : TypeArtikl.values()) {
-                    if (enam instanceof TypeArtikl && enam.name.equals(result.toString().trim())) {
+                for (TypeArt enam : TypeArt.values()) {
+                    if (enam instanceof TypeArt && enam.name.equals(result.toString().trim())) {
                         artiklRec.setNo(eArtikl.level1, enam.id1);
                         artiklRec.setNo(eArtikl.level2, enam.id2);
                         ((DefTableModel) tab1.getModel()).getQuery().update(artiklRec);

@@ -6,7 +6,7 @@ import frames.UGui;
 import dataset.Query;
 import dataset.Record;
 import domain.eArtikl;
-import enums.TypeArtikl;
+import enums.TypeArt;
 import java.util.Arrays;
 import frames.swing.DefTableModel;
 import java.util.List;
@@ -70,29 +70,29 @@ public class DicArtikl2 extends javax.swing.JDialog {
 
         DefaultMutableTreeNode treeNode1 = new DefaultMutableTreeNode("Мат. ценности");
         DefaultMutableTreeNode treeNode2 = null;
-        for (TypeArtikl it : TypeArtikl.values()) {
+        for (TypeArt it : TypeArt.values()) {
             if (it.id1 == 1 && it.id2 == 0) {
-                treeNode2 = new DefaultMutableTreeNode(TypeArtikl.X100); //"Профили"
+                treeNode2 = new DefaultMutableTreeNode(TypeArt.X100); //"Профили"
 
             } else if (it.id1 == 2 && it.id2 == 0) {
                 treeNode1.add(treeNode2);
-                treeNode2 = new DefaultMutableTreeNode(TypeArtikl.X200); //"Аксессуары"
+                treeNode2 = new DefaultMutableTreeNode(TypeArt.X200); //"Аксессуары"
 
             } else if (it.id1 == 3 && it.id2 == 0) {
                 treeNode1.add(treeNode2);
-                treeNode2 = new DefaultMutableTreeNode(TypeArtikl.X300); //"Погонаж"
+                treeNode2 = new DefaultMutableTreeNode(TypeArt.X300); //"Погонаж"
 
             } else if (it.id1 == 4 && it.id2 == 0) {
                 treeNode1.add(treeNode2);
-                treeNode2 = new DefaultMutableTreeNode(TypeArtikl.X400); //"Инструмент"
+                treeNode2 = new DefaultMutableTreeNode(TypeArt.X400); //"Инструмент"
 
             } else if (it.id1 == 5 && it.id2 == 0) {
                 treeNode1.add(treeNode2);
-                treeNode2 = new DefaultMutableTreeNode(TypeArtikl.X500); //"Заполнения"
+                treeNode2 = new DefaultMutableTreeNode(TypeArt.X500); //"Заполнения"
 
             } else if (it.id1 == 6 && it.id2 == 0) {
                 treeNode1.add(treeNode2);
-                treeNode2 = new DefaultMutableTreeNode(TypeArtikl.X600); //"Наборы"                  
+                treeNode2 = new DefaultMutableTreeNode(TypeArt.X600); //"Наборы"                  
 
             } else if (it.id2 > 0) {   //остальное       
                 treeNode1.add(treeNode2);
@@ -120,15 +120,15 @@ public class DicArtikl2 extends javax.swing.JDialog {
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
         if (node != null) {
             qArtikl.clear();
-            if (node.getUserObject() instanceof TypeArtikl == false) {
+            if (node.getUserObject() instanceof TypeArt == false) {
                 qArtikl.addAll(qArtiklAll);
 
             } else if (node.isLeaf()) {
-                TypeArtikl e = (TypeArtikl) node.getUserObject();
+                TypeArt e = (TypeArt) node.getUserObject();
                 qArtikl.addAll(qArtiklAll.stream().filter(rec -> rec.getInt(eArtikl.level1) == e.id1 && rec.getInt(eArtikl.level2) == e.id2).collect(toList()));
 
             } else {
-                TypeArtikl e = (TypeArtikl) node.getUserObject();
+                TypeArt e = (TypeArt) node.getUserObject();
                 qArtikl.addAll(qArtiklAll.stream().filter(rec -> rec.getInt(eArtikl.level1) == e.id1).collect(toList()));
             }
             ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();

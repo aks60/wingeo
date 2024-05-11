@@ -8,7 +8,7 @@ import dataset.Query;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eFurndet;
-import enums.TypeArtikl;
+import enums.TypeArt;
 import java.util.Arrays;
 import frames.swing.DefTableModel;
 import java.util.List;
@@ -71,15 +71,15 @@ public class DicArtikl extends javax.swing.JDialog {
                 if (field == eArtikl.level2) {
                     Record record = qArtikl.get(row);
                     if (record.getInt(eArtikl.level1) == 1) {
-                        return "Проф. " + TypeArtikl.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
+                        return "Проф. " + TypeArt.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
                     } else if (record.getInt(eArtikl.level1) == 2) {
-                        return "Акс...  " + TypeArtikl.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
+                        return "Акс...  " + TypeArt.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
                     } else if (record.getInt(eArtikl.level1) == 3) {
-                        return "Пог...  " + TypeArtikl.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
+                        return "Пог...  " + TypeArt.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
                     } else if (record.getInt(eArtikl.level1) == 4) {
-                        return "Инст..." + TypeArtikl.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
+                        return "Инст..." + TypeArt.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
                     } else if (record.getInt(eArtikl.level1) == 5) {
-                        return "Зап... " + TypeArtikl.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
+                        return "Зап... " + TypeArt.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
                     } else {
                         return "";
                     }

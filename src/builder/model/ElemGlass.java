@@ -15,7 +15,7 @@ import domain.eSystree;
 import enums.Layout;
 import enums.PKjson;
 import enums.Type;
-import enums.TypeArtikl;
+import enums.TypeArt;
 import enums.UseUnit;
 import java.awt.Color;
 import java.awt.Shape;
@@ -160,7 +160,7 @@ public class ElemGlass extends ElemSimple {
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм         
-            if (TypeArtikl.X502.isType(spcAdd.artiklRec)) {
+            if (TypeArt.X502.isType(spcAdd.artiklRec)) {
                 return;  //если стеклопакет сразу выход
             }
 
