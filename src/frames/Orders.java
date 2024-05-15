@@ -104,6 +104,7 @@ import report.HtmlOfSmeta;
 import report.HtmlOfSpecific;
 import startup.App;
 import common.listener.ListenerReload;
+import report.HtmlOfManufactory;
 
 public class Orders extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -3953,7 +3954,12 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }//GEN-LAST:event_tabMouseClicked
 
     private void menuItem18(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem18
-        // TODO add your handling code here:
+        ProgressBar.create(Orders.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                //Отчёт
+                HtmlOfManufactory.manufactory(qProject.get(UGui.getIndexRec(tab1, 0)));
+            }
+        });
     }//GEN-LAST:event_menuItem18
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
