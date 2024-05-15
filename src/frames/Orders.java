@@ -760,6 +760,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ppReport = new javax.swing.JPopupMenu();
         menuItem11 = new javax.swing.JMenuItem();
         menuItem12 = new javax.swing.JMenuItem();
+        menuItem18 = new javax.swing.JMenuItem();
         sep1 = new javax.swing.JPopupMenu.Separator();
         menuItem14 = new javax.swing.JMenuItem();
         menuItem13 = new javax.swing.JMenuItem();
@@ -954,6 +955,16 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             }
         });
         ppReport.add(menuItem12);
+
+        menuItem18.setFont(frames.UGui.getFont(0,1));
+        menuItem18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
+        menuItem18.setText("Задание в цех");
+        menuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem18(evt);
+            }
+        });
+        ppReport.add(menuItem18);
         ppReport.add(sep1);
 
         menuItem14.setFont(frames.UGui.getFont(0,1));
@@ -3941,6 +3952,10 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         }
     }//GEN-LAST:event_tabMouseClicked
 
+    private void menuItem18(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem18
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItem18
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn1;
@@ -4034,6 +4049,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private javax.swing.JMenuItem menuItem15;
     private javax.swing.JMenuItem menuItem16;
     private javax.swing.JMenuItem menuItem17;
+    private javax.swing.JMenuItem menuItem18;
     private javax.swing.JPanel north;
     private javax.swing.JPanel pan1;
     private javax.swing.JPanel pan11;
