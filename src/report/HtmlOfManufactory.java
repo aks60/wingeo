@@ -18,6 +18,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 //Задание в цех
@@ -54,8 +55,13 @@ public class HtmlOfManufactory {
             winc.specification(true);
             spcList2.addAll(winc.listSpec);
         }
-//        List<RSpecific> spcList3 = new ArrayList<RSpecific>();
-//        spcList2.forEach(el -> spcList3.add(new RSpecific(el)));
+        List<RSpecific> spcList3 = new ArrayList<RSpecific>();
+        spcList2.forEach(el -> spcList3.add(new RSpecific(el)));
+        
+                    Element div2 = doc.getElementById("div2");
+            String template2 = div2.html();
+            //List<Wincalc> wincList = wincList(prjprodList, length);
+        
 //        double total = spcList3.stream().mapToDouble(spc -> spc.getCost1()).sum();
 //
 //        doc.getElementById("h01").text("Заказ №" + projectRec.getStr(eProject.num_ord));
