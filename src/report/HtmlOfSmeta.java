@@ -3,7 +3,6 @@ package report;
 import builder.Wincalc;
 import builder.model.ElemSimple;
 import common.MoneyInWords;
-import common.eProp;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eColor;
@@ -14,7 +13,6 @@ import domain.eProject;
 import domain.eSysuser;
 import enums.Type;
 import frames.UGui;
-import frames.swing.Canvas;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -24,7 +22,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -32,6 +29,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import static report.URep.wincList;
 
 public class HtmlOfSmeta {
 
@@ -150,12 +148,12 @@ public class HtmlOfSmeta {
     }
 
     private static void load2(Record projectRec, Document doc) {
-        int length = 400;
         double total = 0f;
         double square = 0f; //площадь
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
-            Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
+            Record sysRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
+            Record sysuserRec = (sysRec == null) ? eSysuser.virtualRec() : sysRec;
             List<Record> prjprodList = ePrjprod.find2(projectRec.getInt(eProject.id));
             List<Record> prjkitAll = new ArrayList<Record>();
 
@@ -183,7 +181,7 @@ public class HtmlOfSmeta {
             //СЕКЦИЯ №2
             Element div2 = doc.getElementById("div2");
             String template2 = div2.html();
-            List<Wincalc> wincList = wincList(prjprodList, length);
+            List<Wincalc> wincList = URep.wincList(prjprodList, 400); 
 
             for (int i = 1; i < prjprodList.size(); i++) {
                 div2.append(template2);
@@ -308,44 +306,17 @@ public class HtmlOfSmeta {
                 get.attr("src", "C:\\Users\\All Users\\Avers\\Okna\\img" + (i + 1) + ".gif");
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:HtmlOfSmeta.load2()" + e);
+            System.err.println("Ошибка:HtmlOfSmeta.load2() " + e);
         }
     }
 
-    private static List<Wincalc> wincList(List<Record> prjprodList, int length) {
-        List<Wincalc> list = new ArrayList<Wincalc>();
-        try {
-            for (int index = 0; index < prjprodList.size(); ++index) {
-                Record prjprodRec = prjprodList.get(index);
-                String script = prjprodRec.getStr(ePrjprod.script);
-                Wincalc winc = new Wincalc(script);
-                winc.specification(true);
-                winc.imageIcon = Canvas.createIcon(winc, length);
-                winc.bufferImg = new BufferedImage(length, length, BufferedImage.TYPE_INT_RGB);
-                winc.gc2d = winc.bufferImg.createGraphics();
-                winc.gc2d.fillRect(0, 0, length, length);
-                double height = winc.height();
-                double width = winc.width();
-                winc.scale = (length / width > length / height) ? length / (height + 80) : length / (width + 80);
-                winc.gc2d.scale(winc.scale, winc.scale);
-                winc.draw(); //рисую конструкцию
-                File outputfile = new File(eProp.path_prop.read(), "img" + (index + 1) + ".gif");
-                ImageIO.write(winc.bufferImg, "gif", outputfile);
-                list.add(winc);
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:HtmlOfSmeta.wincList()" + e);
-        }
-        return list;
-    }
-
-    private static byte[] toByteArray(BufferedImage bi) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        try {
-            ImageIO.write(bi, "png", outputStream);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return outputStream.toByteArray();
-    }
+//    private static byte[] toByteArray(BufferedImage bi) {
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//        try {
+//            ImageIO.write(bi, "png", outputStream);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return outputStream.toByteArray();
+//    }
 }
