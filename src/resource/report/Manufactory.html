@@ -11,30 +11,196 @@
                 text-align: left;
                 width: 680px;
             }
+            #tab1 {
+                font-size: 14px;
+                margin-left: 120px;
+            }
+            .tab2 caption {
+                font-size: 16px;
+                height: 22px;
+            }
+            .tab3 caption, #tab4 caption, #tab5 caption {
+                font-size: 12px;
+                text-align: left;
+                margin-top: 8px;
+            }
+            tfoot tr td {
+                font-weight: bold;
+            }
         </style>    
     </head>
     <body>
     <center>
         <h2 id="h01">Задание в цех</h2>
-        <h2 id='h01'>Заказ №222 <span></span></h2>
+        <h3 id='h01'>Заказ №222</h3>
         <!------------------------ СЕКЦИЯ №1 ----------------------------------->
         <table id="tab1" border=0>
             <col width='80'> <col width='600'>
             <tbody>
                 <tr>
-                    <td>Куда:</td><td>Москва</td>
+                    <td>Заказчик:</td><td>Иванов И.И.</td>
                 </tr>
                 <tr>
-                    <td>Тел/Факс:</td><td>89037896543</td>
-                </tr>
-                <tr>
-                    <td>E-mail:</td><td>fhg@yutg.ru</td>
-                </tr>
-                <tr>
-                    <td>Кому:</td><td>Потерялкин Н.Н.</td>
+                    <td>Конт. лицо:</td><td>Потерялкин Н.Н.</td>
                 </tr>
             </tbody>
-        </table>        
+        </table>    
+        <!------------------------- СЕКЦИЯ №2 --------------------------------->
+        <div id="div2">
+            <table class="tab2" border=1>
+                <br><caption><b>Изделие № 1</b></caption>
+                <col width='240'> <col width='140'> <col width='300'>
+                <tbody>
+                    <tr>
+                        <td style="border: 0;" height=223 rowSpan=14><FONT size=2>&nbsp;
+                            <IMG src="C:\Users\All Users\Avers\Okna\img1.gif" width=223 height=223></FONT>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Профиль:</td>
+                        <td>KBE-58</td>
+                    </tr>
+                    <tr>
+                        <td>Цвет:</td>
+                        <td>Белый</td>
+                    </tr>
+                    <tr>
+                        <td>Ширина х Высота , м </td>
+                        <td>0,90 х 0,60 </td>
+                    </tr>
+                    <tr>
+                        <td>Фурнитура</td>
+                        <td>Fomax</td>
+                    </tr>
+                    <tr>
+                        <td>Количество</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>Площадь изделия</td>
+                        <td>3.21&nbsp;кв.м.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--------------------------- СЕКЦИЯ №3 -------------------------------->   
+        <div>
+            <table id="tab4" border=1>
+                <caption>ПРОФИЛЬ / АРМИРОВАНИЕ</caption>
+                <thead> 
+                    <tr align='center'>
+                        <th>№</th>
+                        <th>Артикул</th>
+                        <th>Название</th>
+                        <th>Размер</th>
+                        <th>Угол1</th>
+                        <th>Угол2</th>
+                        <th>Кол-во</th>
+                        <th>Ориент.</th>
+                        <th>Радиус</th>
+                        <th>Размер.арм.</th>
+                        <th>Артикул арм.</th>
+                    </tr> 
+                </thead>
+                <tbody>
+                    <tr>
+                        <td align='center'>1</td>
+                        <td>КП40</td>
+                        <td>Профиль-40</td>
+                        <td>RAL 1001</td>
+                        <td align='center'>45</td>
+                        <td align='center'>45</td>
+                        <td align='center'>1</td>
+                        <td>Гориз.</td>
+                        <td align='right'>980</td>
+                        <td align='center'>1200</td>
+                        <td>3001</td>
+                    </tr>
+                </tbody>          
+            </table> 
+        </div> 
+
+        <!--------------------------- СЕКЦИЯ №4 -------------------------------->
+        <div>
+            <table id="tab4" border=1>
+                <caption>УПЛОТНИТЕЛИ</caption>
+                <thead> 
+                    <tr align='center'>
+                        <th>№</th>
+                        <th>Артикул</th>
+                        <th>Название</th>
+                        <th>Ед.изм.</th>
+                        <th>Кол-во</th>
+                    </tr> 
+                </thead>
+                <tbody>
+                    <tr>
+                        <td align='center'>1</td>
+                        <td>1075</td>
+                        <td>Уплотрение притвора</td>
+                        <td>м</td>
+                        <td align='center'>10.42</td>
+                    </tr>
+                </tbody>          
+            </table> 
+        </div> 
+
+        <!--------------------------- СЕКЦИЯ №5 -------------------------------->   
+        <div>
+            <table id="tab4" border=1>
+                <caption>ШТАПИК</caption>
+                <thead> 
+                    <tr align='center'>
+                        <th>№</th>
+                        <th>Артикул</th>
+                        <th>Название</th>
+                        <th>Размер</th>
+                        <th>Кол-во</th>
+                        <th>Угол1</th>
+                        <th>Угол2</th>
+                    </tr> 
+                </thead>
+                <tbody>
+                    <tr>
+                        <td align='center'>1</td>
+                        <td>1077</td>
+                        <td>Штапик 7.5 мм</td>
+                        <td align='center'>562</td>
+                        <td align='center'>4</td>
+                        <td align='center'>45</td>
+                        <td align='center'>45</td>
+                    </tr>
+                </tbody>          
+            </table> 
+        </div>           
+        <!--------------------------- СЕКЦИЯ №6 -------------------------------->   
+        <div>
+            <table id="tab4" border=1>
+                <caption>ЗАПОЛНЕНИЯ</caption>
+                <thead> 
+                    <tr align='center'>
+                        <th>№</th>
+                        <th>Наименование</th>
+                        <th>Высота</th>
+                        <th>Ширина</th>
+                        <th>Площадь</th>
+                        <th>Кол-во</th>
+                        <th>Общая площадь</th>
+                    </tr> 
+                </thead>
+                <tbody>
+                    <tr>
+                        <td align='center'>1</td>
+                        <td>4-10-4-10-4</td>
+                        <td align='center'>562</td>
+                        <td align='center'>340</td>
+                        <td align='center'>1.45</td>
+                        <td align='center'>1</td>
+                        <td align='center'>1.6</td>
+                    </tr>
+                </tbody>          
+            </table> 
+        </div>           
     </center>
-    </body>
+</body>
 </html>

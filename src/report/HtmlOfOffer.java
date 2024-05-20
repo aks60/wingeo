@@ -32,6 +32,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+//Коммерческое предложение
 public class HtmlOfOffer {
 
     private static DecimalFormat df0 = new DecimalFormat("0");

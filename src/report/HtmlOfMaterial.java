@@ -20,6 +20,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+//Разход материала
 public class HtmlOfMaterial {
 
     private static DecimalFormat df1 = new DecimalFormat("#0.0");
@@ -75,9 +76,5 @@ public class HtmlOfMaterial {
             tdList.get(6).text(spc.getPrice());
             tdList.get(7).text(spc.getCost());
         } 
-        Object obj = doc.getElementsByTag("tfoot")
-                .get(0).getElementsByTag("tr")
-                .get(0).getElementsByTag("td")
-                .get(1).text(df2.format(total));
     }
 }
