@@ -69,9 +69,11 @@ public class HtmlOfManufactory {
             for (int i = 0; i < prjprodList.size(); i++) {
                 Wincalc winc = wincList.get(i);
                 Record prjprodRec = prjprodList.get(i);
-                for (int j = 0; j < tab2List.get(i).getElementsByTag("tr").size(); ++j) {
-                    Elements tdList = tab2List.get(i).getElementsByTag("td");
-                }
+                
+                tab2List.get(i).getElementsByTag("tr").get(1).getElementsByTag("td").get(1).text("????");
+//                for (int j = 0; j < tab2List.get(i).getElementsByTag("tr").size(); ++j) {
+//                    Elements tdList = tab2List.get(i).getElementsByTag("td");
+//                }
             }
 
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");
