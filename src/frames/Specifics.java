@@ -114,7 +114,8 @@ public class Specifics extends javax.swing.JFrame {
         if (listSpec != null && listSpec.isEmpty() == false) {
             int indexLast = listSpec.get(0).getVector(0).size();
             double sum1 = 0, sum2 = 0, sum9 = 0, sum13 = 0;
-            for (int i = 0; i < listSpec.size(); i++) { //заполним спецификацию
+            //Заполним спецификацию
+            for (int i = 0; i < listSpec.size(); i++) { 
                 Vector v = listSpec.get(i).getVector(i);
                 dtm.addRow(v);
                 sum1 = sum1 + (Double) v.get(indexLast - 1);
