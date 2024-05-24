@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import static domain.eArtikl.groups4_id;
 
 public enum ePrjprod implements Field {
-    up("0", "0", "0", "Изделия заказов", "EMPTY"),
+    up("0", "0", "0", "Изделия заказa", "EMPTY"),
     id("4", "10", "0", "Идентификатор", "id"),
     num("5", "5", "1", "Количество", "num"),
     name("12", "128", "1", "Название изделия", "name"),

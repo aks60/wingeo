@@ -134,9 +134,10 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         }
     };
 
-    public Orders() {
+    public Orders(boolean menureport) {
         initComponents();
         scene = new Scene(canvas, this, this);
+        btnReport.setVisible(menureport);
         initElements();
         loadingData();
         loadingModel();

@@ -195,7 +195,7 @@ public enum App {
                     }
                     break;
                 case Order:
-                    frame = new Orders();
+                    frame = new Orders((boolean) param[0]);
                     break;
                 case Models:
                     frame = new Models();

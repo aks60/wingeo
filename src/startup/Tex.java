@@ -1060,7 +1060,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     private void mnOrder(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnOrder
         ProgressBar.create(Tex.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                App.Order.createFrame(Tex.this);
+                App.Order.createFrame(Tex.this, true);
             }
         });
     }//GEN-LAST:event_mnOrder
