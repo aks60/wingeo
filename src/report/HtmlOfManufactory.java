@@ -76,11 +76,10 @@ public class HtmlOfManufactory {
 
                 List<SpcRecord> spcList3 = new ArrayList(), spcList3a = new ArrayList();
                 loadTab3Specific(winc, tab3, template3Rec, spcList3, spcList3a); //спецификация для изделия 
-                //doc.getElementById("div2").select("tr").remove();//removeAttr("tr");
-                spcList3.forEach(act -> tab3.getElementsByTag("tbody").append(template3Rec));
-//                for (int f = 1; f < spcList3.size(); ++f) {
-//                    tab3.getElementsByTag("tbody").append(template3Rec);
-//                }
+                System.out.println(doc.select("div2"));
+                for (int f = 1; f < spcList3.size(); ++f) {
+                    tab3.getElementsByTag("tbody").append(template3Rec);
+                }
                 for (int j = 0; j < spcList3.size(); j++) { //заполним строки 
                     Elements tdList3 = tab3List.get(i).getElementsByTag("tr").get(j + 1).getElementsByTag("td");
                     tdList3.get(0).text(String.valueOf(j + 1));
