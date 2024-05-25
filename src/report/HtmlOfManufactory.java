@@ -11,7 +11,7 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JTextField;
+import static java.util.stream.Collectors.toList;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -67,21 +67,25 @@ public class HtmlOfManufactory {
             //Цикл по изделиям
             for (int i = 0; i < prjprodList.size(); i++) {
 
+                String script = prjprodList.get(i).getStr(ePrjprod.script);
+                Wincalc winc = new Wincalc(script);
+                winc.specification(true);
+
                 //Таблица №3 ПРОФИЛЬ / АРМИРОВАНИЕ          
                 Element tab3 = tab3List.get(i);
 
                 List<SpcRecord> spcList3 = new ArrayList(), spcList3a = new ArrayList();
-                loadTab3Specific(prjprodList.get(i), spcList3, spcList3a); //спецификация для изделия 
-                //spcList3.forEach(act -> tab3.getElementsByTag("tbody").append(template3Rec));
-                for(int f = 1; f < spcList3.size(); ++f) {
-                   tab3.getElementsByTag("tbody").append(template3Rec); 
-                }                
-                
+                loadTab3Specific(winc, tab3, template3Rec, spcList3, spcList3a); //спецификация для изделия 
+                //doc.getElementById("div2").select("tr").remove();//removeAttr("tr");
+                spcList3.forEach(act -> tab3.getElementsByTag("tbody").append(template3Rec));
+//                for (int f = 1; f < spcList3.size(); ++f) {
+//                    tab3.getElementsByTag("tbody").append(template3Rec);
+//                }
                 for (int j = 0; j < spcList3.size(); j++) { //заполним строки 
                     Elements tdList3 = tab3List.get(i).getElementsByTag("tr").get(j + 1).getElementsByTag("td");
                     tdList3.get(0).text(String.valueOf(j + 1));
-                    tdList3.get(1).text(spcList3.get(j).artikl);
-                    tdList3.get(2).text(spcList3.get(j).name);
+                    tdList3.get(1).text(str(spcList3.get(j).artikl));
+                    tdList3.get(2).text(str(spcList3.get(j).name));
                     tdList3.get(3).text(str(spcList3.get(j).width));
                     tdList3.get(4).text(str(spcList3.get(j).anglCut0));
                     tdList3.get(5).text(str(spcList3.get(j).anglCut1));
@@ -91,8 +95,28 @@ public class HtmlOfManufactory {
                     tdList3.get(9).text(str(spcList3a.get(j).width));
                     tdList3.get(10).text(str(spcList3a.get(j).artikl));
                 }
+
+                //Таблица №4 УПЛОТНИТЕЛИ          
+                Element tab4 = tab4List.get(i);
+                List<SpcRecord> spcList4 = loadTab4Specific(winc, tab4, template4Rec);
+                for (int f = 1; f < spcList4.size(); ++f) {
+                    tab4.getElementsByTag("tbody").append(template4Rec);
+                }
+                for (int j = 0; j < spcList4.size(); j++) { //заполним строки 
+                    Elements tdList4 = tab4List.get(i).getElementsByTag("tr").get(j + 1).getElementsByTag("td");
+                    tdList4.get(0).text(String.valueOf(j + 1));
+                    tdList4.get(1).text(str(spcList4.get(j).artikl));
+                    tdList4.get(2).text(str(spcList4.get(j).name));
+                    tdList4.get(3).text(str(spcList4.get(j).unit));
+                    tdList4.get(4).text(str(spcList4.get(j).width));
+                }
+
+                //Таблица №5 ШТАПИК          
+                Element tab5 = tab5List.get(i);
+                List<SpcRecord> spcList5 = loadTab5Specific(winc, tab5, template5Rec);
+                
             }
-            
+
             //Загрузим изображения
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");
             for (int i = 0; i < imgList.size(); i++) {
@@ -105,11 +129,8 @@ public class HtmlOfManufactory {
         }
     }
 
-    public static void loadTab3Specific(Record prjprodRec, List<SpcRecord> spcList2, List<SpcRecord> spcList3) {
-
-        String script = prjprodRec.getStr(ePrjprod.script);
-        Wincalc winc = new Wincalc(script);
-        winc.specification(true);
+    //ПРОФИЛЬ / АРМИРОВАНИЕ
+    public static void loadTab3Specific(Wincalc winc, Element tab, String templateRec, List<SpcRecord> spcList2, List<SpcRecord> spcList3) {
 
         winc.listSpec.forEach(spcRec -> { //профиля
             if (TypeArt.isType(spcRec.artiklRec, TypeArt.X100, TypeArt.X101, TypeArt.X102, TypeArt.X103, TypeArt.X104, TypeArt.X105) == true) {
@@ -119,18 +140,42 @@ public class HtmlOfManufactory {
         spcList2.forEach(spcRec1 -> { //армирование
             SpcRecord spcRec3 = new SpcRecord();
             for (SpcRecord spcRec2 : winc.listSpec) {
-                 if (TypeArt.isType(spcRec2.artiklRec, TypeArt.X107) == true && spcRec2.elem5e.id == spcRec1.id) {
+                if (TypeArt.isType(spcRec2.artiklRec, TypeArt.X107) == true && spcRec2.elem5e.id == spcRec1.id) {
                     spcRec3 = spcRec2;
-                }               
+                }
             }
             spcList3.add(spcRec3);
         });
     }
 
+    //УПЛОТНИТЕЛИ
+    public static List<SpcRecord> loadTab4Specific(Wincalc winc, Element tab, String templateRec) {
+
+        List<SpcRecord> spcList = new ArrayList();
+        winc.listSpec.forEach(spcRec -> { //профиля
+            if (TypeArt.isType(spcRec.artiklRec, TypeArt.X135) == true) {
+                spcList.add(spcRec);
+            }
+        });
+        return spcList;
+    }
+
+    //ШТАПИК
+    public static List<SpcRecord> loadTab5Specific(Wincalc winc, Element tab, String templateRec) {
+
+        List<SpcRecord> spcList = new ArrayList();
+        winc.listSpec.forEach(spcRec -> { //профиля
+            if (TypeArt.isType(spcRec.artiklRec, TypeArt.X108) == true) {
+                spcList.add(spcRec);
+            }
+        });
+        return spcList;
+    }
+
     private static String str(Object txt) {
         if (txt == null) {
             return "";
-        } else if(txt instanceof Number) {
+        } else if (txt instanceof Number) {
             return df2.format(txt);
         }
         return txt.toString();
