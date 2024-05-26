@@ -53,14 +53,14 @@ public class HtmlOfManufactory {
                 div2.append(templateBody);
             }
 
-            Element tab2 = doc.getElementById("tab2"), tab3 = doc.getElementById("tab3"),
-                    tab4 = doc.getElementById("tab4"), tab5 = doc.getElementById("tab5"),
-                    tab6 = doc.getElementById("tab6");
-            String template2Rec = tab2.getElementsByTag("tr").get(1).html(),
-                    template3Rec = tab3.getElementsByTag("tr").get(1).html(),
-                    template4Rec = tab4.getElementsByTag("tr").get(1).html(),
-                    template5Rec = tab5.getElementsByTag("tr").get(1).html(),
-                    template6Rec = tab6.getElementsByTag("tr").get(1).html();
+            Elements tab2List = doc.getElementsByClass("tab2"), tab3List = doc.getElementsByClass("tab3"),
+                    tab4List = doc.getElementsByClass("tab4"), tab5List = doc.getElementsByClass("tab5"),
+                    tab6List = doc.getElementsByClass("tab6");
+            String template2Rec = tab2List.get(0).getElementsByTag("tr").get(1).html(),
+                    template3Rec = tab3List.get(0).getElementsByTag("tr").get(1).html(),
+                    template4Rec = tab4List.get(0).getElementsByTag("tr").get(1).html(),
+                    template5Rec = tab5List.get(0).getElementsByTag("tr").get(1).html(),
+                    template6Rec = tab6List.get(0).getElementsByTag("tr").get(1).html();
 
             //Цикл по изделиям
             for (int i = 0; i < prjprodList.size(); i++) {
@@ -69,14 +69,12 @@ public class HtmlOfManufactory {
                 Wincalc winc = new Wincalc(script);
                 winc.specification(true);
 
-                //Таблица №3 ПРОФИЛЬ / АРМИРОВАНИЕ          
+                //Таблица №3 ПРОФИЛЬ / АРМИРОВАНИЕ  
+                Element tab3 = tab3List.get(i);
                 List<SpcRecord> spcList3 = new ArrayList(), spcList3a = new ArrayList();
                 loadTab3Specific(winc, tab3, template3Rec, spcList3, spcList3a); //спецификация для изделия 
-                //doc.getElementById("tab3").getElementsByTag("tr").remove();
-                //spcList3.forEach(act -> tab3.append(template3Rec));
-                for (int f = 1; f < spcList3.size(); ++f) {
-                    tab3.getElementsByTag("tbody").append(template3Rec);
-                }                
+                spcList3.forEach(act -> tab3.append(template3Rec));
+                tab3.getElementsByTag("tr").remove(1);
 
                 for (int j = 0; j < spcList3.size(); j++) { //заполним строки 
                     Elements tdList3 = tab3.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
@@ -93,11 +91,12 @@ public class HtmlOfManufactory {
                     tdList3.get(10).text(str(spcList3a.get(j).artikl));
                 }
 
-                //Таблица №4 УПЛОТНИТЕЛИ          
+                //Таблица №4 УПЛОТНИТЕЛИ 
+                Element tab4 = tab4List.get(i);
                 List<SpcRecord> spcList4 = loadTab4Specific(winc, tab4, template4Rec);
-                for (int f = 1; f < spcList4.size(); ++f) {
-                    tab4.getElementsByTag("tbody").append(template4Rec);
-                }
+                spcList4.forEach(act -> tab4.append(template4Rec));
+                tab4.getElementsByTag("tr").remove(1);
+
                 for (int j = 0; j < spcList4.size(); j++) { //заполним строки 
                     Elements tdList4 = tab4.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
                     tdList4.get(0).text(String.valueOf(j + 1));
@@ -107,8 +106,11 @@ public class HtmlOfManufactory {
                     tdList4.get(4).text(str(spcList4.get(j).width));
                 }
 
-                //Таблица №5 ШТАПИК          
+                //Таблица №5 ШТАПИК  
+                Element tab5 = tab5List.get(i);
                 List<SpcRecord> spcList5 = loadTab5Specific(winc, tab5, template5Rec);
+                spcList5.forEach(act -> tab5.append(template5Rec));
+                tab5.getElementsByTag("tr").remove(1);
 
             }
 
