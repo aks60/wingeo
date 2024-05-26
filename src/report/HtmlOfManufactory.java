@@ -76,6 +76,10 @@ public class HtmlOfManufactory {
                 spcList3.forEach(act -> tab3.append(template3Rec));
                 tab3.getElementsByTag("tr").remove(1);
 
+                System.out.println(doc.select("div2"));
+                for (int f = 1; f < spcList3.size(); ++f) {
+                    tab3.getElementsByTag("tbody").append(template3Rec);
+                }
                 for (int j = 0; j < spcList3.size(); j++) { //заполним строки 
                     Elements tdList3 = tab3.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
                     tdList3.get(0).text(String.valueOf(j + 1));
