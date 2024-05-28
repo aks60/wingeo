@@ -60,9 +60,8 @@ public class HtmlOfMaterial {
         
         doc.getElementById("h01").text("Заказ №" + projectRec.getStr(eProject.num_ord));        
         String template = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
-        for (int i = 1; i < spcList3.size(); i++) {
-            doc.getElementsByTag("tbody").append(template);
-        }
+        spcList3.forEach(act -> doc.getElementsByTag("tbody").append(template));
+        doc.getElementsByTag("tbody").get(0).getElementsByTag("tr").remove(1);        
         Elements trList = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
         for (int i = 0; i < spcList3.size(); i++) {
             RSpecific spc = spcList3.get(i);

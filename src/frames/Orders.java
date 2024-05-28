@@ -760,8 +760,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
         buttonGroup = new javax.swing.ButtonGroup();
         ppReport = new javax.swing.JPopupMenu();
-        menuItem11 = new javax.swing.JMenuItem();
         menuItem12 = new javax.swing.JMenuItem();
+        menuItem11 = new javax.swing.JMenuItem();
         menuItem18 = new javax.swing.JMenuItem();
         sep1 = new javax.swing.JPopupMenu.Separator();
         menuItem14 = new javax.swing.JMenuItem();
@@ -938,16 +938,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         tab4 = new javax.swing.JTable();
         south = new javax.swing.JPanel();
 
-        menuItem11.setFont(frames.UGui.getFont(0,1));
-        menuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
-        menuItem11.setText("Расход материалов");
-        menuItem11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem11(evt);
-            }
-        });
-        ppReport.add(menuItem11);
-
         menuItem12.setFont(frames.UGui.getFont(0,1));
         menuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
         menuItem12.setText("Спецификация");
@@ -957,6 +947,16 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             }
         });
         ppReport.add(menuItem12);
+
+        menuItem11.setFont(frames.UGui.getFont(0,1));
+        menuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
+        menuItem11.setText("Расход материалов");
+        menuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem11(evt);
+            }
+        });
+        ppReport.add(menuItem11);
 
         menuItem18.setFont(frames.UGui.getFont(0,1));
         menuItem18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
