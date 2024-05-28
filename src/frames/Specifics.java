@@ -147,7 +147,7 @@ public class Specifics extends javax.swing.JFrame {
                     ? spc.name + spc.artikl + spc.colorID1 + spc.colorID2 + spc.colorID3 + spc.width + spc.height + spc.anglCut0 + spc.anglCut1 + spc.wastePrc + spc.costpric1
                     : (num == 2) ? spc.name + spc.artikl + spc.colorID1 + spc.colorID2 + spc.colorID3 + spc.wastePrc + spc.costpric1 : spc.artikl;
             if (hs.add(key)) {
-                map.put(key, new SpcRecord().clon(spc));
+                map.put(key, new SpcRecord(spc));
             } else {
                 SpcRecord s = map.get(key);
                 s.weight = s.weight + spc.weight;

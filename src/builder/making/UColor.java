@@ -59,7 +59,7 @@ public class UColor {
      */
     public static boolean colorFromProduct(SpcRecord spcAdd) {  //см. http://help.profsegment.ru/?id=1107 
 
-        SpcRecord spcClon = new SpcRecord().clon(spcAdd);
+        SpcRecord spcClon = new SpcRecord(spcAdd);
         int typesUS = spcClon.detailRec.getInt(COLOR_US);
         if (UseColor.isSeries(typesUS)) { //если серия
 
@@ -69,7 +69,7 @@ public class UColor {
                 if (UColor.colorFromProduct(spcClon, 1, true)
                         && UColor.colorFromProduct(spcClon, 2, true)
                         && UColor.colorFromProduct(spcClon, 3, true)) {
-                    spcAdd.clon(spcClon);
+                    spcAdd.copy(spcClon);
                     return true;
                 }
             }

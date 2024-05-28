@@ -111,6 +111,32 @@ public class HtmlOfManufactory {
                 List<SpcRecord> spcList5 = loadTab5Specific(winc, tab5, template5Rec);
                 spcList5.forEach(act -> tab5.append(template5Rec));
                 tab5.getElementsByTag("tr").remove(1);
+                for (int j = 0; j < spcList5.size(); j++) { //заполним строки 
+                    Elements tdList5 = tab5.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
+                    tdList5.get(0).text(String.valueOf(j + 1));
+                    tdList5.get(1).text(str(spcList5.get(j).artikl));
+                    tdList5.get(2).text(str(spcList5.get(j).name));
+                    tdList5.get(3).text(str(spcList5.get(j).width));
+                    tdList5.get(4).text(str(spcList5.get(j).count));
+                    tdList5.get(5).text(str(spcList5.get(j).anglCut0));
+                    tdList5.get(6).text(str(spcList5.get(j).anglCut1));
+                }
+
+                //Таблица №6 ЗАПОЛНЕНИЯ  
+                Element tab6 = tab6List.get(i);
+                List<SpcRecord> spcList6 = loadTab6Specific(winc, tab6, template6Rec);
+                spcList6.forEach(act -> tab6.append(template6Rec));
+                tab6.getElementsByTag("tr").remove(1);
+                for (int j = 0; j < spcList6.size(); j++) { //заполним строки 
+                    Elements tdList6 = tab6.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
+                    tdList6.get(0).text(String.valueOf(j + 1));
+                    tdList6.get(1).text(str(spcList6.get(j).name));
+                    tdList6.get(2).text(str(spcList6.get(j).width));
+                    tdList6.get(3).text(str(spcList6.get(j).height));
+                    tdList6.get(4).text(str(spcList6.get(j).weight));
+                    tdList6.get(5).text(str(spcList6.get(j).count));
+                    tdList6.get(6).text(str(spcList6.get(j).weight));
+                }    
 
             }
 
@@ -131,7 +157,7 @@ public class HtmlOfManufactory {
 
         winc.listSpec.forEach(spcRec -> { //профиля
             if (TypeArt.isType(spcRec.artiklRec, TypeArt.X100, TypeArt.X101, TypeArt.X102, TypeArt.X103, TypeArt.X104, TypeArt.X105) == true) {
-                spcList2.add(spcRec);
+                spcList2.add(new  SpcRecord(spcRec));
             }
         });
         spcList2.forEach(spcRec1 -> { //армирование
@@ -141,7 +167,7 @@ public class HtmlOfManufactory {
                     spcRec3 = spcRec2;
                 }
             }
-            spcList3.add(spcRec3);
+            spcList3.add(new  SpcRecord(spcRec3));
         });
     }
 
@@ -149,9 +175,9 @@ public class HtmlOfManufactory {
     public static List<SpcRecord> loadTab4Specific(Wincalc winc, Element tab, String templateRec) {
 
         List<SpcRecord> spcList = new ArrayList();
-        winc.listSpec.forEach(spcRec -> { //профиля
+        winc.listSpec.forEach(spcRec -> { 
             if (TypeArt.isType(spcRec.artiklRec, TypeArt.X135) == true) {
-                spcList.add(spcRec);
+                spcList.add(new  SpcRecord(spcRec));
             }
         });
         return spcList;
@@ -161,9 +187,21 @@ public class HtmlOfManufactory {
     public static List<SpcRecord> loadTab5Specific(Wincalc winc, Element tab, String templateRec) {
 
         List<SpcRecord> spcList = new ArrayList();
-        winc.listSpec.forEach(spcRec -> { //профиля
+        winc.listSpec.forEach(spcRec -> { 
             if (TypeArt.isType(spcRec.artiklRec, TypeArt.X108) == true) {
-                spcList.add(spcRec);
+                spcList.add(new  SpcRecord(spcRec));
+            }
+        });
+        return spcList;
+    }
+
+    //ЗАПОЛНЕНИЯ
+    public static List<SpcRecord> loadTab6Specific(Wincalc winc, Element tab, String templateRec) {
+
+        List<SpcRecord> spcList = new ArrayList();
+        winc.listSpec.forEach(spcRec -> { 
+            if (TypeArt.isType(spcRec.artiklRec, TypeArt.X502) == true) {
+                spcList.add(new  SpcRecord(spcRec));
             }
         });
         return spcList;

@@ -48,49 +48,10 @@ public class SpcRecord {
     public double price = 0;  //Стоимость без скидки
     public double cost2 = 0;  //Стоимость с технологической скидкой
 
-    public SpcRecord() {        
-    }
-    
-    public SpcRecord(double id, ElemSimple elem5e) {
-        ++elem5e.winc.spcId;
-        this.id = id;
-        this.elem5e = elem5e;
-        this.mapParam = new HashMap();
+    public SpcRecord() {
     }
 
-    public SpcRecord(String place, Record detailRec, Record artiklRec, ElemSimple elem5e, HashMap<Integer, String> mapParam) {
-        this.id = ++elem5e.winc.spcId;
-        this.elem5e = elem5e;
-        this.mapParam = mapParam;
-        this.detailRec = detailRec;
-        this.place = place;
-        setArtikl(artiklRec);
-    }
-
-    public SpcRecord(String place, double id, Record detailRec, Record artiklRec, HashMap<Integer, String> mapParam) {
-        this.id = id;
-        this.mapParam = mapParam;
-        this.detailRec = detailRec;
-        this.place = place;
-        setArtikl(artiklRec);
-    }
-    
-    public void setArtikl(Record artiklRec) {
-        this.artikl = artiklRec.getStr(eArtikl.code);
-        this.name = artiklRec.getStr(eArtikl.name);
-        this.wastePrc = artiklRec.getDbl(eArtikl.otx_norm);
-        this.unit = artiklRec.getInt(eArtikl.unit); //atypi;
-        this.artiklRec = artiklRec;
-        setAnglCut();
-    }
-    
-    public void setColor(int colorID1, int colorID2, int colorID3) {
-        this.colorID1 = colorID1;
-        this.colorID2 = colorID2;
-        this.colorID3 = colorID3;
-    }
-    
-    public SpcRecord clon(SpcRecord spec) {
+    public SpcRecord(SpcRecord spec) {
         this.id = spec.id;
         this.place = spec.place;
         this.artikl = spec.artikl;
@@ -117,7 +78,74 @@ public class SpcRecord {
         this.anglHoriz = spec.anglHoriz;
         this.mapParam = spec.mapParam;
         this.elem5e = spec.elem5e;
-        return this;
+    }
+
+    public SpcRecord(double id, ElemSimple elem5e) {
+        ++elem5e.winc.spcId;
+        this.id = id;
+        this.elem5e = elem5e;
+        this.mapParam = new HashMap();
+    }
+
+    public SpcRecord(String place, Record detailRec, Record artiklRec, ElemSimple elem5e, HashMap<Integer, String> mapParam) {
+        this.id = ++elem5e.winc.spcId;
+        this.elem5e = elem5e;
+        this.mapParam = mapParam;
+        this.detailRec = detailRec;
+        this.place = place;
+        setArtikl(artiklRec);
+    }
+
+    public SpcRecord(String place, double id, Record detailRec, Record artiklRec, HashMap<Integer, String> mapParam) {
+        this.id = id;
+        this.mapParam = mapParam;
+        this.detailRec = detailRec;
+        this.place = place;
+        setArtikl(artiklRec);
+    }
+
+    public void setArtikl(Record artiklRec) {
+        this.artikl = artiklRec.getStr(eArtikl.code);
+        this.name = artiklRec.getStr(eArtikl.name);
+        this.wastePrc = artiklRec.getDbl(eArtikl.otx_norm);
+        this.unit = artiklRec.getInt(eArtikl.unit); //atypi;
+        this.artiklRec = artiklRec;
+        setAnglCut();
+    }
+
+    public void setColor(int colorID1, int colorID2, int colorID3) {
+        this.colorID1 = colorID1;
+        this.colorID2 = colorID2;
+        this.colorID3 = colorID3;
+    }
+
+    public void copy(SpcRecord spec) {
+        this.id = spec.id;
+        this.place = spec.place;
+        this.artikl = spec.artikl;
+        this.artiklRec = spec.artiklRec;
+        this.detailRec = spec.detailRec;
+        this.name = spec.name;
+        this.colorID1 = spec.colorID1;
+        this.colorID2 = spec.colorID2;
+        this.colorID3 = spec.colorID3;
+        this.width = spec.width;
+        this.height = spec.height;
+        this.weight = spec.weight;
+        this.anglCut0 = spec.anglCut0;
+        this.anglCut1 = spec.anglCut1;
+        this.count = spec.count;
+        this.unit = spec.unit;
+        this.quant1 = spec.quant1;
+        this.wastePrc = spec.wastePrc;
+        this.quant2 = spec.quant2;
+        this.costpric1 = spec.costpric1;
+        this.costpric2 = spec.costpric2;
+        this.price = spec.price;
+        this.cost2 = spec.cost2;
+        this.anglHoriz = spec.anglHoriz;
+        this.mapParam = spec.mapParam;
+        this.elem5e = spec.elem5e;
     }
 
     public Vector getVector(int npp) {
@@ -135,12 +163,12 @@ public class SpcRecord {
             colorID3 = colorID;
         }
     }
-    
+
     public void setAnglCut(double angl0, double angl1) {
         this.anglCut0 = angl0;
         this.anglCut1 = angl1;
     }
-    
+
     protected void setAnglCut() {
         if (TypeArt.X109.isType(artiklRec)
                 || TypeArt.X135.isType(artiklRec)
