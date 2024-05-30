@@ -10,11 +10,15 @@ import common.listener.ListenerFrame;
 import common.eProp;
 import dataset.Record;
 import domain.eProject;
+import frames.Orders;
 import frames.PathToDb;
 import java.util.List;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import report.HtmlOfManufactory;
+import report.HtmlOfMaterial;
+import report.HtmlOfOffer;
+import report.HtmlOfSmeta;
 
 public class Man extends javax.swing.JFrame {
 
@@ -71,9 +75,11 @@ public class Man extends javax.swing.JFrame {
         pan6 = new javax.swing.JPanel();
         pan9 = new javax.swing.JPanel();
         btn8 = new javax.swing.JButton();
+        btn16 = new javax.swing.JButton();
+        btn15 = new javax.swing.JButton();
         btn9 = new javax.swing.JButton();
         btn10 = new javax.swing.JButton();
-        btn15 = new javax.swing.JButton();
+        btn17 = new javax.swing.JButton();
         pan11 = new javax.swing.JPanel();
         btn14 = new javax.swing.JButton();
         tabb1 = new javax.swing.JTabbedPane();
@@ -340,8 +346,36 @@ public class Man extends javax.swing.JFrame {
         pan9.add(btn8);
         btn8.getAccessibleContext().setAccessibleName("");
 
+        btn16.setFont(frames.UGui.getFont(0,1));
+        btn16.setText("Расход мат-лов");
+        btn16.setActionCommand("");
+        btn16.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btn16.setMaximumSize(new java.awt.Dimension(120, 30));
+        btn16.setMinimumSize(new java.awt.Dimension(87, 26));
+        btn16.setPreferredSize(new java.awt.Dimension(108, 26));
+        btn16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn16(evt);
+            }
+        });
+        pan9.add(btn16);
+
+        btn15.setFont(frames.UGui.getFont(0,1));
+        btn15.setText("Задание в цех");
+        btn15.setActionCommand("");
+        btn15.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btn15.setMaximumSize(new java.awt.Dimension(120, 30));
+        btn15.setMinimumSize(new java.awt.Dimension(87, 26));
+        btn15.setPreferredSize(new java.awt.Dimension(96, 26));
+        btn15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn15(evt);
+            }
+        });
+        pan9.add(btn15);
+
         btn9.setFont(frames.UGui.getFont(0,1));
-        btn9.setText("Смета");
+        btn9.setText("Смета под-ая");
         btn9.setActionCommand("");
         btn9.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn9.setMaximumSize(new java.awt.Dimension(120, 30));
@@ -370,19 +404,19 @@ public class Man extends javax.swing.JFrame {
         pan9.add(btn10);
         btn10.getAccessibleContext().setAccessibleName("");
 
-        btn15.setFont(frames.UGui.getFont(0,1));
-        btn15.setText("Задание в цех");
-        btn15.setActionCommand("");
-        btn15.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btn15.setMaximumSize(new java.awt.Dimension(120, 30));
-        btn15.setMinimumSize(new java.awt.Dimension(87, 26));
-        btn15.setPreferredSize(new java.awt.Dimension(96, 26));
-        btn15.addActionListener(new java.awt.event.ActionListener() {
+        btn17.setFont(frames.UGui.getFont(0,1));
+        btn17.setText("Комм-ое предл... ");
+        btn17.setActionCommand("");
+        btn17.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btn17.setMaximumSize(new java.awt.Dimension(120, 30));
+        btn17.setMinimumSize(new java.awt.Dimension(87, 26));
+        btn17.setPreferredSize(new java.awt.Dimension(106, 26));
+        btn17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn15(evt);
+                btn17(evt);
             }
         });
-        pan9.add(btn15);
+        pan9.add(btn17);
 
         pan6.add(pan9, java.awt.BorderLayout.CENTER);
 
@@ -500,6 +534,8 @@ public class Man extends javax.swing.JFrame {
     }//GEN-LAST:event_btn6
 
     private void btn8(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8
+        int orderID = Integer.valueOf(eProp.orderID.read());
+        Record projectRec = eProject.find(orderID);        
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 App.Specification.createFrame(Man.this);
@@ -508,7 +544,14 @@ public class Man extends javax.swing.JFrame {
     }//GEN-LAST:event_btn8
 
     private void btn9(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9
-
+        int orderID = Integer.valueOf(eProp.orderID.read());
+        Record projectRec = eProject.find(orderID);         
+        ProgressBar.create(Man.this, new ListenerFrame() {
+            @Override
+            public void actionRequest(Object obj) {
+                HtmlOfSmeta.smeta2(projectRec);
+            }
+        });
     }//GEN-LAST:event_btn9
 
     private void btn10(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn10
@@ -547,6 +590,28 @@ public class Man extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_btn15
 
+    private void btn16(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn16
+        int orderID = Integer.valueOf(eProp.orderID.read());
+        Record projectRec = eProject.find(orderID);
+        ProgressBar.create(Man.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                HtmlOfMaterial.material(projectRec);
+            }
+        });
+    }//GEN-LAST:event_btn16
+
+    private void btn17(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn17
+
+        int orderID = Integer.valueOf(eProp.orderID.read());
+        Record projectRec = eProject.find(orderID);        
+        ProgressBar.create(Man.this, new ListenerFrame() {
+            @Override
+            public void actionRequest(Object obj) {
+                HtmlOfOffer.offer(projectRec);
+            }
+        });
+    }//GEN-LAST:event_btn17
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn10;
@@ -555,6 +620,8 @@ public class Man extends javax.swing.JFrame {
     private javax.swing.JButton btn13;
     private javax.swing.JButton btn14;
     private javax.swing.JButton btn15;
+    private javax.swing.JButton btn16;
+    private javax.swing.JButton btn17;
     private javax.swing.JButton btn2;
     private javax.swing.JButton btn3;
     private javax.swing.JButton btn4;

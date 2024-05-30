@@ -74,7 +74,7 @@ public class HtmlOfOffer {
 
             Element div2 = doc.getElementById("div2");
             String template2 = div2.html();
-            List<Wincalc> wincList = wincList(prjprodList, length);
+            List<Wincalc> wincList = URep.wincList(prjprodList, 400);; //wincList(prjprodList, length);
             for (int i = 1; i < prjprodList.size(); i++) {
                 div2.append(template2);
             }
@@ -130,40 +130,13 @@ public class HtmlOfOffer {
         }
     }
 
-    private static List<Wincalc> wincList(List<Record> prjprodList, int length) {
-        List<Wincalc> list = new ArrayList<Wincalc>();
+//    private static byte[] toByteArray(BufferedImage bi) {
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 //        try {
-//            for (int index = 0; index < prjprodList.size(); ++index) {
-//                Record prjprodRec = prjprodList.get(index);
-//                String script = prjprodRec.getStr(ePrjprod.script);
-//                Wincalc winc = new Wincalc(script);
-//                winc.constructiv(true);
-//                winc.imageIcon = Canvas.createIcon(winc, length);
-//                winc.bufferImg = new BufferedImage(length, length, BufferedImage.TYPE_INT_RGB);
-//                winc.gc2d = winc.bufferImg.createGraphics();
-//                winc.gc2d.fillRect(0, 0, length, length);
-//                double height = (winc.height1() > winc.height2()) ? winc.height1() : winc.height2();
-//                double width = (winc.width2() > winc.width1()) ? winc.width2() : winc.width1();
-//                winc.scale = (length / width > length / height) ? length / (height + 80) : length / (width + 80);
-//                winc.gc2d.scale(winc.scale, winc.scale);
-//                winc.rootArea.draw(); //рисую конструкцию
-//                File outputfile = new File(eProp.path_prop.read(), "img" + (index + 1) + ".gif");
-//                ImageIO.write(winc.bufferImg, "gif", outputfile);
-//                list.add(winc);
-//            }
-//        } catch (Exception e) {
-//            System.err.println("Ошибка:HtmlOfSmeta.wincList()" + e);
+//            ImageIO.write(bi, "png", outputStream);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
 //        }
-        return list;
-    }
-
-    private static byte[] toByteArray(BufferedImage bi) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        try {
-            ImageIO.write(bi, "png", outputStream);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return outputStream.toByteArray();
-    }
+//        return outputStream.toByteArray();
+//    }
 }
