@@ -41,7 +41,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
-    <Property name="title" type="java.lang.String" value="&#x413;&#x440;&#x443;&#x43f;&#x43f;&#x44b;"/>
+    <Property name="title" type="java.lang.String" value="&#x426;&#x435;&#x43d;&#x43e;&#x432;&#x44b;&#x435; &#x43a;&#x43e;&#x44d;&#x444;&#x444;&#x438;&#x446;&#x438;&#x435;&#x43d;&#x442;&#x44b;"/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[700, 400]"/>
     </Property>

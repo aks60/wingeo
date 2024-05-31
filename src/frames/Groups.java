@@ -49,7 +49,7 @@ public class Groups extends javax.swing.JFrame {
         loadingModel();
         List<Component> list = (mode == 1) ? List.of(pan1, pan2, pan5, pan6, pan7) : List.of(pan3, pan4);
         list.forEach(comp -> tabb.remove(comp));
-        setTitle((mode == 1) ? "Справочники" : "Коэффициенты");
+        setTitle((mode == 1) ? "Справочники МЦ" : "Ценовые коэффициенты");
     }
     
     public Groups(int mode, ListenerRecord listener) {
@@ -211,7 +211,7 @@ public class Groups extends javax.swing.JFrame {
         ppmCrud.add(mDelit);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Группы");
+        setTitle("Ценовые коэффициенты");
         setMinimumSize(new java.awt.Dimension(700, 400));
         setPreferredSize(new java.awt.Dimension(600, 500));
         addWindowListener(new java.awt.event.WindowAdapter() {
