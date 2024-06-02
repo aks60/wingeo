@@ -92,7 +92,7 @@ public class Com5t {
     }
 
     public java.awt.Color color() {
-        return (timer.isRunning() == true) ? new java.awt.Color(255, 0, 0) : new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb));
+        return (timer.isRunning() == true) ? new java.awt.Color(255, 120, 0) : new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb));
     }
 
     public boolean isJson(JsonObject jso, String key) {

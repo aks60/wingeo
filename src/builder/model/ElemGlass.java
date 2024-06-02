@@ -299,7 +299,7 @@ public class ElemGlass extends ElemSimple {
     @Override
     public void paint() {
         if (areaFalz != null) {
-            winc.gc2d.setColor(new java.awt.Color(eColor.find(colorID1).getInt(eColor.rgb)));
+            winc.gc2d.setColor(this.color());
             Shape shape = new ShapeWriter().toShape(areaFalz);
             winc.gc2d.fill(shape);
         }
