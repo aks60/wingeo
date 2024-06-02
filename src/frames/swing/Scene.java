@@ -14,7 +14,7 @@ public class Scene extends javax.swing.JPanel {
     private ListenerReload listenerReload = null;
     private ListenerAction listenerAction = null;
     public Wincalc winc = null;
-    private Timer timer = new Timer(500, null);
+    private Timer timer = new javax.swing.Timer(500, null);
 
     public Scene(Canvas canvas, ListenerReload listenerReload, ListenerAction listenerAction) {
         initComponents();

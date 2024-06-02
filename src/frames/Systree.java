@@ -425,7 +425,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             if (selNode instanceof DefMutableTreeNode) {
                 winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
                 Wincalc winc = wincalc();
-
+                 //Таймер цвета
+                if (winc.canvas != null) {
+                    winNode.com5t().timer.start();
+                    winc.canvas.repaint();
+                }
                 //Конструкции
                 if (winNode.com5t().type == enums.Type.RECTANGL || winNode.com5t().type == enums.Type.DOOR || winNode.com5t().type == enums.Type.TRAPEZE || winNode.com5t().type == enums.Type.ARCH) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card12");

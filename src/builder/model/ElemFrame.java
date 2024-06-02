@@ -285,21 +285,13 @@ public class ElemFrame extends ElemSimple {
     public void paint() {
         if (this.area != null) {
 
-            super.paint();
-//if(this.id != 4) {
-            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
+            super.paint();         
+            winc.gc2d.setColor(this.color());
             Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(0));
             winc.gc2d.fill(shape);
 
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
             winc.gc2d.draw(shape);
-//}
-//            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
-//            for (Coordinate c: this.area.getCoordinates()) {
-//                Geometry p = UGeo.newPoint(c.x, c.y);
-//                Shape pe = new ShapeWriter().toShape(p);
-//                winc.gc2d.draw(pe);
-//            }
         }
     }
 

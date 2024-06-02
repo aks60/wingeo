@@ -219,7 +219,7 @@ public class ElemCross extends ElemSimple {
     @Override
     public void paint() {
         if (this.area != null) {
-            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
+            winc.gc2d.setColor(this.color());
 
             super.paint();
 
