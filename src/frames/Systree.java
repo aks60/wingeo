@@ -102,6 +102,7 @@ import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import common.listener.ListenerReload;
+import javax.swing.JPopupMenu;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -467,6 +468,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 } else if (winNode.com5t().type == enums.Type.GLASS) {
                     ElemGlass elem = (ElemGlass) winNode.com5t();
                     ((CardLayout) pan7.getLayout()).show(pan7, "card15");
+                    UGui.enabledPpmTree(ppmTree, winNode.com5t());
+
                     Record artiklRec = winNode.com5t().artiklRec;
                     setText(txt19, artiklRec.getStr(eArtikl.code));
                     setText(txt18, artiklRec.getStr(eArtikl.name));
@@ -882,7 +885,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         ppmTree = new javax.swing.JPopupMenu();
         addImpost = new javax.swing.JMenuItem();
         removeImpost = new javax.swing.JMenuItem();
-        jSep1 = new javax.swing.JPopupMenu.Separator();
         addStvorka = new javax.swing.JMenuItem();
         removeStvorka = new javax.swing.JMenuItem();
         tool = new javax.swing.JPanel();
@@ -1120,7 +1122,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         });
         ppmTree.add(removeImpost);
-        ppmTree.add(jSep1);
 
         addStvorka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
         addStvorka.setText("Добавить сворку");
@@ -4473,7 +4474,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
-    private javax.swing.JPopupMenu.Separator jSep1;
     private javax.swing.JLabel lab1;
     private javax.swing.JLabel lab13;
     private javax.swing.JLabel lab14;

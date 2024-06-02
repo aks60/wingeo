@@ -51,7 +51,6 @@ public class Test {
     private static GeometryFactory gf = new GeometryFactory();
     AffineTransformation aff = new AffineTransformation();
 
-
     // <editor-fold defaultstate="collapsed" desc="Connection[] connect(int numDb)">
     public static Connection connect1() {
         try {
@@ -147,7 +146,7 @@ public class Test {
 
         //draw6();
     }
-        
+
     public static void frame(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -156,7 +155,7 @@ public class Test {
             }
         });
     }
-    
+
     public void paincomp(Graphics g) {
 
         Graphics2D gc2d = (Graphics2D) g;
@@ -176,7 +175,7 @@ public class Test {
             gc2d.draw(shape);
         }
     }
-    
+
     private static void wincalc() throws Exception {
 
         Conn.connection(Test.connect2());
@@ -459,7 +458,6 @@ public class Test {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
-
     private void draw7() {
         double M = 1500;
         GeometricShapeFactory gsf = new GeometricShapeFactory();

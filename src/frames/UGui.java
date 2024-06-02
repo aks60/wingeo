@@ -21,6 +21,7 @@ import domain.eSysprod;
 import domain.eSystree;
 import enums.Enam;
 import builder.param.ParamList;
+import builder.script.GsonElem;
 import common.UCom;
 import enums.UseColor;
 import java.awt.Component;
@@ -69,6 +70,7 @@ import enums.PKjson;
 import enums.Type;
 import frames.swing.DefMutableTreeNode;
 import java.util.HashSet;
+import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -171,7 +173,7 @@ public class UGui {
         DefMutableTreeNode frm = root.add(new DefMutableTreeNode(new Com5t(Type.FRAME)));
         Object obj = winc.root.frames.get(Layout.LEFT);
         frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.LEFT)));
-        frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));        
+        frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
         frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.BOTT)));
         frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
         frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.RIGHT)));
@@ -1006,5 +1008,18 @@ public class UGui {
             obj.add(key, new JsonObject());
         }
         return obj.getAsJsonObject(key);
-    }    
+    }
+
+    public static void enabledPpmTree(JPopupMenu ppm, Com5t com5t) {
+
+        if (com5t.type == Type.GLASS) {
+            if (com5t.owner.type == Type.STVORKA) {
+                boolean b[] = {false, false, false, true};
+                List.of(0, 1, 2, 3).forEach(i -> ppm.getComponent(i).setEnabled(b[i]));
+            } else {
+                boolean b[] = {true, true, true, false};
+                List.of(0, 1, 2, 3).forEach(i -> ppm.getComponent(i).setEnabled(b[i]));
+            }
+        }
+    }
 }

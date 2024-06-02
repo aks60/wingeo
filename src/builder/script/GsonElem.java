@@ -87,7 +87,7 @@ public class GsonElem {
         this.childs.add(elem);
         return this;
     }
-
+    
     /**
      * Назначить родителей всем детям
      */

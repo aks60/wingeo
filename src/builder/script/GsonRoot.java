@@ -56,6 +56,22 @@ public class GsonRoot extends GsonElem {
         }
     }
 
+    public void addImpost() {
+
+    }
+
+    public void removeImpost() {
+
+    }
+
+    public void addStvorka() {
+        
+    }
+    
+    public void removeStvorka() {
+        
+    }
+    
     public void setMaxId(Wincalc winc) {
         double max = 0;
         for (Com5t e : winc.listAll) {
