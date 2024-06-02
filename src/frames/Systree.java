@@ -1105,19 +1105,39 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         addImpost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b054.gif"))); // NOI18N
         addImpost.setText("Добавить импост");
+        addImpost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addImpostActionPerformed(evt);
+            }
+        });
         ppmTree.add(addImpost);
 
         removeImpost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b054.gif"))); // NOI18N
         removeImpost.setText("Удалить импост");
+        removeImpost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeImpostActionPerformed(evt);
+            }
+        });
         ppmTree.add(removeImpost);
         ppmTree.add(jSep1);
 
         addStvorka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
         addStvorka.setText("Добавить сворку");
+        addStvorka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addStvorkaActionPerformed(evt);
+            }
+        });
         ppmTree.add(addStvorka);
 
         removeStvorka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
         removeStvorka.setText("Удалить створку");
+        removeStvorka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeStvorkaActionPerformed(evt);
+            }
+        });
         ppmTree.add(removeStvorka);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -4388,6 +4408,22 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
         this.pack();
     }//GEN-LAST:event_btnTreebtnMove
+
+    private void addImpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImpostActionPerformed
+        System.out.println("addImpost");
+    }//GEN-LAST:event_addImpostActionPerformed
+
+    private void removeImpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeImpostActionPerformed
+        System.out.println("removeImpost");
+    }//GEN-LAST:event_removeImpostActionPerformed
+
+    private void addStvorkaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStvorkaActionPerformed
+        System.out.println("addStvorka");
+    }//GEN-LAST:event_addStvorkaActionPerformed
+
+    private void removeStvorkaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeStvorkaActionPerformed
+        System.out.println("removeStvorka");
+    }//GEN-LAST:event_removeStvorkaActionPerformed
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables

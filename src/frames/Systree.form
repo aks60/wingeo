@@ -51,6 +51,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="&#x414;&#x43e;&#x431;&#x430;&#x432;&#x438;&#x442;&#x44c; &#x438;&#x43c;&#x43f;&#x43e;&#x441;&#x442;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addImpostActionPerformed"/>
+          </Events>
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="removeImpost">
           <Properties>
@@ -59,6 +62,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="&#x423;&#x434;&#x430;&#x43b;&#x438;&#x442;&#x44c; &#x438;&#x43c;&#x43f;&#x43e;&#x441;&#x442;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeImpostActionPerformed"/>
+          </Events>
         </MenuItem>
         <Component class="javax.swing.JPopupMenu$Separator" name="jSep1">
         </Component>
@@ -69,6 +75,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="&#x414;&#x43e;&#x431;&#x430;&#x432;&#x438;&#x442;&#x44c; &#x441;&#x432;&#x43e;&#x440;&#x43a;&#x443;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addStvorkaActionPerformed"/>
+          </Events>
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="removeStvorka">
           <Properties>
@@ -77,6 +86,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="&#x423;&#x434;&#x430;&#x43b;&#x438;&#x442;&#x44c; &#x441;&#x442;&#x432;&#x43e;&#x440;&#x43a;&#x443;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeStvorkaActionPerformed"/>
+          </Events>
         </MenuItem>
       </SubComponents>
     </Container>
