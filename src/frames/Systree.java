@@ -879,6 +879,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         ppmCrud = new javax.swing.JPopupMenu();
         mInsert = new javax.swing.JMenuItem();
         mDelit = new javax.swing.JMenuItem();
+        ppmTree = new javax.swing.JPopupMenu();
+        addImpost = new javax.swing.JMenuItem();
+        removeImpost = new javax.swing.JMenuItem();
+        jSep1 = new javax.swing.JPopupMenu.Separator();
+        addStvorka = new javax.swing.JMenuItem();
+        removeStvorka = new javax.swing.JMenuItem();
         tool = new javax.swing.JPanel();
         btnIns = new javax.swing.JButton();
         btnDel = new javax.swing.JButton();
@@ -1096,6 +1102,23 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         });
         ppmCrud.add(mDelit);
+
+        addImpost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b054.gif"))); // NOI18N
+        addImpost.setText("Добавить импост");
+        ppmTree.add(addImpost);
+
+        removeImpost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b054.gif"))); // NOI18N
+        removeImpost.setText("Удалить импост");
+        ppmTree.add(removeImpost);
+        ppmTree.add(jSep1);
+
+        addStvorka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
+        addStvorka.setText("Добавить сворку");
+        ppmTree.add(addStvorka);
+
+        removeStvorka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
+        removeStvorka.setText("Удалить створку");
+        ppmTree.add(removeStvorka);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Модели системных профилей");
@@ -3368,6 +3391,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         scr6.setPreferredSize(new java.awt.Dimension(200, 400));
 
         winTree.setFont(frames.UGui.getFont(0,0));
+        winTree.setInheritsPopupMenu(true);
         scr6.setViewportView(winTree);
 
         pan10.add(scr6, java.awt.BorderLayout.EAST);
@@ -4367,6 +4391,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem addImpost;
+    private javax.swing.JMenuItem addStvorka;
     private javax.swing.JButton btn10;
     private javax.swing.JButton btn11;
     private javax.swing.JButton btn12;
@@ -4411,6 +4437,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
+    private javax.swing.JPopupMenu.Separator jSep1;
     private javax.swing.JLabel lab1;
     private javax.swing.JLabel lab13;
     private javax.swing.JLabel lab14;
@@ -4492,6 +4519,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private javax.swing.JPanel pan7;
     private javax.swing.JPanel panDesign;
     private javax.swing.JPopupMenu ppmCrud;
+    private javax.swing.JPopupMenu ppmTree;
+    private javax.swing.JMenuItem removeImpost;
+    private javax.swing.JMenuItem removeStvorka;
     private javax.swing.JScrollPane scr1;
     private javax.swing.JScrollPane scr2;
     private javax.swing.JScrollPane scr3;
@@ -4574,6 +4604,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         new FrameToFile(this, btnClose);
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
+        winTree.setComponentPopupMenu(ppmTree);
         new UColor();
 
         UGui.setDocumentFilter(3, txt17, txt22, txt24, txt26);
