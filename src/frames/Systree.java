@@ -4410,11 +4410,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     private void removeImpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeImpostActionPerformed
         Com5t owner = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t().owner;
-        for (int i = 0; i < owner.gson.childs.size(); ++i) {
-            if(owner.gson.childs.get(i).type != enums.Type.FRAME_SIDE) {
-                owner.gson.childs.remove(i);
+        List<GsonElem> list = new ArrayList<GsonElem>();
+        for (GsonElem gson : owner.gson.childs) {
+            if (gson.type == enums.Type.FRAME_SIDE) {
+                list.add(gson);
             }
         }
+        owner.gson.childs = list;
         owner.gson.addElem(new GsonElem(enums.Type.GLASS));
     }//GEN-LAST:event_removeImpostActionPerformed
 
