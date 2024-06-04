@@ -80,7 +80,7 @@ public class Wincalc {
 
     public void build(String script) {
         //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script))); //для тестирования
-        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
         //Инит свойств
         spcId = 0;
@@ -118,13 +118,13 @@ public class Wincalc {
         }
 
         //Элементы конструкции
-        constructor(root, gson);
+        creator(root, gson);
 
         //Обновление конструкции
         location();
     }
 
-    private void constructor(AreaSimple owner, GsonElem gson) {
+    private void creator(AreaSimple owner, GsonElem gson) {
         try {
             if (gson.childs != null) {
                 LinkedHashMap<AreaSimple, GsonElem> hm = new LinkedHashMap();
@@ -159,7 +159,7 @@ public class Wincalc {
                 }
                 //Теперь вложенные элементы
                 for (Map.Entry<AreaSimple, GsonElem> entry : hm.entrySet()) {
-                    constructor(entry.getKey(), entry.getValue());
+                    creator(entry.getKey(), entry.getValue());
                 }
             }
         } catch (Exception e) {

@@ -81,7 +81,6 @@ import builder.model.ElemSimple;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
-import common.ArrayCom;
 import common.listener.ListenerAction;
 import domain.eJoinvar;
 import enums.TypeJoin;
@@ -102,7 +101,6 @@ import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import common.listener.ListenerReload;
-import javax.swing.JPopupMenu;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -427,6 +425,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
                 Wincalc winc = wincalc();
 
+                UGui.changePpmTree(winTree, ppmTree, winNode.com5t());
                 //Таймер цвета
                 if (winNode.com5t().type != enums.Type.PARAM && winNode.com5t().type != enums.Type.FRAME) {
                     if (winc.canvas != null) {
@@ -468,8 +467,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 } else if (winNode.com5t().type == enums.Type.GLASS) {
                     ElemGlass elem = (ElemGlass) winNode.com5t();
                     ((CardLayout) pan7.getLayout()).show(pan7, "card15");
-                    UGui.enabledPpmTree(ppmTree, winNode.com5t());
-
                     Record artiklRec = winNode.com5t().artiklRec;
                     setText(txt19, artiklRec.getStr(eArtikl.code));
                     setText(txt18, artiklRec.getStr(eArtikl.name));
@@ -1105,7 +1102,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
         ppmCrud.add(mDelit);
 
-        addImpost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b054.gif"))); // NOI18N
+        addImpost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
         addImpost.setText("Добавить импост");
         addImpost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1114,7 +1111,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
         ppmTree.add(addImpost);
 
-        removeImpost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b054.gif"))); // NOI18N
+        removeImpost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
         removeImpost.setText("Удалить импост");
         removeImpost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -3412,7 +3409,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         scr6.setPreferredSize(new java.awt.Dimension(200, 400));
 
         winTree.setFont(frames.UGui.getFont(0,0));
-        winTree.setInheritsPopupMenu(true);
         scr6.setViewportView(winTree);
 
         pan10.add(scr6, java.awt.BorderLayout.EAST);
@@ -4138,8 +4134,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_colorFromLock
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        //new Test().mpol = wincalc().listElem.get(6.0).area;
-        selectionTree1();
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void colorFromGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromGlass
@@ -4415,7 +4409,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_addImpostActionPerformed
 
     private void removeImpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeImpostActionPerformed
-        System.out.println("removeImpost");
+        Com5t owner = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t().owner;
+        for (int i = 0; i < owner.gson.childs.size(); ++i) {
+            if(owner.gson.childs.get(i).type != enums.Type.FRAME_SIDE) {
+                owner.gson.childs.remove(i);
+            }
+        }
+        owner.gson.addElem(new GsonElem(enums.Type.GLASS));
     }//GEN-LAST:event_removeImpostActionPerformed
 
     private void addStvorkaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStvorkaActionPerformed
@@ -4640,7 +4640,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         new FrameToFile(this, btnClose);
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
-        winTree.setComponentPopupMenu(ppmTree);
         new UColor();
 
         UGui.setDocumentFilter(3, txt17, txt22, txt24, txt26);

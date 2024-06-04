@@ -47,7 +47,7 @@
         <MenuItem class="javax.swing.JMenuItem" name="addImpost">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/resource/img16/b054.gif"/>
+              <Image iconType="3" name="/resource/img16/b055.gif"/>
             </Property>
             <Property name="text" type="java.lang.String" value="&#x414;&#x43e;&#x431;&#x430;&#x432;&#x438;&#x442;&#x44c; &#x438;&#x43c;&#x43f;&#x43e;&#x441;&#x442;"/>
           </Properties>
@@ -58,7 +58,7 @@
         <MenuItem class="javax.swing.JMenuItem" name="removeImpost">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/resource/img16/b054.gif"/>
+              <Image iconType="3" name="/resource/img16/b055.gif"/>
             </Property>
             <Property name="text" type="java.lang.String" value="&#x423;&#x434;&#x430;&#x43b;&#x438;&#x442;&#x44c; &#x438;&#x43c;&#x43f;&#x43e;&#x441;&#x442;"/>
           </Properties>
@@ -4913,7 +4913,6 @@
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                               <Connection code="frames.UGui.getFont(0,0)" type="code"/>
                             </Property>
-                            <Property name="inheritsPopupMenu" type="boolean" value="true"/>
                           </Properties>
                         </Component>
                       </SubComponents>

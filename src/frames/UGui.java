@@ -72,6 +72,7 @@ import frames.swing.DefMutableTreeNode;
 import java.util.HashSet;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * <p>
@@ -1010,16 +1011,34 @@ public class UGui {
         return obj.getAsJsonObject(key);
     }
 
-    public static void enabledPpmTree(JPopupMenu ppm, Com5t com5t) {
+    public static void changePpmTree(JTree winTree, JPopupMenu ppm, Com5t com5t) {
 
-        if (com5t.type == Type.GLASS) {
-            if (com5t.owner.type == Type.STVORKA) {
-                boolean b[] = {false, false, false, true};
-                List.of(0, 1, 2, 3).forEach(i -> ppm.getComponent(i).setEnabled(b[i]));
-            } else {
-                boolean b[] = {true, true, true, false};
-                List.of(0, 1, 2, 3).forEach(i -> ppm.getComponent(i).setEnabled(b[i]));
-            }
+        winTree.setComponentPopupMenu(null);
+        if (com5t.type == Type.GLASS && com5t.owner.type != Type.STVORKA) {
+            winTree.setComponentPopupMenu(ppm);
+            boolean b[] = {true, false, true, false};
+            List.of(0, 1, 2, 3).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+
+        } else if (List.of(enums.Type.IMPOST)
+                .contains(com5t.type)) {
+            winTree.setComponentPopupMenu(ppm);
+            boolean b[] = {false, true, false, false};
+            List.of(0, 1, 2, 3).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+
+        } else if (List.of(enums.Type.STVORKA)
+                .contains(com5t.type)) {
+            winTree.setComponentPopupMenu(ppm);
+            boolean b[] = {false, false, false, true};
+            List.of(0, 1, 2, 3).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
         }
+    }
+
+    public static void removeImpostTree(Com5t imp) {
+        //for (Com5t com5t : imp.owner.childs) {}
+        //GsonElem gson = imp.owner.gson;
+        //Geometry area = imp.owner.area;
+        
+        imp.owner.gson.childs.clear();
+        imp.owner.gson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
     }
 }
