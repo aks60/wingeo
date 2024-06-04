@@ -76,11 +76,11 @@ public class GsonScript {
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 0.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 1400.0))
-                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 0.0))
-                    
-                    .addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS))
-                    .addElem(new GsonElem(Type.IMPOST, 650.0, 0.0, 650.0, 1400.0))
-                    .addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 1300.0, 0.0));
+
+            rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 650.0, 0.0, 650.0, 1400.0));
+            rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 601006) {
             rootGson = new GsonRoot(Type.RECTANGL, "RAZIO \\ RAZIO 58 \\ 1 ОКНА");
@@ -120,9 +120,8 @@ public class GsonScript {
             area.addElem(new GsonElem(Type.IMPOST, 720.0, 1300.0, 720.0, 1700.0))
                     .addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
 // </editor-fold>   
-
 // <editor-fold defaultstate="collapsed" desc="ARCH">
-        } else if (prj == 507998) { 
+        } else if (prj == 507998) {
             rootGson = new GsonRoot(Type.ARCH, "Montblanc / Eco / 1 ОКНА");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 400.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1780.0))
@@ -132,7 +131,7 @@ public class GsonScript {
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 440.0, 800.0, 440.0));
             rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
-            
+
         } else if (prj == 604004) {
             rootGson = new GsonRoot(Type.ARCH, "Rehau / Delight / 1 ОКНА");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 300.0))
@@ -148,7 +147,7 @@ public class GsonScript {
             area.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             area.addElem(new GsonElem(Type.IMPOST, 650.0, 650.0, 650.0, 1700.0));
             area.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
-            
+
         } else if (prj == 604005) {
             rootGson = new GsonRoot(Type.ARCH, "Wintech\\Termotech 742\\1 ОКНА");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 300.0))
@@ -166,7 +165,6 @@ public class GsonScript {
             area.addArea(new GsonElem(Type.STVORKA))
                     .addElem(new GsonElem(Type.GLASS));
 // </editor-fold>
-
 // <editor-fold defaultstate="collapsed" desc="TRAPEZE">
         } else if (prj == 506642) { //Трапеции без импоста
             rootGson = new GsonRoot(Type.TRAPEZE, "KBE / KBE Эксперт / 1 ОКНА / Открывание внутрь (ств. Z 77)");
@@ -186,7 +184,7 @@ public class GsonScript {
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 400.0, 1300.0, 400.0));
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-            
+
         } else if (prj == 508916) {
             rootGson = new GsonRoot(Type.TRAPEZE, "KBE 58\\ОКНА\\Открывание внутрь");
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 0.0))
@@ -197,9 +195,8 @@ public class GsonScript {
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 450.0, 900.0, 450.0));
             rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
-            
-// </editor-fold>
 
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="DOOR">
         } else if (prj == 508841) {
             rootGson = new GsonRoot(Type.DOOR, "KBE / KBE Эксперт / 6 ВХОДНЫЕ ДВЕРИ / Дверь наружу");
@@ -207,10 +204,12 @@ public class GsonScript {
                     .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 2100.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 2100.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0));
-            
+
             GsonElem stv = rootGson.addArea(new GsonElem(Type.STVORKA));
             stv.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-            stv.addElem(new GsonElem(Type.IMPOST, 0.0, 1300.0, 900.0, 1300.0));           
+            stv.addElem(new GsonElem(Type.IMPOST, 0.0, 1300.0, 900.0, 1300.0));
+            stv.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            
 
         } else if (prj == 700009) {
             rootGson = new GsonRoot(Type.DOOR, "Darrio / Двери DARRIO / Дверь внутрь");
@@ -218,7 +217,7 @@ public class GsonScript {
                     .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 2000.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 2000.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0));
-            
+
             GsonElem stv = rootGson.addArea(new GsonElem(Type.STVORKA));
             stv.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             stv.addElem(new GsonElem(Type.IMPOST, 0.0, 1400.0, 900.0, 1400.0));
@@ -230,7 +229,7 @@ public class GsonScript {
                     .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 2100.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 2100.0))
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0));
-            
+
             GsonElem stv = rootGson.addArea(new GsonElem(Type.STVORKA));
             stv.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             stv.addElem(new GsonElem(Type.IMPOST, 0.0, 1500.0, 900.0, 1500.0));
@@ -266,8 +265,9 @@ public class GsonScript {
                     700027, 604004, 604005, 604006, 604007, 604008, 604009, 604010, //арки
                     508983, 506642, -506642, 605001, -605001, 508916, -508916, 508945, //трапеции  
                     508841, 700009, 700014) //двери
-                    : List.of(601006, 601001, 601002, 601003, 604009, 604005, 605001, -605001,
-                            506642, -506642, 508916, -508916, 508841, 700009, 700014);
+                    //                    : List.of(601006, 601001, 601002, 601003, 604009, 604005, 605001, -605001, 506642, -506642, 508916, -508916, 508841, 700009, 700014);
+                    : List.of(501006, 508852, 508920, 601001, 601002, 601006, 601003, 601004,
+                            507998, 604004, 604005, 506642, 605001, 508916, 508841, 700009, 700014);
 
         } else if (base_name.toLowerCase().contains("vidnal.fdb")) {
             return List.of(26);
