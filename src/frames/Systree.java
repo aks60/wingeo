@@ -4423,8 +4423,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         Com5t stv = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
         for (int i = 0; i < stv.owner.gson.childs.size(); ++i) {
             if (stv.owner.gson.childs.get(i).id == stv.id) {
-                GsonElem glass = new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS));
-                stv.owner.gson.childs.set(i, glass);
+                wincalc().gson.setMaxId(wincalc());
+                if (stv.owner.gson instanceof GsonRoot) {
+                    GsonElem glass = new GsonElem(enums.Type.GLASS);
+                    stv.owner.gson.childs.set(i, glass);
+                } else {
+                    GsonElem glass = new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS));
+                    stv.owner.gson.childs.set(i, glass);
+                }
             }
         }
     }//GEN-LAST:event_removeStvorkaActionPerformed
