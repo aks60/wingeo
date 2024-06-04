@@ -101,6 +101,7 @@ import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import common.listener.ListenerReload;
+import static java.util.stream.Collectors.toList;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -4410,13 +4411,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     private void removeImpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeImpostActionPerformed
         Com5t owner = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t().owner;
-        List<GsonElem> list = new ArrayList<GsonElem>();
-        for (GsonElem gson : owner.gson.childs) {
-            if (gson.type == enums.Type.FRAME_SIDE) {
-                list.add(gson);
-            }
-        }
-        owner.gson.childs = list;
+        owner.gson.childs = owner.gson.childs.stream().filter(e -> e.type == enums.Type.FRAME_SIDE).collect(toList());
         owner.gson.addElem(new GsonElem(enums.Type.GLASS));
     }//GEN-LAST:event_removeImpostActionPerformed
 
@@ -4425,7 +4420,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_addStvorkaActionPerformed
 
     private void removeStvorkaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeStvorkaActionPerformed
-        System.out.println("removeStvorka");
+        Com5t stv = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
+        for (int i = 0; i < stv.owner.gson.childs.size(); ++i) {
+            if (stv.owner.gson.childs.get(i).id == stv.id) {
+                GsonElem glass = new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS));
+                stv.owner.gson.childs.set(i, glass);
+            }
+        }
     }//GEN-LAST:event_removeStvorkaActionPerformed
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 

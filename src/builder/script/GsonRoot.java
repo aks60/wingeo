@@ -11,6 +11,7 @@ import java.util.List;
 public class GsonRoot extends GsonElem {
 
     public String version = "2.0"; //версия
+    //public transient double gsonId = 0;  //идентификатор    
     public Integer prj = null; //PNUMB - номер тестируемого проекта, поле пока нужно только для тестов при сравнении с PS4
     public Integer pid = null; //PNUMB - номер тестируемого проекта, поле пока нужно только для тестов при сравнении с PS4    
     public Integer ord = null; //ONUMB - номер тестируемого заказа, поле пока нужно только для тестов при сравнении с PS4 

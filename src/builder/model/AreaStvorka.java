@@ -330,14 +330,14 @@ public class AreaStvorka extends AreaSimple {
                 winc.gc2d.draw(shape);
             }
             Shape shape = new ShapeWriter().toShape(this.knobOpen);
-            if (timer.isRunning() == true) {
-                this.frames.stream().filter(e -> e.type == Type.STVORKA_SIDE).forEach(e -> ((Com5t) e).timer.start());
-            }
             Record colorRec = eColor.find(knobColor);
             int rgb = colorRec.getInt(eColor.rgb);
             winc.gc2d.setColor(new java.awt.Color(rgb));
             winc.gc2d.fill(shape);
 
+            if (timer.isRunning() == true) {
+                this.frames.stream().filter(e -> e.type == Type.STVORKA_SIDE).forEach(e -> ((Com5t) e).timer.start());
+            }            
             winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
             winc.gc2d.draw(shape);
         }
