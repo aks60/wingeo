@@ -102,6 +102,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import common.listener.ListenerReload;
 import static java.util.stream.Collectors.toList;
+import org.locationtech.jts.geom.Envelope;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -881,7 +882,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         mInsert = new javax.swing.JMenuItem();
         mDelit = new javax.swing.JMenuItem();
         ppmTree = new javax.swing.JPopupMenu();
-        addImpost = new javax.swing.JMenuItem();
+        addImpost = new javax.swing.JMenu();
+        addImpostHor = new javax.swing.JMenuItem();
+        addImpostVer = new javax.swing.JMenuItem();
         removeImpost = new javax.swing.JMenuItem();
         addStvorka = new javax.swing.JMenuItem();
         removeStvorka = new javax.swing.JMenuItem();
@@ -1105,11 +1108,25 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         addImpost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
         addImpost.setText("Добавить импост");
-        addImpost.addActionListener(new java.awt.event.ActionListener() {
+
+        addImpostHor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
+        addImpostHor.setText("горизонтальный");
+        addImpostHor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addImpostActionPerformed(evt);
+                addImpostHorActionPerformed(evt);
             }
         });
+        addImpost.add(addImpostHor);
+
+        addImpostVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
+        addImpostVer.setText("вертикальный");
+        addImpostVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addImpostVerActionPerformed(evt);
+            }
+        });
+        addImpost.add(addImpostVer);
+
         ppmTree.add(addImpost);
 
         removeImpost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
@@ -4405,10 +4422,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         this.pack();
     }//GEN-LAST:event_btnTreebtnMove
 
-    private void addImpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImpostActionPerformed
-        System.out.println("addImpost");
-    }//GEN-LAST:event_addImpostActionPerformed
-
     private void removeImpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeImpostActionPerformed
         Com5t owner = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t().owner;
         owner.gson.childs = owner.gson.childs.stream().filter(e -> e.type == enums.Type.FRAME_SIDE).collect(toList());
@@ -4435,9 +4448,39 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }//GEN-LAST:event_removeStvorkaActionPerformed
 
+    private void addImpostHorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImpostHorActionPerformed
+        Com5t glass = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
+        for (int i = 0; i < glass.owner.gson.childs.size(); ++i) {
+            if (glass.owner.gson.childs.get(i).id == glass.id) {
+                wincalc().gson.setMaxId(wincalc());
+                Envelope env = glass.owner.area.getEnvelopeInternal();
+                double x1 = env.getMinX(), x2 = env.getMaxX(), y = env.getMinY() + env.getHeight() / 2;
+                glass.owner.gson.childs.set(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
+                glass.owner.gson.childs.add(i, new GsonElem(enums.Type.IMPOST, x1, y, x2, y));
+                glass.owner.gson.childs.add(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
+            }
+        }
+    }//GEN-LAST:event_addImpostHorActionPerformed
+
+    private void addImpostVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImpostVerActionPerformed
+        Com5t glass = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
+        for (int i = 0; i < glass.owner.gson.childs.size(); ++i) {
+            if (glass.owner.gson.childs.get(i).id == glass.id) {
+                wincalc().gson.setMaxId(wincalc());
+                Envelope env = glass.owner.area.getEnvelopeInternal();
+                double y1 = env.getMinY(), y2 = env.getMaxY(), x = env.getMinX() + env.getWidth() / 2;
+                glass.owner.gson.childs.set(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
+                glass.owner.gson.childs.add(i, new GsonElem(enums.Type.IMPOST, x, y1, x, y2));
+                glass.owner.gson.childs.add(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
+            }
+        }
+    }//GEN-LAST:event_addImpostVerActionPerformed
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem addImpost;
+    private javax.swing.JMenu addImpost;
+    private javax.swing.JMenuItem addImpostHor;
+    private javax.swing.JMenuItem addImpostVer;
     private javax.swing.JMenuItem addStvorka;
     private javax.swing.JButton btn10;
     private javax.swing.JButton btn11;
