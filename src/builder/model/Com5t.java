@@ -44,7 +44,7 @@ public class Com5t {
         public void actionPerformed(ActionEvent evt) {
             winc.canvas.repaint();
         }
-    });
+    }); //подсветка элемента конструкции
     public int colorID1 = -1, colorID2 = -1, colorID3 = -1; //1-базовый 2-внутренний 3-внешний 
     public Record sysprofRec = null, artiklRec = null, artiklRecAn = null; //профиль системы, мат.средства, аналог.мат.средств
 

@@ -843,6 +843,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 sysprodRec.set(eSysprod.script, script);
                 sysprodRec.set(eSysprod.values().length, win);
                 canvas.draw();
+                //loadingTree2(win);
                 selectionTree2();
             }
         } catch (Exception e) {
@@ -4426,10 +4427,26 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         Com5t owner = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t().owner;
         owner.gson.childs = owner.gson.childs.stream().filter(e -> e.type == enums.Type.FRAME_SIDE).collect(toList());
         owner.gson.addElem(new GsonElem(enums.Type.GLASS));
+        reload().execsql();
     }//GEN-LAST:event_removeImpostActionPerformed
 
     private void addStvorkaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStvorkaActionPerformed
-        System.out.println("addStvorka");
+        Com5t glass = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
+        wincalc().gson.setMaxId(wincalc());
+        if (glass.owner.gson instanceof GsonRoot) {
+            for (int i = 0; i < glass.owner.gson.childs.size(); ++i) {
+                if (glass.owner.gson.childs.get(i).id == glass.id) {
+                    glass.owner.gson.childs.set(i, new GsonElem(enums.Type.STVORKA).addElem(new GsonElem(enums.Type.GLASS)));
+                }
+            }
+        } else {
+            for (int i = 0; i < glass.owner.owner.gson.childs.size(); ++i) {
+                if (glass.owner.owner.gson.childs.get(i).id == glass.owner.id) {
+                    glass.owner.owner.gson.childs.set(i, new GsonElem(enums.Type.STVORKA).addElem(new GsonElem(enums.Type.GLASS)));
+                }
+            }
+        }
+        reload().execsql();
     }//GEN-LAST:event_addStvorkaActionPerformed
 
     private void removeStvorkaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeStvorkaActionPerformed
@@ -4446,6 +4463,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }
             }
         }
+        reload().execsql();
     }//GEN-LAST:event_removeStvorkaActionPerformed
 
     private void addImpostHorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImpostHorActionPerformed
@@ -4460,6 +4478,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 glass.owner.gson.childs.add(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
             }
         }
+        reload().execsql();
     }//GEN-LAST:event_addImpostHorActionPerformed
 
     private void addImpostVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImpostVerActionPerformed
@@ -4474,6 +4493,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 glass.owner.gson.childs.add(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
             }
         }
+        reload().execsql();
     }//GEN-LAST:event_addImpostVerActionPerformed
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
