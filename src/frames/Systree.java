@@ -344,7 +344,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     public void loadingTree2(Wincalc winc) {
         try {
-            DefMutableTreeNode root = UGui.loadWinTree(winc);
+            DefMutableTreeNode root = UTree.loadWinTree(winc);
             winTree.setModel(new DefaultTreeModel(root));
 
         } catch (Exception e) {
@@ -371,52 +371,56 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }
 
     public void selectionTree1() {
-        UGui.stopCellEditing(tab2, tab3, tab4, tab5);
-        List.of(tab2, tab3, tab4).forEach(table -> ((DefTableModel) table.getModel()).getQuery().execsql());
+        try {
+            UGui.stopCellEditing(tab2, tab3, tab4, tab5);
+            List.of(tab2, tab3, tab4).forEach(table -> ((DefTableModel) table.getModel()).getQuery().execsql());
 
-        sysNode = (DefMutableTreeNode) sysTree.getLastSelectedPathComponent();
-        if (sysNode != null && sysNode.getChildCount() == 0) {
-            systreeID = sysNode.rec().getInt(eSystree.id);
-            rsvSystree.load();
-            qSysprof.select(eSysprof.up, "left join", eArtikl.up, "on", eArtikl.id, "=",
-                    eSysprof.artikl_id, "where", eSysprof.systree_id, "=", sysNode.rec().getInt(eSystree.id), "order by", eSysprof.use_type, ",", eSysprof.npp);
-            qSysfurn.select(eSysfurn.up, "left join", eFurniture.up, "on", eFurniture.id, "=",
-                    eSysfurn.furniture_id, "where", eSysfurn.systree_id, "=", sysNode.rec().getInt(eSystree.id), "order by", eSysfurn.npp);
-            qSyspar1a.select(eSyspar1.up, "where", eSyspar1.systree_id, "=", sysNode.rec().getInt(eSystree.id));
-            lab1.setText("ID = " + systreeID);
-            lab2.setText("ID = -1");
-            Collections.sort(qSyspar1a, (o1, o2) -> qGroups.find(o1.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)
-                    .compareTo(qGroups.find(o2.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)));
+            sysNode = (DefMutableTreeNode) sysTree.getLastSelectedPathComponent();
+            if (sysNode != null && sysNode.getChildCount() == 0) {
+                systreeID = sysNode.rec().getInt(eSystree.id);
+                rsvSystree.load();
+                qSysprof.select(eSysprof.up, "left join", eArtikl.up, "on", eArtikl.id, "=",
+                        eSysprof.artikl_id, "where", eSysprof.systree_id, "=", sysNode.rec().getInt(eSystree.id), "order by", eSysprof.use_type, ",", eSysprof.npp);
+                qSysfurn.select(eSysfurn.up, "left join", eFurniture.up, "on", eFurniture.id, "=",
+                        eSysfurn.furniture_id, "where", eSysfurn.systree_id, "=", sysNode.rec().getInt(eSystree.id), "order by", eSysfurn.npp);
+                qSyspar1a.select(eSyspar1.up, "where", eSyspar1.systree_id, "=", sysNode.rec().getInt(eSystree.id));
+                lab1.setText("ID = " + systreeID);
+                lab2.setText("ID = -1");
+                Collections.sort(qSyspar1a, (o1, o2) -> qGroups.find(o1.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)
+                        .compareTo(qGroups.find(o2.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)));
 
-            loadingTab5();
+                loadingTab5();
 
-            ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
-            ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
-            ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
-            ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
-            UGui.setSelectedRow(tab2);
-            UGui.setSelectedRow(tab3);
-            UGui.setSelectedRow(tab4);
-            if (qSysprod.isEmpty() == false) {
+                ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
+                ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
+                ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
+                ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
+                UGui.setSelectedRow(tab2);
+                UGui.setSelectedRow(tab3);
+                UGui.setSelectedRow(tab4);
+                if (qSysprod.isEmpty() == false) {
 
-                int index = -1;
-                int sysprodID = Integer.valueOf(eProp.sysprodID.read());
-                for (int i = 0; i < qSysprod.size(); ++i) {
-                    if (qSysprod.get(i).getInt(eSysprod.id) == sysprodID) {
-                        index = i;
-                        UGui.scrollRectToIndex(index, tab5);
+                    int index = -1;
+                    int sysprodID = Integer.valueOf(eProp.sysprodID.read());
+                    for (int i = 0; i < qSysprod.size(); ++i) {
+                        if (qSysprod.get(i).getInt(eSysprod.id) == sysprodID) {
+                            index = i;
+                            UGui.scrollRectToIndex(index, tab5);
+                        }
                     }
-                }
-                if (index != -1) {
-                    UGui.setSelectedIndex(tab5, index);
+                    if (index != -1) {
+                        UGui.setSelectedIndex(tab5, index);
 
+                    } else {
+                        UGui.setSelectedRow(tab5);
+                    }
                 } else {
-                    UGui.setSelectedRow(tab5);
+                    canvas.init(null);
+                    canvas.repaint();
                 }
-            } else {
-                canvas.init(null);
-                canvas.repaint();
             }
+        } catch (Exception e) {
+            System.err.println("Ошибка:Systree.selectionTree1() " + e);
         }
     }
 
@@ -563,7 +567,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 List.of(pan12, pan13, pan15, pan16).forEach(it -> it.repaint());
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.selectionTree() " + e);
+            System.err.println("Ошибка:Systree.selectionTree2() " + e);
         }
     }
 

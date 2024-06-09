@@ -312,7 +312,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
     public void loadingTree(Wincalc winc) {
         try {
-            DefMutableTreeNode root = UGui.loadWinTree(winc);
+            DefMutableTreeNode root = UTree.loadWinTree(winc);
             winTree.setModel(new DefaultTreeModel(root));
 
         } catch (Exception e) {
