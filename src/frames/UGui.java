@@ -221,6 +221,20 @@ public class UGui {
                                                             frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING) {
                                                             }));
                                                         }
+                                                    } else {
+                                                        for (Com5t com5 : ((AreaSimple) com4).childs) {
+                                                            if (com5.type != Type.STVORKA) {
+                                                                if (com5 instanceof ElemSimple) {
+                                                                    frm.add(new DefMutableTreeNode(com5));
+                                                                    if (com5.type != Type.GLASS) {
+                                                                        frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING) {
+                                                                        }));
+                                                                    }
+                                                                }
+                                                            } else {
+                                                                loadWinTree(winc, root, com5); //створка  
+                                                            }
+                                                        }
                                                     }
                                                 } else {
                                                     loadWinTree(winc, root, com4); //створка
@@ -1037,7 +1051,7 @@ public class UGui {
         //for (Com5t com5t : imp.owner.childs) {}
         //GsonElem gson = imp.owner.gson;
         //Geometry area = imp.owner.area;
-        
+
         imp.owner.gson.childs.clear();
         imp.owner.gson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
     }

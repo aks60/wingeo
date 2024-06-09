@@ -18,6 +18,8 @@ import builder.model.ElemMosquit;
 import builder.script.GsonElem;
 import builder.script.GsonRoot;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import common.ArrayJoin;
 import common.ArraySpc;
 import common.ArrayCom;
@@ -89,6 +91,10 @@ public class Wincalc {
 
         //Создание Gson класса
         gson = new GsonBuilder().create().fromJson(script, GsonRoot.class);
+        
+        JsonParser parser = new JsonParser();
+        JsonElement rootNode = parser.parse(script);
+        
         gson.setOwner(this);
 
         //Инит конструктива
@@ -198,7 +204,7 @@ public class Wincalc {
                     elemSimple.setLocation();
                 }
             } else {
-               listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation()); 
+                listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
             }
 
             //Соединения конструкции             
@@ -263,13 +269,13 @@ public class Wincalc {
 
             //Прорисовка стеклопакетов
             this.listElem.filter(Type.GLASS).stream().forEach(el -> el.paint());
-            
+
             //Прорисовка раскладок
             this.listElem.filter(Type.GLASS).stream().forEach(el -> ((ElemGlass) el).rascladkaPaint());
 
             //Прорисовка москиток
             this.listElem.filter(Type.MOSKITKA).stream().forEach(el -> ((ElemMosquit) el).paint());
-            
+
             //Прорисовка импостов
             this.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA).stream().forEach(el -> el.paint());
 

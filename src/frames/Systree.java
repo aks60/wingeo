@@ -843,7 +843,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 sysprodRec.set(eSysprod.script, script);
                 sysprodRec.set(eSysprod.values().length, win);
                 canvas.draw();
-                //loadingTree2(win);
+                loadingTree2(win);
                 selectionTree2();
             }
         } catch (Exception e) {
