@@ -43,12 +43,13 @@ public class DefMutableTreeNode<E> extends DefaultMutableTreeNode {
 
         } else if (obj instanceof ElemSimple) {
             String s = ((ElemSimple) obj).type.name;
-            int ind = s.indexOf(" ", 0);
+            int ind = s.indexOf(" ");
             if (ind != -1) {
                 s = s.substring(0, ind);
             }
-            return s + " " + ((ElemSimple) obj).layout().name.toLowerCase();
-            //return " " + ((ElemSimple) obj).layout().name.toLowerCase();
+            return s + "   id=" + ((ElemSimple) obj).id;
+            //return s + "  " + ((ElemSimple) obj).layout().name.toLowerCase();
+            //return " "      + ((ElemSimple) obj).layout().name.toLowerCase();
 
         } else if (obj instanceof Com5t) {
             return ((Com5t) obj).type.name;
