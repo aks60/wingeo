@@ -43,9 +43,9 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
                     //T- соединение 
                 } else if (imp == true && (side == 0 || side == 1)) {
                     Coordinate point = (side == 0) ? new Coordinate(elem.x1(), elem.y1()) : new Coordinate(elem.x2(), elem.y2());
-                   // if (elem.id == join.elem1.id) {
-                    if (elem.artiklRec.getStr(eArtikl.code).equals(join.elem1.artiklRec.getStr(eArtikl.code))
-                            || elem.artiklRecAn.getStr(eArtikl.code).equals(join.elem1.artiklRecAn.getStr(eArtikl.code))) {
+                    if (elem.id == join.elem1.id) {
+                    //if (elem.artiklRec.getStr(eArtikl.code).equals(join.elem1.artiklRec.getStr(eArtikl.code))
+                            //|| elem.artiklRecAn.getStr(eArtikl.code).equals(join.elem1.artiklRecAn.getStr(eArtikl.code))) {
                         Coordinate[] line = UGeo.arrCoord(join.elem2.x1(), join.elem2.y1(), join.elem2.x2(), join.elem2.y2());
                         if (PointLocation.isOnLine(point, line)) {
                             return join;

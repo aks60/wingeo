@@ -104,28 +104,27 @@ public class AreaSimple extends Com5t {
 
         //T - соединения
         ArrayList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.STOIKA);
-        //ArrayList<ElemSimple> elemList = winc.listElem.filterNo(Type.GLASS);
         ArrayList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.IMPOST);
 
         //Цикл по кросс элементам
-        for (ElemSimple cross : crosList) {
+        for (ElemSimple imp : crosList) {
 
-            //Цикл по сторонам рамы и импостам
+            //Цикл по сторокам рамы и импостам
             for (ElemSimple frame : elemList) {
-                if (cross.id != frame.id) {
+                if (imp.id != frame.id) {
                     LineString line = UGeo.newLineStr(frame.x1(), frame.y1(), frame.x2(), frame.y2());
 
-                    if (line.contains(UGeo.newPoint(cross.x1(), cross.y1()))) {
-                        winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, cross, frame));
+                    if (line.contains(UGeo.newPoint(imp.x1(), imp.y1()))) {
+                        winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, imp, frame));
                     }
-                    if (line.contains(UGeo.newPoint(cross.x2(), cross.y2()))) {
-                        winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, cross, frame));
+                    if (line.contains(UGeo.newPoint(imp.x2(), imp.y2()))) {
+                        winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, imp, frame));
                     }
                 }
             }
         }
     }
-    
+
     //Линии и координаты размерности
     @Override
     public void paint() {
@@ -158,7 +157,7 @@ public class AreaSimple extends Com5t {
                             hsVer.add(c2.y);
                         }
                     }
-                    
+
                 }
             } else {
                 Geometry frameBox = this.area.getGeometryN(0);

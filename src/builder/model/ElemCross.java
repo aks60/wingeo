@@ -137,14 +137,14 @@ public class ElemCross extends ElemSimple {
                 if (winc.syssizRec != null) {
                     double zax = winc.syssizRec.getDbl(eSyssize.zax);
                     if (Layout.VERT == this.layout()) {
-                        ElemSimple inTop = joinFlat(Layout.TOP), inBott = joinFlat(Layout.BOTT);
+                        ElemSimple inTop = joining(Layout.TOP), inBott = joining(Layout.BOTT);
                         spcRec.width = (inBott.y1() - inBott.artiklRec.getDbl(eArtikl.height) + inBott.artiklRec.getDbl(eArtikl.size_centr))
                                 - (inTop.y2() + inTop.artiklRec.getDbl(eArtikl.height) - inTop.artiklRec.getDbl(eArtikl.size_centr))
                                 + zax * 2 + inBott.artiklRec.getDbl(eArtikl.size_falz) + inTop.artiklRec.getDbl(eArtikl.size_falz);
                         spcRec.height = artiklRec.getDbl(eArtikl.height);
 
                     } else if (Layout.HORIZ == this.layout()) {
-                        ElemSimple inLeft = joinFlat(Layout.LEFT), inRight = joinFlat(Layout.RIGHT);
+                        ElemSimple inLeft = joining(Layout.LEFT), inRight = joining(Layout.RIGHT);
                         spcRec.width = (inRight.x1() - inRight.artiklRec.getDbl(eArtikl.height) + inRight.artiklRec.getDbl(eArtikl.size_centr))
                                 - (inLeft.x1() + inLeft.artiklRec.getDbl(eArtikl.height) - inLeft.artiklRec.getDbl(eArtikl.size_centr))
                                 + zax * 2 + inLeft.artiklRec.getDbl(eArtikl.size_falz) + inRight.artiklRec.getDbl(eArtikl.size_falz);

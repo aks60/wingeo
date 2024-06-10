@@ -16,9 +16,7 @@ public class UTree {
     private static DefMutableTreeNode root = null;
     private static DefMutableTreeNode frm = null;
 
-    /**
-     * Заполнение JTree
-     */
+    //Заполнение JTree
     public static DefMutableTreeNode loadWinTree(Wincalc w) {
         try {
             winc = w;
@@ -42,9 +40,7 @@ public class UTree {
         return root;
     }
 
-    /**
-     * Функция рекурсии
-     */
+    //Функция рекурсии
     public static void loadWinTree(ArrayCom<Com5t> childs) {
         try {
             for (Com5t com : childs) {
@@ -70,9 +66,7 @@ public class UTree {
         }
     }
 
-    /**
-     * Створка
-     */
+    //Створка
     public static void loadStvorka(Com5t com) {
         try {
             DefMutableTreeNode nodeStv = root.add(new DefMutableTreeNode(com)); //створка всегда на верху, нет створка в створке
