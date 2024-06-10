@@ -909,13 +909,4 @@ public class UGui {
             List.of(0, 1, 2, 3).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
         }
     }
-
-    public static void removeImpostTree(Com5t imp) {
-        //for (Com5t com5t : imp.owner.childs) {}
-        //GsonElem gson = imp.owner.gson;
-        //Geometry area = imp.owner.area;
-
-        imp.owner.gson.childs.clear();
-        imp.owner.gson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-    }
 }
