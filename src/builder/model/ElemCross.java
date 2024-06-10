@@ -87,7 +87,7 @@ public class ElemCross extends ElemSimple {
 
             //Внутренняя ареа       
             Geometry geo2 = buffer(owner.area.getGeometryN(0), winc.listElem, .0);
-             if (owner.area.getGeometryN(1).isValid() == false) { //исправление коллизий
+            if (owner.area.getGeometryN(1).isValid() == false) { //исправление коллизий
                 GeometryFixer fix = new GeometryFixer(owner.area.getGeometryN(1));
                 geo2 = (Polygon) fix.getResult().getGeometryN(0);
             }
@@ -105,7 +105,7 @@ public class ElemCross extends ElemSimple {
             //Ареа импоста обрезаем areaPadding 
             Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
             Polygon areaImp = (Polygon) areaExp.intersection(geo2); //полигон элемента конструкции
-            if(areaImp != null) {
+            if (areaImp != null) {
                 this.area = areaImp;
             }
             //new Test().mpol = this.area;
@@ -130,6 +130,8 @@ public class ElemCross extends ElemSimple {
                 Coordinate coo[] = this.area.getCoordinates();
                 spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
                 spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[0], coo[1], coo[2]));
+                spcRec.anglCut0 = (spcRec.anglCut0 > 90) ? 180 - spcRec.anglCut0 : spcRec.anglCut0;
+                spcRec.anglCut1 = (spcRec.anglCut1 > 90) ? 180 - spcRec.anglCut1 : spcRec.anglCut1;
 
                 //На эскизе заход импоста не показываю, сразу пишу в спецификацию
                 if (winc.syssizRec != null) {

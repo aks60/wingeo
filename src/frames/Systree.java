@@ -433,7 +433,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
                 UGui.changePpmTree(winTree, ppmTree, winNode.com5t());
                 //Таймер цвета
-                if (winNode.com5t().type != enums.Type.PARAM && winNode.com5t().type != enums.Type.FRAME) {
+                if (enums.Type.contains(winNode.com5t(), enums.Type.PARAM, enums.Type.FRAME, enums.Type.JOINING) == false) {
                     if (winc.canvas != null) {
                         winNode.com5t().timer.start();
                         winc.canvas.repaint();

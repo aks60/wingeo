@@ -1,6 +1,7 @@
 package enums;
 
 //Типы конструкций и элементов
+import builder.model.Com5t;
 import java.util.List;
 
 public enum Type implements Enam {
@@ -56,6 +57,15 @@ public enum Type implements Enam {
     public static boolean isCross(Type type) {
         if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).contains(type)) {
             return true;
+        }
+        return false;
+    }
+
+    public static boolean contains(Com5t com5t, Type... types) {
+        for (Type type : types) {
+            if (com5t.type == type) {
+                return true;
+            }
         }
         return false;
     }
