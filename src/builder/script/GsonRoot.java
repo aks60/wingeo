@@ -11,8 +11,7 @@ import java.util.List;
 
 public class GsonRoot extends GsonElem {
 
-    public String version = "2.0"; //версия
-    public transient List<Double> listID = new ArrayList<Double>();  //идентификатор    
+    public String version = "2.0"; //версия 
     public Integer prj = null; //PNUMB - номер тестируемого проекта, поле пока нужно только для тестов при сравнении с PS4
     public Integer pid = null; //PNUMB - номер тестируемого проекта, поле пока нужно только для тестов при сравнении с PS4    
     public Integer ord = null; //ONUMB - номер тестируемого заказа, поле пока нужно только для тестов при сравнении с PS4 
@@ -56,14 +55,6 @@ public class GsonRoot extends GsonElem {
         if (paramJson != null) {
             this.param = new Gson().fromJson(paramJson, JsonObject.class);
         }
-    }
-  
-    public void setMaxId(Wincalc winc) {
-        double max = 0;
-        for (Com5t e : winc.listAll) {
-            max = e.id > max ? e.id : max;
-        }
-        GsonElem.gsonId = max;
     }
 
     //Перемещение на канве

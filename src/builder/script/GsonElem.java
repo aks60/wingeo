@@ -1,6 +1,7 @@
 package builder.script;
 
 import builder.Wincalc;
+import builder.model.Com5t;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import enums.Type;
@@ -15,7 +16,7 @@ public class GsonElem {
     public List<GsonElem> childs = null; //список детей
     public JsonObject param = new JsonObject(); //параметры элемента
     public Type type = null; //тип элемента
-    public Double x1, y1, h, x2, y2;
+    public Double x1 = null, y1 = null, h = null, x2 = null, y2 = null;
 
     //Use GsonRoot
     public GsonElem() {
@@ -66,11 +67,11 @@ public class GsonElem {
     public GsonElem(Type type, Double x1, Double y1, Double x2, Double y2, Double h, String param) {
         this.id = ++gsonId;
         this.type = type;
-        this.x1 = (x1 == null) ? null : (double) x1;
-        this.y1 = (y1 == null) ? null : (double) y1;
-        this.x2 = (x2 == null) ? null : (double) x2;
-        this.y2 = (y2 == null) ? null : (double) y2;
-        this.h = (h == null) ? null : (double) h;
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+        this.h = h;
         this.param = new Gson().fromJson(param, JsonObject.class); //параметры элемента
     }
 
@@ -104,6 +105,14 @@ public class GsonElem {
         }
     }
 
+    public static void setMaxID(Wincalc winc) {
+        double max = 0;
+        for (Com5t e : winc.listAll) {
+            max = e.id > max ? e.id : max;
+        }
+        GsonElem.gsonId = max;
+    }
+    
     public void serialize(GsonElem gsonElem) {
         if (gsonElem == this && this.param != null && this.param.size() == 0) {
             this.param = null;

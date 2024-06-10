@@ -584,7 +584,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             Object w = sysprodRec.get(eSysprod.values().length);
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc win = (Wincalc) w;
-                
+                GsonElem.setMaxID(win); //установим генератор идентификаторов
                 loadingTree2(win);
                 winTree.setSelectionInterval(0, 0);
                 scene.init(win);
@@ -840,6 +840,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     public Query reload() {
         try {
             Wincalc win = wincalc();
+            
             int index = UGui.getIndexRec(tab5);
             if (index != -1) {
                 String script = win.gson.toJson();
@@ -4248,7 +4249,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 Com5t mosq = areaStv.childs.stream().filter(e -> e.type == enums.Type.MOSKITKA).findFirst().orElse(null);
 
                 if (mosq == null) {
-                    wincalc().gson.setMaxId(wincalc());
                     gsonMosq = new GsonElem(enums.Type.MOSKITKA);
                     GsonElem gsonStv = areaStv.gson;
                     gsonStv.childs.add(gsonMosq);
@@ -4433,14 +4433,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private void removeImpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeImpostActionPerformed
         Com5t owner = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t().owner;
         owner.gson.childs = owner.gson.childs.stream().filter(e -> e.type == enums.Type.FRAME_SIDE).collect(toList());
-        wincalc().gson.setMaxId(wincalc());
         owner.gson.addElem(new GsonElem(enums.Type.GLASS));
         reload().execsql();
     }//GEN-LAST:event_removeImpostActionPerformed
 
     private void addStvorkaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStvorkaActionPerformed
         Com5t glass = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
-        wincalc().gson.setMaxId(wincalc());
         if (glass.owner.gson instanceof GsonRoot) {
             for (int i = 0; i < glass.owner.gson.childs.size(); ++i) {
                 if (glass.owner.gson.childs.get(i).id == glass.id) {
@@ -4461,7 +4459,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         Com5t stv = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
         for (int i = 0; i < stv.owner.gson.childs.size(); ++i) {
             if (stv.owner.gson.childs.get(i).id == stv.id) {
-                wincalc().gson.setMaxId(wincalc());
                 if (stv.owner.gson instanceof GsonRoot) {
                     GsonElem glass = new GsonElem(enums.Type.GLASS);
                     stv.owner.gson.childs.set(i, glass);
@@ -4478,7 +4475,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         Com5t glass = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
         for (int i = 0; i < glass.owner.gson.childs.size(); ++i) {
             if (glass.owner.gson.childs.get(i).id == glass.id) {
-                wincalc().gson.setMaxId(wincalc());
                 Envelope env = glass.owner.area.getEnvelopeInternal();
                 double x1 = env.getMinX(), x2 = env.getMaxX(), y = env.getMinY() + env.getHeight() / 2;
                 glass.owner.gson.childs.set(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
@@ -4493,7 +4489,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         Com5t glass = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
         for (int i = 0; i < glass.owner.gson.childs.size(); ++i) {
             if (glass.owner.gson.childs.get(i).id == glass.id) {
-                wincalc().gson.setMaxId(wincalc());
                 Envelope env = glass.owner.area.getEnvelopeInternal();
                 double y1 = env.getMinY(), y2 = env.getMaxY(), x = env.getMinX() + env.getWidth() / 2;
                 glass.owner.gson.childs.set(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
@@ -4741,6 +4736,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }
             }
         });
+        tab5.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                if (event.getValueIsAdjusting() == false) {
+                    selectionTab5();
+                }
+            }
+        });
         tab7.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (event.getValueIsAdjusting() == false) {
@@ -4748,7 +4750,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }
             }
         });
-        tab5.getSelectionModel().addListSelectionListener(it -> selectionTab5());
         DefaultTreeModel model = (DefaultTreeModel) winTree.getModel();
         ((DefaultMutableTreeNode) model.getRoot()).removeAllChildren();
         model.reload();
