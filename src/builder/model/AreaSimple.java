@@ -100,23 +100,49 @@ public class AreaSimple extends Com5t {
     }
 
     //Т - соединения
-    public void joining() {
+    public void joining2() {
 
         //T - соединения
         ArrayList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.STOIKA);
         ArrayList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.IMPOST);
 
-        //Цикл по кросс элементам
+        //Цикл по импостам
         for (ElemSimple imp : crosList) {
-
             //Цикл по сторокам рамы и импостам
             for (ElemSimple frame : elemList) {
+                
                 if (imp.id != frame.id) {
                     LineString line = UGeo.newLineStr(frame.x1(), frame.y1(), frame.x2(), frame.y2());
 
                     if (line.contains(UGeo.newPoint(imp.x1(), imp.y1()))) {
                         winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, imp, frame));
                     }
+                    if (line.contains(UGeo.newPoint(imp.x2(), imp.y2()))) {
+                        winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, imp, frame));
+                    }
+                }
+            }
+        }
+    }
+    public void joining() {
+
+        //T - соединения
+        ArrayList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.STOIKA);
+        ArrayList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.IMPOST);
+
+        //Цикл по импостам
+        for (ElemSimple imp : crosList) {
+            //Цикл по сторокам рамы и импостам
+            for (ElemSimple frame : elemList) {
+                
+                if (imp.id != frame.id) {
+                    LineString line = UGeo.newLineStr(frame.x1(), frame.y1(), frame.x2(), frame.y2());
+
+                    //Левая сторона
+                    if (line.contains(UGeo.newPoint(imp.x1(), imp.y1()))) {
+                        winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, frame, imp));
+                    }
+                    //Правая сторона
                     if (line.contains(UGeo.newPoint(imp.x2(), imp.y2()))) {
                         winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, imp, frame));
                     }
