@@ -571,6 +571,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }
 
+    //Выбор другой конструкции
     public void selectionTab5() {
         int index = UGui.getIndexRec(tab5);
         if (index != -1) {
@@ -583,6 +584,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             Object w = sysprodRec.get(eSysprod.values().length);
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc win = (Wincalc) w;
+                
                 loadingTree2(win);
                 winTree.setSelectionInterval(0, 0);
                 scene.init(win);
