@@ -79,7 +79,7 @@ public class ElemCross extends ElemSimple {
             }
 
             //Присваиваю нов. коорд.
-            if (this.layout() == Layout.VERT) { //т.к. ордината н перевёрнута
+            if (this.layout() == Layout.VERT) {
                 this.setDimension(lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y, lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y);
             } else {
                 this.setDimension(lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y, lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y);

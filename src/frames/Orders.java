@@ -364,7 +364,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             Object w = prjprodRec.get(ePrjprod.values().length);
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc win = (Wincalc) w;
-                GsonElem.setMaxID(win); //установим генератор идентификаторов    
+                
+                GsonElem.setMaxID(win); //установим генератор идентификаторов  
+                
                 scene.init(win);
                 canvas.draw();
 

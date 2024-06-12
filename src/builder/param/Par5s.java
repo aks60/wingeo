@@ -11,7 +11,6 @@ import domain.eSyspar1;
 import java.util.ArrayList;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-import common.listener.ListenerOffset;
 
 public class Par5s {
 
