@@ -4,5 +4,5 @@ import dataset.Query;
 
 public interface ListenerReload {
 
-    public Query reload();
+    public Query reload(boolean b);
 }

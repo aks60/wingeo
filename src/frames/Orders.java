@@ -104,6 +104,7 @@ import report.HtmlOfSmeta;
 import report.HtmlOfSpecific;
 import startup.App;
 import common.listener.ListenerReload;
+import static dataset.Query.INS;
 import report.HtmlOfManufactory;
 
 public class Orders extends javax.swing.JFrame implements ListenerReload, ListenerAction {
@@ -364,9 +365,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             Object w = prjprodRec.get(ePrjprod.values().length);
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc win = (Wincalc) w;
-                
+
                 GsonElem.setMaxID(win); //установим генератор идентификаторов  
-                
+
                 scene.init(win);
                 canvas.draw();
 
@@ -717,16 +718,18 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }
 
     @Override
-    public Query reload() {
+    public Query reload(boolean b) {
         Wincalc win = wincalc();
         int index = UGui.getIndexRec(tab2);
         if (index != -1) {
             String script = win.gson.toJson();
             win.build(script);
             win.imageIcon = Canvas.createIcon(win, 68);
-            Record sysprodRec = qPrjprod.get(index);
-            sysprodRec.set(ePrjprod.script, script);
-            sysprodRec.set(ePrjprod.values().length, win);
+            if (b == true) {
+                Record sysprodRec = qPrjprod.get(index);
+                sysprodRec.set(ePrjprod.script, script);
+                sysprodRec.set(ePrjprod.values().length, win);
+            }
             canvas.draw();
             selectionTree();
         }
@@ -737,11 +740,11 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     public void action() {
         //int index = UGui.getIndexRec(tab1);
         //if (index != -1) {
-            loadingTab2();
-           // UGui.setSelectedIndex(tab1, index);
+        loadingTab2();
+        // UGui.setSelectedIndex(tab1, index);
         //}
     }
-    
+
     private void setText(JTextComponent comp, String txt) {
         comp.setText(txt);
         comp.setCaretPosition(0);
@@ -3161,6 +3164,14 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         UGui.stopCellEditing(tab1, tab2, tab3, tab4);
         eProp.save(); //запишем текущий ordersId в файл
         List.of(qProject, qPrjprod, qPrjkit).forEach(q -> q.execsql());
+//        for (Record record : qPrjprod) {
+//            if (record.get(0).equals(Query.UPD) || record.get(0).equals(INS)) {
+//                if (JOptionPane.showConfirmDialog(this, "Конструкция была изменена.n/Сохранить изменение конструкции?",
+//                        "Внимание", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+//                    qPrjprod.execsql();
+//                }
+//            }
+//        }        
     }//GEN-LAST:event_windowClosed
 
     private void mousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mousePressed

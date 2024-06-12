@@ -184,11 +184,11 @@ public class Scene extends javax.swing.JPanel {
         }
         timer.stop();
         timer.start();
-        listenerReload.reload();
+        listenerReload.reload(false);
     }//GEN-LAST:event_btnMove
 
     private void btnSave(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave
-        listenerReload.reload().execsql();
+        listenerReload.reload(true).execsql();
     }//GEN-LAST:event_btnSave
 
     private void btnRevert(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRevert

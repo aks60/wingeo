@@ -122,7 +122,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }
 
     @Override
-    public Query reload() {
+    public Query reload(boolean b) {
         try {
             int index = UGui.getIndexRec(tab1);
             if (index != -1) {

@@ -101,6 +101,7 @@ import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import common.listener.ListenerReload;
+import static dataset.Query.INS;
 import static java.util.stream.Collectors.toList;
 import org.locationtech.jts.geom.Envelope;
 
@@ -584,11 +585,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             Object w = sysprodRec.get(eSysprod.values().length);
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc win = (Wincalc) w;
-                
+
                 GsonElem.setMaxID(win); //установим генератор идентификаторов
-                
+
                 loadingTree2(win);
-                
+
                 winTree.setSelectionInterval(0, 0);
                 scene.init(win);
                 canvas.draw();
@@ -840,18 +841,20 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }
 
     @Override
-    public Query reload() {
+    public Query reload(boolean b) {
         try {
             Wincalc win = wincalc();
-            
+
             int index = UGui.getIndexRec(tab5);
             if (index != -1) {
                 String script = win.gson.toJson();
                 win.build(script);
                 win.imageIcon = Canvas.createIcon(win, 68);
-                Record sysprodRec = qSysprod.get(index);
-                sysprodRec.set(eSysprod.script, script);
-                sysprodRec.set(eSysprod.values().length, win);
+                if (b == true) {
+                    Record sysprodRec = qSysprod.get(index);
+                    sysprodRec.set(eSysprod.script, script);
+                    sysprodRec.set(eSysprod.values().length, win);
+                }
                 canvas.draw();
                 loadingTree2(win);
                 selectionTree2();
@@ -3493,6 +3496,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         if (models != null) {
             models.dispose();
         }
+//        for (Record record : qSysprod) {
+//            if (record.get(0).equals(Query.UPD) || record.get(0).equals(INS)) {
+//                if (JOptionPane.showConfirmDialog(this, "Конструкция была изменена.n/Сохранить изменение конструкции?",
+//                        "Внимание", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+//                    qSysprod.execsql();
+//                }
+//            }
+//        }
     }//GEN-LAST:event_windowClosed
 
     private void stateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_stateChanged
@@ -4437,7 +4448,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         Com5t owner = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t().owner;
         owner.gson.childs = owner.gson.childs.stream().filter(e -> e.type == enums.Type.FRAME_SIDE).collect(toList());
         owner.gson.addElem(new GsonElem(enums.Type.GLASS));
-        reload().execsql();
+        reload(false);
     }//GEN-LAST:event_removeImpostActionPerformed
 
     private void addStvorkaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStvorkaActionPerformed
@@ -4455,7 +4466,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }
             }
         }
-        reload().execsql();
+        reload(false);
     }//GEN-LAST:event_addStvorkaActionPerformed
 
     private void removeStvorkaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeStvorkaActionPerformed
@@ -4471,7 +4482,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }
             }
         }
-        reload().execsql();
+        reload(false);
     }//GEN-LAST:event_removeStvorkaActionPerformed
 
     private void addImpostHorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImpostHorActionPerformed
@@ -4485,7 +4496,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 glass.owner.gson.childs.add(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
             }
         }
-        reload().execsql();
+        reload(false);
     }//GEN-LAST:event_addImpostHorActionPerformed
 
     private void addImpostVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImpostVerActionPerformed
@@ -4499,7 +4510,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 glass.owner.gson.childs.add(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
             }
         }
-        reload().execsql();
+        reload(false);
     }//GEN-LAST:event_addImpostVerActionPerformed
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
