@@ -1,7 +1,6 @@
 package builder.model;
 
 import builder.Wincalc;
-import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -15,12 +14,12 @@ import domain.eParmap;
 import domain.eSysprof;
 import enums.*;
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -29,13 +28,12 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
-import org.locationtech.jts.geom.util.AffineTransformation;
 
 public class AreaSimple extends Com5t {
 
     private DecimalFormat df1 = new DecimalFormat("#0.#");
     public ArrayCom<ElemSimple> frames = new ArrayCom<ElemSimple>(this); //список рам
-    public ListenerPaint listenerPassEdit = null;
+    public ListenerPaint listenerPassEdit = null; //для прорисовки точек движения сегментов
     public ArrayCom<Com5t> childs = new ArrayCom<Com5t>(this); //дети
 
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
@@ -151,8 +149,6 @@ public class AreaSimple extends Com5t {
                 for (AreaSimple area5e : winc.listArea.filterNo(Type.STVORKA)) {
                     Geometry frameBox = area5e.area.getGeometryN(0);
                     Coordinate coo[] = frameBox.getCoordinates();
-                    //hsHor.add(coo[0].x);
-                    //hsVer.add(coo[0].y);
 
                     if (this instanceof AreaArch) {
                         Geometry geo1 = this.area.getGeometryN(0);

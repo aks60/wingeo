@@ -91,10 +91,10 @@ public class Wincalc {
 
         //Создание Gson класса
         gson = new GsonBuilder().create().fromJson(script, GsonRoot.class);
-        
+
         JsonParser parser = new JsonParser();
         JsonElement rootNode = parser.parse(script);
-        
+
         gson.setOwner(this);
 
         //Инит конструктива
@@ -289,7 +289,9 @@ public class Wincalc {
             this.listArea.filter(Type.STVORKA).stream().forEach(el -> el.paint());
 
             //Размерные линии
-            this.root.paint();
+            if (this.scale > .1) {
+                this.root.paint();
+            }
 
 // <editor-fold defaultstate="collapsed" desc="Раскладка"> 
 /*            
