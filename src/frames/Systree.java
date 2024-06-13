@@ -78,6 +78,7 @@ import builder.model.ElemGlass;
 import builder.model.ElemJoining;
 import builder.model.ElemMosquit;
 import builder.model.ElemSimple;
+import builder.model.UGeo;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -101,9 +102,11 @@ import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import common.listener.ListenerReload;
-import static dataset.Query.INS;
 import static java.util.stream.Collectors.toList;
 import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.Polygon;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
