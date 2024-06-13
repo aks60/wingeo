@@ -100,45 +100,45 @@ public class AreaSimple extends Com5t {
     }
 
     //Т - соединения
-    public void joining() {
-
+    public void joining2() {
         //T - соединения
         ArrayList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.STOIKA);
         ArrayList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.IMPOST);
 
         //Цикл по импостам
-        for (ElemSimple imp : crosList) {
-            
-            //Цикл по импостам и рамам
-            for (ElemSimple impfrm : elemList) {
-                
-                if (imp.id != impfrm.id) {
-                    LineString line = UGeo.newLineStr(impfrm.x1(), impfrm.y1(), impfrm.x2(), impfrm.y2());
+        ElemSimple imp = crosList.get(0);
+        System.out.println("impost ===== " + imp);
 
-                    //Левая сторона
-                    if (line.contains(UGeo.newPoint(imp.x1(), imp.y1()))) {
-                        winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, impfrm, imp));
-                    }
-                    //Правая сторона
-                    if (line.contains(UGeo.newPoint(imp.x2(), imp.y2()))) {
-                        winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, imp, impfrm));
-                    }
+        //Цикл по импостам и рамам
+        for (ElemSimple impfrm : elemList) {
+
+            if (imp.id != impfrm.id) {
+                LineString line = UGeo.newLineStr(impfrm.x1(), impfrm.y1(), impfrm.x2(), impfrm.y2());
+
+                //Левая сторона
+                if (line.contains(UGeo.newPoint(imp.x1(), imp.y1()))) {
+                    System.out.println(new ElemJoining(this.winc, TypeJoin.TIMP, impfrm, imp));
+                }
+                //Правая сторона
+                if (line.contains(UGeo.newPoint(imp.x2(), imp.y2()))) {
+                    System.out.println(new ElemJoining(this.winc, TypeJoin.TIMP, imp, impfrm));
                 }
             }
         }
     }
-    public void joining2() {
 
+    public void joining() {
+        joining2();
         //T - соединения
         ArrayList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.STOIKA);
         ArrayList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.IMPOST);
 
         //Цикл по импостам
         for (ElemSimple imp : crosList) {
-            
+
             //Цикл по импостам и рамам
             for (ElemSimple impfrm : elemList) {
-                
+
                 if (imp.id != impfrm.id) {
                     LineString line = UGeo.newLineStr(impfrm.x1(), impfrm.y1(), impfrm.x2(), impfrm.y2());
 
