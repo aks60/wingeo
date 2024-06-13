@@ -78,6 +78,7 @@ import builder.model.ElemGlass;
 import builder.model.ElemJoining;
 import builder.model.ElemMosquit;
 import builder.model.ElemSimple;
+import builder.model.UGeo;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -101,9 +102,11 @@ import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import common.listener.ListenerReload;
-import static dataset.Query.INS;
 import static java.util.stream.Collectors.toList;
 import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.Polygon;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -4174,7 +4177,41 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_colorFromLock
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        wincalc().listJoin.forEach(it -> System.out.println(it));
+        //wincalc().listJoin.forEach(it -> System.out.println(it));
+
+        Wincalc winc = wincalc();
+
+        //T - соединения
+        ArrayList<ElemSimple> crosList = winc.listElem.filter(enums.Type.IMPOST, enums.Type.STOIKA);
+        ArrayList<ElemSimple> elemList = winc.listElem.filter(enums.Type.FRAME_SIDE, enums.Type.IMPOST);
+
+        //Цикл по импостам
+        for (ElemSimple imp : crosList) {
+            if (imp.id == 30) {
+                LineString impost = UGeo.newLineStr(imp.x1(), imp.y1(), imp.x2(), imp.y2());
+
+                //Цикл по импостам и рамам
+                for (ElemSimple impfrm : elemList) {
+
+                    if (imp.id != impfrm.id) {
+                        //if (impfrm.id == 4.0) {
+                        Geometry line = UGeo.newLineStr(impfrm.x1(), impfrm.y1(), impfrm.x2(), impfrm.y2());
+                        Geometry p1 = UGeo.newPoint(imp.x1(), imp.y1()).buffer(.0001);
+                        Geometry p2 = UGeo.newPoint(imp.x2(), imp.y2()).buffer(.0001);
+
+                        if (imp.owner.area.buffer(.0001).contains(line)) {
+                            
+                            if (line.intersects(p1)) { //левая сторона
+                                System.out.println(new ElemJoining(winc, TypeJoin.TIMP, impfrm, imp));
+                            }                            
+                            if (line.intersects(p2)) { //правая сторона
+                                System.out.println(new ElemJoining(winc, TypeJoin.TIMP, imp, impfrm));
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void colorFromGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromGlass
