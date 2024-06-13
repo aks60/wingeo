@@ -3399,7 +3399,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         pan10.setLayout(new java.awt.BorderLayout());
 
         scr5.setBorder(null);
-        scr5.setPreferredSize(new java.awt.Dimension(400, 400));
+        scr5.setPreferredSize(new java.awt.Dimension(350, 400));
 
         tab5.setFont(frames.UGui.getFont(0,0));
         tab5.setModel(new javax.swing.table.DefaultTableModel(
@@ -3441,7 +3441,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         pan10.add(scr5, java.awt.BorderLayout.CENTER);
 
         scr6.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        scr6.setPreferredSize(new java.awt.Dimension(200, 400));
+        scr6.setPreferredSize(new java.awt.Dimension(250, 400));
 
         winTree.setFont(frames.UGui.getFont(0,0));
         scr6.setViewportView(winTree);

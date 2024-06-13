@@ -63,7 +63,7 @@ public class Scene extends javax.swing.JPanel {
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c036.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnSave.setToolTipText(bundle.getString("Переместить вниз")); // NOI18N
+        btnSave.setToolTipText(bundle.getString("Сохранить")); // NOI18N
         btnSave.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnSave.setFocusable(false);
         btnSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -149,7 +149,7 @@ public class Scene extends javax.swing.JPanel {
         Tooll.add(btnMovRi);
 
         btnMovLe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c048.gif"))); // NOI18N
-        btnMovLe.setToolTipText(bundle.getString("Переместить вниз")); // NOI18N
+        btnMovLe.setToolTipText(bundle.getString("Переместить влево")); // NOI18N
         btnMovLe.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnMovLe.setFocusable(false);
         btnMovLe.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
