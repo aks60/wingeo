@@ -190,6 +190,7 @@ public class ParColor extends javax.swing.JDialog {
         btnCard1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnCard1.setSelected(true);
         btnCard1.setText("1");
+        btnCard1.setToolTipText("");
         btnCard1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnCard1.setPreferredSize(new java.awt.Dimension(30, 25));
         btnCard1.addActionListener(new java.awt.event.ActionListener() {

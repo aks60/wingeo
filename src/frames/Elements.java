@@ -677,6 +677,7 @@ public class Elements extends javax.swing.JFrame {
         });
 
         btnFind2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c089.gif"))); // NOI18N
+        btnFind2.setText(bundle.getString("Поиск записи")); // NOI18N
         btnFind2.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
         btnFind2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnFind2.setFocusable(false);

@@ -202,6 +202,7 @@ public class DicGroups extends javax.swing.JDialog {
         });
 
         btnGroups.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c064.gif"))); // NOI18N
+        btnGroups.setToolTipText(bundle.getString("Добавить и выбрать")); // NOI18N
         btnGroups.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnGroups.setFocusable(false);
         btnGroups.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

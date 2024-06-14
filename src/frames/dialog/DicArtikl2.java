@@ -206,7 +206,7 @@ public class DicArtikl2 extends javax.swing.JDialog {
         });
 
         btnArt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c064.gif"))); // NOI18N
-        btnArt.setToolTipText("Артикулы");
+        btnArt.setToolTipText(bundle.getString("Добавить и выбрать")); // NOI18N
         btnArt.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnArt.setFocusable(false);
         btnArt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
