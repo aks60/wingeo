@@ -80,7 +80,7 @@ public class Scene extends javax.swing.JPanel {
         Tooll.add(btnSave);
 
         btnRevert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c039.gif"))); // NOI18N
-        btnRevert.setToolTipText(bundle.getString("Переместить вниз")); // NOI18N
+        btnRevert.setToolTipText(bundle.getString("Отменить")); // NOI18N
         btnRevert.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnRevert.setFocusable(false);
         btnRevert.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -98,7 +98,7 @@ public class Scene extends javax.swing.JPanel {
         Tooll.add(filler1);
 
         btnMovUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c051.gif"))); // NOI18N
-        btnMovUp.setToolTipText(bundle.getString("Переместить вниз")); // NOI18N
+        btnMovUp.setToolTipText(bundle.getString("Переместить вверх")); // NOI18N
         btnMovUp.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnMovUp.setFocusable(false);
         btnMovUp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -132,7 +132,7 @@ public class Scene extends javax.swing.JPanel {
         Tooll.add(btnMovDo);
 
         btnMovRi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c046.gif"))); // NOI18N
-        btnMovRi.setToolTipText(bundle.getString("Переместить вниз")); // NOI18N
+        btnMovRi.setToolTipText(bundle.getString("Переместить вправо")); // NOI18N
         btnMovRi.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnMovRi.setFocusable(false);
         btnMovRi.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

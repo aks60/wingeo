@@ -1306,7 +1306,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         btnTree.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c086.gif"))); // NOI18N
-        btnTree.setToolTipText(bundle.getString("Переместить вниз")); // NOI18N
+        btnTree.setToolTipText(bundle.getString("Изменить вид")); // NOI18N
         btnTree.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnTree.setFocusable(false);
         btnTree.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

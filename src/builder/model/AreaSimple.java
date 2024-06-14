@@ -146,8 +146,10 @@ public class AreaSimple extends Com5t {
             Envelope frameEnv = winc.root.area.getGeometryN(0).getEnvelopeInternal();
             HashSet<Double> hsHor = new HashSet<Double>(), hsVer = new HashSet<Double>();
             if (this.type != Type.DOOR) {
-                for (AreaSimple area5e : winc.listArea.filterNo(Type.STVORKA)) {
-                    Geometry frameBox = area5e.area.getGeometryN(0);
+                for (AreaSimple area5e : winc.listArea) {
+                    Geometry frameBox = (area5e.type == Type.STVORKA)
+                            ? ((AreaStvorka) area5e).frameBox 
+                            : area5e.area.getGeometryN(0);
                     Coordinate coo[] = frameBox.getCoordinates();
 
                     if (this instanceof AreaArch) {
