@@ -482,6 +482,7 @@ public class Tex extends javax.swing.JFrame {
 
         buttonBaseGroup1.add(btnT7);
         btnT7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c057.gif"))); // NOI18N
+        btnT7.setToolTipText(bundle.getString("Меню.Соединение с БД1")); // NOI18N
         btnT7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 204)));
         btnT7.setFocusable(false);
         btnT7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -495,6 +496,7 @@ public class Tex extends javax.swing.JFrame {
 
         buttonBaseGroup1.add(btnT8);
         btnT8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c058.gif"))); // NOI18N
+        btnT8.setToolTipText(bundle.getString("Меню.Соединение с БД2")); // NOI18N
         btnT8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 204)));
         btnT8.setFocusable(false);
         btnT8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -508,6 +510,7 @@ public class Tex extends javax.swing.JFrame {
 
         buttonBaseGroup1.add(btnT9);
         btnT9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c059.gif"))); // NOI18N
+        btnT9.setToolTipText(bundle.getString("Меню.Соединение с БД3")); // NOI18N
         btnT9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 204)));
         btnT9.setFocusable(false);
         btnT9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -557,7 +560,6 @@ public class Tex extends javax.swing.JFrame {
         mn0.setPreferredSize(new java.awt.Dimension(800, 25));
 
         mn01.setText(bundle.getString("Меню.Справка")); // NOI18N
-        mn01.setActionCommand("Настройки");
         mn01.setFont(frames.UGui.getFont(1,1));
 
         mn12.setFont(frames.UGui.getFont(0,1));
@@ -752,7 +754,6 @@ public class Tex extends javax.swing.JFrame {
         mn0.add(mn03);
 
         mn07.setText(bundle.getString("Меню.Заказы")); // NOI18N
-        mn07.setActionCommand("  Заказы  ");
         mn07.setFont(frames.UGui.getFont(1,1));
         mn07.setPreferredSize(new java.awt.Dimension(67, 19));
 
@@ -799,7 +800,7 @@ public class Tex extends javax.swing.JFrame {
         buttonMenuGroup.add(mn631);
         mn631.setFont(frames.UGui.getFont(1,1));
         mn631.setSelected(true);
-        mn631.setText("База 1");
+        mn631.setText(bundle.getString("Меню.База 1")); // NOI18N
         mn631.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnBase(evt);
@@ -809,7 +810,7 @@ public class Tex extends javax.swing.JFrame {
 
         buttonMenuGroup.add(mn632);
         mn632.setFont(frames.UGui.getFont(1,1));
-        mn632.setText("База 2");
+        mn632.setText(bundle.getString("Меню.База 2")); // NOI18N
         mn632.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnBase(evt);
@@ -819,7 +820,7 @@ public class Tex extends javax.swing.JFrame {
 
         buttonMenuGroup.add(mn633);
         mn633.setFont(frames.UGui.getFont(1,1));
-        mn633.setText("База 3");
+        mn633.setText(bundle.getString("Меню.База 3")); // NOI18N
         mn633.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnBase(evt);
