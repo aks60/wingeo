@@ -602,7 +602,9 @@ public class UGui {
             tabList.forEach(tab -> tab.setBorder(null));
             tabList.forEach(tab -> {
                 if (tab != table) {
-                    UGui.stopCellEditing(tab);
+                    if (tab.isEditing()) {
+                        UGui.stopCellEditing(tab);
+                    }
                     if (tab.getModel() instanceof DefTableModel) {
                         ((DefTableModel) tab.getModel()).getQuery().execsql();
                     }

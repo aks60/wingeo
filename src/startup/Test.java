@@ -97,8 +97,8 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //frame(args);
-            wincalc();
-            //param();
+            //wincalc();
+            param();
             //query();
             //json();
             //uid();
@@ -236,13 +236,13 @@ public class Test {
         t2.joiningVar();
         t2.joiningDet();
 
-        FillingTest t3 = new FillingTest();
-        t3.fillingVar();
-        t3.fillingDet();
-
-        FurnitureTest t4 = new FurnitureTest();
-        t4.furnitureVar();
-        t4.furnitureDet();
+//        FillingTest t3 = new FillingTest();
+//        t3.fillingVar();
+//        t3.fillingDet();
+//
+//        FurnitureTest t4 = new FurnitureTest();
+//        t4.furnitureVar();
+//        t4.furnitureDet();
 
 //        Set set = new HashSet();
 //        Map<String, Set> map = new HashMap<String, Set>();

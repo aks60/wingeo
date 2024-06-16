@@ -78,7 +78,6 @@ import builder.model.ElemGlass;
 import builder.model.ElemJoining;
 import builder.model.ElemMosquit;
 import builder.model.ElemSimple;
-import builder.model.UGeo;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -103,10 +102,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import common.listener.ListenerReload;
 import static java.util.stream.Collectors.toList;
+import javax.swing.JTree;
 import org.locationtech.jts.geom.Envelope;
-import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.LineString;
-import org.locationtech.jts.geom.Polygon;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -1409,9 +1406,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         sysTree.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         sysTree.setFont(frames.UGui.getFont(0,0));
         sysTree.setEditable(true);
+        sysTree.setName("sysTree"); // NOI18N
         sysTree.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                sysTreeMousePressed(evt);
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabMouseClicked(evt);
             }
         });
         scr1.setViewportView(sysTree);
@@ -1466,8 +1464,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         tab7.setName("tab7"); // NOI18N
         tab7.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tab7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                Systree.this.mousePressed(evt);
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabMouseClicked(evt);
             }
         });
         scr7.setViewportView(tab7);
@@ -2975,11 +2973,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         tabb1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 2, 0, 0));
         tabb1.setFont(frames.UGui.getFont(0,0));
         tabb1.setPreferredSize(new java.awt.Dimension(540, 180));
-        tabb1.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                Systree.this.stateChanged(evt);
-            }
-        });
 
         lab13.setFont(frames.UGui.getFont(0,0));
         lab13.setText("Заполн. по умолчанию");
@@ -3274,9 +3267,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabMouseClicked(evt);
             }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                Systree.this.mousePressed(evt);
-            }
         });
         scr2.setViewportView(tab2);
         if (tab2.getColumnModel().getColumnCount() > 0) {
@@ -3332,9 +3322,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabMouseClicked(evt);
             }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                Systree.this.mousePressed(evt);
-            }
         });
         scr3.setViewportView(tab3);
         if (tab3.getColumnModel().getColumnCount() > 0) {
@@ -3380,9 +3367,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabMouseClicked(evt);
             }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                Systree.this.mousePressed(evt);
-            }
         });
         scr4.setViewportView(tab4);
         if (tab4.getColumnModel().getColumnCount() > 0) {
@@ -3420,14 +3404,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         });
         tab5.setFillsViewportHeight(true);
+        tab5.setName("tab5"); // NOI18N
         tab5.setRowHeight(68);
         tab5.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tab5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                Systree.this.mousePressed(evt);
             }
         });
         scr5.setViewportView(tab5);
@@ -3444,6 +3426,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         scr6.setPreferredSize(new java.awt.Dimension(250, 400));
 
         winTree.setFont(frames.UGui.getFont(0,0));
+        winTree.setName("winTree"); // NOI18N
+        winTree.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabMouseClicked(evt);
+            }
+        });
         scr6.setViewportView(winTree);
 
         pan10.add(scr6, java.awt.BorderLayout.EAST);
@@ -3483,15 +3471,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mousePressed
-//        JTable table = (JTable) evt.getSource();
-//        UGui.updateBorderAndSql(table, List.of(tab2, tab3, tab4, tab5));
-//        if (sysTree.isEditing()) {
-//            sysTree.getCellEditor().stopCellEditing();
-//        }
-//        sysTree.setBorder(null);
-    }//GEN-LAST:event_mousePressed
-
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
         UGui.stopCellEditing(sysTree, tab2, tab3, tab4, tab5);
         qSystree.execsql();
@@ -3508,36 +3487,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 //            }
 //        }
     }//GEN-LAST:event_windowClosed
-
-    private void stateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_stateChanged
-
-        UGui.stopCellEditing(sysTree);
-        sysTree.setBorder(null);
-        List.of(btnFind1, btnFind2, btnMoveU, btnMoveD).forEach(btn -> btn.setEnabled(false));
-
-        if (tabb1.getSelectedIndex() == 1) {
-            UGui.updateBorderAndSql(tab2, List.of(tab2, tab3, tab4, tab5));
-            List.of(btnMoveU, btnMoveD).forEach(btn -> btn.setEnabled(true));
-            btnFind1.setEnabled(true);
-
-        } else if (tabb1.getSelectedIndex() == 2) {
-            UGui.updateBorderAndSql(tab3, List.of(tab2, tab3, tab4, tab5));
-            List.of(btnMoveU, btnMoveD).forEach(btn -> btn.setEnabled(true));
-
-        } else if (tabb1.getSelectedIndex() == 3) {
-            UGui.updateBorderAndSql(tab4, List.of(tab2, tab3, tab4, tab5));
-
-        } else if (tabb1.getSelectedIndex() == 4) {
-            UGui.updateBorderAndSql(tab5, List.of(tab2, tab3, tab4, tab5));
-            List.of(btnMoveU, btnMoveD).forEach(btn -> btn.setEnabled(true));
-        }
-    }//GEN-LAST:event_stateChanged
-
-    private void sysTreeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sysTreeMousePressed
-        List.of(tab2, tab3, tab4, tab5).forEach(tab -> tab.setBorder(null));
-        sysTree.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
-        UGui.stopCellEditing(tab2, tab3, tab4, tab5);
-    }//GEN-LAST:event_sysTreeMousePressed
 
     private void glasdefToSystree(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_glasdefToSystree
 
@@ -4177,7 +4126,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_colorFromLock
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-         wincalc().listJoin.forEach(it -> System.out.println(it));
+        wincalc().listJoin.forEach(it -> System.out.println(it));
 //        Wincalc winc = wincalc();
 //        ArrayList<ElemSimple> crosList = winc.listElem.filter(enums.Type.IMPOST, enums.Type.STOIKA);
 //        ArrayList<ElemSimple> elemList = winc.listElem.filter(enums.Type.FRAME_SIDE, enums.Type.IMPOST);
@@ -4461,14 +4410,42 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_ppmActionItems
 
     private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
-        JTable table = (JTable) evt.getSource();
-        UGui.updateBorderAndSql(table, List.of(tab2, tab3, tab4, tab5));
-        sysTree.setBorder(null);
-        if (sysTree.isEditing()) {
-            sysTree.getCellEditor().stopCellEditing();
-        }
-        if (evt.getButton() == MouseEvent.BUTTON3) {
-            ppmCrud.show(table, evt.getX(), evt.getY());
+        if (evt.getSource() instanceof JTable) {
+            JTable table = (JTable) evt.getSource();
+            UGui.updateBorderAndSql(table, List.of(tab2, tab3, tab4, tab5, tab7));
+            List.of(btnFind1, btnFind2, btnMoveU, btnMoveD).forEach(btn -> btn.setEnabled(false));
+            List.of(sysTree, sysTree).forEach(tree -> tree.setBorder(null));
+            if (sysTree.isEditing()) {
+                sysTree.getCellEditor().stopCellEditing();
+            }
+            if (winTree.isEditing()) {
+                winTree.getCellEditor().stopCellEditing();
+            }
+            if (evt.getButton() == MouseEvent.BUTTON3) {
+                ppmCrud.show(table, evt.getX(), evt.getY());
+            }
+            if ("tab2".equals(table.getName())) {
+                List.of(btnMoveU, btnMoveD).forEach(btn -> btn.setEnabled(true));
+                btnFind1.setEnabled(true);
+
+            } else if ("tab3".equals(table.getName())) {
+                List.of(btnMoveU, btnMoveD).forEach(btn -> btn.setEnabled(true));
+
+            } else if ("tab4".equals(table.getName())) {
+                //
+
+            } else if ("tab5".equals(table.getName())) {
+                List.of(btnMoveU, btnMoveD).forEach(btn -> btn.setEnabled(true));
+            }
+        } else if (evt.getSource() instanceof JTree) {
+            JTree tree = (JTree) evt.getSource();
+            UGui.stopCellEditing(tab2, tab3, tab4, tab5, tab7);
+            List.of(tab2, tab3, tab4, tab5, tab7).forEach(tab -> tab.setBorder(null));
+            if ("sysTree".equals(tree.getName())) {
+                sysTree.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
+            } else if ("winTree".equals(tree.getName())) {
+                winTree.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
+            }
         }
     }//GEN-LAST:event_tabMouseClicked
 

@@ -73,8 +73,8 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
      * Получить элемент соединения профилей.
      *
      * @param elem - элемент соединения,
-     * @param side - сторона соединения 0-пред.артикул, 1-след.артикл,
-     * 2-прилег.артикл
+     * @param side - сторона соединения 0-пред.артикул, 
+     * 1-след.артикл, 2-прилег.артикл
      * @return - элемент соединения
      */
     public ElemSimple elem(ElemSimple elem, int side) {
@@ -89,14 +89,19 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
                     } else if (side == 1 && elem.x2() == join.elem2.x1() && elem.y2() == join.elem2.y1()) { //1-след.артикл
                         return join.elem2;
                     }
-                    //T- соединение 
-                } else if (imp == true && (side == 0 || side == 1)) {
-                    Coordinate point = (side == 0) ? new Coordinate(elem.x1(), elem.y1()) : new Coordinate(elem.x2(), elem.y2());
-                    if (elem.id == join.elem1.id) {
-                        Coordinate[] line = UGeo.arrCoord(join.elem2.x1(), join.elem2.y1(), join.elem2.x2(), join.elem2.y2());
-                        if (PointLocation.isOnLine(point, line)) {
-                            return join.elem2;
-                        }
+                    //T- соединение левое
+                } else if (imp == true && side == 0 && elem.id == join.elem2.id) {
+                    Coordinate[] line = UGeo.arrCoord(join.elem1.x1(), join.elem1.y1(), join.elem1.x2(), join.elem1.y2());
+                    Coordinate point = new Coordinate(elem.x1(), elem.y1());
+                    if (PointLocation.isOnLine(point, line)) {
+                        return join.elem1;
+                    }
+                    //T- соединение правое
+                } else if (imp == true && side == 1 && elem.id == join.elem1.id) {
+                    Coordinate[] line = UGeo.arrCoord(join.elem2.x1(), join.elem2.y1(), join.elem2.x2(), join.elem2.y2());
+                    Coordinate point = new Coordinate(elem.x2(), elem.y2());
+                    if (PointLocation.isOnLine(point, line)) {
+                        return join.elem2;
                     }
                     //Прил.соединение
                 } else if (side == 2 && join.type() == TypeJoin.FLAT) {
@@ -114,7 +119,7 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
             System.out.println("Неудача:ArrayJoin.elem() " + message(elem, side));
         }
         return null;
-    }
+    }    
 
     private static String message(ElemSimple elem, int side) {
         return "Соединение не найдено для elem.id=" + elem.id + ", side=" + side;

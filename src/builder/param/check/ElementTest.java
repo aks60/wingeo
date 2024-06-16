@@ -200,7 +200,7 @@ public class ElementTest {
         assert false == elementVar2.check(glass2_left, param("Произвольное", grup)) : grup;
 
         grup = 37010; //Ограничение ширины/высоты листа, мм
-        assert true == elementVar2.check(glass2_top, param("1000-3000/200-334", grup)) : grup;
+        assert true == elementVar2.check(glass2_top, param("1000-3000/200-450", grup)) : grup;
         assert false == elementVar2.check(glass2_top, param("1000-3000/200-280", grup)) : grup;
 
         grup = 37030; //Ограничение площади, кв.м.

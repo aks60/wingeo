@@ -303,4 +303,12 @@ public class ElemGlass extends ElemSimple {
             winc.gc2d.fill(shape);
         }
     }
+    
+    public Double width() {
+        return this.areaFalz.getEnvelopeInternal().getWidth();
+    }
+
+    public Double height() {
+        return this.areaFalz.getEnvelopeInternal().getHeight();
+    }    
 }

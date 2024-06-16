@@ -88,12 +88,12 @@ public class ElementVar extends Par5s {
                     break;
                 case 31004: //Если прилегающий артикул 
                 {
-                    boolean ret = false;
                     ElemSimple el = winc.listJoin.elem(elem5e, 2);
-                    if (rec.getStr(TEXT).equals(el.artiklRecAn.getStr(eArtikl.code))) {
-                        ret = true;
-                    }
-                    if (ret == false) {
+                    if (el != null) {
+                        if (rec.getStr(TEXT).equals(el.artiklRecAn.getStr(eArtikl.code)) == false) {
+                            return false;
+                        }
+                    } else {
                         return false;
                     }
                 }
@@ -321,14 +321,14 @@ public class ElementVar extends Par5s {
                 case 37001:  //Установка жалюзи 
                     message(grup);
                     break;
-                case 37002:  //Если артикул профиля контура
+                case 37002: //Если артикул профиля контура
                 {
                     Object r = elem5e.root.frames.stream().filter(f -> f.artiklRecAn.getStr(eArtikl.code).equals(rec.getStr(TEXT))).findFirst().orElse(null);
                     if (r == null) {
                         return false;
                     }
                 }
-                    break;
+                break;
                 case 37008:  //Тип проема 
                     if (!UPar.is_13003_14005_15005_37008(rec.getStr(TEXT), elem5e)) {
                         return false;
