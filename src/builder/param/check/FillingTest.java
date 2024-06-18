@@ -92,9 +92,9 @@ public class FillingTest {
 
         grup = 13015;  //Форма заполнения
         assert true == fillingVar3.check(glass3_left, param("Прямоугольное", grup)) : grup;
+        assert false == fillingVar3.check(glass3_left, param("Не прямоугольное", grup)) : grup;
         assert true == fillingVar3.check(glass3_top, param("Арочное", grup)) : grup;
         assert false == fillingVar3.check(glass3_top, param("Не арочное", grup)) : grup;
-        assert false == fillingVar3.check(glass3_left, param("Не прямоугольное", grup)) : grup;
 
         grup = 13017; //Код системы содержит строку
         assert true == fillingVar4.check(glass4_left, param("me-1", grup)) : grup;

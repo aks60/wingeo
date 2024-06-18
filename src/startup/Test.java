@@ -98,7 +98,7 @@ public class Test {
             //frames.PSConvert.exec();
             //frame(args);
             //wincalc();
-            param();
+            //param();
             //query();
             //json();
             //uid();
@@ -180,10 +180,10 @@ public class Test {
 
         Conn.connection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
-        String _case = "min";
+        String _case = "one";
 
         if (_case.equals("one")) {
-            String script = GsonScript.scriptPath(601006);
+            String script = GsonScript.scriptPath(-604005);
             winc.build(script);
             //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
             //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
@@ -197,7 +197,7 @@ public class Test {
             //frames.PSCompare.iwinPs4(winc, true);
             //winc.listElem.forEach(it -> System.out.println(it));
             //winc.listJoin.forEach(it -> System.out.println(it.joiningRec));     
-            winc.listJoin.forEach(it -> System.out.println(it));     
+            //winc.listJoin.forEach(it -> System.out.println(it));     
 
         } else if (_case.equals("min")) {
             List<Integer> prjList = GsonScript.systemList(_case);
@@ -236,13 +236,13 @@ public class Test {
         t2.joiningVar();
         t2.joiningDet();
 
-//        FillingTest t3 = new FillingTest();
-//        t3.fillingVar();
-//        t3.fillingDet();
-//
-//        FurnitureTest t4 = new FurnitureTest();
-//        t4.furnitureVar();
-//        t4.furnitureDet();
+        FillingTest t3 = new FillingTest();
+        t3.fillingVar();
+        t3.fillingDet();
+
+        FurnitureTest t4 = new FurnitureTest();
+        t4.furnitureVar();
+        t4.furnitureDet();
 
 //        Set set = new HashSet();
 //        Map<String, Set> map = new HashMap<String, Set>();

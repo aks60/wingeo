@@ -74,7 +74,7 @@ public class JoiningTest {
 
         grup = 1005; //2005, 3005, 4005 //Контейнер имеет тип Артикула1/Артикула2
         assert true == joiningVar2.check(iwin2.listJoin.join(frame2_1, 0), param("1/1", grup)) : grup;
-        assert true == joiningVar2.check(iwin2.listJoin.join(imp2_horiz, 0), param("3/1", grup)) : grup;
+        assert true == joiningVar2.check(iwin2.listJoin.join(imp2_horiz, 0), param("1/3", grup)) : grup;
 
         grup = 1008; //Эффективное заполнение изд., мм
         assert true == joiningVar2.check(iwin2.listJoin.join(frame2_1, 1), param("30", grup)) : grup;

@@ -5,11 +5,12 @@ import domain.eGlasgrp;
 import domain.eGlaspar1;
 import java.util.List;
 import builder.Wincalc;
+import builder.model.Com5t;
+import builder.model.ElemGlass;
 import builder.model.ElemSimple;
 import builder.model.UGeo;
 import common.UCom;
 import domain.eArtikl;
-import enums.Type;
 import java.util.Arrays;
 import java.util.Collections;
 import org.locationtech.jts.geom.LineSegment;
@@ -93,13 +94,13 @@ public class FillingVar extends Par5s {
                 break;
                 case 13015:  //Форма заполнения 
                     //"Прямоугольное", "Не прямоугольное", "Не арочное", "Арочное" (TypeElem.AREA - глухарь)
-                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && Type.RECTANGL.equals(winc.root.type) == false) {
+                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && elem5e.owner.area.isRectangle() == true) {
                         return false;
-                    } else if ("Не прямоугольное".equals(rec.getStr(TEXT)) && (Type.TRAPEZE.equals(winc.root.type) == false)) {
+                    } else if ("Не прямоугольное".equals(rec.getStr(TEXT)) && elem5e.owner.area.isRectangle() == false) {
                         return false;
-                    } else if ("Арочное".equals(rec.getStr(TEXT)) && Type.ARCH.equals(winc.root.type) == false) {
+                    } else if ("Арочное".equals(rec.getStr(TEXT)) && elem5e.owner.area.getNumPoints() < Com5t.MAXSIDE) {
                         return false;
-                    } else if ("Не арочное".equals(rec.getStr(TEXT)) && Type.ARCH.equals(winc.root.type) == true) {
+                    } else if ("Не арочное".equals(rec.getStr(TEXT)) && ((ElemGlass) elem5e).area.getNumPoints() > Com5t.MAXSIDE) {
                         return false;
                     }                    
                     break;
