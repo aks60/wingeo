@@ -65,12 +65,14 @@ public class ElemGlass extends ElemSimple {
         //Цвет стекла
         if (isJson(gson.param, PKjson.colorGlass)) {
             colorID1 = gson.param.get(PKjson.colorGlass).getAsInt();
+            colorID2 = colorID1;
+            colorID3 = colorID1;
         } else {
             Record artdetRec = eArtdet.find(artiklRec.getInt(eArtikl.id));
             Record colorRec = eColor.find3(artdetRec.getInt(eArtdet.color_fk));
             colorID1 = colorRec.getInt(eColor.id);
-            colorID2 = colorRec.getInt(eColor.id);
-            colorID3 = colorRec.getInt(eColor.id);
+            colorID2 = colorID1;
+            colorID3 = colorID1;
         }
 
         //Раскладка

@@ -2,8 +2,8 @@ package frames.swing;
 
 import builder.model.Com5t;
 import builder.model.AreaSimple;
-import builder.model.ElemCross;
 import builder.model.ElemGlass;
+import builder.model.ElemMosquit;
 import builder.model.ElemSimple;
 import dataset.Record;
 import domain.eSystree;
@@ -48,7 +48,7 @@ public class DefMutableTreeNode<E> extends DefaultMutableTreeNode {
             if (i != -1) {
                 s = s.substring(0, i);
             }
-            if (obj instanceof ElemGlass) {
+            if (obj instanceof ElemGlass || obj instanceof ElemMosquit) {
                 return s + "   id=" + ((ElemSimple) obj).id;
             } else {
                 return s + "  " + ((ElemSimple) obj).layout().name.toLowerCase();

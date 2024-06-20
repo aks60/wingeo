@@ -120,7 +120,7 @@ public class ElemMosquit extends ElemSimple {
             int z = (winc.scale < 0.1) ? 80 : 30;
             int h = 0, w = 0;
             Record colorMosq = eColor.find(this.colorID1);
-            winc.gc2d.setColor(new Color(colorMosq.getInt(eColor.rgb)));
+            winc.gc2d.setColor(this.color());
             winc.gc2d.setStroke(new BasicStroke(1));
 
             for (int i = 1; i < (envMosq.getMaxY() - envMosq.getMinY()) / z; i++) {

@@ -891,24 +891,27 @@ public class UGui {
     }
 
     public static void changePpmTree(JTree winTree, JPopupMenu ppm, Com5t com5t) {
-
         winTree.setComponentPopupMenu(null);
+        
         if (com5t.type == Type.GLASS && com5t.owner.type != Type.STVORKA) {
             winTree.setComponentPopupMenu(ppm);
-            boolean b[] = {true, false, true, false};
-            List.of(0, 1, 2, 3).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+            boolean b[] = {true, false, true, false, false};
+            List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
 
-        } else if (List.of(enums.Type.IMPOST)
-                .contains(com5t.type)) {
+        } else if (enums.Type.IMPOST == com5t.type) {
             winTree.setComponentPopupMenu(ppm);
-            boolean b[] = {false, true, false, false};
-            List.of(0, 1, 2, 3).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+            boolean b[] = {false, true, false, false, false};
+            List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
 
-        } else if (List.of(enums.Type.STVORKA)
-                .contains(com5t.type)) {
+        } else if (enums.Type.STVORKA == com5t.type) {
             winTree.setComponentPopupMenu(ppm);
-            boolean b[] = {false, false, false, true};
-            List.of(0, 1, 2, 3).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+            boolean b[] = {false, false, false, true, false};
+            List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+
+        } else if (enums.Type.MOSKITKA == com5t.type) {
+            winTree.setComponentPopupMenu(ppm);
+            boolean b[] = {false, false, false, false, true};
+            List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));            
         }
     }
 }

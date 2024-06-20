@@ -523,7 +523,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     setIcon(btn23, stv.paramCheck[5]);
                     setText(txt48, eColor.find(stv.lockColor).getStr(eColor.name));
                     setIcon(btn24, stv.paramCheck[6]);
-                    //Москитка
+                    List.of(txt54, txt55, txt60, txt56).forEach(e -> e.setText(null)); //москитка
                     Com5t mosquit = stv.childs.stream().filter(e -> e.type == enums.Type.MOSKITKA).findFirst().orElse(null);
                     if (mosquit != null) {
                         ElemMosquit mosq = (ElemMosquit) mosquit;
@@ -532,6 +532,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         setText(txt60, eColor.find(mosq.colorID1).getStr(eColor.name));
                         setText(txt56, mosq.sysprofRec.getStr(eElement.name));
                     }
+
                     //Соединения
                 } else if (winNode.com5t().type == enums.Type.JOINING) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card17");
@@ -902,6 +903,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         removeImpost = new javax.swing.JMenuItem();
         addStvorka = new javax.swing.JMenuItem();
         removeStvorka = new javax.swing.JMenuItem();
+        removeMosquit = new javax.swing.JMenuItem();
         tool = new javax.swing.JPanel();
         btnIns = new javax.swing.JButton();
         btnDel = new javax.swing.JButton();
@@ -1127,7 +1129,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         addImpostHor.setText("горизонтальный");
         addImpostHor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addImpostHorActionPerformed(evt);
+                addImpostHorAction(evt);
             }
         });
         addImpost.add(addImpostHor);
@@ -1136,7 +1138,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         addImpostVer.setText("вертикальный");
         addImpostVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addImpostVerActionPerformed(evt);
+                addImpostVerAction(evt);
             }
         });
         addImpost.add(addImpostVer);
@@ -1147,7 +1149,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         removeImpost.setText("Удалить импост");
         removeImpost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeImpostActionPerformed(evt);
+                removeImpostAction(evt);
             }
         });
         ppmTree.add(removeImpost);
@@ -1156,7 +1158,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         addStvorka.setText("Добавить сворку");
         addStvorka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addStvorkaActionPerformed(evt);
+                addStvorkaAction(evt);
             }
         });
         ppmTree.add(addStvorka);
@@ -1165,10 +1167,19 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         removeStvorka.setText("Удалить створку");
         removeStvorka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeStvorkaActionPerformed(evt);
+                removeStvorkaAction(evt);
             }
         });
         ppmTree.add(removeStvorka);
+
+        removeMosquit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
+        removeMosquit.setText("Удалить москитку");
+        removeMosquit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeMosquitAction(evt);
+            }
+        });
+        ppmTree.add(removeMosquit);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Модели системных профилей");
@@ -4245,20 +4256,22 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
             new DicArtikl(this, (artiklRec) -> {
 
-                GsonElem gsonMosq = null;
-                Com5t mosq = areaStv.childs.stream().filter(e -> e.type == enums.Type.MOSKITKA).findFirst().orElse(null);
+                for (int i = 0; i < areaStv.gson.childs.size(); ++i) {
 
-                if (mosq == null) {
-                    gsonMosq = new GsonElem(enums.Type.MOSKITKA);
-                    GsonElem gsonStv = areaStv.gson;
-                    gsonStv.childs.add(gsonMosq);
-                }
-                if (artiklRec.get(1) == null) {
-                    gsonMosq.param.remove(PKjson.artiklID);
-                    gsonMosq.param.remove(PKjson.colorID1);
-                    gsonMosq.param.remove(PKjson.elementID);
-                } else {
-                    gsonMosq.param.addProperty(PKjson.artiklID, artiklRec.getStr(eArtikl.id));
+                    if (artiklRec.get(1) == null) {  //удаление
+                        Com5t mosq = areaStv.childs.stream().filter(e -> e.type == enums.Type.MOSKITKA).findFirst().orElse(null);
+                        if (mosq != null && areaStv.gson.childs.get(i).id == mosq.id) {
+                            areaStv.gson.childs.remove(i);
+                            break;
+                        }
+                    } else {  //вставка
+                        GsonElem gsonMosq = new GsonElem(enums.Type.MOSKITKA);
+                        areaStv.gson.childs.add(gsonMosq);
+                        gsonMosq.param.addProperty(PKjson.artiklID, artiklRec.getStr(eArtikl.id));
+                        List<Record> reclist = eArtdet.filter(artiklRec.getInt(eArtikl.id));
+                        gsonMosq.param.addProperty(PKjson.colorID1, reclist.get(0).getInt(eArtdet.color_fk));
+                        break;
+                    }
                 }
                 updateScript(selectID);
 
@@ -4458,14 +4471,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         this.pack();
     }//GEN-LAST:event_btnTreebtnMove
 
-    private void removeImpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeImpostActionPerformed
+    private void removeImpostAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeImpostAction
         Com5t owner = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t().owner;
         owner.gson.childs = owner.gson.childs.stream().filter(e -> e.type == enums.Type.FRAME_SIDE).collect(toList());
         owner.gson.addElem(new GsonElem(enums.Type.GLASS));
         reload(false);
-    }//GEN-LAST:event_removeImpostActionPerformed
+    }//GEN-LAST:event_removeImpostAction
 
-    private void addStvorkaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStvorkaActionPerformed
+    private void addStvorkaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStvorkaAction
         Com5t glass = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
         if (glass.owner.gson instanceof GsonRoot) {
             for (int i = 0; i < glass.owner.gson.childs.size(); ++i) {
@@ -4481,9 +4494,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         }
         reload(false);
-    }//GEN-LAST:event_addStvorkaActionPerformed
+    }//GEN-LAST:event_addStvorkaAction
 
-    private void removeStvorkaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeStvorkaActionPerformed
+    private void removeStvorkaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeStvorkaAction
         Com5t stv = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
         for (int i = 0; i < stv.owner.gson.childs.size(); ++i) {
             if (stv.owner.gson.childs.get(i).id == stv.id) {
@@ -4497,9 +4510,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         }
         reload(false);
-    }//GEN-LAST:event_removeStvorkaActionPerformed
+    }//GEN-LAST:event_removeStvorkaAction
 
-    private void addImpostHorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImpostHorActionPerformed
+    private void addImpostHorAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImpostHorAction
         Com5t glass = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
         for (int i = 0; i < glass.owner.gson.childs.size(); ++i) {
             if (glass.owner.gson.childs.get(i).id == glass.id) {
@@ -4511,9 +4524,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         }
         reload(false);
-    }//GEN-LAST:event_addImpostHorActionPerformed
+    }//GEN-LAST:event_addImpostHorAction
 
-    private void addImpostVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImpostVerActionPerformed
+    private void addImpostVerAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImpostVerAction
         Com5t glass = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
         for (int i = 0; i < glass.owner.gson.childs.size(); ++i) {
             if (glass.owner.gson.childs.get(i).id == glass.id) {
@@ -4525,7 +4538,17 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         }
         reload(false);
-    }//GEN-LAST:event_addImpostVerActionPerformed
+    }//GEN-LAST:event_addImpostVerAction
+
+    private void removeMosquitAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMosquitAction
+        Com5t mosq = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
+        for (int i = 0; i < mosq.owner.gson.childs.size(); ++i) {
+            if (mosq.owner.gson.childs.get(i).id == mosq.id) {
+                mosq.owner.gson.childs.remove(i);
+            }
+        }
+        reload(false);
+    }//GEN-LAST:event_removeMosquitAction
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -4660,6 +4683,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private javax.swing.JPopupMenu ppmCrud;
     private javax.swing.JPopupMenu ppmTree;
     private javax.swing.JMenuItem removeImpost;
+    private javax.swing.JMenuItem removeMosquit;
     private javax.swing.JMenuItem removeStvorka;
     private javax.swing.JScrollPane scr1;
     private javax.swing.JScrollPane scr2;
