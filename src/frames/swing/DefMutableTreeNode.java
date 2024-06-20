@@ -2,8 +2,9 @@ package frames.swing;
 
 import builder.model.Com5t;
 import builder.model.AreaSimple;
+import builder.model.ElemCross;
+import builder.model.ElemGlass;
 import builder.model.ElemSimple;
-import static dataset.Field.TYPE.type;
 import dataset.Record;
 import domain.eSystree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -43,16 +44,19 @@ public class DefMutableTreeNode<E> extends DefaultMutableTreeNode {
 
         } else if (obj instanceof ElemSimple) {
             String s = ((ElemSimple) obj).type.name;
-            int ind = s.indexOf(" ");
-            if (ind != -1) {
-                s = s.substring(0, ind);
+            int i = s.indexOf(" ");
+            if (i != -1) {
+                s = s.substring(0, i);
             }
-            return s + "   id=" + ((ElemSimple) obj).id;
-            //return s + "  " + ((ElemSimple) obj).layout().name.toLowerCase();
-            //return " "      + ((ElemSimple) obj).layout().name.toLowerCase();
-
+            if (obj instanceof ElemGlass) {
+                return s + "   id=" + ((ElemSimple) obj).id;
+            } else {
+                return s + "  " + ((ElemSimple) obj).layout().name.toLowerCase();
+            }
+            
         } else if (obj instanceof Com5t) {
             return ((Com5t) obj).type.name;
+            
         } else {
             return String.valueOf(obj);
         }
