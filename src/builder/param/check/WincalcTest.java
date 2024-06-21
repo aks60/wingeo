@@ -40,6 +40,7 @@ public class WincalcTest {
 
     public static ElemSimple frame3_left = null;
     public static ElemSimple frame3_right = null;
+    public static ElemSimple frame3_top = null;
     public static ElemSimple stv3_right_3 = null;
     public static ElemSimple imp3_vert = null;
     public static ElemSimple glass3_top = null;
@@ -138,6 +139,7 @@ public class WincalcTest {
 
         frame3_left = getElem(iwin3.root, 1);
         frame3_right = getElem(iwin3.root, 3);
+        frame3_top = getElem(iwin3.root, 4);
         stv3_right_3 = getElem(iwin3.root, 12.3);
         imp3_vert = getElem(iwin3.root, 11);
         glass3_top = (ElemSimple) getElem(iwin3.root, 6);

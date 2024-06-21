@@ -56,6 +56,7 @@ import static builder.param.check.WincalcTest.glass4_right;
 import static builder.param.check.WincalcTest.glass4_left;
 import static builder.param.check.WincalcTest.frame2_1;
 import static builder.param.check.WincalcTest.frame2_3;
+import static builder.param.check.WincalcTest.frame3_top;
 import static builder.param.check.WincalcTest.frame4_top;
 import static builder.param.check.WincalcTest.shtulp4_hor;
 import static builder.param.check.WincalcTest.stv2_left_3;
@@ -87,6 +88,7 @@ public class ElementTest {
         grup = 31002; //Если профиль
         assert true == elementVar2.check(frame2_1, param("прямой", grup)) : grup;
         assert false == elementVar2.check(frame2_1, param("арочный", grup)) : grup;
+        assert true == elementVar3.check(frame3_top, param("арочный", grup)) : grup;
 
         grup = 31003; //Если соединенный артикул  T-обр.
         assert true == elementVar2.check(imp2_vert, param("937", grup)) : grup;
