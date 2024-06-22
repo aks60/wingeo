@@ -653,8 +653,6 @@ public class Fillings extends javax.swing.JFrame {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1111",  new Double(2.0), "2", null},
-                {"2222",  new Double(2.0), "2", null},
                 {null, null, null, null}
             },
             new String [] {
@@ -705,8 +703,7 @@ public class Fillings extends javax.swing.JFrame {
         tab3.setFont(frames.UGui.getFont(0,0));
         tab3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"kkkkkkkkkkk", "77"},
-                {"hhhhhhhhh", "88"}
+
             },
             new String [] {
                 "Параметр", "Значение"
@@ -745,8 +742,7 @@ public class Fillings extends javax.swing.JFrame {
         tab2.setFont(frames.UGui.getFont(0,0));
         tab2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, "22", "222222", "qqqqqqqqqqqqqqq", "mmmmmmmmmmm", null, null, null},
-                {null, "33", "333333", "hhhhhhhhhhhhhhh", "kkkkkkkkkkkkkkkkkk", null, null, null}
+
             },
             new String [] {
                 "Толщина", "Артикул", "Название", "Текстура", "Основная", "Внутренняя", "Внешняя", "ID"
@@ -804,8 +800,7 @@ public class Fillings extends javax.swing.JFrame {
         tab4.setFont(frames.UGui.getFont(0,0));
         tab4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"zzzzz", "aaaaa"},
-                {"ccccc", "vvvvv"}
+
             },
             new String [] {
                 "Параметр", "Значение"
@@ -838,8 +833,7 @@ public class Fillings extends javax.swing.JFrame {
         tab5.setFont(frames.UGui.getFont(0,0));
         tab5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Артикул", "Название", "Размер от оси до стеклопакета", "Внутреннее", "Внешнее", "ID"

@@ -544,19 +544,10 @@
                       <Connection code="frames.UGui.getFont(0,0)" type="code"/>
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="3" rowCount="2">
-                        <Column editable="false" title="&#x2116;" type="java.lang.Integer">
-                          <Data value="1"/>
-                          <Data value="2"/>
-                        </Column>
-                        <Column editable="false" title="&#x41d;&#x430;&#x438;&#x43c;&#x435;&#x43d;&#x43e;&#x432;&#x430;&#x43d;&#x438;&#x435;" type="java.lang.String">
-                          <Data value="xxxxxxxxxxxxxxx"/>
-                          <Data value="zzzzzzzzzzzzzzzzz"/>
-                        </Column>
-                        <Column editable="false" title="&#x420;&#x438;&#x441;&#x443;&#x43d;&#x43e;&#x43a;" type="java.lang.Object">
-                          <Data value="XXX"/>
-                          <Data value="XXX"/>
-                        </Column>
+                      <Table columnCount="3" rowCount="0">
+                        <Column editable="false" title="&#x2116;" type="java.lang.Integer"/>
+                        <Column editable="false" title="&#x41d;&#x430;&#x438;&#x43c;&#x435;&#x43d;&#x43e;&#x432;&#x430;&#x43d;&#x438;&#x435;" type="java.lang.String"/>
+                        <Column editable="false" title="&#x420;&#x438;&#x441;&#x443;&#x43d;&#x43e;&#x43a;" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

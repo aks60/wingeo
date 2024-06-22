@@ -261,12 +261,8 @@
                       <Connection code="frames.UGui.getFont(0,0)" type="code"/>
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="2" rowCount="3">
-                        <Column editable="false" title="&#x41d;&#x430;&#x438;&#x43c;&#x435;&#x43d;&#x43e;&#x432;&#x430;&#x43d;&#x438;&#x435;" type="java.lang.Object">
-                          <Data value="11111111111"/>
-                          <Data value="22222222222"/>
-                          <Data value="null"/>
-                        </Column>
+                      <Table columnCount="2" rowCount="1">
+                        <Column editable="false" title="&#x41d;&#x430;&#x438;&#x43c;&#x435;&#x43d;&#x43e;&#x432;&#x430;&#x43d;&#x438;&#x435;" type="java.lang.Object"/>
                         <Column editable="false" title="&#x420;&#x438;&#x441;&#x443;&#x43d;&#x43e;&#x43a;" type="java.lang.Object"/>
                       </Table>
                     </Property>

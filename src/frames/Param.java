@@ -427,8 +427,7 @@ public class Param extends javax.swing.JFrame {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"11111", null},
-                {"22222", null}
+
             },
             new String [] {
                 "Название параметра", "ID"
@@ -475,8 +474,7 @@ public class Param extends javax.swing.JFrame {
         tab2.setFont(frames.UGui.getFont(0,0));
         tab2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1111", null, null, null, null, null, null, null, null},
-                {"2222", null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Значение параметра", "Комплекты", "Соединения", "Вставки", "Заполнения", "Фурнитура", "Откосы", "Надпись", "ID"

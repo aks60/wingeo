@@ -162,8 +162,7 @@ public class DicParlist extends javax.swing.JDialog implements ListenerFrame<Obj
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "Name 1"},
-                {"2", "Name 2"}
+
             },
             new String [] {
                 "numb", "Название параметра"

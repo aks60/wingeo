@@ -434,8 +434,7 @@ public class Partner extends javax.swing.JFrame {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"111", "111", null, null, null},
-                {"222", "222", null, null, null}
+
             },
             new String [] {
                 "Категория", "Контрагент", "User", "Организация", "ID"

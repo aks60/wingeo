@@ -802,8 +802,7 @@ public class Joinings extends javax.swing.JFrame {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"11", "11", "1111", null, null, null},
-                {"22", "22", "2222", null, null, null}
+
             },
             new String [] {
                 "Артикул 1", "Артикул 2", "Название", "Основной", "Аналог", "ID"
@@ -858,8 +857,7 @@ public class Joinings extends javax.swing.JFrame {
         tab2.setFont(frames.UGui.getFont(0,0));
         tab2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "Мммммммммм", null, null},
-                {"2", "Ррррррррррр", null, null}
+
             },
             new String [] {
                 "Приоритет", "Название", "Зеркальность", "ID"
@@ -905,8 +903,7 @@ public class Joinings extends javax.swing.JFrame {
         tab3.setFont(frames.UGui.getFont(0,0));
         tab3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1111", "1"},
-                {"2222", "2"}
+
             },
             new String [] {
                 "Параметр", "Значение"
@@ -946,8 +943,7 @@ public class Joinings extends javax.swing.JFrame {
         tab4.setFont(frames.UGui.getFont(0,0));
         tab4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"yyyyyyyy", "fffffffffffffff", "44", "7", null, null, null},
-                {"rrrrrrrrrrr", "llllllllllllllllllllllllllll", "77", "2", null, null, null}
+
             },
             new String [] {
                 "Артикул", "Название", "Текстура", "Основная", "Внутренняя", "Внешняя", "ID"
@@ -997,8 +993,7 @@ public class Joinings extends javax.swing.JFrame {
         tab5.setFont(frames.UGui.getFont(0,0));
         tab5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"eeeeeeeeee", "22"},
-                {"mmmmmmm", "44"}
+
             },
             new String [] {
                 "Параметр", "Значение"

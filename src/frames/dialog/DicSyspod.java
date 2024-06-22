@@ -288,8 +288,6 @@ public class DicSyspod extends javax.swing.JDialog {
         tab2.setFont(frames.UGui.getFont(0,0));
         tab2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"11111111111", null},
-                {"22222222222", null},
                 {null, null}
             },
             new String [] {

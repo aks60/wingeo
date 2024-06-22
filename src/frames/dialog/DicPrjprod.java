@@ -158,8 +158,7 @@ public class DicPrjprod extends javax.swing.JDialog {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Value 1"},
-                {"Value 2"}
+
             },
             new String [] {
                 "Наименование конструкции"

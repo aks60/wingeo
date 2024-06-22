@@ -450,8 +450,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                { new Integer(1), "xxxxxxxxxxxxxxx", "XXX"},
-                { new Integer(2), "zzzzzzzzzzzzzzzzz", "XXX"}
+
             },
             new String [] {
                 "№", "Наименование", "Рисунок"

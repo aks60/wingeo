@@ -204,8 +204,7 @@ public class DicJoinvar extends javax.swing.JDialog {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Nmae 0", null},
-                {"Name 0", null}
+
             },
             new String [] {
                 "Соединение", "ID"

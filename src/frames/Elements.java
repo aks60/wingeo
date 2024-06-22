@@ -792,8 +792,7 @@ public class Elements extends javax.swing.JFrame {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"wwwwwww"},
-                {"ddddddddd"}
+
             },
             new String [] {
                 "Категория"
@@ -825,8 +824,7 @@ public class Elements extends javax.swing.JFrame {
         tab2.setFont(frames.UGui.getFont(0,0));
         tab2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, "vvvvvvvvvvvvvvv", "111", null, null, null, null,  new Double(0.0), null},
-                {null, null, "hhhhhhhhhhhhhh", "222", null, null, null, null,  new Double(0.0), null}
+
             },
             new String [] {
                 "Артикул", "Название", "Наименование вставок", "Тип состава", "Признак состава", "Серия", "Умолчание", "Обязательно", "Наценка%", "ID"
@@ -887,8 +885,7 @@ public class Elements extends javax.swing.JFrame {
         tab4.setFont(frames.UGui.getFont(0,0));
         tab4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1111", "111"},
-                {"2222", "222"}
+
             },
             new String [] {
                 "Параметр", "Значение"
@@ -927,8 +924,7 @@ public class Elements extends javax.swing.JFrame {
         tab3.setFont(frames.UGui.getFont(0,0));
         tab3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"xxxxxxxx", null, "mmmmm", "kkkkkkk", "vvvvv", "ffffff", null},
-                {"zzzzzzzzz", null, "mmmmm", "kkkkkkk", "ddddd", "yyyyy", null}
+
             },
             new String [] {
                 "Артикул", "Название", "Текстура", "Основная", "Внутренняя", "Внешняя", "ID"
@@ -981,8 +977,7 @@ public class Elements extends javax.swing.JFrame {
         tab5.setFont(frames.UGui.getFont(0,0));
         tab5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1111", "111"},
-                {"2222", "222"}
+
             },
             new String [] {
                 "Параметр", "Значение"

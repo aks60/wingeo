@@ -169,8 +169,6 @@ public class DicCurrenc extends javax.swing.JDialog {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1111", "1", "1",  new Double(1.0), null},
-                {"222", "2", "2",  new Double(2.0), null},
                 {null, null, null, null, null},
                 {null, null, null, null, null}
             },

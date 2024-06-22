@@ -430,11 +430,8 @@
                           <Connection code="frames.UGui.getFont(0,0)" type="code"/>
                         </Property>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="2" rowCount="2">
-                            <Column editable="true" title="&#x41d;&#x430;&#x437;&#x432;&#x430;&#x43d;&#x438;&#x435; &#x43f;&#x430;&#x440;&#x430;&#x43c;&#x435;&#x442;&#x440;&#x430;" type="java.lang.String">
-                              <Data value="11111"/>
-                              <Data value="22222"/>
-                            </Column>
+                          <Table columnCount="2" rowCount="0">
+                            <Column editable="true" title="&#x41d;&#x430;&#x437;&#x432;&#x430;&#x43d;&#x438;&#x435; &#x43f;&#x430;&#x440;&#x430;&#x43c;&#x435;&#x442;&#x440;&#x430;" type="java.lang.String"/>
                             <Column editable="false" title="ID" type="java.lang.Integer"/>
                           </Table>
                         </Property>
@@ -499,11 +496,8 @@
                           <Connection code="frames.UGui.getFont(0,0)" type="code"/>
                         </Property>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="9" rowCount="2">
-                            <Column editable="true" title="&#x417;&#x43d;&#x430;&#x447;&#x435;&#x43d;&#x438;&#x435; &#x43f;&#x430;&#x440;&#x430;&#x43c;&#x435;&#x442;&#x440;&#x430;" type="java.lang.String">
-                              <Data value="1111"/>
-                              <Data value="2222"/>
-                            </Column>
+                          <Table columnCount="9" rowCount="0">
+                            <Column editable="true" title="&#x417;&#x43d;&#x430;&#x447;&#x435;&#x43d;&#x438;&#x435; &#x43f;&#x430;&#x440;&#x430;&#x43c;&#x435;&#x442;&#x440;&#x430;" type="java.lang.String"/>
                             <Column editable="true" title="&#x41a;&#x43e;&#x43c;&#x43f;&#x43b;&#x435;&#x43a;&#x442;&#x44b;" type="java.lang.Boolean"/>
                             <Column editable="true" title="&#x421;&#x43e;&#x435;&#x434;&#x438;&#x43d;&#x435;&#x43d;&#x438;&#x44f;" type="java.lang.Boolean"/>
                             <Column editable="true" title="&#x412;&#x441;&#x442;&#x430;&#x432;&#x43a;&#x438;" type="java.lang.Boolean"/>

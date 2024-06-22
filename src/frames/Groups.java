@@ -419,8 +419,6 @@ public class Groups extends javax.swing.JFrame {
         tab6.setFont(frames.UGui.getFont(0,0));
         tab6.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1111", "1", "1",  new Double(1.0), null},
-                {"222", "2", "2",  new Double(2.0), null},
                 {null, null, null, null, null},
                 {null, null, null, null, null}
             },
@@ -509,8 +507,7 @@ public class Groups extends javax.swing.JFrame {
         tab2.setFont(frames.UGui.getFont(0,0));
         tab2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"111", null, null},
-                {"222", null, null}
+
             },
             new String [] {
                 "Название группы", "Скидка %", "ID"
@@ -559,8 +556,7 @@ public class Groups extends javax.swing.JFrame {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"111", null, null},
-                {"222", null, null}
+
             },
             new String [] {
                 "Название группы", "Наценка (коэф)", "ID"
@@ -609,8 +605,6 @@ public class Groups extends javax.swing.JFrame {
         tab5.setFont(frames.UGui.getFont(0,0));
         tab5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1111",  new Double(3.0), null},
-                {"2222",  new Double(3.0), null},
                 {null, null, null},
                 {null, null, null}
             },
@@ -660,8 +654,7 @@ public class Groups extends javax.swing.JFrame {
         tab3.setFont(frames.UGui.getFont(0,0));
         tab3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1111", null},
-                {"2222", null}
+
             },
             new String [] {
                 "Наименование", "ID"
@@ -707,8 +700,6 @@ public class Groups extends javax.swing.JFrame {
         tab4.setFont(frames.UGui.getFont(0,0));
         tab4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"11111", null},
-                {"22222", null},
                 {null, null},
                 {null, null}
             },

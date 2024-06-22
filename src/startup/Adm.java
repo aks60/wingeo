@@ -1321,9 +1321,14 @@ public class Adm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReport
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        timer.stop();
-        if (thread != null)
-            thread.stop();
+        try {
+            timer.stop();
+            if (thread != null) {
+                thread.join();
+            }
+        } catch (InterruptedException e) {
+            System.out.println("Ошибка:Adm.windowClosed()");
+        }
     }//GEN-LAST:event_windowClosed
 
     private void windowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosing

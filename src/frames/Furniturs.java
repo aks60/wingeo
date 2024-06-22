@@ -1004,8 +1004,7 @@ public class Furniturs extends javax.swing.JFrame {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"xxxxxxxxx", "3", "3", null, null, null, null, null, null, null, null, null, null, null},
-                {"vvvvvvvvv", "3", "4", null, null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Название", "Вид", "Сторона ручки", "По середине", "Константная", "Вариационная", "Р/2 максимальная", "Ширина максимальная", "Высота максимальная", "Вес максимальный", "Створка", "Использ. параметры", "Ограничения", "ID"
@@ -1126,8 +1125,7 @@ public class Furniturs extends javax.swing.JFrame {
         tab3.setFont(frames.UGui.getFont(0,0));
         tab3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"xxxxx", "mmmmm"},
-                {"vvvvv", "ddddddd"}
+
             },
             new String [] {
                 "Сторона", "Назначение"
@@ -1157,8 +1155,7 @@ public class Furniturs extends javax.swing.JFrame {
         tab4.setFont(frames.UGui.getFont(0,0));
         tab4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1111", "11"},
-                {"2222", "22"}
+
             },
             new String [] {
                 "Параметр", "Значение"
@@ -1201,8 +1198,7 @@ public class Furniturs extends javax.swing.JFrame {
         tab2a.setFont(frames.UGui.getFont(0,0));
         tab2a.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"11", "xxxxxxxxx", "11", "11", null},
-                {"22", "vvvvvvvvv", "22", "22", null}
+
             },
             new String [] {
                 "Артикул", "Название", "Текстура", "Подбор", "ID"
@@ -1247,8 +1243,7 @@ public class Furniturs extends javax.swing.JFrame {
         tab2c.setFont(frames.UGui.getFont(0,0));
         tab2c.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"11", "xxxxxxxxx", "11", "11", null},
-                {"22", "vvvvvvvvv", "22", "22", null}
+
             },
             new String [] {
                 "Артикул", "Название", "Текстура", "Подбор", "ID"
@@ -1298,8 +1293,7 @@ public class Furniturs extends javax.swing.JFrame {
         tab2b.setFont(frames.UGui.getFont(0,0));
         tab2b.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"11", "xxxxxxxxx", "11", "11", null},
-                {"22", "vvvvvvvvv", "22", "22", null}
+
             },
             new String [] {
                 "Артикул", "Название", "Текстура", "Подбор", "ID"
@@ -1360,8 +1354,7 @@ public class Furniturs extends javax.swing.JFrame {
         tab5.setFont(frames.UGui.getFont(0,0));
         tab5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"xxxxxxxx", null, null, null, null},
-                {"zzzzzzzzz", null, null, null, null}
+
             },
             new String [] {
                 "Сторона", "Мин. длина", "Макс. длина", "Мин. угол", "Макс. угол"
@@ -1399,8 +1392,7 @@ public class Furniturs extends javax.swing.JFrame {
         tab6.setFont(frames.UGui.getFont(0,0));
         tab6.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1111", "11"},
-                {"2222", "22"}
+
             },
             new String [] {
                 "Параметр", "Значение"

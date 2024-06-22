@@ -293,8 +293,7 @@ public class Syssize extends javax.swing.JFrame {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"111",  new Double(1.0),  new Double(1.0),  new Double(1.0),  new Double(1.0), null},
-                {"222",  new Double(2.0),  new Double(2.0),  new Double(2.0),  new Double(2.0), null}
+
             },
             new String [] {
                 "Система артикулов", "Припуск на сварку", "Нахлест створки", "Заход импоста", "Наплав системы, полка", "ID"

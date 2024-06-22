@@ -601,19 +601,10 @@
                       <Connection code="frames.UGui.getFont(0,0)" type="code"/>
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="3" rowCount="2">
-                        <Column editable="false" title="&#x41a;&#x430;&#x442;&#x435;&#x433;&#x43e;&#x440;&#x438;&#x44f;" type="java.lang.Object">
-                          <Data value="111"/>
-                          <Data value="222"/>
-                        </Column>
-                        <Column editable="false" title="&#x41d;&#x430;&#x437;&#x432;&#x430;&#x43d;&#x438;&#x435; &#x43a;&#x43e;&#x43c;&#x43f;&#x43b;&#x435;&#x43a;&#x442;&#x430;" type="java.lang.Object">
-                          <Data value="name1"/>
-                          <Data value="name2"/>
-                        </Column>
-                        <Column editable="false" title="ID" type="java.lang.Integer">
-                          <Data value="1"/>
-                          <Data value="2"/>
-                        </Column>
+                      <Table columnCount="3" rowCount="0">
+                        <Column editable="false" title="&#x41a;&#x430;&#x442;&#x435;&#x433;&#x43e;&#x440;&#x438;&#x44f;" type="java.lang.Object"/>
+                        <Column editable="false" title="&#x41d;&#x430;&#x437;&#x432;&#x430;&#x43d;&#x438;&#x435; &#x43a;&#x43e;&#x43c;&#x43f;&#x43b;&#x435;&#x43a;&#x442;&#x430;" type="java.lang.Object"/>
+                        <Column editable="false" title="ID" type="java.lang.Integer"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -672,36 +663,15 @@
                       <Connection code="frames.UGui.getFont(0,0)" type="code"/>
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="8" rowCount="2">
-                        <Column editable="false" title="&#x410;&#x440;&#x442;&#x438;&#x43a;&#x443;&#x43b;" type="java.lang.Object">
-                          <Data value="111"/>
-                          <Data value="222"/>
-                        </Column>
-                        <Column editable="false" title="&#x41d;&#x430;&#x437;&#x432;&#x430;&#x43d;&#x438;&#x435;" type="java.lang.Object">
-                          <Data value="Name1"/>
-                          <Data value="Name2"/>
-                        </Column>
-                        <Column editable="false" title="&#x41e;&#x441;&#x43d;&#x43e;&#x432;&#x43d;&#x430;&#x44f; &#x442;&#x435;&#x43a;&#x441;&#x442;&#x443;&#x440;&#x430;" type="java.lang.Object">
-                          <Data value="111"/>
-                          <Data value="222"/>
-                        </Column>
-                        <Column editable="false" title="&#x412;&#x43d;&#x443;&#x442;&#x440;&#x435;&#x43d;&#x43d;&#x44f;&#x44f; &#x442;&#x435;&#x43a;&#x441;&#x442;&#x443;&#x440;&#x430;" type="java.lang.Object">
-                          <Data value="111"/>
-                          <Data value="222"/>
-                        </Column>
-                        <Column editable="false" title="&#x412;&#x43d;&#x435;&#x448;&#x43d;&#x44f;&#x44f; &#x442;&#x435;&#x43a;&#x441;&#x442;&#x443;&#x440;&#x430;" type="java.lang.Object">
-                          <Data value="111"/>
-                          <Data value="222"/>
-                        </Column>
-                        <Column editable="false" title="&#x415;&#x434;.&#x438;&#x437;&#x43c;&#x435;&#x440;&#x435;&#x43d;&#x438;&#x44f;" type="java.lang.Object">
-                          <Data value="x"/>
-                          <Data value="v"/>
-                        </Column>
+                      <Table columnCount="8" rowCount="0">
+                        <Column editable="false" title="&#x410;&#x440;&#x442;&#x438;&#x43a;&#x443;&#x43b;" type="java.lang.Object"/>
+                        <Column editable="false" title="&#x41d;&#x430;&#x437;&#x432;&#x430;&#x43d;&#x438;&#x435;" type="java.lang.Object"/>
+                        <Column editable="false" title="&#x41e;&#x441;&#x43d;&#x43e;&#x432;&#x43d;&#x430;&#x44f; &#x442;&#x435;&#x43a;&#x441;&#x442;&#x443;&#x440;&#x430;" type="java.lang.Object"/>
+                        <Column editable="false" title="&#x412;&#x43d;&#x443;&#x442;&#x440;&#x435;&#x43d;&#x43d;&#x44f;&#x44f; &#x442;&#x435;&#x43a;&#x441;&#x442;&#x443;&#x440;&#x430;" type="java.lang.Object"/>
+                        <Column editable="false" title="&#x412;&#x43d;&#x435;&#x448;&#x43d;&#x44f;&#x44f; &#x442;&#x435;&#x43a;&#x441;&#x442;&#x443;&#x440;&#x430;" type="java.lang.Object"/>
+                        <Column editable="false" title="&#x415;&#x434;.&#x438;&#x437;&#x43c;&#x435;&#x440;&#x435;&#x43d;&#x438;&#x44f;" type="java.lang.Object"/>
                         <Column editable="false" title="&#x41e;&#x441;&#x43d;&#x43e;&#x432;&#x43d;&#x43e;&#x439; &#x44d;&#x43b;&#x435;&#x43c;&#x435;&#x43d;&#x442;" type="java.lang.Boolean"/>
-                        <Column editable="false" title="ID" type="java.lang.Integer">
-                          <Data value="1"/>
-                          <Data value="2"/>
-                        </Column>
+                        <Column editable="false" title="ID" type="java.lang.Integer"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -784,15 +754,9 @@
                       <Connection code="frames.UGui.getFont(0,0)" type="code"/>
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="2" rowCount="2">
-                        <Column editable="false" title="&#x41f;&#x430;&#x440;&#x430;&#x43c;&#x435;&#x442;&#x440;" type="java.lang.Object">
-                          <Data value="name1"/>
-                          <Data value="name2"/>
-                        </Column>
-                        <Column editable="false" title="&#x417;&#x43d;&#x430;&#x447;&#x435;&#x43d;&#x438;&#x435;" type="java.lang.Object">
-                          <Data value="111"/>
-                          <Data value="222"/>
-                        </Column>
+                      <Table columnCount="2" rowCount="0">
+                        <Column editable="false" title="&#x41f;&#x430;&#x440;&#x430;&#x43c;&#x435;&#x442;&#x440;" type="java.lang.Object"/>
+                        <Column editable="false" title="&#x417;&#x43d;&#x430;&#x447;&#x435;&#x43d;&#x438;&#x435;" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

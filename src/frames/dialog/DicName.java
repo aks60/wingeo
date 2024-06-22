@@ -103,8 +103,7 @@ public class DicName extends javax.swing.JDialog {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Name 1"},
-                {"Name 2"}
+
             },
             new String [] {
                 "Название"

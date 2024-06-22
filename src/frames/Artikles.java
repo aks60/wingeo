@@ -1089,8 +1089,7 @@ public class Artikles extends javax.swing.JFrame {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "111", null, null, null, null, null, null, null, null, null, null},
-                {"2", "222", null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Актикул", "Название", "Наценки", "Скидки", "Группы", "Серии", "Ширина", "Толщина", "Отход %", "Тех. код", "Аналог", "ID"
@@ -2333,8 +2332,7 @@ public class Artikles extends javax.swing.JFrame {
         tab2.setFont(frames.UGui.getFont(0,0));
         tab2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "111", null, "0,0", null, null, null, null, null, null, null, null},
-                {"2", "222", null, "0,0", null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Группа", "Название", "Применить", "Основная", "Применить", "Внутренняя", "Применить", "Внешняя", "Двухсторонняя", "За ед. веса", "Коэф. ценовой", "ID"
@@ -2355,6 +2353,7 @@ public class Artikles extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tab2.setColumnSelectionAllowed(true);
         tab2.setFillsViewportHeight(true);
         tab2.setName("tab2"); // NOI18N
         tab2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);

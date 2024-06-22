@@ -496,8 +496,7 @@ public class DicKits extends javax.swing.JDialog {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"111", "name1",  new Integer(1)},
-                {"222", "name2",  new Integer(2)}
+
             },
             new String [] {
                 "Категория", "Название комплекта", "ID"
@@ -545,8 +544,7 @@ public class DicKits extends javax.swing.JDialog {
         tab2.setFont(frames.UGui.getFont(0,0));
         tab2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"111", "Name1", "111", "111", "111", "x", null,  new Integer(1)},
-                {"222", "Name2", "222", "222", "222", "v", null,  new Integer(2)}
+
             },
             new String [] {
                 "Артикул", "Название", "Основная текстура", "Внутренняя текстура", "Внешняя текстура", "Ед.измерения", "Основной элемент", "ID"
@@ -595,8 +593,7 @@ public class DicKits extends javax.swing.JDialog {
         tab3.setFont(frames.UGui.getFont(0,0));
         tab3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"name1", "111"},
-                {"name2", "222"}
+
             },
             new String [] {
                 "Параметр", "Значение"

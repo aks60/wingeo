@@ -256,9 +256,7 @@ public class ParColor extends javax.swing.JDialog {
 
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"11", "111", "111111111", null},
-                {"22", "222", "222222222", null},
-                {"33", "333", "333333333", null}
+
             },
             new String [] {
                 "Группа", "Код", "Название", "id"

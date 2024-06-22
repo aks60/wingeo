@@ -228,8 +228,7 @@ public class DicColor extends javax.swing.JDialog {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"name1"},
-                {"name2"}
+
             },
             new String [] {
                 "Группы текстур"
@@ -258,8 +257,6 @@ public class DicColor extends javax.swing.JDialog {
         tab2.setFont(frames.UGui.getFont(0,0));
         tab2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, "1111111"},
-                {null, "2222222"},
                 {null, null},
                 {null, null},
                 {null, null},

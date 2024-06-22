@@ -316,8 +316,7 @@ public class Rulecalc extends javax.swing.JFrame {
         tab2.setFont(frames.UGui.getFont(0,0));
         tab2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"xxx", null, "ttt", "erertet", "1", "1", null,  new Double(1.0), "1", "1", "1", null,  new Integer(1)},
-                {"vvv", null, "reee", "ertewr", "1", "1", null,  new Double(1.0), "1", "1", "1", null,  new Integer(1)}
+
             },
             new String [] {
                 "Название правила", "Использование", "Артикул", "Название", "Количество", "Габариты", "Коэффициент", "Надбавка", "Базовая текстура", "Внутр. текстура", "Внешн. текстура", "Форма позиции", "ID"

@@ -1507,8 +1507,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         tab5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"   Конструкции", Double.valueOf(0.0), Double.valueOf(0.0), Double.valueOf(0.0)},
-                {"   Комплектации",  new Double(0.0), Double.valueOf(0.0), Double.valueOf(0.0)},
-                {"   Итого за заказ",  new Double(0.0), Double.valueOf(0.0), Double.valueOf(0.0)}
+                {"   Комплектации",  Double.valueOf(0.0), Double.valueOf(0.0), Double.valueOf(0.0)},
+                {"   Итого за заказ",  Double.valueOf(0.0), Double.valueOf(0.0), Double.valueOf(0.0)}
             },
             new String [] {
                 "", "Скидка (%)", "Без скидок", "Со скидкой"

@@ -327,8 +327,7 @@ public class Colors extends javax.swing.JFrame {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1111111", null,  new Double(1.0), null},
-                {"222222", null,  new Double(3.0), null}
+
             },
             new String [] {
                 "Название групп", "Код группы", "Коэффициент", "ID"
@@ -378,8 +377,7 @@ public class Colors extends javax.swing.JFrame {
         tab2.setFont(frames.UGui.getFont(0,0));
         tab2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, "111", null, null, null, null, null},
-                {null, null, "222", null, null, null, null, null}
+
             },
             new String [] {
                 "Код текстуры", "RGB", "Название", "Коэф.(основн.текстура)", "Коэф.(внутр.текстура)", "Коэф.(внешн.текстура)", "Для изделий", "ID"

@@ -469,8 +469,7 @@ public class Kits extends javax.swing.JFrame {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"wwwwwww"},
-                {"ddddddddd"}
+
             },
             new String [] {
                 "Категория"
@@ -504,8 +503,7 @@ public class Kits extends javax.swing.JFrame {
         tab2.setFont(frames.UGui.getFont(0,0));
         tab2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"111111111111111",  new Integer(1)},
-                {"222222222222222",  new Integer(2)}
+
             },
             new String [] {
                 "Название комплектов", "ID"
@@ -555,8 +553,7 @@ public class Kits extends javax.swing.JFrame {
         tab3.setFont(frames.UGui.getFont(0,0));
         tab3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "111", "1", "1", "1", null, null,  new Integer(1)},
-                {"2", "222", "2", "2", "2", null, null,  new Integer(2)}
+
             },
             new String [] {
                 "Артикул", "Название", "Основная текстура", "Внутренняя текстура", "Внешняя текстура", "Ед.измерения", "Основной элемент", "ID"
@@ -607,8 +604,7 @@ public class Kits extends javax.swing.JFrame {
         tab4.setFont(frames.UGui.getFont(0,0));
         tab4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"111", "1"},
-                {"222", "2"}
+
             },
             new String [] {
                 "Параметр", "Значение"

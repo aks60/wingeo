@@ -1449,8 +1449,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         tab7.setFont(frames.UGui.getFont(0,0));
         tab7.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"111", "1", null},
-                {"222", "2", null}
+
             },
             new String [] {
                 "Параметр конструкции", "Значение по умолчанию", "ID"
@@ -3356,8 +3355,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         tab4.setFont(frames.UGui.getFont(0,0));
         tab4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"111", "1",  new Boolean(true), null},
-                {"222", "2",  new Boolean(true), null}
+
             },
             new String [] {
                 "Параметр системы", "Значение по умолчанию", "Закреплено", "ID"

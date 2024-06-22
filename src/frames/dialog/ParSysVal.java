@@ -137,8 +137,7 @@ public class ParSysVal extends javax.swing.JDialog {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"name1"},
-                {"name2"}
+
             },
             new String [] {
                 "Значение параметра"
