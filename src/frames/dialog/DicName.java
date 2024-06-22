@@ -22,6 +22,7 @@ public class DicName extends javax.swing.JDialog {
     private Set<String> set = null;
     private Query query = null;
     private Field field = null;
+    private int recordID = -1;
 
     public DicName(java.awt.Frame parent, ListenerRecord listenet, Set<String> set) {
         super(parent, true);
@@ -37,6 +38,18 @@ public class DicName extends javax.swing.JDialog {
         super(parent, true);
         initComponents();
         initElements();
+        this.listener = listenet;
+        this.field = field;
+        this.query = query;
+        loadingModel();
+        setVisible(true);
+    }
+
+    public DicName(java.awt.Frame parent, int recordID, ListenerRecord listenet, Query query, Field field) {
+        super(parent, true);
+        initComponents();
+        initElements();
+        this.recordID = recordID;
         this.listener = listenet;
         this.field = field;
         this.query = query;
@@ -60,6 +73,7 @@ public class DicName extends javax.swing.JDialog {
                 dtm.setValueAt(record.get(field), i, 0);
             }
         }
+        UGui.setSelectedKey(tab1, query, recordID);
     }
 
     @SuppressWarnings("unchecked")

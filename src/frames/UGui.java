@@ -461,18 +461,31 @@ public class UGui {
     }
 
     //Выделить запись по ключу
-    public static void setSelectedKey(JTable table, int id) {
-        Query query = ((DefTableModel) table.getModel()).getQuery();
-        if (id == -1) {
-            UGui.setSelectedRow(table);
-        } else {
+    public static void setSelectedKey(JTable table, int id) {        
+        if (id != -1 && id != -3) {
+            Query query = ((DefTableModel) table.getModel()).getQuery();
             for (int i = 0; i < query.size(); ++i) {
                 if (query.get(i).getInt(1) == id) {
                     UGui.setSelectedIndex(table, i);
                     UGui.scrollRectToRow(i, table);
+                    return;
+                }
+            }            
+        }
+        UGui.setSelectedRow(table);
+    }
+    //Выделить запись по ключу
+    public static void setSelectedKey(JTable table, Query query, int id) {        
+        if (id != -1 && id != -3) {
+            for (int i = 0; i < query.size(); ++i) {
+                if (query.get(i).getInt(1) == id) {
+                    UGui.setSelectedIndex(table, i);
+                    UGui.scrollRectToRow(i, table);
+                    return;
                 }
             }
         }
+        UGui.setSelectedRow(table);
     }
 
     public static int getIndexKeyValue(JTable table, Record record, Field field) {

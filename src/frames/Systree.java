@@ -3693,7 +3693,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         }
                     }
                 }
-                new DicSysprof(this, (sysprofRec) -> {
+                int paramID = winNode.com5t().artiklRec.getInt(eArtikl.id);
+                Record paramRec = qSysprofFilter.stream().filter(rec -> rec.getInt(eSysprof.artikl_id) == paramID).findFirst().orElse(eSysprof.virtualRec(0));
+
+                new DicSysprof(this, paramRec.getInt(eSysprof.id), (sysprofRec) -> {
                     Wincalc winc = wincalc();
                     if (winNode.com5t().type == enums.Type.FRAME_SIDE) { //рама окна
                         double elemId = winNode.com5t().id;
@@ -3883,8 +3886,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             depth = (depth != null && depth.isEmpty() == false) ? " and " + eArtikl.depth.name() + " in (" + depth + ")" : "";
             Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
                     "where", eArtikl.level1, "= 5 and", eArtikl.level2, "in (1,2,3)", depth, "order by", eArtikl.name);
+            int recordID = (winNode.com5t().artiklRec != null) ? winNode.com5t().artiklRec.getInt(eArtikl.id) : -3;
 
-            new DicArtikl(this, (artiklRec) -> {
+            new DicArtikl(this, recordID, (artiklRec) -> {
 
                 GsonElem glassElem = (GsonElem) wincalc().listAll.gson(selectID);
                 if (artiklRec.get(1) == null) {
@@ -4253,24 +4257,29 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             double selectID = winNode.com5t().id;
             Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
                     "where", eArtikl.level1, "= 5 and", eArtikl.level2, "= 20");
-
-            new DicArtikl(this, (artiklRec) -> {
+            Com5t mosq = areaStv.childs.stream().filter(e -> e.type == enums.Type.MOSKITKA).findFirst().orElse(null);
+            int recordID = (mosq != null && mosq.artiklRec != null) ? mosq.artiklRec.getInt(eArtikl.id) : -1;
+            new DicArtikl(this, recordID, (artiklRec) -> {
 
                 for (int i = 0; i < areaStv.gson.childs.size(); ++i) {
 
-                    if (artiklRec.get(1) == null) {  //удаление
-                        Com5t mosq = areaStv.childs.stream().filter(e -> e.type == enums.Type.MOSKITKA).findFirst().orElse(null);
+                    if (artiklRec.get(1) == null) {  //удаление                        
                         if (mosq != null && areaStv.gson.childs.get(i).id == mosq.id) {
                             areaStv.gson.childs.remove(i);
                             break;
                         }
                     } else {  //вставка
-                        GsonElem gsonMosq = new GsonElem(enums.Type.MOSKITKA);
-                        areaStv.gson.childs.add(gsonMosq);
-                        gsonMosq.param.addProperty(PKjson.artiklID, artiklRec.getStr(eArtikl.id));
-                        List<Record> reclist = eArtdet.filter(artiklRec.getInt(eArtikl.id));
-                        gsonMosq.param.addProperty(PKjson.colorID1, reclist.get(0).getInt(eArtdet.color_fk));
-                        break;
+                        if (mosq != null) {
+                            mosq.gson.param.remove("artiklID");
+                            mosq.gson.param.addProperty(PKjson.artiklID, artiklRec.getStr(eArtikl.id));
+                        } else {
+                            GsonElem mosqNew = new GsonElem(enums.Type.MOSKITKA);
+                            areaStv.gson.childs.add(mosqNew);
+                            mosqNew.param.addProperty(PKjson.artiklID, artiklRec.getStr(eArtikl.id));
+                            List<Record> reclist = eArtdet.filter(artiklRec.getInt(eArtikl.id));
+                            mosqNew.param.addProperty(PKjson.colorID1, reclist.get(0).getInt(eArtdet.color_fk));
+                            break;
+                        }
                     }
                 }
                 updateScript(selectID);
@@ -4290,10 +4299,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             if (mosq != null) {
                 ElemMosquit mosqElem = (ElemMosquit) mosq;
                 Record artiklRec = mosqElem.artiklRec;
+                int recordID = (mosqElem.sysprofRec == null) ? -1 : mosqElem.sysprofRec.getInt(eSysprof.id);
                 Query qElements = new Query(eElement.values()).select(eElement.up,
                         "where", eElement.artikl_id, "=", artiklRec.getInt(eArtikl.id));
 
-                new DicName(this, (elementRec) -> {
+                new DicName(this, recordID, (elementRec) -> {
 
                     if (elementRec.get(1) == null) {
                         mosqElem.gson.param.remove(PKjson.elementID);

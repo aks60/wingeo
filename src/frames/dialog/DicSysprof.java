@@ -17,12 +17,24 @@ public class DicSysprof extends javax.swing.JDialog {
 
     private ListenerRecord listener = null;
     private Query qSysprof = null;
+    private int recordID = -1;
 
     public DicSysprof(java.awt.Frame parent, ListenerRecord listenet, Query query) {
         super(parent, true);
         initComponents();
         initElements();
         qSysprof = query;
+        this.listener = listenet;
+        loadingModel();
+        setVisible(true);
+    }
+
+    public DicSysprof(java.awt.Frame parent, int recordID, ListenerRecord listenet, Query query) {
+        super(parent, true);
+        initComponents();
+        initElements();
+        qSysprof = query;
+        this.recordID = recordID;
         this.listener = listenet;
         loadingModel();
         setVisible(true);
@@ -40,7 +52,7 @@ public class DicSysprof extends javax.swing.JDialog {
                 return val;
             }
         };
-        UGui.setSelectedRow(tab2);
+        UGui.setSelectedKey(tab2, recordID);
     }
 
     @SuppressWarnings("unchecked")

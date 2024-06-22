@@ -25,12 +25,25 @@ public class DicArtikl extends javax.swing.JDialog {
     private ListenerRecord listener = null;
     private Query qArtikl = new Query(eArtikl.id, eArtikl.level1, eArtikl.level2, eArtikl.code, eArtikl.name);
     private List<Record> list = null;
+    private int recordID = -1;
 
     public DicArtikl(java.awt.Frame parent, ListenerRecord listener, List<Record> list) {
         super(parent, true);
         initComponents();
         initElements();
         qArtikl.addAll(list);
+        this.listener = listener;
+        this.list = list;
+        loadingModel();
+        setVisible(true);
+    }
+
+    public DicArtikl(java.awt.Frame parent, int recordID, ListenerRecord listener, List<Record> list) {
+        super(parent, true);
+        initComponents();
+        initElements();
+        qArtikl.addAll(list);
+        this.recordID = recordID;
         this.listener = listener;
         this.list = list;
         loadingModel();
@@ -87,7 +100,7 @@ public class DicArtikl extends javax.swing.JDialog {
                 return val;
             }
         };
-        UGui.setSelectedRow(tab2);
+        UGui.setSelectedKey(tab2, recordID);
     }
 
     @SuppressWarnings("unchecked")
