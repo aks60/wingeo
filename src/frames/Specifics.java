@@ -40,11 +40,16 @@ import frames.swing.DefCellRendererNumb;
 import frames.swing.TableFieldFilter;
 import frames.swing.col.ColumnGroup;
 import frames.swing.col.GroupableTableHeader;
+import java.util.Iterator;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
 import report.ExecuteCmd;
 import report.HtmlOfTable;
 
@@ -52,17 +57,61 @@ public class Specifics extends javax.swing.JFrame {
 
     private builder.Wincalc winc = new Wincalc();
     private TableFieldFilter filterTable = null;
-    ImageIcon[] image = {new ImageIcon("C:\\Okna\\winapp\\src\\resource\\img16\\b063.gif"),
-        new ImageIcon("C:\\Okna\\winapp\\src\\resource\\img16\\b076.gif"),
-        new ImageIcon("C:\\Okna\\winapp\\src\\resource\\img16\\b077.gif")
+    ImageIcon[] image = {new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b063.gif")),
+        new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b076.gif")),
+        new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b077.gif")),
+        new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b031.gif"))
     };
 
     public Specifics() {
         initComponents();
         initElements();
+        createPpm();
         createIwin();
         loadingTab1(winc.listSpec);
         UGui.setSelectedRow(tab1);
+    }
+
+    public void createPpm() {
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Мат. ценности");
+        mnAll.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    filterTab1(enums.TypeArt.ROOT);
+                }
+            });
+        UTree.loadArtTree(root);
+        Iterator<TreeNode> ir = root.children().asIterator();
+        while (ir.hasNext()) {
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) ir.next();
+            enums.TypeArt type = (enums.TypeArt) node.getUserObject();
+            JMenu jm = new JMenu(type.name);
+            jm.setFont(frames.UGui.getFont(0, 0));
+            jm.setIcon(image[3]);
+            DefaultMutableTreeNode nod2 = new DefaultMutableTreeNode(type.name);
+            JMenuItem mni = new JMenuItem(type.name, image[3]);
+            mni.setFont(frames.UGui.getFont(0, 1));
+            mni.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    filterTab1(type);
+                }
+            });
+            jm.add(mni);
+            ppmTree.add(jm);
+
+            Iterator<TreeNode> in = node.children().asIterator();
+            while (in.hasNext()) {
+                DefaultMutableTreeNode nod3 = (DefaultMutableTreeNode) in.next();
+                enums.TypeArt typ2 = (enums.TypeArt) nod3.getUserObject();
+                JMenuItem mn = new JMenuItem(typ2.name, image[3]);
+                mn.setFont(frames.UGui.getFont(0, 0));
+                mn.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        filterTab1(typ2);
+                    }
+                });
+                jm.add(mn);
+            }
+        }
     }
 
     public void createIwin() {
@@ -98,6 +147,10 @@ public class Specifics extends javax.swing.JFrame {
         }
     }
 
+    public void filterTab1(enums.TypeArt type) {
+        System.out.println("id1= " + type.id1 + " id2= " + type.id2 + " name= " + type.name);
+    }
+
     public void loadingTab1(List<SpcRecord> listSpec) {
         tab1.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
@@ -115,7 +168,7 @@ public class Specifics extends javax.swing.JFrame {
             int indexLast = listSpec.get(0).getVector(0).size();
             double sum1 = 0, sum2 = 0, sum9 = 0, sum13 = 0;
             //Заполним спецификацию
-            for (int i = 0; i < listSpec.size(); i++) { 
+            for (int i = 0; i < listSpec.size(); i++) {
                 Vector v = listSpec.get(i).getVector(i);
                 dtm.addRow(v);
                 sum1 = sum1 + (Double) v.get(indexLast - 1);
@@ -171,7 +224,8 @@ public class Specifics extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnGroup = new javax.swing.ButtonGroup();
+        ppmTree = new javax.swing.JPopupMenu();
+        mnAll = new javax.swing.JMenuItem();
         north = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
         btnReport = new javax.swing.JButton();
@@ -198,6 +252,11 @@ public class Specifics extends javax.swing.JFrame {
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(4, 0), new java.awt.Dimension(4, 32767));
         pan1 = new javax.swing.JPanel();
         labSum = new javax.swing.JLabel();
+
+        mnAll.setFont(frames.UGui.getFont(0,1));
+        mnAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b031.gif"))); // NOI18N
+        mnAll.setText("Показать всё");
+        ppmTree.add(mnAll);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Спецификация");
@@ -683,7 +742,7 @@ public class Specifics extends javax.swing.JFrame {
     }//GEN-LAST:event_btn27mnFurnityra
 
     private void btn21mnSpecif(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn21mnSpecif
-        loadingTab1(winc.listSpec);
+        ppmTree.show(north, btn21.getX(), btn21.getY() + 18);
     }//GEN-LAST:event_btn21mnSpecif
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">     
@@ -697,7 +756,6 @@ public class Specifics extends javax.swing.JFrame {
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnFind1;
     private javax.swing.JButton btnFind2;
-    private javax.swing.ButtonGroup btnGroup;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnReport;
     private javax.swing.JButton btnTest;
@@ -706,8 +764,10 @@ public class Specifics extends javax.swing.JFrame {
     private javax.swing.JPanel centr;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel labSum;
+    private javax.swing.JMenuItem mnAll;
     private javax.swing.JPanel north;
     private javax.swing.JPanel pan1;
+    private javax.swing.JPopupMenu ppmTree;
     private javax.swing.JScrollPane scr1;
     private javax.swing.JPanel south;
     private javax.swing.JTable tab1;
