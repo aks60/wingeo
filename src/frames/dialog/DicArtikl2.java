@@ -17,6 +17,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import common.listener.ListenerRecord;
+import frames.UTree;
 import frames.swing.ProgressBar;
 import frames.swing.TableFieldFilter;
 import javax.swing.JOptionPane;
@@ -67,43 +68,8 @@ public class DicArtikl2 extends javax.swing.JDialog {
     }
 
     public void loadingTree() {
-
         DefaultMutableTreeNode treeNode1 = new DefaultMutableTreeNode("Мат. ценности");
-        DefaultMutableTreeNode treeNode2 = null;
-        for (TypeArt it : TypeArt.values()) {
-            if (it.id1 == 1 && it.id2 == 0) {
-                treeNode2 = new DefaultMutableTreeNode(TypeArt.X100); //"Профили"
-
-            } else if (it.id1 == 2 && it.id2 == 0) {
-                treeNode1.add(treeNode2);
-                treeNode2 = new DefaultMutableTreeNode(TypeArt.X200); //"Аксессуары"
-
-            } else if (it.id1 == 3 && it.id2 == 0) {
-                treeNode1.add(treeNode2);
-                treeNode2 = new DefaultMutableTreeNode(TypeArt.X300); //"Погонаж"
-
-            } else if (it.id1 == 4 && it.id2 == 0) {
-                treeNode1.add(treeNode2);
-                treeNode2 = new DefaultMutableTreeNode(TypeArt.X400); //"Инструмент"
-
-            } else if (it.id1 == 5 && it.id2 == 0) {
-                treeNode1.add(treeNode2);
-                treeNode2 = new DefaultMutableTreeNode(TypeArt.X500); //"Заполнения"
-
-            } else if (it.id1 == 6 && it.id2 == 0) {
-                treeNode1.add(treeNode2);
-                treeNode2 = new DefaultMutableTreeNode(TypeArt.X600); //"Наборы"                  
-
-            } else if (it.id2 > 0) {   //остальное       
-                treeNode1.add(treeNode2);
-                DefaultMutableTreeNode defaultMutableTreeNode = new javax.swing.tree.DefaultMutableTreeNode(it);
-                treeNode2.add(defaultMutableTreeNode);
-                if (artiklRec != null && it.id1 == artiklRec.getInt(eArtikl.level1) && it.id2 == artiklRec.getInt(eArtikl.level2)) {
-                    selectedPath = defaultMutableTreeNode.getPath();
-                }
-            }
-        }
-        treeNode1.add(treeNode2);
+        UTree.loadArtTree(treeNode1);
         tree.setModel(new DefaultTreeModel(treeNode1));
         scrTree.setViewportView(tree);
         if (selectedPath != null) {

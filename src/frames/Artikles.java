@@ -280,40 +280,9 @@ public class Artikles extends javax.swing.JFrame {
         });
     }
 
-    public void loadingTree() {
-
+    public void loadingTree() {      
         nodeRoot = new DefaultMutableTreeNode(TypeArt.ROOT);
-        DefaultMutableTreeNode node = null;
-        for (TypeArt it : TypeArt.values()) {
-            if (it.id1 == 1 && it.id2 == 0) {
-                node = new DefaultMutableTreeNode(TypeArt.X100); //"Профили"
-
-            } else if (it.id1 == 2 && it.id2 == 0) {
-                nodeRoot.add(node);
-                node = new DefaultMutableTreeNode(TypeArt.X200); //"Аксессуары"
-
-            } else if (it.id1 == 3 && it.id2 == 0) {
-                nodeRoot.add(node);
-                node = new DefaultMutableTreeNode(TypeArt.X300); //"Погонаж"
-
-            } else if (it.id1 == 4 && it.id2 == 0) {
-                nodeRoot.add(node);
-                node = new DefaultMutableTreeNode(TypeArt.X400); //"Инструмент"
-
-            } else if (it.id1 == 5 && it.id2 == 0) {
-                nodeRoot.add(node);
-                node = new DefaultMutableTreeNode(TypeArt.X500); //"Заполнения"
-
-            } else if (it.id1 == 6 && it.id2 == 0) {
-                nodeRoot.add(node);
-                node = new DefaultMutableTreeNode(TypeArt.X600); //"Наборы"                
-
-            } else if (it.id2 > 0) {   //остальное       
-                nodeRoot.add(node);
-                node.add(new javax.swing.tree.DefaultMutableTreeNode(it));
-            }
-        }
-        nodeRoot.add(node);
+        UTree.loadArtTree(nodeRoot);
         tree.setModel(new DefaultTreeModel(nodeRoot));
         scrTree.setViewportView(tree);
         tree.setSelectionRow(0);

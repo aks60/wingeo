@@ -319,7 +319,7 @@ public class Specifics extends javax.swing.JFrame {
             }
         });
 
-        btn21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c016.gif"))); // NOI18N
+        btn21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c056.gif"))); // NOI18N
         btn21.setToolTipText(bundle.getString("Меню.Справка")); // NOI18N
         btn21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
         btn21.setFocusable(false);
