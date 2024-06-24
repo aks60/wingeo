@@ -35,6 +35,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import startup.App;
 import common.listener.ListenerFrame;
 import common.eProfile;
+import domain.eArtikl;
 import domain.ePrjprod;
 import frames.swing.DefCellRendererNumb;
 import frames.swing.TableFieldFilter;
@@ -75,10 +76,10 @@ public class Specifics extends javax.swing.JFrame {
     public void createPpm() {
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Мат. ценности");
         mnAll.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    filterTab1(enums.TypeArt.ROOT);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadingTab1(winc.listSpec);
+            }
+        });
         UTree.loadArtTree(root);
         Iterator<TreeNode> ir = root.children().asIterator();
         while (ir.hasNext()) {
@@ -93,6 +94,9 @@ public class Specifics extends javax.swing.JFrame {
             mni.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     filterTab1(type);
+                    List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec
+                            -> rec.artiklRec.getInt(eArtikl.level1) == type.id1).collect(toList());
+                    loadingTab1(listSpec);
                 }
             });
             jm.add(mni);
@@ -107,6 +111,10 @@ public class Specifics extends javax.swing.JFrame {
                 mn.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         filterTab1(typ2);
+                        List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec
+                                -> rec.artiklRec.getInt(eArtikl.level1) == typ2.id1
+                                && rec.artiklRec.getInt(eArtikl.level2) == typ2.id2).collect(toList());
+                        loadingTab1(listSpec);
                     }
                 });
                 jm.add(mn);

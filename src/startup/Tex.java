@@ -112,11 +112,11 @@ public class Tex extends javax.swing.JFrame {
         btn52 = new javax.swing.JButton();
         btn53 = new javax.swing.JButton();
         tb2 = new javax.swing.JToolBar();
-        btn23 = new javax.swing.JButton();
         btn24 = new javax.swing.JButton();
         btn25 = new javax.swing.JButton();
         btn26 = new javax.swing.JButton();
         btn27 = new javax.swing.JButton();
+        btn23 = new javax.swing.JButton();
         btn21 = new javax.swing.JButton();
         tb8 = new javax.swing.JToolBar();
         btn17 = new javax.swing.JButton();
@@ -351,19 +351,6 @@ public class Tex extends javax.swing.JFrame {
         tb2.setMinimumSize(new java.awt.Dimension(172, 28));
         tb2.setPreferredSize(new java.awt.Dimension(172, 28));
 
-        btn23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c023.gif"))); // NOI18N
-        btn23.setToolTipText(bundle.getString("Меню.Комплекты")); // NOI18N
-        btn23.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
-        btn23.setFocusable(false);
-        btn23.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btn23.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn23.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnKits(evt);
-            }
-        });
-        tb2.add(btn23);
-
         btn24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c024.gif"))); // NOI18N
         btn24.setToolTipText(bundle.getString("Меню.Соединения")); // NOI18N
         btn24.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
@@ -415,6 +402,19 @@ public class Tex extends javax.swing.JFrame {
             }
         });
         tb2.add(btn27);
+
+        btn23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c023.gif"))); // NOI18N
+        btn23.setToolTipText(bundle.getString("Меню.Комплекты")); // NOI18N
+        btn23.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
+        btn23.setFocusable(false);
+        btn23.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn23.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btn23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnKits(evt);
+            }
+        });
+        tb2.add(btn23);
 
         btn21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c016.gif"))); // NOI18N
         btn21.setToolTipText(bundle.getString("Меню.Спецификация")); // NOI18N

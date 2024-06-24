@@ -925,31 +925,6 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="btn23">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/resource/img24/c023.gif"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x41a;&#x43e;&#x43c;&#x43f;&#x43b;&#x435;&#x43a;&#x442;&#x44b;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x41a;&#x43e;&#x43c;&#x43f;&#x43b;&#x435;&#x43a;&#x442;&#x44b;&quot;)"/>
-            </Property>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                <LineBorder>
-                  <Color PropertyName="color" blue="0" green="ff" red="ff" type="rgb"/>
-                </LineBorder>
-              </Border>
-            </Property>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/resource/img24/c001.gif"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnKits"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="btn24">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -1048,6 +1023,31 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnFurnityra"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btn23">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resource/img24/c023.gif"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x41a;&#x43e;&#x43c;&#x43f;&#x43b;&#x435;&#x43a;&#x442;&#x44b;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x41a;&#x43e;&#x43c;&#x43f;&#x43b;&#x435;&#x43a;&#x442;&#x44b;&quot;)"/>
+            </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder>
+                  <Color PropertyName="color" blue="0" green="ff" red="ff" type="rgb"/>
+                </LineBorder>
+              </Border>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resource/img24/c001.gif"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnKits"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn21">
