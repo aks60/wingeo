@@ -306,7 +306,7 @@ public abstract class ElemSimple extends Com5t {
     public ElemSimple joining(Layout side) {
         boolean begin = false;
         try {
-            //Цикл по элементам кострукции
+            //Цикл по элементам конструкции
             for (int index = winc.listElem.size() - 1; index >= 0; --index) {
                 ElemSimple el = (ElemSimple) winc.listElem.get(index);
 
