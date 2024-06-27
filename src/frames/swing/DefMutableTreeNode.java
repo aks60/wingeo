@@ -49,7 +49,7 @@ public class DefMutableTreeNode<E> extends DefaultMutableTreeNode {
                 s = s.substring(0, i);
             }
             if (obj instanceof ElemGlass || obj instanceof ElemMosquit) {
-                return s + "   id=" + ((ElemSimple) obj).id;
+                return s; // + "   id=" + ((ElemSimple) obj).id;
             } else {
                 return s + "  " + ((ElemSimple) obj).layout().name.toLowerCase();
             }
