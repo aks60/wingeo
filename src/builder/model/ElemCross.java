@@ -4,10 +4,8 @@ import builder.Wincalc;
 import builder.making.SpcRecord;
 import builder.script.GsonElem;
 import common.UCom;
-import common.GeoBuffer;
 import domain.eArtikl;
 import static domain.eArtikl.size_centr;
-import domain.eColor;
 import domain.eSysprof;
 import domain.eSyssize;
 import enums.Layout;
@@ -22,6 +20,7 @@ import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.algorithm.PointLocation;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
@@ -125,43 +124,21 @@ public class ElemCross extends ElemSimple {
             spcRec.setAnglCut(90, 90);
             spcRec.anglHoriz = UGeo.anglHor(x1(), y1(), x2(), y2());
 
-            //Импост
-            if (type == Type.IMPOST) {
-                Coordinate coo[] = this.area.getCoordinates();
-                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
-                spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[0], coo[1], coo[2]));
-                spcRec.anglCut0 = (spcRec.anglCut0 > 90) ? 180 - spcRec.anglCut0 : spcRec.anglCut0;
-                spcRec.anglCut1 = (spcRec.anglCut1 > 90) ? 180 - spcRec.anglCut1 : spcRec.anglCut1;
-                
-                //На эскизе заход импоста не показываю, сразу пишу в спецификацию
-                if (winc.syssizRec != null) {
-                    double zax = winc.syssizRec.getDbl(eSyssize.zax);
-                    spcRec.height = artiklRec.getDbl(eArtikl.height);
-                    
-                    if (Layout.VERT == this.layout()) {
-                        ElemSimple inTop = getElemjoin(Layout.TOP), inBott = getElemjoin(Layout.BOTT);
-                        spcRec.width = (inBott.y1() - inBott.artiklRec.getDbl(eArtikl.height) + inBott.artiklRec.getDbl(eArtikl.size_centr))
-                                - (inTop.y2() + inTop.artiklRec.getDbl(eArtikl.height) - inTop.artiklRec.getDbl(eArtikl.size_centr))
-                                + zax * 2 + inBott.artiklRec.getDbl(eArtikl.size_falz) + inTop.artiklRec.getDbl(eArtikl.size_falz);                       
+            Coordinate coo[] = this.area.getCoordinates();
+            spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
+            spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[0], coo[1], coo[2]));
+            spcRec.anglCut0 = (spcRec.anglCut0 > 90) ? 180 - spcRec.anglCut0 : spcRec.anglCut0;
+            spcRec.anglCut1 = (spcRec.anglCut1 > 90) ? 180 - spcRec.anglCut1 : spcRec.anglCut1;
+            Envelope env = this.area.getEnvelopeInternal();
+            double width = env.getWidth();
+            double height = env.getHeight();
 
-                    } else if (Layout.HORIZ == this.layout()) {
-                        ElemSimple inLeft = getElemjoin(Layout.LEFT), inRight = getElemjoin(Layout.RIGHT);
-                        spcRec.width = (inRight.x1() - inRight.artiklRec.getDbl(eArtikl.height) + inRight.artiklRec.getDbl(eArtikl.size_centr))
-                                - (inLeft.x1() + inLeft.artiklRec.getDbl(eArtikl.height) - inLeft.artiklRec.getDbl(eArtikl.size_centr))
-                                + zax * 2 + inLeft.artiklRec.getDbl(eArtikl.size_falz) + inRight.artiklRec.getDbl(eArtikl.size_falz);
-                    }
+            //На эскизе заход импоста не показываю, сразу пишу в спецификацию
+            double zax = (winc.syssizRec != null) ? winc.syssizRec.getDbl(eSyssize.zax) : 0;
+            zax = zax * 2 + this.artiklRec.getDbl(eArtikl.size_falz) + this.artiklRec.getDbl(eArtikl.size_falz);
+            spcRec.width = (width > height) ? width + zax : height + zax;
+            spcRec.height = (width > height) ? height : width;
 
-                } else {
-                    spcRec.width = length();
-                    spcRec.height = artiklRec.getDbl(eArtikl.height);
-                }
-                
-                //Штульп, стойка
-            } else if (type == Type.SHTULP || type == Type.STOIKA) {
-                spcRec.width = length();
-                spcRec.height = artiklRec.getDbl(eArtikl.height);
-
-            }
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setSpecific() " + e);
         }
