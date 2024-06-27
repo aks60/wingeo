@@ -303,7 +303,7 @@ public abstract class ElemSimple extends Com5t {
      * @param side - сторона прилегания
      * @return - элемент прилегания
      */
-    public ElemSimple joining(Layout side) {
+    public ElemSimple getElemjoin(Layout side) {
         boolean begin = false;
         try {
             //Цикл по элементам конструкции

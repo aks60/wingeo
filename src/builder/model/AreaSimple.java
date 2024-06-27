@@ -98,7 +98,7 @@ public class AreaSimple extends Com5t {
     }
 
     //Т - соединения
-    public void joining() {
+    public void addJoining() {
         //T - соединения
         ArrayList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.STOIKA);
         ArrayList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.IMPOST);

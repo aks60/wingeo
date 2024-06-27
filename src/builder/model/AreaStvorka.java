@@ -283,7 +283,7 @@ public class AreaStvorka extends AreaSimple {
 
     //L - соединения, прил.соед.
     @Override
-    public void joining() {
+    public void addJoining() {
         ArrayCom<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.STOIKA, Type.SHTULP);
         try {
             //L - соединения

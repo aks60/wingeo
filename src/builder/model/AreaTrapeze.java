@@ -41,11 +41,11 @@ public class AreaTrapeze extends AreaSimple {
 
     //L - соединения
     @Override
-    public void joining() {
+    public void addJoining() {
         try {
             winc.listJoin.clear();
             
-            super.joining(); //T - соединения
+            super.addJoining(); //T - соединения
 
             //L - соединения
             for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам рамы

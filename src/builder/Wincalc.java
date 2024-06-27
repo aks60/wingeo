@@ -208,8 +208,8 @@ public class Wincalc {
             }
 
             //Соединения конструкции             
-            root.joining();  //L и T соединения
-            listArea.filter(Type.STVORKA).forEach(e -> e.joining());
+            root.addJoining();  //L и T соединения
+            listArea.filter(Type.STVORKA).forEach(e -> e.addJoining());
 
         } catch (Exception s) {
             System.err.println("Ошибка:Wincalc.location() " + s);
