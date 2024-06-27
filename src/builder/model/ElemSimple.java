@@ -295,56 +295,6 @@ public abstract class ElemSimple extends Com5t {
         }
     }
 
-    /**
-     * Определяет прилегающий элемент по точке принадлежащей вектору. Прил.
-     * соед. используется для определения координат примыкаемого элемента. (см.
-     * ElemXxx.setSpecific())
-     *
-     * @param side - сторона прилегания
-     * @return - элемент прилегания
-     */
-    public ElemSimple getElemjoin(Layout side) {
-        boolean begin = false;
-        try {
-            //Цикл по элементам конструкции
-            for (int index = winc.listElem.size() - 1; index >= 0; --index) {
-                ElemSimple el = (ElemSimple) winc.listElem.get(index);
-
-                if (begin == true && el.type != Type.GLASS) {
-                    //Проверка начинает выполняться после появления в обратном цикле самого элемента(this) 
-                    if (Layout.BOTT == side && el.layout() != Layout.VERT) {
-                        double Y2 = (y2() > y1()) ? y2() : y1();
-                        if (UGeo.isInRing(x1() + (x2() - x1()) / 2, Y2, el.area) == true) {
-                            return (ElemSimple) el;
-                        }
-                    } else if (Layout.LEFT == side && el.layout() != Layout.HORIZ) {
-                        if (UGeo.isInRing(x1(), y1() + (y2() - y1()) / 2, el.area) == true) {
-                            return (ElemSimple) el;
-                        }
-                    } else if (Layout.TOP == side && el.layout() != Layout.VERT) {
-                        double Y1 = (y2() > y1()) ? y1() : y2();
-                        if (UGeo.isInRing(x1() + (x2() - x1()) / 2, Y1, el.area) == true && (el.owner.type == Type.ARCH && el.layout() == Layout.TOP) == false) {
-                            return (ElemSimple) el;
-                        }
-                    } else if (Layout.RIGHT == side && el.layout() != Layout.HORIZ) {
-                        if (UGeo.isInRing(x2(), y1() + (y2() - y1()) / 2, el.area)) {
-                            return (ElemSimple) el;
-                        }
-                    }
-                }
-                if (this == el) {
-                    begin = true;
-                }
-            }
-            System.err.println("Неудача:ElemSimple.joinFlat() id=" + this.id + ", " + side + " соединение не найдено");
-            return null;
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:IElem5e.joinFlat() " + e);
-            return null;
-        }
-    }
-
     public void setDimension(double x1, double y1, double x2, double y2) {
         //if (passMask[1] > 1) {
         gson.x1 = x1;
