@@ -15,20 +15,15 @@ import enums.TypeArt;
 import enums.TypeJoin;
 import enums.UseSide;
 import java.awt.Shape;
-import java.util.Iterator;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.algorithm.PointLocation;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
-import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.GeometryFixer;
-import org.locationtech.jts.linearref.LinearIterator;
-import org.locationtech.jts.noding.SegmentStringUtil;
 
 public class ElemCross extends ElemSimple {
 
@@ -137,19 +132,16 @@ public class ElemCross extends ElemSimple {
 
             //На эскизе заход импоста не показываю, сразу пишу в спецификацию
             double zax = (winc.syssizRec != null) ? winc.syssizRec.getDbl(eSyssize.zax) : 0;
-            zax = zax * 2 + this.artiklRec.getDbl(eArtikl.size_falz) + this.artiklRec.getDbl(eArtikl.size_falz);
+            zax = 2 * (zax + this.artiklRec.getDbl(eArtikl.size_falz));
 
             if (type == Type.IMPOST) {
                 LineSegment ls = new LineSegment();
-                LinearIterator it = new LinearIterator(this.area);
-                while (it.hasNext()) {
-                    if (!it.isEndOfLine()) {
-                        ls.p0 = it.getSegmentStart();
-                        ls.p1 = it.getSegmentEnd();
-                        spcRec.width = (spcRec.width < ls.getLength()) ? ls.getLength() : spcRec.width;
-                    }
-                    it.next();
+                for (int i = 1; i < coo.length; i++) {
+                    ls.setCoordinates(coo[i - 1], coo[i]);
+                    spcRec.width = (spcRec.width < ls.getLength()) ? ls.getLength() : spcRec.width;
                 }
+                spcRec.width = spcRec.width + zax;
+                
             } else if (type == Type.SHTULP || type == Type.STOIKA) {
                 spcRec.width = length();
             }
