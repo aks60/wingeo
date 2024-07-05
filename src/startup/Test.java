@@ -97,8 +97,8 @@ public class Test {
         try {
             //frames.PSConvert.exec();
             //frame(args);
-            wincalc();
-            //param();
+            //wincalc();
+            param();
             //query();
             //json();
             //uid();
