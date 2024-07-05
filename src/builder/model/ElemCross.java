@@ -15,6 +15,7 @@ import enums.TypeArt;
 import enums.TypeJoin;
 import enums.UseSide;
 import java.awt.Shape;
+import java.util.Iterator;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.algorithm.PointLocation;
@@ -23,8 +24,11 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.GeometryFixer;
+import org.locationtech.jts.linearref.LinearIterator;
+import org.locationtech.jts.noding.SegmentStringUtil;
 
 public class ElemCross extends ElemSimple {
 
@@ -123,21 +127,32 @@ public class ElemCross extends ElemSimple {
             spcRec.setColor(colorID1, colorID2, colorID3);
             spcRec.setAnglCut(90, 90);
             spcRec.anglHoriz = UGeo.anglHor(x1(), y1(), x2(), y2());
+            spcRec.height = artiklRec.getDbl(eArtikl.height);
 
             Coordinate coo[] = this.area.getCoordinates();
             spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
             spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[0], coo[1], coo[2]));
             spcRec.anglCut0 = (spcRec.anglCut0 > 90) ? 180 - spcRec.anglCut0 : spcRec.anglCut0;
             spcRec.anglCut1 = (spcRec.anglCut1 > 90) ? 180 - spcRec.anglCut1 : spcRec.anglCut1;
-            Envelope env = this.area.getEnvelopeInternal();
-            double width = env.getWidth();
-            double height = env.getHeight();
 
             //На эскизе заход импоста не показываю, сразу пишу в спецификацию
             double zax = (winc.syssizRec != null) ? winc.syssizRec.getDbl(eSyssize.zax) : 0;
             zax = zax * 2 + this.artiklRec.getDbl(eArtikl.size_falz) + this.artiklRec.getDbl(eArtikl.size_falz);
-            spcRec.width = (width > height) ? width + zax : height + zax;
-            spcRec.height = (width > height) ? height : width;
+
+            if (type == Type.IMPOST) {
+                LineSegment ls = new LineSegment();
+                LinearIterator it = new LinearIterator(this.area);
+                while (it.hasNext()) {
+                    if (!it.isEndOfLine()) {
+                        ls.p0 = it.getSegmentStart();
+                        ls.p1 = it.getSegmentEnd();
+                        spcRec.width = (spcRec.width < ls.getLength()) ? ls.getLength() : spcRec.width;
+                    }
+                    it.next();
+                }
+            } else if (type == Type.SHTULP || type == Type.STOIKA) {
+                spcRec.width = length();
+            }
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setSpecific() " + e);
