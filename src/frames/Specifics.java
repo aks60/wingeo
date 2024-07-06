@@ -93,7 +93,6 @@ public class Specifics extends javax.swing.JFrame {
             mni.setFont(frames.UGui.getFont(0, 1));
             mni.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    filterTab1(type);
                     List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec
                             -> rec.artiklRec.getInt(eArtikl.level1) == type.id1).collect(toList());
                     loadingTab1(listSpec);
@@ -110,7 +109,6 @@ public class Specifics extends javax.swing.JFrame {
                 mn.setFont(frames.UGui.getFont(0, 0));
                 mn.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        filterTab1(typ2);
                         List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec
                                 -> rec.artiklRec.getInt(eArtikl.level1) == typ2.id1
                                 && rec.artiklRec.getInt(eArtikl.level2) == typ2.id2).collect(toList());
@@ -155,10 +153,6 @@ public class Specifics extends javax.swing.JFrame {
         }
     }
 
-    public void filterTab1(enums.TypeArt type) {
-        System.out.println("id1= " + type.id1 + " id2= " + type.id2 + " name= " + type.name);
-    }
-
     public void loadingTab1(List<SpcRecord> listSpec) {
         tab1.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
@@ -177,7 +171,7 @@ public class Specifics extends javax.swing.JFrame {
             double sum1 = 0, sum2 = 0, sum9 = 0, sum13 = 0;
             //Заполним спецификацию
             for (int i = 0; i < listSpec.size(); i++) {
-                Vector v = listSpec.get(i).getVector(i);
+                Vector v = listSpec.get(i).getVector(i + 1);
                 dtm.addRow(v);
                 sum1 = sum1 + (Double) v.get(indexLast - 1);
                 sum2 = sum2 + (Double) v.get(indexLast - 2);
@@ -185,7 +179,7 @@ public class Specifics extends javax.swing.JFrame {
                 sum13 = sum13 + (Double) v.get(indexLast - 13);
             }
             Vector vectorLast = new Vector();
-            vectorLast.add(listSpec.size());
+            vectorLast.add(listSpec.size() + 1);
             for (int i = 1; i < indexLast; i++) {
                 vectorLast.add(null);
             }

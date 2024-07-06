@@ -16,6 +16,10 @@ import common.ArrayCom;
 import common.GeoBuffer;
 import common.eProp;
 import dataset.Conn;
+import dataset.Field;
+import dataset.Query;
+import dataset.Record;
+import domain.eColor;
 import enums.Type;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -33,7 +37,6 @@ import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
@@ -95,10 +98,11 @@ public class Test {
 
         eProp.dev = true;
         try {
+            create_delete_script();
             //frames.PSConvert.exec();
             //frame(args);
             //wincalc();
-            param();
+            //param();
             //query();
             //json();
             //uid();
@@ -180,7 +184,7 @@ public class Test {
 
         Conn.connection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
-        String _case = "one";
+        String _case = "min";
 
         if (_case.equals("one")) {
             String script = GsonScript.scriptPath(601002);
@@ -198,7 +202,6 @@ public class Test {
             //winc.listElem.forEach(it -> System.out.println(it));
             //winc.listJoin.forEach(it -> System.out.println(it.joiningRec));     
             //winc.listJoin.forEach(it -> System.out.println(it));     
-
         } else if (_case.equals("min")) {
             List<Integer> prjList = GsonScript.systemList(_case);
             for (int prj : prjList) {
@@ -259,24 +262,32 @@ public class Test {
     }
 
     private static void query() {
-        try {
-            Conn.connection(Test.connect2());
+        {
+            try {
+                Conn.connection(Test.connect2());
 
-        } catch (Exception e) {
-            System.err.println("Ошибка:main.Test.query()");
+            } catch (Exception e) {
+                System.err.println("Ошибка:main.Test.query()");
+            }
         }
-        //Пересчёт
-//        try {
-//            Statement statement = statement = Conn.connection().createStatement();
-//            Query q = new Query(eColor.values()).select(eColor.up, "order by id");
-//            int id = 0;
-//            for (Record rec : q) {
-//                String ID = rec.getStr(eColor.id);
-//                statement.executeUpdate("update color set id = " + String.valueOf(++id) + " where id = " + ID);
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("Query.update() " + e);
-//        }        
+        {
+            //Пересчёт
+            try {
+
+                java.sql.Statement statement = Conn.connection().createStatement();
+                Query q = new Query(eColor.values()).select(eColor.up, "order by id");
+                int id = 0;
+                for (Record rec : q) {
+                    String ID = rec.getStr(eColor.id);
+                    statement.executeUpdate("update color set id = " + String.valueOf(++id) + " where id = " + ID);
+                }
+
+                //} catch (Exception e) {
+                //    System.out.println(e);
+            } catch (java.sql.SQLException e) {
+                System.out.println("Query.update() " + e);
+            }
+        }
     }
 
     private static void json() {
@@ -455,6 +466,20 @@ public class Test {
         } catch (Exception e) {
             System.err.println("Ошибка:Test.geom " + e);
         };
+    }
+
+    public static void create_delete_script() {
+        
+        for (Field field : App.db) {
+            if (field.tname().equals("SYSTREE") == false) {
+                System.out.println("delete from " + field.tname() + ";");
+            }
+        }
+        for (Field field : App.db) {
+            if (field.tname().equals("SYSTREE") == false) {
+                System.out.println("set generator gen_" + field.tname() + " to " + "0;");
+            }
+        }
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 public enum eArtdet implements Field {
-    up("0", "0", "0", "Тариф.мат.цености", "ARTSVST"),
+    up("0", "0", "0", "Тариф.мат.ценности", "ARTSVST"),
     id("4", "10", "0", "Идентификатор", "id"),
     cost_unit("8", "15", "1", "Тариф единицы измерения", "CLPRV"),
     cost_c1("8", "15", "1", "Тариф основной текстуры", "CLPRC"),

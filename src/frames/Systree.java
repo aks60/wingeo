@@ -170,7 +170,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         }
         qGroups.select(eGroups.up, "where", eGroups.grup, "=", TypeGrup.PARAM_USER.id, "or", eGroups.grup, "=", TypeGrup.COLOR_MAP.id);
-        qSystree.select(eSystree.up, "order by id");
+        qSystree.select(eSystree.up, "order by name");
         qParams.select(eParams.up);
         qArtikl.select(eArtikl.up, "where", eArtikl.level1, "= 2 and", eArtikl.level2, "in (11,12)");
 
@@ -323,6 +323,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         DefMutableTreeNode rootTree = new DefMutableTreeNode(recordRoot);
         ArrayList<DefMutableTreeNode> nodeList = new ArrayList<DefMutableTreeNode>();
 
+        //List<Record> rootList = qSystree.stream().filter(e -> e.getInt(eSystree.id) == e.getInt(eSystree.parent_id)).collect(toList());
+        //List<Record> rootList2 = rootList.stream().sorted((e1, e2) -> e1.getStr(eSystree.name).compareTo(e2.getStr(eSystree.name))).collect(toList());
         for (Record record : qSystree) { //первый уровень
             if (record.getInt(eSystree.parent_id) == record.getInt(eSystree.id)) {
                 DefMutableTreeNode node = new DefMutableTreeNode(record);
