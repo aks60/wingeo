@@ -202,6 +202,8 @@ public class Elements extends javax.swing.JFrame {
     }
 
     public void selectionTab1(ListSelectionEvent event) {
+        UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
+        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());        
         UGui.clearTable(tab2, tab3, tab4, tab5);
         int index = UGui.getIndexRec(tab1);
         if (index != -1) {
@@ -223,6 +225,8 @@ public class Elements extends javax.swing.JFrame {
     }
 
     public void selectionTab2(ListSelectionEvent event) {
+        UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
+        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());        
         UGui.clearTable(tab3, tab4, tab5);
         int index = UGui.getIndexRec(tab2);
         if (index != -1) {
@@ -238,6 +242,8 @@ public class Elements extends javax.swing.JFrame {
     }
 
     public void selectionTab3(ListSelectionEvent event) {
+        UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
+        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());        
         int index = UGui.getIndexRec(tab3);
         if (index != -1) {
             //Util.stopCellEditing(tab1, tab2, tab3, tab4, tab5);

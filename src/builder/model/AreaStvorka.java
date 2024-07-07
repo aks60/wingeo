@@ -251,7 +251,8 @@ public class AreaStvorka extends AreaSimple {
                 double DX = 10, DY = 60;
                 if (knobLayout == LayoutKnob.VAR && this.knobHeight != 0) {
                     LineSegment lineSegm = UGeo.getSegment(area, ind);
-                    h = lineSegm.pointAlong(1 - (this.knobHeight / lineSegm.getLength())); //высота ручки на створке
+//                    h = lineSegm.pointAlong(1 - (this.knobHeight / lineSegm.getLength())); //высота ручки на створке
+                    h = lineSegm.pointAlong((this.knobHeight / lineSegm.getLength())); //высота ручки на створке
                 }
                 Record sysprofRec = eSysprof.find5(winc.nuni, stvside.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
                 Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул

@@ -107,10 +107,10 @@ public class Colors extends javax.swing.JFrame {
                 return lab;
             }
         });
-        tab2.getColumnModel().getColumn(5).setCellRenderer(new DefCellRendererBool());
-        tab2.getColumnModel().getColumn(2).setCellEditor(new DefCellEditorNumb(3));
         tab2.getColumnModel().getColumn(3).setCellEditor(new DefCellEditorNumb(3));
         tab2.getColumnModel().getColumn(4).setCellEditor(new DefCellEditorNumb(3));
+        tab2.getColumnModel().getColumn(5).setCellEditor(new DefCellEditorNumb(3));
+        tab2.getColumnModel().getColumn(6).setCellRenderer(new DefCellRendererBool());
 
         UGui.setSelectedRow(tab1);
     }

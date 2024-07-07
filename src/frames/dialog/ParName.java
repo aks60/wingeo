@@ -64,7 +64,9 @@ public class ParName extends javax.swing.JDialog {
         Query qParams = new Query(eParams.values()).select(eParams.up, "where", filter.name(), "= 1");
         qParams.forEach(rec -> set.add(rec.getInt(eParams.groups_id)));
         String subsql = set.stream().map(pk -> String.valueOf(pk)).collect(Collectors.joining(",", "(", ")"));
-        qGroups.select(eGroups.up, "where ", eGroups.id, "in " + subsql, "order by", eGroups.name);
+        if (subsql.equals("()") == false) {
+            qGroups.select(eGroups.up, "where ", eGroups.id, "in " + subsql, "order by", eGroups.name);
+        }
     }
 
     public void loadingModel(int... part) {

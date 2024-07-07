@@ -29,7 +29,7 @@ public class ParColor extends javax.swing.JDialog {
 
     private Query qArtdet = new Query(eArtdet.values());
     private Query qGroupsMap = new Query(eGroups.values());
-    private Query qGroupsGrp = new Query(eGroups.values());   
+    private Query qGroupsGrp = new Query(eGroups.values());
     private Query qColor = new Query(eColor.values());
     private ListenerRecord listener;
     private Field filter = null;
@@ -48,12 +48,14 @@ public class ParColor extends javax.swing.JDialog {
     }
 
     public void loadingData(int artikl_id) {
-        
+
         qArtdet.select(eArtdet.up, "where", eArtdet.artikl_id, "=", artikl_id);
         String subset = new Query(eParmap.values()).select(eParmap.up, "where", filter, "= 1")
                 .stream().map(rec -> rec.getStr(eParmap.groups_id)).collect(Collectors.toSet())
                 .stream().collect(Collectors.joining(",", "(", ")"));
-        qGroupsMap.select(eGroups.up, "where", eGroups.id, "in", subset);
+        if (subset.equals("()") == false) {
+            qGroupsMap.select(eGroups.up, "where", eGroups.id, "in", subset);
+        }
         qGroupsGrp.select(eGroups.up, "where", eGroups.grup, "=", TypeGrup.COLOR_GRP.id);
 
         Record color1 = eColor.up.newRecord();

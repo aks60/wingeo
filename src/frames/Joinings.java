@@ -70,7 +70,6 @@ public class Joinings extends javax.swing.JFrame {
 
     //Запуск из Tex (главное меню)
     public Joinings() {
-        //this.subsql = null;
         initComponents();
         initElements();
         loadingData();
@@ -236,6 +235,8 @@ public class Joinings extends javax.swing.JFrame {
     }
 
     public void selectionTab1(ListSelectionEvent event) {
+        UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
+        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> UGui.getQuery(tab).execsql());        
         UGui.clearTable(tab2, tab3, tab4, tab5);
         int index = UGui.getIndexRec(tab1);
         if (index != -1) {
@@ -248,6 +249,8 @@ public class Joinings extends javax.swing.JFrame {
     }
 
     public void selectionTab2(ListSelectionEvent event) {
+        UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
+        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> UGui.getQuery(tab).execsql());        
         UGui.clearTable(tab3, tab4, tab5);
         int index = UGui.getIndexRec(tab2);
         if (index != -1) {
@@ -263,6 +266,8 @@ public class Joinings extends javax.swing.JFrame {
     }
 
     public void selectionTab4(ListSelectionEvent event) {
+        UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
+        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> UGui.getQuery(tab).execsql());        
         int index = UGui.getIndexRec(tab4);
         if (index != -1) {
             Record record = qJoindet.table(eJoindet.up).get(index);
@@ -1088,6 +1093,7 @@ public class Joinings extends javax.swing.JFrame {
             });
 
         } else if (tab3.getBorder() != null) {
+            //System.out.println("insertTab3()");
             UGui.insertRecordCur(tab3, eJoinpar1.up, (record) -> {
                 int id = qJoinvar.getAs(UGui.getIndexRec(tab2), eJoinvar.id);
                 record.set(eJoinpar1.joinvar_id, id);
@@ -1217,8 +1223,8 @@ public class Joinings extends javax.swing.JFrame {
     }//GEN-LAST:event_ppmActionItems
 
     private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
+       
         if (evt.getButton() == MouseEvent.BUTTON3) {
-
             JTable table = List.of(tab1, tab2, tab3, tab4, tab5).stream().filter(it -> it == evt.getSource()).findFirst().get();
             List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> tab.setBorder(null));
             table.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
@@ -1227,7 +1233,6 @@ public class Joinings extends javax.swing.JFrame {
         } else if (evt.getButton() == MouseEvent.BUTTON1) {
             JTable table = (JTable) evt.getSource();
             UGui.updateBorderAndSql(table, List.of(tab1, tab2, tab3, tab4, tab5));
-
             List.of(btnFind1, btnFind2).forEach(btn -> btn.setEnabled(false));
             if (tab1.getBorder() != null) {
                 List.of(btnFind1, btnFind2).forEach(btn -> btn.setEnabled(true));
