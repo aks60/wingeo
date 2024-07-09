@@ -1293,6 +1293,7 @@ public class Adm extends javax.swing.JFrame {
             box2.setSelectedIndex(index2);
             txt1.setText(String.valueOf(tab4.getValueAt(row, 1)));
             txt2.setText(String.valueOf(eProp.password));
+            txt7.setText(String.valueOf(tab4.getValueAt(row, 6)));
             txt5.setText(String.valueOf(tab4.getValueAt(row, 5)));
             txt6.setText(String.valueOf(tab4.getValueAt(row, 4)));
             ((CardLayout) pan3.getLayout()).show(pan3, "pan13");
