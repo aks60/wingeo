@@ -261,7 +261,7 @@ public class ElementVar extends Par5s {
                     }
                     break;
                 case 31057:  //Внутренняя текстура равна внешней 
-                    if (elem5e.colorID2 == elem5e.colorID3) {
+                    if (elem5e.colorID2 != elem5e.colorID3) {
                         return false;
                     }
                     break;

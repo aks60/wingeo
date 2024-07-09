@@ -180,6 +180,9 @@ public class ElementTest {
         assert true == elementVar3.check(stv3_right_3, param("1000-1010;", grup)) : grup;
         assert false == elementVar3.check(stv3_right_3, param("100-310;", grup)) : grup;
 
+        grup = 31057; //Внутренняя текстура равна внешней
+        assert true == elementVar4.check(frame2_1, param("Да", grup)) : grup;
+        
         grup = 31060; //Допустимый угол между плоскостями, °
         assert true == elementVar4.check(stv4_right_3, param("90", grup)) : grup;
         assert false == elementVar4.check(stv4_right_3, param("30;", grup)) : grup;

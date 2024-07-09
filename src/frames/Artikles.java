@@ -490,7 +490,7 @@ public class Artikles extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ppmGrid = new javax.swing.JPopupMenu();
+        ppmTab1 = new javax.swing.JPopupMenu();
         mInsert = new javax.swing.JMenuItem();
         mDelit = new javax.swing.JMenuItem();
         separator1 = new javax.swing.JPopupMenu.Separator();
@@ -503,6 +503,9 @@ public class Artikles extends javax.swing.JFrame {
         separator2 = new javax.swing.JPopupMenu.Separator();
         height = new javax.swing.JMenuItem();
         depth = new javax.swing.JMenuItem();
+        ppmTab2 = new javax.swing.JPopupMenu();
+        mInsert2 = new javax.swing.JMenuItem();
+        mDelit2 = new javax.swing.JMenuItem();
         north = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
         btnRef = new javax.swing.JButton();
@@ -723,7 +726,7 @@ public class Artikles extends javax.swing.JFrame {
                 ppmActionItems(evt);
             }
         });
-        ppmGrid.add(mInsert);
+        ppmTab1.add(mInsert);
 
         mDelit.setFont(frames.UGui.getFont(1,0));
         mDelit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
@@ -733,8 +736,8 @@ public class Artikles extends javax.swing.JFrame {
                 ppmActionItems(evt);
             }
         });
-        ppmGrid.add(mDelit);
-        ppmGrid.add(separator1);
+        ppmTab1.add(mDelit);
+        ppmTab1.add(separator1);
 
         groups1_id.setFont(frames.UGui.getFont(1,0));
         groups1_id.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c085.gif"))); // NOI18N
@@ -744,7 +747,7 @@ public class Artikles extends javax.swing.JFrame {
                 ppmClick(evt);
             }
         });
-        ppmGrid.add(groups1_id);
+        ppmTab1.add(groups1_id);
 
         groups2_id.setFont(frames.UGui.getFont(1,0));
         groups2_id.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c085.gif"))); // NOI18N
@@ -754,7 +757,7 @@ public class Artikles extends javax.swing.JFrame {
                 ppmClick(evt);
             }
         });
-        ppmGrid.add(groups2_id);
+        ppmTab1.add(groups2_id);
 
         groups3_id.setFont(frames.UGui.getFont(1,0));
         groups3_id.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c085.gif"))); // NOI18N
@@ -764,7 +767,7 @@ public class Artikles extends javax.swing.JFrame {
                 ppmClick(evt);
             }
         });
-        ppmGrid.add(groups3_id);
+        ppmTab1.add(groups3_id);
 
         groups4_id.setFont(frames.UGui.getFont(1,0));
         groups4_id.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c085.gif"))); // NOI18N
@@ -774,7 +777,7 @@ public class Artikles extends javax.swing.JFrame {
                 ppmClick(evt);
             }
         });
-        ppmGrid.add(groups4_id);
+        ppmTab1.add(groups4_id);
 
         texcod.setFont(frames.UGui.getFont(1,0));
         texcod.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c085.gif"))); // NOI18N
@@ -784,7 +787,7 @@ public class Artikles extends javax.swing.JFrame {
                 ppmClick(evt);
             }
         });
-        ppmGrid.add(texcod);
+        ppmTab1.add(texcod);
 
         analog.setFont(frames.UGui.getFont(1,0));
         analog.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c085.gif"))); // NOI18N
@@ -794,8 +797,8 @@ public class Artikles extends javax.swing.JFrame {
                 ppmClick(evt);
             }
         });
-        ppmGrid.add(analog);
-        ppmGrid.add(separator2);
+        ppmTab1.add(analog);
+        ppmTab1.add(separator2);
 
         height.setFont(frames.UGui.getFont(1,0));
         height.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c087.gif"))); // NOI18N
@@ -805,7 +808,7 @@ public class Artikles extends javax.swing.JFrame {
                 ppmClick(evt);
             }
         });
-        ppmGrid.add(height);
+        ppmTab1.add(height);
 
         depth.setFont(frames.UGui.getFont(1,0));
         depth.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c087.gif"))); // NOI18N
@@ -815,7 +818,27 @@ public class Artikles extends javax.swing.JFrame {
                 ppmClick(evt);
             }
         });
-        ppmGrid.add(depth);
+        ppmTab1.add(depth);
+
+        mInsert2.setFont(frames.UGui.getFont(1,0));
+        mInsert2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
+        mInsert2.setText("Добавить");
+        mInsert2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppmActionItems(evt);
+            }
+        });
+        ppmTab2.add(mInsert2);
+
+        mDelit2.setFont(frames.UGui.getFont(1,0));
+        mDelit2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
+        mDelit2.setText("Удалить");
+        mDelit2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppmActionItems(evt);
+            }
+        });
+        ppmTab2.add(mDelit2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Материальные ценности");
@@ -1085,7 +1108,7 @@ public class Artikles extends javax.swing.JFrame {
         tab1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tab1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabMouseClicked(evt);
+                tab1MouseClicked(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 Artikles.this.mousePressed(evt);
@@ -2328,7 +2351,7 @@ public class Artikles extends javax.swing.JFrame {
         tab2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tab2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabMouseClicked(evt);
+                tab2MouseClicked(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 Artikles.this.mousePressed(evt);
@@ -2690,19 +2713,19 @@ public class Artikles extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnClone
 
-    private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
+    private void tab1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tab1MouseClicked
         if (evt.getButton() == MouseEvent.BUTTON3) {
             JTable table = List.of(tab1, tab2).stream().filter(it -> it == evt.getSource()).findFirst().get();
             List.of(tab1, tab2).forEach(tab -> tab.setBorder(null));
             table.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
-            ppmGrid.show(table, evt.getX(), evt.getY());
+            ppmTab1.show(table, evt.getX(), evt.getY());
         }
-    }//GEN-LAST:event_tabMouseClicked
+    }//GEN-LAST:event_tab1MouseClicked
 
     private void ppmActionItems(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppmActionItems
-        if (evt.getSource() == mInsert) {
+        if (evt.getSource() == mInsert || evt.getSource() == mInsert2) {
             btnInsert(new java.awt.event.ActionEvent(btnIns, -1, ""));
-        } else if (evt.getSource() == mDelit) {
+        } else if (evt.getSource() == mDelit || evt.getSource() == mDelit2) {
             btnDelete(new java.awt.event.ActionEvent(btnDel, -1, ""));
         }
     }//GEN-LAST:event_ppmActionItems
@@ -2715,6 +2738,15 @@ public class Artikles extends javax.swing.JFrame {
         }
         this.dispose();
     }//GEN-LAST:event_btnChoice
+
+    private void tab2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tab2MouseClicked
+        if (evt.getButton() == MouseEvent.BUTTON3) {
+            JTable table = List.of(tab1, tab2).stream().filter(it -> it == evt.getSource()).findFirst().get();
+            List.of(tab1, tab2).forEach(tab -> tab.setBorder(null));
+            table.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
+            ppmTab2.show(table, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_tab2MouseClicked
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -2845,7 +2877,9 @@ public class Artikles extends javax.swing.JFrame {
     private javax.swing.JLabel lab56;
     private javax.swing.JLabel labl17;
     private javax.swing.JMenuItem mDelit;
+    private javax.swing.JMenuItem mDelit2;
     private javax.swing.JMenuItem mInsert;
+    private javax.swing.JMenuItem mInsert2;
     private javax.swing.JPanel north;
     private javax.swing.JPanel pan100;
     private javax.swing.JPanel pan101;
@@ -2884,7 +2918,8 @@ public class Artikles extends javax.swing.JFrame {
     private javax.swing.JPanel pan96;
     private javax.swing.JPanel pan98;
     private javax.swing.JPanel pan99;
-    private javax.swing.JPopupMenu ppmGrid;
+    private javax.swing.JPopupMenu ppmTab1;
+    private javax.swing.JPopupMenu ppmTab2;
     private javax.swing.JPanel pqn109;
     private javax.swing.JScrollPane scr1;
     private javax.swing.JScrollPane scr2;

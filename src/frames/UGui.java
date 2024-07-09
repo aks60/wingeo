@@ -70,6 +70,7 @@ import enums.PKjson;
 import enums.Type;
 import frames.swing.DefMutableTreeNode;
 import java.util.HashSet;
+import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
 import org.locationtech.jts.geom.Geometry;
@@ -590,13 +591,14 @@ public class UGui {
 
     //Проверка допустимости удаления таблицы
     public static int isDeleteRecord(JTable table, java.awt.Window owner, JTable... tables) {
+        ImageIcon img = new ImageIcon(owner.getClass().getResource("/resource/img24/c014.gif"));
         if (table.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(null, "Ни одна из записей не вывыделена", "Предупреждение", JOptionPane.NO_OPTION);
+            JOptionPane.showMessageDialog(null, "Ни одна из записей не вывыделена", "Предупреждение", JOptionPane.NO_OPTION, img);
             return 1;
         }
         for (JTable tab : tables) {
             if (tab.getRowCount() != 0) {
-                JOptionPane.showMessageDialog(owner, "Перед удалением записи, удалите данные в зависимых таблицах", "Предупреждение", JOptionPane.NO_OPTION);
+                JOptionPane.showMessageDialog(owner, "Перед удалением записи, удалите данные в зависимых таблицах", "Предупреждение", JOptionPane.NO_OPTION, img);
                 return 1;
             }
         }
