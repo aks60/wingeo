@@ -45,7 +45,7 @@ public enum eElement implements Field {
     }
 
     public static List<Record> find(int seriesID) {
-        if(seriesID == -1) {
+        if (seriesID == -1) {
             return new ArrayList<Record>();
         }
         if (Query.conf.equals("calc")) {
@@ -75,6 +75,19 @@ public enum eElement implements Field {
         }
         Query recordList = new Query(values()).select(up, "where", _id, "= id");
         return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
+    }
+
+    public static List<Record> find5(Record recordSer) {
+        int artiklID = recordSer.getInt(eArtikl.id);
+        int seriesID = recordSer.getInt(eArtikl.groups4_id);
+        if (seriesID == -1) {
+            return new ArrayList<Record>();
+        }
+        if (Query.conf.equals("calc")) {
+            return query().stream().filter(rec -> seriesID == rec.getInt(groups1_id)
+                    && artiklID != rec.getInt(artikl_id) && rec.getInt(todef) > 0).collect(Collectors.toList());
+        }
+        return  new Query(values()).select(up, "where", groups1_id, "=", seriesID, "and", artiklID, "!= artikl_id and", todef, "> 0");
     }
 
     public String toString() {

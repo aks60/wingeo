@@ -98,10 +98,10 @@ public class Test {
 
         eProp.dev = true;
         try {
-            create_delete_script();
+            //create_delete_script();
             //frames.PSConvert.exec();
             //frame(args);
-            //wincalc();
+            wincalc();
             //param();
             //query();
             //json();

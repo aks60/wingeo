@@ -59,8 +59,7 @@ public class SpcElement extends Cal5e {
                     detail(elementList3, elem5e);
 
                     //По groups1_id - серии профилей
-                    int seriesID = elem5e.artiklRecAn.getInt(eArtikl.groups4_id);
-                    List<Record> elementList2 = eElement.find(seriesID); //список элементов в серии
+                    List<Record> elementList2 = eElement.find5(elem5e.artiklRecAn); //список элементов в серии
                     detail(elementList2, elem5e);
                 }
             }
