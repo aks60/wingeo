@@ -568,8 +568,8 @@ public class PSConvert {
         try {
             println(Color.GREEN, "Секция создания внешних ключей");
             alterTable("color", "fk_color1", "groups_id", "groups");
-            alterTable("alter table color add constraint ung1_color unique (code)");
-            alterTable("alter table color add constraint ung2_color unique (name)");
+            alterTable("alter table color add constraint unq1_color unique (code, groups_id)");
+            alterTable("alter table color add constraint unq2_color unique (name, groups_id)");
             alterTable("params", "fk_params_1", "groups_id", "groups");
             alterTable("parmap", "fk_parmap_1", "groups_id", "groups");
             alterTable("parmap", "fk_parmap_2", "color_id1", "color");
