@@ -49,12 +49,12 @@ public class SpcJoining extends Cal5e {
 
     @Override
     public void calc() {
-        super.calc();        
+        super.calc();
         try {
-            
+
             //Цикл по списку соединений
             for (ElemJoining elemJoin : winc.listJoin) {
-                
+
                 ElemSimple joinElem1 = elemJoin.elem1;
                 ElemSimple joinElem2 = elemJoin.elem2;
 
@@ -97,8 +97,8 @@ public class SpcJoining extends Cal5e {
 
                             //Если в проверочных парам. успех,
                             //выполним установочные параметры
-                             joiningVar.listenerFire();                           
-                            
+                            joiningVar.listenerFire();
+
                             //Накопление данных для запуска детализации
                             mapJoinvar.put(elemJoin, joinvarRec.getInt(eJoinvar.id));
 
@@ -141,7 +141,7 @@ public class SpcJoining extends Cal5e {
                 if (joiningDet.filter(mapParam, elemJoin, joindetRec) == true) {
                     Record artiklRec = eArtikl.find(joindetRec.getInt(eJoindet.artikl_id), false);
                     SpcRecord spcAdd = new SpcRecord("СОЕД", joindetRec, artiklRec, elemJoin.elem1, mapParam);
-                    
+
                     //Подбор текстуры
                     if (UColor.colorFromProduct(spcAdd)) {
                         elemJoin.addSpecific(spcAdd);
@@ -154,7 +154,10 @@ public class SpcJoining extends Cal5e {
     public List<Record> varList(ElemJoining elemJoin) {
         List<Record> list = new ArrayList<Record>();
 
-        Record joiningRec = eJoining.find(elemJoin.elem1.artiklRecAn, elemJoin.elem2.artiklRecAn);
+        //Record joiningRec = eJoining.find(elemJoin.elem1.artiklRecAn, elemJoin.elem2.artiklRecAn);
+        int id1 = elemJoin.elem1.artiklRecAn.getInt(eArtikl.id);
+        int id2 = elemJoin.elem2.artiklRecAn.getInt(eArtikl.id);
+        Record joiningRec = eJoining.find(id1, id2);
         //Список вариантов соединения для артикула1 и артикула2
         List<Record> joinvarList = eJoinvar.find(joiningRec.getInt(eJoining.id));
         //Если неудача, ищем в аналоге соединения
