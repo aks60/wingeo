@@ -8,7 +8,6 @@ import domain.eFurnside1;
 import domain.eFurnside2;
 import domain.eSysfurn;
 import enums.Layout;
-import java.util.LinkedList;
 import java.util.List;
 import builder.Wincalc;
 import builder.param.FurnitureDet;
@@ -23,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import static java.util.stream.Collectors.toList;
 import javax.swing.JOptionPane;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * Фурнитура
@@ -55,10 +55,10 @@ public class SpcFurniture extends Cal5e {
         try {
             //Цикл по створкам      
             for (AreaSimple areaStv : stvorkaList) {
-
                 AreaStvorka stv = (AreaStvorka) areaStv;
+
                 //Подбор фурнитуры по параметрам
-                List<Record> sysfurnList = eSysfurn.find(winc.nuni); //список фурнитур в системе профилей
+                List<Record> sysfurnList = eSysfurn.find(winc.nuni); //список фурнитур в системе
                 if (sysfurnList.isEmpty() == false) {
                     Record sysfurnRec = sysfurnList.get(0); //значение по умолчанию, первая SYSFURN в списке системы
 
@@ -66,18 +66,19 @@ public class SpcFurniture extends Cal5e {
                     sysfurnRec = sysfurnList.stream().filter(rec -> rec.getInt(eSysfurn.id) == stv.sysfurnRec.getInt(eSysfurn.id)).findFirst().orElse(sysfurnRec);
                     Record furnityreRec = eFurniture.find(sysfurnRec.getInt(eSysfurn.furniture_id));
 
-                    //Проверка на max высоту, ширину
-                    double max_width = stvorkaList.stream().max((s1, s2) -> s1.width().compareTo(s2.width())).get().width(); //сторона створки
-                    double max_height = stvorkaList.stream().max((s1, s2) -> s1.height().compareTo(s2.height())).get().height(); //сторона створки
-                    boolean p2_max = stvorkaList.stream().anyMatch(s -> furnityreRec.getDbl(eFurniture.max_p2) < (s.width() * 2 + s.height() * 2) / 2);
-                    if (p2_max || furnityreRec.getDbl(eFurniture.max_height) < max_height || furnityreRec.getDbl(eFurniture.max_width) < max_width) {
+                    //Проверка на max высоту, ширину, периметр
+                    Envelope env = stv.area.getEnvelopeInternal();
+                    double stv_width = env.getWidth();
+                    double stv_height = env.getHeight();
+                    boolean p2_max = (furnityreRec.getDbl(eFurniture.max_p2) < (stv_width * 2 + stv_height * 2) / 2);
+                    if (p2_max || furnityreRec.getDbl(eFurniture.max_height) < stv_height
+                            || furnityreRec.getDbl(eFurniture.max_width) < stv_width) {
                         if (max_size_message == true) {
-                            JOptionPane.showMessageDialog(null, "Размер створки превышает максимальный размер по фурнитуре.", "ВНИМАНИЕ!", 1);
+                            JOptionPane.showMessageDialog(null, "Размер створки превышает максимальный размер фурнитуры.", "ВНИМАНИЕ!", 1);
                         }
                         max_size_message = false;
                     }
-
-                    variant(areaStv, furnityreRec, 1); //основная фурнитура
+                    variant(stv, furnityreRec, 1); //основная фурнитура
                 }
             }
         } catch (Exception e) {
@@ -133,7 +134,7 @@ public class SpcFurniture extends Cal5e {
     protected boolean detail(AreaSimple areaStv, Record furndetRec, int countKit) {
         try {
             Record artiklRec = eArtikl.find(furndetRec.getInt(eFurndet.artikl_id), false);
-            HashMap<Integer, String> mapParam = new HashMap<Integer, String> (); //тут накапливаются параметры element и specific
+            HashMap<Integer, String> mapParam = new HashMap<Integer, String>(); //тут накапливаются параметры element и specific
 
             //Сделано для убыстрения поиска ручки, подвеса, замка при конструировании окна
             if (shortPass == true) {

@@ -69,7 +69,7 @@ public class AreaStvorka extends AreaSimple {
 
     public void initArtikle(JsonObject param) {
         try {
-            //Фурнитура створки, ручка, подвес
+            //Фурнитура
             if (isJson(param, PKjson.sysfurnID)) {
                 sysfurnRec = eSysfurn.find2(param.get(PKjson.sysfurnID).getAsInt());
                 paramCheck[0] = false;
@@ -89,8 +89,7 @@ public class AreaStvorka extends AreaSimple {
                 knobColor = param.get(PKjson.colorKnob).getAsInt();
                 paramCheck[2] = false;
             } else {
-                int colorFK = eArtdet.find(knobRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk);
-                knobColor = eColor.find3(colorFK).getInt(eColor.id);
+                knobColor = eArtdet.find(knobRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk);
                 paramCheck[2] = true;
             }
             //Подвес (петли)
@@ -276,7 +275,7 @@ public class AreaStvorka extends AreaSimple {
                         this.knobOpen = (Polygon) aff.transform(this.knobOpen);
                     }
                 }
-            }
+            }           
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.setLocation " + e);
         }
