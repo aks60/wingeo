@@ -432,7 +432,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
                     //Створка
                 } else if (winNode.com5t().type == enums.Type.STVORKA) {
-                    new SpcFurniture(wincalc(), true); //найдём ручку створки
+                    new SpcFurniture(wincalc(), true).calc(); //найдём ручку створки
                     ((CardLayout) pan8.getLayout()).show(pan8, "card16");
                     AreaStvorka stv = (AreaStvorka) winNode.com5t();
                     AreaSimple sta = (AreaSimple) winNode.com5t();

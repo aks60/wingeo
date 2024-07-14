@@ -2493,6 +2493,8 @@ public class Artikles extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDelete
 
     private void btnRefresh(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefresh
+        UGui.stopCellEditing(tab1, tab2);
+        List.of(tab1, tab2).forEach(tab -> UGui.getQuery(tab).execsql());        
         TreePath[] node = tree.getSelectionPaths(); //запомним path для nuni
         loadingData();
         tree.setSelectionPaths(node);

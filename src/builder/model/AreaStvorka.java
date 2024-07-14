@@ -69,12 +69,14 @@ public class AreaStvorka extends AreaSimple {
 
     public void initArtikle(JsonObject param) {
         try {
+            //Поиск о параметру или первая запись из списка...
             //Фурнитура
             if (isJson(param, PKjson.sysfurnID)) {
                 sysfurnRec = eSysfurn.find2(param.get(PKjson.sysfurnID).getAsInt());
                 paramCheck[0] = false;
             } else {
                 sysfurnRec = eSysfurn.find3(winc.nuni); //ищем первую в системе
+                paramCheck[0] = false;
             }
             //Ручка
             if (isJson(param, PKjson.artiklKnob)) {
@@ -136,39 +138,6 @@ public class AreaStvorka extends AreaSimple {
                     //knobHeight = owner.area.getEnvelopeInternal().getHeight() / 2;
                 }
             }
-//            //По середине
-//            else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.MIDL.id) {
-//                knobLayout = LayoutKnob.MIDL;
-//                //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
-//
-//                //Константная
-//            } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.CONST.id) {
-//                knobLayout = LayoutKnob.CONST;
-//                //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
-//
-//                //Установлена
-//            } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.VAR.id) {
-//                knobLayout = LayoutKnob.VAR;
-//                //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
-//
-//                //По умолчанию по середине
-//            } else {
-//                knobLayout = LayoutKnob.MIDL; //по умолчанию
-//                //knobHeight = area.getEnvelopeInternal().getHeight() / 2;
-//            }
-//            //Москидка
-//            if (isJson(gson.param, PKjson.artiklMosq)) {
-//                mosqRec = eArtikl.find(gson.param.get(PKjson.artiklMosq).getAsInt(), false);
-//                //Текстура
-//                if (isJson(gson.param, PKjson.colorMosq)) {
-//                    mosqColor = eColor.get(gson.param.get(PKjson.colorMosq).getAsInt()).getInt(eColor.id);
-//                } else {
-//                    mosqColor = eArtdet.find(mosqRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk); //цвет по умолчанию
-//                }
-//                if (isJson(gson.param, PKjson.elementID)) {
-//                    this.elementRec = eElement.find4(gson.param.get(PKjson.elementID).getAsInt());
-//                }
-//            }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.furniture " + e);
         }

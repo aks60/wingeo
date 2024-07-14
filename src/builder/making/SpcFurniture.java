@@ -45,7 +45,6 @@ public class SpcFurniture extends Cal5e {
         furnitureVar = new FurnitureVar(winc);
         furnitureDet = new FurnitureDet(winc);
         this.shortPass = shortPass;
-        calc();
     }
 
     @Override
@@ -95,7 +94,7 @@ public class SpcFurniture extends Cal5e {
                     .filter(rec -> rec.getInt(eFurndet.id) != rec.getInt(eFurndet.furndet_pk)).collect(toList()); //детализация второй уровень
 
             //Цикл по описанию сторон фурнитуры
-            List<Record> furnsidetList = eFurnside1.find(furnitureRec.getInt(eFurniture.id));
+            List<Record> furnsidetList = eFurnside1.find(furnitureRec.getInt(eFurniture.id)); //список описания сторон
             for (Record furnside1Rec : furnsidetList) {
                 ElemSimple elemFrame = areaStv.frames.get((Layout) Layout.ANY.find(furnside1Rec.getInt(eFurnside1.side_num)));
 
@@ -154,6 +153,7 @@ public class SpcFurniture extends Cal5e {
                 return false;
             }
 
+            //Проверка по ограничению сторон
             //Цикл по ограничению сторон фурнитуры
             List<Record> furnside2List = eFurnside2.find(furndetRec.getInt(eFurndet.id));
             for (Record furnside2Rec : furnside2List) {
@@ -186,6 +186,7 @@ public class SpcFurniture extends Cal5e {
                     length = el.spcRec.width - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
                 }
                 if (length >= furnside2Rec.getDbl(eFurnside2.len_max) || (length < furnside2Rec.getDbl(eFurnside2.len_min))) {
+                    
                     return false; //не прошли ограничение сторон
                 }
             }
@@ -193,12 +194,13 @@ public class SpcFurniture extends Cal5e {
             //Не НАБОР (элемент из мат. ценности)
             if (furndetRec.get(eFurndet.furniture_id2) == null) {
                 if (artiklRec.getInt(eArtikl.id) != -1) { //артикул есть
+                    
                     ElemSimple sideStv = determOfSide(mapParam, areaStv);
                     SpcRecord spcAdd = new SpcRecord("ФУРН", furndetRec, artiklRec, sideStv, mapParam);
 
                     //Ловим ручку, подвес, замок и 
                     //присваиваем знач. в створку
-                    propertyStv(areaStv, spcAdd);
+                    setPropertyStv(areaStv, spcAdd);
 
                     if (UColor.colorFromProduct(spcAdd)) { //подбор по цвету
 
@@ -226,7 +228,9 @@ public class SpcFurniture extends Cal5e {
         }
     }
 
-    private void propertyStv(AreaSimple areaStv, SpcRecord spcAdd) {
+    //Ловим ручку, подвес, замок и 
+    //присваиваем знач. в створку    
+    private void setPropertyStv(AreaSimple areaStv, SpcRecord spcAdd) {
         AreaStvorka stv = (AreaStvorka) areaStv;
 
         if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2) {
