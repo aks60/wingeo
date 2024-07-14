@@ -158,12 +158,13 @@ public class SpcFurniture extends Cal5e {
             List<Record> furnside2List = eFurnside2.find(furndetRec.getInt(eFurndet.id));
             for (Record furnside2Rec : furnside2List) {
                 ElemSimple el;
-                double width = 0;
+                double length = 0;
                 int side = furnside2Rec.getInt(eFurnside2.side_num);
 
                 if (side < 0) {
                     String txt = (furnitureDet.mapParamTmp.getOrDefault(24038, null) == null)
-                            ? furnitureDet.mapParamTmp.getOrDefault(25038, "*/*") : furnitureDet.mapParamTmp.getOrDefault(24038, "*/*");
+                            ? furnitureDet.mapParamTmp.getOrDefault(25038, "*/*") 
+                            : furnitureDet.mapParamTmp.getOrDefault(24038, "*/*");
                     String[] par = txt.split("/");
                     if (side == -1) {
                         side = (par[0].equals("*") == true) ? 99 : Integer.valueOf(par[0]);
@@ -171,31 +172,27 @@ public class SpcFurniture extends Cal5e {
                         side = (par[1].equals("*") == true) ? 99 : Integer.valueOf(par[1]);
                     }
                 }
-                if (side == 1) {// || side == -2) {
+                if (side == 1) {
                     el = areaStv.frames.get(Layout.BOTT);
-                    double size_falz = (el.artiklRec.getDbl(eArtikl.size_falz) == 0) ? 21 : el.artiklRec.getDbl(eArtikl.size_falz);
-                    width = el.spcRec.width - 2 * size_falz;
-                } else if (side == 2) {// || side == -1) {
+                    length = el.spcRec.width - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
+                } else if (side == 2) {
                     el = areaStv.frames.get(Layout.RIGHT);
-                    double size_falz = (el.artiklRec.getDbl(eArtikl.size_falz) == 0) ? 21 : el.artiklRec.getDbl(eArtikl.size_falz);
-                    width = el.spcRec.width - 2 * size_falz;
-                } else if (side == 3) {// || side == -2) {
+                    length = el.spcRec.width - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
+                } else if (side == 3) {
                     el = areaStv.frames.get(Layout.TOP);
-                    double size_falz = (el.artiklRec.getDbl(eArtikl.size_falz) == 0) ? 21 : el.artiklRec.getDbl(eArtikl.size_falz);
-                    width = el.spcRec.width - 2 * size_falz;
+                    length = el.spcRec.width - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
                 } else if (side == 4) {// || side == -1) {
                     el = areaStv.frames.get(Layout.LEFT);
-                    double size_falz = (el.artiklRec.getDbl(eArtikl.size_falz) == 0) ? 21 : el.artiklRec.getDbl(eArtikl.size_falz);
-                    width = el.spcRec.width - 2 * size_falz;
+                    length = el.spcRec.width - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
                 }
-                if (width >= furnside2Rec.getDbl(eFurnside2.len_max) || (width < furnside2Rec.getDbl(eFurnside2.len_min))) {
+                if (length >= furnside2Rec.getDbl(eFurnside2.len_max) || (length < furnside2Rec.getDbl(eFurnside2.len_min))) {
                     return false; //не прошли ограничение сторон
                 }
             }
 
             //Не НАБОР (элемент из мат. ценности)
             if (furndetRec.get(eFurndet.furniture_id2) == null) {
-                if (artiklRec.getInt(eArtikl.id) != -1) {
+                if (artiklRec.getInt(eArtikl.id) != -1) { //артикул есть
                     ElemSimple sideStv = determOfSide(mapParam, areaStv);
                     SpcRecord spcAdd = new SpcRecord("ФУРН", furndetRec, artiklRec, sideStv, mapParam);
 
@@ -221,6 +218,7 @@ public class SpcFurniture extends Cal5e {
                 variant(areaStv, furnitureRec2, countKi2); //рекурсия обработки наборов
             }
             return true;
+            
         } catch (Exception e) {
             System.err.println("Ошибка:Furniture.detail() " + e);
             return false;
@@ -284,6 +282,59 @@ public class SpcFurniture extends Cal5e {
         return true;
     }
 
+    private void propertySt2(AreaSimple areaStv, SpcRecord spcAdd) {
+        AreaStvorka stv = (AreaStvorka) areaStv;
+        
+        if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2) {
+            boolean add_specific = true;
+            //Ручка
+            if (spcAdd.artiklRec.getInt(eArtikl.level2) == 11) {
+                if (UColor.colorFromProduct(spcAdd) == true) { //подбор по цвету
+
+                    if (stv.knobRec.getInt(eArtikl.id) == -3) {
+                        stv.knobRec = spcAdd.artiklRec;
+                        add_specific = true;
+                    } else {
+                        add_specific = (stv.knobRec.getInt(eArtikl.id) == spcAdd.artiklRec.getInt(eArtikl.id));
+                    }
+                    if (add_specific == true && stv.knobColor == -3) {
+                        stv.knobColor = spcAdd.colorID1;
+                    }
+                }
+
+                //Подвес
+            } else if (spcAdd.artiklRec.getInt(eArtikl.level2) == 12) {
+                if (UColor.colorFromProduct(spcAdd) == true) { //подбор по цвету
+
+                    if (stv.loopRec.getInt(eArtikl.id) == -3) {
+                        stv.loopRec = spcAdd.artiklRec;
+                        add_specific = true;
+                    } else {
+                        add_specific = (stv.loopRec.getInt(eArtikl.id) == spcAdd.artiklRec.getInt(eArtikl.id));
+                    }
+                    if (add_specific == true && stv.loopColor == -3) {
+                        stv.loopColor = spcAdd.colorID1;
+                    }
+                }
+
+                //Замок  
+            } else if (spcAdd.artiklRec.getInt(eArtikl.level2) == 9) {
+                if (UColor.colorFromProduct(spcAdd) == true) { //подбор по цвету
+
+                    if (stv.lockRec.getInt(eArtikl.id) == -3) {
+                        stv.lockRec = spcAdd.artiklRec;
+                        add_specific = true;
+                    } else {
+                        add_specific = (stv.lockRec.getInt(eArtikl.id) == spcAdd.artiklRec.getInt(eArtikl.id));
+                    }
+                    if (add_specific == true && stv.lockColor == -3) {
+                        stv.lockColor = spcAdd.colorID1;
+                    }
+                }
+            }
+        }
+    }
+    
     public ElemSimple determOfSide(HashMap<Integer, String> mapParam, AreaSimple area5e) {
 
         //Через параметр
