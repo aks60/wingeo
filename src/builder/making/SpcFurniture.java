@@ -197,7 +197,8 @@ public class SpcFurniture extends Cal5e {
                     SpcRecord spcAdd = new SpcRecord("ФУРН", furndetRec, artiklRec, sideStv, mapParam);
 
                     //Ловим ручку, подвес, замок
-                    if (propertyStv(areaStv, spcAdd)) {
+                    propertySt2(areaStv, spcAdd);
+                    
                         if (UColor.colorFromProduct(spcAdd)) { //подбор по цвету
 
                             //Добавим спецификацию в элемент
@@ -207,7 +208,6 @@ public class SpcFurniture extends Cal5e {
                                 sideStv.addSpecific(spcAdd);
                             }
                         }
-                    }
                 }
 
                 //Это НАБОР 
