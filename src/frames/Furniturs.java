@@ -1113,6 +1113,7 @@ public class Furniturs extends javax.swing.JFrame {
         pan5.setPreferredSize(new java.awt.Dimension(260, 200));
         pan5.setLayout(new javax.swing.BoxLayout(pan5, javax.swing.BoxLayout.PAGE_AXIS));
 
+        lab2.setFont(frames.UGui.getFont(0,0));
         lab2.setText("                  Описание сторон");
         lab2.setMaximumSize(new java.awt.Dimension(300, 46));
         lab2.setMinimumSize(new java.awt.Dimension(170, 26));
@@ -1342,6 +1343,7 @@ public class Furniturs extends javax.swing.JFrame {
         pan10.setPreferredSize(new java.awt.Dimension(260, 300));
         pan10.setLayout(new javax.swing.BoxLayout(pan10, javax.swing.BoxLayout.PAGE_AXIS));
 
+        lab1.setFont(frames.UGui.getFont(0,0));
         lab1.setText("                  Ограничения сторон");
         lab1.setMaximumSize(new java.awt.Dimension(300, 46));
         lab1.setMinimumSize(new java.awt.Dimension(170, 26));

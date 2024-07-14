@@ -31,7 +31,7 @@ public class SpcFurniture extends Cal5e {
 
     private FurnitureVar furnitureVar = null;
     private FurnitureDet furnitureDet = null;
-    private final List list = List.of(9, 11, 12);
+    private final List list = List.of(9, 11, 12); //замок, ручка, петля 
     private boolean max_size_message = true;
 
     public SpcFurniture(Wincalc winc) {
@@ -62,11 +62,11 @@ public class SpcFurniture extends Cal5e {
                 for (AreaSimple areaStv : stvorkaList) {
                     AreaStvorka stv = (AreaStvorka) areaStv;
 
-                    //Найдём из списка сист.фурн. фурнитуру которая в створке                 
+                    //Найдём из списка сист.фурн. фурнитуру которая установлена в створку                 
                     sysfurnRec = sysfurnList.stream().filter(rec -> rec.getInt(eSysfurn.id) == stv.sysfurnRec.getInt(eSysfurn.id)).findFirst().orElse(sysfurnRec);
                     Record furnityreRec = eFurniture.find(sysfurnRec.getInt(eSysfurn.furniture_id));
 
-                    //Проверка на max высоту, ширину, периметр
+                    //Проверка с предупреждением на max высоту, ширину, периметр
                     Envelope env = stv.area.getEnvelopeInternal();
                     double stv_width = env.getWidth();
                     double stv_height = env.getHeight();
@@ -90,11 +90,12 @@ public class SpcFurniture extends Cal5e {
 
     protected void variant(AreaSimple areaStv, Record furnitureRec, int count) {
         try {
-            List<Record> furndetList1 = eFurndet.find(furnitureRec.getInt(eFurniture.id));
-            List<Record> furndetList2 = furndetList1.stream().filter(rec -> rec.getInt(eFurndet.id) != rec.getInt(eFurndet.furndet_pk)).collect(toList());
-            List<Record> furnsidetList = eFurnside1.find(furnitureRec.getInt(eFurniture.id));
+            List<Record> furndetList1 = eFurndet.find(furnitureRec.getInt(eFurniture.id)); //детализация первый уровень
+            List<Record> furndetList2 = furndetList1.stream()
+                    .filter(rec -> rec.getInt(eFurndet.id) != rec.getInt(eFurndet.furndet_pk)).collect(toList()); //детализация второй уровень
 
             //Цикл по описанию сторон фурнитуры
+            List<Record> furnsidetList = eFurnside1.find(furnitureRec.getInt(eFurniture.id));
             for (Record furnside1Rec : furnsidetList) {
                 ElemSimple elemFrame = areaStv.frames.get((Layout) Layout.ANY.find(furnside1Rec.getInt(eFurnside1.side_num)));
 
@@ -104,17 +105,17 @@ public class SpcFurniture extends Cal5e {
                 }
             }
 
-            //Цикл по детализации (уровень 1)        
+            //Цикл по детализации (первый уровень)        
             for (Record furndetRec1 : furndetList1) {
                 if (furndetRec1.getInt(eFurndet.furndet_pk) == furndetRec1.getInt(eFurndet.id)) {
                     if (detail(areaStv, furndetRec1, count) == true) {
 
-                        //Цикл по детализации (уровень 2)
+                        //Цикл по детализации (второй уровень)
                         for (Record furndetRec2 : furndetList2) {
                             if (furndetRec2.getInt(eFurndet.furndet_pk) == furndetRec1.getInt(eFurndet.pk)) {
                                 if (detail(areaStv, furndetRec2, count) == true) {
 
-                                    //Цикл по детализации (уровень 3)
+                                    //Цикл по детализации (третий уровень)
                                     for (Record furndetRec3 : furndetList2) {
                                         if (furndetRec3.getInt(eFurndet.furndet_pk) == furndetRec2.getInt(eFurndet.pk)) {
                                             detail(areaStv, furndetRec3, count);
@@ -136,24 +137,25 @@ public class SpcFurniture extends Cal5e {
             Record artiklRec = eArtikl.find(furndetRec.getInt(eFurndet.artikl_id), false);
             HashMap<Integer, String> mapParam = new HashMap<Integer, String>(); //тут накапливаются параметры element и specific
 
-            //Сделано для убыстрения поиска ручки, подвеса, замка при конструировании окна
+            //Сделано для убыстрения поиска ручки, 
+            //подвеса, замка при конструировании окна
             if (shortPass == true) {
                 if (furndetRec.getInt(eFurndet.furndet_pk) == furndetRec.getInt(eFurndet.id) && furndetRec.get(eFurndet.furniture_id2) == null) {
-                    if (artiklRec.getInt(eArtikl.level1) != 2 || (artiklRec.getInt(eArtikl.level1) == 2
-                            && list.contains(artiklRec.getInt(eArtikl.level2)) == false)) { //т.к. ручки, подвеса, замка на этом уровне нет
+                    if ((artiklRec.getInt(eArtikl.level1) == 2 && list.contains(artiklRec.getInt(eArtikl.level2)) == false)
+                            || artiklRec.getInt(eArtikl.level1) != 2) { //т.к. ручки, подвеса, замка на этом уровне нет
                         return false;
                     }
                 }
             }
-
-            //ФИЛЬТР детализации            
             furnitureDet.detailRec = furndetRec; //для тестирования
+
+            //ФИЛЬТР параметров детализации 
             if (furnitureDet.filter(mapParam, areaStv, furndetRec) == false) {
-                return false; //параметры детализации
+                return false;
             }
-            List<Record> furnside2List = eFurnside2.find(furndetRec.getInt(eFurndet.id));
 
             //Цикл по ограничению сторон фурнитуры
+            List<Record> furnside2List = eFurnside2.find(furndetRec.getInt(eFurndet.id));
             for (Record furnside2Rec : furnside2List) {
                 ElemSimple el;
                 double width = 0;
@@ -187,11 +189,11 @@ public class SpcFurniture extends Cal5e {
                     width = el.spcRec.width - 2 * size_falz;
                 }
                 if (width >= furnside2Rec.getDbl(eFurnside2.len_max) || (width < furnside2Rec.getDbl(eFurnside2.len_min))) {
-                    return false;
+                    return false; //не прошли ограничение сторон
                 }
             }
 
-            //Если это элемент из мат. ценности (не НАБОР)
+            //Не НАБОР (элемент из мат. ценности)
             if (furndetRec.get(eFurndet.furniture_id2) == null) {
                 if (artiklRec.getInt(eArtikl.id) != -1) {
                     ElemSimple sideStv = determOfSide(mapParam, areaStv);
@@ -211,7 +213,7 @@ public class SpcFurniture extends Cal5e {
                     }
                 }
 
-                //Это НАБОР  
+                //Это НАБОР 
             } else {
                 int countKi2 = (mapParam.get(24030) == null) ? 1 : Integer.valueOf((mapParam.get(24030)));
                 Record furnitureRec2 = eFurniture.find(furndetRec.getInt(eFurndet.furniture_id2));
@@ -227,6 +229,7 @@ public class SpcFurniture extends Cal5e {
 
     private boolean propertyStv(AreaSimple areaStv, SpcRecord spcAdd) {
         AreaStvorka stv = (AreaStvorka) areaStv;
+        
         if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2) {
             boolean add_specific = true;
             //Ручка

@@ -89,8 +89,10 @@ public class Conn {
             statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
         } catch (ClassNotFoundException e) {
+            System.err.println(e);
             return eExcep.findDrive;
         } catch (SQLException e) {
+            System.err.println(e);
             return eExcep.getError(e.getErrorCode());
         }
         return eExcep.yesConn;
