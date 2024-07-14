@@ -53,16 +53,16 @@ public class SpcFurniture extends Cal5e {
         super.calc();
         ArrayList<AreaSimple> stvorkaList = winc.listArea.filter(Type.STVORKA);
         try {
-            //Цикл по створкам      
-            for (AreaSimple areaStv : stvorkaList) {
-                AreaStvorka stv = (AreaStvorka) areaStv;
+            //Подбор фурнитуры по параметрам
+            List<Record> sysfurnList = eSysfurn.find(winc.nuni); //список фурнитур в системе
+            if (sysfurnList.isEmpty() == false) {
+                Record sysfurnRec = sysfurnList.get(0); //значение по умолчанию, первая SYSFURN в списке системы
 
-                //Подбор фурнитуры по параметрам
-                List<Record> sysfurnList = eSysfurn.find(winc.nuni); //список фурнитур в системе
-                if (sysfurnList.isEmpty() == false) {
-                    Record sysfurnRec = sysfurnList.get(0); //значение по умолчанию, первая SYSFURN в списке системы
+                //Цикл по створкам      
+                for (AreaSimple areaStv : stvorkaList) {
+                    AreaStvorka stv = (AreaStvorka) areaStv;
 
-                    //Теперь найдём из списка сист. фурн. фурнитуру которая в створке                 
+                    //Найдём из списка сист.фурн. фурнитуру которая в створке                 
                     sysfurnRec = sysfurnList.stream().filter(rec -> rec.getInt(eSysfurn.id) == stv.sysfurnRec.getInt(eSysfurn.id)).findFirst().orElse(sysfurnRec);
                     Record furnityreRec = eFurniture.find(sysfurnRec.getInt(eSysfurn.furniture_id));
 
