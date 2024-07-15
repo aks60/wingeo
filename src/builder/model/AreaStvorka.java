@@ -68,15 +68,15 @@ public class AreaStvorka extends AreaSimple {
             if (isJson(param, PKjson.sysfurnID)) {
                 sysfurnRec = eSysfurn.find2(param.get(PKjson.sysfurnID).getAsInt());
                 paramCheck[0] = false;
-            } else {
+            } else { //по умолчанию
                 sysfurnRec = eSysfurn.find3(winc.nuni); //ищем первую в системе
-                paramCheck[0] = false;
+                paramCheck[0] = true;
             }
             //Ручка
             if (isJson(param, PKjson.artiklKnob)) {
                 knobRec = eArtikl.find(param.get(PKjson.artiklKnob).getAsInt(), false);
                 paramCheck[1] = false;
-            } else {
+            } else { //по умолчанию
                 knobRec = eArtikl.find(sysfurnRec.getInt(eSysfurn.artikl_id1), false);
                 paramCheck[1] = true;
             }
@@ -84,7 +84,7 @@ public class AreaStvorka extends AreaSimple {
             if (isJson(param, PKjson.colorKnob)) {
                 knobColor = param.get(PKjson.colorKnob).getAsInt();
                 paramCheck[2] = false;
-            } else {
+            } else {//по умолчанию
                 knobColor = eArtdet.find(knobRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk);
                 if(knobColor < 0) { //если все текстуры группы
                     knobColor = eColor.find2(knobColor).get(0).getInt(eColor.id);

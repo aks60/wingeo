@@ -449,6 +449,10 @@ public class Groups extends javax.swing.JFrame {
             }
         });
         scr6.setViewportView(tab6);
+        if (tab6.getColumnModel().getColumnCount() > 0) {
+            tab6.getColumnModel().getColumn(4).setPreferredWidth(40);
+            tab6.getColumnModel().getColumn(4).setMaxWidth(60);
+        }
 
         pan6.add(scr6, java.awt.BorderLayout.CENTER);
 
@@ -797,7 +801,7 @@ public class Groups extends javax.swing.JFrame {
         } else if (tab4.getBorder() != null) {
             UGui.insertRecordCur(tab4, eGroups.up, (record) -> {
                 record.set(eGroups.grup, TypeGrup.CATEG_ELEM.id);
-                record.setDev(eGroups.name, "Катег.");
+                //record.setDev(eGroups.name, "Катег.");
             });
 
         } else if (tab5.getBorder() != null) {
