@@ -98,10 +98,10 @@ public class Test {
 
         eProp.dev = true;
         try {
-            //create_delete_script();
+            clearDataDB();
             //frames.PSConvert.exec();
             //frame(args);
-            wincalc();
+            //wincalc();
             //param();
             //query();
             //json();
@@ -468,16 +468,21 @@ public class Test {
         };
     }
 
-    public static void create_delete_script() {
+    public static void clearDataDB() {
         
         for (Field field : App.db) {
-            if (field.tname().equals("SYSTREE") == false) {
+            if (field.tname().equals("GROUPS") == true) {
+                System.out.println("delete from " + field.tname() + " where id < 0;");
+            } else if (field.tname().equals("SYSTREE") == false) {
                 System.out.println("delete from " + field.tname() + ";");
             }
         }
         for (Field field : App.db) {
             if (field.tname().equals("SYSTREE") == false) {
                 System.out.println("set generator gen_" + field.tname() + " to " + "0;");
+            }
+            if (field.tname().equals("GROUPS") == true) {
+                System.out.println("set generator gen_" + field.tname() + " to " + "-9999;");
             }
         }
     }

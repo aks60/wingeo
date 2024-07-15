@@ -486,7 +486,7 @@ public class Colors extends javax.swing.JFrame {
             UGui.insertRecordCur(tab1, eGroups.up, (record) -> {
                 record.set(eGroups.grup, TypeGrup.COLOR_GRP.id);
                 record.set(eGroups.name, "");
-                record.setDev(eGroups.name, "Группа");
+                //record.setDev(eGroups.name, "Группа");
                 record.set(eGroups.val, 1);
             });
 
@@ -501,7 +501,7 @@ public class Colors extends javax.swing.JFrame {
                 int index = Arrays.stream(groupArr).boxed().collect(Collectors.toList()).indexOf(groupRec.getInt(eGroups.id));
                 record.setNo(eColor.groups_id, groupRec.getInt(eGroups.id));
                 record.setNo(eColor.code, ++index * 1000 + max + 1);
-                record.setDev(eColor.name, "Цвет");
+                //record.setDev(eColor.name, "Цвет");
                 record.setNo(eColor.rgb, 0xCCCCCC);
                 record.setNo(eColor.coef1, 1);
                 record.setNo(eColor.coef2, 1);
