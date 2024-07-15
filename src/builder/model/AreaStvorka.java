@@ -5,8 +5,6 @@ import builder.making.SpcRecord;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import common.ArrayCom;
-import common.GeoBuffer;
-import common.UCom;
 import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
@@ -23,14 +21,10 @@ import enums.TypeJoin;
 import enums.TypeOpen1;
 import enums.TypeOpen2;
 import enums.UseSide;
-import enums.UseUnit;
-import java.awt.Color;
 import java.awt.Shape;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
@@ -92,6 +86,9 @@ public class AreaStvorka extends AreaSimple {
                 paramCheck[2] = false;
             } else {
                 knobColor = eArtdet.find(knobRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk);
+                if(knobColor < 0) { //если все текстуры группы
+                    knobColor = eColor.find2(knobColor).get(0).getInt(eColor.id);
+                }
                 paramCheck[2] = true;
             }
             //Подвес (петли)
