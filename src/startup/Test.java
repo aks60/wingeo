@@ -98,10 +98,10 @@ public class Test {
 
         eProp.dev = true;
         try {
-            clearDataDB();
+            //clearDataDB();
             //frames.PSConvert.exec();
             //frame(args);
-            //wincalc();
+            wincalc();
             //param();
             //query();
             //json();

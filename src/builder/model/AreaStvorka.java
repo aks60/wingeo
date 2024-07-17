@@ -67,7 +67,6 @@ public class AreaStvorka extends AreaSimple {
      * либо выбирается вручную из ручек фыбранной фурнитуры. Цвет первая запись из текстуры 
      * артикулов или из подбора текстур или вручную.
      * 
-     * 
      */
     public void initArtikle(JsonObject param) {
         try {

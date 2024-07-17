@@ -175,16 +175,16 @@ public class SpcFurniture extends Cal5e {
                 }
                 if (side == 1) {
                     el = areaStv.frames.get(Layout.BOTT);
-                    length = el.spcRec.width - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
+                    length = el.length() - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
                 } else if (side == 2) {
                     el = areaStv.frames.get(Layout.RIGHT);
-                    length = el.spcRec.width - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
+                    length = el.length() - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
                 } else if (side == 3) {
                     el = areaStv.frames.get(Layout.TOP);
-                    length = el.spcRec.width - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
+                    length = el.length() - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
                 } else if (side == 4) {
                     el = areaStv.frames.get(Layout.LEFT);
-                    length = el.spcRec.width - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
+                    length = el.length() - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
                 }
                 if (length >= furnside2Rec.getDbl(eFurnside2.len_max) || (length < furnside2Rec.getDbl(eFurnside2.len_min))) {
 
@@ -199,7 +199,7 @@ public class SpcFurniture extends Cal5e {
                     ElemSimple sideStv = determOfSide(mapParam, areaStv);
                     SpcRecord spcAdd = new SpcRecord("ФУРН", furndetRec, artiklRec, sideStv, mapParam);
 
-                    //Ловим ручку, подвес, замок и присваиваем знач. в свойства створки
+                    //Ловим ручку, петлю, замок и присваиваем знач. в свойства створки
                     if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2 && 
                             List.of(9, 11, 12).contains(spcAdd.artiklRec.getInt(eArtikl.level2)) == true) {
                         setPropertyStv(areaStv, spcAdd);
@@ -235,55 +235,52 @@ public class SpcFurniture extends Cal5e {
         AreaStvorka stv = (AreaStvorka) areaStv;
 
         if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2) {
-            boolean add_specific = true;
             //Ручка
             if (spcAdd.artiklRec.getInt(eArtikl.level2) == 11) {
-                if (stv.isJson(stv.gson.param, PKjson.colorKnob)) {
-                    spcAdd.setColor(stv.knobColor, -3, -3);
+                if (stv.isJson(stv.gson.param, PKjson.artiklKnob)) { 
+                    spcAdd.artiklRec = stv.knobRec; //выбр. вручную
                 } else {
+                    stv.knobRec = spcAdd.artiklRec; //из детализации
+                }
+                //Цвет
+                spcAdd.setColor(stv.knobColor, -3, -3);  //перв. запись в текст.артикулов или выбр. вручную
+                if (stv.isJson(stv.gson.param, PKjson.colorKnob) == false) {
+                    Object o1 = UColor.colorFromProduct(spcAdd);
                     if (UColor.colorFromProduct(spcAdd) == true) { //подбор по цвету
-
-                        if (stv.knobRec.getInt(eArtikl.id) == -3) {
-                            stv.knobRec = spcAdd.artiklRec;
-                            add_specific = true;
-                        } else {
-                            add_specific = (stv.knobRec.getInt(eArtikl.id) == spcAdd.artiklRec.getInt(eArtikl.id));
-                        }
-                        if (add_specific == true && stv.knobColor == -3) {
-                            stv.knobColor = spcAdd.colorID1;
-                        }
-                    }
-                }
-                //Подвес
-            } else if (spcAdd.artiklRec.getInt(eArtikl.level2) == 12) {
-                if (UColor.colorFromProduct(spcAdd) == true) { //подбор по цвету
-
-                    if (stv.loopRec.getInt(eArtikl.id) == -3) {
-                        stv.loopRec = spcAdd.artiklRec;
-                        add_specific = true;
-                    } else {
-                        add_specific = (stv.loopRec.getInt(eArtikl.id) == spcAdd.artiklRec.getInt(eArtikl.id));
-                    }
-                    if (add_specific == true && stv.loopColor == -3) {
-                        stv.loopColor = spcAdd.colorID1;
-                    }
-                }
-
-                //Замок  
-            } else if (spcAdd.artiklRec.getInt(eArtikl.level2) == 9) {
-                if (UColor.colorFromProduct(spcAdd) == true) { //подбор по цвету
-
-                    if (stv.lockRec.getInt(eArtikl.id) == -3) {
-                        stv.lockRec = spcAdd.artiklRec;
-                        add_specific = true;
-                    } else {
-                        add_specific = (stv.lockRec.getInt(eArtikl.id) == spcAdd.artiklRec.getInt(eArtikl.id));
-                    }
-                    if (add_specific == true && stv.lockColor == -3) {
-                        stv.lockColor = spcAdd.colorID1;
+                        stv.knobColor = spcAdd.colorID1;
                     }
                 }
             }
+//                //Подвес
+//            } else if (spcAdd.artiklRec.getInt(eArtikl.level2) == 12) {
+//                if (UColor.colorFromProduct(spcAdd) == true) { //подбор по цвету
+//
+//                    if (stv.loopRec.getInt(eArtikl.id) == -3) {
+//                        stv.loopRec = spcAdd.artiklRec;
+//                        add_specific = true;
+//                    } else {
+//                        add_specific = (stv.loopRec.getInt(eArtikl.id) == spcAdd.artiklRec.getInt(eArtikl.id));
+//                    }
+//                    if (add_specific == true && stv.loopColor == -3) {
+//                        stv.loopColor = spcAdd.colorID1;
+//                    }
+//                }
+//
+//                //Замок  
+//            } else if (spcAdd.artiklRec.getInt(eArtikl.level2) == 9) {
+//                if (UColor.colorFromProduct(spcAdd) == true) { //подбор по цвету
+//
+//                    if (stv.lockRec.getInt(eArtikl.id) == -3) {
+//                        stv.lockRec = spcAdd.artiklRec;
+//                        add_specific = true;
+//                    } else {
+//                        add_specific = (stv.lockRec.getInt(eArtikl.id) == spcAdd.artiklRec.getInt(eArtikl.id));
+//                    }
+//                    if (add_specific == true && stv.lockColor == -3) {
+//                        stv.lockColor = spcAdd.colorID1;
+//                    }
+//                }
+//            }
         }
     }
 

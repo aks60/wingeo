@@ -100,7 +100,7 @@ public class UColor {
         try {
             int elemColorUS = (side == 1) ? typesUS & 0x0000000f : (side == 2) ? (typesUS & 0x000000f0) >> 4 : (typesUS & 0x00000f00) >> 8; //тип подбора                
             int elemArtID = spcAdd.artiklRec.getInt(eArtikl.id);
-            
+
 ////////////////////////////////////////////////////////////////////////////////            
             int profSideColorID = getColorFromProfile(spcAdd, elemColorUS); //цвет из варианта подбора 
 ////////////////////////////////////////////////////////////////////////////////
@@ -229,10 +229,12 @@ public class UColor {
             //Цикл по ARTDET определённого артикула
             for (Record artdetRec : artdetList) {
                 //Сторона подлежит рассмотрению?
-                if ((side == 1 && "1".equals(artdetRec.getStr(eArtdet.mark_c1)))
-                        || (side == 2 && (artdetRec.getInt(eArtdet.mark_c2) == 1 || (artdetRec.getInt(eArtdet.mark_c2) != 1 && artdetRec.getInt(eArtdet.mark_c1) == 1)))
-                        || (side == 3 && (artdetRec.getInt(eArtdet.mark_c3) == 1 || (artdetRec.getInt(eArtdet.mark_c3) != 1 && artdetRec.getInt(eArtdet.mark_c1) == 1)))) {
-
+//                if ((side == 1 && "1".equals(artdetRec.getStr(eArtdet.mark_c1)))
+//                        || (side == 2 && (artdetRec.getInt(eArtdet.mark_c2) == 1 || (artdetRec.getInt(eArtdet.mark_c2) != 1 && artdetRec.getInt(eArtdet.mark_c1) == 1)))
+//                        || (side == 3 && (artdetRec.getInt(eArtdet.mark_c3) == 1 || (artdetRec.getInt(eArtdet.mark_c3) != 1 && artdetRec.getInt(eArtdet.mark_c1) == 1)))) {
+                if ((side == 1 && "1".equals(artdetRec.getStr(eArtdet.mark_c1))) //cторона подлежит рассмотрению?
+                        || (side == 2 && ("1".equals(artdetRec.getStr(eArtdet.mark_c2)) || "1".equals(artdetRec.getStr(eArtdet.mark_c1))))
+                        || (side == 3 && ("1".equals(artdetRec.getStr(eArtdet.mark_c3))) || "1".equals(artdetRec.getStr(eArtdet.mark_c1)))) {
                     //Группа текстур
                     if (artdetRec.getInt(eArtdet.color_fk) < 0) {
                         List<Record> colorList = eColor.find2(artdetRec.getInt(eArtdet.color_fk)); //фильтр списка определённой группы
@@ -315,7 +317,7 @@ public class UColor {
         try {
             List<Record> artdetList = eArtdet.filter(elemArtiklID);
             Record parmapRec = eParmap.find3(syspar1Rec.getStr(eSyspar1.text), syspar1Rec.getInt(eSyspar1.groups_id));
-            
+
             Field field = (side == 2) ? eArtdet.mark_c2 : eArtdet.mark_c3;
             //Если текстура соответствия и текстура профиля совпали
             if (parmapRec.getInt(eParmap.color_id2) == profSideColorID) {
@@ -466,7 +468,7 @@ public class UColor {
             return -1;
         }
     }
-    
+
     //Поиск текстуры в артикуле
     public static int colorFromArtikl(int artiklID, int side, int elemColorID) {
         try {
@@ -503,7 +505,7 @@ public class UColor {
             return -1;
         }
     }
-    
+
     //Иконка типа соединения
     public static ImageIcon iconFromTypeJoin(int typeJoin) {
         for (int i = 0; i < 6; i++) {
