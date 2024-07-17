@@ -229,9 +229,6 @@ public class UColor {
             //Цикл по ARTDET определённого артикула
             for (Record artdetRec : artdetList) {
                 //Сторона подлежит рассмотрению?
-//                if ((side == 1 && "1".equals(artdetRec.getStr(eArtdet.mark_c1)))
-//                        || (side == 2 && (artdetRec.getInt(eArtdet.mark_c2) == 1 || (artdetRec.getInt(eArtdet.mark_c2) != 1 && artdetRec.getInt(eArtdet.mark_c1) == 1)))
-//                        || (side == 3 && (artdetRec.getInt(eArtdet.mark_c3) == 1 || (artdetRec.getInt(eArtdet.mark_c3) != 1 && artdetRec.getInt(eArtdet.mark_c1) == 1)))) {
                 if ((side == 1 && "1".equals(artdetRec.getStr(eArtdet.mark_c1))) //cторона подлежит рассмотрению?
                         || (side == 2 && ("1".equals(artdetRec.getStr(eArtdet.mark_c2)) || "1".equals(artdetRec.getStr(eArtdet.mark_c1))))
                         || (side == 3 && ("1".equals(artdetRec.getStr(eArtdet.mark_c3))) || "1".equals(artdetRec.getStr(eArtdet.mark_c1)))) {
