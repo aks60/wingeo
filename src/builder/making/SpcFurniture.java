@@ -245,7 +245,6 @@ public class SpcFurniture extends Cal5e {
                 //Цвет
                 spcAdd.setColor(stv.knobColor, -3, -3);  //перв. запись в текст.артикулов или выбр. вручную
                 if (stv.isJson(stv.gson.param, PKjson.colorKnob) == false) {
-                    Object o1 = UColor.colorFromProduct(spcAdd);
                     if (UColor.colorFromProduct(spcAdd) == true) { //подбор по цвету
                         stv.knobColor = spcAdd.colorID1;
                     }
