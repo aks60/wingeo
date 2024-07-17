@@ -158,7 +158,7 @@ public class ElementTest {
         assert true == elementVar2.check(stv2_left_3, param("2", grup)) : grup;
         assert false == elementVar2.check(stv2_left_3, param("1", grup)) : grup;
 
-        //TODO параметр не работает
+        //TODO 31051 параметр не работает
         grup = 31051; //Если створка фурнитуры
         assert true == elementVar4.check(stv4_right_3, param("ведущая", grup)) : grup;
         assert false == elementVar4.check(stv4_right_3, param("ведомая", grup)) : grup;

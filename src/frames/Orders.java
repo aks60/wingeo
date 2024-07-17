@@ -443,7 +443,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     double h = (sta.frames.get(Layout.RIGHT).height() > sta.frames.get(Layout.LEFT).height()) ? sta.frames.get(Layout.RIGHT).height() : sta.frames.get(Layout.LEFT).height();
                     setText(txt26, UCom.format(h, 1));
                     setText(txt20, eFurniture.find(id).getStr(eFurniture.name));
-                    setIcon(btn10, stv.paramCheck[0]);
+                    setIcon(btn10, stv.isJson(stv.gson.param, PKjson.sysfurnID));
                     setText(txt30, stv.typeOpen.name2);
                     setText(txt16, stv.knobLayout.name);
                     if (stv.knobLayout == LayoutKnob.VAR) {
@@ -454,21 +454,21 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         setText(txt31, "");
                     }
                     setText(txt21, stv.knobRec.getStr(eArtikl.code) + " ÷ " + stv.knobRec.getStr(eArtikl.name));
-                    setIcon(btn12, stv.paramCheck[1]);
+                    setIcon(btn12, stv.isJson(stv.gson.param, PKjson.artiklKnob));
                     setText(txt25, eColor.find(stv.knobColor).getStr(eColor.name));
-                    setIcon(btn14, stv.paramCheck[2]);
+                    setIcon(btn14, stv.isJson(stv.gson.param, PKjson.colorKnob));
                     setText(txt45, stv.loopRec.getStr(eArtikl.code));
                     setText(txt58, stv.loopRec.getStr(eArtikl.name));
-                    setIcon(btn15, stv.paramCheck[3]);
+                    setIcon(btn15, stv.isJson(stv.gson.param, PKjson.artiklLoop));
                     setText(txt47, eColor.find(stv.loopColor).getStr(eColor.name));
-                    setIcon(btn17, stv.paramCheck[4]);
+                    setIcon(btn17, stv.isJson(stv.gson.param, PKjson.colorLoop));
                     setText(txt46, stv.lockRec.getStr(eArtikl.code));
                     setText(txt57, stv.lockRec.getStr(eArtikl.name));
-                    setIcon(btn23, stv.paramCheck[5]);
+                    setIcon(btn23, stv.isJson(stv.gson.param, PKjson.artiklLock));
                     setText(txt48, eColor.find(stv.lockColor).getStr(eColor.name));
-                    setIcon(btn24, stv.paramCheck[6]);
+                    setIcon(btn24, stv.isJson(stv.gson.param, PKjson.colorLock));
                     //Москитка
-                    ArrayCom<Com5t> mosqList = ((AreaSimple) stv).childs.filter(enums.Type.MOSKITKA);
+                    ArrayCom<Com5t> mosqList = ((AreaSimple) stv).childs.filter(enums.Type.MOSQUIT);
                     if (mosqList.isEmpty() == false) {
                         ElemSimple mosq = (ElemSimple) mosqList.get(0);
                         setText(txt54, mosq.artiklRec.getStr(eArtikl.code));
@@ -753,7 +753,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }
 
     private void setIcon(JButton btn, boolean b) {
-        if (b == false) {
+        if (b == true) {
             btn.setText("");
             btn.setIcon(icon);
         } else {
@@ -2416,7 +2416,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         tabb2.addTab("Основн...", pan22);
 
         lab26.setFont(frames.UGui.getFont(0,0));
-        lab26.setText("Подвес");
+        lab26.setText("Петля");
         lab26.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab26.setMaximumSize(new java.awt.Dimension(80, 18));
         lab26.setMinimumSize(new java.awt.Dimension(80, 18));
@@ -3877,13 +3877,13 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             new DicArtikl(this, (artiklRec) -> {
 
                 GsonElem gsonElem = null;
-                ArrayCom<Com5t> mosqList = ((AreaSimple) stvElem).childs.filter(enums.Type.MOSKITKA);
+                ArrayCom<Com5t> mosqList = ((AreaSimple) stvElem).childs.filter(enums.Type.MOSQUIT);
 
                 if (mosqList.isEmpty() == false) {
                     ElemSimple mosqElem = (ElemSimple) mosqList.get(0);
                     gsonElem = mosqElem.gson;
                 } else {
-                    gsonElem = new GsonElem(enums.Type.MOSKITKA);
+                    gsonElem = new GsonElem(enums.Type.MOSQUIT);
                     GsonElem stvArea = stvElem.gson;
                     stvArea.childs.add(gsonElem);
                 }
@@ -3906,7 +3906,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         try {
             double selectID = winNode.com5t().id;
             AreaStvorka stvElem = (AreaStvorka) winNode.com5t();
-            ArrayCom<Com5t> mosqList = ((AreaSimple) stvElem).childs.filter(enums.Type.MOSKITKA);
+            ArrayCom<Com5t> mosqList = ((AreaSimple) stvElem).childs.filter(enums.Type.MOSQUIT);
             if (mosqList.isEmpty() == false) {
                 ElemMosquit mosqElem = (ElemMosquit) mosqList.get(0);
                 HashSet<Record> colorSet = UGui.artiklToColorSet(mosqElem.artiklRec.getInt(eArtikl.id));
@@ -3930,7 +3930,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         try {
             double selectID = winNode.com5t().id;
             AreaSimple stvElem = (AreaSimple) winNode.com5t();
-            ArrayCom<Com5t> mosqList = ((AreaSimple) stvElem).childs.filter(enums.Type.MOSKITKA);
+            ArrayCom<Com5t> mosqList = ((AreaSimple) stvElem).childs.filter(enums.Type.MOSQUIT);
             if (mosqList.isEmpty() == false) {
                 ElemSimple mosqElem = (ElemSimple) mosqList.get(0);
                 Record artiklRec = mosqElem.artiklRec;

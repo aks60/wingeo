@@ -89,25 +89,25 @@ public class Specifics extends javax.swing.JFrame {
             jm.setFont(frames.UGui.getFont(0, 0));
             jm.setIcon(image[3]);
             DefaultMutableTreeNode nod2 = new DefaultMutableTreeNode(type.name);
-            JMenuItem mni = new JMenuItem(type.name, image[3]);
-            mni.setFont(frames.UGui.getFont(0, 1));
-            mni.addActionListener(new java.awt.event.ActionListener() {
+            JMenuItem mn1 = new JMenuItem(type.name, image[3]); //1 элемент списка
+            mn1.setFont(frames.UGui.getFont(0, 1));
+            mn1.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec
                             -> rec.artiklRec.getInt(eArtikl.level1) == type.id1).collect(toList());
                     loadingTab1(listSpec);
                 }
             });
-            jm.add(mni);
+            jm.add(mn1);
             ppmTree.add(jm);
 
             Iterator<TreeNode> in = node.children().asIterator();
             while (in.hasNext()) {
                 DefaultMutableTreeNode nod3 = (DefaultMutableTreeNode) in.next();
                 enums.TypeArt typ2 = (enums.TypeArt) nod3.getUserObject();
-                JMenuItem mn = new JMenuItem(typ2.name, image[3]);
-                mn.setFont(frames.UGui.getFont(0, 0));
-                mn.addActionListener(new java.awt.event.ActionListener() {
+                JMenuItem mn2 = new JMenuItem(typ2.name, image[3]); //следующте элемены списка
+                mn2.setFont(frames.UGui.getFont(0, 0));
+                mn2.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec
                                 -> rec.artiklRec.getInt(eArtikl.level1) == typ2.id1
@@ -115,7 +115,7 @@ public class Specifics extends javax.swing.JFrame {
                         loadingTab1(listSpec);
                     }
                 });
-                jm.add(mn);
+                jm.add(mn2);
             }
         }
     }

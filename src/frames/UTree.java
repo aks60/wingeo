@@ -122,7 +122,7 @@ public class UTree {
                 //Если это элемент
                 if (com2 instanceof ElemSimple) {
                     nodeStv.add(new DefMutableTreeNode(com2));
-                    if (com2.type != Type.GLASS && com2.type != Type.MOSKITKA) { //В стекле нет соединений
+                    if (com2.type != Type.GLASS && com2.type != Type.MOSQUIT) { //В стекле нет соединений
                         nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
                     }
                     //Это ареа
@@ -130,14 +130,14 @@ public class UTree {
                     for (Com5t com3 : ((AreaSimple) com2).childs) {
                         if (com3 instanceof ElemSimple) {
                             nodeStv.add(new DefMutableTreeNode(com3));
-                            if (com3.type != Type.GLASS && com3.type != Type.MOSKITKA) {
+                            if (com3.type != Type.GLASS && com3.type != Type.MOSQUIT) {
                                 nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
                             }
                         } else {
                             for (Com5t com4 : ((AreaSimple) com3).childs) {
                                 if (com4 instanceof ElemSimple) {
                                     nodeStv.add(new DefMutableTreeNode(com4));
-                                    if (com4.type != Type.GLASS && com4.type != Type.MOSKITKA) {
+                                    if (com4.type != Type.GLASS && com4.type != Type.MOSQUIT) {
                                         nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
                                     }
                                 }

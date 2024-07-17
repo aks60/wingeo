@@ -158,7 +158,7 @@ public class Wincalc {
                         ElemGlass elem5e = new ElemGlass(this, js, owner);
                         owner.childs.add(elem5e); //добавим ребёнка родителю
 
-                    } else if (Type.MOSKITKA == js.type) {
+                    } else if (Type.MOSQUIT == js.type) {
                         ElemMosquit elem5e = new ElemMosquit(this, js, owner);
                         owner.childs.add(elem5e); //добавим ребёнка родителю
                     }
@@ -274,7 +274,7 @@ public class Wincalc {
             this.listElem.filter(Type.GLASS).stream().forEach(el -> ((ElemGlass) el).rascladkaPaint());
 
             //Прорисовка москиток
-            this.listElem.filter(Type.MOSKITKA).stream().forEach(el -> ((ElemMosquit) el).paint());
+            this.listElem.filter(Type.MOSQUIT).stream().forEach(el -> ((ElemMosquit) el).paint());
 
             //Прорисовка импостов
             this.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA).stream().forEach(el -> el.paint());

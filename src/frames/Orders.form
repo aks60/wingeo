@@ -3073,7 +3073,7 @@
                                         <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                           <Connection code="frames.UGui.getFont(0,0)" type="code"/>
                                         </Property>
-                                        <Property name="text" type="java.lang.String" value="&#x41f;&#x43e;&#x434;&#x432;&#x435;&#x441;"/>
+                                        <Property name="text" type="java.lang.String" value="&#x41f;&#x435;&#x442;&#x43b;&#x44f;"/>
                                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
                                             <EtchetBorder bevelType="0"/>

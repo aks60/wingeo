@@ -923,7 +923,7 @@ public class UGui {
             boolean b[] = {false, false, false, true, false};
             List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
 
-        } else if (enums.Type.MOSKITKA == com5t.type) {
+        } else if (enums.Type.MOSQUIT == com5t.type) {
             winTree.setComponentPopupMenu(ppm);
             boolean b[] = {false, false, false, false, true};
             List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));            

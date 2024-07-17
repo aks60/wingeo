@@ -17,6 +17,7 @@ import builder.model.AreaStvorka;
 import builder.model.ElemSimple;
 import common.UCom;
 import dataset.Query;
+import enums.PKjson;
 import enums.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -146,7 +147,7 @@ public class SpcFurniture extends Cal5e {
                     }
                 }
             }
-            furnitureDet.detailRec = furndetRec; //для тестирования
+            furnitureDet.detailRec = furndetRec; //текущий элемент детализации
 
             //ФИЛЬТР параметров детализации 
             if (furnitureDet.filter(mapParam, areaStv, furndetRec) == false) {
@@ -198,7 +199,7 @@ public class SpcFurniture extends Cal5e {
                     ElemSimple sideStv = determOfSide(mapParam, areaStv);
                     SpcRecord spcAdd = new SpcRecord("ФУРН", furndetRec, artiklRec, sideStv, mapParam);
 
-                    //Ловим ручку, подвес, замок и присваиваем знач. в створку
+                    //Ловим ручку, подвес, замок и присваиваем знач. в свойства створки
                     if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2 && 
                             List.of(9, 11, 12).contains(spcAdd.artiklRec.getInt(eArtikl.level2)) == true) {
                         setPropertyStv(areaStv, spcAdd);
@@ -237,8 +238,8 @@ public class SpcFurniture extends Cal5e {
             boolean add_specific = true;
             //Ручка
             if (spcAdd.artiklRec.getInt(eArtikl.level2) == 11) {
-                if (stv.paramCheck[2] == false) {
-                    spcAdd.setColor(stv.knobColor, stv.knobColor, stv.knobColor);
+                if (stv.isJson(stv.gson.param, PKjson.colorKnob)) {
+                    spcAdd.setColor(stv.knobColor, -3, -3);
                 } else {
                     if (UColor.colorFromProduct(spcAdd) == true) { //подбор по цвету
 

@@ -53,7 +53,6 @@ public class AreaStvorka extends AreaSimple {
     public double knobHeight = 0; //высота ручки
     public TypeOpen1 typeOpen = TypeOpen1.EMPTY; //направление открывания
     public LayoutKnob knobLayout = LayoutKnob.MIDL; //положение ручки на створке      
-    public boolean paramCheck[] = {true, true, true, true, true, true, true, true};
     public double offset[] = {0, 0, 0, 0};
 
     public AreaStvorka(Wincalc winc, GsonElem gson, AreaSimple owner) {
@@ -61,60 +60,58 @@ public class AreaStvorka extends AreaSimple {
         initArtikle(gson.param);
     }
 
+    /**
+     * Фурнитура выбирается вручную из списка системы либо первая в списке системы.
+     * 
+     * Ручка по умолчанию из фурнитуры либо если есть подбирается из детализации выбр. фурн.
+     * либо выбирается вручную из ручек фыбранной фурнитуры. Цвет первая запись из текстуры 
+     * артикулов или из подбора текстур или вручную.
+     * 
+     * 
+     */
     public void initArtikle(JsonObject param) {
         try {
             //Поиск о параметру или первая запись из списка...
             //Фурнитура
             if (isJson(param, PKjson.sysfurnID)) {
                 sysfurnRec = eSysfurn.find2(param.get(PKjson.sysfurnID).getAsInt());
-                paramCheck[0] = false;
             } else { //по умолчанию
                 sysfurnRec = eSysfurn.find3(winc.nuni); //ищем первую в системе
-                paramCheck[0] = true;
             }
             //Ручка
             if (isJson(param, PKjson.artiklKnob)) {
                 knobRec = eArtikl.find(param.get(PKjson.artiklKnob).getAsInt(), false);
-                paramCheck[1] = false;
             } else { //по умолчанию
                 knobRec = eArtikl.find(sysfurnRec.getInt(eSysfurn.artikl_id1), false);
-                paramCheck[1] = true;
             }
             //Текстура ручки
             if (isJson(param, PKjson.colorKnob)) {
                 knobColor = param.get(PKjson.colorKnob).getAsInt();
-                paramCheck[2] = false;
             } else if (knobColor == -3) { //по умолчанию (первая в списке)
                 knobColor = eArtdet.find(knobRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk);
-                if(knobColor < 0) { //если все текстуры группы
+                if (knobColor < 0) { //если все текстуры группы
                     knobColor = eColor.find2(knobColor).get(0).getInt(eColor.id);
                 }
-                paramCheck[2] = true;
             }
             //Подвес (петли)
             if (isJson(param, PKjson.artiklLoop)) {
                 loopRec = eArtikl.find(param.get(PKjson.artiklLoop).getAsInt(), false);
-                paramCheck[3] = false;
             }
             //Текстура подвеса
             if (isJson(param, PKjson.colorLoop)) {
                 loopColor = param.get(PKjson.colorLoop).getAsInt();
-                paramCheck[4] = false;
             }
             //Замок
             if (isJson(param, PKjson.artiklLock)) {
                 lockRec = eArtikl.find(param.get(PKjson.artiklLock).getAsInt(), false);
-                paramCheck[5] = false;
             }
             //Текстура замка
             if (isJson(param, PKjson.colorLock)) {
                 lockColor = param.get(PKjson.colorLock).getAsInt();
-                paramCheck[6] = false;
             }
             //Сторона открывания
             if (isJson(param, PKjson.typeOpen)) {
                 typeOpen = TypeOpen1.get(param.get(PKjson.typeOpen).getAsInt());
-                paramCheck[7] = false;
             } else {
                 int index = sysfurnRec.getInt(eSysfurn.side_open);
                 typeOpen = (index == TypeOpen2.REQ.id) ? typeOpen : (index == TypeOpen2.LEF.id) ? TypeOpen1.RIGH : TypeOpen1.LEFT;
@@ -241,7 +238,7 @@ public class AreaStvorka extends AreaSimple {
                         this.knobOpen = (Polygon) aff.transform(this.knobOpen);
                     }
                 }
-            }           
+            }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.setLocation " + e);
         }
@@ -303,7 +300,7 @@ public class AreaStvorka extends AreaSimple {
 
             if (timer.isRunning() == true) {
                 this.frames.stream().filter(e -> e.type == Type.STVORKA_SIDE).forEach(e -> ((Com5t) e).timer.start());
-            }            
+            }
             winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
             winc.gc2d.draw(shape);
         }

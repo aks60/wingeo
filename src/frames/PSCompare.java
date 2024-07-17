@@ -1144,7 +1144,7 @@ public class PSCompare extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFindArtikl
 
     private void txt19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt19ActionPerformed
-        // TODO add your handling code here:
+        // 
     }//GEN-LAST:event_txt19ActionPerformed
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">   

@@ -19,6 +19,7 @@ import domain.eSysprof;
 import enums.Type;
 import java.util.ArrayList;
 
+//TODO Сделать составы для заполнений
 /**
  * Составы.
  */
@@ -38,12 +39,12 @@ public class SpcElement extends Cal5e {
     public void calc() {
         super.calc();
         ArrayList<ElemSimple> listElem = winc.listElem.filter(Type.FRAME_SIDE,
-                Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA, Type.GLASS, Type.MOSKITKA); //список элементов конструкции
+                Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA, Type.GLASS, Type.MOSQUIT); //список элементов конструкции
         try {
             //Цикл по списку элементов конструкции
             for (ElemSimple elem5e : listElem) {
 
-                if (elem5e.type == Type.MOSKITKA) {
+                if (elem5e.type == Type.MOSQUIT) {
                     ElemMosquit elemMosq = (ElemMosquit) elem5e;
                     //По id - профиля
                     List<Record> elementList4 = List.of(eElement.find4(elemMosq.sysprofRec.getInt(eElement.id)));
