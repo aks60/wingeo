@@ -45,10 +45,10 @@ public class AreaStvorka extends AreaSimple {
     public LineString lineOpenHor = null; //линии горизонт. открывания
     public LineString lineOpenVer = null; //линии вертик. открывания
     public Polygon knobOpen = null; //ручка открывания    
-    public int knobColor = -3; //цвет ручки
-    public int loopColor = -3; //цвет подвеса
-    public int lockColor = -3; //цвет замка
-    public int mosqColor = -3; //цвет москитки
+    public int knobColor = -3; //цвет ручки вирт...
+    public int loopColor = -3; //цвет подвеса вирт...
+    public int lockColor = -3; //цвет замка вирт...
+    public int mosqColor = -3; //цвет москитки вирт...
 
     public double knobHeight = 0; //высота ручки
     public TypeOpen1 typeOpen = TypeOpen1.EMPTY; //направление открывания
@@ -84,7 +84,7 @@ public class AreaStvorka extends AreaSimple {
             if (isJson(param, PKjson.colorKnob)) {
                 knobColor = param.get(PKjson.colorKnob).getAsInt();
                 paramCheck[2] = false;
-            } else {//по умолчанию
+            } else if (knobColor == -3) { //по умолчанию (первая в списке)
                 knobColor = eArtdet.find(knobRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk);
                 if(knobColor < 0) { //если все текстуры группы
                     knobColor = eColor.find2(knobColor).get(0).getInt(eColor.id);
