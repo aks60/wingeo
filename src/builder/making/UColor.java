@@ -381,12 +381,16 @@ public class UColor {
                 case 11: //По текстуре профиля
                     ElemSimple firstElem = spcAdd.elem5e.root.frames.get(0);
                     int artiklID = firstElem.artiklRec.getInt(eArtikl.id);
-                    return eArtdet.query().stream().filter(rec -> rec.getInt(eArtdet.mark_c1) == 1
-                            && rec.getInt(eArtdet.mark_c2) == 1 && rec.getInt(eArtdet.mark_c3) == 1
-                            && rec.getInt(eArtdet.artikl_id) == artiklID && rec.getInt(eArtdet.color_fk) > 0)
+                    return eArtdet.query().stream().filter(rec
+                            -> rec.getInt(eArtdet.mark_c1) == 1
+                            && rec.getInt(eArtdet.mark_c2) == 1
+                            && rec.getInt(eArtdet.mark_c3) == 1
+                            && rec.getInt(eArtdet.artikl_id) == artiklID
+                            && rec.getInt(eArtdet.color_fk) > 0)
                             .findFirst().orElse(eArtdet.record()).getInt(eArtdet.color_fk);
                 case 15: //По текстуре заполнения
-                    //System.out.println("builder.making.UColor.getColorProfile()");
+                    //spcAdd.elem5e.root.;
+                    
                     return -1;
                 case 1: //По основе профиля
                     return spcAdd.elem5e.winc.colorID1;

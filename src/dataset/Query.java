@@ -58,7 +58,8 @@ public class Query extends Table {
     }
 
     public Query select(Object... s) {
-
+        
+        String tName = "";
         String sql = String.valueOf(s[0]);
         if (String.valueOf(s[0]).substring(0, 6).equalsIgnoreCase("select") == false) {
             sql = ""; //для улучшения см. класс Scanner
@@ -66,6 +67,8 @@ public class Query extends Table {
                 if (p instanceof Field) {
                     Field f = (Field) p;
                     if ("up".equals(f.name())) {
+                        tName = f.tname();
+                        System.out.println("start " + tName + "  " + Query.conf);
                         sql = sql + " " + f.tname();
                     } else {
                         sql = sql + " " + f.tname() + "." + f.name();
@@ -88,7 +91,7 @@ public class Query extends Table {
             sql = sql.replace("' ", "'");
             sql = sql.replace(" '", "'");
         }
-        //System.out.println("SQL-SELECT: " + sql);
+        //System.out.println("SQL-SELECT:" + tName + ":" + sql);
         try {
             Statement statement = Conn.connection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet recordset = statement.executeQuery(sql);
@@ -109,6 +112,7 @@ public class Query extends Table {
             }
             statement.close();
             Conn.close();
+            System.out.println("stop " + tName);
             return this;
 
         } catch (SQLException e) {

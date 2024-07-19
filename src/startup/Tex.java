@@ -910,12 +910,20 @@ private void mn51ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:ev
 }//GEN-LAST:event_mn51ActionPerformed
 
 private void mnSpecif(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnSpecif
+    try {
+        Query.conf = "calc";
+        ProgressBar.create(Tex.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                App.Specification.createFrame(Tex.this);
+            }
+        });
+    } catch (Exception e) {
+        System.err.println("Ошибка:Texn() " + e);
+    } finally {
+        Query.conf = "app";
+    }
 
-    ProgressBar.create(Tex.this, new ListenerFrame() {
-        public void actionRequest(Object obj) {
-            App.Specification.createFrame(Tex.this);
-        }
-    });
+
 }//GEN-LAST:event_mnSpecif
 
 private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
