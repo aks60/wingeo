@@ -61,12 +61,13 @@ public class AreaStvorka extends AreaSimple {
     }
 
     /**
-     * Фурнитура выбирается вручную из списка системы либо первая в списке системы.
-     * 
-     * Ручка по умолчанию из фурнитуры либо если есть подбирается из детализации выбр. фурн.
-     * либо выбирается вручную из ручек фыбранной фурнитуры. Цвет первая запись из текстуры 
-     * артикулов или из подбора текстур или вручную.
-     * 
+     * Фурнитура выбирается вручную из списка системы либо первая в списке
+     * системы.
+     *
+     * Ручка по умолчанию из фурнитуры либо если есть подбирается из детализации
+     * выбр. фурн. либо выбирается вручную из ручек фыбранной фурнитуры. Цвет
+     * первая запись из текстуры артикулов или из подбора текстур или вручную.
+     *
      */
     public void initArtikle(JsonObject param) {
         try {
@@ -89,7 +90,10 @@ public class AreaStvorka extends AreaSimple {
             } else if (knobColor == -3) { //по умолчанию (первая в списке)
                 knobColor = eArtdet.find(knobRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk);
                 if (knobColor < 0) { //если все текстуры группы
-                    knobColor = eColor.find2(knobColor).get(0).getInt(eColor.id);
+                    List<Record> recordList = eColor.find2(knobColor);
+                    if (recordList.isEmpty() == false) {
+                        knobColor = eColor.find2(knobColor).get(0).getInt(eColor.id);
+                    }
                 }
             }
             //Подвес (петли)
@@ -132,7 +136,7 @@ public class AreaStvorka extends AreaSimple {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaStvorka.furniture " + e);
+            System.err.println("Ошибка:AreaStvorka.initArtikle() " + e);
         }
     }
 
