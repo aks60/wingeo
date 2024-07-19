@@ -25,6 +25,7 @@ import common.ArraySpc;
 import common.ArrayCom;
 import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
+import dataset.Query;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eSyspar1;
@@ -260,7 +261,7 @@ public class Wincalc {
 
         } catch (Exception e) {
             System.err.println("Ошибка:Wincalc.constructiv() " + e);
-        }
+        } 
     }
 
     //Рисуем конструкцию
