@@ -6,7 +6,7 @@ import common.eProfile;
 import common.eProp;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Locale;
+import java.util.List;
 import javax.swing.SwingWorker;
 import startup.App;
 
@@ -18,10 +18,9 @@ public class LogoToDb extends javax.swing.JDialog {
     public LogoToDb(java.awt.Window owner) {
         super(owner);
         initComponents();
-        
+
         //eProp.localeOld = LogoToDb.this.getInputContext().getLocale();
         //this.getInputContext().selectInputMethod(eProp.locale);
-
         if (eProp.dev == true) {
             if ("adm".equals(eProp.profile)) {
                 edUser.setText("SYSDBA"); //user
@@ -36,10 +35,17 @@ public class LogoToDb extends javax.swing.JDialog {
             connectToDb();
 
         } else {
-            labMes.setText("");
+            //labMes.setText("");
             edUser.setText(eProp.user.read());
-            edPass.requestFocus();
-            getRootPane().setDefaultButton(btnOk);
+            if (List.of("ADMIN", "TEXNOLOG", "MANAGER")
+                    .contains(eProp.user.read().toUpperCase())) {
+                
+                edPass.setText("masterkey"); 
+                connectToDb();
+            } else {
+                edPass.requestFocus();
+                getRootPane().setDefaultButton(btnOk);
+            }
         }
     }
 

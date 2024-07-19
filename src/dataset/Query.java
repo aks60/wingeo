@@ -12,7 +12,7 @@ import startup.App;
 
 public class Query extends Table {
 
-    public static String conf = "app";
+    public static String conf = "calc";
     private static String schema = "";
     public static String INS = "INS";
     public static String SEL = "SEL";
@@ -68,7 +68,7 @@ public class Query extends Table {
                     Field f = (Field) p;
                     if ("up".equals(f.name())) {
                         tName = f.tname();
-                        System.out.println("start " + tName + "  " + Query.conf);
+                        //System.out.println("start " + tName + "  " + Query.conf);
                         sql = sql + " " + f.tname();
                     } else {
                         sql = sql + " " + f.tname() + "." + f.name();
@@ -112,7 +112,7 @@ public class Query extends Table {
             }
             statement.close();
             Conn.close();
-            System.out.println("stop " + tName);
+            //System.out.println("stop " + tName);
             return this;
 
         } catch (SQLException e) {
