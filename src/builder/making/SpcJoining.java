@@ -143,7 +143,7 @@ public class SpcJoining extends Cal5e {
                     SpcRecord spcAdd = new SpcRecord("СОЕД", joindetRec, artiklRec, elemJoin.elem1, mapParam);
 
                     //Подбор текстуры
-                    if (UColor.colorFromProduct(spcAdd)) {
+                    if (UColor.colorFromElemOrSeri(spcAdd)) {
                         elemJoin.addSpecific(spcAdd);
                     }
                 }

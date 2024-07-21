@@ -199,12 +199,13 @@ public class SpcFurniture extends Cal5e {
                     ElemSimple sideStv = determOfSide(mapParam, areaStv);
                     SpcRecord spcAdd = new SpcRecord("ФУРН", furndetRec, artiklRec, sideStv, mapParam);
 
-                    //Ловим ручку, петлю, замок и присваиваем знач. в свойства створки
+                    //Ловим ручку, петлю, замок и 
+                    //присваиваем знач. в свойства створки
                     if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2 && 
                             List.of(9, 11, 12).contains(spcAdd.artiklRec.getInt(eArtikl.level2)) == true) {
                         setPropertyStv(areaStv, spcAdd);
                     } else {
-                        UColor.colorFromProduct(spcAdd);
+                        UColor.colorFromElemOrSeri(spcAdd);
                     }
                     //Добавим спецификацию в элемент
                     if (shortPass == false) {
@@ -245,7 +246,7 @@ public class SpcFurniture extends Cal5e {
                 //Цвет
                 spcAdd.setColor(stv.knobColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
                 if (stv.isJson(stv.gson.param, PKjson.colorKnob) == false) {
-                    if (UColor.colorFromProduct(spcAdd) == true) { //подбор по цвету
+                    if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
                         stv.knobColor = spcAdd.colorID1;
                     }
                 }
@@ -290,7 +291,7 @@ public class SpcFurniture extends Cal5e {
             boolean add_specific = true;
             //Ручка
             if (spcAdd.artiklRec.getInt(eArtikl.level2) == 11) {
-                if (UColor.colorFromProduct(spcAdd) == true) { //подбор по цвету
+                if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
 
                     if (stv.knobRec.getInt(eArtikl.id) == -3) {
                         stv.knobRec = spcAdd.artiklRec;
@@ -305,7 +306,7 @@ public class SpcFurniture extends Cal5e {
 
                 //Подвес
             } else if (spcAdd.artiklRec.getInt(eArtikl.level2) == 12) {
-                if (UColor.colorFromProduct(spcAdd) == true) { //подбор по цвету
+                if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
 
                     if (stv.loopRec.getInt(eArtikl.id) == -3) {
                         stv.loopRec = spcAdd.artiklRec;
@@ -320,7 +321,7 @@ public class SpcFurniture extends Cal5e {
 
                 //Замок  
             } else if (spcAdd.artiklRec.getInt(eArtikl.level2) == 9) {
-                if (UColor.colorFromProduct(spcAdd) == true) { //подбор по цвету
+                if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
 
                     if (stv.lockRec.getInt(eArtikl.id) == -3) {
                         stv.lockRec = spcAdd.artiklRec;

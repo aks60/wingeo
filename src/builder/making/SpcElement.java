@@ -96,7 +96,7 @@ public class SpcElement extends Cal5e {
                             SpcRecord spcAdd = new SpcRecord("ВСТ", elemdetRec, artiklRec, elem5e, mapParam);
 
                             //Подбор текстуры
-                            if (UColor.colorFromProduct(spcAdd)) {
+                            if (UColor.colorFromElemOrSeri(spcAdd)) {
 
                                 //Если в списке детализации элем.контейнер, 
                                 //например профиль с префиксом @ в осн. специф.

@@ -123,7 +123,7 @@ public class SpcFilling extends Cal5e {
                     SpcRecord spcAdd = new SpcRecord("ЗАП", glasdetRec, artiklRec, elemGlass, mapParam);
                     spcAdd.variantRec = glasgrpRec;
                     //Подбор текстуры
-                    if (UColor.colorFromProduct(spcAdd)) {
+                    if (UColor.colorFromElemOrSeri(spcAdd)) {
                         elemGlass.addSpecific(spcAdd);
                     }
                 }
