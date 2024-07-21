@@ -1,20 +1,16 @@
 package builder.making;
 
 import builder.model.ElemSimple;
-import common.ArrayCom;
 import dataset.Field;
 import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
 import domain.eParmap;
-import domain.eSetting;
 import domain.eSyspar1;
-import enums.Layout;
+import enums.Type;
 import enums.UseColor;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -389,7 +385,7 @@ public class UColor {
                             && rec.getInt(eArtdet.color_fk) > 0)
                             .findFirst().orElse(eArtdet.record()).getInt(eArtdet.color_fk);
                 case 15: //По текстуре заполнения
-                    //spcAdd.elem5e.root.;
+                    ElemSimple glass = spcAdd.elem5e.winc.listElem.filter(Type.GLASS).get(0);
                     
                     return -1;
                 case 1: //По основе профиля
