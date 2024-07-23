@@ -4,6 +4,8 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.ePrjkit.up;
+import frames.UGui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,6 +45,10 @@ public enum eSysfurn implements Field {
         return query;
     }
 
+    public Record addRecord() {
+        return UGui.addRecord(query, up);
+    }
+  
     public static List<Record> find(int _nuni) {
         if (Query.conf.equals("calc")) {
             return query().stream().filter(rec -> rec.getInt(systree_id) == _nuni).collect(Collectors.toList());

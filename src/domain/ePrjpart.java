@@ -5,6 +5,8 @@ import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
 import static domain.eColor.up;
+import static domain.ePrjkit.up;
+import frames.UGui;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 
@@ -68,6 +70,10 @@ public enum ePrjpart implements Field {
         return query;
     }
 
+    public Record addRecord() {
+        return UGui.addRecord(query, up);
+    }
+  
     public static Record find(int _id) {
         if (_id == -3) {
             return up.newRecord();

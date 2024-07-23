@@ -3,6 +3,9 @@ package domain;
 import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
+import dataset.Record;
+import static domain.eGroups.up;
+import frames.UGui;
 
 public enum eKitdet implements Field {
     up("0", "0", "0", "Спецификация комплектов", "KOMPSPC"),
@@ -37,6 +40,10 @@ public enum eKitdet implements Field {
         return query;
     }
 
+    public Record addRecord() {
+        return UGui.addRecord(query, up);
+    }
+    
     public String toString() {
         return meta.descr();
     }

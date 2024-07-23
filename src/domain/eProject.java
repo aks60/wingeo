@@ -4,6 +4,8 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.eGroups.up;
+import frames.UGui;
 
 public enum eProject implements Field {
     up("0", "0", "0", "Заказы проектов", "LISTPRJ"),
@@ -71,6 +73,10 @@ public enum eProject implements Field {
         return query;
     }
 
+    public Record addRecord() {
+        return UGui.addRecord(query, up);
+    }
+    
     public String toString() {
         return meta.descr();
     }

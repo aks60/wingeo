@@ -4,6 +4,7 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import frames.UGui;
 
 public enum eGroups implements Field {
     up("0", "0", "0", "Справочники", "EMPTY"),
@@ -45,6 +46,10 @@ public enum eGroups implements Field {
         return query;
     }
 
+    public Record addRecord() {
+        return UGui.addRecord(query, up);
+    }
+    
     public static Record find(int _id) {
         if (Query.conf.equals("calc")) {
             return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord());

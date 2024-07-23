@@ -4,6 +4,8 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.eArtdet.up;
+import frames.UGui;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -71,7 +73,11 @@ public enum eArtikl implements Field {
         }
         return query;
     }
-
+    
+    public Record addRecord() {
+        return UGui.addRecord(query, up);
+    }
+    
     public static Record get(int id) {
         if (id == -3) {
             return virtualRec();

@@ -4,6 +4,9 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.eArtikl.up;
+import static domain.eColor.up;
+import frames.UGui;
 import java.util.ArrayList;
 
 public enum eGlasgrp implements Field {
@@ -27,7 +30,7 @@ public enum eGlasgrp implements Field {
     public Field[] fields() {
         return values();
     }
-
+    
     public static Query query() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
@@ -36,6 +39,10 @@ public enum eGlasgrp implements Field {
         return query;
     }
 
+    public Record addRecord() {
+        return UGui.addRecord(query, up);
+    }
+    
     public static ArrayList<Record>  findAll() {
         if (Query.conf.equals("calc")) {
             return query();

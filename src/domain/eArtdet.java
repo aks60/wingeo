@@ -4,6 +4,8 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.eArtikl.up;
+import frames.UGui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,6 +44,14 @@ public enum eArtdet implements Field {
         meta.init(p);
     }
 
+    public MetaField meta() {
+        return meta;
+    }
+
+    public Field[] fields() {
+        return values();
+    }
+
     public static Query query() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
@@ -49,13 +59,9 @@ public enum eArtdet implements Field {
         }
         return query;
     }
-
-    public MetaField meta() {
-        return meta;
-    }
-
-    public Field[] fields() {
-        return values();
+    
+    public Record addRecord() {
+        return UGui.addRecord(query, up);
     }
     
     public static Record find(int artiklID) {
@@ -68,20 +74,21 @@ public enum eArtdet implements Field {
         List<Record> record = new Query(values()).select("select first 1 * from " + up.tname() + " where " + artikl_id.name() + " = " + artiklID);
         return (record.size() == 0) ? record() : record.get(0);
     }
-    
-//    public static Record find2(int artiklID, int side) {
-//        if (artiklID == -3) {
-//            return record();
-//        }
-//        if (Query.conf.equals("calc")) {
-//            return query().stream().filter(rec -> rec.getInt(artikl_id) == artiklID 
-//                    && rec.getInt(color_fk) > 0 && rec.getInt(mark_c1) == 1).findFirst().orElse(record());
-//        }
-//        List<Record> record = new Query(values()).select("select first 1 * from " + up.tname() + " where " 
-//                + artikl_id.name() + " = " + artiklID + "and" + color_fk.name(), " > 0 and" + mark_c1.name(), " = 1");
-//        return (record.size() == 0) ? record() : record.get(0);
-//    }
-
+ 
+    /**
+    public static Record find2(int artiklID, int side) {
+        if (artiklID == -3) {
+            return record();
+        }
+        if (Query.conf.equals("calc")) {
+            return query().stream().filter(rec -> rec.getInt(artikl_id) == artiklID 
+                    && rec.getInt(color_fk) > 0 && rec.getInt(mark_c1) == 1).findFirst().orElse(record());
+        }
+        List<Record> record = new Query(values()).select("select first 1 * from " + up.tname() + " where " 
+                + artikl_id.name() + " = " + artiklID + "and" + color_fk.name(), " > 0 and" + mark_c1.name(), " = 1");
+        return (record.size() == 0) ? record() : record.get(0);
+    }
+*/
     
     public static List<Record> filter(int artiklID) {
         if (Query.conf.equals("calc")) {

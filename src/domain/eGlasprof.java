@@ -5,6 +5,8 @@ import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
 import static domain.eArtikl.up;
+import static domain.eGroups.up;
+import frames.UGui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,6 +43,10 @@ public enum eGlasprof implements Field {
         return query;
     }
 
+    public Record addRecord() {
+        return UGui.addRecord(query, up);
+    }
+    
     public static List<Record> findAll() {
         if (Query.conf.equals("calc")) {
             return query();

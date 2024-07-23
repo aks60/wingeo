@@ -4,6 +4,10 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.eArtikl.up;
+import static domain.eColor.up;
+import static domain.eGroups.up;
+import frames.UGui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +38,7 @@ public enum eFurndet implements Field {
     public Field[] fields() {
         return values();
     }
-
+    
     public static Query query() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
@@ -43,6 +47,10 @@ public enum eFurndet implements Field {
         return query;
     }
 
+    public Record addRecord() {
+        return UGui.addRecord(query, up);
+    }
+    
     public static List<Record> find(int _id) {
         if (Query.conf.equals("calc")) {
             return query().stream().filter(rec -> rec.getInt(furniture_id1) == _id).collect(Collectors.toList());

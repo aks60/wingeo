@@ -6,6 +6,9 @@ import dataset.Query;
 import dataset.Record;
 import static domain.eArtikl.code;
 import static domain.eArtikl.name;
+import static domain.eArtikl.up;
+import static domain.eGroups.up;
+import frames.UGui;
 import java.util.HashMap;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
@@ -51,6 +54,10 @@ public enum eColor implements Field {
         return query;
     }
 
+    public Record addRecord() {
+        return UGui.addRecord(query, up);
+    }
+    
     public static int rgb(int id) {
         if (id == -3) {
             return virtualRec().getInt(rgb);
@@ -130,7 +137,7 @@ public enum eColor implements Field {
         Record record = up.newRecord();
         record.setNo(id, -3);
         record.setNo(code, "@");
-        record.setNo(name, "virtual");        
+        record.setNo(name, "virtual");
         record.setNo(groups_id, -3);
         record.setNo(name, "");
         record.setNo(rgb, 15790320);

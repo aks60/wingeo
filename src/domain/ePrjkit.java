@@ -4,9 +4,11 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.eGroups.up;
 import static domain.ePrjprod.project_id;
 import static domain.ePrjprod.up;
 import static domain.ePrjprod.values;
+import frames.UGui;
 import java.util.List;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
@@ -34,14 +36,6 @@ public enum ePrjkit implements Field {
         meta.init(p);
     }
 
-    public static Query query() {
-        if (query.size() == 0) {
-            query.select(up, "order by", id);
-            Query.listOpenTable.add(query);
-        }
-        return query;
-    }
-
     public MetaField meta() {
         return meta;
     }
@@ -50,6 +44,18 @@ public enum ePrjkit implements Field {
         return values();
     }
 
+    public static Query query() {
+        if (query.size() == 0) {
+            query.select(up, "order by", id);
+            Query.listOpenTable.add(query);
+        }
+        return query;
+    }
+
+    public Record addRecord() {
+        return UGui.addRecord(query, up);
+    }
+        
     public static Record find(int _id) {
         if (Query.conf.equals("calc")) {
             return query().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(up.newRecord());

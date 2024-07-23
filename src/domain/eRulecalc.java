@@ -4,6 +4,8 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.ePrjkit.up;
+import frames.UGui;
 import java.util.List;
 
 public enum eRulecalc implements Field {
@@ -47,6 +49,10 @@ public enum eRulecalc implements Field {
         return query;
     }
 
+    public Record addRecord() {
+        return UGui.addRecord(query, up);
+    }
+  
     public static List<Record> list() {
         if (Query.conf.equals("calc")) {
             return query();

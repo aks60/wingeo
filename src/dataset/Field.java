@@ -65,7 +65,7 @@ public interface Field {
     default Record newRecord() {
         return newRecord(Query.SEL);
     }
-
+    
     default Record newRecord(String up) {
         Record record = new Record();
         record.add(this);
@@ -76,6 +76,10 @@ public interface Field {
         return record;
     }
 
+    default Record addRecord() {
+       return null; 
+    }
+    
     public MetaField meta();
 
     default Field[] fields() {

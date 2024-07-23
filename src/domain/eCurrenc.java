@@ -6,6 +6,8 @@ import dataset.Query;
 import dataset.Record;
 import static domain.eArtikl.code;
 import static domain.eArtikl.name;
+import static domain.eGroups.up;
+import frames.UGui;
 
 public enum eCurrenc implements Field {
     up("0", "0", "0", "Валюта", "CORRENC"),
@@ -43,6 +45,10 @@ public enum eCurrenc implements Field {
         return query;
     }
 
+    public Record addRecord() {
+        return UGui.addRecord(query, up);
+    }
+    
     public static Record find(int _id) {
         if (Query.conf.equals("calc")) {
             return query().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(virtualRec());

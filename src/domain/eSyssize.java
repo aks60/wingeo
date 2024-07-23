@@ -9,6 +9,8 @@ import static domain.eArtikl.id;
 import static domain.eArtikl.name;
 import static domain.eArtikl.up;
 import static domain.eArtikl.virtualRec;
+import static domain.ePrjkit.up;
+import frames.UGui;
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -44,7 +46,10 @@ public enum eSyssize implements Field {
         return query;
     }
 
-
+    public Record addRecord() {
+        return UGui.addRecord(query, up);
+    }
+  
     public static Record find(Record artiklRec) {
         int _id = artiklRec.getInt(eArtikl.syssize_id);
         if (_id == -3) { //если арт. вирт. то return virtualRec();

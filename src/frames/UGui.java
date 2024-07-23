@@ -462,7 +462,7 @@ public class UGui {
     }
 
     //Выделить запись по ключу
-    public static void setSelectedKey(JTable table, int id) {        
+    public static void setSelectedKey(JTable table, int id) {
         if (id != -1 && id != -3) {
             Query query = ((DefTableModel) table.getModel()).getQuery();
             for (int i = 0; i < query.size(); ++i) {
@@ -471,12 +471,13 @@ public class UGui {
                     UGui.scrollRectToRow(i, table);
                     return;
                 }
-            }            
+            }
         }
         UGui.setSelectedRow(table);
     }
+
     //Выделить запись по ключу
-    public static void setSelectedKey(JTable table, Query query, int id) {        
+    public static void setSelectedKey(JTable table, Query query, int id) {
         if (id != -1 && id != -3) {
             for (int i = 0; i < query.size(); ++i) {
                 if (query.get(i).getInt(1) == id) {
@@ -530,14 +531,13 @@ public class UGui {
         int index = UGui.getIndexRec(table);
         index = (index == -1) ? 0 : index;
         Query query = ((DefTableModel) table.getModel()).getQuery();
-        Record record = field.newRecord(Query.INS);
+        Record record = field.addRecord();
+        if (record == null) {
+            record = field.newRecord(Query.INS);
+        }
         record.setNo(field.fields()[1], Conn.genId(field));
-//        if (index == 0) {
-//            query.add(index, record);      
-//        } else 
         if (++index <= table.getRowCount()) {
             query.add(index, record);
-
         } else {
             query.add(--index, record);
         }
@@ -551,7 +551,10 @@ public class UGui {
     public static void insertRecordEnd(JTable table, Field field, ListenerRecord listener) {
 
         Query query = ((DefTableModel) table.getModel()).getQuery();
-        Record record = field.newRecord(Query.INS);
+        Record record = field.addRecord();
+        if (record == null) {
+            record = field.newRecord(Query.INS);
+        }
         record.setNo(field.fields()[1], Conn.genId(field));
         query.add(record);
         listener.action(record);
@@ -559,6 +562,14 @@ public class UGui {
         UGui.setSelectedIndex(table, query.size() - 1);
         UGui.scrollRectToIndex(query.size() - 1, table);
     }
+
+        
+    public static Record addRecord(Query query, Field field) {
+        Record record = field.newRecord(Query.INS);
+        query.add(record);
+        return record;
+    }
+    
 
     //Изменить запись
     public static void updateRecord(JTable table, ListenerRecord listener) {
@@ -907,7 +918,7 @@ public class UGui {
 
     public static void changePpmTree(JTree winTree, JPopupMenu ppm, Com5t com5t) {
         winTree.setComponentPopupMenu(null);
-        
+
         if (com5t.type == Type.GLASS && com5t.owner.type != Type.STVORKA) {
             winTree.setComponentPopupMenu(ppm);
             boolean b[] = {true, false, true, false, false};
@@ -926,7 +937,7 @@ public class UGui {
         } else if (enums.Type.MOSQUIT == com5t.type) {
             winTree.setComponentPopupMenu(ppm);
             boolean b[] = {false, false, false, false, true};
-            List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));            
+            List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
         }
     }
 }
