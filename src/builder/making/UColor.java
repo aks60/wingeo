@@ -385,9 +385,9 @@ public class UColor {
                 case 0:
                     return spcAdd.detailRec.getInt(COLOR_FK);  //указана вручную
                 case 11: //По текстуре профиля
-                    //ElemSimple firstElem = spcAdd.elem5e.root.frames.get(0);
-                    //int artiklID = firstElem.artiklRec.getInt(eArtikl.id);
-                    int artiklID = spcAdd.elem5e.artiklRecAn.getInt(eArtikl.id);
+                    ElemSimple firstElem = spcAdd.elem5e.root.frames.get(0);
+                    int artiklID = firstElem.artiklRec.getInt(eArtikl.id);
+                    //int artiklID = spcAdd.elem5e.artiklRecAn.getInt(eArtikl.id);
                     return eArtdet.query().stream().filter(rec
                             -> rec.getInt(eArtdet.mark_c1) == 1
                             && rec.getInt(eArtdet.mark_c2) == 1
@@ -400,17 +400,23 @@ public class UColor {
                         return spcAdd.elem5e.colorID1;
                     } 
                 case 1: //По основе профиля
-                    return spcAdd.elem5e.colorID1;
+                    return spcAdd.elem5e.winc.colorID1;
+//                    return spcAdd.elem5e.colorID1;
                 case 2: //По внутр.профиля
-                    return spcAdd.elem5e.colorID2;
+                    return spcAdd.elem5e.winc.colorID2;
+//                    return spcAdd.elem5e.colorID2;
                 case 3: //По внешн.профиля
-                    return spcAdd.elem5e.colorID3;
+                    return spcAdd.elem5e.winc.colorID3;
+//                    return spcAdd.elem5e.colorID3;
                 case 6: //По основе профиля в серии
-                    return spcAdd.elem5e.colorID1;
+                    return spcAdd.elem5e.winc.colorID1;
+//                    return spcAdd.elem5e.colorID1;
                 case 7: //По внутр.профиля в серии
-                    return spcAdd.elem5e.colorID2;
+                    return spcAdd.elem5e.winc.colorID2;
+//                    return spcAdd.elem5e.colorID2;
                 case 8: //По внешн.профиля в серии
-                    return spcAdd.elem5e.colorID3;
+                    return spcAdd.elem5e.winc.colorID3;
+//                    return spcAdd.elem5e.colorID3;
                 default:
                     return -1;
             }

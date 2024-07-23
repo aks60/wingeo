@@ -1691,7 +1691,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         btn9.setPreferredSize(new java.awt.Dimension(21, 20));
         btn9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                colorToWindows(evt);
+                colorToKorobka(evt);
             }
         });
 
@@ -1704,7 +1704,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         btn13.setPreferredSize(new java.awt.Dimension(21, 20));
         btn13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                colorToWindows(evt);
+                colorToKorobka(evt);
             }
         });
 
@@ -1717,7 +1717,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         btn2.setPreferredSize(new java.awt.Dimension(21, 20));
         btn2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                colorToWindows(evt);
+                colorToKorobka(evt);
             }
         });
 
@@ -3205,7 +3205,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         });
     }//GEN-LAST:event_btn1ActionPerformed
 
-    private void colorToWindows(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToWindows
+    private void colorToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToKorobka
         try {
             if (winNode != null) {
                 double selectID = winNode.com5t().id;
@@ -3249,7 +3249,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         } catch (Exception e) {
             System.err.println("Ошибка: " + e);
         }
-    }//GEN-LAST:event_colorToWindows
+    }//GEN-LAST:event_colorToKorobka
 
     private void sysprofToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysprofToFrame
         try {

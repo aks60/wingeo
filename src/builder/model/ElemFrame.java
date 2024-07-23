@@ -6,6 +6,8 @@ import builder.making.UColor;
 import builder.script.GsonElem;
 import common.ArrayLoop;
 import common.UCom;
+import dataset.Record;
+import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
 import domain.eSysprof;
@@ -16,7 +18,6 @@ import enums.Type;
 import enums.TypeArt;
 import enums.UseSide;
 import java.awt.Shape;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -24,7 +25,6 @@ import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
 
 public class ElemFrame extends ElemSimple {

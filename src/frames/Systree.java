@@ -1534,7 +1534,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btn9.setPreferredSize(new java.awt.Dimension(21, 20));
         btn9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                colorToWindows(evt);
+                colorToKorobka(evt);
             }
         });
 
@@ -1546,7 +1546,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btn13.setPreferredSize(new java.awt.Dimension(21, 20));
         btn13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                colorToWindows(evt);
+                colorToKorobka(evt);
             }
         });
 
@@ -1558,7 +1558,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btn2.setPreferredSize(new java.awt.Dimension(21, 20));
         btn2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                colorToWindows(evt);
+                colorToKorobka(evt);
             }
         });
 
@@ -3943,7 +3943,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }//GEN-LAST:event_colorToFrame
 
-    private void colorToWindows(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToWindows
+    private void colorToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToKorobka
         try {
             double selectID = winNode.com5t().id;
             HashSet<Record> colorSet = new HashSet<Record>();
@@ -3985,7 +3985,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.colorToWindows() " + e);
         }
-    }//GEN-LAST:event_colorToWindows
+    }//GEN-LAST:event_colorToKorobka
 
     private void artiklToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToGlass
         try {
