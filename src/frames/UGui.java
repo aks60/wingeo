@@ -186,6 +186,7 @@ public class UGui {
                     TreePath path = new TreePath(curNode.getPath());
                     tree.setSelectionPath(path);
                     tree.scrollPathToVisible(path);
+                    return;
                 }
                 curNode = curNode.getNextNode();
             } while (curNode != null);

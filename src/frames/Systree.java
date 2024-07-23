@@ -3949,6 +3949,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             HashSet<Record> colorSet = new HashSet<Record>();
 
             String colorTxt = (evt.getSource() == btn9) ? txt3.getText() : (evt.getSource() == btn13) ? txt4.getText() : txt5.getText();
+            double parentId = winNode.com5t().owner.id;
+            GsonElem parentArea = (GsonElem) wincalc().listAll.gson(parentId);
             Integer[] colorArr = UCom.parserInt(colorTxt);
 
             //Поле текстур заполнено
