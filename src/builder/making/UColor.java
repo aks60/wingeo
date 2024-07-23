@@ -61,7 +61,7 @@ public class UColor {
         int typesUS = spcClon.detailRec.getInt(COLOR_US);
         if (UseColor.isSeries(typesUS)) { //если серия
 
-            List<Record> artseriList = eArtikl.find3(spcClon.artiklRec.getInt(eArtikl.groups4_id));
+            List<Record> artseriList = eArtikl.filter(spcClon.artiklRec.getInt(eArtikl.groups4_id));
             for (Record artseriRec : artseriList) {
                 spcClon.setArtikl(artseriRec);
                 if (UColor.colorFromProduct(spcClon, 1, true)

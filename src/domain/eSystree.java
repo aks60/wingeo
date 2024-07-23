@@ -5,9 +5,12 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.eArtikl.groups4_id;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public enum eSystree implements Field {
     up("0", "0", "0", "Дерево системы профилей", "SYSPROF"),
@@ -22,7 +25,7 @@ public enum eSystree implements Field {
     imgview("5", "5", "1", "Вид со стороны", "TVIEW"),
     pref("12", "32", "1", "Замена / код", "NPREF"),
     types("5", "5", "1", "Тип конструкции", "TYPEW"), //1-окно; 4,5-двери
-    note("12", "256", "1", "Примечание", "NPRIM"), 
+    note("12", "256", "1", "Примечание", "NPRIM"),
     parent_id("4", "10", "1", "Родитель", "parent_id");
 
     private MetaField meta = new MetaField(this);
@@ -47,9 +50,14 @@ public enum eSystree implements Field {
         }
         return query;
     }
-    
+
     public static String patch(int _nuni, String patch) {
-        Query recordList = new Query(values()).select(up, "where", id, "=", _nuni);
+        List<Record> recordList = null;
+        if (Query.conf.equals("calc")) {
+            recordList = query().stream().filter(rec -> _nuni == rec.getInt(id)).collect(Collectors.toList());
+        } else {
+            recordList = new Query(values()).select(up, "where", id, "=", _nuni);
+        }
         Record record = recordList.get(0);
         if (record.getInt(id) == record.getInt(parent_id)) {
             return patch + record.getStr(name);
@@ -81,7 +89,7 @@ public enum eSystree implements Field {
         String ret = "";
         try {
             Statement statement = Conn.connection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet recordset = statement.executeQuery("with recursive tree as (select * from systree where id = " 
+            ResultSet recordset = statement.executeQuery("with recursive tree as (select * from systree where id = "
                     + id + " union all select * from systree a join tree b on a.id = b.parent_id and b.id != b.parent_id) select * from tree");
             while (recordset.next()) {
                 ret = recordset.getString("name") + " / " + ret;
@@ -93,7 +101,7 @@ public enum eSystree implements Field {
         }
         return ret;
     }
-    
+
     public String toString() {
         return meta.descr();
     }

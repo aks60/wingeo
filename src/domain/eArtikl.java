@@ -120,7 +120,7 @@ public enum eArtikl implements Field {
         return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
     }
 
-    public static List<Record> find3(int seriesID) {
+    public static List<Record> filter(int seriesID) {
         if (seriesID == -1) {
             return List.of();
         }
