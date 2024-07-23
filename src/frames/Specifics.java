@@ -72,7 +72,7 @@ public class Specifics extends javax.swing.JFrame {
         loadingTab1(winc.listSpec);
         UGui.setSelectedRow(tab1);
     }
-
+    
     public void createPpm() {
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Мат. ценности");
         mnAll.addActionListener(new java.awt.event.ActionListener() {
@@ -152,16 +152,9 @@ public class Specifics extends javax.swing.JFrame {
             }
         }
     }
-
+    
     public void loadingTab1(List<SpcRecord> listSpec) {
-        tab1.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
-                JLabel lab = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
-                lab.setBackground(new java.awt.Color(212, 208, 200));
-                return lab;
-            }
-        });
+
         DefaultTableModel dtm = ((DefaultTableModel) tab1.getModel());
         dtm.getDataVector().clear();
         dtm.fireTableDataChanged();
@@ -785,6 +778,14 @@ public class Specifics extends javax.swing.JFrame {
         TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tab1.getModel());
         tab1.setRowSorter(sorter);
         tab1.getTableHeader().setPreferredSize(new Dimension(0, 46));
+        tab1.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+                JLabel lab = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+                lab.setBackground(new java.awt.Color(212, 208, 200));
+                return lab;
+            }
+        });         
         tab1.getColumnModel().getColumn(1).setCellRenderer(new DefCellRendererNumb("#0.#"));
         tab1.getColumnModel().getColumn(2).setCellRenderer(new DefCellRendererNumb("#0.#"));
         tab1.getColumnModel().getColumn(9).setCellRenderer(new DefCellRendererNumb(1));
