@@ -11,6 +11,13 @@ import enums.UseUnit;
 import org.locationtech.jts.geom.Envelope;
 //TODO - Реализовать жалюзи
 //Жалюзи
+/**
+ * Правила расчёта.
+ * Следует измерить ширину и высоту оконного проема в нескольких местах, как в случае с горизонтальными конструкциями;
+ * К показателю ширины прибавить 20 см (по 10 см с каждой стороны); При монтаже жалюзи на потолок, к высоте нужно 
+ * прибавить расстояние от окна (верхний откос) к потолку, если на стену – минимум +10 см.
+ * @author aks
+ */
 public class ElemBlinds extends ElemSimple {
 
     public ElemBlinds(Wincalc winc, GsonElem gson, AreaSimple owner) {

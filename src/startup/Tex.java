@@ -559,7 +559,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn0.setPreferredSize(new java.awt.Dimension(800, 25));
 
-        mn01.setText(bundle.getString("Меню.Справка")); // NOI18N
+        mn01.setText(bundle.getString("Меню.Настройки")); // NOI18N
         mn01.setFont(frames.UGui.getFont(1,1));
 
         mn12.setFont(frames.UGui.getFont(0,1));
