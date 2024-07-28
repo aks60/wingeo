@@ -2024,7 +2024,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         lab4.setMaximumSize(new java.awt.Dimension(260, 18));
 
-        lab40.setFont(frames.UGui.getFont(0,0));
+        lab40.setFont(frames.UGui.getFont(0,1));
         lab40.setText("Жалюзи");
         lab40.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab40.setMaximumSize(new java.awt.Dimension(80, 18));
@@ -2128,7 +2128,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btn35.setPreferredSize(new java.awt.Dimension(21, 20));
         btn35.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn35mosqToElements(evt);
+                blindsToElement(evt);
             }
         });
 
@@ -2271,10 +2271,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                             .addComponent(lab72, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txt62, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pan15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lab73, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt63, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pan15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pan15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lab73, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt63, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pan15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pan15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -2435,7 +2436,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         lab30.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab30.setPreferredSize(new java.awt.Dimension(80, 18));
 
-        lab25.setFont(frames.UGui.getFont(0,0));
+        lab25.setFont(frames.UGui.getFont(0,1));
         lab25.setText("Ручка");
         lab25.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab25.setMaximumSize(new java.awt.Dimension(80, 18));
@@ -2461,7 +2462,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         lab70.setMinimumSize(new java.awt.Dimension(80, 18));
         lab70.setPreferredSize(new java.awt.Dimension(80, 18));
 
-        lab26.setFont(frames.UGui.getFont(0,0));
+        lab26.setFont(frames.UGui.getFont(0,1));
         lab26.setText("Петля");
         lab26.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab26.setMaximumSize(new java.awt.Dimension(80, 18));
@@ -2650,7 +2651,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         tabb2.addTab("Основн...", pan20);
 
-        lab71.setFont(frames.UGui.getFont(0,0));
+        lab71.setFont(frames.UGui.getFont(0,1));
         lab71.setText("Замок");
         lab71.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab71.setMaximumSize(new java.awt.Dimension(80, 18));
@@ -2710,7 +2711,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         lab3.setMinimumSize(new java.awt.Dimension(80, 18));
         lab3.setPreferredSize(new java.awt.Dimension(80, 18));
 
-        lab28.setFont(frames.UGui.getFont(0,0));
+        lab28.setFont(frames.UGui.getFont(0,1));
         lab28.setText("Моск. сетка");
         lab28.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab28.setMaximumSize(new java.awt.Dimension(80, 18));
@@ -4127,7 +4128,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 stvArea.param.remove(PKjson.colorKnob);
                 if (artiklRec.get(1) == null) {
                     stvArea.param.remove(PKjson.artiklKnob);
-                    stvArea.param.remove(PKjson.colorKnob);
                 } else {
                     stvArea.param.addProperty(PKjson.artiklKnob, artiklRec.getStr(eArtikl.id));
                 }
@@ -4765,9 +4765,29 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         // 
     }//GEN-LAST:event_btn34mosqToElements
 
-    private void btn35mosqToElements(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn35mosqToElements
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn35mosqToElements
+    private void blindsToElement(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blindsToElement
+        try {
+            double glassID = winNode.com5t().id;
+            int artiklID = ((ElemGlass) winNode.com5t()).artiklRec.getInt(eArtikl.id);
+            Query qBlinds = new Query(eArtikl.values()).select(eArtikl.up, "where", eArtikl.level1, "= 5 and", eArtikl.level2, " = 50");
+            //Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
+            new DicArtikl(this, (artiklRec) -> {
+
+                GsonElem glass = (GsonElem) wincalc().listAll.gson(glassID);
+                //stvArea.param.remove(PKjson.colorKnob);
+                if (artiklRec.get(1) == null) {
+                    //stvArea.param.remove(PKjson.artiklB);
+                } else {
+                    glass.param.addProperty(PKjson.artiklKnob, artiklRec.getStr(eArtikl.id));
+                }
+                //updateScript(stvorkaID);
+
+            }, qBlinds);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:Systree.handlToStvorka() " + e);
+        }        
+    }//GEN-LAST:event_blindsToElement
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables

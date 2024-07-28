@@ -20,6 +20,8 @@ import org.locationtech.jts.geom.Envelope;
  */
 public class ElemBlinds extends ElemSimple {
 
+    public int parentID = -3;
+    
     public ElemBlinds(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(owner.winc, gson, owner);
     }
@@ -57,15 +59,15 @@ public class ElemBlinds extends ElemSimple {
             spcRec.place = "ВСТ";
             spcRec.setArtikl(this.artiklRec);
             spcRec.colorID1 = this.colorID1;
-            Envelope envMosq = owner.owner.area.getGeometryN(1).getEnvelopeInternal();
+            Envelope envBlinds = owner.owner.area.getGeometryN(1).getEnvelopeInternal();
             double dXY = 25;
             this.area = UGeo.newPolygon( //жалюзи всегда прямоугольные
-                    envMosq.getMinX() - dXY, envMosq.getMinY() - dXY,
-                    envMosq.getMinX() - dXY, envMosq.getMaxY() + dXY,
-                    envMosq.getMaxX() + dXY, envMosq.getMaxY() + dXY,
-                    envMosq.getMaxX() + dXY, envMosq.getMinY() - dXY);
-            spcRec.width = (envMosq.getMaxX() - envMosq.getMinX()) + 2 * dXY;
-            spcRec.height = (envMosq.getMaxY() - envMosq.getMinY()) + 2 * dXY;
+                    envBlinds.getMinX() - dXY, envBlinds.getMinY() - dXY,
+                    envBlinds.getMinX() - dXY, envBlinds.getMaxY() + dXY,
+                    envBlinds.getMaxX() + dXY, envBlinds.getMaxY() + dXY,
+                    envBlinds.getMaxX() + dXY, envBlinds.getMinY() - dXY);
+            spcRec.width = (envBlinds.getMaxX() - envBlinds.getMinX()) + 2 * dXY;
+            spcRec.height = (envBlinds.getMaxY() - envBlinds.getMinY()) + 2 * dXY;
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemBlinds.setSpecific() " + e);
@@ -111,7 +113,7 @@ public class ElemBlinds extends ElemSimple {
 
     @Override
     public void paint() {
-        //Жалюзи на эскизе не прорисовываю
+        //Жалюзи на эскизе прорисовываетс как иконка
     }
 
     @Override

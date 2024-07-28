@@ -14,6 +14,7 @@ import builder.making.UColor;
 import builder.model.AreaArch;
 import builder.model.AreaDoor;
 import builder.model.AreaTrapeze;
+import builder.model.ElemBlinds;
 import builder.model.ElemMosquit;
 import builder.script.GsonElem;
 import builder.script.GsonRoot;
@@ -25,7 +26,6 @@ import common.ArraySpc;
 import common.ArrayCom;
 import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
-import dataset.Query;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eSyspar1;
@@ -83,7 +83,7 @@ public class Wincalc {
 
     public void build(String script) {
         //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script))); //для тестирования
-        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
         //Инит свойств
         spcId = 0;
@@ -161,6 +161,10 @@ public class Wincalc {
 
                     } else if (Type.MOSQUIT == js.type) {
                         ElemMosquit elem5e = new ElemMosquit(this, js, owner);
+                        owner.childs.add(elem5e); //добавим ребёнка родителю
+
+                    } else if (Type.BLINDS == js.type) {
+                        ElemBlinds elem5e = new ElemBlinds(this, js, owner);
                         owner.childs.add(elem5e); //добавим ребёнка родителю
                     }
                 }

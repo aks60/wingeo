@@ -26,6 +26,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 //Текстура артикулов
+//Устанавливать курсор на предыдущем выборе цвета см. Текстуры артикулов
 public class DicColor extends javax.swing.JDialog {
 
     private ListenerRecord listener;

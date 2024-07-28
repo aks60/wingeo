@@ -8,6 +8,7 @@ public class PKjson {
     public final static String sysfurnID = "sysfurnID"; //ID Фурнитуры
     public final static String artglasID = "artglasID"; //ID заполнения
     public final static String elementID = "elementID"; //ID составов
+    public final static String parentID = "parentID"; //ID родителя
 
     public final static String artiklKnob = "artiklKnob"; //Ручка на створке
     public final static String artiklLoop = "artiklLoop"; //Подвес на створке
