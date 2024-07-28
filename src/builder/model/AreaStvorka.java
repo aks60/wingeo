@@ -37,7 +37,7 @@ public class AreaStvorka extends AreaSimple {
     public Record sysfurnRec = eSysfurn.up.newRecord(); //фурнитура
     public Record knobRec = eArtikl.virtualRec(); //ручка
     public Record loopRec = eArtikl.virtualRec(); //подвес(петли)
-    public Record lockRec = eArtikl.virtualRec(); //замок
+    public Record lockRec = eArtikl.up.newRecord(); //замок
     public Record mosqRec = eArtikl.virtualRec(); //москитка
     public Record elementRec = eElement.up.newRecord(); //состав москидки 
 

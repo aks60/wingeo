@@ -2146,7 +2146,7 @@
                         <Component class="javax.swing.JLabel" name="lab40">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                              <Connection code="frames.UGui.getFont(0,1)" type="code"/>
+                              <Connection code="frames.UGui.getFont(0,0)" type="code"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="&#x416;&#x430;&#x43b;&#x44e;&#x437;&#x438;"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -3496,7 +3496,7 @@
                                 <Component class="javax.swing.JLabel" name="lab28">
                                   <Properties>
                                     <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                                      <Connection code="frames.UGui.getFont(0,1)" type="code"/>
+                                      <Connection code="frames.UGui.getFont(0,0)" type="code"/>
                                     </Property>
                                     <Property name="text" type="java.lang.String" value="&#x41c;&#x43e;&#x441;&#x43a;. &#x441;&#x435;&#x442;&#x43a;&#x430;"/>
                                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

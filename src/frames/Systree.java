@@ -2024,7 +2024,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         lab4.setMaximumSize(new java.awt.Dimension(260, 18));
 
-        lab40.setFont(frames.UGui.getFont(0,1));
+        lab40.setFont(frames.UGui.getFont(0,0));
         lab40.setText("Жалюзи");
         lab40.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab40.setMaximumSize(new java.awt.Dimension(80, 18));
@@ -2711,7 +2711,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         lab3.setMinimumSize(new java.awt.Dimension(80, 18));
         lab3.setPreferredSize(new java.awt.Dimension(80, 18));
 
-        lab28.setFont(frames.UGui.getFont(0,1));
+        lab28.setFont(frames.UGui.getFont(0,0));
         lab28.setText("Моск. сетка");
         lab28.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab28.setMaximumSize(new java.awt.Dimension(80, 18));
@@ -4224,7 +4224,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 stvArea.param.remove(PKjson.colorLoop);
                 if (artiklRec.get(1) == null) {
                     stvArea.param.remove(PKjson.artiklLoop);
-                    stvArea.param.remove(PKjson.colorLoop);
+                    //stvArea.param.remove(PKjson.colorLoop);
                 } else {
                     stvArea.param.addProperty(PKjson.artiklLoop, artiklRec.getStr(eArtikl.id));
                 }
@@ -4249,7 +4249,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 stvArea.param.remove(PKjson.colorLock);
                 if (artiklRec.get(1) == null) {
                     stvArea.param.remove(PKjson.artiklLock);
-                    stvArea.param.remove(PKjson.colorLock);
+                    //stvArea.param.remove(PKjson.colorLock);
                 } else {
                     stvArea.param.addProperty(PKjson.artiklLock, artiklRec.getStr(eArtikl.id));
                 }
