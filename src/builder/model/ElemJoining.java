@@ -36,8 +36,10 @@ public class ElemJoining {
 
     public void addSpecific(SpcRecord spcAdd) { //добавление спесификаций зависимых элементов
         try {
+            if(spcAdd.artiklRec.getStr(eArtikl.code).substring(0, 1).equals("@")) {
+                return;
+            }            
             SpcRecord spcRec = elem1.spcRec;
-
             String sideCalc = spcAdd.getParam("null", 11072, 12072);
             if (sideCalc != null && "большей".equals(sideCalc)) {
                 spcAdd.width = (elem1.length() > elem2.length()) ? elem1.length() : elem2.length();

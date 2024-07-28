@@ -155,6 +155,9 @@ public class ElemCross extends ElemSimple {
     @Override
     public void addSpecific(SpcRecord spcAdd) { //добавление спесификаций зависимых элементов
         try {
+            if(spcAdd.artiklRec.getStr(eArtikl.code).substring(0, 1).equals("@")) {
+                return;
+            }
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм 
