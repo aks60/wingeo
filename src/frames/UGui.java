@@ -608,6 +608,10 @@ public class UGui {
         return record;
     }
 
+    public static boolean upDomainRec() {
+        return false;
+    }
+    
     //Удалить запись в домене
     public static boolean delDomainRec(Query query, int id) {
         for (int i = 0; i < query.size(); i++) {
