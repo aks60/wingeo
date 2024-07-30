@@ -564,13 +564,21 @@ public class UGui {
         UGui.scrollRectToIndex(query.size() - 1, table);
     }
 
-        
+    //Добавить новую запись в домен и query    
     public static Record addRecord(Query query, Field field) {
         Record record = field.newRecord(Query.INS);
         query.add(record);
         return record;
     }
-    
+
+    //Добавить новую запись в домен и query    
+    public static boolean delRecord(Query query, int id) {
+        //Record record = query.stream().filter(rec -> id == rec.getInt(1)).findFirst().orElse(null);
+        for (Record record : query) {
+            
+        }
+        return true;
+    }
 
     //Изменить запись
     public static void updateRecord(JTable table, ListenerRecord listener) {

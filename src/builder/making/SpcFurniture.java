@@ -202,7 +202,7 @@ public class SpcFurniture extends Cal5e {
                     //Ловим ручку, петлю, замок и 
                     //присваиваем знач. в свойства створки
                     if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2
-                            && List.of(9, 11, 12).contains(spcAdd.artiklRec.getInt(eArtikl.level2)) == true) {
+                            && list.contains(spcAdd.artiklRec.getInt(eArtikl.level2)) == true) {
                         setPropertyStv(areaStv, spcAdd);
                     } else {
                         UColor.colorFromElemOrSeri(spcAdd);

@@ -99,7 +99,7 @@ public class AreaStvorka extends AreaSimple {
             //Подвес (петли)
             if (isJson(param, PKjson.artiklLoop)) {
                 loopRec = eArtikl.find(param.get(PKjson.artiklLoop).getAsInt(), false);
-            }
+            } 
             //Текстура подвеса
             if (isJson(param, PKjson.colorLoop)) {
                 loopColor = param.get(PKjson.colorLoop).getAsInt();
