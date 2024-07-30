@@ -74,8 +74,8 @@ public enum eArtikl implements Field {
         return query;
     }
     
-    public Record addRecord() {
-        return UGui.addRecord(query, up);
+    public Query getQuery() {
+        return query;
     }
     
     public static Record get(int id) {
@@ -92,11 +92,11 @@ public enum eArtikl implements Field {
             return virtualRec();
         }
         if (Query.conf.equals("calc")) {
-            Record recordRec = query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord());
+            Record recordRec = query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
             if (_analog == true && recordRec.get(analog_id) != null) {
 
                 int _analog_id = recordRec.getInt(analog_id);
-                recordRec = query().stream().filter(rec -> _analog_id == rec.getInt(id)).findFirst().orElse(up.newRecord());
+                recordRec = query().stream().filter(rec -> _analog_id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
             }
             return recordRec;
         }
@@ -106,7 +106,7 @@ public enum eArtikl implements Field {
             int _analog_id = recordList.getAs(0, analog_id);
             recordList = new Query(values()).select(up, "where", id, "=", _analog_id);
         }
-        return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
+        return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
 
     public static Record find2(String _code) {
@@ -114,10 +114,10 @@ public enum eArtikl implements Field {
             return virtualRec();
         }
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> _code.equals(rec.getStr(code))).findFirst().orElse(up.newRecord());
+            return query().stream().filter(rec -> _code.equals(rec.getStr(code))).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", code, "='", _code, "'");
-        return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
+        return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
 
     public static List<Record> filter(int seriesID) {
@@ -131,7 +131,7 @@ public enum eArtikl implements Field {
     }
 
     public static Record virtualRec() {
-        Record record = up.newRecord();
+        Record record = up.newRecord(Query.SEL);
         record.setNo(id, -3);
         record.setNo(code, "@");
         record.setNo(name, "virtual");

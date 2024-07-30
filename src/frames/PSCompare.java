@@ -5,6 +5,7 @@ import builder.Wincalc;
 import builder.making.SpcRecord;
 import common.UCom;
 import common.listener.ListenerFrame;
+import dataset.Query;
 import dataset.Record;
 import domain.eArtikl;
 import frames.swing.ProgressBar;
@@ -195,7 +196,7 @@ public class PSCompare extends javax.swing.JFrame {
                         vectorRec.set(5, hmColor.get(vectorRec.get(5)));  //цвет
                         vectorRec.set(6, hmColor.get(vectorRec.get(6)));  //цвет
                         String artikl = rs.getString("ANUMB"); //артикул                              
-                        Record artiklRec = eArtikl.query().stream().filter(r -> artikl.equals(r.get(eArtikl.code))).findFirst().orElse(eArtikl.up.newRecord());
+                        Record artiklRec = eArtikl.query().stream().filter(r -> artikl.equals(r.get(eArtikl.code))).findFirst().orElse(eArtikl.up.newRecord(Query.SEL));
                         vectorRec.add(4, artiklRec.get(eArtikl.name)); //имя артикула                 
                         vectorRec.add(null); //стоим. элемента без скидки
                         vectorRec.add(null); //стоим. элемента со скидкой                
@@ -317,7 +318,7 @@ public class PSCompare extends javax.swing.JFrame {
                     double costdec = rs.getDouble("APRCD"); //стоим.со.ск.за.ед.изм                                
                     double value1 = (perc * pogonag / 100 + pogonag) * cost;
                     double value2 = (perc * pogonag / 100 + pogonag) * costdec;
-                    Record artiklRec = eArtikl.query().stream().filter(r -> artikl.equals(r.get(eArtikl.code))).findFirst().orElse(eArtikl.up.newRecord());
+                    Record artiklRec = eArtikl.query().stream().filter(r -> artikl.equals(r.get(eArtikl.code))).findFirst().orElse(eArtikl.up.newRecord(Query.SEL));
                     sum1 = sum1 + value1;
                     sum2 = sum2 + value2;
                     vectorRec.add(4, artiklRec.get(eArtikl.name)); //имя артикула                
@@ -534,7 +535,7 @@ public class PSCompare extends javax.swing.JFrame {
                     Double val1 = entry.getValue();
                     Double val2 = hmDbSa.getOrDefault(key, 0.0);
                     hmDbSa.remove(key);
-                    Record rec = eArtikl.query().stream().filter(r -> key.equals(r.get(eArtikl.code))).findFirst().orElse(eArtikl.up.newRecord());
+                    Record rec = eArtikl.query().stream().filter(r -> key.equals(r.get(eArtikl.code))).findFirst().orElse(eArtikl.up.newRecord(Query.SEL));
                     System.out.printf("%-64s%-24s%-16.2f%-16.2f%-16.2f", new Object[]{rec.get(eArtikl.name), key, val1, val2, Math.abs(val1 - val2)});
                     System.out.println();
                     jarTotal = jarTotal + val2;

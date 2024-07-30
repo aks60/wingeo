@@ -125,10 +125,10 @@ public class Joinings extends javax.swing.JFrame {
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
                 if (eJoining.artikl_id1 == field) {
-                    return qArtikl.stream().filter(rec -> rec.get(eArtikl.id).equals(val)).findFirst().orElse(eArtikl.up.newRecord()).get(eArtikl.code);
+                    return qArtikl.stream().filter(rec -> rec.get(eArtikl.id).equals(val)).findFirst().orElse(eArtikl.up.newRecord(Query.SEL)).get(eArtikl.code);
 
                 } else if (eJoining.artikl_id2 == field) {
-                    return qArtikl.stream().filter(rec -> rec.get(eArtikl.id).equals(val)).findFirst().orElse(eArtikl.up.newRecord()).get(eArtikl.code);
+                    return qArtikl.stream().filter(rec -> rec.get(eArtikl.id).equals(val)).findFirst().orElse(eArtikl.up.newRecord(Query.SEL)).get(eArtikl.code);
                 }
                 return val;
             }
@@ -163,7 +163,7 @@ public class Joinings extends javax.swing.JFrame {
                     Field field = columns[col];
                     if (eJoindet.artikl_id == field) {
                         int id = Integer.valueOf(val.toString());
-                        Record recordArt = qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == id).findFirst().orElse(eArtikl.up.newRecord());
+                        Record recordArt = qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == id).findFirst().orElse(eArtikl.up.newRecord(Query.SEL));
                         if (col == 0) {
                             return recordArt.getStr(eArtikl.code);
                         } else if (col == 1) {
@@ -179,9 +179,9 @@ public class Joinings extends javax.swing.JFrame {
                             return UseColor.precision[1];
                         }
                         if (colorFk > 0) {
-                            return qColor.stream().filter(rec -> rec.getInt(eColor.id) == colorFk).findFirst().orElse(eColor.up.newRecord()).get(eColor.name);
+                            return qColor.stream().filter(rec -> rec.getInt(eColor.id) == colorFk).findFirst().orElse(eColor.up.newRecord(Query.SEL)).get(eColor.name);
                         } else {
-                            return "# " + qGroups.stream().filter(rec -> rec.getInt(eGroups.id) == -1 * colorFk).findFirst().orElse(eGroups.up.newRecord()).get(eGroups.name);
+                            return "# " + qGroups.stream().filter(rec -> rec.getInt(eGroups.id) == -1 * colorFk).findFirst().orElse(eGroups.up.newRecord(Query.SEL)).get(eGroups.name);
                         }
                     } else if (eJoindet.color_us == field) {
                         int types = Integer.valueOf(val.toString());
@@ -1130,7 +1130,7 @@ public class Joinings extends javax.swing.JFrame {
     private void btnFind1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind1
         if (tab1.getBorder() != null) {
             Record record = ((DefTableModel) tab1.getModel()).getQuery().get(UGui.getIndexRec(tab1));
-            Record record2 = qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == record.getInt(eJoining.artikl_id1)).findFirst().orElse(eJoining.up.newRecord());
+            Record record2 = qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == record.getInt(eJoining.artikl_id1)).findFirst().orElse(eJoining.up.newRecord(Query.SEL));
             ProgressBar.create(this, new ListenerFrame() {
                 public void actionRequest(Object obj) {
                     App.Artikles.createFrame(Joinings.this, record2);
@@ -1138,7 +1138,7 @@ public class Joinings extends javax.swing.JFrame {
             });
         } else if (tab4.getBorder() != null) {
             Record record = ((DefTableModel) tab4.getModel()).getQuery().get(UGui.getIndexRec(tab4));
-            Record record2 = qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == record.getInt(eJoindet.artikl_id)).findFirst().orElse(eJoindet.up.newRecord());
+            Record record2 = qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == record.getInt(eJoindet.artikl_id)).findFirst().orElse(eJoindet.up.newRecord(Query.SEL));
             ProgressBar.create(this, new ListenerFrame() {
                 public void actionRequest(Object obj) {
                     App.Artikles.createFrame(Joinings.this, record2);
@@ -1245,7 +1245,7 @@ public class Joinings extends javax.swing.JFrame {
     private void btnFind2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind2
         if (tab1.getBorder() != null) {
             Record record = ((DefTableModel) tab1.getModel()).getQuery().get(UGui.getIndexRec(tab1));
-            Record record2 = qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == record.getInt(eJoining.artikl_id2)).findFirst().orElse(eJoining.up.newRecord());
+            Record record2 = qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == record.getInt(eJoining.artikl_id2)).findFirst().orElse(eJoining.up.newRecord(Query.SEL));
             ProgressBar.create(this, new ListenerFrame() {
                 public void actionRequest(Object obj) {
                     App.Artikles.createFrame(Joinings.this, record2);

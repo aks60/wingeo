@@ -166,7 +166,7 @@ public class Artikles extends javax.swing.JFrame {
 
                     } else if (color_fk < 0) {
                         if (col == 0) {
-                            Record colgrpRec = qGroups.stream().filter(rec -> rec.getInt(eGroups.id) == color_fk).findFirst().orElse(eGroups.up.newRecord());
+                            Record colgrpRec = qGroups.stream().filter(rec -> rec.getInt(eGroups.id) == color_fk).findFirst().orElse(eGroups.up.newRecord(Query.SEL));
                             return colgrpRec.getStr(eGroups.name);
                         } else {
                             return "Все текстуры группы";

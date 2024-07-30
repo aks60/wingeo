@@ -1616,7 +1616,7 @@ public class Furniturs extends javax.swing.JFrame {
         JTable table = (UGui.getIndexRec(tab2c) != -1) ? tab2c
                 : (UGui.getIndexRec(tab2b) != -1) ? tab2b : tab2a; //ВАЖНО! Поиск выделения строки снизу вверх.
         Record record = ((DefTableModel) table.getModel()).getQuery().get(UGui.getIndexRec(table));
-        Record record2 = qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == record.getInt(eFurndet.artikl_id)).findFirst().orElse(eFurndet.up.newRecord());
+        Record record2 = qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == record.getInt(eFurndet.artikl_id)).findFirst().orElse(eFurndet.up.newRecord(Query.SEL));
         ProgressBar.create(this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 App.Artikles.createFrame(Furniturs.this, record2);

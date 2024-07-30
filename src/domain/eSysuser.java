@@ -48,6 +48,10 @@ public enum eSysuser implements Field {
         return query;
     }
 
+    public Query getQuery() {
+        return query;
+    }
+    
     public static Record find(int _id) {
         if (Query.conf.equals("calc")) {
             return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(null);
@@ -65,7 +69,7 @@ public enum eSysuser implements Field {
     }
     
     public static Record virtualRec() {
-        Record record = up.newRecord();
+        Record record = up.newRecord(Query.SEL);
         record.setNo(id, -3);
         record.setNo(role, "xxx");
         record.setNo(login, "xxx");

@@ -43,24 +43,24 @@ public enum eElempar2 implements Field {
         return query;
     }
 
-    public Record addRecord() {
-        return UGui.addRecord(query, up);
+    public Query getQuery() {
+        return query;
     }
             
     public static Record find(int _id) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord());
+            return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
-        return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
+        return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
     
     public static Record find2(int _grup) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> _grup == rec.getInt(id)).findFirst().orElse(up.newRecord());
+            return query().stream().filter(rec -> _grup == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _grup);
-        return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
+        return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
     
     public static List<Record> find3(int _elemdet_id) {

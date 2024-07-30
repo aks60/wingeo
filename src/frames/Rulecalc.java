@@ -400,7 +400,7 @@ public class Rulecalc extends javax.swing.JFrame {
         UGui.insertRecordCur(tab2, eRulecalc.up, (record) -> {
             record.setDev(eRulecalc.name, "Правило");
             record.set(eRulecalc.quant, 1);
-            qRulecalc.table(eArtikl.up).add(eArtikl.up.newRecord());
+            qRulecalc.table(eArtikl.up).add(eArtikl.up.newRecord(Query.SEL));
         });
     }//GEN-LAST:event_btnInsert
 

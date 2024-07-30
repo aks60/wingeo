@@ -36,6 +36,10 @@ public enum eSysprod implements Field {
         return query;
     }
 
+    public Query getQuery() {
+        return query;
+    }
+    
     public static Record find(int _id) { //если не нашол надо возвр. null
         if (Query.conf.equals("calc")) {
             return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(null);

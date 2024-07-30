@@ -21,14 +21,7 @@ public enum eJoining implements Field {
         meta.init(p);
     }
 
-    public static Query query() {
-        if (query.size() == 0) {
-            query.select(up, "order by", id);
-            Query.listOpenTable.add(query);
-        }
-        return query;
-    }
-
+    
     public MetaField meta() {
         return meta;
     }
@@ -37,16 +30,27 @@ public enum eJoining implements Field {
         return values();
     }
 
+    public static Query query() {
+        if (query.size() == 0) {
+            query.select(up, "order by", id);
+            Query.listOpenTable.add(query);
+        }
+        return query;
+    }
+
+    public Query getQuery() {
+        return query;
+    }
     public static Record find(int ID1, int ID2) {
 
         if (Query.conf.equals("calc")) {
             return query().stream().filter(rec -> (ID1 == rec.getInt(artikl_id1) || ID1 == rec.getInt(artikl_id2))
                     && (ID2 == rec.getInt(artikl_id1) || ID2 == rec.getInt(artikl_id2))
-                    && rec.getInt(artikl_id1) != rec.getInt(artikl_id2)).findFirst().orElse(up.newRecord());
+                    && rec.getInt(artikl_id1) != rec.getInt(artikl_id2)).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where (", artikl_id1, "=", ID1, "or", artikl_id1, "=", ID2, ") and (",
                 artikl_id2, "=", ID2, "or", artikl_id2, "=", ID1, ") and", artikl_id1, "!=", artikl_id2);
-        return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
+        return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
 
 //    public static Record find2(int ID1, int ID2) {
@@ -69,10 +73,10 @@ public enum eJoining implements Field {
     
     public static Record find2(String _analog) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> _analog.equals(rec.getStr(analog)) && (rec.getInt(is_main) & 0x100) != 0).findFirst().orElse(up.newRecord());
+            return query().stream().filter(rec -> _analog.equals(rec.getStr(analog)) && (rec.getInt(is_main) & 0x100) != 0).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", analog, "='", _analog, "'");
-        return recordList.stream().filter(rec -> (rec.getInt(is_main) & 0x100) != 0).findFirst().orElse(up.newRecord());
+        return recordList.stream().filter(rec -> (rec.getInt(is_main) & 0x100) != 0).findFirst().orElse(up.newRecord(Query.SEL));
     }
 
     public String toString() {

@@ -953,7 +953,7 @@ public class Fillings extends javax.swing.JFrame {
                 record.set(eGlasdet.depth, 0);
                 record.set(eGlasdet.glasgrp_id, id);
                 int index = UGui.getIndexKeyValue(tab2, record, eGlasdet.id);
-                qGlasdet.table(eArtikl.up).add(index, eArtikl.up.newRecord());
+                qGlasdet.table(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
             });
 
         } else if (tab3.getBorder() != null) {
@@ -980,7 +980,7 @@ public class Fillings extends javax.swing.JFrame {
                 record.set(eGlasprof.inside, 1);
                 record.set(eGlasprof.outside, 1);
                 int index = UGui.getIndexKeyValue(tab5, record, eGlasprof.id);
-                qGlasprof.table(eArtikl.up).add(index, eArtikl.up.newRecord());
+                qGlasprof.table(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
             });
         }
     }//GEN-LAST:event_btnInsert

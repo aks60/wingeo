@@ -46,8 +46,8 @@ public enum eSyssize implements Field {
         return query;
     }
 
-    public Record addRecord() {
-        return UGui.addRecord(query, up);
+    public Query getQuery() {
+        return query;
     }
   
     public static Record find(Record artiklRec) {
@@ -64,7 +64,7 @@ public enum eSyssize implements Field {
 
     //Виртуал. системные переменные
     public static Record virtualRec() {
-        Record record = up.newRecord();
+        Record record = up.newRecord(Query.SEL);
         record.setNo(id, -3);
         record.setNo(name, "virtual");        
         record.setNo(prip, 3);

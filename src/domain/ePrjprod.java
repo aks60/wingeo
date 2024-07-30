@@ -42,6 +42,10 @@ public enum ePrjprod implements Field {
         return query;
     }
 
+    public Query getQuery() {
+        return query;
+    }
+    
     public static Record find(int _id) {
         if (Query.conf.equals("calc")) {
             return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(null);

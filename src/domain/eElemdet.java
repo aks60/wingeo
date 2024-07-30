@@ -15,7 +15,7 @@ public enum eElemdet implements Field {
     color_fk("4", "10", "1", "Текстура", "CLNUM"),
     artikl_id("4", "10", "1", "Артикул", "artikl_id"),
     element_id("4", "10", "0", "Вставка", "element_id");
- 
+
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());
 
@@ -43,6 +43,10 @@ public enum eElemdet implements Field {
             query.select(up, "order by", id);
             Query.listOpenTable.add(query);
         }
+        return query;
+    }
+
+    public Query getQuery() {
         return query;
     }
 

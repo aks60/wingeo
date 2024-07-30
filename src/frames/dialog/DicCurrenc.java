@@ -247,7 +247,7 @@ public class DicCurrenc extends javax.swing.JDialog {
     }//GEN-LAST:event_btnChoice
 
     private void btnRemove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemove
-        listener.action(eCurrenc.up.newRecord());
+        listener.action(eCurrenc.up.newRecord(Query.SEL));
         this.dispose();
     }//GEN-LAST:event_btnRemove
 

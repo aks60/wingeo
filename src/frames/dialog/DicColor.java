@@ -64,12 +64,12 @@ public class DicColor extends javax.swing.JDialog {
         Query colgrpList = new Query(eGroups.values()).select(eGroups.up, "where grup=", TypeGrup.COLOR_GRP.id, "order by", eGroups.npp, ",", eGroups.name);
 
         if (auto == true) {
-            Record autoRec = eGroups.up.newRecord();
+            Record autoRec = eGroups.up.newRecord(Query.SEL);
             autoRec.setNo(eGroups.id, -3);
             autoRec.setNo(eGroups.grup, -3);
             autoRec.setNo(eGroups.name, UseColor.automatic[1]);
             colgrpList.add(autoRec);
-            Record autoRec2 = eColor.up.newRecord();
+            Record autoRec2 = eColor.up.newRecord(Query.SEL);
             autoRec2.set(eColor.id, 0);
             autoRec2.set(eColor.groups_id, -3);
             autoRec2.set(eColor.name, UseColor.automatic[1]);

@@ -58,13 +58,13 @@ public class ParColor extends javax.swing.JDialog {
         }
         qGroupsGrp.select(eGroups.up, "where", eGroups.grup, "=", TypeGrup.COLOR_GRP.id);
 
-        Record color1 = eColor.up.newRecord();
+        Record color1 = eColor.up.newRecord(Query.SEL);
         color1.setNo(eColor.groups_id, UseColor.automatic[0]);
         color1.setNo(eColor.id, UseColor.automatic[0]);
         color1.setNo(eColor.code, UseColor.automatic[0]);
         color1.setNo(eColor.name, UseColor.automatic[1]);
         qColor.add(color1);
-        Record color2 = eColor.up.newRecord();
+        Record color2 = eColor.up.newRecord(Query.SEL);
         color2.setNo(eColor.groups_id, UseColor.precision[0]);
         color2.setNo(eColor.id, UseColor.precision[0]);
         color2.setNo(eColor.code, UseColor.precision[0]);

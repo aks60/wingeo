@@ -45,8 +45,8 @@ public enum eSysfurn implements Field {
         return query;
     }
 
-    public Record addRecord() {
-        return UGui.addRecord(query, up);
+    public Query getQuery() {
+        return query;
     }
   
     public static List<Record> find(int _nuni) {
@@ -59,26 +59,26 @@ public enum eSysfurn implements Field {
 
     public static Record find2(int _id) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(up.newRecord());
+            return query().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id, "order by", npp);
-        return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
+        return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
 
     public static Record find3(int _nuni) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> rec.getInt(systree_id) == _nuni).findFirst().orElse(up.newRecord());
+            return query().stream().filter(rec -> rec.getInt(systree_id) == _nuni).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", systree_id, "=", _nuni, "order by", npp, ",", id); //id - т.к. при ковертиров. наруш. порядок след.
-        return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
+        return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
     
     public static Record find4(int _nuni, int _side_open) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> rec.getInt(systree_id) == _nuni && rec.getInt(side_open) == _side_open).findFirst().orElse(up.newRecord());
+            return query().stream().filter(rec -> rec.getInt(systree_id) == _nuni && rec.getInt(side_open) == _side_open).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", systree_id, "=", _nuni, "and", side_open, "=", _side_open, "order by", npp);
-        return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
+        return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
 
     public String toString() {

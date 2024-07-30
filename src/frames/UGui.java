@@ -1,10 +1,6 @@
 package frames;
 
-import builder.Wincalc;
-import builder.model.AreaSimple;
 import builder.model.Com5t;
-import builder.model.ElemFrame;
-import builder.model.ElemSimple;
 import builder.script.GsonRoot;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,7 +17,6 @@ import domain.eSysprod;
 import domain.eSystree;
 import enums.Enam;
 import builder.param.ParamList;
-import builder.script.GsonElem;
 import common.UCom;
 import enums.UseColor;
 import java.awt.Component;
@@ -65,7 +60,6 @@ import domain.eColor;
 import domain.eFurndet;
 import domain.eParmap;
 import domain.ePrjprod;
-import enums.Layout;
 import enums.PKjson;
 import enums.Type;
 import frames.swing.DefMutableTreeNode;
@@ -73,7 +67,6 @@ import java.util.HashSet;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
-import org.locationtech.jts.geom.Geometry;
 
 /**
  * <p>
@@ -532,10 +525,10 @@ public class UGui {
         int index = UGui.getIndexRec(table);
         index = (index == -1) ? 0 : index;
         Query query = ((DefTableModel) table.getModel()).getQuery();
-        Record record = field.addRecord();
-        if (record == null) {
-            record = field.newRecord(Query.INS);
-        }
+        Record record = addDomainRec(field);
+//        if (record == null) {
+//            record = field.newRecord(Query.INS);
+//        }
         record.setNo(field.fields()[1], Conn.genId(field));
         if (++index <= table.getRowCount()) {
             query.add(index, record);
@@ -552,32 +545,16 @@ public class UGui {
     public static void insertRecordEnd(JTable table, Field field, ListenerRecord listener) {
 
         Query query = ((DefTableModel) table.getModel()).getQuery();
-        Record record = field.addRecord();
-        if (record == null) {
-            record = field.newRecord(Query.INS);
-        }
+        Record record = addDomainRec(field);
+//        if (record == null) {
+//            record = field.newRecord(Query.INS);
+//        }
         record.setNo(field.fields()[1], Conn.genId(field));
         query.add(record);
         listener.action(record);
         ((DefaultTableModel) table.getModel()).fireTableRowsInserted(query.size() - 1, query.size() - 1);
         UGui.setSelectedIndex(table, query.size() - 1);
         UGui.scrollRectToIndex(query.size() - 1, table);
-    }
-
-    //Добавить новую запись в домен и query    
-    public static Record addRecord(Query query, Field field) {
-        Record record = field.newRecord(Query.INS);
-        query.add(record);
-        return record;
-    }
-
-    //Добавить новую запись в домен и query    
-    public static boolean delRecord(Query query, int id) {
-        //Record record = query.stream().filter(rec -> id == rec.getInt(1)).findFirst().orElse(null);
-        for (Record record : query) {
-            
-        }
-        return true;
     }
 
     //Изменить запись
@@ -596,7 +573,11 @@ public class UGui {
             Record record = query.get(index);
             record.set(0, Query.DEL);
             if (query.delete(record)) {
-                query.removeRec(index);
+                Field f = query.fields().get(0); //Field домена
+                
+                query.removeRec(index);             
+                delDomainRec(f.getQuery(), record.getInt(1));
+                
                 ((DefTableModel) table.getModel()).fireTableRowsDeleted(row, row);
                 row = (row > 0) ? --row : 0;
                 if (query.size() > 0) {
@@ -626,6 +607,25 @@ public class UGui {
         return JOptionPane.showConfirmDialog(owner, "Вы действительно хотите удалить текущую запись?", "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
     }
 
+    //Добавить новую запись в доменt   
+    public static Record addDomainRec(Field field) {
+        Record record = field.newRecord(Query.INS);
+        field.getQuery().add(record);
+        return record;
+    }
+
+    //Удалить запись в домене
+    public static boolean delDomainRec(Query query, int id) {
+        for (int i = 0; i < query.size(); i++) {
+            Record record = query.get(i);
+            if (id == record.getInt(1)) {
+                query.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+    
     //Обновление записи в таблице JTable
     public static void fireTableRowUpdated(JTable table) {
         ((DefaultTableModel) table.getModel()).fireTableRowsUpdated(table.getSelectedRow(), table.getSelectedRow());

@@ -5,6 +5,7 @@ import builder.making.SpcRecord;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import common.ArrayCom;
+import dataset.Query;
 import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
@@ -34,12 +35,12 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 public class AreaStvorka extends AreaSimple {
 
     public SpcRecord spcRec = null; //спецификация москитки
-    public Record sysfurnRec = eSysfurn.up.newRecord(); //фурнитура
+    public Record sysfurnRec = eSysfurn.up.newRecord(Query.SEL); //фурнитура
     public Record knobRec = eArtikl.virtualRec(); //ручка
     public Record loopRec = eArtikl.virtualRec(); //подвес(петли)
-    public Record lockRec = eArtikl.up.newRecord(); //замок
+    public Record lockRec = eArtikl.up.newRecord(Query.SEL); //замок
     public Record mosqRec = eArtikl.virtualRec(); //москитка
-    public Record elementRec = eElement.up.newRecord(); //состав москидки 
+    public Record elementRec = eElement.up.newRecord(Query.SEL); //состав москидки 
 
     public Geometry frameBox = null; //полигон векторов сторон рамы
     public LineString lineOpenHor = null; //линии горизонт. открывания

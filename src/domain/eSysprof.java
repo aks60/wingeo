@@ -43,8 +43,8 @@ public enum eSysprof implements Field {
         return query;
     }
 
-    public Record addRecord() {
-        return UGui.addRecord(query, up);
+    public Query getQuery() {
+        return query;
     }
   
 //    public static ArrayList<Record> find(int _nuni) {
@@ -75,21 +75,21 @@ public enum eSysprof implements Field {
                 }
             }
             if (mapPrio.size() == 0) {
-                return up.newRecord();
+                return up.newRecord(Query.SEL);
             }
             return mapPrio.get(minLevel);
         }
         Query recordList = new Query(values()).select("select first 1 * from " + up.tname() + " where "
                 + systree_id.name() + " = " + _nuni + " and " + use_type.name() + " = " + _type.id + " order by " + npp.name());
-        return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
+        return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
 
     public static Record find3(int _id) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(up.newRecord());
+            return query().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
-        return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
+        return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
     
     public static Record find4(int nuni, int typ, UseSide us1) {
@@ -116,7 +116,7 @@ public enum eSysprof implements Field {
 
     public static Record virtualRec(int typeId) {
 
-        Record record = up.newRecord();
+        Record record = up.newRecord(Query.SEL);
         record.setNo(id, -3);
         record.setNo(use_type, typeId);
         record.setNo(use_side, UseSide.ANY.id);

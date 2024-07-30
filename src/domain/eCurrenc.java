@@ -45,10 +45,10 @@ public enum eCurrenc implements Field {
         return query;
     }
 
-    public Record addRecord() {
-        return UGui.addRecord(query, up);
+    public Query getQuery() {
+        return query;
     }
-    
+
     public static Record find(int _id) {
         if (Query.conf.equals("calc")) {
             return query().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(virtualRec());
@@ -58,9 +58,9 @@ public enum eCurrenc implements Field {
     }
 
     public static Record virtualRec() {
-        Record record = up.newRecord();
+        Record record = up.newRecord(Query.SEL);
         record.setNo(id, -3);
-        record.setNo(name, "virtual");        
+        record.setNo(name, "virtual");
         record.setNo(cross_cour, 1);
         record.setNo(name, "");
         return record;

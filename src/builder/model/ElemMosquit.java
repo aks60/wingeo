@@ -4,6 +4,7 @@ import builder.Wincalc;
 import builder.making.SpcRecord;
 import builder.script.GsonElem;
 import common.UCom;
+import dataset.Query;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eColor;
@@ -44,7 +45,7 @@ public class ElemMosquit extends ElemSimple {
         if (isJson(gson.param, PKjson.elementID)) {
             this.sysprofRec = eElement.find4(gson.param.get(PKjson.elementID).getAsInt());
         } else {
-            this.sysprofRec = eElement.up.newRecord();
+            this.sysprofRec = eElement.up.newRecord(Query.SEL);
         }
     }
 

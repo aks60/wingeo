@@ -36,8 +36,8 @@ public enum eKits implements Field {
         return query;
     }
 
-    public Record addRecord() {
-        return UGui.addRecord(query, up);
+    public Query getQuery() {
+        return query;
     }
     
     public String toString() {

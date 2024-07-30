@@ -43,8 +43,8 @@ public enum eJoindet implements Field {
         return query;
     }
 
-    public Record addRecord() {
-        return UGui.addRecord(query, up);
+    public Query getQuery() {
+        return query;
     }
     
     public static List<Record> find(int _id) {

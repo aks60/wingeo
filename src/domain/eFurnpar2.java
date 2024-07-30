@@ -41,8 +41,8 @@ public enum eFurnpar2 implements Field {
         return values();
     }
 
-    public Record addRecord() {
-        return UGui.addRecord(query, up);
+    public Query getQuery() {
+        return query;
     }
     
     public static List<Record> find(int _id) {

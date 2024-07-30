@@ -59,9 +59,9 @@ public enum eArtdet implements Field {
         }
         return query;
     }
-    
-    public Record addRecord() {
-        return UGui.addRecord(query, up);
+        
+    public Query getQuery() {
+        return query;
     }
     
     public static Record find(int artiklID) {
@@ -105,7 +105,7 @@ public enum eArtdet implements Field {
     }
 
     public static Record record() {
-        Record record = up.newRecord();
+        Record record = up.newRecord(Query.SEL);
         record.setNo(id, -3);
         record.setNo(artikl_id, -3);
         record.setNo(color_fk, -3);

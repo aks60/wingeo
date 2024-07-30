@@ -41,8 +41,8 @@ public enum eSyspar1 implements Field {
         return query;
     }
 
-    public Record addRecord() {
-        return UGui.addRecord(query, up);
+    public Query getQuery() {
+        return query;
     }
   
     public static List<Record> find(int _nuni) {
@@ -57,7 +57,7 @@ public enum eSyspar1 implements Field {
             return query().find(_id, id);
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
-        return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
+        return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
 
     public String toString() {

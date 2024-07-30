@@ -45,17 +45,17 @@ public enum eParmap implements Field {
         return query;
     }
 
-    public Record addRecord() {
-        return UGui.addRecord(query, up);
+    public Query getQuery() {
+        return query;
     }
   
     public static Record find(int parmapID) {
 
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> rec.getInt(id) == parmapID).findFirst().orElse(up.newRecord());
+            return query().stream().filter(rec -> rec.getInt(id) == parmapID).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", parmapID);
-        return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
+        return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
     
     public static List<Record> find2(int groupsID) {
@@ -69,10 +69,10 @@ public enum eParmap implements Field {
 
         if (Query.conf.equals("calc")) {
             List<Record> list = query().stream().filter(rec -> rec.getInt(groups_id) == groupsID).collect(toList());
-            return list.stream().filter(rec -> name.equals(eColor.get(rec.getInt(eParmap.color_id1)).getStr(eColor.name))).findFirst().orElse(up.newRecord());
+            return list.stream().filter(rec -> name.equals(eColor.get(rec.getInt(eParmap.color_id1)).getStr(eColor.name))).findFirst().orElse(up.newRecord(Query.SEL));
         }
         List<Record> list = new Query(values()).select(up, "where", groups_id, "=", groupsID);
-        return list.stream().filter(rec -> name.equals(eColor.get(rec.getInt(eParmap.color_id1)).getStr(eColor.name))).findFirst().orElse(up.newRecord());
+        return list.stream().filter(rec -> name.equals(eColor.get(rec.getInt(eParmap.color_id1)).getStr(eColor.name))).findFirst().orElse(up.newRecord(Query.SEL));
     }
     
     public static List<Record> filter(int colorID) {

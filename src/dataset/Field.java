@@ -61,10 +61,6 @@ public interface Field {
     public String name();
 
     public int ordinal();
-
-    default Record newRecord() {
-        return newRecord(Query.SEL);
-    }
     
     default Record newRecord(String up) {
         Record record = new Record();
@@ -76,8 +72,8 @@ public interface Field {
         return record;
     }
 
-    default Record addRecord() {
-       return null; 
+    default Query getQuery() {
+        return null;
     }
     
     public MetaField meta();

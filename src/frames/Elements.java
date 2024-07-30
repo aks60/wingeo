@@ -1080,7 +1080,7 @@ public class Elements extends javax.swing.JFrame {
                         record.set(eElement.groups2_id, id);
                         record.set(eElement.todef, 1);
                         int index = UGui.getIndexKeyValue(tab2, record, eElement.id);
-                        qElement.table(eArtikl.up).add(index, eArtikl.up.newRecord());
+                        qElement.table(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
                     });
                 }
             }
@@ -1089,7 +1089,7 @@ public class Elements extends javax.swing.JFrame {
                 UGui.insertRecordCur(tab3, eElemdet.up, (record) -> {
                     record.set(eElemdet.element_id, qElement.get(UGui.getIndexRec(tab2), eElement.id));
                     int index = UGui.getIndexKeyValue(tab3, record, eElemdet.id);
-                    qElemdet.table(eArtikl.up).add(index, eArtikl.up.newRecord());
+                    qElemdet.table(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
                 });
             }
         } else if (tab4.getBorder() != null) {

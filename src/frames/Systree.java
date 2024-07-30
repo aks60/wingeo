@@ -223,10 +223,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         return List.of(LayoutKnob.values()).stream().filter(el -> el.id == id).findFirst().orElse(LayoutKnob.MIDL).name;
                     } else if (field == eSysfurn.artikl_id1) {
                         int id = Integer.valueOf(val.toString());
-                        return qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == id).findFirst().orElse(eArtikl.up.newRecord()).get(eArtikl.code);
+                        return qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == id).findFirst().orElse(eArtikl.up.newRecord(Query.SEL)).get(eArtikl.code);
                     } else if (field == eSysfurn.artikl_id2) {
                         int id = Integer.valueOf(val.toString());
-                        return qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == id).findFirst().orElse(eArtikl.up.newRecord()).get(eArtikl.code);
+                        return qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == id).findFirst().orElse(eArtikl.up.newRecord(Query.SEL)).get(eArtikl.code);
                     }
                 }
                 return val;
@@ -3721,7 +3721,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     int max = qSysprof.stream().mapToInt(rec -> rec.getInt(eSysprof.npp)).max().orElse(0); //.getAsInt();
                     record.set(eSysprof.npp, ++max);
                     int index = UGui.getIndexKeyValue(tab2, record, eSysprof.id);
-                    qSysprof.table(eArtikl.up).add(index, eArtikl.up.newRecord());
+                    qSysprof.table(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
                 });
 
             } else if (tab3.getBorder() != null) {
@@ -3732,7 +3732,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     record.setNo(eSysfurn.side_open, TypeOpen2.REQ.id);
                     record.setNo(eSysfurn.hand_pos, LayoutKnob.MIDL.id);
                     int index = UGui.getIndexKeyValue(tab3, record, eSysfurn.id);
-                    qSysfurn.table(eFurniture.up).add(index, eFurniture.up.newRecord());
+                    qSysfurn.table(eFurniture.up).add(index, eFurniture.up.newRecord(Query.SEL));
                 });
             } else if (tab4.getBorder() != null) {
                 UGui.insertRecordCur(tab4, eSyspar1.up, (record) -> {

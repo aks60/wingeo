@@ -160,7 +160,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
                 if (field == eProject.prjpart_id) {
-                    Record record = qPrjpart.stream().filter(rec -> rec.get(ePrjpart.id).equals(val)).findFirst().orElse(ePrjpart.up.newRecord());
+                    Record record = qPrjpart.stream().filter(rec -> rec.get(ePrjpart.id).equals(val)).findFirst().orElse(ePrjpart.up.newRecord(Query.SEL));
                     return record.get(ePrjpart.partner);
                 }
                 return val;
@@ -186,7 +186,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 if (columns[col] == ePrjkit.prjprod_id) {
                     if (val != null) {
                         return qPrjprod.stream().filter(rec -> val.equals(rec.get(ePrjprod.id)))
-                                .findFirst().orElse(ePrjprod.up.newRecord()).getStr(ePrjprod.name);
+                                .findFirst().orElse(ePrjprod.up.newRecord(Query.SEL)).getStr(ePrjprod.name);
                     } else {
                         return "Заказ № " + qProject.get(UGui.getIndexRec(tab1)).get(eProject.num_ord);
                     }
@@ -339,7 +339,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     Wincalc win = (Wincalc) w;
                 }
             }
-            Record currencRec = qCurrenc.stream().filter(rec -> rec.get(eCurrenc.id).equals(projectRec.get(eProject.currenc_id))).findFirst().orElse(eCurrenc.up.newRecord());
+            Record currencRec = qCurrenc.stream().filter(rec -> rec.get(eCurrenc.id).equals(projectRec.get(eProject.currenc_id))).findFirst().orElse(eCurrenc.up.newRecord(Query.SEL));
             txt3.setText(currencRec.getStr(eCurrenc.name));
             txt7.setText(UCom.format(projectRec.getDbl(eProject.weight) / 1000, 1));
             txt8.setText(UCom.format(projectRec.getDbl(eProject.square) / 1000000, 1));
@@ -3148,7 +3148,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         }
                         record.set(ePrjkit.project_id, qProject.get(index, eProject.id));
                         int index3 = UGui.getIndexKeyValue(tab2, record, ePrjkit.id);
-                        qPrjkit.table(eArtikl.up).add(index3, eArtikl.up.newRecord());
+                        qPrjkit.table(eArtikl.up).add(index3, eArtikl.up.newRecord(Query.SEL));
                     });
                 } else if (((JButton) evt.getSource()) == btnSet) {
                     DicKits frame = new DicKits(Orders.this, (q) -> {
@@ -3569,7 +3569,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             public void actionRequest(Object obj) {
                 try {
                     Record projectRec = qProject.get(UGui.getIndexRec(tab1));
-                    Record currencRec = qCurrenc.stream().filter(rec -> rec.get(eCurrenc.id).equals(projectRec.get(eProject.currenc_id))).findFirst().orElse(eCurrenc.up.newRecord());
+                    Record currencRec = qCurrenc.stream().filter(rec -> rec.get(eCurrenc.id).equals(projectRec.get(eProject.currenc_id))).findFirst().orElse(eCurrenc.up.newRecord(Query.SEL));
 
                     projectRec.set(eProject.weight, 0);
                     projectRec.set(eProject.square, 0);

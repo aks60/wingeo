@@ -39,8 +39,8 @@ public enum eGlasgrp implements Field {
         return query;
     }
 
-    public Record addRecord() {
-        return UGui.addRecord(query, up);
+    public Query getQuery() {
+        return query;
     }
     
     public static ArrayList<Record>  findAll() {
@@ -52,10 +52,10 @@ public enum eGlasgrp implements Field {
     
     public static Record find(int glasgrpId) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> rec.getInt(id) == glasgrpId).findFirst().orElse(up.newRecord());
+            return query().stream().filter(rec -> rec.getInt(id) == glasgrpId).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", glasgrpId);
-        return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
+        return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
     
     public String toString() {

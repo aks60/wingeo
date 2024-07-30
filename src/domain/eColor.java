@@ -54,8 +54,8 @@ public enum eColor implements Field {
         return query;
     }
 
-    public Record addRecord() {
-        return UGui.addRecord(query, up);
+    public Query getQuery() {
+        return query;
     }
     
     public static int rgb(int id) {
@@ -81,7 +81,7 @@ public enum eColor implements Field {
             return virtualRec();
         }
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(up.newRecord());
+            return query().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
         return (recordList.isEmpty() == true) ? virtualRec() : recordList.get(0);
@@ -101,17 +101,17 @@ public enum eColor implements Field {
         }
         if (Query.conf.equals("calc")) {
             if (_color_fk < 0) {
-                return query().stream().filter(rec -> rec.getInt(groups_id) == _color_fk * -1).findFirst().orElse(up.newRecord());
+                return query().stream().filter(rec -> rec.getInt(groups_id) == _color_fk * -1).findFirst().orElse(up.newRecord(Query.SEL));
             } else {
-                return query().stream().filter(rec -> rec.getInt(id) == _color_fk).findFirst().orElse(up.newRecord());
+                return query().stream().filter(rec -> rec.getInt(id) == _color_fk).findFirst().orElse(up.newRecord(Query.SEL));
             }
         }
         if (_color_fk < 0) {
             Query recordList = new Query(values()).select("select first 1 * from " + up.tname() + " where " + groups_id.name() + " = " + (_color_fk * -1));
-            return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
+            return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
         } else {
             Query recordList = new Query(values()).select(up, "where", id, "=", _color_fk);
-            return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
+            return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
         }
     }
 
@@ -121,9 +121,9 @@ public enum eColor implements Field {
         }
         if (Query.conf.equals("calc")) {
             if (_color_fk < 0) {
-                return query().stream().filter(rec -> rec.getInt(groups_id) == _color_fk * -1).findFirst().orElse(up.newRecord());
+                return query().stream().filter(rec -> rec.getInt(groups_id) == _color_fk * -1).findFirst().orElse(up.newRecord(Query.SEL));
             } else {
-                return query().stream().filter(rec -> rec.getInt(id) == _color_fk).findFirst().orElse(up.newRecord());
+                return query().stream().filter(rec -> rec.getInt(id) == _color_fk).findFirst().orElse(up.newRecord(Query.SEL));
             }
         }
         if (_color_fk < 0) {
@@ -134,7 +134,7 @@ public enum eColor implements Field {
     }
 
     public static Record virtualRec() {
-        Record record = up.newRecord();
+        Record record = up.newRecord(Query.SEL);
         record.setNo(id, -3);
         record.setNo(code, "@");
         record.setNo(name, "virtual");

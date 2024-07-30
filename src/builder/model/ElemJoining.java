@@ -4,6 +4,7 @@ import builder.Wincalc;
 import dataset.Record;
 import enums.TypeJoin;
 import builder.making.SpcRecord;
+import dataset.Query;
 import domain.eArtikl;
 import domain.eJoining;
 import domain.eJoinvar;
@@ -14,8 +15,8 @@ import startup.Test;
 
 public class ElemJoining {
 
-    public Record joiningRec = eJoining.up.newRecord(); //для рассчёта тарификации
-    public Record joinvarRec = eJoinvar.up.newRecord(); //для рассчёта тарификации    
+    public Record joiningRec = eJoining.up.newRecord(Query.SEL); //для рассчёта тарификации
+    public Record joinvarRec = eJoinvar.up.newRecord(Query.SEL); //для рассчёта тарификации    
 
     public double id = -1; //идентификатор соединения
     public Wincalc winc;
@@ -75,8 +76,8 @@ public class ElemJoining {
 
     public String name() {
         if (joiningRec.get(1) != null) {
-            String name1 = eArtikl.query().stream().filter(rec -> rec.getInt(eArtikl.id) == elem1.artiklRecAn.getInt(eArtikl.id)).findFirst().orElse(eArtikl.up.newRecord()).getStr(eArtikl.code);
-            String name2 = eArtikl.query().stream().filter(rec -> rec.getInt(eArtikl.id) == elem2.artiklRecAn.getInt(eArtikl.id)).findFirst().orElse(eArtikl.up.newRecord()).getStr(eArtikl.code);
+            String name1 = eArtikl.query().stream().filter(rec -> rec.getInt(eArtikl.id) == elem1.artiklRecAn.getInt(eArtikl.id)).findFirst().orElse(eArtikl.up.newRecord(Query.SEL)).getStr(eArtikl.code);
+            String name2 = eArtikl.query().stream().filter(rec -> rec.getInt(eArtikl.id) == elem2.artiklRecAn.getInt(eArtikl.id)).findFirst().orElse(eArtikl.up.newRecord(Query.SEL)).getStr(eArtikl.code);
             return name1 + " ÷ " + name2;
         }
         return "";

@@ -63,7 +63,7 @@ public class Table extends ArrayList<Record> {
     }
     
     public Record find(Object val, Field field) {
-        return this.stream().filter(rec -> rec.get(field).equals(val)).findFirst().orElse(field.newRecord());
+        return this.stream().filter(rec -> rec.get(field).equals(val)).findFirst().orElse(field.newRecord(Query.SEL));
     }
 
     public List<Record> filter(Object val, Field field) {

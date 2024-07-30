@@ -51,6 +51,10 @@ public enum eSystree implements Field {
         return query;
     }
 
+    public Query getQuery() {
+        return query;
+    }
+    
     public static String patch(int _nuni, String patch) {
         List<Record> recordList = null;
         if (Query.conf.equals("calc")) {
@@ -71,14 +75,14 @@ public enum eSystree implements Field {
             return record();
         }
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> _nuni == rec.getInt(id)).findFirst().orElse(up.newRecord());
+            return query().stream().filter(rec -> _nuni == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _nuni);
-        return (recordList.isEmpty() == true) ? up.newRecord() : recordList.get(0);
+        return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
 
     public static Record record() {
-        Record record = up.newRecord();
+        Record record = up.newRecord(Query.SEL);
         record.setNo(id, -3);
         record.setNo(glas, "0x0x0x0");
         return record;
