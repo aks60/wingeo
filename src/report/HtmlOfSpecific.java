@@ -69,10 +69,10 @@ public class HtmlOfSpecific {
         String num = projectRec.getStr(eProject.num_ord);
         String date = UGui.simpleFormat.format(projectRec.get(eProject.date4));
 
-        List<RSpecific> s1 = spcList3.stream().filter(s -> s.spc().artiklRec.getInt(eArtikl.level1) == 1).collect(toList());
-        List<RSpecific> s2 = RSpecific.groups(spcList3.stream().filter(s -> s.spc().artiklRec.getInt(eArtikl.level1) == 2).collect(toList()));
-        List<RSpecific> s3 = RSpecific.groups(spcList3.stream().filter(s -> s.spc().artiklRec.getInt(eArtikl.level1) == 3).collect(toList()));
-        List<RSpecific> s5 = spcList3.stream().filter(s -> s.spc().artiklRec.getInt(eArtikl.level1) == 5).collect(toList());
+        List<RSpecific> s1 = spcList3.stream().filter(s -> s.spc().artiklRec().getInt(eArtikl.level1) == 1).collect(toList());
+        List<RSpecific> s2 = RSpecific.groups(spcList3.stream().filter(s -> s.spc().artiklRec().getInt(eArtikl.level1) == 2).collect(toList()));
+        List<RSpecific> s3 = RSpecific.groups(spcList3.stream().filter(s -> s.spc().artiklRec().getInt(eArtikl.level1) == 3).collect(toList()));
+        List<RSpecific> s5 = spcList3.stream().filter(s -> s.spc().artiklRec().getInt(eArtikl.level1) == 5).collect(toList());
 
         doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord));       
         Elements template = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");

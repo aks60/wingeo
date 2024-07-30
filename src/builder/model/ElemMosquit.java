@@ -58,7 +58,7 @@ public class ElemMosquit extends ElemSimple {
     public void setSpecific() {
         try {
             spcRec.place = "ВСТ";
-            spcRec.setArtikl(this.artiklRec);
+            spcRec.artiklRec(this.artiklRec);
             spcRec.colorID1 = this.colorID1;
             Envelope envMosq = owner.owner.area.getGeometryN(1).getEnvelopeInternal();
             double dXY = 25;
@@ -79,7 +79,7 @@ public class ElemMosquit extends ElemSimple {
     @Override
     public void addSpecific(SpcRecord spcAdd) {
         try {
-            if(spcAdd.artiklRec.getStr(eArtikl.code).substring(0, 1).equals("@")) {
+            if(spcAdd.artiklRec().getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;
             }            
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам.
@@ -87,7 +87,7 @@ public class ElemMosquit extends ElemSimple {
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм            
 
             double anglHor = UGeo.anglHor(x1(), y1(), x2(), y2());
-            if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) { //пог.м.  
+            if (UseUnit.METR.id == spcAdd.artiklRec().getInt(eArtikl.unit)) { //пог.м.  
 
                 if (anglHor == 0 || anglHor == 180) {
                     spcAdd.width += spcAdd.elem5e.owner.width();

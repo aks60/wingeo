@@ -102,7 +102,7 @@ public class SpcElement extends Cal5e {
                                 //например профиль с префиксом @ в осн. специф.
                                 if (TypeArt.isType(artiklRec, TypeArt.X101, TypeArt.X102,
                                         TypeArt.X103, TypeArt.X104, TypeArt.X105)) {
-                                    elem5e.spcRec.setArtikl(spcAdd.artiklRec); //подмена артикула в осн.спец.
+                                    elem5e.spcRec.artiklRec(spcAdd.artiklRec()); //подмена артикула в осн.спец.
                                     elem5e.spcRec.setColor(1, spcAdd.colorID1);
                                     elem5e.spcRec.setColor(2, spcAdd.colorID2);
                                     elem5e.spcRec.setColor(3, spcAdd.colorID3);
@@ -112,7 +112,7 @@ public class SpcElement extends Cal5e {
                                 } else if (TypeArt.isType(artiklRec, TypeArt.X520)) {
                                     ElemMosquit alemMosq = (ElemMosquit) elem5e;
                                     if (alemMosq.anglHoriz == 0) {
-                                        elem5e.spcRec.setArtikl(spcAdd.artiklRec); //подмена артикула в осн.спец.
+                                        elem5e.spcRec.artiklRec(spcAdd.artiklRec()); //подмена артикула в осн.спец.
                                         elem5e.spcRec.setColor(1, spcAdd.colorID1);
                                         elem5e.spcRec.setColor(2, spcAdd.colorID2);
                                         elem5e.spcRec.setColor(3, spcAdd.colorID3);

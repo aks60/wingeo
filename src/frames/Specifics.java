@@ -94,7 +94,7 @@ public class Specifics extends javax.swing.JFrame {
             mn1.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec
-                            -> rec.artiklRec.getInt(eArtikl.level1) == type.id1).collect(toList());
+                            -> rec.artiklRec().getInt(eArtikl.level1) == type.id1).collect(toList());
                     loadingTab1(listSpec);
                 }
             });
@@ -110,8 +110,8 @@ public class Specifics extends javax.swing.JFrame {
                 mn2.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec
-                                -> rec.artiklRec.getInt(eArtikl.level1) == typ2.id1
-                                && rec.artiklRec.getInt(eArtikl.level2) == typ2.id2).collect(toList());
+                                -> rec.artiklRec().getInt(eArtikl.level1) == typ2.id1
+                                && rec.artiklRec().getInt(eArtikl.level2) == typ2.id2).collect(toList());
                         loadingTab1(listSpec);
                     }
                 });
@@ -606,7 +606,7 @@ public class Specifics extends javax.swing.JFrame {
         SpcRecord recordSpc = winc.listSpec.find(id);
         ProgressBar.create(this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                App.Artikles.createFrame(Specifics.this, recordSpc.artiklRec);
+                App.Artikles.createFrame(Specifics.this, recordSpc.artiklRec());
             }
         });
     }//GEN-LAST:event_btnFind1

@@ -156,14 +156,14 @@ public class HtmlOfManufactory {
     public static void loadTab3Specific(Wincalc winc, Element tab, String templateRec, List<SpcRecord> spcList2, List<SpcRecord> spcList3) {
 
         winc.listSpec.forEach(spcRec -> { //профиля
-            if (TypeArt.isType(spcRec.artiklRec, TypeArt.X100, TypeArt.X101, TypeArt.X102, TypeArt.X103, TypeArt.X104, TypeArt.X105) == true) {
+            if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X100, TypeArt.X101, TypeArt.X102, TypeArt.X103, TypeArt.X104, TypeArt.X105) == true) {
                 spcList2.add(new  SpcRecord(spcRec));
             }
         });
         spcList2.forEach(spcRec1 -> { //армирование
             SpcRecord spcRec3 = new SpcRecord();
             for (SpcRecord spcRec2 : winc.listSpec) {
-                if (TypeArt.isType(spcRec2.artiklRec, TypeArt.X107) == true && spcRec2.elem5e.id == spcRec1.id) {
+                if (TypeArt.isType(spcRec2.artiklRec(), TypeArt.X107) == true && spcRec2.elem5e.id == spcRec1.id) {
                     spcRec3 = spcRec2;
                 }
             }
@@ -176,7 +176,7 @@ public class HtmlOfManufactory {
 
         List<SpcRecord> spcList = new ArrayList();
         winc.listSpec.forEach(spcRec -> { 
-            if (TypeArt.isType(spcRec.artiklRec, TypeArt.X135) == true) {
+            if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X135) == true) {
                 spcList.add(new  SpcRecord(spcRec));
             }
         });
@@ -188,7 +188,7 @@ public class HtmlOfManufactory {
 
         List<SpcRecord> spcList = new ArrayList();
         winc.listSpec.forEach(spcRec -> { 
-            if (TypeArt.isType(spcRec.artiklRec, TypeArt.X108) == true) {
+            if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X108) == true) {
                 spcList.add(new  SpcRecord(spcRec));
             }
         });
@@ -200,7 +200,7 @@ public class HtmlOfManufactory {
 
         List<SpcRecord> spcList = new ArrayList();
         winc.listSpec.forEach(spcRec -> { 
-            if (TypeArt.isType(spcRec.artiklRec, TypeArt.X502) == true) {
+            if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X502) == true) {
                 spcList.add(new  SpcRecord(spcRec));
             }
         });

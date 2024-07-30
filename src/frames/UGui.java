@@ -526,9 +526,6 @@ public class UGui {
         index = (index == -1) ? 0 : index;
         Query query = ((DefTableModel) table.getModel()).getQuery();
         Record record = addDomainRec(field);
-//        if (record == null) {
-//            record = field.newRecord(Query.INS);
-//        }
         record.setNo(field.fields()[1], Conn.genId(field));
         if (++index <= table.getRowCount()) {
             query.add(index, record);
@@ -546,9 +543,6 @@ public class UGui {
 
         Query query = ((DefTableModel) table.getModel()).getQuery();
         Record record = addDomainRec(field);
-//        if (record == null) {
-//            record = field.newRecord(Query.INS);
-//        }
         record.setNo(field.fields()[1], Conn.genId(field));
         query.add(record);
         listener.action(record);

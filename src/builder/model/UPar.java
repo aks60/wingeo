@@ -143,7 +143,7 @@ public class UPar {
 
     //Поправка, мм
     public static double to_12050_15050_34051_39020(SpcRecord spcAdd) {
-        if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) { //пог.м.
+        if (UseUnit.METR.id == spcAdd.artiklRec().getInt(eArtikl.unit)) { //пог.м.
             return UCom.getDbl(spcAdd.getParam(0, 12050, 15050, 34050, 34051, 39020)); //Поправка, мм
         }
         return 0; //spcAdd.width;
@@ -151,7 +151,7 @@ public class UPar {
 
     //Длина, мм
     public static double to_12065_15045_25040_34070_39070(SpcRecord spcAdd) {
-        if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) { //пог.м.
+        if (UseUnit.METR.id == spcAdd.artiklRec().getInt(eArtikl.unit)) { //пог.м.
             return UCom.getDbl(spcAdd.getParam(spcAdd.width, 12065, 15045, 25040, 34070, 39070)); //Длина, мм 
         }
         return spcAdd.width;

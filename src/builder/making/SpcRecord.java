@@ -22,7 +22,7 @@ public class SpcRecord {
     public ElemSimple elem5e = null;  //элемент пораждающий спецификацию (контейнер)
     public Record variantRec = null;  //вариант в конструктиве
     public Record detailRec = null;  //детализация в конструктиве
-    public Record artiklRec = null;  //артикул в детализации конструктива
+    private Record artiklRec = null;  //артикул в детализации конструктива
 
     public double id = -1; //ID
     public String place = "---";  //Место размешения
@@ -93,7 +93,7 @@ public class SpcRecord {
         this.mapParam = mapParam;
         this.detailRec = detailRec;
         this.place = place;
-        setArtikl(artiklRec);
+        artiklRec(artiklRec);
     }
 
     public SpcRecord(String place, double id, Record detailRec, Record artiklRec, HashMap<Integer, String> mapParam) {
@@ -101,10 +101,10 @@ public class SpcRecord {
         this.mapParam = mapParam;
         this.detailRec = detailRec;
         this.place = place;
-        setArtikl(artiklRec);
+        artiklRec(artiklRec);
     }
 
-    public void setArtikl(Record artiklRec) {
+    public void artiklRec(Record artiklRec) {
         this.artikl = artiklRec.getStr(eArtikl.code);
         this.name = artiklRec.getStr(eArtikl.name);
         this.wastePrc = artiklRec.getDbl(eArtikl.otx_norm);
@@ -112,8 +112,12 @@ public class SpcRecord {
         this.artiklRec = artiklRec;
         setAnglCut();
     }
+    
+    public Record artiklRec() {
+        return artiklRec;
+    }    
 
-    public void setColor(int colorID1, int colorID2, int colorID3) {
+    public void color(int colorID1, int colorID2, int colorID3) {
         this.colorID1 = colorID1;
         this.colorID2 = colorID2;
         this.colorID3 = colorID3;
