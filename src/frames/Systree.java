@@ -4307,41 +4307,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_colorFromLock
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        wincalc().listJoin.forEach(it -> System.out.println(it));
-//        Wincalc winc = wincalc();
-//        ArrayList<ElemSimple> crosList = winc.listElem.filter(enums.Type.IMPOST, enums.Type.STOIKA);
-//        ArrayList<ElemSimple> elemList = winc.listElem.filter(enums.Type.FRAME_SIDE, enums.Type.IMPOST);
-//        for (ElemSimple imp : crosList) {
-//            if (imp.id == 15.0) {
-//                LineString impost = UGeo.newLineStr(imp.x1(), imp.y1(), imp.x2(), imp.y2());
-//                Geometry p1 = UGeo.newPoint(imp.x1(), imp.y1()).buffer(.0001);
-//                Geometry p2 = UGeo.newPoint(imp.x2(), imp.y2()).buffer(.0001);
-//
-//                //Цикл по импостам и рамам
-//                for (ElemSimple frm : elemList) {
-//                    if (imp.id != frm.id) {
-//                        Geometry line = UGeo.newLineStr(frm.x1(), frm.y1(), frm.x2(), frm.y2());
-//
-//                        if (frm.type == enums.Type.FRAME_SIDE) {
-//                            if (line.intersects(p1)) { //левая сторона
-//                                System.out.println(new ElemJoining(winc, TypeJoin.TIMP, frm, imp));
-//                            }
-//                            if (line.intersects(p2)) { //правая сторона
-//                                System.out.println(new ElemJoining(winc, TypeJoin.TIMP, imp, frm));;
-//                            }
-//
-//                        } else if (frm.type == enums.Type.IMPOST && imp.owner.area.buffer(.0001).contains(line)) {
-//                            if (line.intersects(p1)) { //левая сторона
-//                                System.out.println(new ElemJoining(winc, TypeJoin.TIMP, frm, imp));
-//                            }
-//                            if (line.intersects(p2)) { //правая сторона
-//                                System.out.println(new ElemJoining(winc, TypeJoin.TIMP, imp, frm));;
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
+       Record sysprodRec = eSysprod.find(2);
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void colorFromGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromGlass
