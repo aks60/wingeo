@@ -71,9 +71,9 @@ public class UColor {
                     return true;
                 }
             }
-            spcClon.setColor(1, getID_colorUS(spcClon, typesUS & 0x0000000f));
-            spcClon.setColor(2, getID_colorUS(spcClon, (typesUS & 0x000000f0) >> 4));
-            spcClon.setColor(3, getID_colorUS(spcClon, (typesUS & 0x00000f00) >> 8));
+            spcClon.colorID1 = getID_colorUS(spcClon, typesUS & 0x0000000f);
+            spcClon.colorID2 = getID_colorUS(spcClon, (typesUS & 0x000000f0) >> 4);
+            spcClon.colorID3 = getID_colorUS(spcClon, (typesUS & 0x00000f00) >> 8);
 
         } else {
             if (UColor.colorFromProduct(spcAdd, 1, false)
@@ -178,7 +178,13 @@ public class UColor {
                 }
             }
             if (resultColorID != -1) {
-                spcAdd.setColor(side, resultColorID);
+                if (side == 1) {
+                    spcAdd.colorID1 = resultColorID;
+                } else if (side == 2) {
+                    spcAdd.colorID2 = resultColorID;
+                } else if (side == 3) {
+                    spcAdd.colorID3 = resultColorID;
+                }
 
             } else { //в спецификпцию не попадёт. См. HELP "Конструктив=>Подбор текстур" 
                 return false;
@@ -192,7 +198,8 @@ public class UColor {
     /**
      * Подбор по текстуре профиля или заполнения в элементе МЦ
      *
-     * @param detailArtiklID - артикул элемента детализации составаoriginColorID@param profFullColorID - текстура профиля
+     * @param detailArtiklID - артикул элемента детализации
+     * составаoriginColorID@param profFullColorID - текстура профиля
      * @param side - сторона элемента детализации состава
      */
     private static int scanFromProfile(int detailArtiklID, int originColorID, int side) {
@@ -237,7 +244,7 @@ public class UColor {
                 if ((side == 1 && "1".equals(artdetRec.getStr(eArtdet.mark_c1))) //cторона подлежит рассмотрению?
                         || (side == 2 && ("1".equals(artdetRec.getStr(eArtdet.mark_c2)) || "1".equals(artdetRec.getStr(eArtdet.mark_c1))))
                         || (side == 3 && ("1".equals(artdetRec.getStr(eArtdet.mark_c3))) || "1".equals(artdetRec.getStr(eArtdet.mark_c1)))) {
-                    
+
                     //Группа текстур
                     if (artdetRec.getInt(eArtdet.color_fk) < 0) {
                         List<Record> colorList = eColor.find2(artdetRec.getInt(eArtdet.color_fk)); //фильтр списка определённой группы
@@ -398,7 +405,7 @@ public class UColor {
                 case 15: //По текстуре заполнения
                     if (spcAdd.elem5e.artiklRecAn.getInt(eArtikl.level1) == 5) {
                         return spcAdd.elem5e.colorID1;
-                    } 
+                    }
                 case 1: //По основе профиля
                     return spcAdd.elem5e.winc.colorID1;
 //                    return spcAdd.elem5e.colorID1;

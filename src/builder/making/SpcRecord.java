@@ -158,16 +158,6 @@ public class SpcRecord {
                 count, UseUnit.getName(unit), wastePrc, quant1, quant2, costpric1, costpric2, price, cost2));
     }
 
-    public void setColor(int side, int colorID) {
-        if (side == 1) {
-            colorID1 = colorID;
-        } else if (side == 2) {
-            colorID2 = colorID;
-        } else if (side == 3) {
-            colorID3 = colorID;
-        }
-    }
-
     public void setAnglCut(double angl0, double angl1) {
         this.anglCut0 = angl0;
         this.anglCut1 = angl1;

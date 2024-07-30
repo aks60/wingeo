@@ -103,9 +103,9 @@ public class SpcElement extends Cal5e {
                                 if (TypeArt.isType(artiklRec, TypeArt.X101, TypeArt.X102,
                                         TypeArt.X103, TypeArt.X104, TypeArt.X105)) {
                                     elem5e.spcRec.artiklRec(spcAdd.artiklRec()); //подмена артикула в осн.спец.
-                                    elem5e.spcRec.setColor(1, spcAdd.colorID1);
-                                    elem5e.spcRec.setColor(2, spcAdd.colorID2);
-                                    elem5e.spcRec.setColor(3, spcAdd.colorID3);
+                                    elem5e.spcRec.colorID1 = spcAdd.colorID1;
+                                    elem5e.spcRec.colorID2 = spcAdd.colorID2;
+                                    elem5e.spcRec.colorID3 = spcAdd.colorID3;
                                     elem5e.addSpecific(elem5e.spcRec); //в спецификацию 
 
                                     //Контейнер маскитка не учавствует в цикле сторон
@@ -113,9 +113,9 @@ public class SpcElement extends Cal5e {
                                     ElemMosquit alemMosq = (ElemMosquit) elem5e;
                                     if (alemMosq.anglHoriz == 0) {
                                         elem5e.spcRec.artiklRec(spcAdd.artiklRec()); //подмена артикула в осн.спец.
-                                        elem5e.spcRec.setColor(1, spcAdd.colorID1);
-                                        elem5e.spcRec.setColor(2, spcAdd.colorID2);
-                                        elem5e.spcRec.setColor(3, spcAdd.colorID3);
+                                        elem5e.spcRec.colorID1 = spcAdd.colorID1;
+                                        elem5e.spcRec.colorID2 = spcAdd.colorID2;
+                                        elem5e.spcRec.colorID3 = spcAdd.colorID3;
                                         elem5e.addSpecific(elem5e.spcRec); //в спецификацию     
                                     }
                                 } else {
