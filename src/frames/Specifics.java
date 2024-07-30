@@ -132,7 +132,7 @@ public class Specifics extends javax.swing.JFrame {
                 JsonElement je = new Gson().fromJson(script, JsonElement.class);
                 je.getAsJsonObject().addProperty("nuni", sysprodRec.getInt(eSysprod.systree_id));
                 winc.build(je.toString());
-                Query.listOpenTable.forEach(q -> q.clear()); //очистим кэш 
+                //Query.listOpenTable.forEach(q -> q.clear()); //очистим кэш 
                 winc.specification(cbx2.getSelectedIndex() == 0);
             }
 
@@ -147,7 +147,7 @@ public class Specifics extends javax.swing.JFrame {
                 je.getAsJsonObject().addProperty("nuni", prjprodRec.getInt(ePrjprod.systree_id));
                 winc = new Wincalc();
                 winc.build(je.toString());
-                Query.listOpenTable.forEach(q -> q.clear()); //очистим кэш 
+                //Query.listOpenTable.forEach(q -> q.clear()); //очистим кэш 
                 winc.specification(true);
             }
         }
@@ -706,6 +706,7 @@ public class Specifics extends javax.swing.JFrame {
 
     private void btnRefresh(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefresh
         int index = UGui.getIndexRec(tab1);
+        Query.listOpenTable.forEach(q -> q.clear()); //очистим кэш 
         createIwin();
         loadingTab1(groups(winc.listSpec, cbx1.getSelectedIndex()));
         cbxGroupBy(null);
