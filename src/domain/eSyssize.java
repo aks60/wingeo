@@ -4,15 +4,8 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
-import static domain.eArtikl.code;
-import static domain.eArtikl.id;
-import static domain.eArtikl.name;
-import static domain.eArtikl.up;
-import static domain.eArtikl.virtualRec;
-import static domain.ePrjkit.up;
-import frames.UGui;
-import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public enum eSyssize implements Field {
     up("0", "0", "0", "Системные константы", "SYSSIZE"),
@@ -49,7 +42,7 @@ public enum eSyssize implements Field {
     public Query getQuery() {
         return query;
     }
-  
+
     public static Record find(Record artiklRec) {
         int _id = artiklRec.getInt(eArtikl.syssize_id);
         if (_id == -3) { //если арт. вирт. то return virtualRec();
@@ -62,14 +55,23 @@ public enum eSyssize implements Field {
         return (recordList.isEmpty() == true) ? virtualRec() : recordList.get(0);
     }
 
+    public static Query select(Query q) {
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().sorted((o1, o2) -> o1.getStr(name)
+                    .compareTo(o2.getStr(name))).collect(Collectors.toList()));
+            return q;
+        }
+        return q.select(up, "order by", name);
+    }
+
     //Виртуал. системные переменные
     public static Record virtualRec() {
         Record record = up.newRecord(Query.SEL);
         record.setNo(id, -3);
-        record.setNo(name, "virtual");        
+        record.setNo(name, "virtual");
         record.setNo(prip, 3);
         record.setNo(naxl, 6);
-        record.setNo(falz, 14);   
+        record.setNo(falz, 14);
         record.setNo(zax, 4);
         return record;
     }
