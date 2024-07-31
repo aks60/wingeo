@@ -8,9 +8,12 @@ import static domain.eArtikl.code;
 import static domain.eArtikl.name;
 import static domain.eArtikl.up;
 import static domain.eGroups.up;
+import static domain.eSyssize.name;
+import static domain.eSyssize.up;
 import frames.UGui;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 public enum eColor implements Field {
@@ -57,7 +60,17 @@ public enum eColor implements Field {
     public Query getQuery() {
         return query;
     }
-    
+
+    public static void select(Query q) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().sorted((o1, o2) -> o1.getStr(name)
+                    .compareTo(o2.getStr(name))).collect(Collectors.toList()));
+        } else {
+            q.select(up, "order by", name);
+        }
+    }
+
     public static int rgb(int id) {
         if (id == -3) {
             return virtualRec().getInt(rgb);

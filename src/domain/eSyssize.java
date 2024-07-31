@@ -43,6 +43,16 @@ public enum eSyssize implements Field {
         return query;
     }
 
+    public static void select(Query q) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().sorted((o1, o2) -> o1.getStr(name)
+                    .compareTo(o2.getStr(name))).collect(Collectors.toList()));
+        } else {
+            q.select(up, "order by", name);
+        }
+    }
+
     public static Record find(Record artiklRec) {
         int _id = artiklRec.getInt(eArtikl.syssize_id);
         if (_id == -3) { //если арт. вирт. то return virtualRec();
@@ -53,15 +63,6 @@ public enum eSyssize implements Field {
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
         return (recordList.isEmpty() == true) ? virtualRec() : recordList.get(0);
-    }
-
-    public static Query select(Query q) {
-        if (Query.conf.equals("calc")) {
-            q.addAll(query().stream().sorted((o1, o2) -> o1.getStr(name)
-                    .compareTo(o2.getStr(name))).collect(Collectors.toList()));
-            return q;
-        }
-        return q.select(up, "order by", name);
     }
 
     //Виртуал. системные переменные

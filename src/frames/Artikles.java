@@ -107,10 +107,14 @@ public class Artikles extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        qSyssize.select(eSyssize.up, "order by", eSyssize.name);
-        qGroups.select(eGroups.up);
-        qCurrenc.select(eCurrenc.up, "order by", eCurrenc.name);
-        qColor.select(eColor.up, "order by", eColor.name);
+        //qSyssize.select(eSyssize.up, "order by", eSyssize.name);
+        eSyssize.select(qSyssize);
+        //qGroups.select(eGroups.up);
+        eGroups.select(qGroups);
+        //qCurrenc.select(eCurrenc.up, "order by", eCurrenc.name);
+        eCurrenc.select(qCurrenc);
+        //qColor.select(eColor.up, "order by", eColor.name);
+        eColor.select(qColor);
     }
 
     public void loadingModel() {
@@ -280,7 +284,7 @@ public class Artikles extends javax.swing.JFrame {
         });
     }
 
-    public void loadingTree() {      
+    public void loadingTree() {
         nodeRoot = new DefaultMutableTreeNode(TypeArt.ROOT);
         UTree.loadArtTree(nodeRoot);
         tree.setModel(new DefaultTreeModel(nodeRoot));
@@ -302,11 +306,14 @@ public class Artikles extends javax.swing.JFrame {
             ((CardLayout) pan6.getLayout()).show(pan6, name);
 
             if (e == TypeArt.ROOT) {
-                qArtikl.select(eArtikl.up, "order by", eArtikl.level1, ",", eArtikl.code);
+                //qArtikl.select(eArtikl.up, "order by", eArtikl.level1, ",", eArtikl.code);
+                eArtikl.select(qArtikl);
             } else if (node.isLeaf()) {
-                qArtikl.select(eArtikl.up, "where", eArtikl.level1, "=", e.id1 + "and", eArtikl.level2, "=", e.id2, "order by", eArtikl.level1, ",", eArtikl.code);
+                //qArtikl.select(eArtikl.up, "where", eArtikl.level1, "=", e.id1 + "and", eArtikl.level2, "=", e.id2, "order by", eArtikl.level1, ",", eArtikl.code);
+                eArtikl.select3(qArtikl, e.id1, e.id2);
             } else {
-                qArtikl.select(eArtikl.up, "where", eArtikl.level1, "=", e.id1, "order by", eArtikl.level1, ",", eArtikl.code);
+                //qArtikl.select(eArtikl.up, "where", eArtikl.level1, "=", e.id1, "order by", eArtikl.level1, ",", eArtikl.code);
+                eArtikl.select2(qArtikl, e.id1);
             }
             DefaultMutableTreeNode node2 = (DefaultMutableTreeNode) node.getParent();
             lab1.setText((node2 != null && node.getParent() != null) ? " Тип: " + ((TypeArt) node2.getUserObject()).id1
@@ -2494,7 +2501,7 @@ public class Artikles extends javax.swing.JFrame {
 
     private void btnRefresh(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefresh
         UGui.stopCellEditing(tab1, tab2);
-        List.of(tab1, tab2).forEach(tab -> UGui.getQuery(tab).execsql());        
+        List.of(tab1, tab2).forEach(tab -> UGui.getQuery(tab).execsql());
         TreePath[] node = tree.getSelectionPaths(); //запомним path для nuni
         loadingData();
         tree.setSelectionPaths(node);

@@ -7,7 +7,10 @@ import dataset.Record;
 import static domain.eArtikl.code;
 import static domain.eArtikl.name;
 import static domain.eGroups.up;
+import static domain.eSyssize.name;
+import static domain.eSyssize.up;
 import frames.UGui;
+import java.util.stream.Collectors;
 
 public enum eCurrenc implements Field {
     up("0", "0", "0", "Валюта", "CORRENC"),
@@ -47,6 +50,16 @@ public enum eCurrenc implements Field {
 
     public Query getQuery() {
         return query;
+    }
+
+    public static void select(Query q) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().sorted((o1, o2) -> o1.getStr(name)
+                    .compareTo(o2.getStr(name))).collect(Collectors.toList()));
+        } else {
+            q.select(up, "order by", name);
+        }
     }
 
     public static Record find(int _id) {
