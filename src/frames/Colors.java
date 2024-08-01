@@ -50,7 +50,7 @@ public class Colors extends javax.swing.JFrame {
 
     public void loadingData() {
         eColor.select(qColall);
-        eGroups.select(qGroups);
+        eGroups.select3(qGroups);     
     }
 
     public void selectionTab1(ListSelectionEvent event) {
@@ -61,9 +61,7 @@ public class Colors extends javax.swing.JFrame {
         if (index != -1) {
             Record record = qGroups.table(eGroups.up).get(index);
             Integer cgrup = record.getInt(eGroups.id);
-            //eColor.select2(qColor, cgrup);
-            qColor.select(eColor.up, "where", eColor.groups_id, "=" + cgrup, "order by", eColor.code);
-
+            eColor.select2(qColor, cgrup);
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab2);
         }

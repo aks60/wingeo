@@ -71,7 +71,7 @@ public enum eGroups implements Field {
         }
     }
 
-    public static void select3(Query q, int grup) {
+    public static void select3(Query q) {
         q.clear();
         if (Query.conf.equals("calc")) {
             q.addAll(query().stream().filter(rec -> rec.getInt(grup) == TypeGrup.COLOR_GRP.id).sorted((o1, o2) -> {
