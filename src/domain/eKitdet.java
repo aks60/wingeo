@@ -4,8 +4,12 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.eColor.code;
+import static domain.eColor.groups_id;
+import static domain.eColor.up;
 import static domain.eGroups.up;
 import frames.UGui;
+import java.util.stream.Collectors;
 
 public enum eKitdet implements Field {
     up("0", "0", "0", "Спецификация комплектов", "KOMPSPC"),
@@ -43,7 +47,17 @@ public enum eKitdet implements Field {
     public Query getQuery() {
         return query;
     }
-    
+
+    public static Query select(int colorFK) {
+        Query q = new Query(values());
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(color1_id) == colorFK).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", color1_id, "=", colorFK);
+        }
+        return q;
+    }
+
     public String toString() {
         return meta.descr();
     }

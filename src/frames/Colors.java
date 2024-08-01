@@ -49,8 +49,8 @@ public class Colors extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        qColall.select(eColor.up, "order by", eColor.name);
-        qGroups.select(eGroups.up, "where", eGroups.grup, "=", TypeGrup.COLOR_GRP.id, "order by", eGroups.npp, ",", eGroups.name);
+        eColor.select(qColall);
+        eGroups.select(qGroups);
     }
 
     public void selectionTab1(ListSelectionEvent event) {
@@ -61,7 +61,9 @@ public class Colors extends javax.swing.JFrame {
         if (index != -1) {
             Record record = qGroups.table(eGroups.up).get(index);
             Integer cgrup = record.getInt(eGroups.id);
+            //eColor.select2(qColor, cgrup);
             qColor.select(eColor.up, "where", eColor.groups_id, "=" + cgrup, "order by", eColor.code);
+
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab2);
         }
@@ -76,7 +78,7 @@ public class Colors extends javax.swing.JFrame {
 
                 if (val != null && columns[col] == eColor.rgb) {
                     String hex = Integer.toHexString(Integer.parseInt(val.toString())).toUpperCase();
-                    while (hex.length() < 6) {                        
+                    while (hex.length() < 6) {
                         hex = "0" + hex;
                     }
                     return hex;
@@ -457,19 +459,19 @@ public class Colors extends javax.swing.JFrame {
                 UGui.deleteRecord(tab1);
             }
         } else if (tab2.getBorder() != null) {
-            int colorID = qColor.get(UGui.getIndexRec(tab2)).getInt(eColor.id);
+            int colorFK = qColor.get(UGui.getIndexRec(tab2)).getInt(eColor.id);
             String mes[] = {"Нельзя удалить запись на которую имеются ссылки из других форм, ", "SQL предупреждение", ""};
-            if (!new Query(eKitdet.id).select(eKitdet.up, "where", eKitdet.color1_id, "=", colorID).isEmpty()) {
+            if (!eKitdet.select(colorFK).isEmpty()) {
                 mes[2] = "см. форму Коиплекты";
-            } else if (!new Query(eJoindet.id).select(eJoindet.up, "where", eJoindet.color_fk, "=", colorID).isEmpty()) {
+            } else if (!eJoindet.select(colorFK).isEmpty()) {
                 mes[2] = "см. форму Соединения";
-            } else if (!new Query(eElemdet.id).select(eElemdet.up, "where", eElemdet.color_fk, "=", colorID).isEmpty()) {
+            } else if (!eElemdet.select(colorFK).isEmpty()) {
                 mes[2] = "см. форму Составы";
-            } else if (!new Query(eGlasdet.id).select(eGlasdet.up, "where", eGlasdet.color_fk, "=", colorID).isEmpty()) {
+            } else if (!eGlasdet.select(colorFK).isEmpty()) {
                 mes[2] = "см. форму Заполнения";
-            } else if (!new Query(eFurndet.id).select(eFurndet.up, "where", eFurndet.color_fk, "=", colorID).isEmpty()) {
+            } else if (!eFurndet.select(colorFK).isEmpty()) {
                 mes[2] = "см. форму Фурнитура";
-            } else if (!new Query(eArtdet.id).select(eArtdet.up, "where", eArtdet.color_fk, "=", colorID).isEmpty()) {
+            } else if (!eArtdet.select(colorFK).isEmpty()) {
                 mes[2] = "см. форму Артикулы";
             }
             if (mes[2].isEmpty() == false) {

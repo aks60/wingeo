@@ -90,15 +90,20 @@ public class TableFieldFormat {
 
     //Очистить текст
     public void clear() {
-        for (Map.Entry<JTextComponent, Field> me : mapTxt.entrySet()) {
-            JTextComponent textcomp = me.getKey();
-            Field field = me.getValue();
-            textcomp.setText(null);
-            if (field.meta().type().equals(Field.TYPE.STR)) {
-                textcomp.setText("");
-            } else {
-                textcomp.setText("0");
+        update = false;
+        try {
+            for (Map.Entry<JTextComponent, Field> me : mapTxt.entrySet()) {
+                JTextComponent textcomp = me.getKey();
+                Field field = me.getValue();
+                textcomp.setText(null);
+                if (field.meta().type().equals(Field.TYPE.STR)) {
+                    textcomp.setText("");
+                } else {
+                    textcomp.setText("0");
+                }
             }
+        } finally {
+            update = true;
         }
     }
 
@@ -216,6 +221,7 @@ public class TableFieldFormat {
                                 if (List.of(Field.TYPE.FLT, Field.TYPE.DBL).contains(field.meta().type())) {
                                     str = String.valueOf(str).replace(',', '.');
                                 }
+                                System.out.println("fieldUpdate() " + field + " = " + str);
                                 query.table(field).set(str, index, field);
                             }
                         }

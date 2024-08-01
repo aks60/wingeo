@@ -5,6 +5,7 @@ import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
 import java.util.List;
+import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 //Не менять индекс поля, см. UColor
@@ -50,6 +51,16 @@ public enum eElemdet implements Field {
         return query;
     }
 
+    public static Query select(int colorFK) {
+        Query q = new Query(values());
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(color_fk) == colorFK).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", color_fk, "=", colorFK);
+        }
+        return q;
+    }    
+    
     public String toString() {
         return meta.descr();
     }

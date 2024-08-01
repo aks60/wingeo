@@ -7,6 +7,7 @@ import dataset.Record;
 import static domain.eArtikl.code;
 import static domain.eArtikl.name;
 import static domain.eArtikl.up;
+import static domain.eGroups.name;
 import static domain.eGroups.up;
 import static domain.eSyssize.name;
 import static domain.eSyssize.up;
@@ -68,6 +69,18 @@ public enum eColor implements Field {
                     .compareTo(o2.getStr(name))).collect(Collectors.toList()));
         } else {
             q.select(up, "order by", name);
+        }
+    }
+
+    public static void select2(Query q, int grupID) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(groups_id) == grupID)
+                    .sorted((o1, o2) -> {
+                        return o1.getStr(code).compareTo(o2.getStr(code));
+                    }).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", groups_id, "=" + grupID, "order by", code);
         }
     }
 

@@ -4,9 +4,7 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
-import static domain.eSyssize.name;
-import static domain.eSyssize.up;
-import frames.UGui;
+import enums.TypeGrup;
 import java.util.stream.Collectors;
 
 public enum eGroups implements Field {
@@ -58,10 +56,36 @@ public enum eGroups implements Field {
         if (Query.conf.equals("calc")) {
             q.addAll(query().stream().collect(Collectors.toList()));
         } else {
+            q.select(up);
+        }
+    }
+
+    public static void select2(Query q) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().sorted((o1, o2) -> {
+                return o1.getStr(name).compareTo(o2.getStr(name));
+            }).collect(Collectors.toList()));
+        } else {
             q.select(up, "order by", name);
         }
     }
 
+    public static void select3(Query q, int grup) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(grup) == TypeGrup.COLOR_GRP.id).sorted((o1, o2) -> {
+                if (o1.getInt(npp) == o2.getInt(npp)) {
+                    return o1.getStr(name).compareTo(o2.getStr(name));
+                } else {
+                    return (o1.getInt(npp) > o2.getInt(npp)) ? 1 : -1;
+                }
+            }).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", eGroups.grup, "=", TypeGrup.COLOR_GRP.id, "order by", eGroups.npp, ",", eGroups.name);
+        }
+    }
+    
     public static Record find(int _id) {
         if (Query.conf.equals("calc")) {
             return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));

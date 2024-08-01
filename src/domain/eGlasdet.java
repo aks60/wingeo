@@ -4,6 +4,9 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.eElemdet.color_fk;
+import static domain.eElemdet.up;
+import static domain.eElemdet.values;
 import static domain.eGroups.up;
 import frames.UGui;
 import java.util.ArrayList;
@@ -46,6 +49,16 @@ public enum eGlasdet implements Field {
     public Query getQuery() {
         return query;
     }
+    
+    public static Query select(int colorFK) {
+        Query q = new Query(values());
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(color_fk) == colorFK).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", color_fk, "=", colorFK);
+        }
+        return q;
+    } 
     
     public static List<Record> find(int _id, double _depth) {
         if (Query.conf.equals("calc")) {

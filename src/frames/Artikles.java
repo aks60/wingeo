@@ -107,13 +107,9 @@ public class Artikles extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        //qSyssize.select(eSyssize.up, "order by", eSyssize.name);
         eSyssize.select(qSyssize);
-        //qGroups.select(eGroups.up);
-        eGroups.select(qGroups);
-        //qCurrenc.select(eCurrenc.up, "order by", eCurrenc.name);
+        eGroups.select2(qGroups);
         eCurrenc.select(qCurrenc);
-        //qColor.select(eColor.up, "order by", eColor.name);
         eColor.select(qColor);
     }
 
@@ -306,13 +302,10 @@ public class Artikles extends javax.swing.JFrame {
             ((CardLayout) pan6.getLayout()).show(pan6, name);
 
             if (e == TypeArt.ROOT) {
-                //qArtikl.select(eArtikl.up, "order by", eArtikl.level1, ",", eArtikl.code);
                 eArtikl.select(qArtikl);
             } else if (node.isLeaf()) {
-                //qArtikl.select(eArtikl.up, "where", eArtikl.level1, "=", e.id1 + "and", eArtikl.level2, "=", e.id2, "order by", eArtikl.level1, ",", eArtikl.code);
                 eArtikl.select3(qArtikl, e.id1, e.id2);
             } else {
-                //qArtikl.select(eArtikl.up, "where", eArtikl.level1, "=", e.id1, "order by", eArtikl.level1, ",", eArtikl.code);
                 eArtikl.select2(qArtikl, e.id1);
             }
             DefaultMutableTreeNode node2 = (DefaultMutableTreeNode) node.getParent();
@@ -321,7 +314,6 @@ public class Artikles extends javax.swing.JFrame {
             ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
         }
         UGui.setSelectedRow(tab1);
-
     }
 
     public void selectionTab1(ListSelectionEvent event) {
@@ -337,7 +329,7 @@ public class Artikles extends javax.swing.JFrame {
 
             int id = record.getInt(eArtikl.id);
             lab2.setText(" id: " + id);
-            qArtdet.select(eArtdet.up, "where", eArtdet.artikl_id, "=", id);
+            eArtdet.select(qArtdet, id);
             rsvArtikl.load();
             checkBox1.setSelected((record.getInt(eArtikl.with_seal) == 1));
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
@@ -373,7 +365,7 @@ public class Artikles extends javax.swing.JFrame {
         listenerSeries = (record) -> {
             int rowQuery = UGui.getIndexRec(tab1);
             if (qGroups.stream().noneMatch(rec -> rec.getInt(eGroups.id) == record.getInt(eGroups.id))) {
-                qGroups.select(eGroups.up);
+                eGroups.select(qGroups);
             }
             if (rowQuery != -1) {
                 Record artiklRec = qArtikl.get(rowQuery);
@@ -456,7 +448,7 @@ public class Artikles extends javax.swing.JFrame {
         listenerMarkup = (record) -> {
             UGui.stopCellEditing(tab1, tab2);
             if (qGroups.stream().noneMatch(rec -> rec.getInt(eGroups.id) == record.getInt(eGroups.id))) {
-                qGroups.select(eGroups.up);
+                eGroups.select(qGroups);
             }
             int index = UGui.getIndexRec(tab1);
             if (index != -1) {
@@ -469,7 +461,7 @@ public class Artikles extends javax.swing.JFrame {
         listenerDiscount = (record) -> {
             UGui.stopCellEditing(tab1, tab2);
             if (qGroups.stream().noneMatch(rec -> rec.getInt(eGroups.id) == record.getInt(eGroups.id))) {
-                qGroups.select(eGroups.up);
+                 eGroups.select(qGroups);
             }
             int index = UGui.getIndexRec(tab1);
             if (index != -1) {
@@ -482,7 +474,7 @@ public class Artikles extends javax.swing.JFrame {
         listenerCateg = (record) -> {
             UGui.stopCellEditing(tab1, tab2);
             if (qGroups.stream().noneMatch(rec -> rec.getInt(eGroups.id) == record.getInt(eGroups.id))) {
-                qGroups.select(eGroups.up);
+                 eGroups.select(qGroups);
             }
             int index = UGui.getIndexRec(tab1);
             if (index != -1) {
@@ -2640,7 +2632,9 @@ public class Artikles extends javax.swing.JFrame {
     }//GEN-LAST:event_btn37
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-        rsvArtikl.load();
+        qArtikl.clear();
+        eArtikl.select(qArtikl);
+        qArtikl.execsql();
 
 //        Query q = ((DefTableModel) tab1.getModel()).getQuery();
 //        Record record = (Record) q.get(UGui.getIndexRec(tab1)).clone();

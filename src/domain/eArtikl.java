@@ -86,10 +86,8 @@ public enum eArtikl implements Field {
             q.addAll(query().stream().sorted((o1, o2) -> {
                 if (o1.getInt(level1) == o2.getInt(level1)) {
                     return o1.getStr(code).compareTo(o2.getStr(code));
-                } else if (o1.getInt(level1) > o2.getInt(level1)) {
-                    return 1;
                 } else {
-                    return -1;
+                    return (o1.getInt(level1) > o2.getInt(level1)) ? 1 : -1;
                 }
             }).collect(Collectors.toList()));
         } else {
@@ -99,29 +97,17 @@ public enum eArtikl implements Field {
 
     public static void select2(Query q, int lev1) {
         q.clear();
-        q.addAll(query().stream().filter(rec -> rec.getInt(level1) == lev1).sorted((o1, o2) -> {
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(level1) == lev1).sorted((o1, o2) -> {
                 if (o1.getInt(level1) == o2.getInt(level1)) {
                     return o1.getStr(code).compareTo(o2.getStr(code));
-                } else if (o1.getInt(level1) > o2.getInt(level1)) {
-                    return 1;
                 } else {
-                    return -1;
+                    return (o1.getInt(level1) > o2.getInt(level1)) ? 1 : -1;
                 }
             }).collect(Collectors.toList()));
-        q.clear();
-//        if (Query.conf.equals("calc")) {
-//            q.addAll(query().stream().filter(rec -> rec.getInt(level1) == lev1).sorted((o1, o2) -> {
-//                if (o1.getInt(level1) == o2.getInt(level1)) {
-//                    return o1.getStr(code).compareTo(o2.getStr(code));
-//                } else if (o1.getInt(level1) > o2.getInt(level1)) {
-//                    return 1;
-//                } else {
-//                    return -1;
-//                }
-//            }).collect(Collectors.toList()));
-//        } else {
-//            q.select(up, "where", level1, "=", lev1, "order by", level1, ",", code);
-//        }
+        } else {
+            q.select(up, "where", level1, "=", lev1, "order by", level1, ",", code);
+        }
     }
 
     public static void select3(Query q, int lev1, int lev2) {
@@ -130,10 +116,8 @@ public enum eArtikl implements Field {
             q.addAll(query().stream().filter(rec -> rec.getInt(level1) == lev1 && rec.getInt(level2) == lev2).sorted((o1, o2) -> {
                 if (o1.getInt(level1) == o2.getInt(level1)) {
                     return o1.getStr(code).compareTo(o2.getStr(code));
-                } else if (o1.getInt(level1) > o2.getInt(level1)) {
-                    return 1;
                 } else {
-                    return -1;
+                    return (o1.getInt(level1) > o2.getInt(level1)) ? 1 : -1;
                 }
             }).collect(Collectors.toList()));
         } else {
@@ -211,14 +195,3 @@ public enum eArtikl implements Field {
         return meta.descr();
     }
 }
-/**
- * List<User> userList = new ArrayList<>(Arrays.asList( new User("John", 33),
- * new User("Robert", 26), new User("Mark", 26), new User("Brandon", 42)));
- *
- * List<User> sortedList = userList.stream() .sorted((o1, o2) -> {
- * if(o1.getAge() == o2.getAge()) return o1.getName().compareTo(o2.getName());
- * else if(o1.getAge() > o2.getAge()) return 1; else return -1; })
- * .collect(Collectors.toList());
- *
- * sortedList.forEach(System.out::println);
- */

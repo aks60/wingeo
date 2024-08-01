@@ -6,6 +6,9 @@ import dataset.Query;
 import dataset.Record;
 import static domain.eArtikl.up;
 import static domain.eColor.up;
+import static domain.eElemdet.color_fk;
+import static domain.eElemdet.up;
+import static domain.eElemdet.values;
 import static domain.eGroups.up;
 import frames.UGui;
 import java.util.ArrayList;
@@ -50,6 +53,16 @@ public enum eFurndet implements Field {
     public Query getQuery() {
         return query;
     }
+    
+    public static Query select(int colorFK) {
+        Query q = new Query(values());
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(color_fk) == colorFK).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", color_fk, "=", colorFK);
+        }
+        return q;
+    } 
     
     public static List<Record> find(int _id) {
         if (Query.conf.equals("calc")) {

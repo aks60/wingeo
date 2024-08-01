@@ -19,7 +19,7 @@ public enum eJoindet implements Field {
     color_fk("4", "10", "1", "Текстура", "CLNUM"),
     artikl_id("4", "10", "1", "Артикул", "artikl_id"),
     joinvar_id("4", "10", "0", "Варианты соед.", "joinvar_id");
-   
+
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());
 
@@ -46,7 +46,17 @@ public enum eJoindet implements Field {
     public Query getQuery() {
         return query;
     }
-    
+
+    public static Query select(int colorFK) {
+        Query q = new Query(values());
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(color_fk) == colorFK).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", color_fk, "=", colorFK);
+        }
+        return q;
+    }
+
     public static List<Record> find(int _id) {
         if (Query.conf.equals("calc")) {
             return query().stream().filter(rec -> rec.getInt(joinvar_id) == _id).collect(toList());
