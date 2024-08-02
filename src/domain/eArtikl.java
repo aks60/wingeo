@@ -125,6 +125,17 @@ public enum eArtikl implements Field {
         }
     }
 
+    public static void select4(Query q) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec
+                    -> rec.getInt(level1) == 2 && (rec.getInt(level2) == 11 || rec.getInt(level2) == 12)
+            ).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", eArtikl.level1, "= 2 and", eArtikl.level2, "in (11,12)");
+        }
+    }
+
     public static Record get(int id) {
         if (id == -3) {
             return virtualRec();

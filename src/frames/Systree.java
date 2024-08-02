@@ -169,10 +169,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 this.systreeID = sysprodRec.getInt(eSysprod.systree_id);
             }
         }
-        qGroups.select(eGroups.up, "where", eGroups.grup, "=", TypeGrup.PARAM_USER.id, "or", eGroups.grup, "=", TypeGrup.COLOR_MAP.id);
-        qSystree.select(eSystree.up, "order by name");
+        eGroups.select4(qGroups);
+        eSystree.select(qSystree);
         qParams.select(eParams.up);
-        qArtikl.select(eArtikl.up, "where", eArtikl.level1, "= 2 and", eArtikl.level2, "in (11,12)");
+        eArtikl.select(qArtikl);
 
         loadingTree1();
     }
@@ -356,7 +356,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }
 
     public void loadingTab5() {
-        qSysprod.select(eSysprod.up, "where", eSysprod.systree_id, "=", systreeID, "order by", eSysprod.npp, ",", eSysprod.id);
+        eSysprod.select(qSysprod, systreeID);
         DefaultTableModel dm = (DefaultTableModel) tab5.getModel();
         dm.getDataVector().removeAllElements();
         for (Record record : qSysprod.table(eSysprod.up)) {
@@ -626,7 +626,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         UGui.buttonCellEditor(tab3, 1).addActionListener(event -> {
-            DicName frame = new DicName(this, listenerFurn, new Query(eFurniture.values()).select(eFurniture.up, "where", eFurniture.types, "in (0, 1)", "order by", eFurniture.name), eFurniture.name);
+            DicName frame = new DicName(this, listenerFurn, new Query(eFurniture.values())
+                    .select(eFurniture.up, "where", eFurniture.types, "in (0, 1)", "order by", eFurniture.name), eFurniture.name);
         });
 
         UGui.buttonCellEditor(tab3, 2).addActionListener(event -> {

@@ -85,7 +85,17 @@ public enum eGroups implements Field {
             q.select(up, "where", eGroups.grup, "=", TypeGrup.COLOR_GRP.id, "order by", eGroups.npp, ",", eGroups.name);
         }
     }
-    
+
+    public static void select4(Query q) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(grup) == TypeGrup.PARAM_USER.id
+                    || rec.getInt(grup) == TypeGrup.COLOR_MAP.id).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", grup, "=", TypeGrup.PARAM_USER.id, "or", grup, "=", TypeGrup.COLOR_MAP.id);
+        }
+    }
+
     public static Record find(int _id) {
         if (Query.conf.equals("calc")) {
             return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));

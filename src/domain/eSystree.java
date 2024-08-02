@@ -6,6 +6,8 @@ import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
 import static domain.eArtikl.groups4_id;
+import static domain.eGroups.name;
+import static domain.eGroups.up;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -53,6 +55,17 @@ public enum eSystree implements Field {
 
     public Query getQuery() {
         return query;
+    }
+    
+    public static void select(Query q) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().sorted((o1, o2) -> {
+                return o1.getStr(name).compareTo(o2.getStr(name));
+            }).collect(Collectors.toList()));
+        } else {
+            q.select(up, "order by", name);
+        }
     }
     
     public static String patch(int _nuni, String patch) {
