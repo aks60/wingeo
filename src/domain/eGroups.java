@@ -51,15 +51,6 @@ public enum eGroups implements Field {
         return query;
     }
 
-    public static void select(Query q) {
-        q.clear();
-        if (Query.conf.equals("calc")) {
-            q.addAll(query().stream().collect(Collectors.toList()));
-        } else {
-            q.select(up);
-        }
-    }
-
     public static void select2(Query q) {
         q.clear();
         if (Query.conf.equals("calc")) {
@@ -93,6 +84,15 @@ public enum eGroups implements Field {
                     || rec.getInt(grup) == TypeGrup.COLOR_MAP.id).collect(Collectors.toList()));
         } else {
             q.select(up, "where", grup, "=", TypeGrup.PARAM_USER.id, "or", grup, "=", TypeGrup.COLOR_MAP.id);
+        }
+    }
+
+    public static void select5(Query q) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().collect(Collectors.toList()));
+        } else {
+            q.select(up);
         }
     }
 

@@ -4,9 +4,12 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.eColor.name;
+import static domain.eColor.up;
 import static domain.ePrjkit.up;
 import frames.UGui;
 import java.util.List;
+import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 public enum eParams implements Field {
@@ -49,6 +52,15 @@ public enum eParams implements Field {
         return query;
     }
   
+    public static void select(Query q) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().collect(Collectors.toList()));
+        } else {
+            q.select(up);
+        }
+    }
+    
     public static Record find(int _id) {
         if (Query.conf.equals("calc")) {
             return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));

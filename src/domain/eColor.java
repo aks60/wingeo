@@ -62,16 +62,6 @@ public enum eColor implements Field {
         return query;
     }
 
-    public static void select(Query q) {
-        q.clear();
-        if (Query.conf.equals("calc")) {
-            q.addAll(query().stream().sorted((o1, o2) -> o1.getStr(name)
-                    .compareTo(o2.getStr(name))).collect(Collectors.toList()));
-        } else {
-            q.select(up, "order by", name);
-        }
-    }
-
     public static void select2(Query q, int grupID) {
         q.clear();
         if (Query.conf.equals("calc")) {
@@ -81,6 +71,16 @@ public enum eColor implements Field {
                     }).collect(Collectors.toList()));
         } else {
             q.select(up, "where", groups_id, "=" + grupID, "order by", code);
+        }
+    }
+
+    public static void select3(Query q) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().sorted((o1, o2) -> o1.getStr(name)
+                    .compareTo(o2.getStr(name))).collect(Collectors.toList()));
+        } else {
+            q.select(up, "order by", name);
         }
     }
 

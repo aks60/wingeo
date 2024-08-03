@@ -47,7 +47,7 @@ public enum eSysprod implements Field {
     }
     
 
-    public static void select(Query q, int systreeID) {
+    public static void select2(Query q, int systreeID) {
         q.clear();
         if (Query.conf.equals("calc")) {
             q.addAll(query().stream().filter(rec -> rec.getInt(systree_id) == systreeID).sorted((o1, o2) -> {

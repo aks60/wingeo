@@ -4,6 +4,8 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.eArtikl.level1;
+import static domain.eArtikl.level2;
 import static domain.eArtikl.up;
 import static domain.eElemdet.color_fk;
 import static domain.eElemdet.up;
@@ -67,7 +69,7 @@ public enum eArtdet implements Field {
         return query;
     }
 
-    public static void select(Query q, int artiklID) {
+    public static void select2(Query q, int artiklID) {
         q.clear();
         if (Query.conf.equals("calc")) {
             q.addAll(query().stream().filter(rec -> rec.getInt(artikl_id) == artiklID)
@@ -77,7 +79,7 @@ public enum eArtdet implements Field {
         }
     }
 
-    public static Query select(int colorFK) {
+    public static Query select3(int colorFK) {
         Query q = new Query(values());
         if (Query.conf.equals("calc")) {
             q.addAll(query().stream().filter(rec -> rec.getInt(color_fk) == colorFK).collect(Collectors.toList()));
@@ -86,6 +88,16 @@ public enum eArtdet implements Field {
         }
         return q;
     }     
+    
+    public static Query select4(Query q, int ID) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(artikl_id) == ID).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", eArtdet.artikl_id, "=", ID);
+        }
+        return q;
+    }   
     
     public static Record find(int artiklID) {
         if (artiklID == -3) {

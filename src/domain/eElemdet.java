@@ -51,7 +51,7 @@ public enum eElemdet implements Field {
         return query;
     }
 
-    public static Query select(int colorFK) {
+    public static Query select2(int colorFK) {
         Query q = new Query(values());
         if (Query.conf.equals("calc")) {
             q.addAll(query().stream().filter(rec -> rec.getInt(color_fk) == colorFK).collect(Collectors.toList()));

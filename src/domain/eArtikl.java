@@ -4,13 +4,10 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
-import static domain.eArtdet.up;
-import static domain.eSyssize.name;
-import static domain.eSyssize.up;
-import frames.UGui;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public enum eArtikl implements Field {
     up("0", "0", "0", "Материальные ценности", "ARTIKLS"),
@@ -80,21 +77,6 @@ public enum eArtikl implements Field {
         return query;
     }
 
-    public static void select(Query q) {
-        q.clear();
-        if (Query.conf.equals("calc")) {
-            q.addAll(query().stream().sorted((o1, o2) -> {
-                if (o1.getInt(level1) == o2.getInt(level1)) {
-                    return o1.getStr(code).compareTo(o2.getStr(code));
-                } else {
-                    return (o1.getInt(level1) > o2.getInt(level1)) ? 1 : -1;
-                }
-            }).collect(Collectors.toList()));
-        } else {
-            q.select(up, "order by", level1, code);
-        }
-    }
-
     public static void select2(Query q, int lev1) {
         q.clear();
         if (Query.conf.equals("calc")) {
@@ -134,6 +116,43 @@ public enum eArtikl implements Field {
         } else {
             q.select(up, "where", eArtikl.level1, "= 2 and", eArtikl.level2, "in (11,12)");
         }
+    }
+
+    public static void select5(Query q) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().sorted((o1, o2) -> {
+                if (o1.getInt(level1) == o2.getInt(level1)) {
+                    return o1.getStr(code).compareTo(o2.getStr(code));
+                } else {
+                    return (o1.getInt(level1) > o2.getInt(level1)) ? 1 : -1;
+                }
+            }).collect(Collectors.toList()));
+        } else {
+            q.select(up, "order by", level1, code);
+        }
+    }
+
+    public static Query select6(Query q, String dep) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            Double[] p1 = Stream.of(dep.split(",")).toArray(Double[]::new);
+            List p2 = List.of(p1);
+
+            //List p1 = List.of(dep.split(","));
+            //Double[] p2 = p1.stream().toArray(Double[]::new);
+            
+            q.addAll(query().stream().filter(rec
+                    -> rec.getInt(level1) == 5 && List.of(1, 2, 3).contains(rec.getInt(level2))
+                    && p2.contains(rec.getDbl(depth)))
+                    .sorted((o1, o2) -> {
+                return o1.getStr(name).compareTo(o2.getStr(name));
+            }).collect(Collectors.toList()));
+        } else {
+            dep = (dep != null && dep.isEmpty() == false) ? " and " + depth.name() + " in (" + dep + ")" : "";
+            q.select(up, "where", level1, "= 5 and", level2, "in (1,2,3)", dep, "order by", name);
+        }
+        return q;
     }
 
     public static Record get(int id) {

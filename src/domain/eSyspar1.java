@@ -5,9 +5,13 @@ import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
 import static domain.eArtikl.up;
+import static domain.eColor.code;
+import static domain.eColor.groups_id;
+import static domain.eColor.up;
 import static domain.ePrjkit.up;
 import frames.UGui;
 import java.util.List;
+import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 public enum eSyspar1 implements Field {
@@ -45,6 +49,15 @@ public enum eSyspar1 implements Field {
         return query;
     }
   
+    public static void select2(Query q, int ID) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(systree_id) == ID).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", systree_id, "=", ID);
+        }
+    }
+    
     public static List<Record> find(int _nuni) {
         if (Query.conf.equals("calc")) {
             return query().stream().filter(rec -> rec.getInt(systree_id) == _nuni).collect(toList());

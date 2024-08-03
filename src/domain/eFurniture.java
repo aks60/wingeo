@@ -4,8 +4,12 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.eColor.code;
+import static domain.eColor.groups_id;
+import static domain.eColor.up;
 import static domain.eGroups.up;
 import frames.UGui;
+import java.util.stream.Collectors;
 
 public enum eFurniture implements Field {
     up("0", "0", "0", "Фурнитура", "FURNLST"),
@@ -26,6 +30,7 @@ public enum eFurniture implements Field {
     coord_lim("12", "128", "1", "Координаты ограничений", "FORML");
 
     private MetaField meta = new MetaField(this);
+    
     private static Query query = new Query(values());
 
     eFurniture(Object... p) {
@@ -50,6 +55,19 @@ public enum eFurniture implements Field {
 
     public Query getQuery() {
         return query;
+    }
+    
+    public static Query select2(Query q) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(types) == 0 || rec.getInt(types) == 1)
+                    .sorted((o1, o2) -> {
+                        return o1.getStr(name).compareTo(o2.getStr(name));
+                    }).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", types, "in (0, 1)", "order by", name);
+        }
+        return q;
     }
     
     public static Record find(int _id) {

@@ -41,6 +41,7 @@ public enum eJoining implements Field {
     public Query getQuery() {
         return query;
     }
+    
     public static Record find(int ID1, int ID2) {
 
         if (Query.conf.equals("calc")) {

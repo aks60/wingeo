@@ -403,7 +403,7 @@ public class UCom {
         }
         return false;
     }
-    
+
     //"Стойка 172;Стойка 240;
     public static boolean containsStr(String str, String val) {
         try {
@@ -446,7 +446,7 @@ public class UCom {
                 return 0;
             }
         }).get().getInt(field);
-    } 
+    }
 
     public static int scaleFont(double scale) {
         if (scale > .44) {
@@ -458,5 +458,5 @@ public class UCom {
         } else {
             return 64;
         }
-    }           
+    }
 }

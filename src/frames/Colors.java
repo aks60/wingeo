@@ -49,7 +49,7 @@ public class Colors extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        eColor.select(qColall);
+        eColor.select3(qColall);
         eGroups.select3(qGroups);     
     }
 
@@ -463,13 +463,13 @@ public class Colors extends javax.swing.JFrame {
                 mes[2] = "см. форму Коиплекты";
             } else if (!eJoindet.select(colorFK).isEmpty()) {
                 mes[2] = "см. форму Соединения";
-            } else if (!eElemdet.select(colorFK).isEmpty()) {
+            } else if (!eElemdet.select2(colorFK).isEmpty()) {
                 mes[2] = "см. форму Составы";
             } else if (!eGlasdet.select(colorFK).isEmpty()) {
                 mes[2] = "см. форму Заполнения";
-            } else if (!eFurndet.select(colorFK).isEmpty()) {
+            } else if (!eFurndet.select2(colorFK).isEmpty()) {
                 mes[2] = "см. форму Фурнитура";
-            } else if (!eArtdet.select(colorFK).isEmpty()) {
+            } else if (!eArtdet.select3(colorFK).isEmpty()) {
                 mes[2] = "см. форму Артикулы";
             }
             if (mes[2].isEmpty() == false) {

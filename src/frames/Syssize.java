@@ -52,7 +52,7 @@ public class Syssize extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        eSyssize.select(qSyssize);
+        eSyssize.select2(qSyssize);
     }
 
     public void loadingModel() {

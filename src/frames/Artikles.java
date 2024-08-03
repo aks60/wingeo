@@ -107,10 +107,10 @@ public class Artikles extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        eSyssize.select(qSyssize);
+        eSyssize.select2(qSyssize);
         eGroups.select2(qGroups);
-        eCurrenc.select(qCurrenc);
-        eColor.select(qColor);
+        eCurrenc.select2(qCurrenc);
+        eColor.select3(qColor);
     }
 
     public void loadingModel() {
@@ -302,7 +302,7 @@ public class Artikles extends javax.swing.JFrame {
             ((CardLayout) pan6.getLayout()).show(pan6, name);
 
             if (e == TypeArt.ROOT) {
-                eArtikl.select(qArtikl);
+                eArtikl.select5(qArtikl);
             } else if (node.isLeaf()) {
                 eArtikl.select3(qArtikl, e.id1, e.id2);
             } else {
@@ -329,7 +329,7 @@ public class Artikles extends javax.swing.JFrame {
 
             int id = record.getInt(eArtikl.id);
             lab2.setText(" id: " + id);
-            eArtdet.select(qArtdet, id);
+            eArtdet.select2(qArtdet, id);
             rsvArtikl.load();
             checkBox1.setSelected((record.getInt(eArtikl.with_seal) == 1));
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
@@ -365,7 +365,7 @@ public class Artikles extends javax.swing.JFrame {
         listenerSeries = (record) -> {
             int rowQuery = UGui.getIndexRec(tab1);
             if (qGroups.stream().noneMatch(rec -> rec.getInt(eGroups.id) == record.getInt(eGroups.id))) {
-                eGroups.select(qGroups);
+                eGroups.select5(qGroups);
             }
             if (rowQuery != -1) {
                 Record artiklRec = qArtikl.get(rowQuery);
@@ -448,7 +448,7 @@ public class Artikles extends javax.swing.JFrame {
         listenerMarkup = (record) -> {
             UGui.stopCellEditing(tab1, tab2);
             if (qGroups.stream().noneMatch(rec -> rec.getInt(eGroups.id) == record.getInt(eGroups.id))) {
-                eGroups.select(qGroups);
+                eGroups.select5(qGroups);
             }
             int index = UGui.getIndexRec(tab1);
             if (index != -1) {
@@ -461,7 +461,7 @@ public class Artikles extends javax.swing.JFrame {
         listenerDiscount = (record) -> {
             UGui.stopCellEditing(tab1, tab2);
             if (qGroups.stream().noneMatch(rec -> rec.getInt(eGroups.id) == record.getInt(eGroups.id))) {
-                 eGroups.select(qGroups);
+                 eGroups.select5(qGroups);
             }
             int index = UGui.getIndexRec(tab1);
             if (index != -1) {
@@ -474,7 +474,7 @@ public class Artikles extends javax.swing.JFrame {
         listenerCateg = (record) -> {
             UGui.stopCellEditing(tab1, tab2);
             if (qGroups.stream().noneMatch(rec -> rec.getInt(eGroups.id) == record.getInt(eGroups.id))) {
-                 eGroups.select(qGroups);
+                 eGroups.select5(qGroups);
             }
             int index = UGui.getIndexRec(tab1);
             if (index != -1) {
@@ -2633,7 +2633,7 @@ public class Artikles extends javax.swing.JFrame {
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
         qArtikl.clear();
-        eArtikl.select(qArtikl);
+        eArtikl.select5(qArtikl);
         qArtikl.execsql();
 
 //        Query q = ((DefTableModel) tab1.getModel()).getQuery();

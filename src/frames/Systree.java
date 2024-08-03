@@ -170,9 +170,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         }
         eGroups.select4(qGroups);
-        eSystree.select(qSystree);
-        qParams.select(eParams.up);
-        eArtikl.select(qArtikl);
+        eSystree.select2(qSystree);
+        eParams.select(qParams);
+        eArtikl.select5(qArtikl);
 
         loadingTree1();
     }
@@ -356,7 +356,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }
 
     public void loadingTab5() {
-        eSysprod.select(qSysprod, systreeID);
+        eSysprod.select2(qSysprod, systreeID);
         DefaultTableModel dm = (DefaultTableModel) tab5.getModel();
         dm.getDataVector().removeAllElements();
         for (Record record : qSysprod.table(eSysprod.up)) {
@@ -386,7 +386,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         eSysprof.artikl_id, "where", eSysprof.systree_id, "=", sysNode.rec().getInt(eSystree.id), "order by", eSysprof.use_type, ",", eSysprof.npp);
                 qSysfurn.select(eSysfurn.up, "left join", eFurniture.up, "on", eFurniture.id, "=",
                         eSysfurn.furniture_id, "where", eSysfurn.systree_id, "=", sysNode.rec().getInt(eSystree.id), "order by", eSysfurn.npp);
-                qSyspar1a.select(eSyspar1.up, "where", eSyspar1.systree_id, "=", sysNode.rec().getInt(eSystree.id));
+                eSyspar1.select2(qSyspar1a, sysNode.rec().getInt(eSystree.id));
                 lab1.setText("Система ID = " + systreeID);
                 lab2.setText("Элемент ID = -1");
                 Collections.sort(qSyspar1a, (o1, o2) -> qGroups.find(o1.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)
@@ -626,8 +626,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         UGui.buttonCellEditor(tab3, 1).addActionListener(event -> {
-            DicName frame = new DicName(this, listenerFurn, new Query(eFurniture.values())
-                    .select(eFurniture.up, "where", eFurniture.types, "in (0, 1)", "order by", eFurniture.name), eFurniture.name);
+            DicName frame = new DicName(this, listenerFurn, eFurniture.select2(new Query(eFurniture.values())), eFurniture.name);
         });
 
         UGui.buttonCellEditor(tab3, 2).addActionListener(event -> {
@@ -3919,7 +3918,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             HashSet<Record> colorSet = new HashSet<Record>();
             //Все текстуры артикула элемента конструкции
             Field field = (evt.getSource() == btn18) ? eArtdet.mark_c1 : (evt.getSource() == btn19) ? eArtdet.mark_c2 : eArtdet.mark_c3;
-            Query artdetList = new Query(eArtdet.values()).select(eArtdet.up, "where", eArtdet.artikl_id, "=", winNode.com5t().artiklRec.getInt(eArtikl.id));
+            int artiklID = winNode.com5t().artiklRec.getInt(eArtikl.id);
+            Query artdetList = eArtdet.select4(new Query(eArtdet.values()), artiklID);
             artdetList.forEach(rec -> {
                 if (rec.getInt(field) == 1) {
 
@@ -4044,16 +4044,16 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             //Список доступных толщин в ветке системы например 4;5;8
             String depth = sysNode.rec().getStr(eSystree.depth);
             if (depth != null && depth.isEmpty() == false) {
-                depth = depth.replace(";;;", ";").replace(";;", ";");
-                depth = depth.replace(";", ",");
+                depth = depth.replace(";;;", ";").replace(";;", ";").replace(";", ",");
                 if (depth.charAt(depth.length() - 1) == ',') {
                     depth = depth.substring(0, depth.length() - 1);
                 }
             }
             //Список стеклопакетов
-            depth = (depth != null && depth.isEmpty() == false) ? " and " + eArtikl.depth.name() + " in (" + depth + ")" : "";
-            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
-                    "where", eArtikl.level1, "= 5 and", eArtikl.level2, "in (1,2,3)", depth, "order by", eArtikl.name);
+            //depth = (depth != null && depth.isEmpty() == false) ? " and " + eArtikl.depth.name() + " in (" + depth + ")" : "";
+//            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
+//                    "where", eArtikl.level1, "= 5 and", eArtikl.level2, "in (1,2,3)", depth, "order by", eArtikl.name);
+            Query qArtikl = eArtikl.select6(new Query(eArtikl.values()), depth);
             int recordID = (winNode.com5t().artiklRec != null) ? winNode.com5t().artiklRec.getInt(eArtikl.id) : -3;
 
             new DicArtikl(this, recordID, (artiklRec) -> {
