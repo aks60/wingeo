@@ -4,6 +4,7 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.eColor.up;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -157,6 +158,17 @@ public enum eArtikl implements Field {
             q.select(up, "where", level1, "= 2 and", level2, " = 11");
         }
         return q;
+    }
+    
+
+
+    public static void select8(Query q) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().collect(Collectors.toList()));
+        } else {
+            q.select(up);
+        }
     }
     
     public static Record get(int id) {

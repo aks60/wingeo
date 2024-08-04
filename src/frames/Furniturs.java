@@ -108,12 +108,12 @@ public class Furniturs extends javax.swing.JFrame {
 
     public void loadingData() {
         tab2X = tab2a;
-        qColor.select(eColor.up);
-        qArtikl.select(eArtikl.up);
-        qFurnall.select(eFurniture.up, "order by", eFurniture.name);
-        qGroups.select(eGroups.up, "where", eGroups.grup, " in (" + TypeGrup.PARAM_USER.id, ",", TypeGrup.COLOR_MAP.id + ")");
+        eColor.select4(qColor);
+        eArtikl.select8(qArtikl);
+        eFurniture.select3(qFurnall);
+        eGroups.select2(qGroups);
         int types = (btnTab1.isSelected()) ? 0 : (btnTab2.isSelected()) ? 1 : -1;
-        qFurniture.select(eFurniture.up, "where", eFurniture.types, "=", types, "order by", eFurniture.name);
+        eFurniture.select3(qFurniture);
     }
 
     public void loadingModel() {
@@ -358,11 +358,11 @@ public class Furniturs extends javax.swing.JFrame {
             Record record = qFurniture.table(eFurniture.up).get(index);
             Integer id = record.getInt(eFurniture.id);
 
-            qFurnside1.select(eFurnside1.up, "where", eFurnside1.furniture_id, "=", id, "order by", eFurnside1.side_num);
+            eFurnside1.select2(qFurnside1, id);
             ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab3);
 
-            qFurndet2a.select(eFurndet.up, "where", eFurndet.furniture_id1, "=", id, "and", eFurndet.furndet_pk, "=", eFurndet.id);
+            eFurndet.select3(qFurndet2a, id);
             ((DefaultTableModel) tab2a.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab2a);
         }

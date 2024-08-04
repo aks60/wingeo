@@ -52,7 +52,7 @@ public enum eParams implements Field {
         return query;
     }
   
-    public static void select(Query q) {
+    public static void select2(Query q) {
         q.clear();
         if (Query.conf.equals("calc")) {
             q.addAll(query().stream().collect(Collectors.toList()));

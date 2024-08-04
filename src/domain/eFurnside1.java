@@ -4,6 +4,9 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.eColor.code;
+import static domain.eFurniture.id;
+import static domain.eFurniture.up;
 import static domain.eGroups.up;
 import frames.UGui;
 import java.util.ArrayList;
@@ -42,6 +45,18 @@ public enum eFurnside1 implements Field {
 
     public Query getQuery() {
         return query;
+    }
+    
+    public static void select2(Query q, int furnityreID) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(furniture_id) == furnityreID)
+                    .sorted((o1, o2) -> {
+                        return o1.getStr(code).compareTo(o2.getStr(code));
+                    }).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", furniture_id, "=", id, "order by", side_num);
+        }
     }
     
     public static List<Record> find(int _id) {

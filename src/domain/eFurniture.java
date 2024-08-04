@@ -7,6 +7,7 @@ import dataset.Record;
 import static domain.eColor.code;
 import static domain.eColor.groups_id;
 import static domain.eColor.up;
+import static domain.eGlasgrp.up;
 import static domain.eGroups.up;
 import frames.UGui;
 import java.util.stream.Collectors;
@@ -68,6 +69,30 @@ public enum eFurniture implements Field {
             q.select(up, "where", types, "in (0, 1)", "order by", name);
         }
         return q;
+    }
+    
+    public static Query select3(Query q) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().sorted((o1, o2) -> {
+                        return o1.getStr(name).compareTo(o2.getStr(name));
+                    }).collect(Collectors.toList()));
+        } else {
+            q.select(up, "order by", name);
+        }
+        return q;
+    }  
+
+    public static void select3(Query q, int types) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(types) == types)
+                    .sorted((o1, o2) -> {
+                        return o1.getStr(code).compareTo(o2.getStr(code));
+                    }).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", types, "=", types, "order by", name);
+        }
     }
     
     public static Record find(int _id) {

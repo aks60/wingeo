@@ -5,9 +5,14 @@ import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
 import static domain.eArtikl.up;
+import static domain.eColor.code;
+import static domain.eColor.groups_id;
+import static domain.eColor.name;
 import static domain.eColor.up;
+import static domain.eParams.up;
 import frames.UGui;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public enum eGlasgrp implements Field {
     up("0", "0", "0", "Группы заполнения", "GLASGRP"),
@@ -41,6 +46,16 @@ public enum eGlasgrp implements Field {
 
     public Query getQuery() {
         return query;
+    }
+    
+    public static void select2(Query q) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().sorted((o1, o2) -> o1.getStr(name)
+                    .compareTo(o2.getStr(name))).collect(Collectors.toList()));
+        } else {
+            q.select(up, "order by", name);
+        }
     }
     
     public static ArrayList<Record>  findAll() {

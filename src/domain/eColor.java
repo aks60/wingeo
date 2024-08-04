@@ -89,7 +89,7 @@ public enum eColor implements Field {
         if (Query.conf.equals("calc")) {
             q.addAll(query().stream().collect(Collectors.toList()));
         } else {
-            q.select(up, "order by", name);
+            q.select(up);
         }
     }
 

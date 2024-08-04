@@ -171,7 +171,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
         eGroups.select4(qGroups);
         eSystree.select2(qSystree);
-        eParams.select(qParams);
+        eParams.select2(qParams);
         eArtikl.select5(qArtikl);
 
         loadingTree1();

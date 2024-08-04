@@ -64,6 +64,16 @@ public enum eFurndet implements Field {
         return q;
     } 
     
+    public static void select3(Query q, int ID) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(furniture_id1) == ID && 
+                    rec.getInt(furndet_pk) == rec.getInt(id)).collect(Collectors.toList()));
+        } else {
+            q.select("where", furniture_id1, "=", id, "and", furndet_pk, "=", id);
+        }
+    } 
+    
     public static List<Record> find(int _id) {
         if (Query.conf.equals("calc")) {
             return query().stream().filter(rec -> rec.getInt(furniture_id1) == _id).collect(Collectors.toList());
