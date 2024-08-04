@@ -497,11 +497,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
                     //Створка
                 } else if (winNode.com5t().type == enums.Type.STVORKA) {
-                                                                //расчёт ручки, 
+                    //расчёт ручки, 
                     new SpcFurniture(wincalc(), true).calc();   //петли, замка
-                                                                //через сокр. тарификацию
+                    //через сокр. тарификацию
                     ((CardLayout) pan7.getLayout()).show(pan7, "card16");
-                    AreaStvorka stv = (AreaStvorka) winNode.com5t(); 
+                    AreaStvorka stv = (AreaStvorka) winNode.com5t();
                     int id = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
                     AreaSimple own = winNode.com5t().owner;
                     setText(txt24, own.width());
@@ -3400,7 +3400,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         .addGroup(pan6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lab17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         tabb1.addTab("   Основные   ", pan6);
@@ -4119,7 +4119,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         try {
             double stvorkaID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
-            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up, "where", eArtikl.level1, "= 2 and", eArtikl.level2, " = 11");
+            Query qArtikl = eArtikl.select7(new Query(eArtikl.values()), 2, 11);
             Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicArtikl(this, (artiklRec) -> {
 
@@ -4215,7 +4215,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         try {
             double selectID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
-            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up, "where", eArtikl.level1, "= 2 and", eArtikl.level2, " = 12");
+            Query qArtikl = eArtikl.select7(new Query(eArtikl.values()), 2, 12);
             Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicArtikl(this, (artiklRec) -> {
 
@@ -4240,7 +4240,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         try {
             double selectID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
-            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up, "where", eArtikl.level1, "= 2 and", eArtikl.level2, " = 9");
+            Query qArtikl = eArtikl.select7(new Query(eArtikl.values()), 2 ,9);
             Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicArtikl(this, (artiklRec) -> {
 
@@ -4306,7 +4306,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_colorFromLock
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-       Record sysprodRec = eSysprod.find(2);
+        Record sysprodRec = eSysprod.find(2);
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void colorFromGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromGlass
@@ -4386,8 +4386,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         try {
             AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
             double selectID = winNode.com5t().id;
-            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
-                    "where", eArtikl.level1, "= 5 and", eArtikl.level2, "= 20");
+            Query qArtikl = eArtikl.select7(new Query(eArtikl.values()), 5 ,20);
             Com5t mosq = areaStv.childs.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
             int recordID = (mosq != null && mosq.artiklRec != null) ? mosq.artiklRec.getInt(eArtikl.id) : -1;
             new DicArtikl(this, recordID, (artiklRec) -> {
@@ -4431,9 +4430,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 ElemMosquit mosqElem = (ElemMosquit) mosq;
                 Record artiklRec = mosqElem.artiklRec;
                 int recordID = (mosqElem.sysprofRec == null) ? -1 : mosqElem.sysprofRec.getInt(eSysprof.id);
-                Query qElements = new Query(eElement.values()).select(eElement.up,
-                        "where", eElement.artikl_id, "=", artiklRec.getInt(eArtikl.id));
-
+                Query qElements = eElement.select2(new Query(eElement.values()), artiklRec.getInt(eArtikl.id));
                 new DicName(this, recordID, (elementRec) -> {
 
                     if (elementRec.get(1) == null) {
@@ -4473,8 +4470,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         try {
             ElemGlass classElem = (ElemGlass) winNode.com5t();
             double selectID = winNode.com5t().id;
-            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
-                    "where", eArtikl.level1, "= 1 and", eArtikl.level2, "= 12");
+            Query qArtikl = eArtikl.select7(new Query(eArtikl.values()), 1 ,12);
 
             new DicArtikl(this, (artiklRec) -> {
 
@@ -4642,7 +4638,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         for (int i = 0; i < stv.owner.gson.childs.size(); ++i) {
             if (stv.owner.gson.childs.get(i).id == stv.id) {
                 if (stv.owner.gson instanceof GsonRoot) { //первый уровень
-                    
+
                     if (wincalc().listElem.stream().anyMatch(e -> e.type == enums.Type.IMPOST)) {
                         GsonElem glass = new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS));
                         stv.owner.gson.childs.set(i, glass);
@@ -4701,7 +4697,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         try {
             double stvorkaID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
-            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up, "where", eArtikl.level1, "= 2 and", eArtikl.level2, " = 11");
+            Query qArtikl = eArtikl.select7(new Query(eArtikl.values()), 2 ,11);
             Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicArtikl(this, (artiklRec) -> {
 
@@ -4734,7 +4730,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         try {
             double glassID = winNode.com5t().id;
             int artiklID = ((ElemGlass) winNode.com5t()).artiklRec.getInt(eArtikl.id);
-            Query qBlinds = new Query(eArtikl.values()).select(eArtikl.up, "where", eArtikl.level1, "= 5 and", eArtikl.level2, " = 50");
+            Query qBlinds = eArtikl.select7(new Query(eArtikl.values()), 5, 50);
             //Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicArtikl(this, (artiklRec) -> {
 
@@ -4751,7 +4747,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.handlToStvorka() " + e);
-        }        
+        }
     }//GEN-LAST:event_blindsToElement
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 

@@ -149,6 +149,16 @@ public enum eArtikl implements Field {
         return q;
     }
 
+    public static Query select7(Query q, int lev1, int lev2) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(level1) == lev1 && rec.getInt(level2) == lev2).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", level1, "= 2 and", level2, " = 11");
+        }
+        return q;
+    }
+    
     public static Record get(int id) {
         if (id == -3) {
             return virtualRec();

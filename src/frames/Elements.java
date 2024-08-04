@@ -64,7 +64,7 @@ public class Elements extends javax.swing.JFrame {
 
     private Query qGroups = new Query(eGroups.values());
     private Query qGrCateg = new Query(eGroups.values());
-    private Query qColor = new Query(eColor.id, eColor.groups_id, eColor.name);
+    private Query qColor = new Query(eColor.values());
     private Query qElement = new Query(eElement.values(), eArtikl.values());
     private Query qElemdet = new Query(eElemdet.values(), eArtikl.values());
     private Query qElempar1 = new Query(eElempar1.values());
@@ -92,10 +92,9 @@ public class Elements extends javax.swing.JFrame {
 
     public void loadingData() {
 
-        qColor.select(eColor.up);
-        qGrCateg.select(eGroups.up, "where", eGroups.grup, "=", TypeGrup.CATEG_VST.id, "order by", eGroups.npp, ",", eGroups.name);
-        qGroups.select(eGroups.up, "where", eGroups.grup, "in (", TypeGrup.SERI_ELEM.id,
-                ",", TypeGrup.PARAM_USER.id, ",", TypeGrup.COLOR_MAP.id, ") order by", eGroups.npp, ",", eGroups.name);
+        eColor.select4(qColor);
+        eGroups.select6(qGrCateg);
+        eGroups.select7(qGroups);
 
         Record record = eGroups.up.newRecord(Query.SEL);
         record.setNo(eGroups.id, -1);
@@ -1253,7 +1252,7 @@ public class Elements extends javax.swing.JFrame {
                 elemdetClon.setNo(eElemdet.up, Query.INS);
                 elemdetClon.setNo(eElemdet.id, Conn.genId(eElemdet.up));
                 elemdetClon.setNo(eElemdet.element_id, elementID);
-                qElempar2.select(eElempar2.up, "where", eElempar2.elemdet_id, "=", elemdetRec.get(eElemdet.id));
+                eElempar2.select2(qElempar2, elemdetRec.getInt(eElemdet.id));
                 qElempar2.forEach(rec -> elempar2Map.put(rec, elemdetClon.getInt(eElemdet.id)));
                 qElemdet.add(elemdetClon);
             }

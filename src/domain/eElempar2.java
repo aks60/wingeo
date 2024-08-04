@@ -6,10 +6,13 @@ import dataset.Query;
 import dataset.Record;
 import static domain.eArtikl.up;
 import static domain.eColor.up;
+import static domain.eElement.artikl_id;
+import static domain.eElement.up;
 import static domain.eGroups.up;
 import frames.UGui;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 //Не менять индекс поля
@@ -47,6 +50,16 @@ public enum eElempar2 implements Field {
         return query;
     }
             
+    
+    public static void select2(Query q, int elemdetID) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(elemdet_id) == elemdetID).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", eElempar2.elemdet_id, "=", elemdetID);
+        }
+    } 
+    
     public static Record find(int _id) {
         if (Query.conf.equals("calc")) {
             return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));

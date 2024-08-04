@@ -4,6 +4,7 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
+import static domain.eArtikl.code;
 import static domain.eArtikl.up;
 import static domain.eColor.up;
 import static domain.eGroups.up;
@@ -51,6 +52,16 @@ public enum eElement implements Field {
     public Query getQuery() {
         return query;
     }
+    
+    public static Query select2(Query q, int artiklID) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(artikl_id) == artiklID).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", eElement.artikl_id, "=", artiklID);
+        }
+        return q;
+    } 
     
     public static List<Record> find(int seriesID) {
         if (seriesID == -1) {

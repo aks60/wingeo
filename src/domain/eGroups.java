@@ -96,6 +96,40 @@ public enum eGroups implements Field {
         }
     }
 
+    public static void select6(Query q) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> rec.getInt(grup) == TypeGrup.COLOR_GRP.id).sorted((o1, o2) -> {
+                if (o1.getInt(npp) == o2.getInt(npp)) {
+                    return o1.getStr(name).compareTo(o2.getStr(name));
+                } else {
+                    return (o1.getInt(npp) > o2.getInt(npp)) ? 1 : -1;
+                }
+            }).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", grup, "=", TypeGrup.CATEG_VST.id, "order by", npp, ",", name);
+        }
+    }
+
+    public static void select7(Query q) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().filter(rec -> 
+                    rec.getInt(grup) == TypeGrup.SERI_ELEM.id ||
+                    rec.getInt(grup) == TypeGrup.PARAM_USER.id ||
+                    rec.getInt(grup) == TypeGrup.COLOR_MAP.id).sorted((o1, o2) -> {
+                if (o1.getInt(npp) == o2.getInt(npp)) {
+                    return o1.getStr(name).compareTo(o2.getStr(name));
+                } else {
+                    return (o1.getInt(npp) > o2.getInt(npp)) ? 1 : -1;
+                }
+            }).collect(Collectors.toList()));
+        } else {
+            q.select(up, "where", eGroups.grup, "in (", TypeGrup.SERI_ELEM.id,
+                ",", TypeGrup.PARAM_USER.id, ",", TypeGrup.COLOR_MAP.id, ") order by", eGroups.npp, ",", eGroups.name);
+        }
+    }
+    
     public static Record find(int _id) {
         if (Query.conf.equals("calc")) {
             return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));

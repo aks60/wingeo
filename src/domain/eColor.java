@@ -84,6 +84,15 @@ public enum eColor implements Field {
         }
     }
 
+    public static void select4(Query q) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            q.addAll(query().stream().collect(Collectors.toList()));
+        } else {
+            q.select(up, "order by", name);
+        }
+    }
+
     public static int rgb(int id) {
         if (id == -3) {
             return virtualRec().getInt(rgb);
