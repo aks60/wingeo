@@ -30,10 +30,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -108,7 +110,25 @@ public class Test {
             //uid();
             //script();
             //geom();
+            //Stream<String> stream = Stream.of("1", "2", "3");
+            //Double[] array = stream.toArray(Double::parseDouble);
+            //List list = List.of(array);
 
+//            Stream<String> tokenStream = Stream.of("1", "2", "3", "4");
+//            Double[] tokenArray = tokenStream.toArray(Double[]::new);
+//            System.out.println(Arrays.toString(tokenArray));
+//
+//        String[] num = {"1", "2", "3"};
+//        Double[] result = Arrays.stream(num)
+//			.map(x -> x * 2)
+//			.boxed()
+//			.toArray(Double[]::new);
+//        System.out.println(Arrays.asList(result));
+        
+        List<String> result = Arrays.asList("1", "2", "3", "4", "5"); 
+        System.out.println("List of String: " + result); 
+        List<Double> listOfInteger = result.stream().map(Double::valueOf).collect(Collectors.toList());  
+            System.out.println(result);
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
         }
@@ -469,7 +489,7 @@ public class Test {
     }
 
     public static void clearDataDB() {
-        
+
         for (Field field : App.db) {
             if (field.tname().equals("GROUPS") == true) {
                 System.out.println("delete from " + field.tname() + " where id < 0;");

@@ -136,16 +136,10 @@ public enum eArtikl implements Field {
     public static Query select6(Query q, String dep) {
         q.clear();
         if (Query.conf.equals("calc")) {
-            Double[] p1 = Stream.of(dep.split(",")).toArray(Double[]::new);
-            List p2 = List.of(p1);
-
-            //List p1 = List.of(dep.split(","));
-            //Double[] p2 = p1.stream().toArray(Double[]::new);
-            
+            List<Double> p = Stream.of(dep.split(",")).map(Double::valueOf).collect(Collectors.toList());            
             q.addAll(query().stream().filter(rec
-                    -> rec.getInt(level1) == 5 && List.of(1, 2, 3).contains(rec.getInt(level2))
-                    && p2.contains(rec.getDbl(depth)))
-                    .sorted((o1, o2) -> {
+                    -> rec.getInt(level1) == 5 && List.of(1, 2, 3)
+                            .contains(rec.getInt(level2)) && p.contains(rec.getDbl(depth))).sorted((o1, o2) -> {
                 return o1.getStr(name).compareTo(o2.getStr(name));
             }).collect(Collectors.toList()));
         } else {
