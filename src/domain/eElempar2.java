@@ -50,7 +50,6 @@ public enum eElempar2 implements Field {
         return query;
     }
             
-    
     public static void select2(Query q, int elemdetID) {
         q.clear();
         if (Query.conf.equals("calc")) {
