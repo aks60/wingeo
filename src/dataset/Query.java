@@ -309,5 +309,33 @@ public class Query extends Table {
         return false;
     }
     
-    
+    public void sorted(Field... field) {
+        
+        if (field.length == 1 && field[0].meta().type() == Field.TYPE.INT) {
+            sort((rec1, rec2) -> rec1.getInt(field[0]) < rec2.getInt(field[0]) ? 1 : -1);
+
+        } else if (field.length == 1 && field[0].meta().type() == Field.TYPE.STR) {
+            sort((rec1, rec2) -> rec1.getStr(field[0]).compareTo(rec2.getStr(field[0])));
+
+        } else if (field.length == 2 && field[0].meta().type() == Field.TYPE.INT && field[1].meta().type() == Field.TYPE.INT) {
+            sort((rec1, rec2) -> {
+                if (rec1.getInt(field[0]) == rec2.getInt(field[0])) {
+                    return (rec1.getInt(field[1]) > rec2.getInt(field[1])) ? 1 : -1;
+                } else {
+                    return (rec1.getInt(field[0]) > rec2.getInt(field[0])) ? 1 : -1;
+                }
+            });
+
+        } else if (field.length == 2 && field[0].meta().type() == Field.TYPE.INT && field[1].meta().type() == Field.TYPE.STR) {
+            sort((rec1, rec2) -> {
+                if (rec1.getInt(field[0]) == rec2.getInt(field[0])) {
+                    return rec1.getStr(field[1]).compareTo(rec2.getStr(field[1]));
+                } else {
+                    return (rec1.getInt(field[0]) > rec2.getInt(field[0])) ? 1 : -1;
+                }
+            });
+        } else {
+            System.err.println("ВНИМАНИЕ! Ошибка сортировки.");
+        }
+    }     
 }
