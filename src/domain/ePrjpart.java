@@ -70,7 +70,7 @@ public enum ePrjpart implements Field {
         return query;
     }
 
-    public Query getQuery() {
+    public Query query() {
         return query;
     }
   

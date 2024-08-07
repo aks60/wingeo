@@ -570,7 +570,7 @@ public class UGui {
                 Field f = query.fields().get(0); //Field домена
                 
                 query.removeRec(index);             
-                delDomainRec(f.getQuery(), record.getInt(1));
+                delDomainRec(f.query(), record.getInt(1));
                 
                 ((DefTableModel) table.getModel()).fireTableRowsDeleted(row, row);
                 row = (row > 0) ? --row : 0;
@@ -604,7 +604,7 @@ public class UGui {
     //Добавить новую запись в доменt   
     public static Record addDomainRec(Field field) {
         Record record = field.newRecord(Query.INS);
-        field.getQuery().add(record);
+        field.query().add(record);
         return record;
     }
 

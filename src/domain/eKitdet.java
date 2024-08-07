@@ -40,7 +40,7 @@ public enum eKitdet implements Field {
         return query;
     }
 
-    public Query getQuery() {
+    public Query query() {
         return query;
     }
     

@@ -73,7 +73,7 @@ public enum eProject implements Field {
         return query;
     }
 
-    public Query getQuery() {
+    public Query query() {
         return query;
     }
     

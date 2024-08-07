@@ -39,7 +39,7 @@ public enum eGlasgrp implements Field {
         return query;
     }
 
-    public Query getQuery() {
+    public Query query() {
         return query;
     }
     

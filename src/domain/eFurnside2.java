@@ -43,7 +43,7 @@ public enum eFurnside2 implements Field {
         return query;
     }
 
-    public Query getQuery() {
+    public Query query() {
         return query;
     }
     

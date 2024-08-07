@@ -45,7 +45,7 @@ public enum eParmap implements Field {
         return query;
     }
 
-    public Query getQuery() {
+    public Query query() {
         return query;
     }
   

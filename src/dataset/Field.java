@@ -72,7 +72,7 @@ public interface Field {
         return record;
     }
 
-    default Query getQuery() {
+    default Query query() {
         return null;
     }
     

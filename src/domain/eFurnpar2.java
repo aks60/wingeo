@@ -41,7 +41,7 @@ public enum eFurnpar2 implements Field {
         return values();
     }
 
-    public Query getQuery() {
+    public Query query() {
         return query;
     }
     
