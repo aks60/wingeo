@@ -1,12 +1,16 @@
 package dataset;
 
 import static dataset.Query.INS;
+import static domain.eArtikl.level1;
+import static domain.eArtikl.level2;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import startup.App;
 
@@ -307,6 +311,52 @@ public class Query extends Table {
             }
         }
         return false;
+    }
+    
+    public Query sql(List<Record> data, Field field) {
+        clear();
+        if (Query.conf.equals("calc")) {
+            addAll(data.stream().collect(Collectors.toList()));
+        } else {
+            select(field.fields()[0]);
+
+        }
+        return this;
+    }
+
+    public Query sql(List<Record> data, Field field, int value) {
+        clear();
+        if (Query.conf.equals("calc")) {
+            addAll(data.stream().filter(rec -> rec.getInt(field) == value).collect(Collectors.toList()));
+        } else {
+            select(field.fields()[0], "where", field, "=", value);
+
+        }
+        return this;
+    }
+
+    public Query sql(List<Record> data, Field field, int value, Field field2, int value2) {
+        clear();
+        if (Query.conf.equals("calc")) {
+            addAll(data.stream().filter(rec -> rec.getInt(field) == value && rec.getInt(field2) == value2).collect(Collectors.toList()));
+        } else {
+            select(field.fields()[0], "where", field, "=", value, "and", field2, "=", value2);
+
+        }
+        return this;
+    }
+
+    public Query sql2(List<Record> data, Field field, Field field2) {
+        clear();
+        if (Query.conf.equals("calc")) {
+            addAll(data.stream().filter(rec
+                    -> rec.getInt(level1) == 2 && (rec.getInt(level2) == 11 || rec.getInt(level2) == 12)
+            ).collect(Collectors.toList()));
+        } else {
+            select(field.fields()[0], "where", field, "= 2 and", field2, "in (11,12)");
+
+        }
+        return this;
     }
     
     public void sorted(Field... field) {

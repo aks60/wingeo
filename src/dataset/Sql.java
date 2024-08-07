@@ -1,4 +1,3 @@
-
 package dataset;
 
 import static domain.eArtikl.code;
@@ -11,6 +10,17 @@ import java.util.stream.Collectors;
 
 public class Sql {
 
+    public static Query select(List<Record> data, Query query, Field field) {
+        query.clear();
+        if (Query.conf.equals("calc")) {
+            query.addAll(data.stream().collect(Collectors.toList()));
+        } else {
+            query.select(field.fields()[0]);
+
+        }
+        return query;
+    }
+
     public static Query select2(List<Record> data, Query query, Field field, int value) {
         query.clear();
         if (Query.conf.equals("calc")) {
@@ -21,7 +31,7 @@ public class Sql {
         }
         return query;
     }
-    
+
     public static Query select3(List<Record> data, Query query, Field field, int value, Field field2, int value2) {
         query.clear();
         if (Query.conf.equals("calc")) {
@@ -32,7 +42,7 @@ public class Sql {
         }
         return query;
     }
-    
+
     public static Query select4(List<Record> data, Query query, Field field, Field field2) {
         query.clear();
         if (Query.conf.equals("calc")) {

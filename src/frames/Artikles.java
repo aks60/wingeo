@@ -40,6 +40,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 import common.listener.ListenerRecord;
+import dataset.Sql;
 import frames.swing.DefCellEditorNumb;
 import frames.swing.TableFieldFilter;
 import java.awt.event.MouseEvent;
@@ -107,10 +108,10 @@ public class Artikles extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        qSyssize.select(eSyssize.up, "order by", eSyssize.name);
-        qGroups.select(eGroups.up);
-        qCurrenc.select(eCurrenc.up, "order by", eCurrenc.name);
-        qColor.select(eColor.up, "order by", eColor.name);
+        qSyssize.sql(eSyssize.data(), eSyssize.up).sorted(eSyssize.name);
+        qGroups.sql(eGroups.data(), eGroups.up);
+        qSyssize.sql(eCurrenc.data(), eCurrenc.up).sorted(eCurrenc.name);
+        qColor.sql(eColor.data(), eColor.up).sorted(eColor.name);
     }
 
     public void loadingModel() {
@@ -280,7 +281,7 @@ public class Artikles extends javax.swing.JFrame {
         });
     }
 
-    public void loadingTree() {      
+    public void loadingTree() {
         nodeRoot = new DefaultMutableTreeNode(TypeArt.ROOT);
         UTree.loadArtTree(nodeRoot);
         tree.setModel(new DefaultTreeModel(nodeRoot));
@@ -302,11 +303,11 @@ public class Artikles extends javax.swing.JFrame {
             ((CardLayout) pan6.getLayout()).show(pan6, name);
 
             if (e == TypeArt.ROOT) {
-                qArtikl.select(eArtikl.up, "order by", eArtikl.level1, ",", eArtikl.code);
+                qArtikl.sql(eArtikl.data(), eArtikl.up).sorted(eArtikl.level1, eArtikl.code);
             } else if (node.isLeaf()) {
-                qArtikl.select(eArtikl.up, "where", eArtikl.level1, "=", e.id1 + "and", eArtikl.level2, "=", e.id2, "order by", eArtikl.level1, ",", eArtikl.code);
+                qArtikl.sql(eArtikl.data(), eArtikl.level1, e.id1, eArtikl.level2, e.id2).sorted(eArtikl.level1, eArtikl.code);
             } else {
-                qArtikl.select(eArtikl.up, "where", eArtikl.level1, "=", e.id1, "order by", eArtikl.level1, ",", eArtikl.code);
+                qArtikl.sql(eArtikl.data(), eArtikl.level1, e.id1).sorted(eArtikl.level1, eArtikl.code);
             }
             DefaultMutableTreeNode node2 = (DefaultMutableTreeNode) node.getParent();
             lab1.setText((node2 != null && node.getParent() != null) ? " Тип: " + ((TypeArt) node2.getUserObject()).id1
@@ -330,7 +331,7 @@ public class Artikles extends javax.swing.JFrame {
 
             int id = record.getInt(eArtikl.id);
             lab2.setText(" id: " + id);
-            qArtdet.select(eArtdet.up, "where", eArtdet.artikl_id, "=", id);
+            qArtdet.sql(eArtdet.data(), eArtdet.artikl_id, id);
             rsvArtikl.load();
             checkBox1.setSelected((record.getInt(eArtikl.with_seal) == 1));
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
@@ -366,7 +367,7 @@ public class Artikles extends javax.swing.JFrame {
         listenerSeries = (record) -> {
             int rowQuery = UGui.getIndexRec(tab1);
             if (qGroups.stream().noneMatch(rec -> rec.getInt(eGroups.id) == record.getInt(eGroups.id))) {
-                qGroups.select(eGroups.up);
+                qGroups.sql(eGroups.data(), eGroups.up);
             }
             if (rowQuery != -1) {
                 Record artiklRec = qArtikl.get(rowQuery);
@@ -449,7 +450,8 @@ public class Artikles extends javax.swing.JFrame {
         listenerMarkup = (record) -> {
             UGui.stopCellEditing(tab1, tab2);
             if (qGroups.stream().noneMatch(rec -> rec.getInt(eGroups.id) == record.getInt(eGroups.id))) {
-                qGroups.select(eGroups.up);
+                //qGroups.select(eGroups.up);
+                qGroups.sql(eGroups.data(), eGroups.up);
             }
             int index = UGui.getIndexRec(tab1);
             if (index != -1) {
@@ -462,7 +464,8 @@ public class Artikles extends javax.swing.JFrame {
         listenerDiscount = (record) -> {
             UGui.stopCellEditing(tab1, tab2);
             if (qGroups.stream().noneMatch(rec -> rec.getInt(eGroups.id) == record.getInt(eGroups.id))) {
-                qGroups.select(eGroups.up);
+                //qGroups.select(eGroups.up);
+                qGroups.sql(eGroups.data(), eGroups.up);
             }
             int index = UGui.getIndexRec(tab1);
             if (index != -1) {
@@ -475,7 +478,8 @@ public class Artikles extends javax.swing.JFrame {
         listenerCateg = (record) -> {
             UGui.stopCellEditing(tab1, tab2);
             if (qGroups.stream().noneMatch(rec -> rec.getInt(eGroups.id) == record.getInt(eGroups.id))) {
-                qGroups.select(eGroups.up);
+                //qGroups.select(eGroups.up);
+                qGroups.sql(eGroups.data(), eGroups.up);
             }
             int index = UGui.getIndexRec(tab1);
             if (index != -1) {
@@ -2494,7 +2498,7 @@ public class Artikles extends javax.swing.JFrame {
 
     private void btnRefresh(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefresh
         UGui.stopCellEditing(tab1, tab2);
-        List.of(tab1, tab2).forEach(tab -> UGui.getQuery(tab).execsql());        
+        List.of(tab1, tab2).forEach(tab -> UGui.getQuery(tab).execsql());
         TreePath[] node = tree.getSelectionPaths(); //запомним path для nuni
         loadingData();
         tree.setSelectionPaths(node);
