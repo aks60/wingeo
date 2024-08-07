@@ -346,7 +346,7 @@ public class Query extends Table {
         return this;
     }
 
-    public Query sql2(List<Record> data, Field field, Field field2) {
+    public Query sql(List<Record> data, Field field, Field field2) {
         clear();
         if (Query.conf.equals("calc")) {
             addAll(data.stream().filter(rec
