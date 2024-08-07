@@ -31,7 +31,7 @@ public enum eSyssize implements Field {
         return values();
     }
 
-    public static Query query() {
+    public static Query data() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
             Query.listOpenTable.add(query);
@@ -49,7 +49,7 @@ public enum eSyssize implements Field {
             return virtualRec();
         }
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(null);
+            return data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(null);
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
         return (recordList.isEmpty() == true) ? virtualRec() : recordList.get(0);
@@ -57,7 +57,7 @@ public enum eSyssize implements Field {
 
     public static Query select(Query q) {
         if (Query.conf.equals("calc")) {
-            q.addAll(query().stream().sorted((o1, o2) -> o1.getStr(name)
+            q.addAll(data().stream().sorted((o1, o2) -> o1.getStr(name)
                     .compareTo(o2.getStr(name))).collect(Collectors.toList()));
             return q;
         }

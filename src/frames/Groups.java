@@ -818,8 +818,8 @@ public class Groups extends javax.swing.JFrame {
 
         }
         List.of(tab1, tab2, tab3, tab4, tab5, tab6, tab7).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
-        eGroups.query().clear();
-        eGroups.query();
+        eGroups.data().clear();
+        eGroups.data();
     }//GEN-LAST:event_btnInsert
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport

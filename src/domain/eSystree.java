@@ -43,7 +43,7 @@ public enum eSystree implements Field {
         return values();
     }
 
-    public static Query query() {
+    public static Query data() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
             Query.listOpenTable.add(query);
@@ -58,7 +58,7 @@ public enum eSystree implements Field {
     public static String patch(int _nuni, String patch) {
         List<Record> recordList = null;
         if (Query.conf.equals("calc")) {
-            recordList = query().stream().filter(rec -> _nuni == rec.getInt(id)).collect(Collectors.toList());
+            recordList = data().stream().filter(rec -> _nuni == rec.getInt(id)).collect(Collectors.toList());
         } else {
             recordList = new Query(values()).select(up, "where", id, "=", _nuni);
         }
@@ -75,7 +75,7 @@ public enum eSystree implements Field {
             return record();
         }
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> _nuni == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
+            return data().stream().filter(rec -> _nuni == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _nuni);
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);

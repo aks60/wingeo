@@ -163,9 +163,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         if (sysprodRec != null) {
             this.systreeID = sysprodRec.getInt(eSysprod.systree_id);
 
-        } else if (eSysprod.query().isEmpty() == false) {
+        } else if (eSysprod.data().isEmpty() == false) {
             if (this.systreeID == -1) {
-                sysprodRec = eSysprod.query().get(0);
+                sysprodRec = eSysprod.data().get(0);
                 this.systreeID = sysprodRec.getInt(eSysprod.systree_id);
             }
         }
@@ -3923,7 +3923,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 if (rec.getInt(field) == 1) {
 
                     if (rec.getInt(eArtdet.color_fk) < 0) { //все текстуры групы color_fk                       
-                        eColor.query().forEach(rec2 -> {
+                        eColor.data().forEach(rec2 -> {
                             if (rec2.getInt(eColor.groups_id) == rec.getInt(eArtdet.color_fk)) {
                                 colorSet.add(rec2);
                             }
@@ -4003,7 +4003,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
             //Поле текстур заполнено
             if (colorArr.length != 0) {
-                for (Record rec : eColor.query()) {
+                for (Record rec : eColor.data()) {
                     for (int i = 0; i < colorArr.length; i = i + 2) { //тестуры
                         if (rec.getInt(eColor.code) >= colorArr[i] && rec.getInt(eColor.code) <= colorArr[i + 1]) {
                             colorSet.add(rec);

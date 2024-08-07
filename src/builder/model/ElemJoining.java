@@ -76,8 +76,8 @@ public class ElemJoining {
 
     public String name() {
         if (joiningRec.get(1) != null) {
-            String name1 = eArtikl.query().stream().filter(rec -> rec.getInt(eArtikl.id) == elem1.artiklRecAn.getInt(eArtikl.id)).findFirst().orElse(eArtikl.up.newRecord(Query.SEL)).getStr(eArtikl.code);
-            String name2 = eArtikl.query().stream().filter(rec -> rec.getInt(eArtikl.id) == elem2.artiklRecAn.getInt(eArtikl.id)).findFirst().orElse(eArtikl.up.newRecord(Query.SEL)).getStr(eArtikl.code);
+            String name1 = eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.id) == elem1.artiklRecAn.getInt(eArtikl.id)).findFirst().orElse(eArtikl.up.newRecord(Query.SEL)).getStr(eArtikl.code);
+            String name2 = eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.id) == elem2.artiklRecAn.getInt(eArtikl.id)).findFirst().orElse(eArtikl.up.newRecord(Query.SEL)).getStr(eArtikl.code);
             return name1 + " ÷ " + name2;
         }
         return "";

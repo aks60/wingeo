@@ -35,7 +35,7 @@ public enum eElempar1 implements Field {
         return values();
     }
         
-    public static Query query() {
+    public static Query data() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
             Query.listOpenTable.add(query);
@@ -49,7 +49,7 @@ public enum eElempar1 implements Field {
     
     public static Record find(int _id) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
+            return data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
@@ -57,7 +57,7 @@ public enum eElempar1 implements Field {
 
     public static Record find2(int _par1) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> _par1 == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
+            return data().stream().filter(rec -> _par1 == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _par1);
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
@@ -65,7 +65,7 @@ public enum eElempar1 implements Field {
 
     public static List<Record> find3(int _element_id) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> _element_id == rec.getInt(element_id)).collect(Collectors.toList());
+            return data().stream().filter(rec -> _element_id == rec.getInt(element_id)).collect(Collectors.toList());
         }
         Query recordList = new Query(values()).select(up, "where", element_id, "=", _element_id);
         return (recordList.isEmpty() == true) ? new ArrayList<Record>() : recordList;

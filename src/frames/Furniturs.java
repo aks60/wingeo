@@ -1725,11 +1725,11 @@ public class Furniturs extends javax.swing.JFrame {
 
         int index = UGui.getIndexRec(tab1);
         Record furnitureRec = qFurniture.get(index);
-        List<Record> sysfurnList1 = eSysfurn.query().stream().filter(rec -> furnitureRec.getInt(eFurniture.id) == rec.getInt(eSysfurn.furniture_id)).collect(Collectors.toList());
+        List<Record> sysfurnList1 = eSysfurn.data().stream().filter(rec -> furnitureRec.getInt(eFurniture.id) == rec.getInt(eSysfurn.furniture_id)).collect(Collectors.toList());
         Set<Integer> systreeList = new HashSet<Integer>();
         sysfurnList1.forEach(rec -> systreeList.add(rec.getInt(eSysfurn.systree_id)));
 
-        for (Record rec : eSystree.query()) {
+        for (Record rec : eSystree.data()) {
             if (systreeList.contains(rec.get(eSystree.id))) {
                 bufferPath = bufferPath.append(rec.getStr(eSystree.name));
                 findPathSystree(rec, bufferPath);
@@ -1908,7 +1908,7 @@ public class Furniturs extends javax.swing.JFrame {
     }//GEN-LAST:event_tabMouseClicked
 
     private void findPathSystree(Record record, StringBuffer path) {
-        for (Record rec : eSystree.query()) {
+        for (Record rec : eSystree.data()) {
             if (record.getInt(eSystree.parent_id) == rec.getInt(eSystree.id)) {
                 path.insert(0, rec.getStr(eSystree.name) + "->");
                 if (rec.getInt(eSystree.id) != rec.getInt(eSystree.parent_id)) {

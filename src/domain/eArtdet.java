@@ -52,7 +52,7 @@ public enum eArtdet implements Field {
         return values();
     }
 
-    public static Query query() {
+    public static Query data() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
             Query.listOpenTable.add(query);
@@ -69,7 +69,7 @@ public enum eArtdet implements Field {
             return record();
         }
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> rec.getInt(artikl_id) == artiklID).findFirst().orElse(record());
+            return data().stream().filter(rec -> rec.getInt(artikl_id) == artiklID).findFirst().orElse(record());
         }
         List<Record> record = new Query(values()).select("select first 1 * from " + up.tname() + " where " + artikl_id.name() + " = " + artiklID);
         return (record.size() == 0) ? record() : record.get(0);
@@ -92,14 +92,14 @@ public enum eArtdet implements Field {
     
     public static List<Record> filter(int artiklID) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> rec.getInt(artikl_id) == artiklID).collect(toList());
+            return data().stream().filter(rec -> rec.getInt(artikl_id) == artiklID).collect(toList());
         }
         return new Query(values()).select(up, "where", artikl_id, "=", artiklID, "order by", id);
     }
     
     public static List<Record> filter2(int artiklID) {
 
-        return eArtdet.query().stream().filter(rec
+        return eArtdet.data().stream().filter(rec
                 -> artiklID == rec.getInt(eArtdet.artikl_id)
                 && rec.getInt(eArtdet.color_fk) > 0).collect(Collectors.toList());
     }

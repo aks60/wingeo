@@ -35,7 +35,7 @@ public enum eGlasdet implements Field {
         return values();
     }
 
-    public static Query query() {
+    public static Query data() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
             Query.listOpenTable.add(query);
@@ -49,7 +49,7 @@ public enum eGlasdet implements Field {
     
     public static List<Record> find(int _id, double _depth) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> rec.getInt(glasgrp_id) == _id && rec.getDbl(depth) == _depth).collect(Collectors.toList());
+            return data().stream().filter(rec -> rec.getInt(glasgrp_id) == _id && rec.getDbl(depth) == _depth).collect(Collectors.toList());
         }
         Query recordList = new Query(values()).select(up, "where", glasgrp_id, "=", _id, "and", depth, "=", _depth);
         return (recordList.isEmpty() == true) ? new ArrayList<Record>() : recordList;

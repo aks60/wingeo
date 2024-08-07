@@ -395,7 +395,7 @@ public class UColor {
                     ElemSimple firstElem = spcAdd.elem5e.root.frames.get(0);
                     int artiklID = firstElem.artiklRec.getInt(eArtikl.id);
                     //int artiklID = spcAdd.elem5e.artiklRecAn.getInt(eArtikl.id);
-                    return eArtdet.query().stream().filter(rec
+                    return eArtdet.data().stream().filter(rec
                             -> rec.getInt(eArtdet.mark_c1) == 1
                             && rec.getInt(eArtdet.mark_c2) == 1
                             && rec.getInt(eArtdet.mark_c3) == 1

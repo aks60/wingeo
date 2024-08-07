@@ -30,7 +30,7 @@ public enum eJoining implements Field {
         return values();
     }
 
-    public static Query query() {
+    public static Query data() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
             Query.listOpenTable.add(query);
@@ -41,10 +41,11 @@ public enum eJoining implements Field {
     public Query getQuery() {
         return query;
     }
+    
     public static Record find(int ID1, int ID2) {
 
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> (ID1 == rec.getInt(artikl_id1) || ID1 == rec.getInt(artikl_id2))
+            return data().stream().filter(rec -> (ID1 == rec.getInt(artikl_id1) || ID1 == rec.getInt(artikl_id2))
                     && (ID2 == rec.getInt(artikl_id1) || ID2 == rec.getInt(artikl_id2))
                     && rec.getInt(artikl_id1) != rec.getInt(artikl_id2)).findFirst().orElse(up.newRecord(Query.SEL));
         }
@@ -73,7 +74,7 @@ public enum eJoining implements Field {
     
     public static Record find2(String _analog) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> _analog.equals(rec.getStr(analog)) && (rec.getInt(is_main) & 0x100) != 0).findFirst().orElse(up.newRecord(Query.SEL));
+            return data().stream().filter(rec -> _analog.equals(rec.getStr(analog)) && (rec.getInt(is_main) & 0x100) != 0).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", analog, "='", _analog, "'");
         return recordList.stream().filter(rec -> (rec.getInt(is_main) & 0x100) != 0).findFirst().orElse(up.newRecord(Query.SEL));

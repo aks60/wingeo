@@ -33,7 +33,7 @@ public enum eSyspar1 implements Field {
         return values();
     }
 
-    public static Query query() {
+    public static Query data() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
             Query.listOpenTable.add(query);
@@ -47,14 +47,14 @@ public enum eSyspar1 implements Field {
   
     public static List<Record> find(int _nuni) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> rec.getInt(systree_id) == _nuni).collect(toList());
+            return data().stream().filter(rec -> rec.getInt(systree_id) == _nuni).collect(toList());
         }
         return new Query(values()).select(up, "where", systree_id, "=", _nuni);
     }
 
     public static Record find2(int _id) {
         if (Query.conf.equals("calc")) {
-            return query().find(_id, id);
+            return data().find(_id, id);
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);

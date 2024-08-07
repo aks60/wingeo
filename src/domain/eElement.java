@@ -40,7 +40,7 @@ public enum eElement implements Field {
         return values();
     }
     
-    public static Query query() {
+    public static Query data() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
             Query.listOpenTable.add(query);
@@ -57,21 +57,21 @@ public enum eElement implements Field {
             return new ArrayList<Record>();
         }
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> seriesID == rec.getInt(groups1_id) && rec.getInt(todef) > 0).collect(Collectors.toList());
+            return data().stream().filter(rec -> seriesID == rec.getInt(groups1_id) && rec.getInt(todef) > 0).collect(Collectors.toList());
         }
         return new Query(values()).select(up, "where", groups1_id, "=", seriesID, "and", todef, "> 0");
     }
 
     public static List<Record> find2(int artikl2_id) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> artikl2_id == rec.getInt(artikl_id) && rec.getInt(todef) > 0).collect(Collectors.toList());
+            return data().stream().filter(rec -> artikl2_id == rec.getInt(artikl_id) && rec.getInt(todef) > 0).collect(Collectors.toList());
         }
         return new Query(values()).select(up, "where", artikl_id, "=", artikl2_id, "and", todef, "> 0");
     }
 
     public static List<Record> find3(int artikl2_id, int series2_id) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> (artikl2_id == rec.getInt(artikl_id)
+            return data().stream().filter(rec -> (artikl2_id == rec.getInt(artikl_id)
                     || series2_id == rec.getInt(groups1_id)) && rec.getInt(todef) > 0).collect(Collectors.toList());
         }
         return new Query(values()).select(up, "where (", artikl_id, "=", artikl2_id, "or", groups1_id, "=", series2_id, ") and", todef, "> 0");
@@ -79,7 +79,7 @@ public enum eElement implements Field {
 
     public static Record find4(int _id) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
+            return data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", _id, "= id");
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
@@ -92,7 +92,7 @@ public enum eElement implements Field {
             return new ArrayList<Record>();
         }
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> seriesID == rec.getInt(groups1_id)
+            return data().stream().filter(rec -> seriesID == rec.getInt(groups1_id)
                     && artiklID != rec.getInt(artikl_id) && rec.getInt(todef) > 0).collect(Collectors.toList());
         }
         return  new Query(values()).select(up, "where", groups1_id, "=", seriesID, "and", artiklID, "!= artikl_id and", todef, "> 0");

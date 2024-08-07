@@ -32,7 +32,7 @@ public enum eJoinpar2 implements Field {
         return values();
     }
 
-    public static Query query() {
+    public static Query data() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
             Query.listOpenTable.add(query);
@@ -46,7 +46,7 @@ public enum eJoinpar2 implements Field {
     
     public static List<Record> find(int _id) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> rec.getInt(joindet_id) == _id).collect(toList());
+            return data().stream().filter(rec -> rec.getInt(joindet_id) == _id).collect(toList());
         }
         return new Query(values()).select(up, "where", joindet_id, "=", _id, "order by", id);
     }

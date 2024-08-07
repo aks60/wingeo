@@ -1183,13 +1183,13 @@ public class Elements extends javax.swing.JFrame {
     private void btnFind2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind2
         int index = UGui.getIndexRec(tab2);
         Record record = qElement.get(index);
-        List<Record> sysprofList1 = eSysprof.query().stream().filter(rec -> record.getInt(eElement.artikl_id) == rec.getInt(eSysprof.artikl_id)).collect(Collectors.toList());
+        List<Record> sysprofList1 = eSysprof.data().stream().filter(rec -> record.getInt(eElement.artikl_id) == rec.getInt(eSysprof.artikl_id)).collect(Collectors.toList());
         Set<Integer> sysprofList2 = new HashSet<Integer>();
         sysprofList1.forEach(rec -> sysprofList2.add(rec.getInt(eSysprof.systree_id)));
         List<String> pathList = new ArrayList<String>();
         List<Integer> keyList = new ArrayList<Integer>();
         StringBuffer path = new StringBuffer();
-        for (Record rec : eSystree.query()) {
+        for (Record rec : eSystree.data()) {
             if (sysprofList2.contains(rec.get(eSystree.id))) {
                 path = path.append(rec.getStr(eSystree.name));
                 findPathSystree(rec, path);
@@ -1322,7 +1322,7 @@ public class Elements extends javax.swing.JFrame {
     }//GEN-LAST:event_tabMouseClicked
 
     private void findPathSystree(Record record, StringBuffer path) {
-        for (Record rec : eSystree.query()) {
+        for (Record rec : eSystree.data()) {
             if (record.getInt(eSystree.parent_id) == rec.getInt(eSystree.id)) {
                 path.insert(0, rec.getStr(eSystree.name) + "->");
                 if (rec.getInt(eSystree.id) != rec.getInt(eSystree.parent_id)) {

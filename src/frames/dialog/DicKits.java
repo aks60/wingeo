@@ -68,7 +68,7 @@ public class DicKits extends javax.swing.JDialog {
     }
 
     public void loadingData(String type) {
-        eArtikl.query();
+        eArtikl.data();
         qKits.select(eKits.up, "order by", eKits.groups_id, ",", eKits.name);
     }
 

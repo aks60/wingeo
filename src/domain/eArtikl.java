@@ -64,7 +64,7 @@ public enum eArtikl implements Field {
         return values();
     }
 
-    public static Query query() {
+    public static Query data() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
             Query.listOpenTable.add(query);
@@ -82,7 +82,7 @@ public enum eArtikl implements Field {
         if (id == -3) {
             return virtualRec();
         }
-        query();
+        data();
         Record rec = map.get(id);
         return (rec == null) ? virtualRec() : rec;
     }
@@ -92,11 +92,11 @@ public enum eArtikl implements Field {
             return virtualRec();
         }
         if (Query.conf.equals("calc")) {
-            Record recordRec = query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
+            Record recordRec = data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
             if (_analog == true && recordRec.get(analog_id) != null) {
 
                 int _analog_id = recordRec.getInt(analog_id);
-                recordRec = query().stream().filter(rec -> _analog_id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
+                recordRec = data().stream().filter(rec -> _analog_id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
             }
             return recordRec;
         }
@@ -114,7 +114,7 @@ public enum eArtikl implements Field {
             return virtualRec();
         }
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> _code.equals(rec.getStr(code))).findFirst().orElse(up.newRecord(Query.SEL));
+            return data().stream().filter(rec -> _code.equals(rec.getStr(code))).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", code, "='", _code, "'");
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
@@ -125,7 +125,7 @@ public enum eArtikl implements Field {
             return List.of();
         }
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> seriesID == rec.getInt(groups4_id)).collect(Collectors.toList());
+            return data().stream().filter(rec -> seriesID == rec.getInt(groups4_id)).collect(Collectors.toList());
         }
         return new Query(values()).select(up, "where", groups4_id, "=", seriesID, "");
     }

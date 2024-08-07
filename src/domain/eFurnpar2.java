@@ -25,7 +25,7 @@ public enum eFurnpar2 implements Field {
         meta.init(p);
     }
 
-    public static Query query() {
+    public static Query data() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
             Query.listOpenTable.add(query);
@@ -47,7 +47,7 @@ public enum eFurnpar2 implements Field {
     
     public static List<Record> find(int _id) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> rec.getInt(furndet_id) == _id).collect(Collectors.toList());
+            return data().stream().filter(rec -> rec.getInt(furndet_id) == _id).collect(Collectors.toList());
         }
         Query recordList = new Query(values()).select(up, "where", furndet_id, "=", _id);
         return (recordList.isEmpty() == true) ? new ArrayList<Record>() : recordList;

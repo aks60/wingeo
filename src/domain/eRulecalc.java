@@ -41,7 +41,7 @@ public enum eRulecalc implements Field {
         return values();
     }
 
-    public static Query query() {
+    public static Query data() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
             Query.listOpenTable.add(query);
@@ -55,7 +55,7 @@ public enum eRulecalc implements Field {
   
     public static List<Record> list() {
         if (Query.conf.equals("calc")) {
-            return query();
+            return data();
         }
         return new Query(values()).select(up, "order by", id);
     }

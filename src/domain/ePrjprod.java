@@ -34,7 +34,7 @@ public enum ePrjprod implements Field {
         return values();
     }
 
-    public static Query query() {
+    public static Query data() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
             Query.listOpenTable.add(query);
@@ -48,7 +48,7 @@ public enum ePrjprod implements Field {
     
     public static Record find(int _id) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(null);
+            return data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(null);
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
         return (recordList.isEmpty() == true) ? null : recordList.get(0);
@@ -57,7 +57,7 @@ public enum ePrjprod implements Field {
     
     public static List<Record> find2(int _project_id) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> _project_id == rec.getInt(project_id)).collect(Collectors.toList());
+            return data().stream().filter(rec -> _project_id == rec.getInt(project_id)).collect(Collectors.toList());
         }
         return new Query(values()).select(up, "where", project_id, "=", _project_id);
     }

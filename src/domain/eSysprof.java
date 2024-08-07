@@ -35,7 +35,7 @@ public enum eSysprof implements Field {
         return values();
     }
 
-    public static Query query() {
+    public static Query data() {
         if (query.size() == 0) {
             query.select(up, "order by", npp);
             Query.listOpenTable.add(query);
@@ -62,7 +62,7 @@ public enum eSysprof implements Field {
         }
         if (Query.conf.equals("calc")) {
             HashMap<Integer, Record> mapPrio = new HashMap<Integer, Record>();
-            query().stream().filter(rec -> rec.getInt(systree_id) == _nuni && rec.getInt(use_type) == _type.id)
+            data().stream().filter(rec -> rec.getInt(systree_id) == _nuni && rec.getInt(use_type) == _type.id)
                     .forEach(rec -> mapPrio.put(rec.getInt(npp), rec));
             int minLevel = 32767;
             for (Map.Entry<Integer, Record> entry : mapPrio.entrySet()) {
@@ -86,7 +86,7 @@ public enum eSysprof implements Field {
 
     public static Record find3(int _id) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(up.newRecord(Query.SEL));
+            return data().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
@@ -96,7 +96,7 @@ public enum eSysprof implements Field {
         if (nuni == -3) {
             return virtualRec(typ);
         }
-        return query().stream().filter(rec -> rec.getInt(systree_id) == nuni
+        return data().stream().filter(rec -> rec.getInt(systree_id) == nuni
                 && rec.getInt(use_type) == typ
                 && UseSide.MANUAL.id != rec.getInt(use_side)
                 && (us1.id == rec.getInt(use_side) || UseSide.ANY.id == rec.getInt(use_side))
@@ -107,7 +107,7 @@ public enum eSysprof implements Field {
         if (nuni == -3) {
             return virtualRec(type);
         }
-        return query().stream().filter(rec -> rec.getInt(systree_id) == nuni
+        return data().stream().filter(rec -> rec.getInt(systree_id) == nuni
                 && rec.getInt(use_type) == type
                 && UseSide.MANUAL.id != rec.getInt(use_side)
                 && (us1.id == rec.getInt(use_side) || us2.id == rec.getInt(use_side) || UseSide.ANY.id == rec.getInt(use_side))

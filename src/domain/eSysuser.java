@@ -40,7 +40,7 @@ public enum eSysuser implements Field {
         return values();
     }
 
-    public static Query query() {
+    public static Query data() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
             Query.listOpenTable.add(query);
@@ -54,7 +54,7 @@ public enum eSysuser implements Field {
     
     public static Record find(int _id) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(null);
+            return data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(null);
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
         return (recordList.isEmpty() == true) ? null : recordList.get(0);
@@ -62,7 +62,7 @@ public enum eSysuser implements Field {
 
     public static Record find2(String _login) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> _login.equalsIgnoreCase(rec.getStr(login))).findFirst().orElse(null);
+            return data().stream().filter(rec -> _login.equalsIgnoreCase(rec.getStr(login))).findFirst().orElse(null);
         }
         Query recordList = new Query(values()).select(up, "where", login, "= '", _login + "'");
         return (recordList.isEmpty() == true) ? null : recordList.get(0);

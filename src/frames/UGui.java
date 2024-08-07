@@ -870,7 +870,7 @@ public class UGui {
         artdetList.stream().forEach(rec -> {
 
             if (rec.getInt(eArtdet.color_fk) < 0) {
-                eColor.query().forEach(rec2 -> {
+                eColor.data().forEach(rec2 -> {
                     if (rec2.getInt(eColor.groups_id) == rec.getInt(eArtdet.color_fk)) {
                         colorSet.add(rec2);
                     }
@@ -889,7 +889,7 @@ public class UGui {
         artdetList.stream().forEach(rec -> {
 
             if (rec.getInt(eArtdet.color_fk) < 0) {
-                eColor.query().forEach(rec2 -> {
+                eColor.data().forEach(rec2 -> {
                     if (rec2.getInt(eColor.groups_id) == rec.getInt(eArtdet.color_fk)) {
                         colorSet.add(rec2);
                     }

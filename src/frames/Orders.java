@@ -3215,7 +3215,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 eSystree col = (evt.getSource() == btn9) ? eSystree.col1 : (evt.getSource() == btn13) ? eSystree.col2 : eSystree.col3;
                 Integer[] arr2 = UCom.parserInt(systreeRec.getStr(col));
                 if (arr2.length != 0) {
-                    for (Record rec : eColor.query()) {
+                    for (Record rec : eColor.data()) {
                         for (int i = 0; i < arr2.length; i = i + 2) { //тестуры
                             if (rec.getInt(eColor.code) >= arr2[i] && rec.getInt(eColor.code) <= arr2[i + 1]) {
                                 colorSet.add(rec);
@@ -3333,7 +3333,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             artdetList.forEach(rec -> {
 
                 if (rec.getInt(eArtdet.color_fk) < 0) {
-                    eColor.query().forEach(rec2 -> {
+                    eColor.data().forEach(rec2 -> {
                         if (rec2.getInt(eColor.groups_id) == rec.getInt(eArtdet.color_fk)) {
                             colorSet.add(rec2);
                         }

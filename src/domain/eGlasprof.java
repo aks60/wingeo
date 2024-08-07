@@ -35,7 +35,7 @@ public enum eGlasprof implements Field {
         return values();
     }
 
-    public static Query query() {
+    public static Query data() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
             Query.listOpenTable.add(query);
@@ -49,7 +49,7 @@ public enum eGlasprof implements Field {
     
     public static List<Record> findAll() {
         if (Query.conf.equals("calc")) {
-            return query();
+            return data();
         }
         Query recordList = new Query(values()).select(up);
         return (recordList.isEmpty() == true) ? new ArrayList<Record>() : recordList;
@@ -57,7 +57,7 @@ public enum eGlasprof implements Field {
 
     public static List<Record> find(int glasgrpId) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> rec.getInt(glasgrp_id) == glasgrpId).collect(Collectors.toList());
+            return data().stream().filter(rec -> rec.getInt(glasgrp_id) == glasgrpId).collect(Collectors.toList());
         }
         Query recordList = new Query(values()).select(up, "where", glasgrp_id, "=", glasgrpId);
         return (recordList.isEmpty() == true) ? new ArrayList<Record>() : recordList;
@@ -65,7 +65,7 @@ public enum eGlasprof implements Field {
 
     public static Record find2(int artiklId) {
         if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> rec.getInt(artikl_id) == artiklId).findFirst().orElse(up.newRecord(Query.SEL));
+            return data().stream().filter(rec -> rec.getInt(artikl_id) == artiklId).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", artikl_id, "=", artiklId);
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
