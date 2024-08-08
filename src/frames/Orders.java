@@ -147,11 +147,11 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }
 
     private void loadingData() {
-        qGroups.select(eGroups.up, "where", eGroups.grup, "=", TypeGrup.PARAM_USER.id, "or", eGroups.grup, "=", TypeGrup.COLOR_MAP.id);
-        qParams.select(eParams.up);
-        qCurrenc.select(eCurrenc.up, "order by", eCurrenc.name);
-        qProjectAll.select(eProject.up, "order by", eProject.date4);
-        qPrjpart.select(ePrjpart.up);
+        qGroups.sq2(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, eGroups.grup,TypeGrup.COLOR_MAP.id);
+        qParams.sql(eParams.data(), eParams.up);
+        qCurrenc.sql(eCurrenc.data(), eCurrenc.up).sorted(eCurrenc.name);
+        qProjectAll.sql(eProject.data(), eProject.up).sorted(eProject.date4);
+        qPrjpart.sql(ePrjpart.data(), ePrjpart.up);
     }
 
     public void loadingModel() {
@@ -272,7 +272,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
             Record projectRec = qProject.get(UGui.getIndexRec(tab1));
             int id = projectRec.getInt(eProject.id);
-            qPrjprod.select(ePrjprod.up, "where", ePrjprod.project_id, "=", id);
+            qPrjprod.sql(ePrjprod.data(), ePrjprod.project_id, id);
 
             for (Record record : qPrjprod) {
                 try {
@@ -3329,7 +3329,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         try {
             double selectID = winNode.com5t().id;
             HashSet<Record> colorSet = new HashSet<Record>();
-            Query artdetList = new Query(eArtdet.values()).select(eArtdet.up, "where", eArtdet.artikl_id, "=", winNode.com5t().artiklRec.getInt(eArtikl.id));
+            Query artdetList = new Query(eArtdet.values()).sql(eArtdet.data(), eArtdet.artikl_id, winNode.com5t().artiklRec.getInt(eArtikl.id));
             artdetList.forEach(rec -> {
 
                 if (rec.getInt(eArtdet.color_fk) < 0) {
@@ -3472,7 +3472,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         try {
             double stvorkaID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
-            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up, "where", eArtikl.level1, "= 2 and", eArtikl.level2, " = 11");
+            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, 11);
             Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicArtikl(this, (artiklRec) -> {
 
@@ -3542,8 +3542,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 }
             }
             depth = (depth != null && depth.isEmpty() == false) ? " and " + eArtikl.depth.name() + " in (" + depth + ")" : "";
-            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up, "where",
-                    eArtikl.level1, "= 5 and", eArtikl.level2, "in (1,2,3)", depth);
+            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up, "where", eArtikl.level1, "= 5 and", eArtikl.level2, "in (1,2,3)", depth);
 
             new DicArtikl(this, (artiklRec) -> {
 
@@ -3658,7 +3657,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         try {
             double selectID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
-            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up, "where", eArtikl.level1, "= 2 and", eArtikl.level2, " = 12");
+            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, 12);
             Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicArtikl(this, (artiklRec) -> {
 
@@ -3704,7 +3703,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         try {
             double selectID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
-            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up, "where", eArtikl.level1, "= 2 and", eArtikl.level2, " = 9");
+            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, 9);
             Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicArtikl(this, (artiklRec) -> {
 
@@ -3871,8 +3870,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         try {
             AreaSimple stvElem = (AreaSimple) winNode.com5t();
             double selectID = winNode.com5t().id;
-            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
-                    "where", eArtikl.level1, "= 5 and", eArtikl.level2, "= 20");
+            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 20);
 
             new DicArtikl(this, (artiklRec) -> {
 
@@ -3934,8 +3932,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             if (mosqList.isEmpty() == false) {
                 ElemSimple mosqElem = (ElemSimple) mosqList.get(0);
                 Record artiklRec = mosqElem.artiklRec;
-                Query qElements = new Query(eElement.values()).select(eElement.up,
-                        "where", eElement.artikl_id, "=", artiklRec.getInt(eArtikl.id));
+                Query qElements = new Query(eElement.values()).sql(eElement.data(), eElement.artikl_id, artiklRec.getInt(eArtikl.id));
 
                 new DicName(this, (elementRec) -> {
 

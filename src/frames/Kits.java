@@ -64,9 +64,9 @@ public class Kits extends javax.swing.JFrame {
 
     public void loadingData() {
         eArtikl.data();
-        qGroups.select(eGroups.up, "where", eGroups.grup, " in (" + TypeGrup.PARAM_USER.id, ",", TypeGrup.COLOR_MAP.id + ")");
-        qCateg.select(eGroups.up, "where", eGroups.grup, "=", TypeGrup.CATEG_KIT.id, "order by", eGroups.name);
-        qKits.select(eKits.up, "order by", eKits.groups_id, ",", eKits.name);
+        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id);
+        qCateg.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_KIT.id).sorted(eGroups.name);
+        qKits.sql(eKits.data(), eKits.up).sorted(eKits.groups_id, eKits.name);
     }
 
     public void loadingModel() {
@@ -132,7 +132,7 @@ public class Kits extends javax.swing.JFrame {
         if (index != -1) {
             Record record = qCateg.get(index);
             Integer id = record.getInt(eGroups.id);
-            qKits.select(eKits.up, "where", eKits.groups_id, "=", id, "order by", eKits.name);
+            qKits.sql(eKits.data(), eKits.groups_id, id).sorted(eKits.name);
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab2);
         }
@@ -145,7 +145,7 @@ public class Kits extends javax.swing.JFrame {
         if (index != -1) {
             Record record = qKits.get(index);
             Integer id = record.getInt(eKits.id);
-            qKitdet.select(eKitdet.up, "where", eKitdet.kits_id, "=", id, "order by", eKitdet.id);
+            qKitdet.sql(eKitdet.data(), eKitdet.kits_id, id).sorted(eKitdet.id);
             ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab3);
         }
@@ -158,7 +158,6 @@ public class Kits extends javax.swing.JFrame {
         if (index != -1) {
             Record record = qKitdet.get(index);
             Integer id = record.getInt(eKitdet.id);
-            //qKitpar2.select(eKitpar2.up, "where", eKitpar2.kitdet_id, "=", id, "order by", eKitpar2.text);
             qKitpar2.clear();
             qKitpar2.addAll(eKitpar2.find(id));
             ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();

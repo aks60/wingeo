@@ -346,6 +346,17 @@ public class Query extends Table {
         return this;
     }
 
+    public Query sq2(List<Record> data, Field field, int value, Field field2, int value2) {
+        clear();
+        if (Query.conf.equals("calc")) {
+            addAll(data.stream().filter(rec -> rec.getInt(field) == value || rec.getInt(field2) == value2).collect(Collectors.toList()));
+        } else {
+            select(field.fields()[0], "where", field, "=", value, "or", field2, "=", value2);
+
+        }
+        return this;
+    }
+
     public Query sql(List<Record> data, Field field, int value, Field field2, Field field3) {
         clear();
         if (Query.conf.equals("calc")) {
@@ -403,10 +414,26 @@ public class Query extends Table {
         return this;
     }
 
+    public Query sql(List<Record> data, Field field, int value, Field field2, int value2, int value3, int value4) {
+        clear();
+        if (Query.conf.equals("calc")) {
+            addAll(data.stream().filter(rec -> rec.getInt(field) == value
+                    && (rec.getInt(field2) == value2 || rec.getInt(field2) == value3 || rec.getInt(field2) == value4)
+            ).collect(Collectors.toList()));
+        } else {
+            select(field.fields()[0], "where", field, "=", value, "and", field2, "in (", value2, ",", value3, ",", value4 + ")");
+
+        }
+        return this;
+    }
+
     public void sorted(Field... field) {
 
         if (field.length == 1 && field[0].meta().type() == Field.TYPE.INT) {
             sort((rec1, rec2) -> rec1.getInt(field[0]) < rec2.getInt(field[0]) ? 1 : -1);
+            
+        } else if (field.length == 1 && field[0].meta().type() == Field.TYPE.DATE) {
+            sort((rec1, rec2) -> rec1.getDate(field[0]).compareTo(rec2.getDate(field[0])));
 
         } else if (field.length == 1 && field[0].meta().type() == Field.TYPE.STR) {
             sort((rec1, rec2) -> rec1.getStr(field[0]).compareTo(rec2.getStr(field[0])));

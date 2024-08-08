@@ -66,16 +66,16 @@ public class Groups extends javax.swing.JFrame {
     }
 
     private void loadingData() {
-        qCurrenc.select(eCurrenc.up, "order by", eCurrenc.npp, ",", eCurrenc.name);
-        qColGrp.select(eGroups.up, "where", eGroups.grup, "= 2", "order by", eGroups.npp, ",", eGroups.name);
-        qColMap.select(eGroups.up, "where", eGroups.grup, "= 7", "order by", eGroups.npp, ",", eGroups.name);
-        qArtSeri.select(eGroups.up, "where", eGroups.grup, "= 3", "order by", eGroups.npp, ",", eGroups.name);
-        qArtIncr.select(eGroups.up, "where", eGroups.grup, "= 4", "order by", eGroups.npp, ",", eGroups.name);
-        qArtDecr.select(eGroups.up, "where", eGroups.grup, "= 5", "order by", eGroups.npp, ",", eGroups.name);
-        qCategProf.select(eGroups.up, "where", eGroups.grup, "= 6", "order by", eGroups.npp, ",", eGroups.name);
-        qCategVst.select(eGroups.up, "where", eGroups.grup, "= 8", "order by", eGroups.npp, ",", eGroups.name);
-        qCategKit.select(eGroups.up, "where", eGroups.grup, "= 10", "order by", eGroups.npp, ",", eGroups.name);
-        qDecInc.select(eGroups.up, "where", eGroups.grup, "= 9 and", eGroups.id, "in (2101, 2104, 2073)", "order by", eGroups.npp, ",", eGroups.name);
+        qCurrenc.sql(eCurrenc.data(), eCurrenc.up).sorted(eCurrenc.npp, eCurrenc.name);
+        qColGrp.sql(eGroups.data(), eGroups.grup, 2).sorted(eGroups.npp, eGroups.name);
+        qColMap.sql(eGroups.data(), eGroups.grup, 7).sorted(eGroups.npp, eGroups.name);
+        qArtSeri.sql(eGroups.data(), eGroups.grup, 3).sorted(eGroups.npp, eGroups.name);
+        qArtIncr.sql(eGroups.data(), eGroups.grup, 4).sorted(eGroups.npp, eGroups.name);
+        qArtDecr.sql(eGroups.data(), eGroups.grup, 5).sorted(eGroups.npp, eGroups.name);
+        qCategProf.sql(eGroups.data(), eGroups.grup, 6).sorted(eGroups.npp, eGroups.name);
+        qCategVst.sql(eGroups.data(), eGroups.grup, 8).sorted(eGroups.npp, eGroups.name);
+        qCategKit.sql(eGroups.data(), eGroups.grup, 10).sorted(eGroups.npp, eGroups.name);
+        qDecInc.sql(eGroups.data(), eGroups.grup, 9, eGroups.id, 2101, 2104, 2073).sorted(eGroups.npp, eGroups.name);
     }
 
     public void loadingModel() {
