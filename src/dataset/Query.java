@@ -62,7 +62,7 @@ public class Query extends Table {
     }
 
     public Query select(Object... s) {
-        
+
         String tName = "";
         String sql = String.valueOf(s[0]);
         if (String.valueOf(s[0]).substring(0, 6).equalsIgnoreCase("select") == false) {
@@ -95,7 +95,7 @@ public class Query extends Table {
             sql = sql.replace("' ", "'");
             sql = sql.replace(" '", "'");
         }
-        //System.out.println("SQL-SELECT:" + tName + " - " + sql);
+        System.out.println("SQL-SELECT:" + tName + " - " + sql);
         try {
             Statement statement = Conn.connection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet recordset = statement.executeQuery(sql);
@@ -312,7 +312,7 @@ public class Query extends Table {
         }
         return false;
     }
-    
+
     public Query sql(List<Record> data, Field field) {
         clear();
         if (Query.conf.equals("calc")) {
@@ -346,21 +346,65 @@ public class Query extends Table {
         return this;
     }
 
-    public Query sql(List<Record> data, Field field, Field field2) {
+    public Query sql(List<Record> data, Field field, int value, Field field2, Field field3) {
         clear();
         if (Query.conf.equals("calc")) {
-            addAll(data.stream().filter(rec
-                    -> rec.getInt(level1) == 2 && (rec.getInt(level2) == 11 || rec.getInt(level2) == 12)
-            ).collect(Collectors.toList()));
+            addAll(data.stream().filter(rec -> rec.getInt(field) == value && rec.getInt(field2) == rec.getInt(field3)).collect(Collectors.toList()));
         } else {
-            select(field.fields()[0], "where", field, "= 2 and", field2, "in (11,12)");
+            select(field.fields()[0], "where", field, "=", value, "and", field2, "=", field3);
+        }
+        return this;
+    }
+
+    public Query sq2(List<Record> data, Field field, int value, Field field2, Field field3) {
+        clear();
+        if (Query.conf.equals("calc")) {
+            addAll(data.stream().filter(rec -> rec.getInt(field) == value && rec.getInt(field2) != rec.getInt(field3)).collect(Collectors.toList()));
+        } else {
+            select(field.fields()[0], "where", field, "=", value, "and", field2, "!=", field3);
+        }
+        return this;
+    }
+
+    public Query sql(List<Record> data, Field field, int value2, int value3) {
+        clear();
+        if (Query.conf.equals("calc")) {
+            addAll(data.stream().filter(rec -> rec.getInt(field) == value2 || rec.getInt(field) == value3)
+                    .collect(Collectors.toList()));
+        } else {
+            select(field.fields()[0], "where", field, "in (", value2, ",", value3, ")");
 
         }
         return this;
     }
-    
+
+    public Query sql(List<Record> data, Field field, int value2, int value3, int value4) {
+        clear();
+        if (Query.conf.equals("calc")) {
+            addAll(data.stream().filter(rec -> rec.getInt(field) == value2 || rec.getInt(field) == value3 || rec.getInt(field) == value4
+            ).collect(Collectors.toList()));
+        } else {
+            select(field.fields()[0], "where", field, "in (", value2, ",", value3, ",", value4 + ")");
+
+        }
+        return this;
+    }
+
+    public Query sql(List<Record> data, Field field, int value, Field field2, int value2, int value3) {
+        clear();
+        if (Query.conf.equals("calc")) {
+            addAll(data.stream().filter(rec -> rec.getInt(field) == value
+                    && (rec.getInt(field2) == value2 || rec.getInt(field2) == value3)
+            ).collect(Collectors.toList()));
+        } else {
+            select(field.fields()[0], "where", field, "=", value, "and", field2, "in (", value2, ",", value3 + ")");
+
+        }
+        return this;
+    }
+
     public void sorted(Field... field) {
-        
+
         if (field.length == 1 && field[0].meta().type() == Field.TYPE.INT) {
             sort((rec1, rec2) -> rec1.getInt(field[0]) < rec2.getInt(field[0]) ? 1 : -1);
 
@@ -387,5 +431,5 @@ public class Query extends Table {
         } else {
             System.err.println("ВНИМАНИЕ! Ошибка сортировки.");
         }
-    }     
+    }
 }

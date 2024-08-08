@@ -49,8 +49,8 @@ public class Colors extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        qColall.select(eColor.up, "order by", eColor.name);
-        qGroups.select(eGroups.up, "where", eGroups.grup, "=", TypeGrup.COLOR_GRP.id, "order by", eGroups.npp, ",", eGroups.name);
+        qColall.sql(eGroups.data(), eColor.up).sorted(eColor.name);      
+        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_GRP.id).sorted(eGroups.npp, eGroups.name);
     }
 
     public void selectionTab1(ListSelectionEvent event) {
@@ -61,7 +61,7 @@ public class Colors extends javax.swing.JFrame {
         if (index != -1) {
             Record record = qGroups.table(eGroups.up).get(index);
             Integer cgrup = record.getInt(eGroups.id);
-            qColor.select(eColor.up, "where", eColor.groups_id, "=" + cgrup, "order by", eColor.code);
+            qColor.sql(eColor.data(), eColor.groups_id, cgrup).sorted(eColor.code);
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab2);
         }
@@ -459,17 +459,17 @@ public class Colors extends javax.swing.JFrame {
         } else if (tab2.getBorder() != null) {
             int colorID = qColor.get(UGui.getIndexRec(tab2)).getInt(eColor.id);
             String mes[] = {"Нельзя удалить запись на которую имеются ссылки из других форм, ", "SQL предупреждение", ""};
-            if (!new Query(eKitdet.id).select(eKitdet.up, "where", eKitdet.color1_id, "=", colorID).isEmpty()) {
+            if (!new Query(eKitdet.id).sql(eKitdet.data(), eKitdet.color1_id, colorID).isEmpty()) {
                 mes[2] = "см. форму Коиплекты";
-            } else if (!new Query(eJoindet.id).select(eJoindet.up, "where", eJoindet.color_fk, "=", colorID).isEmpty()) {
+            } else if (!new Query(eJoindet.id).sql(eJoindet.data(), eJoindet.color_fk, colorID).isEmpty()) {
                 mes[2] = "см. форму Соединения";
-            } else if (!new Query(eElemdet.id).select(eElemdet.up, "where", eElemdet.color_fk, "=", colorID).isEmpty()) {
+            } else if (!new Query(eElemdet.id).sql(eElemdet.data(), eElemdet.color_fk, colorID).isEmpty()) {
                 mes[2] = "см. форму Составы";
-            } else if (!new Query(eGlasdet.id).select(eGlasdet.up, "where", eGlasdet.color_fk, "=", colorID).isEmpty()) {
+            } else if (!new Query(eGlasdet.id).sql(eGlasdet.data(), eGlasdet.color_fk, colorID).isEmpty()) {
                 mes[2] = "см. форму Заполнения";
-            } else if (!new Query(eFurndet.id).select(eFurndet.up, "where", eFurndet.color_fk, "=", colorID).isEmpty()) {
+            } else if (!new Query(eFurndet.id).sql(eFurndet.data(), eFurndet.color_fk, colorID).isEmpty()) {
                 mes[2] = "см. форму Фурнитура";
-            } else if (!new Query(eArtdet.id).select(eArtdet.up, "where", eArtdet.color_fk, "=", colorID).isEmpty()) {
+            } else if (!new Query(eArtdet.id).sql(eArtdet.data(), eArtdet.color_fk, colorID).isEmpty()) {
                 mes[2] = "см. форму Артикулы";
             }
             if (mes[2].isEmpty() == false) {

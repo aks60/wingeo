@@ -450,7 +450,6 @@ public class Artikles extends javax.swing.JFrame {
         listenerMarkup = (record) -> {
             UGui.stopCellEditing(tab1, tab2);
             if (qGroups.stream().noneMatch(rec -> rec.getInt(eGroups.id) == record.getInt(eGroups.id))) {
-                //qGroups.select(eGroups.up);
                 qGroups.sql(eGroups.data(), eGroups.up);
             }
             int index = UGui.getIndexRec(tab1);
@@ -464,7 +463,6 @@ public class Artikles extends javax.swing.JFrame {
         listenerDiscount = (record) -> {
             UGui.stopCellEditing(tab1, tab2);
             if (qGroups.stream().noneMatch(rec -> rec.getInt(eGroups.id) == record.getInt(eGroups.id))) {
-                //qGroups.select(eGroups.up);
                 qGroups.sql(eGroups.data(), eGroups.up);
             }
             int index = UGui.getIndexRec(tab1);
@@ -478,7 +476,6 @@ public class Artikles extends javax.swing.JFrame {
         listenerCateg = (record) -> {
             UGui.stopCellEditing(tab1, tab2);
             if (qGroups.stream().noneMatch(rec -> rec.getInt(eGroups.id) == record.getInt(eGroups.id))) {
-                //qGroups.select(eGroups.up);
                 qGroups.sql(eGroups.data(), eGroups.up);
             }
             int index = UGui.getIndexRec(tab1);

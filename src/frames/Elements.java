@@ -92,10 +92,9 @@ public class Elements extends javax.swing.JFrame {
 
     public void loadingData() {
 
-        qColor.select(eColor.up);
-        qGrCateg.select(eGroups.up, "where", eGroups.grup, "=", TypeGrup.CATEG_VST.id, "order by", eGroups.npp, ",", eGroups.name);
-        qGroups.select(eGroups.up, "where", eGroups.grup, "in (", TypeGrup.SERI_ELEM.id,
-                ",", TypeGrup.PARAM_USER.id, ",", TypeGrup.COLOR_MAP.id, ") order by", eGroups.npp, ",", eGroups.name);
+        qColor.sql(eColor.data(), eColor.up);
+        qGrCateg.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id).sorted(eGroups.npp,eGroups.name );
+        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.SERI_ELEM.id, TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id).sorted(eGroups.npp, eGroups.name);
 
         Record record = eGroups.up.newRecord(Query.SEL);
         record.setNo(eGroups.id, -1);
@@ -1253,7 +1252,7 @@ public class Elements extends javax.swing.JFrame {
                 elemdetClon.setNo(eElemdet.up, Query.INS);
                 elemdetClon.setNo(eElemdet.id, Conn.genId(eElemdet.up));
                 elemdetClon.setNo(eElemdet.element_id, elementID);
-                qElempar2.select(eElempar2.up, "where", eElempar2.elemdet_id, "=", elemdetRec.get(eElemdet.id));
+                qElempar2.sql(eElempar2.data(), eElempar2.elemdet_id, elemdetRec.getInt(eElemdet.id));
                 qElempar2.forEach(rec -> elempar2Map.put(rec, elemdetClon.getInt(eElemdet.id)));
                 qElemdet.add(elemdetClon);
             }

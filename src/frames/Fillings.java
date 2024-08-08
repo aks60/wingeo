@@ -87,10 +87,10 @@ public class Fillings extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        qGroups.select(eGroups.up, "where", eGroups.grup, "in(", TypeGrup.COLOR_MAP.id, ",", TypeGrup.PARAM_USER.id, ")");
-        qColor.select(eColor.up);
-        qParams.select(eParams.up);
-        qGlasgrp.select(eGlasgrp.up, "order by", eGlasgrp.name);
+        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_MAP.id, TypeGrup.PARAM_USER.id);
+        qColor.sql(eColor.data(), eColor.up);
+        qParams.sql(eParams.data(), eParams.up);
+        qGlasgrp.sql(eGlasgrp.data(), eGlasgrp.up).sorted(eGlasgrp.name);
 
     }
 
