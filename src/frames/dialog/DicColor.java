@@ -39,8 +39,8 @@ public class DicColor extends javax.swing.JDialog {
         super(parent, true);
         this.master = master;
         initComponents();
-        qColgrp.select(eGroups.up, "where grup=", TypeGrup.COLOR_GRP.id, "order by", eGroups.npp, ",", eGroups.name);
-        qColorAll.select(eColor.up, "order by", eColor.name);
+        qColgrp.sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_GRP.id).sorted(eGroups.npp, eGroups.name);
+        qColorAll.sql(eColor.data(), eColor.up).sorted(eColor.name);
         initElements();
         this.listener = listener;
         loadingModel();
@@ -61,7 +61,7 @@ public class DicColor extends javax.swing.JDialog {
     }
 
     private void loadingData(HashSet<Record> colorSet, boolean auto) {
-        Query colgrpList = new Query(eGroups.values()).select(eGroups.up, "where grup=", TypeGrup.COLOR_GRP.id, "order by", eGroups.npp, ",", eGroups.name);
+        Query colgrpList = new Query(eGroups.values()).sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_GRP.id).sorted(eGroups.npp, eGroups.name);
 
         if (auto == true) {
             Record autoRec = eGroups.up.newRecord(Query.SEL);

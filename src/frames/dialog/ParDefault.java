@@ -29,8 +29,8 @@ public class ParDefault extends javax.swing.JDialog {
 
     private ListenerRecord listener;
     private Query qGroups = new Query(eGroups.values());
-    private Query qParmap = new Query(eParmap.color_id1, eParmap.id, eParmap.groups_id).select(eParmap.up);
-    private Query qParams = new Query(eParams.text, eParams.id, eParams.groups_id).select(eParams.up);
+    private Query qParmap = new Query(eParmap.color_id1, eParmap.id, eParmap.groups_id).sql(eParmap.data(),eParmap.up);
+    private Query qParams = new Query(eParams.text, eParams.id, eParams.groups_id).sql(eParams.data(), eParams.up);
     private List<Vector> parList = new ArrayList<Vector>();
     private DefaultTableModel dm = null;
 
@@ -55,7 +55,7 @@ public class ParDefault extends javax.swing.JDialog {
 
     private void loadingModel() {
         dm = (DefaultTableModel) tab2.getModel();
-        qGroups.select(eGroups.up, "where", eGroups.grup, "=", TypeGrup.PARAM_USER.id, "or", eGroups.grup, "=", TypeGrup.COLOR_MAP.id, "order by", eGroups.name);
+        qGroups.sq2(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, eGroups.grup, TypeGrup.COLOR_MAP.id).sorted(eGroups.name);
         for (Record rec : qParams) {
             parList.add(new Vector(List.of(rec.get(eParams.text), rec.get(eParams.id), rec.get(eParams.groups_id))));
         }

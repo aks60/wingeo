@@ -29,7 +29,7 @@ public class DicPrjprod extends javax.swing.JDialog {
     }
 
     public void loadingData(int projectID) {
-        qPrjprod.select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
+        qPrjprod.sql(ePrjprod.data(), ePrjprod.project_id, projectID);
     }
     
     public void loadingModel() {

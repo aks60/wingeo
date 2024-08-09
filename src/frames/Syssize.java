@@ -52,7 +52,7 @@ public class Syssize extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        qSyssize.select(eSyssize.up, "order by", eSyssize.name);
+        qSyssize.sql(eSyssize.data(), eSyssize.up).sorted(eSyssize.name);
     }
 
     public void loadingModel() {

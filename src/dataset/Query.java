@@ -324,10 +324,14 @@ public class Query extends Table {
         return this;
     }
 
-    public Query sql(List<Record> data, Field field, int value) {
+    public Query sql(List<Record> data, Field field, Object value) {
         clear();
         if (Query.conf.equals("calc")) {
-            addAll(data.stream().filter(rec -> rec.getInt(field) == value).collect(Collectors.toList()));
+            if (value instanceof Integer) {
+                addAll(data.stream().filter(rec -> rec.getInt(field) == Integer.valueOf(value.toString())).collect(Collectors.toList()));
+            } else if(value instanceof String) {
+                addAll(data.stream().filter(rec -> rec.getStr(field) == value).collect(Collectors.toList()));
+            }
         } else {
             select(field.fields()[0], "where", field, "=", value);
 
@@ -352,6 +356,17 @@ public class Query extends Table {
             addAll(data.stream().filter(rec -> rec.getInt(field) == value || rec.getInt(field2) == value2).collect(Collectors.toList()));
         } else {
             select(field.fields()[0], "where", field, "=", value, "or", field2, "=", value2);
+
+        }
+        return this;
+    }
+
+    public Query sq3(List<Record> data, Field field, int value, Field field2, int value2) {
+        clear();
+        if (Query.conf.equals("calc")) {
+            addAll(data.stream().filter(rec -> rec.getInt(field) == value && rec.getInt(field2) != value2).collect(Collectors.toList()));
+        } else {
+            select(field.fields()[0], "where", field, "=", value, "and", field2, "!=", value2);
 
         }
         return this;
@@ -427,11 +442,11 @@ public class Query extends Table {
         return this;
     }
 
-    public void sorted(Field... field) {
+    public Query sorted(Field... field) {
 
         if (field.length == 1 && field[0].meta().type() == Field.TYPE.INT) {
             sort((rec1, rec2) -> rec1.getInt(field[0]) < rec2.getInt(field[0]) ? 1 : -1);
-            
+
         } else if (field.length == 1 && field[0].meta().type() == Field.TYPE.DATE) {
             sort((rec1, rec2) -> rec1.getDate(field[0]).compareTo(rec2.getDate(field[0])));
 
@@ -458,5 +473,6 @@ public class Query extends Table {
         } else {
             System.err.println("ВНИМАНИЕ! Ошибка сортировки.");
         }
+        return this;
     }
 }

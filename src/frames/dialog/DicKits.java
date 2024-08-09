@@ -69,12 +69,12 @@ public class DicKits extends javax.swing.JDialog {
 
     public void loadingData(String type) {
         eArtikl.data();
-        qKits.select(eKits.up, "order by", eKits.groups_id, ",", eKits.name);
+        qKits.sql(eKits.data(), eKits.up).sorted(eKits.groups_id, eKits.name);
     }
 
     private void loadingModel() {
-        qGroups.select(eGroups.up, "where", eGroups.grup, "in(", TypeGrup.COLOR_MAP.id, ",", TypeGrup.PARAM_USER.id, ")");
-        qCateg.select(eGroups.up, "where", eGroups.grup, "= 10");
+        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_MAP.id, TypeGrup.PARAM_USER.id);
+        qCateg.sql(eGroups.data(), eGroups.grup, 10);
         new DefTableModel(tab1, qKits, eKits.groups_id, eKits.name) {
 
             public Object getValueAt(int col, int row, Object val) {
@@ -143,7 +143,7 @@ public class DicKits extends javax.swing.JDialog {
         if (index != -1) {
             Record kitsRec = qKits.get(index);
             Integer kitsId = kitsRec.getInt(eKits.id);
-            qKitdet.select(eKitdet.up, "where", eKitdet.kits_id, "=", kitsId, "order by", eKitdet.artikl_id);
+            qKitdet.sql(eKitdet.data(), eKitdet.kits_id, kitsId).sorted(eKitdet.artikl_id);
             List.of(txt1, txt2, txt3, txt9, txt13, txt14).forEach(act -> act.setEditable(false));
             List.of(txt1, txt2, txt3, txt9, txt13, txt14).forEach(act -> act.setBackground(new java.awt.Color(212, 208, 200)));
 
@@ -805,19 +805,6 @@ public class DicKits extends javax.swing.JDialog {
             if (kitdetRec != null) {
                 int id = kitdetRec.getInt(eKitdet.artikl_id);
                 HashSet<Record> colorSet = new HashSet<Record>();
-//                Query artdetList = new Query(eArtdet.values()).select(eArtdet.up, "where", eArtdet.artikl_id, "=", id);
-//                artdetList.forEach(rec -> {
-//
-//                    if (rec.getInt(eArtdet.color_fk) < 0) {
-//                        eColor.query().forEach(rec2 -> {
-//                            if (rec2.getInt(eColor.colgrp_id) == rec.getInt(eArtdet.color_fk)) {
-//                                colorSet.add(rec2);
-//                            }
-//                        });
-//                    } else {
-//                        colorSet.add(eColor.find(rec.getInt(eArtdet.color_fk)));
-//                    }
-//                });
                 colorSet = UGui.artiklToColorSet(id, indexBtn + 1);
                 DicColor frame = new DicColor(null, (colorRc) -> {
                     setColor(indexBtn, colorRc);

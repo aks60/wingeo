@@ -49,14 +49,14 @@ public class ParColor extends javax.swing.JDialog {
 
     public void loadingData(int artikl_id) {
 
-        qArtdet.select(eArtdet.up, "where", eArtdet.artikl_id, "=", artikl_id);
-        String subset = new Query(eParmap.values()).select(eParmap.up, "where", filter, "= 1")
+        qArtdet.sql(eArtdet.data(), eArtdet.artikl_id, artikl_id);
+        String subset = new Query(eParmap.values()).sql(eParmap.data(), filter, 1)
                 .stream().map(rec -> rec.getStr(eParmap.groups_id)).collect(Collectors.toSet())
                 .stream().collect(Collectors.joining(",", "(", ")"));
         if (subset.equals("()") == false) {
             qGroupsMap.select(eGroups.up, "where", eGroups.id, "in", subset);
         }
-        qGroupsGrp.select(eGroups.up, "where", eGroups.grup, "=", TypeGrup.COLOR_GRP.id);
+        qGroupsGrp.sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_GRP.id);
 
         Record color1 = eColor.up.newRecord(Query.SEL);
         color1.setNo(eColor.groups_id, UseColor.automatic[0]);
@@ -73,9 +73,9 @@ public class ParColor extends javax.swing.JDialog {
 
         for (Record record : qArtdet) {
             if (record.getInt(eArtdet.color_fk) > 0) {
-                qColor.addAll(new Query(eColor.values()).select(eColor.up, "where", eColor.id, "=", record.getStr(eArtdet.color_fk)));
+                qColor.addAll(new Query(eColor.values()).sql(eColor.data(), eColor.id, record.getInt(eArtdet.color_fk)));
             } else if (record.getInt(eArtdet.color_fk) < 0) {
-                qColor.addAll(new Query(eColor.values()).select(eColor.up, "where", eColor.groups_id, "=", record.getInt(eArtdet.color_fk)));
+                qColor.addAll(new Query(eColor.values()).sql(eColor.data(), eColor.groups_id, record.getInt(eArtdet.color_fk)));
             }
         }
     }

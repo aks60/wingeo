@@ -73,7 +73,6 @@ public class Partner extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        //qPrjpart.select(ePrjpart.up, "left join", eSysuser.up, "on", ePrjpart.login, "=", eSysuser.login, "order by", ePrjpart.npp);
         qPrjpart.select(ePrjpart.up, "left join", eSysuser.up, "on", ePrjpart.login, "=", eSysuser.login,
                 "where", ePrjpart.login, "=", eSysuser.login, "order by", ePrjpart.npp);
     }
@@ -1057,7 +1056,7 @@ public class Partner extends javax.swing.JFrame {
                     prjpartRec.setNo(ePrjpart.login, login);
                     prjpartRec.setNo(ePrjpart.npp, prjpartRec.get(ePrjpart.id));
                     prjpartRec.setNo(ePrjpart.category, arrCateg[0]);
-                    Record record2 = new Query(eSysuser.values()).select(eSysuser.up, "where", eSysuser.login, "= '", login + "'").get(0);
+                    Record record2 = new Query(eSysuser.values()).sql(eSysuser.data(), eSysuser.login, login).get(0);
                     qPrjpart.table(eSysuser.up).add(record2);
 
                 } catch (Exception e) {

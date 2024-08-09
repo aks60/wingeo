@@ -273,17 +273,13 @@ public class Test {
         {
             //Пересчёт
             try {
-
                 java.sql.Statement statement = Conn.connection().createStatement();
-                Query q = new Query(eColor.values()).select(eColor.up, "order by id");
+                Query q = new Query(eColor.values()).sql(eColor.data(), eColor.up).sorted(eColor.id);
                 int id = 0;
                 for (Record rec : q) {
                     String ID = rec.getStr(eColor.id);
                     statement.executeUpdate("update color set id = " + String.valueOf(++id) + " where id = " + ID);
                 }
-
-                //} catch (Exception e) {
-                //    System.out.println(e);
             } catch (java.sql.SQLException e) {
                 System.out.println("Query.update() " + e);
             }

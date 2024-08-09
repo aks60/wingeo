@@ -53,7 +53,7 @@ public class DicSyspod extends javax.swing.JDialog {
         if (sysprodRec != null) {
             systreeID = sysprodRec.getInt(eSysprod.systree_id);
         }
-        qSystree.select(eSystree.up);
+        qSystree.sql(eSystree.data(), eSystree.up);
     }
 
     public void loadingModel() {
@@ -104,7 +104,7 @@ public class DicSyspod extends javax.swing.JDialog {
 
     public void loadingTab2() {
 
-        qSysprod.select(eSysprod.up, "where", eSysprod.systree_id, "=", systreeID);
+        qSysprod.sql(eSysprod.data(), eSysprod.systree_id, systreeID);
         DefaultTableModel dm = (DefaultTableModel) tab2.getModel();
         dm.getDataVector().removeAllElements();
         ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();

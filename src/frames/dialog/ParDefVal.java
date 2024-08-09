@@ -37,7 +37,7 @@ public class ParDefVal extends javax.swing.JDialog {
         List<Vector> vectorList = new Vector();
         grup = eGroups.find(groupsID).getInt(eGroups.grup);
         if (grup == 1) {
-            qParams.select(eParams.up, "where", eParams.groups_id, "=", groupsID);
+            qParams.sql(eParams.data(), eParams.groups_id, groupsID);
             for (Record paramRec : qParams) {
                 Vector vector = new Vector();
                 vector.add(paramRec.getStr(eParams.text));
@@ -45,7 +45,7 @@ public class ParDefVal extends javax.swing.JDialog {
                 vectorList.add(vector);
             }
         } else {
-            qParmap.select(eParmap.up, "where", eParmap.groups_id, "=", groupsID);
+            qParmap.sql(eParmap.data(), eParmap.groups_id, groupsID);
             for (Record paramRec : qParmap) {
                 Record colorRec = eColor.find(paramRec.getInt(eParmap.color_id1));
                 Vector vector = new Vector();
