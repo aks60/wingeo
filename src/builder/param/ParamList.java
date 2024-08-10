@@ -690,7 +690,7 @@ public class ParamList {
     public static Dictionary dic_COLOR_NAME = () -> {
         //return List.of("1цвет", "2цвет", "3цвет", "4цвет");
         List list = new ArrayList();
-        new Query(eColor.name).select(eColor.up, "order by", eColor.name).forEach(rec -> list.add(rec.getStr(eColor.name)));
+        new Query(eColor.name).sql(eColor.data(), eColor.up).sorted(eColor.name).forEach(rec -> list.add(rec.getStr(eColor.name)));
         return list;
     };
 

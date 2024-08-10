@@ -30,7 +30,8 @@ import java.util.List;
 public class SpcTariffic extends Cal5e {
 
     private static boolean norm_otx = true;
-    private static int precision = Math.round(new Query(eGroups.values()).select(eGroups.up).get(0).getFloat(eGroups.val)); //округление длины профилей
+    private static int precision = Math.round(new Query(eGroups.values())
+            .sql(eGroups.data(), eGroups.up).get(0).getFloat(eGroups.val)); //округление длины профилей
 
     public SpcTariffic(Wincalc winc, boolean norm_otx) {
         super(winc);
