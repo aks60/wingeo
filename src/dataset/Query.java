@@ -468,34 +468,46 @@ public class Query extends Table {
     }
 
     public Query sort(Field... field) {
+        try {
+            if (field.length == 1 && field[0].meta().type() == Field.TYPE.INT) {
+                this.sort((rec1, rec2) -> rec1.getInt(field[0]) < rec2.getInt(field[0]) ? 1 : -1);
 
-        if (field.length == 1 && (field[0].meta().type() == Field.TYPE.INT
-                || field[0].meta().type() == Field.TYPE.DBL)) {
-            this.sort((rec1, rec2) -> rec1.getInt(field[0]) < rec2.getInt(field[0]) ? 1 : -1);
+            } else if (field.length == 1 && field[0].meta().type() == Field.TYPE.DBL) {
+                this.sort((rec1, rec2) ->  Double.compare(rec1.getDbl(field[0]), rec2.getDbl(field[0])));
+                
+            } else if (field.length == 1 && field[0].meta().type() == Field.TYPE.STR) {
+                this.sort((rec1, rec2) -> rec1.getStr(field[0]).compareTo(rec2.getStr(field[0])));
 
-        } else if (field.length == 1 && field[0].meta().type() == Field.TYPE.STR
-                || field[0].meta().type() == Field.TYPE.DATE) {
-            this.sort((rec1, rec2) -> rec1.getStr(field[0]).compareTo(rec2.getStr(field[0])));
+            } else if (field.length == 1 && field[0].meta().type() == Field.TYPE.DATE) {
+                this.sort((rec1, rec2) -> {
+                    if (rec1.getDate(field[0]) == null || rec2.getDate(field[0]) == null) {
+                        return 0;
+                    }
+                    return rec1.getDate(field[0]).compareTo(rec2.getDate(field[0]));
+                });
 
-        } else if (field.length == 2 && field[0].meta().type() == Field.TYPE.INT && field[1].meta().type() == Field.TYPE.INT) {
-            this.sort((rec1, rec2) -> {
-                if (rec1.getInt(field[0]) == rec2.getInt(field[0])) {
-                    return (rec1.getInt(field[1]) > rec2.getInt(field[1])) ? 1 : -1;
-                } else {
-                    return (rec1.getInt(field[0]) > rec2.getInt(field[0])) ? 1 : -1;
-                }
-            });
+            } else if (field.length == 2 && field[0].meta().type() == Field.TYPE.INT && field[1].meta().type() == Field.TYPE.INT) {
+                this.sort((rec1, rec2) -> {
+                    if (rec1.getInt(field[0]) == rec2.getInt(field[0])) {
+                        return (rec1.getInt(field[1]) > rec2.getInt(field[1])) ? 1 : -1;
+                    } else {
+                        return (rec1.getInt(field[0]) > rec2.getInt(field[0])) ? 1 : -1;
+                    }
+                });
 
-        } else if (field.length == 2 && field[0].meta().type() == Field.TYPE.INT && field[1].meta().type() == Field.TYPE.STR) {
-            this.sort((rec1, rec2) -> {
-                if (rec1.getInt(field[0]) == rec2.getInt(field[0])) {
-                    return rec1.getStr(field[1]).compareTo(rec2.getStr(field[1]));
-                } else {
-                    return (rec1.getInt(field[0]) > rec2.getInt(field[0])) ? 1 : -1;
-                }
-            });
-        } else {
-            System.err.println("ВНИМАНИЕ! Ошибка сортировки.");
+            } else if (field.length == 2 && field[0].meta().type() == Field.TYPE.INT && field[1].meta().type() == Field.TYPE.STR) {
+                this.sort((rec1, rec2) -> {
+                    if (rec1.getInt(field[0]) == rec2.getInt(field[0])) {
+                        return rec1.getStr(field[1]).compareTo(rec2.getStr(field[1]));
+                    } else {
+                        return (rec1.getInt(field[0]) > rec2.getInt(field[0])) ? 1 : -1;
+                    }
+                });
+            } else {
+                System.err.println("ВНИМАНИЕ! Ошибка сортировки.");
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:Query.sort()");
         }
         return this;
     }

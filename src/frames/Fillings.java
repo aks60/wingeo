@@ -170,7 +170,7 @@ public class Fillings extends javax.swing.JFrame {
             List.of(qGlasdet, qGlaspar1, qGlaspar2, qGlasprof).forEach(q -> q.execsql());
             UGui.clearTable(tab2, tab3, tab4, tab5);
             Record record = qGlasgrp.table(eGlasgrp.up).get(index);
-            Integer id = record.getInt(eGlasgrp.id);           
+            Integer id = record.getInt(eGlasgrp.id);
             qGlasdet.sql(eGlasdet.data(), eGlasdet.glasgrp_id, id).sort(eGlasdet.depth);
             qGlasdet.table(eArtikl.up).join(qGlasdet, eArtikl.data(), eGlasdet.artikl_id,  eArtikl.id);  
             qGlasprof.sql(eGlasprof.data(), eGlasprof.glasgrp_id, id);
@@ -408,21 +408,21 @@ public class Fillings extends javax.swing.JFrame {
     public void deteilFind(int deteilID) {
         Query qGlasdet2 = new Query(eGlasdet.values(), eArtikl.values());
         for (int index = 0; index < qGlasgrp.size(); index++) {
-            int glasgrp_id = qGlasgrp.get(index).getInt(eGlasgrp.id);
-            qGlasdet2.select(eGlasdet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eGlasdet.artikl_id, "where", eGlasdet.glasgrp_id, "=", glasgrp_id, "order by", eGlasdet.depth);
-            //qGlasdet2.sql(eGlasdet.data(), eGlasdet.glasgrp_id, glasgrp_id).sort(eGlasdet.depth);
-            //qGlasdet2.table(eArtikl.up).join(qGlasdet2, eArtikl.data(), eGlasdet.artikl_id,  eArtikl.id);             
+            int glasgrpID = qGlasgrp.get(index).getInt(eGlasgrp.id);
+            qGlasdet2.sql(eGlasdet.data(), eGlasdet.glasgrp_id, glasgrpID).sort(eGlasdet.depth);
+            qGlasdet2.table(eArtikl.up).join(qGlasdet2, eArtikl.data(), eGlasdet.artikl_id,  eArtikl.id);              
             for (int index2 = 0; index2 < qGlasdet2.size(); index2++) {
                 if (qGlasdet2.get(index2).getInt(eGlasdet.id) == deteilID) {                    
                     UGui.setSelectedIndex(tab1, index);
                     UGui.scrollRectToRow(index, tab1);
                     UGui.setSelectedIndex(tab2, index2);
                     UGui.scrollRectToRow(index2, tab2);
+                    break;
                 }
             }
         }
     }
-
+    
     public void profileFind(int... deteilID) {
 
     }
@@ -1015,7 +1015,7 @@ public class Fillings extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFind1
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-        // 
+        deteilFind(1657);
     }//GEN-LAST:event_btnTest
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
