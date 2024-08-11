@@ -210,11 +210,11 @@ public class Elements extends javax.swing.JFrame {
             Integer id = record.getInt(eGroups.id);
 
             if (id == -1 || id == -5) {
-                eElement.sql(qElement, qElement.mapQuery().get(eArtikl.up.tname()), id);
+                eElement.sql(qElement, qElement.map(eArtikl.up), id);
 
             } else {
                 qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
-                qElement.mapQuery().get(eArtikl.up.tname()).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                qElement.map(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
             }
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab2);
@@ -230,7 +230,7 @@ public class Elements extends javax.swing.JFrame {
             Record record = qElement.table(eElement.up).get(index);
             Integer p1 = record.getInt(eElement.id);
             qElemdet.sql(eElemdet.data(), eElemdet.element_id, p1);
-            qElemdet.mapQuery().get(eArtikl.up.tname()).join(qElemdet, eArtikl.data(), eElemdet.artikl_id, eArtikl.id);
+            qElemdet.map(eArtikl.up).join(qElemdet, eArtikl.data(), eElemdet.artikl_id, eArtikl.id);
             qElempar1.sql(eElempar1.data(), eElempar1.element_id, p1);
             ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
             ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();

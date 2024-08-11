@@ -22,8 +22,8 @@ public class Table extends ArrayList<Record> {
         return fields;
     }
 
-    public HashMap<String, Query> mapQuery() {
-        return mapQuery;
+    public Query map(Field field) {
+        return mapQuery.get(field.tname());
     }
     
     

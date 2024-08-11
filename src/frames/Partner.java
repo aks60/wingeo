@@ -13,11 +13,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import common.listener.ListenerRecord;
 import dataset.Conn;
-import domain.eArtikl;
-import domain.eFurniture;
-import domain.eSysfurn;
-import domain.eSysprod;
-import domain.eSysprof;
 import domain.eSysuser;
 import frames.swing.DefCellRendererBool;
 import frames.swing.TableFieldFilter;
@@ -1030,7 +1025,8 @@ public class Partner extends javax.swing.JFrame {
 
     private void btnRefresh(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefresh
         UGui.stopCellEditing(tab1);
-        qPrjpart.mapQuery().values().forEach(q -> q.execsql());
+        //qPrjpart.mapQuery().values().forEach(q -> q.execsql());
+        List.of(qPrjpart, qSysuser).forEach(q -> q.execsql());
         loadingData();
         ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
         UGui.setSelectedRow(tab1);
@@ -1082,7 +1078,8 @@ public class Partner extends javax.swing.JFrame {
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
         UGui.stopCellEditing(tab1);
-        qPrjpart.mapQuery().values().forEach(q -> q.execsql());
+        //qPrjpart.mapQuery().values().forEach(q -> q.execsql());
+        List.of(qPrjpart, qSysuser).forEach(q -> q.execsql());
         if (owner != null)
             owner.setEnabled(true);
     }//GEN-LAST:event_windowClosed

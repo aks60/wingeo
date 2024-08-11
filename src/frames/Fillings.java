@@ -172,6 +172,8 @@ public class Fillings extends javax.swing.JFrame {
             Record record = qGlasgrp.table(eGlasgrp.up).get(index);
             Integer id = record.getInt(eGlasgrp.id);
             qGlasdet.select(eGlasdet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eGlasdet.artikl_id, "where", eGlasdet.glasgrp_id, "=", id, "order by", eGlasdet.depth);
+            //qGlasdet.sql(eGlasdet.data(), eGlasdet.glasgrp_id, id).sort(eArtikl.code);
+            //qGlasdet.
             qGlasprof.select(eGlasprof.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eGlasprof.artikl_id, "where", eGlasprof.glasgrp_id, "=", id, "order by", eArtikl.code);
             qGlaspar1.select(eGlaspar1.up, "left join", eParams.up, "on", eParams.id, "=", eGlaspar1.groups_id, "where", eGlaspar1.glasgrp_id, "=", id);
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
