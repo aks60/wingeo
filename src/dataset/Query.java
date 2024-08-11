@@ -330,7 +330,7 @@ public class Query extends Table {
         if (Query.conf.equals("calc")) {
             if (value instanceof Integer) {
                 addAll(data.stream().filter(rec -> rec.getInt(field) == Integer.valueOf(value.toString())).collect(Collectors.toList()));
-            } else if(value instanceof String) {
+            } else if (value instanceof String) {
                 addAll(data.stream().filter(rec -> rec.getStr(field) == value).collect(Collectors.toList()));
             }
         } else {
@@ -455,27 +455,26 @@ public class Query extends Table {
         }
         return this;
     }
-    
+
     public void join(List<Record> data, List<Record> data2, Field field, Field field2) {
         clear();
         for (Record rec : data) {
             for (Record rec2 : data2) {
-                if(rec.getInt(field) == rec2.getInt(field2)) {
+                if (rec.getInt(field) == rec2.getInt(field2)) {
                     add(rec2);
                 }
             }
         }
     }
-    
+
     public Query sort(Field... field) {
 
-        if (field.length == 1 && field[0].meta().type() == Field.TYPE.INT) {
+        if (field.length == 1 && (field[0].meta().type() == Field.TYPE.INT
+                || field[0].meta().type() == Field.TYPE.DBL)) {
             this.sort((rec1, rec2) -> rec1.getInt(field[0]) < rec2.getInt(field[0]) ? 1 : -1);
 
-        } else if (field.length == 1 && field[0].meta().type() == Field.TYPE.DATE) {
-            this.sort((rec1, rec2) -> rec1.getDate(field[0]).compareTo(rec2.getDate(field[0])));
-
-        } else if (field.length == 1 && field[0].meta().type() == Field.TYPE.STR) {
+        } else if (field.length == 1 && field[0].meta().type() == Field.TYPE.STR
+                || field[0].meta().type() == Field.TYPE.DATE) {
             this.sort((rec1, rec2) -> rec1.getStr(field[0]).compareTo(rec2.getStr(field[0])));
 
         } else if (field.length == 2 && field[0].meta().type() == Field.TYPE.INT && field[1].meta().type() == Field.TYPE.INT) {
