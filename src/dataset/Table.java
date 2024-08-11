@@ -25,8 +25,7 @@ public class Table extends ArrayList<Record> {
     public Query map(Field field) {
         return mapQuery.get(field.tname());
     }
-    
-    
+        
     public void removeRec(int index) {
         for (Map.Entry<String, Query> entry : mapQuery.entrySet()) {
             Table table = entry.getValue();
