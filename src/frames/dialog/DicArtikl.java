@@ -68,6 +68,10 @@ public class DicArtikl extends javax.swing.JDialog {
         initElements();
         Query qFurndet = new Query(eFurndet.id, eArtikl.id).select(eFurndet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eFurndet.artikl_id,
                 "where", eFurndet.furniture_id1, "=", furnId, "and", eArtikl.level1, "=", level1, "and", eArtikl.level2, "=", level2);
+        for (Record record : eFurndet.data()) {
+         XXX   
+        }
+                
         String arr = (qFurndet.isEmpty() == false) ? qFurndet.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.joining(",", "(", ")")) : "(-1)";
         qArtikl.select(eArtikl.up).select(eArtikl.up, "where", eArtikl.id, "in", arr);
         this.listener = listenet;
