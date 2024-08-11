@@ -690,7 +690,7 @@ public class ParamList {
     public static Dictionary dic_COLOR_NAME = () -> {
         //return List.of("1цвет", "2цвет", "3цвет", "4цвет");
         List list = new ArrayList();
-        new Query(eColor.name).sql(eColor.data(), eColor.up).sorted(eColor.name).forEach(rec -> list.add(rec.getStr(eColor.name)));
+        new Query(eColor.name).sql(eColor.data(), eColor.up).sort(eColor.name).forEach(rec -> list.add(rec.getStr(eColor.name)));
         return list;
     };
 
@@ -800,7 +800,7 @@ public class ParamList {
 
     public static Dictionary dic_ARTIKL_CODE = () -> {
         List list = new ArrayList();
-        new Query(eArtikl.code).select(eArtikl.up, "where", eArtikl.level1, "= 1", "and", eArtikl.level2, "= 2 order by", eArtikl.level2).forEach(rec -> list.add(rec.getStr(eArtikl.code)));
+        new Query(eArtikl.code).sql(eArtikl.data(), eArtikl.level1, 1, eArtikl.level2, 2).sort(eArtikl.level2).forEach(rec -> list.add(rec.getStr(eArtikl.code)));
         return list;
     };
     // </editor-fold>

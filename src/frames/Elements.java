@@ -93,8 +93,8 @@ public class Elements extends javax.swing.JFrame {
     public void loadingData() {
 
         qColor.sql(eColor.data(), eColor.up);
-        qGrCateg.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id).sorted(eGroups.npp,eGroups.name );
-        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.SERI_ELEM.id, TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id).sorted(eGroups.npp, eGroups.name);
+        qGrCateg.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id).sort(eGroups.npp, eGroups.name);
+        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.SERI_ELEM.id, TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id).sort(eGroups.npp, eGroups.name);
 
         Record record = eGroups.up.newRecord(Query.SEL);
         record.setNo(eGroups.id, -1);
@@ -202,21 +202,19 @@ public class Elements extends javax.swing.JFrame {
 
     public void selectionTab1(ListSelectionEvent event) {
         UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
-        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());        
+        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
         UGui.clearTable(tab2, tab3, tab4, tab5);
         int index = UGui.getIndexRec(tab1);
         if (index != -1) {
             Record record = qGrCateg.get(index);
             Integer id = record.getInt(eGroups.id);
+
             if (id == -1 || id == -5) {
-                qElement.select(eElement.up, "left join", eArtikl.up, "on", eElement.artikl_id, "=", eArtikl.id,
-                        "left join", eGroups.up, "on", eGroups.id, "=", eElement.groups2_id,
-                        "where", eGroups.npp, "=", Math.abs(id), "order by", eElement.name);
+                eElement.sql(qElement, qElement.mapQuery().get(eArtikl.up.tname()), id);
 
             } else {
-                qElement.select(eElement.up, "left join", eArtikl.up, "on", eElement.artikl_id, "=", eArtikl.id,
-                        "where", eElement.groups2_id, "=", id, "order by", eElement.name);
-
+                qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
+                qElement.mapQuery().get(eArtikl.up.tname()).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
             }
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab2);
@@ -225,14 +223,15 @@ public class Elements extends javax.swing.JFrame {
 
     public void selectionTab2(ListSelectionEvent event) {
         UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
-        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());        
+        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
         UGui.clearTable(tab3, tab4, tab5);
         int index = UGui.getIndexRec(tab2);
         if (index != -1) {
             Record record = qElement.table(eElement.up).get(index);
             Integer p1 = record.getInt(eElement.id);
-            qElemdet.select(eElemdet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eElemdet.artikl_id, "where", eElemdet.element_id, "=", p1);
-            qElempar1.select(eElempar1.up, "left join", eParams.up, "on", eParams.id, "=", eElempar1.groups_id, "where", eElempar1.element_id, "=", p1);
+            qElemdet.sql(eElemdet.data(), eElemdet.element_id, p1);
+            qElemdet.mapQuery().get(eArtikl.up.tname()).join(qElemdet, eArtikl.data(), eElemdet.artikl_id, eArtikl.id);
+            qElempar1.sql(eElempar1.data(), eElempar1.element_id, p1);
             ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
             ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab3);
@@ -242,14 +241,14 @@ public class Elements extends javax.swing.JFrame {
 
     public void selectionTab3(ListSelectionEvent event) {
         UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
-        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());        
+        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
         int index = UGui.getIndexRec(tab3);
         if (index != -1) {
             //Util.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
             List.of(qElempar2).forEach(q -> q.execsql());
             Record record = qElemdet.table(eElemdet.up).get(index);
             Integer p1 = record.getInt(eElemdet.id);
-            qElempar2.select(eElempar2.up, "left join", eParams.up, "on", eParams.id, "=", eElempar2.groups_id, "where", eElempar2.elemdet_id, "=", p1);
+            qElempar2.sql(eElempar2.data(), eElempar2.elemdet_id, p1);
             ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab5);
         }
@@ -473,7 +472,7 @@ public class Elements extends javax.swing.JFrame {
         Query qDet = new Query(eElemdet.values(), eArtikl.values());
         for (int index = 0; index < qElement.size(); index++) {
             int element_id = qElement.get(index).getInt(eElement.id);
-            qDet.select(eElemdet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eElemdet.artikl_id, "where", eElemdet.element_id, "=", element_id);
+            qDet.sql(eElemdet.data(), eElemdet.element_id, element_id);
             for (int index2 = 0; index2 < qDet.size(); index2++) {
                 if (qDet.get(index2).getInt(eElemdet.id) == deteilID) {
                     UGui.setSelectedIndex(tab2, index);

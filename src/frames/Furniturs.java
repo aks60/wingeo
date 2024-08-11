@@ -110,10 +110,10 @@ public class Furniturs extends javax.swing.JFrame {
         tab2X = tab2a;
         qColor.sql(eColor.data(), eColor.up);
         qArtikl.sql(eArtikl.data(), eArtikl.up);
-        qFurnall.sql(eFurniture.data(), eFurniture.up).sorted(eFurniture.name);
+        qFurnall.sql(eFurniture.data(), eFurniture.up).sort(eFurniture.name);
         qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id);
         int types = (btnTab1.isSelected()) ? 0 : (btnTab2.isSelected()) ? 1 : -1;
-        qFurniture.sql(eFurniture.data(), eFurniture.types, types).sorted(eFurniture.name);
+        qFurniture.sql(eFurniture.data(), eFurniture.types, types).sort(eFurniture.name);
     }
 
     public void loadingModel() {
@@ -358,7 +358,7 @@ public class Furniturs extends javax.swing.JFrame {
             Record record = qFurniture.table(eFurniture.up).get(index);
             Integer id = record.getInt(eFurniture.id);
 
-            qFurnside1.sql(eFurnside1.data(), eFurnside1.furniture_id, id).sorted(eFurnside1.side_num);
+            qFurnside1.sql(eFurnside1.data(), eFurnside1.furniture_id, id).sort(eFurnside1.side_num);
             ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab3);
             qFurndet2a.sql(eFurndet.data(), eFurndet.furniture_id1, id, eFurndet.furndet_pk, eFurndet.id);
@@ -378,11 +378,11 @@ public class Furniturs extends javax.swing.JFrame {
             ((DefaultTableModel) tab2b.getModel()).fireTableDataChanged();
 
             int id = record.getInt(eFurndet.id);
-            qFurnside2.sql(eFurnside2.data(), eFurnside2.furndet_id, id).sorted(eFurnside2.side_num);
+            qFurnside2.sql(eFurnside2.data(), eFurnside2.furndet_id, id).sort(eFurnside2.side_num);
             ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab5);
 
-            qFurnpar2.sql(eFurnpar2.data(), eFurnpar2.furndet_id, id).sorted(eFurnpar2.id);
+            qFurnpar2.sql(eFurnpar2.data(), eFurnpar2.furndet_id, id).sort(eFurnpar2.id);
             ((DefaultTableModel) tab6.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab6);
         }
@@ -399,11 +399,11 @@ public class Furniturs extends javax.swing.JFrame {
             ((DefaultTableModel) tab2c.getModel()).fireTableDataChanged();
 
             Integer id = record.getInt(eFurndet.id);
-            qFurnside2.sql(eFurnside2.data(), eFurnside2.furndet_id, id).sorted(eFurnside2.side_num);
+            qFurnside2.sql(eFurnside2.data(), eFurnside2.furndet_id, id).sort(eFurnside2.side_num);
             ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab5);
 
-            qFurnpar2.sql(eFurnpar2.data(), eFurnpar2.furndet_id, id).sorted(eFurnpar2.id);
+            qFurnpar2.sql(eFurnpar2.data(), eFurnpar2.furndet_id, id).sort(eFurnpar2.id);
             ((DefaultTableModel) tab6.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab6);
         }
@@ -416,11 +416,11 @@ public class Furniturs extends javax.swing.JFrame {
             Record record = qFurndet2c.get(index);
             Integer id = record.getInt(eFurndet.id);
 
-            qFurnside2.sql(eFurnside2.data(), eFurnside2.furndet_id, id).sorted(eFurnside2.side_num);
+            qFurnside2.sql(eFurnside2.data(), eFurnside2.furndet_id, id).sort(eFurnside2.side_num);
             ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab5);
 
-            qFurnpar2.sql(eFurnpar2.data(), eFurnpar2.furndet_id, id).sorted(eFurnpar2.id);
+            qFurnpar2.sql(eFurnpar2.data(), eFurnpar2.furndet_id, id).sort(eFurnpar2.id);
             ((DefaultTableModel) tab6.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab6);
         }
@@ -432,7 +432,7 @@ public class Furniturs extends javax.swing.JFrame {
         if (index != -1) {
             Record record = qFurnside1.table(eFurnside1.up).get(index);
             Integer id = record.getInt(eFurnside1.id);
-            qFurnpar1.sql(eFurnpar1.data(), eFurnpar1.furnside_id, id).sorted(eFurnpar1.id);
+            qFurnpar1.sql(eFurnpar1.data(), eFurnpar1.furnside_id, id).sort(eFurnpar1.id);
             ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab4);
         }
@@ -673,7 +673,7 @@ public class Furniturs extends javax.swing.JFrame {
         Query qDet2c = new Query(eFurndet.values(), eArtikl.values());
         try {
             for (int index0 : List.of(0, 1, -1)) {
-                qFurn.sql(eFurniture.data(), eFurniture.types, index0).sorted(eFurniture.name);
+                qFurn.sql(eFurniture.data(), eFurniture.types, index0).sort(eFurniture.name);
                 for (int index1 = 0; index1 < qFurn.size(); index1++) {
                     int id = qFurn.get(index1).getInt(eFurniture.id);
                     qDet2a.select(eFurndet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eFurndet.artikl_id, "where", eFurndet.furniture_id1, "=", id, "and", eFurndet.furndet_pk, "=", eFurndet.id);

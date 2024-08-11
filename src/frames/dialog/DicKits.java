@@ -69,7 +69,7 @@ public class DicKits extends javax.swing.JDialog {
 
     public void loadingData(String type) {
         eArtikl.data();
-        qKits.sql(eKits.data(), eKits.up).sorted(eKits.groups_id, eKits.name);
+        qKits.sql(eKits.data(), eKits.up).sort(eKits.groups_id, eKits.name);
     }
 
     private void loadingModel() {
@@ -143,7 +143,7 @@ public class DicKits extends javax.swing.JDialog {
         if (index != -1) {
             Record kitsRec = qKits.get(index);
             Integer kitsId = kitsRec.getInt(eKits.id);
-            qKitdet.sql(eKitdet.data(), eKitdet.kits_id, kitsId).sorted(eKitdet.artikl_id);
+            qKitdet.sql(eKitdet.data(), eKitdet.kits_id, kitsId).sort(eKitdet.artikl_id);
             List.of(txt1, txt2, txt3, txt9, txt13, txt14).forEach(act -> act.setEditable(false));
             List.of(txt1, txt2, txt3, txt9, txt13, txt14).forEach(act -> act.setBackground(new java.awt.Color(212, 208, 200)));
 

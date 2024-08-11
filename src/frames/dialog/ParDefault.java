@@ -55,7 +55,7 @@ public class ParDefault extends javax.swing.JDialog {
 
     private void loadingModel() {
         dm = (DefaultTableModel) tab2.getModel();
-        qGroups.sq2(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, eGroups.grup, TypeGrup.COLOR_MAP.id).sorted(eGroups.name);
+        qGroups.sq2(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, eGroups.grup, TypeGrup.COLOR_MAP.id).sort(eGroups.name);
         for (Record rec : qParams) {
             parList.add(new Vector(List.of(rec.get(eParams.text), rec.get(eParams.id), rec.get(eParams.groups_id))));
         }

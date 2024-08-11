@@ -108,10 +108,10 @@ public class Artikles extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        qSyssize.sql(eSyssize.data(), eSyssize.up).sorted(eSyssize.name);
+        qSyssize.sql(eSyssize.data(), eSyssize.up).sort(eSyssize.name);
         qGroups.sql(eGroups.data(), eGroups.up);
-        qSyssize.sql(eCurrenc.data(), eCurrenc.up).sorted(eCurrenc.name);
-        qColor.sql(eColor.data(), eColor.up).sorted(eColor.name);
+        qSyssize.sql(eCurrenc.data(), eCurrenc.up).sort(eCurrenc.name);
+        qColor.sql(eColor.data(), eColor.up).sort(eColor.name);
     }
 
     public void loadingModel() {
@@ -303,11 +303,11 @@ public class Artikles extends javax.swing.JFrame {
             ((CardLayout) pan6.getLayout()).show(pan6, name);
 
             if (e == TypeArt.ROOT) {
-                qArtikl.sql(eArtikl.data(), eArtikl.up).sorted(eArtikl.level1, eArtikl.code);
+                qArtikl.sql(eArtikl.data(), eArtikl.up).sort(eArtikl.level1, eArtikl.code);
             } else if (node.isLeaf()) {
-                qArtikl.sql(eArtikl.data(), eArtikl.level1, e.id1, eArtikl.level2, e.id2).sorted(eArtikl.level1, eArtikl.code);
+                qArtikl.sql(eArtikl.data(), eArtikl.level1, e.id1, eArtikl.level2, e.id2).sort(eArtikl.level1, eArtikl.code);
             } else {
-                qArtikl.sql(eArtikl.data(), eArtikl.level1, e.id1).sorted(eArtikl.level1, eArtikl.code);
+                qArtikl.sql(eArtikl.data(), eArtikl.level1, e.id1).sort(eArtikl.level1, eArtikl.code);
             }
             DefaultMutableTreeNode node2 = (DefaultMutableTreeNode) node.getParent();
             lab1.setText((node2 != null && node.getParent() != null) ? " Тип: " + ((TypeArt) node2.getUserObject()).id1

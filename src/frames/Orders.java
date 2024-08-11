@@ -149,8 +149,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private void loadingData() {
         qGroups.sq2(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, eGroups.grup,TypeGrup.COLOR_MAP.id);
         qParams.sql(eParams.data(), eParams.up);
-        qCurrenc.sql(eCurrenc.data(), eCurrenc.up).sorted(eCurrenc.name);
-        qProjectAll.sql(eProject.data(), eProject.up).sorted(eProject.date4);
+        qCurrenc.sql(eCurrenc.data(), eCurrenc.up).sort(eCurrenc.name);
+        qProjectAll.sql(eProject.data(), eProject.up).sort(eProject.date4);
         qPrjpart.sql(ePrjpart.data(), ePrjpart.up);
     }
 

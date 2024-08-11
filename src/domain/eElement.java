@@ -4,12 +4,9 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
-import static domain.eArtikl.up;
-import static domain.eColor.up;
-import static domain.eGroups.up;
-import frames.UGui;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public enum eElement implements Field {
@@ -39,7 +36,7 @@ public enum eElement implements Field {
     public Field[] fields() {
         return values();
     }
-    
+
     public static Query data() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
@@ -51,7 +48,28 @@ public enum eElement implements Field {
     public Query query() {
         return query;
     }
-    
+
+    public static void sql(Query qElament, Query qArtikl, int categID) {
+        qElament.clear();
+        qArtikl.clear();
+        
+        List<Record> artList = (categID == -5)
+                ? eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.level1) == 5).collect(Collectors.toList())
+                : eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.level1) != 5).collect(Collectors.toList());
+        List<Record> groupList = eGroups.data().stream().filter(rec
+                -> rec.getInt(eGroups.npp) == Math.abs(categID)).collect(Collectors.toList());
+
+        for (Record recElem : data()) {
+            for (Record recGrp : groupList) {
+                if (recElem.getInt(eElement.groups2_id) == recGrp.getInt(eGroups.id) && recGrp.getInt(eGroups.npp) == Math.abs(categID)) {
+                    qElament.add(recElem);
+                    qArtikl.add(artList.stream().filter(rec
+                            -> recElem.getInt(eElement.artikl_id) == rec.getInt(eArtikl.id)).findFirst().get());
+                }
+            }
+        }
+    }
+
     public static List<Record> find(int seriesID) {
         if (seriesID == -1) {
             return new ArrayList<Record>();
@@ -95,7 +113,7 @@ public enum eElement implements Field {
             return data().stream().filter(rec -> seriesID == rec.getInt(groups1_id)
                     && artiklID != rec.getInt(artikl_id) && rec.getInt(todef) > 0).collect(Collectors.toList());
         }
-        return  new Query(values()).select(up, "where", groups1_id, "=", seriesID, "and", artiklID, "!= artikl_id and", todef, "> 0");
+        return new Query(values()).select(up, "where", groups1_id, "=", seriesID, "and", artiklID, "!= artikl_id and", todef, "> 0");
     }
 
     public String toString() {

@@ -59,10 +59,10 @@ public class Param extends javax.swing.JFrame {
     }
 
     public void loadData() {
-        qColor.sql(eColor.data(), eColor.up).sorted(eColor.name);
-        qGroups1.sql(eGroups.data(), eGroups.grup,  TypeGrup.PARAM_USER.id).sorted(eGroups.npp, eGroups.name);
-        qGroups2.sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_MAP.id).sorted(eGroups.npp, eGroups.name);
-        qGroups3.sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_GRP.id).sorted(eGroups.npp, eGroups.name);
+        qColor.sql(eColor.data(), eColor.up).sort(eColor.name);
+        qGroups1.sql(eGroups.data(), eGroups.grup,  TypeGrup.PARAM_USER.id).sort(eGroups.npp, eGroups.name);
+        qGroups2.sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_MAP.id).sort(eGroups.npp, eGroups.name);
+        qGroups3.sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_GRP.id).sort(eGroups.npp, eGroups.name);
     }
 
     public void loadingModel() {
@@ -133,7 +133,7 @@ public class Param extends javax.swing.JFrame {
             UGui.clearTable(tab2);
             Record groupsRec = qGroups1.get(index);
             Integer id = groupsRec.getInt(eGroups.id);
-            qParams.sql(eParams.data(), eParams.groups_id, id).sorted(eParams.text);
+            qParams.sql(eParams.data(), eParams.groups_id, id).sort(eParams.text);
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab2);
         }

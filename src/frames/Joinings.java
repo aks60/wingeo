@@ -108,11 +108,11 @@ public class Joinings extends javax.swing.JFrame {
     public void loadingData() {
 
         tab1.setToolTipText("");
-        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id).sorted(eGroups.npp, eGroups.name);
+        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id).sort(eGroups.npp, eGroups.name);
         qColor.sql(eColor.data(), eColor.up);
         qArtikl.sql(eArtikl.data(), eArtikl.up);
         if (subsql.equals("(-1)") == true) {
-            qJoining.sql(eJoining.data(), eJoining.up).sorted(eJoining.name);
+            qJoining.sql(eJoining.data(), eJoining.up).sort(eJoining.name);
         } else {
             qJoining.select(eJoining.up, "where", eJoining.id, "in", subsql, "order by", eJoining.name);
             //qJoining.sql(eJoining.data(), eJoining.up, eJoining.id, subsql).sorted(eJoining.name);
@@ -243,7 +243,7 @@ public class Joinings extends javax.swing.JFrame {
         if (index != -1) {
             Record record = qJoining.table(eJoining.up).get(index);
             Integer id = record.getInt(eJoining.id);
-            qJoinvar.sql(eJoinvar.data(), eJoinvar.joining_id, id).sorted(eJoinvar.prio);
+            qJoinvar.sql(eJoinvar.data(), eJoinvar.joining_id, id).sort(eJoinvar.prio);
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab2);
         }
@@ -257,8 +257,8 @@ public class Joinings extends javax.swing.JFrame {
         if (index != -1) {
             Record record = qJoinvar.table(eJoinvar.up).get(index);
             Integer id = record.getInt(eJoinvar.id);
-            qJoindet.sql(eJoindet.data(), eJoindet.joinvar_id, id).sorted(eJoindet.artikl_id);
-            qJoinpar1.sql(eJoinpar1.data(), eJoinpar1.joinvar_id, id).sorted(eJoinpar1.id);
+            qJoindet.sql(eJoindet.data(), eJoindet.joinvar_id, id).sort(eJoindet.artikl_id);
+            qJoinpar1.sql(eJoinpar1.data(), eJoinpar1.joinvar_id, id).sort(eJoinpar1.id);
             ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
             ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab3);
@@ -273,7 +273,7 @@ public class Joinings extends javax.swing.JFrame {
         if (index != -1) {
             Record record = qJoindet.table(eJoindet.up).get(index);
             Integer id = record.getInt(eJoindet.id);
-            qJoinpar2.sql(eJoinpar2.data(), eJoinpar2.joindet_id, id).sorted(eJoinpar2.id);
+            qJoinpar2.sql(eJoinpar2.data(), eJoinpar2.joindet_id, id).sort(eJoinpar2.id);
             ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab5);
         }
@@ -508,7 +508,7 @@ public class Joinings extends javax.swing.JFrame {
             //Цыкл по соединениям
             for (int index = 0; index < qJoining.size(); index++) {
                 int joining_id = qJoining.get(index).getInt(eJoining.id);
-                qVar.sql(eJoinvar.data(), eJoinvar.joining_id, joining_id).sorted(eJoinvar.prio);
+                qVar.sql(eJoinvar.data(), eJoinvar.joining_id, joining_id).sort(eJoinvar.prio);
 
                 //Цыкл по вариантам соединениям
                 for (int index2 = 0; index2 < qVar.size(); index2++) {
@@ -1171,8 +1171,8 @@ public class Joinings extends javax.swing.JFrame {
             qJoining.insert(joiningClon);
 
             for (Record joinvarRec : joinvarList) {
-                qJoinpar1.sql(eJoinpar1.data(), eJoinpar1.joinvar_id, joinvarRec.getInt(eJoinvar.id)).sorted(eJoinpar1.id);
-                qJoindet.sql(eJoindet.data(), eJoindet.joinvar_id, joinvarRec.getInt(eJoinvar.id)).sorted(eJoindet.id);
+                qJoinpar1.sql(eJoinpar1.data(), eJoinpar1.joinvar_id, joinvarRec.getInt(eJoinvar.id)).sort(eJoinpar1.id);
+                qJoindet.sql(eJoindet.data(), eJoindet.joinvar_id, joinvarRec.getInt(eJoinvar.id)).sort(eJoindet.id);
                 Record joinvarClon = (Record) joinvarRec.clone();
                 joinvarClon.setNo(eJoinvar.up, Query.INS);
                 joinvarClon.setNo(eJoinvar.id, Conn.genId(eJoinvar.up));
@@ -1191,7 +1191,7 @@ public class Joinings extends javax.swing.JFrame {
             }
             for (Map.Entry<Record, Integer> it : joindetMap.entrySet()) {
                 Record joindetRec = it.getKey();
-                qJoinpar2.sql(eJoinpar2.data(), eJoinpar2.joindet_id, joindetRec.getInt(eJoindet.id)).sorted(eJoinpar2.id);
+                qJoinpar2.sql(eJoinpar2.data(), eJoinpar2.joindet_id, joindetRec.getInt(eJoindet.id)).sort(eJoinpar2.id);
                 Record joindetClon = (Record) joindetRec.clone();
                 joindetClon.setNo(eJoindet.up, Query.INS);
                 joindetClon.setNo(eJoindet.id, Conn.genId(eJoindet.up));

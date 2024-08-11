@@ -274,7 +274,7 @@ public class Test {
             //Пересчёт
             try {
                 java.sql.Statement statement = Conn.connection().createStatement();
-                Query q = new Query(eColor.values()).sql(eColor.data(), eColor.up).sorted(eColor.id);
+                Query q = new Query(eColor.values()).sql(eColor.data(), eColor.up).sort(eColor.id);
                 int id = 0;
                 for (Record rec : q) {
                     String ID = rec.getStr(eColor.id);

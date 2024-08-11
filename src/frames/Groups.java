@@ -66,16 +66,16 @@ public class Groups extends javax.swing.JFrame {
     }
 
     private void loadingData() {
-        qCurrenc.sql(eCurrenc.data(), eCurrenc.up).sorted(eCurrenc.npp, eCurrenc.name);
-        qColGrp.sql(eGroups.data(), eGroups.grup, 2).sorted(eGroups.npp, eGroups.name);
-        qColMap.sql(eGroups.data(), eGroups.grup, 7).sorted(eGroups.npp, eGroups.name);
-        qArtSeri.sql(eGroups.data(), eGroups.grup, 3).sorted(eGroups.npp, eGroups.name);
-        qArtIncr.sql(eGroups.data(), eGroups.grup, 4).sorted(eGroups.npp, eGroups.name);
-        qArtDecr.sql(eGroups.data(), eGroups.grup, 5).sorted(eGroups.npp, eGroups.name);
-        qCategProf.sql(eGroups.data(), eGroups.grup, 6).sorted(eGroups.npp, eGroups.name);
-        qCategVst.sql(eGroups.data(), eGroups.grup, 8).sorted(eGroups.npp, eGroups.name);
-        qCategKit.sql(eGroups.data(), eGroups.grup, 10).sorted(eGroups.npp, eGroups.name);
-        qDecInc.sql(eGroups.data(), eGroups.grup, 9, eGroups.id, 2101, 2104, 2073).sorted(eGroups.npp, eGroups.name);
+        qCurrenc.sql(eCurrenc.data(), eCurrenc.up).sort(eCurrenc.npp, eCurrenc.name);
+        qColGrp.sql(eGroups.data(), eGroups.grup, 2).sort(eGroups.npp, eGroups.name);
+        qColMap.sql(eGroups.data(), eGroups.grup, 7).sort(eGroups.npp, eGroups.name);
+        qArtSeri.sql(eGroups.data(), eGroups.grup, 3).sort(eGroups.npp, eGroups.name);
+        qArtIncr.sql(eGroups.data(), eGroups.grup, 4).sort(eGroups.npp, eGroups.name);
+        qArtDecr.sql(eGroups.data(), eGroups.grup, 5).sort(eGroups.npp, eGroups.name);
+        qCategProf.sql(eGroups.data(), eGroups.grup, 6).sort(eGroups.npp, eGroups.name);
+        qCategVst.sql(eGroups.data(), eGroups.grup, 8).sort(eGroups.npp, eGroups.name);
+        qCategKit.sql(eGroups.data(), eGroups.grup, 10).sort(eGroups.npp, eGroups.name);
+        qDecInc.sql(eGroups.data(), eGroups.grup, 9, eGroups.id, 2101, 2104, 2073).sort(eGroups.npp, eGroups.name);
     }
 
     public void loadingModel() {

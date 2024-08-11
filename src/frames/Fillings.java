@@ -90,7 +90,7 @@ public class Fillings extends javax.swing.JFrame {
         qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_MAP.id, TypeGrup.PARAM_USER.id);
         qColor.sql(eColor.data(), eColor.up);
         qParams.sql(eParams.data(), eParams.up);
-        qGlasgrp.sql(eGlasgrp.data(), eGlasgrp.up).sorted(eGlasgrp.name);
+        qGlasgrp.sql(eGlasgrp.data(), eGlasgrp.up).sort(eGlasgrp.name);
 
     }
 

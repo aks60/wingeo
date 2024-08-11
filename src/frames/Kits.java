@@ -65,8 +65,8 @@ public class Kits extends javax.swing.JFrame {
     public void loadingData() {
         eArtikl.data();
         qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id);
-        qCateg.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_KIT.id).sorted(eGroups.name);
-        qKits.sql(eKits.data(), eKits.up).sorted(eKits.groups_id, eKits.name);
+        qCateg.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_KIT.id).sort(eGroups.name);
+        qKits.sql(eKits.data(), eKits.up).sort(eKits.groups_id, eKits.name);
     }
 
     public void loadingModel() {
@@ -132,7 +132,7 @@ public class Kits extends javax.swing.JFrame {
         if (index != -1) {
             Record record = qCateg.get(index);
             Integer id = record.getInt(eGroups.id);
-            qKits.sql(eKits.data(), eKits.groups_id, id).sorted(eKits.name);
+            qKits.sql(eKits.data(), eKits.groups_id, id).sort(eKits.name);
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab2);
         }
@@ -145,7 +145,7 @@ public class Kits extends javax.swing.JFrame {
         if (index != -1) {
             Record record = qKits.get(index);
             Integer id = record.getInt(eKits.id);
-            qKitdet.sql(eKitdet.data(), eKitdet.kits_id, id).sorted(eKitdet.id);
+            qKitdet.sql(eKitdet.data(), eKitdet.kits_id, id).sort(eKitdet.id);
             ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab3);
         }

@@ -50,7 +50,7 @@ public class DicCurrenc extends javax.swing.JDialog {
     }
     
     public void loadingData() {
-        qCurrenc.sql(eCurrenc.data(), eCurrenc.up).sorted(eCurrenc.npp, eCurrenc.name);
+        qCurrenc.sql(eCurrenc.data(), eCurrenc.up).sort(eCurrenc.npp, eCurrenc.name);
     }
 
     public void loadingModel() {

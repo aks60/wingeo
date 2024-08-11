@@ -30,9 +30,9 @@ public class ParUserVal extends javax.swing.JDialog {
 
     public void loadingData() {
         if (filter != null) {
-            qParams.sq2(eParams.data(), eParams.groups_id, grup, filter, 0).sorted(eParams.text);
+            qParams.sq2(eParams.data(), eParams.groups_id, grup, filter, 0).sort(eParams.text);
         } else {
-            qParams.sql(eParams.data(), eParams.groups_id, grup).sorted(eParams.text);
+            qParams.sql(eParams.data(), eParams.groups_id, grup).sort(eParams.text);
         }
     }
 

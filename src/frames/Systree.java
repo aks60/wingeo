@@ -170,7 +170,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         }
         qGroups.sq2(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, eGroups.grup, TypeGrup.COLOR_MAP.id);
-        qSystree.sql(eSystree.data(), eSystree.up).sorted(eSystree.name);
+        qSystree.sql(eSystree.data(), eSystree.up).sort(eSystree.name);
         qParams.sql(eParams.data(), eParams.up);
         qArtikl.sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, 11, 12);
 
@@ -356,7 +356,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }
 
     public void loadingTab5() {
-        qSysprod.sql(eSysprod.data(), eSysprod.systree_id, systreeID).sorted(eSysprod.npp, eSysprod.id);
+        qSysprod.sql(eSysprod.data(), eSysprod.systree_id, systreeID).sort(eSysprod.npp, eSysprod.id);
         DefaultTableModel dm = (DefaultTableModel) tab5.getModel();
         dm.getDataVector().removeAllElements();
         for (Record record : qSysprod.table(eSysprod.up)) {
@@ -627,7 +627,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         UGui.buttonCellEditor(tab3, 1).addActionListener(event -> {
             DicName frame = new DicName(this, listenerFurn, new Query(eFurniture.values())
-                    .sql(eFurniture.data(), eFurniture.types, 0, 1).sorted(eFurniture.name), eFurniture.name);
+                    .sql(eFurniture.data(), eFurniture.types, 0, 1).sort(eFurniture.name), eFurniture.name);
         });
 
         UGui.buttonCellEditor(tab3, 2).addActionListener(event -> {

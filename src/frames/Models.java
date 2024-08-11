@@ -88,7 +88,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }
 
     public void loadingTab1(JTable tab, int form) {
-        qSysmodel.select(eSysmodel.up, "where", eSysmodel.form, "=", form, "and form > 2000 and id >0", "order by npp");
+        qSysmodel.sql(eSysmodel.data(), eSysmodel.form, form, eSysmodel.form, 2000, eSysmodel.id, 0).sort(eSysmodel.npp);
         DefaultTableModel dm = (DefaultTableModel) tab.getModel();
         dm.getDataVector().removeAllElements();
         for (Record record : qSysmodel.table(eSysmodel.up)) {

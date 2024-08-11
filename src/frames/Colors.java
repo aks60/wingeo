@@ -49,8 +49,8 @@ public class Colors extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        qColall.sql(eGroups.data(), eColor.up).sorted(eColor.name);      
-        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_GRP.id).sorted(eGroups.npp, eGroups.name);
+        qColall.sql(eGroups.data(), eColor.up).sort(eColor.name);      
+        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_GRP.id).sort(eGroups.npp, eGroups.name);
     }
 
     public void selectionTab1(ListSelectionEvent event) {
@@ -61,7 +61,7 @@ public class Colors extends javax.swing.JFrame {
         if (index != -1) {
             Record record = qGroups.table(eGroups.up).get(index);
             Integer cgrup = record.getInt(eGroups.id);
-            qColor.sql(eColor.data(), eColor.groups_id, cgrup).sorted(eColor.code);
+            qColor.sql(eColor.data(), eColor.groups_id, cgrup).sort(eColor.code);
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab2);
         }
