@@ -174,7 +174,7 @@ public class Fillings extends javax.swing.JFrame {
             qGlasdet.sql(eGlasdet.data(), eGlasdet.glasgrp_id, id).sort(eGlasdet.depth);
             qGlasdet.table(eArtikl.up).join(qGlasdet, eArtikl.data(), eGlasdet.artikl_id,  eArtikl.id);  
             qGlasprof.sql(eGlasprof.data(), eGlasprof.glasgrp_id, id);
-            qGlasprof.table(eGlasprof.up).join(qGlasprof, eArtikl.data(), eGlasprof.artikl_id,  eArtikl.id);           
+            qGlasprof.table(eArtikl.up).join(qGlasprof, eArtikl.data(), eGlasprof.artikl_id,  eArtikl.id);           
             qGlaspar1.sql(eGlaspar1.data(), eGlaspar1.glasgrp_id, id); 
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
             ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
