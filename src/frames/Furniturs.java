@@ -103,7 +103,7 @@ public class Furniturs extends javax.swing.JFrame {
         loadingModel();
         listenerAdd();
         listenerSet();
-        selectionRows(deteilID);
+        deteilFind(deteilID);
     }
 
     public void loadingData() {
@@ -666,7 +666,7 @@ public class Furniturs extends javax.swing.JFrame {
         }
     }
 
-    public void selectionRows(int deteilID) {
+    public void deteilFind(int deteilID) {
         Query qFurn = new Query(eFurniture.values());
         Query qDet2a = new Query(eFurndet.values(), eArtikl.values());
         Query qDet2b = new Query(eFurndet.values(), eArtikl.values());
@@ -676,21 +676,25 @@ public class Furniturs extends javax.swing.JFrame {
                 qFurn.sql(eFurniture.data(), eFurniture.types, index0).sort(eFurniture.name);
                 for (int index1 = 0; index1 < qFurn.size(); index1++) {
                     int id = qFurn.get(index1).getInt(eFurniture.id);
-                    qDet2a.select(eFurndet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eFurndet.artikl_id, "where", eFurndet.furniture_id1, "=", id, "and", eFurndet.furndet_pk, "=", eFurndet.id);
+                    qDet2a.sql(eFurndet.data(), eFurndet.furniture_id1, id, eFurndet.furndet_pk, eFurndet.id);
+                    qDet2a.table(eArtikl.up).join(qDet2a, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);
                     for (int index2 = 0; index2 < qDet2a.size(); index2++) {
                         if (qDet2a.get(index2).getInt(eFurndet.id) == deteilID) {
                             selectionRows(qFurn, qDet2a, qDet2b, qDet2c, 0, index1, index2, 0, 0);
                             return;
                         } else {
                             int pk = qDet2a.get(index2).getInt(eFurndet.pk);
-                            qDet2b.select(eFurndet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eFurndet.artikl_id, "where", eFurndet.furndet_pk, "=", pk, "and", eFurndet.id, "!=", eFurndet.furndet_pk);
+                            qDet2b.sql(eFurndet.data(), eFurndet.furniture_id1, id, eFurndet.furndet_pk, eFurndet.id);
+                            qDet2b.table(eArtikl.up).join(qDet2b, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);                            
+                            
                             for (int index3 = 0; index3 < qDet2b.size(); index3++) {
                                 if (qDet2b.get(index3).getInt(eFurndet.id) == deteilID) {
                                     selectionRows(qFurn, qDet2a, qDet2b, qDet2c, 1, index1, index2, index3, 0);
                                     return;
                                 } else {
                                     pk = qDet2b.get(index3).getInt(eFurndet.pk);
-                                    qDet2c.select(eFurndet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eFurndet.artikl_id, "where", eFurndet.furndet_pk, "=", pk);
+                                    qDet2c.sql(eFurndet.data(), eFurndet.furniture_id1, id, eFurndet.furndet_pk, eFurndet.id);
+                                    qDet2c.table(eArtikl.up).join(qDet2c, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);                                      
                                     for (int index4 = 0; index4 < qDet2c.size(); index4++) {
                                         if (qDet2c.get(index4).getInt(eFurndet.id) == deteilID) {
                                             selectionRows(qFurn, qDet2a, qDet2b, qDet2c, 2, index1, index2, index3, index4);
