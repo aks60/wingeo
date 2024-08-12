@@ -1713,11 +1713,7 @@ public class Furniturs extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInser2
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-        ProgressBar.create(Furniturs.this, new ListenerFrame() {
-            public void actionRequest(Object obj) {
-                App.Artikles.createFrame(Furniturs.this, listenerColor);
-            }
-        });
+        deteilFind(520);
     }//GEN-LAST:event_btnTest
 
     private void btnFindSystree(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindSystree
