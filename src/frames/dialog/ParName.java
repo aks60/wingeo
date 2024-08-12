@@ -61,7 +61,6 @@ public class ParName extends javax.swing.JDialog {
 
     public void loadingData() {
         Set<Integer> set = new HashSet<Integer>();
-//        Query qParams = new Query(eParams.values()).select(eParams.data(), filter.name(), 1);
         Query qParams = new Query(eParams.values()).sql(eParams.data(), filter, 1);
         qParams.forEach(rec -> set.add(rec.getInt(eParams.groups_id)));
         String subsql = set.stream().map(pk -> String.valueOf(pk)).collect(Collectors.joining(",", "(", ")"));
