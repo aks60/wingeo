@@ -42,7 +42,8 @@ public class Rulecalc extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        qRulecalc.select(eRulecalc.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eRulecalc.artikl_id, "order by", eRulecalc.type);
+        qRulecalc.sql(eRulecalc.data(), eRulecalc.up).sort(eRulecalc.type);
+        qRulecalc.table(eArtikl.up).join(qRulecalc, eArtikl.data(), eRulecalc.artikl_id, eArtikl.id);
     }
 
     public void loadingModel() {

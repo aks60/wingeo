@@ -382,11 +382,19 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             if (sysNode != null && sysNode.getChildCount() == 0) {
                 systreeID = sysNode.rec().getInt(eSystree.id);
                 rsvSystree.load();
-                qSysprof.select(eSysprof.up, "left join", eArtikl.up, "on", eArtikl.id, "=",
-                        eSysprof.artikl_id, "where", eSysprof.systree_id, "=", sysNode.rec().getInt(eSystree.id), "order by", eSysprof.use_type, ",", eSysprof.npp);
-                qSysfurn.select(eSysfurn.up, "left join", eFurniture.up, "on", eFurniture.id, "=",
-                        eSysfurn.furniture_id, "where", eSysfurn.systree_id, "=", sysNode.rec().getInt(eSystree.id), "order by", eSysfurn.npp);
+                //qSysprof.select(eSysprof.up, "left join", eArtikl.up, "on", eArtikl.id, "=",
+                        //eSysprof.artikl_id, "where", eSysprof.systree_id, "=", sysNode.rec().getInt(eSystree.id), "order by", eSysprof.use_type, ",", eSysprof.npp);
+                qSysprof.sql(eSysprof.data(), eSysprof.systree_id, sysNode.rec().getInt(eSystree.id)).sort(eSysprof.use_type, eSysprof.npp);
+                qSysprof.table(eArtikl.up).join(qSysprof, eArtikl.data(), eSysprof.artikl_id, eArtikl.id);
+                
+                //qSysfurn.select(eSysfurn.up, "left join", eFurniture.up, "on", eFurniture.id, "=",
+                        //eSysfurn.furniture_id, "where", eSysfurn.systree_id, "=", sysNode.rec().getInt(eSystree.id), "order by", eSysfurn.npp);
+                qSysfurn.sql(eSysfurn.data(), eSysfurn.systree_id, sysNode.rec().getInt(eSystree.id)).sort(eSysfurn.npp);
+                qSysfurn.table(eFurniture.up).join(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);
+                
                 qSyspar1a.sql(eSyspar1.data(), eSyspar1.systree_id, sysNode.rec().getInt(eSystree.id));
+                
+                
                 lab1.setText("Система ID = " + systreeID);
                 lab2.setText("Элемент ID = -1");
                 Collections.sort(qSyspar1a, (o1, o2) -> qGroups.find(o1.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)
@@ -4076,10 +4084,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private void sysfurnToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysfurnToStvorka
         try {
             double windowsID = winNode.com5t().id;
-            String systreeID = sysNode.rec().getStr(eSystree.id);
-            Query qSysfurn = new Query(eSysfurn.values(), eFurniture.values()).select(eSysfurn.up, "left join", eFurniture.up, "on",
-                    eSysfurn.furniture_id, "=", eFurniture.id, "where", eSysfurn.systree_id, "=", systreeID);
-
+            int systreeID = sysNode.rec().getInt(eSystree.id);
+            Query qSysfurn = new Query(eSysfurn.values(), eFurniture.values()).sql(eSysfurn.data(), eSysfurn.systree_id, systreeID);
+            qSysfurn.table(eFurniture.up).join(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);            
             new DicName(this, (sysfurnRec) -> {
 
                 GsonElem stvArea = (GsonElem) wincalc().listAll.gson(windowsID);
