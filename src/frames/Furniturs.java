@@ -676,6 +676,7 @@ public class Furniturs extends javax.swing.JFrame {
                 qFurn.sql(eFurniture.data(), eFurniture.types, index0).sort(eFurniture.name);
                 for (int index1 = 0; index1 < qFurn.size(); index1++) {
                     int id = qFurn.get(index1).getInt(eFurniture.id);
+                    //qDet2a.select(eFurndet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eFurndet.artikl_id, "where", eFurndet.furniture_id1, "=", id, "and", eFurndet.furndet_pk, "=", eFurndet.id);
                     qDet2a.sql(eFurndet.data(), eFurndet.furniture_id1, id, eFurndet.furndet_pk, eFurndet.id);
                     qDet2a.table(eArtikl.up).join(qDet2a, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);
                     for (int index2 = 0; index2 < qDet2a.size(); index2++) {
@@ -684,6 +685,7 @@ public class Furniturs extends javax.swing.JFrame {
                             return;
                         } else {
                             int pk = qDet2a.get(index2).getInt(eFurndet.pk);
+                            //qDet2b.select(eFurndet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eFurndet.artikl_id, "where", eFurndet.furndet_pk, "=", pk, "and", eFurndet.id, "!=", eFurndet.furndet_pk);                           
                             qDet2b.sql(eFurndet.data(), eFurndet.furniture_id1, id, eFurndet.furndet_pk, eFurndet.id);
                             qDet2b.table(eArtikl.up).join(qDet2b, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);
 
