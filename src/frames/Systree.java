@@ -382,19 +382,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             if (sysNode != null && sysNode.getChildCount() == 0) {
                 systreeID = sysNode.rec().getInt(eSystree.id);
                 rsvSystree.load();
-                //qSysprof.select(eSysprof.up, "left join", eArtikl.up, "on", eArtikl.id, "=",
-                        //eSysprof.artikl_id, "where", eSysprof.systree_id, "=", sysNode.rec().getInt(eSystree.id), "order by", eSysprof.use_type, ",", eSysprof.npp);
                 qSysprof.sql(eSysprof.data(), eSysprof.systree_id, sysNode.rec().getInt(eSystree.id)).sort(eSysprof.use_type, eSysprof.npp);
                 qSysprof.table(eArtikl.up).join(qSysprof, eArtikl.data(), eSysprof.artikl_id, eArtikl.id);
-                
-                //qSysfurn.select(eSysfurn.up, "left join", eFurniture.up, "on", eFurniture.id, "=",
-                        //eSysfurn.furniture_id, "where", eSysfurn.systree_id, "=", sysNode.rec().getInt(eSystree.id), "order by", eSysfurn.npp);
                 qSysfurn.sql(eSysfurn.data(), eSysfurn.systree_id, sysNode.rec().getInt(eSystree.id)).sort(eSysfurn.npp);
                 qSysfurn.table(eFurniture.up).join(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);
-                
                 qSyspar1a.sql(eSyspar1.data(), eSyspar1.systree_id, sysNode.rec().getInt(eSystree.id));
-                
-                
+
                 lab1.setText("Система ID = " + systreeID);
                 lab2.setText("Элемент ID = -1");
                 Collections.sort(qSyspar1a, (o1, o2) -> qGroups.find(o1.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)
@@ -505,11 +498,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
                     //Створка
                 } else if (winNode.com5t().type == enums.Type.STVORKA) {
-                                                                //расчёт ручки, 
+                    //расчёт ручки, 
                     new SpcFurniture(wincalc(), true).calc();   //петли, замка
-                                                                //через сокр. тарификацию
+                    //через сокр. тарификацию
                     ((CardLayout) pan7.getLayout()).show(pan7, "card16");
-                    AreaStvorka stv = (AreaStvorka) winNode.com5t(); 
+                    AreaStvorka stv = (AreaStvorka) winNode.com5t();
                     int id = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
                     AreaSimple own = winNode.com5t().owner;
                     setText(txt24, own.width());
@@ -4086,7 +4079,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             double windowsID = winNode.com5t().id;
             int systreeID = sysNode.rec().getInt(eSystree.id);
             Query qSysfurn = new Query(eSysfurn.values(), eFurniture.values()).sql(eSysfurn.data(), eSysfurn.systree_id, systreeID);
-            qSysfurn.table(eFurniture.up).join(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);            
+            qSysfurn.table(eFurniture.up).join(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);
             new DicName(this, (sysfurnRec) -> {
 
                 GsonElem stvArea = (GsonElem) wincalc().listAll.gson(windowsID);
@@ -4315,7 +4308,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_colorFromLock
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-       Record sysprodRec = eSysprod.find(2);
+        Record sysprodRec = eSysprod.find(2);
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void colorFromGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromGlass
@@ -4648,7 +4641,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         for (int i = 0; i < stv.owner.gson.childs.size(); ++i) {
             if (stv.owner.gson.childs.get(i).id == stv.id) {
                 if (stv.owner.gson instanceof GsonRoot) { //первый уровень
-                    
+
                     if (wincalc().listElem.stream().anyMatch(e -> e.type == enums.Type.IMPOST)) {
                         GsonElem glass = new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS));
                         stv.owner.gson.childs.set(i, glass);
@@ -4757,7 +4750,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.handlToStvorka() " + e);
-        }        
+        }
     }//GEN-LAST:event_blindsToElement
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
