@@ -3407,10 +3407,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         try {
             double windowsID = winNode.com5t().id;
             int systreeID = qPrjprod.getAs(UGui.getIndexRec(tab2), ePrjprod.systree_id);
-
-            Query qSysfurn = new Query(eSysfurn.values(), eFurniture.values()).select(eSysfurn.up, "left join", eFurniture.up, "on",
-                    eSysfurn.furniture_id, "=", eFurniture.id, "where", eSysfurn.systree_id, "=", systreeID);
-
+            Query qSysfurn = new Query(eSysfurn.values(), eFurniture.values()).sql(eSysfurn.data(), eSysfurn.systree_id, systreeID);
+            qSysfurn.table(eFurniture.up).join(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);
             new DicName(this, (sysfurnRec) -> {
 
                 GsonElem stvArea = (GsonElem) wincalc().listAll.gson(windowsID);
@@ -3545,7 +3543,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             }
             depth = (depth != null && depth.isEmpty() == false) ? " and " + eArtikl.depth.name() + " in (" + depth + ")" : "";
             Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up, "where", eArtikl.level1, "= 5 and", eArtikl.level2, "in (1,2,3)", depth);
-
+            //Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2,)
             new DicArtikl(this, (artiklRec) -> {
 
                 GsonElem glassElem = (GsonElem) wincalc().listAll.gson(selectID);
