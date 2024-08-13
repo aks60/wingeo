@@ -88,7 +88,7 @@ public enum eArtikl implements Field {
         return (rec == null) ? virtualRec() : rec;
     }
 
-    public static void sql(Query q, Query p, Field field) {
+    public static void sql(Query q, Field f, Query p) {
         q.clear();
         if (Query.conf.equals("calc")) {
             if (p.isEmpty() == false) {
@@ -97,8 +97,8 @@ public enum eArtikl implements Field {
             }
         } else {
             if (p.isEmpty() == false) {
-                String arr = p.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.joining(",", "(", ")"));
-                q.select(field.fields()[0], "where", id, "in", arr);
+                String arrID = p.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.joining(",", "(", ")"));
+                q.select(f.fields()[0], "where", id, "in", arrID);
             }
         }
     }

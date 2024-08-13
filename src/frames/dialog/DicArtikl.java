@@ -66,14 +66,16 @@ public class DicArtikl extends javax.swing.JDialog {
         super(parent, true);
         initComponents();
         initElements();
-//        Query qFurndet = new Query(eFurndet.id, eArtikl.id).sql(eFurndet.data(), eFurndet.furniture_id1, furnId, eArtikl.level1, level1, eArtikl.level2, level2);
-//        qFurndet.table(eArtikl.up).join(qFurndet, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);     
-//        eArtikl.sql(qArtikl, qFurndet, eArtikl.id);
-        
-        Query qFurndet = new Query(eFurndet.id, eArtikl.id).select(eFurndet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eFurndet.artikl_id,
-                "where", eFurndet.furniture_id1, "=", furnId, "and", eArtikl.level1, "=", level1, "and", eArtikl.level2, "=", level2);
+        Query qFurndet = new Query(eFurndet.values(), eArtikl.values());
+        eFurndet.sql(qFurndet, furnId, level1, level2);
+        //eArtikl.sql(qArtikl, eArtikl.id, qFurndet);
+        XXXXXXX
+        //Query qFurndet2 = new Query(eFurndet.id, eArtikl.id).select(eFurndet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eFurndet.artikl_id,
+                //"where", eFurndet.furniture_id1, "=", furnId, "and", eArtikl.level1, "=", level1, "and", eArtikl.level2, "=", level2);
+       
         String arr = (qFurndet.isEmpty() == false) ? qFurndet.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.joining(",", "(", ")")) : "(-1)";
-        qArtikl.select(eArtikl.up).select(eArtikl.up, "where", eArtikl.id, "in", arr);        
+        qArtikl.select(eArtikl.up).select(eArtikl.up, "where", eArtikl.id, "in", arr);   
+        
         this.listener = listenet;
         loadingModel();
         btnRemove.setVisible(del);

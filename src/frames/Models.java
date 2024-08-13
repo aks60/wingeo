@@ -88,7 +88,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }
 
     public void loadingTab1(JTable tab, int form) {
-        qSysmodel.sql(eSysmodel.data(), eSysmodel.form, form, eSysmodel.form, 2000, eSysmodel.id, 0).sort(eSysmodel.npp);
+        qSysmodel.sq2(eSysmodel.data(), eSysmodel.form, form, eSysmodel.form, 2000, eSysmodel.id, 0).sort(eSysmodel.npp);
         DefaultTableModel dm = (DefaultTableModel) tab.getModel();
         dm.getDataVector().removeAllElements();
         for (Record record : qSysmodel.table(eSysmodel.up)) {
