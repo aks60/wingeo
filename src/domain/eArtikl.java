@@ -88,11 +88,9 @@ public enum eArtikl implements Field {
         return (rec == null) ? virtualRec() : rec;
     }
 
-    public static List<Record> sql(Query q, Query p, Field field) {
+    public static void sql(Query q, Query p, Field field) {
         q.clear();
         if (Query.conf.equals("calc")) {
-            //List listID = (qFurndet.isEmpty() == false) ? qFurndet.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.toList()) : new ArrayList();
-            //String arr = (qFurndet.isEmpty() == false) ? qFurndet.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.joining(",", "(", ")")) : "(-1)";
             if (p.isEmpty() == false) {
                 List listID = p.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.toList());
                 q.addAll(data().stream().filter(rec -> listID.contains(rec.getInt(id))).collect(Collectors.toList()));
@@ -100,12 +98,9 @@ public enum eArtikl implements Field {
         } else {
             if (p.isEmpty() == false) {
                 String arr = p.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.joining(",", "(", ")"));
-                //select(field.fields()[0], "where", id, "in", arr);
+                q.select(field.fields()[0], "where", id, "in", arr);
             }
-            //qArtikl.select(eArtikl.up).select(eArtikl.up, "where", eArtikl.id, "in", arr);
-
         }
-        return q;
     }
 
     public static Record find(int _id, boolean _analog) {
