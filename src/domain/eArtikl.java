@@ -6,6 +6,7 @@ import dataset.Query;
 import dataset.Record;
 import static domain.eArtdet.up;
 import frames.UGui;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -73,11 +74,11 @@ public enum eArtikl implements Field {
         }
         return query;
     }
-    
+
     public Query query() {
         return query;
     }
-    
+
     public static Record get(int id) {
         if (id == -3) {
             return virtualRec();
@@ -87,21 +88,26 @@ public enum eArtikl implements Field {
         return (rec == null) ? virtualRec() : rec;
     }
 
-//    public static List<Record> sql(List<Record> data, Field field, List<Integer> listID) {
-//        clear();
-//        if (Query.conf.equals("calc")) {
-//            if (value instanceof Integer) {
-//                addAll(data.stream().filter(rec -> rec.getInt(field) == Integer.valueOf(value.toString())).collect(Collectors.toList()));
-//            } else if (value instanceof String) {
-//                addAll(data.stream().filter(rec -> rec.getStr(field) == value).collect(Collectors.toList()));
-//            }
-//        } else {
-//            select(field.fields()[0], "where", field, "=", value);
-//
-//        }
-//        return this;        
-//    }
-    
+    public static List<Record> sql(Query q, Query p, Field field) {
+        q.clear();
+        if (Query.conf.equals("calc")) {
+            //List listID = (qFurndet.isEmpty() == false) ? qFurndet.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.toList()) : new ArrayList();
+            //String arr = (qFurndet.isEmpty() == false) ? qFurndet.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.joining(",", "(", ")")) : "(-1)";
+            if (p.isEmpty() == false) {
+                List listID = p.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.toList());
+                q.addAll(data().stream().filter(rec -> listID.contains(rec.getInt(id))).collect(Collectors.toList()));
+            }
+        } else {
+            if (p.isEmpty() == false) {
+                String arr = p.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.joining(",", "(", ")"));
+                //select(field.fields()[0], "where", id, "in", arr);
+            }
+            //qArtikl.select(eArtikl.up).select(eArtikl.up, "where", eArtikl.id, "in", arr);
+
+        }
+        return q;
+    }
+
     public static Record find(int _id, boolean _analog) {
         if (_id == -3) {
             return virtualRec();

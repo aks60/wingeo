@@ -14,9 +14,9 @@ import frames.swing.DefTableModel;
 import java.util.List;
 import java.util.stream.Collectors;
 import common.listener.ListenerRecord;
-import frames.Artikles;
 import frames.swing.ProgressBar;
 import frames.swing.TableFieldFilter;
+import java.util.ArrayList;
 import startup.App;
 
 //Справочник артикулов
@@ -67,10 +67,10 @@ public class DicArtikl extends javax.swing.JDialog {
         initComponents();
         initElements();
         Query qFurndet = new Query(eFurndet.id, eArtikl.id).sql(eFurndet.data(), eFurndet.furniture_id1, furnId, eArtikl.level1, level1, eArtikl.level2, level2);
-        qFurndet.table(eArtikl.up).join(qFurndet, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);
-        
-        String arr = (qFurndet.isEmpty() == false) ? qFurndet.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.joining(",", "(", ")")) : "(-1)";
-        qArtikl.select(eArtikl.up).select(eArtikl.up, "where", eArtikl.id, "in", arr);
+        qFurndet.table(eArtikl.up).join(qFurndet, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);     
+        //List listID = (qFurndet.isEmpty() == false) ? qFurndet.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.toList()) : new ArrayList();
+        //String arr = (qFurndet.isEmpty() == false) ? qFurndet.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.joining(",", "(", ")")) : "(-1)";
+        eArtikl.sql(qArtikl, qFurndet, eArtikl.id);
         this.listener = listenet;
         loadingModel();
         btnRemove.setVisible(del);
