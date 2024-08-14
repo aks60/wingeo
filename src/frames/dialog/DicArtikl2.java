@@ -42,7 +42,7 @@ public class DicArtikl2 extends javax.swing.JDialog {
         initElements();
         //String p1 = Arrays.toString(level).split("[\\[\\]]")[1];
         List<Integer> levList = Arrays.stream(level).boxed().collect(Collectors.toList());
-        eArtikl.sql(qArtiklAll, eArtikl.level1, levList).sort(eArtikl.level1, eArtikl.level2, eArtikl.code, eArtikl.name);
+        qArtiklAll.sql(eArtikl.data(), eArtikl.level1, levList).sort(eArtikl.level1, eArtikl.level2, eArtikl.code, eArtikl.name);
         this.listener = listenet;
         loadingModel();
         loadingTree();
@@ -55,7 +55,7 @@ public class DicArtikl2 extends javax.swing.JDialog {
         initElements();
         //String p1 = Arrays.toString(level).split("[\\[\\]]")[1];
         List<Integer> levList = Arrays.stream(level).boxed().collect(Collectors.toList());
-        eArtikl.sql(qArtiklAll, eArtikl.level1, levList).sort(eArtikl.level1, eArtikl.level2, eArtikl.code, eArtikl.name);
+        qArtiklAll.sql(eArtikl.data(), eArtikl.level1, levList).sort(eArtikl.level1, eArtikl.level2, eArtikl.code, eArtikl.name);
         if (id != -1) {
             artiklRec = qArtiklAll.find(id, eArtikl.id);
         }

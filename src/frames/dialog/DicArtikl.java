@@ -55,7 +55,7 @@ public class DicArtikl extends javax.swing.JDialog {
         initComponents();
         initElements();
         List<Integer> levList = Arrays.stream(level).boxed().collect(Collectors.toList());
-        eArtikl.sql(qArtikl, eArtikl.level1, levList).sort(eArtikl.level1, eArtikl.level2, eArtikl.code, eArtikl.name);       
+        qArtikl.sql(eArtikl.data(), eArtikl.level1, levList).sort(eArtikl.level1, eArtikl.level2, eArtikl.code, eArtikl.name);       
         this.listener = listenet;
         loadingModel();
         btnRemove.setVisible(del);
@@ -67,8 +67,9 @@ public class DicArtikl extends javax.swing.JDialog {
         initComponents();
         initElements();
         Query qFurndet = new Query(eFurndet.values(), eArtikl.values());
-        eFurndet.sql(qFurndet, furnId, level1, level2);
-        eArtikl.sql(qArtikl, eArtikl.id, qFurndet);
+        eFurndet.sql(qFurndet, furnId, level1, level2);         
+        List<Integer> list = qFurndet.table(eArtikl.up).stream().map(rec -> rec.getInt(1)).collect(Collectors.toList());
+        qArtikl.sql(eArtikl.data(), eArtikl.id, list);      
         this.listener = listenet;
         loadingModel();
         btnRemove.setVisible(del);

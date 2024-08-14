@@ -13,6 +13,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import common.listener.ListenerRecord;
 import dataset.Conn;
+import dataset.Field;
 import domain.eSysuser;
 import frames.swing.DefCellRendererBool;
 import frames.swing.TableFieldFilter;
@@ -32,6 +33,7 @@ public class Partner extends javax.swing.JFrame {
     private Window owner = null;
     private ListenerRecord listener = null;
     private Query qPrjpart = new Query(ePrjpart.values(), eSysuser.values());
+    private Query qPrjpart2 = new Query(ePrjpart.values(), eSysuser.values());
     private Query qSysuser = new Query(eSysuser.values());
     private TableFieldFormat rsv = null;
     private String arrCateg[] = {"заказчик", "поставшик", "офис", "дилер", "специальный"};
@@ -68,9 +70,14 @@ public class Partner extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        qPrjpart.select(ePrjpart.up, "left join", eSysuser.up, "on", ePrjpart.login, "=", eSysuser.login,
-                "where", ePrjpart.login, "=", eSysuser.login, "order by", ePrjpart.npp);
-        qPrjpart.sql(ePrjpart.data(), ePrjpart.login, )
+        if (Query.conf.equals("calc")) {
+            qPrjpart.join(eSysuser.data(), ePrjpart.data(), eSysuser.login, ePrjpart.login).sort(ePrjpart.npp);
+            qPrjpart.table(eSysuser.up).join(qPrjpart, eSysuser.data(), ePrjpart.login, eSysuser.login);
+        } else {
+            Field up = ePrjpart.up;
+            qPrjpart.select(up, "left join", eSysuser.up, "on", ePrjpart.login, "=", eSysuser.login,
+                    "where", ePrjpart.login, "=", eSysuser.login, "order by", ePrjpart.npp);
+        }
     }
 
     public void loadingModel() {

@@ -320,7 +320,6 @@ public class Query extends Table {
             addAll(data.stream().collect(Collectors.toList()));
         } else {
             select(field.fields()[0]);
-
         }
         return this;
     }
@@ -335,7 +334,6 @@ public class Query extends Table {
             }
         } else {
             select(field.fields()[0], "where", field, "=", value);
-
         }
         return this;
     }
@@ -346,7 +344,6 @@ public class Query extends Table {
             addAll(data.stream().filter(rec -> rec.getInt(field) == value && rec.getInt(field2) == value2).collect(Collectors.toList()));
         } else {
             select(field.fields()[0], "where", field, "=", value, "and", field2, "=", value2);
-
         }
         return this;
     }
@@ -357,7 +354,6 @@ public class Query extends Table {
             addAll(data.stream().filter(rec -> rec.getInt(field) == value || rec.getInt(field2) == value2).collect(Collectors.toList()));
         } else {
             select(field.fields()[0], "where", field, "=", value, "or", field2, "=", value2);
-
         }
         return this;
     }
@@ -368,7 +364,6 @@ public class Query extends Table {
             addAll(data.stream().filter(rec -> rec.getInt(field) == value && rec.getInt(field2) != value2).collect(Collectors.toList()));
         } else {
             select(field.fields()[0], "where", field, "=", value, "and", field2, "!=", value2);
-
         }
         return this;
     }
@@ -400,7 +395,6 @@ public class Query extends Table {
                     .collect(Collectors.toList()));
         } else {
             select(field.fields()[0], "where", field, "in (", value2, ",", value3, ")");
-
         }
         return this;
     }
@@ -412,7 +406,6 @@ public class Query extends Table {
             ).collect(Collectors.toList()));
         } else {
             select(field.fields()[0], "where", field, "in (", value2, ",", value3, ",", value4 + ")");
-
         }
         return this;
     }
@@ -425,7 +418,6 @@ public class Query extends Table {
             ).collect(Collectors.toList()));
         } else {
             select(field.fields()[0], "where", field, "=", value, "and", field2, "in (", value2, ",", value3 + ")");
-
         }
         return this;
     }
@@ -438,7 +430,6 @@ public class Query extends Table {
             ).collect(Collectors.toList()));
         } else {
             select(field.fields()[0], "where", field, "=", value, "and", field2, "in (", value2, ",", value3, ",", value4 + ")");
-
         }
         return this;
     }
@@ -451,7 +442,6 @@ public class Query extends Table {
             ).collect(Collectors.toList()));
         } else {
             select(field.fields()[0], "where", field, "=", value, "and", field2, "=", value2, "and", field3, "=", value3);
-
         }
         return this;
     }
@@ -464,20 +454,49 @@ public class Query extends Table {
             ).collect(Collectors.toList()));
         } else {
             select(field.fields()[0], "where", field, "=", value, "and", field2, ">", value2, "and", field3, ">", value3);
-
         }
         return this;
     }
-
-    public void join(List<Record> data, List<Record> data2, Field field, Field field2) {
+    
+    public Query sql(List<Record> data, Field field, List<Integer> paramsID) {
         clear();
-        for (Record rec : data) {
-            for (Record rec2 : data2) {
-                if (rec.getInt(field) == rec2.getInt(field2)) {
-                    add(rec2);
-                }
+        if (Query.conf.equals("calc")) {
+            if (paramsID.isEmpty() == false) {
+                addAll(data.stream().filter(rec -> paramsID.contains(rec.getInt(field))).collect(Collectors.toList()));
+            }
+        } else {
+            if (paramsID.isEmpty() == false) {                
+                String arrID = paramsID.stream().map(v -> String.valueOf(v)).collect(Collectors.joining(",", "(", ")"));
+                select(field.fields()[0], "where", field, "in", arrID);
             }
         }
+        return this;
+    }
+    
+    public Query join(List<Record> data, List<Record> data2, Field field, Field field2) {
+        try {
+            clear();
+            if (field.meta().type() == Field.TYPE.INT && field2.meta().type() == Field.TYPE.INT) {
+                for (Record rec : data) {
+                    for (Record rec2 : data2) {
+                        if (rec.getInt(field) == rec2.getInt(field2)) {
+                            add(rec2);
+                        }
+                    }
+                }
+            } else if (field.meta().type() == Field.TYPE.STR && field2.meta().type() == Field.TYPE.STR) {
+                for (Record rec : data) {
+                    for (Record rec2 : data2) {
+                        if (rec.getStr(field).trim().equals(rec2.getStr(field2).trim())) {
+                            add(rec2);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:Query.join()");
+        }
+        return this;
     }
 
     public Query sort(Field... field) {

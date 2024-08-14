@@ -65,7 +65,7 @@ public class Joinings extends javax.swing.JFrame {
     private Query qJoindet = new Query(eJoindet.values());
     private Query qJoinpar1 = new Query(eJoinpar1.values());
     private Query qJoinpar2 = new Query(eJoinpar2.values());
-    private String subsql = "(-1)";
+    private int joinID = -1;
     private ListenerRecord listenerArtikl, listenerJoinvar, listenerColor, listenerColvar1, listenerColvar2, listenerColvar3;
 
     //Запуск из Tex (главное меню)
@@ -78,9 +78,9 @@ public class Joinings extends javax.swing.JFrame {
         listenerAdd();
     }
 
-    //Запуск из Specific
+    //Запуск из Systree
     public Joinings(ElemJoining join) {
-        this.subsql = "(" + join.joiningRec.getStr(1) + ")";
+        this.joinID = join.joiningRec.getInt(1);
         initComponents();
         initElements();
         loadingData();
@@ -94,7 +94,7 @@ public class Joinings extends javax.swing.JFrame {
         }
     }
 
-    //Запуск из Systree
+    //Запуск из Specific
     public Joinings(int deteilID) {
         initComponents();
         initElements();
@@ -111,11 +111,10 @@ public class Joinings extends javax.swing.JFrame {
         qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id).sort(eGroups.npp, eGroups.name);
         qColor.sql(eColor.data(), eColor.up);
         qArtikl.sql(eArtikl.data(), eArtikl.up);
-        if (subsql.equals("(-1)") == true) {
+        if (joinID == -1) {
             qJoining.sql(eJoining.data(), eJoining.up).sort(eJoining.name);
         } else {
-            qJoining.select(eJoining.up, "where", eJoining.id, "in", subsql, "order by", eJoining.name);
-            //qJoining.sql(eJoining.data(), eJoining.up, eJoining.id, subsql).sorted(eJoining.name);
+            qJoining.sql(eJoining.data(), eJoining.id, joinID).sort(eJoining.name);
         }
     }
 

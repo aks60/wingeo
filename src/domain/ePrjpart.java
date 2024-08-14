@@ -73,7 +73,7 @@ public enum ePrjpart implements Field {
     public Query query() {
         return query;
     }
-  
+
     public static Record find(int _id) {
         if (_id == -3) {
             return up.newRecord(Query.SEL);
