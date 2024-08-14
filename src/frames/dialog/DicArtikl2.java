@@ -20,6 +20,7 @@ import common.listener.ListenerRecord;
 import frames.UTree;
 import frames.swing.ProgressBar;
 import frames.swing.TableFieldFilter;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
@@ -39,8 +40,9 @@ public class DicArtikl2 extends javax.swing.JDialog {
         super(parent, true);
         initComponents();
         initElements();
-        String p1 = Arrays.toString(level).split("[\\[\\]]")[1];
-        qArtiklAll.select(eArtikl.up, "where", eArtikl.level1, "in (", p1, ") order by", eArtikl.level1, ",", eArtikl.level2, ",", eArtikl.code, ",", eArtikl.name);
+        //String p1 = Arrays.toString(level).split("[\\[\\]]")[1];
+        List<Integer> levList = Arrays.stream(level).boxed().collect(Collectors.toList());
+        eArtikl.sql(qArtiklAll, eArtikl.level1, levList).sort(eArtikl.level1, eArtikl.level2, eArtikl.code, eArtikl.name);
         this.listener = listenet;
         loadingModel();
         loadingTree();
@@ -51,8 +53,9 @@ public class DicArtikl2 extends javax.swing.JDialog {
         super(parent, true);
         initComponents();
         initElements();
-        String p1 = Arrays.toString(level).split("[\\[\\]]")[1];
-        qArtiklAll.select(eArtikl.up, "where", eArtikl.level1, "in (", p1, ") order by", eArtikl.level1, ",", eArtikl.level2, ",", eArtikl.code, ",", eArtikl.name);
+        //String p1 = Arrays.toString(level).split("[\\[\\]]")[1];
+        List<Integer> levList = Arrays.stream(level).boxed().collect(Collectors.toList());
+        eArtikl.sql(qArtiklAll, eArtikl.level1, levList).sort(eArtikl.level1, eArtikl.level2, eArtikl.code, eArtikl.name);
         if (id != -1) {
             artiklRec = qArtiklAll.find(id, eArtikl.id);
         }
