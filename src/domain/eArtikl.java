@@ -88,19 +88,34 @@ public enum eArtikl implements Field {
         return (rec == null) ? virtualRec() : rec;
     }
 
-    public static void sql(Query q, Field f, Query p) {
-        q.clear();
+    public static void sql(Query query, Field field, Query param) {
+        query.clear();
         if (Query.conf.equals("calc")) {
-            if (p.isEmpty() == false) {
-                List listID = p.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.toList());
-                q.addAll(data().stream().filter(rec -> listID.contains(rec.getInt(id))).collect(Collectors.toList()));
+            if (param.isEmpty() == false) {
+                List<Integer> listID = param.table(eArtikl.up).stream().map(rec -> rec.getInt(eArtikl.id)).collect(Collectors.toList());
+                query.addAll(data().stream().filter(rec -> listID.contains(rec.getInt(id))).collect(Collectors.toList()));
             }
         } else {
-            if (p.isEmpty() == false) {
-                String arrID = p.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.joining(",", "(", ")"));
-                q.select(f.fields()[0], "where", id, "in", arrID);
+            if (param.isEmpty() == false) {
+                String arrID = param.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.joining(",", "(", ")"));
+                query.select(field.fields()[0], "where", id, "in", arrID);
             }
         }
+    }
+    
+    public static Query sql(Query query, Field field, List<Integer> paramsID) {
+        query.clear();
+        if (Query.conf.equals("calc")) {
+            if (paramsID.isEmpty() == false) {
+                query.addAll(data().stream().filter(rec -> paramsID.contains(rec.getInt(level1))).collect(Collectors.toList()));
+            }
+        } else {
+//            if (param.isEmpty() == false) {
+//                String arrID = param.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.joining(",", "(", ")"));
+//                query.select(field.fields()[0], "where", id, "in", arrID);
+//            }
+        }
+        return query;
     }
 
     public static Record find(int _id, boolean _analog) {

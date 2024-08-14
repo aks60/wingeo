@@ -54,8 +54,8 @@ public class DicArtikl extends javax.swing.JDialog {
         super(parent, true);
         initComponents();
         initElements();
-        String p1 = Arrays.toString(level).split("[\\[\\]]")[1];
-        qArtikl.select(eArtikl.up, "where", eArtikl.level1, "in (", p1, ") order by", eArtikl.level1, ",", eArtikl.level2, ",", eArtikl.code, ",", eArtikl.name);
+        List<Integer> levList = Arrays.stream(level).boxed().collect(Collectors.toList());
+        eArtikl.sql(qArtikl, eArtikl.level1, levList).sort(eArtikl.level1, eArtikl.level2, eArtikl.code, eArtikl.name);       
         this.listener = listenet;
         loadingModel();
         btnRemove.setVisible(del);
@@ -68,14 +68,7 @@ public class DicArtikl extends javax.swing.JDialog {
         initElements();
         Query qFurndet = new Query(eFurndet.values(), eArtikl.values());
         eFurndet.sql(qFurndet, furnId, level1, level2);
-        //eArtikl.sql(qArtikl, eArtikl.id, qFurndet);
-        //XXXX
-        //Query qFurndet2 = new Query(eFurndet.id, eArtikl.id).select(eFurndet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eFurndet.artikl_id,
-                //"where", eFurndet.furniture_id1, "=", furnId, "and", eArtikl.level1, "=", level1, "and", eArtikl.level2, "=", level2);
-       
-        String arr = (qFurndet.isEmpty() == false) ? qFurndet.table(eArtikl.up).stream().map(rec -> rec.getStr(eArtikl.id)).collect(Collectors.joining(",", "(", ")")) : "(-1)";
-        qArtikl.select(eArtikl.up).select(eArtikl.up, "where", eArtikl.id, "in", arr);   
-        
+        eArtikl.sql(qArtikl, eArtikl.id, qFurndet);
         this.listener = listenet;
         loadingModel();
         btnRemove.setVisible(del);

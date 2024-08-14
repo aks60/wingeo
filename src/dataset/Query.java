@@ -486,8 +486,8 @@ public class Query extends Table {
                 this.sort((rec1, rec2) -> rec1.getInt(field[0]) < rec2.getInt(field[0]) ? 1 : -1);
 
             } else if (field.length == 1 && field[0].meta().type() == Field.TYPE.DBL) {
-                this.sort((rec1, rec2) ->  Double.compare(rec1.getDbl(field[0]), rec2.getDbl(field[0])));
-                
+                this.sort((rec1, rec2) -> Double.compare(rec1.getDbl(field[0]), rec2.getDbl(field[0])));
+
             } else if (field.length == 1 && field[0].meta().type() == Field.TYPE.STR) {
                 this.sort((rec1, rec2) -> rec1.getStr(field[0]).compareTo(rec2.getStr(field[0])));
 
@@ -515,6 +515,25 @@ public class Query extends Table {
                     } else {
                         return (rec1.getInt(field[0]) > rec2.getInt(field[0])) ? 1 : -1;
                     }
+                });
+
+            } else if (field.length == 4 && field[0].meta().type() == Field.TYPE.INT && field[1].meta().type() == Field.TYPE.INT
+                    && field[2].meta().type() == Field.TYPE.STR && field[3].meta().type() == Field.TYPE.STR) {
+                this.sort((r1, r2) -> {
+
+                    int result = Integer.valueOf(r1.getInt(field[0])).compareTo(r2.getInt(field[0]));
+                    if (result != 0) {
+                        return result;
+                    }
+                    result = Integer.valueOf(r1.getInt(field[1])).compareTo(r2.getInt(field[1]));
+                    if (result != 0) {
+                        return result;
+                    }
+                    result = r1.getStr(field[2]).compareTo(r2.getStr(field[2]));
+                    if (result != 0) {
+                        return result;
+                    }
+                    return r1.getStr(field[3]).compareTo(r2.getStr(field[3]));
                 });
             } else {
                 System.err.println("ВНИМАНИЕ! Ошибка сортировки.");
