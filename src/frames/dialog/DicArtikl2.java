@@ -53,7 +53,6 @@ public class DicArtikl2 extends javax.swing.JDialog {
         super(parent, true);
         initComponents();
         initElements();
-        //String p1 = Arrays.toString(level).split("[\\[\\]]")[1];
         List<Integer> levList = Arrays.stream(level).boxed().collect(Collectors.toList());
         qArtiklAll.sql(eArtikl.data(), eArtikl.level1, levList).sort(eArtikl.level1, eArtikl.level2, eArtikl.code, eArtikl.name);
         if (id != -1) {
