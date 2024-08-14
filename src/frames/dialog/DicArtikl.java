@@ -69,7 +69,7 @@ public class DicArtikl extends javax.swing.JDialog {
         Query qFurndet = new Query(eFurndet.values(), eArtikl.values());
         eFurndet.sql(qFurndet, furnId, level1, level2);
         //eArtikl.sql(qArtikl, eArtikl.id, qFurndet);
-        XXXX
+        //XXXX
         //Query qFurndet2 = new Query(eFurndet.id, eArtikl.id).select(eFurndet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eFurndet.artikl_id,
                 //"where", eFurndet.furniture_id1, "=", furnId, "and", eArtikl.level1, "=", level1, "and", eArtikl.level2, "=", level2);
        
