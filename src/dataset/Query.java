@@ -458,15 +458,18 @@ public class Query extends Table {
         return this;
     }
     
-    public Query sql(List<Record> data, Field field, List<Integer> paramsID) {
+    public Query sql(List<Record> data, Field field, List listID) {
         clear();
         if (Query.conf.equals("calc")) {
-            if (paramsID.isEmpty() == false) {
-                addAll(data.stream().filter(rec -> paramsID.contains(rec.getInt(field))).collect(Collectors.toList()));
+            if (listID.isEmpty() == false && field.meta().type() == Field.TYPE.INT) {
+                addAll(data.stream().filter(rec -> listID.contains(rec.getInt(field))).collect(Collectors.toList()));
+            } else if (listID.isEmpty() == false && field.meta().type() == Field.TYPE.DBL) {
+                addAll(data.stream().filter(rec -> listID.contains(rec.getDbl(field))).collect(Collectors.toList()));
             }
         } else {
-            if (paramsID.isEmpty() == false) {                
-                String arrID = paramsID.stream().map(v -> String.valueOf(v)).collect(Collectors.joining(",", "(", ")"));
+            if (listID.isEmpty() == false) {
+                List<Integer> listInt = listID;
+                String arrID = listInt.stream().map(s -> String.valueOf(s)).collect(Collectors.joining(",", "(", ")"));
                 select(field.fields()[0], "where", field, "in", arrID);
             }
         }

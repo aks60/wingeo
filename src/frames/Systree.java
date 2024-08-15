@@ -101,6 +101,8 @@ import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import common.listener.ListenerReload;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 import javax.swing.JTree;
 import org.locationtech.jts.geom.Envelope;
@@ -4052,12 +4054,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }
             }
             //Список стеклопакетов
-            depth = (depth != null && depth.isEmpty() == false) ? " and " + eArtikl.depth.name() + " in (" + depth + ")" : "";
-            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
-                    "where", eArtikl.level1, "= 5 and", eArtikl.level2, "in (1,2,3)", depth, "order by", eArtikl.name);
-            int recordID = (winNode.com5t().artiklRec != null) ? winNode.com5t().artiklRec.getInt(eArtikl.id) : -3;
+            Query qData = new Query(eArtikl.values()), qArtikl = new Query(eArtikl.values());
+            List<Double> listID = (depth != null && depth.isEmpty() == false)
+                    ? List.of(depth.split(",")).stream().map(m -> Double.valueOf(m)).collect(Collectors.toList()) : new ArrayList();
+            qData.sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 1, 2, 3).sort(eArtikl.name);
+            qArtikl.addAll(qData.stream().filter(rec -> listID.contains(rec.getDbl(eArtikl.depth))).collect(Collectors.toList()));
+            int artiklID = (winNode.com5t().artiklRec != null) ? winNode.com5t().artiklRec.getInt(eArtikl.id) : -3;
 
-            new DicArtikl(this, recordID, (artiklRec) -> {
+            new DicArtikl(this, artiklID, (artiklRec) -> {
 
                 GsonElem glassElem = (GsonElem) wincalc().listAll.gson(selectID);
                 if (artiklRec.get(1) == null) {
