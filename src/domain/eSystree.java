@@ -5,7 +5,6 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
-import static domain.eArtikl.groups4_id;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

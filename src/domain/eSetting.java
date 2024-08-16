@@ -3,9 +3,6 @@ package domain;
 import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
-import dataset.Record;
-import static domain.eArtikl.up;
-import java.sql.SQLException;
 
 public enum eSetting implements Field {
     up("0", "0", "0", "Системные настройки", "EMPTY"),
