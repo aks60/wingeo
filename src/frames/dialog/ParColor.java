@@ -17,9 +17,9 @@ import common.listener.ListenerRecord;
 import dataset.Field;
 import domain.eParmap;
 import java.awt.Component;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -50,12 +50,11 @@ public class ParColor extends javax.swing.JDialog {
     public void loadingData(int artikl_id) {
 
         qArtdet.sql(eArtdet.data(), eArtdet.artikl_id, artikl_id);
-        String subset = new Query(eParmap.values()).sql(eParmap.data(), filter, 1)
-                .stream().map(rec -> rec.getStr(eParmap.groups_id)).collect(Collectors.toSet())
-                .stream().collect(Collectors.joining(",", "(", ")"));
-        if (subset.equals("()") == false) {
-            qGroupsMap.select(eGroups.up, "where", eGroups.id, "in", subset);
-        }
+        List<Integer> listId = new Query(eParmap.values()).sql(eParmap.data(), filter, 1)
+                .stream().map(rec -> rec.getInt(eParmap.groups_id)).collect(Collectors.toList());
+        if (listId.isEmpty() == false) {
+            qGroupsMap.sql(eGroups.data(), eGroups.id, listId).sort(eGroups.name);
+        }        
         qGroupsGrp.sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_GRP.id);
 
         Record color1 = eColor.up.newRecord(Query.SEL);

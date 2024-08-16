@@ -20,6 +20,7 @@ import common.listener.ListenerRecord;
 import domain.eGroups;
 import frames.swing.ProgressBar;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -60,12 +61,11 @@ public class ParName extends javax.swing.JDialog {
     }
 
     public void loadingData() {
-        Set<Integer> set = new HashSet<Integer>();
+        List<Integer> listId = new ArrayList<Integer>();
         Query qParams = new Query(eParams.values()).sql(eParams.data(), filter, 1);
-        qParams.forEach(rec -> set.add(rec.getInt(eParams.groups_id)));
-        String subsql = set.stream().map(pk -> String.valueOf(pk)).collect(Collectors.joining(",", "(", ")"));
-        if (subsql.equals("()") == false) {
-            qGroups.select(eGroups.up, "where ", eGroups.id, "in " + subsql, "order by", eGroups.name);
+        qParams.forEach(rec -> listId.add(rec.getInt(eParams.groups_id)));
+        if (listId.isEmpty() == false) {
+            qGroups.sql(eGroups.data(), eGroups.id, listId).sort(eGroups.name);
         }
     }
 
