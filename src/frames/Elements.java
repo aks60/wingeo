@@ -1129,6 +1129,7 @@ public class Elements extends javax.swing.JFrame {
             elemgrpRec.setNo(eGroups.npp, level1); //-1 -ПРОФИЛИ, -5 -ЗАПОЛНЕНИЯ
             elemgrpRec.setNo(eGroups.name, result);
             qGrCateg.insert(elemgrpRec);
+            eGroups.up.query().add(elemgrpRec);
             loadingData();
             for (int i = 0; i < qGrCateg.size(); ++i) {
                 if (qGrCateg.get(i).getInt(eGroups.id) == id) {

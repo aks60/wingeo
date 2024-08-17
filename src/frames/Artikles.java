@@ -2456,9 +2456,8 @@ public class Artikles extends javax.swing.JFrame {
             int index = UGui.getIndexRec(tab1);
             if (index != -1) {
 
-                UGui.insertRecordCur(tab2, eArtikl.up, (record) -> {
+                UGui.insertRecordCur(tab2, eArtdet.up, (record) -> {
                     Record artiklRec = qArtikl.get(index);
-                    record.setNo(eArtdet.id, Conn.genId(eArtdet.up));
                     record.setNo(eArtdet.artikl_id, artiklRec.get(eArtikl.id));
                     record.setNo(eArtdet.mark_c1, 1);
                     if (artiklRec.getInt(eArtikl.level1) == 1 && List.of(1, 2, 3, 4, 5).contains(artiklRec.getInt(eArtikl.level2))) {

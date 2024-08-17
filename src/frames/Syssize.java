@@ -362,7 +362,7 @@ public class Syssize extends javax.swing.JFrame {
     private void btnInsert(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsert
         if (tab1.getBorder() != null) {
             UGui.insertRecordCur(tab1, eSyssize.up, (record) -> {
-                record.setDev(eSyssize.name, "Сист.конст");
+                //record.setDev(eSyssize.name, "Сист.конст");
                 record.set(eSyssize.falz, 0);
                 record.set(eSyssize.naxl, 0);
                 record.set(eSyssize.prip, 0);
