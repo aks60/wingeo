@@ -4,10 +4,8 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
-import static domain.eArtdet.up;
-import frames.UGui;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -86,6 +84,18 @@ public enum eArtikl implements Field {
         data();
         Record rec = map.get(id);
         return (rec == null) ? virtualRec() : rec;
+    }
+
+    public static Query sql(Query query, Field field, int value) {
+        query.clear();
+        HashSet hs = new HashSet();
+        if (Query.conf.equals("calc")) {
+              query.addAll(data().stream().filter(rec -> rec.getInt(field) == value && hs.add(rec.getDbl(depth))).collect(Collectors.toList()));
+        } else {
+            query.select("select distinct " + depth.name()
+                    + " from " + up.tname() + " where " + level1.name() + " = 5" + " order by " + depth.name());
+        }
+        return query;
     }
 
     public static Record find(int _id, boolean _analog) {

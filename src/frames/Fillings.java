@@ -201,9 +201,9 @@ public class Fillings extends javax.swing.JFrame {
 
     public void listenerAdd() {
         UGui.buttonCellEditor(tab2, 0).addActionListener(event -> {
-            Query query = new Query(eArtikl.depth).select("select distinct " + eArtikl.depth.name()
-                    + " from " + eArtikl.up.tname() + " where " + eArtikl.level1.name() + " = 5" + " order by " + eArtikl.depth.name());
-            DicName frame = new DicName(this, listenerThicknes, query, eArtikl.depth);
+            Query qArtikl = new Query(eArtikl.values());
+            eArtikl.sql(qArtikl, eArtikl.level1, 5).sort(eArtikl.depth);
+            DicName frame = new DicName(this, listenerThicknes, qArtikl, eArtikl.depth);
         });
 
         UGui.buttonCellEditor(tab2, 1).addActionListener(event -> {
