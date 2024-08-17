@@ -105,6 +105,8 @@ import report.HtmlOfSpecific;
 import startup.App;
 import common.listener.ListenerReload;
 import static dataset.Query.INS;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 import report.HtmlOfManufactory;
 
 public class Orders extends javax.swing.JFrame implements ListenerReload, ListenerAction {
@@ -2090,7 +2092,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         btn3.setPreferredSize(new java.awt.Dimension(21, 20));
         btn3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnToArtiklGlass(evt);
+                artiklToGlass(evt);
             }
         });
 
@@ -3258,7 +3260,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 Layout layout = winNode.com5t().layout();
                 double selectID = winNode.com5t().id;
                 int systreeID = qPrjprod.getAs(UGui.getIndexRec(tab2), ePrjprod.systree_id);
-                //Query qSysprof = new Query(eSysprof.values(), eArtikl.values()).select(eSysprof.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eSysprof.artikl_id, "where", eSysprof.systree_id, "=", systreeID);
                 Query qSysprof = new Query(eSysprof.values(), eArtikl.values()).sql(eSysprof.data(), eSysprof.systree_id, systreeID);
                 qSysprof.table(eArtikl.up).join(qSysprof, eArtikl.data(), eSysprof.artikl_id, eArtikl.id);
                 Query qSysprof2 = new Query(eSysprof.values(), eArtikl.values());
@@ -3528,7 +3529,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         }, indexLayoutHandl);
     }//GEN-LAST:event_heightHandlToStvorka
 
-    private void btnToArtiklGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnToArtiklGlass
+    private void artiklToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToGlass
         try {
             double selectID = winNode.com5t().id;
             int systreeID = qPrjprod.getAs(UGui.getIndexRec(tab2), ePrjprod.systree_id);
@@ -3541,10 +3542,15 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     depth = depth.substring(0, depth.length() - 1);
                 }
             }
-            depth = (depth != null && depth.isEmpty() == false) ? " and " + eArtikl.depth.name() + " in (" + depth + ")" : "";
-            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up, "where", eArtikl.level1, "= 5 and", eArtikl.level2, "in (1,2,3)", depth);
-            //Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2,)
-            new DicArtikl(this, (artiklRec) -> {
+            //Список стеклопакетов
+            Query qData = new Query(eArtikl.values()), qArtikl = new Query(eArtikl.values());
+            List<Double> listID = (depth != null && depth.isEmpty() == false)
+                    ? List.of(depth.split(",")).stream().map(m -> Double.valueOf(m)).collect(Collectors.toList()) : new ArrayList();
+            qData.sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 1, 2, 3).sort(eArtikl.name);
+            qArtikl.addAll(qData.stream().filter(rec -> listID.contains(rec.getDbl(eArtikl.depth))).collect(Collectors.toList()));
+            int artiklID = (winNode.com5t().artiklRec != null) ? winNode.com5t().artiklRec.getInt(eArtikl.id) : -3;
+            
+            new DicArtikl(this, artiklID, (artiklRec) -> {
 
                 GsonElem glassElem = (GsonElem) wincalc().listAll.gson(selectID);
                 if (artiklRec.get(1) == null) {
@@ -3559,7 +3565,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         } catch (Exception e) {
             System.err.println("Ошибка: " + e);
         }
-    }//GEN-LAST:event_btnToArtiklGlass
+    }//GEN-LAST:event_artiklToGlass
 
     private void btnCalc(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalc
         UGui.stopCellEditing(tab1, tab2, tab3, tab4);
