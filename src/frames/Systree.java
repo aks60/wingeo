@@ -709,6 +709,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             sysprodRec.setNo(eSysprod.name, record.get(1));
             sysprodRec.setNo(eSysprod.script, script2);
             qSysprod.insert(sysprodRec);
+            eSysprod.up.query().add(sysprodRec);
 
             loadingTab5();
 
