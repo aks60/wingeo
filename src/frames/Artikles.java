@@ -40,7 +40,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 import common.listener.ListenerRecord;
-import dataset.Sql;
 import frames.swing.DefCellEditorNumb;
 import frames.swing.TableFieldFilter;
 import java.awt.event.MouseEvent;
