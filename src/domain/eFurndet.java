@@ -52,7 +52,7 @@ public enum eFurndet implements Field {
     }
 
     public static void sql(Query q, int furnID, int lev1, int lev2) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             List<Integer> out = new ArrayList();
             List<Record> listArt = eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.level1) == lev1
                     && rec.getInt(eArtikl.level2) == lev2).collect(Collectors.toList());
@@ -73,7 +73,7 @@ public enum eFurndet implements Field {
     }
 
     public static List<Record> find(int _id) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(furniture_id1) == _id).collect(Collectors.toList());
         }
         Query recordList = new Query(values()).select(up, "where", furniture_id1, "=", _id);

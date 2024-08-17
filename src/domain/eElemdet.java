@@ -32,7 +32,7 @@ public enum eElemdet implements Field {
     }
 
     public static List<Record> find(int _id) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(element_id) == _id).collect(toList());
         }
         return new Query(values()).select(up, "where", element_id.name(), "=", _id);

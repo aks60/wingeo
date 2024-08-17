@@ -48,7 +48,7 @@ public enum eElempar1 implements Field {
     }
     
     public static Record find(int _id) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
@@ -56,7 +56,7 @@ public enum eElempar1 implements Field {
     }
 
     public static Record find2(int _par1) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _par1 == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _par1);
@@ -64,7 +64,7 @@ public enum eElempar1 implements Field {
     }
 
     public static List<Record> find3(int _element_id) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _element_id == rec.getInt(element_id)).collect(Collectors.toList());
         }
         Query recordList = new Query(values()).select(up, "where", element_id, "=", _element_id);

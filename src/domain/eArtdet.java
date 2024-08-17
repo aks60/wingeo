@@ -68,30 +68,15 @@ public enum eArtdet implements Field {
         if (artiklID == -3) {
             return record();
         }
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(artikl_id) == artiklID).findFirst().orElse(record());
         }
         List<Record> record = new Query(values()).select("select first 1 * from " + up.tname() + " where " + artikl_id.name() + " = " + artiklID);
         return (record.size() == 0) ? record() : record.get(0);
     }
- 
-    /**
-    public static Record find2(int artiklID, int side) {
-        if (artiklID == -3) {
-            return record();
-        }
-        if (Query.conf.equals("calc")) {
-            return query().stream().filter(rec -> rec.getInt(artikl_id) == artiklID 
-                    && rec.getInt(color_fk) > 0 && rec.getInt(mark_c1) == 1).findFirst().orElse(record());
-        }
-        List<Record> record = new Query(values()).select("select first 1 * from " + up.tname() + " where " 
-                + artikl_id.name() + " = " + artiklID + "and" + color_fk.name(), " > 0 and" + mark_c1.name(), " = 1");
-        return (record.size() == 0) ? record() : record.get(0);
-    }
-*/
     
     public static List<Record> filter(int artiklID) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(artikl_id) == artiklID).collect(toList());
         }
         return new Query(values()).select(up, "where", artikl_id, "=", artiklID, "order by", id);

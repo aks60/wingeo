@@ -48,7 +48,7 @@ public enum eGlasprof implements Field {
     }
     
     public static List<Record> findAll() {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data();
         }
         Query recordList = new Query(values()).select(up);
@@ -56,7 +56,7 @@ public enum eGlasprof implements Field {
     }
 
     public static List<Record> find(int glasgrpId) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(glasgrp_id) == glasgrpId).collect(Collectors.toList());
         }
         Query recordList = new Query(values()).select(up, "where", glasgrp_id, "=", glasgrpId);
@@ -64,7 +64,7 @@ public enum eGlasprof implements Field {
     }
 
     public static Record find2(int artiklId) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(artikl_id) == artiklId).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", artikl_id, "=", artiklId);

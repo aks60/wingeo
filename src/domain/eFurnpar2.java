@@ -46,7 +46,7 @@ public enum eFurnpar2 implements Field {
     }
     
     public static List<Record> find(int _id) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(furndet_id) == _id).collect(Collectors.toList());
         }
         Query recordList = new Query(values()).select(up, "where", furndet_id, "=", _id);

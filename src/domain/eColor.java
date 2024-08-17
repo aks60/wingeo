@@ -80,7 +80,7 @@ public enum eColor implements Field {
         if (_id == -3) {
             return virtualRec();
         }
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
@@ -89,7 +89,7 @@ public enum eColor implements Field {
 
     public static List<Record> find2(int _colgrp_id) {
 
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(groups_id) == _colgrp_id).collect(toList());
         }
         return new Query(values()).select(up, "where", groups_id, "=", _colgrp_id);
@@ -99,7 +99,7 @@ public enum eColor implements Field {
         if (_color_fk == -3) {
             return virtualRec();
         }
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             if (_color_fk < 0) {
                 return data().stream().filter(rec -> rec.getInt(groups_id) == _color_fk * -1).findFirst().orElse(up.newRecord(Query.SEL));
             } else {
@@ -119,7 +119,7 @@ public enum eColor implements Field {
         if (_color_fk == -3) {
             return virtualRec();
         }
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             if (_color_fk < 0) {
                 return data().stream().filter(rec -> rec.getInt(groups_id) == _color_fk * -1).findFirst().orElse(up.newRecord(Query.SEL));
             } else {

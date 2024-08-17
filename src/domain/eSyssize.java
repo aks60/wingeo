@@ -48,7 +48,7 @@ public enum eSyssize implements Field {
         if (_id == -3) { //если арт. вирт. то return virtualRec();
             return virtualRec();
         }
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(null);
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
@@ -56,7 +56,7 @@ public enum eSyssize implements Field {
     }
 
     public static Query select(Query q) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             q.addAll(data().stream().sorted((o1, o2) -> o1.getStr(name)
                     .compareTo(o2.getStr(name))).collect(Collectors.toList()));
             return q;

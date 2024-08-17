@@ -46,14 +46,14 @@ public enum eSyspar1 implements Field {
     }
   
     public static List<Record> find(int _nuni) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(systree_id) == _nuni).collect(toList());
         }
         return new Query(values()).select(up, "where", systree_id, "=", _nuni);
     }
 
     public static Record find2(int _id) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().find(_id, id);
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);

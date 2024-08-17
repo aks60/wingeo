@@ -56,7 +56,6 @@ public class SpcFilling extends Cal5e {
     }
 
     public void calc(ElemSimple elemGlass) {
-        super.calc();
         try {
             Double depth = elemGlass.artiklRec.getDbl(eArtikl.depth); //толщина стекда           
             //List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(winc.root.frames);  //список рам конструкции
@@ -105,9 +104,7 @@ public class SpcFilling extends Cal5e {
             
         } catch (Exception e) {
             System.err.println("Ошибка:Filling.calc() " + e);
-        } finally {
-            Query.conf = conf;
-        }
+        } 
     }
 
     protected void detail(ElemSimple elemGlass, Record glasgrpRec, List<Record> glasdetList) {

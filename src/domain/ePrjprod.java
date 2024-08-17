@@ -47,7 +47,7 @@ public enum ePrjprod implements Field {
     }
     
     public static Record find(int _id) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(null);
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
@@ -56,7 +56,7 @@ public enum ePrjprod implements Field {
 
     
     public static List<Record> find2(int _project_id) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _project_id == rec.getInt(project_id)).collect(Collectors.toList());
         }
         return new Query(values()).select(up, "where", project_id, "=", _project_id);
