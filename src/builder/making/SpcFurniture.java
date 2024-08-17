@@ -83,9 +83,10 @@ public class SpcFurniture extends Cal5e {
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Furniture.calc() " + e);
-        } finally {
-            Query.conf = conf;
-        }
+        } 
+//        finally {
+//            Query.conf = conf;
+//        }
     }
 
     protected void variant(AreaSimple areaStv, Record furnitureRec, int count) {

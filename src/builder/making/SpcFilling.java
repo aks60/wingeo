@@ -105,9 +105,10 @@ public class SpcFilling extends Cal5e {
             
         } catch (Exception e) {
             System.err.println("Ошибка:Filling.calc() " + e);
-        } finally {
-            Query.conf = conf;
-        }
+        } 
+//        finally {
+//            Query.conf = conf;
+//        }
     }
 
     protected void detail(ElemSimple elemGlass, Record glasgrpRec, List<Record> glasdetList) {

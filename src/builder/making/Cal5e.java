@@ -17,7 +17,7 @@ public abstract class Cal5e {
     }
 
     public void calc() {
-        conf = Query.conf;
-        Query.conf = "calc";
+//        conf = Query.conf;
+//        Query.conf = "calc";
     }
 }

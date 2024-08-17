@@ -120,9 +120,10 @@ public class SpcJoining extends Cal5e {
 
         } catch (Exception e) {
             System.err.println("Ошибка:Joining.calc() " + e);
-        } finally {
-            Query.conf = conf;
-        }
+        } 
+//        finally {
+//            Query.conf = conf;
+//        }
     }
 
     public void detal() {

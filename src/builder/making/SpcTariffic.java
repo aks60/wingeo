@@ -150,9 +150,10 @@ public class SpcTariffic extends Cal5e {
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Tariffic.calc() " + e);
-        } finally {
-            Query.conf = conf;
-        }
+        } 
+//        finally {
+//            Query.conf = conf;
+//        }
     }
 
     //Комплекты конструкции    
