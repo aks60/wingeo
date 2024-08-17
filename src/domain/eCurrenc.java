@@ -50,7 +50,7 @@ public enum eCurrenc implements Field {
     }
 
     public static Record find(int _id) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(virtualRec());
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);

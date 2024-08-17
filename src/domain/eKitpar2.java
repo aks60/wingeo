@@ -49,7 +49,7 @@ public enum eKitpar2 implements Field {
     }
     
     public static List<Record> find(int _id) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(kitdet_id) == _id).collect(Collectors.toList());
         }
         Query recordList = new Query(values()).select(up, "where", kitdet_id, "=", _id);

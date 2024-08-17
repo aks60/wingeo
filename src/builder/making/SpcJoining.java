@@ -49,7 +49,6 @@ public class SpcJoining extends Cal5e {
 
     @Override
     public void calc() {
-        super.calc();
         try {
 
             //Цикл по списку соединений
@@ -121,9 +120,6 @@ public class SpcJoining extends Cal5e {
         } catch (Exception e) {
             System.err.println("Ошибка:Joining.calc() " + e);
         } 
-//        finally {
-//            Query.conf = conf;
-//        }
     }
 
     public void detal() {

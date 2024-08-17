@@ -51,7 +51,7 @@ public enum eParmap implements Field {
   
     public static Record find(int parmapID) {
 
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(id) == parmapID).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", parmapID);
@@ -59,7 +59,7 @@ public enum eParmap implements Field {
     }
     
     public static List<Record> find2(int groupsID) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(groups_id) == groupsID).collect(toList());
         }
         return new Query(values()).select(up, "where", groups_id, "=", groupsID);
@@ -67,7 +67,7 @@ public enum eParmap implements Field {
 
     public static Record find3(String name, int groupsID) {
 
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             List<Record> list = data().stream().filter(rec -> rec.getInt(groups_id) == groupsID).collect(toList());
             return list.stream().filter(rec -> name.equals(eColor.get(rec.getInt(eParmap.color_id1)).getStr(eColor.name))).findFirst().orElse(up.newRecord(Query.SEL));
         }
@@ -77,7 +77,7 @@ public enum eParmap implements Field {
     
     public static List<Record> filter(int colorID) {
 
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(color_id1) == colorID).collect(toList());
         }
         return new Query(values()).select(up, "where", color_id1, "=", colorID);
@@ -85,7 +85,7 @@ public enum eParmap implements Field {
 
     public static List<Record> filter2(int colorID, int groupsID) {
 
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(color_id1) == colorID && rec.getInt(groups_id) == groupsID).collect(toList());
         }
         return new Query(values()).select(up, "where", color_id1, "=", colorID, "and", groups_id, "=", groupsID);

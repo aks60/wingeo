@@ -46,21 +46,12 @@ public enum eSysprof implements Field {
     public Query query() {
         return query;
     }
-  
-//    public static ArrayList<Record> find(int _nuni) {
-//        if (Query.conf.equals("calc")) {
-//            ArrayList<Record> sysproaList = new ArrayList<Record>();
-//            query().stream().filter(rec -> _nuni == rec.getInt(systree_id)).forEach(rec -> sysproaList.add(rec));
-//            return sysproaList;
-//        }
-//        return new Query(values()).select(up, "where", systree_id, "=", _nuni, "order by", npp);
-//    }
 
     public static Record find2(int _nuni, UseArtiklTo _type) {
         if (_nuni == -3) {
             return virtualRec(_type.id);
         }
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             HashMap<Integer, Record> mapPrio = new HashMap<Integer, Record>();
             data().stream().filter(rec -> rec.getInt(systree_id) == _nuni && rec.getInt(use_type) == _type.id)
                     .forEach(rec -> mapPrio.put(rec.getInt(npp), rec));
@@ -85,7 +76,7 @@ public enum eSysprof implements Field {
     }
 
     public static Record find3(int _id) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);

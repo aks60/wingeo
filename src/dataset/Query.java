@@ -17,7 +17,7 @@ import startup.App;
 
 public class Query extends Table {
 
-    public static String conf = "calc";
+    public static String conf = "NET"; //или "APP"
     private static String schema = "";
     public static String INS = "INS";
     public static String SEL = "SEL";
@@ -316,7 +316,7 @@ public class Query extends Table {
 
     public Query sql(List<Record> data, Field field) {
         clear();
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             addAll(data.stream().collect(Collectors.toList()));
         } else {
             select(field.fields()[0]);
@@ -326,7 +326,7 @@ public class Query extends Table {
 
     public Query sql(List<Record> data, Field field, Object value) {
         clear();
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             if (value instanceof Integer) {
                 addAll(data.stream().filter(rec -> rec.getInt(field) == Integer.valueOf(value.toString())).collect(Collectors.toList()));
             } else if (value instanceof String) {
@@ -340,7 +340,7 @@ public class Query extends Table {
 
     public Query sql(List<Record> data, Field field, int value, Field field2, int value2) {
         clear();
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             addAll(data.stream().filter(rec -> rec.getInt(field) == value && rec.getInt(field2) == value2).collect(Collectors.toList()));
         } else {
             select(field.fields()[0], "where", field, "=", value, "and", field2, "=", value2);
@@ -350,7 +350,7 @@ public class Query extends Table {
 
     public Query sq2(List<Record> data, Field field, int value, Field field2, int value2) {
         clear();
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             addAll(data.stream().filter(rec -> rec.getInt(field) == value || rec.getInt(field2) == value2).collect(Collectors.toList()));
         } else {
             select(field.fields()[0], "where", field, "=", value, "or", field2, "=", value2);
@@ -360,7 +360,7 @@ public class Query extends Table {
 
     public Query sq3(List<Record> data, Field field, int value, Field field2, int value2) {
         clear();
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             addAll(data.stream().filter(rec -> rec.getInt(field) == value && rec.getInt(field2) != value2).collect(Collectors.toList()));
         } else {
             select(field.fields()[0], "where", field, "=", value, "and", field2, "!=", value2);
@@ -370,7 +370,7 @@ public class Query extends Table {
 
     public Query sql(List<Record> data, Field field, int value, Field field2, Field field3) {
         clear();
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             addAll(data.stream().filter(rec -> rec.getInt(field) == value && rec.getInt(field2) == rec.getInt(field3)).collect(Collectors.toList()));
         } else {
             select(field.fields()[0], "where", field, "=", value, "and", field2, "=", field3);
@@ -380,7 +380,7 @@ public class Query extends Table {
 
     public Query sq2(List<Record> data, Field field, int value, Field field2, Field field3) {
         clear();
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             addAll(data.stream().filter(rec -> rec.getInt(field) == value && rec.getInt(field2) != rec.getInt(field3)).collect(Collectors.toList()));
         } else {
             select(field.fields()[0], "where", field, "=", value, "and", field2, "!=", field3);
@@ -390,7 +390,7 @@ public class Query extends Table {
 
     public Query sql(List<Record> data, Field field, int value2, int value3) {
         clear();
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             addAll(data.stream().filter(rec -> rec.getInt(field) == value2 || rec.getInt(field) == value3)
                     .collect(Collectors.toList()));
         } else {
@@ -401,7 +401,7 @@ public class Query extends Table {
 
     public Query sql(List<Record> data, Field field, int value2, int value3, int value4) {
         clear();
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             addAll(data.stream().filter(rec -> rec.getInt(field) == value2 || rec.getInt(field) == value3 || rec.getInt(field) == value4
             ).collect(Collectors.toList()));
         } else {
@@ -412,7 +412,7 @@ public class Query extends Table {
 
     public Query sql(List<Record> data, Field field, int value, Field field2, int value2, int value3) {
         clear();
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             addAll(data.stream().filter(rec -> rec.getInt(field) == value
                     && (rec.getInt(field2) == value2 || rec.getInt(field2) == value3)
             ).collect(Collectors.toList()));
@@ -424,7 +424,7 @@ public class Query extends Table {
 
     public Query sql(List<Record> data, Field field, int value, Field field2, int value2, int value3, int value4) {
         clear();
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             addAll(data.stream().filter(rec -> rec.getInt(field) == value
                     && (rec.getInt(field2) == value2 || rec.getInt(field2) == value3 || rec.getInt(field2) == value4)
             ).collect(Collectors.toList()));
@@ -436,7 +436,7 @@ public class Query extends Table {
 
     public Query sql(List<Record> data, Field field, int value, Field field2, int value2, Field field3, int value3) {
         clear();
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             addAll(data.stream().filter(rec -> rec.getInt(field) == value
                     && rec.getInt(field2) == value2 && rec.getInt(field3) == value3
             ).collect(Collectors.toList()));
@@ -448,7 +448,7 @@ public class Query extends Table {
 
     public Query sq2(List<Record> data, Field field, int value, Field field2, int value2, Field field3, int value3) {
         clear();
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             addAll(data.stream().filter(rec -> rec.getInt(field) == value
                     && rec.getInt(field2) > value2 && rec.getInt(field3) > value3
             ).collect(Collectors.toList()));
@@ -460,7 +460,7 @@ public class Query extends Table {
     
     public Query sql(List<Record> data, Field field, List listID) {
         clear();
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             if (listID.isEmpty() == false && field.meta().type() == Field.TYPE.INT) {
                 addAll(data.stream().filter(rec -> listID.contains(rec.getInt(field))).collect(Collectors.toList()));
             } else if (listID.isEmpty() == false && field.meta().type() == Field.TYPE.DBL) {

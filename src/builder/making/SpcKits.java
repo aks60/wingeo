@@ -13,14 +13,5 @@ public class SpcKits extends Cal5e {
     }
 
     public void calc(double Q, double L, double H, Query kitDet) {
-        super.calc();
-        try {
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:kits.calc() " + e);
-        } 
-//        finally {
-//            Query.conf = conf;
-//        }
     }
 }

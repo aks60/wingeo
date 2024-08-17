@@ -41,7 +41,6 @@ public class SpcTariffic extends Cal5e {
     //Тарификация конструкции
     public void calc() {
         try {
-            super.calc();
             double percentMarkup = percentMarkup(winc); //процентная надбавка на изделия сложной формы
 
             //Расчёт себес-сти за ед.изм. и колич. материала
@@ -151,9 +150,6 @@ public class SpcTariffic extends Cal5e {
         } catch (Exception e) {
             System.err.println("Ошибка:Tariffic.calc() " + e);
         } 
-//        finally {
-//            Query.conf = conf;
-//        }
     }
 
     //Комплекты конструкции    

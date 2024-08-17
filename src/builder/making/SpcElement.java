@@ -37,7 +37,6 @@ public class SpcElement extends Cal5e {
     //Идем по списку профилей смотрим, есть аналог, работаем с ним.
     @Override
     public void calc() {
-        super.calc();
         ArrayList<ElemSimple> listElem = winc.listElem.filter(Type.FRAME_SIDE,
                 Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA, Type.GLASS, Type.MOSQUIT); //список элементов конструкции
         try {
@@ -67,9 +66,6 @@ public class SpcElement extends Cal5e {
         } catch (Exception e) {
             System.err.println("Ошибка:SpcElement.calc() " + e);
         } 
-//        finally {
-//            Query.conf = conf;
-//        }
     }
 
     protected void detail(List<Record> elementList, ElemSimple elem5e) {

@@ -50,7 +50,6 @@ public class SpcFurniture extends Cal5e {
 
     @Override
     public void calc() {
-        super.calc();
         ArrayList<AreaSimple> stvorkaList = winc.listArea.filter(Type.STVORKA);
         try {
             //Подбор фурнитуры по параметрам
@@ -84,9 +83,6 @@ public class SpcFurniture extends Cal5e {
         } catch (Exception e) {
             System.err.println("Ошибка:Furniture.calc() " + e);
         } 
-//        finally {
-//            Query.conf = conf;
-//        }
     }
 
     protected void variant(AreaSimple areaStv, Record furnitureRec, int count) {

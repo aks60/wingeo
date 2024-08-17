@@ -70,7 +70,7 @@ public class Partner extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             qPrjpart.join(eSysuser.data(), ePrjpart.data(), eSysuser.login, ePrjpart.login).sort(ePrjpart.npp);
             qPrjpart.table(eSysuser.up).join(qPrjpart, eSysuser.data(), ePrjpart.login, eSysuser.login);
         } else {

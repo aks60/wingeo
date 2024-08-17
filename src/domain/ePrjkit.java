@@ -57,7 +57,7 @@ public enum ePrjkit implements Field {
     }
         
     public static Record find(int _id) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
@@ -65,14 +65,14 @@ public enum ePrjkit implements Field {
     }
 
     public static List<Record> find2(int _project_id) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _project_id == rec.getInt(project_id)).collect(Collectors.toList());
         }
         return new Query(values()).select(up, "where", project_id, "=", _project_id);
     }
 
     public static List<Record> find3(Object _prjprod_id) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.get(prjprod_id).equals(_prjprod_id)).collect(Collectors.toList());
         }
         return new Query(values()).select(up, "where", prjprod_id, "=", _prjprod_id);

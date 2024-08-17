@@ -44,14 +44,14 @@ public enum eGlasgrp implements Field {
     }
     
     public static ArrayList<Record>  findAll() {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data();
         }
         return new Query(values()).select(up);
     }
     
     public static Record find(int glasgrpId) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(id) == glasgrpId).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", glasgrpId);

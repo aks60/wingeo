@@ -53,7 +53,7 @@ public enum eSysuser implements Field {
     }
     
     public static Record find(int _id) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(null);
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
@@ -61,7 +61,7 @@ public enum eSysuser implements Field {
     }
 
     public static Record find2(String _login) {
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _login.equalsIgnoreCase(rec.getStr(login))).findFirst().orElse(null);
         }
         Query recordList = new Query(values()).select(up, "where", login, "= '", _login + "'");

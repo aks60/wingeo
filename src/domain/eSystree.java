@@ -56,7 +56,7 @@ public enum eSystree implements Field {
     
     public static String patch(int _nuni, String patch) {
         List<Record> recordList = null;
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             recordList = data().stream().filter(rec -> _nuni == rec.getInt(id)).collect(Collectors.toList());
         } else {
             recordList = new Query(values()).select(up, "where", id, "=", _nuni);
@@ -73,7 +73,7 @@ public enum eSystree implements Field {
         if (_nuni == -3) {
             return record();
         }
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _nuni == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _nuni);

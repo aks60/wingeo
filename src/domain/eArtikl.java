@@ -89,7 +89,7 @@ public enum eArtikl implements Field {
     public static Query sql(Query query, Field field, int value) {
         query.clear();
         HashSet hs = new HashSet();
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
               query.addAll(data().stream().filter(rec -> rec.getInt(field) == value && hs.add(rec.getDbl(depth))).collect(Collectors.toList()));
         } else {
             query.select("select distinct " + depth.name()
@@ -102,7 +102,7 @@ public enum eArtikl implements Field {
         if (_id == -3) {
             return virtualRec();
         }
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             Record recordRec = data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
             if (_analog == true && recordRec.get(analog_id) != null) {
 
@@ -124,7 +124,7 @@ public enum eArtikl implements Field {
         if ("0x0x0x0".equals(_code)) { //|| "-".equals(_code)) {
             return virtualRec();
         }
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _code.equals(rec.getStr(code))).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", code, "='", _code, "'");
@@ -135,7 +135,7 @@ public enum eArtikl implements Field {
         if (seriesID == -1) {
             return List.of();
         }
-        if (Query.conf.equals("calc")) {
+        if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> seriesID == rec.getInt(groups4_id)).collect(Collectors.toList());
         }
         return new Query(values()).select(up, "where", groups4_id, "=", seriesID, "");
