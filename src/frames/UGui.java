@@ -525,14 +525,18 @@ public class UGui {
         int index = UGui.getIndexRec(table);
         index = (index == -1) ? 0 : index;
         Query query = ((DefTableModel) table.getModel()).getQuery();
-        Record record = addDomainRec(field);
+        Record record = field.newRecord(Query.INS);
         record.setNo(field.fields()[1], Conn.genId(field));
+        
+        listener.action(record); 
+        
         if (++index <= table.getRowCount()) {
             query.add(index, record);
         } else {
             query.add(--index, record);
         }
-        listener.action(record);
+        field.query().add(record);  //добавим запись в кэш
+        
         ((DefaultTableModel) table.getModel()).fireTableRowsInserted(index, index);
         UGui.setSelectedIndex(table, index);
         UGui.scrollRectToIndex(index, table);
@@ -542,10 +546,14 @@ public class UGui {
     public static void insertRecordEnd(JTable table, Field field, ListenerRecord listener) {
 
         Query query = ((DefTableModel) table.getModel()).getQuery();
-        Record record = addDomainRec(field);
+        Record record = field.newRecord(Query.INS);
         record.setNo(field.fields()[1], Conn.genId(field));
-        query.add(record);
+        
         listener.action(record);
+        
+        query.add(record);  //добавим запись в запрос
+        field.query().add(record);  //добавим запись в кэш
+        
         ((DefaultTableModel) table.getModel()).fireTableRowsInserted(query.size() - 1, query.size() - 1);
         UGui.setSelectedIndex(table, query.size() - 1);
         UGui.scrollRectToIndex(query.size() - 1, table);
