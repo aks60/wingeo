@@ -149,7 +149,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }
 
     private void loadingData() {
-        qGroups.sq2(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, eGroups.grup,TypeGrup.COLOR_MAP.id);
+        qGroups.sq2(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, eGroups.grup, TypeGrup.COLOR_MAP.id);
         qParams.sql(eParams.data(), eParams.up);
         qCurrenc.sql(eCurrenc.data(), eCurrenc.up).sort(eCurrenc.name);
         qProjectAll.sql(eProject.data(), eProject.up).sort(eProject.date4);
@@ -435,9 +435,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
                     //Створка
                 } else if (winNode.com5t().type == enums.Type.STVORKA) {
-                                                                //расчёт ручки, 
+                    //расчёт ручки, 
                     new SpcFurniture(wincalc(), true).calc();   //подвеса, замка
-                                                                //через сокр. тарификацию
+                    //через сокр. тарификацию
                     ((CardLayout) pan8.getLayout()).show(pan8, "card16");
                     AreaStvorka stv = (AreaStvorka) winNode.com5t();
                     AreaSimple sta = (AreaSimple) winNode.com5t();
@@ -3122,19 +3122,23 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             });
 
         } else if (tab2.getBorder() != null) {
+            //Вставка без UGui.insertRecordCur() т.к. рисунок добавляется в доп. поле
             new DicSyspod(this, (record) -> {
-                UGui.insertRecordCur(tab2, ePrjprod.up, (record2) -> {
-                    record2.set(ePrjprod.name, record.getStr(eSysprod.name));
-                    record2.set(ePrjprod.num, 1);
-                    record2.set(ePrjprod.script, record.getStr(eSysprod.script));
-                    record2.set(ePrjprod.systree_id, record.getStr(eSysprod.systree_id));
-                    record2.set(ePrjprod.project_id, qProject.getAs(UGui.getIndexRec(tab1), eProject.id)); 
-                });
+                Record prjprodRec = ePrjprod.up.newRecord(INS);
+                prjprodRec.set(ePrjprod.id, Conn.genId(ePrjprod.up));
+                prjprodRec.set(ePrjprod.name, record.getStr(eSysprod.name));
+                prjprodRec.set(ePrjprod.num, 1);
+                prjprodRec.set(ePrjprod.script, record.getStr(eSysprod.script));
+                prjprodRec.set(ePrjprod.systree_id, record.getStr(eSysprod.systree_id));
+                prjprodRec.set(ePrjprod.project_id, qProject.getAs(UGui.getIndexRec(tab1), eProject.id));
+                qPrjprod.insert(prjprodRec);
+                ePrjprod.data().add(prjprodRec); //добавим в кэш новую запись
             });
-            Object ID = qPrjprod.get(UGui.getIndexRec(tab2), ePrjprod.id);
+
             loadingTab2();
+            
             for (int index = 0; index < qPrjprod.size(); ++index) {
-                if (qPrjprod.get(index, ePrjprod.id) == ID) {
+                if (qPrjprod.get(index, ePrjprod.id) == qPrjprod.get(index, ePrjprod.id)) {
                     UGui.setSelectedIndex(tab2, index);
                     UGui.scrollRectToRow(index, tab2);
                     winTree.setSelectionRow(0);
@@ -3549,7 +3553,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             qData.sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 1, 2, 3).sort(eArtikl.name);
             qArtikl.addAll(qData.stream().filter(rec -> listID.contains(rec.getDbl(eArtikl.depth))).collect(Collectors.toList()));
             int artiklID = (winNode.com5t().artiklRec != null) ? winNode.com5t().artiklRec.getInt(eArtikl.id) : -3;
-            
+
             new DicArtikl(this, artiklID, (artiklRec) -> {
 
                 GsonElem glassElem = (GsonElem) wincalc().listAll.gson(selectID);
