@@ -3122,8 +3122,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
         } else if (tab2.getBorder() != null) {
             new DicSyspod(this, (record) -> {
-                UGui.insertRecordCur(tab2, eProject.up, (record2) -> {
-                    //record2.set(ePrjprod.id, Conn.genId(ePrjprod.up));
+                UGui.insertRecordCur(tab2, ePrjprod.up, (record2) -> {
                     record2.set(ePrjprod.name, record.getStr(eSysprod.name));
                     record2.set(ePrjprod.num, 1);
                     record2.set(ePrjprod.script, record.getStr(eSysprod.script));
