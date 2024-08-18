@@ -1584,6 +1584,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             }
         });
         tab2.setFillsViewportHeight(true);
+        tab2.setName("tab2x"); // NOI18N
         tab2.setRowHeight(68);
         tab2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -3655,7 +3656,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }//GEN-LAST:event_btnFilter
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-
+        UGui.setSelectedIndex(tab2, 0);
     }//GEN-LAST:event_btnTest
 
     private void loopToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loopToStvorka

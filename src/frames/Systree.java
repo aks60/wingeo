@@ -692,6 +692,35 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             UGui.setSelectedIndex(tab2, index);
         };
 
+//        listenerModel = (record) -> {
+//            UGui.stopCellEditing(tab2, tab3, tab4, tab5);
+//
+//            //Запишем в скрипт ветку из которого будет создаваться окно  
+//            String script = record.get(2).toString();
+//            JsonObject je = new GsonBuilder().create().fromJson(script, JsonObject.class);
+//            je.addProperty("nuni", systreeID);
+//            String script2 = new GsonBuilder().create().toJson(je);
+//
+//            //Сохраним скрипт в базе
+//            UGui.insertRecordCur(tab5, eSysprod.up, (sysprodRec) -> {
+//                sysprodRec.setNo(eSysprod.npp, sysprodRec.get(eSysprod.id));
+//                sysprodRec.setNo(eSysprod.systree_id, systreeID);
+//                sysprodRec.setNo(eSysprod.name, record.get(1));
+//                sysprodRec.setNo(eSysprod.script, script2);
+//            });
+//            Object ID = qSysprod.get(UGui.getIndexRec(tab5), eSysprod.id);
+//            loadingTab5();
+//
+//            ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
+//            for (int index = 0; index < qSysprod.size(); ++index) {
+//                if (qSysprod.get(index, eSysprod.id) == ID) {
+//                    UGui.setSelectedIndex(tab5, index); //выделение рабочей записи
+//                    UGui.scrollRectToRow(index, tab5);
+//                    winTree.setSelectionRow(0);
+//                }
+//            }
+//        };
+
         listenerModel = (record) -> {
             UGui.stopCellEditing(tab2, tab3, tab4, tab5);
 
@@ -722,7 +751,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }
             }
         };
-
+        
         listenerFurn = (record) -> {
             UGui.stopCellEditing(tab2, tab3, tab4, tab5);
             int index = UGui.getIndexRec(tab3);

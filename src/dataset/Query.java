@@ -263,7 +263,7 @@ public class Query extends Table {
                 String message = record.validateRec(fields);
                 if (record.get(0).equals(Query.UPD) || record.get(0).equals(INS)) {
 
-                    if (record.validateRec(fields) != null) { //проверка на корректность ввода данных                        
+                    if (record.validateRec(fields) != null) { //проверка на корректность ввода данных    
                         JOptionPane.showMessageDialog(App.Top.frame, "Таблица <" + fields.get(0).fields()[0].meta().descr + ">.\n" + message
                                 + ".\nЗапись не будет сохранена.", "Предупреждение", JOptionPane.INFORMATION_MESSAGE);
 
