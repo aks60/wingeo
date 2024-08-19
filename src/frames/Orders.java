@@ -401,7 +401,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     setText(txt14, eColor.find(winc.colorID3).getStr(eColor.name));
                     setText(txt17, UCom.format(winc.width(), 1));
                     setText(txt22, UCom.format(winc.height(), 1));
-                    int systreeID = qPrjprod.getAs(UGui.getIndexRec(tab2), ePrjprod.systree_id);
+                    Record record = qPrjprod.get(UGui.getIndexRec(tab2));
+                    Integer systreeID = record.getInt(ePrjprod.systree_id);
                     setText(txt12, eSystree.find(systreeID).getStr(eSystree.note));
 
                     //Параметры
@@ -3136,7 +3137,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             });
 
             loadingTab2();
-            
+
             for (int index = 0; index < qPrjprod.size(); ++index) {
                 if (qPrjprod.get(index, ePrjprod.id) == qPrjprod.get(index, ePrjprod.id)) {
                     UGui.setSelectedIndex(tab2, index);
