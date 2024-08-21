@@ -42,6 +42,7 @@ import javax.swing.tree.TreePath;
 import common.listener.ListenerRecord;
 import frames.swing.DefCellEditorNumb;
 import frames.swing.TableFieldFilter;
+import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -2418,8 +2419,8 @@ public class Artikles extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditing(tab1, tab2);
-        List.of(qArtikl, qArtdet).forEach(q -> q.execsql());
+        UGui.findComponents(getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
+        Query.listOpenTable.forEach(q -> q.execsql());  
     }//GEN-LAST:event_windowClosed
 
     private void btnInsert(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsert

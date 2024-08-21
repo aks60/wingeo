@@ -49,7 +49,7 @@ public class Colors extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        qColall.sql(eGroups.data(), eColor.up).sort(eColor.name);      
+        qColall.sql(eGroups.data(), eColor.up).sort(eColor.name);
         qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_GRP.id).sort(eGroups.npp, eGroups.name);
     }
 
@@ -76,7 +76,7 @@ public class Colors extends javax.swing.JFrame {
 
                 if (val != null && columns[col] == eColor.rgb) {
                     String hex = Integer.toHexString(Integer.parseInt(val.toString())).toUpperCase();
-                    while (hex.length() < 6) {                        
+                    while (hex.length() < 6) {
                         hex = "0" + hex;
                     }
                     return hex;
@@ -513,8 +513,8 @@ public class Colors extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsert
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditing(tab1, tab2);
-        List.of(tab1, tab2).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
+        UGui.findComponents(getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
+        Query.listOpenTable.forEach(q -> q.execsql());  
     }//GEN-LAST:event_windowClosed
 
     private void mousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mousePressed

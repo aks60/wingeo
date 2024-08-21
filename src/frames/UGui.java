@@ -63,9 +63,13 @@ import domain.ePrjprod;
 import enums.PKjson;
 import enums.Type;
 import frames.swing.DefMutableTreeNode;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
+import javax.swing.JRootPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -155,6 +159,25 @@ public class UGui {
 
     public static Font getFont(int size, int bold) {
         return new Font(eProp.fontname.read(), bold, Integer.valueOf(eProp.fontsize.read()) + size);
+    }
+
+    public static <T extends JComponent> List<T> findComponents(final Container container, final Class<T> componentType) {
+        return Stream.concat(
+                Arrays.stream(container.getComponents())
+                        .filter(componentType::isInstance).map(componentType::cast),
+                Arrays.stream(container.getComponents())
+                        .filter(Container.class::isInstance).map(Container.class::cast).flatMap(c -> findComponents(c, componentType).stream())
+        ).collect(Collectors.toList());
+    }
+
+    public static <T extends JComponent> List<T> findComponents(final JRootPane rootPane, final Class<T> componentType) {
+        Container container = rootPane.getContentPane();
+        return Stream.concat(
+                Arrays.stream(container.getComponents())
+                        .filter(componentType::isInstance).map(componentType::cast),
+                Arrays.stream(container.getComponents())
+                        .filter(Container.class::isInstance).map(Container.class::cast).flatMap(c -> findComponents(c, componentType).stream())
+        ).collect(Collectors.toList());
     }
 
     public static void selectionPathSys(double id, JTree tree) {
@@ -527,16 +550,16 @@ public class UGui {
         Query query = ((DefTableModel) table.getModel()).getQuery();
         Record record = field.newRecord(Query.INS);
         record.setNo(field.fields()[1], Conn.genId(field));
-        
-        listener.action(record); 
-        
+
+        listener.action(record);
+
         if (++index <= table.getRowCount()) {
             query.add(index, record);
         } else {
             query.add(--index, record);
         }
         field.query().add(record);  //добавим запись в кэш
-        
+
         ((DefaultTableModel) table.getModel()).fireTableRowsInserted(index, index);
         UGui.setSelectedIndex(table, index);
         UGui.scrollRectToIndex(index, table);
@@ -548,12 +571,12 @@ public class UGui {
         Query query = ((DefTableModel) table.getModel()).getQuery();
         Record record = field.newRecord(Query.INS);
         record.setNo(field.fields()[1], Conn.genId(field));
-        
+
         listener.action(record);
-        
+
         query.add(record);  //добавим запись в запрос
         field.query().add(record);  //добавим запись в кэш
-        
+
         ((DefaultTableModel) table.getModel()).fireTableRowsInserted(query.size() - 1, query.size() - 1);
         UGui.setSelectedIndex(table, query.size() - 1);
         UGui.scrollRectToIndex(query.size() - 1, table);
@@ -576,10 +599,10 @@ public class UGui {
             record.set(0, Query.DEL);
             if (query.delete(record)) {
                 Field f = query.fields().get(0); //Field домена
-                
-                query.removeRec(index);             
+
+                query.removeRec(index);
                 delDomainRec(f.query(), record.getInt(1));
-                
+
                 ((DefTableModel) table.getModel()).fireTableRowsDeleted(row, row);
                 row = (row > 0) ? --row : 0;
                 if (query.size() > 0) {
@@ -619,7 +642,7 @@ public class UGui {
     public static boolean upDomainRec() {
         return false;
     }
-    
+
     //Удалить запись в домене
     public static boolean delDomainRec(Query query, int id) {
         for (int i = 0; i < query.size(); i++) {
@@ -631,7 +654,7 @@ public class UGui {
         }
         return false;
     }
-    
+
     //Обновление записи в таблице JTable
     public static void fireTableRowUpdated(JTable table) {
         ((DefaultTableModel) table.getModel()).fireTableRowsUpdated(table.getSelectedRow(), table.getSelectedRow());

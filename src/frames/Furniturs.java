@@ -675,8 +675,8 @@ public class Furniturs extends javax.swing.JFrame {
             for (int index0 : List.of(0, 1, -1)) {
                 qFurn.sql(eFurniture.data(), eFurniture.types, index0).sort(eFurniture.name);
                 for (int index1 = 0; index1 < qFurn.size(); index1++) {
-                    
-                    int id = qFurn.get(index1).getInt(eFurniture.id);                   
+
+                    int id = qFurn.get(index1).getInt(eFurniture.id);
                     qDet2a.sql(eFurndet.data(), eFurndet.furniture_id1, id, eFurndet.furndet_pk, eFurndet.id);
                     qDet2a.table(eArtikl.up).join(qDet2a, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);
                     for (int index2 = 0; index2 < qDet2a.size(); index2++) {
@@ -684,7 +684,7 @@ public class Furniturs extends javax.swing.JFrame {
                             selectionRows(qFurn, qDet2a, qDet2b, qDet2c, 0, index1, index2, 0, 0);
                             return;
                         } else {
-                            int pk = qDet2a.get(index2).getInt(eFurndet.pk);                         
+                            int pk = qDet2a.get(index2).getInt(eFurndet.pk);
                             qDet2b.sql(eFurndet.data(), eFurndet.furndet_pk, pk, eFurndet.furndet_pk, eFurndet.id);
                             qDet2b.table(eArtikl.up).join(qDet2b, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);
                             for (int index3 = 0; index3 < qDet2b.size(); index3++) {
@@ -1581,8 +1581,8 @@ public class Furniturs extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsert
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditing(tab1, tab2a, tab2b, tab2c, tab3, tab4, tab5, tab6);
-        List.of(tab1, tab2a, tab2b, tab2c, tab3, tab4, tab5, tab6).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
+        UGui.findComponents(getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
+        Query.listOpenTable.forEach(q -> q.execsql());  
     }//GEN-LAST:event_windowClosed
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport

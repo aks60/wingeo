@@ -60,7 +60,7 @@ public class Param extends javax.swing.JFrame {
 
     public void loadData() {
         qColor.sql(eColor.data(), eColor.up).sort(eColor.name);
-        qGroups1.sql(eGroups.data(), eGroups.grup,  TypeGrup.PARAM_USER.id).sort(eGroups.npp, eGroups.name);
+        qGroups1.sql(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id).sort(eGroups.npp, eGroups.name);
         qGroups2.sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_MAP.id).sort(eGroups.npp, eGroups.name);
         qGroups3.sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_GRP.id).sort(eGroups.npp, eGroups.name);
     }
@@ -708,8 +708,8 @@ public class Param extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsert
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditing(tab1, tab2, tab3, tab4);
-        List.of(qGroups1, qGroups2, qParams, qParmap).forEach(q -> q.execsql());
+        UGui.findComponents(getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
+        Query.listOpenTable.forEach(q -> q.execsql());  
     }//GEN-LAST:event_windowClosed
 
     private void mousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mousePressed

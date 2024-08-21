@@ -380,8 +380,8 @@ public class Syssize extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChoice
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditing(tab1);
-        qSyssize.execsql();
+        UGui.findComponents(getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
+        Query.listOpenTable.forEach(q -> q.execsql());  
         if (owner != null)
             owner.setEnabled(true);
     }//GEN-LAST:event_windowClosed

@@ -620,9 +620,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }//GEN-LAST:event_btnChoice
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditing(tab1);
-        qSysmodel.execsql();
-        List.of(tab1).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
+        UGui.findComponents(getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
+        Query.listOpenTable.forEach(q -> q.execsql());  
     }//GEN-LAST:event_windowClosed
 
     private void btnToggl(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnToggl

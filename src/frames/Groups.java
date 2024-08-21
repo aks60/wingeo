@@ -51,7 +51,7 @@ public class Groups extends javax.swing.JFrame {
         list.forEach(comp -> tabb.remove(comp));
         setTitle((mode == 1) ? "Справочники МЦ" : "Ценовые коэффициенты");
     }
-    
+
     public Groups(int mode, ListenerRecord listener) {
         this.mode = mode;
         initComponents();
@@ -216,7 +216,7 @@ public class Groups extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(600, 500));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+                Groups.this.windowClosed(evt);
             }
         });
 
@@ -763,7 +763,7 @@ public class Groups extends javax.swing.JFrame {
 
     private void btnRefresh(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefresh
         UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5, tab6, tab7);
-        List.of(tab1, tab2, tab3, tab4, tab5, tab6, tab7).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
+        eGroups.data().execsql();
         loadingData();
         List.of(tab1, tab2, tab3, tab4, tab5, tab6, tab7).forEach(tab -> ((DefaultTableModel) tab.getModel()).fireTableDataChanged());
         List.of(tab1, tab2, tab3, tab4, tab5, tab6, tab7).forEach(tab -> UGui.setSelectedRow(tab));
@@ -817,24 +817,17 @@ public class Groups extends javax.swing.JFrame {
             });
 
         }
-        List.of(tab1, tab2, tab3, tab4, tab5, tab6, tab7).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
-        eGroups.data().clear();
-        eGroups.data();
+        eGroups.data().execsql();
     }//GEN-LAST:event_btnInsert
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        JTable table = UGui.tableFromBorder(tab1, tab2, tab3, tab4, tab4, tab6, tab7);
-        if (table != null) {
-            String title = tabb.getTitleAt(tabb.getSelectedIndex());
-            HtmlOfTable.load(title, table);
-            ExecuteCmd.documentType(this);
-        }
+         UGui.findComponents(getRootPane(), JTable.class).stream().forEach(System.out::println);    
     }//GEN-LAST:event_btnReport
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5, tab6, tab7);
-        List.of(tab1, tab2, tab3, tab4, tab5, tab6, tab7).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
-    }//GEN-LAST:event_formWindowClosed
+    private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
+        UGui.findComponents(getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
+        Query.listOpenTable.forEach(q -> q.execsql());         
+    }//GEN-LAST:event_windowClosed
 
     private void btnMove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMove
         JTable table = UGui.tableFromBorder(tab1, tab2, tab3, tab4, tab5, tab6, tab7);
@@ -853,7 +846,7 @@ public class Groups extends javax.swing.JFrame {
             for (int i = 0; i < query.size(); i++) {
                 query.set(i + 1, i, eGroups.npp);
             }
-            query.execsql();
+            eGroups.data().execsql();
 
             ((DefaultTableModel) table.getModel()).fireTableDataChanged();
             UGui.setSelectedIndex(table, index2);
@@ -906,7 +899,7 @@ public class Groups extends javax.swing.JFrame {
     }//GEN-LAST:event_tabMouseClicked
 
     private void btnChoice(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice
-        List.of(tab1, tab2, tab3, tab4, tab5, tab6, tab7).forEach(tab -> UGui.getQuery(tab).execsql()); //если добавил и сразу выбрал
+        eGroups.data().execsql(); //если добавил и сразу выбрал
         JTable table = UGui.tableFromBorder(tab1, tab2, tab3, tab4, tab4, tab6, tab7);
         int index = UGui.getIndexRec(table);
         if (index != -1) {

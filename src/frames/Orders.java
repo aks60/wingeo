@@ -3171,17 +3171,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }//GEN-LAST:event_btnInsert
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditing(tab1, tab2, tab3, tab4);
-        eProp.save(); //запишем текущий ordersId в файл
-        List.of(qProject, qPrjprod, qPrjkit).forEach(q -> q.execsql());
-//        for (Record record : qPrjprod) {
-//            if (record.get(0).equals(Query.UPD) || record.get(0).equals(INS)) {
-//                if (JOptionPane.showConfirmDialog(this, "Конструкция была изменена.n/Сохранить изменение конструкции?",
-//                        "Внимание", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-//                    qPrjprod.execsql();
-//                }
-//            }
-//        }        
+        UGui.findComponents(getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
+        Query.listOpenTable.forEach(q -> q.execsql());  
+        eProp.save(); //запишем текущий ordersId в файл  
     }//GEN-LAST:event_windowClosed
 
     private void mousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mousePressed

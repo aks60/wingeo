@@ -58,7 +58,7 @@ public class Setting extends javax.swing.JFrame {
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+                Setting.this.windowClosed(evt);
             }
         });
 
@@ -437,9 +437,8 @@ public class Setting extends javax.swing.JFrame {
         this.dispose();
 }//GEN-LAST:event_btnClose
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        //mAdmin.Property.window = null;
-    }//GEN-LAST:event_formWindowClosed
+    private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
+    }//GEN-LAST:event_windowClosed
 
     private void btnProp2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProp2
         eProp.fontname.write(fontName[comboBox.getSelectedIndex()]);

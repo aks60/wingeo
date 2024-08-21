@@ -1085,9 +1085,8 @@ public class Partner extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRemove
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditing(tab1);
-        //qPrjpart.mapQuery().values().forEach(q -> q.execsql());
-        List.of(qPrjpart, qSysuser).forEach(q -> q.execsql());
+        UGui.findComponents(getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
+        Query.listOpenTable.forEach(q -> q.execsql());  
         if (owner != null)
             owner.setEnabled(true);
     }//GEN-LAST:event_windowClosed

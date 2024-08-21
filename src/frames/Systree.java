@@ -723,7 +723,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }
             }
         };
-        
+
         listenerFurn = (record) -> {
             UGui.stopCellEditing(tab2, tab3, tab4, tab5);
             int index = UGui.getIndexRec(tab3);
@@ -3654,9 +3654,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }// </editor-fold>//GEN-END:initComponents
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditing(sysTree, tab2, tab3, tab4, tab5);
-        qSystree.execsql();
-        List.of(tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
+        UGui.findComponents(getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
+        Query.listOpenTable.forEach(q -> q.execsql());  
         if (models != null) {
             models.dispose();
         }
@@ -3766,12 +3765,20 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private void btnDelete(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete
         if (sysTree.getBorder() != null) {
             if (sysTree.isSelectionEmpty() == false) {
+                ImageIcon img = new ImageIcon(this.getClass().getResource("/resource/img24/c014.gif"));
+
                 if (sysNode.getChildCount() != 0) {
-                    JOptionPane.showMessageDialog(this, "Нельзя удалить текущий узел т. к. у него есть подчинённые записи", "Предупреждение", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Нельзя удалить текущий узел т. к. у него есть подчинённые записи", "Предупреждение", JOptionPane.NO_OPTION, img);
                     return;
                 }
+                for (JTable tab : List.of(tab2, tab3, tab4, tab5)) {
+                    if (tab.getRowCount() != 0) {
+                        JOptionPane.showMessageDialog(this, "Перед удалением записи, удалите данные в зависимых таблицах", "Предупреждение", JOptionPane.NO_OPTION, img);
+                        return;
+                    }
+                }
                 DefMutableTreeNode parentNode = (DefMutableTreeNode) sysNode.getParent();
-                if (JOptionPane.showConfirmDialog(this, "Хотите удалить " + sysNode + " узел?", "Подтвердите удаление",
+                if (JOptionPane.showConfirmDialog(this, "Хотите удалить узел <" + sysNode + ">?", "Подтвердите удаление",
                         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null) == 0) {
                     UGui.stopCellEditing(sysTree);
                     if (qSystree.delete(sysNode.rec())) {
