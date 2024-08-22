@@ -786,6 +786,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ppmCrud = new javax.swing.JPopupMenu();
         mInsert = new javax.swing.JMenuItem();
         mDelit = new javax.swing.JMenuItem();
+        ppmCrud1 = new javax.swing.JPopupMenu();
+        mInsert1 = new javax.swing.JMenuItem();
+        mDelit1 = new javax.swing.JMenuItem();
         north = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
         btnSet = new javax.swing.JButton();
@@ -1053,6 +1056,26 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             }
         });
         ppmCrud.add(mDelit);
+
+        mInsert1.setFont(frames.UGui.getFont(1,0));
+        mInsert1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
+        mInsert1.setText("Добавить");
+        mInsert1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mInsert1ppmActionItems(evt);
+            }
+        });
+        ppmCrud1.add(mInsert1);
+
+        mDelit1.setFont(frames.UGui.getFont(1,0));
+        mDelit1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
+        mDelit1.setText("Удалить");
+        mDelit1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mDelit1ppmActionItems(evt);
+            }
+        });
+        ppmCrud1.add(mDelit1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Заказы");
@@ -3943,6 +3966,22 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         });
     }//GEN-LAST:event_menuItem18
 
+    private void mInsert1ppmActionItems(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mInsert1ppmActionItems
+        if (evt.getSource() == mInsert) {
+            btnInsert(new java.awt.event.ActionEvent(mInsert, -1, ""));
+        } else if (evt.getSource() == mDelit) {
+            btnDelete(new java.awt.event.ActionEvent(mDelit, -1, ""));
+        }
+    }//GEN-LAST:event_mInsert1ppmActionItems
+
+    private void mDelit1ppmActionItems(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mDelit1ppmActionItems
+        if (evt.getSource() == mInsert) {
+            btnInsert(new java.awt.event.ActionEvent(mInsert, -1, ""));
+        } else if (evt.getSource() == mDelit) {
+            btnDelete(new java.awt.event.ActionEvent(btnDel, -1, ""));
+        }
+    }//GEN-LAST:event_mDelit1ppmActionItems
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn1;
@@ -4027,7 +4066,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private javax.swing.JLabel lab7;
     private javax.swing.JLabel lab8;
     private javax.swing.JMenuItem mDelit;
+    private javax.swing.JMenuItem mDelit1;
     private javax.swing.JMenuItem mInsert;
+    private javax.swing.JMenuItem mInsert1;
     private javax.swing.JMenuItem menuItem11;
     private javax.swing.JMenuItem menuItem12;
     private javax.swing.JMenuItem menuItem13;
@@ -4061,6 +4102,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private javax.swing.JPanel panDesign;
     private javax.swing.JPopupMenu ppReport;
     private javax.swing.JPopupMenu ppmCrud;
+    private javax.swing.JPopupMenu ppmCrud1;
     private javax.swing.JScrollPane scr1;
     private javax.swing.JScrollPane scr2;
     private javax.swing.JScrollPane scr3;

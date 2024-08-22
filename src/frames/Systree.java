@@ -3678,7 +3678,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_typeToSystree
 
     private void btnInsert(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsert
-
         if (sysNode != null) {
             if (sysTree.getBorder() != null) {
                 if (JOptionPane.showConfirmDialog(this, "Вы действительно хотите добавить ветку в систему?", "Подтверждение",
@@ -4536,7 +4535,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         if (evt.getSource() == mInsert) {
             btnInsert(new java.awt.event.ActionEvent(mInsert, -1, ""));
         } else if (evt.getSource() == mDelit) {
-            btnDelete(new java.awt.event.ActionEvent(btnDel, -1, ""));
+            btnDelete(new java.awt.event.ActionEvent(mDelit, -1, ""));
         }
     }//GEN-LAST:event_ppmActionItems
 
