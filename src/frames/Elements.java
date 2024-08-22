@@ -496,7 +496,6 @@ public class Elements extends javax.swing.JFrame {
         mDelit = new javax.swing.JMenuItem();
         north = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
-        btnRef = new javax.swing.JButton();
         btnDel = new javax.swing.JButton();
         btnIns = new javax.swing.JButton();
         btnReport = new javax.swing.JButton();
@@ -586,22 +585,6 @@ public class Elements extends javax.swing.JFrame {
         btnClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnClose(evt);
-            }
-        });
-
-        btnRef.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c038.gif"))); // NOI18N
-        btnRef.setToolTipText(bundle.getString("Обновить")); // NOI18N
-        btnRef.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btnRef.setFocusable(false);
-        btnRef.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnRef.setMaximumSize(new java.awt.Dimension(25, 25));
-        btnRef.setMinimumSize(new java.awt.Dimension(25, 25));
-        btnRef.setPreferredSize(new java.awt.Dimension(25, 25));
-        btnRef.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btnRef.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnRef.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRefresh(evt);
             }
         });
 
@@ -737,8 +720,6 @@ public class Elements extends javax.swing.JFrame {
                 .addComponent(btnIns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnMove, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -747,7 +728,7 @@ public class Elements extends javax.swing.JFrame {
                 .addComponent(btnFind1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnFind2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 526, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 557, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -763,7 +744,6 @@ public class Elements extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnClose, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRef, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFind1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFind2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1021,48 +1001,218 @@ public class Elements extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnClose(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClose
-        this.dispose();
-    }//GEN-LAST:event_btnClose
+    private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
+        UGui.findComponents(getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
+        Query.listOpenTable.forEach(q -> q.execsql());  
+    }//GEN-LAST:event_windowClosed
 
-    private void btnRefresh(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefresh
-        UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
-        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> UGui.getQuery(tab).execsql());
-        int indexTab1 = UGui.getIndexRec(tab1);
-        int indexTab2 = UGui.getIndexRec(tab2);
-        int indexTab3 = UGui.getIndexRec(tab3);
-        loadingData();
-        ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
-        ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
-        ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
-        UGui.setSelectedIndex(tab1, indexTab1);
-        UGui.setSelectedIndex(tab2, indexTab2);
-        UGui.setSelectedIndex(tab3, indexTab3);
-    }//GEN-LAST:event_btnRefresh
+    private void ppmCategAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppmCategAction
 
-    private void btnDelete(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete
-        if (tab1.getBorder() != null) {
-            if (UGui.isDeleteRecord(tab1, this, tab2) == 0) {
-                UGui.deleteRecord(tab1);
-            }
-        } else if (tab2.getBorder() != null) {
-            if (UGui.isDeleteRecord(tab2, this, tab3, tab4) == 0) {
-                UGui.deleteRecord(tab2);
-            }
-        } else if (tab3.getBorder() != null) {
-            if (UGui.isDeleteRecord(tab3, this, tab5) == 0) {
-                UGui.deleteRecord(tab3);
-            }
-        } else if (tab4.getBorder() != null) {
-            if (UGui.isDeleteRecord(tab4, this) == 0) {
-                UGui.deleteRecord(tab4);
-            }
-        } else if (tab5.getBorder() != null) {
-            if (UGui.isDeleteRecord(tab5, this) == 0) {
-                UGui.deleteRecord(tab5);
+        JMenuItem ppm = (JMenuItem) evt.getSource();
+        int level1 = (ppm == itCateg1) ? 1 : 5;
+        String result = JOptionPane.showInputDialog(Elements.this, "Название", "Категория", JOptionPane.QUESTION_MESSAGE);
+        int id = Conn.genId(eGroups.up);
+        if (result.isEmpty() && eProp.dev) {
+            result = (ppm == itCateg1) ? "Катег.проф-" + id : "Катег.зап-" + id;
+        }
+        if (result.isEmpty() == false) {
+            Record elemgrpRec = eGroups.up.newRecord(Query.INS);
+            elemgrpRec.setNo(eGroups.id, id);
+            elemgrpRec.setNo(eGroups.grup, TypeGrup.CATEG_VST.id);
+            elemgrpRec.setNo(eGroups.npp, level1); //-1 -ПРОФИЛИ, -5 -ЗАПОЛНЕНИЯ
+            elemgrpRec.setNo(eGroups.name, result);
+            qGrCateg.insert(elemgrpRec);
+            eGroups.up.query().add(elemgrpRec);
+            loadingData();
+            for (int i = 0; i < qGrCateg.size(); ++i) {
+                if (qGrCateg.get(i).getInt(eGroups.id) == id) {
+                    UGui.setSelectedIndex(tab1, i - 1);
+                    ((DefaultTableModel) tab1.getModel()).fireTableRowsInserted(i - 1, i - 1);
+                    UGui.scrollRectToRow(i, tab1);
+                    break;
+                }
             }
         }
-    }//GEN-LAST:event_btnDelete
+    }//GEN-LAST:event_ppmCategAction
+
+    private void mousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mousePressed
+        UGui.updateBorderAndSql((JTable) evt.getSource(), List.of(tab1, tab2, tab3, tab4, tab5));
+        List.of(btnFind1, btnFind2).forEach(btn -> btn.setEnabled(false));
+    }//GEN-LAST:event_mousePressed
+
+    private void ppmActionItems(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppmActionItems
+        if (evt.getSource() == mInsert) {
+            btnInsert(new java.awt.event.ActionEvent(btnIns, -1, ""));
+        } else if (evt.getSource() == mDelit) {
+            btnDelete(new java.awt.event.ActionEvent(btnDel, -1, ""));
+        }
+    }//GEN-LAST:event_ppmActionItems
+
+    private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
+        if (evt.getButton() == MouseEvent.BUTTON1) {
+            if (tab2.getBorder() != null) {
+                List.of(btnFind1, btnFind2).forEach(btn -> btn.setEnabled(true));
+            } else if (tab3.getBorder() != null) {
+                btnFind1.setEnabled(true);
+            }
+        } else if (evt.getButton() == MouseEvent.BUTTON3) {
+            JTable table = List.of(tab2, tab3, tab4, tab5).stream().filter(it -> it == evt.getSource()).findFirst().get();
+            List.of(tab2, tab3, tab4, tab5).forEach(tab -> tab.setBorder(null));
+            table.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
+            ppmCrud.show(table, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_tabMouseClicked
+
+    private void btnMove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMove
+        try {
+            int index = UGui.getIndexRec(tab2);
+            if (index != -1) {
+                Record elementRec = qElement.get(index);
+                List list = new LinkedList();
+                qGrCateg.forEach(rec -> list.add(rec.getStr(eGroups.name)));
+                Object result = JOptionPane.showInputDialog(Elements.this, "Вставка: " + elementRec.getStr(eElement.name),
+                    "Изменение категории элемента втавки", JOptionPane.QUESTION_MESSAGE, null, list.toArray(), list.toArray()[0]);
+                if (result != null) {
+                    for (Record groupsRec : qGrCateg) {
+                        if (result.equals(groupsRec.getStr(eGroups.name))) {
+                            elementRec.setNo(eElement.groups2_id, groupsRec.getInt(eGroups.id));
+                            qElement.update(elementRec);
+                            selectionTab1(null);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:Elements.btnMove()");
+        }
+    }//GEN-LAST:event_btnMove
+
+    private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
+        int index = UGui.getIndexRec(tab2);
+        if (index != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
+            "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+
+        Map<Record, Integer> elempar2Map = new HashMap<Record, Integer>();
+        List<Record> elempar1List = new ArrayList<Record>();
+        List<Record> elemdetList = new ArrayList<Record>();
+        qElempar1.forEach(rec -> elempar1List.add(rec));
+        qElemdet.forEach(rec -> elemdetList.add(rec));
+
+        Record elementClon = (Record) qElement.get(index).clone();
+        Record artiklClon = (Record) qElement.table(eArtikl.up).get(index).clone();
+        elementClon.setNo(eElement.up, Query.INS);
+        int elementID = Conn.genId(eElement.up);
+        elementClon.setNo(eElement.id, elementID);
+        elementClon.setNo(eElement.name, elementClon.getStr(eElement.name) + "-клон");
+        qElement.add(index, elementClon);
+        qElement.table(eArtikl.up).add(index, artiklClon);
+
+        for (Record elempar1Rec : elempar1List) {
+            Record elempar1Clon = (Record) elempar1Rec.clone();
+            elempar1Clon.setNo(eElempar1.up, Query.INS);
+            elempar1Clon.setNo(eElempar1.id, Conn.genId(eElempar1.up));
+            elempar1Clon.setNo(eElempar1.element_id, elementID);
+            qElempar1.add(elempar1Clon);
+        }
+        for (Record elemdetRec : elemdetList) {
+            Record elemdetClon = (Record) elemdetRec.clone();
+            elemdetClon.setNo(eElemdet.up, Query.INS);
+            elemdetClon.setNo(eElemdet.id, Conn.genId(eElemdet.up));
+            elemdetClon.setNo(eElemdet.element_id, elementID);
+            qElempar2.sql(eElempar2.data(), eElempar2.elemdet_id, elemdetRec.getInt(eElemdet.id));
+            qElempar2.forEach(rec -> elempar2Map.put(rec, elemdetClon.getInt(eElemdet.id)));
+            qElemdet.add(elemdetClon);
+        }
+        for (Map.Entry<Record, Integer> it : elempar2Map.entrySet()) {
+            Record elempar2Rec = it.getKey();
+            Record elempar2Clon = (Record) elempar2Rec.clone();
+            elempar2Clon.setNo(eElempar2.up, Query.INS);
+            elempar2Clon.setNo(eElempar2.id, Conn.genId(eElempar2.up));
+            elempar2Clon.setNo(eElempar2.elemdet_id, it.getValue());
+            qElempar2.add(elempar2Clon);
+        }
+
+        List.of(qElement, qElemdet, qElempar1, qElempar2).forEach(q -> q.execsql());
+        ((DefaultTableModel) tab2.getModel()).fireTableRowsInserted(index, index);
+        UGui.setSelectedIndex(tab2, index);
+        UGui.scrollRectToIndex(index, tab2);
+        UGui.setSelectedRow(tab4);
+        }
+    }//GEN-LAST:event_btnClone
+
+    private void btnFind2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind2
+        int index = UGui.getIndexRec(tab2);
+        Record record = qElement.get(index);
+        List<Record> sysprofList1 = eSysprof.data().stream().filter(rec -> record.getInt(eElement.artikl_id) == rec.getInt(eSysprof.artikl_id)).collect(Collectors.toList());
+        Set<Integer> sysprofList2 = new HashSet<Integer>();
+        sysprofList1.forEach(rec -> sysprofList2.add(rec.getInt(eSysprof.systree_id)));
+        List<String> pathList = new ArrayList<String>();
+        List<Integer> keyList = new ArrayList<Integer>();
+        StringBuffer path = new StringBuffer();
+        for (Record rec : eSystree.data()) {
+            if (sysprofList2.contains(rec.get(eSystree.id))) {
+                path = path.append(rec.getStr(eSystree.name));
+                findPathSystree(rec, path);
+                pathList.add(path.toString());
+                keyList.add(rec.getInt(eSystree.id));
+                path.delete(0, path.length());
+            }
+        }
+        if (pathList.size() != 0) {
+            for (int i = pathList.size(); i < 21; ++i) {
+                pathList.add(null);
+            }
+            Object result = JOptionPane.showInputDialog(Elements.this, "Артикул в системе профилей", "Сообщение", JOptionPane.QUESTION_MESSAGE,
+                new ImageIcon(getClass().getResource("/resource/img24/c066.gif")), pathList.toArray(), pathList.toArray()[0]);
+            if (result != null || result instanceof Integer) {
+                for (int i = 0; i < pathList.size(); ++i) {
+                    if (result.equals(pathList.get(i))) {
+                        Object id = keyList.get(i);
+                        ProgressBar.create(Elements.this, new ListenerFrame() {
+                            public void actionRequest(Object obj) {
+                                App.Systree.createFrame(Elements.this, id, 1);
+                            }
+                        });
+                    }
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(Elements.this, "В системе профилей артикул не найден", "Сообщение", JOptionPane.NO_OPTION);
+        }
+    }//GEN-LAST:event_btnFind2
+
+    private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
+
+    }//GEN-LAST:event_btnTest
+
+    private void btnFind1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind1
+        if (tab2.getBorder() != null) {
+            Record record = ((DefTableModel) tab2.getModel()).getQuery().get(UGui.getIndexRec(tab2));
+            if (record != null) {
+                Record record2 = eArtikl.find(record.getInt(eElement.artikl_id), false);
+                ProgressBar.create(this, new ListenerFrame() {
+                    public void actionRequest(Object obj) {
+                        App.Artikles.createFrame(Elements.this, record2);
+                    }
+                });
+            }
+        } else if (tab3.getBorder() != null) {
+            Record record = ((DefTableModel) tab3.getModel()).getQuery().get(UGui.getIndexRec(tab3));
+            if (record != null) {
+                Record record2 = eArtikl.find(record.getInt(eElemdet.artikl_id), false);
+                ProgressBar.create(this, new ListenerFrame() {
+                    public void actionRequest(Object obj) {
+                        App.Artikles.createFrame(Elements.this, record2);
+                    }
+                });
+            }
+        }
+    }//GEN-LAST:event_btnFind1
+
+    private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
+        HtmlOfTable.load("Вставки", tab2);
+        ExecuteCmd.documentType(this);
+    }//GEN-LAST:event_btnReport
 
     private void btnInsert(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsert
 
@@ -1108,217 +1258,33 @@ public class Elements extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnInsert
 
-    private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.findComponents(getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
-        Query.listOpenTable.forEach(q -> q.execsql());  
-    }//GEN-LAST:event_windowClosed
-
-    private void ppmCategAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppmCategAction
-
-        JMenuItem ppm = (JMenuItem) evt.getSource();
-        int level1 = (ppm == itCateg1) ? 1 : 5;
-        String result = JOptionPane.showInputDialog(Elements.this, "Название", "Категория", JOptionPane.QUESTION_MESSAGE);
-        int id = Conn.genId(eGroups.up);
-        if (result.isEmpty() && eProp.dev) {
-            result = (ppm == itCateg1) ? "Катег.проф-" + id : "Катег.зап-" + id;
-        }
-        if (result.isEmpty() == false) {
-            Record elemgrpRec = eGroups.up.newRecord(Query.INS);
-            elemgrpRec.setNo(eGroups.id, id);
-            elemgrpRec.setNo(eGroups.grup, TypeGrup.CATEG_VST.id);
-            elemgrpRec.setNo(eGroups.npp, level1); //-1 -ПРОФИЛИ, -5 -ЗАПОЛНЕНИЯ
-            elemgrpRec.setNo(eGroups.name, result);
-            qGrCateg.insert(elemgrpRec);
-            eGroups.up.query().add(elemgrpRec);
-            loadingData();
-            for (int i = 0; i < qGrCateg.size(); ++i) {
-                if (qGrCateg.get(i).getInt(eGroups.id) == id) {
-                    UGui.setSelectedIndex(tab1, i - 1);
-                    ((DefaultTableModel) tab1.getModel()).fireTableRowsInserted(i - 1, i - 1);
-                    UGui.scrollRectToRow(i, tab1);
-                    break;
-                }
+    private void btnDelete(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete
+        if (tab1.getBorder() != null) {
+            if (UGui.isDeleteRecord(tab1, this, tab2) == 0) {
+                UGui.deleteRecord(tab1);
             }
-        }
-    }//GEN-LAST:event_ppmCategAction
-
-    private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        HtmlOfTable.load("Вставки", tab2);
-        ExecuteCmd.documentType(this);
-    }//GEN-LAST:event_btnReport
-
-    private void mousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mousePressed
-        UGui.updateBorderAndSql((JTable) evt.getSource(), List.of(tab1, tab2, tab3, tab4, tab5));
-        List.of(btnFind1, btnFind2).forEach(btn -> btn.setEnabled(false));
-    }//GEN-LAST:event_mousePressed
-
-    private void btnFind1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind1
-        if (tab2.getBorder() != null) {
-            Record record = ((DefTableModel) tab2.getModel()).getQuery().get(UGui.getIndexRec(tab2));
-            if (record != null) {
-                Record record2 = eArtikl.find(record.getInt(eElement.artikl_id), false);
-                ProgressBar.create(this, new ListenerFrame() {
-                    public void actionRequest(Object obj) {
-                        App.Artikles.createFrame(Elements.this, record2);
-                    }
-                });
+        } else if (tab2.getBorder() != null) {
+            if (UGui.isDeleteRecord(tab2, this, tab3, tab4) == 0) {
+                UGui.deleteRecord(tab2);
             }
         } else if (tab3.getBorder() != null) {
-            Record record = ((DefTableModel) tab3.getModel()).getQuery().get(UGui.getIndexRec(tab3));
-            if (record != null) {
-                Record record2 = eArtikl.find(record.getInt(eElemdet.artikl_id), false);
-                ProgressBar.create(this, new ListenerFrame() {
-                    public void actionRequest(Object obj) {
-                        App.Artikles.createFrame(Elements.this, record2);
-                    }
-                });
+            if (UGui.isDeleteRecord(tab3, this, tab5) == 0) {
+                UGui.deleteRecord(tab3);
+            }
+        } else if (tab4.getBorder() != null) {
+            if (UGui.isDeleteRecord(tab4, this) == 0) {
+                UGui.deleteRecord(tab4);
+            }
+        } else if (tab5.getBorder() != null) {
+            if (UGui.isDeleteRecord(tab5, this) == 0) {
+                UGui.deleteRecord(tab5);
             }
         }
-    }//GEN-LAST:event_btnFind1
+    }//GEN-LAST:event_btnDelete
 
-    private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-    }//GEN-LAST:event_btnTest
-
-    private void btnFind2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind2
-        int index = UGui.getIndexRec(tab2);
-        Record record = qElement.get(index);
-        List<Record> sysprofList1 = eSysprof.data().stream().filter(rec -> record.getInt(eElement.artikl_id) == rec.getInt(eSysprof.artikl_id)).collect(Collectors.toList());
-        Set<Integer> sysprofList2 = new HashSet<Integer>();
-        sysprofList1.forEach(rec -> sysprofList2.add(rec.getInt(eSysprof.systree_id)));
-        List<String> pathList = new ArrayList<String>();
-        List<Integer> keyList = new ArrayList<Integer>();
-        StringBuffer path = new StringBuffer();
-        for (Record rec : eSystree.data()) {
-            if (sysprofList2.contains(rec.get(eSystree.id))) {
-                path = path.append(rec.getStr(eSystree.name));
-                findPathSystree(rec, path);
-                pathList.add(path.toString());
-                keyList.add(rec.getInt(eSystree.id));
-                path.delete(0, path.length());
-            }
-        }
-        if (pathList.size() != 0) {
-            for (int i = pathList.size(); i < 21; ++i) {
-                pathList.add(null);
-            }
-            Object result = JOptionPane.showInputDialog(Elements.this, "Артикул в системе профилей", "Сообщение", JOptionPane.QUESTION_MESSAGE,
-                    new ImageIcon(getClass().getResource("/resource/img24/c066.gif")), pathList.toArray(), pathList.toArray()[0]);
-            if (result != null || result instanceof Integer) {
-                for (int i = 0; i < pathList.size(); ++i) {
-                    if (result.equals(pathList.get(i))) {
-                        Object id = keyList.get(i);
-                        ProgressBar.create(Elements.this, new ListenerFrame() {
-                            public void actionRequest(Object obj) {
-                                App.Systree.createFrame(Elements.this, id, 1);
-                            }
-                        });
-                    }
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(Elements.this, "В системе профилей артикул не найден", "Сообщение", JOptionPane.NO_OPTION);
-        }
-    }//GEN-LAST:event_btnFind2
-
-    private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
-        int index = UGui.getIndexRec(tab2);
-        if (index != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
-                "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-
-            Map<Record, Integer> elempar2Map = new HashMap<Record, Integer>();
-            List<Record> elempar1List = new ArrayList<Record>();
-            List<Record> elemdetList = new ArrayList<Record>();
-            qElempar1.forEach(rec -> elempar1List.add(rec));
-            qElemdet.forEach(rec -> elemdetList.add(rec));
-
-            Record elementClon = (Record) qElement.get(index).clone();
-            Record artiklClon = (Record) qElement.table(eArtikl.up).get(index).clone();
-            elementClon.setNo(eElement.up, Query.INS);
-            int elementID = Conn.genId(eElement.up);
-            elementClon.setNo(eElement.id, elementID);
-            elementClon.setNo(eElement.name, elementClon.getStr(eElement.name) + "-клон");
-            qElement.add(index, elementClon);
-            qElement.table(eArtikl.up).add(index, artiklClon);
-
-            for (Record elempar1Rec : elempar1List) {
-                Record elempar1Clon = (Record) elempar1Rec.clone();
-                elempar1Clon.setNo(eElempar1.up, Query.INS);
-                elempar1Clon.setNo(eElempar1.id, Conn.genId(eElempar1.up));
-                elempar1Clon.setNo(eElempar1.element_id, elementID);
-                qElempar1.add(elempar1Clon);
-            }
-            for (Record elemdetRec : elemdetList) {
-                Record elemdetClon = (Record) elemdetRec.clone();
-                elemdetClon.setNo(eElemdet.up, Query.INS);
-                elemdetClon.setNo(eElemdet.id, Conn.genId(eElemdet.up));
-                elemdetClon.setNo(eElemdet.element_id, elementID);
-                qElempar2.sql(eElempar2.data(), eElempar2.elemdet_id, elemdetRec.getInt(eElemdet.id));
-                qElempar2.forEach(rec -> elempar2Map.put(rec, elemdetClon.getInt(eElemdet.id)));
-                qElemdet.add(elemdetClon);
-            }
-            for (Map.Entry<Record, Integer> it : elempar2Map.entrySet()) {
-                Record elempar2Rec = it.getKey();
-                Record elempar2Clon = (Record) elempar2Rec.clone();
-                elempar2Clon.setNo(eElempar2.up, Query.INS);
-                elempar2Clon.setNo(eElempar2.id, Conn.genId(eElempar2.up));
-                elempar2Clon.setNo(eElempar2.elemdet_id, it.getValue());
-                qElempar2.add(elempar2Clon);
-            }
-
-            List.of(qElement, qElemdet, qElempar1, qElempar2).forEach(q -> q.execsql());
-            ((DefaultTableModel) tab2.getModel()).fireTableRowsInserted(index, index);
-            UGui.setSelectedIndex(tab2, index);
-            UGui.scrollRectToIndex(index, tab2);
-            UGui.setSelectedRow(tab4);
-        }
-    }//GEN-LAST:event_btnClone
-
-    private void btnMove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMove
-        try {
-            int index = UGui.getIndexRec(tab2);
-            if (index != -1) {
-                Record elementRec = qElement.get(index);
-                List list = new LinkedList();
-                qGrCateg.forEach(rec -> list.add(rec.getStr(eGroups.name)));
-                Object result = JOptionPane.showInputDialog(Elements.this, "Вставка: " + elementRec.getStr(eElement.name),
-                        "Изменение категории элемента втавки", JOptionPane.QUESTION_MESSAGE, null, list.toArray(), list.toArray()[0]);
-                if (result != null) {
-                    for (Record groupsRec : qGrCateg) {
-                        if (result.equals(groupsRec.getStr(eGroups.name))) {
-                            elementRec.setNo(eElement.groups2_id, groupsRec.getInt(eGroups.id));
-                            qElement.update(elementRec);
-                            selectionTab1(null);
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:Elements.btnMove()");
-        }
-    }//GEN-LAST:event_btnMove
-
-    private void ppmActionItems(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppmActionItems
-        if (evt.getSource() == mInsert) {
-            btnInsert(new java.awt.event.ActionEvent(btnIns, -1, ""));
-        } else if (evt.getSource() == mDelit) {
-            btnDelete(new java.awt.event.ActionEvent(btnDel, -1, ""));
-        }
-    }//GEN-LAST:event_ppmActionItems
-
-    private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
-        if (evt.getButton() == MouseEvent.BUTTON1) {
-            if (tab2.getBorder() != null) {
-                List.of(btnFind1, btnFind2).forEach(btn -> btn.setEnabled(true));
-            } else if (tab3.getBorder() != null) {
-                btnFind1.setEnabled(true);
-            }
-        } else if (evt.getButton() == MouseEvent.BUTTON3) {
-            JTable table = List.of(tab2, tab3, tab4, tab5).stream().filter(it -> it == evt.getSource()).findFirst().get();
-            List.of(tab2, tab3, tab4, tab5).forEach(tab -> tab.setBorder(null));
-            table.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
-            ppmCrud.show(table, evt.getX(), evt.getY());
-        }
-    }//GEN-LAST:event_tabMouseClicked
+    private void btnClose(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClose
+        this.dispose();
+    }//GEN-LAST:event_btnClose
 
     private void findPathSystree(Record record, StringBuffer path) {
         for (Record rec : eSystree.data()) {
@@ -1340,7 +1306,6 @@ public class Elements extends javax.swing.JFrame {
     private javax.swing.JButton btnFind2;
     private javax.swing.JButton btnIns;
     private javax.swing.JButton btnMove;
-    private javax.swing.JButton btnRef;
     private javax.swing.JButton btnReport;
     private javax.swing.JButton btnTest;
     private javax.swing.JPanel centr;
@@ -1376,7 +1341,7 @@ public class Elements extends javax.swing.JFrame {
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
 
-        List.of(btnIns, btnDel, btnRef).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5)));
+        List.of(btnIns, btnDel).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5)));
         tab1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (event.getValueIsAdjusting() == false) {

@@ -229,7 +229,6 @@ public class Specifics extends javax.swing.JFrame {
         cbx1 = new javax.swing.JComboBox<>();
         cbx2 = new javax.swing.JComboBox<>();
         btnTest = new javax.swing.JButton();
-        btnRefresh = new javax.swing.JButton();
         btn21 = new javax.swing.JButton();
         btn23 = new javax.swing.JButton();
         btn24 = new javax.swing.JButton();
@@ -357,22 +356,6 @@ public class Specifics extends javax.swing.JFrame {
             }
         });
 
-        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c038.gif"))); // NOI18N
-        btnRefresh.setToolTipText(bundle.getString("Обновить")); // NOI18N
-        btnRefresh.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btnRefresh.setFocusable(false);
-        btnRefresh.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnRefresh.setMaximumSize(new java.awt.Dimension(25, 25));
-        btnRefresh.setMinimumSize(new java.awt.Dimension(25, 25));
-        btnRefresh.setPreferredSize(new java.awt.Dimension(25, 25));
-        btnRefresh.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btnRefresh.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRefresh(evt);
-            }
-        });
-
         btn21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c056.gif"))); // NOI18N
         btn21.setToolTipText(bundle.getString("Меню.Справка")); // NOI18N
         btn21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
@@ -451,8 +434,6 @@ public class Specifics extends javax.swing.JFrame {
             northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(northLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
                 .addComponent(btnFind1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnFind2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -472,7 +453,7 @@ public class Specifics extends javax.swing.JFrame {
                 .addComponent(cbx2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbx1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 206, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -494,7 +475,6 @@ public class Specifics extends javax.swing.JFrame {
                     .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFind1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFind2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(northLayout.createSequentialGroup()
                         .addGroup(northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btn23, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -704,15 +684,6 @@ public class Specifics extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_btnTest
 
-    private void btnRefresh(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefresh
-        int index = UGui.getIndexRec(tab1);
-        Query.listOpenTable.forEach(q -> q.clear()); //очистим кэш 
-        createIwin();
-        loadingTab1(groups(winc.listSpec, cbx1.getSelectedIndex()));
-        cbxGroupBy(null);
-        UGui.setSelectedIndex(tab1, index);
-    }//GEN-LAST:event_btnRefresh
-
     private void btn23mnKits(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn23mnKits
 
     }//GEN-LAST:event_btn23mnKits
@@ -752,7 +723,6 @@ public class Specifics extends javax.swing.JFrame {
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnFind1;
     private javax.swing.JButton btnFind2;
-    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnReport;
     private javax.swing.JButton btnTest;
     private javax.swing.JComboBox<String> cbx1;

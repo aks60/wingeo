@@ -293,7 +293,6 @@ public class Kits extends javax.swing.JFrame {
         mDelit = new javax.swing.JMenuItem();
         north = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
-        btnRef = new javax.swing.JButton();
         btnDel = new javax.swing.JButton();
         btnIns = new javax.swing.JButton();
         btnFind = new javax.swing.JButton();
@@ -360,22 +359,6 @@ public class Kits extends javax.swing.JFrame {
             }
         });
 
-        btnRef.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c038.gif"))); // NOI18N
-        btnRef.setToolTipText(bundle.getString("Обновить")); // NOI18N
-        btnRef.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btnRef.setFocusable(false);
-        btnRef.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnRef.setMaximumSize(new java.awt.Dimension(25, 25));
-        btnRef.setMinimumSize(new java.awt.Dimension(25, 25));
-        btnRef.setPreferredSize(new java.awt.Dimension(25, 25));
-        btnRef.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btnRef.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnRef.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRefresh(evt);
-            }
-        });
-
         btnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
         btnDel.setToolTipText(bundle.getString("Удалить")); // NOI18N
         btnDel.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -433,11 +416,9 @@ public class Kits extends javax.swing.JFrame {
                 .addComponent(btnIns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 670, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 701, Short.MAX_VALUE)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -450,7 +431,6 @@ public class Kits extends javax.swing.JFrame {
                         .addGroup(northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btnDel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnIns, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnRef, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnFind, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -642,20 +622,6 @@ public class Kits extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnClose
 
-    private void btnRefresh(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefresh
-        UGui.stopCellEditing(tab1, tab2, tab3, tab4);
-        List.of(qCateg, qKits, qKitdet, qKitpar2).forEach(q -> q.execsql());
-        int index1 = UGui.getIndexRec(tab1);
-        int index2 = UGui.getIndexRec(tab2);
-        int index3 = UGui.getIndexRec(tab3);
-        int index4 = UGui.getIndexRec(tab4);
-        loadingData();
-        UGui.setSelectedIndex(tab1, index1);
-        UGui.setSelectedIndex(tab2, index2);
-        UGui.setSelectedIndex(tab3, index3);
-        UGui.setSelectedIndex(tab4, index4);
-    }//GEN-LAST:event_btnRefresh
-
     private void btnDelete(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete
         if (tab1.getBorder() != null) {
             if (UGui.isDeleteRecord(tab1, this, tab2) == 0) {
@@ -772,7 +738,6 @@ public class Kits extends javax.swing.JFrame {
     private javax.swing.JButton btnDel;
     private javax.swing.JButton btnFind;
     private javax.swing.JButton btnIns;
-    private javax.swing.JButton btnRef;
     private javax.swing.JPanel centr;
     private javax.swing.JMenuItem mDelit;
     private javax.swing.JMenuItem mInsert;
@@ -799,7 +764,6 @@ public class Kits extends javax.swing.JFrame {
 
         btnIns.addActionListener(l -> UGui.stopCellEditing(tab1, tab2, tab3, tab4));
         btnDel.addActionListener(l -> UGui.stopCellEditing(tab1, tab2, tab3, tab4));
-        btnRef.addActionListener(l -> UGui.stopCellEditing(tab1, tab2, tab3, tab4));
 
         FocusListener listenerFocus = new FocusListener() {
 
