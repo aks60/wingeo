@@ -42,7 +42,6 @@ import javax.swing.tree.TreePath;
 import common.listener.ListenerRecord;
 import frames.swing.DefCellEditorNumb;
 import frames.swing.TableFieldFilter;
-import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
