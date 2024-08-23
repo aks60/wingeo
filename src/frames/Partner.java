@@ -29,12 +29,10 @@ import javax.swing.event.ListSelectionListener;
 
 public class Partner extends javax.swing.JFrame {
 
-    private int ID = -1;
+    private int prjpartID = -1;
     private Window owner = null;
     private ListenerRecord listener = null;
     private Query qPrjpart = new Query(ePrjpart.values(), eSysuser.values());
-    private Query qPrjpart2 = new Query(ePrjpart.values(), eSysuser.values());
-    private Query qSysuser = new Query(eSysuser.values());
     private TableFieldFormat rsv = null;
     private String arrCateg[] = {"заказчик", "поставшик", "офис", "дилер", "специальный"};
 
@@ -50,7 +48,7 @@ public class Partner extends javax.swing.JFrame {
     public Partner(int id) {
         initComponents();
         initElements();
-        this.ID = id;
+        this.prjpartID = id;
         loadingData();
         loadingModel();
         btnChoice.setVisible(false);
@@ -80,8 +78,8 @@ public class Partner extends javax.swing.JFrame {
     }
 
     public void loadingModel() {
-        if (ID != -1) {
-            Record record = ePrjpart.find(ID);
+        if (prjpartID != -1) {
+            Record record = ePrjpart.find(prjpartID);
             qPrjpart.clear();
             qPrjpart.add(record);
         }
@@ -99,7 +97,6 @@ public class Partner extends javax.swing.JFrame {
         tab1.getColumnModel().getColumn(3).setCellRenderer(new DefCellRendererBool());
 
         rsv = new TableFieldFormat(tab1);
-        rsv.add(ePrjpart.partner, txt22);
         rsv.add(ePrjpart.addr_leve1, txt12);
         rsv.add(ePrjpart.addr_leve2, txt14);
         rsv.add(ePrjpart.addr_phone, txt13);
@@ -178,8 +175,6 @@ public class Partner extends javax.swing.JFrame {
         txt15 = new javax.swing.JTextField();
         txt18 = new javax.swing.JTextField();
         lab53 = new javax.swing.JLabel();
-        lab57 = new javax.swing.JLabel();
-        txt22 = new javax.swing.JTextField();
         pan3 = new javax.swing.JPanel();
         lab36 = new javax.swing.JLabel();
         txt8 = new javax.swing.JTextField();
@@ -615,18 +610,6 @@ public class Partner extends javax.swing.JFrame {
         lab53.setMinimumSize(new java.awt.Dimension(34, 14));
         lab53.setPreferredSize(new java.awt.Dimension(96, 18));
 
-        lab57.setFont(frames.UGui.getFont(0,0));
-        lab57.setText("Дилер");
-        lab57.setToolTipText("");
-        lab57.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        lab57.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
-        lab57.setMinimumSize(new java.awt.Dimension(34, 14));
-        lab57.setPreferredSize(new java.awt.Dimension(96, 18));
-
-        txt22.setFont(frames.UGui.getFont(0,0));
-        txt22.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt22.setPreferredSize(new java.awt.Dimension(120, 18));
-
         javax.swing.GroupLayout pan4Layout = new javax.swing.GroupLayout(pan4);
         pan4.setLayout(pan4Layout);
         pan4Layout.setHorizontalGroup(
@@ -649,23 +632,17 @@ public class Partner extends javax.swing.JFrame {
                     .addGroup(pan4Layout.createSequentialGroup()
                         .addGroup(pan4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lab48, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lab53, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lab57, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lab53, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pan4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt13, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                            .addComponent(txt18, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                            .addComponent(txt22, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))))
+                            .addComponent(txt18, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         pan4Layout.setVerticalGroup(
             pan4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pan4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lab57, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(30, 30, 30)
                 .addGroup(pan4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lab48, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -685,7 +662,7 @@ public class Partner extends javax.swing.JFrame {
                 .addGroup(pan4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lab50, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         tabb1.addTab("  Частное лицо  ", pan4);
@@ -1030,8 +1007,11 @@ public class Partner extends javax.swing.JFrame {
                     prjpartRec.setNo(ePrjpart.login, login);
                     prjpartRec.setNo(ePrjpart.npp, prjpartRec.get(ePrjpart.id));
                     prjpartRec.setNo(ePrjpart.category, arrCateg[0]);
-                    Record record2 = new Query(eSysuser.values()).sql(eSysuser.data(), eSysuser.login, login).get(0);
-                    qPrjpart.table(eSysuser.up).add(record2);
+                    Record sysuserRec = new Query(eSysuser.values()).sql(eSysuser.data(), eSysuser.login, login).get(0);
+                    qPrjpart.table(eSysuser.up).add(sysuserRec);
+                    qPrjpart.insert(prjpartRec);
+                   
+                    //loadingData();
 
                 } catch (Exception e) {
                     System.err.println("Ошибка:Partner.btnInsert() " + e);
@@ -1141,7 +1121,6 @@ public class Partner extends javax.swing.JFrame {
     private javax.swing.JLabel lab54;
     private javax.swing.JLabel lab55;
     private javax.swing.JLabel lab56;
-    private javax.swing.JLabel lab57;
     private javax.swing.JMenuItem mDelit;
     private javax.swing.JMenuItem mInsert;
     private javax.swing.JPanel north;
@@ -1171,7 +1150,6 @@ public class Partner extends javax.swing.JFrame {
     private javax.swing.JTextField txt2;
     private javax.swing.JTextField txt20;
     private javax.swing.JTextField txt21;
-    private javax.swing.JTextField txt22;
     private javax.swing.JTextField txt3;
     private javax.swing.JTextField txt4;
     private javax.swing.JTextField txt5;

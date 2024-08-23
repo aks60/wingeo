@@ -49,7 +49,6 @@ public class PathToDb extends javax.swing.JDialog {
                 if (pass == eExcep.yesConn) {
                     
                     if ("SYSDBA".equalsIgnoreCase(edUser.getText())) {
-
                             if (App.Top.frame == null) {
                                 App.createApp(eProfile.P01);
                             }

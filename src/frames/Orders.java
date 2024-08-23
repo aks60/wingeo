@@ -786,9 +786,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ppmCrud = new javax.swing.JPopupMenu();
         mInsert = new javax.swing.JMenuItem();
         mDelit = new javax.swing.JMenuItem();
-        ppmCrud1 = new javax.swing.JPopupMenu();
-        mInsert1 = new javax.swing.JMenuItem();
-        mDelit1 = new javax.swing.JMenuItem();
         north = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
         btnSet = new javax.swing.JButton();
@@ -1056,26 +1053,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             }
         });
         ppmCrud.add(mDelit);
-
-        mInsert1.setFont(frames.UGui.getFont(1,0));
-        mInsert1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        mInsert1.setText("Добавить");
-        mInsert1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mInsert1ppmActionItems(evt);
-            }
-        });
-        ppmCrud1.add(mInsert1);
-
-        mDelit1.setFont(frames.UGui.getFont(1,0));
-        mDelit1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        mDelit1.setText("Удалить");
-        mDelit1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mDelit1ppmActionItems(evt);
-            }
-        });
-        ppmCrud1.add(mDelit1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Заказы");
@@ -1591,6 +1568,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         tab2.setName("tab2x"); // NOI18N
         tab2.setRowHeight(68);
         tab2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 Orders.this.mousePressed(evt);
             }
@@ -3118,9 +3098,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 prjprodRec.set(ePrjprod.num, 1);
                 prjprodRec.set(ePrjprod.script, record.getStr(eSysprod.script));
                 prjprodRec.set(ePrjprod.systree_id, record.getStr(eSysprod.systree_id));
-                prjprodRec.set(ePrjprod.project_id, qProject.getAs(UGui.getIndexRec(tab1), eProject.id));
-                qPrjprod.insert(prjprodRec);
+                prjprodRec.set(ePrjprod.project_id, qProject.getAs(UGui.getIndexRec(tab1), eProject.id));                
                 ePrjprod.data().add(prjprodRec); //добавим в кэш новую запись
+                qPrjprod.insert(prjprodRec);
             });
 
             loadingTab2();
@@ -3165,17 +3145,17 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
     private void mousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mousePressed
         JTable table = (JTable) evt.getSource();
-        UGui.updateBorderAndSql(table, List.of(tab1, tab2, tab4, tab3));
+        UGui.updateBorderAndSql(table, List.of(tab1, tab2, tab3, tab4));
     }//GEN-LAST:event_mousePressed
 
     private void stateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_stateChanged
         UGui.stopCellEditing(tab1, tab2, tab4, tab3);
         if (tabb1.getSelectedIndex() == 0) {
-            UGui.updateBorderAndSql(tab1, List.of(tab1, tab2, tab4, tab3));
+            UGui.updateBorderAndSql(tab1, List.of(tab1, tab2, tab3, tab4));
         } else if (tabb1.getSelectedIndex() == 1) {
-            UGui.updateBorderAndSql(tab2, List.of(tab1, tab2, tab4, tab3));
+            UGui.updateBorderAndSql(tab2, List.of(tab1, tab2, tab3, tab4));
         } else if (tabb1.getSelectedIndex() == 2) {
-            UGui.updateBorderAndSql(tab4, List.of(tab1, tab2, tab4, tab3));
+            UGui.updateBorderAndSql(tab4, List.of(tab1, tab2, tab3, tab4));
         }
     }//GEN-LAST:event_stateChanged
 
@@ -3950,8 +3930,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
     private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
         if (evt.getButton() == MouseEvent.BUTTON3) {
-            JTable table = List.of(tab1, tab4).stream().filter(it -> it == evt.getSource()).findFirst().get();
-            List.of(tab1, tab4).forEach(tab -> tab.setBorder(null));
+            JTable table = List.of(tab1, tab2, tab4).stream().filter(it -> it == evt.getSource()).findFirst().get();
+            List.of(tab1, tab2, tab4).forEach(tab -> tab.setBorder(null));
             table.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
             ppmCrud.show(table, evt.getX(), evt.getY());
         }
@@ -3965,22 +3945,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             }
         });
     }//GEN-LAST:event_menuItem18
-
-    private void mInsert1ppmActionItems(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mInsert1ppmActionItems
-        if (evt.getSource() == mInsert) {
-            btnInsert(new java.awt.event.ActionEvent(mInsert, -1, ""));
-        } else if (evt.getSource() == mDelit) {
-            btnDelete(new java.awt.event.ActionEvent(mDelit, -1, ""));
-        }
-    }//GEN-LAST:event_mInsert1ppmActionItems
-
-    private void mDelit1ppmActionItems(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mDelit1ppmActionItems
-        if (evt.getSource() == mInsert) {
-            btnInsert(new java.awt.event.ActionEvent(mInsert, -1, ""));
-        } else if (evt.getSource() == mDelit) {
-            btnDelete(new java.awt.event.ActionEvent(btnDel, -1, ""));
-        }
-    }//GEN-LAST:event_mDelit1ppmActionItems
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -4066,9 +4030,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private javax.swing.JLabel lab7;
     private javax.swing.JLabel lab8;
     private javax.swing.JMenuItem mDelit;
-    private javax.swing.JMenuItem mDelit1;
     private javax.swing.JMenuItem mInsert;
-    private javax.swing.JMenuItem mInsert1;
     private javax.swing.JMenuItem menuItem11;
     private javax.swing.JMenuItem menuItem12;
     private javax.swing.JMenuItem menuItem13;
@@ -4102,7 +4064,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private javax.swing.JPanel panDesign;
     private javax.swing.JPopupMenu ppReport;
     private javax.swing.JPopupMenu ppmCrud;
-    private javax.swing.JPopupMenu ppmCrud1;
     private javax.swing.JScrollPane scr1;
     private javax.swing.JScrollPane scr2;
     private javax.swing.JScrollPane scr3;

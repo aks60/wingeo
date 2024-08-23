@@ -330,7 +330,7 @@ public class Query extends Table {
             if (value instanceof Integer) {
                 addAll(data.stream().filter(rec -> rec.getInt(field) == Integer.valueOf(value.toString())).collect(Collectors.toList()));
             } else if (value instanceof String) {
-                addAll(data.stream().filter(rec -> rec.getStr(field) == value).collect(Collectors.toList()));
+                addAll(data.stream().filter(rec -> String.valueOf(value).equals(rec.getStr(field))).collect(Collectors.toList()));
             }
         } else {
             select(field.fields()[0], "where", field, "=", value);
