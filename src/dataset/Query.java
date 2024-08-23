@@ -235,7 +235,7 @@ public class Query extends Table {
             return true;
 
         } catch (SQLException e) {
-            System.out.println("Ошибка:Query.delete() " + e);
+            System.err.println("Ошибка:Query.delete() " + e);
             if (Conn.web() == false && e.getErrorCode() == 335544466) {
                 JOptionPane.showMessageDialog(App.active, "Нельзя удалить запись на которую имеются ссылки из других форм", "SQL предупреждение", JOptionPane.INFORMATION_MESSAGE);
             }

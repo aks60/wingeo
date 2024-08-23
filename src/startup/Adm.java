@@ -1287,8 +1287,10 @@ public class Adm extends javax.swing.JFrame {
             box2.setEnabled(false);
             txt1.setEnabled(false);
 
-            int index1 = ("Технолог".equals(tab4.getValueAt(row, 3))) ? 1 : 2;
+            String role = tab4.getValueAt(row, 3).toString().substring(0, 8);
+            int index1 = ("TEXNOLOG".equals(role)) ? 1 : 2;
             box1.setSelectedIndex(index1);
+            
             int index2 = ("чтение-запись".equals(tab4.getValueAt(row, 2))) ? 0 : 1;
             box2.setSelectedIndex(index2);
             txt1.setText(String.valueOf(tab4.getValueAt(row, 1)));
@@ -1312,13 +1314,6 @@ public class Adm extends javax.swing.JFrame {
     }//GEN-LAST:event_userAdded
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        try {
-            Conn.connection().createStatement().executeUpdate("create user AKS2 password '1'");
-            Conn.connection().createStatement().executeUpdate("grant DEFROLE to AKS2");
-            Conn.connection().createStatement().executeUpdate("grant TEXNOLOG_RW to AKS2");
-
-        } catch (Exception e) {
-        }
     }//GEN-LAST:event_btnReport
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed

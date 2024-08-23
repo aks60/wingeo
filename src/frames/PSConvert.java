@@ -205,7 +205,6 @@ public class PSConvert {
 
             if (eProp.dev == true) { //при этом в firebird такие логины должны быть созданы
                 executeSql("GRANT TEXNOLOG_RW, DEFROLE TO TEXNOLOG");
-                executeSql("GRANT MANAGER_RW, DEFROLE TO MANAGER");
                 executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('MANAGER_RW','MANAGER','Менеджер М.И.','89031237833','asd@jmail.com',null,null)");
                 executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('RDB$ADMIN','ADMIN','Администратор М.Г.','89034327685','aks@jmail.com',null,null)");
                 executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('TEXNOLOG_RW','TEXNOLOG','Технолог Е.В.','89036782345','qsd@jmail.com',null,null)");

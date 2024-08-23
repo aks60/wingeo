@@ -110,7 +110,7 @@ public class Conn {
     public static void addUser(String user, char[] password, String role) {
         try {
             connection.createStatement().executeUpdate("create user " + user + " password '" + String.valueOf(password) + "'");
-            connection.createStatement().executeUpdate("grant DEFROLE to " + user);
+            //connection.createStatement().executeUpdate("grant DEFROLE to " + user);
             connection.createStatement().executeUpdate("grant " + role + " to " + user);
 
         } catch (SQLException e) {

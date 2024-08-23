@@ -35,17 +35,17 @@ public class LogoToDb extends javax.swing.JDialog {
             connectToDb();
 
         } else {
-            //labMes.setText("");
-            edUser.setText(eProp.user.read());
-            if (List.of("ADMIN", "TEXNOLOG", "MANAGER")
-                    .contains(eProp.user.read().toUpperCase())) {
-                
-                edPass.setText("masterkey"); 
-                connectToDb();
-            } else {
-                edPass.requestFocus();
-                getRootPane().setDefaultButton(btnOk);
-            }
+//            labMes.setText("");
+//            edUser.setText(eProp.user.read());
+//            if (List.of("SYSDBA", "TEXNOLOG", "MANAGER")
+//                    .contains(eProp.user.read().toUpperCase())) {
+//
+//                edPass.setText("masterkey");
+//                connectToDb();
+//            } else {
+            edPass.requestFocus();
+            getRootPane().setDefaultButton(btnOk);
+//            }
         }
     }
 
@@ -65,17 +65,27 @@ public class LogoToDb extends javax.swing.JDialog {
                 progressBar.setIndeterminate(true);
                 labMes.setText("Установка соединения с базой данных");
                 String num = eProp.base_num.read();
-                eExcep pass = Conn.connection(eProp.server(num), eProp.port(num), eProp.base(num), edUser.getText(), edPass.getPassword(), "DEFROLE");
+                eExcep pass = Conn.connection(eProp.server(num), eProp.port(num), eProp.base(num), edUser.getText(), edPass.getPassword(), null);
                 if (pass == eExcep.yesConn) {
-                    if ("SYSDBA".equalsIgnoreCase(edUser.getText()) == false) {
 
+                    if ("SYSDBA".equalsIgnoreCase(edUser.getText())) {
+                        App.createApp(eProfile.P01);
+                        eProp.user.write(edUser.getText().trim());
+                        eProp.password = String.valueOf(edPass.getPassword()).trim();
+                        eProp.save();
+                        dispose();
+
+                    } else {
+                        //Получим роль по имени логина
                         Statement st = Conn.connection().createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
                         //ResultSet rs = st.executeQuery("SELECT DISTINCT a.rdb$role_name , b.rdb$user FROM rdb$roles a, rdb$user_privileges b WHERE a.rdb$role_name = b.rdb$relation_name AND a.rdb$role_name != 'DEFROLE' AND b.rdb$user = '" + edUser.getText() + "'");
                         ResultSet rs = st.executeQuery("SELECT u.RDB$USER, u.RDB$RELATION_NAME FROM RDB$USER_PRIVILEGES u WHERE u.RDB$RELATION_NAME != 'DEFROLE' and u.RDB$USER = '" + edUser.getText().toUpperCase() + "'");
-                        while (rs.next()) {
+                        if (rs.next()) {
                             eProp.role = rs.getString("RDB$RELATION_NAME").trim();
                             Conn.connection().close();
+                            //Соединение с новыми привелегиями
                             pass = Conn.connection(eProp.server(num), eProp.port(num), eProp.base(num), edUser.getText(), edPass.getPassword(), eProp.role);
+                            //По имени роли откроем нужное приложение
                             if (pass == eExcep.yesConn) {
                                 if (eProfile.P02.roleSet.contains(eProp.role)) {
                                     App.createApp(eProfile.P02);
@@ -87,15 +97,6 @@ public class LogoToDb extends javax.swing.JDialog {
                                 eProp.save();
                                 dispose();
                             }
-                        }
-                    } else {
-                        pass = Conn.connection(eProp.server(num), eProp.port(num), eProp.base(num), edUser.getText(), edPass.getPassword(), null);
-                        if (pass == eExcep.yesConn) {
-                            App.createApp(eProfile.P01);
-                            eProp.user.write(edUser.getText().trim());
-                            eProp.password = String.valueOf(edPass.getPassword()).trim();
-                            eProp.save();
-                            dispose();
                         }
                     }
                 }

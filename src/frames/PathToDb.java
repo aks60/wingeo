@@ -45,18 +45,35 @@ public class PathToDb extends javax.swing.JDialog {
             protected Object doInBackground() throws Exception {
                 progressBar.setIndeterminate(true);
                 labMes.setText("Установка соединения с базой данных");
-                eExcep pass = Conn.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), "DEFROLE");
+                eExcep pass = Conn.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), null);
                 if (pass == eExcep.yesConn) {
-                    if ("SYSDBA".equalsIgnoreCase(edUser.getText()) == false) {
+                    
+                    if ("SYSDBA".equalsIgnoreCase(edUser.getText())) {
 
+                            if (App.Top.frame == null) {
+                                App.createApp(eProfile.P01);
+                            }
+                            eProp.user.write(edUser.getText().trim());
+                            eProp.password = String.valueOf(edPass.getPassword()).trim();
+                            eProp.base_num.write(num_base);
+                            eProp.port(num_base, edPort.getText().trim());
+                            eProp.server(num_base, edHost.getText().trim());
+                            eProp.base(num_base, edPath.getText().trim());
+                            eProp.save();
+                            dispose();
+                        
+                    } else {  
+                        //Получим роль по имени логина
                         Statement st = Conn.connection().createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
                         //ResultSet rs = st.executeQuery("SELECT DISTINCT a.rdb$role_name , b.rdb$user FROM rdb$roles a, rdb$user_privileges b WHERE a.rdb$role_name = b.rdb$relation_name AND a.rdb$role_name != 'DEFROLE' AND b.rdb$user = '" + edUser.getText() + "'");
                         ResultSet rs = st.executeQuery("SELECT u.RDB$USER, u.RDB$RELATION_NAME FROM RDB$USER_PRIVILEGES u WHERE u.RDB$RELATION_NAME != 'DEFROLE' and u.RDB$USER = '" + edUser.getText().toUpperCase() + "'");
                         while (rs.next()) {
                             eProp.role = rs.getString("RDB$RELATION_NAME").trim();
                             Conn.connection().close();
+                            //Соединение с новыми привелегиями
                             pass = Conn.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), eProp.role);
                             if (pass == eExcep.yesConn) {
+                                //По имени роли откроем нужное приложение
                                 if (App.Top.frame == null && eProfile.P02.roleSet.contains(eProp.role)) {
                                     App.createApp(eProfile.P02);
                                 } else if (App.Top.frame == null && eProfile.P03.roleSet.contains(eProp.role)) {
@@ -70,22 +87,7 @@ public class PathToDb extends javax.swing.JDialog {
                                 eProp.save();
                                 dispose();
                             }
-                        }
-                    } else {
-                        pass = Conn.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), null);
-                        if (pass == eExcep.yesConn) {
-                            if (App.Top.frame == null) {
-                                App.createApp(eProfile.P01);
-                            }
-                            eProp.user.write(edUser.getText().trim());
-                            eProp.password = String.valueOf(edPass.getPassword()).trim();
-                            eProp.base_num.write(num_base);
-                            eProp.port(num_base, edPort.getText().trim());
-                            eProp.server(num_base, edHost.getText().trim());
-                            eProp.base(num_base, edPath.getText().trim());
-                            eProp.save();
-                            dispose();
-                        }
+                        }                        
                     }
                 }
                 if (pass == eExcep.noLogin) {
