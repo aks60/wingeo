@@ -51,11 +51,6 @@ select  id, bin_shr(bin_and(solor_us, 3840), 8), bin_shr(bin_and(solor_us, 240),
 select  id, bin_shr(bin_and(solor_us, 3840), 8), bin_shr(bin_and(solor_us, 240), 4), bin_and(solor_us, 15) from joindet  union
 select  id, bin_shr(bin_and(solor_us, 3840), 8), bin_shr(bin_and(solor_us, 240), 4), bin_and(solor_us, 15) from furndet
 
-SELECT u.RDB$USER, u.RDB$RELATION_NAME
-FROM RDB$USER_PRIVILEGES u
-WHERE u.rdb$relation_name = 'DEFROLE'
-ORDER BY 1, 2
-
 SELECT CURRENT_USER FROM RDB$DATABASE
 
 Удаление всех данных в бд

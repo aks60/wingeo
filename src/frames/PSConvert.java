@@ -191,7 +191,7 @@ public class PSConvert {
                 set.add(rs.getString("rdb$role_name"));
             }
             set.forEach(role -> executeSql("DROP ROLE " + role));
-            List.of("DEFROLE", "MANAGER_RO", "MANAGER_RW", "TEXNOLOG_RO", "TEXNOLOG_RW").forEach(role -> executeSql("CREATE ROLE " + role));
+            List.of("MANAGER_RO", "MANAGER_RW", "TEXNOLOG_RO", "TEXNOLOG_RW").forEach(role -> executeSql("CREATE ROLE " + role));
             for (Field field : App.db) {
                 executeSql("GRANT SELECT ON " + field.tname() + " TO MANAGER_RO");
                 executeSql("GRANT ALL ON " + field.tname() + " TO MANAGER_RW");
@@ -204,7 +204,6 @@ public class PSConvert {
             executeSql("GRANT ALL ON " + eSetting.up.tname() + " TO TEXNOLOG_RW");
 
             if (eProp.dev == true) { //при этом в firebird такие логины должны быть созданы
-                executeSql("GRANT TEXNOLOG_RW, DEFROLE TO TEXNOLOG");
                 executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('MANAGER_RW','MANAGER','Менеджер М.И.','89031237833','asd@jmail.com',null,null)");
                 executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('RDB$ADMIN','ADMIN','Администратор М.Г.','89034327685','aks@jmail.com',null,null)");
                 executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('TEXNOLOG_RW','TEXNOLOG','Технолог Е.В.','89036782345','qsd@jmail.com',null,null)");

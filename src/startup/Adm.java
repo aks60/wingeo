@@ -142,7 +142,7 @@ public class Adm extends javax.swing.JFrame {
             DefaultTableModel dm = (DefaultTableModel) tab4.getModel();
             dm.getDataVector().clear();
             String sql = "SELECT DISTINCT a.rdb$role_name , b.rdb$user, c.fio, c.phone, c.email FROM rdb$roles a left join "
-                    + " rdb$user_privileges b on a.rdb$role_name = b.rdb$relation_name AND a.rdb$role_name != 'DEFROLE' AND "
+                    + " rdb$user_privileges b on a.rdb$role_name = b.rdb$relation_name AND "
                     + " b.rdb$user != 'SYSDBA' AND NOT EXISTS (SELECT * FROM rdb$roles c WHERE c.rdb$role_name = b.rdb$user) "
                     + " left join sysuser c on b.rdb$user = c.login where b.rdb$user is not null ORDER BY 1";
             Statement statement = Conn.connection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
