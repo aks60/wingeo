@@ -110,7 +110,7 @@ public class Artikles extends javax.swing.JFrame {
     public void loadingData() {
         qSyssize.sql(eSyssize.data(), eSyssize.up).sort(eSyssize.name);
         qGroups.sql(eGroups.data(), eGroups.up);
-        qSyssize.sql(eCurrenc.data(), eCurrenc.up).sort(eCurrenc.name);
+        qCurrenc.sql(eCurrenc.data(), eCurrenc.up).sort(eCurrenc.name);
         qColor.sql(eColor.data(), eColor.up).sort(eColor.name);
     }
 
