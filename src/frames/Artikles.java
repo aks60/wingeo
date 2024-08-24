@@ -200,6 +200,7 @@ public class Artikles extends javax.swing.JFrame {
             @Override
             public void load(Integer index) {
                 super.load(index);
+                update = false;
                 Record artiklRec = qArtikl.get(UGui.getIndexRec(tab1));
                 Record seriesRec = qGroups.find(artiklRec.getInt(eArtikl.groups4_id), eGroups.id);
                 Record currenc1Rec = qCurrenc.find(artiklRec.get(eArtikl.currenc1_id), eCurrenc.id);
@@ -244,6 +245,7 @@ public class Artikles extends javax.swing.JFrame {
                 setText(txt52, artgrp2Rec.getStr(eGroups.name));
                 setText(txt53, artgrp1Rec.getStr(eGroups.name));
                 setText(txt54, artgrp2Rec.getStr(eGroups.name));
+                update = true;
             }
 
             @Override
