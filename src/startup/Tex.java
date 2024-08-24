@@ -16,19 +16,15 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import common.listener.ListenerFrame;
-import common.eProfile;
 import dataset.Conn;
-import dataset.Field;
 import dataset.Query;
-import domain.eColor;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
+import javax.swing.JTable;
 
 /**
  * <p>
@@ -69,13 +65,8 @@ public class Tex extends javax.swing.JFrame {
         }
     }
 
-    private void connectBaseNumb(String num_base) {
-        List.of(App.values()).stream().filter(el -> el.frame != null && el != App.Top).forEach(el -> el.frame.dispose());
-        Query.listOpenTable.forEach(q -> q.clear());
-        PathToDb pathToDb = new PathToDb(this, num_base);
-        FrameToFile.setFrameSize(pathToDb);
-        pathToDb.setVisible(true);
-
+    private void prepareConnectBaseNumb(String num_base) {
+        Conn.prepareConnectBaseNumb(num_base);
         if (eProp.base_num.read().equals("1")) {
             btnT7.setSelected(true);
             mn631.setSelected(true);
@@ -910,11 +901,11 @@ private void mn51ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:ev
 }//GEN-LAST:event_mn51ActionPerformed
 
 private void mnSpecif(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnSpecif
-        ProgressBar.create(Tex.this, new ListenerFrame() {
-            public void actionRequest(Object obj) {
-                App.Specification.createFrame(Tex.this);
-            }
-        });
+    ProgressBar.create(Tex.this, new ListenerFrame() {
+        public void actionRequest(Object obj) {
+            App.Specification.createFrame(Tex.this);
+        }
+    });
 }//GEN-LAST:event_mnSpecif
 
 private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
@@ -1024,12 +1015,12 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
 
     private void mnBase(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnBase
         String num_base = (mn631.isSelected()) ? "1" : (mn632.isSelected()) ? "2" : "3";
-        connectBaseNumb(num_base);
+        prepareConnectBaseNumb(num_base);
     }//GEN-LAST:event_mnBase
 
     private void btnBase(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBase
         String num_base = (btnT7.isSelected()) ? "1" : (btnT8.isSelected()) ? "2" : "3";
-        connectBaseNumb(num_base);
+        prepareConnectBaseNumb(num_base);
     }//GEN-LAST:event_btnBase
 
     private void mnGroup2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnGroup2

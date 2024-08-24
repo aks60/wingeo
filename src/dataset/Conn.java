@@ -1,18 +1,22 @@
 package dataset;
 
-import common.eProfile;
-import common.eProp;
+import frames.PathToDb;
+import frames.UGui;
+import frames.swing.FrameToFile;
+import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Properties;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import startup.App;
 
 /**
@@ -98,6 +102,18 @@ public class Conn {
         return eExcep.yesConn;
     }
 
+    public static  void prepareConnectBaseNumb(String num_base) {
+        List.of(App.values()).stream().filter(el -> el.frame != null && el != App.Top).forEach(el
+                -> UGui.findComponents(el.frame.getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c)));
+        List.of(App.values()).stream().filter(el -> el.frame != null && el != App.Top).forEach(el -> el.frame.dispose());
+        Query.listOpenTable.forEach(q -> q.execsql());
+        Query.listOpenTable.forEach(q -> q.clear());
+        
+        PathToDb pathToDb = new PathToDb(App.Top.frame, num_base);
+        FrameToFile.setFrameSize(pathToDb);
+        pathToDb.setVisible(true);
+    }  
+    
     public static void autocommit(boolean autoCommit) {
         try {
             connection.setAutoCommit(autoCommit);

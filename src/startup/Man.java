@@ -8,11 +8,14 @@ import java.util.HashMap;
 import javax.swing.JCheckBoxMenuItem;
 import common.listener.ListenerFrame;
 import common.eProp;
+import dataset.Conn;
+import dataset.Query;
 import dataset.Record;
 import domain.eProject;
 import frames.Orders;
 import frames.PathToDb;
 import java.util.List;
+import javax.swing.JTable;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import report.HtmlOfManufactory;
@@ -589,13 +592,8 @@ public class Man extends javax.swing.JFrame {
     }//GEN-LAST:event_tabb1MouseClicked
 
     private void mnBase(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnBase
-
-        List.of(App.values()).stream().filter(el -> el.frame != null && el != App.Top).forEach(el -> el.frame.dispose());
         String num_base = (mn61.isSelected()) ? "1" : (mn62.isSelected()) ? "2" : "3";
-        PathToDb frame = new PathToDb(this, num_base);
-        FrameToFile.setFrameSize(frame);
-        frame.setVisible(true);
-
+        Conn.prepareConnectBaseNumb(num_base);
         if (eProp.base_num.read().equals("1")) {
             mn61.setSelected(true);
         } else if (eProp.base_num.read().equals("2")) {

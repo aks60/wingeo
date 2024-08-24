@@ -458,7 +458,6 @@ public class Colors extends javax.swing.JFrame {
             UGui.insertRecordCur(tab1, eGroups.up, (record) -> {
                 record.set(eGroups.grup, TypeGrup.COLOR_GRP.id);
                 record.set(eGroups.name, "");
-                //record.setDev(eGroups.name, "Группа");
                 record.set(eGroups.val, 1);
             });
 
