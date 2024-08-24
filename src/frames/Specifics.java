@@ -72,7 +72,7 @@ public class Specifics extends javax.swing.JFrame {
         loadingTab1(winc.listSpec);
         UGui.setSelectedRow(tab1);
     }
-    
+
     public void createPpm() {
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Мат. ценности");
         mnAll.addActionListener(new java.awt.event.ActionListener() {
@@ -235,6 +235,7 @@ public class Specifics extends javax.swing.JFrame {
         btn25 = new javax.swing.JButton();
         btn26 = new javax.swing.JButton();
         btn27 = new javax.swing.JButton();
+        btn22 = new javax.swing.JButton();
         centr = new javax.swing.JPanel();
         scr1 = new javax.swing.JScrollPane();
         tab1 = new javax.swing.JTable() {
@@ -357,7 +358,7 @@ public class Specifics extends javax.swing.JFrame {
         });
 
         btn21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c056.gif"))); // NOI18N
-        btn21.setToolTipText(bundle.getString("Меню.Справка")); // NOI18N
+        btn21.setToolTipText(bundle.getString("Меню.Спецификация")); // NOI18N
         btn21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
         btn21.setFocusable(false);
         btn21.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -369,7 +370,7 @@ public class Specifics extends javax.swing.JFrame {
         });
 
         btn23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c023.gif"))); // NOI18N
-        btn23.setToolTipText(bundle.getString("Меню.Справка")); // NOI18N
+        btn23.setToolTipText(bundle.getString("Меню.Комплекты")); // NOI18N
         btn23.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
         btn23.setFocusable(false);
         btn23.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -381,7 +382,7 @@ public class Specifics extends javax.swing.JFrame {
         });
 
         btn24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c024.gif"))); // NOI18N
-        btn24.setToolTipText(bundle.getString("Меню.Справка")); // NOI18N
+        btn24.setToolTipText(bundle.getString("Меню.Соединения")); // NOI18N
         btn24.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
         btn24.setFocusable(false);
         btn24.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -393,7 +394,7 @@ public class Specifics extends javax.swing.JFrame {
         });
 
         btn25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c025.gif"))); // NOI18N
-        btn25.setToolTipText(bundle.getString("Меню.Справка")); // NOI18N
+        btn25.setToolTipText(bundle.getString("Меню.Вставки")); // NOI18N
         btn25.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
         btn25.setFocusable(false);
         btn25.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -405,7 +406,7 @@ public class Specifics extends javax.swing.JFrame {
         });
 
         btn26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c026.gif"))); // NOI18N
-        btn26.setToolTipText(bundle.getString("Меню.Справка")); // NOI18N
+        btn26.setToolTipText(bundle.getString("Меню.Заполнения")); // NOI18N
         btn26.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
         btn26.setFocusable(false);
         btn26.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -417,7 +418,7 @@ public class Specifics extends javax.swing.JFrame {
         });
 
         btn27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c027.gif"))); // NOI18N
-        btn27.setToolTipText(bundle.getString("Меню.Справка")); // NOI18N
+        btn27.setToolTipText(bundle.getString("Меню.Фурнитура")); // NOI18N
         btn27.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
         btn27.setFocusable(false);
         btn27.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -425,6 +426,18 @@ public class Specifics extends javax.swing.JFrame {
         btn27.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn27mnFurnityra(evt);
+            }
+        });
+
+        btn22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c041.gif"))); // NOI18N
+        btn22.setToolTipText(bundle.getString("Пересчитать")); // NOI18N
+        btn22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
+        btn22.setFocusable(false);
+        btn22.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn22.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btn22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn22ActionPerformed(evt);
             }
         });
 
@@ -437,6 +450,8 @@ public class Specifics extends javax.swing.JFrame {
                 .addComponent(btnFind1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnFind2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn22)
                 .addGap(18, 18, 18)
                 .addComponent(btn21)
                 .addGap(0, 0, 0)
@@ -451,9 +466,9 @@ public class Specifics extends javax.swing.JFrame {
                 .addComponent(btn23)
                 .addGap(18, 18, 18)
                 .addComponent(cbx2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(52, 52, 52)
                 .addComponent(cbx1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 206, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -482,7 +497,8 @@ public class Specifics extends javax.swing.JFrame {
                             .addComponent(btn25, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn26, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn27, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn21, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btn21, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn22, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -685,7 +701,7 @@ public class Specifics extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTest
 
     private void btn23mnKits(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn23mnKits
-
+//TODO Фильтр комплектов в списке спецификации
     }//GEN-LAST:event_btn23mnKits
 
     private void btn24mnJoining(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn24mnJoining
@@ -712,9 +728,18 @@ public class Specifics extends javax.swing.JFrame {
         ppmTree.show(north, btn21.getX(), btn21.getY() + 18);
     }//GEN-LAST:event_btn21mnSpecif
 
+    private void btn22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn22ActionPerformed
+        int index = UGui.getIndexRec(tab1);
+        createIwin();
+        loadingTab1(groups(winc.listSpec, cbx1.getSelectedIndex()));
+        cbxGroupBy(null);
+        UGui.setSelectedIndex(tab1, index);
+    }//GEN-LAST:event_btn22ActionPerformed
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code">     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn21;
+    private javax.swing.JButton btn22;
     private javax.swing.JButton btn23;
     private javax.swing.JButton btn24;
     private javax.swing.JButton btn25;
@@ -756,7 +781,7 @@ public class Specifics extends javax.swing.JFrame {
                 lab.setBackground(new java.awt.Color(212, 208, 200));
                 return lab;
             }
-        });         
+        });
         tab1.getColumnModel().getColumn(1).setCellRenderer(new DefCellRendererNumb("#0.#"));
         tab1.getColumnModel().getColumn(2).setCellRenderer(new DefCellRendererNumb("#0.#"));
         tab1.getColumnModel().getColumn(9).setCellRenderer(new DefCellRendererNumb(1));

@@ -80,6 +80,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnFind2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="btn22" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btn21" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="btn24" min="-2" max="-2" attributes="0"/>
@@ -93,9 +95,9 @@
                   <Component id="btn23" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="cbx2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                   <Component id="cbx1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="206" max="32767" attributes="0"/>
+                  <EmptySpace pref="122" max="32767" attributes="0"/>
                   <Component id="btnTest" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnReport" min="-2" max="-2" attributes="0"/>
@@ -129,6 +131,7 @@
                               <Component id="btn26" min="-2" pref="24" max="-2" attributes="0"/>
                               <Component id="btn27" min="-2" pref="24" max="-2" attributes="0"/>
                               <Component id="btn21" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="btn22" min="-2" pref="24" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
@@ -359,7 +362,7 @@
               <Image iconType="3" name="/resource/img24/c056.gif"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x421;&#x43f;&#x435;&#x446;&#x438;&#x444;&#x438;&#x43a;&#x430;&#x446;&#x438;&#x44f;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x421;&#x43f;&#x440;&#x430;&#x432;&#x43a;&#x430;&quot;)"/>
+              <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x421;&#x43f;&#x435;&#x446;&#x438;&#x444;&#x438;&#x43a;&#x430;&#x446;&#x438;&#x44f;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x421;&#x43f;&#x435;&#x446;&#x438;&#x444;&#x438;&#x43a;&#x430;&#x446;&#x438;&#x44f;&quot;)"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -384,7 +387,7 @@
               <Image iconType="3" name="/resource/img24/c023.gif"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x41a;&#x43e;&#x43c;&#x43f;&#x43b;&#x435;&#x43a;&#x442;&#x44b;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x421;&#x43f;&#x440;&#x430;&#x432;&#x43a;&#x430;&quot;)"/>
+              <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x41a;&#x43e;&#x43c;&#x43f;&#x43b;&#x435;&#x43a;&#x442;&#x44b;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x41a;&#x43e;&#x43c;&#x43f;&#x43b;&#x435;&#x43a;&#x442;&#x44b;&quot;)"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -409,7 +412,7 @@
               <Image iconType="3" name="/resource/img24/c024.gif"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x421;&#x43e;&#x435;&#x434;&#x438;&#x43d;&#x435;&#x43d;&#x438;&#x44f;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x421;&#x43f;&#x440;&#x430;&#x432;&#x43a;&#x430;&quot;)"/>
+              <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x421;&#x43e;&#x435;&#x434;&#x438;&#x43d;&#x435;&#x43d;&#x438;&#x44f;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x421;&#x43e;&#x435;&#x434;&#x438;&#x43d;&#x435;&#x43d;&#x438;&#x44f;&quot;)"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -434,7 +437,7 @@
               <Image iconType="3" name="/resource/img24/c025.gif"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x412;&#x441;&#x442;&#x430;&#x432;&#x43a;&#x438;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x421;&#x43f;&#x440;&#x430;&#x432;&#x43a;&#x430;&quot;)"/>
+              <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x412;&#x441;&#x442;&#x430;&#x432;&#x43a;&#x438;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x412;&#x441;&#x442;&#x430;&#x432;&#x43a;&#x438;&quot;)"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -459,7 +462,7 @@
               <Image iconType="3" name="/resource/img24/c026.gif"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x417;&#x430;&#x43f;&#x43e;&#x43b;&#x43d;&#x435;&#x43d;&#x438;&#x44f;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x421;&#x43f;&#x440;&#x430;&#x432;&#x43a;&#x430;&quot;)"/>
+              <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x417;&#x430;&#x43f;&#x43e;&#x43b;&#x43d;&#x435;&#x43d;&#x438;&#x44f;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x417;&#x430;&#x43f;&#x43e;&#x43b;&#x43d;&#x435;&#x43d;&#x438;&#x44f;&quot;)"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -484,7 +487,7 @@
               <Image iconType="3" name="/resource/img24/c027.gif"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x424;&#x443;&#x440;&#x43d;&#x438;&#x442;&#x443;&#x440;&#x430;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x421;&#x43f;&#x440;&#x430;&#x432;&#x43a;&#x430;&quot;)"/>
+              <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x424;&#x443;&#x440;&#x43d;&#x438;&#x442;&#x443;&#x440;&#x430;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x424;&#x443;&#x440;&#x43d;&#x438;&#x442;&#x443;&#x440;&#x430;&quot;)"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -501,6 +504,31 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn27mnFurnityra"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btn22">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resource/img24/c041.gif"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="resource/hints/okno.properties" key="&#x41f;&#x435;&#x440;&#x435;&#x441;&#x447;&#x438;&#x442;&#x430;&#x442;&#x44c;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41f;&#x435;&#x440;&#x435;&#x441;&#x447;&#x438;&#x442;&#x430;&#x442;&#x44c;&quot;)"/>
+            </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder>
+                  <Color PropertyName="color" blue="0" green="ff" red="ff" type="rgb"/>
+                </LineBorder>
+              </Border>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resource/img24/c001.gif"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn22ActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
