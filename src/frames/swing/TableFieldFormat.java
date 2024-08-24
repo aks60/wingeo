@@ -32,7 +32,7 @@ public class TableFieldFormat {
     private JComponent comp = null;
     private Query query = null;
     private HashMap<JTextComponent, Field> mapTxt = new HashMap(16);
-    private static boolean update = false;
+    public static boolean update = false;
 
     //Конструктор
     public TableFieldFormat(JTree comp) {
@@ -90,15 +90,20 @@ public class TableFieldFormat {
 
     //Очистить текст
     public void clear() {
-        for (Map.Entry<JTextComponent, Field> me : mapTxt.entrySet()) {
-            JTextComponent textcomp = me.getKey();
-            Field field = me.getValue();
-            textcomp.setText(null);
-            if (field.meta().type().equals(Field.TYPE.STR)) {
-                textcomp.setText("");
-            } else {
-                textcomp.setText("0");
+        try {
+            update = false;
+            for (Map.Entry<JTextComponent, Field> me : mapTxt.entrySet()) {
+                JTextComponent textcomp = me.getKey();
+                Field field = me.getValue();
+                textcomp.setText(null);
+                if (field.meta().type().equals(Field.TYPE.STR)) {
+                    textcomp.setText("");
+                } else {
+                    textcomp.setText("0");
+                }
             }
+        } finally {
+            update = true;
         }
     }
 
