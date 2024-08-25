@@ -653,6 +653,7 @@ public class Kits extends javax.swing.JFrame {
                 groupsRec.setNo(eGroups.id, id);
                 groupsRec.setNo(eGroups.grup, TypeGrup.CATEG_KIT.id);
                 groupsRec.setNo(eGroups.name, result);
+                eGroups.data().add(groupsRec); //добавим в кэш новую запись
                 qCateg.insert(groupsRec);
                 loadingData();
                 int index;
