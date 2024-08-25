@@ -4,6 +4,7 @@ import builder.Wincalc;
 import builder.param.KitDet;
 import dataset.Query;
 
+//TODO Сделать комплекты в списке спецификации
 public class SpcKits extends Cal5e {
 
     private KitDet kitDet = null;

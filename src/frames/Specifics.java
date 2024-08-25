@@ -701,7 +701,8 @@ public class Specifics extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTest
 
     private void btn23mnKits(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn23mnKits
-//TODO Фильтр комплектов в списке спецификации
+        List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec -> "КОМ".equals(rec.place.substring(0, 3))).collect(toList());
+        loadingTab1(listSpec);
     }//GEN-LAST:event_btn23mnKits
 
     private void btn24mnJoining(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn24mnJoining
