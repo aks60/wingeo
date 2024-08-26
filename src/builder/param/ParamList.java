@@ -813,7 +813,6 @@ public class ParamList {
     }
 
     public static Checkparam check_STRING = (c) -> {
-
         return true;
     };
 
