@@ -147,16 +147,19 @@ public class DicKits extends javax.swing.JDialog {
             //List.of(btn9, btn13, btn14).forEach(act -> act.setEnabled(false));
             List.of(txt1, txt2, txt3, txt9, txt13, txt14).forEach(act -> act.setBackground(new java.awt.Color(212, 208, 200)));
 
+            //Автоподбор
             if (qKitdet.stream().filter(rec -> rec.getInt(eKitdet.color1_id) == 0).findFirst().orElse(null) != null) {
                 txt9.setEditable(true);
                 //btn9.setEnabled(true);
                 txt9.setBackground(new java.awt.Color(255, 255, 255));
             }
+            //Автоподбор
             if (qKitdet.stream().filter(rec -> rec.getInt(eKitdet.color2_id) == 0).findFirst().orElse(null) != null) {
                 txt13.setEditable(true);
                 //btn13.setEnabled(true);
                 txt13.setBackground(new java.awt.Color(255, 255, 255));
             }
+            //Автоподбор
             if (qKitdet.stream().filter(rec -> rec.getInt(eKitdet.color3_id) == 0).findFirst().orElse(null) != null) {
                 txt14.setEditable(true);
                 //btn14.setEnabled(true);
@@ -199,7 +202,7 @@ public class DicKits extends javax.swing.JDialog {
     }
 
     public void addSpecific() {
-        
+
         double H = UCom.getDbl(txt1.getText(), 0.0);
         double L = UCom.getDbl(txt2.getText(), 0.0);
         double Q = UCom.getDbl(txt3.getText(), 1.0);
@@ -214,6 +217,7 @@ public class DicKits extends javax.swing.JDialog {
             if (kitDet.filter(mapParam, kitdetRec) == true) {
 
                 Record artkitRec = eArtikl.get(kitdetRec.getInt(eKitdet.artikl_id));
+
                 Record prjkitRec = ePrjkit.up.newRecord(Query.INS);
                 prjkitRec.set(ePrjkit.id, Conn.genId(ePrjkit.up));
                 prjkitRec.set(ePrjkit.project_id, projectID);
@@ -224,7 +228,6 @@ public class DicKits extends javax.swing.JDialog {
 
                 //Длина, мм
                 Double width = UPar.to_8065_8066_9065_9066(mapParam);
-                width = (width == null) ? 0 : width;
                 prjkitRec.set(ePrjkit.width, width); //длина мм   
 
                 //Ширина, мм
@@ -279,6 +282,7 @@ public class DicKits extends javax.swing.JDialog {
                     }
                 }
                 qPrjkit.insert(prjkitRec);
+                ePrjkit.up.query().add(prjkitRec);
             }
         }
     }
@@ -767,9 +771,9 @@ public class DicKits extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Укажите текстуру комплекта.", "Предупреждение", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-         
+
         addSpecific();
-        
+
         listener.action(null);
         this.dispose();
     }//GEN-LAST:event_btnChoice

@@ -204,7 +204,7 @@ public class UPar {
                 spcAdd.anglCut0 = elem5e.spcRec.anglCut0;
                 spcAdd.anglCut1 = elem5e.spcRec.anglCut1;
 
-            } else  if ("установить (90° x 90°)".equals(txt)) {
+            } else if ("установить (90° x 90°)".equals(txt)) {
                 spcAdd.anglCut0 = 90;
                 spcAdd.anglCut1 = 90;
 
@@ -262,11 +262,11 @@ public class UPar {
             spcAdd.width = spcAdd.width + UCom.getDbl(arr[1]);
         }
     }
-    
+
     //Количество ед.
     public static double to_7030_7031_8060_8061_9060_9061(HashMap<Integer, String> mapParam) {
-        String numb = getParam(mapParam, 7030, 7031, 8060, 8061, 9060, 9061);
-        if (numb != null) {
+        String numb = getParam("null", mapParam, 7030, 7031, 8060, 8061, 9060, 9061);
+        if (!"null".equals(numb)) {
             return Double.valueOf(numb);
         }
         return 1;
@@ -274,26 +274,20 @@ public class UPar {
 
     //Поправка, мм
     public static double to_8050(HashMap<Integer, String> mapParam) {
-        String numb = getParam(mapParam, 8050);
-        if (numb != null) {
-            return Double.valueOf(numb);
-        }
-        return 0;
+        String numb = getParam(0, mapParam, 8050);
+        return Double.valueOf(numb);
     }
 
     //Длина, мм
     public static Double to_8065_8066_9065_9066(HashMap<Integer, String> mapParam) {
-        String numb = getParam(mapParam, 8065, 8066, 9065, 9066);
-        if (numb != null) {
-            return Double.valueOf(numb);
-        }
-        return null;
+        String numb = getParam(0, mapParam, 8065, 8066, 9065, 9066);
+        return Double.valueOf(numb);
     }
 
     //Ширина, мм
     public static Double to_8070_8071_9070_9071(HashMap<Integer, String> mapParam) {
-        String numb = getParam(mapParam, 8070, 8071, 9070, 9071);
-        if (numb != null) {
+        String numb = getParam("null", mapParam, 8070, 8071, 9070, 9071);
+        if (!"null".equals(numb)) {
             return Double.valueOf(numb);
         }
         return null;
@@ -301,25 +295,25 @@ public class UPar {
 
     //Углы реза "90х90", "90х45", "45х90", "45х45"
     public static Double to_8075(HashMap<Integer, String> mapParam, int m) {
-        String angl = getParam(mapParam, 8075);
-        if (angl != null) {
+        String angl = getParam("null", mapParam, 8075);
+        if (!"null".equals(angl)) {
             String s[] = angl.split("х");
             return Double.valueOf(s[m]);
         }
         return null;
     }
 
-    public static String getParam(HashMap<Integer, String> mapParam, int... p) {
+    public static String getParam(Object def, HashMap<Integer, String> mapParam, int... p) {
 
         if (mapParam != null) {
             for (int index = 0; index < p.length; ++index) {
                 int key = p[index];
-                String str = mapParam.get(key);
+                String str = mapParam.get(Integer.valueOf(key));
                 if (str != null) {
                     return str;
                 }
             }
         }
-        return null;
-    }    
+        return String.valueOf(def);
+    }
 }

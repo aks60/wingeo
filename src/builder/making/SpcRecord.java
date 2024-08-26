@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 import builder.model.ElemSimple;
+import builder.model.UPar;
 import common.ArraySpc;
 import java.util.List;
 
@@ -112,10 +113,10 @@ public class SpcRecord {
         this.artiklRec = artiklRec;
         setAnglCut();
     }
-    
+
     public Record artiklRec() {
         return artiklRec;
-    }    
+    }
 
     public void color(int colorID1, int colorID2, int colorID3) {
         this.colorID1 = colorID1;
@@ -178,17 +179,7 @@ public class SpcRecord {
     }
 
     public String getParam(Object def, int... p) {
-
-        if (mapParam != null) {
-            for (int index = 0; index < p.length; ++index) {
-                int key = p[index];
-                String str = mapParam.get(Integer.valueOf(key));
-                if (str != null) {
-                    return str;
-                }
-            }
-        }
-        return String.valueOf(def);
+        return UPar.getParam(def, mapParam, p);
     }
 
     public static void write_csv(ArrayList<SpcRecord> spcList) {
