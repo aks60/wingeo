@@ -921,7 +921,7 @@ public class Fillings extends javax.swing.JFrame {
                 int id = qGlasgrp.getAs(UGui.getIndexRec(tab1), eGlasgrp.id);
                 record.set(eGlasdet.depth, 0);
                 record.set(eGlasdet.glasgrp_id, id);
-                int index = UGui.getIndexKeyValue(tab2, record, eGlasdet.id);
+                int index = UGui.getIndexFind(tab2, eGlasdet.id, record.get(eGlasdet.id));
                 qGlasdet.table(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
             });
 
@@ -948,7 +948,7 @@ public class Fillings extends javax.swing.JFrame {
                 record.set(eGlasprof.gsize, .0);
                 record.set(eGlasprof.inside, 1);
                 record.set(eGlasprof.outside, 1);
-                int index = UGui.getIndexKeyValue(tab5, record, eGlasprof.id);
+                int index = UGui.getIndexFind(tab5, eGlasprof.id, record.get(eGlasprof.id));
                 qGlasprof.table(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
             });
         }

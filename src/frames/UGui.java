@@ -507,8 +507,7 @@ public class UGui {
         UGui.setSelectedRow(table);
     }
 
-    public static int getIndexKeyValue(JTable table, Record record, Field field) {
-        Object val = record.get(field);
+    public static int getIndexFind(JTable table, Field field, Object val) {
         Query query = getQuery(table);
         if (val != null) {
             for (int i = 0; i < query.size(); i++) {
@@ -551,14 +550,14 @@ public class UGui {
         Record record = field.newRecord(Query.INS);
         record.setNo(field.fields()[1], Conn.genId(field));
 
-        listener.action(record);
-
         if (++index <= table.getRowCount()) {
             query.add(index, record);
         } else {
             query.add(--index, record);
         }
+
         field.query().add(record);  //добавим запись в кэш
+        listener.action(record);
 
         ((DefaultTableModel) table.getModel()).fireTableRowsInserted(index, index);
         UGui.setSelectedIndex(table, index);
@@ -594,7 +593,7 @@ public class UGui {
         if (table.getSelectedRow() != -1) {
             Query query = ((DefTableModel) table.getModel()).getQuery();
             int row = table.getSelectedRow();
-            int index = getIndexRec(table);
+            int index = UGui.getIndexRec(table);
             Record record = query.get(index);
             record.set(0, Query.DEL);
             if (query.delete(record)) {
@@ -757,7 +756,7 @@ public class UGui {
                     record2.set(text, record.getStr(0)); //???
                 }
             }
-            int index = getIndexRec(table);
+            int index = UGui.getIndexRec(table);
             ((DefaultTableModel) table.getModel()).fireTableRowsUpdated(index, index);
         } catch (Exception e) {
             System.err.println("Ошибка:UGui.cellParamNameOrValue() " + e);
@@ -769,7 +768,7 @@ public class UGui {
     public static boolean cellParamTypeOrVid(JTable table, Object componentCell, Field groups_id) {
         try {
             Query qXxxpar = ((DefTableModel) table.getModel()).getQuery();
-            int groupsID = qXxxpar.getAs(getIndexRec(table), groups_id);
+            int groupsID = qXxxpar.getAs(UGui.getIndexRec(table), groups_id);
 
             //Если компонент класс DefCellEditorBtn
             //установим вид и тип ячейки
@@ -813,7 +812,7 @@ public class UGui {
     //Редактирование параметра текстуры
     public static void cellParamColor(Record record, JTable table, Field color_fk, Field color_us, JTable... tables) {
         UGui.stopCellEditing(tables);
-        int index = getIndexRec(table);
+        int index = UGui.getIndexRec(table);
         Query query = ((DefTableModel) table.getModel()).getQuery();
         Record detailRec = query.get(index);
         int group = (eGroups.values().length == record.size()) ? record.getInt(eGroups.id) : record.getInt(eColor.id);
@@ -837,8 +836,8 @@ public class UGui {
     public static void cellParamEnum(Record record, JTable table, Field field_fk, JTable... tables) {
         UGui.stopCellEditing(tables);
         Query query = ((DefTableModel) table.getModel()).getQuery();
-        int index = getIndexRec(table);
-        query.set(record.getInt(0), getIndexRec(table), field_fk);
+        int index = UGui.getIndexRec(table);
+        query.set(record.getInt(0), UGui.getIndexRec(table), field_fk);
         ((DefaultTableModel) table.getModel()).fireTableDataChanged();
         UGui.setSelectedIndex(table, index);
     }

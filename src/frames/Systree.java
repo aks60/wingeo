@@ -3704,7 +3704,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     record.set(eSysprof.systree_id, systreeID);
                     int max = qSysprof.stream().mapToInt(rec -> rec.getInt(eSysprof.npp)).max().orElse(0); //.getAsInt();
                     record.set(eSysprof.npp, ++max);
-                    int index = UGui.getIndexKeyValue(tab2, record, eSysprof.id);
+                    int index = UGui.getIndexFind(tab2, eSysprof.id, record.get(eSysprof.id));
                     qSysprof.table(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
                 });
 
@@ -3715,7 +3715,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     record.setNo(eSysfurn.replac, 0);
                     record.setNo(eSysfurn.side_open, TypeOpen2.REQ.id);
                     record.setNo(eSysfurn.hand_pos, LayoutKnob.MIDL.id);
-                    int index = UGui.getIndexKeyValue(tab3, record, eSysfurn.id);
+                    int index = UGui.getIndexFind(tab3, eSysfurn.id, record.get(eSysfurn.id));
                     qSysfurn.table(eFurniture.up).add(index, eFurniture.up.newRecord(Query.SEL));
                 });
             } else if (tab4.getBorder() != null) {

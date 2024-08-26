@@ -3098,7 +3098,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 prjprodRec.set(ePrjprod.num, 1);
                 prjprodRec.set(ePrjprod.script, record.getStr(eSysprod.script));
                 prjprodRec.set(ePrjprod.systree_id, record.getStr(eSysprod.systree_id));
-                prjprodRec.set(ePrjprod.project_id, qProject.getAs(UGui.getIndexRec(tab1), eProject.id));                
+                prjprodRec.set(ePrjprod.project_id, qProject.getAs(UGui.getIndexRec(tab1), eProject.id));
                 ePrjprod.data().add(prjprodRec); //добавим в кэш новую запись
                 qPrjprod.insert(prjprodRec);
             });
@@ -3113,23 +3113,21 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 }
             }
         } else if (tab4.getBorder() != null) {
-            int index = UGui.getIndexRec(tab1);
+            int index1 = UGui.getIndexRec(tab1);
             int index2 = UGui.getIndexRec(tab2);
-            if (index != -1) {
+            if (index1 != -1 && index2 != -1) {
                 if (((JButton) evt.getSource()) == btnIns) {
                     UGui.insertRecordCur(tab4, ePrjkit.up, (record) -> {
-                        if (index2 != -1) {
-                            record.set(ePrjkit.prjprod_id, qPrjprod.get(index2, ePrjprod.id));
-                        }
-                        record.set(ePrjkit.project_id, qProject.get(index, eProject.id));
-                        int index3 = UGui.getIndexKeyValue(tab2, record, ePrjkit.id);
+                        record.set(ePrjkit.prjprod_id, qPrjprod.get(index2, ePrjprod.id));
+                        record.set(ePrjkit.project_id, qProject.get(index1, eProject.id));
+                        int index3 = UGui.getIndexFind(tab4, ePrjkit.id, record.get(ePrjkit.id));
                         qPrjkit.table(eArtikl.up).add(index3, eArtikl.up.newRecord(Query.SEL));
                     });
                 } else if (((JButton) evt.getSource()) == btnSet) {
                     DicKits frame = new DicKits(Orders.this, (q) -> {
                         loadingTab4();
                         return true;
-                    }, qProject.getAs(index, eProject.id), qPrjprod.getAs(index2, ePrjprod.id));
+                    }, qProject.getAs(index1, eProject.id), qPrjprod.getAs(index2, ePrjprod.id));
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Заказ не выбран.", "Предупреждение", JOptionPane.INFORMATION_MESSAGE);
@@ -3139,7 +3137,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
         UGui.findComponents(getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
-        Query.listOpenTable.forEach(q -> q.execsql());  
+        Query.listOpenTable.forEach(q -> q.execsql());
         eProp.save(); //запишем текущий ordersId в файл  
     }//GEN-LAST:event_windowClosed
 

@@ -1,9 +1,9 @@
 package frames.dialog;
 
+import builder.model.UPar;
 import builder.param.KitDet;
 import builder.param.ParamList;
 import common.UCom;
-import common.eProp;
 import common.listener.ListenerObject;
 import dataset.Conn;
 import dataset.Field;
@@ -25,7 +25,6 @@ import domain.eGroups;
 import domain.eKitdet;
 import domain.eKitpar2;
 import domain.eKits;
-import domain.eParams;
 import domain.ePrjkit;
 import enums.Enam;
 import enums.TypeGrup;
@@ -145,18 +144,22 @@ public class DicKits extends javax.swing.JDialog {
             Integer kitsId = kitsRec.getInt(eKits.id);
             qKitdet.sql(eKitdet.data(), eKitdet.kits_id, kitsId).sort(eKitdet.artikl_id);
             List.of(txt1, txt2, txt3, txt9, txt13, txt14).forEach(act -> act.setEditable(false));
+            //List.of(btn9, btn13, btn14).forEach(act -> act.setEnabled(false));
             List.of(txt1, txt2, txt3, txt9, txt13, txt14).forEach(act -> act.setBackground(new java.awt.Color(212, 208, 200)));
 
             if (qKitdet.stream().filter(rec -> rec.getInt(eKitdet.color1_id) == 0).findFirst().orElse(null) != null) {
                 txt9.setEditable(true);
+                //btn9.setEnabled(true);
                 txt9.setBackground(new java.awt.Color(255, 255, 255));
             }
             if (qKitdet.stream().filter(rec -> rec.getInt(eKitdet.color2_id) == 0).findFirst().orElse(null) != null) {
                 txt13.setEditable(true);
+                //btn13.setEnabled(true);
                 txt13.setBackground(new java.awt.Color(255, 255, 255));
             }
             if (qKitdet.stream().filter(rec -> rec.getInt(eKitdet.color3_id) == 0).findFirst().orElse(null) != null) {
                 txt14.setEditable(true);
+                //btn14.setEnabled(true);
                 txt14.setBackground(new java.awt.Color(255, 255, 255));
             }
             for (Record kitdetRec : qKitdet) {
@@ -193,6 +196,91 @@ public class DicKits extends javax.swing.JDialog {
             qKitpar2.addAll(kitpar2List);
         }
         ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
+    }
+
+    public void addSpecific() {
+        
+        double H = UCom.getDbl(txt1.getText(), 0.0);
+        double L = UCom.getDbl(txt2.getText(), 0.0);
+        double Q = UCom.getDbl(txt3.getText(), 1.0);
+        HashMap<Integer, String> mapParam = new HashMap<Integer, String>();
+        KitDet kitDet = new KitDet(Q, L, H);
+
+        //Цикл по списку детализации
+        for (Record kitdetRec : qKitdet) {
+            mapParam.clear();
+
+            //ФИЛЬТР детализации, параметры накапливаются в mapParam
+            if (kitDet.filter(mapParam, kitdetRec) == true) {
+
+                Record artkitRec = eArtikl.get(kitdetRec.getInt(eKitdet.artikl_id));
+                Record prjkitRec = ePrjkit.up.newRecord(Query.INS);
+                prjkitRec.set(ePrjkit.id, Conn.genId(ePrjkit.up));
+                prjkitRec.set(ePrjkit.project_id, projectID);
+                prjkitRec.set(ePrjkit.prjprod_id, prjprodID);
+                prjkitRec.set(ePrjkit.artikl_id, artkitRec.getInt(eArtikl.id));
+
+                prjkitRec.set(ePrjkit.numb, UPar.to_7030_7031_8060_8061_9060_9061(mapParam)); //количество    
+
+                //Длина, мм
+                Double width = UPar.to_8065_8066_9065_9066(mapParam);
+                width = (width == null) ? 0 : width;
+                prjkitRec.set(ePrjkit.width, width); //длина мм   
+
+                //Ширина, мм
+                Double height = UPar.to_8070_8071_9070_9071(mapParam);
+                height = (height == null) ? artkitRec.getDbl(eArtikl.height) : height;
+                prjkitRec.set(ePrjkit.height, height); //ширина  
+
+                //Поправка, мм
+                double correct = UPar.to_8050(mapParam);
+                prjkitRec.set(ePrjkit.width, width + correct); //длина мм 
+
+                //Угол реза 1
+                Double angl1 = UPar.to_8075(mapParam, 0);
+                angl1 = (angl1 == null) ? 90 : angl1;
+                prjkitRec.set(ePrjkit.angl1, angl1); //угол 1  
+
+                //Угол реза 2
+                Double angl2 = UPar.to_8075(mapParam, 1);
+                angl1 = (angl2 == null) ? 90 : angl2;
+                prjkitRec.set(ePrjkit.angl2, angl2); //угол 2
+
+                //Текстура
+                prjkitRec.set(ePrjkit.color1_id, kitdetRec.get(eKitdet.color1_id));
+                prjkitRec.set(ePrjkit.color2_id, kitdetRec.get(eKitdet.color2_id));
+                prjkitRec.set(ePrjkit.color3_id, kitdetRec.get(eKitdet.color3_id));
+
+                //Автоподбор
+                if (kitdetRec.getInt(eKitdet.color1_id) == 0) {
+                    HashSet<Record> colorSet = UGui.artiklToColorSet(kitdetRec.getInt(eKitdet.artikl_id), 1);
+                    for (Record colorRec : colorSet) {
+                        if (colorID[0].equals(colorRec.get(eColor.id))) {
+                            prjkitRec.set(ePrjkit.color1_id, colorID[0]); //color1
+                        }
+                    }
+                }
+                //Автоподбор
+                if (kitdetRec.getInt(eKitdet.color2_id) == 0) {
+                    HashSet<Record> colorSet = UGui.artiklToColorSet(kitdetRec.getInt(eKitdet.artikl_id), 2);
+                    for (Record colorRec : colorSet) {
+                        if (colorID[1].equals(colorRec.get(eColor.id))) {
+                            prjkitRec.set(ePrjkit.color2_id, colorID[1]); //color2
+                        }
+                    }
+                }
+                //Автоподбор
+                if (kitdetRec.getInt(eKitdet.color3_id) == 0) {
+                    HashSet<Record> colorSet = UGui.artiklToColorSet(kitdetRec.getInt(eKitdet.artikl_id), 3);
+                    for (Record colorRec : colorSet) {
+                        if (colorID[2].equals(colorRec.get(eColor.id))) {
+                            prjkitRec.set(ePrjkit.color3_id, colorID[2]); //color3
+                        }
+                    }
+                }
+                qPrjkit.insert(prjkitRec);
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -679,88 +767,9 @@ public class DicKits extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Укажите текстуру комплекта.", "Предупреждение", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        double H = UCom.getDbl(txt1.getText(), 0.0);
-        double L = UCom.getDbl(txt2.getText(), 0.0);
-        double Q = UCom.getDbl(txt3.getText(), 1.0);
-
-        HashMap<Integer, String> mapParam = new HashMap<Integer, String>();
-        KitDet kitDet = new KitDet(Q, L, H);
-        //Цикл по списку детализации
-        for (Record kitdetRec : qKitdet) {
-            mapParam.clear();
-
-            //ФИЛЬТР детализации, параметры накапливаются в mapParam
-            if (kitDet.filter(mapParam, kitdetRec) == true) {
-
-                Record artkitRec = eArtikl.get(kitdetRec.getInt(eKitdet.artikl_id));
-                Record prjkitRec = ePrjkit.up.newRecord(Query.INS);
-                prjkitRec.set(ePrjkit.id, Conn.genId(ePrjkit.up));
-                prjkitRec.set(ePrjkit.project_id, projectID);
-                prjkitRec.set(ePrjkit.prjprod_id, prjprodID);
-                prjkitRec.set(ePrjkit.artikl_id, artkitRec.getInt(eArtikl.id));
-
-                prjkitRec.set(ePrjkit.numb, to_7030_7031_8060_8061_9060_9061(mapParam)); //количество    
-
-                //Длина, мм
-                Double width = to_8065_8066_9065_9066(mapParam);
-                width = (width == null) ? 0 : width;
-                prjkitRec.set(ePrjkit.width, width); //длина мм   
-
-                //Ширина, мм
-                Double height = to_8070_8071_9070_9071(mapParam);
-                height = (height == null) ? artkitRec.getDbl(eArtikl.height) : height;
-                prjkitRec.set(ePrjkit.height, height); //ширина  
-
-                //Поправка, мм
-                double correct = to_8050(mapParam);
-                prjkitRec.set(ePrjkit.width, width + correct); //длина мм 
-
-                //Угол реза 1
-                Double angl1 = to_8075(mapParam, 0);
-                angl1 = (angl1 == null) ? 90 : angl1;
-                prjkitRec.set(ePrjkit.angl1, angl1); //угол 1  
-
-                //Угол реза 2
-                Double angl2 = to_8075(mapParam, 1);
-                angl1 = (angl2 == null) ? 90 : angl2;
-                prjkitRec.set(ePrjkit.angl2, angl2); //угол 2
-
-                //Текстура
-                prjkitRec.set(ePrjkit.color1_id, kitdetRec.get(eKitdet.color1_id));
-                prjkitRec.set(ePrjkit.color2_id, kitdetRec.get(eKitdet.color2_id));
-                prjkitRec.set(ePrjkit.color3_id, kitdetRec.get(eKitdet.color3_id));
-
-                //Автоподбор
-                if (kitdetRec.getInt(eKitdet.color1_id) == 0) {
-                    HashSet<Record> colorSet = UGui.artiklToColorSet(kitdetRec.getInt(eKitdet.artikl_id), 1);
-                    for (Record colorRec : colorSet) {
-                        if (colorID[0].equals(colorRec.get(eColor.id))) {
-                            prjkitRec.set(ePrjkit.color1_id, colorID[0]); //color1
-                        }
-                    }
-                }
-                //Автоподбор
-                if (kitdetRec.getInt(eKitdet.color2_id) == 0) {
-                    HashSet<Record> colorSet = UGui.artiklToColorSet(kitdetRec.getInt(eKitdet.artikl_id), 2);
-                    for (Record colorRec : colorSet) {
-                        if (colorID[1].equals(colorRec.get(eColor.id))) {
-                            prjkitRec.set(ePrjkit.color2_id, colorID[1]); //color2
-                        }
-                    }
-                }
-                //Автоподбор
-                if (kitdetRec.getInt(eKitdet.color3_id) == 0) {
-                    HashSet<Record> colorSet = UGui.artiklToColorSet(kitdetRec.getInt(eKitdet.artikl_id), 3);
-                    for (Record colorRec : colorSet) {
-                        if (colorID[2].equals(colorRec.get(eColor.id))) {
-                            prjkitRec.set(ePrjkit.color3_id, colorID[2]); //color3
-                        }
-                    }
-                }
-                qPrjkit.insert(prjkitRec);
-            }
-        }
-
+         
+        addSpecific();
+        
         listener.action(null);
         this.dispose();
     }//GEN-LAST:event_btnChoice
@@ -836,20 +845,6 @@ public class DicKits extends javax.swing.JDialog {
             txt14.setText(colorRec.getStr(eColor.name));
             colorID[2] = colorRec.getInt(eColor.id);
         }
-    }
-
-    private String getParam(HashMap<Integer, String> mapParam, int... p) {
-
-        if (mapParam != null) {
-            for (int index = 0; index < p.length; ++index) {
-                int key = p[index];
-                String str = mapParam.get(key);
-                if (str != null) {
-                    return str;
-                }
-            }
-        }
-        return null;
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
@@ -962,51 +957,5 @@ public class DicKits extends javax.swing.JDialog {
                 }
             }
         });
-    }
-
-    //Количество ед.
-    private double to_7030_7031_8060_8061_9060_9061(HashMap<Integer, String> mapParam) {
-        String numb = getParam(mapParam, 7030, 7031, 8060, 8061, 9060, 9061);
-        if (numb != null) {
-            return Double.valueOf(numb);
-        }
-        return 1;
-    }
-
-    //Поправка, мм
-    private double to_8050(HashMap<Integer, String> mapParam) {
-        String numb = getParam(mapParam, 8050);
-        if (numb != null) {
-            return Double.valueOf(numb);
-        }
-        return 0;
-    }
-
-    //Длина, мм
-    private Double to_8065_8066_9065_9066(HashMap<Integer, String> mapParam) {
-        String numb = getParam(mapParam, 8065, 8066, 9065, 9066);
-        if (numb != null) {
-            return Double.valueOf(numb);
-        }
-        return null;
-    }
-
-    //Ширина, мм
-    private Double to_8070_8071_9070_9071(HashMap<Integer, String> mapParam) {
-        String numb = getParam(mapParam, 8070, 8071, 9070, 9071);
-        if (numb != null) {
-            return Double.valueOf(numb);
-        }
-        return null;
-    }
-
-    //Углы реза "90х90", "90х45", "45х90", "45х45"
-    private Double to_8075(HashMap<Integer, String> mapParam, int m) {
-        String angl = getParam(mapParam, 8075);
-        if (angl != null) {
-            String s[] = angl.split("х");
-            return Double.valueOf(s[m]);
-        }
-        return null;
     }
 }

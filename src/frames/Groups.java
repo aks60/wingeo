@@ -8,7 +8,6 @@ import dataset.Record;
 import domain.eCurrenc;
 import domain.eGroups;
 import enums.TypeGrup;
-import static frames.UGui.getIndexRec;
 import frames.swing.DefCellEditorBtn;
 import frames.swing.DefCellEditorNumb;
 import frames.swing.DefCellRendererNumb;
@@ -24,6 +23,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import report.ExecuteCmd;
 import report.HtmlOfTable;
+import static frames.UGui.getIndexFind;
+import static frames.UGui.getIndexRec;
 
 public class Groups extends javax.swing.JFrame {
 
