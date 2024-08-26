@@ -894,6 +894,7 @@ public class UGui {
         }
     }
 
+    //Все доступные цвета артикла artiklID
     public static HashSet<Record> artiklToColorSet(int artiklID) {
         HashSet<Record> colorSet = new HashSet<Record>();
         Query artdetList = new Query(eArtdet.values()).sql(eArtdet.data(), eArtdet.artikl_id, artiklID);

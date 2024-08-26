@@ -265,11 +265,8 @@ public class UPar {
 
     //Количество ед.
     public static double to_7030_7031_8060_8061_9060_9061(HashMap<Integer, String> mapParam) {
-        String numb = getParam("null", mapParam, 7030, 7031, 8060, 8061, 9060, 9061);
-        if (!"null".equals(numb)) {
-            return Double.valueOf(numb);
-        }
-        return 1;
+        String numb = getParam(0, mapParam, 7030, 7031, 8060, 8061, 9060, 9061);
+        return Double.valueOf(numb);
     }
 
     //Поправка, мм
