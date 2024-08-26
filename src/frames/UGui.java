@@ -912,6 +912,7 @@ public class UGui {
         return colorSet;
     }
 
+    //Все доступные цвета артикла artiklID
     public static HashSet<Record> artiklToColorSet(int artiklID, int side) {
         HashSet<Record> colorSet = new HashSet<Record>();
         Field field = (side == 1) ? eArtdet.mark_c1 : (side == 2) ? eArtdet.mark_c2 : eArtdet.mark_c3;

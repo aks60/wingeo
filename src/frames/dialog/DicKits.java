@@ -50,7 +50,7 @@ public class DicKits extends javax.swing.JDialog {
     private Query qKits = new Query(eKits.values());
     private Query qKitdet = new Query(eKitdet.values());
     private Query qKitpar2 = new Query(eKitpar2.values());
-    private Object colorID[] = {-1, -1, -1};
+    private int colorID[] = {-1, -1, -1};
     private int projectID = -1;
     private int prjprodID = -1;
 
@@ -216,13 +216,12 @@ public class DicKits extends javax.swing.JDialog {
             //ФИЛЬТР детализации, параметры накапливаются в mapParam
             if (kitDet.filter(mapParam, kitdetRec) == true) {
 
-                Record artkitRec = eArtikl.get(kitdetRec.getInt(eKitdet.artikl_id));
 
                 Record prjkitRec = ePrjkit.up.newRecord(Query.INS);
                 prjkitRec.set(ePrjkit.id, Conn.genId(ePrjkit.up));
                 prjkitRec.set(ePrjkit.project_id, projectID);
                 prjkitRec.set(ePrjkit.prjprod_id, prjprodID);
-                prjkitRec.set(ePrjkit.artikl_id, artkitRec.getInt(eArtikl.id));
+                prjkitRec.set(ePrjkit.artikl_id, kitdetRec.getInt(eKitdet.artikl_id));
 
                 prjkitRec.set(ePrjkit.numb, UPar.to_7030_7031_8060_8061_9060_9061(mapParam)); //количество    
 
@@ -232,7 +231,10 @@ public class DicKits extends javax.swing.JDialog {
 
                 //Ширина, мм
                 Double height = UPar.to_8070_8071_9070_9071(mapParam);
-                height = (height == null) ? artkitRec.getDbl(eArtikl.height) : height;
+                if(height == null) {
+                    Record artkitRec = eArtikl.get(kitdetRec.getInt(eKitdet.artikl_id));
+                    height = artkitRec.getDbl(eArtikl.height);
+                }
                 prjkitRec.set(ePrjkit.height, height); //ширина  
 
                 //Поправка, мм
@@ -249,34 +251,37 @@ public class DicKits extends javax.swing.JDialog {
                 angl1 = (angl2 == null) ? 90 : angl2;
                 prjkitRec.set(ePrjkit.angl2, angl2); //угол 2
 
-                //Текстура
+                //Текстура по умолчанию из детализации
                 prjkitRec.set(ePrjkit.color1_id, kitdetRec.get(eKitdet.color1_id));
                 prjkitRec.set(ePrjkit.color2_id, kitdetRec.get(eKitdet.color2_id));
                 prjkitRec.set(ePrjkit.color3_id, kitdetRec.get(eKitdet.color3_id));
 
+                int artiklID = kitdetRec.getInt(eKitdet.artikl_id);
+                
                 //Автоподбор
-                if (kitdetRec.getInt(eKitdet.color1_id) == 0) {
-                    HashSet<Record> colorSet = UGui.artiklToColorSet(kitdetRec.getInt(eKitdet.artikl_id), 1);
+                if (colorID[0] != -1) {
+                    HashSet<Record> colorSet = UGui.artiklToColorSet(artiklID, 1); //все текстуры артикула
                     for (Record colorRec : colorSet) {
-                        if (colorID[0].equals(colorRec.get(eColor.id))) {
+                        if (colorID[0] == colorRec.getInt(eColor.id)) {
                             prjkitRec.set(ePrjkit.color1_id, colorID[0]); //color1
                         }
                     }
                 }
+                
                 //Автоподбор
-                if (kitdetRec.getInt(eKitdet.color2_id) == 0) {
-                    HashSet<Record> colorSet = UGui.artiklToColorSet(kitdetRec.getInt(eKitdet.artikl_id), 2);
+                if (colorID[1] != -1) {
+                    HashSet<Record> colorSet = UGui.artiklToColorSet(artiklID, 2); //все текстуры артикула
                     for (Record colorRec : colorSet) {
-                        if (colorID[1].equals(colorRec.get(eColor.id))) {
+                        if (colorID[1] == colorRec.getInt(eColor.id)) {
                             prjkitRec.set(ePrjkit.color2_id, colorID[1]); //color2
                         }
                     }
                 }
                 //Автоподбор
-                if (kitdetRec.getInt(eKitdet.color3_id) == 0) {
-                    HashSet<Record> colorSet = UGui.artiklToColorSet(kitdetRec.getInt(eKitdet.artikl_id), 3);
+                if (colorID[2] != -1) {
+                    HashSet<Record> colorSet = UGui.artiklToColorSet(artiklID, 3); //все текстуры артикула
                     for (Record colorRec : colorSet) {
-                        if (colorID[2].equals(colorRec.get(eColor.id))) {
+                        if (colorID[2] == colorRec.getInt(eColor.id)) {
                             prjkitRec.set(ePrjkit.color3_id, colorID[2]); //color3
                         }
                     }
@@ -836,10 +841,6 @@ public class DicKits extends javax.swing.JDialog {
         if (indexBtn == 0) {
             txt9.setText(colorRec.getStr(eColor.name));
             colorID[0] = colorRec.getInt(eColor.id);
-            //txt13.setText(colorRec.getStr(eColor.name));
-            //colorID[1] = colorRec.getInt(eColor.id);
-            //txt14.setText(colorRec.getStr(eColor.name));
-            //colorID[2] = colorRec.getInt(eColor.id);
 
         } else if (indexBtn == 1) {
             txt13.setText(colorRec.getStr(eColor.name));
