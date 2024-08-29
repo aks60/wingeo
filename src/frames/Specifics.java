@@ -60,6 +60,7 @@ public class Specifics extends javax.swing.JFrame {
     private int src = 0;
     private builder.Wincalc winc = new Wincalc();
     private TableFieldFilter filterTable = null;
+    private ArraySpc<SpcRecord> listSpc = new ArraySpc<SpcRecord>();
     ImageIcon[] image = {new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b063.gif")),
         new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b076.gif")),
         new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b077.gif")),
@@ -69,10 +70,10 @@ public class Specifics extends javax.swing.JFrame {
     public Specifics(int src) {
         initComponents();
         initElements();
-        this.src = src;
+        this.src = src;        
         createPpm();
-        createIwin();
-        loadingTab1(winc.listSpec);
+        createIwin();        
+        loadingTab1(this.listSpc);
         UGui.setSelectedRow(tab1);
     }
 
@@ -80,7 +81,7 @@ public class Specifics extends javax.swing.JFrame {
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Мат. ценности");
         mnAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loadingTab1(winc.listSpec);
+                loadingTab1(listSpc);
             }
         });
         UTree.loadArtTree(root);
@@ -96,7 +97,7 @@ public class Specifics extends javax.swing.JFrame {
             mn1.setFont(frames.UGui.getFont(0, 1));
             mn1.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec
+                    List<SpcRecord> listSpec = listSpc.stream().filter(rec
                             -> rec.artiklRec().getInt(eArtikl.level1) == type.id1).collect(toList());
                     loadingTab1(listSpec);
                 }
@@ -112,7 +113,7 @@ public class Specifics extends javax.swing.JFrame {
                 mn2.setFont(frames.UGui.getFont(0, 0));
                 mn2.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec
+                        List<SpcRecord> listSpec = listSpc.stream().filter(rec
                                 -> rec.artiklRec().getInt(eArtikl.level1) == typ2.id1
                                 && rec.artiklRec().getInt(eArtikl.level2) == typ2.id2).collect(toList());
                         loadingTab1(listSpec);
@@ -151,6 +152,7 @@ public class Specifics extends javax.swing.JFrame {
                 winc.specification(cbx2.getSelectedIndex() == 0);
             }
         }
+        this.listSpc.addAll(winc.listSpec);
     }
 
     public void loadingTab1(List<SpcRecord> listSpec) {
@@ -158,47 +160,46 @@ public class Specifics extends javax.swing.JFrame {
         DefaultTableModel dtm = ((DefaultTableModel) tab1.getModel());
         dtm.getDataVector().clear();
         dtm.fireTableDataChanged();
-        int indexLast = listSpec.get(0).getVector(0).size();
+        int indexLast = new SpcRecord().getVector(0).size();
 
-        if (listSpec != null && listSpec.isEmpty() == false) {
-            double sum1 = 0, sum2 = 0, sum9 = 0, sum13 = 0;
-            //Заполним спецификацию
-            int i = 0;
-            for (i = 0; i < listSpec.size(); i++) {
-                Vector v = listSpec.get(i).getVector(i + 1);
+        double sum1 = 0, sum2 = 0, sum9 = 0, sum13 = 0;
+        //Заполним спецификацию
+        int i = 0;
+        for (i = 0; i < listSpec.size(); i++) {
+            Vector v = listSpec.get(i).getVector(i + 1);
+            dtm.addRow(v);
+            sum1 = sum1 + (Double) v.get(indexLast - 1);
+            sum2 = sum2 + (Double) v.get(indexLast - 2);
+            sum9 = sum9 + (Double) v.get(indexLast - 9);
+            sum13 = sum13 + (Double) v.get(indexLast - 13);
+        }
+        //Если открыл менеджер добавим комплекты
+        if (src == 1) {
+            int prjprodID = Integer.valueOf(eProp.prjprodID.read());
+            Record prjprodRec = ePrjprod.find(prjprodID);
+            ArraySpc<SpcRecord> prjkitList = SpcTariffic.kits(prjprodRec, winc, true); //комплекты
+
+            for (SpcRecord spc : prjkitList) {
+                this.listSpc.add(spc);
+                Vector v = spc.getVector(++i);
                 dtm.addRow(v);
                 sum1 = sum1 + (Double) v.get(indexLast - 1);
                 sum2 = sum2 + (Double) v.get(indexLast - 2);
                 sum9 = sum9 + (Double) v.get(indexLast - 9);
                 sum13 = sum13 + (Double) v.get(indexLast - 13);
             }
-            //Если открыл менеджер добавим комплекты
-            if (src == 1) {
-                int prjprodID = Integer.valueOf(eProp.prjprodID.read());
-                Record prjprodRec = ePrjprod.find(prjprodID);
-                ArraySpc<SpcRecord> prjkitList = SpcTariffic.kits(prjprodRec, winc, true); //комплекты
-
-                for (SpcRecord spc : prjkitList) {
-                    Vector v = spc.getVector(++i);
-                    dtm.addRow(v);
-                    sum1 = sum1 + (Double) v.get(indexLast - 1);
-                    sum2 = sum2 + (Double) v.get(indexLast - 2);
-                    sum9 = sum9 + (Double) v.get(indexLast - 9);
-                    sum13 = sum13 + (Double) v.get(indexLast - 13);
-                }
-            }
-            Vector vectorLast = new Vector();
-            vectorLast.add(listSpec.size() + 1);
-            for (int k = 1; k < indexLast; k++) {
-                vectorLast.add(null);
-            }
-            vectorLast.set(indexLast - 1, sum1); //стоимость без скидки
-            vectorLast.set(indexLast - 2, sum2); //стоимость со скидклй
-            vectorLast.set(indexLast - 9, sum9);
-            vectorLast.set(indexLast - 13, sum13);
-            dtm.addRow(vectorLast);
-            labSum.setText("Итого: " + UCom.format(sum1, "#,##0.##"));
         }
+        Vector vectorLast = new Vector();
+        vectorLast.add(listSpec.size() + 1);
+        for (int k = 1; k < indexLast; k++) {
+            vectorLast.add(null);
+        }
+        vectorLast.set(indexLast - 1, sum1); //стоимость без скидки
+        vectorLast.set(indexLast - 2, sum2); //стоимость со скидклй
+        vectorLast.set(indexLast - 9, sum9);
+        vectorLast.set(indexLast - 13, sum13);
+        dtm.addRow(vectorLast);
+        labSum.setText("Итого: " + UCom.format(sum1, "#,##0.##"));
     }
 
     public static List<SpcRecord> groups(List<SpcRecord> listSpec, int num) {
@@ -615,7 +616,7 @@ public class Specifics extends javax.swing.JFrame {
 
     private void btnFind1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind1
         double id = UCom.getDbl(tab1.getValueAt(tab1.getSelectedRow(), 1).toString());
-        SpcRecord recordSpc = winc.listSpec.find(id);
+        SpcRecord recordSpc = this.listSpc.find(id);
         ProgressBar.create(this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 App.Artikles.createFrame(Specifics.this, recordSpc.artiklRec());
@@ -626,7 +627,7 @@ public class Specifics extends javax.swing.JFrame {
     private void btnFind2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind2
         double id = UCom.getDbl(tab1.getValueAt(tab1.getSelectedRow(), 1).toString());
         String str = tab1.getValueAt(tab1.getSelectedRow(), 3).toString().substring(0, 3);
-        SpcRecord specificRec = winc.listSpec.find(id);
+        SpcRecord specificRec = this.listSpc.find(id);
         Record variantRec = specificRec.variantRec;
         Record detailRec = specificRec.detailRec;
         if (detailRec != null) {
@@ -663,28 +664,28 @@ public class Specifics extends javax.swing.JFrame {
         double id = (UGui.getIndexRec(tab1) == -1) ? -1 : UCom.getDbl(tab1.getValueAt(UGui.getIndexRec(tab1), 1).toString());
 
         if (cbx1.getSelectedIndex() == 0) {
-            loadingTab1(winc.listSpec);
+            loadingTab1(this.listSpc);
 
         } else if (cbx1.getSelectedIndex() == 1) {
-            loadingTab1(groups(winc.listSpec, 1));
+            loadingTab1(groups(this.listSpc, 1));
 
         } else if (cbx1.getSelectedIndex() == 2) {
-            loadingTab1(groups(winc.listSpec, 2));
+            loadingTab1(groups(this.listSpc, 2));
 
         } else if (cbx1.getSelectedIndex() == 3) {
-            List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec -> "СОЕ".equals(rec.place.substring(0, 3))).collect(toList());
+            List<SpcRecord> listSpec = this.listSpc.stream().filter(rec -> "СОЕ".equals(rec.place.substring(0, 3))).collect(toList());
             loadingTab1(listSpec);
 
         } else if (cbx1.getSelectedIndex() == 4) {
-            List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec -> "ВСТ".equals(rec.place.substring(0, 3))).collect(toList());
+            List<SpcRecord> listSpec = this.listSpc.stream().filter(rec -> "ВСТ".equals(rec.place.substring(0, 3))).collect(toList());
             loadingTab1(listSpec);
 
         } else if (cbx1.getSelectedIndex() == 5) {
-            List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec -> "ЗАП".equals(rec.place.substring(0, 3))).collect(toList());
+            List<SpcRecord> listSpec = this.listSpc.stream().filter(rec -> "ЗАП".equals(rec.place.substring(0, 3))).collect(toList());
             loadingTab1(listSpec);
 
         } else if (cbx1.getSelectedIndex() == 6) {
-            List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec -> "ФУР".equals(rec.place.substring(0, 3))).collect(toList());
+            List<SpcRecord> listSpec = this.listSpc.stream().filter(rec -> "ФУР".equals(rec.place.substring(0, 3))).collect(toList());
             loadingTab1(listSpec);
         }
 
@@ -701,7 +702,7 @@ public class Specifics extends javax.swing.JFrame {
         ProgressBar.create(this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 createIwin();
-                loadingTab1(winc.listSpec);
+                loadingTab1(listSpc);
                 UGui.setSelectedRow(tab1);
             }
         });
@@ -717,27 +718,26 @@ public class Specifics extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTest
 
     private void btn23mnKits(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn23mnKits
-        //List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec -> "КОМ".equals(rec.place.substring(0, 3))).collect(toList());
         loadingTab1(new ArrayList<SpcRecord>());
     }//GEN-LAST:event_btn23mnKits
 
     private void btn24mnJoining(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn24mnJoining
-        List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec -> "СОЕ".equals(rec.place.substring(0, 3))).collect(toList());
+        List<SpcRecord> listSpec = this.listSpc.stream().filter(rec -> "СОЕ".equals(rec.place.substring(0, 3))).collect(toList());
         loadingTab1(listSpec);
     }//GEN-LAST:event_btn24mnJoining
 
     private void btn25mnElement(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn25mnElement
-        List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec -> "ВСТ".equals(rec.place.substring(0, 3))).collect(toList());
+        List<SpcRecord> listSpec = this.listSpc.stream().filter(rec -> "ВСТ".equals(rec.place.substring(0, 3))).collect(toList());
         loadingTab1(listSpec);
     }//GEN-LAST:event_btn25mnElement
 
     private void btn26mnGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn26mnGlass
-        List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec -> "ЗАП".equals(rec.place.substring(0, 3))).collect(toList());
+        List<SpcRecord> listSpec = this.listSpc.stream().filter(rec -> "ЗАП".equals(rec.place.substring(0, 3))).collect(toList());
         loadingTab1(listSpec);
     }//GEN-LAST:event_btn26mnGlass
 
     private void btn27mnFurnityra(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn27mnFurnityra
-        List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec -> "ФУР".equals(rec.place.substring(0, 3))).collect(toList());
+        List<SpcRecord> listSpec = this.listSpc.stream().filter(rec -> "ФУР".equals(rec.place.substring(0, 3))).collect(toList());
         loadingTab1(listSpec);
     }//GEN-LAST:event_btn27mnFurnityra
 
@@ -748,7 +748,7 @@ public class Specifics extends javax.swing.JFrame {
     private void btn22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn22ActionPerformed
         int index = UGui.getIndexRec(tab1);
         createIwin();
-        loadingTab1(groups(winc.listSpec, cbx1.getSelectedIndex()));
+        loadingTab1(groups(this.listSpc, cbx1.getSelectedIndex()));
         cbxGroupBy(null);
         UGui.setSelectedIndex(tab1, index);
     }//GEN-LAST:event_btn22ActionPerformed

@@ -360,7 +360,7 @@ public class Tex extends javax.swing.JFrame {
         tb2.setRollover(true);
         tb2.setMaximumSize(new java.awt.Dimension(200, 28));
         tb2.setMinimumSize(new java.awt.Dimension(178, 28));
-        tb2.setPreferredSize(new java.awt.Dimension(170, 28));
+        tb2.setPreferredSize(new java.awt.Dimension(172, 28));
 
         btn24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c024.gif"))); // NOI18N
         btn24.setToolTipText(bundle.getString("Меню.Соединения")); // NOI18N
@@ -474,7 +474,6 @@ public class Tex extends javax.swing.JFrame {
         btn22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c016.gif"))); // NOI18N
         btn22.setToolTipText(bundle.getString("Меню.Спецификация")); // NOI18N
         btn22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 255)));
-        btn22.setFocusable(true);
         btn22.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn22.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
         btn22.addActionListener(new java.awt.event.ActionListener() {
