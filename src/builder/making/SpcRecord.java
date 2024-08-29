@@ -32,16 +32,16 @@ public class SpcRecord {
     public int colorID1 = -3;  //Осн.текстура
     public int colorID2 = -3;  //Внутр.текстура
     public int colorID3 = -3;  //Внешн.текстура
-    public double width = 0;  //Длина
-    public double height = 0;  //Ширина
-    public double weight = 0;  //Масса
-    public double anglCut0 = 0;  //Угол1
-    public double anglCut1 = 0;  //Угол2
+    public double width = -1;  //Длина
+    public double height = -1;  //Ширина
+    public double weight = -1;  //Масса
+    public double anglCut0 = -1;  //Угол1
+    public double anglCut1 = -1;  //Угол2
     public double anglHoriz = 0; // Угол к горизонту    
     public double count = 1;  //Кол. единиц
 
     public int unit = 0;  //Ед.изм   
-    public double wastePrc = 0;  //Процент отхода см. eArtikl.otx_norm    
+    public double waste = -1;  //Процент отхода см. eArtikl.otx_norm    
     public double quant1 = 0;  //Количество без отхода
     public double quant2 = 0;  //Количество с отходом
     public double costpric1 = 0;  //Себест. за ед. без отхода     
@@ -70,7 +70,7 @@ public class SpcRecord {
         this.count = spec.count;
         this.unit = spec.unit;
         this.quant1 = spec.quant1;
-        this.wastePrc = spec.wastePrc;
+        this.waste = spec.waste;
         this.quant2 = spec.quant2;
         this.costpric1 = spec.costpric1;
         this.costpric2 = spec.costpric2;
@@ -108,10 +108,9 @@ public class SpcRecord {
     public void artiklRec(Record artiklRec) {
         this.artikl = artiklRec.getStr(eArtikl.code);
         this.name = artiklRec.getStr(eArtikl.name);
-        this.wastePrc = artiklRec.getDbl(eArtikl.otx_norm);
-        this.unit = artiklRec.getInt(eArtikl.unit); 
+        this.waste = artiklRec.getDbl(eArtikl.otx_norm);
+        this.unit = artiklRec.getInt(eArtikl.unit);
         this.artiklRec = artiklRec;
-        setAnglCut();
     }
 
     public Record artiklRec() {
@@ -142,7 +141,7 @@ public class SpcRecord {
         this.count = spec.count;
         this.unit = spec.unit;
         this.quant1 = spec.quant1;
-        this.wastePrc = spec.wastePrc;
+        this.waste = spec.waste;
         this.quant2 = spec.quant2;
         this.costpric1 = spec.costpric1;
         this.costpric2 = spec.costpric2;
@@ -154,29 +153,15 @@ public class SpcRecord {
     }
 
     public Vector getVector(int npp) {
-        double elemID = (elem5e == null) ?0 :elem5e.id;
+        double elemID = (elem5e == null) ? 0 : elem5e.id;
         return new Vector(List.of(npp, id, elemID, place, artikl, name, eColor.find(colorID1).getStr(eColor.name), eColor.find(colorID2).getStr(eColor.name),
                 eColor.find(colorID3).getStr(eColor.name), width, height, weight, anglCut0, anglCut1, anglHoriz,
-                count, UseUnit.getName(unit), wastePrc, quant1, quant2, costpric1, costpric2, price, cost2));
+                count, UseUnit.getName(unit), waste, quant1, quant2, costpric1, costpric2, price, cost2));
     }
 
     public void setAnglCut(double angl0, double angl1) {
         this.anglCut0 = angl0;
         this.anglCut1 = angl1;
-    }
-
-    protected void setAnglCut() {
-        if (TypeArt.X109.isType(artiklRec)
-                || TypeArt.X135.isType(artiklRec)
-                || TypeArt.X117.isType(artiklRec)
-                || TypeArt.X136.isType(artiklRec)) {
-            anglCut1 = 90;
-            anglCut0 = 90;
-
-        } else if (TypeArt.X109.isType(artiklRec)) {
-            anglCut1 = 0;
-            anglCut0 = 0;
-        }
     }
 
     public String getParam(Object def, int... p) {

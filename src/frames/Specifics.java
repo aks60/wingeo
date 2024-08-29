@@ -16,6 +16,8 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import builder.Wincalc;
 import builder.making.SpcRecord;
+import builder.making.SpcTariffic;
+import common.ArraySpc;
 import common.UCom;
 import domain.eSysprod;
 import java.awt.Component;
@@ -159,7 +161,6 @@ public class Specifics extends javax.swing.JFrame {
         int indexLast = listSpec.get(0).getVector(0).size();
 
         if (listSpec != null && listSpec.isEmpty() == false) {
-            //int indexLast = listSpec.get(0).getVector(0).size();
             double sum1 = 0, sum2 = 0, sum9 = 0, sum13 = 0;
             //Заполним спецификацию
             int i = 0;
@@ -174,32 +175,16 @@ public class Specifics extends javax.swing.JFrame {
             //Если открыл менеджер добавим комплекты
             if (src == 1) {
                 int prjprodID = Integer.valueOf(eProp.prjprodID.read());
-                if (prjprodID == -1) {
-                    JOptionPane.showMessageDialog(this, "Выберите конструкцию в списке заказов", "Предупреждение", JOptionPane.OK_OPTION);
-                } else {
-                    List<Record> prjkitList = ePrjkit.filter3(prjprodID);
-                    for (Record prjkitRec : prjkitList) {
+                Record prjprodRec = ePrjprod.find(prjprodID);
+                ArraySpc<SpcRecord> prjkitList = SpcTariffic.kits(prjprodRec, winc, true); //комплекты
 
-                        Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.artikl_id), true);
-                        SpcRecord spc = new SpcRecord();
-                        spc.id = 777;
-                        spc.place = "Комп";
-                        spc.artiklRec(artiklRec);
-                        spc.colorID1 = prjkitRec.getInt(ePrjkit.color1_id);
-                        spc.colorID2 = prjkitRec.getInt(ePrjkit.color2_id);
-                        spc.colorID3 = prjkitRec.getInt(ePrjkit.color3_id);
-                        spc.width = prjkitRec.getDbl(ePrjkit.width);
-                        spc.height = prjkitRec.getDbl(ePrjkit.height);
-                        spc.anglCut0 = prjkitRec.getDbl(ePrjkit.angl1);
-                        spc.anglCut1 = prjkitRec.getDbl(ePrjkit.angl2);
-                        spc.count = prjkitRec.getDbl(ePrjkit.numb);
-                        Vector v = spc.getVector(++i);
-                        dtm.addRow(v);
-                        sum1 = sum1 + (Double) v.get(indexLast - 1);
-                        sum2 = sum2 + (Double) v.get(indexLast - 2);
-                        sum9 = sum9 + (Double) v.get(indexLast - 9);
-                        sum13 = sum13 + (Double) v.get(indexLast - 13);
-                    }
+                for (SpcRecord spc : prjkitList) {
+                    Vector v = spc.getVector(++i);
+                    dtm.addRow(v);
+                    sum1 = sum1 + (Double) v.get(indexLast - 1);
+                    sum2 = sum2 + (Double) v.get(indexLast - 2);
+                    sum9 = sum9 + (Double) v.get(indexLast - 9);
+                    sum13 = sum13 + (Double) v.get(indexLast - 13);
                 }
             }
             Vector vectorLast = new Vector();
@@ -223,8 +208,8 @@ public class Specifics extends javax.swing.JFrame {
 
         for (SpcRecord spc : listSpec) {
             String key = (num == 1)
-                    ? spc.name + spc.artikl + spc.colorID1 + spc.colorID2 + spc.colorID3 + spc.width + spc.height + spc.anglCut0 + spc.anglCut1 + spc.wastePrc + spc.costpric1
-                    : (num == 2) ? spc.name + spc.artikl + spc.colorID1 + spc.colorID2 + spc.colorID3 + spc.wastePrc + spc.costpric1 : spc.artikl;
+                    ? spc.name + spc.artikl + spc.colorID1 + spc.colorID2 + spc.colorID3 + spc.width + spc.height + spc.anglCut0 + spc.anglCut1 + spc.waste + spc.costpric1
+                    : (num == 2) ? spc.name + spc.artikl + spc.colorID1 + spc.colorID2 + spc.colorID3 + spc.waste + spc.costpric1 : spc.artikl;
             if (hs.add(key)) {
                 map.put(key, new SpcRecord(spc));
             } else {
@@ -732,8 +717,8 @@ public class Specifics extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTest
 
     private void btn23mnKits(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn23mnKits
-        List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec -> "КОМ".equals(rec.place.substring(0, 3))).collect(toList());
-        loadingTab1(listSpec);
+        //List<SpcRecord> listSpec = winc.listSpec.stream().filter(rec -> "КОМ".equals(rec.place.substring(0, 3))).collect(toList());
+        loadingTab1(new ArrayList<SpcRecord>());
     }//GEN-LAST:event_btn23mnKits
 
     private void btn24mnJoining(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn24mnJoining
