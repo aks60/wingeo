@@ -1,11 +1,9 @@
 package startup;
 
-import frames.PathToDb;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import frames.UGui;
 import frames.swing.ProgressBar;
-import frames.swing.FrameToFile;
 import common.eProp;
 import dataset.Record;
 import builder.Wincalc;
@@ -17,14 +15,13 @@ import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import common.listener.ListenerFrame;
 import dataset.Conn;
-import dataset.Query;
+import domain.eProject;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import javax.swing.JTable;
 
 /**
  * <p>
@@ -903,7 +900,13 @@ private void mn51ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:ev
 private void mnSpecif(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnSpecif
     ProgressBar.create(Tex.this, new ListenerFrame() {
         public void actionRequest(Object obj) {
-            App.Specification.createFrame(Tex.this);
+//            if (App.Order.frame != null && App.Order.frame.isVisible()) {
+//                int orderID = Integer.valueOf(eProp.orderID.read());
+//                Record projectRec = eProject.find(orderID);
+//                  App.Specification.createFrame(Tex.this);
+//            } else {
+                App.Specification.createFrame(Tex.this);
+//            }
         }
     });
 }//GEN-LAST:event_mnSpecif
@@ -1044,11 +1047,9 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     }//GEN-LAST:event_mnGroup1
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-        ProgressBar.create(Tex.this, new ListenerFrame() {
-            public void actionRequest(Object obj) {
-                App.PSCompare.createFrame(Tex.this);
-            }
-        });
+        if (App.Order.frame != null && App.Order.frame.isVisible()) {
+            System.out.println(App.Order.frame);
+        }
     }//GEN-LAST:event_btnTest
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated

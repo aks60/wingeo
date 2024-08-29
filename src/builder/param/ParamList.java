@@ -844,13 +844,13 @@ public class ParamList {
         return ("0123456789-,".indexOf(c) != -1);
     };
     public static Checkparam check_SCRIPT_L = (c) -> {
-        return ("0123456789,L*".indexOf(c) != -1);
+        return ("0123456789,L*+-".indexOf(c) != -1);
     };
     public static Checkparam check_SCRIPT_H = (c) -> {
-        return ("0123456789,H*".indexOf(c) != -1);
+        return ("0123456789,H*+-".indexOf(c) != -1);
     };
     public static Checkparam check_SCRIPT_Q = (c) -> {
-        return ("0123456789,Q*".indexOf(c) != -1);
+        return ("0123456789,Q*+-".indexOf(c) != -1);
     };
 
     public static Checkparam check_FLOAT_MOD = (c) -> {

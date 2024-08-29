@@ -17,7 +17,6 @@ import javax.swing.table.TableRowSorter;
 import builder.Wincalc;
 import builder.making.SpcRecord;
 import common.UCom;
-import dataset.Query;
 import domain.eSysprod;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -37,6 +36,7 @@ import common.listener.ListenerFrame;
 import common.eProfile;
 import domain.eArtikl;
 import domain.ePrjprod;
+import domain.eProject;
 import frames.swing.DefCellRendererNumb;
 import frames.swing.TableFieldFilter;
 import frames.swing.col.ColumnGroup;
@@ -183,6 +183,12 @@ public class Specifics extends javax.swing.JFrame {
             dtm.addRow(vectorLast);
             labSum.setText("Итого: " + UCom.format(sum1, "#,##0.##"));
         }
+//        if(App.Order.frame != null && App.Order.frame.isVisible()) {
+//            int orderID = Integer.valueOf(eProp.orderID.read());
+//            int prjprodID = Integer.valueOf(eProp.prjprodID.read());
+//            int sysprodID = Integer.valueOf(eProp.sysprodID.read());
+//            Record projectRec = eProject.find(orderID);
+//        }
     }
 
     public static List<SpcRecord> groups(List<SpcRecord> listSpec, int num) {

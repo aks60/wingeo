@@ -26,9 +26,9 @@ public enum eProp {
     server1("localhost"),
     server2("localhost"),
     server3("localhost"),
-    sysprodID("-1"),
-    prjprodID("-1"),
-    orderID("-1"),
+    sysprodID("-1"), //выбранный системный шаблон продукта
+    prjprodID("-1"), //выбранный продукт для клиента
+    orderID("-1"), //выбранный заказ клиента
     base_num("1"),
     old("0"), //переключение на пред. версию
     base1("C:\\Okna\\fbase\\BASE.FDB?encoding=win1251", "C:\\Okna\\fbase\\BASE.FDB?encoding=win1251"),

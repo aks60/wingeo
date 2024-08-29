@@ -375,6 +375,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 canvas.draw();
 
                 loadingTree(win);
+                
                 winTree.setSelectionInterval(0, 0);
             }
         } else {
