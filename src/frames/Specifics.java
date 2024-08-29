@@ -162,7 +162,8 @@ public class Specifics extends javax.swing.JFrame {
             //int indexLast = listSpec.get(0).getVector(0).size();
             double sum1 = 0, sum2 = 0, sum9 = 0, sum13 = 0;
             //Заполним спецификацию
-            for (int i = 0; i < listSpec.size(); i++) {
+            int i = 0;
+            for (i = 0; i < listSpec.size(); i++) {
                 Vector v = listSpec.get(i).getVector(i + 1);
                 dtm.addRow(v);
                 sum1 = sum1 + (Double) v.get(indexLast - 1);
@@ -179,9 +180,24 @@ public class Specifics extends javax.swing.JFrame {
                     List<Record> prjkitList = ePrjkit.filter3(prjprodID);
                     for (Record prjkitRec : prjkitList) {
 
-//                        Vector v = new SpcRecord().getVector(777);
-//                        v.
-//                        //dtm.addRow(v);
+                        Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.id), true);
+                        SpcRecord spc = new SpcRecord();
+                        spc.id = 777;
+                        spc.place = "Комп";
+                        spc.name = artiklRec.getStr(eArtikl.name);
+                        spc.artikl = artiklRec.getStr(eArtikl.code);
+                        spc.colorID1 = prjkitRec.getInt(ePrjkit.color1_id);
+                        spc.colorID2 = prjkitRec.getInt(ePrjkit.color2_id);
+                        spc.colorID3 = prjkitRec.getInt(ePrjkit.color3_id);
+                        spc.width = prjkitRec.getDbl(ePrjkit.width);
+                        spc.height = prjkitRec.getDbl(ePrjkit.height);
+                        spc.anglCut0 = prjkitRec.getDbl(ePrjkit.angl1);
+                        spc.anglCut1 = prjkitRec.getDbl(ePrjkit.angl2);
+                        spc.count = prjkitRec.getDbl(ePrjkit.numb);
+                       
+                        Vector v = spc.getVector(++i);                          
+                        dtm.addRow(v);
+                        
 //                        sum1 = sum1 + (Double) v.get(indexLast - 1);
 //                        sum2 = sum2 + (Double) v.get(indexLast - 2);
 //                        sum9 = sum9 + (Double) v.get(indexLast - 9);
@@ -191,7 +207,7 @@ public class Specifics extends javax.swing.JFrame {
             }
             Vector vectorLast = new Vector();
             vectorLast.add(listSpec.size() + 1);
-            for (int i = 1; i < indexLast; i++) {
+            for (int k = 1; k < indexLast; k++) {
                 vectorLast.add(null);
             }
             vectorLast.set(indexLast - 1, sum1); //стоимость без скидки
