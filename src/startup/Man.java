@@ -564,11 +564,11 @@ public class Man extends javax.swing.JFrame {
     }//GEN-LAST:event_btn6
 
     private void btn8(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8
-        int orderID = Integer.valueOf(eProp.orderID.read());
-        Record projectRec = eProject.find(orderID);        
+        //int orderID = Integer.valueOf(eProp.orderID.read());
+        //Record projectRec = eProject.find(orderID);        
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                App.Specification.createFrame(Man.this);
+                App.Specification.createFrame(Man.this, 1);
             }
         });
     }//GEN-LAST:event_btn8

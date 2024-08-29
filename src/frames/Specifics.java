@@ -56,6 +56,7 @@ import report.HtmlOfTable;
 
 public class Specifics extends javax.swing.JFrame {
 
+    private int src = 0;
     private builder.Wincalc winc = new Wincalc();
     private TableFieldFilter filterTable = null;
     ImageIcon[] image = {new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b063.gif")),
@@ -64,9 +65,18 @@ public class Specifics extends javax.swing.JFrame {
         new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b031.gif"))
     };
 
-    public Specifics() {
+//    public Specifics() {
+//        initComponents();
+//        initElements();
+//        createPpm();
+//        createIwin();
+//        loadingTab1(winc.listSpec);
+//        UGui.setSelectedRow(tab1);
+//    }
+    public Specifics(int src) {
         initComponents();
         initElements();
+        this.src = src;
         createPpm();
         createIwin();
         loadingTab1(winc.listSpec);
@@ -122,21 +132,7 @@ public class Specifics extends javax.swing.JFrame {
 
     public void createIwin() {
 
-        if (eProfile.profile == eProfile.P02) {
-            int sysprodID = Integer.valueOf(eProp.sysprodID.read());
-            Record sysprodRec = eSysprod.find(sysprodID);
-            if (sysprodRec == null) {
-                JOptionPane.showMessageDialog(this, "Выберите конструкцию в системе профилей", "Предупреждение", JOptionPane.OK_OPTION);
-            } else {
-                String script = sysprodRec.getStr(eSysprod.script);
-                JsonElement je = new Gson().fromJson(script, JsonElement.class);
-                je.getAsJsonObject().addProperty("nuni", sysprodRec.getInt(eSysprod.systree_id));
-                winc.build(je.toString());
-                //Query.listOpenTable.forEach(q -> q.clear()); //очистим кэш 
-                winc.specification(cbx2.getSelectedIndex() == 0);
-            }
-
-        } else {
+        if (src == 1) {
             int prjprodID = Integer.valueOf(eProp.prjprodID.read());
             Record prjprodRec = ePrjprod.find(prjprodID);
             if (prjprodRec == null) {
@@ -147,8 +143,19 @@ public class Specifics extends javax.swing.JFrame {
                 je.getAsJsonObject().addProperty("nuni", prjprodRec.getInt(ePrjprod.systree_id));
                 winc = new Wincalc();
                 winc.build(je.toString());
-                //Query.listOpenTable.forEach(q -> q.clear()); //очистим кэш 
                 winc.specification(true);
+            }
+        } else {
+            int sysprodID = Integer.valueOf(eProp.sysprodID.read());
+            Record sysprodRec = eSysprod.find(sysprodID);
+            if (sysprodRec == null) {
+                JOptionPane.showMessageDialog(this, "Выберите конструкцию в системе профилей", "Предупреждение", JOptionPane.OK_OPTION);
+            } else {
+                String script = sysprodRec.getStr(eSysprod.script);
+                JsonElement je = new Gson().fromJson(script, JsonElement.class);
+                je.getAsJsonObject().addProperty("nuni", sysprodRec.getInt(eSysprod.systree_id));
+                winc.build(je.toString());
+                winc.specification(cbx2.getSelectedIndex() == 0);
             }
         }
     }
@@ -171,6 +178,14 @@ public class Specifics extends javax.swing.JFrame {
                 sum9 = sum9 + (Double) v.get(indexLast - 9);
                 sum13 = sum13 + (Double) v.get(indexLast - 13);
             }
+            if (src == 1) { //если открыл менеджер
+                int orderID = Integer.valueOf(eProp.orderID.read());
+                int prjprodID = Integer.valueOf(eProp.prjprodID.read());
+                //int sysprodID = Integer.valueOf(eProp.sysprodID.read());
+                //Record projectRec = eProject.find(orderID);
+                Record prjprodRec = ePrjprod.find(prjprodID);
+                
+            }
             Vector vectorLast = new Vector();
             vectorLast.add(listSpec.size() + 1);
             for (int i = 1; i < indexLast; i++) {
@@ -183,12 +198,6 @@ public class Specifics extends javax.swing.JFrame {
             dtm.addRow(vectorLast);
             labSum.setText("Итого: " + UCom.format(sum1, "#,##0.##"));
         }
-//        if(App.Order.frame != null && App.Order.frame.isVisible()) {
-//            int orderID = Integer.valueOf(eProp.orderID.read());
-//            int prjprodID = Integer.valueOf(eProp.prjprodID.read());
-//            int sysprodID = Integer.valueOf(eProp.sysprodID.read());
-//            Record projectRec = eProject.find(orderID);
-//        }
     }
 
     public static List<SpcRecord> groups(List<SpcRecord> listSpec, int num) {

@@ -109,11 +109,10 @@ public class Tex extends javax.swing.JFrame {
         btn27 = new javax.swing.JButton();
         btn23 = new javax.swing.JButton();
         btn21 = new javax.swing.JButton();
-        btn22 = new javax.swing.JButton();
         tb8 = new javax.swing.JToolBar();
         btn17 = new javax.swing.JButton();
         btn3 = new javax.swing.JButton();
-        btn5 = new javax.swing.JButton();
+        btn22 = new javax.swing.JButton();
         tb6 = new javax.swing.JToolBar();
         btnT7 = new javax.swing.JToggleButton();
         btnT8 = new javax.swing.JToggleButton();
@@ -149,9 +148,9 @@ public class Tex extends javax.swing.JFrame {
         mn37 = new javax.swing.JMenuItem();
         mn07 = new javax.swing.JMenu();
         mn71 = new javax.swing.JMenuItem();
-        mn73 = new javax.swing.JMenuItem();
-        mn74 = new javax.swing.JPopupMenu.Separator();
         mn72 = new javax.swing.JMenuItem();
+        mn74 = new javax.swing.JPopupMenu.Separator();
+        mn75 = new javax.swing.JMenuItem();
         mn06 = new javax.swing.JMenu();
         mn63 = new javax.swing.JMenu();
         mn631 = new javax.swing.JCheckBoxMenuItem();
@@ -361,7 +360,7 @@ public class Tex extends javax.swing.JFrame {
         tb2.setRollover(true);
         tb2.setMaximumSize(new java.awt.Dimension(200, 28));
         tb2.setMinimumSize(new java.awt.Dimension(178, 28));
-        tb2.setPreferredSize(new java.awt.Dimension(182, 28));
+        tb2.setPreferredSize(new java.awt.Dimension(170, 28));
 
         btn24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c024.gif"))); // NOI18N
         btn24.setToolTipText(bundle.getString("Меню.Соединения")); // NOI18N
@@ -441,23 +440,6 @@ public class Tex extends javax.swing.JFrame {
         });
         tb2.add(btn21);
 
-        btn22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c092.gif"))); // NOI18N
-        btn22.setToolTipText(bundle.getString("Меню.Спецификация")); // NOI18N
-        btn22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
-        btn22.setFocusable(false);
-        btn22.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btn22.setMaximumSize(new java.awt.Dimension(12, 26));
-        btn22.setMinimumSize(new java.awt.Dimension(8, 26));
-        btn22.setPreferredSize(new java.awt.Dimension(12, 26));
-        btn22.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn22.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btn22.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mn2Specif(evt);
-            }
-        });
-        tb2.add(btn22);
-
         getContentPane().add(tb2);
 
         tb8.setRollover(true);
@@ -489,18 +471,18 @@ public class Tex extends javax.swing.JFrame {
         });
         tb8.add(btn3);
 
-        btn5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c083.gif"))); // NOI18N
-        btn5.setToolTipText(bundle.getString("Меню.Дилеры")); // NOI18N
-        btn5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 255)));
-        btn5.setFocusable(false);
-        btn5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btn5.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btn5.addActionListener(new java.awt.event.ActionListener() {
+        btn22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c016.gif"))); // NOI18N
+        btn22.setToolTipText(bundle.getString("Меню.Спецификация")); // NOI18N
+        btn22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 255)));
+        btn22.setFocusable(true);
+        btn22.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn22.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btn22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnDiler(evt);
+                mn2Specif(evt);
             }
         });
-        tb8.add(btn5);
+        tb8.add(btn22);
 
         getContentPane().add(tb8);
 
@@ -796,17 +778,6 @@ public class Tex extends javax.swing.JFrame {
         });
         mn07.add(mn71);
 
-        mn73.setFont(frames.UGui.getFont(0,1));
-        mn73.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
-        mn73.setText(bundle.getString("Меню.Дилеры")); // NOI18N
-        mn73.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnDiler(evt);
-            }
-        });
-        mn07.add(mn73);
-        mn07.add(mn74);
-
         mn72.setFont(frames.UGui.getFont(0,1));
         mn72.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
         mn72.setText(bundle.getString("Меню.Заказы")); // NOI18N
@@ -816,6 +787,12 @@ public class Tex extends javax.swing.JFrame {
             }
         });
         mn07.add(mn72);
+        mn07.add(mn74);
+
+        mn75.setFont(frames.UGui.getFont(0,1));
+        mn75.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
+        mn75.setText(bundle.getString("Пересчитать")); // NOI18N
+        mn07.add(mn75);
 
         mn0.add(mn07);
 
@@ -941,13 +918,7 @@ private void mn51ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:ev
 private void mnSpecif(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnSpecif
     ProgressBar.create(Tex.this, new ListenerFrame() {
         public void actionRequest(Object obj) {
-//            if (App.Order.frame != null && App.Order.frame.isVisible()) {
-//                int orderID = Integer.valueOf(eProp.orderID.read());
-//                Record projectRec = eProject.find(orderID);
-//                  App.Specification.createFrame(Tex.this);
-//            } else {
-                App.Specification.createFrame(Tex.this);
-//            }
+            App.Specification.createFrame(Tex.this, 0);
         }
     });
 }//GEN-LAST:event_mnSpecif
@@ -1126,22 +1097,6 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
         });
     }//GEN-LAST:event_mnSetting
 
-    private void mnDiler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnDiler
-        try {
-            Desktop desktop = Desktop.getDesktop();
-            URI url = new URI(eProp.url_src.read());
-            desktop.browse(url);
-        } catch (URISyntaxException e) {
-            System.err.println(e);
-        } catch (IOException e) {
-            System.err.println(e);
-        }
-    }//GEN-LAST:event_mnDiler
-
-    private void mn2Specif(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn2Specif
-        ppmSpecif.show(tb2, btn22.getX(), btn22.getY() + 26);
-    }//GEN-LAST:event_mn2Specif
-
     private void spcSystem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spcSystem
         // TODO add your handling code here:
     }//GEN-LAST:event_spcSystem
@@ -1149,6 +1104,14 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     private void spcProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spcProductActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_spcProductActionPerformed
+
+    private void mn2Specif(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn2Specif
+        ProgressBar.create(Tex.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                    App.Specification.createFrame(Tex.this, 1);
+            }
+        });
+    }//GEN-LAST:event_mn2Specif
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1169,7 +1132,6 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     private javax.swing.JButton btn3;
     private javax.swing.JButton btn4;
     private javax.swing.JButton btn42;
-    private javax.swing.JButton btn5;
     private javax.swing.JButton btn51;
     private javax.swing.JButton btn52;
     private javax.swing.JButton btn53;
@@ -1216,8 +1178,8 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     private javax.swing.JCheckBoxMenuItem mn633;
     private javax.swing.JMenuItem mn71;
     private javax.swing.JMenuItem mn72;
-    private javax.swing.JMenuItem mn73;
     private javax.swing.JPopupMenu.Separator mn74;
+    private javax.swing.JMenuItem mn75;
     private javax.swing.JMenuItem mn91;
     private javax.swing.JMenuItem mn92;
     private javax.swing.JPopupMenu.Separator mn93;
