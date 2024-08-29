@@ -154,7 +154,8 @@ public class SpcRecord {
     }
 
     public Vector getVector(int npp) {
-        return new Vector(List.of(npp, id, elem5e.id, place, artikl, name, eColor.find(colorID1).getStr(eColor.name), eColor.find(colorID2).getStr(eColor.name),
+        double elemID = (elem5e == null) ?0 :elem5e.id;
+        return new Vector(List.of(npp, id, elemID, place, artikl, name, eColor.find(colorID1).getStr(eColor.name), eColor.find(colorID2).getStr(eColor.name),
                 eColor.find(colorID3).getStr(eColor.name), width, height, weight, anglCut0, anglCut1, anglHoriz,
                 count, UseUnit.getName(unit), wastePrc, quant1, quant2, costpric1, costpric2, price, cost2));
     }
