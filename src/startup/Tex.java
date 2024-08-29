@@ -86,6 +86,9 @@ public class Tex extends javax.swing.JFrame {
         buttonBaseGroup1 = new javax.swing.ButtonGroup();
         buttonBaseGroup2 = new javax.swing.ButtonGroup();
         buttonMenuGroup = new javax.swing.ButtonGroup();
+        ppmSpecif = new javax.swing.JPopupMenu();
+        spcSystem = new javax.swing.JMenuItem();
+        spcProduct = new javax.swing.JMenuItem();
         tb7 = new javax.swing.JToolBar();
         btn4 = new javax.swing.JButton();
         btn15 = new javax.swing.JButton();
@@ -106,6 +109,7 @@ public class Tex extends javax.swing.JFrame {
         btn27 = new javax.swing.JButton();
         btn23 = new javax.swing.JButton();
         btn21 = new javax.swing.JButton();
+        btn22 = new javax.swing.JButton();
         tb8 = new javax.swing.JToolBar();
         btn17 = new javax.swing.JButton();
         btn3 = new javax.swing.JButton();
@@ -159,6 +163,27 @@ public class Tex extends javax.swing.JFrame {
         mn52 = new javax.swing.JMenuItem();
         mn54 = new javax.swing.JMenuItem();
 
+        spcSystem.setFont(frames.UGui.getFont(0,1));
+        spcSystem.setText("Спецификация ситемы");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
+        spcSystem.setToolTipText(bundle.getString("Пересчитать")); // NOI18N
+        spcSystem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                spcSystem(evt);
+            }
+        });
+        ppmSpecif.add(spcSystem);
+
+        spcProduct.setFont(frames.UGui.getFont(0,1));
+        spcProduct.setText("Спецификация продукции");
+        spcProduct.setToolTipText(bundle.getString("Пересчитать")); // NOI18N
+        spcProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                spcProductActionPerformed(evt);
+            }
+        });
+        ppmSpecif.add(spcProduct);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SA.OKNA   <АРМ Технолог>");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
@@ -189,7 +214,6 @@ public class Tex extends javax.swing.JFrame {
         tb7.setPreferredSize(new java.awt.Dimension(94, 28));
 
         btn4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c015.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
         btn4.setToolTipText(bundle.getString("Меню.Установки")); // NOI18N
         btn4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
         btn4.setFocusable(false);
@@ -335,9 +359,9 @@ public class Tex extends javax.swing.JFrame {
         getContentPane().add(td5);
 
         tb2.setRollover(true);
-        tb2.setMaximumSize(new java.awt.Dimension(172, 28));
-        tb2.setMinimumSize(new java.awt.Dimension(172, 28));
-        tb2.setPreferredSize(new java.awt.Dimension(172, 28));
+        tb2.setMaximumSize(new java.awt.Dimension(200, 28));
+        tb2.setMinimumSize(new java.awt.Dimension(178, 28));
+        tb2.setPreferredSize(new java.awt.Dimension(182, 28));
 
         btn24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c024.gif"))); // NOI18N
         btn24.setToolTipText(bundle.getString("Меню.Соединения")); // NOI18N
@@ -416,6 +440,23 @@ public class Tex extends javax.swing.JFrame {
             }
         });
         tb2.add(btn21);
+
+        btn22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c092.gif"))); // NOI18N
+        btn22.setToolTipText(bundle.getString("Меню.Спецификация")); // NOI18N
+        btn22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
+        btn22.setFocusable(false);
+        btn22.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn22.setMaximumSize(new java.awt.Dimension(12, 26));
+        btn22.setMinimumSize(new java.awt.Dimension(8, 26));
+        btn22.setPreferredSize(new java.awt.Dimension(12, 26));
+        btn22.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btn22.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mn2Specif(evt);
+            }
+        });
+        tb2.add(btn22);
 
         getContentPane().add(tb2);
 
@@ -1097,6 +1138,18 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
         }
     }//GEN-LAST:event_mnDiler
 
+    private void mn2Specif(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn2Specif
+        ppmSpecif.show(tb2, btn22.getX(), btn22.getY() + 26);
+    }//GEN-LAST:event_mn2Specif
+
+    private void spcSystem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spcSystem
+        // TODO add your handling code here:
+    }//GEN-LAST:event_spcSystem
+
+    private void spcProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spcProductActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_spcProductActionPerformed
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn11;
@@ -1107,6 +1160,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     private javax.swing.JButton btn17;
     private javax.swing.JButton btn2;
     private javax.swing.JButton btn21;
+    private javax.swing.JButton btn22;
     private javax.swing.JButton btn23;
     private javax.swing.JButton btn24;
     private javax.swing.JButton btn25;
@@ -1168,6 +1222,9 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     private javax.swing.JMenuItem mn92;
     private javax.swing.JPopupMenu.Separator mn93;
     private javax.swing.JMenuItem mn94;
+    private javax.swing.JPopupMenu ppmSpecif;
+    private javax.swing.JMenuItem spcProduct;
+    private javax.swing.JMenuItem spcSystem;
     private javax.swing.JToolBar tb1;
     private javax.swing.JToolBar tb2;
     private javax.swing.JToolBar tb4;
