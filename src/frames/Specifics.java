@@ -33,10 +33,9 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import startup.App;
 import common.listener.ListenerFrame;
-import common.eProfile;
 import domain.eArtikl;
+import domain.ePrjkit;
 import domain.ePrjprod;
-import domain.eProject;
 import frames.swing.DefCellRendererNumb;
 import frames.swing.TableFieldFilter;
 import frames.swing.col.ColumnGroup;
@@ -65,14 +64,6 @@ public class Specifics extends javax.swing.JFrame {
         new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b031.gif"))
     };
 
-//    public Specifics() {
-//        initComponents();
-//        initElements();
-//        createPpm();
-//        createIwin();
-//        loadingTab1(winc.listSpec);
-//        UGui.setSelectedRow(tab1);
-//    }
     public Specifics(int src) {
         initComponents();
         initElements();
@@ -165,9 +156,10 @@ public class Specifics extends javax.swing.JFrame {
         DefaultTableModel dtm = ((DefaultTableModel) tab1.getModel());
         dtm.getDataVector().clear();
         dtm.fireTableDataChanged();
+        int indexLast = listSpec.get(0).getVector(0).size();
 
         if (listSpec != null && listSpec.isEmpty() == false) {
-            int indexLast = listSpec.get(0).getVector(0).size();
+            //int indexLast = listSpec.get(0).getVector(0).size();
             double sum1 = 0, sum2 = 0, sum9 = 0, sum13 = 0;
             //Заполним спецификацию
             for (int i = 0; i < listSpec.size(); i++) {
@@ -178,13 +170,24 @@ public class Specifics extends javax.swing.JFrame {
                 sum9 = sum9 + (Double) v.get(indexLast - 9);
                 sum13 = sum13 + (Double) v.get(indexLast - 13);
             }
-            if (src == 1) { //если открыл менеджер
-                int orderID = Integer.valueOf(eProp.orderID.read());
+            //Если открыл менеджер добавим комплекты
+            if (src == 1) {
                 int prjprodID = Integer.valueOf(eProp.prjprodID.read());
-                //int sysprodID = Integer.valueOf(eProp.sysprodID.read());
-                //Record projectRec = eProject.find(orderID);
-                Record prjprodRec = ePrjprod.find(prjprodID);
-                
+                if (prjprodID == -1) {
+                    JOptionPane.showMessageDialog(this, "Выберите конструкцию в списке заказов", "Предупреждение", JOptionPane.OK_OPTION);
+                } else {
+                    List<Record> prjkitList = ePrjkit.filter3(prjprodID);
+                    for (Record prjkitRec : prjkitList) {
+
+//                        Vector v = new SpcRecord().getVector(777);
+//                        v.
+//                        //dtm.addRow(v);
+//                        sum1 = sum1 + (Double) v.get(indexLast - 1);
+//                        sum2 = sum2 + (Double) v.get(indexLast - 2);
+//                        sum9 = sum9 + (Double) v.get(indexLast - 9);
+//                        sum13 = sum13 + (Double) v.get(indexLast - 13);
+                    }
+                }
             }
             Vector vectorLast = new Vector();
             vectorLast.add(listSpec.size() + 1);

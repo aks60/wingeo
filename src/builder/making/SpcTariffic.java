@@ -159,7 +159,7 @@ public class SpcTariffic extends Cal5e {
             Record systreeRec = eSystree.find(winc.nuni); //для нахожд. коэф. рентабельности
             double percentMarkup = percentMarkup(winc); //процентная надбавка на изделия сложной формы
             if (prjprodRec != null) {
-                List<Record> prjkitList = ePrjkit.find3(prjprodRec.getInt(ePrjprod.id));
+                List<Record> prjkitList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
 
                 //Цикл по комплектам
                 for (Record prjkitRec : prjkitList) {

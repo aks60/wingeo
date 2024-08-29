@@ -112,7 +112,7 @@ public class HtmlOfSmeta {
                 Wincalc winc = wincList.get(i);
                 square = square + winc.root.area.getGeometryN(0).getArea();
                 Record prjprodRec = prjprodList.get(i);
-                List<Record> prjkitList = ePrjkit.find3(prjprodRec.getInt(ePrjprod.id));
+                List<Record> prjkitList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
                 prjkitAll.addAll(prjkitList);
 
                 ArrayList<ElemSimple> glassList = winc.listElem.filter(Type.GLASS);
@@ -196,7 +196,7 @@ public class HtmlOfSmeta {
                 Wincalc winc = wincList.get(i);
                 square = square + winc.width() * winc.height();
                 Record prjprodRec = prjprodList.get(i);
-                List<Record> prjkitList = ePrjkit.find3(prjprodRec.getInt(ePrjprod.id));
+                List<Record> prjkitList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
                 prjkitAll.addAll(prjkitList);
 
                 ArrayList<ElemSimple> glassList = winc.listElem.filter(Type.GLASS);
