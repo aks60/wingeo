@@ -687,7 +687,7 @@
                             <Column editable="false" title="&#x421;&#x435;&#x440;&#x438;&#x438;" type="java.lang.String"/>
                             <Column editable="false" title="&#x428;&#x438;&#x440;&#x438;&#x43d;&#x430;" type="java.lang.Object"/>
                             <Column editable="false" title="&#x422;&#x43e;&#x43b;&#x449;&#x438;&#x43d;&#x430;" type="java.lang.Object"/>
-                            <Column editable="false" title="&#x41e;&#x442;&#x445;&#x43e;&#x434; %" type="java.lang.Double"/>
+                            <Column editable="true" title="&#x41e;&#x442;&#x445;&#x43e;&#x434; %" type="java.lang.Double"/>
                             <Column editable="false" title="&#x422;&#x435;&#x445;. &#x43a;&#x43e;&#x434;" type="java.lang.String"/>
                             <Column editable="false" title="&#x410;&#x43d;&#x430;&#x43b;&#x43e;&#x433;" type="java.lang.Integer"/>
                             <Column editable="false" title="ID" type="java.lang.Integer"/>

@@ -180,12 +180,11 @@ public class Specifics extends javax.swing.JFrame {
                     List<Record> prjkitList = ePrjkit.filter3(prjprodID);
                     for (Record prjkitRec : prjkitList) {
 
-                        Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.id), true);
+                        Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.artikl_id), true);
                         SpcRecord spc = new SpcRecord();
                         spc.id = 777;
                         spc.place = "Комп";
-                        spc.name = artiklRec.getStr(eArtikl.name);
-                        spc.artikl = artiklRec.getStr(eArtikl.code);
+                        spc.artiklRec(artiklRec);
                         spc.colorID1 = prjkitRec.getInt(ePrjkit.color1_id);
                         spc.colorID2 = prjkitRec.getInt(ePrjkit.color2_id);
                         spc.colorID3 = prjkitRec.getInt(ePrjkit.color3_id);
@@ -194,14 +193,12 @@ public class Specifics extends javax.swing.JFrame {
                         spc.anglCut0 = prjkitRec.getDbl(ePrjkit.angl1);
                         spc.anglCut1 = prjkitRec.getDbl(ePrjkit.angl2);
                         spc.count = prjkitRec.getDbl(ePrjkit.numb);
-                       
-                        Vector v = spc.getVector(++i);                          
+                        Vector v = spc.getVector(++i);
                         dtm.addRow(v);
-                        
-//                        sum1 = sum1 + (Double) v.get(indexLast - 1);
-//                        sum2 = sum2 + (Double) v.get(indexLast - 2);
-//                        sum9 = sum9 + (Double) v.get(indexLast - 9);
-//                        sum13 = sum13 + (Double) v.get(indexLast - 13);
+                        sum1 = sum1 + (Double) v.get(indexLast - 1);
+                        sum2 = sum2 + (Double) v.get(indexLast - 2);
+                        sum9 = sum9 + (Double) v.get(indexLast - 9);
+                        sum13 = sum13 + (Double) v.get(indexLast - 13);
                     }
                 }
             }

@@ -1073,7 +1073,7 @@ public class Artikles extends javax.swing.JFrame {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, false, false, false, false, false, false, false, false, false, false
+                true, true, false, false, false, false, false, false, true, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

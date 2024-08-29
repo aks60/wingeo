@@ -23,7 +23,7 @@ public class SpcRecord {
     public ElemSimple elem5e = null;  //элемент пораждающий спецификацию (контейнер)
     public Record variantRec = null;  //вариант в конструктиве
     public Record detailRec = null;  //детализация в конструктиве
-    private Record artiklRec = null;  //артикул в детализации конструктива
+    public Record artiklRec = null;  //артикул в детализации конструктива
 
     public double id = -1; //ID
     public String place = "---";  //Место размешения
@@ -109,7 +109,7 @@ public class SpcRecord {
         this.artikl = artiklRec.getStr(eArtikl.code);
         this.name = artiklRec.getStr(eArtikl.name);
         this.wastePrc = artiklRec.getDbl(eArtikl.otx_norm);
-        this.unit = artiklRec.getInt(eArtikl.unit); //atypi;
+        this.unit = artiklRec.getInt(eArtikl.unit); 
         this.artiklRec = artiklRec;
         setAnglCut();
     }
