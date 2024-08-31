@@ -93,12 +93,13 @@ public class Man extends javax.swing.JFrame {
         ppmMain.setFont(frames.UGui.getFont(1,1));
 
         mn10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b031.gif"))); // NOI18N
-        mn10.setText("Установки");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
+        mn10.setText(bundle.getString("Меню.Установки")); // NOI18N
         mn10.setToolTipText("");
         mn10.setFont(frames.UGui.getFont(1,1));
 
         mn11.setFont(frames.UGui.getFont(1,1));
-        mn11.setText("Текст ячейки");
+        mn11.setText(bundle.getString("Меню.Текст ячейки")); // NOI18N
         mn11.setName("1"); // NOI18N
         mn11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,7 +109,7 @@ public class Man extends javax.swing.JFrame {
         mn10.add(mn11);
 
         mn12.setFont(frames.UGui.getFont(1,1));
-        mn12.setText("Целое число");
+        mn12.setText(bundle.getString("Меню.Целое число")); // NOI18N
         mn12.setName("2"); // NOI18N
         mn12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,13 +121,13 @@ public class Man extends javax.swing.JFrame {
         ppmMain.add(mn10);
 
         mn60.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b028.gif"))); // NOI18N
-        mn60.setText("База данных");
+        mn60.setText(bundle.getString("Меню.База данных")); // NOI18N
         mn60.setFont(frames.UGui.getFont(1,1));
 
         buttonBaseGroup.add(mn61);
         mn61.setFont(frames.UGui.getFont(1,1));
         mn61.setSelected(true);
-        mn61.setText("База 1");
+        mn61.setText(bundle.getString("Меню.База 1")); // NOI18N
         mn61.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnBase(evt);
@@ -136,7 +137,7 @@ public class Man extends javax.swing.JFrame {
 
         buttonBaseGroup.add(mn62);
         mn62.setFont(frames.UGui.getFont(1,1));
-        mn62.setText("База 2");
+        mn62.setText(bundle.getString("Меню.База 2")); // NOI18N
         mn62.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnBase(evt);
@@ -146,7 +147,7 @@ public class Man extends javax.swing.JFrame {
 
         buttonBaseGroup.add(mn63);
         mn63.setFont(frames.UGui.getFont(1,1));
-        mn63.setText("База 3");
+        mn63.setText(bundle.getString("Меню.База 3")); // NOI18N
         mn63.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnBase(evt);
@@ -157,14 +158,14 @@ public class Man extends javax.swing.JFrame {
         ppmMain.add(mn60);
 
         mn20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b061.gif"))); // NOI18N
-        mn20.setText("Вид интерфейса");
+        mn20.setText(bundle.getString("Меню.Вид интерфейса")); // NOI18N
         mn20.setFont(frames.UGui.getFont(1,1));
         ppmMain.add(mn20);
         ppmMain.add(sep1);
 
         mn30.setFont(frames.UGui.getFont(1,1));
         mn30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b009.gif"))); // NOI18N
-        mn30.setText("Выход");
+        mn30.setText(bundle.getString("Меню.Выход")); // NOI18N
         mn30.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnExit(evt);
@@ -296,7 +297,6 @@ public class Man extends javax.swing.JFrame {
         btn4.getAccessibleContext().setAccessibleName("");
 
         btn11.setFont(frames.UGui.getFont(0,1));
-        btn11.setActionCommand("");
         btn11.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn11.setLabel("Текстуры");
         btn11.setMaximumSize(new java.awt.Dimension(120, 30));
