@@ -46,7 +46,7 @@ public class SpcRecord {
     public double quant2 = 0;  //Количество с отходом
     public double costpric1 = 0;  //Себест. за ед. без отхода     
     public double costpric2 = 0;  //Себест. за ед. с отходом
-    public double price = 0;  //Стоимость без скидки
+    public double price2 = 0;  //Стоимость без скидки
     public double cost2 = 0;  //Стоимость с технологической скидкой
 
     public SpcRecord() {
@@ -74,7 +74,7 @@ public class SpcRecord {
         this.quant2 = spec.quant2;
         this.costpric1 = spec.costpric1;
         this.costpric2 = spec.costpric2;
-        this.price = spec.price;
+        this.price2 = spec.price2;
         this.cost2 = spec.cost2;
         this.anglHoriz = spec.anglHoriz;
         this.mapParam = spec.mapParam;
@@ -145,7 +145,7 @@ public class SpcRecord {
         this.quant2 = spec.quant2;
         this.costpric1 = spec.costpric1;
         this.costpric2 = spec.costpric2;
-        this.price = spec.price;
+        this.price2 = spec.price2;
         this.cost2 = spec.cost2;
         this.anglHoriz = spec.anglHoriz;
         this.mapParam = spec.mapParam;
@@ -156,7 +156,7 @@ public class SpcRecord {
         double elemID = (elem5e == null) ? 0 : elem5e.id;
         return new Vector(List.of(npp, id, elemID, place, artikl, name, eColor.find(colorID1).getStr(eColor.name), eColor.find(colorID2).getStr(eColor.name),
                 eColor.find(colorID3).getStr(eColor.name), width, height, weight, anglCut0, anglCut1, anglHoriz,
-                count, UseUnit.getName(unit), waste, quant1, quant2, costpric1, costpric2, price, cost2));
+                count, UseUnit.getName(unit), waste, quant1, quant2, costpric1, costpric2, price2, cost2));
     }
 
     public void setAnglCut(double angl0, double angl1) {

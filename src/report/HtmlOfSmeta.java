@@ -126,7 +126,7 @@ public class HtmlOfSmeta {
                 tdList.get(8).text(prjprodRec.getStr(ePrjprod.num));
                 tdList.get(10).text(df2.format(winc.root.area.getGeometryN(0).getArea()));
                 tdList.get(12).text(df2.format(winc.weight));
-                tdList.get(14).text(df1.format(prjprodRec.getInt(ePrjprod.num) * winc.price));
+                tdList.get(14).text(df1.format(prjprodRec.getInt(ePrjprod.num) * winc.price2));
                 tdList.get(16).text(df1.format(prjprodRec.getInt(ePrjprod.num) * winc.cost2));
                 total += prjprodRec.getInt(ePrjprod.num) * winc.cost2;
             }
@@ -213,8 +213,8 @@ public class HtmlOfSmeta {
                 tdList.get(14).text(prjprodRec.getStr(ePrjprod.num));
                 tdList.get(16).text(df2.format(winc.root.area.getGeometryN(0).getArea()));
                 tdList.get(18).text(df2.format(winc.weight));
-                tdList.get(20).text(df1.format(prjprodRec.getInt(ePrjprod.num) * winc.price));
-                tdList.get(22).text(df1.format(winc.price / winc.root.area.getGeometryN(0).getArea()));
+                tdList.get(20).text(df1.format(prjprodRec.getInt(ePrjprod.num) * winc.price2));
+                tdList.get(22).text(df1.format(winc.price2 / winc.root.area.getGeometryN(0).getArea()));
                 tdList.get(24).text(df1.format(prjprodRec.getInt(ePrjprod.num) * winc.cost2));
 
                 total += prjprodRec.getInt(ePrjprod.num) * winc.cost2;

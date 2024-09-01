@@ -98,25 +98,16 @@ public class Specifics extends javax.swing.JFrame {
         dtm.getDataVector().clear();
         dtm.fireTableDataChanged();
         int vSize = new SpcRecord().getVector(0).size();
-
-        double sum1 = 0, sum2 = 0, sum9 = 0, sum13 = 0;
         for (int i = 0; i < listSpc.size(); i++) {
-            Vector v = listSpc.get(i).getVector(i + 1);
-            dtm.addRow(v);
-            sum1 = sum1 + (Double) v.get(v.size() - 1);
-            sum2 = sum2 + (Double) v.get(v.size() - 2);
-            sum9 = sum9 + (Double) v.get(v.size() - 9);
-            sum13 = sum13 + (Double) v.get(v.size() - 13);
+            dtm.addRow(listSpc.get(i).getVector(i + 1));
         }
-        Vector v2 = new Vector();
-        v2.add(listSpc.size() + 1);
-        IntStream.range(1, vSize).forEach(action -> v2.add(null));
-        v2.set(v2.size() - 1, sum1); //стоимость без скидки
-        v2.set(v2.size() - 2, sum2); //стоимость со скидклй
-        v2.set(v2.size() - 9, sum9);
-        v2.set(v2.size() - 13, sum13);
-        dtm.addRow(v2);
-        labSum.setText("Итого: " + UCom.format(sum1, "#,##0.##"));
+        Vector v = new Vector();
+        v.add(listSpc.size() + 1);
+        IntStream.range(1, vSize).forEach(action -> v.add(null));
+        v.set(v.size() - 1, winc.cost2); //стоимость со скидклй
+        v.set(v.size() - 2, winc.price2); //стоимость без скидки      
+        dtm.addRow(v);
+        labSum.setText("Итого: " + UCom.format(winc.cost2, "#,##0.##"));
     }
 
     public void createIwin() {
@@ -492,7 +483,6 @@ public class Specifics extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        tab1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tab1.setFillsViewportHeight(true);
         tab1.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         scr1.setViewportView(tab1);
@@ -705,33 +695,21 @@ public class Specifics extends javax.swing.JFrame {
             }
         });
         tab1.getTableHeader().setPreferredSize(new Dimension(0, 46));
-        tab1.getColumnModel().getColumn(1).setCellRenderer(new DefCellRendererNumb("#0.#"));
-        tab1.getColumnModel().getColumn(2).setCellRenderer(new DefCellRendererNumb("#0.#"));
-        tab1.getColumnModel().getColumn(9).setCellRenderer(new DefCellRendererNumb(1));
-        tab1.getColumnModel().getColumn(10).setCellRenderer(new DefCellRendererNumb(1));
-        tab1.getColumnModel().getColumn(11).setCellRenderer(new DefCellRendererNumb(3));
-        tab1.getColumnModel().getColumn(12).setCellRenderer(new DefCellRendererNumb(2));
-        tab1.getColumnModel().getColumn(13).setCellRenderer(new DefCellRendererNumb(2));
-        tab1.getColumnModel().getColumn(14).setCellRenderer(new DefCellRendererNumb(1));
-        tab1.getColumnModel().getColumn(15).setCellRenderer(new DefCellRendererNumb(1));
-        tab1.getColumnModel().getColumn(18).setCellRenderer(new DefCellRendererNumb(2));
-        tab1.getColumnModel().getColumn(19).setCellRenderer(new DefCellRendererNumb(2));
-        tab1.getColumnModel().getColumn(20).setCellRenderer(new DefCellRendererNumb(2));
-        tab1.getColumnModel().getColumn(21).setCellRenderer(new DefCellRendererNumb(2));
-        tab1.getColumnModel().getColumn(22).setCellRenderer(new DefCellRendererNumb(9));
-        tab1.getColumnModel().getColumn(23).setCellRenderer(new DefCellRendererNumb(9));
-        for (int i = 8; i < tab1.getColumnCount(); i++) {
-            tab1.getColumnModel().getColumn(i).setCellRenderer(new DefaultTableCellRenderer() {
-                @Override
-                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
-                    JLabel lab = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
-                    if ("-1".equals(lab.getText()) || "-1.0".equals(lab.getText()) || "0.0".equals(lab.getText())) {
-                        lab.setText("");
-                    }
-                    return lab;
-                }
-            });
-        }        
+        tab1.getColumnModel().getColumn(1).setCellRenderer(new DefCellRendererNumb(1));
+        tab1.getColumnModel().getColumn(2).setCellRenderer(new DefCellRendererNumb(1));
+        tab1.getColumnModel().getColumn(9).setCellRenderer(new DefCellRendererSpc(1));
+        tab1.getColumnModel().getColumn(10).setCellRenderer(new DefCellRendererSpc(1));
+        tab1.getColumnModel().getColumn(11).setCellRenderer(new DefCellRendererSpc(3));
+        tab1.getColumnModel().getColumn(12).setCellRenderer(new DefCellRendererSpc(2));
+        tab1.getColumnModel().getColumn(13).setCellRenderer(new DefCellRendererSpc(2));
+        tab1.getColumnModel().getColumn(14).setCellRenderer(new DefCellRendererSpc(1));
+        tab1.getColumnModel().getColumn(15).setCellRenderer(new DefCellRendererSpc(1));
+        tab1.getColumnModel().getColumn(18).setCellRenderer(new DefCellRendererSpc(2));
+        tab1.getColumnModel().getColumn(19).setCellRenderer(new DefCellRendererSpc(2));
+        tab1.getColumnModel().getColumn(20).setCellRenderer(new DefCellRendererSpc(2));
+        tab1.getColumnModel().getColumn(21).setCellRenderer(new DefCellRendererSpc(2));
+        tab1.getColumnModel().getColumn(22).setCellRenderer(new DefCellRendererSpc(9));
+        tab1.getColumnModel().getColumn(23).setCellRenderer(new DefCellRendererSpc(9));
         if ("Nimbus".equals(eProp.lookandfeel.read())) {
             for (int i = 15; i < 22; i++) {
                 tab1.getColumnModel().getColumn(i).setPreferredWidth(tab1.getColumnModel().getColumn(i).getPreferredWidth() + tab1.getColumnModel().getColumn(i).getPreferredWidth() / 3);
@@ -762,5 +740,21 @@ public class Specifics extends javax.swing.JFrame {
         header.addColumnGroup(sebe);
         header.addColumnGroup(angl);
         header.addColumnGroup(cost);
+    }
+
+    class DefCellRendererSpc extends DefCellRendererNumb {
+
+        public DefCellRendererSpc(int scale) {
+            super(scale);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+            JLabel lab = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+            if ("-1".equals(lab.getText()) || "-1.0".equals(lab.getText()) || "0.0".equals(lab.getText())) {
+                lab.setText("");
+            }
+            return lab;
+        }
     }
 }

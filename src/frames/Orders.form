@@ -215,7 +215,7 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,87,0,0,3,-124"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,110,0,0,3,-79"/>
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
@@ -264,7 +264,7 @@
                   <Component id="btnReport" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                   <Component id="lab2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="325" max="32767" attributes="0"/>
+                  <EmptySpace pref="370" max="32767" attributes="0"/>
                   <Component id="btnTest" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnClose" min="-2" max="-2" attributes="0"/>
@@ -682,6 +682,9 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="frames.UGui.getFont(1,0)" type="code"/>
             </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[800, 500]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="stateChanged"/>
@@ -695,6 +698,11 @@
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
           <SubComponents>
             <Container class="javax.swing.JPanel" name="pan1">
+              <Properties>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[800, 500]"/>
+                </Property>
+              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="       &#x417;&#x430;&#x43a;&#x430;&#x437;&#x44b;       ">
@@ -797,7 +805,7 @@
                 <Container class="javax.swing.JPanel" name="pan11">
                   <Properties>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[400, 550]"/>
+                      <Dimension value="[400, 500]"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -811,7 +819,7 @@
                     <Container class="javax.swing.JPanel" name="pan9">
                       <Properties>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[450, 142]"/>
+                          <Dimension value="[450, 145]"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -825,7 +833,7 @@
                         <Container class="javax.swing.JPanel" name="pan19">
                           <Properties>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[450, 68]"/>
+                              <Dimension value="[450, 70]"/>
                             </Property>
                           </Properties>
                           <Constraints>
@@ -838,7 +846,7 @@
                             <DimensionLayout dim="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="lab3" min="-2" max="-2" attributes="1"/>
@@ -851,16 +859,16 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="txt8" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="lab7" pref="40" max="32767" attributes="1"/>
+                                              <Component id="lab7" max="32767" attributes="1"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="txt7" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace pref="18" max="32767" attributes="0"/>
+                                              <EmptySpace max="32767" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="lab1" min="-2" max="-2" attributes="1"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jComboBox1" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
+                                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                                              <Component id="jComboBox1" max="32767" attributes="0"/>
+                                              <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -869,7 +877,7 @@
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace pref="11" max="32767" attributes="0"/>
+                                      <EmptySpace pref="12" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="lab1" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -884,7 +892,7 @@
                                           <Component id="txt3" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="btn1" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="11" max="32767" attributes="0"/>
+                                      <EmptySpace pref="12" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -1084,7 +1092,7 @@
                               </Border>
                             </Property>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[450, 90]"/>
+                              <Dimension value="[450, 80]"/>
                             </Property>
                           </Properties>
                           <AuxValues>
@@ -1104,7 +1112,7 @@
                                   <Connection code="frames.UGui.getFont(0,0)" type="code"/>
                                 </Property>
                                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                                  <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;        {&quot;   &#x41a;&#x43e;&#x43d;&#x441;&#x442;&#x440;&#x443;&#x43a;&#x446;&#x438;&#x438;&quot;, Double.valueOf(0.0), Double.valueOf(0.0), Double.valueOf(0.0)},&#xa;        {&quot;   &#x41a;&#x43e;&#x43c;&#x43f;&#x43b;&#x435;&#x43a;&#x442;&#x430;&#x446;&#x438;&#x438;&quot;,  Double.valueOf(0.0), Double.valueOf(0.0), Double.valueOf(0.0)},&#xa;        {&quot;   &#x418;&#x442;&#x43e;&#x433;&#x43e; &#x437;&#x430; &#x437;&#x430;&#x43a;&#x430;&#x437;&quot;,  Double.valueOf(0.0), Double.valueOf(0.0), Double.valueOf(0.0)}&#xa;    },&#xa;    new String [] {&#xa;        &quot;&quot;, &quot;&#x421;&#x43a;&#x438;&#x434;&#x43a;&#x430; (%)&quot;, &quot;&#x411;&#x435;&#x437; &#x441;&#x43a;&#x438;&#x434;&#x43e;&#x43a;&quot;, &quot;&#x421;&#x43e; &#x441;&#x43a;&#x438;&#x434;&#x43a;&#x43e;&#x439;&quot;&#xa;    }&#xa;) {&#xa;    Class[] types = new Class [] {&#xa;        java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class&#xa;    };&#xa;    boolean[] canEdit = new boolean [] {&#xa;        false, true, false, false&#xa;    };&#xa;&#xa;    public Class getColumnClass(int columnIndex) {&#xa;        return types [columnIndex];&#xa;    }&#xa;&#xa;    public boolean isCellEditable(int rowIndex, int columnIndex) {&#xa;        return canEdit [columnIndex];&#xa;    }&#xa;&#xa;    public void setValueAt(Object aValue, int row, int column) {&#xa;        super.setValueAt(aValue, row, column);&#xa;        Record projectRec = qProject.get(UGui.getIndexRec(tab1));&#xa;        if (row == 0 &amp;&amp; column == 1 &amp;&amp; projectRec.get(eProject.disc2).equals(aValue) == false) {&#xa;            projectRec.set(eProject.disc2, aValue);&#xa;        } else if (row == 1 &amp;&amp; column == 1 &amp;&amp; projectRec.get(eProject.disc3).equals(aValue) == false) {&#xa;            projectRec.set(eProject.disc3, aValue);&#xa;        } else if (row == 2 &amp;&amp; column == 1 &amp;&amp; projectRec.get(eProject.disc4).equals(aValue) == false) {&#xa;            projectRec.set(eProject.disc4, aValue);&#xa;        }&#xa;    }&#xa;}" type="code"/>
+                                  <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;        {&quot;   &#x41a;&#x43e;&#x43d;&#x441;&#x442;&#x440;&#x443;&#x43a;&#x446;&#x438;&#x438;&quot;, Double.valueOf(0.0), Double.valueOf(0.0), Double.valueOf(0.0)},&#xa;        {&quot;   &#x41a;&#x43e;&#x43c;&#x43f;&#x43b;&#x435;&#x43a;&#x442;&#x430;&#x446;&#x438;&#x438;&quot;,  Double.valueOf(0.0), Double.valueOf(0.0), Double.valueOf(0.0)},&#xa;        {&quot;   &#x418;&#x442;&#x43e;&#x433;&#x43e; &#x437;&#x430; &#x437;&#x430;&#x43a;&#x430;&#x437;&quot;,  Double.valueOf(0.0), Double.valueOf(0.0), Double.valueOf(0.0)}&#xa;    },&#xa;    new String [] {&#xa;        &quot;&quot;, &quot;&#x421;&#x43a;&#x438;&#x434;&#x43a;&#x430; (%)&quot;, &quot;&#x411;&#x435;&#x437; &#x441;&#x43a;&#x438;&#x434;&#x43e;&#x43a;&quot;, &quot;&#x421;&#x43e; &#x441;&#x43a;&#x438;&#x434;&#x43a;&#x43e;&#x439;&quot;&#xa;    }&#xa;) {&#xa;    Class[] types = new Class [] {&#xa;        java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class&#xa;    };&#xa;    boolean[] canEdit = new boolean [] {&#xa;        false, true, false, false&#xa;    };&#xa;&#xa;    public Class getColumnClass(int columnIndex) {&#xa;        return types [columnIndex];&#xa;    }&#xa;&#xa;    public boolean isCellEditable(int rowIndex, int columnIndex) {&#xa;        return canEdit [columnIndex];&#xa;    }&#xa;&#xa;    public void setValueAt(Object aValue, int row, int column) {&#xa;        super.setValueAt(aValue, row, column);&#xa;        Record projectRec = qProject.get(UGui.getIndexRec(tab1));&#xa;        if (row == 0 &amp;&amp; column == 1 &amp;&amp; projectRec.get(eProject.disc2).equals(aValue) == false) {&#xa;            projectRec.set(eProject.disc2, aValue);&#xa;        } else if (row == 1 &amp;&amp; column == 1 &amp;&amp; projectRec.get(eProject.disc3).equals(aValue) == false) {&#xa;            projectRec.set(eProject.disc3, aValue);&#xa;        } else if (row == 2 &amp;&amp; column == 1 &amp;&amp; projectRec.get(eProject.disc4).equals(aValue) == false) {&#xa;            projectRec.set(eProject.disc4, aValue);&#xa;        }&#xa;        loadingTab5();&#xa;    }&#xa;}" type="code"/>
                                 </Property>
                                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                                   <TableColumnModel selectionModel="0"/>
@@ -1121,7 +1129,7 @@
                     <Container class="javax.swing.JPanel" name="pan7">
                       <Properties>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[404, 320]"/>
+                          <Dimension value="[450, 350]"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1207,6 +1215,11 @@
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="pan3">
+              <Properties>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[800, 500]"/>
+                </Property>
+              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="        &#x418;&#x437;&#x434;&#x435;&#x43b;&#x438;&#x44f;        ">
@@ -1831,7 +1844,7 @@
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="pan20" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="109" max="32767" attributes="0"/>
+                                      <EmptySpace pref="107" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -2253,7 +2266,7 @@
                                           <Component id="txt34" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="btn25" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="193" max="32767" attributes="0"/>
+                                      <EmptySpace pref="191" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -2563,7 +2576,7 @@
                                                   <Component id="txt31" alignment="3" min="-2" max="-2" attributes="0"/>
                                                   <Component id="btn6" alignment="3" min="-2" max="-2" attributes="0"/>
                                               </Group>
-                                              <EmptySpace max="32767" attributes="0"/>
+                                              <EmptySpace pref="79" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
@@ -3044,7 +3057,7 @@
                                                   <Component id="lab63" alignment="3" min="-2" max="-2" attributes="0"/>
                                                   <Component id="btn24" alignment="3" min="-2" max="-2" attributes="0"/>
                                               </Group>
-                                              <EmptySpace pref="89" max="32767" attributes="0"/>
+                                              <EmptySpace pref="83" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
@@ -3418,7 +3431,7 @@
                                                       <Group type="102" alignment="0" attributes="0">
                                                           <Component id="lab53" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="txt55" pref="0" max="32767" attributes="0"/>
+                                                          <Component id="txt55" pref="292" max="32767" attributes="0"/>
                                                       </Group>
                                                       <Group type="102" alignment="1" attributes="0">
                                                           <Component id="lab66" max="-2" attributes="0"/>
@@ -3435,7 +3448,7 @@
                                     </DimensionLayout>
                                     <DimensionLayout dim="1">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <EmptySpace min="0" pref="238" max="32767" attributes="0"/>
+                                          <EmptySpace min="0" pref="232" max="32767" attributes="0"/>
                                           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace max="-2" attributes="0"/>
@@ -3463,7 +3476,7 @@
                                                       <Component id="lab62" alignment="0" min="-2" max="-2" attributes="0"/>
                                                       <Component id="btn31" alignment="0" min="-2" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <EmptySpace pref="134" max="32767" attributes="0"/>
+                                                  <EmptySpace pref="126" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
@@ -3823,7 +3836,7 @@
                                           <Component id="lab57" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="txt41" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="50" max="32767" attributes="0"/>
+                                      <EmptySpace pref="48" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -4220,6 +4233,11 @@
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="pan6">
+              <Properties>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[800, 500]"/>
+                </Property>
+              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="   &#x41a;&#x43e;&#x43c;&#x43f;&#x43b;&#x435;&#x43a;&#x442;&#x430;&#x446;&#x438;&#x44f;   ">

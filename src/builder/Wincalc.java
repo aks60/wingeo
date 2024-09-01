@@ -52,9 +52,10 @@ public class Wincalc {
     public Record syssizRec = null; //система констант
     public double costpric1 = 0; //себест. за ед. без отхода     
     public double costpric2 = 0; //себест. за ед. с отходом
-    public double price = 0; //стоимость без скидки
+    public double price2 = 0; //стоимость без скидки
     public double cost2 = 0; //стоимость с технологической скидкой
     public double weight = 0; //масса конструкции  
+    public double count = 0; //колич. единиц
     public BufferedImage bufferImg = null;  //образ рисунка
     public ImageIcon imageIcon = null; //рисунок конструкции
     public Graphics2D gc2d = null; //графический котекст рисунка  
@@ -224,7 +225,7 @@ public class Wincalc {
     //Спецификация и тарификация 
     public void specification(boolean norm_otx) {
         weight = 0;
-        price = 0;
+        price2 = 0;
         cost2 = 0;
         try {
             //Спецификация ведущих элементов конструкции
@@ -251,8 +252,9 @@ public class Wincalc {
 
             //Итоговая стоимость
             for (SpcRecord spc : listSpec) {
-                this.price = (this.price + spc.price); //общая стоимость без скидки
+                this.price2 = (this.price2 + spc.price2); //общая стоимость без скидки
                 this.cost2 = (this.cost2 + spc.cost2); //общая стоимость со скидкой             
+                this.count = (this.count + spc.count); //колич. единиц                       
             }
 
             //Вес изделия

@@ -91,7 +91,7 @@ public class RSpecific {
         if (otx) {
             return df1.format(spc.cost2);
         }
-        return df1.format(spc.price);
+        return df1.format(spc.price2);
     }
 
     //--------------------------------------------------------------------------  
@@ -111,7 +111,7 @@ public class RSpecific {
                 s.spc.quant1 = s.spc.quant1 + sr.spc.quant1;
                 s.spc.quant2 = s.spc.quant2 + sr.spc.quant2;
                 s.spc.costpric2 = s.spc.costpric2 + sr.spc.costpric2;
-                s.spc.price = s.spc.price + sr.spc.price;
+                s.spc.price2 = s.spc.price2 + sr.spc.price2;
                 s.spc.cost2 = s.spc.cost2 + sr.spc.cost2;
             }
         }
@@ -121,7 +121,7 @@ public class RSpecific {
     } 
     
     public double getCost1() {
-        return spc.price;
+        return spc.price2;
     }
     
     public double getCost2() {

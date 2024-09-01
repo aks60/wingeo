@@ -577,7 +577,6 @@
                     <Column editable="true" title="&#x441;&#x43e; &#x441;&#x43a;." type="java.lang.Double"/>
                   </Table>
                 </Property>
-                <Property name="autoResizeMode" type="int" value="4"/>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
                     <Column maxWidth="40" minWidth="-1" prefWidth="32" resizable="true">

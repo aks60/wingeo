@@ -110,9 +110,9 @@ public class SpcTariffic extends Cal5e {
                     double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
                     double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                     double k3 = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
-                    elem5e.spcRec.price = elem5e.spcRec.costpric2 * k1 * k3;
-                    elem5e.spcRec.price = elem5e.spcRec.price + (elem5e.spcRec.price / 100) * percentMarkup; //стоимость без скидки                     
-                    elem5e.spcRec.cost2 = elem5e.spcRec.price - (elem5e.spcRec.price / 100) * k2; //стоимость со скидкой 
+                    elem5e.spcRec.price2 = elem5e.spcRec.costpric2 * k1 * k3;
+                    elem5e.spcRec.price2 = elem5e.spcRec.price2 + (elem5e.spcRec.price2 / 100) * percentMarkup; //стоимость без скидки                     
+                    elem5e.spcRec.cost2 = elem5e.spcRec.price2 - (elem5e.spcRec.price2 / 100) * k2; //стоимость со скидкой 
 
                     //Правила расчёта вложенные
                     for (SpcRecord spc : elem5e.spcRec.spcList) {
@@ -130,9 +130,9 @@ public class SpcTariffic extends Cal5e {
                         double m1 = artgrp1bRec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
                         double m2 = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                         double m3 = systreeRec.getDbl(eSystree.coef); //коэф. рентабельности
-                        spc.price = spc.costpric2 * m1 * m3;
-                        spc.price = spc.price + (spc.price / 100) * percentMarkup; //стоимость без скидки                         
-                        spc.cost2 = spc.price - (spc.price / 100) * m2; //стоимость со скидкой 
+                        spc.price2 = spc.costpric2 * m1 * m3;
+                        spc.price2 = spc.price2 + (spc.price2 / 100) * percentMarkup; //стоимость без скидки                         
+                        spc.cost2 = spc.price2 - (spc.price2 / 100) * m2; //стоимость со скидкой 
                     }
                 }
             }
@@ -187,9 +187,9 @@ public class SpcTariffic extends Cal5e {
                         double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
                         double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                         double k3 = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
-                        spc.price = spc.costpric2 * k1 * k3;
-                        spc.price = spc.price + (spc.price / 100) * percentMarkup; //стоимость без скидки                     
-                        spc.cost2 = spc.price - (spc.price / 100) * k2; //стоимость со скидкой 
+                        spc.price2 = spc.costpric2 * k1 * k3;
+                        spc.price2 = spc.price2 + (spc.price2 / 100) * percentMarkup; //стоимость без скидки                     
+                        spc.cost2 = spc.price2 - (spc.price2 / 100) * k2; //стоимость со скидкой 
                         kitList.add(spc);
                     }
                 }
