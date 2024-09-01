@@ -138,7 +138,7 @@
               <Image iconType="3" name="/resource/img16/b053.gif"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x41a;&#x43e;&#x43c;&#x43c;&#x435;&#x440;&#x447;&#x435;&#x441;&#x43a;&#x43e;&#x435; &#x43f;&#x440;&#x435;&#x434;&#x43b;..." replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x41a;&#x43e;&#x43c;&#x43c;&#x435;&#x440;&#x447;&#x435;&#x441;&#x43a;&#x43e;&#x435; &#x43f;&#x440;&#x435;&#x434;&#x43b;...&quot;)"/>
+              <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x41a;&#x43e;&#x43c;-&#x43e;&#x435; &#x43f;&#x440;&#x435;&#x434;&#x43b;..." replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x41a;&#x43e;&#x43c;-&#x43e;&#x435; &#x43f;&#x440;&#x435;&#x434;&#x43b;...&quot;)"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>

@@ -1027,7 +1027,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
         menuItem17.setFont(frames.UGui.getFont(0,1));
         menuItem17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
-        menuItem17.setText(bundle.getString("Меню.Коммерческое предл...")); // NOI18N
+        menuItem17.setText(bundle.getString("Меню.Ком-ое предл...")); // NOI18N
         menuItem17.setToolTipText("");
         menuItem17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
