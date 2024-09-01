@@ -59,7 +59,6 @@ public class Specifics extends javax.swing.JFrame {
 
     private int manager = 0;
     private builder.Wincalc winc = new Wincalc();
-    ;
     private TableFieldFilter filterTable = null;
     private ArraySpc<SpcRecord> listSpc = new ArraySpc<SpcRecord>();
 
@@ -575,7 +574,7 @@ public class Specifics extends javax.swing.JFrame {
     private void btnFind2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind2
         String str = tab1.getValueAt(tab1.getSelectedRow(), 3).toString().substring(0, 3);
         if ("КОМ".equals(str) == false) {
-            
+
             double id = UCom.getDbl(tab1.getValueAt(tab1.getSelectedRow(), 1).toString());
             SpcRecord specificRec = this.listSpc.find(id);
             Record variantRec = specificRec.variantRec;
@@ -697,7 +696,6 @@ public class Specifics extends javax.swing.JFrame {
 
         TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tab1.getModel());
         tab1.setRowSorter(sorter);
-        tab1.getTableHeader().setPreferredSize(new Dimension(0, 46));
         tab1.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
@@ -706,6 +704,7 @@ public class Specifics extends javax.swing.JFrame {
                 return lab;
             }
         });
+        tab1.getTableHeader().setPreferredSize(new Dimension(0, 46));
         tab1.getColumnModel().getColumn(1).setCellRenderer(new DefCellRendererNumb("#0.#"));
         tab1.getColumnModel().getColumn(2).setCellRenderer(new DefCellRendererNumb("#0.#"));
         tab1.getColumnModel().getColumn(9).setCellRenderer(new DefCellRendererNumb(1));
@@ -721,6 +720,18 @@ public class Specifics extends javax.swing.JFrame {
         tab1.getColumnModel().getColumn(21).setCellRenderer(new DefCellRendererNumb(2));
         tab1.getColumnModel().getColumn(22).setCellRenderer(new DefCellRendererNumb(9));
         tab1.getColumnModel().getColumn(23).setCellRenderer(new DefCellRendererNumb(9));
+        for (int i = 8; i < tab1.getColumnCount() - 1; i++) {
+            tab1.getColumnModel().getColumn(i).setCellRenderer(new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+                    JLabel lab = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+                    if ("-1".equals(lab.getText()) || "-1.0".equals(lab.getText()) || "0.0".equals(lab.getText())) {
+                        lab.setText("");
+                    }
+                    return lab;
+                }
+            });
+        }        
         if ("Nimbus".equals(eProp.lookandfeel.read())) {
             for (int i = 15; i < 22; i++) {
                 tab1.getColumnModel().getColumn(i).setPreferredWidth(tab1.getColumnModel().getColumn(i).getPreferredWidth() + tab1.getColumnModel().getColumn(i).getPreferredWidth() / 3);
