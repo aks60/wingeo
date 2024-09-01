@@ -720,7 +720,7 @@ public class Specifics extends javax.swing.JFrame {
         tab1.getColumnModel().getColumn(21).setCellRenderer(new DefCellRendererNumb(2));
         tab1.getColumnModel().getColumn(22).setCellRenderer(new DefCellRendererNumb(9));
         tab1.getColumnModel().getColumn(23).setCellRenderer(new DefCellRendererNumb(9));
-        for (int i = 8; i < tab1.getColumnCount() - 1; i++) {
+        for (int i = 8; i < tab1.getColumnCount(); i++) {
             tab1.getColumnModel().getColumn(i).setCellRenderer(new DefaultTableCellRenderer() {
                 @Override
                 public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
