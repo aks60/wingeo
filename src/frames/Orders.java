@@ -202,19 +202,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 return val;
             }
         };
-//        tab5.setModel(new DefaultTableModel() {
-//            public void setValueAt(Object aValue, int row, int column) {
-//                if (row == 0) {
-//                    qProject.set(aValue, UGui.getIndexRec(tab1), eProject.disc2);
-//                } else if (row == 1) {
-//                    qProject.set(aValue, UGui.getIndexRec(tab1), eProject.disc3);
-//                } else if (row == 2) {
-//                    qProject.set(aValue, UGui.getIndexRec(tab1), eProject.disc4);
-//                }
-//                loadingTab5();
-//            }
-//        });
-
+        
         DefaultTableCellRenderer defaultTableDateRenderer = new DefaultTableCellRenderer() {
 
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -355,8 +343,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
             Record currencRec = qCurrenc.stream().filter(rec -> rec.get(eCurrenc.id).equals(projectRec.get(eProject.currenc_id))).findFirst().orElse(eCurrenc.up.newRecord(Query.SEL));
             txt3.setText(currencRec.getStr(eCurrenc.name));
-            txt7.setText(UCom.format(projectRec.getDbl(eProject.weight) / 1000, 1));
-            txt8.setText(UCom.format(projectRec.getDbl(eProject.square) / 1000000, 1));
+            txt7.setText(UCom.format(projectRec.getDbl(eProject.weight), 1));
+            txt8.setText(UCom.format(projectRec.getDbl(eProject.square) / 1000000, 2));
 
             loadingTab2();
             loadingTab5();
@@ -762,7 +750,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 try {
                     Record projectRec = qProject.get(UGui.getIndexRec(tab1));
                     Record currencRec = qCurrenc.stream().filter(rec -> rec.get(eCurrenc.id).equals(projectRec.get(eProject.currenc_id))).findFirst().orElse(eCurrenc.up.newRecord(Query.SEL));
-                    List.of(eProject.price2, eProject.cost2, eProject.price3, eProject.cost3).forEach(field -> projectRec.setNo(field, 0));
+                    List.of(eProject.price2, eProject.cost2, eProject.price3, eProject.cost3, eProject.square, eProject.weight).forEach(field -> projectRec.setNo(field, 0));
 
                     //Пересчёт заказа
                     if (UGui.getIndexRec(tab1) != -1) {
@@ -781,8 +769,12 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                                 win.specification(true); //конструктив                                                               
 
                                 //Площадь изделий
-                                double square = prjprodRec.getDbl(ePrjprod.num, 1) * win.root.area.getGeometryN(0).getArea();
+                                double square = prjprodRec.getDbl(ePrjprod.num) * win.root.area.getGeometryN(0).getArea();
                                 projectRec.set(eProject.square, projectRec.getDbl(eProject.square) + square);
+
+                                //Вес изделий
+                                double weight = prjprodRec.getDbl(ePrjprod.num) * win.weight;
+                                projectRec.set(eProject.weight, projectRec.getDbl(eProject.weight) + weight);
 
                                 //Суммируем коонструкции заказа
                                 projectRec.set(eProject.price2, projectRec.getDbl(eProject.price2) + win.price2); //стоимость без скидки
@@ -796,32 +788,32 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                                 }
                             }
                         }
-                        double cost2 = projectRec.getDbl(eProject.cost2, 0) - projectRec.getDbl(eProject.cost2, 0) * projectRec.getDbl(eProject.disc2, 0) / 100;
+                        double cost2 = projectRec.getDbl(eProject.cost2) - projectRec.getDbl(eProject.cost2) * projectRec.getDbl(eProject.disc2) / 100;
                         projectRec.set(eProject.cost2, cost2); //стоимость проекта со скидкой менеджера
 
-                        double cost3 = projectRec.getDbl(eProject.cost3, 0) - projectRec.getDbl(eProject.cost3, 0) * projectRec.getDbl(eProject.disc3, 0) / 100;
+                        double cost3 = projectRec.getDbl(eProject.cost3) - projectRec.getDbl(eProject.cost3) * projectRec.getDbl(eProject.disc3) / 100;
                         projectRec.set(eProject.cost3, cost3); //стоимость проекта комплектации со скидкой менеджера
 
-                        projectRec.set(eProject.price4, projectRec.getDbl(eProject.price2, 0) + projectRec.getDbl(eProject.price3, 0)); //стоимость проекта без скидок
+                        projectRec.set(eProject.price4, projectRec.getDbl(eProject.price2) + projectRec.getDbl(eProject.price3)); //стоимость проекта без скидок
 
-                        double cost4 = (projectRec.getDbl(eProject.cost2, 0) + projectRec.getDbl(eProject.cost3, 0))
-                                - (projectRec.getDbl(eProject.cost2, 0) + projectRec.getDbl(eProject.cost3, 0)) * projectRec.getDbl(eProject.disc4, 0) / 100;
+                        double cost4 = (projectRec.getDbl(eProject.cost2) + projectRec.getDbl(eProject.cost3))
+                                - (projectRec.getDbl(eProject.cost2) + projectRec.getDbl(eProject.cost3)) * projectRec.getDbl(eProject.disc4) / 100;
                         projectRec.set(eProject.cost4, cost4); //стоимость проекта со скидками менеджера
 
                         //Вес, площадь
-                        txt7.setText(UCom.format(projectRec.getDbl(eProject.weight, 0) / 1000, 1)); //вес
-                        txt8.setText(UCom.format(projectRec.getDbl(eProject.square, 0) / 1000000, 1)); //площадь
+                        txt8.setText(UCom.format(projectRec.getDbl(eProject.square) / 1000000, 2)); //площадь
+                        txt7.setText(UCom.format(projectRec.getDbl(eProject.weight), 1)); //вес 
 
                         //Стоимость
-                        tab5.setValueAt(projectRec.getDbl(eProject.price2, 0), 0, 2); //стоимость конструкций без скидки
-                        tab5.setValueAt(projectRec.getDbl(eProject.cost2, 0), 0, 3); //стоимость конструкций со скидкой
+                        tab5.setValueAt(projectRec.getDbl(eProject.price2), 0, 2); //стоимость конструкций без скидки
+                        tab5.setValueAt(projectRec.getDbl(eProject.cost2), 0, 3); //стоимость конструкций со скидкой
 
-                        tab5.setValueAt(projectRec.getDbl(eProject.price3, 0), 1, 2); //стоимость комплектации без скидки
-                        tab5.setValueAt(projectRec.getDbl(eProject.cost3, 0), 1, 3); //стоимость комплектации со скидкой
+                        tab5.setValueAt(projectRec.getDbl(eProject.price3), 1, 2); //стоимость комплектации без скидки
+                        tab5.setValueAt(projectRec.getDbl(eProject.cost3), 1, 3); //стоимость комплектации со скидкой
 
                         //Итого
-                        tab5.setValueAt(projectRec.getDbl(eProject.price4, 0), 2, 2); //итого стоимость без скидки
-                        tab5.setValueAt(projectRec.getDbl(eProject.cost4, 0), 2, 3); //итого стоимость со скидкой
+                        tab5.setValueAt(projectRec.getDbl(eProject.price4), 2, 2); //итого стоимость без скидки
+                        tab5.setValueAt(projectRec.getDbl(eProject.cost4), 2, 3); //итого стоимость со скидкой
                     }
 
                 } catch (Exception e) {
@@ -1661,7 +1653,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         scr2.setViewportView(tab2);
         if (tab2.getColumnModel().getColumnCount() > 0) {
             tab2.getColumnModel().getColumn(0).setPreferredWidth(180);
-            tab2.getColumnModel().getColumn(1).setPreferredWidth(20);
+            tab2.getColumnModel().getColumn(1).setPreferredWidth(30);
             tab2.getColumnModel().getColumn(1).setMaxWidth(80);
             tab2.getColumnModel().getColumn(2).setMinWidth(68);
             tab2.getColumnModel().getColumn(2).setPreferredWidth(68);
