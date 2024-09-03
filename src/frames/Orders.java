@@ -806,7 +806,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
                         double cost4 = (projectRec.getDbl(eProject.cost2, 0) + projectRec.getDbl(eProject.cost3, 0))
                                 - (projectRec.getDbl(eProject.cost2, 0) + projectRec.getDbl(eProject.cost3, 0)) * projectRec.getDbl(eProject.disc4, 0) / 100;
-                        projectRec.set(eProject.cost4, cost4); //проекта со скидками менеджера
+                        projectRec.set(eProject.cost4, cost4); //стоимость проекта со скидками менеджера
 
                         //Вес, площадь
                         txt7.setText(UCom.format(projectRec.getDbl(eProject.weight, 0) / 1000, 1)); //вес
