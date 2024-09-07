@@ -104,7 +104,10 @@ public class SpcTariffic extends Cal5e {
                         }
                     }
 
-                    elem5e.spcRec.costpric2 = elem5e.spcRec.costpric1 * elem5e.spcRec.quant2; //себест. за ед. с отходом 
+                    if (norm_otx == true) {
+                        double otx = elem5e.spcRec.artiklRec().getDbl(eArtikl.otx_norm);
+                        elem5e.spcRec.costpric2 = elem5e.spcRec.costpric1 + elem5e.spcRec.costpric1 * otx; //себест. за ед. с отходом 
+                    }
                     Record artgrp1Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups1_id));
                     Record artgrp2Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups2_id));
                     double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
@@ -149,7 +152,7 @@ public class SpcTariffic extends Cal5e {
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Tariffic.calc() " + e);
-        } 
+        }
     }
 
     //Комплекты конструкции    
@@ -264,7 +267,7 @@ public class SpcTariffic extends Cal5e {
                     double d2 = color2Rec.getDbl(eColor.coef2); //ценовой коэф.внутренний текстуры
                     double d3 = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
                     double d5 = kursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
-                    artdetPrice += ( d1 * d2 * d3) / d5;
+                    artdetPrice += (d1 * d2 * d3) / d5;
                     artdetUsed = true;
                 }
                 //Подбираем тариф внешней текстуры

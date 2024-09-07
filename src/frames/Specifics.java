@@ -81,6 +81,7 @@ public class Specifics extends javax.swing.JFrame {
 
     public void loadingData() {
 
+        this.listSpc.clear();
         this.listSpc.addAll(winc.listSpec); //добавим спецификацию
 
         //Если открыл менеджер добавим комплекты
@@ -643,9 +644,14 @@ public class Specifics extends javax.swing.JFrame {
     }//GEN-LAST:event_btn21mnSpecif
 
     private void btn22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn22ActionPerformed
+        for (App app : App.values()) {
+            if (app.frame != null) {
+                UGui.findComponents(app.frame.getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
+            }
+        }
         int index = UGui.getIndexRec(tab1);
         createIwin();
-        createIwin();
+        loadingData();
         loadingTab1(this.listSpc);
         UGui.setSelectedIndex(tab1, index);
     }//GEN-LAST:event_btn22ActionPerformed
