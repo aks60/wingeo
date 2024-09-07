@@ -80,7 +80,11 @@ public class Specifics extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-
+        for (App app : App.values()) {
+            if (app.frame != null) {
+                UGui.findComponents(app.frame.getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
+            }
+        }
         this.listSpc.clear();
         this.listSpc.addAll(winc.listSpec); //добавим спецификацию
 
@@ -473,7 +477,7 @@ public class Specifics extends javax.swing.JFrame {
                 {null, null, null, "", "", "", "", "", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nпп", "PK", "FK", "Расположенние", "Артикул", "Наименование", "Текстура", "Внутр..", "Внешн...", "Длина", "Ширина", "Масса", "реза1", "реза2", "гориз.", "<html>Кол.<br/>единиц", "<html>Един.<br/>изм.", "<html>Процент<br/> отхода", "<html>Кол.без<br/>отхода", "<html>Кол. с <br/>отходом", "за ед. изм.", "с отх.", "без ск.", "со ск."
+                "Nпп", "PK", "FK", "Расположенние", "Артикул", "Наименование", "Текстура", "Внутр..", "Внешн...", "Длина", "Ширина", "Масса", "реза1", "реза2", "гориз.", "<html>Кол.<br/>единиц", "<html>Един.<br/>изм.", "<html>Процент<br/> отхода", "<html>Кол.без<br/>отхода", "<html>Кол. с <br/>отходом", "без отх", "с отх.", "без ск.", "со ск."
             }
         ) {
             Class[] types = new Class [] {

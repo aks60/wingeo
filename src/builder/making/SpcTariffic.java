@@ -52,8 +52,7 @@ public class SpcTariffic extends Cal5e {
                     elem5e.spcRec.quant1 = formatAmount(elem5e.spcRec); //количество без отхода
                     elem5e.spcRec.quant2 = elem5e.spcRec.quant1;  //базовое количество с отходом
                     if (norm_otx == true) {
-                        double otx = elem5e.spcRec.artiklRec().getDbl(eArtikl.otx_norm);
-                        elem5e.spcRec.quant2 = elem5e.spcRec.quant2 + (elem5e.spcRec.quant1 * otx / 100); //количество с отходом
+                        elem5e.spcRec.quant2 = elem5e.spcRec.quant2 + (elem5e.spcRec.quant1 * elem5e.spcRec.waste / 100); //количество с отходом
                     }
                     //Вложенная спецификация
                     //Цикл по детализации эдемента
@@ -62,8 +61,7 @@ public class SpcTariffic extends Cal5e {
                         specificationRec2.quant1 = formatAmount(specificationRec2); //количество без отхода
                         specificationRec2.quant2 = specificationRec2.quant1; //базовое количество с отходом
                         if (norm_otx == true) {
-                            double otx = specificationRec2.artiklRec().getDbl(eArtikl.otx_norm);
-                            specificationRec2.quant2 = specificationRec2.quant2 + (specificationRec2.quant1 * otx / 100); //количество с отходом
+                            specificationRec2.quant2 = specificationRec2.quant2 + (specificationRec2.quant1 * specificationRec2.waste / 100); //количество с отходом
                         }
                     }
                 }
@@ -104,10 +102,7 @@ public class SpcTariffic extends Cal5e {
                         }
                     }
 
-                    if (norm_otx == true) {
-                        double otx = elem5e.spcRec.artiklRec().getDbl(eArtikl.otx_norm);
-                        elem5e.spcRec.costpric2 = elem5e.spcRec.costpric1 + elem5e.spcRec.costpric1 * otx; //себест. за ед. с отходом 
-                    }
+                    elem5e.spcRec.costpric2 = elem5e.spcRec.costpric1 * elem5e.spcRec.quant2; //себест. за ед. с отходом 
                     Record artgrp1Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups1_id));
                     Record artgrp2Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups2_id));
                     double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
@@ -178,21 +173,17 @@ public class SpcTariffic extends Cal5e {
                         spc.anglCut0 = prjkitRec.getDbl(ePrjkit.angl1);
                         spc.anglCut1 = prjkitRec.getDbl(ePrjkit.angl2);
                         spc.quant1 = formatAmount(spc); //количество без отхода
-                        spc.quant2 = spc.quant1; //базовое количество с отходом
-                        if (norm_otx == true) {
-                            double otx = spc.artiklRec().getDbl(eArtikl.otx_norm);
-                            spc.quant2 = spc.quant2 + (spc.quant1 * otx / 100); //количество с отходом
-                        }
+                        spc.quant2 = (norm_otx == true) ? spc.quant1 + (spc.quant1 * spc.waste / 100) : spc.quant1; //количество с отходом
                         spc.costpric1 += artdetPrice(spc); //себест. за ед. без отхода по табл. ARTDET с коэф. и надб.
-                        spc.costpric2 = spc.costpric1 * spc.quant2; //себест. за ед. с отходом 
+                        spc.costpric2 = spc.costpric1 + (spc.costpric1 * (spc.quant2 - spc.quant1)); //себест. за ед. с отходом 
                         Record artgrp1Rec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups1_id));
                         Record artgrp2Rec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups2_id));
                         double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
                         double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                         double k3 = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
-                        spc.price1 = spc.costpric2 * k1 * k3;
-                        spc.price1 = spc.price1 + (spc.price1 / 100) * percentMarkup; //стоимость без скидки                     
-                        spc.price2 = spc.price1 - (spc.price1 / 100) * k2; //стоимость со скидкой 
+                        double price = spc.costpric2 * k1 * k3;
+                        spc.price1 = price + price / 100 * percentMarkup; //стоимость без скидки                     
+                        spc.price2 = price - price / 100 * k2; //стоимость со скидкой 
                         kitList.add(spc);
                     }
                 }

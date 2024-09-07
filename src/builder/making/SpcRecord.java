@@ -39,9 +39,8 @@ public class SpcRecord {
     public double anglCut1 = -1;  //Угол2
     public double anglHoriz = 0; // Угол к горизонту    
     public double count = 1;  //Кол. единиц
-
     public int unit = 0;  //Ед.изм   
-    public double waste = -1;  //Процент отхода см. eArtikl.otx_norm    
+    public double waste = -1;  //Процент отхода см. eArtikl.otx_norm     
     public double quant1 = 0;  //Количество без отхода
     public double quant2 = 0;  //Количество с отходом
     public double costpric1 = 0;  //Себест. за ед. без отхода     
