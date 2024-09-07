@@ -772,8 +772,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                                 //Комплектация
                                 ArraySpc<SpcRecord> kitList = SpcTariffic.kits(prjprodRec, win, true); //комплекты
                                 for (SpcRecord spc : kitList) {
-                                    price3 = price3 + spc.price2; //стоимость без скидки
-                                    cost3 = cost3 + spc.cost2; //стоимость со скидками
+                                    price3 = price3 + spc.price1; //стоимость без скидки
+                                    cost3 = cost3 + spc.price2; //стоимость со скидками
                                 }
                             }
                         }

@@ -89,9 +89,9 @@ public class RSpecific {
 
     public String getCost() {
         if (otx) {
-            return df1.format(spc.cost2);
+            return df1.format(spc.price2);
         }
-        return df1.format(spc.price2);
+        return df1.format(spc.price1);
     }
 
     //--------------------------------------------------------------------------  
@@ -111,8 +111,8 @@ public class RSpecific {
                 s.spc.quant1 = s.spc.quant1 + sr.spc.quant1;
                 s.spc.quant2 = s.spc.quant2 + sr.spc.quant2;
                 s.spc.costpric2 = s.spc.costpric2 + sr.spc.costpric2;
+                s.spc.price1 = s.spc.price1 + sr.spc.price1;
                 s.spc.price2 = s.spc.price2 + sr.spc.price2;
-                s.spc.cost2 = s.spc.cost2 + sr.spc.cost2;
             }
         }
         map.entrySet().forEach(act -> list.add(act.getValue()));
@@ -121,10 +121,10 @@ public class RSpecific {
     } 
     
     public double getCost1() {
-        return spc.price2;
+        return spc.price1;
     }
     
     public double getCost2() {
-        return spc.cost2;
+        return spc.price2;
     }
 }

@@ -37,14 +37,14 @@ public abstract class ElemSimple extends Com5t {
 
     public ElemSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson.id, gson, owner);
-        spcRec = new SpcRecord(id, this);
+        this.spcRec = new SpcRecord(id, this);
         winc.listElem.add(this);
         winc.listAll.add(this);
     }
 
     public ElemSimple(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
         super(winc, id, gson, owner);
-        spcRec = new SpcRecord(id, this);
+        this.spcRec = new SpcRecord(id, this);
         winc.listElem.add(this);
         winc.listAll.add(this);
     }

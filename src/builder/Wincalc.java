@@ -253,8 +253,8 @@ public class Wincalc {
 
             //Итоговая стоимость
             for (SpcRecord spc : listSpec) {
-                this.price2 = (this.price2 + spc.price2); //общая стоимость без скидки
-                this.cost2 = (this.cost2 + spc.cost2); //общая стоимость со скидкой             
+                this.price2 = (this.price2 + spc.price1); //общая стоимость без скидки
+                this.cost2 = (this.cost2 + spc.price2); //общая стоимость со скидкой             
                 this.count = (this.count + spc.count); //колич. единиц                       
             }
 
