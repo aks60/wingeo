@@ -14,6 +14,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
 import common.GeoBuffer;
+import common.PolygonTools;
 import common.eProp;
 import dataset.Conn;
 import dataset.Field;
@@ -100,8 +101,8 @@ public class Test {
         try {
             //clearDataDB();
             //frames.PSConvert.exec();
-            //frame(args);
-            wincalc();
+            frame(args);
+            //wincalc();
             //param();
             //query();
             //json();
@@ -148,7 +149,7 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        //draw6();
+        draw7();
     }
 
     public static void frame(String[] args) {
@@ -495,8 +496,9 @@ public class Test {
         frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, M)));
         frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
 
-        LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
-        LineString arc1 = UGeo.newLineArch(s1.p1.x, s1.p0.x, s1.p0.y, 300, 4);
+        LineSegment segm1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
+        LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(1500, 500), new Coordinate(0, 500)});
+        LineString arc1 = UGeo.newLineArch(segm1.p1.x, segm1.p0.x, segm1.p0.y, 300, 4);
         Coordinate arr[] = arc1.getCoordinates();
         List.of(arr).forEach(c -> c.z = 4);
 
@@ -512,10 +514,11 @@ public class Test {
         hm.put(4.0, new Double[]{68.0, .0, .0});
 
         Polygon geo1 = UGeo.newPolygon(list);
-        //Polygon geo2 = UGeo.geoBuffer(geo1, hm, 0);
+        //Polygon geo2 = UGeo.bufferCross(geo1, hm, 0);
+        Geometry geo2 = PolygonTools.splitPolygon(geo1, line1).getGeometryN(1);
 
-        this.mpol = geo1;
-        //this.mlin = geo1.intersection(geo2);
+        //this.mpol = geo1;
+        this.mlin = geo2;
     }
 
     private void draw6() {
