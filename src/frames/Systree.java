@@ -455,6 +455,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     setText(txt17, UCom.format(winc.width(), 1));
                     setText(txt22, UCom.format(winc.height(), 1));
 
+                } else if (winNode.com5t().type == enums.Type.FRAME) {
+                    ((CardLayout) pan7.getLayout()).show(pan7, "card18");
+                    ((TitledBorder) pan18.getBorder()).setTitle(winNode.toString());
+                    //System.out.println("Коробка  " + winNode.toString());
+
                     //Параметры
                 } else if (winNode.com5t().type == enums.Type.PARAM) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card11");
@@ -708,7 +713,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             sysprodRec.setNo(eSysprod.npp, sysprodRec.get(eSysprod.id));
             sysprodRec.setNo(eSysprod.systree_id, systreeID);
             sysprodRec.setNo(eSysprod.name, record.get(1));
-            sysprodRec.setNo(eSysprod.script, script2);            
+            sysprodRec.setNo(eSysprod.script, script2);
             eSysprod.data().add(sysprodRec); //добавим в кэш новую запись
             qSysprod.insert(sysprodRec);
 
@@ -3173,15 +3178,17 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         pan7.add(pan17, "card17");
 
+        pan18.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Коробка", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
+
         javax.swing.GroupLayout pan18Layout = new javax.swing.GroupLayout(pan18);
         pan18.setLayout(pan18Layout);
         pan18Layout.setHorizontalGroup(
             pan18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 343, Short.MAX_VALUE)
+            .addGap(0, 333, Short.MAX_VALUE)
         );
         pan18Layout.setVerticalGroup(
             pan18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 379, Short.MAX_VALUE)
         );
 
         pan7.add(pan18, "card18");
@@ -3694,7 +3701,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
         UGui.findComponents(getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
-        Query.listOpenTable.forEach(q -> q.execsql());  
+        Query.listOpenTable.forEach(q -> q.execsql());
         if (models != null) {
             models.dispose();
         }
@@ -3959,7 +3966,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
             DicColor frame = new DicColor(this, (colorRec) -> {
 
-                String colorKey = (evt.getSource() == btn18) ? PKjson.colorID1 : (evt.getSource() == btn19) ? PKjson.colorID2 : PKjson.colorID3;                
+                String colorKey = (evt.getSource() == btn18) ? PKjson.colorID1 : (evt.getSource() == btn19) ? PKjson.colorID2 : PKjson.colorID3;
                 double parentId = winNode.com5t().owner.id;
                 GsonElem parentArea = (GsonElem) wincalc().listAll.gson(parentId);
 
@@ -4010,7 +4017,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     }
                 }
             }, colorSet, true, false);
-            
+
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.colorToFrame() " + e);
         }
@@ -4023,10 +4030,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             Field field = (evt.getSource() == btn18) ? eArtdet.mark_c1 : (evt.getSource() == btn19) ? eArtdet.mark_c2 : eArtdet.mark_c3;
             String colorTxt = (evt.getSource() == btn18) ? txt3.getText() : (evt.getSource() == btn19) ? txt4.getText() : txt5.getText();
             Integer[] colorArr = UCom.parserInt(colorTxt);
-            Query artdetList = new Query(eArtdet.values()).sql(eArtdet.data(), eArtdet.artikl_id, winc.root.sysprofRec.getInt(eSysprof.artikl_id));           
-            HashSet<Record> colorSrc = DicColor.filterTxt(eColor.data(), colorTxt);            
+            Query artdetList = new Query(eArtdet.values()).sql(eArtdet.data(), eArtdet.artikl_id, winc.root.sysprofRec.getInt(eSysprof.artikl_id));
+            HashSet<Record> colorSrc = DicColor.filterTxt(eColor.data(), colorTxt);
             HashSet<Record> colorSet = DicColor.filterDet(colorSrc, artdetList, field);
-            
+
             ListenerRecord listenerColor = (colorRec) -> {
 
                 builder.script.GsonElem rootArea = winc.listAll.gson(selectID);

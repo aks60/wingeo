@@ -2670,13 +2670,17 @@ public class Artikles extends javax.swing.JFrame {
             artiklClon.setNo(eArtikl.id, artiklID);
             artiklClon.setNo(eArtikl.code, artiklClon.getStr(eArtikl.code) + "-клон");
             artiklClon.setNo(eArtikl.name, artiklClon.getStr(eArtikl.name) + "-клон");
+            eArtikl.up.query().add(artiklClon);  //добавим запись в кэш
             qArtikl.add(++index, artiklClon);
             qArtikl.insert(artiklClon);
+            
             for (Record artdetRec : artdetList) {
-                artdetRec.setNo(eArtdet.up, Query.INS);
-                artdetRec.setNo(eArtdet.id, Conn.genId(eArtdet.up));
-                artdetRec.setNo(eArtdet.artikl_id, artiklID);
-                qArtdet.add(artdetRec);
+                Record artdetClon = (Record) artdetRec.clone();
+                artdetClon.setNo(eArtdet.up, Query.INS);
+                artdetClon.setNo(eArtdet.id, Conn.genId(eArtdet.up));
+                artdetClon.setNo(eArtdet.artikl_id, artiklID);
+                eArtdet.up.query().add(artdetClon);  //добавим запись в кэш
+                qArtdet.add(artdetClon);
             }
             qArtdet.execsql();
             ((DefaultTableModel) tab1.getModel()).fireTableRowsInserted(index, index);
