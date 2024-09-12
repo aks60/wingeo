@@ -712,6 +712,7 @@ public class Param extends javax.swing.JFrame {
                 int paramID = Conn.genId(eParams.up);
                 paramClon.setNo(eParams.id, paramID);
                 paramClon.setNo(eParams.text, paramClon.getStr(eParams.text) + "-клон");
+                eParams.up.query().add(paramClon);  //добавим запись в кэш
                 qParams.add(index, paramClon);
                 qParams.insert(paramClon);
                 ((DefaultTableModel) tab2.getModel()).fireTableRowsInserted(index, index);
@@ -727,6 +728,7 @@ public class Param extends javax.swing.JFrame {
                 parmapClon.setNo(eParmap.up, Query.INS);
                 int parmapID = Conn.genId(eParmap.up);
                 parmapClon.setNo(eParmap.id, parmapID);
+                eParmap.up.query().add(parmapClon);  //добавим запись в кэш
                 qParmap.add(index, parmapClon);
                 qParmap.insert(parmapClon);
                 ((DefaultTableModel) tab4.getModel()).fireTableRowsInserted(index, index);

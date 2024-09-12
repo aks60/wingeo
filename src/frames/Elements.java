@@ -1104,6 +1104,7 @@ public class Elements extends javax.swing.JFrame {
         int elementID = Conn.genId(eElement.up);
         elementClon.setNo(eElement.id, elementID);
         elementClon.setNo(eElement.name, elementClon.getStr(eElement.name) + "-клон");
+        eElement.up.query().add(elementClon);  //добавим запись в кэш
         qElement.add(index, elementClon);
         qElement.table(eArtikl.up).add(index, artiklClon);
 
@@ -1112,6 +1113,7 @@ public class Elements extends javax.swing.JFrame {
             elempar1Clon.setNo(eElempar1.up, Query.INS);
             elempar1Clon.setNo(eElempar1.id, Conn.genId(eElempar1.up));
             elempar1Clon.setNo(eElempar1.element_id, elementID);
+            eElempar1.up.query().add(elempar1Clon);  //добавим запись в кэш
             qElempar1.add(elempar1Clon);
         }
         for (Record elemdetRec : elemdetList) {
@@ -1121,6 +1123,7 @@ public class Elements extends javax.swing.JFrame {
             elemdetClon.setNo(eElemdet.element_id, elementID);
             qElempar2.sql(eElempar2.data(), eElempar2.elemdet_id, elemdetRec.getInt(eElemdet.id));
             qElempar2.forEach(rec -> elempar2Map.put(rec, elemdetClon.getInt(eElemdet.id)));
+            eElemdet.up.query().add(elemdetClon);  //добавим запись в кэш
             qElemdet.add(elemdetClon);
         }
         for (Map.Entry<Record, Integer> it : elempar2Map.entrySet()) {
@@ -1129,6 +1132,7 @@ public class Elements extends javax.swing.JFrame {
             elempar2Clon.setNo(eElempar2.up, Query.INS);
             elempar2Clon.setNo(eElempar2.id, Conn.genId(eElempar2.up));
             elempar2Clon.setNo(eElempar2.elemdet_id, it.getValue());
+            eElempar2.up.query().add(elempar2Clon);  //добавим запись в кэш
             qElempar2.add(elempar2Clon);
         }
 

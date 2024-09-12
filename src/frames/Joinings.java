@@ -1132,6 +1132,7 @@ public class Joinings extends javax.swing.JFrame {
             joiningClon.setNo(eJoining.up, Query.INS);
             joiningClon.setNo(eJoining.id, Conn.genId(eJoining.up));
             joiningClon.setNo(eJoining.name, joiningClon.getStr(eJoining.name) + "-клон");
+            eJoining.up.query().add(joiningClon);  //добавим запись в кэш
             qJoining.add(index, joiningClon);
             qJoining.insert(joiningClon);
 
@@ -1144,6 +1145,7 @@ public class Joinings extends javax.swing.JFrame {
                 joinvarClon.setNo(eJoinvar.joining_id, joiningClon.getInt(eJoining.id));
                 qJoinpar1.forEach(rec -> joinpar2Map.put(rec, joinvarClon.getInt(eJoinvar.id)));
                 qJoindet.forEach(rec -> joindetMap.put(rec, joinvarClon.getInt(eJoinvar.id)));
+                eJoinvar.up.query().add(joinvarClon);  //добавим запись в кэш
                 qJoinvar.add(joinvarClon);
             }
             for (Map.Entry<Record, Integer> it : joinpar2Map.entrySet()) {
@@ -1152,6 +1154,7 @@ public class Joinings extends javax.swing.JFrame {
                 joinpar1Clon.setNo(eJoinpar1.up, Query.INS);
                 joinpar1Clon.setNo(eJoinpar1.id, Conn.genId(eJoinpar1.up));
                 joinpar1Clon.setNo(eJoinpar1.joinvar_id, it.getValue());
+                eJoinpar1.up.query().add(joinpar1Clon);  //добавим запись в кэш
                 qJoinpar1.add(joinpar1Clon);
             }
             for (Map.Entry<Record, Integer> it : joindetMap.entrySet()) {
@@ -1162,6 +1165,7 @@ public class Joinings extends javax.swing.JFrame {
                 joindetClon.setNo(eJoindet.id, Conn.genId(eJoindet.up));
                 joindetClon.setNo(eJoindet.joinvar_id, it.getValue());
                 qJoinpar2.forEach(rec -> joinpar2Map.put(rec, joindetClon.getInt(eJoindet.id)));
+                eJoindet.up.query().add(joindetClon);  //добавим запись в кэш
                 qJoindet.add(joindetClon);
             }
             for (Map.Entry<Record, Integer> it : joinpar2Map.entrySet()) {
@@ -1170,6 +1174,7 @@ public class Joinings extends javax.swing.JFrame {
                 joinpar2Clon.setNo(eJoinpar2.up, Query.INS);
                 joinpar2Clon.setNo(eJoinpar2.id, Conn.genId(eJoinpar2.up));
                 joinpar2Clon.setNo(eJoinpar2.joindet_id, it.getValue());
+                eJoinpar2.up.query().add(joinpar2Clon);  //добавим запись в кэш
                 qJoinpar2.add(joinpar2Clon);
             }
             List.of(qJoinvar, qJoindet, qJoinpar1, qJoinpar2).forEach(q -> q.execsql());

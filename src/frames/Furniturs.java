@@ -1771,6 +1771,7 @@ public class Furniturs extends javax.swing.JFrame {
                 furnitureClon.setNo(eFurniture.up, Query.INS);
                 furnitureClon.setNo(eFurniture.id, Conn.genId(eFurniture.up));
                 furnitureClon.setNo(eFurniture.name, furnitureClon.getStr(eFurniture.name) + "-клон");
+                eFurniture.up.query().add(furnitureClon);  //добавим запись в кэш
                 qFurniture.add(indexTab1, furnitureClon);
                 qFurnside1.forEach(rec -> furnside1List.add(rec));
                 for (Record furnside1Rec : furnside1List) {
@@ -1780,6 +1781,7 @@ public class Furniturs extends javax.swing.JFrame {
                     furnside1Clon.setNo(eFurnside1.id, Conn.genId(eFurnside1.up));
                     furnside1Clon.setNo(eFurnside1.furniture_id, furnitureClon.getInt(eFurniture.id));
                     qFurnpar1.forEach(rec -> furnpar1Map.put(rec, furnside1Clon.getInt(eFurnside1.id)));
+                    eFurnside1.up.query().add(furnside1Clon);  //добавим запись в кэш
                     qFurnside1.add(furnside1Clon);
                 }
                 for (Map.Entry<Record, Integer> it : furnpar1Map.entrySet()) {
@@ -1788,6 +1790,7 @@ public class Furniturs extends javax.swing.JFrame {
                     joinpar1Clon.setNo(eFurnpar1.up, Query.INS);
                     joinpar1Clon.setNo(eFurnpar1.id, Conn.genId(eFurnpar1.up));
                     joinpar1Clon.setNo(eFurnpar1.furnside_id, it.getValue());
+                    eFurnpar1.up.query().add(joinpar1Clon);  //добавим запись в кэш
                     qFurnpar1.add(joinpar1Clon);
                 }
                 qFurndet2a.forEach(rec -> furndet2aList.add(rec));
@@ -1809,6 +1812,7 @@ public class Furniturs extends javax.swing.JFrame {
                 qFurnside2.forEach(rec -> furnside2Map.put(rec, furndet2aClon.getInt(eFurndet.id)));
                 qFurnpar2.forEach(rec -> furnpar2Map.put(rec, furndet2aClon.getInt(eFurndet.id)));
                 qFurndet2b.forEach(rec -> furndet2bMap.put(rec, furndet2aClon.getInt(eFurndet.id)));
+                eFurndet.up.query().add(furndet2aClon);  //добавим запись в кэш
                 qFurndet2a.add(furndet2aClon);
             }
 
@@ -1828,6 +1832,7 @@ public class Furniturs extends javax.swing.JFrame {
                 qFurnside2.forEach(rec -> furnside2Map.put(rec, furndet2bClon.getInt(eFurndet.id)));
                 qFurnpar2.forEach(rec -> furnpar2Map.put(rec, furndet2bClon.getInt(eFurndet.id)));
                 qFurndet2c.forEach(rec -> furndet2cMap.put(rec, furndet2bClon.getInt(eFurndet.id)));
+                eFurndet.up.query().add(furndet2bClon);  //добавим запись в кэш
                 qFurndet2b.add(furndet2bClon);
             }
             clone2(furnside2Map, furnpar2Map);
@@ -1844,6 +1849,7 @@ public class Furniturs extends javax.swing.JFrame {
                 furndet2cClon.setNo(eFurndet.furndet_pk, it.getValue());
                 qFurnside2.forEach(rec -> furnside2Map.put(rec, furndet2cClon.getInt(eFurndet.id)));
                 qFurnpar2.forEach(rec -> furnpar2Map.put(rec, furndet2cClon.getInt(eFurndet.id)));
+                eFurndet.up.query().add(furndet2cClon);  //добавим запись в кэш
                 qFurndet2c.add(furndet2cClon);
             }
             clone2(furnside2Map, furnpar2Map);
