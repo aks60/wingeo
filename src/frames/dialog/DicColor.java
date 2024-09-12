@@ -1,5 +1,6 @@
 package frames.dialog;
 
+import common.UCom;
 import frames.swing.FrameToFile;
 import frames.UGui;
 import dataset.Query;
@@ -34,6 +35,7 @@ public class DicColor extends javax.swing.JDialog {
     private Query qColorAll = new Query(eColor.values());
     private Query qColor = new Query(eColor.id, eColor.name);
     private boolean master = false;
+    private Integer[] colorArr = null;
 
     public DicColor(Frame parent, ListenerRecord listener, boolean master, boolean remove) {
         super(parent, true);
@@ -60,7 +62,32 @@ public class DicColor extends javax.swing.JDialog {
         setVisible(true);
     }
 
+    public DicColor(Frame parent, ListenerRecord listener, HashSet<Record> colorSet, String colorTxt, boolean remove, boolean auto) {
+        super(parent, true);
+        initComponents();
+        initElements();
+        this.listener = listener;
+        this.colorArr = UCom.parserInt(colorTxt);
+
+        if (colorArr.length != 0) {
+            for (Record rec : colorSet) {
+                for (int i = 0; i < colorArr.length; i = i + 2) { //тестуры
+                    if (rec.getInt(eColor.code) >= colorArr[i] && rec.getInt(eColor.code) <= colorArr[i + 1]) {
+                        qColorAll.add(rec);
+                    }
+                }
+            }
+        } else {
+            qColorAll.addAll(colorSet);
+        }
+        loadingData(colorSet, auto);
+        loadingModel();
+        btnRemove.setVisible(remove);
+        setVisible(true);
+    }
+
     private void loadingData(HashSet<Record> colorSet, boolean auto) {
+
         Query colgrpList = new Query(eGroups.values()).sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_GRP.id).sort(eGroups.npp, eGroups.name);
 
         if (auto == true) {
@@ -363,7 +390,7 @@ public class DicColor extends javax.swing.JDialog {
     private javax.swing.JTable tab2;
     // End of variables declaration//GEN-END:variables
     // </editor-fold>
-    
+
     private void initElements() {
 
         FrameToFile.setFrameSize(this);
@@ -380,5 +407,20 @@ public class DicColor extends javax.swing.JDialog {
                 }
             }
         });
+    }
+
+    public static HashSet<Record> filterColor(HashSet<Record> colorSet, String colorTxt) {
+//        this.colorArr = UCom.parserInt(colorTxt);
+//
+//        if (colorArr.length != 0) {
+//            for (Record rec : colorSet) {
+//                for (int i = 0; i < colorArr.length; i = i + 2) { //тестуры
+//                    if (rec.getInt(eColor.code) >= colorArr[i] && rec.getInt(eColor.code) <= colorArr[i + 1]) {
+//                        qColorAll.add(rec);
+//                    }
+//                }
+//            }
+//        }  
+        return null;
     }
 }
