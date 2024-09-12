@@ -497,7 +497,7 @@ public class Test {
         frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
 
         LineSegment segm1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
-        LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(1500, 500), new Coordinate(0, 500)});
+        LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(1100, 0), new Coordinate(0, 500)});
         LineString arc1 = UGeo.newLineArch(segm1.p1.x, segm1.p0.x, segm1.p0.y, 300, 4);
         Coordinate arr[] = arc1.getCoordinates();
         List.of(arr).forEach(c -> c.z = 4);
@@ -515,7 +515,7 @@ public class Test {
 
         Polygon geo1 = UGeo.newPolygon(list);
         //Polygon geo2 = UGeo.bufferCross(geo1, hm, 0);
-        Geometry geo2 = PolygonTools.splitPolygon(geo1, line1).getGeometryN(1);
+        Geometry geo2 = PolygonTools.splitPolygon(geo1, line1).getGeometryN(0);
 
         //this.mpol = geo1;
         this.mlin = geo2;
