@@ -455,11 +455,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     setText(txt17, UCom.format(winc.width(), 1));
                     setText(txt22, UCom.format(winc.height(), 1));
 
-                } else if (winNode.com5t().type == enums.Type.FRAME) {
-                    ((CardLayout) pan7.getLayout()).show(pan7, "card18");
-                    ((TitledBorder) pan18.getBorder()).setTitle(winNode.toString());
-                    //System.out.println("Коробка  " + winNode.toString());
-
                     //Параметры
                 } else if (winNode.com5t().type == enums.Type.PARAM) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card11");
@@ -955,11 +950,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         lab38 = new javax.swing.JLabel();
         txt17 = new javax.swing.JTextField();
         txt22 = new javax.swing.JTextField();
-        lab76 = new javax.swing.JLabel();
-        txt52 = new javax.swing.JTextField();
-        btn36 = new javax.swing.JButton();
-        lab77 = new javax.swing.JLabel();
-        txt53 = new javax.swing.JTextField();
         pan13 = new javax.swing.JPanel();
         lab33 = new javax.swing.JLabel();
         lab34 = new javax.swing.JLabel();
@@ -1645,68 +1635,23 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt22.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt22.setPreferredSize(new java.awt.Dimension(60, 18));
 
-        lab76.setFont(frames.UGui.getFont(0,0));
-        lab76.setText("Артикул");
-        lab76.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        lab76.setPreferredSize(new java.awt.Dimension(80, 18));
-
-        txt52.setEditable(false);
-        txt52.setFont(frames.UGui.getFont(0,0));
-        txt52.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt52.setPreferredSize(new java.awt.Dimension(180, 18));
-
-        btn36.setText("...");
-        btn36.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btn36.setMaximumSize(new java.awt.Dimension(21, 20));
-        btn36.setMinimumSize(new java.awt.Dimension(21, 20));
-        btn36.setName("btnField17"); // NOI18N
-        btn36.setPreferredSize(new java.awt.Dimension(21, 20));
-        btn36.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn36sysprofToFrame(evt);
-            }
-        });
-
-        lab77.setFont(frames.UGui.getFont(0,0));
-        lab77.setText("Название");
-        lab77.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        lab77.setPreferredSize(new java.awt.Dimension(80, 18));
-
-        txt53.setEditable(false);
-        txt53.setFont(frames.UGui.getFont(0,0));
-        txt53.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt53.setPreferredSize(new java.awt.Dimension(180, 18));
-
         javax.swing.GroupLayout pan12Layout = new javax.swing.GroupLayout(pan12);
         pan12.setLayout(pan12Layout);
         pan12Layout.setHorizontalGroup(
             pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pan21, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
             .addGroup(pan12Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pan12Layout.createSequentialGroup()
-                        .addGroup(pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pan12Layout.createSequentialGroup()
-                                .addComponent(lab38, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pan12Layout.createSequentialGroup()
-                                .addComponent(lab35, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(lab38, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pan12Layout.createSequentialGroup()
-                        .addComponent(lab76, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lab35, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt52, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn36, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pan12Layout.createSequentialGroup()
-                        .addComponent(lab77, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt53, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(txt17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(181, Short.MAX_VALUE))
+            .addComponent(pan21, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
         );
         pan12Layout.setVerticalGroup(
             pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1718,18 +1663,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 .addGroup(pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lab38, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lab76, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt52, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn36, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lab77, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt53, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(pan21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addContainerGap(211, Short.MAX_VALUE))
         );
 
         pan7.add(pan12, "card12");
@@ -3188,7 +3124,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         );
         pan18Layout.setVerticalGroup(
             pan18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 379, Short.MAX_VALUE)
+            .addGap(0, 375, Short.MAX_VALUE)
         );
 
         pan7.add(pan18, "card18");
@@ -3961,6 +3897,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             Field field = (evt.getSource() == btn18) ? eArtdet.mark_c1 : (evt.getSource() == btn19) ? eArtdet.mark_c2 : eArtdet.mark_c3;
             String colorTxt = (evt.getSource() == btn18) ? txt3.getText() : (evt.getSource() == btn19) ? txt4.getText() : txt5.getText();
             Query artdetList = new Query(eArtdet.values()).sql(eArtdet.data(), eArtdet.artikl_id, winNode.com5t().artiklRec.getInt(eArtikl.id));
+            
             HashSet<Record> colorSrc = DicColor.filterTxt(eColor.data(), colorTxt);
             HashSet<Record> colorSet = DicColor.filterDet(colorSrc, artdetList, field);
 
@@ -4027,12 +3964,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         try {
             Wincalc winc = wincalc();
             double selectID = winNode.com5t().id;
-            Field field = (evt.getSource() == btn18) ? eArtdet.mark_c1 : (evt.getSource() == btn19) ? eArtdet.mark_c2 : eArtdet.mark_c3;
-            String colorTxt = (evt.getSource() == btn18) ? txt3.getText() : (evt.getSource() == btn19) ? txt4.getText() : txt5.getText();
+            String colorTxt = (evt.getSource() == btn9) ? txt3.getText() : (evt.getSource() == btn13) ? txt4.getText() : txt5.getText();
             Integer[] colorArr = UCom.parserInt(colorTxt);
-            Query artdetList = new Query(eArtdet.values()).sql(eArtdet.data(), eArtdet.artikl_id, winc.root.sysprofRec.getInt(eSysprof.artikl_id));
-            HashSet<Record> colorSrc = DicColor.filterTxt(eColor.data(), colorTxt);
-            HashSet<Record> colorSet = DicColor.filterDet(colorSrc, artdetList, field);
+            HashSet<Record> colorSet = DicColor.filterTxt(eColor.data(), colorTxt);
 
             ListenerRecord listenerColor = (colorRec) -> {
 
@@ -4774,10 +4708,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }//GEN-LAST:event_blindsToElement
 
-    private void btn36sysprofToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn36sysprofToFrame
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn36sysprofToFrame
-
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu addImpost;
@@ -4812,7 +4742,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private javax.swing.JButton btn33;
     private javax.swing.JButton btn34;
     private javax.swing.JButton btn35;
-    private javax.swing.JButton btn36;
     private javax.swing.JButton btn4;
     private javax.swing.JButton btn5;
     private javax.swing.JButton btn6;
@@ -4895,8 +4824,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private javax.swing.JLabel lab73;
     private javax.swing.JLabel lab74;
     private javax.swing.JLabel lab75;
-    private javax.swing.JLabel lab76;
-    private javax.swing.JLabel lab77;
     private javax.swing.JMenuItem mDelit;
     private javax.swing.JMenuItem mInsert;
     private javax.swing.JPanel pan10;
@@ -4987,8 +4914,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private javax.swing.JTextField txt5;
     private javax.swing.JTextField txt50;
     private javax.swing.JTextField txt51;
-    private javax.swing.JTextField txt52;
-    private javax.swing.JTextField txt53;
     private javax.swing.JTextField txt54;
     private javax.swing.JTextField txt55;
     private javax.swing.JTextField txt56;

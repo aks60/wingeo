@@ -3248,20 +3248,11 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         try {
             if (winNode != null) {
                 double selectID = winNode.com5t().id;
-                HashSet<Record> colorSet = new HashSet<Record>();
                 int systreeID = qPrjprod.getAs(UGui.getIndexRec(tab2), ePrjprod.systree_id);
                 Record systreeRec = eSystree.find(systreeID);
-                eSystree col = (evt.getSource() == btn9) ? eSystree.col1 : (evt.getSource() == btn13) ? eSystree.col2 : eSystree.col3;
-                Integer[] arr2 = UCom.parserInt(systreeRec.getStr(col));
-                if (arr2.length != 0) {
-                    for (Record rec : eColor.data()) {
-                        for (int i = 0; i < arr2.length; i = i + 2) { //тестуры
-                            if (rec.getInt(eColor.code) >= arr2[i] && rec.getInt(eColor.code) <= arr2[i + 1]) {
-                                colorSet.add(rec);
-                            }
-                        }
-                    }
-                }
+                eSystree field = (evt.getSource() == btn9) ? eSystree.col1 : (evt.getSource() == btn13) ? eSystree.col2 : eSystree.col3;
+                HashSet<Record> colorSet = DicColor.filterTxt(eColor.data(), systreeRec.getStr(field));
+                Integer[] arr2 = UCom.parserInt(systreeRec.getStr(field));
 
                 ListenerRecord listenerColor = (colorRec) -> {
 
@@ -3367,20 +3358,15 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private void colorToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToFrame
         try {
             double selectID = winNode.com5t().id;
-            HashSet<Record> colorSet = new HashSet<Record>();
+            int systreeID = qPrjprod.getAs(UGui.getIndexRec(tab2), ePrjprod.systree_id);
+            Record systreeRec = eSystree.find(systreeID);
+            eSystree col = (evt.getSource() == btn18) ? eSystree.col1 : (evt.getSource() == btn19) ? eSystree.col2 : eSystree.col3;
+            Field field = (evt.getSource() == btn18) ? eArtdet.mark_c1 : (evt.getSource() == btn19) ? eArtdet.mark_c2 : eArtdet.mark_c3;
             Query artdetList = new Query(eArtdet.values()).sql(eArtdet.data(), eArtdet.artikl_id, winNode.com5t().artiklRec.getInt(eArtikl.id));
-            artdetList.forEach(rec -> {
+            
+            HashSet<Record> colorSrc = DicColor.filterTxt(eColor.data(), systreeRec.getStr(col));
+            HashSet<Record> colorSet = DicColor.filterDet(colorSrc, artdetList, field);
 
-                if (rec.getInt(eArtdet.color_fk) < 0) {
-                    eColor.data().forEach(rec2 -> {
-                        if (rec2.getInt(eColor.groups_id) == rec.getInt(eArtdet.color_fk)) {
-                            colorSet.add(rec2);
-                        }
-                    });
-                } else {
-                    colorSet.add(eColor.find(rec.getInt(eArtdet.color_fk)));
-                }
-            });
             DicColor frame = new DicColor(this, (colorRec) -> {
 
                 String colorID = (evt.getSource() == btn18) ? PKjson.colorID1 : (evt.getSource() == btn19) ? PKjson.colorID2 : PKjson.colorID3;
