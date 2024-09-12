@@ -6,7 +6,7 @@ import dataset.Query;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eSysprof;
-import enums.UseSide;
+import enums.UseSideTo;
 import frames.UGui;
 import frames.swing.DefTableModel;
 import common.listener.ListenerRecord;

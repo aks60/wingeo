@@ -20,6 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import common.listener.ListenerRecord;
+import dataset.Field;
+import domain.eArtdet;
 import enums.UseColor;
 import frames.swing.TableFieldFilter;
 import java.util.List;
@@ -62,30 +64,29 @@ public class DicColor extends javax.swing.JDialog {
         setVisible(true);
     }
 
-    public DicColor(Frame parent, ListenerRecord listener, HashSet<Record> colorSet, String colorTxt, boolean remove, boolean auto) {
-        super(parent, true);
-        initComponents();
-        initElements();
-        this.listener = listener;
-        this.colorArr = UCom.parserInt(colorTxt);
-
-        if (colorArr.length != 0) {
-            for (Record rec : colorSet) {
-                for (int i = 0; i < colorArr.length; i = i + 2) { //тестуры
-                    if (rec.getInt(eColor.code) >= colorArr[i] && rec.getInt(eColor.code) <= colorArr[i + 1]) {
-                        qColorAll.add(rec);
-                    }
-                }
-            }
-        } else {
-            qColorAll.addAll(colorSet);
-        }
-        loadingData(colorSet, auto);
-        loadingModel();
-        btnRemove.setVisible(remove);
-        setVisible(true);
-    }
-
+//    public DicColor(Frame parent, ListenerRecord listener, HashSet<Record> colorSet, String colorTxt, boolean remove, boolean auto) {
+//        super(parent, true);
+//        initComponents();
+//        initElements();
+//        this.listener = listener;
+//        this.colorArr = UCom.parserInt(colorTxt);
+//
+//        if (colorArr.length != 0) {
+//            for (Record rec : colorSet) {
+//                for (int i = 0; i < colorArr.length; i = i + 2) { //тестуры
+//                    if (rec.getInt(eColor.code) >= colorArr[i] && rec.getInt(eColor.code) <= colorArr[i + 1]) {
+//                        qColorAll.add(rec);
+//                    }
+//                }
+//            }
+//        } else {
+//            qColorAll.addAll(colorSet);
+//        }
+//        loadingData(colorSet, auto);
+//        loadingModel();
+//        btnRemove.setVisible(remove);
+//        setVisible(true);
+//    }
     private void loadingData(HashSet<Record> colorSet, boolean auto) {
 
         Query colgrpList = new Query(eGroups.values()).sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_GRP.id).sort(eGroups.npp, eGroups.name);
@@ -115,7 +116,7 @@ public class DicColor extends javax.swing.JDialog {
 
     private void loadingModel() {
         new DefTableModel(tab1, qColgrp, eGroups.name);
-        new DefTableModel(tab2, qColor, eColor.id, eColor.name);
+        new DefTableModel(tab2, qColor, eColor.code, eColor.name);
         tab2.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
@@ -409,18 +410,47 @@ public class DicColor extends javax.swing.JDialog {
         });
     }
 
-    public static HashSet<Record> filterColor(HashSet<Record> colorSet, String colorTxt) {
-//        this.colorArr = UCom.parserInt(colorTxt);
-//
-//        if (colorArr.length != 0) {
-//            for (Record rec : colorSet) {
-//                for (int i = 0; i < colorArr.length; i = i + 2) { //тестуры
-//                    if (rec.getInt(eColor.code) >= colorArr[i] && rec.getInt(eColor.code) <= colorArr[i + 1]) {
-//                        qColorAll.add(rec);
-//                    }
-//                }
-//            }
-//        }  
-        return null;
+    public static HashSet<Record> filterTxt(List<Record> colorSrc, String colorTxt) {
+        HashSet<Record> colorRet = new HashSet<Record>();
+        try {
+            Integer[] colorArr = UCom.parserInt(colorTxt);
+            colorArr = UCom.parserInt(colorTxt);
+
+            if (colorArr.length != 0) {
+                for (Record rec : colorSrc) {
+                    for (int i = 0; i < colorArr.length; i = i + 2) { //тестуры
+                        if (rec.getInt(eColor.code) >= colorArr[i] && rec.getInt(eColor.code) <= colorArr[i + 1]) {
+                            colorRet.add(rec);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка: DicColor.filterTxt() " + e);
+        }
+        return colorRet;
+    }
+
+    public static HashSet<Record> filterDet(HashSet<Record> colorSrc, List<Record> artdetList, Field field) {
+        HashSet<Record> colorSet = new HashSet<Record>();
+        try {
+            artdetList.forEach(rec -> {
+                if (rec.getInt(field) == 1) {
+
+                    if (rec.getInt(eArtdet.color_fk) < 0) { //все текстуры групы color_fk                       
+                        colorSrc.forEach(rec2 -> {
+                            if (rec2.getInt(eColor.groups_id) == rec.getInt(eArtdet.color_fk)) {
+                                colorSet.add(rec2);
+                            }
+                        });
+                    } else { //текстура color_fk 
+                        colorSet.add(eColor.find(rec.getInt(eArtdet.color_fk)));
+                    }
+                }
+            });
+        } catch (Exception e) {
+            System.err.println("Ошибка: DicColor.filterDet() " + e);
+        }
+        return colorSet;
     }
 }

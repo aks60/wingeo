@@ -13,7 +13,7 @@ import enums.PKjson;
 import enums.Type;
 import enums.TypeArt;
 import enums.TypeJoin;
-import enums.UseSide;
+import enums.UseSideTo;
 import java.awt.Shape;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
@@ -43,7 +43,7 @@ public class ElemCross extends ElemSimple {
         if (isJson(gson.param, PKjson.sysprofID)) { //профили через параметр
             sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());
         } else {
-            sysprofRec = eSysprof.find4(winc.nuni, type.id2, UseSide.ANY);
+            sysprofRec = eSysprof.find4(winc.nuni, type.id2, UseSideTo.ANY);
         }
         artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
         artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true);

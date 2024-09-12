@@ -16,7 +16,7 @@ import enums.Layout;
 import enums.PKjson;
 import enums.Type;
 import enums.TypeArt;
-import enums.UseSide;
+import enums.UseSideTo;
 import java.awt.Shape;
 import java.util.Collections;
 import java.util.List;
@@ -65,15 +65,15 @@ public class ElemFrame extends ElemSimple {
                 sysprofRec = owner.sysprofRec;
             } else {
                 if (Layout.BOTT.equals(layout())) {
-                    sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.BOT, UseSide.HORIZ);
+                    sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSideTo.BOT, UseSideTo.HORIZ);
                 } else if (Layout.RIGHT.equals(layout())) {
-                    sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.RIGHT, UseSide.VERT);
+                    sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSideTo.RIGHT, UseSideTo.VERT);
                 } else if (Layout.TOP.equals(layout())) {
-                    sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.TOP, UseSide.HORIZ);
+                    sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSideTo.TOP, UseSideTo.HORIZ);
                 } else if (Layout.LEFT.equals(layout())) {
-                    sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.LEFT, UseSide.VERT);
+                    sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSideTo.LEFT, UseSideTo.VERT);
                 } else {
-                    sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSide.ANY, UseSide.ANY);
+                    sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSideTo.ANY, UseSideTo.ANY);
                 }
             }
 

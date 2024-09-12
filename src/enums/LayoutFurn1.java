@@ -5,7 +5,7 @@
  */
 package enums;
 
-import static enums.UseSide.values;
+import static enums.UseSideTo.values;
 
 //Стороны фурнитуры/ Внимание! Номера LayoutFurn1.id привязаны к LayoutArea.id  
 public enum LayoutFurn1 implements Enam {

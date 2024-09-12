@@ -5,7 +5,7 @@ import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
 import static domain.ePrjkit.up;
-import enums.UseSide;
+import enums.UseSideTo;
 import enums.UseArtiklTo;
 import frames.UGui;
 import java.util.HashMap;
@@ -83,25 +83,25 @@ public enum eSysprof implements Field {
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
     
-    public static Record find4(int nuni, int typ, UseSide us1) {
+    public static Record find4(int nuni, int typ, UseSideTo us1) {
         if (nuni == -3) {
             return virtualRec(typ);
         }
         return data().stream().filter(rec -> rec.getInt(systree_id) == nuni
                 && rec.getInt(use_type) == typ
-                && UseSide.MANUAL.id != rec.getInt(use_side)
-                && (us1.id == rec.getInt(use_side) || UseSide.ANY.id == rec.getInt(use_side))
+                && UseSideTo.MANUAL.id != rec.getInt(use_side)
+                && (us1.id == rec.getInt(use_side) || UseSideTo.ANY.id == rec.getInt(use_side))
         ).findFirst().orElse(up.virtualRec(typ));
     }
     
-    public static Record find5(int nuni, int type, UseSide us1, UseSide us2) {
+    public static Record find5(int nuni, int type, UseSideTo us1, UseSideTo us2) {
         if (nuni == -3) {
             return virtualRec(type);
         }
         return data().stream().filter(rec -> rec.getInt(systree_id) == nuni
                 && rec.getInt(use_type) == type
-                && UseSide.MANUAL.id != rec.getInt(use_side)
-                && (us1.id == rec.getInt(use_side) || us2.id == rec.getInt(use_side) || UseSide.ANY.id == rec.getInt(use_side))
+                && UseSideTo.MANUAL.id != rec.getInt(use_side)
+                && (us1.id == rec.getInt(use_side) || us2.id == rec.getInt(use_side) || UseSideTo.ANY.id == rec.getInt(use_side))
         ).findFirst().orElse(up.virtualRec(type));
     }
 
@@ -110,7 +110,7 @@ public enum eSysprof implements Field {
         Record record = up.newRecord(Query.SEL);
         record.setNo(id, -3);
         record.setNo(use_type, typeId);
-        record.setNo(use_side, UseSide.ANY.id);
+        record.setNo(use_side, UseSideTo.ANY.id);
         record.setNo(systree_id, -3);
         record.setNo(artikl_id, -3);
         return record;

@@ -10,7 +10,7 @@ import java.util.stream.Stream;
  * select distinct ASETS from PRO4_SYSPROA where region_id = 177 order by ASETS
  */
 // 
-public enum UseSide implements Enam { 
+public enum UseSideTo implements Enam { 
     VERT(-3, "Вертикальная"),//разрешена вертикальная установка профиля
     HORIZ(-2, "Горизонтальная"),//разрешена горизонтальная установка профиля
     ANY(-1, "Любая"),//разрешена установка профиля на любую сторону и в любое положение
@@ -23,7 +23,7 @@ public enum UseSide implements Enam {
     public int id;
     public String name;
 
-    UseSide(int id, String name) {
+    UseSideTo(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -40,7 +40,7 @@ public enum UseSide implements Enam {
         return values();
     }
     
-    public static UseSide get(int id) {
+    public static UseSideTo get(int id) {
         return Stream.of(values()).filter(en -> en.numb() == id).findFirst().orElse(null);
     }
 }

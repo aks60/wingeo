@@ -52,6 +52,8 @@ public class AreaSimple extends Com5t {
     public void initConstructiv(JsonObject param) {
         if (isJson(param, PKjson.sysprofID)) {//профили через параметр
             sysprofRec = eSysprof.find3(param.get(PKjson.sysprofID).getAsInt());
+        } else {
+            
         }
     }
 

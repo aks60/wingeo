@@ -53,20 +53,6 @@ public class Colors extends javax.swing.JFrame {
         qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_GRP.id).sort(eGroups.npp, eGroups.name);
     }
 
-    public void selectionTab1(ListSelectionEvent event) {
-
-        UGui.stopCellEditing(tab1, tab2);
-        List.of(qGroups, qColor).forEach(q -> q.execsql());
-        int index = UGui.getIndexRec(tab1);
-        if (index != -1) {
-            Record record = qGroups.table(eGroups.up).get(index);
-            Integer cgrup = record.getInt(eGroups.id);
-            qColor.sql(eColor.data(), eColor.groups_id, cgrup).sort(eColor.code);
-            ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
-            UGui.setSelectedRow(tab2);
-        }
-    }
-
     public void loadingModel() {
 
         new DefTableModel(tab1, qGroups, eGroups.name, eGroups.id, eGroups.val);
@@ -113,6 +99,20 @@ public class Colors extends javax.swing.JFrame {
         tab2.getColumnModel().getColumn(6).setCellRenderer(new DefCellRendererBool());
 
         UGui.setSelectedRow(tab1);
+    }
+    
+    public void selectionTab1(ListSelectionEvent event) {
+
+        UGui.stopCellEditing(tab1, tab2);
+        List.of(qGroups, qColor).forEach(q -> q.execsql());
+        int index = UGui.getIndexRec(tab1);
+        if (index != -1) {
+            Record record = qGroups.table(eGroups.up).get(index);
+            Integer cgrup = record.getInt(eGroups.id);
+            qColor.sql(eColor.data(), eColor.groups_id, cgrup).sort(eColor.code);
+            ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
+            UGui.setSelectedRow(tab2);
+        }
     }
 
     public void listenerAdd() {

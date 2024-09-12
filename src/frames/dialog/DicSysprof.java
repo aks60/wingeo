@@ -6,7 +6,7 @@ import dataset.Query;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eSysprof;
-import enums.UseSide;
+import enums.UseSideTo;
 import frames.UGui;
 import frames.swing.DefTableModel;
 import java.util.List;
@@ -47,7 +47,7 @@ public class DicSysprof extends javax.swing.JDialog {
                 Field field = columns[col];
                 if (field == eSysprof.use_side) {
                     Record sysprofRec = qSysprof.get(row);
-                    return UseSide.get(sysprofRec.getInt(eSysprof.use_side)).text();
+                    return UseSideTo.get(sysprofRec.getInt(eSysprof.use_side)).text();
                 } 
                 return val;
             }
