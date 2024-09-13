@@ -1,6 +1,5 @@
 package builder.making;
 
-import builder.model.ElemGlass;
 import builder.model.ElemSimple;
 import dataset.Field;
 import dataset.Record;
@@ -9,7 +8,6 @@ import domain.eArtikl;
 import domain.eColor;
 import domain.eParmap;
 import domain.eSyspar1;
-import enums.Type;
 import enums.UseColor;
 import java.util.List;
 import javax.swing.ImageIcon;

@@ -211,7 +211,8 @@ public class SpcTariffic extends Cal5e {
             double artdetPrice = 0;
             boolean artdetUsed = false;
 
-            //Если тариф двухсторонней текстуры не равен 0, и если
+            //СЛОЖЕНИЕ ОСНОВНОЙ И ДВУХСТОРОННЕЙ
+            //если тариф двухсторонней текстуры не равен 0, и если
             //текстура1 равна текстура2 и заданный тариф применим
             if (artdetRec.getDbl(eArtdet.cost_c4) != 0
                     && color2Rec.getInt(eColor.id) == color3Rec.getInt(eColor.id)
@@ -239,7 +240,7 @@ public class SpcTariffic extends Cal5e {
                 }
                 artdetUsed = true;
 
-                //Сложение цен по трём текстурам
+                //СЛОЖЕНИЕ ТРЁХ ТЕКСТУР
             } else {
                 //Подбираем тариф основной текстуры
                 if (isTariff(artdetRec, color1Rec)) {
@@ -279,7 +280,7 @@ public class SpcTariffic extends Cal5e {
 
                 artdetPrice = artdetRec.getDbl(eArtdet.cost_min) / specificRec.quant1;
             }*/
-            if (artdetUsed) { //если было попадание
+            if (artdetUsed == true) { //если было попадание
                 inPrice = inPrice + (artdetPrice
                         * artdetRec.getDbl(eArtdet.coef)); //kоэф. текстуры уникальн. арт.
             }
