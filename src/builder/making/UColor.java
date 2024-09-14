@@ -84,7 +84,7 @@ public class UColor {
     }
 
     /**
-     * Подбор ВРУЧНУЮ, АВТОПОДБОР, ПАРАМЕТР
+     * ВРУЧНУЮ, АВТОПОДБОР, ПАРАМЕТР
      *
      * @param spcAdd
      * @param side
@@ -109,7 +109,8 @@ public class UColor {
             //Цвет элемента по которому подбираю из варианта подбора
             int originColorID = getID_colorUS(spcAdd, srcColorUS);
 
-            ////= Выбрана тестура ВРУЧНУЮ =////
+            
+            ////= ВРУЧНУЮ =////
             if (srcColorFk > 0 && srcColorFk != 100000) {
 
                 //Явное указание текстуры
@@ -136,7 +137,8 @@ public class UColor {
                     }
                 }
 
-                ////= Выбрана тестура АВТОПОДБОР =////
+                
+                ////= АВТОПОДБОР =////
             } else if (srcColorFk == 0 || srcColorFk == 100000) {
                 //Для точн.подбора в спецификпцию не попадёт. См. HELP "Конструктив=>Подбор текстур"
 
@@ -144,7 +146,7 @@ public class UColor {
                 if (List.of(UseColor.PROF.id, UseColor.GLAS.id).contains(srcColorUS)) {
                     resultColorID = scanFromProfile(elemArtID, originColorID, side);
                     if (resultColorID == -1 && srcColorFk == 0) {
-                        resultColorID = scanFromColorFirst(spcAdd); //если неудача подбора то первая в списке запись цвета
+                        resultColorID = +(spcAdd); //если неудача подбора то первая в списке запись цвета
                     }
                     //Подбор по текстуре сторон профиля
                 } else if (List.of(UseColor.COL1.id, UseColor.COL2.id, UseColor.COL3.id,
@@ -155,7 +157,8 @@ public class UColor {
                     }
                 }
 
-                ////=Выбрана тестура ПАРАМЕТР =////
+                
+                ////= ПАРАМЕТР =////
             } else if (srcColorFk < 0) {  //если artdetColorFK == -1 в спецификпцию не попадёт. См. HELP "Конструктив=>Подбор текстур" 
                 Record syspar1Rec = spcAdd.elem5e.winc.mapPardef.get(srcColorFk);
 
@@ -194,7 +197,7 @@ public class UColor {
     }
 
     /**
-     * Подбор по текстуре профиля или заполнения в элементе МЦ
+     * Авто профиля или заполнения
      *
      * @param detailArtiklID - артикул элемента детализации
      * составаoriginColorID@param profFullColorID - текстура профиля
@@ -227,7 +230,7 @@ public class UColor {
     }
 
     /**
-     * Подбор по текстуре сторон профиля в элементе МЦ или группе текстур
+     * Авто сторон профиля
      *
      * @param detailArtiklID - артикул элемента детализации состава
      * @param originColorID - текстура стороны профиля
@@ -270,7 +273,7 @@ public class UColor {
     }
 
     /**
-     * Подбор по параметру текстур профиля или заполнения в элементе МЦ
+     * Параметр профиля или заполнения
      *
      * @param detailArtiklID - артикул элемента детализации состава
      * @param syspar1Rec - параметр подбора
@@ -314,7 +317,7 @@ public class UColor {
     }
 
     /**
-     * Подбор по параметру текстур сторон профиля в элементе МЦ
+     * Параметр сторон профиля
      *
      * @param detailArtiklID - артикул элемента детализации состава
      * @param syspar1Rec - параметр подбора
@@ -363,7 +366,7 @@ public class UColor {
         }
     }
 
-    //Первая в списке запись цвета элемента
+    //Первая запись цвета
     private static int scanFromColorFirst(SpcRecord spc) {
         Record artdetRec = eArtdet.find(spc.detailRec.getInt(ARTIKL_ID));
         if (artdetRec.getInt(1) != -1) {
