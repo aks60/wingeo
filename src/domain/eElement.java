@@ -70,6 +70,14 @@ public enum eElement implements Field {
         }
     }
 
+    public static Record find(int _id) {
+        if (Query.conf.equals("NET")) {
+            return data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
+        }
+        Query recordList = new Query(values()).select(up, "where", _id, "= id");
+        return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
+    }
+    
     public static List<Record> filter(int seriesID) {
         if (seriesID == -1) {
             return new ArrayList<Record>();
@@ -93,14 +101,6 @@ public enum eElement implements Field {
                     || series2_id == rec.getInt(groups1_id)) && rec.getInt(todef) > 0).collect(Collectors.toList());
         }
         return new Query(values()).select(up, "where (", artikl_id, "=", artikl2_id, "or", groups1_id, "=", series2_id, ") and", todef, "> 0");
-    }
-
-    public static Record find(int _id) {
-        if (Query.conf.equals("NET")) {
-            return data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
-        }
-        Query recordList = new Query(values()).select(up, "where", _id, "= id");
-        return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
 
     public static List<Record> filter4(Record recordSer) {
