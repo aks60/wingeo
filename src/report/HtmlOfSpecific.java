@@ -51,7 +51,7 @@ public class HtmlOfSpecific {
 
     private static void load1(Record projectRec, Document doc) {
         List<SpcRecord> spcList2 = new ArrayList<SpcRecord>();
-        List<Record> prjprodList = ePrjprod.find2(projectRec.getInt(eProject.id));
+        List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
         Wincalc winc = new builder.Wincalc();
 
         //Цикл по конструкциям заказа

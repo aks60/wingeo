@@ -147,7 +147,7 @@ public class DicKits extends javax.swing.JDialog {
             List.of(txt1, txt2, txt3, txt9, txt13, txt14).forEach(act -> act.setBackground(new java.awt.Color(212, 208, 200)));
 
             for (Record kitdetRec : qKitdet) {
-                List<Record> kitparList = eKitpar2.find(kitdetRec.getInt(eKitdet.id));
+                List<Record> kitparList = eKitpar2.filter(kitdetRec.getInt(eKitdet.id));
                 for (Record kitparRec : kitparList) {
                     String text = kitparRec.getStr(eKitpar2.text);
                     if (text.contains("Q")) {
@@ -176,7 +176,7 @@ public class DicKits extends javax.swing.JDialog {
         int indexArr[] = tab2.getSelectedRows();
         for (int i = 0; i < indexArr.length; i++) {
             Record kitdetRec = qKitdet.get(tab2.convertRowIndexToModel(indexArr[i]));
-            List<Record> kitpar2List = eKitpar2.find(kitdetRec.getInt(eKitdet.id));
+            List<Record> kitpar2List = eKitpar2.filter(kitdetRec.getInt(eKitdet.id));
             qKitpar2.addAll(kitpar2List);
         }
         ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();

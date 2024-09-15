@@ -49,7 +49,7 @@ public enum eSysfurn implements Field {
         return query;
     }
   
-    public static List<Record> find(int _nuni) {
+    public static List<Record> filter(int _nuni) {
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(systree_id) == _nuni).collect(Collectors.toList());
         }

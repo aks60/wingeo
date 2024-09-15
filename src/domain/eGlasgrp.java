@@ -43,7 +43,7 @@ public enum eGlasgrp implements Field {
         return query;
     }
     
-    public static ArrayList<Record>  findAll() {
+    public static ArrayList<Record>  filter() {
         if (Query.conf.equals("NET")) {
             return data();
         }

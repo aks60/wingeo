@@ -31,11 +31,11 @@ public enum eElemdet implements Field {
         return values();
     }
 
-    public static List<Record> find(int _id) {
+    public static List<Record> find(int elementID) {
         if (Query.conf.equals("NET")) {
-            return data().stream().filter(rec -> rec.getInt(element_id) == _id).collect(toList());
+            return data().stream().filter(rec -> rec.getInt(element_id) == elementID).collect(toList());
         }
-        return new Query(values()).select(up, "where", element_id.name(), "=", _id);
+        return new Query(values()).select(up, "where", element_id.name(), "=", elementID);
     }
 
     public static Query data() {

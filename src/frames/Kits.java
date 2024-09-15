@@ -159,7 +159,7 @@ public class Kits extends javax.swing.JFrame {
             Record record = qKitdet.get(index);
             Integer id = record.getInt(eKitdet.id);
             qKitpar2.clear();
-            qKitpar2.addAll(eKitpar2.find(id));
+            qKitpar2.addAll(eKitpar2.filter(id));
             ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab4);
         }

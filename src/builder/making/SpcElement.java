@@ -46,7 +46,7 @@ public class SpcElement extends Cal5e {
                 if (elem5e.type == Type.MOSQUIT) {
                     ElemMosquit elemMosq = (ElemMosquit) elem5e;
                     //По id - профиля
-                    List<Record> elementList4 = List.of(eElement.find4(elemMosq.sysprofRec.getInt(eElement.id)));
+                    List<Record> elementList4 = List.of(eElement.find(elemMosq.sysprofRec.getInt(eElement.id)));
                     //Цикл по списку элементов сторон маскитки
                     for (int side : List.of(0, 90, 180, 270)) {
                         elemMosq.anglHoriz = side; //устан. угол. проверяемой стороны
@@ -55,11 +55,11 @@ public class SpcElement extends Cal5e {
                 } else {
                     //По artikl_id - артикула профилей
                     int artiklID = elem5e.artiklRecAn.getInt(eArtikl.id);
-                    List<Record> elementList3 = eElement.find2(artiklID);
+                    List<Record> elementList3 = eElement.filter2(artiklID);
                     detail(elementList3, elem5e);
 
                     //По groups1_id - серии профилей
-                    List<Record> elementList2 = eElement.find5(elem5e.artiklRecAn); //список элементов в серии
+                    List<Record> elementList2 = eElement.filter4(elem5e.artiklRecAn); //список элементов в серии
                     detail(elementList2, elem5e);
                 }
             }

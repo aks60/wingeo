@@ -68,7 +68,7 @@ public class HtmlOfOffer {
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
-            List<Record> prjprodList = ePrjprod.find2(projectRec.getInt(eProject.id));
+            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
 
             doc.getElementById("h01").text("Коммерческое предложение от " + UGui.DateToStr(projectRec.get(eProject.date4)));
 

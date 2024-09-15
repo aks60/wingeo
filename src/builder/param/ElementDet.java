@@ -22,7 +22,7 @@ public class ElementDet extends Par5s {
 
     public boolean filter(HashMap<Integer, String> mapParam, ElemSimple elem5e, Record elemdetRec) {
 
-        List<Record> paramList = eElempar2.find3(elemdetRec.getInt(eElemdet.id)); //список параметров детализации 
+        List<Record> paramList = eElempar2.filter(elemdetRec.getInt(eElemdet.id)); //список параметров детализации 
         if (filterParamDef(paramList) == false) {
             return false;
         }

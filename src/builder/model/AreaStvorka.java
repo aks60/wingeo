@@ -91,9 +91,9 @@ public class AreaStvorka extends AreaSimple {
             } else if (knobColor == -3) { //по умолчанию (первая в списке)
                 knobColor = eArtdet.find(knobRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk);
                 if (knobColor < 0) { //если все текстуры группы
-                    List<Record> recordList = eColor.find2(knobColor);
+                    List<Record> recordList = eColor.filter(knobColor);
                     if (recordList.isEmpty() == false) {
-                        knobColor = eColor.find2(knobColor).get(0).getInt(eColor.id);
+                        knobColor = eColor.filter(knobColor).get(0).getInt(eColor.id);
                     }
                 }
             }

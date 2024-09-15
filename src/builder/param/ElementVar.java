@@ -29,7 +29,7 @@ public class ElementVar extends Par5s {
     public boolean filter(ElemSimple elem5e, Record elementRec) {
 
         listenerList.clear();
-        List<Record> paramList = eElempar1.find3(elementRec.getInt(eElement.id)); //список параметров вариантов использования
+        List<Record> paramList = eElempar1.filter(elementRec.getInt(eElement.id)); //список параметров вариантов использования
         if (filterParamDef(paramList) == false) {
             return false;
         }

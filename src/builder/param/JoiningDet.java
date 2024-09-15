@@ -23,7 +23,7 @@ public class JoiningDet extends Par5s {
 
     public boolean filter(HashMap<Integer, String> mapParam, ElemJoining elemJoin, Record joindetRec) {
 
-        List<Record> paramList = eJoinpar2.find(joindetRec.getInt(eJoindet.id));
+        List<Record> paramList = eJoinpar2.filter(joindetRec.getInt(eJoindet.id));
         if (filterParamDef(paramList) == false) {
             return false;
         }

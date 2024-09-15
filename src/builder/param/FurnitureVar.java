@@ -24,7 +24,7 @@ public class FurnitureVar extends Par5s {
 
     public boolean filter(ElemSimple elem5e, Record furnside1Rec) {
 
-        List<Record> paramList = eFurnpar1.find(furnside1Rec.getInt(eFurnside1.id));
+        List<Record> paramList = eFurnpar1.filter(furnside1Rec.getInt(eFurnside1.id));
         if (filterParamDef(paramList) == false) {
             return false;
         }

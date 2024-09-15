@@ -72,7 +72,7 @@ public enum eFurndet implements Field {
         }
     }
 
-    public static List<Record> find(int _id) {
+    public static List<Record> filter(int _id) {
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(furniture_id1) == _id).collect(Collectors.toList());
         }

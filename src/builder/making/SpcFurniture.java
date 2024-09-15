@@ -53,7 +53,7 @@ public class SpcFurniture extends Cal5e {
         ArrayList<AreaSimple> stvorkaList = winc.listArea.filter(Type.STVORKA);
         try {
             //Подбор фурнитуры по параметрам
-            List<Record> sysfurnList = eSysfurn.find(winc.nuni); //список фурнитур в системе
+            List<Record> sysfurnList = eSysfurn.filter(winc.nuni); //список фурнитур в системе
             if (sysfurnList.isEmpty() == false) {
                 Record sysfurnRec = sysfurnList.get(0); //значение по умолчанию, первая SYSFURN в списке системы
 
@@ -87,12 +87,12 @@ public class SpcFurniture extends Cal5e {
 
     protected void variant(AreaSimple areaStv, Record furnitureRec, int count) {
         try {
-            List<Record> furndetList1 = eFurndet.find(furnitureRec.getInt(eFurniture.id)); //детализация первый уровень
+            List<Record> furndetList1 = eFurndet.filter(furnitureRec.getInt(eFurniture.id)); //детализация первый уровень
             List<Record> furndetList2 = furndetList1.stream()
                     .filter(rec -> rec.getInt(eFurndet.id) != rec.getInt(eFurndet.furndet_pk)).collect(toList()); //детализация второй уровень
 
             //Цикл по описанию сторон фурнитуры
-            List<Record> furnsidetList = eFurnside1.find(furnitureRec.getInt(eFurniture.id)); //список описания сторон
+            List<Record> furnsidetList = eFurnside1.filter(furnitureRec.getInt(eFurniture.id)); //список описания сторон
             for (Record furnside1Rec : furnsidetList) {
                 ElemSimple elemFrame = areaStv.frames.get((Layout) Layout.ANY.find(furnside1Rec.getInt(eFurnside1.side_num)));
 
@@ -153,7 +153,7 @@ public class SpcFurniture extends Cal5e {
 
             //Проверка по ограничению сторон
             //Цикл по ограничению сторон фурнитуры
-            List<Record> furnside2List = eFurnside2.find(furndetRec.getInt(eFurndet.id));
+            List<Record> furnside2List = eFurnside2.filter(furndetRec.getInt(eFurndet.id));
             for (Record furnside2Rec : furnside2List) {
                 ElemSimple el;
                 double length = 0;

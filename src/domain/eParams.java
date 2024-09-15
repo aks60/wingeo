@@ -57,7 +57,7 @@ public enum eParams implements Field {
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
 
-    public static List<Record> find2(int _groups_id) {
+    public static List<Record> filter(int _groups_id) {
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _groups_id == rec.getInt(groups_id)).collect(toList());
         }

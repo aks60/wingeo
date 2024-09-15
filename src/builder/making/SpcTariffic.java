@@ -16,6 +16,7 @@ import builder.model.ElemSimple;
 import common.ArraySpc;
 import common.UCom;
 import dataset.Query;
+import domain.eElement;
 import domain.ePrjkit;
 import domain.ePrjprod;
 import enums.Type;
@@ -202,6 +203,13 @@ public class SpcTariffic extends Cal5e {
         Record color2Rec = eColor.find(specificRec.colorID2);  //внутренняя
         Record color3Rec = eColor.find(specificRec.colorID3);  //внешняя
 
+        double k6 = 0;  //("ВСТ".equals(specificRec.place.substring(0, 3))) ? specificRec.variantRec.getDbl(eElement.markup) : 0; //проц. наценка
+        if ("ВСТ".equals(specificRec.place.substring(0, 3)) == true) {
+            Record elementRec = eElement.find(specificRec.elem5e.artiklRecAn.getInt(eArtikl.id));
+ 
+            System.out.println("k6 = " + k6);
+        }
+        
         Record kursBaseRec = eCurrenc.find(specificRec.artiklRec().getInt(eArtikl.currenc1_id));    // кросс-курс валюты для основной текстуры
         Record kursNoBaseRec = eCurrenc.find(specificRec.artiklRec().getInt(eArtikl.currenc2_id));  // кросс-курс валюты для неосновных текстур (внутренняя, внешняя, двухсторонняя)
 
@@ -222,7 +230,7 @@ public class SpcTariffic extends Cal5e {
                 double k2 = color2Rec.getDbl(eColor.coef2); //ценовой коэф.внутренний текстуры
                 double k3 = color3Rec.getDbl(eColor.coef3); //ценовой коэф.внешний текстуры
                 double k5 = kursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс            
-                artdetPrice += (k1 * Math.max(k2, k3) / k5);
+                artdetPrice += (k1 * k6 * Math.max(k2, k3) / k5);
 
                 if (isTariff(artdetRec, color1Rec)) { //подбираем тариф основной текстуры
                     double m1 = artdetRec.getDbl(eArtdet.cost_unit); //тариф единица измерения

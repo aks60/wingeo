@@ -30,7 +30,7 @@ public class FurnitureDet extends Par5s {
     public boolean filter(HashMap<Integer, String> mapParam, AreaSimple areaStv, Record furndetRec) {
 
         this.detailRec = furndetRec;
-        List<Record> tableList = eFurnpar2.find(furndetRec.getInt(eFurndet.id));
+        List<Record> tableList = eFurnpar2.filter(furndetRec.getInt(eFurndet.id));
         if (filterParamDef(tableList) == false) {
             return false; //параметры по умолчанию
         }

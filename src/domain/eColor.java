@@ -87,7 +87,7 @@ public enum eColor implements Field {
         return (recordList.isEmpty() == true) ? virtualRec() : recordList.get(0);
     }
 
-    public static List<Record> find2(int _colgrp_id) {
+    public static List<Record> filter(int _colgrp_id) {
 
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(groups_id) == _colgrp_id).collect(toList());

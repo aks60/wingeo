@@ -90,7 +90,7 @@ public class HtmlOfSmeta {
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
-            List<Record> prjprodList = ePrjprod.find2(projectRec.getInt(eProject.id));
+            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Record> prjkitAll = new ArrayList<Record>();
 
             doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
@@ -154,7 +154,7 @@ public class HtmlOfSmeta {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
             Record sysuserRec = (sysRec == null) ? eSysuser.virtualRec() : sysRec;
-            List<Record> prjprodList = ePrjprod.find2(projectRec.getInt(eProject.id));
+            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Record> prjkitAll = new ArrayList<Record>();
 
             doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");

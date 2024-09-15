@@ -70,7 +70,7 @@ public enum eElement implements Field {
         }
     }
 
-    public static List<Record> find(int seriesID) {
+    public static List<Record> filter(int seriesID) {
         if (seriesID == -1) {
             return new ArrayList<Record>();
         }
@@ -80,14 +80,14 @@ public enum eElement implements Field {
         return new Query(values()).select(up, "where", groups1_id, "=", seriesID, "and", todef, "> 0");
     }
 
-    public static List<Record> find2(int artikl2_id) {
+    public static List<Record> filter2(int artikl2_id) {
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> artikl2_id == rec.getInt(artikl_id) && rec.getInt(todef) > 0).collect(Collectors.toList());
         }
         return new Query(values()).select(up, "where", artikl_id, "=", artikl2_id, "and", todef, "> 0");
     }
 
-    public static List<Record> find3(int artikl2_id, int series2_id) {
+    public static List<Record> filter3(int artikl2_id, int series2_id) {
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> (artikl2_id == rec.getInt(artikl_id)
                     || series2_id == rec.getInt(groups1_id)) && rec.getInt(todef) > 0).collect(Collectors.toList());
@@ -95,7 +95,7 @@ public enum eElement implements Field {
         return new Query(values()).select(up, "where (", artikl_id, "=", artikl2_id, "or", groups1_id, "=", series2_id, ") and", todef, "> 0");
     }
 
-    public static Record find4(int _id) {
+    public static Record find(int _id) {
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
         }
@@ -103,7 +103,7 @@ public enum eElement implements Field {
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
 
-    public static List<Record> find5(Record recordSer) {
+    public static List<Record> filter4(Record recordSer) {
         int artiklID = recordSer.getInt(eArtikl.id);
         int seriesID = recordSer.getInt(eArtikl.groups4_id);
         if (seriesID == -1) {

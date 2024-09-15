@@ -43,7 +43,7 @@ public class HtmlOfManufactory {
 
     private static void load(Record projectRec, Document doc) {
         try {
-            List<Record> prjprodList = ePrjprod.find2(projectRec.getInt(eProject.id));
+            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Wincalc> wincList = URep.wincList(prjprodList, 400);
 
             //Заполним файл шаблонами заказов

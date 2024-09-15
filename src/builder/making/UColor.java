@@ -248,7 +248,7 @@ public class UColor {
 
                     //Группа текстур
                     if (artdetRec.getInt(eArtdet.color_fk) < 0) {
-                        List<Record> colorList = eColor.find2(artdetRec.getInt(eArtdet.color_fk)); //фильтр списка определённой группы
+                        List<Record> colorList = eColor.filter(artdetRec.getInt(eArtdet.color_fk)); //фильтр списка определённой группы
                         //Цикл по COLOR определённой группы
                         for (Record colorRec : colorList) {
                             if (colorRec.getInt(eColor.id) == originColorID) {
@@ -283,7 +283,7 @@ public class UColor {
     private static int scanFromParams(int detailArtiklID, Record syspar1Rec, int originColorID, int side) {
 
         List<Record> artdetList = eArtdet.filter(detailArtiklID);
-        List<Record> parmapList = eParmap.find2(syspar1Rec.getInt(eSyspar1.groups_id));
+        List<Record> parmapList = eParmap.filter3(syspar1Rec.getInt(eSyspar1.groups_id));
         Field field = (side == 2) ? eArtdet.mark_c2 : eArtdet.mark_c3;
 
         //Цикл по параметрам соответствия текстур
@@ -373,7 +373,7 @@ public class UColor {
             int colorFK2 = artdetRec.getInt(eArtdet.color_fk);
 
             if (colorFK2 < 0 && colorFK2 != -1) { //это группа
-                List<Record> colorList = eColor.find2(colorFK2);
+                List<Record> colorList = eColor.filter(colorFK2);
                 if (colorList.isEmpty() == false) {
                     return colorList.get(0).getInt(eColor.id);
                 }
@@ -504,7 +504,7 @@ public class UColor {
 
                     //Группа текстур
                     if (artdetRec.getInt(eArtdet.color_fk) < 0) {
-                        List<Record> colorList = eColor.find2(artdetRec.getInt(eArtdet.color_fk)); //фильтр списка определённой группы
+                        List<Record> colorList = eColor.filter(artdetRec.getInt(eArtdet.color_fk)); //фильтр списка определённой группы
                         //Цикл по COLOR определённой группы
                         for (Record colorRec : colorList) {
                             if (colorRec.getInt(eColor.id) == elemColorID) {

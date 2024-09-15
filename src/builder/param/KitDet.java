@@ -21,7 +21,7 @@ public class KitDet extends Par5s {
 
     public boolean filter(HashMap<Integer, String> mapParam, Record kitdetRec) {
 
-        List<Record> paramList = eKitpar2.find(kitdetRec.getInt(eKitdet.id)); //список параметров детализации  
+        List<Record> paramList = eKitpar2.filter(kitdetRec.getInt(eKitdet.id)); //список параметров детализации  
         if (filterParamDef(paramList) == false) {
             return false; //параметры по умолчанию
         }

@@ -63,17 +63,17 @@ public class SpcJoining extends Cal5e {
                 Record joiningRec2 = null;
 
                 //Список вариантов соединения для артикула1 и артикула2
-                List<Record> joinvarList = eJoinvar.find(joiningRec1.getInt(eJoining.id));
+                List<Record> joinvarList = eJoinvar.filter(joiningRec1.getInt(eJoining.id));
 
                 //Если неудача, ищем в аналоге соединения
                 if (joinvarList.isEmpty() == true && joiningRec1.getStr(eJoining.analog).isEmpty() == false) {
                     joiningRec2 = eJoining.find2(joiningRec1.getStr(eJoining.analog));
-                    joinvarList = eJoinvar.find(joiningRec2.getInt(eJoining.id));
+                    joinvarList = eJoinvar.filter(joiningRec2.getInt(eJoining.id));
                 }
                 //Если неудача то ищем зеркальность (только для дверей)
                 if (winc.root.type == Type.DOOR && joinvarList.isEmpty()) {
                     joiningRec1 = eJoining.find(id2, id1);
-                    joinvarList = eJoinvar.find(joiningRec1.getInt(eJoining.id));
+                    joinvarList = eJoinvar.filter(joiningRec1.getInt(eJoining.id));
                 }
                 Collections.sort(joinvarList, (connvar1, connvar2) -> connvar1.getInt(eJoinvar.prio) - connvar2.getInt(eJoinvar.prio));
 
@@ -128,7 +128,7 @@ public class SpcJoining extends Cal5e {
 
             ElemJoining elemJoin = entry.getKey();
             Integer key = entry.getValue();
-            List<Record> joindetList = eJoindet.find(key);
+            List<Record> joindetList = eJoindet.filter(key);
 
             //Цикл по детализации соединений
             for (Record joindetRec : joindetList) {
@@ -156,11 +156,11 @@ public class SpcJoining extends Cal5e {
         int id2 = elemJoin.elem2.artiklRecAn.getInt(eArtikl.id);
         Record joiningRec = eJoining.find(id1, id2);
         //Список вариантов соединения для артикула1 и артикула2
-        List<Record> joinvarList = eJoinvar.find(joiningRec.getInt(eJoining.id));
+        List<Record> joinvarList = eJoinvar.filter(joiningRec.getInt(eJoining.id));
         //Если неудача, ищем в аналоге соединения
         if (joinvarList.isEmpty() == true && joiningRec.getStr(eJoining.analog).isEmpty() == false) {
             joiningRec = eJoining.find2(joiningRec.getStr(eJoining.analog));
-            joinvarList = eJoinvar.find(joiningRec.getInt(eJoining.id));
+            joinvarList = eJoinvar.filter(joiningRec.getInt(eJoining.id));
         }
         Collections.sort(joinvarList, (connvar1, connvar2) -> connvar1.getInt(eJoinvar.prio) - connvar2.getInt(eJoinvar.prio));
 

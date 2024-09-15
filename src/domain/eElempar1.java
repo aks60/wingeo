@@ -63,7 +63,7 @@ public enum eElempar1 implements Field {
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
 
-    public static List<Record> find3(int _element_id) {
+    public static List<Record> filter(int _element_id) {
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _element_id == rec.getInt(element_id)).collect(Collectors.toList());
         }

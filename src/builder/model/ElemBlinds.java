@@ -45,7 +45,7 @@ public class ElemBlinds extends ElemSimple {
         }
         //Состав жалюзи. ВНИМАЕИЕ! elementID подменён на sysprofRec
         if (isJson(gson.param, PKjson.elementID)) {
-            this.sysprofRec = eElement.find4(gson.param.get(PKjson.elementID).getAsInt());
+            this.sysprofRec = eElement.find(gson.param.get(PKjson.elementID).getAsInt());
         } else {
             this.sysprofRec = eElement.up.newRecord(Query.SEL);
         }

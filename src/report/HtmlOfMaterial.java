@@ -47,7 +47,7 @@ public class HtmlOfMaterial {
     private static void load(Record projectRec, Document doc) {
 
         List<SpcRecord> spcList2 = new ArrayList<SpcRecord>();
-        List<Record> prjprodList = ePrjprod.find2(projectRec.getInt(eProject.id));
+        List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
         for (Record prjprodRec : prjprodList) {
             String script = prjprodRec.getStr(ePrjprod.script);
             Wincalc winc = new Wincalc(script);

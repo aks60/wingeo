@@ -58,7 +58,7 @@ public enum eParmap implements Field {
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
     
-    public static List<Record> find2(int groupsID) {
+    public static List<Record> filter3(int groupsID) {
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(groups_id) == groupsID).collect(toList());
         }

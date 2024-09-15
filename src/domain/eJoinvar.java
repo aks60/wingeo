@@ -46,7 +46,7 @@ public enum eJoinvar implements Field {
         return query;
     }
     
-    public static List<Record> find(int _id) {
+    public static List<Record> filter(int _id) {
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(joining_id) == _id).collect(toList());
         }

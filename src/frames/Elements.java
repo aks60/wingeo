@@ -815,7 +815,7 @@ public class Elements extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Double.class, java.lang.Integer.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
                 true, true, true, true, true, true, true, true, true, false
@@ -1231,6 +1231,7 @@ public class Elements extends javax.swing.JFrame {
                     UGui.insertRecordCur(tab2, eElement.up, (record) -> {
                         record.set(eElement.groups2_id, id);
                         record.set(eElement.todef, 1);
+                        record.set(eElement.markup, 0);
                         int index = UGui.getIndexFind(tab2, eElement.id, record.get(eElement.id));
                         qElement.table(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
                     });
