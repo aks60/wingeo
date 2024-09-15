@@ -607,9 +607,7 @@ public class Specifics extends javax.swing.JFrame {
     private void cbxCalcType(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCalcType
         ProgressBar.create(this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                createIwin();
-                loadingTab1(listSpc);
-                UGui.setSelectedRow(tab1);
+                btn22ActionPerformed(null);
             }
         });
 

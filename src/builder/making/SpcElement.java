@@ -65,7 +65,7 @@ public class SpcElement extends Cal5e {
             }
         } catch (Exception e) {
             System.err.println("Ошибка:SpcElement.calc() " + e);
-        } 
+        }
     }
 
     protected void detail(List<Record> elementList, ElemSimple elem5e) {

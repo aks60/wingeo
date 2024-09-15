@@ -146,7 +146,7 @@ public class UColor {
                 if (List.of(UseColor.PROF.id, UseColor.GLAS.id).contains(srcColorUS)) {
                     resultColorID = scanFromProfile(elemArtID, originColorID, side);
                     if (resultColorID == -1 && srcColorFk == 0) {
-                        resultColorID = +(spcAdd); //если неудача подбора то первая в списке запись цвета
+                        resultColorID = scanFromColorFirst(spcAdd); //если неудача подбора то первая в списке запись цвета
                     }
                     //Подбор по текстуре сторон профиля
                 } else if (List.of(UseColor.COL1.id, UseColor.COL2.id, UseColor.COL3.id,
