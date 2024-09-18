@@ -46,7 +46,7 @@ public class SpcTariffic extends Cal5e {
             double percentMarkup = percentMarkup(winc); //процентная надбавка на изделия сложной формы
 
             //Расчёт себес-сти за ед.изм. и колич. материала
-            //Цикл по эдементам конструкции
+            //цикл по эдементам конструкции
             for (ElemSimple elem5e : winc.listElem) {
                 if (filter(elem5e)) {
 
@@ -57,20 +57,20 @@ public class SpcTariffic extends Cal5e {
                         elem5e.spcRec.quant2 = elem5e.spcRec.quant2 + (elem5e.spcRec.quant1 * elem5e.spcRec.waste / 100); //количество с отходом
                     }
                     //Вложенная спецификация
-                    //Цикл по детализации эдемента
-                    for (SpcRecord specificationRec2 : elem5e.spcRec.spcList) {
-                        specificationRec2.costpric1 += artdetPrice(specificationRec2); //себест. за ед. без отхода
-                        specificationRec2.quant1 = formatAmount(specificationRec2); //количество без отхода
-                        specificationRec2.quant2 = specificationRec2.quant1; //базовое количество с отходом
+                    //цикл по детализации эдемента
+                    for (SpcRecord spсRec2 : elem5e.spcRec.spcList) {
+                        spсRec2.costpric1 += artdetPrice(spсRec2); //себест. за ед. без отхода
+                        spсRec2.quant1 = formatAmount(spсRec2); //количество без отхода
+                        spсRec2.quant2 = spсRec2.quant1; //базовое количество с отходом
                         if (norm_otx == true) {
-                            specificationRec2.quant2 = specificationRec2.quant2 + (specificationRec2.quant1 * specificationRec2.waste / 100); //количество с отходом
+                            spсRec2.quant2 = spсRec2.quant2 + (spсRec2.quant1 * spсRec2.waste / 100); //количество с отходом
                         }
                     }
                 }
             }
 
-            //Расчёт стоимости
-            //Цикл по эдементам конструкции
+            //Правила расчёта
+            //цикл по эдементам конструкции
             for (ElemSimple elem5e : winc.listElem) {
                 if (filter(elem5e)) {
 
@@ -204,12 +204,6 @@ public class SpcTariffic extends Cal5e {
         Record color2Rec = eColor.find(specificRec.colorID2);  //внутренняя
         Record color3Rec = eColor.find(specificRec.colorID3);  //внешняя
 
-        double k6 = 0;
-        if ("ВСТ".equals(specificRec.place.substring(0, 3)) == true) {
-            Record elementRec = eElement.find(specificRec.detailRec.getInt(eElemdet.element_id));
-            k6 = elementRec.getDbl(eElement.markup);
-        }
-
         Record kursBaseRec = eCurrenc.find(specificRec.artiklRec().getInt(eArtikl.currenc1_id));    // кросс-курс валюты для основной текстуры
         Record kursNoBaseRec = eCurrenc.find(specificRec.artiklRec().getInt(eArtikl.currenc2_id));  // кросс-курс валюты для неосновных текстур (внутренняя, внешняя, двухсторонняя)
 
@@ -230,7 +224,6 @@ public class SpcTariffic extends Cal5e {
                 double k2 = color2Rec.getDbl(eColor.coef2); //ценовой коэф.внутренний текстуры
                 double k3 = color3Rec.getDbl(eColor.coef3); //ценовой коэф.внешний текстуры
                 double k5 = kursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс 
-
                 artdetPrice += (k1 * Math.max(k2, k3) / k5);
 
                 if (isTariff(artdetRec, color1Rec)) { //подбираем тариф основной текстуры
@@ -275,7 +268,7 @@ public class SpcTariffic extends Cal5e {
                 if (isTariff(artdetRec, color3Rec)) {
                     Record colgrpRec = eGroups.find(color3Rec.getInt(eColor.groups_id));
                     double w1 = artdetRec.getDbl(eArtdet.cost_c3); //Тариф внешний текстуры
-                    double w2 = color3Rec.getDbl(eColor.coef3); //Ценовой коэф.внешний текстуры
+                    double w2 = color3Rec.getDbl(eColor.coef3); //ценовой коэф.внешний текстуры
                     double w3 = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
                     double w5 = kursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
                     artdetPrice += (w1 * w2 * w3) / w5;
@@ -290,8 +283,16 @@ public class SpcTariffic extends Cal5e {
                 artdetPrice = artdetRec.getDbl(eArtdet.cost_min) / specificRec.quant1;
             }*/
             if (artdetUsed == true) { //если было попадание
+                if ("ВСТ".equals(specificRec.place.substring(0, 3)) == true) {
+                    if (specificRec.detailRec != null) {
+                        Record elementRec = eElement.find(specificRec.detailRec.getInt(eElemdet.element_id));
+                        if (elementRec.getDbl(eElement.markup) > 0) {
+                            artdetPrice = artdetPrice + (artdetPrice * (elementRec.getDbl(eElement.markup))) / 100;
+                        }
+                    }
+                }
                 inPrice = inPrice + (artdetPrice
-                        * artdetRec.getDbl(eArtdet.coef)); //kоэф. текстуры уникальн. арт.
+                        * artdetRec.getDbl(eArtdet.coef)); //kоэф. текстуры по табл. ARTDET
             }
         }
         return inPrice;
