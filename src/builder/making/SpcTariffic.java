@@ -184,11 +184,11 @@ public class SpcTariffic extends Cal5e {
                         spc.costpric2 = spc.costpric1 + (spc.costpric1 * (spc.quant2 - spc.quant1)); //себест. за ед. с отходом 
                         Record artgrp1Rec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups1_id));
                         Record artgrp2Rec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups2_id));
-                        double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
-                        double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
+                        double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //(koef)наценка группы мат.ценностей
+                        double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //(%)скидки группы мат.ценностей
                         double k3 = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
-                        double price = spc.costpric2 * k1 * k3;
-                        spc.price1 = price + price / 100 * percentMarkup; //стоимость без скидки                     
+                        double price = spc.count * spc.quant2 * spc.costpric2 * k1 * k3;
+                        spc.price1 = price; //стоимость без скидки                     
                         spc.price2 = price - price / 100 * k2; //стоимость со скидкой 
                         kitList.add(spc);
                     }

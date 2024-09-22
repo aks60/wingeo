@@ -201,6 +201,7 @@ public class DicKits extends javax.swing.JDialog {
                 prjkitRec.set(ePrjkit.id, Conn.genId(ePrjkit.up));
                 prjkitRec.set(ePrjkit.project_id, projectID);
                 prjkitRec.set(ePrjkit.prjprod_id, prjprodID);
+                prjkitRec.set(ePrjkit.numb, 0);
                 prjkitRec.set(ePrjkit.artikl_id, kitdetRec.getInt(eKitdet.artikl_id));
 
                 double count = UPar.to_7030_7031_8060_8061_9060_9061(mapParam);
