@@ -1574,7 +1574,14 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.Object.class
+
+                , java.lang.Double.class
+
+                , java.lang.Double.class
+
+                , java.lang.Double.class
+
             };
             boolean[] canEdit = new boolean [] {
                 false, true, false, false
@@ -1589,16 +1596,21 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             }
 
             public void setValueAt(Object aValue, int row, int column) {
-                super.setValueAt(aValue, row, column);
-                Record projectRec = qProject.get(UGui.getIndexRec(tab1));
-                if (row == 0 && column == 1 && projectRec.get(eProject.disc2).equals(aValue) == false) {
-                    projectRec.set(eProject.disc2, aValue);
-                } else if (row == 1 && column == 1 && projectRec.get(eProject.disc3).equals(aValue) == false) {
-                    projectRec.set(eProject.disc3, aValue);
-                } else if (row == 2 && column == 1 && projectRec.get(eProject.disc4).equals(aValue) == false) {
-                    projectRec.set(eProject.disc4, aValue);
+                try {
+                    super.setValueAt(aValue, row, column);
+                    Record projectRec = qProject.get(UGui.getIndexRec(tab1));
+
+                    if (row == 0 && column == 1 && aValue.equals(projectRec.get(eProject.disc2)) == false) {
+                        projectRec.set(eProject.disc2, aValue);
+                    } else if (row == 1 && column == 1 && aValue.equals(projectRec.get(eProject.disc3)) == false) {
+                        projectRec.set(eProject.disc3, aValue);
+                    } else if (row == 2 && column == 1 && aValue.equals(projectRec.get(eProject.disc4)) == false) {
+                        projectRec.set(eProject.disc4, aValue);
+                    }
+                    loadingTab5();
+                } catch (Exception e) {
+                    System.out.println("Ошибка: tab5.setValueAt() " + e);
                 }
-                loadingTab5();
             }
         });
         tab5.getTableHeader().setReorderingAllowed(false);
