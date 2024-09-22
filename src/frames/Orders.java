@@ -742,8 +742,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }
 
     public void calculate() {
-        UGui.findComponents(getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
-        Query.listOpenTable.forEach(q -> q.execsql());
+        UGui.stopCellEditingAndExecSql(getRootPane());
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 try {
@@ -3210,8 +3209,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }//GEN-LAST:event_btnInsert
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.findComponents(getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
-        Query.listOpenTable.forEach(q -> q.execsql());
+        UGui.stopCellEditingAndExecSql(getRootPane());
         eProp.save(); //запишем текущий ordersId в файл  
     }//GEN-LAST:event_windowClosed
 

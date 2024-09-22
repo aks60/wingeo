@@ -955,8 +955,7 @@ public class Fillings extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsert
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.findComponents(getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
-        Query.listOpenTable.forEach(q -> q.execsql());  
+        UGui.stopCellEditingAndExecSql(getRootPane());  
     }//GEN-LAST:event_windowClosed
 
     private void btnFind1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind1
