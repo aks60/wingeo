@@ -302,7 +302,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
     public void loadingTab4() {
         UGui.stopCellEditing(tab1, tab2, tab3, tab4);
+        UGui.updateBorderAndSql(tab4, List.of(tab1, tab2, tab3, tab4));       
         Record projectRec = qProject.get(UGui.getIndexRec(tab1));
+        
         int id = projectRec.getInt(eProject.id);
         qPrjkit.sql(ePrjkit.data(), ePrjkit.project_id, id);
         qPrjkit.table(eArtikl.up).join(qPrjkit, eArtikl.data(), ePrjkit.artikl_id, eArtikl.id);
@@ -798,6 +800,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         if (cost4 != projectRec.getDbl(eProject.cost4)) {
                             projectRec.set(eProject.cost4, cost4); //стоимость проекта со скидками менеджера
                         }
+                        qProject.execsql();
 
                         //Заполним вес, площадь
                         txt8.setText(UCom.format(projectRec.getDbl(eProject.square) / 1000000, 2)); //площадь
@@ -3153,8 +3156,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }//GEN-LAST:event_btnDelete
 
     private void btnInsert(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsert
-        UGui.stopCellEditing(tab1, tab2, tab3, tab4);
-        List.of(tab1, tab2, tab3, tab4).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
+
+        UGui.stopCellEditingAndExecSql(getRootPane());
 
         if (tab1.getBorder() != null) {
             UGui.insertRecordCur(tab1, eProject.up, (projectRec) -> {
@@ -3200,11 +3203,11 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     DicKits frame = new DicKits(Orders.this, (q) -> {
                         loadingTab4();
                         return true;
-                    }, qProject.getAs(index1, eProject.id), qPrjprod.getAs(index2, ePrjprod.id));
+                    }, qProject.getAs(index1, eProject.id), qPrjprod.getAs(index2, ePrjprod.id));                    
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Заказ не выбран.", "Предупреждение", JOptionPane.INFORMATION_MESSAGE);
-            }
+            }                        
         }
     }//GEN-LAST:event_btnInsert
 
