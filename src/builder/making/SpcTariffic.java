@@ -40,7 +40,8 @@ public class SpcTariffic extends Cal5e {
         this.norm_otx = norm_otx;
     }
 
-    //Тарификация конструкции
+    //Рассчёт конструкции с учётом 
+    //всех скидок и наценок
     public void calc() {
         try {
             double percentMarkup = percentMarkup(winc); //процентная надбавка на изделия сложной формы
@@ -69,12 +70,12 @@ public class SpcTariffic extends Cal5e {
                 }
             }
 
-            //Правила расчёта
+            //Рассчёт с учётом наценок и скидок
             //цикл по эдементам конструкции
             for (ElemSimple elem5e : winc.listElem) {
                 if (filter(elem5e)) {
 
-                    Record systreeRec = eSystree.find(winc.nuni);
+                    // <editor-fold defaultstate="collapsed" desc="Правила рассч.">                     
                     //Цикл по правилам расчёта.                 
                     for (Record rulecalcRec : eRulecalc.list()) {
                         //Всё обнуляется и рассчитывается по таблице правил расчёта
@@ -103,7 +104,8 @@ public class SpcTariffic extends Cal5e {
                             }
                         }
                     }
-
+                    // </editor-fold>                     
+                    Record systreeRec = eSystree.find(winc.nuni);
                     elem5e.spcRec.costpric2 = elem5e.spcRec.costpric1 * elem5e.spcRec.quant2; //себест. за ед. с отходом 
                     Record artgrp1Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups1_id));
                     Record artgrp2Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups2_id));
@@ -114,9 +116,10 @@ public class SpcTariffic extends Cal5e {
                     elem5e.spcRec.price1 = elem5e.spcRec.price1 + (elem5e.spcRec.price1 / 100) * percentMarkup; //стоимость без скидки                     
                     elem5e.spcRec.price2 = elem5e.spcRec.price1 - (elem5e.spcRec.price1 / 100) * k2; //стоимость со скидкой 
 
-                    //Правила расчёта вложенные
+                    //Цикл по детализации
                     for (SpcRecord spc : elem5e.spcRec.spcList) {
 
+                        // <editor-fold defaultstate="collapsed" desc="Правила рассч. вложенные">  
                         //Цикл по правилам расчёта.
                         for (Record rulecalcRec : eRulecalc.list()) {
                             int form = (rulecalcRec.getInt(eRulecalc.form) == 0) ? 1 : rulecalcRec.getInt(eRulecalc.form);
@@ -124,6 +127,7 @@ public class SpcTariffic extends Cal5e {
                                 rulecalcPrise(winc, rulecalcRec, spc);
                             }
                         }
+                        // </editor-fold> 
                         spc.costpric2 = spc.costpric1 * spc.quant2; //себест. за ед. с отходом  
                         Record artgrp1bRec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups1_id));
                         Record artgrp2bRec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups2_id));
