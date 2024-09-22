@@ -237,9 +237,9 @@ public class Wincalc {
             new builder.making.SpcElement(this).calc(); //вставки
             new builder.making.SpcFilling(this).calc(); //заполнения
             new builder.making.SpcFurniture(this).calc(); //фурнитура 
-            new builder.making.SpcTariffic(this, norm_otx).calc(); //тарификация 
+            new builder.making.SpcTariffic(this, norm_otx).calc(); //рассчитаем тарификацию
 
-            //Строим список спецификации
+            //Заполним список спецификации
             for (ElemSimple elem5e : listElem) {
                 if (elem5e.spcRec.artikl.isEmpty() || elem5e.spcRec.artikl.trim().charAt(0) != '@') {
                     listSpec.add(elem5e.spcRec);
