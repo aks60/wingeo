@@ -43,8 +43,8 @@ public class SpcRecord {
     public double waste = -1;  //Процент отхода см. eArtikl.otx_norm     
     public double quant1 = 0;  //Количество без отхода
     public double quant2 = 0;  //Количество с отходом
-    public double costpric1 = 0;  //Себест. за ед. без отхода     
-    public double costpric2 = 0;  //Себест. за ед. с отходом
+    public double sebes1 = 0;  //Себест. за ед. без отхода     
+    public double sebes2 = 0;  //Себест. за ед. с отходом
     public double price1 = 0;  //Стоимость без скидки
     public double price2 = 0;  //Стоимость с технологической скидкой
 
@@ -71,8 +71,8 @@ public class SpcRecord {
         this.quant1 = spec.quant1;
         this.waste = spec.waste;
         this.quant2 = spec.quant2;
-        this.costpric1 = spec.costpric1;
-        this.costpric2 = spec.costpric2;
+        this.sebes1 = spec.sebes1;
+        this.sebes2 = spec.sebes2;
         this.price1 = spec.price1;
         this.price2 = spec.price2;
         this.anglHoriz = spec.anglHoriz;
@@ -142,8 +142,8 @@ public class SpcRecord {
         this.quant1 = spec.quant1;
         this.waste = spec.waste;
         this.quant2 = spec.quant2;
-        this.costpric1 = spec.costpric1;
-        this.costpric2 = spec.costpric2;
+        this.sebes1 = spec.sebes1;
+        this.sebes2 = spec.sebes2;
         this.price1 = spec.price1;
         this.price2 = spec.price2;
         this.anglHoriz = spec.anglHoriz;
@@ -155,7 +155,7 @@ public class SpcRecord {
         double elemID = (elem5e == null) ? 0 : elem5e.id;
         return new Vector(List.of(npp, id, elemID, place, artikl, name, eColor.find(colorID1).getStr(eColor.name), eColor.find(colorID2).getStr(eColor.name),
                 eColor.find(colorID3).getStr(eColor.name), width, height, weight, anglCut0, anglCut1, anglHoriz,
-                count, UseUnit.getName(unit), waste, quant1, quant2, costpric1, costpric2, price1, price2));
+                count, UseUnit.getName(unit), waste, quant1, quant2, sebes1, sebes2, price1, price2));
     }
 
     public void setAnglCut(double angl0, double angl1) {

@@ -767,8 +767,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
                                 square = square + prjprodRec.getDbl(ePrjprod.num) * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
                                 weight = weight + prjprodRec.getDbl(ePrjprod.num) * win.weight; //вес изделий
-                                price2 = price2 + win.price2; //стоимость без скидки
-                                cost2 = cost2 + win.cost2; //стоимость со скидками
+                                price2 = price2 + win.price2; //стоимость конструкции без скидки менеджера
+                                cost2 = cost2 + win.cost2; //стоимость конструкции со скидкой менеджера
 
                                 //Комплектация
                                 ArraySpc<SpcRecord> kitList = SpcTariffic.kits(prjprodRec, win, true); //комплекты
@@ -780,11 +780,11 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         }
                         //Сохраним новые кальк.данные в проекте
                         if (price2 != projectRec.getDbl(eProject.price2)) {
-                            projectRec.set(eProject.price2, price2); //стоимость проекта без скидки менеджера
+                            projectRec.set(eProject.price2, price2); //стоимость конструкции без скидки менеджера
                         }                      
                         cost2 = cost2 - cost2 * projectRec.getDbl(eProject.disc2) / 100;
                         if (cost2 != projectRec.getDbl(eProject.cost2)) {
-                            projectRec.set(eProject.cost2, cost2); //стоимость проекта со скидкой менеджера
+                            projectRec.set(eProject.cost2, cost2); //стоимость конструкции со скидкой менеджера
                         }                       
                         if (price3 != projectRec.getDbl(eProject.price3)) {
                             projectRec.set(eProject.price3, price3); //стоимость комплектации без скидки менеджера

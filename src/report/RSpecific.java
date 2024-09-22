@@ -82,9 +82,9 @@ public class RSpecific {
 
     public String getPrice() {
         if (otx) {
-            return df1.format(spc.costpric2);
+            return df1.format(spc.sebes2);
         }
-        return df1.format(spc.costpric1);
+        return df1.format(spc.sebes1);
     }
 
     public String getCost() {
@@ -110,7 +110,7 @@ public class RSpecific {
                 s.spc.count = s.spc.count + sr.spc.count;
                 s.spc.quant1 = s.spc.quant1 + sr.spc.quant1;
                 s.spc.quant2 = s.spc.quant2 + sr.spc.quant2;
-                s.spc.costpric2 = s.spc.costpric2 + sr.spc.costpric2;
+                s.spc.sebes2 = s.spc.sebes2 + sr.spc.sebes2;
                 s.spc.price1 = s.spc.price1 + sr.spc.price1;
                 s.spc.price2 = s.spc.price2 + sr.spc.price2;
             }

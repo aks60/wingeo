@@ -51,7 +51,7 @@ public class SpcTariffic extends Cal5e {
             for (ElemSimple elem5e : winc.listElem) {
                 if (filter(elem5e)) {
 
-                    elem5e.spcRec.costpric1 += artdetPrice(elem5e.spcRec); //себест. за ед. без отхода по табл. ARTDET с коэф. и надб.
+                    elem5e.spcRec.sebes1 += artdetPrice(elem5e.spcRec); //себест. за ед. без отхода по табл. ARTDET с коэф. и надб.
                     elem5e.spcRec.quant1 = formatAmount(elem5e.spcRec); //количество без отхода
                     elem5e.spcRec.quant2 = elem5e.spcRec.quant1;  //базовое количество с отходом
                     if (norm_otx == true) {
@@ -60,7 +60,7 @@ public class SpcTariffic extends Cal5e {
                     //Вложенная спецификация
                     //цикл по детализации эдемента
                     for (SpcRecord spсRec2 : elem5e.spcRec.spcList) {
-                        spсRec2.costpric1 += artdetPrice(spсRec2); //себест. за ед. без отхода
+                        spсRec2.sebes1 += artdetPrice(spсRec2); //себест. за ед. без отхода
                         spсRec2.quant1 = formatAmount(spсRec2); //количество без отхода
                         spсRec2.quant2 = spсRec2.quant1; //базовое количество с отходом
                         if (norm_otx == true) {
@@ -106,13 +106,13 @@ public class SpcTariffic extends Cal5e {
                     }
                     // </editor-fold>                     
                     Record systreeRec = eSystree.find(winc.nuni);
-                    elem5e.spcRec.costpric2 = elem5e.spcRec.costpric1 * elem5e.spcRec.quant2; //себест. за ед. с отходом 
+                    elem5e.spcRec.sebes2 = elem5e.spcRec.sebes1 * elem5e.spcRec.quant2; //себест. за ед. с отходом 
                     Record artgrp1Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups1_id));
                     Record artgrp2Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups2_id));
                     double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
                     double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                     double k3 = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
-                    elem5e.spcRec.price1 = elem5e.spcRec.costpric2 * k1 * k3;
+                    elem5e.spcRec.price1 = elem5e.spcRec.sebes2 * k1 * k3;
                     elem5e.spcRec.price1 = elem5e.spcRec.price1 + (elem5e.spcRec.price1 / 100) * percentMarkup; //стоимость без скидки                     
                     elem5e.spcRec.price2 = elem5e.spcRec.price1 - (elem5e.spcRec.price1 / 100) * k2; //стоимость со скидкой 
 
@@ -128,13 +128,13 @@ public class SpcTariffic extends Cal5e {
                             }
                         }
                         // </editor-fold> 
-                        spc.costpric2 = spc.costpric1 * spc.quant2; //себест. за ед. с отходом  
+                        spc.sebes2 = spc.sebes1 * spc.quant2; //себест. за ед. с отходом  
                         Record artgrp1bRec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups1_id));
                         Record artgrp2bRec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups2_id));
                         double m1 = artgrp1bRec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
                         double m2 = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                         double m3 = systreeRec.getDbl(eSystree.coef); //коэф. рентабельности
-                        spc.price1 = spc.costpric2 * m1 * m3;
+                        spc.price1 = spc.sebes2 * m1 * m3;
                         spc.price1 = spc.price1 + (spc.price1 / 100) * percentMarkup; //стоимость без скидки                         
                         spc.price2 = spc.price1 - (spc.price1 / 100) * m2; //стоимость со скидкой 
                     }
@@ -180,14 +180,14 @@ public class SpcTariffic extends Cal5e {
                         spc.anglCut1 = prjkitRec.getDbl(ePrjkit.angl2);
                         spc.quant1 = formatAmount(spc); //количество без отхода
                         spc.quant2 = (norm_otx == true) ? spc.quant1 + (spc.quant1 * spc.waste / 100) : spc.quant1; //количество с отходом
-                        spc.costpric1 += artdetPrice(spc); //себест. за ед. без отхода по табл. ARTDET с коэф. и надб.
-                        spc.costpric2 = spc.costpric1 + (spc.costpric1 * (spc.quant2 - spc.quant1)); //себест. за ед. с отходом 
+                        spc.sebes1 += artdetPrice(spc); //себест. за ед. без отхода по табл. ARTDET с коэф. и надб.
+                        spc.sebes2 = spc.sebes1 + (spc.sebes1 * (spc.quant2 - spc.quant1)); //себест. за ед. с отходом 
                         Record artgrp1Rec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups1_id));
                         Record artgrp2Rec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups2_id));
                         double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //(koef)наценка группы мат.ценностей
                         double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //(%)скидки группы мат.ценностей
                         double k3 = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
-                        double price = spc.count * spc.quant2 * spc.costpric2 * k1 * k3;
+                        double price = spc.count * spc.quant2 * spc.sebes2 * k1 * k3;
                         spc.price1 = price; //стоимость без скидки                     
                         spc.price2 = price - price / 100 * k2; //стоимость со скидкой 
                         kitList.add(spc);
@@ -317,7 +317,7 @@ public class SpcTariffic extends Cal5e {
 
                         if (rulecalcRec.getInt(eRulecalc.common) == 0) {
                             if (UCom.containsNumbJust(rulecalcRec.getStr(eRulecalc.quant), spcRec.quant2) == true) {
-                                spcRec.costpric1 = spcRec.costpric1 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.incr);  //увеличение себестоимости в coegg раз и на incr величину надбавки
+                                spcRec.sebes1 = spcRec.sebes1 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.incr);  //увеличение себестоимости в coegg раз и на incr величину надбавки
                             }
 
                         } else if (rulecalcRec.getInt(eRulecalc.common) == 1) { //по использованию c расчётом общего количества по артикулу, подтипу, типу
@@ -352,7 +352,7 @@ public class SpcTariffic extends Cal5e {
                                 }
                             }
                             if (UCom.containsNumbJust(rulecalcRec.getStr(eRulecalc.quant), quantity3) == true) {
-                                spcRec.costpric1 = spcRec.costpric1 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.incr); //увеличение себестоимости в coeff раз и на incr величину надбавки                      
+                                spcRec.sebes1 = spcRec.sebes1 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.incr); //увеличение себестоимости в coeff раз и на incr величину надбавки                      
                             }
                         }
                     }
