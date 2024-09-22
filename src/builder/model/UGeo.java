@@ -4,6 +4,7 @@ import builder.making.SpcRecord;
 import static builder.model.Com5t.gf;
 import common.ArrayCom;
 import common.LineSegm;
+import common.PolygonTools;
 import dataset.Record;
 import domain.eArtikl;
 import java.util.ArrayDeque;
@@ -31,7 +32,6 @@ import java.util.Map;
 import org.locationtech.jts.geom.GeometryCollection;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LinearRing;
-import startup.Test;
 
 /**
  * Утилиты JTS
@@ -127,7 +127,7 @@ public class UGeo {
     }
 
     //Пилим многоугольник
-    public static Geometry[] geoSplit(Geometry geom, ElemCross impost) {
+    public static Geometry[] splitPolygon(Geometry geom, ElemCross impost) {
         try {
             Geometry poly = geom.getGeometryN(0);
             HashSet<Coordinate> hsCheck = new HashSet<Coordinate>();
@@ -199,6 +199,27 @@ public class UGeo {
             System.err.println("Ошибка:UGeo.geoSplit()" + e);
             return null;
         }
+    }
+
+    //Пилим многоугольник см. class PolygonTools
+    public static Geometry[] splitPolygon(Geometry geom, LineSegment imp) {
+        Geometry poly = geom.getGeometryN(0);
+        List<Coordinate> crosP = new ArrayList<Coordinate>();
+        Coordinate[] coo = poly.copy().getCoordinates();
+        imp.normalize();
+
+        for (int i = 1; i < coo.length; i++) {
+            //Точка пересечения сегмента и линии
+            Coordinate segmP0 = coo[i - 1], segmP1 = coo[i];
+            Coordinate crosC = Intersection.lineSegment(imp.p0, imp.p1, segmP0, segmP1);
+            if (crosC != null) {
+                crosP.add(crosC);  //вставим точки
+            }
+        }
+        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(imp.p0.x, imp.p0.y), new Coordinate(imp.p1.x, imp.p1.y)});
+        Geometry gemm = PolygonTools.splitPolygon(geom, line);
+        Geometry p0 = Com5t.gf.createLineString(crosP.toArray(new Coordinate[0]));
+        return new Geometry[]{p0, gemm.getGeometryN(0), gemm.getGeometryN(1)};
     }
 
     //Список входн. параметров не замыкается начальной точкой как в jts!
@@ -291,7 +312,7 @@ public class UGeo {
     }
 
     public static int getIndex(Coordinate[] coo, int index) {
-        
+
         if (index > coo.length - 1) {
             return index - coo.length;
         }
@@ -523,7 +544,7 @@ public class UGeo {
             Geometry buffer = partsGeom.union().union(arcGeo);
 
             Geometry ggg = (Polygon) buffer.getGeometryN(0);
-                    
+
             LinearRing ring = ((Polygon) buffer).getInteriorRingN(0);
             Polygon poly = (Polygon) gf.createPolygon(ring).norm();
             Coordinate cor[] = poly.getCoordinates();
@@ -598,7 +619,7 @@ public class UGeo {
             System.err.println("Ошибка:UGeo.bufferUnion() " + e);
             return gf.createPolygon();
         }
-    }  
+    }
 
     //Угол реза
     public static double angCut(Coordinate c1, Coordinate c2, Coordinate c3, double delta) {

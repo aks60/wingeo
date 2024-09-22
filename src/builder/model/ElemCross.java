@@ -65,7 +65,7 @@ public class ElemCross extends ElemSimple {
     public void setLocation() {
         try {
             //Пилим полигон импостом
-            Geometry[] geoSplit = UGeo.geoSplit(owner.area.getGeometryN(0), this);
+            Geometry[] geoSplit = UGeo.splitPolygon(owner.area.getGeometryN(0), this);
             owner.childs.get(0).area = (Polygon) geoSplit[1];
             owner.childs.get(2).area = (Polygon) geoSplit[2];
 
