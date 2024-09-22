@@ -2401,6 +2401,7 @@ public class Artikles extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
+        //UGui.stopCellEditingAndExecSql(getRootPane());
         UGui.findComponents(getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
         Query.listOpenTable.forEach(q -> q.execsql());  
     }//GEN-LAST:event_windowClosed

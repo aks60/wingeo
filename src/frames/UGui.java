@@ -180,6 +180,11 @@ public class UGui {
         ).collect(Collectors.toList());
     }
 
+    public static void stopCellEditingAndExecSql(JRootPane rootPane) {
+        UGui.findComponents(rootPane, JTable.class).forEach(c -> UGui.stopCellEditing(c));
+        Query.listOpenTable.forEach(q -> q.execsql());
+    }
+    
     public static void selectionPathSys(double id, JTree tree) {
         if (id != -1) {
             DefaultMutableTreeNode curNode = (DefaultMutableTreeNode) tree.getModel().getRoot();
@@ -979,6 +984,4 @@ public class UGui {
             List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
         }
     }
-    
-    
 }
