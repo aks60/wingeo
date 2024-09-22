@@ -180,7 +180,7 @@ public class SpcTariffic extends Cal5e {
                         spc.anglCut1 = prjkitRec.getDbl(ePrjkit.angl2);
                         spc.quant1 = formatAmount(spc); //количество без отхода
                         spc.quant2 = (norm_otx == true) ? spc.quant1 + (spc.quant1 * spc.waste / 100) : spc.quant1; //количество с отходом
-                        spc.sebes1 += artdetPrice(spc); //себест. за ед. без отхода по табл. ARTDET с коэф. и надб.
+                        spc.sebes1 = artdetPrice(spc); //себест. за ед. без отхода по табл. ARTDET с коэф. и надб.
                         spc.sebes2 = spc.sebes1 + (spc.sebes1 * (spc.quant2 - spc.quant1)); //себест. за ед. с отходом 
                         Record artgrp1Rec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups1_id));
                         Record artgrp2Rec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups2_id));

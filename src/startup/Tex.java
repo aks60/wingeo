@@ -1097,11 +1097,11 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     }//GEN-LAST:event_mnSetting
 
     private void spcSystem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spcSystem
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_spcSystem
 
     private void spcProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spcProductActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_spcProductActionPerformed
 
     private void mn2Specif(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn2Specif

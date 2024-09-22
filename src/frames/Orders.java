@@ -3156,11 +3156,10 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             }
         } else if (tab2.getBorder() != null) {
             if (UGui.isDeleteRecord(tab2, this, tab4) == 0) {
-                UGui.deleteRecord(tab2);
-                //canvas.init(null);
-                //canvas.repaint();                
+                UGui.deleteRecord(tab2);              
             }
         } else if (tab4.getBorder() != null) {
+            //TODO Если вставить комплект, а потом сразу удалить возникает ошибка
             if (UGui.isDeleteRecord(tab4, this) == 0) {
                 UGui.deleteRecord(tab4);
             }
