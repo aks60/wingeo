@@ -302,12 +302,14 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
     public void loadingTab4() {
         UGui.stopCellEditing(tab1, tab2, tab3, tab4);
-        UGui.updateBorderAndSql(tab4, List.of(tab1, tab2, tab3, tab4));       
+        UGui.updateBorderAndSql(tab4, List.of(tab1, tab2, tab3, tab4));
         Record projectRec = qProject.get(UGui.getIndexRec(tab1));
-        
+
         int id = projectRec.getInt(eProject.id);
         qPrjkit.sql(ePrjkit.data(), ePrjkit.project_id, id);
         qPrjkit.table(eArtikl.up).join(qPrjkit, eArtikl.data(), ePrjkit.artikl_id, eArtikl.id);
+        ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
+        UGui.setSelectedRow(tab4);
     }
 
     public void loadingTab5() {
@@ -781,14 +783,14 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         //Сохраним новые кальк.данные в проекте
                         if (price2 != projectRec.getDbl(eProject.price2)) {
                             projectRec.set(eProject.price2, price2); //стоимость конструкции без скидки менеджера
-                        }                      
+                        }
                         cost2 = cost2 - cost2 * projectRec.getDbl(eProject.disc2) / 100;
                         if (cost2 != projectRec.getDbl(eProject.cost2)) {
                             projectRec.set(eProject.cost2, cost2); //стоимость конструкции со скидкой менеджера
-                        }                       
+                        }
                         if (price3 != projectRec.getDbl(eProject.price3)) {
                             projectRec.set(eProject.price3, price3); //стоимость комплектации без скидки менеджера
-                        }                       
+                        }
                         cost3 = cost3 - cost3 * projectRec.getDbl(eProject.disc3) / 100;
                         if (cost3 != projectRec.getDbl(eProject.cost3)) {
                             projectRec.set(eProject.cost3, cost3); //стоимость комплектации со скидкой менеджера
@@ -805,7 +807,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         //Заполним вес, площадь
                         txt8.setText(UCom.format(projectRec.getDbl(eProject.square) / 1000000, 2)); //площадь
                         txt7.setText(UCom.format(projectRec.getDbl(eProject.weight), 1)); //вес 
-                        
+
                         //Заполним таблицу
                         tab5.setValueAt(projectRec.getDbl(eProject.price2), 0, 2); //стоимость конструкций без скидки
                         tab5.setValueAt(projectRec.getDbl(eProject.cost2), 0, 3); //стоимость конструкций со скидкой
@@ -3156,7 +3158,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             }
         } else if (tab2.getBorder() != null) {
             if (UGui.isDeleteRecord(tab2, this, tab4) == 0) {
-                UGui.deleteRecord(tab2);              
+                UGui.deleteRecord(tab2);
             }
         } else if (tab4.getBorder() != null) {
             //TODO Если вставить комплект, а потом сразу удалить возникает ошибка
@@ -3207,7 +3209,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     UGui.insertRecordCur(tab4, ePrjkit.up, (record) -> {
                         record.set(ePrjkit.prjprod_id, qPrjprod.get(index2, ePrjprod.id));
                         record.set(ePrjkit.project_id, qProject.get(index1, eProject.id));
-                        record.set(ePrjkit.numb, 0);                        
+                        record.set(ePrjkit.numb, 0);
                         int index3 = UGui.getIndexFind(tab4, ePrjkit.id, record.get(ePrjkit.id));
                         qPrjkit.table(eArtikl.up).add(index3, eArtikl.up.newRecord(Query.SEL));
                     });
@@ -3215,11 +3217,11 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     DicKits frame = new DicKits(Orders.this, (q) -> {
                         loadingTab4();
                         return true;
-                    }, qProject.getAs(index1, eProject.id), qPrjprod.getAs(index2, ePrjprod.id));                    
+                    }, qProject.getAs(index1, eProject.id), qPrjprod.getAs(index2, ePrjprod.id));
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Заказ не выбран.", "Предупреждение", JOptionPane.INFORMATION_MESSAGE);
-            }                        
+            }
         }
     }//GEN-LAST:event_btnInsert
 
@@ -3376,7 +3378,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             eSystree col = (evt.getSource() == btn18) ? eSystree.col1 : (evt.getSource() == btn19) ? eSystree.col2 : eSystree.col3;
             Field field = (evt.getSource() == btn18) ? eArtdet.mark_c1 : (evt.getSource() == btn19) ? eArtdet.mark_c2 : eArtdet.mark_c3;
             Query artdetList = new Query(eArtdet.values()).sql(eArtdet.data(), eArtdet.artikl_id, winNode.com5t().artiklRec.getInt(eArtikl.id));
-            
+
             HashSet<Record> colorSrc = DicColor.filterTxt(eColor.data(), systreeRec.getStr(col));
             HashSet<Record> colorSet = DicColor.filterDet(colorSrc, artdetList, field);
 
