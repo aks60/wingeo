@@ -44,7 +44,7 @@ import javax.swing.text.PlainDocument;
 public class DicKits extends javax.swing.JDialog {
 
     private ListenerObject<Query> listener = null;
-    private Query qPrjkit = new Query(ePrjkit.values());
+    //private Query qPrjkit = new Query(ePrjkit.values());
     private Query qGroups = new Query(eGroups.values());
     private Query qCateg = new Query(eGroups.values());
     private Query qKits = new Query(eKits.values());
@@ -269,7 +269,7 @@ public class DicKits extends javax.swing.JDialog {
                         }
                     }
                 }
-                qPrjkit.insert(prjkitRec);
+                //qPrjkit.insert(prjkitRec);
                 ePrjkit.data().add(prjkitRec);
             }
         }
