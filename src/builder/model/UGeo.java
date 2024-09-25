@@ -202,21 +202,21 @@ public class UGeo {
     }
 
     //Пилим многоугольник см. class PolygonTools
-    public static Geometry[] splitPolygon(Geometry geom, LineSegment imp) {
+    public static Geometry[] splitPolygon(Geometry geom, LineSegment ls) {
         Geometry poly = geom.getGeometryN(0);
         List<Coordinate> crosP = new ArrayList<Coordinate>();
         Coordinate[] coo = poly.copy().getCoordinates();
-        imp.normalize();
+        ls.normalize();
 
         for (int i = 1; i < coo.length; i++) {
             //Точка пересечения сегмента и линии
             Coordinate segmP0 = coo[i - 1], segmP1 = coo[i];
-            Coordinate crosC = Intersection.lineSegment(imp.p0, imp.p1, segmP0, segmP1);
+            Coordinate crosC = Intersection.lineSegment(ls.p0, ls.p1, segmP0, segmP1);
             if (crosC != null) {
                 crosP.add(crosC);  //вставим точки
             }
         }
-        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(imp.p0.x, imp.p0.y), new Coordinate(imp.p1.x, imp.p1.y)});
+        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(ls.p0.x, ls.p0.y), new Coordinate(ls.p1.x, ls.p1.y)});
         Geometry gemm = PolygonTools.splitPolygon(geom, line);
         Geometry p0 = Com5t.gf.createLineString(crosP.toArray(new Coordinate[0]));
         return new Geometry[]{p0, gemm.getGeometryN(0), gemm.getGeometryN(1)};
