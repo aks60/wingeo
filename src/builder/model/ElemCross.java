@@ -24,6 +24,7 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.GeometryFixer;
+import startup.Test;
 
 public class ElemCross extends ElemSimple {
 
@@ -66,6 +67,7 @@ public class ElemCross extends ElemSimple {
         try {
             //Пилим полигон импостом
             Geometry[] geoSplit = UGeo.splitPolygon(owner.area.getGeometryN(0), this);
+            //Geometry[] geoSplit = UGeo.splitPolygon(owner.area.getGeometryN(0), new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()));
             owner.childs.get(0).area = (Polygon) geoSplit[1];
             owner.childs.get(2).area = (Polygon) geoSplit[2];
 
