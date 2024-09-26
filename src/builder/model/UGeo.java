@@ -339,8 +339,6 @@ public class UGeo {
             }
         }
         LineString line = Com5t.gf.createLineString(lineCross.toArray(new Coordinate[0]));
-        //line.normalize();
-
         Geometry gm = PolygonTools.splitPolygon(geom, line);
         gm.getGeometryN(0).normalize();
         gm.getGeometryN(1).normalize();
@@ -350,7 +348,6 @@ public class UGeo {
                 c.z = impost.id;
             }
         }
-
         for (Coordinate c : gm.getGeometryN(1).getCoordinates()) {
             if (c.equals2D(line.getCoordinateN(1))) {
                 c.z = impost.id;
@@ -361,8 +358,7 @@ public class UGeo {
         System.out.println(formatVal(gm.getGeometryN(0)));
         System.out.println(formatVal(gm.getGeometryN(1)));
 
-        Geometry geametryP = Com5t.gf.createLineString(lineCross.toArray(new Coordinate[0]));
-        return new Geometry[]{geametryP, gm.getGeometryN(0), gm.getGeometryN(1)};
+        return new Geometry[]{line, gm.getGeometryN(0), gm.getGeometryN(1)};
     }
 
     //Список входн. параметров не замыкается начальной точкой как в jts!
