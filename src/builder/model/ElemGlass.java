@@ -32,6 +32,7 @@ import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
+import startup.Test;
 
 public class ElemGlass extends ElemSimple {
 
@@ -98,31 +99,38 @@ public class ElemGlass extends ElemSimple {
     //Внутренний полигон створки/рамы для прорисовки
     @Override
     public void setLocation() {
-        ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
-        Map<Double, Double> hm = new HashMap();
-        for (Com5t el : list) {
-            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-            hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - rec.getDbl(eArtikl.size_falz));
-        }
-
-        this.areaFalz = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
-
-        Coordinate[] coo = this.areaFalz.getCoordinates();
-        if (this.areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
-            coo[0].z = coo[1].z;
-            coo[1].z = coo[coo.length - 2].z;
-            coo[2].z = coo[coo.length - 2].z;
-            coo[coo.length - 1].z = coo[1].z;
-        }
-        //Для тестирования
-        if (owner.area.getNumPoints() > Com5t.MAXSIDE) {
-            this.deltaDY = this.areaFalz.getCoordinate().y - owner.area.getCoordinate().y;
-
-        } else if (root.type == Type.TRAPEZE && owner.area.isRectangle() == false) {
-            Coordinate[] co2 = owner.area.getCoordinates();
-            if (winc.listElem.stream().filter(e -> e.type == Type.IMPOST && e.layout() == Layout.HORIZ).findFirst().orElse(null) != null) {
-                this.deltaDY = coo[coo.length - 2].y - co2[co2.length - 2].y;
+        try {
+            ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
+            Map<Double, Double> hm = new HashMap();
+            for (Com5t el : list) {
+                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+                hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - rec.getDbl(eArtikl.size_falz));
             }
+            //new Test().mpol = owner.area.getGeometryN(0);
+            //System.out.println(List.of(owner.area.getGeometryN(0).getCoordinates()));
+            
+            this.areaFalz = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
+
+            Coordinate[] coo = this.areaFalz.getCoordinates();
+            if (this.areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
+                coo[0].z = coo[1].z;
+                coo[1].z = coo[coo.length - 2].z;
+                coo[2].z = coo[coo.length - 2].z;
+                coo[coo.length - 1].z = coo[1].z;
+            }
+            //Для тестирования
+            if (owner.area.getNumPoints() > Com5t.MAXSIDE) {
+                this.deltaDY = this.areaFalz.getCoordinate().y - owner.area.getCoordinate().y;
+
+            } else if (root.type == Type.TRAPEZE && owner.area.isRectangle() == false) {
+                Coordinate[] co2 = owner.area.getCoordinates();
+                if (winc.listElem.stream().filter(e -> e.type == Type.IMPOST && e.layout() == Layout.HORIZ).findFirst().orElse(null) != null) {
+                    this.deltaDY = coo[coo.length - 2].y - co2[co2.length - 2].y;
+                }
+            }
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:ElemGlass.setLocation" + toString() + e);
         }
     }
 
@@ -158,9 +166,9 @@ public class ElemGlass extends ElemSimple {
     @Override
     public void addSpecific(SpcRecord spcAdd) {
         try {
-            if(spcAdd.artiklRec().getStr(eArtikl.code).substring(0, 1).equals("@")) {
+            if (spcAdd.artiklRec().getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;
-            }            
+            }
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм         
@@ -308,12 +316,12 @@ public class ElemGlass extends ElemSimple {
             winc.gc2d.fill(shape);
         }
     }
-    
+
     public Double width() {
         return this.areaFalz.getEnvelopeInternal().getWidth();
     }
 
     public Double height() {
         return this.areaFalz.getEnvelopeInternal().getHeight();
-    }    
+    }
 }

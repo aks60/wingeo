@@ -101,14 +101,15 @@ public class Test {
         try {
             //clearDataDB();
             //frames.PSConvert.exec();
-            frame(args);
+            //frame(args);
             //wincalc();
             //param();
             //query();
             //json();
             //uid();
             //script();
-            //geom();
+            //clearDataDB();
+            geom();
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
@@ -131,7 +132,7 @@ public class Test {
 
             @Override
             public java.awt.Dimension getPreferredSize() {
-                return new java.awt.Dimension(800, 600);
+                return new java.awt.Dimension(800, 800);
             }
         };
         frame.add(p);
@@ -149,7 +150,7 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
 
-        draw7();
+        //draw7();
     }
 
     public static void frame(String[] args) {
@@ -166,7 +167,7 @@ public class Test {
         Graphics2D gc2d = (Graphics2D) g;
         //gc2d.translate(-80, -1840);
         //gc2d.scale(4, 4);
-        gc2d.translate(10, -10);
+        gc2d.translate(10, 10);
         gc2d.scale(.4, .4);
 
         if (mlin != null) {
@@ -430,7 +431,7 @@ public class Test {
 
         Point point1 = gf.createPoint(new Coordinate(500, 500));
         Point point2 = gf.createPoint(new Coordinate(0, 500));
-        LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(200, 0), new Coordinate(200, 500)});
+        LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(801, 100), new Coordinate(800, 400)});
         LineString line2 = gf.createLineString(coord2);
         LineSegment segm1 = new LineSegment(100, 600, 100, 0);
         LineSegment segm2 = new LineSegment(0, 10, 12, 10);
@@ -449,21 +450,25 @@ public class Test {
             new Coordinate(0, 300, 9), new Coordinate(0, 380, 9),
             new Coordinate(150, 380, 9), new Coordinate(150, 300, 9), new Coordinate(0, 300, 9)});
 
+        System.out.println(line1);
+        line1.normalize();
+        System.out.println(line1);
+        
 //        Geometry geo1 = UGeo.newPolygon(0, 300, 0, 1370, 68, 1370, 68, 300, 0, 300);
 //        Geometry geo2 = UGeo.newPolygon(0, 1370, 1300, 1370, 1300, 1302, 0, 1302, 0, 1370);
         //LineSegment seg = segm1.offset(-68);
         // LineSegment se2 = segm1.offset(-68);
-        Geometry p3 = p1.union(p2);
-        Coordinate coo[] = p3.getCoordinates();
-        new Test().mpol = p3;
-
-        GeometryFactory geometryFactory = new GeometryFactory();
-        WKTReader reader = new WKTReader(geometryFactory);
-        try {
-            LineString line = (LineString) reader.read("LINESTRING(0 2, 2 0, 8 6)");
-        } catch (Exception e) {
-            System.err.println("Ошибка:Test.geom " + e);
-        };
+//        Geometry p3 = p1.union(p2);
+//        Coordinate coo[] = p3.getCoordinates();
+//        new Test().mpol = p3;
+//
+//        GeometryFactory geometryFactory = new GeometryFactory();
+//        WKTReader reader = new WKTReader(geometryFactory);
+//        try {
+//            LineString line = (LineString) reader.read("LINESTRING(0 2, 2 0, 8 6)");
+//        } catch (Exception e) {
+//            System.err.println("Ошибка:Test.geom " + e);
+//        };
     }
 
     public static void clearDataDB() {

@@ -22,17 +22,22 @@ public class PolygonTools {
   }
 
   public static Geometry splitPolygon(Geometry poly, Geometry line) {
+      //line.getCoordinates()[0].z = 3;
+      //line.getCoordinates()[1].z = 10;
       Geometry nodedLinework = poly.getBoundary().union(line);
-      Geometry polys = polygonize(nodedLinework);
-
-      // Only keep polygons which are inside the input
-      List output = new ArrayList();
+      Geometry polys = polygonize(nodedLinework);      
+      //Оставить только полигоны, находящиеся внутри входных данных
+      List<Polygon> output = new ArrayList();
       for (int i = 0; i < polys.getNumGeometries(); i++) {
           Polygon candpoly = (Polygon) polys.getGeometryN(i);
           if (poly.contains(candpoly.getInteriorPoint())) {
               output.add(candpoly);
           }
       }
+
+      //System.out.println(List.of(output.get(0).getCoordinates()));
+      //System.out.println(List.of(line.getCoordinates()));
+      
       return poly.getFactory().createGeometryCollection(GeometryFactory.toGeometryArray(output));
   }
 } 
