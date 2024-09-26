@@ -5,8 +5,10 @@ import static builder.model.Com5t.gf;
 import common.ArrayCom;
 import common.LineSegm;
 import common.PolygonTools;
+import common.UCom;
 import dataset.Record;
 import domain.eArtikl;
+import java.text.DecimalFormat;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +27,6 @@ import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
-import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,17 +34,15 @@ import java.util.Set;
 import org.locationtech.jts.geom.GeometryCollection;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.PrecisionModel;
 
 /**
  * Утилиты JTS
  */
 public class UGeo {
 
+    private static DecimalFormat df1 = new DecimalFormat("#0.#");
     public static PrecisionModel pm = null;
-
-    public static void precisionModel(PrecisionModel pm) {
-        pm = new PrecisionModel(pm);
-    }
 
     public static boolean isInRing(double x, double y, Geometry g) {
         try {
@@ -244,7 +243,7 @@ public class UGeo {
             Coordinate crosP = Intersection.lineSegment(impP0, impP1, segmP0, segmP1); //точка перес. линии и сегм.
             if (crosP != null) {
                 lineCross.add(new Coordinate(crosP.x, crosP.y, segmP0.z)); //точка и сегмент пересеч.
-            } 
+            }
         }
 
         LineString line = Com5t.gf.createLineString(lineCross.toArray(new Coordinate[0]));
@@ -252,26 +251,25 @@ public class UGeo {
 
         Geometry gm = PolygonTools.splitPolygon(geom, line);
         gm.normalize();
-        
+
         boolean b = true;
         for (Coordinate c : gm.getGeometryN(0).getCoordinates()) {
-            if(ringP0.contains(c) == false && b == true) {
-               c.z = impost.id; 
-               b = false;
-            } else if(ringP0.contains(c) == false && b == false) {
-               c.z = lineCross.get(1).z;  
+            if (ringP0.contains(c) == false && b == true) {
+                c.z = impost.id;
+                b = false;
+            } else if (ringP0.contains(c) == false && b == false) {
+                c.z = lineCross.get(1).z;
             }
         }
         b = true;
         for (Coordinate c : gm.getGeometryN(1).getCoordinates()) {
-            if(ringP0.contains(c) == false && b == true) {
-               c.z = impost.id; 
-               b = false;
-            } else if(ringP0.contains(c) == false && b == false) {
-               c.z = lineCross.get(0).z;  
+            if (ringP0.contains(c) == false && b == true) {
+                c.z = impost.id;
+                b = false;
+            } else if (ringP0.contains(c) == false && b == false) {
+                c.z = lineCross.get(0).z;
             }
         }
-
 
         System.out.println(List.of(gm.getGeometryN(0).getCoordinates()));
         System.out.println(List.of(gm.getGeometryN(1).getCoordinates()));
@@ -279,6 +277,7 @@ public class UGeo {
         Geometry geometryP0 = Com5t.gf.createLineString(lineCross.toArray(new Coordinate[0]));
         return new Geometry[]{geometryP0, gm.getGeometryN(0), gm.getGeometryN(1)};
     }
+
     public static Geometry[] splitPolygon4(Geometry geom, ElemCross impost) {
         List<Coordinate> lineCross = new ArrayList<Coordinate>();
         Coordinate impP0 = new Coordinate(impost.x1(), impost.y1(), impost.id);
@@ -298,9 +297,9 @@ public class UGeo {
         line.normalize();
 
         Geometry gm = PolygonTools.splitPolygon(geom, line);
-        Geometry geometryP1 = gm.getGeometryN(0); 
+        Geometry geometryP1 = gm.getGeometryN(0);
         geometryP1.normalize();
-        
+
         lineCross.clear();
         for (int i = 1; i < coo.length; i++) {
             Coordinate segmP0 = coo[i - 1], segmP1 = coo[i];
@@ -315,7 +314,7 @@ public class UGeo {
         line.normalize();
 
         gm = PolygonTools.splitPolygon(geom, line2);
-        Geometry geometryP2 = gm.getGeometryN(1); 
+        Geometry geometryP2 = gm.getGeometryN(1);
         geometryP2.normalize();
 
         System.out.println(List.of(gm.getGeometryN(0).getCoordinates()));
@@ -323,6 +322,47 @@ public class UGeo {
 
         Geometry geometryP0 = Com5t.gf.createLineString(lineCross.toArray(new Coordinate[0]));
         return new Geometry[]{geometryP0, geometryP1, geometryP2};
+    }
+
+    public static Geometry[] splitPolygon5(Geometry geom, ElemCross impost) {
+        List<Coordinate> lineCross = new ArrayList<Coordinate>();
+        Coordinate impP0 = new Coordinate(impost.x1(), impost.y1());
+        Coordinate impP1 = new Coordinate(impost.x2(), impost.y2());
+        Coordinate[] coo = geom.copy().getCoordinates();
+
+        for (int i = 1; i < coo.length; i++) {
+            //Точка пересечения сегмента и линии
+            Coordinate segmP0 = coo[i - 1], segmP1 = coo[i];
+            Coordinate crosP = Intersection.lineSegment(impP0, impP1, segmP0, segmP1);
+            if (crosP != null) {
+                lineCross.add(new Coordinate(crosP.x, crosP.y, segmP0.z));
+            }
+        }
+        LineString line = Com5t.gf.createLineString(lineCross.toArray(new Coordinate[0]));
+        //line.normalize();
+
+        Geometry gm = PolygonTools.splitPolygon(geom, line);
+        gm.getGeometryN(0).normalize();
+        gm.getGeometryN(1).normalize();
+
+        for (Coordinate c : gm.getGeometryN(0).getCoordinates()) {
+            if (c.equals2D(line.getCoordinateN(0))) {
+                c.z = impost.id;
+            }
+        }
+
+        for (Coordinate c : gm.getGeometryN(1).getCoordinates()) {
+            if (c.equals2D(line.getCoordinateN(1))) {
+                c.z = impost.id;
+            }
+        }
+
+        //System.out.println(formatVal(line));
+        System.out.println(formatVal(gm.getGeometryN(0)));
+        System.out.println(formatVal(gm.getGeometryN(1)));
+
+        Geometry geametryP = Com5t.gf.createLineString(lineCross.toArray(new Coordinate[0]));
+        return new Geometry[]{geametryP, gm.getGeometryN(0), gm.getGeometryN(1)};
     }
 
     //Список входн. параметров не замыкается начальной точкой как в jts!
@@ -731,6 +771,31 @@ public class UGeo {
         Coordinate c4 = seg1.offset(delta).lineIntersection(seg2.offset(delta));
         LineSegment seg3 = new LineSegment(c2, c4);
         return Math.toDegrees(Math.asin(delta / seg3.getLength()));
+    }
+
+    public static void PRINT(Geometry g) {
+        Coordinate coo[] = g.getCoordinates();
+        System.out.println(List.of(coo));
+    }
+
+    public static void PRINT(String s, Geometry g) {
+        Coordinate coo[] = g.getCoordinates();
+        System.out.println(s + " " + List.of(coo));
+    }
+
+    public static void PRINT(Coordinate... coo) {
+        System.out.println(List.of(coo));
+    }
+
+    public static void PRINT(String s, Coordinate... coo) {
+        System.out.println(s + " " + List.of(coo));
+    }
+
+    public static List<Coordinate> formatVal(Geometry g) {
+        List<Coordinate> list = new ArrayList();
+        Coordinate coo[] = g.getCoordinates();
+        List.of(coo).forEach(c -> list.add(new Coordinate((int) c.x, (int) c.y, c.z)));
+        return list;
     }
 // </editor-fold>    
 }

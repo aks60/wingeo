@@ -202,23 +202,5 @@ public class Com5t {
         return " art=" + art + ", type=" + type + ", layout=" + layout() + ", owner=" + ownerID + ", id=" + id
                 + ", x1=" + x1() + ", y1=" + y1() + ", x2=" + x2() + ", y2=" + y2();
     }
-
-    public static void PRINT(Geometry g) {
-        Coordinate coo[] = g.getCoordinates();
-        System.out.println(List.of(coo));
-    }
-
-    public static void PRINT(String s, Geometry g) {
-        Coordinate coo[] = g.getCoordinates();
-        System.out.println(s + " " + List.of(coo));
-    }
-
-    public static void PRINT(Coordinate... coo) {
-        System.out.println(List.of(coo));
-    }
-
-    public static void PRINT(String s, Coordinate... coo) {
-        System.out.println(s + " " + List.of(coo));
-    }
     // </editor-fold>
 }

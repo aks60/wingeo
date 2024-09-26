@@ -118,16 +118,16 @@ public class ElemGlass extends ElemSimple {
                 coo[2].z = coo[coo.length - 2].z;
                 coo[coo.length - 1].z = coo[1].z;
             }
-            //Для тестирования
-            if (owner.area.getNumPoints() > Com5t.MAXSIDE) {
-                this.deltaDY = this.areaFalz.getCoordinate().y - owner.area.getCoordinate().y;
-
-            } else if (root.type == Type.TRAPEZE && owner.area.isRectangle() == false) {
-                Coordinate[] co2 = owner.area.getCoordinates();
-                if (winc.listElem.stream().filter(e -> e.type == Type.IMPOST && e.layout() == Layout.HORIZ).findFirst().orElse(null) != null) {
-                    this.deltaDY = coo[coo.length - 2].y - co2[co2.length - 2].y;
-                }
-            }
+//            //Для тестирования
+//            if (owner.area.getNumPoints() > Com5t.MAXSIDE) {
+//                this.deltaDY = this.areaFalz.getCoordinate().y - owner.area.getCoordinate().y;
+//
+//            } else if (root.type == Type.TRAPEZE && owner.area.isRectangle() == false) {
+//                Coordinate[] co2 = owner.area.getCoordinates();
+//                if (winc.listElem.stream().filter(e -> e.type == Type.IMPOST && e.layout() == Layout.HORIZ).findFirst().orElse(null) != null) {
+//                    this.deltaDY = coo[coo.length - 2].y - co2[co2.length - 2].y;
+//                }
+//            }
 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemGlass.setLocation" + toString() + e);

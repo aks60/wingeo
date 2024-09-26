@@ -108,8 +108,8 @@ public class Test {
             //json();
             //uid();
             //script();
-            //clearDataDB();
             geom();
+            //clearDataDB();
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
@@ -416,59 +416,24 @@ public class Test {
 
     public static void geom() {
         //Toolkit.getDefaultToolkit().beep();//ЗВУК!!!!
-        GeometryFactory gf = new GeometryFactory(); //JTSFactoryFinder.getGeometryFactory(); 
+        GeometryFactory gf = new GeometryFactory();
 
         Coordinate[] coord1 = new Coordinate[]{
-            new Coordinate(0, 0), new Coordinate(0, 100),
-            new Coordinate(100, 100), new Coordinate(100, 0),
-            new Coordinate(0, 0)};
-        Coordinate[] coord2 = {
-            new Coordinate(100, 0, 1),
-            new Coordinate(100, 200, 2),
-            new Coordinate(300, 200, 3),
-            new Coordinate(300, 0, 4),
-            new Coordinate(100, 0, 1)};
-
-        Point point1 = gf.createPoint(new Coordinate(500, 500));
-        Point point2 = gf.createPoint(new Coordinate(0, 500));
-        LineString line1 = gf.createLineString(new Coordinate[]{new Coordinate(801, 100), new Coordinate(800, 400)});
-        LineString line2 = gf.createLineString(coord2);
-        LineSegment segm1 = new LineSegment(100, 600, 100, 0);
-        LineSegment segm2 = new LineSegment(0, 10, 12, 10);
-        Polygon poly1 = gf.createPolygon(coord1);
-        Polygon poly2 = gf.createPolygon(coord2);
-
-        Geometry p = poly1.union(poly2);
-
-        Geometry geo1 = UGeo.newPolygon(0, 300, 0, 380, 50, 380, 50, 300, 0, 300);
-        Geometry geo2 = UGeo.newPolygon(0, 300, 0, 380, 150, 380, 150, 300, 0, 300);
-
-        Polygon p1 = gf.createPolygon(new Coordinate[]{
-            new Coordinate(0, 300, 8), new Coordinate(0, 380, 8),
-            new Coordinate(50, 380, 8), new Coordinate(50, 300, 8), new Coordinate(0, 300, 8)});
-        Polygon p2 = gf.createPolygon(new Coordinate[]{
-            new Coordinate(0, 300, 9), new Coordinate(0, 380, 9),
-            new Coordinate(150, 380, 9), new Coordinate(150, 300, 9), new Coordinate(0, 300, 9)});
-
-        System.out.println(line1);
-        line1.normalize();
-        System.out.println(line1);
+            new Coordinate(200, 200, 1), new Coordinate(200, 800, 2),
+            new Coordinate(800, 800, 3), new Coordinate(800, 200, 4),
+            new Coordinate(200, 200, 1)};
         
-//        Geometry geo1 = UGeo.newPolygon(0, 300, 0, 1370, 68, 1370, 68, 300, 0, 300);
-//        Geometry geo2 = UGeo.newPolygon(0, 1370, 1300, 1370, 1300, 1302, 0, 1302, 0, 1370);
-        //LineSegment seg = segm1.offset(-68);
-        // LineSegment se2 = segm1.offset(-68);
-//        Geometry p3 = p1.union(p2);
-//        Coordinate coo[] = p3.getCoordinates();
-//        new Test().mpol = p3;
-//
-//        GeometryFactory geometryFactory = new GeometryFactory();
-//        WKTReader reader = new WKTReader(geometryFactory);
-//        try {
-//            LineString line = (LineString) reader.read("LINESTRING(0 2, 2 0, 8 6)");
-//        } catch (Exception e) {
-//            System.err.println("Ошибка:Test.geom " + e);
-//        };
+        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(600, 200, -1), new Coordinate(800, 400, -1)});
+        Polygon poly = gf.createPolygon(coord1);
+        Geometry geom = PolygonTools.splitPolygon(poly, line);
+        
+        geom.getGeometryN(0).normalize();
+        geom.getGeometryN(1).normalize();
+        
+        System.out.println(List.of(geom.getGeometryN(0).getCoordinates()));
+        System.out.println(List.of(geom.getGeometryN(1).getCoordinates()));
+
+        //new Test().mpol = geom.getGeometryN(1);
     }
 
     public static void clearDataDB() {
