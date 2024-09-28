@@ -331,7 +331,7 @@ public class UGeo {
         Coordinate[] coo = geom.copy().getCoordinates();
 
         for (int i = 1; i < coo.length; i++) {
-            //Точка пересечения сегмента и линии
+            //Точка пересечения линии и сегмента
             Coordinate segmP0 = coo[i - 1], segmP1 = coo[i];
             Coordinate crosP = Intersection.lineSegment(impP0, impP1, segmP0, segmP1);
             if (crosP != null) {

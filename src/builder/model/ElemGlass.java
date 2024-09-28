@@ -12,7 +12,6 @@ import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
 import domain.eSystree;
-import enums.Layout;
 import enums.PKjson;
 import enums.Type;
 import enums.TypeArt;
@@ -32,7 +31,6 @@ import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
-import startup.Test;
 
 public class ElemGlass extends ElemSimple {
 
@@ -106,10 +104,16 @@ public class ElemGlass extends ElemSimple {
                 Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
                 hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - rec.getDbl(eArtikl.size_falz));
             }
-            //new Test().mpol = owner.area.getGeometryN(0);
-            //System.out.println(List.of(owner.area.getGeometryN(0).getCoordinates()));
+
+            System.out.println(UGeo.formatVal(owner.area.getGeometryN(0)));
             
-            this.areaFalz = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
+            try {
+                this.areaFalz = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
+            } catch (Exception e) {
+                System.err.println("Ошибка-3:ElemGlass.setLocation. " + e);
+                this.areaFalz = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);
+            }
+            System.out.println(UGeo.formatVal(this.areaFalz));
 
             Coordinate[] coo = this.areaFalz.getCoordinates();
             if (this.areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
@@ -118,6 +122,7 @@ public class ElemGlass extends ElemSimple {
                 coo[2].z = coo[coo.length - 2].z;
                 coo[coo.length - 1].z = coo[1].z;
             }
+
 //            //Для тестирования
 //            if (owner.area.getNumPoints() > Com5t.MAXSIDE) {
 //                this.deltaDY = this.areaFalz.getCoordinate().y - owner.area.getCoordinate().y;
@@ -128,9 +133,9 @@ public class ElemGlass extends ElemSimple {
 //                    this.deltaDY = coo[coo.length - 2].y - co2[co2.length - 2].y;
 //                }
 //            }
-
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemGlass.setLocation" + toString() + e);
+            System.err.println("Ошибка:ElemGlass.setLocation. " + e);
+            //new Test().mpol = this.areaFalz;
         }
     }
 
@@ -164,7 +169,8 @@ public class ElemGlass extends ElemSimple {
 
     //Вложенная спецификация
     @Override
-    public void addSpecific(SpcRecord spcAdd) {
+    public void addSpecific(SpcRecord spcAdd
+    ) {
         try {
             if (spcAdd.artiklRec().getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;

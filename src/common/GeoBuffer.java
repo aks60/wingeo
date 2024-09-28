@@ -33,6 +33,7 @@ import org.locationtech.jts.operation.buffer.VariableBuffer;
  * @author Martin Davis
  *
  */
+//public class VariableBuffer {
 public class GeoBuffer {
 
     /**
