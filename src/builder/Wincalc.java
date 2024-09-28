@@ -86,7 +86,7 @@ public class Wincalc {
 
     public void build(String script) {
         //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script))); //для тестирования
-        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
         //Инит свойств
         spcId = 0;
@@ -157,6 +157,7 @@ public class Wincalc {
                     } else if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).contains(js.type)) {
                         ElemCross elem5e = new ElemCross(this, js, owner);                        
                         owner.childs.add(elem5e); //добавим ребёнка родителю
+                        //UGeo.normalizeElem(elem5e);
 
                     } else if (Type.GLASS == js.type) {
                         ElemGlass elem5e = new ElemGlass(this, js, owner);

@@ -283,7 +283,7 @@ public class UGeo {
         return segm;
     }
     
-    public static void normalizeElem(Com5t c) {
+    public static int normalizeElem(Com5t c) {
 
         if (c.x2() < c.x1()) {
             double x = c.x1(), y = c.y1();
@@ -291,7 +291,10 @@ public class UGeo {
             c.y1(c.y2());
             c.x2(x);
             c.y2(y);
-            return;
+            return -1;
+        }
+        if (c.x2() > c.x1()) {
+            return 1;
         }
         if (c.y2() < c.y1()) {
             double x = c.x1(), y = c.y1();
@@ -299,7 +302,12 @@ public class UGeo {
             c.y1(c.y2());
             c.x2(x);
             c.y2(y);
+            return -1;
         }
+        if (c.y2() > c.y1()) {
+            return 1;
+        }
+        return 0;
     }    
 
     public static Coordinate offset(LineSegment s1, LineSegment s2, double d) {

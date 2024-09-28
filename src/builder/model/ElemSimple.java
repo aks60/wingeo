@@ -202,6 +202,7 @@ public abstract class ElemSimple extends Com5t {
     }
 
     private void moveXY(double x, double y) {
+        
         if (x > 0 && y > 0) {
             if (List.of(Layout.BOTT, Layout.HORIZ).contains(layout())) {
                 if (passMask[0] == 0) {
@@ -229,6 +230,9 @@ public abstract class ElemSimple extends Com5t {
                 }
             }
         }
+//        if(this instanceof ElemCross) {
+//            UGeo.normalizeElem(this);
+//        }        
     }
 
     @Override
