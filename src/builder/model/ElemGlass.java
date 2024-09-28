@@ -5,7 +5,6 @@ import builder.making.SpcFilling;
 import builder.making.SpcRecord;
 import builder.script.GsonElem;
 import common.ArrayCom;
-import common.GeoBuffer;
 import common.UCom;
 import dataset.Record;
 import domain.eArtdet;
@@ -104,7 +103,7 @@ public class ElemGlass extends ElemSimple {
                 Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
                 hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - rec.getDbl(eArtikl.size_falz));
             }
-            this.areaFalz = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
+            this.areaFalz = UGeo.buffer(owner.area.getGeometryN(0), hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
 
             Coordinate[] coo = this.areaFalz.getCoordinates();
             if (this.areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
@@ -147,7 +146,7 @@ public class ElemGlass extends ElemSimple {
                 Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
                 hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + gzazo);
             }
-            this.area = GeoBuffer.buffer(owner.area.getGeometryN(0), hm); //полигон стеклопакета
+            this.area = UGeo.buffer(owner.area.getGeometryN(0), hm); //полигон стеклопакета
 
             Envelope env = this.area.getEnvelopeInternal();
             spcRec.width = env.getWidth();
@@ -267,7 +266,7 @@ public class ElemGlass extends ElemSimple {
                 Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
                 hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr));
             }
-            Polygon areaProf = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);  //полигон внут. по ширине профиля для прорисовки раскладки
+            Polygon areaProf = UGeo.buffer(owner.area.getGeometryN(0), hm);  //полигон внут. по ширине профиля для прорисовки раскладки
             Envelope envRasc = areaProf.getEnvelopeInternal();
 
             double artH = Math.round(this.rascRec.getDbl(eArtikl.height));

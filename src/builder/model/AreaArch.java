@@ -4,7 +4,6 @@ import builder.Wincalc;
 import static builder.model.Com5t.aff;
 import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
-import common.GeoBuffer;
 import dataset.Record;
 import domain.eArtikl;
 import enums.TypeJoin;
@@ -15,7 +14,6 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
-import startup.Test;
 
 public class AreaArch extends AreaSimple {
 

@@ -13,7 +13,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
-import common.GeoBuffer;
 import common.eProp;
 import dataset.Conn;
 import dataset.Field;
@@ -513,7 +512,7 @@ public class Test {
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
 
         LineString geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
-        Polygon geo2 = GeoBuffer.buffer(geo1, frames, 0);
+        Polygon geo2 = UGeo.buffer(geo1, frames, 0);
         Polygon geo3 = UGeo.bufferCross(geo1, frames, 0);
         Polygon geo4 = UGeo.bufferUnion(geo1, frames, 0);
 
@@ -580,7 +579,7 @@ public class Test {
 //        Geometry geo1 = UGeo.newLineStr(0, 300, 0, 1370, 68, 1370, 68, 300, 0, 300);
 //        Geometry geo2 = UGeo.newLineStr(0, 1370, 1300, 1370, 1300, 1302, 0, 1302, 0, 1370);
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
-        Geometry geo2 = GeoBuffer.buffer(geo1, hm);
+        Geometry geo2 = UGeo.buffer(geo1, hm);
 
         mpol = geo1.union(geo2);
         // mlin = geo2;

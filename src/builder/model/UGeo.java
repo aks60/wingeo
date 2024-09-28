@@ -32,6 +32,7 @@ import org.locationtech.jts.geom.GeometryCollection;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.util.LineStringExtracter;
+import org.locationtech.jts.operation.buffer.VariableBuffer;
 import org.locationtech.jts.operation.polygonize.Polygonizer;
 
 /**
@@ -178,6 +179,54 @@ public class UGeo {
         return geometry.getFactory().createGeometryCollection(polyArray);
     }
 
+    public static Polygon buffer(Geometry line, Map<Double, Double> hm) {
+
+        Coordinate coo[] = line.getCoordinates();
+        double distance[] = new double[coo.length];
+        for (int i = 0; i < coo.length; ++i) {
+            distance[i] = hm.get(coo[i].z);
+        }
+        LineString ls = line.getFactory().createLineString(line.getCoordinates());
+        VariableBuffer geoBuffer = new VariableBuffer(ls, distance);
+        Geometry geom = geoBuffer.getResult();
+        return ringToPolygon(line, geom);
+    }
+
+    public static Polygon buffer(Geometry line, ArrayCom<? extends Com5t> list, double amend) {
+
+        //Map дистанций
+        Map<Double, Double> hm = new HashMap();
+        for (Com5t el : list) {
+            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+            Double delta1 = rec.getDbl(eArtikl.height);
+            Double delta2 = rec.getDbl(eArtikl.size_centr);
+            hm.put(el.id, delta1 - delta2 + amend);
+        }
+        //Array дистанций
+        Coordinate coo[] = line.getGeometryN(0).getCoordinates();
+        double distance[] = new double[coo.length];
+        for (int i = 0; i < coo.length; ++i) {
+            distance[i] = hm.get(coo[i].z);
+        }
+        LineString ls = line.getFactory().createLineString(line.getCoordinates());
+        VariableBuffer vb = new VariableBuffer(ls, distance);
+        Geometry geo = vb.getResult();
+        return ringToPolygon(line, geo);
+    }
+
+    public static Polygon ringToPolygon(Geometry line, Geometry geom) {
+
+        Coordinate coo1[] = line.getGeometryN(0).getCoordinates();
+        LinearRing ring = ((Polygon) geom).getInteriorRingN(0);
+        Polygon geom2 = (Polygon) line.getFactory().createPolygon(ring).norm();
+        Coordinate coo2[] = geom2.getCoordinates();
+        for (int i = 0; i < coo2.length - 1; ++i) {
+            coo2[i].z = coo1[i].z;
+        }
+        coo2[coo2.length - 1].z = coo2[0].z;
+        return (Polygon) line.getFactory().createPolygon(coo2);
+    }
+    
     //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Coordinate[] arrCoord(double... d) {
         List<Coordinate> list = new ArrayList<Coordinate>();

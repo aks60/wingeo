@@ -2,7 +2,6 @@ package builder.model;
 
 import builder.Wincalc;
 import builder.script.GsonElem;
-import common.GeoBuffer;
 import dataset.Record;
 import domain.eArtikl;
 import enums.TypeJoin;
