@@ -14,7 +14,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
 import common.GeoBuffer;
-import common.PolygonTools;
 import common.eProp;
 import dataset.Conn;
 import dataset.Field;
@@ -41,7 +40,6 @@ import javax.swing.SwingUtilities;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
-import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Test {
@@ -102,14 +100,13 @@ public class Test {
             //clearDataDB();
             //frames.PSConvert.exec();
             //frame(args);
-            //wincalc();
+            wincalc();
             //param();
             //query();
             //json();
             //uid();
             //script();
             geom();
-            //clearDataDB();
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
@@ -191,8 +188,8 @@ public class Test {
         if (_case.equals("one")) {
             String script = GsonScript.scriptPath(601001);
             winc.build(script);
-            //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
-            //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+            //System.out.println(new com.google.gson.GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
+            System.out.println(new com.google.gson.GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
             winc.specification(true);
             //new Joining(winc).calc();
@@ -425,7 +422,7 @@ public class Test {
         
         LineString line = gf.createLineString(new Coordinate[]{new Coordinate(600, 200, -1), new Coordinate(800, 400, -1)});
         Polygon poly = gf.createPolygon(coord1);
-        Geometry geom = PolygonTools.splitPolygon(poly, line);
+        Geometry geom = UGeo.splitPolygon(poly, line);
         
         geom.getGeometryN(0).normalize();
         geom.getGeometryN(1).normalize();
@@ -485,7 +482,7 @@ public class Test {
 
         Polygon geo1 = UGeo.newPolygon(list);
         //Polygon geo2 = UGeo.bufferCross(geo1, hm, 0);
-        Geometry geo2 = PolygonTools.splitPolygon(geo1, line1).getGeometryN(0);
+        Geometry geo2 = UGeo.splitPolygon(geo1, line1).getGeometryN(0);
 
         //this.mpol = geo1;
         this.mlin = geo2;

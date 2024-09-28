@@ -1,8 +1,18 @@
+/*
+ * Copyright (c) 2019 Martin Davis.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
+ * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v20.html
+ * and the Eclipse Distribution License is available at
+ *
+ * http://www.eclipse.org/org/documents/edl-v10.php.
+ */
 package common;
+//см. package org.locationtech.jts.operation.buffer;
 
 import builder.model.Com5t;
-import builder.model.UGeo;
-import common.ArrayCom;
 import dataset.Record;
 import domain.eArtikl;
 import java.util.ArrayList;
@@ -11,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.locationtech.jts.algorithm.Angle;
+import org.locationtech.jts.algorithm.Orientation;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateList;
 import org.locationtech.jts.geom.Geometry;
@@ -33,8 +44,10 @@ import org.locationtech.jts.operation.buffer.VariableBuffer;
  * @author Martin Davis
  *
  */
-//public class VariableBuffer {
 public class GeoBuffer {
+//см. public class VariableBuffer { 
+
+    private static final int MIN_CAP_SEG_LEN_FACTOR = 4;
 
     /**
      * Creates a buffer polygon along a line with the buffer distance
@@ -49,7 +62,7 @@ public class GeoBuffer {
             double endDistance) {
         double[] distance = interpolate((LineString) line,
                 startDistance, endDistance);
-        GeoBuffer vb = new GeoBuffer(line, distance);
+        VariableBuffer vb = new VariableBuffer(line, distance);
         return vb.getResult();
     }
 
@@ -72,7 +85,7 @@ public class GeoBuffer {
             double endDistance) {
         double[] distance = interpolate((LineString) line,
                 startDistance, midDistance, endDistance);
-        GeoBuffer vb = new GeoBuffer(line, distance);
+        VariableBuffer vb = new VariableBuffer(line, distance);
         return vb.getResult();
     }
 
@@ -84,29 +97,26 @@ public class GeoBuffer {
      * @param distance the buffer distance for each vertex of the line
      * @return the variable-distance buffer polygon
      */
-    public static Polygon buffer(Geometry line, double[] distance) {
-        
-        LineString ls = line.getFactory().createLineString(line.getCoordinates());
-        GeoBuffer vb = new GeoBuffer(ls, distance);
-        Geometry geom = vb.getResult();
-        return vb.ringToPolygon(line, geom);
+    public static Geometry buffer(Geometry line, double[] distance) {
+        VariableBuffer vb = new VariableBuffer(line, distance);
+        return vb.getResult();
     }
 
     public static Polygon buffer(Geometry line, Map<Double, Double> hm) {
-        
+
         Coordinate coo[] = line.getCoordinates();
         double distance[] = new double[coo.length];
         for (int i = 0; i < coo.length; ++i) {
             distance[i] = hm.get(coo[i].z);
         }
         LineString ls = line.getFactory().createLineString(line.getCoordinates());
-        GeoBuffer vb = new GeoBuffer(ls, distance);
-        Geometry geom = vb.getResult();
-        return vb.ringToPolygon(line, geom);
+        GeoBuffer geoBuffer = new GeoBuffer(ls, distance);
+        Geometry geom = geoBuffer.getResult();
+        return geoBuffer.ringToPolygon(line, geom);
     }
 
     public static Polygon buffer(Geometry line, ArrayCom<? extends Com5t> list, double amend) {
-  
+
         //Map дистанций
         Map<Double, Double> hm = new HashMap();
         for (Com5t el : list) {
@@ -127,19 +137,19 @@ public class GeoBuffer {
         return vb.ringToPolygon(line, geo);
     }
 
-    public Polygon ringToPolygon(Geometry line, Geometry geom) {
-        
-        Coordinate coo[] = line.getGeometryN(0).getCoordinates();
+    public Polygon ringToPolygon(Geometry lene, Geometry geom) {
+
+        Coordinate coo1[] = lene.getGeometryN(0).getCoordinates();
         LinearRing ring = ((Polygon) geom).getInteriorRingN(0);
-        Polygon poly = (Polygon) geomFactory.createPolygon(ring).norm();
-        Coordinate cor[] = poly.getCoordinates();
-        for (int i = 0; i < cor.length - 1; ++i) {
-            cor[i].z = coo[i].z;
+        Polygon geom2 = (Polygon) geomFactory.createPolygon(ring).norm();
+        Coordinate coo2[] = geom2.getCoordinates();
+        for (int i = 0; i < coo2.length - 1; ++i) {
+            coo2[i].z = coo1[i].z;
         }
-        cor[cor.length - 1].z = cor[0].z;
-        return (Polygon) geomFactory.createPolygon(cor);        
+        coo2[coo2.length - 1].z = coo2[0].z;
+        return (Polygon) geomFactory.createPolygon(coo2);
     }
-    
+
     /**
      * Computes a list of values for the points along a line by interpolating
      * between values for the start and end point. The interpolation is based on
@@ -279,8 +289,9 @@ public class GeoBuffer {
         // construct segment buffers
         for (int i = 1; i < pts.length; i++) {
             double dist0 = distance[i - 1];
-            if (dist0 > 0) {
-                Polygon poly = segmentBuffer(pts[i - 1], pts[i], dist0, dist0);
+            double dist1 = distance[i];
+            if (dist0 > 0 || dist1 > 0) {
+                Polygon poly = segmentBuffer(pts[i - 1], pts[i], dist0, dist1);
                 if (poly != null) {
                     parts.add(poly);
                 }
@@ -313,26 +324,30 @@ public class GeoBuffer {
      */
     private Polygon segmentBuffer(Coordinate p0, Coordinate p1,
             double dist0, double dist1) {
-        //double Z = p0.z;
-
         /**
-         * Skip polygon if both distances are zero
+         * Skip buffer polygon if both distances are zero
          */
         if (dist0 <= 0 && dist1 <= 0) {
             return null;
         }
 
         /**
-         * Compute for increasing distance only, so flip if needed
+         * Generation algorithm requires increasing distance, so flip if needed
          */
-        //if (dist0 > dist1) {
-        //    return segmentBuffer(p1, p0, dist1, dist0);
-        //}
+        if (dist0 > dist1) {
+            return segmentBufferOriented(p1, p0, dist1, dist0);
+        }
+        return segmentBufferOriented(p0, p1, dist0, dist1);
+    }
 
-        // forward tangent line
+    private Polygon segmentBufferOriented(Coordinate p0, Coordinate p1,
+            double dist0, double dist1) {
+        //-- Assert: dist0 <= dist1
+
+        //-- forward tangent line
         LineSegment tangent = outerTangent(p0, dist0, p1, dist1);
 
-        // if tangent is null then compute a buffer for largest circle
+        //-- if tangent is null then compute a buffer for largest circle
         if (tangent == null) {
             Coordinate center = p0;
             double dist = dist0;
@@ -343,38 +358,32 @@ public class GeoBuffer {
             return circle(center, dist);
         }
 
-        Coordinate t0 = tangent.getCoordinate(0);
-        Coordinate t1 = tangent.getCoordinate(1);
-
-        // reverse tangent line on other side of segment
-        LineSegment seg = new LineSegment(p0, p1);
-        Coordinate tr0 = seg.reflect(t0);
-        Coordinate tr1 = seg.reflect(t1);
-        //-- avoid numeric jitter if first distance is zero
-        if (dist0 == 0) {
-            tr0 = p0.copy();
-        }
+        //-- reverse tangent line on other side of segment
+        LineSegment tangentReflect = reflect(tangent, p0, p1, dist0);
 
         CoordinateList coords = new CoordinateList();
-        coords.add(t0, false);
-        coords.add(t1, false);
+        //-- end cap
+        addCap(p1, dist1, tangent.p1, tangentReflect.p1, coords);
+        //-- start cap
+        addCap(p0, dist0, tangentReflect.p0, tangent.p0, coords);
 
-        // end cap
-        addCap(p1, dist1, t1, tr1, coords);
+        coords.closeRing();
 
-        coords.add(tr1, false);
-        coords.add(tr0, false);
-
-        // start cap
-        addCap(p0, dist0, tr0, t0, coords);
-
-        // close
-        coords.add(t0, false);
-
-        //coords.forEach(c -> c.z = Z);
         Coordinate[] pts = coords.toCoordinateArray();
         Polygon polygon = geomFactory.createPolygon(pts);
+//System.out.println(polygon);
         return polygon;
+    }
+
+    private LineSegment reflect(LineSegment seg, Coordinate p0, Coordinate p1, double dist0) {
+        LineSegment line = new LineSegment(p0, p1);
+        Coordinate r0 = line.reflect(seg.p0);
+        Coordinate r1 = line.reflect(seg.p1);
+        //-- avoid numeric jitter if first distance is zero (second dist must be > 0)
+        if (dist0 == 0) {
+            r0 = p0.copy();
+        }
+        return new LineSegment(r0, r1);
     }
 
     /**
@@ -400,6 +409,9 @@ public class GeoBuffer {
 
     /**
      * Adds a semi-circular cap CCW around the point p.
+     * <>p> The vertices in caps are generated at fixed angles around a point.
+     * This allows caps at the same point to share vertices, which reduces
+     * artifacts when the segment buffers are merged.
      *
      * @param p the centre point of the cap
      * @param r the cap radius
@@ -408,11 +420,13 @@ public class GeoBuffer {
      * @param coords the coordinate list to add to
      */
     private void addCap(Coordinate p, double r, Coordinate t1, Coordinate t2, CoordinateList coords) {
-        //-- handle zero-width at vertex
+        //-- if radius is zero just copy the vertex
         if (r == 0) {
             coords.add(p.copy(), false);
             return;
         }
+
+        coords.add(t1, false);
 
         double angStart = Angle.angle(p, t1);
         double angEnd = Angle.angle(p, t2);
@@ -423,18 +437,52 @@ public class GeoBuffer {
         int indexStart = capAngleIndex(angStart);
         int indexEnd = capAngleIndex(angEnd);
 
-        for (int i = indexStart; i > indexEnd; i--) {
-            // use negative increment to create points CW
+        double capSegLen = r * 2 * Math.sin(Math.PI / 4 / quadrantSegs);
+        double minSegLen = capSegLen / MIN_CAP_SEG_LEN_FACTOR;
+
+        for (int i = indexStart; i >= indexEnd; i--) {
+            //-- use negative increment to create points CW
             double ang = capAngle(i);
-            coords.add(projectPolar(p, r, ang), false);
+            Coordinate capPt = projectPolar(p, r, ang);
+
+            boolean isCapPointHighQuality = true;
+            /**
+             * Due to the fixed locations of the cap points, a start or end cap
+             * point might create a "reversed" segment to the next tangent
+             * point. This causes an unwanted narrow spike in the buffer curve,
+             * which can cause holes in the final buffer polygon. These checks
+             * remove these points.
+             */
+            if (i == indexStart
+                    && Orientation.CLOCKWISE != Orientation.index(p, t1, capPt)) {
+                isCapPointHighQuality = false;
+            } else if (i == indexEnd
+                    && Orientation.COUNTERCLOCKWISE != Orientation.index(p, t2, capPt)) {
+                isCapPointHighQuality = false;
+            }
+
+            /**
+             * Remove short segments between the cap and the tangent segments.
+             */
+            if (capPt.distance(t1) < minSegLen) {
+                isCapPointHighQuality = false;
+            } else if (capPt.distance(t2) < minSegLen) {
+                isCapPointHighQuality = false;
+            }
+
+            if (isCapPointHighQuality) {
+                coords.add(capPt, false);
+            }
         }
+
+        coords.add(t2, false);
     }
 
     /**
-     * Computes the angle for the given cap point index.
+     * Computes the actual angle for a cap angle index.
      *
-     * @param index the fillet angle index
-     * @return
+     * @param index the cap angle index
+     * @return the angle
      */
     private double capAngle(int index) {
         double capSegAng = Math.PI / 2 / quadrantSegs;
@@ -462,7 +510,8 @@ public class GeoBuffer {
 
     /**
      * Computes the two circumference points defining the outer tangent line
-     * between two circles.
+     * between two circles. The tangent line may be null if one circle mostly
+     * overlaps the other.
      * <p>
      * For the algorithm see
      * <a href='https://en.wikipedia.org/wiki/Tangent_lines_to_circles#Outer_tangent'>Wikipedia</a>.

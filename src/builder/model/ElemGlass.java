@@ -104,16 +104,7 @@ public class ElemGlass extends ElemSimple {
                 Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
                 hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - rec.getDbl(eArtikl.size_falz));
             }
-
-            System.out.println(UGeo.formatVal(owner.area.getGeometryN(0)));
-            
-            try {
-                this.areaFalz = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
-            } catch (Exception e) {
-                System.err.println("Ошибка-3:ElemGlass.setLocation. " + e);
-                this.areaFalz = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);
-            }
-            System.out.println(UGeo.formatVal(this.areaFalz));
+            this.areaFalz = GeoBuffer.buffer(owner.area.getGeometryN(0), hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
 
             Coordinate[] coo = this.areaFalz.getCoordinates();
             if (this.areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {

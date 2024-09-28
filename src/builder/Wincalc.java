@@ -16,6 +16,7 @@ import builder.model.AreaDoor;
 import builder.model.AreaTrapeze;
 import builder.model.ElemBlinds;
 import builder.model.ElemMosquit;
+import builder.model.UGeo;
 import builder.script.GsonElem;
 import builder.script.GsonRoot;
 import com.google.gson.GsonBuilder;
@@ -154,7 +155,7 @@ public class Wincalc {
                         root.frames.add(elem5e);
 
                     } else if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).contains(js.type)) {
-                        ElemCross elem5e = new ElemCross(this, js, owner);
+                        ElemCross elem5e = new ElemCross(this, js, owner);                        
                         owner.childs.add(elem5e); //добавим ребёнка родителю
 
                     } else if (Type.GLASS == js.type) {
