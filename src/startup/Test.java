@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
+import common.Crypto;
 import common.eProp;
 import dataset.Conn;
 import dataset.Field;
@@ -99,13 +100,14 @@ public class Test {
             //clearDataDB();
             //frames.PSConvert.exec();
             //frame(args);
-            wincalc();
+            //wincalc();
             //param();
             //query();
             //json();
             //uid();
             //script();
-            geom();
+            //geom();
+            Crypto.rtwRandom();
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
