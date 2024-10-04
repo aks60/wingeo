@@ -1,13 +1,15 @@
 package common;
 
-import sun.net.www.http.HttpClient;
-import java.lang.ProcessBuilder.Redirect;
-import java.lang.Runtime.Version;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.math.BigInteger;
 import java.net.Authenticator;
 import java.net.InetSocketAddress;
 import java.net.ProxySelector;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -18,6 +20,9 @@ import java.security.SecureRandom;
 import java.security.Security;
 import java.time.Duration;
 import java.util.Base64;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -30,7 +35,7 @@ public class Crypto {
     private static byte[] encoded = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};
     static String rndstr = "";
 
-    public static void httpClient() {
+    public static void httpCrypto() {
         try {
             //Пара ключей RSA
             KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
@@ -72,14 +77,92 @@ public class Crypto {
         }
     }
 
-    public static void httpRequest() {
+    /**
+     * Пример отправки синхронного POST-запроса
+     *
+     * @throws InterruptedException
+     * @throws java.util.concurrent.ExecutionException
+     */
+    public static void httpSynch() throws ExecutionException, InterruptedException {
         HttpClient client = HttpClient.newBuilder()
-                .version(Version.HTTP_1_1)
-                .followRedirects(Redirect.NORMAL)
+                .version(HttpClient.Version.HTTP_1_1)
+                .followRedirects(HttpClient.Redirect.NORMAL)
                 .connectTimeout(Duration.ofSeconds(20))
                 .proxy(ProxySelector.of(new InetSocketAddress("proxy.example.com", 8085)))
                 .authenticator(Authenticator.getDefault())
                 .build();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://openjdk.org/"))
+                .timeout(Duration.ofMinutes(1))
+                .header("Content-Type", "application/json")
+                //.POST(HttpRequest.BodyPublishers.ofFile(Paths.get("file.json")))
+                .build();
+
+        //var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+
+    //https://gist.github.com/thomasdarimont/b05e3e785e088e35d37890480dd84364
+    /**
+     * Пример отправки асинхронного POST-запроса
+     *
+     * @throws InterruptedException
+     * @throws java.util.concurrent.ExecutionException
+     */
+    public static void httpAsync() throws ExecutionException, InterruptedException {
+
+        HttpRequest postRequest = HttpRequest.newBuilder()
+                .uri(URI.create("https://postman-echo.com/post"))
+                .header("Content-Type", "text/plain")
+                .POST(HttpRequest.BodyPublishers.ofString("Hi there!"))
+                .build();
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        HttpClient client = HttpClient.newBuilder().executor(executor).build();
+
+        var responseFuture = client.sendAsync(postRequest, HttpResponse.BodyHandlers.ofString());
+
+        responseFuture.thenApply(res -> {
+            System.out.printf("StatusCode: %s%n", res.statusCode());
+            //System.out.println("Version = " + res.version());
+            //System.out.println("Body = " + res.body());
+            return res;
+        })
+                .thenApply(HttpResponse::body)
+                .thenAccept(System.out::println)
+                .get();
+
+        executor.shutdownNow();
+    }
+
+    public void get(String uri) throws Exception {
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(uri)).build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        System.out.println(response.body());
+    }
+
+    public void get2(String uri) throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(new URI("https://postman-echo.com/get"))
+                .GET()
+                .build();
+
+        HttpRequest request2 = HttpRequest.newBuilder()
+                .uri(new URI("https://postman-echo.com/get"))
+                .version(HttpClient.Version.HTTP_2)
+                .GET()
+                .build();
+
+        byte[] sampleData = "Sample request body".getBytes();
+        HttpRequest request3 = HttpRequest.newBuilder()
+                .uri(new URI("https://postman-echo.com/post"))
+                .headers("Content-Type", "text/plain;charset=UTF-8")
+                .POST(HttpRequest.BodyPublishers.ofByteArray(sampleData))
+                .build();
+
+        //HttpResponse<String> response = client.send(request, HttpResponse.BodyHandler.asString());
     }
 
     public static void rtwRandom() {
