@@ -107,7 +107,7 @@ public class Test {
             //uid();
             //script();
             //geom();
-            Crypto.rtwRandom();
+            Crypto.encode();
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
