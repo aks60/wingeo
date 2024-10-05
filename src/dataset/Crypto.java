@@ -30,10 +30,10 @@ import javax.crypto.NoSuchPaddingException;
 
 public class Crypto {
 
-   //private static String algorithm = "DESede";
-   //private static byte[] encoded = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};
-   //static String rndstr = "";
-
+    //private static String algorithm = "DESede";
+    //private static byte[] encoded = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};
+    //static String rndstr = "";
+    
     //https://gist.github.com/thomasdarimont/b05e3e785e088e35d37890480dd84364
     public static void httpCrypto() {
         try {
@@ -102,17 +102,11 @@ public class Crypto {
     }
 
     //https://gist.github.com/thomasdarimont/b05e3e785e088e35d37890480dd84364
-    /**
-     * Пример отправки асинхронного POST-запроса
-     *
-     * @throws InterruptedException
-     * @throws java.util.concurrent.ExecutionException
-     */
     public static void httpAsync() throws ExecutionException, InterruptedException {
 
         HttpRequest postRequest = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret;username=sysdba"))
-//                .uri(URI.create("https://postman-echo.com/post"))
+                //                .uri(URI.create("https://postman-echo.com/post"))
                 .header("Content-Type", "text/plain")
                 .POST(HttpRequest.BodyPublishers.ofString("Hi there!"))
                 .build();
@@ -135,7 +129,13 @@ public class Crypto {
         executor.shutdownNow();
     }
 
-    // <editor-fold defaultstate="collapsed" desc="EXAMPLE">
+    public static void random() {
+        SecureRandom random = new SecureRandom();
+        String rndstr = new BigInteger(130, random).toString(32);
+        System.out.println(rndstr);
+    }
+
+// <editor-fold defaultstate="collapsed" desc="EXAMPLE">
     public void get(String uri) throws Exception {
 
         HttpClient client = HttpClient.newHttpClient();
@@ -165,12 +165,6 @@ public class Crypto {
                 .build();
 
         //HttpResponse<String> response = client.send(request, HttpResponse.BodyHandler.asString());
-    }
-
-    public static void random() {
-        SecureRandom random = new SecureRandom();
-        String rndstr = new BigInteger(130, random).toString(32);
-        System.out.println(rndstr);
     }
 
 // </editor-fold>    
