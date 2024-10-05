@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
-import common.Crypto;
+import dataset.Crypto;
 import common.eProp;
 import dataset.Conn;
 import dataset.Field;

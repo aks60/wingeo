@@ -1,4 +1,4 @@
-package common;
+package dataset;
 
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -9,6 +9,7 @@ import java.net.InetSocketAddress;
 import java.net.ProxySelector;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -29,9 +30,9 @@ import javax.crypto.NoSuchPaddingException;
 
 public class Crypto {
 
-    private static String algorithm = "DESede";
-    private static byte[] encoded = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};
-    static String rndstr = "";
+   //private static String algorithm = "DESede";
+   // private static byte[] encoded = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};
+   //static String rndstr = "";
 
     //https://gist.github.com/thomasdarimont/b05e3e785e088e35d37890480dd84364
     public static void httpCrypto() {
@@ -82,7 +83,7 @@ public class Crypto {
      * @throws InterruptedException
      * @throws java.util.concurrent.ExecutionException
      */
-    public static void httpSynch() throws ExecutionException, InterruptedException {
+    public static void httpSynch() throws ExecutionException, InterruptedException, Exception {
         HttpClient client = HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_1_1)
                 .followRedirects(HttpClient.Redirect.NORMAL)
@@ -94,10 +95,10 @@ public class Crypto {
                 .uri(URI.create("http://openjdk.org/"))
                 .timeout(Duration.ofMinutes(1))
                 .header("Content-Type", "application/json")
-                //.POST(HttpRequest.BodyPublishers.ofFile(Paths.get("file.json")))
+                .POST(HttpRequest.BodyPublishers.ofFile(Paths.get("file.json")))
                 .build();
 
-        //var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        var response = client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
     //https://gist.github.com/thomasdarimont/b05e3e785e088e35d37890480dd84364
@@ -134,7 +135,7 @@ public class Crypto {
         executor.shutdownNow();
     }
 
-    // <editor-fold defaultstate="collapsed" desc="TEST">
+    // <editor-fold defaultstate="collapsed" desc="EXAMPLE">
     public void get(String uri) throws Exception {
 
         HttpClient client = HttpClient.newHttpClient();
