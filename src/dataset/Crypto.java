@@ -105,7 +105,7 @@ public class Crypto {
     public static void httpAsync() throws ExecutionException, InterruptedException {
 
         HttpRequest postRequest = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret;username=sysdba"))
+                .uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&username=sysdba"))
                 //                .uri(URI.create("https://postman-echo.com/post"))
                 .header("Content-Type", "text/plain")
                 .POST(HttpRequest.BodyPublishers.ofString("Hi there!"))
