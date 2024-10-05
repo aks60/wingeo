@@ -9,7 +9,6 @@ import java.net.InetSocketAddress;
 import java.net.ProxySelector;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -17,7 +16,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SecureRandom;
-import java.security.Security;
 import java.time.Duration;
 import java.util.Base64;
 import java.util.concurrent.ExecutionException;
@@ -27,7 +25,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
+//import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 public class Crypto {
 
@@ -168,14 +166,11 @@ public class Crypto {
         //HttpResponse<String> response = client.send(request, HttpResponse.BodyHandler.asString());
     }
 
-    public static void rtwRandom() {
+    public static void random() {
         SecureRandom random = new SecureRandom();
         String rndstr = new BigInteger(130, random).toString(32);
         System.out.println(rndstr);
     }
 
-    public static void rtwConnect() {
-        Security.addProvider(new BouncyCastleProvider());
-    }
 // </editor-fold>    
 }
