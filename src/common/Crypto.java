@@ -35,6 +35,7 @@ public class Crypto {
     private static byte[] encoded = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};
     static String rndstr = "";
 
+    //https://gist.github.com/thomasdarimont/b05e3e785e088e35d37890480dd84364
     public static void httpCrypto() {
         try {
             //Пара ключей RSA
@@ -111,7 +112,8 @@ public class Crypto {
     public static void httpAsync() throws ExecutionException, InterruptedException {
 
         HttpRequest postRequest = HttpRequest.newBuilder()
-                .uri(URI.create("https://postman-echo.com/post"))
+                .uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret;username=sysdba"))
+//                .uri(URI.create("https://postman-echo.com/post"))
                 .header("Content-Type", "text/plain")
                 .POST(HttpRequest.BodyPublishers.ofString("Hi there!"))
                 .build();
@@ -134,6 +136,7 @@ public class Crypto {
         executor.shutdownNow();
     }
 
+    // <editor-fold defaultstate="collapsed" desc="TEST">
     public void get(String uri) throws Exception {
 
         HttpClient client = HttpClient.newHttpClient();
@@ -174,4 +177,5 @@ public class Crypto {
     public static void rtwConnect() {
         Security.addProvider(new BouncyCastleProvider());
     }
+// </editor-fold>    
 }

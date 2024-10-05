@@ -606,7 +606,7 @@ public class UGeo {
             result = gf.createPolygon(cooList.toArray(new Coordinate[0]));
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.buffeCrossr() " + e);
+            System.err.println("Ошибка:UGeo.buffeCross() " + e);
         }
         return result;
     }
