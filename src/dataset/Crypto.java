@@ -31,7 +31,7 @@ import javax.crypto.NoSuchPaddingException;
 public class Crypto {
 
    //private static String algorithm = "DESede";
-   // private static byte[] encoded = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};
+   //private static byte[] encoded = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};
    //static String rndstr = "";
 
     //https://gist.github.com/thomasdarimont/b05e3e785e088e35d37890480dd84364
