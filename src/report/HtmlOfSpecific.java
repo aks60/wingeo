@@ -51,6 +51,7 @@ public class HtmlOfSpecific {
 
     private static void load1(Record projectRec, Document doc) {
         List<SpcRecord> spcList2 = new ArrayList<SpcRecord>();
+        List<RSpecific> kitList = new ArrayList<RSpecific>();
         List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
         Wincalc winc = new builder.Wincalc();
 
@@ -60,8 +61,9 @@ public class HtmlOfSpecific {
             winc.build(script);
             winc.specification(true);
             spcList2.addAll(winc.listSpec); //добавим спецификацию
-            ArraySpc<SpcRecord> kitList = SpcTariffic.kits(prjprodRec, winc, true); 
-            spcList2.addAll(kitList); //добавим комплекты
+            
+            List<SpcRecord> list = SpcTariffic.kits(prjprodRec, winc, true); //добавим комплекты
+            list.forEach(rec -> kitList.add(new RSpecific(rec)));
         }
         
         List<RSpecific> spcList3 = new ArrayList<RSpecific>();
@@ -90,11 +92,15 @@ public class HtmlOfSpecific {
         template.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ЗАПОЛНЕНИЯ");
         doc.getElementsByTag("tbody").append(template.get(0).html());
         s5.forEach(spc -> templateAdd(template, spc, doc));
+        template.get(0).getElementsByTag("td").get(0).selectFirst("b").text("КОМПЛЕКТЫ");
+        doc.getElementsByTag("tbody").append(template.get(0).html());
+        kitList.forEach(spc -> templateAdd(template, spc, doc));
 
         double total = s1.stream().mapToDouble(spc -> spc.getCost1()).sum()
                 + s2.stream().mapToDouble(spc -> spc.getCost1()).sum()
                 + s3.stream().mapToDouble(spc -> spc.getCost1()).sum()
-                + s5.stream().mapToDouble(spc -> spc.getCost1()).sum();
+                + s5.stream().mapToDouble(spc -> spc.getCost1()).sum()
+                + kitList.stream().mapToDouble(spc -> spc.getCost1()).sum();
         doc.getElementsByTag("tfoot").get(0).selectFirst("tr:eq(0)")
                 .selectFirst("td:eq(1)").text(df1.format(total));
     }
