@@ -108,7 +108,7 @@ public class Test {
             //script();
             //geom();
             //Crypto.httpSynch();
-            Crypto.httpAsync();
+            Crypto.httpCrypto();
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
