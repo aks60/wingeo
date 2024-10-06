@@ -746,82 +746,78 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }
 
     public void calculate() {
-        UGui.stopCellEditingAndExecSql(getRootPane());
-        ProgressBar.create(Orders.this, new ListenerFrame() {
-            public void actionRequest(Object obj) {
-                try {
-                    Record projectRec = qProject.get(UGui.getIndexRec(tab1));
-                    Record currencRec = qCurrenc.stream().filter(rec -> rec.get(eCurrenc.id).equals(projectRec.get(eProject.currenc_id))).findFirst().orElse(eCurrenc.up.newRecord(Query.SEL));
-                    double square = 0, weight = 0, cost2 = 0, cost3 = 0, cost4, price2 = 0, price3 = 0, price4 = 0;
-                    //Пересчёт заказа
-                    if (UGui.getIndexRec(tab1) != -1) {
+        try {
+            UGui.stopCellEditingAndExecSql(getRootPane());
+            Record projectRec = qProject.get(UGui.getIndexRec(tab1));
+            Record currencRec = qCurrenc.stream().filter(rec -> rec.get(eCurrenc.id).equals(projectRec.get(eProject.currenc_id))).findFirst().orElse(eCurrenc.up.newRecord(Query.SEL));
+            double square = 0, weight = 0, cost2 = 0, cost3 = 0, cost4, price2 = 0, price3 = 0, price4 = 0;
+            //Пересчёт заказа
+            if (UGui.getIndexRec(tab1) != -1) {
 
-                        //Цикл по конструкциям
-                        for (Record prjprodRec : qPrjprod) {
-                            Object w = prjprodRec.get(ePrjprod.values().length);
-                            if (w instanceof Wincalc) {
+                //Цикл по конструкциям
+                for (Record prjprodRec : qPrjprod) {
+                    Object w = prjprodRec.get(ePrjprod.values().length);
+                    if (w instanceof Wincalc) {
 
-                                Wincalc win = (Wincalc) w;
-                                String script = prjprodRec.getStr(ePrjprod.script);
-                                JsonElement jsonElem = new Gson().fromJson(script, JsonElement.class);
-                                win.build(jsonElem.toString()); //калкуляция                              
-                                win.specification(true); //конструктив  
+                        Wincalc win = (Wincalc) w;
+                        String script = prjprodRec.getStr(ePrjprod.script);
+                        JsonElement jsonElem = new Gson().fromJson(script, JsonElement.class);
+                        win.build(jsonElem.toString()); //калкуляция                              
+                        win.specification(true); //конструктив  
 
-                                square = square + prjprodRec.getDbl(ePrjprod.num) * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
-                                weight = weight + prjprodRec.getDbl(ePrjprod.num) * win.weight; //вес изделий
-                                price2 = price2 + win.price2; //стоимость конструкции без скидки менеджера
-                                cost2 = cost2 + win.cost2; //стоимость конструкции со скидкой менеджера
+                        square = square + prjprodRec.getDbl(ePrjprod.num) * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
+                        weight = weight + prjprodRec.getDbl(ePrjprod.num) * win.weight; //вес изделий
+                        price2 = price2 + win.price2; //стоимость конструкции без скидки менеджера
+                        cost2 = cost2 + win.cost2; //стоимость конструкции со скидкой менеджера
 
-                                //Комплектация
-                                ArraySpc<SpcRecord> kitList = SpcTariffic.kits(prjprodRec, win, true); //комплекты
-                                for (SpcRecord spc : kitList) {
-                                    price3 = price3 + spc.price1; //стоимость без скидки
-                                    cost3 = cost3 + spc.price2; //стоимость со скидками
-                                }
-                            }
+                        //Комплектация
+                        ArraySpc<SpcRecord> kitList = SpcTariffic.kits(prjprodRec, win, true); //комплекты
+                        for (SpcRecord kit : kitList) {
+                            price3 = price3 + kit.price1; //стоимость без скидки
+                            cost3 = cost3 + kit.price2; //стоимость со скидками
                         }
-                        //Сохраним новые кальк.данные в проекте
-                        if (price2 != projectRec.getDbl(eProject.price2)) {
-                            projectRec.set(eProject.price2, price2); //стоимость конструкции без скидки менеджера
-                        }
-                        cost2 = cost2 - cost2 * projectRec.getDbl(eProject.disc2) / 100;
-                        if (cost2 != projectRec.getDbl(eProject.cost2)) {
-                            projectRec.set(eProject.cost2, cost2); //стоимость конструкции со скидкой менеджера
-                        }
-                        if (price3 != projectRec.getDbl(eProject.price3)) {
-                            projectRec.set(eProject.price3, price3); //стоимость комплектации без скидки менеджера
-                        }
-                        cost3 = cost3 - cost3 * projectRec.getDbl(eProject.disc3) / 100;
-                        if (cost3 != projectRec.getDbl(eProject.cost3)) {
-                            projectRec.set(eProject.cost3, cost3); //стоимость комплектации со скидкой менеджера
-                        }
-                        if (price2 + price3 != projectRec.getDbl(eProject.price4)) {
-                            projectRec.set(eProject.price4, price2 + price3); //стоимость проекта без скидок
-                        }
-                        cost4 = (cost2 + cost3) - ((cost2 + cost3) * projectRec.getDbl(eProject.disc4) / 100);
-                        if (cost4 != projectRec.getDbl(eProject.cost4)) {
-                            projectRec.set(eProject.cost4, cost4); //стоимость проекта со скидками менеджера
-                        }
-                        qProject.execsql();
-
-                        //Заполним вес, площадь
-                        txt8.setText(UCom.format(projectRec.getDbl(eProject.square) / 1000000, 2)); //площадь
-                        txt7.setText(UCom.format(projectRec.getDbl(eProject.weight), 1)); //вес 
-
-                        //Заполним таблицу
-                        tab5.setValueAt(projectRec.getDbl(eProject.price2), 0, 2); //стоимость конструкций без скидки
-                        tab5.setValueAt(projectRec.getDbl(eProject.cost2), 0, 3); //стоимость конструкций со скидкой
-                        tab5.setValueAt(projectRec.getDbl(eProject.price3), 1, 2); //стоимость комплектации без скидки
-                        tab5.setValueAt(projectRec.getDbl(eProject.cost3), 1, 3); //стоимость комплектации со скидкой
-                        tab5.setValueAt(projectRec.getDbl(eProject.price4), 2, 2); //итого стоимость без скидки
-                        tab5.setValueAt(projectRec.getDbl(eProject.cost4), 2, 3); //итого стоимость со скидкой
                     }
-
-                } catch (Exception e) {
-                    System.err.println("Ошибка:Orders.btnCalc() " + e);
                 }
+                //Сохраним новые кальк.данные в проекте
+                if (price2 != projectRec.getDbl(eProject.price2)) {
+                    projectRec.set(eProject.price2, price2); //стоимость конструкции без скидки менеджера
+                }
+                cost2 = cost2 - cost2 * projectRec.getDbl(eProject.disc2) / 100;
+                if (cost2 != projectRec.getDbl(eProject.cost2)) {
+                    projectRec.set(eProject.cost2, cost2); //стоимость конструкции со скидкой менеджера
+                }
+                if (price3 != projectRec.getDbl(eProject.price3)) {
+                    projectRec.set(eProject.price3, price3); //стоимость комплектации без скидки менеджера
+                }
+                cost3 = cost3 - cost3 * projectRec.getDbl(eProject.disc3) / 100;
+                //System.err.println(cost3); // + " - " + projectRec.getDbl(eProject.cost3));
+                if (cost3 != projectRec.getDbl(eProject.cost3)) {
+                    projectRec.set(eProject.cost3, cost3); //стоимость комплектации со скидкой менеджера
+                }
+                if (price2 + price3 != projectRec.getDbl(eProject.price4)) {
+                    projectRec.set(eProject.price4, price2 + price3); //стоимость проекта без скидок
+                }
+                cost4 = (cost2 + cost3) - ((cost2 + cost3) * projectRec.getDbl(eProject.disc4) / 100);
+                if (cost4 != projectRec.getDbl(eProject.cost4)) {
+                    projectRec.set(eProject.cost4, cost4); //стоимость проекта со скидками менеджера
+                }
+                qProject.execsql();
+
+                //Заполним вес, площадь
+                txt8.setText(UCom.format(projectRec.getDbl(eProject.square) / 1000000, 2)); //площадь
+                txt7.setText(UCom.format(projectRec.getDbl(eProject.weight), 1)); //вес 
+
+                //Заполним таблицу
+                tab5.setValueAt(projectRec.getDbl(eProject.price2), 0, 2); //стоимость конструкций без скидки
+                tab5.setValueAt(projectRec.getDbl(eProject.cost2), 0, 3); //стоимость конструкций со скидкой
+                tab5.setValueAt(projectRec.getDbl(eProject.price3), 1, 2); //стоимость комплектации без скидки
+                tab5.setValueAt(projectRec.getDbl(eProject.cost3), 1, 3); //стоимость комплектации со скидкой
+                tab5.setValueAt(projectRec.getDbl(eProject.price4), 2, 2); //итого стоимость без скидки
+                tab5.setValueAt(projectRec.getDbl(eProject.cost4), 2, 3); //итого стоимость со скидкой
             }
-        });
+        } catch (Exception e) {
+            System.err.println("Ошибка:Orders.btnCalc() " + e);
+        }
     }
 
     private void setText(JTextComponent comp, String txt) {
@@ -3605,7 +3601,11 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }//GEN-LAST:event_artiklToGlass
 
     private void btnCalc(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalc
-        calculate();
+        ProgressBar.create(Orders.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                calculate();
+            }
+        });
     }//GEN-LAST:event_btnCalc
 
     private void btnFilter(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilter

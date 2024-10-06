@@ -63,10 +63,10 @@ public class RSpecific {
     }
 
     public String getAngl() {
-        if (spc.anglCut0 == 0 || spc.anglCut1 == 0) {
-            return "";
-        }
-        return df1.format(spc.anglCut0) + " x " + df1.format(spc.anglCut1);
+        String anglCut0 = (spc.anglCut0 == 0 || spc.anglCut0 == -1) ? "" : df1.format(spc.anglCut0);
+        String anglCut1 = (spc.anglCut1 == 0 || spc.anglCut1 == -1) ? "" : df1.format(spc.anglCut1);
+        String X = ("".equals(anglCut0) && "".equals(anglCut0)) ? "" : "x";
+        return anglCut0 + X + anglCut1;
     }
 
     public String getWeight() {
@@ -118,12 +118,12 @@ public class RSpecific {
         map.entrySet().forEach(act -> list.add(act.getValue()));
         Collections.sort(list, (o1, o2) -> (o1.spc.name).compareTo(o2.spc.name));
         return list;
-    } 
-    
+    }
+
     public double getCost1() {
         return spc.price1;
     }
-    
+
     public double getCost2() {
         return spc.price2;
     }

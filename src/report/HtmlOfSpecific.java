@@ -50,7 +50,8 @@ public class HtmlOfSpecific {
     }
 
     private static void load1(Record projectRec, Document doc) {
-        List<SpcRecord> spcList2 = new ArrayList<SpcRecord>();
+        
+        List<SpcRecord> spcList = new ArrayList<SpcRecord>();
         List<RSpecific> kitList = new ArrayList<RSpecific>();
         List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
         Wincalc winc = new builder.Wincalc();
@@ -60,21 +61,21 @@ public class HtmlOfSpecific {
             String script = prjprodRec.getStr(ePrjprod.script);
             winc.build(script);
             winc.specification(true);
-            spcList2.addAll(winc.listSpec); //добавим спецификацию
+            spcList.addAll(winc.listSpec); //добавим спецификацию
             
             List<SpcRecord> list = SpcTariffic.kits(prjprodRec, winc, true); //добавим комплекты
             list.forEach(rec -> kitList.add(new RSpecific(rec)));
         }
         
-        List<RSpecific> spcList3 = new ArrayList<RSpecific>();
-        spcList2.forEach(el -> spcList3.add(new RSpecific(el)));
+        List<RSpecific> listSpc = new ArrayList<RSpecific>();
+        spcList.forEach(rec -> listSpc.add(new RSpecific(rec)));
         String num = projectRec.getStr(eProject.num_ord);
         String date = UGui.simpleFormat.format(projectRec.get(eProject.date4));
 
-        List<RSpecific> s1 = spcList3.stream().filter(s -> s.spc().artiklRec().getInt(eArtikl.level1) == 1).collect(toList());
-        List<RSpecific> s2 = RSpecific.groups(spcList3.stream().filter(s -> s.spc().artiklRec().getInt(eArtikl.level1) == 2).collect(toList()));
-        List<RSpecific> s3 = RSpecific.groups(spcList3.stream().filter(s -> s.spc().artiklRec().getInt(eArtikl.level1) == 3).collect(toList()));
-        List<RSpecific> s5 = spcList3.stream().filter(s -> s.spc().artiklRec().getInt(eArtikl.level1) == 5).collect(toList());
+        List<RSpecific> s1 = listSpc.stream().filter(s -> s.spc().artiklRec().getInt(eArtikl.level1) == 1).collect(toList());
+        List<RSpecific> s2 = RSpecific.groups(listSpc.stream().filter(s -> s.spc().artiklRec().getInt(eArtikl.level1) == 2).collect(toList()));
+        List<RSpecific> s3 = RSpecific.groups(listSpc.stream().filter(s -> s.spc().artiklRec().getInt(eArtikl.level1) == 3).collect(toList()));
+        List<RSpecific> s5 = listSpc.stream().filter(s -> s.spc().artiklRec().getInt(eArtikl.level1) == 5).collect(toList());
 
         doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord));       
         Elements template = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
