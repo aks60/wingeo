@@ -72,6 +72,7 @@ import frames.Specifics;
 import frames.Syssize;
 import frames.Systree;
 import frames.PSFrame;
+import frames.UGui;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.ResultSet;
@@ -79,6 +80,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JTable;
 
 public enum App {
 
@@ -303,4 +305,14 @@ public enum App {
         eArtdet.up, eArtikl.up,
         eSyssize.up, eGroups.up, eCurrenc.up, eSysuser.up
     };
+    
+//    public static List<javax.swing.JFrame> listOpenFrane() {
+//        List<javax.swing.JFrame> list = new ArrayList();
+//        for (App app : App.values()) {
+//            if (app.frame != null) {
+//                list.add(app.frame);
+//            }
+//        }  
+//        return list;
+//    }
 }

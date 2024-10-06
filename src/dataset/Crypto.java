@@ -92,10 +92,10 @@ public class Crypto {
                 .authenticator(Authenticator.getDefault())
                 .build();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://openjdk.org/"))
+                .uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&username=sysdba"))
                 .timeout(Duration.ofMinutes(1))
                 .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofFile(Paths.get("file.json")))
+                .GET()
                 .build();
 
         var response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -104,7 +104,7 @@ public class Crypto {
     //https://gist.github.com/thomasdarimont/b05e3e785e088e35d37890480dd84364
     public static void httpAsync() throws ExecutionException, InterruptedException {
 
-        HttpRequest postRequest = HttpRequest.newBuilder()
+        HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&username=sysdba"))
                 //                .uri(URI.create("https://postman-echo.com/post"))
                 .header("Content-Type", "text/plain")
@@ -114,9 +114,9 @@ public class Crypto {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         HttpClient client = HttpClient.newBuilder().executor(executor).build();
 
-        var responseFuture = client.sendAsync(postRequest, HttpResponse.BodyHandlers.ofString());
+        var response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
 
-        responseFuture.thenApply(res -> {
+        response.thenApply(res -> {
             System.out.printf("StatusCode: %s%n", res.statusCode());
             //System.out.println("Version = " + res.version());
             //System.out.println("Body = " + res.body());

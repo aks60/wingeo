@@ -747,7 +747,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
     public void calculate() {
         try {
-            UGui.stopCellEditingAndExecSql(getRootPane());
+            UGui.stopCellEditingAndExecSql();
             Record projectRec = qProject.get(UGui.getIndexRec(tab1));
             Record currencRec = qCurrenc.stream().filter(rec -> rec.get(eCurrenc.id).equals(projectRec.get(eProject.currenc_id))).findFirst().orElse(eCurrenc.up.newRecord(Query.SEL));
             double square = 0, weight = 0, cost2 = 0, cost3 = 0, cost4, price2 = 0, price3 = 0, price4 = 0;

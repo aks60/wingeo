@@ -71,6 +71,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import javax.swing.JRootPane;
 import javax.swing.tree.DefaultMutableTreeNode;
+import startup.App;
 
 /**
  * <p>
@@ -180,11 +181,20 @@ public class UGui {
         ).collect(Collectors.toList());
     }
 
+    public static void stopCellEditingAndExecSql() {
+        for (App app : App.values()) {
+            if (app.frame != null) {
+                UGui.findComponents(app.frame.getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c));
+            }
+        }
+        Query.listOpenTable.forEach(q -> q.execsql());
+    }
+
     public static void stopCellEditingAndExecSql(JRootPane rootPane) {
         UGui.findComponents(rootPane, JTable.class).forEach(c -> UGui.stopCellEditing(c));
         Query.listOpenTable.forEach(q -> q.execsql());
     }
-    
+
     public static void selectionPathSys(double id, JTree tree) {
         if (id != -1) {
             DefaultMutableTreeNode curNode = (DefaultMutableTreeNode) tree.getModel().getRoot();
