@@ -1,5 +1,8 @@
 package dataset;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -10,6 +13,7 @@ import java.net.ProxySelector;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -33,7 +37,29 @@ public class Crypto {
     //private static String algorithm = "DESede";
     //private static byte[] encoded = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};
     //static String rndstr = "";
-    
+    //https://www.novixys.com/blog/how-to-generate-rsa-keys-java/
+    public static void generateKeyPair() throws NoSuchAlgorithmException,
+            FileNotFoundException, IOException {
+
+        KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
+        kpg.initialize(2048);
+        KeyPair kp = kpg.generateKeyPair();
+        Key pub = kp.getPublic();
+        Key pvt = kp.getPrivate();
+
+        String outFile = "./resource/securety/crypto";
+        var out = new FileOutputStream(outFile + ".key");
+        out.write(pvt.getEncoded());
+        out.close();
+
+        out = new FileOutputStream(outFile + ".pub");
+        out.write(pvt.getEncoded());
+        out.close();
+
+        System.err.println("Private key format: " + pvt.getFormat());
+        System.err.println("Public key format: " + pub.getFormat());
+    }
+
     //https://gist.github.com/thomasdarimont/b05e3e785e088e35d37890480dd84364
     public static void httpCrypto() {
         try {
@@ -46,7 +72,7 @@ public class Crypto {
 
             System.out.println(List.of(privateKey.getEncoded()));
             System.out.println(List.of(publicKey.getEncoded()));
-            
+
             //Шифровать 
             Cipher encryptCipher = Cipher.getInstance("RSA");
             encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
