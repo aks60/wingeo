@@ -38,14 +38,11 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-//import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 //https://www.novixys.com/blog/how-to-generate-rsa-keys-java/
 //https://gist.github.com/thomasdarimont/b05e3e785e088e35d37890480dd84364
 public class Crypto {
 
-    private static String algorithm = "DESede";
-    private static byte[] encoded = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};
     public static String keyFile = "C:\\Temp\\crypto";
 
     public static void writeFileKeyPair() throws NoSuchAlgorithmException,
@@ -71,15 +68,15 @@ public class Crypto {
 
     public static void readFileKeyPair() throws IOException,
             NoSuchAlgorithmException, InvalidKeySpecException {
-
-        Path path = Paths.get(keyFile);
         {
+            Path path = Paths.get(keyFile + ".key");
             byte[] bytes = Files.readAllBytes(path);
             PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(bytes);
             KeyFactory kf = KeyFactory.getInstance("RSA");
             PrivateKey pvt = kf.generatePrivate(ks);
         }
         {
+            Path path = Paths.get(keyFile + ".pub");
             byte[] bytes = Files.readAllBytes(path);
             X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
             KeyFactory kf = KeyFactory.getInstance("RSA");
@@ -102,21 +99,22 @@ public class Crypto {
             //Шифровать 
             Cipher encryptCipher = Cipher.getInstance("RSA");
             encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
-            byte[] secretMessageBytes = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};
-            String secretMessage = new String(secretMessageBytes, StandardCharsets.UTF_8);
-            byte[] encryptedMessageBytes = encryptCipher.doFinal(secretMessageBytes);
-            String encodedMessage = Base64.getEncoder().encodeToString(encryptedMessageBytes); //закодированный
+            byte[] secretMesBytes = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};
+            String secretMesStr = new String(secretMesBytes, StandardCharsets.UTF_8);
+            byte[] encryptedMesBytes = encryptCipher.doFinal(secretMesBytes);
+            String encodedMesStr = Base64.getEncoder().encodeToString(encryptedMesBytes); //закодированный
 
             //Расшифровывать
             Cipher decryptCipher = Cipher.getInstance("RSA");
             decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
-            byte[] decryptedMessageBytes = decryptCipher.doFinal(encryptedMessageBytes);
-            String decryptedMessage = new String(decryptedMessageBytes, StandardCharsets.UTF_8); //декодированный
+            byte[] decryptedMesBytes = decryptCipher.doFinal(encryptedMesBytes);
+            String decryptedMesStr = new String(decryptedMesBytes, StandardCharsets.UTF_8); //декодированный
 
             //Сравнить
-            System.out.println(secretMessage);
-            if (secretMessage.equals(decryptedMessage)) {
-                System.out.println(decryptedMessage);
+            System.out.println(secretMesStr);
+            System.out.println(decryptedMesStr);
+            if (secretMesStr.equals(decryptedMesStr)) {
+                System.out.println("УРА АКСЁНОВ");
             }
 
         } catch (InvalidKeyException e) {
@@ -137,7 +135,7 @@ public class Crypto {
             //Загрузим файл
             URL url = Crypto.class.getResource("/resource/securety/crypto.pub");
             Path path = Paths.get(url.toURI());
-            byte[] bytes = Files.readAllBytes(path);  
+            byte[] bytes = Files.readAllBytes(path);
 
             //Получим ключ
             X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
@@ -147,36 +145,36 @@ public class Crypto {
             //Cлучайное сообщение
             SecureRandom random = new SecureRandom();
             String randomMes = new BigInteger(130, random).toString(32);
- //           String randomMes = new BigInteger(32, random).toString();
 
             //Шифровать случайное сообщение
             Cipher encryptCipher = Cipher.getInstance("RSA");
             encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
-            byte[] randomMesBytes = randomMes.getBytes();
+            byte[] randomMesBytes = randomMes.getBytes("UTF-8");
             byte[] encryptMesBytes = encryptCipher.doFinal(randomMesBytes); //закодированный 
             String encodeMesStr = Base64.getEncoder().encodeToString(encryptMesBytes);
 
             //Отправить на сервер закодированное случайное сообщение
-//            var request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&message=" + encodeMesStr)).build();
-//            var client = HttpClient.newHttpClient();
-//            HttpResponse.BodyHandler<String> asString = HttpResponse.BodyHandlers.ofString();
-//            HttpResponse<String> response = client.send(request, asString);
+            var request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&message=" + encodeMesStr)).build();
+            var client = HttpClient.newHttpClient();
+            HttpResponse.BodyHandler<String> asString = HttpResponse.BodyHandlers.ofString();
+            HttpResponse<String> response = client.send(request, asString);
+
+            if (randomMes.equals(response.body().trim())) {
+                System.out.println("УРА ТЫ ГЕНИЙ");
+            }
 
             //Полученное разшифрованное закр. ключом сообщение  
-            System.out.println("MESSAGE3a = " + randomMes);
-            System.out.println("MESSAGE2a = " + encodeMesStr);
-            
-            mesDecode(encodeMesStr);
-           
+            //System.out.println("httpSynch2 = " + randomMes);
+            //System.out.println("httpSynch3 = " + response.body());
+
+            //mesDecode(encodeMesStr);
         } catch (Exception e) {
             System.err.println("Ошибка: Crypto.httpSynch() " + e);
         }
     }
 
-    public static void mesDecode(String encryptMesStr) throws Exception {
-        byte[] decodeMesByte = Base64.getDecoder().decode(encryptMesStr);
-        String decodedMesStr = new String(decodeMesByte);
-        System.out.println("MESSAGE2c = " + decodedMesStr);
+    public static void mesВecrypte(String encodeMesStr) throws Exception {
+        byte[] decodeMesByte = Base64.getDecoder().decode(encodeMesStr);
 
         //Загрузим файл
         URL url = Crypto.class.getResource("/resource/securety/crypto.key");
@@ -191,10 +189,8 @@ public class Crypto {
         //Расшифровывать
         Cipher decryptCipher = Cipher.getInstance("RSA");
         decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
-        byte[] decryptMesBytes = decryptCipher.doFinal(decodedMesStr.getBytes());
+        byte[] decryptMesBytes = decryptCipher.doFinal(decodeMesByte);
         String decryptMesStr = new String(decryptMesBytes, StandardCharsets.UTF_8); //декодированный
-
-        System.out.println("MESSAGE3c = " + decryptMesStr);
     }
 
     public static void httpAsync() throws ExecutionException, InterruptedException {
@@ -222,13 +218,6 @@ public class Crypto {
                 .get();
 
         executor.shutdownNow();
-    }
-
-    public static String random() {
-        SecureRandom random = new SecureRandom();
-        String rndstr = new BigInteger(130, random).toString(32);
-        System.out.println(rndstr);
-        return rndstr;
     }
 
 // <editor-fold defaultstate="collapsed" desc="EXAMPLE">

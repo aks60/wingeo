@@ -28,8 +28,11 @@ import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,8 +110,19 @@ public class Test {
             //uid();
             //script();
             //geom();
-            //Crypto.httpSynch();
-            Crypto.generateKeyPair();
+            Crypto.httpSynch();
+            
+//            SecureRandom random = new SecureRandom();
+//            String randomMesStr = new BigInteger(130, random).toString(32);            
+//            
+//            byte[] randomMesByte = randomMesStr.getBytes(); 
+//            String encodedMesStr = Base64.getEncoder().encodeToString(randomMesByte); 
+//            
+//            byte[] decodeMesByte = Base64.getDecoder().decode(encodedMesStr);
+//            String decodedMesStr = new String(decodeMesByte);
+//            
+//            System.out.println(randomMesStr);
+//            System.out.println(decodedMesStr);
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
@@ -203,7 +217,7 @@ public class Test {
             //winc.listElem.forEach(it -> System.out.println(it));
             //winc.listJoin.forEach(it -> System.out.println(it.joiningRec));     
             //winc.listJoin.forEach(it -> System.out.println(it));   
-            
+
         } else if (_case.equals("min")) {
             List<Integer> prjList = GsonScript.systemList(_case);
             for (int prj : prjList) {
@@ -421,14 +435,14 @@ public class Test {
             new Coordinate(200, 200, 1), new Coordinate(200, 800, 2),
             new Coordinate(800, 800, 3), new Coordinate(800, 200, 4),
             new Coordinate(200, 200, 1)};
-        
+
         LineString line = gf.createLineString(new Coordinate[]{new Coordinate(600, 200, -1), new Coordinate(800, 400, -1)});
         Polygon poly = gf.createPolygon(coord1);
         Geometry geom = UGeo.splitPolygon(poly, line);
-        
+
         geom.getGeometryN(0).normalize();
         geom.getGeometryN(1).normalize();
-        
+
         System.out.println(List.of(geom.getGeometryN(0).getCoordinates()));
         System.out.println(List.of(geom.getGeometryN(1).getCoordinates()));
 
@@ -436,7 +450,7 @@ public class Test {
     }
 
     public static void clearDataDB() {
-        
+
         for (Field field : App.db) {
             if (field.tname().equals("GROUPS") == true) {
                 System.out.println("delete from " + field.tname() + " where id < 0;");
