@@ -11,15 +11,23 @@ import java.net.Authenticator;
 import java.net.InetSocketAddress;
 import java.net.ProxySelector;
 import java.net.URI;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.Key;
+import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.time.Duration;
 import java.util.Base64;
 import java.util.List;
@@ -32,35 +40,53 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 //import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
+//https://www.novixys.com/blog/how-to-generate-rsa-keys-java/
+//https://gist.github.com/thomasdarimont/b05e3e785e088e35d37890480dd84364
 public class Crypto {
 
-    //private static String algorithm = "DESede";
-    //private static byte[] encoded = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};
-    //static String rndstr = "";
-    //https://www.novixys.com/blog/how-to-generate-rsa-keys-java/
-    public static void generateKeyPair() throws NoSuchAlgorithmException,
+    private static String algorithm = "DESede";
+    private static byte[] encoded = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};
+    public static String keyFile = "C:\\Temp\\crypto";
+
+    public static void writeFileKeyPair() throws NoSuchAlgorithmException,
             FileNotFoundException, IOException {
 
         KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
         kpg.initialize(2048);
         KeyPair kp = kpg.generateKeyPair();
-        Key pub = kp.getPublic();
         Key pvt = kp.getPrivate();
+        Key pub = kp.getPublic();
 
-        String outFile = "./resource/securety/crypto";
-        var out = new FileOutputStream(outFile + ".key");
+        var out = new FileOutputStream(keyFile + ".key");
         out.write(pvt.getEncoded());
         out.close();
 
-        out = new FileOutputStream(outFile + ".pub");
-        out.write(pvt.getEncoded());
+        out = new FileOutputStream(keyFile + ".pub");
+        out.write(pub.getEncoded());
         out.close();
 
         System.err.println("Private key format: " + pvt.getFormat());
         System.err.println("Public key format: " + pub.getFormat());
     }
 
-    //https://gist.github.com/thomasdarimont/b05e3e785e088e35d37890480dd84364
+    public static void readFileKeyPair() throws IOException,
+            NoSuchAlgorithmException, InvalidKeySpecException {
+
+        Path path = Paths.get(keyFile);
+        {
+            byte[] bytes = Files.readAllBytes(path);
+            PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(bytes);
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+            PrivateKey pvt = kf.generatePrivate(ks);
+        }
+        {
+            byte[] bytes = Files.readAllBytes(path);
+            X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+            PublicKey pub = kf.generatePublic(ks);
+        }
+    }
+
     public static void httpCrypto() {
         try {
             //Пара ключей RSA
@@ -106,36 +132,76 @@ public class Crypto {
         }
     }
 
-    /**
-     * Пример отправки синхронного POST-запроса
-     *
-     * @throws InterruptedException
-     * @throws java.util.concurrent.ExecutionException
-     */
-    public static void httpSynch() throws ExecutionException, InterruptedException, Exception {
-        HttpClient client = HttpClient.newBuilder()
-                .version(HttpClient.Version.HTTP_1_1)
-                .followRedirects(HttpClient.Redirect.NORMAL)
-                .connectTimeout(Duration.ofSeconds(20))
-                .proxy(ProxySelector.of(new InetSocketAddress("proxy.example.com", 8085)))
-                .authenticator(Authenticator.getDefault())
-                .build();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&username=sysdba"))
-                .timeout(Duration.ofMinutes(1))
-                .header("Content-Type", "application/json")
-                .GET()
-                .build();
+    public static void httpSynch() {
+        try {
+            //Загрузим файл
+            URL url = Crypto.class.getResource("/resource/securety/crypto.pub");
+            Path path = Paths.get(url.toURI());
+            byte[] bytes = Files.readAllBytes(path);  
 
-        var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            //Получим ключ
+            X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+            PublicKey publicKey = kf.generatePublic(ks);
+
+            //Cлучайное сообщение
+            SecureRandom random = new SecureRandom();
+            String randomMes = new BigInteger(130, random).toString(32);
+ //           String randomMes = new BigInteger(32, random).toString();
+
+            //Шифровать случайное сообщение
+            Cipher encryptCipher = Cipher.getInstance("RSA");
+            encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
+            byte[] randomMesBytes = randomMes.getBytes();
+            byte[] encryptMesBytes = encryptCipher.doFinal(randomMesBytes); //закодированный 
+            String encodeMesStr = Base64.getEncoder().encodeToString(encryptMesBytes);
+
+            //Отправить на сервер закодированное случайное сообщение
+//            var request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&message=" + encodeMesStr)).build();
+//            var client = HttpClient.newHttpClient();
+//            HttpResponse.BodyHandler<String> asString = HttpResponse.BodyHandlers.ofString();
+//            HttpResponse<String> response = client.send(request, asString);
+
+            //Полученное разшифрованное закр. ключом сообщение  
+            System.out.println("MESSAGE3a = " + randomMes);
+            System.out.println("MESSAGE2a = " + encodeMesStr);
+            
+            mesDecode(encodeMesStr);
+           
+        } catch (Exception e) {
+            System.err.println("Ошибка: Crypto.httpSynch() " + e);
+        }
     }
 
-    //https://gist.github.com/thomasdarimont/b05e3e785e088e35d37890480dd84364
+    public static void mesDecode(String encryptMesStr) throws Exception {
+        byte[] decodeMesByte = Base64.getDecoder().decode(encryptMesStr);
+        String decodedMesStr = new String(decodeMesByte);
+        System.out.println("MESSAGE2c = " + decodedMesStr);
+
+        //Загрузим файл
+        URL url = Crypto.class.getResource("/resource/securety/crypto.key");
+        Path path = Paths.get(url.toURI());
+        byte[] bytes = Files.readAllBytes(path);
+
+        //Получим ключ
+        PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(bytes);
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+        PrivateKey privateKey = kf.generatePrivate(ks);
+
+        //Расшифровывать
+        Cipher decryptCipher = Cipher.getInstance("RSA");
+        decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
+        byte[] decryptMesBytes = decryptCipher.doFinal(decodedMesStr.getBytes());
+        String decryptMesStr = new String(decryptMesBytes, StandardCharsets.UTF_8); //декодированный
+
+        System.out.println("MESSAGE3c = " + decryptMesStr);
+    }
+
     public static void httpAsync() throws ExecutionException, InterruptedException {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&username=sysdba"))
-                //                .uri(URI.create("https://postman-echo.com/post"))
+                //.uri(URI.create("https://postman-echo.com/post")) //тест запроса!!!
                 .header("Content-Type", "text/plain")
                 .POST(HttpRequest.BodyPublishers.ofString("Hi there!"))
                 .build();
@@ -147,8 +213,8 @@ public class Crypto {
 
         response.thenApply(res -> {
             System.out.printf("StatusCode: %s%n", res.statusCode());
-            //System.out.println("Version = " + res.version());
-            //System.out.println("Body = " + res.body());
+            System.out.println("Version = " + res.version());
+            System.out.println("Body = " + res.body());
             return res;
         })
                 .thenApply(HttpResponse::body)
@@ -158,13 +224,33 @@ public class Crypto {
         executor.shutdownNow();
     }
 
-    public static void random() {
+    public static String random() {
         SecureRandom random = new SecureRandom();
         String rndstr = new BigInteger(130, random).toString(32);
         System.out.println(rndstr);
+        return rndstr;
     }
 
 // <editor-fold defaultstate="collapsed" desc="EXAMPLE">
+    public static void httpSynch2() throws ExecutionException, InterruptedException, Exception {
+        HttpClient client = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_1_1)
+                .followRedirects(HttpClient.Redirect.NORMAL)
+                .connectTimeout(Duration.ofSeconds(20))
+                .proxy(ProxySelector.of(new InetSocketAddress("proxy.example.com", 8085)))
+                .authenticator(Authenticator.getDefault())
+                .build();
+        HttpRequest request = HttpRequest.newBuilder()
+                //.uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&username=sysdba"))
+                .uri(URI.create("https://example.com")) //тест запроса!!!
+                .timeout(Duration.ofMinutes(1))
+                .header("Content-Type", "application/json")
+                .GET()
+                .build();
+
+        var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+
     public void get(String uri) throws Exception {
 
         HttpClient client = HttpClient.newHttpClient();
