@@ -173,7 +173,7 @@ public class Crypto {
         }
     }
 
-    public static void mesВecrypte(String encodeMesStr) throws Exception {
+    public static void testServer(String encodeMesStr) throws Exception {
         byte[] decodeMesByte = Base64.getDecoder().decode(encodeMesStr);
 
         //Загрузим файл

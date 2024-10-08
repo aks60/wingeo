@@ -110,7 +110,7 @@ public class Test {
             //uid();
             //script();
             //geom();
-            //Crypto.httpSynch();
+            Crypto.httpSynch();
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
