@@ -110,19 +110,7 @@ public class Test {
             //uid();
             //script();
             //geom();
-            Crypto.httpSynch();
-            
-//            SecureRandom random = new SecureRandom();
-//            String randomMesStr = new BigInteger(130, random).toString(32);            
-//            
-//            byte[] randomMesByte = randomMesStr.getBytes(); 
-//            String encodedMesStr = Base64.getEncoder().encodeToString(randomMesByte); 
-//            
-//            byte[] decodeMesByte = Base64.getDecoder().decode(encodedMesStr);
-//            String decodedMesStr = new String(decodeMesByte);
-//            
-//            System.out.println(randomMesStr);
-//            System.out.println(decodedMesStr);
+            //Crypto.httpSynch();
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
