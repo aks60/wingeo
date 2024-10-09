@@ -160,40 +160,86 @@ public class Crypto {
             HttpResponse<String> response = client.send(request, asString);
 
             if (randomMes.equals(response.body().trim())) {
-                System.out.println("УРА ТЫ ГЕНИЙ");
+                System.out.println("httpSynch УРА ТЫ ГЕНИЙ");
             }
-
+            
             //Полученное разшифрованное закр. ключом сообщение  
             //System.out.println("httpSynch2 = " + randomMes);
             //System.out.println("httpSynch3 = " + response.body());
-
-            //mesDecode(encodeMesStr);
+            
+            //testServer(encodeMesStr);
+            
         } catch (Exception e) {
             System.err.println("Ошибка: Crypto.httpSynch() " + e);
         }
     }
 
-    public static void testServer(String encodeMesStr) throws Exception {
-        byte[] decodeMesByte = Base64.getDecoder().decode(encodeMesStr);
+    public static void httpAsync() throws ExecutionException, InterruptedException {
 
-        //Загрузим файл
-        URL url = Crypto.class.getResource("/resource/securety/crypto.key");
-        Path path = Paths.get(url.toURI());
-        byte[] bytes = Files.readAllBytes(path);
+        try {
+            //Загрузим файл
+            URL url = Crypto.class.getResource("/resource/securety/crypto.pub");
+            Path path = Paths.get(url.toURI());
+            byte[] bytes = Files.readAllBytes(path);
 
-        //Получим ключ
-        PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(bytes);
-        KeyFactory kf = KeyFactory.getInstance("RSA");
-        PrivateKey privateKey = kf.generatePrivate(ks);
+            //Получим ключ
+            X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+            PublicKey publicKey = kf.generatePublic(ks);
 
-        //Расшифровывать
-        Cipher decryptCipher = Cipher.getInstance("RSA");
-        decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
-        byte[] decryptMesBytes = decryptCipher.doFinal(decodeMesByte);
-        String decryptMesStr = new String(decryptMesBytes, StandardCharsets.UTF_8); //декодированный
+            //Cлучайное сообщение
+            SecureRandom random = new SecureRandom();
+            String randomMes = new BigInteger(130, random).toString(32);
+
+            //Шифровать случайное сообщение
+            Cipher encryptCipher = Cipher.getInstance("RSA");
+            encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
+            byte[] randomMesBytes = randomMes.getBytes("UTF-8");
+            byte[] encryptMesBytes = encryptCipher.doFinal(randomMesBytes); //закодированный 
+            String encodeMesStr = Base64.getEncoder().encodeToString(encryptMesBytes);
+
+            //Отправить на сервер закодированное случайное сообщение
+            var request = HttpRequest.newBuilder()
+                    .uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&message=" + encodeMesStr)).build();
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            HttpClient client = HttpClient.newBuilder().executor(executor).build();
+            var response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+
+            response.thenApply(res -> {
+                if (randomMes.equals(res.body().trim())) {
+                    System.out.println("httpAsync УРА ТЫ ГЕНИЙ");
+                }
+                return res;
+            }).get();           
+            executor.shutdownNow();
+
+        } catch (Exception e) {
+            System.err.println("Ошибка: Crypto.httpSynch() " + e);
+        }
+    }
+       
+
+// <editor-fold defaultstate="collapsed" desc="EXAMPLE">
+    public static void httpSynch2() throws ExecutionException, InterruptedException, Exception {
+        HttpClient client = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_1_1)
+                .followRedirects(HttpClient.Redirect.NORMAL)
+                .connectTimeout(Duration.ofSeconds(20))
+                .proxy(ProxySelector.of(new InetSocketAddress("proxy.example.com", 8085)))
+                .authenticator(Authenticator.getDefault())
+                .build();
+        HttpRequest request = HttpRequest.newBuilder()
+                //.uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&username=sysdba"))
+                .uri(URI.create("https://example.com")) //тест запроса!!!
+                .timeout(Duration.ofMinutes(1))
+                .header("Content-Type", "application/json")
+                .GET()
+                .build();
+
+        var response = client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
-    public static void httpAsync() throws ExecutionException, InterruptedException {
+    public static void httpAsync2() throws ExecutionException, InterruptedException {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&username=sysdba"))
@@ -218,26 +264,6 @@ public class Crypto {
                 .get();
 
         executor.shutdownNow();
-    }
-
-// <editor-fold defaultstate="collapsed" desc="EXAMPLE">
-    public static void httpSynch2() throws ExecutionException, InterruptedException, Exception {
-        HttpClient client = HttpClient.newBuilder()
-                .version(HttpClient.Version.HTTP_1_1)
-                .followRedirects(HttpClient.Redirect.NORMAL)
-                .connectTimeout(Duration.ofSeconds(20))
-                .proxy(ProxySelector.of(new InetSocketAddress("proxy.example.com", 8085)))
-                .authenticator(Authenticator.getDefault())
-                .build();
-        HttpRequest request = HttpRequest.newBuilder()
-                //.uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&username=sysdba"))
-                .uri(URI.create("https://example.com")) //тест запроса!!!
-                .timeout(Duration.ofMinutes(1))
-                .header("Content-Type", "application/json")
-                .GET()
-                .build();
-
-        var response = client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
     public void get(String uri) throws Exception {
