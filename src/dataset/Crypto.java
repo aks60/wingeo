@@ -200,7 +200,8 @@ public class Crypto {
 
             //Отправить на сервер закодированное случайное сообщение
             var request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&message=" + encodeMesStr)).build();
+                    .uri(URI.create("http://31.172.66.46:8080/winnet/Crypto?action=secret&message=" + encodeMesStr)).build();
+//                    .uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&message=" + encodeMesStr)).build();
             ExecutorService executor = Executors.newSingleThreadExecutor();
             HttpClient client = HttpClient.newBuilder().executor(executor).build();
             var response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
