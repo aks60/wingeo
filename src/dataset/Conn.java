@@ -26,7 +26,7 @@ import startup.App;
  */
 public class Conn {
 
-    public static boolean httpcheck = false;
+    private static boolean httpcheck = false;
     private static boolean webapp = false;
     private static Connection connection = null;
     protected static Statement statement = null;
@@ -43,6 +43,10 @@ public class Conn {
         return connection;
     }
 
+    public static void setHttpcheck(boolean httpcheck) {
+        Conn.httpcheck = httpcheck;
+    }
+    
     public static boolean isWebapp() {
         return webapp == true;
     }

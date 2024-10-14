@@ -209,7 +209,7 @@ public class Crypto {
             HttpClient client = HttpClient.newBuilder().executor(executor).build();
             client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(res -> {
                 if (randomMes.equals(res.body().trim())) {
-                    Conn.httpcheck = true;
+                    Conn.setHttpcheck(true);
                     //JOptionPane.showMessageDialog(null, "Успех активации программы", "Сообщение", JOptionPane.ERROR_MESSAGE);
                 }
                 return res;
