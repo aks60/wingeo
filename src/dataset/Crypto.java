@@ -134,48 +134,6 @@ public class Crypto {
         }
     }
 
-    public static void httpSynch() {
-        try {
-            //Загрузим файл
-            URL url = Crypto.class.getResource("/resource/securety/crypto.pub");
-            Path path = Paths.get(url.toURI());
-            byte[] bytes = Files.readAllBytes(path);
-
-            //Получим ключ
-            X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
-            KeyFactory kf = KeyFactory.getInstance("RSA");
-            PublicKey publicKey = kf.generatePublic(ks);
-
-            //Cлучайное сообщение
-            SecureRandom random = new SecureRandom();
-            String randomMes = new BigInteger(130, random).toString(32);
-
-            //Шифровать случайное сообщение
-            Cipher encryptCipher = Cipher.getInstance("RSA");
-            encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
-            byte[] randomMesBytes = randomMes.getBytes("UTF-8");
-            byte[] encryptMesBytes = encryptCipher.doFinal(randomMesBytes); //закодированный 
-            String encodeMesStr = Base64.getEncoder().encodeToString(encryptMesBytes);
-
-            //Отправить на сервер закодированное случайное сообщение
-            var request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&message=" + encodeMesStr)).build();
-            var client = HttpClient.newHttpClient();
-            HttpResponse.BodyHandler<String> asString = HttpResponse.BodyHandlers.ofString();
-            HttpResponse<String> response = client.send(request, asString);
-
-            if (randomMes.equals(response.body().trim())) {
-                System.out.println("httpSynch УРА ТЫ ГЕНИЙ");
-            }
-
-            //Полученное разшифрованное закр. ключом сообщение  
-            //System.out.println("httpSynch2 = " + randomMes);
-            //System.out.println("httpSynch3 = " + response.body());
-            //testServer(encodeMesStr);
-        } catch (Exception e) {
-            System.err.println("Ошибка: Crypto.httpSynch() " + e);
-        }
-    }
-
     public static void httpAsync(String server) {
         try {
             //Загрузим файл
@@ -228,6 +186,48 @@ public class Crypto {
     }
 
 // <editor-fold defaultstate="collapsed" desc="EXAMPLE">
+    public static void httpSynch() {
+        try {
+            //Загрузим файл
+            URL url = Crypto.class.getResource("/resource/securety/crypto.pub");
+            Path path = Paths.get(url.toURI());
+            byte[] bytes = Files.readAllBytes(path);
+
+            //Получим ключ
+            X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+            PublicKey publicKey = kf.generatePublic(ks);
+
+            //Cлучайное сообщение
+            SecureRandom random = new SecureRandom();
+            String randomMes = new BigInteger(130, random).toString(32);
+
+            //Шифровать случайное сообщение
+            Cipher encryptCipher = Cipher.getInstance("RSA");
+            encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
+            byte[] randomMesBytes = randomMes.getBytes("UTF-8");
+            byte[] encryptMesBytes = encryptCipher.doFinal(randomMesBytes); //закодированный 
+            String encodeMesStr = Base64.getEncoder().encodeToString(encryptMesBytes);
+
+            //Отправить на сервер закодированное случайное сообщение
+            var request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&message=" + encodeMesStr)).build();
+            var client = HttpClient.newHttpClient();
+            HttpResponse.BodyHandler<String> asString = HttpResponse.BodyHandlers.ofString();
+            HttpResponse<String> response = client.send(request, asString);
+
+            if (randomMes.equals(response.body().trim())) {
+                System.out.println("httpSynch УРА ТЫ ГЕНИЙ");
+            }
+
+            //Полученное разшифрованное закр. ключом сообщение  
+            //System.out.println("httpSynch2 = " + randomMes);
+            //System.out.println("httpSynch3 = " + response.body());
+            //testServer(encodeMesStr);
+        } catch (Exception e) {
+            System.err.println("Ошибка: Crypto.httpSynch() " + e);
+        }
+    }
+
     public static void httpSynch2() throws ExecutionException, InterruptedException, Exception {
         HttpClient client = HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_1_1)
