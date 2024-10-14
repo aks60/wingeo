@@ -7,7 +7,6 @@ import common.eProp;
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.List;
 import javax.swing.SwingWorker;
 import startup.App;
 
@@ -19,7 +18,7 @@ public class LogoToDb extends javax.swing.JDialog {
     public LogoToDb(java.awt.Window owner) {
         super(owner);
         initComponents();
-
+        
         //Автопароль при тестировании
         if (eProp.dev == true) {
             if ("adm".equals(eProp.profile)) {
@@ -35,16 +34,17 @@ public class LogoToDb extends javax.swing.JDialog {
             connectToDb();
 
         } else {
-//            labMes.setText("");
-//            edUser.setText(eProp.user.read());
-//            if (List.of("SYSDBA", "TEXNOLOG", "MANAGER")
-//                    .contains(eProp.user.read().toUpperCase())) {
-//
-//                edPass.setText("masterkey");
-//                connectToDb();
-//            } else {
+            edUser.setText(eProp.user.read());
+            labMes.setText("Введите логин и пароль");           
             edPass.requestFocus();
             getRootPane().setDefaultButton(btnOk);
+//            if (List.of("SYSDBA", "TEXNOLOG", "MANAGER")
+//                    .contains(eProp.user.read().toUpperCase())) {
+//                //edPass.setText("masterkey");
+//                //connectToDb();
+//            } else {
+//                edPass.requestFocus();
+//                getRootPane().setDefaultButton(btnOk);
 //            }
         }
     }
@@ -53,7 +53,6 @@ public class LogoToDb extends javax.swing.JDialog {
      * Команда на соединение с БД.
      */
     public void connectToDb() {
-        labMes.setText("");
         if (++countCon > 3) {
             dispose();
             PathToDb.pathToDb(null);
@@ -281,6 +280,7 @@ public class LogoToDb extends javax.swing.JDialog {
 
     private void closeAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeAction
         System.exit(0);
+        
     }//GEN-LAST:event_closeAction
 
     private void okAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okAction
@@ -288,7 +288,6 @@ public class LogoToDb extends javax.swing.JDialog {
     }//GEN-LAST:event_okAction
 
     private void passonCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_passonCaretUpdate
-        labMes.setText("");
         if (edPass.getPassword().length > 0 && !edUser.getText().isEmpty()) {
             btnOk.setEnabled(true);
         } else {

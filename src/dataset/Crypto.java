@@ -11,6 +11,7 @@ import java.net.Authenticator;
 import java.net.InetSocketAddress;
 import java.net.ProxySelector;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.http.HttpTimeoutException;
 import java.nio.charset.StandardCharsets;
@@ -49,6 +50,7 @@ public class Crypto {
 
     public static String keyFile = "C:\\Temp\\crypto";
 
+    //Генерация ключей
     public static void writeFileKeyPair() throws NoSuchAlgorithmException,
             FileNotFoundException, IOException {
 
@@ -68,24 +70,6 @@ public class Crypto {
 
         System.err.println("Private key format: " + pvt.getFormat());
         System.err.println("Public key format: " + pub.getFormat());
-    }
-
-    public static void readFileKeyPair() throws IOException,
-            NoSuchAlgorithmException, InvalidKeySpecException {
-        {
-            Path path = Paths.get(keyFile + ".key");
-            byte[] bytes = Files.readAllBytes(path);
-            PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(bytes);
-            KeyFactory kf = KeyFactory.getInstance("RSA");
-            PrivateKey pvt = kf.generatePrivate(ks);
-        }
-        {
-            Path path = Paths.get(keyFile + ".pub");
-            byte[] bytes = Files.readAllBytes(path);
-            X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
-            KeyFactory kf = KeyFactory.getInstance("RSA");
-            PublicKey pub = kf.generatePublic(ks);
-        }
     }
 
     public static void httpCrypto() {
@@ -164,7 +148,7 @@ public class Crypto {
             ExecutorService executor = Executors.newSingleThreadExecutor();
             HttpClient client = HttpClient.newBuilder().executor(executor).build();
             client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(res -> {
-                
+
                 //Проверка сервера
                 if (randomMes.equals(res.body().trim())) {
                     Conn.setHttpcheck(true);
@@ -186,6 +170,24 @@ public class Crypto {
     }
 
 // <editor-fold defaultstate="collapsed" desc="EXAMPLE">
+    public static void readFileKeyPair() throws IOException,
+            NoSuchAlgorithmException, InvalidKeySpecException {
+        {
+            Path path = Paths.get(keyFile + ".key");
+            byte[] bytes = Files.readAllBytes(path);
+            PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(bytes);
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+            PrivateKey pvt = kf.generatePrivate(ks);
+        }
+        {
+            Path path = Paths.get(keyFile + ".pub");
+            byte[] bytes = Files.readAllBytes(path);
+            X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+            PublicKey pub = kf.generatePublic(ks);
+        }
+    }
+
     public static void httpSynch() {
         try {
             //Загрузим файл
@@ -228,26 +230,7 @@ public class Crypto {
         }
     }
 
-    public static void httpSynch2() throws ExecutionException, InterruptedException, Exception {
-        HttpClient client = HttpClient.newBuilder()
-                .version(HttpClient.Version.HTTP_1_1)
-                .followRedirects(HttpClient.Redirect.NORMAL)
-                .connectTimeout(Duration.ofSeconds(20))
-                .proxy(ProxySelector.of(new InetSocketAddress("proxy.example.com", 8085)))
-                .authenticator(Authenticator.getDefault())
-                .build();
-        HttpRequest request = HttpRequest.newBuilder()
-                //.uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&username=sysdba"))
-                .uri(URI.create("https://example.com")) //тест запроса!!!
-                .timeout(Duration.ofMinutes(1))
-                .header("Content-Type", "application/json")
-                .GET()
-                .build();
-
-        var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-    }
-
-    public static void httpAsync2() throws ExecutionException, InterruptedException {
+    public static void httpAsync() throws ExecutionException, InterruptedException {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&username=sysdba"))
@@ -272,37 +255,6 @@ public class Crypto {
                 .get();
 
         executor.shutdownNow();
-    }
-
-    public void get(String uri) throws Exception {
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(uri)).build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-        System.out.println(response.body());
-    }
-
-    public void get2(String uri) throws Exception {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI("https://postman-echo.com/get"))
-                .GET()
-                .build();
-
-        HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("https://postman-echo.com/get"))
-                .version(HttpClient.Version.HTTP_2)
-                .GET()
-                .build();
-
-        byte[] sampleData = "Sample request body".getBytes();
-        HttpRequest request3 = HttpRequest.newBuilder()
-                .uri(new URI("https://postman-echo.com/post"))
-                .headers("Content-Type", "text/plain;charset=UTF-8")
-                .POST(HttpRequest.BodyPublishers.ofByteArray(sampleData))
-                .build();
-
-        //HttpResponse<String> response = client.send(request, HttpResponse.BodyHandler.asString());
     }
 
 // </editor-fold>    
