@@ -160,15 +160,14 @@ public class Crypto {
             //Отправить на сервер закодированное случайное сообщениеtry 
             var request = HttpRequest.newBuilder()
                     .uri(URI.create("http://" + server + ":8080/winnet/Crypto?action=secret&message=" + encodeMesStr))
-                    //.uri(URI.create("http://31.172.66.46:8080/winnet/Crypto?action=secret&message=" + encodeMesStr))
-                    //.uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&message=" + encodeMesStr)))
                     .timeout(Duration.ofSeconds(16)).build();
             ExecutorService executor = Executors.newSingleThreadExecutor();
             HttpClient client = HttpClient.newBuilder().executor(executor).build();
             client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(res -> {
+                
+                //Проверка сервера
                 if (randomMes.equals(res.body().trim())) {
                     Conn.setHttpcheck(true);
-                    //JOptionPane.showMessageDialog(null, "Успех активации программы", "Сообщение", JOptionPane.ERROR_MESSAGE);
                 }
                 return res;
             }).get();

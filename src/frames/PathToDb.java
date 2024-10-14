@@ -8,6 +8,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import dataset.eExcep;
 import frames.swing.FileFilter;
+import java.awt.Color;
 import java.awt.Frame;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -44,24 +45,25 @@ public class PathToDb extends javax.swing.JDialog {
             @Override
             protected Object doInBackground() throws Exception {
                 progressBar.setIndeterminate(true);
+                labMes.setForeground(Color.BLUE);
                 labMes.setText("Установка соединения с базой данных");
                 eExcep pass = Conn.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), null);
                 if (pass == eExcep.yesConn) {
-                    
+
                     if ("SYSDBA".equalsIgnoreCase(edUser.getText())) {
-                            if (App.Top.frame == null) {
-                                App.createApp(eProfile.P01);
-                            }
-                            eProp.user.write(edUser.getText().trim());
-                            eProp.password = String.valueOf(edPass.getPassword()).trim();
-                            eProp.base_num.write(num_base);
-                            eProp.port(num_base, edPort.getText().trim());
-                            eProp.server(num_base, edHost.getText().trim());
-                            eProp.base(num_base, edPath.getText().trim());
-                            eProp.save();
-                            dispose();
-                        
-                    } else {  
+                        if (App.Top.frame == null) {
+                            App.createApp(eProfile.P01);
+                        }
+                        eProp.user.write(edUser.getText().trim());
+                        eProp.password = String.valueOf(edPass.getPassword()).trim();
+                        eProp.base_num.write(num_base);
+                        eProp.port(num_base, edPort.getText().trim());
+                        eProp.server(num_base, edHost.getText().trim());
+                        eProp.base(num_base, edPath.getText().trim());
+                        eProp.save();
+                        dispose();
+
+                    } else {
                         //Получим роль по имени логина
                         Statement st = Conn.getConnection().createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
                         //ResultSet rs = st.executeQuery("SELECT DISTINCT a.rdb$role_name , b.rdb$user FROM rdb$roles a, rdb$user_privileges b WHERE a.rdb$role_name = b.rdb$relation_name AND b.rdb$user = '" + edUser.getText() + "'");
@@ -86,16 +88,11 @@ public class PathToDb extends javax.swing.JDialog {
                                 eProp.save();
                                 dispose();
                             }
-                        }                        
+                        }
                     }
                 }
-                if (pass == eExcep.noLogin) {
-                    labMes.setText(eExcep.noLogin.mes);
-                } else if (pass == eExcep.noGrant) {
-                    labMes.setText(eExcep.noGrant.mes);
-                } else {
-                    labMes.setText(eExcep.noConn.mes);
-                }
+                labMes.setForeground(Color.RED);
+                labMes.setText(pass.mes);
                 return null;
             }
 
@@ -391,7 +388,7 @@ public class PathToDb extends javax.swing.JDialog {
 }//GEN-LAST:event_btnOk
     //Нажал кнопку "ОТМЕНА"
     private void btnClose(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClose
-        this.dispose();
+        System.exit(0);
 }//GEN-LAST:event_btnClose
 
     private void btnFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFileActionPerformed

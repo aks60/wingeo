@@ -46,7 +46,7 @@ public class Conn {
     public static void setHttpcheck(boolean httpcheck) {
         Conn.httpcheck = httpcheck;
     }
-    
+
     public static boolean isWebapp() {
         return webapp == true;
     }
@@ -80,19 +80,13 @@ public class Conn {
 
     public static eExcep connection(String server, String port, String base, String user, char[] password, String role) {
         try {
-            //ДЛЯ ПРОДАКШЕН => if(eProp.dev = false) {
-            if (eProp.dev == true) {
+            if (eProp.dev == true && ("localhost".equals(base) || "127.0.0.1".equals(base))) {
                 Crypto.httpAsync("31.172.66.46");
             } else {
                 Crypto.httpAsync(server);
             }
-            if (httpcheck == false) {
-                JOptionPane.showMessageDialog(App.Top.frame, "Ошибка активации программы",
-                        "Ошибка", JOptionPane.ERROR_MESSAGE);
-                return eExcep.noConn;
-            }
             if (Class.forName(driver) == null) {
-                JOptionPane.showMessageDialog(App.Top.frame, "Ошибка загрузки файла драйвера",
+                JOptionPane.showMessageDialog(App.Top.frame, eExcep.loadDrive.mes,
                         "Ошибка", JOptionPane.ERROR_MESSAGE);
             }
             String url = fbserver + "//" + server + ":" + port + "/" + base;
@@ -113,6 +107,9 @@ public class Conn {
         } catch (SQLException e) {
             System.err.println(e);
             return eExcep.getError(e.getErrorCode());
+        }
+        if (httpcheck == false) {
+            return eExcep.noActiv;
         }
         return eExcep.yesConn;
     }

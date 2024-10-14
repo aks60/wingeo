@@ -4,6 +4,7 @@ import dataset.Conn;
 import dataset.eExcep;
 import common.eProfile;
 import common.eProp;
+import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
@@ -62,6 +63,7 @@ public class LogoToDb extends javax.swing.JDialog {
             @Override
             protected Object doInBackground() throws Exception {
                 progressBar.setIndeterminate(true);
+                labMes.setForeground(Color.BLUE);
                 labMes.setText("Установка соединения с базой данных");
                 String num = eProp.base_num.read();
                 eExcep pass = Conn.connection(eProp.server(num), eProp.port(num), eProp.base(num), edUser.getText(), edPass.getPassword(), null);
@@ -99,13 +101,8 @@ public class LogoToDb extends javax.swing.JDialog {
                         }
                     }
                 }
-                if (pass == eExcep.noLogin) {
-                    labMes.setText(eExcep.noLogin.mes);
-                } else if (pass == eExcep.noGrant) {
-                    labMes.setText(eExcep.noGrant.mes);
-                } else {
-                    labMes.setText(eExcep.noConn.mes);
-                }
+                labMes.setForeground(Color.RED);
+                labMes.setText(pass.mes);
                 return null;
             }
 
@@ -263,12 +260,12 @@ public class LogoToDb extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(pan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addComponent(pan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
