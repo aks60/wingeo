@@ -105,7 +105,7 @@ public class Test {
             //uid();
             //script();
             //geom();
-            Crypto.httpAsync("31.172.66.46");
+            //Crypto.httpAsync("31.172.66.46");
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);

@@ -56,7 +56,6 @@ public class Wincalc {
     public double price2 = 0; //стоимость без скидки
     public double cost2 = 0; //стоимость с технологической скидкой
     public double weight = 0; //масса конструкции  
-    //public double square = 0; //площадь конструкции  
     public double count = 0; //колич. единиц
     public BufferedImage bufferImg = null;  //образ рисунка
     public ImageIcon imageIcon = null; //рисунок конструкции
