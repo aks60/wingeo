@@ -83,15 +83,10 @@ public class Test {
     }
 
     public static Connection connect2() {
-        try {
-            eProp.user.write("sysdba");
-            eProp.password = String.valueOf("masterkey");
-            Conn.connection(eProp.server(numDb.toString()), eProp.port(numDb.toString()), eProp.base(numDb.toString()), eProp.user.read(), eProp.password.toCharArray(), null);
-            return Conn.connection();
-        } catch (Exception e) {
-            System.err.println("Ошибка:Test.connect() " + e);
-            return null;
-        }
+        eProp.user.write("sysdba");
+        eProp.password = String.valueOf("masterkey");
+        Conn.connection(eProp.server(numDb.toString()), eProp.port(numDb.toString()), eProp.base(numDb.toString()), eProp.user.read(), eProp.password.toCharArray(), null);
+        return Conn.getConnection();
     }
 
     // </editor-fold>     
@@ -110,7 +105,7 @@ public class Test {
             //uid();
             //script();
             //geom();
-            Crypto.httpAsync();
+            Crypto.httpAsync("31.172.66.47");
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
@@ -185,7 +180,7 @@ public class Test {
 
     private static void wincalc() throws Exception {
 
-        Conn.connection(Test.connect2());
+        Conn.setConnection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
         String _case = "min";
 
@@ -232,7 +227,7 @@ public class Test {
 
     private static void param() {
 
-        Conn.connection(Test.connect2());
+        Conn.setConnection(Test.connect2());
         WincalcTest.init();
 
         ElementTest t1 = new ElementTest();
@@ -268,7 +263,7 @@ public class Test {
     private static void query() {
         {
             try {
-                Conn.connection(Test.connect2());
+                Conn.setConnection(Test.connect2());
 
             } catch (Exception e) {
                 System.err.println("Ошибка:main.Test.query()");
@@ -277,7 +272,7 @@ public class Test {
         {
             //Пересчёт
             try {
-                java.sql.Statement statement = Conn.connection().createStatement();
+                java.sql.Statement statement = Conn.getConnection().createStatement();
                 Query q = new Query(eColor.values()).sql(eColor.data(), eColor.up).sort(eColor.id);
                 int id = 0;
                 for (Record rec : q) {

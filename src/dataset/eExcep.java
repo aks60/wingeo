@@ -19,11 +19,10 @@ public enum eExcep {
     noPort("Порт закрыт или занят другой программой"),
     noConn("Ошибка соединения с базой данных"),
     noTable("Не найдена таблица в базе данных", 335544569);
-    public int id = 0;
     public String mes;
     private HashSet<Integer> code = new HashSet<Integer>();
-    public static int countErr = 0;
 
+    //Конструктор
     eExcep(String mes, int... codes) {
         this.mes = mes;
         for (int cod : codes) {
@@ -34,11 +33,9 @@ public enum eExcep {
     public static eExcep getError(int code) {
         for (eExcep con : values()) {
             if (con.code.contains(code) == true) {
-                con.id = code;
                 return con;
             }
         }
-        noConn.id = code;
         return noConn;
     }   
 }

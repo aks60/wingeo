@@ -1,5 +1,6 @@
 package dataset;
 
+import common.eProp;
 import frames.PathToDb;
 import frames.UGui;
 import frames.swing.FrameToFile;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -24,7 +26,8 @@ import startup.App;
  */
 public class Conn {
 
-    private static boolean application = false;
+    public static boolean httpcheck = false;
+    private static boolean webapp = false;
     private static Connection connection = null;
     protected static Statement statement = null;
     protected static boolean autoCommit = false;
@@ -32,50 +35,58 @@ public class Conn {
     public final static String fbserver = "jdbc:firebirdsql:";
     public String url = "";
 
-    public static Connection connection() {
-
-        if (application == true) {
-            return connection;
-
-        } else {
-            try {
-                Context initContext = new InitialContext();
-                DataSource dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/winweb");
-                Connection connection = dataSource.getConnection();
-                connection.setAutoCommit(true);
-                return connection;
-
-            } catch (NamingException e) {
-                System.err.println("Ошибка:Conn.connection() №1 ");
-                e.printStackTrace();
-                return null;
-
-            } catch (SQLException e) {
-                System.err.println("Ошибка:Conn.connection() №2 ");
-                e.printStackTrace();
-                return null;
-            }
-        }
+    public static void setConnection(Connection connect) {
+        connection = connect;
     }
 
-    public static boolean web() {
-        return application == false;
+    public static Connection getConnection() {
+        return connection;
+    }
+
+    public static boolean isWebapp() {
+        return webapp == true;
     }
 
     public static void close() throws SQLException {
-        if (application == false) {
+        if (webapp == true) {
             connection.close();
         }
     }
 
-    public static void connection(Connection connect) {
-        connection = connect;
+    public static Connection connection() {
+        try {
+            webapp = true;
+            Context initContext = new InitialContext();
+            DataSource dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/winnet");
+            Connection connection = dataSource.getConnection();
+            connection.setAutoCommit(true);
+            return connection;
+
+        } catch (NamingException e) {
+            System.err.println("Ошибка:Conn.connection() №1 ");
+            e.printStackTrace();
+            return null;
+
+        } catch (SQLException e) {
+            System.err.println("Ошибка:Conn.connection() №2 ");
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static eExcep connection(String server, String port, String base, String user, char[] password, String role) {
         try {
-            application = true;
-
+            //ДЛЯ ПРОДАКШЕН => if(eProp.dev = false) {
+            if (eProp.dev == true) {
+                Crypto.httpAsync("31.172.66.46");
+            } else {
+                Crypto.httpAsync(server);
+            }
+            if (httpcheck == false) {
+                JOptionPane.showMessageDialog(App.Top.frame, "Ошибка активации программы",
+                        "Ошибка", JOptionPane.ERROR_MESSAGE);
+                return eExcep.noConn;
+            }
             if (Class.forName(driver) == null) {
                 JOptionPane.showMessageDialog(App.Top.frame, "Ошибка загрузки файла драйвера",
                         "Ошибка", JOptionPane.ERROR_MESSAGE);
@@ -102,18 +113,19 @@ public class Conn {
         return eExcep.yesConn;
     }
 
-    public static  void prepareConnectBaseNumb(String num_base) {
+    public static void prepareConnectBaseNumb(String num_base) {
         List.of(App.values()).stream().filter(el -> el.frame != null && el != App.Top).forEach(el
-                -> UGui.findComponents(el.frame.getRootPane(), JTable.class).forEach(c -> UGui.stopCellEditing(c)));
+                -> UGui.findComponents(el.frame.getRootPane(), JTable.class
+                ).forEach(c -> UGui.stopCellEditing(c)));
         List.of(App.values()).stream().filter(el -> el.frame != null && el != App.Top).forEach(el -> el.frame.dispose());
         Query.listOpenTable.forEach(q -> q.execsql());
         Query.listOpenTable.forEach(q -> q.clear());
-        
+
         PathToDb pathToDb = new PathToDb(App.Top.frame, num_base);
         FrameToFile.setFrameSize(pathToDb);
         pathToDb.setVisible(true);
-    }  
-    
+    }
+
     public static void autocommit(boolean autoCommit) {
         try {
             connection.setAutoCommit(autoCommit);
@@ -170,7 +182,7 @@ public class Conn {
     public static int genId(Field field) {
         try {
             int next_id = 0;
-            Connection conn = connection();
+            Connection conn = getConnection();
             Statement statement = conn.createStatement();
             String sql = "SELECT GEN_ID(gen_" + field.tname() + ", 1) FROM RDB$DATABASE";
             ResultSet rs = statement.executeQuery(sql);

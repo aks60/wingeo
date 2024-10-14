@@ -98,7 +98,7 @@ public class Query extends Table {
         }
         //System.out.println("SQL-SELECT:" + tName + " - " + sql);
         try {
-            Statement statement = Conn.connection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            Statement statement = Conn.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet recordset = statement.executeQuery(sql);
             this.sql = s;
             while (recordset.next()) {
@@ -128,7 +128,7 @@ public class Query extends Table {
 
     public void insert(Record record) {
         try {
-            Statement statement = Conn.connection().createStatement();
+            Statement statement = Conn.getConnection().createStatement();
             //если нет, генерю сам
             String nameCols = "", nameVals = "";
             //цикл по полям таблицы
@@ -155,7 +155,7 @@ public class Query extends Table {
     }
 
     public void insert2(Record record) throws SQLException {
-        Statement statement = Conn.connection().createStatement();
+        Statement statement = Conn.getConnection().createStatement();
         //если нет, генерю сам
         String nameCols = "", nameVals = "";
         //цикл по полям таблицы
@@ -180,7 +180,7 @@ public class Query extends Table {
     public void update(Record record) {
         try {
             String nameCols = "";
-            Statement statement = statement = Conn.connection().createStatement();
+            Statement statement = statement = Conn.getConnection().createStatement();
             //цикл по полям таблицы
             for (Field field : fields) {
                 if (field.meta().type() != Field.TYPE.OBJ) {
@@ -205,7 +205,7 @@ public class Query extends Table {
 
     public void update2(Record record) throws SQLException {
         String nameCols = "";
-        Statement statement = Conn.connection().createStatement();
+        Statement statement = Conn.getConnection().createStatement();
         //цикл по полям таблицы
         for (Field field : fields) {
             if (field.meta().type() != Field.TYPE.OBJ) {
@@ -226,7 +226,7 @@ public class Query extends Table {
 
     public boolean delete(Record record) {
         try {
-            Statement statement = Conn.connection().createStatement();
+            Statement statement = Conn.getConnection().createStatement();
             Field[] f = fields.get(0).fields();
             String sql = "delete from " + schema + fields.get(0).tname() + " where " + f[1].name() + " = " + wrapper(record, f[1]);
             System.out.println("SQL-DELETE " + sql);
@@ -236,7 +236,7 @@ public class Query extends Table {
 
         } catch (SQLException e) {
             System.err.println("Ошибка:Query.delete() " + e);
-            if (Conn.web() == false && e.getErrorCode() == 335544466) {
+            if (Conn.isWebapp() == false && e.getErrorCode() == 335544466) {
                 JOptionPane.showMessageDialog(App.active, "Нельзя удалить запись на которую имеются ссылки из других форм", "SQL предупреждение", JOptionPane.INFORMATION_MESSAGE);
             }
             return false;
@@ -244,7 +244,7 @@ public class Query extends Table {
     }
 
     public int delete2(Record record) throws SQLException {
-        Statement statement = Conn.connection().createStatement();
+        Statement statement = Conn.getConnection().createStatement();
         Field[] f = fields.get(0).fields();
         String sql = "delete from " + schema + fields.get(0).tname() + " where " + f[1].name() + " = " + wrapper(record, f[1]);
         System.out.println("SQL-DELETE " + sql);

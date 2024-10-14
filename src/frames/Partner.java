@@ -1000,7 +1000,7 @@ public class Partner extends javax.swing.JFrame {
 
             UGui.insertRecordCur(tab1, ePrjpart.up, (prjpartRec) -> {
                 try {
-                    ResultSet rs = Conn.connection().createStatement()
+                    ResultSet rs = Conn.getConnection().createStatement()
                             .executeQuery("SELECT current_user FROM rdb$database"); //дёрнем текущего пользователя
                     rs.next();
                     String login = rs.getString(1).trim();

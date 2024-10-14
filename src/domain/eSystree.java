@@ -91,7 +91,7 @@ public enum eSystree implements Field {
     public static String systemProfile(int id) {
         String ret = "";
         try {
-            Statement statement = Conn.connection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            Statement statement = Conn.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet recordset = statement.executeQuery("with recursive tree as (select * from systree where id = "
                     + id + " union all select * from systree a join tree b on a.id = b.parent_id and b.id != b.parent_id) select * from tree");
             while (recordset.next()) {

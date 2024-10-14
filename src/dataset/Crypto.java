@@ -12,6 +12,7 @@ import java.net.InetSocketAddress;
 import java.net.ProxySelector;
 import java.net.URI;
 import java.net.URL;
+import java.net.http.HttpTimeoutException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +32,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.time.Duration;
 import java.util.Base64;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -38,6 +40,8 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.swing.JOptionPane;
+import startup.App;
 
 //https://www.novixys.com/blog/how-to-generate-rsa-keys-java/
 //https://gist.github.com/thomasdarimont/b05e3e785e088e35d37890480dd84364
@@ -162,20 +166,17 @@ public class Crypto {
             if (randomMes.equals(response.body().trim())) {
                 System.out.println("httpSynch УРА ТЫ ГЕНИЙ");
             }
-            
+
             //Полученное разшифрованное закр. ключом сообщение  
             //System.out.println("httpSynch2 = " + randomMes);
             //System.out.println("httpSynch3 = " + response.body());
-            
             //testServer(encodeMesStr);
-            
         } catch (Exception e) {
             System.err.println("Ошибка: Crypto.httpSynch() " + e);
         }
     }
 
-    public static void httpAsync() throws ExecutionException, InterruptedException {
-
+    public static void httpAsync(String server) {
         try {
             //Загрузим файл
             URL url = Crypto.class.getResource("/resource/securety/crypto.pub");
@@ -198,27 +199,33 @@ public class Crypto {
             byte[] encryptMesBytes = encryptCipher.doFinal(randomMesBytes); //закодированный 
             String encodeMesStr = Base64.getEncoder().encodeToString(encryptMesBytes);
 
-            //Отправить на сервер закодированное случайное сообщение
+            //Отправить на сервер закодированное случайное сообщениеtry 
             var request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://31.172.66.46:8080/winnet/Crypto?action=secret&message=" + encodeMesStr)).build();
-//                    .uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&message=" + encodeMesStr)).build();
+                    .uri(URI.create("http://" + server + ":8080/winnet/Crypto?action=secret&message=" + encodeMesStr))
+                    //.uri(URI.create("http://31.172.66.46:8080/winnet/Crypto?action=secret&message=" + encodeMesStr))
+                    //.uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&message=" + encodeMesStr)))
+                    .timeout(Duration.ofSeconds(16)).build();
             ExecutorService executor = Executors.newSingleThreadExecutor();
             HttpClient client = HttpClient.newBuilder().executor(executor).build();
-            var response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
-
-            response.thenApply(res -> {
+            client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(res -> {
                 if (randomMes.equals(res.body().trim())) {
-                    System.out.println("httpAsync УРА ТЫ ГЕНИЙ");
+                    Conn.httpcheck = true;
+                    //JOptionPane.showMessageDialog(null, "Успех активации программы", "Сообщение", JOptionPane.ERROR_MESSAGE);
                 }
                 return res;
-            }).get();           
+            }).get();
             executor.shutdownNow();
 
-        } catch (Exception e) {
-            System.err.println("Ошибка: Crypto.httpSynch() " + e);
+        } catch (HttpTimeoutException e) {
+            System.err.println("Ошибка: Crypto.httpAsync() №1 " + e);
+        } catch (ExecutionException e2) {
+            System.err.println("Ошибка: Crypto.httpAsync() №2 " + e2);
+        } catch (InterruptedException e3) {
+            System.err.println("Ошибка: Crypto.httpAsync() №3 " + e3);
+        } catch (Exception e4) {
+            System.err.println("Ошибка: Crypto.httpAsync() №4 " + e4);
         }
     }
-       
 
 // <editor-fold defaultstate="collapsed" desc="EXAMPLE">
     public static void httpSynch2() throws ExecutionException, InterruptedException, Exception {

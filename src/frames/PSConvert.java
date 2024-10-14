@@ -101,7 +101,7 @@ public class PSConvert {
     public static void script() {
         try {
             cn2.setAutoCommit(false);
-            Conn.connection(cn2);
+            Conn.setConnection(cn2);
             st1 = cn1.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY); //источник 
             st2 = cn2.createStatement();//приёмник
             DatabaseMetaData mdb1 = cn1.getMetaData();
@@ -208,7 +208,7 @@ public class PSConvert {
                 executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('RDB$ADMIN','ADMIN','Администратор М.Г.','89034327685','aks@jmail.com',null,null)");
                 executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('TEXNOLOG_RW','TEXNOLOG','Технолог Е.В.','89036782345','qsd@jmail.com',null,null)");
             }
-            Conn.connection(cn2);
+            Conn.setConnection(cn2);
             deletePart(cn2, st2);
             updatePart(cn2, st2);
             metaPart(cn2, st2);
