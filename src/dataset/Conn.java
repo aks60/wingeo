@@ -80,7 +80,7 @@ public class Conn {
 
     public static eExcep connection(String server, String port, String base, String user, char[] password, String role) {
         try {
-            if (eProp.dev == true && ("localhost".equals(base) || "127.0.0.1".equals(base))) {
+            if (eProp.dev == true && ("localhost".equals(server) || "127.0.0.1".equals(server))) {
                 Crypto.httpAsync("31.172.66.46");
             } else {
                 Crypto.httpAsync(server);
@@ -109,6 +109,7 @@ public class Conn {
             return eExcep.getError(e.getErrorCode());
         }
         if (httpcheck == false) {
+            //System.out.println("dataset.Conn.connection()");
             return eExcep.noActiv;
         }
         return eExcep.yesConn;
