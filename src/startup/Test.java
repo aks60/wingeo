@@ -98,8 +98,8 @@ public class Test {
             //clearDataDB();
             //frames.PSConvert.exec();
             //frame(args);
-            //wincalc();
-            param();
+            wincalc("min");
+            //param();
             //query();
             //json();
             //uid();
@@ -178,12 +178,10 @@ public class Test {
         }
     }
 
-    private static void wincalc() throws Exception {
+    private static void wincalc(String _case) throws Exception {
 
         Conn.setConnection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
-        String _case = "min";
-
         if (_case.equals("one")) {
             String script = GsonScript.scriptPath(601001);
             winc.build(script);
