@@ -388,7 +388,11 @@ public class PathToDb extends javax.swing.JDialog {
 }//GEN-LAST:event_btnOk
     //Нажал кнопку "ОТМЕНА"
     private void btnClose(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClose
-        System.exit(0);
+        if (App.Top.frame == null) {
+            System.exit(0);
+        } else {
+            this.dispose();
+        }
 }//GEN-LAST:event_btnClose
 
     private void btnFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFileActionPerformed

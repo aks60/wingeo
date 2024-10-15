@@ -610,7 +610,11 @@ public class Specifics extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxCalcType
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-
+        ProgressBar.create(Specifics.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                App.PSCompare.createFrame(Specifics.this, winc);
+            }
+        });
     }//GEN-LAST:event_btnTest
 
     private void btn23mnKits(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn23mnKits

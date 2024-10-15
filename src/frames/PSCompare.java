@@ -152,14 +152,17 @@ public class PSCompare extends javax.swing.JFrame {
             if (txt19.getText().isEmpty() == false) {
                 int npp = 0;
                 ((DefaultTableModel) tab4.getModel()).getDataVector().clear();
-                ResultSet rs = st.executeQuery("select * from SAVEELM where TYPP != 0 and PUNIC = " + txt19.getText() + " and ONUMB = " + txt20.getText() + " order by TYPP");
+                //ResultSet rs = st.executeQuery("select * from SAVEELM where TYPP != 0 and PUNIC = " + txt19.getText() + " and ONUMB = " + txt20.getText() + " order by TYPP");
+                ResultSet rs = st.executeQuery("select SAVEELM.*, ARTIKLS.ANAME from SAVEELM, ARTIKLS  where TYPP != 0 "
+                        + " and PUNIC = " + txt19.getText() + " and ONUMB = " + txt20.getText() 
+                        + " and SAVEELM.anumb = ARTIKLS.ANUMB order by TYPP");
                 if (rs.isLast() == false) {
                     while (rs.next()) {
                         Vector vectorRec = new Vector();
                         vectorRec.add(++npp);
                         vectorRec.add(rs.getObject("PUNIC"));
                         vectorRec.add(rs.getObject("ONUMB"));
-                        vectorRec.add(rs.getObject("ANUMB"));
+                        vectorRec.add(rs.getObject("ANUMB") + "- " + rs.getObject("ANAME"));
                         vectorRec.add(rs.getObject("C1X"));
                         vectorRec.add(rs.getObject("C1Y"));
                         vectorRec.add(rs.getObject("C2X"));
@@ -369,14 +372,17 @@ public class PSCompare extends javax.swing.JFrame {
             //=== Таблица 4 ===
             npp = 0;
             ((DefaultTableModel) tab4.getModel()).getDataVector().clear();
-            rs = st.executeQuery("select * from SAVEELM where TYPP != 0 and PUNIC = " + txt19.getText() + "and ONUMB =" + txt20.getText() + "order by TYPP");
+            //rs = st.executeQuery("select * from SAVEELM where TYPP != 0 and PUNIC = " + txt19.getText() + "and ONUMB =" + txt20.getText() + "order by TYPP");
+                rs = st.executeQuery("select SAVEELM.*, ARTIKLS.ANAME from SAVEELM, ARTIKLS  where TYPP != 0 "
+                        + " and PUNIC = " + txt19.getText() + " and ONUMB = " + txt20.getText() 
+                        + " and SAVEELM.anumb = ARTIKLS.ANUMB order by TYPP");            
             if (rs.isLast() == false) {
                 while (rs.next()) {
                     Vector vectorRec = new Vector();
                     vectorRec.add(++npp);
                     vectorRec.add(rs.getObject("PUNIC"));
                     vectorRec.add(rs.getObject("ONUMB"));
-                    vectorRec.add(rs.getObject("ANUMB"));
+                    vectorRec.add(rs.getObject("ANUMB") + "- " + rs.getObject("ANAME"));
                     vectorRec.add(rs.getObject("C1X"));
                     vectorRec.add(rs.getObject("C1Y"));
                     vectorRec.add(rs.getObject("C2X"));
@@ -934,6 +940,7 @@ public class PSCompare extends javax.swing.JFrame {
             tab4.getColumnModel().getColumn(0).setPreferredWidth(20);
             tab4.getColumnModel().getColumn(1).setPreferredWidth(20);
             tab4.getColumnModel().getColumn(2).setPreferredWidth(20);
+            tab4.getColumnModel().getColumn(3).setPreferredWidth(300);
         }
 
         pan8.add(scr4, java.awt.BorderLayout.CENTER);

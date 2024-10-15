@@ -98,7 +98,7 @@ public class Test {
             //clearDataDB();
             //frames.PSConvert.exec();
             //frame(args);
-            wincalc("min");
+            wincalc("one");
             //param();
             //query();
             //json();
@@ -182,11 +182,12 @@ public class Test {
 
         Conn.setConnection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
+        
         if (_case.equals("one")) {
-            String script = GsonScript.scriptPath(601001);
+            String script = GsonScript.scriptPath(604005);
             winc.build(script);
             //System.out.println(new com.google.gson.GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
-            System.out.println(new com.google.gson.GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+            //System.out.println(new com.google.gson.GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
             winc.specification(true);
             //new Joining(winc).calc();
