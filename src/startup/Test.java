@@ -99,7 +99,7 @@ public class Test {
             //frames.PSConvert.exec();
             //frame(args);
             //wincalc();
-            //param();
+            param();
             //query();
             //json();
             //uid();

@@ -4992,7 +4992,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 record.set(eSysprod.name, "Kod:" + prj + "* " + gsonRoot.name);
                 record.set(eSysprod.script, json);
                 record.set(eSysprod.systree_id, systreeID);
-                qSysprod.insert(record);
+                eSysprod.data().add(record);
 
                 loadingTab5();
                 UGui.setSelectedIndex(tab5, qSysprod.size() - 1);

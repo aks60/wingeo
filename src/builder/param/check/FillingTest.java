@@ -7,9 +7,6 @@ import static builder.param.check.WincalcTest.hmParam;
 import static builder.param.check.WincalcTest.grup;
 import static builder.param.check.WincalcTest.record;
 
-
-
-
 import static builder.param.check.WincalcTest.elementVar2;
 import static builder.param.check.WincalcTest.elementDet2;
 import static builder.param.check.WincalcTest.joiningVar2;
@@ -73,36 +70,41 @@ public class FillingTest {
      * join systree e on e.id = d.systree_id where a.groups_id = 13014
      */
     public void fillingVar() {
-
+        try {
 //        grup = 13001; //Если признак состава 
 //        assert true == fillingVar2.check(glass2_left, param("KBE 58", grup)) : grup;
 //        assert false == fillingVar2.check(glass2_left, param("KBE 5X", grup)) : grup;
 
-        grup = 13003; //Тип проема
-        assert false == fillingVar2.check(stv2_left_3, param("глухой", grup)) : grup;
-        assert true == fillingVar2.check(stv2_left_3, param("не глухой", grup)) : grup;
+            grup = 13003; //Тип проема
+            assert false == fillingVar2.check(stv2_left_3, param("глухой", grup)) : grup;
+            assert true == fillingVar2.check(stv2_left_3, param("не глухой", grup)) : grup;
 
-        grup = 13005; //Заполнение типа
-        assert true == fillingVar3.check(glass3_top, param("Стеклопакет", grup)) : grup;
-        assert false == fillingVar3.check(glass3_left, param("Стекло", grup)) : grup;
+            grup = 13005; //Заполнение типа
+            assert true == fillingVar3.check(glass3_top, param("Стеклопакет", grup)) : grup;
+            assert false == fillingVar3.check(glass3_left, param("Стекло", grup)) : grup;
 
-        grup = 13014; //Углы ориентации стороны, ° 
-        assert true == fillingVar3.check(glass3_left, param("0;90;180;270", grup));
-        assert false == fillingVar3.check(glass3_left, param("0;9.1;180;270", grup));
+            grup = 13014; //Углы ориентации стороны, ° 
+            assert true == fillingVar3.check(glass3_left, param("0;90;180;270", grup));
+            assert false == fillingVar3.check(glass3_left, param("0;9.1;180;270", grup));
 
-        grup = 13015;  //Форма заполнения
-        assert true == fillingVar3.check(glass3_left, param("Прямоугольное", grup)) : grup;
-        assert false == fillingVar3.check(glass3_left, param("Не прямоугольное", grup)) : grup;
-        assert true == fillingVar3.check(glass3_top, param("Арочное", grup)) : grup;
-        assert false == fillingVar3.check(glass3_top, param("Не арочное", grup)) : grup;
+            grup = 13015;  //Форма заполнения
+            assert true == fillingVar3.check(glass3_left, param("Прямоугольное", grup)) : grup;
+            assert false == fillingVar3.check(glass3_left, param("Не прямоугольное", grup)) : grup;
+            assert true == fillingVar3.check(glass3_top, param("Арочное", grup)) : grup;
+            assert false == fillingVar3.check(glass3_top, param("Не арочное", grup)) : grup;
 
-        grup = 13017; //Код системы содержит строку
-        assert true == fillingVar4.check(glass4_left, param("me-1", grup)) : grup;
-        assert false == fillingVar4.check(glass3_left, param("КП-40", grup)) : grup;
+            grup = 13017; //Код системы содержит строку
+            assert true == fillingVar4.check(glass4_left, param("me-1", grup)) : grup;
+            assert false == fillingVar4.check(glass3_left, param("КП-40", grup)) : grup;
 
-        grup = 13095; //Если признак системы конструкции (см. Systree->вкл.Основные)
-        assert true == fillingVar4.check(stv4_right_3, param("1;2;", grup)) : grup;
-        assert false == fillingVar4.check(stv4_right_3, param("2;9", grup)) : grup;
+            grup = 13095; //Если признак системы конструкции (см. Systree->вкл.Основные)
+            assert true == fillingVar4.check(stv4_right_3, param("1;2;", grup)) : grup;
+            assert false == fillingVar4.check(stv4_right_3, param("2;9", grup)) : grup;
+            
+            System.out.println("builder.param.check.FillingTest.fillingVar() - ВЫПОЛНЕНО");
+        } catch (Exception e) {
+            System.err.println("Ошибка:FillingtTest.fillingVar() " + e);
+        }
     }
 
     /**
@@ -112,53 +114,58 @@ public class FillingTest {
      */
     public void fillingDet() {
         HashMap<Integer, String> mapParam = new HashMap<Integer, String>();
+        try {
+            grup = 14000; //15000 //Для технологического кода контейнера
+            assert true == fillingDet2.check(mapParam, null, param("KBE 58", grup)) : grup;
+            assert false == fillingDet2.check(mapParam, null, param("KBE;58;", grup)) : grup;
 
-        grup = 14000; //15000 //Для технологического кода контейнера
-        assert true == fillingDet2.check(mapParam, null, param("KBE 58", grup)) : grup;
-        assert false == fillingDet2.check(mapParam, null, param("KBE;58;", grup)) : grup;
+            grup = 14001; //15001 //Если признак состава (для теста необходимо вписать признак состава-KBE 58 )
+            //assert true == fillingDet2.check(mapParam, glass2_left, param("KBE 58", grup)) : grup;
+            assert false == fillingDet2.check(mapParam, glass2_left, param("null", grup)) : grup;
 
-        grup = 14001; //15001 //Если признак состава (для теста необходимо вписать признак состава-KBE 58 )
-        //assert true == fillingDet2.check(mapParam, glass2_left, param("KBE 58", grup)) : grup;
-        assert false == fillingDet2.check(mapParam, glass2_left, param("null", grup)) : grup;
+            grup = 14005;  //Тип проема
+            assert false == fillingDet2.check(mapParam, glass2_left, param("глухой", grup)) : grup;
+            assert true == fillingDet2.check(mapParam, glass2_left, param("не глухой", grup)) : grup;
 
-        grup = 14005;  //Тип проема
-        assert false == fillingDet2.check(mapParam, glass2_left, param("глухой", grup)) : grup;
-        assert true == fillingDet2.check(mapParam, glass2_left, param("не глухой", grup)) : grup;
+            grup = 14008; //15008 //Эффективное заполнение изд., мм
+            assert true == fillingDet2.check(mapParam, glass2_left, param("30", grup)) : grup;
+            assert false == fillingDet2.check(mapParam, glass2_left, param("32", grup)) : grup;
 
-        grup = 14008; //15008 //Эффективное заполнение изд., мм
-        assert true == fillingDet2.check(mapParam, glass2_left, param("30", grup)) : grup;
-        assert false == fillingDet2.check(mapParam, glass2_left, param("32", grup)) : grup;
+            grup = 14009;  //Арочное заполнение
+            assert true == fillingDet2.check(mapParam, glass2_left, param("Нет", grup)) : grup;
+            assert false == fillingDet2.check(mapParam, glass2_left, param("Да", grup)) : grup;
 
-        grup = 14009;  //Арочное заполнение
-        assert true == fillingDet2.check(mapParam, glass2_left, param("Нет", grup)) : grup;
-        assert false == fillingDet2.check(mapParam, glass2_left, param("Да", grup)) : grup;
+            grup = 14017; //15017 //Код системы содержит строку 
+            assert true == fillingDet2.check(mapParam, glass2_left, param("et-1", grup)) : grup;
+            assert false == fillingDet2.check(mapParam, glass2_left, param("КП-40", grup)) : grup;
 
-        grup = 14017; //15017 //Код системы содержит строку 
-        assert true == fillingDet2.check(mapParam, glass2_left, param("et-1", grup)) : grup;
-        assert false == fillingDet2.check(mapParam, glass2_left, param("КП-40", grup)) : grup;
+            grup = 14065; //15055 //Ограничение угла, ° или Точный угол
+            assert true == fillingDet2.check(mapParam, glass2_left, param("0", grup)) : grup;
+            assert false == fillingDet2.check(mapParam, glass2_left, param("270,1", grup)) : grup;
 
-        grup = 14065; //15055 //Ограничение угла, ° или Точный угол
-        assert true == fillingDet2.check(mapParam, glass2_left, param("0", grup)) : grup;
-        assert false == fillingDet2.check(mapParam, glass2_left, param("270,1", grup)) : grup;
+            grup = 14067; //15067 //Коды основной текстуры изделия 
+            assert true == fillingDet2.check(mapParam, glass2_right, param("1009", grup)) : grup;
+            assert false == fillingDet2.check(mapParam, glass2_right, param("109", grup)) : grup;
 
-        grup = 14067; //15067 //Коды основной текстуры изделия 
-        assert true == fillingDet2.check(mapParam, glass2_right, param("1009", grup)) : grup;
-        assert false == fillingDet2.check(mapParam, glass2_right, param("109", grup)) : grup;
+            grup = 14068; //15068 //Коды внутр. текстуры изделия
+            assert true == fillingDet2.check(mapParam, glass2_right, param("100-1009", grup)) : grup;
+            assert false == fillingDet2.check(mapParam, glass2_right, param("109", grup)) : grup;
 
-        grup = 14068; //15068 //Коды внутр. текстуры изделия
-        assert true == fillingDet2.check(mapParam, glass2_right, param("100-1009", grup)) : grup;
-        assert false == fillingDet2.check(mapParam, glass2_right, param("109", grup)) : grup;
+            grup = 14069; //15069 //Коды внешн. текстуры изделия
+            assert true == fillingDet2.check(mapParam, glass2_right, param("1009", grup)) : grup;
+            assert false == fillingDet2.check(mapParam, glass2_right, param("109", grup)) : grup;
 
-        grup = 14069; //15069 //Коды внешн. текстуры изделия
-        assert true == fillingDet2.check(mapParam, glass2_right, param("1009", grup)) : grup;
-        assert false == fillingDet2.check(mapParam, glass2_right, param("109", grup)) : grup;
+            grup = 14081; //15081 //Если артикул профиля контура
+            assert true == fillingDet3.check(mapParam, glass3_left, param("21316-05000", grup)) : grup;
+            assert false == fillingDet3.check(mapParam, glass3_left, param("21316=05000", grup)) : grup;
 
-        grup = 14081; //15081 //Если артикул профиля контура
-        assert true == fillingDet3.check(mapParam, glass3_left, param("21316-05000", grup)) : grup;
-        assert false == fillingDet3.check(mapParam, glass3_left, param("21316=05000", grup)) : grup;
-
-        grup = 15027; //12027  //Рассчитывать для профиля
-        assert true == fillingDet4.check(mapParam, glass4_left, param("без уплотнителя", grup)) : grup;
-        assert false == fillingDet4.check(mapParam, glass4_left, param("с уплотнителем", grup)) : grup;
+            grup = 15027; //12027  //Рассчитывать для профиля
+            assert true == fillingDet4.check(mapParam, glass4_left, param("без уплотнителя", grup)) : grup;
+            assert false == fillingDet4.check(mapParam, glass4_left, param("с уплотнителем", grup)) : grup;
+            
+            System.out.println("builder.param.check.FillingTest.fillingDet() - ВЫПОЛНЕНО");
+        } catch (Exception e) {
+            System.err.println("Ошибка:FillingTest.fillingDet() " + e);
+        }
     }
 }
