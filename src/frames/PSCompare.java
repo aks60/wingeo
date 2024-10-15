@@ -300,6 +300,7 @@ public class PSCompare extends javax.swing.JFrame {
 //            rs.next();
 //            int punic = rs.getInt("PUNIC");           
             ResultSet rs = st.executeQuery("select a.* from SPECPAU a where a.PUNIC = " + txt19.getText() + " and a.ONUMB = " + txt20.getText() + " and clke != -1 order by a.anumb");
+            //ResultSet rs = st.executeQuery("select a.*, b.aname from SPECPAU a, ARTIKLS b where a.PUNIC = " + txt19.getText() + " and a.ONUMB = " + txt20.getText() + " and clke != -1 and a.anumb = b.anumb order by a.anumb");
             int npp = 0;
             double sum1 = 0, sum2 = 0;
             if (rs.isLast() == false) {
@@ -313,6 +314,7 @@ public class PSCompare extends javax.swing.JFrame {
                     vectorRec.set(5, hmColor.get(vectorRec.get(5)));  //цвет
                     vectorRec.set(6, hmColor.get(vectorRec.get(6)));  //цвет
                     String artikl = rs.getString("ANUMB"); //артикул
+                    //String artikl = rs.getString("ANUMB") + "- " + rs.getString("ANAME"); //артикул
                     double leng = rs.getDouble("ALENG"); //длина
                     double count = rs.getDouble("AQTYP"); //колич
                     double pogonag = rs.getDouble("AQTYA"); //погонаж
