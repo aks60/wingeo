@@ -5,9 +5,7 @@ import common.eProp;
 import enums.Type;
 import java.util.List;
 
-/**
- * Модели конструкций. Загружаются в таблицу SYSMODEL.
- */
+//Модели конструкций. Загружаются в таблицу SYSMODEL.
 public class GsonScript {
 
     public static GsonRoot rootGson = null;

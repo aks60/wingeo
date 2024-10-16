@@ -227,7 +227,7 @@ public class Test {
     private static void param() {
 
         Conn.setConnection(Test.connect2());
-        WincalcTest.init();
+        WincalcTest.init(); //см. -601004,-604005,-700027
 
         ElementTest t1 = new ElementTest();
         t1.elementVar();
