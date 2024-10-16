@@ -7,6 +7,8 @@ import domain.ePrjprod;
 import domain.eProject;
 import enums.TypeArt;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -23,16 +25,18 @@ public class HtmlOfManufactory {
     private static DecimalFormat df1 = new DecimalFormat("#0.0");
     private static DecimalFormat df2 = new DecimalFormat("#0.00");
 
-    public static void manufactory(Record projectRec) {
+    public void manufactory(Record projectRec) {
         try {
-            URL path = HtmlOfManufactory.class.getResource("/resource/report/Manufactory.html");
-            File input = new File(path.toURI());
-            Document doc = Jsoup.parse(input, "utf-8");
+            InputStream in = getClass().getResourceAsStream("/resource/report/Manufactory.html");
+            File tempFile = File.createTempFile("report", "html");
+            in.transferTo(new FileOutputStream(tempFile));
+            Document doc = Jsoup.parse(tempFile);
 
             //Заполним отчёт
             load(projectRec, doc);
 
             String str = doc.html();
+            str = new String(str.getBytes("UTF-8"));
             HtmlOfTable.write(str);
             ExecuteCmd.documentType(null);
 

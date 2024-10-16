@@ -11,6 +11,8 @@ import domain.eProject;
 import frames.UGui;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -30,22 +32,24 @@ public class HtmlOfSpecific {
     private static DecimalFormat df1 = new DecimalFormat("#0.0");
     private static DecimalFormat df2 = new DecimalFormat("#0.00");
 
-    public static void specific(Record projectRec) {
+    public  void specific(Record projectRec) {
         try {
             npp = 0;
-            URL path = HtmlOfSpecific.class.getResource("/resource/report/Specific.html");
-            File input = new File(path.toURI());
-            Document doc = Jsoup.parse(input, "utf-8");
+            InputStream in = getClass().getResourceAsStream("/resource/report/Specific.html");
+            File tempFile = File.createTempFile("report", "html");
+            in.transferTo(new FileOutputStream(tempFile));
+            Document doc = Jsoup.parse(tempFile, "UTF-8");
 
             //Заполним отчёт
             load1(projectRec, doc);
 
             String str = doc.html();
+            str = new String(str.getBytes("UTF-8"));
             HtmlOfTable.write(str);
             ExecuteCmd.documentType(null);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERROR " + e, "ВНИМАНИЕ!", 1);
+            JOptionPane.showMessageDialog(null, "ERROR*2 " + e, "ВНИМАНИЕ!", 1);
             System.err.println("Ошибка:HtmlOfSpecific.specific()" + e);
         }
     }

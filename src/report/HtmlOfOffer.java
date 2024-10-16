@@ -19,7 +19,9 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -39,26 +41,26 @@ public class HtmlOfOffer {
     private static DecimalFormat df1 = new DecimalFormat("0.0");
     private static DecimalFormat df2 = new DecimalFormat("#0.00");
 
-    public static void offer(Record projectRec) {
+    public  void offer(Record projectRec) {
         try {
-            URL path = HtmlOfOffer.class.getResource("/resource/report/Offer.html");
-            File input = new File(path.toURI());
-            Document doc = Jsoup.parse(input, "utf-8");
+            InputStream in = getClass().getResourceAsStream("/resource/report/Offer.html");
+            File tempFile = File.createTempFile("report", "html");
+            in.transferTo(new FileOutputStream(tempFile));
+            Document doc = Jsoup.parse(tempFile);
 
             //Заполним отчёт
             load(projectRec, doc);
 
             String str = doc.html();
+            str = new String(str.getBytes("UTF-8"));
             HtmlOfTable.write(str);
             ExecuteCmd.documentType(null);
 
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
             System.err.println("Ошибка1:HtmlOfSmeta.smeta2()" + e);
-        } catch (URISyntaxException e) {
-            System.err.println("Ошибка2:HtmlOfSmeta.smeta2()" + e);
         } catch (Exception e) {
-            System.err.println("Ошибка3:HtmlOfSmeta.smeta2()" + e);
+            System.err.println("Ошибка2:HtmlOfSmeta.smeta2()" + e);
         }
     }
 

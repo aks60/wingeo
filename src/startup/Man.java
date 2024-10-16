@@ -579,7 +579,7 @@ public class Man extends javax.swing.JFrame {
         ProgressBar.create(Man.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                HtmlOfSmeta.smeta2(projectRec);
+                new HtmlOfSmeta().smeta2(projectRec);
             }
         });
     }//GEN-LAST:event_btn9
@@ -610,7 +610,7 @@ public class Man extends javax.swing.JFrame {
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Отчёт
-                HtmlOfManufactory.manufactory(projectRec);
+                new HtmlOfManufactory().manufactory(projectRec);
             }
         });
     }//GEN-LAST:event_btn15
@@ -620,7 +620,7 @@ public class Man extends javax.swing.JFrame {
         Record projectRec = eProject.find(orderID);
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                HtmlOfMaterial.material(projectRec);
+                new HtmlOfMaterial().material(projectRec);
             }
         });
     }//GEN-LAST:event_btn16
@@ -632,7 +632,7 @@ public class Man extends javax.swing.JFrame {
         ProgressBar.create(Man.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                HtmlOfOffer.offer(projectRec);
+                new HtmlOfOffer().offer(projectRec);
             }
         });
     }//GEN-LAST:event_btn17

@@ -3765,7 +3765,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Отчёт
-                HtmlOfMaterial.material(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new HtmlOfMaterial().material(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem11
@@ -3774,7 +3774,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Отчёт
-                HtmlOfSpecific.specific(qProject.get(UGui.getIndexRec(tab1, 1)));
+                new HtmlOfSpecific().specific(qProject.get(UGui.getIndexRec(tab1, 1)));
             }
         });
     }//GEN-LAST:event_menuItem12
@@ -3784,7 +3784,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Отчёт
-                HtmlOfSmeta.smeta2(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new  HtmlOfSmeta().smeta2(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem13
@@ -3794,7 +3794,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Отчёт
-                HtmlOfSmeta.smeta1(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new HtmlOfSmeta().smeta1(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem14
@@ -3804,7 +3804,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Отчёт
-                HtmlOfInvoice.invoice1(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new HtmlOfInvoice().invoice1(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem15
@@ -3814,7 +3814,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Отчёт
-                HtmlOfInvoice.invoice2(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new HtmlOfInvoice().invoice2(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem16
@@ -3824,7 +3824,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Отчёт
-                HtmlOfOffer.offer(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new HtmlOfOffer().offer(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem17
@@ -3934,7 +3934,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Отчёт
-                HtmlOfManufactory.manufactory(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new HtmlOfManufactory().manufactory(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem18

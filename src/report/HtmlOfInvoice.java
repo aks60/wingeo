@@ -14,11 +14,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,57 +33,49 @@ public class HtmlOfInvoice {
     private static DecimalFormat df1 = new DecimalFormat("0.0");
     private static DecimalFormat df2 = new DecimalFormat("#0.00");
 
-    public static void invoice1(Record projectRec) {
+    public void invoice1(Record projectRec) {
         try {
-            //InputStream in = HtmlOfInvoice.class.getClassLoader().getResourceAsStream("/resource/report/Invoice1.html");
-            //URL url = HtmlOfInvoice.class.getClassLoader().getResource("report.html");
-            InputStream in = HtmlOfInvoice.class.getResourceAsStream("/resource/report/Invoice1.html");
-            //BufferedInputStream result = (BufferedInputStream) in;
-            //URL path = HtmlOfInvoice.class.getClassLoader().getResource("/resource/report/Invoice1.html");
-            //File input = new File(path.toURI());
-            //String outputFile = "C:\\Users\\user\\Desktop\\test\\output.txt";
-            //Files.copy(is, Paths.get(outputFile));
-            //File file = new File(outputFile);
-
-            Document doc = Jsoup.parse(in, "utf-8", null);
+            InputStream in = getClass().getResourceAsStream("/resource/report/Invoice1.html");
+            File tempFile = File.createTempFile("report", "html");
+            in.transferTo(new FileOutputStream(tempFile));
+            Document doc = Jsoup.parse(tempFile);
 
             //Заполним отчёт
             load1(projectRec, doc);
 
             String str = doc.html();
+            str = new String(str.getBytes("UTF-8"));
             HtmlOfTable.write(str);
             ExecuteCmd.documentType(null);
 
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
             System.err.println("Ошибка1:HtmlOfInvoice.smeta1()" + e);
-        //} catch (URISyntaxException e) {
-        //    System.err.println("Ошибка2:HtmlOfInvoice.smeta1()" + e);
         } catch (Exception e) {
-            System.err.println("Ошибка3:HtmlOfInvoice.smeta1()" + e);
+            System.err.println("Ошибка2:HtmlOfInvoice.smeta1()" + e);
         }
     }
 
-    public static void invoice2(Record projectRec) {
+    public void invoice2(Record projectRec) {
         try {
-            URL path = HtmlOfInvoice.class.getResource("/resource/report/Invoice2.html");
-            File input = new File(path.toURI());
-            Document doc = Jsoup.parse(input, "utf-8");
+            InputStream in = getClass().getResourceAsStream("/resource/report/Invoice2.html");
+            File tempFile = File.createTempFile("report", "html");
+            in.transferTo(new FileOutputStream(tempFile));
+            Document doc = Jsoup.parse(tempFile);
 
             //Заполним отчёт
             load2(projectRec, doc);
 
             String str = doc.html();
+            str = new String(str.getBytes("UTF-8"));
             HtmlOfTable.write(str);
             ExecuteCmd.documentType(null);
 
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
             System.err.println("Ошибка1:HtmlOfInvoice.smeta2()" + e);
-        } catch (URISyntaxException e) {
-            System.err.println("Ошибка2:HtmlOfInvoice.smeta2()" + e);
         } catch (Exception e) {
-            System.err.println("Ошибка3:HtmlOfInvoice.smeta2()" + e);
+            System.err.println("Ошибка2:HtmlOfInvoice.smeta2()" + e);
         }
     }
 
