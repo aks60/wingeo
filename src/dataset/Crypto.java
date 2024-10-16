@@ -1,17 +1,16 @@
 package dataset;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.math.BigInteger;
-import java.net.Authenticator;
-import java.net.InetSocketAddress;
-import java.net.ProxySelector;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.http.HttpTimeoutException;
 import java.nio.charset.StandardCharsets;
@@ -33,7 +32,6 @@ import java.security.spec.X509EncodedKeySpec;
 import java.time.Duration;
 import java.util.Base64;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -42,13 +40,16 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.swing.JOptionPane;
-import startup.App;
+import startup.Test;
 
 //https://www.novixys.com/blog/how-to-generate-rsa-keys-java/
 //https://gist.github.com/thomasdarimont/b05e3e785e088e35d37890480dd84364
 public class Crypto {
 
     public static String keyFile = "C:\\Temp\\crypto";
+
+    public Crypto() {
+    }
 
     //Генерация ключей
     public static void writeFileKeyPair() throws NoSuchAlgorithmException,
@@ -118,18 +119,17 @@ public class Crypto {
         }
     }
 
-    public static void httpAsync(String server) {
+    public void httpAsync(String server) {
         try {
             //Загрузим файл
-            URL url = Crypto.class.getResource("/resource/securety/crypto.pub");
-            Path path = Paths.get(url.toURI());
-            byte[] bytes = Files.readAllBytes(path);
-
+            InputStream in = getClass().getResourceAsStream("/resource/securety/crypto.pub");
+            byte[] bytes = in.readAllBytes();
+            
             //Получим ключ
             X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
             KeyFactory kf = KeyFactory.getInstance("RSA");
             PublicKey publicKey = kf.generatePublic(ks);
-
+            
             //Cлучайное сообщение
             SecureRandom random = new SecureRandom();
             String randomMes = new BigInteger(130, random).toString(32);
@@ -152,7 +152,7 @@ public class Crypto {
                 //Проверка сервера
                 if (randomMes.equals(res.body().trim())) {
                     Conn.setHttpcheck(true);
-                    //System.out.println("dataset.Crypto.httpAsync()");
+                    System.out.println("УРА АКС");
                 }
                 return res;
             }).get();

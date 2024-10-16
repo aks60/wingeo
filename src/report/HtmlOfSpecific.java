@@ -45,6 +45,7 @@ public class HtmlOfSpecific {
             ExecuteCmd.documentType(null);
 
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR " + e, "ВНИМАНИЕ!", 1);
             System.err.println("Ошибка:HtmlOfSpecific.specific()" + e);
         }
     }

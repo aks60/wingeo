@@ -13,9 +13,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.ArrayCom;
-import dataset.Crypto;
 import common.eProp;
 import dataset.Conn;
+import dataset.Crypto;
 import dataset.Field;
 import dataset.Query;
 import dataset.Record;
@@ -28,11 +28,8 @@ import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,14 +95,14 @@ public class Test {
             //clearDataDB();
             //frames.PSConvert.exec();
             //frame(args);
-            wincalc("one");
+            //wincalc("one");
             //param();
             //query();
             //json();
             //uid();
             //script();
             //geom();
-            //Crypto.httpAsync("31.172.66.46");
+            //new Crypto().httpAsync("31.172.66.46");       
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
@@ -182,7 +179,7 @@ public class Test {
 
         Conn.setConnection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
-        
+
         if (_case.equals("one")) {
             String script = GsonScript.scriptPath(604005);
             winc.build(script);

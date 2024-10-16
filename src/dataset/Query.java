@@ -458,6 +458,18 @@ public class Query extends Table {
         return this;
     }
     
+    public Query sq3(List<Record> data, Field field, int value, Field field2, int value2, Field field3, int value3) {
+        clear();
+        if (Query.conf.equals("NET")) {
+            addAll(data.stream().filter(rec -> rec.getInt(field) == value
+                    && (rec.getInt(field2) == value2 || rec.getInt(field3) == value3)
+            ).collect(Collectors.toList()));
+        } else {
+            select(field.fields()[0], "where", field, "=", value, "and (", field2, "=", value2, "or", field3, "=", value3 + ")");
+        }
+        return this;
+    }   
+    
     public Query sql(List<Record> data, Field field, List listID) {
         clear();
         if (Query.conf.equals("NET")) {

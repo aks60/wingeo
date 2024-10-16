@@ -210,10 +210,10 @@ public class PSCompare extends javax.swing.JFrame {
             }
             //=== Таблица 6 ===
             Vector vectorData = new Vector();
-            Vector vectorColumn = new Vector(List.of("PUNIC", "NUNIC", "PNUMB", "ONUMB", "ONAME", "OLENG", "OHEIG", "PDATE", "BPICT"));
-            ResultSet rs = st.executeQuery("select b.punic, b.nunic, b.pnumb, a.onumb, a.oname, a.oleng, a.oheig, b.pdate, a.bpict from listord a, listprj b "
+            Vector vectorColumn = new Vector(List.of("PUNIC", "PNUMB", "ONUMB", "ONAME", "OLENG", "OHEIG", "PDATE", "BPICT"));
+            ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, a.oleng, a.oheig, b.pdate, a.bpict from listord a, listprj b "
                     + "where a.punic = b.punic and b.pdate > '01.06.2005' and b.pdate < '01.01.2024' order by b.pdate");
-//            ResultSet rs = st.executeQuery("select b.punic, b.nunic, b.pnumb, a.onumb, a.oname, b.pdate, a.bpict from listord a, listprj b where a.punic = b.punic and b.punic in "
+//            ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, b.pdate, a.bpict from listord a, listprj b where a.punic = b.punic and b.punic in "
 //                    + "(412463, 427595, 427597, 427761, 427817, 427818 ,427819, 427820, 427840, 427838, 427842, 427848, 427851, 427852, 427858, 427872, 427422, 427565, "
 //                    + "427833, 427832, 427831, 427830, 427825, 427826, 427779, 425392, 425392, 427850, 427708, 427737, 427629, 427847, 427856,"
 //                    + "425688, 505072, 507830, 507965, 507998, 508035) order by b.pnumb");
@@ -221,7 +221,6 @@ public class PSCompare extends javax.swing.JFrame {
                 while (rs.next()) {
                     Vector vectorRec = new Vector();
                     vectorRec.add(rs.getObject("PUNIC"));
-                    vectorRec.add(rs.getObject("NUNIC"));
                     vectorRec.add(rs.getObject("PNUMB"));
                     vectorRec.add(rs.getObject("ONUMB"));
                     vectorRec.add(rs.getObject("ONAME"));
@@ -256,13 +255,12 @@ public class PSCompare extends javax.swing.JFrame {
             tab6.getColumnModel().getColumn(2).setMaxWidth(80);
             tab6.getColumnModel().getColumn(4).setMaxWidth(80);
             tab6.getColumnModel().getColumn(5).setMaxWidth(80);
-            tab6.getColumnModel().getColumn(6).setMaxWidth(80);
             rs.close();
         } catch (SQLException e) {
             System.err.println("Ошибка: DBCompare.loadingTab4().  " + e);
         }
     }
-    
+
     public void loadingTabGroup2(Wincalc winc) {
         try {
             Map<String, Vector> hmSpc = new HashMap<String, Vector>();
@@ -435,14 +433,13 @@ public class PSCompare extends javax.swing.JFrame {
 
             //=== Таблица 6 ===
             Vector vectorData = new Vector();
-            Vector vectorColumn = new Vector(List.of("PUNIC", "NUNIC", "PNUMB", "ONUMB", "ONAME", "OLENG", "OHEIG", "PDATE", "BPICT"));
-            rs = st.executeQuery("select b.punic, b.nunic, b.pnumb, a.onumb, a.oname, a.oleng, a.oheig, b.pdate, a.bpict from listord a, listprj b "
+            Vector vectorColumn = new Vector(List.of("PUNIC", "PNUMB", "ONUMB", "ONAME", "OLENG", "OHEIG", "PDATE", "BPICT"));
+            rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, a.oleng, a.oheig, b.pdate, a.bpict from listord a, listprj b "
                     + "where  a.punic = b.punic and a.punic = " + txt19.getText() + " and a.onumb = " + txt20.getText() + " order by b.pnumb");
             if (rs.isLast() == false) {
                 while (rs.next()) {
                     Vector vectorRec = new Vector();
                     vectorRec.add(rs.getObject("PUNIC"));
-                    vectorRec.add(rs.getObject("NUNIC"));
                     vectorRec.add(rs.getObject("PNUMB"));
                     vectorRec.add(rs.getObject("ONUMB"));
                     vectorRec.add(rs.getObject("ONAME"));
@@ -457,6 +454,7 @@ public class PSCompare extends javax.swing.JFrame {
                         BufferedImage img = ImageIO.read(new java.io.ByteArrayInputStream(bytes));
                         ImageIcon icon = new ImageIcon(img);
                         vectorRec.add(icon);
+                        //ImageIO.write(img, "jpg", new File("img.jpg"));
 
                     } catch (Exception e) {
                         vectorRec.add(null);
@@ -466,7 +464,8 @@ public class PSCompare extends javax.swing.JFrame {
             }
             DefaultTableModel model = new DefaultTableModel(vectorData, vectorColumn) {
                 public Class getColumnClass(int column) {
-                    return (column == 8) ? ImageIcon.class : Object.class;
+                    return (column == 7) ? ImageIcon.class : Object.class;
+                    //return Object.class;
                 }
             };
             tab6.setModel(model);
@@ -475,7 +474,6 @@ public class PSCompare extends javax.swing.JFrame {
             tab6.getColumnModel().getColumn(2).setMaxWidth(80);
             tab6.getColumnModel().getColumn(4).setMaxWidth(80);
             tab6.getColumnModel().getColumn(5).setMaxWidth(80);
-            tab6.getColumnModel().getColumn(6).setMaxWidth(80);
             rs.close();
 
             //=== Таблица 7 ===
@@ -1064,11 +1062,11 @@ public class PSCompare extends javax.swing.JFrame {
 
         tab6.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Номер ветки", "Номер проекта", "Номер заказа", "Имя заказа", "Ширина", "Высота", "Рисунок"
+                "ID", "Номер проекта", "Номер заказа", "Имя заказа", "Ширина", "Высота", "Рисунок"
             }
         ));
         tab6.setFillsViewportHeight(true);
@@ -1081,8 +1079,6 @@ public class PSCompare extends javax.swing.JFrame {
             tab6.getColumnModel().getColumn(1).setMaxWidth(140);
             tab6.getColumnModel().getColumn(2).setPreferredWidth(140);
             tab6.getColumnModel().getColumn(2).setMaxWidth(140);
-            tab6.getColumnModel().getColumn(3).setPreferredWidth(140);
-            tab6.getColumnModel().getColumn(3).setMaxWidth(140);
         }
 
         pan11.add(scr6, java.awt.BorderLayout.CENTER);

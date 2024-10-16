@@ -7,6 +7,7 @@ import common.eProp;
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import startup.App;
 
@@ -18,7 +19,7 @@ public class LogoToDb extends javax.swing.JDialog {
     public LogoToDb(java.awt.Window owner) {
         super(owner);
         initComponents();
-        
+
         //Автопароль при тестировании
         if (eProp.dev == true) {
             if ("adm".equals(eProp.profile)) {
@@ -30,12 +31,16 @@ public class LogoToDb extends javax.swing.JDialog {
             } else if ("man".equals(eProp.profile)) {
                 edUser.setText("MANAGER"); //user
                 edPass.setText("masterkey"); //pass
+            } else {
+                edUser.setText("TEXNOLOG"); //user
+                edPass.setText("masterkey"); //pass                
             }
             connectToDb();
 
         } else {
+            labMes.setForeground(Color.BLUE);
+            labMes.setText("Введите логин и пароль");
             edUser.setText(eProp.user.read());
-            labMes.setText("Введите логин и пароль");           
             edPass.requestFocus();
             getRootPane().setDefaultButton(btnOk);
 //            if (List.of("SYSDBA", "TEXNOLOG", "MANAGER")
@@ -65,7 +70,10 @@ public class LogoToDb extends javax.swing.JDialog {
                 labMes.setForeground(Color.BLUE);
                 labMes.setText("Установка соединения с базой данных");
                 String num = eProp.base_num.read();
+                //JOptionPane.showMessageDialog(LogoToDb.this, " " + eProp.server(num) + " " +eProp.port(num) + " " +  eProp.base(num)
+                //+ " " + edUser.getText() + " " + edPass.getPassword(), "ВНИМАНИЕ!", 1);
                 eExcep pass = Conn.connection(eProp.server(num), eProp.port(num), eProp.base(num), edUser.getText(), edPass.getPassword(), null);
+                //JOptionPane.showMessageDialog(LogoToDb.this, pass.mes, "ВНИМАНИЕ!", 1);
                 if (pass == eExcep.yesConn) {
 
                     if ("SYSDBA".equalsIgnoreCase(edUser.getText())) {
@@ -174,6 +182,7 @@ public class LogoToDb extends javax.swing.JDialog {
         progressBar.setVerifyInputWhenFocusTarget(false);
 
         labMes.setFont(frames.UGui.getFont(0,0));
+        labMes.setForeground(new java.awt.Color(0, 0, 255));
         labMes.setText("<html>Ошибка соединения с базой данных!");
         labMes.setToolTipText("Ошибка соединения с базой данных!");
         labMes.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -280,7 +289,7 @@ public class LogoToDb extends javax.swing.JDialog {
 
     private void closeAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeAction
         System.exit(0);
-        
+
     }//GEN-LAST:event_closeAction
 
     private void okAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okAction
