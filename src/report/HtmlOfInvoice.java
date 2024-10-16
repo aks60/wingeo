@@ -1,37 +1,31 @@
 package report;
 
-import builder.model.AreaSimple;
 import builder.Wincalc;
 import common.MoneyInWords;
-import common.UCom;
-import common.eProp;
 import dataset.Record;
-import domain.eArtikl;
-import domain.eColor;
-import domain.ePrjkit;
 import domain.ePrjpart;
 import domain.ePrjprod;
 import domain.eProject;
-import domain.eSysuser;
-import enums.Type;
 import frames.UGui;
-import frames.swing.Canvas;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class HtmlOfInvoice {
@@ -42,9 +36,17 @@ public class HtmlOfInvoice {
 
     public static void invoice1(Record projectRec) {
         try {
-            URL path = HtmlOfInvoice.class.getResource("/resource/report/Invoice1.html");
-            File input = new File(path.toURI());
-            Document doc = Jsoup.parse(input, "utf-8");
+            //InputStream in = HtmlOfInvoice.class.getClassLoader().getResourceAsStream("/resource/report/Invoice1.html");
+            //URL url = HtmlOfInvoice.class.getClassLoader().getResource("report.html");
+            InputStream in = HtmlOfInvoice.class.getResourceAsStream("/resource/report/Invoice1.html");
+            //BufferedInputStream result = (BufferedInputStream) in;
+            //URL path = HtmlOfInvoice.class.getClassLoader().getResource("/resource/report/Invoice1.html");
+            //File input = new File(path.toURI());
+            //String outputFile = "C:\\Users\\user\\Desktop\\test\\output.txt";
+            //Files.copy(is, Paths.get(outputFile));
+            //File file = new File(outputFile);
+
+            Document doc = Jsoup.parse(in, "utf-8", null);
 
             //Заполним отчёт
             load1(projectRec, doc);
@@ -56,8 +58,8 @@ public class HtmlOfInvoice {
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
             System.err.println("Ошибка1:HtmlOfInvoice.smeta1()" + e);
-        } catch (URISyntaxException e) {
-            System.err.println("Ошибка2:HtmlOfInvoice.smeta1()" + e);
+        //} catch (URISyntaxException e) {
+        //    System.err.println("Ошибка2:HtmlOfInvoice.smeta1()" + e);
         } catch (Exception e) {
             System.err.println("Ошибка3:HtmlOfInvoice.smeta1()" + e);
         }
@@ -187,7 +189,7 @@ public class HtmlOfInvoice {
                 tdList.get(4).text(df1.format(winc.cost2));
                 tdList.get(5).text(df1.format(prjprodRec.getInt(ePrjprod.num) * winc.cost2));
                 double cost2 = prjprodRec.getInt(ePrjprod.num) * winc.cost2;
-                tdList.get(7).text(df1.format(cost2 / 100 * 18)); 
+                tdList.get(7).text(df1.format(cost2 / 100 * 18));
                 tdList.get(8).text(df1.format(cost2 + cost2 / 100 * 18));
                 total += cost2 + cost2 / 100 * 18;
             }
