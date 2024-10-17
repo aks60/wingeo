@@ -19,7 +19,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-//–ó–∞–¥–∞–Ω–∏–µ –≤ —Ü–µ—Ö
+//«‡‰‡ÌËÂ ‚ ˆÂı
 public class HtmlOfManufactory {
 
     private static DecimalFormat df1 = new DecimalFormat("#0.0");
@@ -32,7 +32,7 @@ public class HtmlOfManufactory {
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
 
-            //–ó–∞–ø–æ–ª–Ω–∏–º –æ—Ç—á—ë—Ç
+            //«‡ÔÓÎÌËÏ ÓÚ˜∏Ú
             load(projectRec, doc);
 
             String str = doc.html();
@@ -41,7 +41,7 @@ public class HtmlOfManufactory {
             ExecuteCmd.documentType(null);
 
         } catch (Exception e) {
-            System.err.println("–û—à–∏–±–∫–∞:HtmlOfManufactory.manufactory() " + e);
+            System.err.println("Œ¯Ë·Í‡:HtmlOfManufactory.manufactory() " + e);
         }
     }
 
@@ -50,7 +50,7 @@ public class HtmlOfManufactory {
             List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Wincalc> wincList = URep.wincList(prjprodList, 400);
 
-            //–ó–∞–ø–æ–ª–Ω–∏–º —Ñ–∞–π–ª —à–∞–±–ª–æ–Ω–∞–º–∏ –∑–∞–∫–∞–∑–æ–≤
+            //«‡ÔÓÎÌËÏ Ù‡ÈÎ ¯‡·ÎÓÌ‡ÏË Á‡Í‡ÁÓ‚
             Element div2 = doc.getElementById("div2");
             String templateBody = div2.html();
             for (int i = 1; i < prjprodList.size(); i++) {
@@ -66,21 +66,21 @@ public class HtmlOfManufactory {
                     template5Rec = tab5List.get(0).getElementsByTag("tr").get(1).html(),
                     template6Rec = tab6List.get(0).getElementsByTag("tr").get(1).html();
 
-            //–¶–∏–∫–ª –ø–æ –∏–∑–¥–µ–ª–∏—è–º
+            //÷ËÍÎ ÔÓ ËÁ‰ÂÎËˇÏ
             for (int i = 0; i < prjprodList.size(); i++) {
 
                 String script = prjprodList.get(i).getStr(ePrjprod.script);
                 Wincalc winc = new Wincalc(script);
                 winc.specification(true);
 
-                //–¢–∞–±–ª–∏—Ü–∞ ‚Ññ3 –ü–†–û–§–ò–õ–¨ / –ê–†–ú–ò–†–û–í–ê–ù–ò–ï  
+                //“‡·ÎËˆ‡ π3 œ–Œ‘»À‹ / ¿–Ã»–Œ¬¿Õ»≈  
                 Element tab3 = tab3List.get(i);
                 List<SpcRecord> spcList3 = new ArrayList(), spcList3a = new ArrayList();
-                loadTab3Specific(winc, tab3, template3Rec, spcList3, spcList3a); //—Å–ø–µ—Ü–∏—Ñ–∏–∫–∞—Ü–∏—è –¥–ª—è –∏–∑–¥–µ–ª–∏—è 
+                loadTab3Specific(winc, tab3, template3Rec, spcList3, spcList3a); //ÒÔÂˆËÙËÍ‡ˆËˇ ‰Îˇ ËÁ‰ÂÎËˇ 
                 spcList3.forEach(act -> tab3.append(template3Rec));
                 tab3.getElementsByTag("tr").remove(1);
 
-                for (int j = 0; j < spcList3.size(); j++) { //–∑–∞–ø–æ–ª–Ω–∏–º —Å—Ç—Ä–æ–∫–∏ 
+                for (int j = 0; j < spcList3.size(); j++) { //Á‡ÔÓÎÌËÏ ÒÚÓÍË 
                     Elements tdList3 = tab3.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
                     tdList3.get(0).text(String.valueOf(j + 1));
                     tdList3.get(1).text(str(spcList3.get(j).artikl));
@@ -95,13 +95,13 @@ public class HtmlOfManufactory {
                     tdList3.get(10).text(str(spcList3a.get(j).artikl));
                 }
 
-                //–¢–∞–±–ª–∏—Ü–∞ ‚Ññ4 –£–ü–õ–û–¢–ù–ò–¢–ï–õ–ò 
+                //“‡·ÎËˆ‡ π4 ”œÀŒ“Õ»“≈À» 
                 Element tab4 = tab4List.get(i);
                 List<SpcRecord> spcList4 = loadTab4Specific(winc, tab4, template4Rec);
                 spcList4.forEach(act -> tab4.append(template4Rec));
                 tab4.getElementsByTag("tr").remove(1);
 
-                for (int j = 0; j < spcList4.size(); j++) { //–∑–∞–ø–æ–ª–Ω–∏–º —Å—Ç—Ä–æ–∫–∏ 
+                for (int j = 0; j < spcList4.size(); j++) { //Á‡ÔÓÎÌËÏ ÒÚÓÍË 
                     Elements tdList4 = tab4.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
                     tdList4.get(0).text(String.valueOf(j + 1));
                     tdList4.get(1).text(str(spcList4.get(j).artikl));
@@ -110,12 +110,12 @@ public class HtmlOfManufactory {
                     tdList4.get(4).text(str(spcList4.get(j).width));
                 }
 
-                //–¢–∞–±–ª–∏—Ü–∞ ‚Ññ5 –®–¢–ê–ü–ò–ö  
+                //“‡·ÎËˆ‡ π5 ÿ“¿œ»   
                 Element tab5 = tab5List.get(i);
                 List<SpcRecord> spcList5 = loadTab5Specific(winc, tab5, template5Rec);
                 spcList5.forEach(act -> tab5.append(template5Rec));
                 tab5.getElementsByTag("tr").remove(1);
-                for (int j = 0; j < spcList5.size(); j++) { //–∑–∞–ø–æ–ª–Ω–∏–º —Å—Ç—Ä–æ–∫–∏ 
+                for (int j = 0; j < spcList5.size(); j++) { //Á‡ÔÓÎÌËÏ ÒÚÓÍË 
                     Elements tdList5 = tab5.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
                     tdList5.get(0).text(String.valueOf(j + 1));
                     tdList5.get(1).text(str(spcList5.get(j).artikl));
@@ -126,12 +126,12 @@ public class HtmlOfManufactory {
                     tdList5.get(6).text(str(spcList5.get(j).anglCut1));
                 }
 
-                //–¢–∞–±–ª–∏—Ü–∞ ‚Ññ6 –ó–ê–ü–û–õ–ù–ï–ù–ò–Ø  
+                //“‡·ÎËˆ‡ π6 «¿œŒÀÕ≈Õ»ﬂ  
                 Element tab6 = tab6List.get(i);
                 List<SpcRecord> spcList6 = loadTab6Specific(winc, tab6, template6Rec);
                 spcList6.forEach(act -> tab6.append(template6Rec));
                 tab6.getElementsByTag("tr").remove(1);
-                for (int j = 0; j < spcList6.size(); j++) { //–∑–∞–ø–æ–ª–Ω–∏–º —Å—Ç—Ä–æ–∫–∏ 
+                for (int j = 0; j < spcList6.size(); j++) { //Á‡ÔÓÎÌËÏ ÒÚÓÍË 
                     Elements tdList6 = tab6.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
                     tdList6.get(0).text(String.valueOf(j + 1));
                     tdList6.get(1).text(str(spcList6.get(j).name));
@@ -144,7 +144,7 @@ public class HtmlOfManufactory {
 
             }
 
-            //–ó–∞–≥—Ä—É–∑–∏–º –∏–∑–æ–±—Ä–∞–∂–µ–Ω–∏—è
+            //«‡„ÛÁËÏ ËÁÓ·‡ÊÂÌËˇ
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");
             for (int i = 0; i < imgList.size(); i++) {
                 Element get = imgList.get(i);
@@ -152,19 +152,19 @@ public class HtmlOfManufactory {
             }
 
         } catch (Exception e) {
-            System.err.println("–û—à–∏–±–∫–∞:HtmlOfManufactory.load() " + e);
+            System.err.println("Œ¯Ë·Í‡:HtmlOfManufactory.load() " + e);
         }
     }
 
-    //–ü–†–û–§–ò–õ–¨ / –ê–†–ú–ò–†–û–í–ê–ù–ò–ï
+    //œ–Œ‘»À‹ / ¿–Ã»–Œ¬¿Õ»≈
     public static void loadTab3Specific(Wincalc winc, Element tab, String templateRec, List<SpcRecord> spcList2, List<SpcRecord> spcList3) {
 
-        winc.listSpec.forEach(spcRec -> { //–ø—Ä–æ—Ñ–∏–ª—è
+        winc.listSpec.forEach(spcRec -> { //ÔÓÙËÎˇ
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X100, TypeArt.X101, TypeArt.X102, TypeArt.X103, TypeArt.X104, TypeArt.X105) == true) {
                 spcList2.add(new  SpcRecord(spcRec));
             }
         });
-        spcList2.forEach(spcRec1 -> { //–∞—Ä–º–∏—Ä–æ–≤–∞–Ω–∏–µ
+        spcList2.forEach(spcRec1 -> { //‡ÏËÓ‚‡ÌËÂ
             SpcRecord spcRec3 = new SpcRecord();
             for (SpcRecord spcRec2 : winc.listSpec) {
                 if (TypeArt.isType(spcRec2.artiklRec(), TypeArt.X107) == true && spcRec2.elem5e.id == spcRec1.id) {
@@ -175,7 +175,7 @@ public class HtmlOfManufactory {
         });
     }
 
-    //–£–ü–õ–û–¢–ù–ò–¢–ï–õ–ò
+    //”œÀŒ“Õ»“≈À»
     public static List<SpcRecord> loadTab4Specific(Wincalc winc, Element tab, String templateRec) {
 
         List<SpcRecord> spcList = new ArrayList();
@@ -187,7 +187,7 @@ public class HtmlOfManufactory {
         return spcList;
     }
 
-    //–®–¢–ê–ü–ò–ö
+    //ÿ“¿œ» 
     public static List<SpcRecord> loadTab5Specific(Wincalc winc, Element tab, String templateRec) {
 
         List<SpcRecord> spcList = new ArrayList();
@@ -199,7 +199,7 @@ public class HtmlOfManufactory {
         return spcList;
     }
 
-    //–ó–ê–ü–û–õ–ù–ï–ù–ò–Ø
+    //«¿œŒÀÕ≈Õ»ﬂ
     public static List<SpcRecord> loadTab6Specific(Wincalc winc, Element tab, String templateRec) {
 
         List<SpcRecord> spcList = new ArrayList();

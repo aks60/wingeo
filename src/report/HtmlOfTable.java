@@ -12,7 +12,7 @@ import dataset.Table;
 import java.io.FileNotFoundException;
 import javax.swing.JOptionPane;
 
-//РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РґРѕРєСѓРјРµРЅС‚Р° РІ HTML </p>
+//Преобразование документа в HTML </p>
 public class HtmlOfTable {
 
     private static String charset = "UTF-8";
@@ -37,25 +37,25 @@ public class HtmlOfTable {
                 "  <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1>",
                 "  <CAPTION><br>" + title + "<br><br></CAPTION>");
 
-        //Р·Р°РїРёСЃР°Р» РЅР°Р·РІР°РЅРёРµ РІС‹Р±СЂР°РЅРЅС‹С… СЃС‚РѕР»Р±С†РѕРІ
+        //записал название выбранных столбцов
         for (int index = 0; index < table.getColumnCount(); index++) {
             String colName = table.getColumnName(index);
             str += "<TH>" + colName + "</TH>";
         }
-        //РїРѕРµС…Р°Р»Рё !!!
+        //поехали !!!
         for (int row = 0; row < table.getRowCount(); row++) {
-            str += "<TR>";//РЅР°С‡Р°Р»Рѕ СЃС‚СЂРѕРєРё
-            //РїРµСЂРІС‹Р№ СЃС‚РѕР»Р±РµС†, С„РёРєСЃРёСЂРѕРІР°РЅРЅС‹Рµ Р·Р°РїРёСЃРё
+            str += "<TR>";//начало строки
+            //первый столбец, фиксированные записи
             Object obj = table.getValueAt(row, 0);
             String str2 = (obj == null) ? "" : obj.toString();
             str += "<TD class=TDFC>" + str2 + "</TD>";
-            //РѕСЃС‚Р°Р»СЊРЅС‹Рµ СЃС‚РѕР»Р±С†С‹
+            //остальные столбцы
             for (int col = 1; col < table.getColumnCount(); col++) {
                 obj = table.getValueAt(row, col);
                 str2 = (obj == null) ? "" : obj.toString();
                 str += "<TD class=TDC>" + str2 + "</TD>";
             }
-            str += "</TR>";//РєРѕРЅРµС† СЃС‚СЂРѕРєРё
+            str += "</TR>";//конец строки
         }
         str += "</TABLE></BODY>";
 
@@ -82,21 +82,21 @@ public class HtmlOfTable {
                 "  <CAPTION><br>" + title + "<br><br></CAPTION>",
                 "  <col width='250' valign='top'>");
 
-        //Р·Р°РїРёСЃР°Р» РЅР°Р·РІР°РЅРёРµ РІС‹Р±СЂР°РЅРЅС‹С… СЃС‚РѕР»Р±С†РѕРІ
-        str += "<TH>в„–РїРї</TH>";
+        //записал название выбранных столбцов
+        str += "<TH>№пп</TH>";
         for (RColumn rColumn : listRColumn) {
             str += "<TH>" + rColumn + "</TH>";
         }
-        //РїРѕРµС…Р°Р»Рё !!!
+        //поехали !!!
         npp = 0;
         for (int indexMaster = 0; indexMaster < table.size(); indexMaster++) {
-            str += "<TR>";//РЅР°С‡Р°Р»Рѕ СЃС‚СЂРѕРєРё     
+            str += "<TR>";//начало строки     
 
-            //РЅРѕРјРµСЂ РїРѕ РїРѕСЂСЏРґРєСѓ
+            //номер по порядку
             String nppReport = table.get(indexMaster).get(0).equals("") ? "" : String.valueOf(++npp);
             str += "<TD class=TDFC>" + nppReport + "</TD>";
 
-            //РїРµСЂРІС‹Р№ СЃС‚РѕР»Р±РµС†, С„РёРєСЃРёСЂРѕРІР°РЅРЅС‹Рµ Р·Р°РїРёСЃРё           
+            //первый столбец, фиксированные записи           
             RColumn firsColumn = listRColumn.get(0);
             Field firstField = firsColumn.fields().get(0);
             str += "<TD class=TDFC>" + table.getAs(indexMaster, firstField);
@@ -106,7 +106,7 @@ public class HtmlOfTable {
             }
             str += "</TD>";
 
-            //РѕСЃС‚Р°Р»СЊРЅС‹Рµ СЃС‚РѕР»Р±С†С‹
+            //остальные столбцы
             for (int indexNode = 1; indexNode < listRColumn.size(); indexNode++) {
                 RColumn nextColumn = listRColumn.get(indexNode);
                 Field nextField = nextColumn.fields().get(0);
@@ -117,7 +117,7 @@ public class HtmlOfTable {
                 }
                 str += "</TD>";
             }
-            str += "</TR>";//РєРѕРЅРµС† СЃС‚СЂРѕРєРё
+            str += "</TR>";//конец строки
         }
         str += "</TABLE></BODY>";
         write(str);
@@ -142,25 +142,25 @@ public class HtmlOfTable {
                 "  <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1>",
                 "  <CAPTION><br>" + title + "<br><br></CAPTION>");
 
-        //Р·Р°РїРёСЃР°Р» РЅР°Р·РІР°РЅРёРµ РІС‹Р±СЂР°РЅРЅС‹С… СЃС‚РѕР»Р±С†РѕРІ
+        //записал название выбранных столбцов
         for (int index = 0; index < fields.length; index++) {
             String colName = fields[index].meta().descr;
             str += "<TH>" + colName + "</TH>";
         }
-        //РїРѕРµС…Р°Р»Рё !!!
+        //поехали !!!
         for (Record record : table) {
-            str += "<TR>";//РЅР°С‡Р°Р»Рѕ СЃС‚СЂРѕРєРё
-            //РїРµСЂРІС‹Р№ СЃС‚РѕР»Р±РµС†, С„РёРєСЃРёСЂРѕРІР°РЅРЅС‹Рµ Р·Р°РїРёСЃРё
+            str += "<TR>";//начало строки
+            //первый столбец, фиксированные записи
             Object obj = record.get(fields[0]);
             String str2 = (obj == null) ? "" : obj.toString();
             str += "<TD class=TDFC>" + str2 + "</TD>";
-            //РѕСЃС‚Р°Р»СЊРЅС‹Рµ СЃС‚РѕР»Р±С†С‹
+            //остальные столбцы
             for (Field field : fields) {
                 obj = record.get(field);
                 str2 = (obj == null) ? "" : obj.toString();
                 str += "<TD class=TDC>" + str2 + "</TD>";
             }
-            str += "</TR>";//РєРѕРЅРµС† СЃС‚СЂРѕРєРё
+            str += "</TR>";//конец строки
         }
         str += "</TABLE></BODY>";
 
@@ -187,7 +187,7 @@ public class HtmlOfTable {
                 "  <CAPTION><br>" + title + "<br><br></CAPTION>",
                 "  <col width='250' valign='top'>");
 
-        //Р·Р°РїРёСЃР°Р» РЅР°Р·РІР°РЅРёРµ РІС‹Р±СЂР°РЅРЅС‹С… СЃС‚РѕР»Р±С†РѕРІ
+        //записал название выбранных столбцов
         int indexTitle = 0;
         for (indexTitle = 0; indexTitle < table1.getColumnCount(); indexTitle++) {
             String colName = table1.getColumnName(indexTitle);
@@ -198,14 +198,14 @@ public class HtmlOfTable {
             str += "<TH>" + colName + "</TH>";
         }
 
-        //РїРѕРµС…Р°Р»Рё !!!
+        //поехали !!!
         for (int row = 0; row < table1.getRowCount(); row++) {
-            str += "<TR>";//РЅР°С‡Р°Р»Рѕ СЃС‚СЂРѕРєРё
-            //РїРµСЂРІС‹Р№ СЃС‚РѕР»Р±РµС†, С„РёРєСЃРёСЂРѕРІР°РЅРЅС‹Рµ Р·Р°РїРёСЃРё
+            str += "<TR>";//начало строки
+            //первый столбец, фиксированные записи
             Object obj = table1.getValueAt(row, 0);
             String str2 = (obj == null) ? "" : obj.toString();
             str += "<TD class=TDFC>" + str2 + "</TD>";
-            //РѕСЃС‚Р°Р»СЊРЅС‹Рµ СЃС‚РѕР»Р±С†С‹
+            //остальные столбцы
             for (int col = 1; col < table1.getColumnCount(); col++) {
                 obj = table1.getValueAt(row, col);
                 str2 = (obj == null) ? "" : obj.toString();
@@ -218,14 +218,14 @@ public class HtmlOfTable {
                 str += "<TD class=TDC>" + str2 + "</TD>";
             }
 
-            str += "</TR>";//РєРѕРЅРµС† СЃС‚СЂРѕРєРё
+            str += "</TR>";//конец строки
         }
         str += "</TABLE></BODY>";
 
         write(str);
     }
 
-    //Р—Р°РїРёСЃР°С‚СЊ С‚РµРєСЃС‚ РІ С„Р°Р№Р»
+    //Записать текст в файл
     public static void write(String text) {
         try {
             PrintWriter out = new PrintWriter(new File(eProp.path_prop.read(), "report.html"));
@@ -235,7 +235,7 @@ public class HtmlOfTable {
                 out.close();
             }
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "РќРµС‚ РґРѕСЃС‚СѓРїР° Рє С„Р°Р№Р»Сѓ. РџСЂРѕС†РµСЃСЃ РЅРµ РјРѕР¶РµС‚ РїРѕР»СѓС‡РёС‚СЊ РґРѕСЃС‚СѓРї Рє С„Р°Р№Р»Сѓ, С‚Р°Рє РєР°Рє СЌС‚РѕС‚ С„Р°Р№Р» Р·Р°РЅСЏС‚ РґСЂСѓРіРёРј РїСЂРѕС†РµСЃСЃРѕРј.", "Р’РќРРњРђРќРР•!", 1);          
+            JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);          
         } catch (Exception e) {
             System.err.println(e);
             //throw new RuntimeException(e);

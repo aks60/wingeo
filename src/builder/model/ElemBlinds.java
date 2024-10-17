@@ -10,13 +10,13 @@ import domain.eElement;
 import enums.PKjson;
 import enums.UseUnit;
 import org.locationtech.jts.geom.Envelope;
-//TODO - Р РµР°Р»РёР·РѕРІР°С‚СЊ Р¶Р°Р»СЋР·Рё
-//Р–Р°Р»СЋР·Рё
+//TODO - Реализовать жалюзи
+//Жалюзи
 /**
- * РџСЂР°РІРёР»Р° СЂР°СЃС‡С‘С‚Р°.
- * РЎР»РµРґСѓРµС‚ РёР·РјРµСЂРёС‚СЊ С€РёСЂРёРЅСѓ Рё РІС‹СЃРѕС‚Сѓ РѕРєРѕРЅРЅРѕРіРѕ РїСЂРѕРµРјР° РІ РЅРµСЃРєРѕР»СЊРєРёС… РјРµСЃС‚Р°С…, РєР°Рє РІ СЃР»СѓС‡Р°Рµ СЃ РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅС‹РјРё РєРѕРЅСЃС‚СЂСѓРєС†РёСЏРјРё;
- * Рљ РїРѕРєР°Р·Р°С‚РµР»СЋ С€РёСЂРёРЅС‹ РїСЂРёР±Р°РІРёС‚СЊ 20 СЃРј (РїРѕ 10 СЃРј СЃ РєР°Р¶РґРѕР№ СЃС‚РѕСЂРѕРЅС‹); РџСЂРё РјРѕРЅС‚Р°Р¶Рµ Р¶Р°Р»СЋР·Рё РЅР° РїРѕС‚РѕР»РѕРє, Рє РІС‹СЃРѕС‚Рµ РЅСѓР¶РЅРѕ 
- * РїСЂРёР±Р°РІРёС‚СЊ СЂР°СЃСЃС‚РѕСЏРЅРёРµ РѕС‚ РѕРєРЅР° (РІРµСЂС…РЅРёР№ РѕС‚РєРѕСЃ) Рє РїРѕС‚РѕР»РєСѓ, РµСЃР»Рё РЅР° СЃС‚РµРЅСѓ вЂ“ РјРёРЅРёРјСѓРј +10 СЃРј.
+ * Правила расчёта.
+ * Следует измерить ширину и высоту оконного проема в нескольких местах, как в случае с горизонтальными конструкциями;
+ * К показателю ширины прибавить 20 см (по 10 см с каждой стороны); При монтаже жалюзи на потолок, к высоте нужно 
+ * прибавить расстояние от окна (верхний откос) к потолку, если на стену – минимум +10 см.
  * @author aks
  */
 public class ElemBlinds extends ElemSimple {
@@ -29,7 +29,7 @@ public class ElemBlinds extends ElemSimple {
 
     @Override
     public void initArtikle() {
-        //РђСЂС‚РёРєР»
+        //Артикл
         if (isJson(gson.param, PKjson.artiklID)) {
             this.artiklRec = eArtikl.find(gson.param.get(PKjson.artiklID).getAsInt(), false);
         } else {
@@ -37,13 +37,13 @@ public class ElemBlinds extends ElemSimple {
         }
         this.artiklRecAn = artiklRec;
 
-        //Р¦РІРµС‚
+        //Цвет
         if (isJson(gson.param, PKjson.colorID1)) {
             this.colorID1 = gson.param.get(PKjson.colorID1).getAsInt();
         } else {
             this.colorID1 = -3;
         }
-        //РЎРѕСЃС‚Р°РІ Р¶Р°Р»СЋР·Рё. Р’РќРРњРђР•РР•! elementID РїРѕРґРјРµРЅС‘РЅ РЅР° sysprofRec
+        //Состав жалюзи. ВНИМАЕИЕ! elementID подменён на sysprofRec
         if (isJson(gson.param, PKjson.elementID)) {
             this.sysprofRec = eElement.find(gson.param.get(PKjson.elementID).getAsInt());
         } else {
@@ -52,17 +52,17 @@ public class ElemBlinds extends ElemSimple {
     }
 
     public void setLocation() {
-        spcRec.place = "Р’РЎРў." + layout().name.substring(0, 1).toLowerCase();
+        spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
     }
 
     public void setSpecific() {
         try {
-            spcRec.place = "Р’РЎРў";
+            spcRec.place = "ВСТ";
             spcRec.artiklRec(this.artiklRec);
             spcRec.colorID1 = this.colorID1;
             Envelope envBlinds = owner.owner.area.getGeometryN(1).getEnvelopeInternal();
             double dXY = 25;
-            this.area = UGeo.newPolygon( //Р¶Р°Р»СЋР·Рё РІСЃРµРіРґР° РїСЂСЏРјРѕСѓРіРѕР»СЊРЅС‹Рµ
+            this.area = UGeo.newPolygon( //жалюзи всегда прямоугольные
                     envBlinds.getMinX() - dXY, envBlinds.getMinY() - dXY,
                     envBlinds.getMinX() - dXY, envBlinds.getMaxY() + dXY,
                     envBlinds.getMaxX() + dXY, envBlinds.getMaxY() + dXY,
@@ -71,7 +71,7 @@ public class ElemBlinds extends ElemSimple {
             spcRec.height = (envBlinds.getMaxY() - envBlinds.getMinY()) + 2 * dXY;
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:ElemBlinds.setSpecific() " + e);
+            System.err.println("Ошибка:ElemBlinds.setSpecific() " + e);
         }        
     }
 
@@ -81,12 +81,12 @@ public class ElemBlinds extends ElemSimple {
             if(spcAdd.artiklRec().getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;
             }            
-            spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //РєРѕР». РµРґ. СЃ СѓС‡С‘С‚РѕРј РїР°СЂР°Рј.
-            spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //РєРѕР». РµРґ. СЃ С€Р°РіРѕРј
-            spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //РїРѕРїСЂР°РІРєР° РјРј            
+            spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам.
+            spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
+            spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм            
 
             double anglHor = UGeo.anglHor(x1(), y1(), x2(), y2());
-            if (UseUnit.METR.id == spcAdd.artiklRec().getInt(eArtikl.unit)) { //РїРѕРі.Рј.  
+            if (UseUnit.METR.id == spcAdd.artiklRec().getInt(eArtikl.unit)) { //пог.м.  
 
                 if (anglHor == 0 || anglHor == 180) {
                     spcAdd.width += spcAdd.elem5e.owner.width();
@@ -94,30 +94,30 @@ public class ElemBlinds extends ElemSimple {
                     spcAdd.width += spcAdd.elem5e.owner.height();
                 }
             }
-            UPar.to_12075_34075_39075(this, spcAdd); //СѓРіР»С‹ СЂРµР·Р°
-            UPar.to_34077_39077(spcAdd); //Р·Р°РґР°С‚СЊ РЈРіРѕР»_СЂРµР·Р°_1/РЈРіРѕР»_СЂРµР·Р°_2
-            spcAdd.height = UCom.getDbl(spcAdd.getParam(spcAdd.height, 40006)); //РІС‹СЃРѕС‚Р° Р·Р°РїРѕР»РЅРµРЅРёСЏ, РјРј 
-            spcAdd.width = UPar.to_12065_15045_25040_34070_39070(spcAdd); //РґР»РёРЅР° РјРј
-            spcAdd.width = UCom.getDbl(spcAdd.getParam(spcAdd.width, 40004)); //С€РёСЂРёРЅР° Р·Р°РїРѕР»РЅРµРЅРёСЏ, РјРј        
-            spcAdd.width = spcAdd.width * UPar.to_12030_15030_25035_34030_39030(spcAdd);//"[ * РєРѕСЌС„-С‚ ]"
-            spcAdd.width = spcAdd.width / UPar.to_12040_15031_25036_34040_39040(spcAdd);//"[ / РєРѕСЌС„-С‚ ]"
-            UPar.to_40005_40010(spcAdd); //РџРѕРїСЂР°РІРєР° РЅР° СЃС‚РѕСЂРѕРЅС‹ С‡РµС‚РЅС‹Рµ/РЅРµС‡РµС‚РЅС‹Рµ (С€РёСЂРёРЅС‹/РІС‹СЃРѕС‚С‹), РјРј
-            UPar.to_40007(spcAdd); //РІС‹СЃРѕС‚Сѓ СЃРґРµР»Р°С‚СЊ РґР»РёРЅРѕР№
-            spcAdd.count = UPar.to_11070_12070_33078_34078(spcAdd); //СЃС‚Р°РІРёС‚СЊ РѕРґРЅРѕРєСЂР°С‚РЅРѕ
-            spcAdd.count = UPar.to_39063(spcAdd); //РѕРєСЂСѓРіР»СЏС‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ РґРѕ Р±Р»РёР¶Р°Р№С€РµРіРѕ 
+            UPar.to_12075_34075_39075(this, spcAdd); //углы реза
+            UPar.to_34077_39077(spcAdd); //задать Угол_реза_1/Угол_реза_2
+            spcAdd.height = UCom.getDbl(spcAdd.getParam(spcAdd.height, 40006)); //высота заполнения, мм 
+            spcAdd.width = UPar.to_12065_15045_25040_34070_39070(spcAdd); //длина мм
+            spcAdd.width = UCom.getDbl(spcAdd.getParam(spcAdd.width, 40004)); //ширина заполнения, мм        
+            spcAdd.width = spcAdd.width * UPar.to_12030_15030_25035_34030_39030(spcAdd);//"[ * коэф-т ]"
+            spcAdd.width = spcAdd.width / UPar.to_12040_15031_25036_34040_39040(spcAdd);//"[ / коэф-т ]"
+            UPar.to_40005_40010(spcAdd); //Поправка на стороны четные/нечетные (ширины/высоты), мм
+            UPar.to_40007(spcAdd); //высоту сделать длиной
+            spcAdd.count = UPar.to_11070_12070_33078_34078(spcAdd); //ставить однократно
+            spcAdd.count = UPar.to_39063(spcAdd); //округлять количество до ближайшего 
 
             if (spcRec.id != spcAdd.id) {
                 spcRec.spcList.add(spcAdd);
             }
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:ElemMosquit.addSpecific() " + e);
+            System.err.println("Ошибка:ElemMosquit.addSpecific() " + e);
         }        
     }
 
     @Override
     public void paint() {
-        //Р–Р°Р»СЋР·Рё РЅР° СЌСЃРєРёР·Рµ РїСЂРѕСЂРёСЃРѕРІС‹РІР°РµС‚СЃ РєР°Рє РёРєРѕРЅРєР°
+        //Жалюзи на эскизе прорисовываетс как иконка
     }
 
     @Override

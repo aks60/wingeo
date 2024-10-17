@@ -36,7 +36,7 @@ import org.locationtech.jts.operation.buffer.VariableBuffer;
 import org.locationtech.jts.operation.polygonize.Polygonizer;
 
 /**
- * РЈС‚РёР»РёС‚С‹ JTS
+ * Утилиты JTS
  */
 public class UGeo {
 
@@ -46,24 +46,24 @@ public class UGeo {
             return PointLocation.isInRing(c, g.getGeometryN(0).getCoordinates());
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Com5t.inside()");
+            System.err.println("Ошибка:Com5t.inside()");
             return false;
         }
     }
 
-    //РЈРіРѕР» РЅРµРѕСЂРёРµРЅС‚РёСЂРѕРІР°РЅРЅС‹Р№ Рє РіРѕСЂРёР·РѕРЅС‚Сѓ. РЈРіРѕР» РЅРѕСЂРјРёСЂСѓРµС‚СЃСЏ РІ РґРёР°РїР°Р·РѕРЅРµ [0, 2PI].
+    //Угол неориентированный к горизонту. Угол нормируется в диапазоне [0, 2PI].
     public static double anglHor(double x1, double y1, double x2, double y2) {
         double ang = Math.toDegrees(Angle.angle(new Coordinate(x1, y1), new Coordinate(x2, y2)));
         return (ang > 0) ? 360 - ang : Math.abs(ang);
     }
 
-    //РЈРіРѕР» РѕСЂРёРµРЅС‚РёСЂРѕРІР°РЅРЅС‹Р№ Рє РіРѕСЂРёР·РѕРЅС‚Сѓ. РЈРіРѕР» РЅРѕСЂРјРёСЂСѓРµС‚СЃСЏ РІ РґРёР°РїР°Р·РѕРЅРµ [-Pi, Pi].
+    //Угол ориентированный к горизонту. Угол нормируется в диапазоне [-Pi, Pi].
     public static double anglHor(ElemSimple e) {
         double ang = Math.toDegrees(Angle.angle(new Coordinate(e.x1(), e.y1()), new Coordinate(e.x2(), e.y2())));
         return (ang > 0) ? 360 - ang : Math.abs(ang);
     }
 
-    //РЈРіРѕР» СЂРµР·Р°
+    //Угол реза
     public static double anglCut(SpcRecord spcRec, Geometry area, int index1, int index2, char direction) {
         LineSegment s1a = UGeo.getSegment(area, index1);
         LineSegment s2a = UGeo.getSegment(area, index2);
@@ -85,7 +85,7 @@ public class UGeo {
         return Math.toDegrees(Math.asin(spcRec.height / gip));
     }
 
-    //РЈРіРѕР» РЅРµРѕСЂРёРµРЅС‚РёСЂРѕРІР°РЅРЅС‹Р№ РЅРµРѕРјРµР¶РґСѓ РїСЂРѕС„РёР»СЏРјРё
+    //Угол неориентированный неомежду профилями
     public static double anglBetbeeem(ElemSimple e1, ElemSimple e2) {
 
         double c1 = angle(new Coordinate(e1.x2(), e1.y2()), new Coordinate(e1.x1(), e1.y1()));
@@ -94,7 +94,7 @@ public class UGeo {
         return Math.toDegrees(diff(c1, c2));
     }
 
-    //РџРµСЂРµСЃРµС‡РµРЅРёРµ СЃРµРіРјРµРЅС‚Р°(Р»РёРЅРёРё) РёРјРїРѕСЃС‚Р° СЃ СЃРµРіРјРµРЅС‚Р°РјРё(РѕС‚СЂРµР·РєР°РјРё) РјРЅРѕРіРѕСѓРіРѕР»СЊРЅРёРєР°
+    //Пересечение сегмента(линии) импоста с сегментами(отрезками) многоугольника
     public static Coordinate[] geoCross(Geometry poly, LineSegment line) {
         try {
             poly = poly.getGeometryN(0);
@@ -122,7 +122,7 @@ public class UGeo {
         return null;
     }
 
-    //РџРёР»РёРј РјРЅРѕРіРѕСѓРіРѕР»СЊРЅРёРє     
+    //Пилим многоугольник     
     public static Geometry[] splitPolygon(Geometry geom, ElemCross impost) {
         List<Coordinate> lineCross = new ArrayList<Coordinate>();
         Coordinate impP0 = new Coordinate(impost.x1(), impost.y1());
@@ -130,7 +130,7 @@ public class UGeo {
         Coordinate[] coo = geom.copy().getCoordinates();
 
         for (int i = 1; i < coo.length; i++) {
-            //РўРѕС‡РєР° РїРµСЂРµСЃРµС‡РµРЅРёСЏ Р»РёРЅРёРё Рё СЃРµРіРјРµРЅС‚Р°
+            //Точка пересечения линии и сегмента
             Coordinate segmP0 = coo[i - 1], segmP1 = coo[i];
             Coordinate crosP = Intersection.lineSegment(impP0, impP1, segmP0, segmP1);
             if (crosP != null) {
@@ -155,11 +155,11 @@ public class UGeo {
         return new Geometry[]{line, gm.getGeometryN(0), gm.getGeometryN(1)};
     }
 
-    //СЃРј. //https://gis.stackexchange.com/questions/189976/jts-split-arbitrary-polygon-by-a-line
+    //см. //https://gis.stackexchange.com/questions/189976/jts-split-arbitrary-polygon-by-a-line
     public static Geometry splitPolygon(Geometry poly, Geometry line) {
         Geometry nodedLinework = poly.getBoundary().union(line);
         Geometry polys = polygonize(nodedLinework);
-        //РћСЃС‚Р°РІРёС‚СЊ С‚РѕР»СЊРєРѕ РїРѕР»РёРіРѕРЅС‹, РЅР°С…РѕРґСЏС‰РёРµСЃСЏ РІРЅСѓС‚СЂРё РІС…РѕРґРЅС‹С… РґР°РЅРЅС‹С…
+        //Оставить только полигоны, находящиеся внутри входных данных
         List<Polygon> output = new ArrayList();
         for (int i = 0; i < polys.getNumGeometries(); i++) {
             Polygon candpoly = (Polygon) polys.getGeometryN(i);
@@ -194,7 +194,7 @@ public class UGeo {
 
     public static Polygon buffer(Geometry line, ArrayCom<? extends Com5t> list, double amend) {
 
-        //Map РґРёСЃС‚Р°РЅС†РёР№
+        //Map дистанций
         Map<Double, Double> hm = new HashMap();
         for (Com5t el : list) {
             Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
@@ -202,7 +202,7 @@ public class UGeo {
             Double delta2 = rec.getDbl(eArtikl.size_centr);
             hm.put(el.id, delta1 - delta2 + amend);
         }
-        //Array РґРёСЃС‚Р°РЅС†РёР№
+        //Array дистанций
         Coordinate coo[] = line.getGeometryN(0).getCoordinates();
         double distance[] = new double[coo.length];
         for (int i = 0; i < coo.length; ++i) {
@@ -227,7 +227,7 @@ public class UGeo {
         return (Polygon) line.getFactory().createPolygon(coo2);
     }
     
-    //РЎРїРёСЃРѕРє РІС…РѕРґРЅ. РїР°СЂР°РјРµС‚СЂРѕРІ РЅРµ Р·Р°РјС‹РєР°РµС‚СЃСЏ РЅР°С‡Р°Р»СЊРЅРѕР№ С‚РѕС‡РєРѕР№ РєР°Рє РІ jts!
+    //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Coordinate[] arrCoord(double... d) {
         List<Coordinate> list = new ArrayList<Coordinate>();
         for (int i = 1; i < d.length; i = i + 2) {
@@ -248,7 +248,7 @@ public class UGeo {
 
     public static LineString newLineArch(double x1, double x2, double y, double h, double z) {
         try {
-            double R = (Math.pow((x2 - x1) / 2, 2) + Math.pow(h, 2)) / (2 * h);  //R = (L2 + H2) / 2H - СЂР°РґРёСѓСЃ Р°СЂРєРё
+            double R = (Math.pow((x2 - x1) / 2, 2) + Math.pow(h, 2)) / (2 * h);  //R = (L2 + H2) / 2H - радиус арки
             double angl = Math.PI / 2 - Math.asin((x2 - x1) / (R * 2));
             Com5t.gsf.setSize(2 * R);
             Com5t.gsf.setNumPoints(1000);
@@ -259,12 +259,12 @@ public class UGeo {
             return gf.createLineString(lm);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UGeo.newLineArch()");
+            System.err.println("Ошибка:UGeo.newLineArch()");
             return null;
         }
     }
 
-    //РЎРїРёСЃРѕРє РІС…РѕРґРЅ. РїР°СЂР°РјРµС‚СЂРѕРІ РЅРµ Р·Р°РјС‹РєР°РµС‚СЃСЏ РЅР°С‡Р°Р»СЊРЅРѕР№ С‚РѕС‡РєРѕР№ РєР°Рє РІ jts!
+    //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Polygon newPolygon(double... d) {
         return Com5t.gf.createPolygon(UGeo.arrCoord(d));
     }
@@ -311,8 +311,8 @@ public class UGeo {
             }
         }
 //        }
-        //throw new Exception("РћС€РёР±РєР°:UGeo.getIndex()");
-        System.err.println("РћС€РёР±РєР°:UGeo.getIndex()");
+        //throw new Exception("Ошибка:UGeo.getIndex()");
+        System.err.println("Ошибка:UGeo.getIndex()");
         return -1;
     }
 
@@ -369,10 +369,10 @@ public class UGeo {
     /**
      *
      * @param midle
-     * @param tipX - С‚РѕС‡РєР° РїРѕРІРѕСЂРѕС‚Р°
-     * @param tipY - С‚РѕС‡РєР° РїРѕРІРѕСЂРѕС‚Р°
-     * @param angl - СѓРіРѕР» РїРѕРІРѕСЂРѕС‚Р°
-     * @param length - РґР»РёРЅР° Р»РёРЅРёРё
+     * @param tipX - точка поворота
+     * @param tipY - точка поворота
+     * @param angl - угол поворота
+     * @param length - длина линии
      * @return
      */
     public static Geometry lineTip(boolean midle, double tipX, double tipY, double angl, double length) {
@@ -387,7 +387,7 @@ public class UGeo {
         return aff.transform(tip);
     }
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
-    //РџРёР»РёРј РјРЅРѕРіРѕСѓРіРѕР»СЊРЅРёРє
+    //Пилим многоугольник
 
     public static Geometry[] splitPolygon2(Geometry geom, ElemCross impost) {
         try {
@@ -399,15 +399,15 @@ public class UGeo {
             List<Coordinate> cooL = new ArrayList<Coordinate>(), cooR = new ArrayList<Coordinate>();
             List<Coordinate> crosP = new ArrayList<Coordinate>(), exten = new ArrayList<Coordinate>(List.of(coo[0]));
 
-            //Р’СЃС‚Р°РІРёРј С‚РѕС‡РєРё РїРµСЂРµСЃРµС‡РµРЅРёСЏ РІ СЃРїРёСЃРѕРє РєРѕРѕСЂРґРёРЅР°С‚
+            //Вставим точки пересечения в список координат
             for (int i = 1; i < coo.length; i++) {
 
-                //РўРѕС‡РєР° РїРµСЂРµСЃРµС‡РµРЅРёСЏ СЃРµРіРјРµРЅС‚Р° Рё Р»РёРЅРёРё
+                //Точка пересечения сегмента и линии
                 Coordinate segmP0 = coo[i - 1], segmP1 = coo[i];
                 Coordinate crosC = Intersection.lineSegment(imp.p0, imp.p1, segmP0, segmP1);
                 hsCheck.add(coo[i]);
 
-                //Р’СЃС‚Р°РІРёРј С‚РѕС‡РєРё
+                //Вставим точки
                 if (crosC != null) {
                     crosP.add(crosC);
                     if (hsCheck.add(crosC)) {
@@ -416,7 +416,7 @@ public class UGeo {
                 }
                 exten.add(coo[i]);
             }
-            //РћР±С…РѕРґ СЃРµРіРјРµРЅС‚РѕРІ РґРѕ Рё РїРѕСЃР»Рµ С‚РѕС‡РµРє РїРµСЂРµСЃРµС‡РµРЅРёСЏ
+            //Обход сегментов до и после точек пересечения
             boolean b = true;
             for (int i = 0; i < exten.size(); ++i) {
                 Coordinate c = exten.get(i);
@@ -435,10 +435,10 @@ public class UGeo {
                     cooL.add(cL);
                     cooR.add(cR);
 
-                } else { //РѕР±С…РѕРґ РєРѕРѕСЂРґРёРЅР°С‚
-                    if (b == true) { //Р°СЂРµР° СЃР»РµРІР°
+                } else { //обход координат
+                    if (b == true) { //ареа слева
                         cooL.add(c);
-                    } else { //Р°СЂРµР° СЃРїСЂР°РІР°
+                    } else { //ареа справа
                         cooR.add(c);
                     }
                 }
@@ -458,12 +458,12 @@ public class UGeo {
             return new Geometry[]{p0, p1, p2};
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UGeo.geoSplit()" + e);
+            System.err.println("Ошибка:UGeo.geoSplit()" + e);
             return null;
         }
     }
 
-    //РџСЂРё РІС‹СЂРѕР¶РґРµРЅРёРё РїРѕР»РёРіРѕРЅР° Р·Р°РіРёР±С‹ РЅР° РєРѕРЅС†Р°С… Р°СЂРєРё
+    //При вырождении полигона загибы на концах арки
     public static Polygon bufferPaddin(Geometry poly, ArrayCom<? extends Com5t> list, double amend) {
         LineSegment segm1, segm2, segm1a = null, segm2a = null, segm1b, segm2b, segm1c, segm2c;
         Coordinate cros1 = null, cros2 = null;
@@ -474,32 +474,32 @@ public class UGeo {
             Coordinate[] coo = poly.copy().getCoordinates();
             for (int i = 0; i < coo.length; i++) {
 
-                //РЎРµРіРјРµРЅС‚С‹ РіСЂР°РЅРёС† РїРѕР»РёРіРѕРЅР°
+                //Сегменты границ полигона
                 segm1 = UGeo.getSegment(poly, i - 1);
                 segm2 = UGeo.getSegment(poly, i);
 
-                //РџРѕР»СѓС‡РёРј С€РёСЂРёРЅСѓ СЃРµРіРјРµРЅС‚РѕРІ             
+                //Получим ширину сегментов             
                 Com5t e1 = list.get(segm1.p0.z), e2 = list.get(segm2.p0.z);
                 Record rec1 = (e1.artiklRec == null) ? eArtikl.virtualRec() : e1.artiklRec;
                 Record rec2 = (e2.artiklRec == null) ? eArtikl.virtualRec() : e2.artiklRec;
                 double w1 = (rec1.getDbl(eArtikl.height) - rec1.getDbl(eArtikl.size_centr)) - amend;
                 double w2 = (rec2.getDbl(eArtikl.height) - rec2.getDbl(eArtikl.size_centr)) - amend;
 
-                //РЎРјРµС‰РµРЅРёРµ СЃРµРіРјРµРЅС‚РѕРІ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РіСЂР°РЅРёС†
+                //Смещение сегментов относительно границ
                 if (segm1.getLength() != 0 && segm2.getLength() != 0) {
                     segm1a = segm1.offset(-w1);
                     segm2a = segm2.offset(-w2);
 
-                    //РўРѕС‡РєР° РїРµСЂРµСЃРµС‡РµРЅРёСЏ РІРЅСѓС‚СЂРµРЅРЅРёС… СЃРµРіРјРµРЅС‚РѕРІ
+                    //Точка пересечения внутренних сегментов
                     Coordinate cross = segm2a.intersection(segm1a);
 
                     if (cross != null && i < j - 1) {
                         cross.z = e2.id;
                         outList.add(cross);
 
-                    } else { //РѕР±СЂРµР·Р°РµРј РєРѕРЅС†С‹ Р°СЂРєРё
+                    } else { //обрезаем концы арки
 
-                        if (cros1 == null && e1.h() != null) { //С…РІРѕСЃС‚
+                        if (cros1 == null && e1.h() != null) { //хвост
                             j = i - 1;
                             do {
                                 segm1b = UGeo.getSegment(poly, --j);
@@ -509,10 +509,10 @@ public class UGeo {
                             } while (cros1 == null);
                             cros1.z = e2.id;
                             outList.add(cros1);
-                            j = (j < 0) ? --j + coo.length : --j; //РґР»СЏ РѕР±СЂРµР·Р°РЅРёСЏ РєРѕРЅС‡РёРєР° Р°СЂРєРё
+                            j = (j < 0) ? --j + coo.length : --j; //для обрезания кончика арки
 
                         }
-                        if (cros2 == null && e2.h() != null) {  //РєРѕРЅС‡РёРє
+                        if (cros2 == null && e2.h() != null) {  //кончик
                             k = i;
                             do {
                                 segm2b = UGeo.getSegment(poly, ++k);
@@ -534,12 +534,12 @@ public class UGeo {
             return geo;
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UGeo.bufferPadding() " + e);
+            System.err.println("Ошибка:UGeo.bufferPadding() " + e);
             return null;
         }
     }
 
-    //РћР±РІРѕРґРєР° РїРѕР»РёРіРѕРЅР°, СЂР°Р±РѕС‚Р°РµС‚ Р±С‹СЃС‚СЂРѕ. РџСЂРё РІС‹СЂРѕР¶РґРµРЅРёРё РїРѕР»РёРіРѕРЅР° Р·Р°РіРёР±С‹ РЅР° РєРѕРЅС†Р°С… Р°СЂРєРё
+    //Обводка полигона, работает быстро. При вырождении полигона загибы на концах арки
     public static Polygon bufferCross(Geometry str, ArrayCom<? extends Com5t> list, double amend) {
         int i = 0;
         Polygon result = gf.createPolygon();
@@ -557,7 +557,7 @@ public class UGeo {
             }
             for (i = 1; i < coo.length; i++) {
 
-                //РџРµСЂРµР±РѕСЂ СЃРµРіРјРµРЅС‚РѕРІ РґР»СЏ РІС‹С‡РёСЃР»РµРЅРёСЏ С‚РѕС‡РєРё РїРµСЂРµСЃРµС‡РµРЅРёСЏ
+                //Перебор сегментов для вычисления точки пересечения
                 if (i > Com5t.MAXSIDE || (cross != null && i < Com5t.MAXSIDE)) {
                     e1 = list.get(coo[i - 1].z);
                     seg1a.setCoordinates(coo[i - 1], coo[i]);
@@ -570,15 +570,15 @@ public class UGeo {
                     seg2b = seg2a.offset(-hm.get(e2.id));
                 }
 
-                //РўРѕС‡РєР° РїРµСЂРµСЃРµС‡РµРЅРёСЏ СЃРµРіРјРµРЅС‚РѕРІ
+                //Точка пересечения сегментов
                 cross = seg2b.intersection(seg1b);
 
-                if (cross != null) { //Р·Р°РїРѕР»РЅРµРЅРёРµ РѕС‡РµСЂРµРґРё
+                if (cross != null) { //заполнение очереди
                     deqList.addLast(cross);
                     cross.z = coo[i].z;
 
                 } else {
-                    if (e2.h() == null) { //РѕР±СЂРµР·Р°РЅРёРµ С…РІРѕСЃС‚Р° СЃР»РµРІР°
+                    if (e2.h() == null) { //обрезание хвоста слева
                         List<Coordinate> loop = new ArrayList(deqList);
                         for (int k = loop.size() - 1; k >= 0; --k) {
 
@@ -606,12 +606,12 @@ public class UGeo {
             result = gf.createPolygon(cooList.toArray(new Coordinate[0]));
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UGeo.buffeCross() " + e);
+            System.err.println("Ошибка:UGeo.buffeCross() " + e);
         }
         return result;
     }
 
-    //РћР±РІРѕРґРєР° РїРѕР»РёРіРѕРЅР°, СЂР°Р±РѕС‚Р°РµС‚ Р±С‹СЃС‚СЂРѕ. РџСЂРё РІС‹СЂРѕР¶РґРµРЅРёРё РїРѕР»РёРіРѕРЅР° С‚РµСЂСЏСЋС‚СЃСЏ p.z
+    //Обводка полигона, работает быстро. При вырождении полигона теряются p.z
     public static Polygon bufferUnion(Geometry str, ArrayCom<? extends Com5t> list, Map<Double, Double> hm) {
         try {
             List<Geometry> geoList = new ArrayList();
@@ -663,12 +663,12 @@ public class UGeo {
             //return (Polygon) arcGeo;
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UGeo.bufferUnion()  " + e);
+            System.err.println("Ошибка:UGeo.bufferUnion()  " + e);
             return gf.createPolygon();
         }
     }
 
-    //РћС€РёР±РєР° РµСЃР»Рё Р°СЂРєР° РїСЂР°РІРёР»СЊРЅР°СЏ! СЃРј. 604004 
+    //Ошибка если арка правильная! см. 604004 
     public static Polygon bufferUnion(Geometry str, ArrayCom<? extends Com5t> list, double amend) {
         try {
             Map<Double, Double> hm = new HashMap();
@@ -723,12 +723,12 @@ public class UGeo {
             //return (Polygon) arcGeo;
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UGeo.bufferUnion() " + e);
+            System.err.println("Ошибка:UGeo.bufferUnion() " + e);
             return gf.createPolygon();
         }
     }
 
-    //РЈРіРѕР» СЂРµР·Р°
+    //Угол реза
     public static double angCut(Coordinate c1, Coordinate c2, Coordinate c3, double delta) {
         LineSegment seg1 = new LineSegment(c1, c2);
         LineSegment seg2 = new LineSegment(c2, c3);

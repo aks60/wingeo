@@ -23,7 +23,7 @@ import enums.Type;
 import java.util.ArrayList;
 import org.locationtech.jts.geom.Coordinate;
 
-//РЎРѕРµРґРёРЅРµРЅРёСЏ
+//Соединения
 public class SpcJoining extends Cal5e {
 
     private JoiningVar joiningVar = null;
@@ -51,7 +51,7 @@ public class SpcJoining extends Cal5e {
     public void calc() {
         try {
 
-            //Р¦РёРєР» РїРѕ СЃРїРёСЃРєСѓ СЃРѕРµРґРёРЅРµРЅРёР№
+            //Цикл по списку соединений
             for (ElemJoining elemJoin : winc.listJoin) {
 
                 ElemSimple joinElem1 = elemJoin.elem1;
@@ -62,63 +62,63 @@ public class SpcJoining extends Cal5e {
                 Record joiningRec1 = eJoining.find(id1, id2);
                 Record joiningRec2 = null;
 
-                //РЎРїРёСЃРѕРє РІР°СЂРёР°РЅС‚РѕРІ СЃРѕРµРґРёРЅРµРЅРёСЏ РґР»СЏ Р°СЂС‚РёРєСѓР»Р°1 Рё Р°СЂС‚РёРєСѓР»Р°2
+                //Список вариантов соединения для артикула1 и артикула2
                 List<Record> joinvarList = eJoinvar.filter(joiningRec1.getInt(eJoining.id));
 
-                //Р•СЃР»Рё РЅРµСѓРґР°С‡Р°, РёС‰РµРј РІ Р°РЅР°Р»РѕРіРµ СЃРѕРµРґРёРЅРµРЅРёСЏ
+                //Если неудача, ищем в аналоге соединения
                 if (joinvarList.isEmpty() == true && joiningRec1.getStr(eJoining.analog).isEmpty() == false) {
                     joiningRec2 = eJoining.find2(joiningRec1.getStr(eJoining.analog));
                     joinvarList = eJoinvar.filter(joiningRec2.getInt(eJoining.id));
                 }
-                //Р•СЃР»Рё РЅРµСѓРґР°С‡Р° С‚Рѕ РёС‰РµРј Р·РµСЂРєР°Р»СЊРЅРѕСЃС‚СЊ (С‚РѕР»СЊРєРѕ РґР»СЏ РґРІРµСЂРµР№)
+                //Если неудача то ищем зеркальность (только для дверей)
                 if (winc.root.type == Type.DOOR && joinvarList.isEmpty()) {
                     joiningRec1 = eJoining.find(id2, id1);
                     joinvarList = eJoinvar.filter(joiningRec1.getInt(eJoining.id));
                 }
                 Collections.sort(joinvarList, (connvar1, connvar2) -> connvar1.getInt(eJoinvar.prio) - connvar2.getInt(eJoinvar.prio));
 
-                //Р¦РёРєР» РїРѕ РІР°СЂРёР°РЅС‚Р°Рј СЃРѕРµРґРёРЅРµРЅРёСЏ
+                //Цикл по вариантам соединения
                 for (Record joinvarRec : joinvarList) {
                     boolean go = false;
                     int typeID = joinvarRec.getInt(eJoinvar.types);
 
-                    if (elemJoin.type().id == typeID) { //РµСЃР»Рё РІР°СЂРёР°РЅС‚С‹ СЃРѕРµРґРёРЅРµРЅРёСЏ СЃРѕРІРїР°Р»Рё
+                    if (elemJoin.type().id == typeID) { //если варианты соединения совпали
                         go = true;
-                    } else if (joinvarRec.getInt(eJoinvar.mirr) == 1) { //РєРѕРіРґР° РІРєР»СЋС‡РµРЅР° Р·РµСЂРєР°Р»СЊРЅРѕСЃС‚СЊ
+                    } else if (joinvarRec.getInt(eJoinvar.mirr) == 1) { //когда включена зеркальность
                         if (winc.root.type == Type.DOOR && (typeID == 30 || typeID == 31)
                                 && (elemJoin.type().id == 30 || elemJoin.type().id == 31)) {
                             go = true;
                         }
                     }
                     if (go == true) {
-                        //Р¤РР›Р¬РўР  РІР°СЂРёР°РЅС‚РѕРІ  
+                        //ФИЛЬТР вариантов  
                         if (joiningVar.filter(elemJoin, joinvarRec) == true) {
 
-                            //Р•СЃР»Рё РІ РїСЂРѕРІРµСЂРѕС‡РЅС‹С… РїР°СЂР°Рј. СѓСЃРїРµС…,
-                            //РІС‹РїРѕР»РЅРёРј СѓСЃС‚Р°РЅРѕРІРѕС‡РЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹
+                            //Если в проверочных парам. успех,
+                            //выполним установочные параметры
                             joiningVar.listenerFire();
 
-                            //РќР°РєРѕРїР»РµРЅРёРµ РґР°РЅРЅС‹С… РґР»СЏ Р·Р°РїСѓСЃРєР° РґРµС‚Р°Р»РёР·Р°С†РёРё
+                            //Накопление данных для запуска детализации
                             mapJoinvar.put(elemJoin, joinvarRec.getInt(eJoinvar.id));
 
-                            //РЎРѕС…СЂР°РЅРёРј РїРѕРґС…РѕСЏС‰РёР№ РІР°СЂРёР°РЅС‚ СЃРѕРµРґРёРЅРµРЅРёСЏ РёР· С‚Р°Р±Р»РёС† bd                           
+                            //Сохраним подхоящий вариант соединения из таблиц bd                           
                             elemJoin.type(TypeJoin.get(joinvarRec.getInt(eJoinvar.types)));
                             elemJoin.joiningRec = joiningRec1;
                             elemJoin.joinvarRec = joinvarRec;
 
-                            break; //РµСЃР»Рё С‚РµРєСѓС‰РёР№ РІР°СЂРёР°РЅС‚ СЃРѕРІРїР°Р»
+                            break; //если текущий вариант совпал
                         }
                     }
                 }
             }
 
-            //Р”РµС‚Р°Р»РёР·Р°С†РёСЏ
+            //Детализация
             if (shortPass == false) {
                 detal();
             }
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Joining.calc() " + e);
+            System.err.println("Ошибка:Joining.calc() " + e);
         } 
     }
 
@@ -130,16 +130,16 @@ public class SpcJoining extends Cal5e {
             Integer key = entry.getValue();
             List<Record> joindetList = eJoindet.filter(key);
 
-            //Р¦РёРєР» РїРѕ РґРµС‚Р°Р»РёР·Р°С†РёРё СЃРѕРµРґРёРЅРµРЅРёР№
+            //Цикл по детализации соединений
             for (Record joindetRec : joindetList) {
-                HashMap<Integer, String> mapParam = new HashMap<Integer, String>(); //С‚СѓС‚ РЅР°РєР°РїР»РёРІР°СЋС‚СЃСЏ РїР°СЂР°РјРµС‚СЂС‹
+                HashMap<Integer, String> mapParam = new HashMap<Integer, String>(); //тут накапливаются параметры
 
-                //Р¤РР›Р¬РўР  РґРµС‚Р°Р»РёР·Р°С†РёРё 
+                //ФИЛЬТР детализации 
                 if (joiningDet.filter(mapParam, elemJoin, joindetRec) == true) {
                     Record artiklRec = eArtikl.find(joindetRec.getInt(eJoindet.artikl_id), false);
-                    SpcRecord spcAdd = new SpcRecord("РЎРћР•Р”", joindetRec, artiklRec, elemJoin.elem1, mapParam);
+                    SpcRecord spcAdd = new SpcRecord("СОЕД", joindetRec, artiklRec, elemJoin.elem1, mapParam);
 
-                    //РџРѕРґР±РѕСЂ С‚РµРєСЃС‚СѓСЂС‹
+                    //Подбор текстуры
                     if (UColor.colorFromElemOrSeri(spcAdd)) {
                         elemJoin.addSpecific(spcAdd);
                     }
@@ -155,20 +155,20 @@ public class SpcJoining extends Cal5e {
         int id1 = elemJoin.elem1.artiklRecAn.getInt(eArtikl.id);
         int id2 = elemJoin.elem2.artiklRecAn.getInt(eArtikl.id);
         Record joiningRec = eJoining.find(id1, id2);
-        //РЎРїРёСЃРѕРє РІР°СЂРёР°РЅС‚РѕРІ СЃРѕРµРґРёРЅРµРЅРёСЏ РґР»СЏ Р°СЂС‚РёРєСѓР»Р°1 Рё Р°СЂС‚РёРєСѓР»Р°2
+        //Список вариантов соединения для артикула1 и артикула2
         List<Record> joinvarList = eJoinvar.filter(joiningRec.getInt(eJoining.id));
-        //Р•СЃР»Рё РЅРµСѓРґР°С‡Р°, РёС‰РµРј РІ Р°РЅР°Р»РѕРіРµ СЃРѕРµРґРёРЅРµРЅРёСЏ
+        //Если неудача, ищем в аналоге соединения
         if (joinvarList.isEmpty() == true && joiningRec.getStr(eJoining.analog).isEmpty() == false) {
             joiningRec = eJoining.find2(joiningRec.getStr(eJoining.analog));
             joinvarList = eJoinvar.filter(joiningRec.getInt(eJoining.id));
         }
         Collections.sort(joinvarList, (connvar1, connvar2) -> connvar1.getInt(eJoinvar.prio) - connvar2.getInt(eJoinvar.prio));
 
-        //Р¦РёРєР» РїРѕ РІР°СЂРёР°РЅС‚Р°Рј СЃРѕРµРґРёРЅРµРЅРёСЏ
+        //Цикл по вариантам соединения
         for (Record joinvarRec : joinvarList) {
-            //Р•СЃР»Рё РІР°СЂРёР°РЅС‚С‹ СЃРѕРµРґРёРЅРµРЅРёСЏ СЃРѕРІРїР°Р»Рё
+            //Если варианты соединения совпали
             if (elemJoin.type().id == joinvarRec.getInt(eJoinvar.types)) {
-                //Р¤РР›Р¬РўР  РІР°СЂРёР°РЅС‚РѕРІ  
+                //ФИЛЬТР вариантов  
                 if (joiningVar.filter(elemJoin, joinvarRec) == true) {
                     joinvarRec.setNo(eJoinvar.name, joinvarRec.getStr(eJoinvar.name) + " (" + joiningRec.getStr(eJoining.name) + ")");
                     list.add(joinvarRec);

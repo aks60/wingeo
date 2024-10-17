@@ -17,7 +17,7 @@ import startup.App;
 
 public class Query extends Table {
 
-    public static String conf = "NET"; //РёР»Рё "APP"
+    public static String conf = "NET"; //или "APP"
     private static String schema = "";
     public static String INS = "INS";
     public static String SEL = "SEL";
@@ -67,7 +67,7 @@ public class Query extends Table {
         String tName = "";
         String sql = String.valueOf(s[0]);
         if (String.valueOf(s[0]).substring(0, 6).equalsIgnoreCase("select") == false) {
-            sql = ""; //РґР»СЏ СѓР»СѓС‡С€РµРЅРёСЏ СЃРј. РєР»Р°СЃСЃ Scanner
+            sql = ""; //для улучшения см. класс Scanner
             for (Object p : s) {
                 if (p instanceof Field) {
                     Field f = (Field) p;
@@ -86,7 +86,7 @@ public class Query extends Table {
             for (Map.Entry<String, Query> q : root.mapQuery.entrySet()) {
                 Query table = q.getValue();
 
-                table.clear(); //СѓРґР°Р»СЏРµРј РґР°РЅРЅС‹Рµ
+                table.clear(); //удаляем данные
 
                 for (Field field : table.fields) {
                     str = str + ", " + field.tname() + "." + field.name();
@@ -129,9 +129,9 @@ public class Query extends Table {
     public void insert(Record record) {
         try {
             Statement statement = Conn.getConnection().createStatement();
-            //РµСЃР»Рё РЅРµС‚, РіРµРЅРµСЂСЋ СЃР°Рј
+            //если нет, генерю сам
             String nameCols = "", nameVals = "";
-            //С†РёРєР» РїРѕ РїРѕР»СЏРј С‚Р°Р±Р»РёС†С‹
+            //цикл по полям таблицы
             for (int k = 0; k < fields.size(); k++) {
                 Field field = fields.get(k);
                 if (field.meta().type() != Field.TYPE.OBJ) {
@@ -150,15 +150,15 @@ public class Query extends Table {
             Conn.close();
 
         } catch (SQLException e) {
-            System.err.println("РћС€РёР±РєР°:Query.insert() " + e);
+            System.err.println("Ошибка:Query.insert() " + e);
         }
     }
 
     public void insert2(Record record) throws SQLException {
         Statement statement = Conn.getConnection().createStatement();
-        //РµСЃР»Рё РЅРµС‚, РіРµРЅРµСЂСЋ СЃР°Рј
+        //если нет, генерю сам
         String nameCols = "", nameVals = "";
-        //С†РёРєР» РїРѕ РїРѕР»СЏРј С‚Р°Р±Р»РёС†С‹
+        //цикл по полям таблицы
         for (int k = 0; k < fields.size(); k++) {
             Field field = fields.get(k);
             if (field.meta().type() != Field.TYPE.OBJ) {
@@ -181,7 +181,7 @@ public class Query extends Table {
         try {
             String nameCols = "";
             Statement statement = statement = Conn.getConnection().createStatement();
-            //С†РёРєР» РїРѕ РїРѕР»СЏРј С‚Р°Р±Р»РёС†С‹
+            //цикл по полям таблицы
             for (Field field : fields) {
                 if (field.meta().type() != Field.TYPE.OBJ) {
                     nameCols = nameCols + field.name() + " = " + wrapper(record, field) + ",";
@@ -199,14 +199,14 @@ public class Query extends Table {
             Conn.close();
 
         } catch (SQLException e) {
-            System.err.println("РћС€РёР±РєР°:Query.update() " + e);
+            System.err.println("Ошибка:Query.update() " + e);
         }
     }
 
     public void update2(Record record) throws SQLException {
         String nameCols = "";
         Statement statement = Conn.getConnection().createStatement();
-        //С†РёРєР» РїРѕ РїРѕР»СЏРј С‚Р°Р±Р»РёС†С‹
+        //цикл по полям таблицы
         for (Field field : fields) {
             if (field.meta().type() != Field.TYPE.OBJ) {
                 nameCols = nameCols + field.name() + " = " + wrapper(record, field) + ",";
@@ -235,9 +235,9 @@ public class Query extends Table {
             return true;
 
         } catch (SQLException e) {
-            System.err.println("РћС€РёР±РєР°:Query.delete() " + e);
+            System.err.println("Ошибка:Query.delete() " + e);
             if (Conn.isWebapp() == false && e.getErrorCode() == 335544466) {
-                JOptionPane.showMessageDialog(App.active, "РќРµР»СЊР·СЏ СѓРґР°Р»РёС‚СЊ Р·Р°РїРёСЃСЊ РЅР° РєРѕС‚РѕСЂСѓСЋ РёРјРµСЋС‚СЃСЏ СЃСЃС‹Р»РєРё РёР· РґСЂСѓРіРёС… С„РѕСЂРј", "SQL РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(App.active, "Нельзя удалить запись на которую имеются ссылки из других форм", "SQL предупреждение", JOptionPane.INFORMATION_MESSAGE);
             }
             return false;
         }
@@ -263,9 +263,9 @@ public class Query extends Table {
                 String message = record.validateRec(fields);
                 if (record.get(0).equals(Query.UPD) || record.get(0).equals(INS)) {
 
-                    if (record.validateRec(fields) != null) { //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚СЊ РІРІРѕРґР° РґР°РЅРЅС‹С…    
-                        JOptionPane.showMessageDialog(App.Top.frame, "РўР°Р±Р»РёС†Р° <" + fields.get(0).fields()[0].meta().descr + ">.\n" + message
-                                + ".\nР—Р°РїРёСЃСЊ РЅРµ Р±СѓРґРµС‚ СЃРѕС…СЂР°РЅРµРЅР°.", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.INFORMATION_MESSAGE);
+                    if (record.validateRec(fields) != null) { //проверка на корректность ввода данных    
+                        JOptionPane.showMessageDialog(App.Top.frame, "Таблица <" + fields.get(0).fields()[0].meta().descr + ">.\n" + message
+                                + ".\nЗапись не будет сохранена.", "Предупреждение", JOptionPane.INFORMATION_MESSAGE);
 
                     } else {
                         if (Query.INS.equals(record.getStr(0))) {
@@ -279,7 +279,7 @@ public class Query extends Table {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Query.execsql() " + e);
+            System.err.println("Ошибка:Query.execsql() " + e);
         }
     }
 
@@ -509,7 +509,7 @@ public class Query extends Table {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Query.join()");
+            System.err.println("Ошибка:Query.join()");
         }
         return this;
     }
@@ -570,10 +570,10 @@ public class Query extends Table {
                     return r1.getStr(field[3]).compareTo(r2.getStr(field[3]));
                 });
             } else {
-                System.err.println("Р’РќРРњРђРќРР•! РћС€РёР±РєР° СЃРѕСЂС‚РёСЂРѕРІРєРё.");
+                System.err.println("ВНИМАНИЕ! Ошибка сортировки.");
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Query.sort()");
+            System.err.println("Ошибка:Query.sort()");
         }
         return this;
     }

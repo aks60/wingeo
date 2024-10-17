@@ -18,7 +18,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-//Р—Р°РїСѓСЃРє РѕС‚С‡РµС‚РѕРІ РІ Office </p>
+//Запуск отчетов в Office </p>
 public class ExecuteCmd {
 
     public static void documentType(JFrame owner) {
@@ -28,7 +28,7 @@ public class ExecuteCmd {
         //ExecuteCmd.startWord("report.html");
         
 //        Object[] options = {"HTML", "WORD", "EXCEL"};
-//        int n = JOptionPane.showOptionDialog(owner, "Р’С‹Р±РµСЂРёС‚Рµ С„РѕСЂРјР°С‚ С„Р°Р№Р»Р° РґР»СЏ РѕС‚С‡С‘С‚Р°", "Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ РѕС‚С‡С‘С‚Р°",
+//        int n = JOptionPane.showOptionDialog(owner, "Выберите формат файла для отчёта", "Формирование отчёта",
 //                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
 //        if (n == 0) {
 //            ExecuteCmd.startHtml("report.html");
@@ -39,7 +39,7 @@ public class ExecuteCmd {
 //        }
     }
 
-    //Р—Р°РїСѓСЃРє С„Р°Р№Р»Р° РёР· РєР°С‚Р°Р»РѕРіР°
+    //Запуск файла из каталога
     public static void startHelp(String file) {
 
         Desktop desktop = Desktop.getDesktop();
@@ -50,13 +50,13 @@ public class ExecuteCmd {
 //            }
             desktop.browse(url);
         } catch (URISyntaxException e) {
-            System.err.println("РЎРёРЅС‚Р°РєСЃРёС‡РµСЃРєР°СЏ РѕС€РёР±РєР°" + e);
+            System.err.println("Синтаксическая ошибка" + e);
         } catch (IOException e) {
-            System.err.println("РћС€РёР±РєР°:ExecuteCmd.startHelp" + e);
+            System.err.println("Ошибка:ExecuteCmd.startHelp" + e);
         }
     }
 
-    //Р—Р°РїСѓСЃРє HTML
+    //Запуск HTML
     public static void startHtml(String fileName) {
         try {
             String fileExe = eProp.cmd_html.read();
@@ -69,11 +69,11 @@ public class ExecuteCmd {
                 Runtime.getRuntime().exec(cmd);
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:ExecuteCmd.startHtml" + e);
+            System.err.println("Ошибка:ExecuteCmd.startHtml" + e);
         }
     }
 
-    //Р—Р°РїСѓСЃРє Word
+    //Запуск Word
     public static void startWord(String fileName) {
         try {
             String fileExe = eProp.cmd_word.read();
@@ -86,13 +86,13 @@ public class ExecuteCmd {
                 Runtime.getRuntime().exec(cmd);
             }
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "РќРµС‚ РґРѕСЃС‚СѓРїР° Рє С„Р°Р№Р»Сѓ. РџСЂРѕС†РµСЃСЃ РЅРµ РјРѕР¶РµС‚ РїРѕР»СѓС‡РёС‚СЊ РґРѕСЃС‚СѓРї Рє С„Р°Р№Р»Сѓ, С‚Р°Рє РєР°Рє СЌС‚РѕС‚ С„Р°Р№Р» Р·Р°РЅСЏС‚ РґСЂСѓРіРёРј РїСЂРѕС†РµСЃСЃРѕРј.", "Р’РќРРњРђРќРР•!", 1);
+            JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:ExecuteCmd.startWord" + e);
+            System.err.println("Ошибка:ExecuteCmd.startWord" + e);
         }
     }
 
-    //Р—Р°РїСѓСЃРє Excel
+    //Запуск Excel
     public static void startExcel(String fileName) {
         try {
             String fileExe = eProp.cmd_excel.read();
@@ -105,13 +105,13 @@ public class ExecuteCmd {
                 Runtime.getRuntime().exec(cmd);
             }
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "РќРµС‚ РґРѕСЃС‚СѓРїР° Рє С„Р°Р№Р»Сѓ. РџСЂРѕС†РµСЃСЃ РЅРµ РјРѕР¶РµС‚ РїРѕР»СѓС‡РёС‚СЊ РґРѕСЃС‚СѓРї Рє С„Р°Р№Р»Сѓ, С‚Р°Рє РєР°Рє СЌС‚РѕС‚ С„Р°Р№Р» Р·Р°РЅСЏС‚ РґСЂСѓРіРёРј РїСЂРѕС†РµСЃСЃРѕРј.", "Р’РќРРњРђРќРР•!", 1);            
+            JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);            
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:ExecuteCmd.startExcel" + e);
+            System.err.println("Ошибка:ExecuteCmd.startExcel" + e);
         }
     }
 
-    //РР·РІР»РµС‡РµРЅРёРµ С„Р°Р№Р»Р° РёР· Р°СЂС…РёРІР°
+    //Извлечение файла из архива
     public static void extractZip(String template, String path) {
         OutputStream out = null;
         try {
@@ -132,7 +132,7 @@ public class ExecuteCmd {
             in.close();
             out.close();
         } catch (IOException e) {
-            System.err.println("РћС€РёР±РєР°:ExecuteCmd.startZip" + e);
+            System.err.println("Ошибка:ExecuteCmd.startZip" + e);
         }
         startHtml("report.html");
     }
@@ -179,7 +179,7 @@ public class ExecuteCmd {
             int index3 = str.indexOf(" ");
             if (index3 != -1) {
 //                for(int k = 0; k < str.length(); k++) { 
-//                   //С‚СѓС‚ РЅР°РґРѕ РІС‹РїРѕР»РЅРёС‚СЊ Р»РѕРіРёРєСѓ
+//                   //тут надо выполнить логику
 //                }
                 String str2 = str.substring(0, index3);
                 String str3 = str.substring(index3, str.length()).trim();

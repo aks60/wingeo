@@ -7,9 +7,9 @@ import dataset.Field;
 
 public class RColumn {
 
-    //РІР»Р°РґРµР»РµС† СѓР·Р»Р°
+    //владелец узла
     private DefaultMutableTreeNode parent;
-    //СЌС‚Рѕ РїРѕР»СЏ РєРѕР»РѕРЅРєРё РІ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё РІС‹Р±РѕСЂР° РЅР° РїРµС‡Р°С‚СЊ
+    //это поля колонки в последовательности выбора на печать
     private ArrayList<Field> fields = new ArrayList<Field>();
 
     RColumn(Field field, DefaultMutableTreeNode parent) {

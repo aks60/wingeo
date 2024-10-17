@@ -10,17 +10,17 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public enum eElement implements Field {
-    up("0", "0", "0", "Р’СЃС‚Р°РІРєРё", "VSTALST"),
-    id("4", "10", "0", "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ", "id"),
-    name("12", "96", "1", "РќР°РёРјРµРЅРѕРІР°РЅРёРµ", "VNAME"),
-    typset("4", "10", "1", "РўРёРї СЃРѕСЃС‚Р°РІР°", "typset"),
-    signset("12", "32", "1", "РџСЂРёР·РЅР°Рє СЃРѕСЃС‚Р°РІР°", "VSIGN"),
-    markup("8", "15", "1", "РќР°С†РµРЅРєР° %", "VPERC"),
-    todef("16", "5", "1", "РЎС‚Р°РІРёС‚СЊ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ", "todef"),
-    toset("16", "5", "1", "РЈСЃС‚Р°РЅРѕРІРєР° РѕР±СЏР·Р°С‚РµР»СЊРЅРѕСЃС‚Рё", "toset"),
-    artikl_id("4", "10", "1", "РђСЂС‚РёРєСѓР»", "artikl_id"),
-    groups1_id("4", "10", "1", "РЎРµСЂРёСЏ", "groups1_id"),
-    groups2_id("4", "10", "0", "РљР°С‚РµРіРѕСЂРёРё", "groups2_id");
+    up("0", "0", "0", "Вставки", "VSTALST"),
+    id("4", "10", "0", "Идентификатор", "id"),
+    name("12", "96", "1", "Наименование", "VNAME"),
+    typset("4", "10", "1", "Тип состава", "typset"),
+    signset("12", "32", "1", "Признак состава", "VSIGN"),
+    markup("8", "15", "1", "Наценка %", "VPERC"),
+    todef("16", "5", "1", "Ставить по умолчанию", "todef"),
+    toset("16", "5", "1", "Установка обязательности", "toset"),
+    artikl_id("4", "10", "1", "Артикул", "artikl_id"),
+    groups1_id("4", "10", "1", "Серия", "groups1_id"),
+    groups2_id("4", "10", "0", "Категории", "groups2_id");
 
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());

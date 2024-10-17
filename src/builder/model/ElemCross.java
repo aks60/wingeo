@@ -41,7 +41,7 @@ public class ElemCross extends ElemSimple {
         colorID3 = (isJson(gson.param, PKjson.colorID3)) ? gson.param.get(PKjson.colorID3).getAsInt() : winc.colorID3;
 
         //double angl = UGeo.anglHor(this);
-        if (isJson(gson.param, PKjson.sysprofID)) { //РїСЂРѕС„РёР»Рё С‡РµСЂРµР· РїР°СЂР°РјРµС‚СЂ
+        if (isJson(gson.param, PKjson.sysprofID)) { //профили через параметр
             sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());
         } else {
             sysprofRec = eSysprof.find4(winc.nuni, type.id2, UseSideTo.ANY);
@@ -49,13 +49,13 @@ public class ElemCross extends ElemSimple {
         artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
         artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true);
 
-        //РЎРґРµР»Р°РЅРѕ РґР»СЏ РєРѕСЂСЂРµРєС†РёРё С€РёСЂРёРЅС‹ РёРјРїРѕСЃС‚РѕРІ
+        //Сделано для коррекции ширины импостов
         if (artiklRecAn.getDbl(eArtikl.id) == -3) {
             artiklRec.setNo(eArtikl.height, artiklRec.getDbl(eArtikl.height) + 16);
             artiklRecAn.setNo(eArtikl.height, artiklRec.getDbl(eArtikl.height) + 16);
         }
 
-        //Р•СЃР»Рё РёРјРїРѕСЃС‚ РІРёСЂС‚СѓР°Р»СЊРЅС‹Р№
+        //Если импост виртуальный
         if (artiklRec.getInt(1) == -3) {
             artiklRec.setNo(size_centr, 40);
             artiklRecAn.setNo(size_centr, 40);
@@ -65,7 +65,7 @@ public class ElemCross extends ElemSimple {
     @Override
     public void setLocation() {
         try {
-            //РџРёР»РёРј РїРѕР»РёРіРѕРЅ РёРјРїРѕСЃС‚РѕРј
+            //Пилим полигон импостом
             Geometry[] geoSplit = UGeo.splitPolygon(owner.area.getGeometryN(0), this);
             
             //System.out.println(List.of(geoSplit[2].getCoordinates()));
@@ -73,55 +73,55 @@ public class ElemCross extends ElemSimple {
             owner.childs.get(0).area = (Polygon) geoSplit[1];
             owner.childs.get(2).area = (Polygon) geoSplit[2];
 
-            //РќРѕРІС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ РёРјРїРѕСЃС‚Р°
+            //Новые координаты импоста
             Geometry lineImp = owner.area.getGeometryN(0).intersection(geoSplit[0]);
-            if (lineImp.getGeometryType().equals("MultiLineString")) { //РёСЃРїСЂР°РІР»РµРЅРёРµ РєРѕР»Р»РёР·РёР№
+            if (lineImp.getGeometryType().equals("MultiLineString")) { //исправление коллизий
                 int index = (lineImp.getGeometryN(0).getLength() > lineImp.getGeometryN(1).getLength()) ? 0 : 1;
                 lineImp = lineImp.getGeometryN(index);
             }
 
-            //РџСЂРёСЃРІР°РёРІР°СЋ РЅРѕРІ. РєРѕРѕСЂРґ.
+            //Присваиваю нов. коорд.
             if (this.layout() == Layout.VERT) {
                 this.setDimension(lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y, lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y);
             } else {
                 this.setDimension(lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y, lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y);
             }
 
-            //Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ Р°СЂРµР°       
+            //Внутренняя ареа       
             Geometry geo2 = buffer(owner.area.getGeometryN(0), winc.listElem, .0);
-            if (owner.area.getGeometryN(1).isValid() == false) { //РёСЃРїСЂР°РІР»РµРЅРёРµ РєРѕР»Р»РёР·РёР№
+            if (owner.area.getGeometryN(1).isValid() == false) { //исправление коллизий
                 GeometryFixer fix = new GeometryFixer(owner.area.getGeometryN(1));
                 geo2 = (Polygon) fix.getResult().getGeometryN(0);
             }
 
-            //Р›РµРІС‹Р№ Рё РїСЂР°РІС‹Р№ СЃРµРіРјРµРЅС‚ РІРґРѕР»СЊ РёРјРїРѕСЃС‚Р°
-            double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr); //С€РёСЂРёРЅР°
+            //Левый и правый сегмент вдоль импоста
+            double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr); //ширина
             LineSegment baseSegm = new LineSegment(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()));
             LineSegment moveBaseSegment[] = {baseSegm.offset(+delta), baseSegm.offset(-delta)};
 
-            //РўРѕС‡РєРё РїРµСЂРµСЃРµС‡РµРЅРёСЏ РєР°РЅРІС‹ СЃРµРіРјРµРЅС‚Р°РјРё РёРјРїРѕСЃС‚Р°
+            //Точки пересечения канвы сегментами импоста
             Polygon areaCanvas = UGeo.newPolygon(0, 0, 0, 10000, 10000, 10000, 10000, 0);
             Coordinate C1[] = UGeo.geoCross(areaCanvas, moveBaseSegment[0]);
             Coordinate C2[] = UGeo.geoCross(areaCanvas, moveBaseSegment[1]);
 
-            //РђСЂРµР° РёРјРїРѕСЃС‚Р° РѕР±СЂРµР·Р°РµРј areaPadding 
+            //Ареа импоста обрезаем areaPadding 
             Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
-            Polygon areaImp = (Polygon) areaExp.intersection(geo2); //РїРѕР»РёРіРѕРЅ СЌР»РµРјРµРЅС‚Р° РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+            Polygon areaImp = (Polygon) areaExp.intersection(geo2); //полигон элемента конструкции
             if (areaImp != null) {
                 this.area = areaImp;
             }
             //new Test().mpol = this.area;
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:ElemCross.setLocation " + e);
+            System.err.println("Ошибка:ElemCross.setLocation " + e);
         }
     }
 
-    //Р“Р»Р°РІРЅР°СЏ СЃРїРµС†РёС„РёРєР°С†РёСЏ 
+    //Главная спецификация 
     @Override
     public void setSpecific() {
         try {
-            spcRec.place = "Р’РЎРў." + layout().name.substring(0, 1).toLowerCase();
+            spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
             spcRec.artiklRec(artiklRec);
             spcRec.color(colorID1, colorID2, colorID3);
             spcRec.setAnglCut(90, 90);
@@ -134,7 +134,7 @@ public class ElemCross extends ElemSimple {
             spcRec.anglCut0 = (spcRec.anglCut0 > 90) ? 180 - spcRec.anglCut0 : spcRec.anglCut0;
             spcRec.anglCut1 = (spcRec.anglCut1 > 90) ? 180 - spcRec.anglCut1 : spcRec.anglCut1;
 
-            //РќР° СЌСЃРєРёР·Рµ Р·Р°С…РѕРґ РёРјРїРѕСЃС‚Р° РЅРµ РїРѕРєР°Р·С‹РІР°СЋ, СЃСЂР°Р·Сѓ РїРёС€Сѓ РІ СЃРїРµС†РёС„РёРєР°С†РёСЋ
+            //На эскизе заход импоста не показываю, сразу пишу в спецификацию
             double zax = (winc.syssizRec != null) ? winc.syssizRec.getDbl(eSyssize.zax) : 0;
             zax = 2 * (zax + this.artiklRec.getDbl(eArtikl.size_falz));
 
@@ -151,47 +151,47 @@ public class ElemCross extends ElemSimple {
             }
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:ElemCross.setSpecific() " + e);
+            System.err.println("Ошибка:ElemCross.setSpecific() " + e);
         }
     }
 
-    //Р’Р»РѕР¶РµРЅР°СЏ СЃРїРµС†РёС„РёРєР°С†РёСЏ 
+    //Вложеная спецификация 
     @Override
-    public void addSpecific(SpcRecord spcAdd) { //РґРѕР±Р°РІР»РµРЅРёРµ СЃРїРµСЃРёС„РёРєР°С†РёР№ Р·Р°РІРёСЃРёРјС‹С… СЌР»РµРјРµРЅС‚РѕРІ
+    public void addSpecific(SpcRecord spcAdd) { //добавление спесификаций зависимых элементов
         try {
             if(spcAdd.artiklRec().getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;
             }
-            spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //РєРѕР». РµРґ. СЃ СѓС‡С‘С‚РѕРј РїР°СЂР°Рј. 
-            spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //РєРѕР». РµРґ. СЃ С€Р°РіРѕРј
-            spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //РїРѕРїСЂР°РІРєР° РјРј 
+            spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
+            spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
+            spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм 
 
-            //РђСЂРјРёСЂРѕРІР°РЅРёРµ
+            //Армирование
             if (TypeArt.isType(spcAdd.artiklRec(), TypeArt.X107)) {
-                spcAdd.place = "Р’РЎРў." + layout().name.substring(0, 1).toLowerCase();
+                spcAdd.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
                 spcAdd.setAnglCut(90, 90);
             }
             if (List.of(1, 3, 5).contains(spcAdd.artiklRec().getInt(eArtikl.level1)) && spcRec.id != spcAdd.id) {
                 spcAdd.width += spcRec.width;
             }
-            UPar.to_12075_34075_39075(this, spcAdd); //СѓРіР»С‹ СЂРµР·Р°
-            UPar.to_34077_39077(spcAdd); //Р·Р°РґР°С‚СЊ РЈРіРѕР»_СЂРµР·Р°_1/РЈРіРѕР»_СЂРµР·Р°_2
-            spcAdd.height = UCom.getDbl(spcAdd.getParam(spcAdd.height, 40006)); //РІС‹СЃРѕС‚Р° Р·Р°РїРѕР»РЅРµРЅРёСЏ, РјРј
-            spcAdd.width = UPar.to_12065_15045_25040_34070_39070(spcAdd); //РґР»РёРЅР° РјРј
-            spcAdd.width = UCom.getDbl(spcAdd.getParam(spcAdd.width, 40004)); //С€РёСЂРёРЅР° Р·Р°РїРѕР»РЅРµРЅРёСЏ, РјРј 
-            spcAdd.width = spcAdd.width * UPar.to_12030_15030_25035_34030_39030(spcAdd);//"[ * РєРѕСЌС„-С‚ ]"
-            spcAdd.width = spcAdd.width / UPar.to_12040_15031_25036_34040_39040(spcAdd);//"[ / РєРѕСЌС„-С‚ ]"
-            UPar.to_40005_40010(spcAdd); //РџРѕРїСЂР°РІРєР° РЅР° СЃС‚РѕСЂРѕРЅС‹ С‡РµС‚РЅС‹Рµ/РЅРµС‡РµС‚РЅС‹Рµ (С€РёСЂРёРЅС‹/РІС‹СЃРѕС‚С‹), РјРј
-            UPar.to_40007(spcAdd); //РІС‹СЃРѕС‚Сѓ СЃРґРµР»Р°С‚СЊ РґР»РёРЅРѕР№
-            spcAdd.count = UPar.to_11070_12070_33078_34078(spcAdd); //СЃС‚Р°РІРёС‚СЊ РѕРґРЅРѕРєСЂР°С‚РЅРѕ
-            spcAdd.count = UPar.to_39063(spcAdd); //РѕРєСЂСѓРіР»СЏС‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ РґРѕ Р±Р»РёР¶Р°Р№С€РµРіРѕ
+            UPar.to_12075_34075_39075(this, spcAdd); //углы реза
+            UPar.to_34077_39077(spcAdd); //задать Угол_реза_1/Угол_реза_2
+            spcAdd.height = UCom.getDbl(spcAdd.getParam(spcAdd.height, 40006)); //высота заполнения, мм
+            spcAdd.width = UPar.to_12065_15045_25040_34070_39070(spcAdd); //длина мм
+            spcAdd.width = UCom.getDbl(spcAdd.getParam(spcAdd.width, 40004)); //ширина заполнения, мм 
+            spcAdd.width = spcAdd.width * UPar.to_12030_15030_25035_34030_39030(spcAdd);//"[ * коэф-т ]"
+            spcAdd.width = spcAdd.width / UPar.to_12040_15031_25036_34040_39040(spcAdd);//"[ / коэф-т ]"
+            UPar.to_40005_40010(spcAdd); //Поправка на стороны четные/нечетные (ширины/высоты), мм
+            UPar.to_40007(spcAdd); //высоту сделать длиной
+            spcAdd.count = UPar.to_11070_12070_33078_34078(spcAdd); //ставить однократно
+            spcAdd.count = UPar.to_39063(spcAdd); //округлять количество до ближайшего
 
             if (spcRec.id != spcAdd.id) {
                 spcRec.spcList.add(spcAdd);
             }
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:ElemCross.addSpecific() " + e);
+            System.err.println("Ошибка:ElemCross.addSpecific() " + e);
         }
     }
 
@@ -211,7 +211,7 @@ public class ElemCross extends ElemSimple {
         }
     }
 
-    //Р›РёРЅРёРё СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё
+    //Линии размерности
     @Override
     public void paint() {
         if (this.area != null) {

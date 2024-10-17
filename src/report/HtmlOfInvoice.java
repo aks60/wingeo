@@ -40,7 +40,7 @@ public class HtmlOfInvoice {
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
 
-            //Р—Р°РїРѕР»РЅРёРј РѕС‚С‡С‘С‚
+            //Заполним отчёт
             load1(projectRec, doc);
 
             String str = doc.html();
@@ -49,10 +49,10 @@ public class HtmlOfInvoice {
             ExecuteCmd.documentType(null);
 
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "РќРµС‚ РґРѕСЃС‚СѓРїР° Рє С„Р°Р№Р»Сѓ. РџСЂРѕС†РµСЃСЃ РЅРµ РјРѕР¶РµС‚ РїРѕР»СѓС‡РёС‚СЊ РґРѕСЃС‚СѓРї Рє С„Р°Р№Р»Сѓ, С‚Р°Рє РєР°Рє СЌС‚РѕС‚ С„Р°Р№Р» Р·Р°РЅСЏС‚ РґСЂСѓРіРёРј РїСЂРѕС†РµСЃСЃРѕРј.", "Р’РќРРњРђРќРР•!", 1);
-            System.err.println("РћС€РёР±РєР°1:HtmlOfInvoice.smeta1()" + e);
+            JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
+            System.err.println("Ошибка1:HtmlOfInvoice.smeta1()" + e);
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°2:HtmlOfInvoice.smeta1()" + e);
+            System.err.println("Ошибка2:HtmlOfInvoice.smeta1()" + e);
         }
     }
 
@@ -63,7 +63,7 @@ public class HtmlOfInvoice {
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
 
-            //Р—Р°РїРѕР»РЅРёРј РѕС‚С‡С‘С‚
+            //Заполним отчёт
             load2(projectRec, doc);
 
             String str = doc.html();
@@ -72,10 +72,10 @@ public class HtmlOfInvoice {
             ExecuteCmd.documentType(null);
 
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "РќРµС‚ РґРѕСЃС‚СѓРїР° Рє С„Р°Р№Р»Сѓ. РџСЂРѕС†РµСЃСЃ РЅРµ РјРѕР¶РµС‚ РїРѕР»СѓС‡РёС‚СЊ РґРѕСЃС‚СѓРї Рє С„Р°Р№Р»Сѓ, С‚Р°Рє РєР°Рє СЌС‚РѕС‚ С„Р°Р№Р» Р·Р°РЅСЏС‚ РґСЂСѓРіРёРј РїСЂРѕС†РµСЃСЃРѕРј.", "Р’РќРРњРђРќРР•!", 1);
-            System.err.println("РћС€РёР±РєР°1:HtmlOfInvoice.smeta2()" + e);
+            JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
+            System.err.println("Ошибка1:HtmlOfInvoice.smeta2()" + e);
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°2:HtmlOfInvoice.smeta2()" + e);
+            System.err.println("Ошибка2:HtmlOfInvoice.smeta2()" + e);
         }
     }
 
@@ -86,9 +86,9 @@ public class HtmlOfInvoice {
             List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Wincalc> wincList = wincList(prjprodList);
 
-            doc.getElementById("h01").text("РЎС‡С‘С‚ в„–" + projectRec.getStr(eProject.num_acc) + " РѕС‚ '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
+            doc.getElementById("h01").text("Счёт №" + projectRec.getStr(eProject.num_acc) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
 
-            //РЎР•РљР¦РРЇ в„–2
+            //СЕКЦИЯ №2
             {
                 Elements trList = doc.getElementById("tab2").getElementsByTag("tbody").get(0).getElementsByTag("tr");
                 trList.get(0).getElementsByTag("td").get(1).text(prjpartRec.getStr(ePrjpart.partner));
@@ -104,12 +104,12 @@ public class HtmlOfInvoice {
                 }
                 trList.get(3).getElementsByTag("td").get(1).text(prjpartRec.getStr(ePrjpart.bank_inn));
             }
-            //РЎР•РљР¦РРЇ в„–3
+            //СЕКЦИЯ №3
             String templateRow = doc.getElementById("tab3").getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
             for (int i = 1; i < prjprodList.size(); i++) {
                 doc.getElementById("tab3").getElementsByTag("tbody").append(templateRow);
             }
-            //Р¦РёРєР» РїРѕ РёР·РґРµР»РёСЏРј
+            //Цикл по изделиям
             for (int i = 0; i < prjprodList.size(); i++) {
 
                 Elements trList = doc.getElementById("tab3").getElementsByTag("tbody").get(0).getElementsByTag("tr");
@@ -128,7 +128,7 @@ public class HtmlOfInvoice {
                 trList.get(1).getElementsByTag("td").get(0).text(MoneyInWords.inwords(total));
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:HtmlOfSmeta.load1()" + e);
+            System.err.println("Ошибка:HtmlOfSmeta.load1()" + e);
         }
     }
 
@@ -139,9 +139,9 @@ public class HtmlOfInvoice {
             List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Wincalc> wincList = wincList(prjprodList);
 
-            doc.getElementById("h01").text("РЎС‡С‘С‚ в„–" + projectRec.getStr(eProject.num_acc) + " РѕС‚ '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
+            doc.getElementById("h01").text("Счёт №" + projectRec.getStr(eProject.num_acc) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
 
-            //РЎР•РљР¦РРЇ в„–2
+            //СЕКЦИЯ №2
             {
                 Elements trList = doc.getElementById("tab1").getElementsByTag("tbody").get(0).getElementsByTag("tr");
                 if (prjpartRec.getInt(ePrjpart.flag2) == 1) {
@@ -163,12 +163,12 @@ public class HtmlOfInvoice {
                 trList.get(7).getElementsByTag("td").get(1).text(prjpartRec.getStr(ePrjpart.bank_inn)
                         + " / " + prjpartRec.getStr(ePrjpart.bank_kpp));
             }
-            //РЎР•РљР¦РРЇ в„–3
+            //СЕКЦИЯ №3
             String templateRow = doc.getElementById("tab3").getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
             for (int i = 1; i < prjprodList.size(); i++) {
                 doc.getElementById("tab3").getElementsByTag("tbody").append(templateRow);
             }
-            //Р¦РёРєР» РїРѕ РёР·РґРµР»РёСЏРј
+            //Цикл по изделиям
             for (int i = 0; i < prjprodList.size(); i++) {
 
                 Elements trList = doc.getElementById("tab3").getElementsByTag("tbody").get(0).getElementsByTag("tr");
@@ -190,7 +190,7 @@ public class HtmlOfInvoice {
                 trList.get(1).getElementsByTag("td").get(0).text(MoneyInWords.inwords(total));
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:HtmlOfSmeta.load1()" + e);
+            System.err.println("Ошибка:HtmlOfSmeta.load1()" + e);
         }
     }
 
@@ -205,7 +205,7 @@ public class HtmlOfInvoice {
                 list.add(winc);
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:HtmlOfSmeta.wincList()" + e);
+            System.err.println("Ошибка:HtmlOfSmeta.wincList()" + e);
         }
         return list;
     }

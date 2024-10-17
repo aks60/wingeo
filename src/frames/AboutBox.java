@@ -7,10 +7,11 @@ public class AboutBox extends javax.swing.JFrame {
     public AboutBox() {
         initComponents();
 
-//        labProjectVersion.setText("Р’РµСЂСЃРёСЏ РїСЂРѕРіСЂР°РјРјС‹ - 1.0");
-//        labBase.setText("Р’РµСЂСЃРёСЏ Р±Р°Р·С‹ РґР°РЅРЅС‹С… - 1.0");
-//        labConfig.setText("РљРѕРЅС„РёРіСѓСЂР°С†РёСЏ  - 2.0");
+//        labProjectVersion.setText("Версия программы - 1.0");
+//        labBase.setText("Версия базы данных - 1.0");
+//        labConfig.setText("Конфигурация  - 2.0");
     }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

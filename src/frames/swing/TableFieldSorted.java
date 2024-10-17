@@ -7,32 +7,32 @@ import java.util.List;
 
 /**
  * <P>
- * РЎРѕСЂС‚РёСЂРѕРІРєР° С‚Р°Р±Р»РёС† Рё РїРѕРёСЃРє РІ С‚Р°Р±Р»РёС†Р°С… </p>
- * Р’ СЌС‚РѕРј РєР»Р°СЃСЃРµ РїСЂРµРґСѓСЃРјРѕС‚СЂРµРЅР° СЃРѕСЂС‚РёСЂРѕРІРєР° РЅРµ С‚РѕР»СЊРєРѕ РїРѕ С‹РІР±СЂР°РЅРЅС‹Рј РїРѕР»СЏРј РѕРґРЅРѕР№
- * С‚Р°Р±Р»РёС†С‹, РЅРѕ Рё РїРѕ СЃСЃС‹Р»РєР°Рј РЅР° РїРѕР»СЏ РґСЂСѓРіРёС… С‚Р°Р±Р»РёС†
+ * Сортировка таблиц и поиск в таблицах </p>
+ * В этом классе предусмотрена сортировка не только по ывбранным полям одной
+ * таблицы, но и по ссылкам на поля других таблиц
  */
 public class TableFieldSorted { //implements Comparator<ArrayList> {
 
     private static int ret = 0;
 
     /**
-     * РЎРѕСЂС‚РёСЂРѕРІРєР° С‚Р°Р±Р»РёС†С‹
+     * Сортировка таблицы
      *
-     * @param rsTable - С‚Р°Р±Р»РёС†Р° РєРѕС‚РѕСЂСѓСЋ РЅР°РґРѕ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°С‚СЊ
-     * @param rsSorted - РїРµСЂРІС‹Р№ РѕР±СЉРµРєС‚ СЃС‚СЂРѕРєРё rsTable, Р° РѕСЃС‚Р°Р»СЊРЅС‹Рµ РїРѕР»СЏ
-     * СЃРѕСЂС‚РёСЂРѕРІРєРё СЃ СѓС‡С‘С‚РѕРј СЃСЃС‹Р»РѕРє РЅР° РґСЂСѓРіРёРµ С‚Р°Р±Р»РёС†С‹
+     * @param rsTable - таблица которую надо отсортировать
+     * @param rsSorted - первый объект строки rsTable, а остальные поля
+     * сортировки с учётом ссылок на другие таблицы
      */
     public static void sortedSet(List rsTable, ArrayList<ArrayList> rsSorted) {
 
         if (rsTable.isEmpty() == false) {
-            //СЃРѕСЂС‚РёСЂСѓРµРј rsSorted РёСЃРїРѕР»СЊР·СѓСЏ СЃРІРѕР№ РєРѕРјРїР°СЂР°С‚РѕСЂ
+            //сортируем rsSorted используя свой компаратор
             Collections.sort(rsSorted, new Comparator() {
 
                 public int compare(Object o1, Object o2) {
 
                     ArrayList list1 = (ArrayList) o1;
                     ArrayList list2 = (ArrayList) o2;
-                    //С†РёРєР» РїРѕ РІСЃРµР№ СЃС‚СЂРѕРєРµ, РЅР°С‡РёРЅР°СЏ СЃ index = 1 С‚.Рє. РІ 0 recordTable
+                    //цикл по всей строке, начиная с index = 1 т.к. в 0 recordTable
                     for (int index = 1; index < list1.size(); index++) {
 
                         o1 = list1.get(index);
@@ -45,7 +45,7 @@ public class TableFieldSorted { //implements Comparator<ArrayList> {
                         } else if (o1 != null && o2 == null) {
                             return 1;
                         } else {
-                            //РѕРєРѕРЅС‡Р°С‚РµР»СЊРЅРѕРµ СЂРµС€РµРЅРёРµ РЅР° СЃСЂР°РІРЅРµРЅРёРµ
+                            //окончательное решение на сравнение
                             if (o1 instanceof Integer) {
                                 ret = ((Integer) o1).compareTo((Integer) o2);
                             } else if (o1 instanceof Double) {
@@ -63,7 +63,7 @@ public class TableFieldSorted { //implements Comparator<ArrayList> {
                     return ret;
                 }
             });
-            //С‚РµРїРµСЂСЊ РїРµСЂРµР·Р°РїРёС€РµРј СЃРѕСЂС‚РёСЂРѕРІРєСѓ РёР· rsSorted РІ rsTale
+            //теперь перезапишем сортировку из rsSorted в rsTale
             for (int index = 0; index < rsTable.size(); index++) {
                 rsTable.set(index, (List) rsSorted.get(index).get(0));
             }
@@ -71,7 +71,7 @@ public class TableFieldSorted { //implements Comparator<ArrayList> {
     }
 
     /**
-     * РљРѕРјРїР°СЂР°С‚РѕСЂ РґР»СЏ С†РµР»С‹С… С‡РёСЃРµ
+     * Компаратор для целых чисе
      */
     public static int compareInt(Object v1, Object v2) {
         if (!(v1 instanceof Integer)) {

@@ -7,14 +7,14 @@ package enums;
 
 import static enums.UseSideTo.values;
 
-//РЎС‚РѕСЂРѕРЅС‹ С„СѓСЂРЅРёС‚СѓСЂС‹/ Р’РЅРёРјР°РЅРёРµ! РќРѕРјРµСЂР° LayoutFurn1.id РїСЂРёРІСЏР·Р°РЅС‹ Рє LayoutArea.id  
+//Стороны фурнитуры/ Внимание! Номера LayoutFurn1.id привязаны к LayoutArea.id  
 public enum LayoutFurn1 implements Enam {
-    BOTT(1, "РќРёР¶РЅСЏСЏ"),
-    RICH(2, "РџСЂР°РІР°СЏ"),
-    TOP(3, "Р’РµСЂС…РЅСЏСЏ"),
-    LEFT(4, "Р›РµРІР°СЏ"),
-    VERT(-1, "Р’РµСЂС‚РёРєР°Р»СЊРЅР°СЏ"),
-    HOR(-2, "Р“РѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅР°СЏ");
+    BOTT(1, "Нижняя"),
+    RICH(2, "Правая"),
+    TOP(3, "Верхняя"),
+    LEFT(4, "Левая"),
+    VERT(-1, "Вертикальная"),
+    HOR(-2, "Горизонтальная");
 
     public int id;
     public String name;

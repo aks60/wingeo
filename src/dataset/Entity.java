@@ -18,7 +18,7 @@ import java.util.Map;
  * @author Aksenov Sergey
  *
  * <p>
- * Р“РµРЅРµСЂР°С†РёСЏ enum РєРѕРґР° </p>
+ * Генерация enum кода </p>
  */
 public enum Entity {
 
@@ -40,7 +40,7 @@ public enum Entity {
             writer.println("import dataset.Record;");
             writer.println("public enum " + ename + " implements Field {");
             writer.println("up(\"0\", \"0\", \"0\", \"0\", \"" + table + "\"),");
-            writer.println("id(\"4\", \"10\", \"0\", \"РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ\", \"id\"),");
+            writer.println("id(\"4\", \"10\", \"0\", \"Идентификатор\", \"id\"),");
             int index = 0;
             for (String colname : rangcol) {
                 String end = (index++ < columns.size() - 1) ? ")," : ");";

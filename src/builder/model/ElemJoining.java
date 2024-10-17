@@ -15,62 +15,62 @@ import startup.Test;
 
 public class ElemJoining {
 
-    public Record joiningRec = eJoining.up.newRecord(Query.SEL); //РґР»СЏ СЂР°СЃСЃС‡С‘С‚Р° С‚Р°СЂРёС„РёРєР°С†РёРё
-    public Record joinvarRec = eJoinvar.up.newRecord(Query.SEL); //РґР»СЏ СЂР°СЃСЃС‡С‘С‚Р° С‚Р°СЂРёС„РёРєР°С†РёРё    
+    public Record joiningRec = eJoining.up.newRecord(Query.SEL); //для рассчёта тарификации
+    public Record joinvarRec = eJoinvar.up.newRecord(Query.SEL); //для рассчёта тарификации    
 
-    public double id = -1; //РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃРѕРµРґРёРЅРµРЅРёСЏ
+    public double id = -1; //идентификатор соединения
     public Wincalc winc;
-    private TypeJoin type = TypeJoin.NONE;      //С‚РёРї СЃРѕРµРґРёРЅРµРЅРёСЏ (С‚Рѕ С‡С‚Рѕ РїРёС€РµС‚ )
-    public int vid = 0; //РІРёРґ СЃРѕРµРґРёРЅРµРЅРёСЏ ("0-РџСЂРѕСЃС‚РѕРµ L-РѕР±СЂ", "1-РљСЂРµСЃС‚РѕРІРѕРµ вЂ -РѕР±СЂ") РёР»Рё ("0-РџСЂРѕСЃС‚РѕРµ T-РѕР±СЂ", "1-РљСЂРµСЃС‚РѕРІРѕРµ вЂ -РѕР±СЂ", "2-РЎР»РѕР¶РЅРѕРµ Y-РѕР±СЂ)
-    public ElemSimple elem1 = null;  //СЌР»РµРјРµРЅС‚ СЃРѕРµРґРёРЅРµРЅРёСЏ 1
-    public ElemSimple elem2 = null;  //СЌР»РµРјРµРЅС‚ СЃРѕРµРґРёРЅРµРЅРёСЏ 2
-    public String costs = "";     //С‚СЂСѓРґРѕР·Р°С‚СЂР°С‚С‹, С‡/С‡.
+    private TypeJoin type = TypeJoin.NONE;      //тип соединения (то что пишет )
+    public int vid = 0; //вид соединения ("0-Простое L-обр", "1-Крестовое †-обр") или ("0-Простое T-обр", "1-Крестовое †-обр", "2-Сложное Y-обр)
+    public ElemSimple elem1 = null;  //элемент соединения 1
+    public ElemSimple elem2 = null;  //элемент соединения 2
+    public String costs = "";     //трудозатраты, ч/ч.
 
     public ElemJoining(Wincalc winc, TypeJoin type, ElemSimple elem1, ElemSimple elem2) {
         this.id = ++winc.spcId;
         this.winc = winc;
-        this.type = type; //СѓРіРѕР» РІР°СЂРёР°РЅС‚Р° РІС‹С‡РёСЃР». РґРёРЅР°РјРёС‡РµСЃРєРё СЃРј. type();
+        this.type = type; //угол варианта вычисл. динамически см. type();
         this.elem1 = elem1;
         this.elem2 = elem2;
         //this.angl = angleBetween();
     }
 
-    public void addSpecific(SpcRecord spcAdd) { //РґРѕР±Р°РІР»РµРЅРёРµ СЃРїРµСЃРёС„РёРєР°С†РёР№ Р·Р°РІРёСЃРёРјС‹С… СЌР»РµРјРµРЅС‚РѕРІ
+    public void addSpecific(SpcRecord spcAdd) { //добавление спесификаций зависимых элементов
         try {
             if(spcAdd.artiklRec().getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;
             }            
             SpcRecord spcRec = elem1.spcRec;
             String sideCalc = spcAdd.getParam("null", 11072, 12072);
-            if (sideCalc != null && "Р±РѕР»СЊС€РµР№".equals(sideCalc)) {
+            if (sideCalc != null && "большей".equals(sideCalc)) {
                 spcAdd.width = (elem1.length() > elem2.length()) ? elem1.length() : elem2.length();
-            } else if (sideCalc != null && "РјРµРЅСЊС€РµР№".equals(sideCalc)) {
+            } else if (sideCalc != null && "меньшей".equals(sideCalc)) {
                 spcAdd.width = (elem1.length() > elem2.length()) ? elem2.length() : elem1.length();
-            } else if (sideCalc != null && "РѕР±С‰РµР№".equals(sideCalc)) {
+            } else if (sideCalc != null && "общей".equals(sideCalc)) {
                 if (elem1.layout() == Layout.HORIZ || elem1.layout() == Layout.BOTT || elem1.layout() == Layout.TOP) {
                     spcAdd.width = (elem1.x1() > elem2.x1()) ? elem1.x1() - elem2.x2() : elem2.x1() - elem1.x2();
                 } else if (elem1.layout() == Layout.VERT || elem1.layout() == Layout.RIGHT || elem1.layout() == Layout.LEFT) {
                     spcAdd.width = (elem1.y1() > elem2.y1()) ? elem1.y1() - elem2.y2() : elem2.y1() - elem1.y2();
                 }
             }
-            spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //РєРѕР». РµРґ. СЃ СѓС‡С‘С‚РѕРј РїР°СЂР°Рј. 
-            spcAdd.count += UPar.to_11050(spcAdd, this); //РєРѕР». РµРґ. СЃ С€Р°РіРѕРј
-            spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //РїРѕРїСЂР°РІРєР° РјРј
+            spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
+            spcAdd.count += UPar.to_11050(spcAdd, this); //кол. ед. с шагом
+            spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм
 
             if (List.of(1, 3, 5).contains(spcAdd.artiklRec().getInt(eArtikl.level1))) {
                 //spcAdd.width += elem1.length();
                 spcAdd.width += spcRec.width;
             }
-            UPar.to_12075_34075_39075(elem1, spcAdd); //СѓРіР»С‹ СЂРµР·Р°
-            spcAdd.width = UPar.to_12065_15045_25040_34070_39070(spcAdd); //РґР»РёРЅР° РјРј       
-            spcAdd.width = spcAdd.width * UPar.to_12030_15030_25035_34030_39030(spcAdd);//"[ * РєРѕСЌС„-С‚ ]"
-            spcAdd.width = spcAdd.width / UPar.to_12040_15031_25036_34040_39040(spcAdd);//"[ / РєРѕСЌС„-С‚ ]"
-            spcAdd.count = UPar.to_11070_12070_33078_34078(spcAdd); //СЃС‚Р°РІРёС‚СЊ РѕРґРЅРѕРєСЂР°С‚РЅРѕ
+            UPar.to_12075_34075_39075(elem1, spcAdd); //углы реза
+            spcAdd.width = UPar.to_12065_15045_25040_34070_39070(spcAdd); //длина мм       
+            spcAdd.width = spcAdd.width * UPar.to_12030_15030_25035_34030_39030(spcAdd);//"[ * коэф-т ]"
+            spcAdd.width = spcAdd.width / UPar.to_12040_15031_25036_34040_39040(spcAdd);//"[ / коэф-т ]"
+            spcAdd.count = UPar.to_11070_12070_33078_34078(spcAdd); //ставить однократно
 
             elem1.spcRec.spcList.add(spcAdd);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:ElemJoinning.addSpecific() " + e);
+            System.err.println("Ошибка:ElemJoinning.addSpecific() " + e);
         }
     }
 
@@ -78,12 +78,12 @@ public class ElemJoining {
         if (joiningRec.get(1) != null) {
             String name1 = eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.id) == elem1.artiklRecAn.getInt(eArtikl.id)).findFirst().orElse(eArtikl.up.newRecord(Query.SEL)).getStr(eArtikl.code);
             String name2 = eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.id) == elem2.artiklRecAn.getInt(eArtikl.id)).findFirst().orElse(eArtikl.up.newRecord(Query.SEL)).getStr(eArtikl.code);
-            return name1 + " Г· " + name2;
+            return name1 + " ? " + name2;
         }
         return "";
     }
 
-    //РўРёРї СЃРѕРµРґРёРЅРµРЅРёСЏ
+    //Тип соединения
     public TypeJoin type() {
         if (type == TypeJoin.ANGL) {
             int lev1 = elem1.artiklRec.getInt(eArtikl.level1);
@@ -110,7 +110,7 @@ public class ElemJoining {
         this.type = v;
     }
 
-    //РЈРіРѕР» РјРµР¶РґСѓ РїСЂРѕС„РёР»СЏРјРё
+    //Угол между профилями
     public Double angleBetween() {
         return UGeo.anglBetbeeem(elem1, elem2);
     }

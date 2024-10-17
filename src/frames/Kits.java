@@ -225,7 +225,7 @@ public class Kits extends javax.swing.JFrame {
             }
         });
 
-        UGui.buttonCellEditor(tab4, 1, (component) -> { //СЃР»СѓС€Р°С‚РµР»СЊ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ С‚РёРїР° Рё РІРёРґР° РґР°РЅРЅС‹С… Рё РІРёРґР° СЏС‡РµР№РєРё С‚Р°Р±Р»РёС†С‹
+        UGui.buttonCellEditor(tab4, 1, (component) -> { //слушатель редактирование типа и вида данных и вида ячейки таблицы
             return UGui.cellParamTypeOrVid(tab4, component, eKitpar2.groups_id);
 
         }).addActionListener(event -> {
@@ -310,7 +310,7 @@ public class Kits extends javax.swing.JFrame {
 
         mInsert.setFont(frames.UGui.getFont(1,0));
         mInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        mInsert.setText("Р”РѕР±Р°РІРёС‚СЊ");
+        mInsert.setText("Добавить");
         mInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -320,7 +320,7 @@ public class Kits extends javax.swing.JFrame {
 
         mDelit.setFont(frames.UGui.getFont(1,0));
         mDelit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        mDelit.setText("РЈРґР°Р»РёС‚СЊ");
+        mDelit.setText("Удалить");
         mDelit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -329,7 +329,7 @@ public class Kits extends javax.swing.JFrame {
         ppmCrud.add(mDelit);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РљРѕРјРїР»РµРєС‚С‹");
+        setTitle("Комплекты");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 500));
         setPreferredSize(new java.awt.Dimension(900, 600));
@@ -345,7 +345,7 @@ public class Kits extends javax.swing.JFrame {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -360,7 +360,7 @@ public class Kits extends javax.swing.JFrame {
         });
 
         btnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        btnDel.setToolTipText(bundle.getString("РЈРґР°Р»РёС‚СЊ")); // NOI18N
+        btnDel.setToolTipText(bundle.getString("Удалить")); // NOI18N
         btnDel.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnDel.setFocusable(false);
         btnDel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -376,7 +376,7 @@ public class Kits extends javax.swing.JFrame {
         });
 
         btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        btnIns.setToolTipText(bundle.getString("Р”РѕР±Р°РІРёС‚СЊ")); // NOI18N
+        btnIns.setToolTipText(bundle.getString("Добавить")); // NOI18N
         btnIns.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnIns.setFocusable(false);
         btnIns.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -392,7 +392,7 @@ public class Kits extends javax.swing.JFrame {
         });
 
         btnFind.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c090.gif"))); // NOI18N
-        btnFind.setToolTipText(bundle.getString("РџРѕРёСЃРє Р·Р°РїРёСЃРё")); // NOI18N
+        btnFind.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
         btnFind.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnFind.setFocusable(false);
         btnFind.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -451,7 +451,7 @@ public class Kits extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РљР°С‚РµРіРѕСЂРёСЏ"
+                "Категория"
             }
         ) {
             Class[] types = new Class [] {
@@ -477,7 +477,7 @@ public class Kits extends javax.swing.JFrame {
 
         west.add(scr1, java.awt.BorderLayout.WEST);
 
-        scr2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "РЎРїРёСЃРѕРє РєРѕРјРїР»РµРєС‚РѕРІ", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Список комплектов", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
 
         tab2.setFont(frames.UGui.getFont(0,0));
         tab2.setModel(new javax.swing.table.DefaultTableModel(
@@ -485,7 +485,7 @@ public class Kits extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РќР°Р·РІР°РЅРёРµ РєРѕРјРїР»РµРєС‚РѕРІ", "ID"
+                "Название комплектов", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -527,7 +527,7 @@ public class Kits extends javax.swing.JFrame {
         centr.setPreferredSize(new java.awt.Dimension(600, 200));
         centr.setLayout(new java.awt.BorderLayout());
 
-        scr3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Р”РµС‚Р°Р»РёР·Р°С†РёСЏ РєРѕРјРїР»РµРєС‚РѕРІ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Детализация комплектов", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
 
         tab3.setFont(frames.UGui.getFont(0,0));
         tab3.setModel(new javax.swing.table.DefaultTableModel(
@@ -535,7 +535,7 @@ public class Kits extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РђСЂС‚РёРєСѓР»", "РќР°Р·РІР°РЅРёРµ", "РћСЃРЅРѕРІРЅР°СЏ С‚РµРєСЃС‚СѓСЂР°", "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ С‚РµРєСЃС‚СѓСЂР°", "Р’РЅРµС€РЅСЏСЏ С‚РµРєСЃС‚СѓСЂР°", "Р•Рґ.РёР·РјРµСЂРµРЅРёСЏ", "РћСЃРЅРѕРІРЅРѕР№ СЌР»РµРјРµРЅС‚", "ID"
+                "Артикул", "Название", "Основная текстура", "Внутренняя текстура", "Внешняя текстура", "Ед.измерения", "Основной элемент", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -577,7 +577,7 @@ public class Kits extends javax.swing.JFrame {
 
         centr.add(scr3, java.awt.BorderLayout.CENTER);
 
-        scr4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "РџР°СЂР°РјРµС‚СЂС‹", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Параметры", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
         scr4.setPreferredSize(new java.awt.Dimension(0, 200));
 
         tab4.setFont(frames.UGui.getFont(0,0));
@@ -586,7 +586,7 @@ public class Kits extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РџР°СЂР°РјРµС‚СЂ", "Р—РЅР°С‡РµРЅРёРµ"
+                "Параметр", "Значение"
             }
         ));
         tab4.setFillsViewportHeight(true);
@@ -646,14 +646,14 @@ public class Kits extends javax.swing.JFrame {
 
     private void btnInsert(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsert
         if (tab1.getBorder() != null) {
-            Object result = JOptionPane.showInputDialog(Kits.this, "РќР°Р·РІР°РЅРёРµ", "РљР°С‚РµРіРѕСЂРёСЏ", JOptionPane.QUESTION_MESSAGE);
+            Object result = JOptionPane.showInputDialog(Kits.this, "Название", "Категория", JOptionPane.QUESTION_MESSAGE);
             if (result != null) {
                 Record groupsRec = eGroups.up.newRecord(Query.INS);
                 int id = Conn.genId(eGroups.up);
                 groupsRec.setNo(eGroups.id, id);
                 groupsRec.setNo(eGroups.grup, TypeGrup.CATEG_KIT.id);
                 groupsRec.setNo(eGroups.name, result);
-                eGroups.data().add(groupsRec); //РґРѕР±Р°РІРёРј РІ РєСЌС€ РЅРѕРІСѓСЋ Р·Р°РїРёСЃСЊ
+                eGroups.data().add(groupsRec); //добавим в кэш новую запись
                 qCateg.insert(groupsRec);
                 loadingData();
                 int index;

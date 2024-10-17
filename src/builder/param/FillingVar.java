@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import org.locationtech.jts.geom.LineSegment;
 
-//Р—Р°РїРѕР»РЅРµРЅРёСЏ
+//Заполнения
 public class FillingVar extends Par5s {
 
     private int[] parGrup = {13015, 13017, 13081, 13099};
@@ -30,7 +30,7 @@ public class FillingVar extends Par5s {
         if (filterParamDef(paramList) == false) {
             return false;
         }
-        //Р¦РёРєР» РїРѕ РїР°СЂР°РјРµС‚СЂР°Рј Р·Р°РїРѕР»РЅРµРЅРёСЏ
+        //Цикл по параметрам заполнения
         for (Record rec : paramList) {
             if (check(elem5e, rec) == false) {
                 return false;
@@ -44,37 +44,37 @@ public class FillingVar extends Par5s {
         int grup = rec.getInt(GRUP);
         try {
             switch (grup) {
-                case 13001:  //Р•СЃР»Рё РїСЂРёР·РЅР°Рє СЃРѕСЃС‚Р°РІР° 
+                case 13001:  //Если признак состава 
                     
                     if (UPar.is_11001_11002_12001_12002_13001_14001_15001_33001_34001(rec.getStr(TEXT), elem5e) == false) {
                         return false;
                     }
                     break;
-                case 13003:  //РўРёРї РїСЂРѕРµРјР° 
+                case 13003:  //Тип проема 
                     if (!UPar.is_13003_14005_15005_37008(rec.getStr(TEXT), elem5e)) {
                         return false;
                     }
                     break;
-                case 13005: //Р—Р°РїРѕР»РЅРµРЅРёРµ С‚РёРїР° 
-                    if ("РЎС‚РµРєР»Рѕ".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 1) {
+                case 13005: //Заполнение типа 
+                    if ("Стекло".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 1) {
                         return false;
-                    } else if ("РЎС‚РµРєР»РѕРїР°РєРµС‚".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 2) {
+                    } else if ("Стеклопакет".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 2) {
                         return false;
-                    } else if ("РЎРµРЅРґРІРёС‡".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 3) {
+                    } else if ("Сендвич".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 3) {
                         return false;
-                    } else if ("Р’Р°РіРѕРЅРєР°".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 4) {
+                    } else if ("Вагонка".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 4) {
                         return false;
-                    } else if ("РђР»СЋРјРёРЅРµРІС‹Р№ Р»РёСЃС‚".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 5) {
+                    } else if ("Алюминевый лист".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 5) {
                         return false;
-                    } else if ("РЎРїРµС†РёР°Р»СЊРЅРѕРµ СЃС‚РµРєР»Рѕ".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 6) {
+                    } else if ("Специальное стекло".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 6) {
                         return false;
-                    } else if ("РљРѕРЅСЃС‚СЂСѓРєС‚РёРІ".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 9) {
+                    } else if ("Конструктив".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 9) {
                         return false;
-                    } else if ("РџР°РЅРµР»СЊ РѕС‚РєРѕСЃР°".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 15) {
+                    } else if ("Панель откоса".equals(rec.getStr(TEXT)) && elem5e.artiklRecAn.getInt(eArtikl.level2) != 15) {
                         return false;
                     }
                     break;
-                case 13014: //РЈРіР»С‹ РѕСЂРёРµРЅС‚Р°С†РёРё СЃС‚РѕСЂРѕРЅС‹, В° 
+                case 13014: //Углы ориентации стороны, ° 
                 {
                     List<String> list = Arrays.asList(rec.getStr(TEXT).split(";"));
                     if (list.size() + 1 != elem5e.area.getNumPoints()) {
@@ -92,46 +92,46 @@ public class FillingVar extends Par5s {
                     }
                 }
                 break;
-                case 13015:  //Р¤РѕСЂРјР° Р·Р°РїРѕР»РЅРµРЅРёСЏ 
-                    //"РџСЂСЏРјРѕСѓРіРѕР»СЊРЅРѕРµ", "РќРµ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРѕРµ", "РќРµ Р°СЂРѕС‡РЅРѕРµ", "РђСЂРѕС‡РЅРѕРµ" (TypeElem.AREA - РіР»СѓС…Р°СЂСЊ)
-                    if ("РџСЂСЏРјРѕСѓРіРѕР»СЊРЅРѕРµ".equals(rec.getStr(TEXT)) && elem5e.owner.area.isRectangle() == true) {
+                case 13015:  //Форма заполнения 
+                    //"Прямоугольное", "Не прямоугольное", "Не арочное", "Арочное" (TypeElem.AREA - глухарь)
+                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && elem5e.owner.area.isRectangle() == true) {
                         return false;
-                    } else if ("РќРµ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРѕРµ".equals(rec.getStr(TEXT)) && elem5e.owner.area.isRectangle() == false) {
+                    } else if ("Не прямоугольное".equals(rec.getStr(TEXT)) && elem5e.owner.area.isRectangle() == false) {
                         return false;
-                    } else if ("РђСЂРѕС‡РЅРѕРµ".equals(rec.getStr(TEXT)) && elem5e.owner.area.getNumPoints() < Com5t.MAXSIDE) {
+                    } else if ("Арочное".equals(rec.getStr(TEXT)) && elem5e.owner.area.getNumPoints() < Com5t.MAXSIDE) {
                         return false;
-                    } else if ("РќРµ Р°СЂРѕС‡РЅРѕРµ".equals(rec.getStr(TEXT)) && ((ElemGlass) elem5e).area.getNumPoints() > Com5t.MAXSIDE) {
+                    } else if ("Не арочное".equals(rec.getStr(TEXT)) && ((ElemGlass) elem5e).area.getNumPoints() > Com5t.MAXSIDE) {
                         return false;
                     }                    
                     break;
-                case 13017: //РљРѕРґ СЃРёСЃС‚РµРјС‹ СЃРѕРґРµСЂР¶РёС‚ СЃС‚СЂРѕРєСѓ 
+                case 13017: //Код системы содержит строку 
                     if (UPar.is_13017_14017_24017_25017_31017_33017_34017_37017_38017(rec.getStr(TEXT), winc) == false) {
                         return false;
                     }
                     break;
-                case 13081:  //Р”Р»СЏ РІРЅРµС€РЅРµРіРѕ/РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ СѓРіР»Р° РїР»РѕСЃРєРѕСЃС‚Рё, В° РёР»Рё РњРёРЅ. РІРЅСѓС‚СЂ. СѓРіРѕР» РїР»РѕСЃРєРѕСЃС‚Рё, В° 
+                case 13081:  //Для внешнего/внутреннего угла плоскости, ° или Мин. внутр. угол плоскости, ° 
                     if (UPar.is_13081_13082_13086_13087(elem5e, rec.getStr(TEXT))) {
                         return false;
                     }
-                case 13095:  //Р•СЃР»Рё РїСЂРёР·РЅР°Рє СЃРёСЃС‚РµРјС‹ РєРѕРЅСЃС‚СЂСѓРєС†РёРё (СЃРј. Systree->РІРєР».РћСЃРЅРѕРІРЅС‹Рµ)
+                case 13095:  //Если признак системы конструкции (см. Systree->вкл.Основные)
                     if (!UPar.is_11095_12095_31095_33095_34095_37095_38095_39095_40095(rec.getStr(TEXT), winc.nuni)) {
                         return false;
                     }
                     break;
-                case 13097:  //РўСЂСѓРґРѕР·Р°С‚СЂР°С‚С‹ РїРѕ РґР»РёРЅРµ 
+                case 13097:  //Трудозатраты по длине 
                     message(rec.getInt(GRUP));
                     break;
-                case 13098:  //Р‘СЂРёРіР°РґР°, СѓС‡Р°СЃС‚РѕРє) 
+                case 13098:  //Бригада, участок) 
                     message(rec.getInt(GRUP));
                     break;
-                case 13099:  //РўСЂСѓРґРѕР·Р°С‚СЂР°С‚С‹, С‡/С‡. 
+                case 13099:  //Трудозатраты, ч/ч. 
                     elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
                 default:
-                    assert !(grup > 0 && grup < 50000) : "РљРѕРґ " + grup + "  РЅРµ РѕР±СЂР°Р±РѕС‚Р°РЅ!!!";
+                    assert !(grup > 0 && grup < 50000) : "Код " + grup + "  не обработан!!!";
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:param.FillingVar.check()  parametr=" + grup + "    " + e);
+            System.err.println("Ошибка:param.FillingVar.check()  parametr=" + grup + "    " + e);
             return false;
         }
         return true;

@@ -22,7 +22,7 @@ import javax.swing.JTable;
 import startup.App;
 
 /**
- * РЎРѕРµРґРёРЅРµРЅРёРµ С‡РµСЂРµР· PostgresSQL
+ * Соединение через PostgresSQL
  */
 public class Conn {
 
@@ -67,12 +67,12 @@ public class Conn {
             return connection;
 
         } catch (NamingException e) {
-            System.err.println("РћС€РёР±РєР°:Conn.connection() в„–1 ");
+            System.err.println("Ошибка:Conn.connection() №1 ");
             e.printStackTrace();
             return null;
 
         } catch (SQLException e) {
-            System.err.println("РћС€РёР±РєР°:Conn.connection() в„–2 ");
+            System.err.println("Ошибка:Conn.connection() №2 ");
             e.printStackTrace();
             return null;
         }
@@ -87,7 +87,7 @@ public class Conn {
             }
             if (Class.forName(driver) == null) {
                 JOptionPane.showMessageDialog(App.Top.frame, eExcep.loadDrive.mes,
-                        "РћС€РёР±РєР°", JOptionPane.ERROR_MESSAGE);
+                        "Ошибка", JOptionPane.ERROR_MESSAGE);
             }
             String url = fbserver + "//" + server + ":" + port + "/" + base;
             Properties props = new Properties();
@@ -132,23 +132,23 @@ public class Conn {
         try {
             connection.setAutoCommit(autoCommit);
         } catch (SQLException e) {
-            System.err.println("РћС€РёР±РєР°:Conn.autocommit() " + e);
+            System.err.println("Ошибка:Conn.autocommit() " + e);
         }
     }
 
-    //Р”РѕР±Р°РІР»РµРЅРёРµ РЅРѕРІРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ   
+    //Добавление нового пользователя   
     public static void addUser(String user, char[] password, String role) {
         try {
             connection.createStatement().executeUpdate("create user " + user + " password '" + String.valueOf(password) + "'");
             connection.createStatement().executeUpdate("grant " + role + " to " + user);
 
         } catch (SQLException e) {
-            System.err.println("РћС€РёР±РєР°:Conn.addUser() " + e);
-            JOptionPane.showMessageDialog(null, eExcep.getError(e.getErrorCode()).mes, "Р’РќРРњРђРќРР•!", 1);
+            System.err.println("Ошибка:Conn.addUser() " + e);
+            JOptionPane.showMessageDialog(null, eExcep.getError(e.getErrorCode()).mes, "ВНИМАНИЕ!", 1);
         }
     }
 
-    //РЈРґР°Р»РµРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ   
+    //Удаление пользователя   
     public static void deleteUser(String user) {
         try {
             connection.createStatement().executeUpdate("REVOKE TEXNOLOG_RW FROM " + user);
@@ -158,7 +158,7 @@ public class Conn {
             connection.createStatement().executeUpdate("DROP USER " + user);
 
         } catch (SQLException e) {
-            System.err.println("РћС€РёР±РєР°:Conn.deleteUser() " + e);
+            System.err.println("Ошибка:Conn.deleteUser() " + e);
         }
     }
 
@@ -170,17 +170,17 @@ public class Conn {
         connection.createStatement().executeUpdate("DROP USER " + user);
     }
 
-    //РР·РјРµРЅРµРЅРёРµ РїР°СЂР°РјРµС‚СЂРѕРІ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+    //Изменение параметров пользователя
     public static void modifyPassword(String user, char[] password) {
         try {
             String sql = "ALTER USER " + user + " PASSWORD '" + String.valueOf(password) + "'";
             connection.createStatement().executeUpdate(sql);
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Conn.modifyPassword() " + e);
+            System.err.println("Ошибка:Conn.modifyPassword() " + e);
         }
     }
 
-    //Р“РµРЅРµСЂР°С‚РѕСЂ РєР»СЋС‡Р° ID
+    //Генератор ключа ID
     public static int genId(Field field) {
         try {
             int next_id = 0;
@@ -197,7 +197,7 @@ public class Conn {
             close();
             return next_id;
         } catch (SQLException e) {
-            System.err.println("РћС€РёР±РєР° РіРµРЅРµСЂР°С†РёРё РєР»СЋС‡Р° " + e);
+            System.err.println("Ошибка генерации ключа " + e);
             return 0;
         }
     }
@@ -213,7 +213,7 @@ public class Conn {
             return v;
 
         } catch (SQLException e) {
-            System.err.println("РћС€РёР±РєР° РїРѕР»СѓС‡РµРЅРёСЏ РІРµСЂСЃРёРё " + e);
+            System.err.println("Ошибка получения версии " + e);
             return "";
         }
     }

@@ -70,7 +70,7 @@ public class ProgressBar extends javax.swing.JDialog {
         lab.setBackground(new java.awt.Color(85, 85, 255));
         lab.setFont(frames.UGui.getFont(0,1));
         lab.setForeground(new java.awt.Color(255, 255, 51));
-        lab.setText("    РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РїРѕРґРѕР¶РґРёС‚Рµ...");
+        lab.setText("    Пожалуйста, подождите...");
         lab.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         lab.setFocusable(false);
         lab.setIconTextGap(0);

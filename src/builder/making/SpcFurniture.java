@@ -26,13 +26,13 @@ import javax.swing.JOptionPane;
 import org.locationtech.jts.geom.Envelope;
 
 /**
- * Р¤СѓСЂРЅРёС‚СѓСЂР°
+ * Фурнитура
  */
 public class SpcFurniture extends Cal5e {
 
     private FurnitureVar furnitureVar = null;
     private FurnitureDet furnitureDet = null;
-    private final List list = List.of(9, 11, 12); //Р·Р°РјРѕРє, СЂСѓС‡РєР°, РїРµС‚Р»СЏ 
+    private final List list = List.of(9, 11, 12); //замок, ручка, петля 
     private boolean max_size_message = true;
 
     public SpcFurniture(Wincalc winc) {
@@ -52,20 +52,20 @@ public class SpcFurniture extends Cal5e {
     public void calc() {
         ArrayList<AreaSimple> stvorkaList = winc.listArea.filter(Type.STVORKA);
         try {
-            //РџРѕРґР±РѕСЂ С„СѓСЂРЅРёС‚СѓСЂС‹ РїРѕ РїР°СЂР°РјРµС‚СЂР°Рј
-            List<Record> sysfurnList = eSysfurn.filter(winc.nuni); //СЃРїРёСЃРѕРє С„СѓСЂРЅРёС‚СѓСЂ РІ СЃРёСЃС‚РµРјРµ
+            //Подбор фурнитуры по параметрам
+            List<Record> sysfurnList = eSysfurn.filter(winc.nuni); //список фурнитур в системе
             if (sysfurnList.isEmpty() == false) {
-                Record sysfurnRec = sysfurnList.get(0); //Р·РЅР°С‡РµРЅРёРµ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ, РїРµСЂРІР°СЏ SYSFURN РІ СЃРїРёСЃРєРµ СЃРёСЃС‚РµРјС‹
+                Record sysfurnRec = sysfurnList.get(0); //значение по умолчанию, первая SYSFURN в списке системы
 
-                //Р¦РёРєР» РїРѕ СЃС‚РІРѕСЂРєР°Рј      
+                //Цикл по створкам      
                 for (AreaSimple areaStv : stvorkaList) {
                     AreaStvorka stv = (AreaStvorka) areaStv;
 
-                    //РќР°Р№РґС‘Рј РёР· СЃРїРёСЃРєР° СЃРёСЃС‚.С„СѓСЂРЅ. С„СѓСЂРЅРёС‚СѓСЂСѓ РєРѕС‚РѕСЂР°СЏ СѓСЃС‚Р°РЅРѕРІР»РµРЅР° РІ СЃС‚РІРѕСЂРєСѓ                 
+                    //Найдём из списка сист.фурн. фурнитуру которая установлена в створку                 
                     sysfurnRec = sysfurnList.stream().filter(rec -> rec.getInt(eSysfurn.id) == stv.sysfurnRec.getInt(eSysfurn.id)).findFirst().orElse(sysfurnRec);
                     Record furnityreRec = eFurniture.find(sysfurnRec.getInt(eSysfurn.furniture_id));
 
-                    //РџСЂРѕРІРµСЂРєР° СЃ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµРј РЅР° max РІС‹СЃРѕС‚Сѓ, С€РёСЂРёРЅСѓ, РїРµСЂРёРјРµС‚СЂ
+                    //Проверка с предупреждением на max высоту, ширину, периметр
                     Envelope env = stv.area.getEnvelopeInternal();
                     double stv_width = env.getWidth();
                     double stv_height = env.getHeight();
@@ -73,46 +73,46 @@ public class SpcFurniture extends Cal5e {
                     if (p2_max || furnityreRec.getDbl(eFurniture.max_height) < stv_height
                             || furnityreRec.getDbl(eFurniture.max_width) < stv_width) {
                         if (max_size_message == true) {
-                            JOptionPane.showMessageDialog(null, "Р Р°Р·РјРµСЂ СЃС‚РІРѕСЂРєРё РїСЂРµРІС‹С€Р°РµС‚ РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ С„СѓСЂРЅРёС‚СѓСЂС‹.", "Р’РќРРњРђРќРР•!", 1);
+                            JOptionPane.showMessageDialog(null, "Размер створки превышает максимальный размер фурнитуры.", "ВНИМАНИЕ!", 1);
                         }
                         max_size_message = false;
                     }
-                    variant(stv, furnityreRec, 1); //РѕСЃРЅРѕРІРЅР°СЏ С„СѓСЂРЅРёС‚СѓСЂР°
+                    variant(stv, furnityreRec, 1); //основная фурнитура
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Furniture.calc() " + e);
+            System.err.println("Ошибка:Furniture.calc() " + e);
         } 
     }
 
     protected void variant(AreaSimple areaStv, Record furnitureRec, int count) {
         try {
-            List<Record> furndetList1 = eFurndet.filter(furnitureRec.getInt(eFurniture.id)); //РґРµС‚Р°Р»РёР·Р°С†РёСЏ РїРµСЂРІС‹Р№ СѓСЂРѕРІРµРЅСЊ
+            List<Record> furndetList1 = eFurndet.filter(furnitureRec.getInt(eFurniture.id)); //детализация первый уровень
             List<Record> furndetList2 = furndetList1.stream()
-                    .filter(rec -> rec.getInt(eFurndet.id) != rec.getInt(eFurndet.furndet_pk)).collect(toList()); //РґРµС‚Р°Р»РёР·Р°С†РёСЏ РІС‚РѕСЂРѕР№ СѓСЂРѕРІРµРЅСЊ
+                    .filter(rec -> rec.getInt(eFurndet.id) != rec.getInt(eFurndet.furndet_pk)).collect(toList()); //детализация второй уровень
 
-            //Р¦РёРєР» РїРѕ РѕРїРёСЃР°РЅРёСЋ СЃС‚РѕСЂРѕРЅ С„СѓСЂРЅРёС‚СѓСЂС‹
-            List<Record> furnsidetList = eFurnside1.filter(furnitureRec.getInt(eFurniture.id)); //СЃРїРёСЃРѕРє РѕРїРёСЃР°РЅРёСЏ СЃС‚РѕСЂРѕРЅ
+            //Цикл по описанию сторон фурнитуры
+            List<Record> furnsidetList = eFurnside1.filter(furnitureRec.getInt(eFurniture.id)); //список описания сторон
             for (Record furnside1Rec : furnsidetList) {
                 ElemSimple elemFrame = areaStv.frames.get((Layout) Layout.ANY.find(furnside1Rec.getInt(eFurnside1.side_num)));
 
-                //Р¤РР›Р¬РўР  РІР°СЂРёР°РЅС‚РѕРІ СЃ СѓС‡С‘С‚РѕРј СЃС‚РѕСЂРѕРЅС‹
+                //ФИЛЬТР вариантов с учётом стороны
                 if (furnitureVar.filter(elemFrame, furnside1Rec) == false) {
                     return;
                 }
             }
 
-            //Р¦РёРєР» РїРѕ РґРµС‚Р°Р»РёР·Р°С†РёРё (РїРµСЂРІС‹Р№ СѓСЂРѕРІРµРЅСЊ)        
+            //Цикл по детализации (первый уровень)        
             for (Record furndetRec1 : furndetList1) {
                 if (furndetRec1.getInt(eFurndet.furndet_pk) == furndetRec1.getInt(eFurndet.id)) {
                     if (detail(areaStv, furndetRec1, count) == true) {
 
-                        //Р¦РёРєР» РїРѕ РґРµС‚Р°Р»РёР·Р°С†РёРё (РІС‚РѕСЂРѕР№ СѓСЂРѕРІРµРЅСЊ)
+                        //Цикл по детализации (второй уровень)
                         for (Record furndetRec2 : furndetList2) {
                             if (furndetRec2.getInt(eFurndet.furndet_pk) == furndetRec1.getInt(eFurndet.pk)) {
                                 if (detail(areaStv, furndetRec2, count) == true) {
 
-                                    //Р¦РёРєР» РїРѕ РґРµС‚Р°Р»РёР·Р°С†РёРё (С‚СЂРµС‚РёР№ СѓСЂРѕРІРµРЅСЊ)
+                                    //Цикл по детализации (третий уровень)
                                     for (Record furndetRec3 : furndetList2) {
                                         if (furndetRec3.getInt(eFurndet.furndet_pk) == furndetRec2.getInt(eFurndet.pk)) {
                                             detail(areaStv, furndetRec3, count);
@@ -125,34 +125,34 @@ public class SpcFurniture extends Cal5e {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Furniture.variant() " + e);
+            System.err.println("Ошибка:Furniture.variant() " + e);
         }
     }
 
     protected boolean detail(AreaSimple areaStv, Record furndetRec, int countKit) {
         try {
             Record artiklRec = eArtikl.find(furndetRec.getInt(eFurndet.artikl_id), false);
-            HashMap<Integer, String> mapParam = new HashMap<Integer, String>(); //С‚СѓС‚ РЅР°РєР°РїР»РёРІР°СЋС‚СЃСЏ РїР°СЂР°РјРµС‚СЂС‹ element Рё specific
+            HashMap<Integer, String> mapParam = new HashMap<Integer, String>(); //тут накапливаются параметры element и specific
 
-            //РЎРґРµР»Р°РЅРѕ РґР»СЏ СѓР±С‹СЃС‚СЂРµРЅРёСЏ РїРѕРёСЃРєР° СЂСѓС‡РєРё, 
-            //РїРѕРґРІРµСЃР°, Р·Р°РјРєР° РїСЂРё РєРѕРЅСЃС‚СЂСѓРёСЂРѕРІР°РЅРёРё РѕРєРЅР°
+            //Сделано для убыстрения поиска ручки, 
+            //подвеса, замка при конструировании окна
             if (shortPass == true) {
                 if (furndetRec.getInt(eFurndet.furndet_pk) == furndetRec.getInt(eFurndet.id) && furndetRec.get(eFurndet.furniture_id2) == null) {
                     if ((artiklRec.getInt(eArtikl.level1) == 2 && list.contains(artiklRec.getInt(eArtikl.level2)) == false)
-                            || artiklRec.getInt(eArtikl.level1) != 2) { //С‚.Рє. СЂСѓС‡РєРё, РїРѕРґРІРµСЃР°, Р·Р°РјРєР° РЅР° СЌС‚РѕРј СѓСЂРѕРІРЅРµ РЅРµС‚
+                            || artiklRec.getInt(eArtikl.level1) != 2) { //т.к. ручки, подвеса, замка на этом уровне нет
                         return false;
                     }
                 }
             }
-            furnitureDet.detailRec = furndetRec; //С‚РµРєСѓС‰РёР№ СЌР»РµРјРµРЅС‚ РґРµС‚Р°Р»РёР·Р°С†РёРё
+            furnitureDet.detailRec = furndetRec; //текущий элемент детализации
 
-            //Р¤РР›Р¬РўР  РїР°СЂР°РјРµС‚СЂРѕРІ РґРµС‚Р°Р»РёР·Р°С†РёРё 
+            //ФИЛЬТР параметров детализации 
             if (furnitureDet.filter(mapParam, areaStv, furndetRec) == false) {
                 return false;
             }
 
-            //РџСЂРѕРІРµСЂРєР° РїРѕ РѕРіСЂР°РЅРёС‡РµРЅРёСЋ СЃС‚РѕСЂРѕРЅ
-            //Р¦РёРєР» РїРѕ РѕРіСЂР°РЅРёС‡РµРЅРёСЋ СЃС‚РѕСЂРѕРЅ С„СѓСЂРЅРёС‚СѓСЂС‹
+            //Проверка по ограничению сторон
+            //Цикл по ограничению сторон фурнитуры
             List<Record> furnside2List = eFurnside2.filter(furndetRec.getInt(eFurndet.id));
             for (Record furnside2Rec : furnside2List) {
                 ElemSimple el;
@@ -185,93 +185,93 @@ public class SpcFurniture extends Cal5e {
                 }
                 if (length >= furnside2Rec.getDbl(eFurnside2.len_max) || (length < furnside2Rec.getDbl(eFurnside2.len_min))) {
 
-                    return false; //РЅРµ РїСЂРѕС€Р»Рё РѕРіСЂР°РЅРёС‡РµРЅРёРµ СЃС‚РѕСЂРѕРЅ
+                    return false; //не прошли ограничение сторон
                 }
             }
 
-            //РќРµ РќРђР‘РћР  (СЌР»РµРјРµРЅС‚ РёР· РјР°С‚. С†РµРЅРЅРѕСЃС‚Рё)
+            //Не НАБОР (элемент из мат. ценности)
             if (furndetRec.get(eFurndet.furniture_id2) == null) {
-                if (artiklRec.getInt(eArtikl.id) != -1) { //Р°СЂС‚РёРєСѓР» РµСЃС‚СЊ
+                if (artiklRec.getInt(eArtikl.id) != -1) { //артикул есть
 
                     ElemSimple sideStv = determOfSide(mapParam, areaStv);
-                    SpcRecord spcAdd = new SpcRecord("Р¤РЈР Рќ", furndetRec, artiklRec, sideStv, mapParam);
+                    SpcRecord spcAdd = new SpcRecord("ФУРН", furndetRec, artiklRec, sideStv, mapParam);
 
-                    //Р›РѕРІРёРј СЂСѓС‡РєСѓ, РїРµС‚Р»СЋ, Р·Р°РјРѕРє Рё 
-                    //РїСЂРёСЃРІР°РёРІР°РµРј Р·РЅР°С‡. РІ СЃРІРѕР№СЃС‚РІР° СЃС‚РІРѕСЂРєРё
+                    //Ловим ручку, петлю, замок и 
+                    //присваиваем знач. в свойства створки
                     if (spcAdd.artiklRec().getInt(eArtikl.level1) == 2
                             && list.contains(spcAdd.artiklRec().getInt(eArtikl.level2)) == true) {
                         setPropertyStv(areaStv, spcAdd);
                     } else {
                         UColor.colorFromElemOrSeri(spcAdd);
                     }
-                    //Р”РѕР±Р°РІРёРј СЃРїРµС†РёС„РёРєР°С†РёСЋ РІ СЌР»РµРјРµРЅС‚
+                    //Добавим спецификацию в элемент
                     if (shortPass == false) {
                         spcAdd.count = UCom.getDbl(spcAdd.getParam(spcAdd.count, 24030));
-                        spcAdd.count = spcAdd.count * countKit; //СѓРјРЅРѕР¶Р°СЋ РЅР° РєРѕР»РёС‡РµСЃС‚РІРѕ РєРѕРјРїР»РµРєС‚РѕРІ
+                        spcAdd.count = spcAdd.count * countKit; //умножаю на количество комплектов
                         sideStv.addSpecific(spcAdd);
                     }
                 }
 
-                //Р­С‚Рѕ РќРђР‘РћР  
+                //Это НАБОР 
             } else {
                 int countKi2 = (mapParam.get(24030) == null) ? 1 : Integer.valueOf((mapParam.get(24030)));
                 Record furnitureRec2 = eFurniture.find(furndetRec.getInt(eFurndet.furniture_id2));
 
-                variant(areaStv, furnitureRec2, countKi2); //СЂРµРєСѓСЂСЃРёСЏ РѕР±СЂР°Р±РѕС‚РєРё РЅР°Р±РѕСЂРѕРІ
+                variant(areaStv, furnitureRec2, countKi2); //рекурсия обработки наборов
             }
             return true;
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Furniture.detail() " + e);
+            System.err.println("Ошибка:Furniture.detail() " + e);
             return false;
         }
     }
 
-    //Р›РѕРІРёРј СЂСѓС‡РєСѓ, РїРѕРґРІРµСЃ, Р·Р°РјРѕРє Рё 
-    //РїСЂРёСЃРІР°РёРІР°РµРј Р·РЅР°С‡. РІ СЃС‚РІРѕСЂРєСѓ    
+    //Ловим ручку, подвес, замок и 
+    //присваиваем знач. в створку    
     private void setPropertyStv(AreaSimple areaStv, SpcRecord spcAdd) {
         AreaStvorka stv = (AreaStvorka) areaStv;
 
         if (spcAdd.artiklRec().getInt(eArtikl.level1) == 2) {
-            //Р СѓС‡РєР°
+            //Ручка
             if (spcAdd.artiklRec().getInt(eArtikl.level2) == 11) {
                 if (stv.isJson(stv.gson.param, PKjson.artiklKnob)) {
-                    spcAdd.artiklRec(stv.knobRec); //РІС‹Р±СЂ. РІСЂСѓС‡РЅСѓСЋ
+                    spcAdd.artiklRec(stv.knobRec); //выбр. вручную
                 } else {
-                    stv.knobRec = spcAdd.artiklRec(); //РёР· РґРµС‚Р°Р»РёР·Р°С†РёРё Р°РІС‚Рѕ
+                    stv.knobRec = spcAdd.artiklRec(); //из детализации авто
                 }
-                //Р¦РІРµС‚
-                spcAdd.color(stv.knobColor, -3, -3);  //РїРµСЂРІ. Р·Р°РїРёСЃСЊ РІ С‚РµРєСЃС‚СѓСЂРµ Р°СЂС‚РёРєСѓР»РѕРІ РёР»Рё РІС‹Р±СЂ. РІСЂСѓС‡РЅСѓСЋ
+                //Цвет
+                spcAdd.color(stv.knobColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
                 if (stv.isJson(stv.gson.param, PKjson.colorKnob) == false) {
-                    if (UColor.colorFromElemOrSeri(spcAdd) == true) { //РїРѕРґР±РѕСЂ РїРѕ С†РІРµС‚Сѓ
+                    if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
                         stv.knobColor = spcAdd.colorID1;
                     }
                 }
-                //РџРѕРґРІРµСЃ
+                //Подвес
             } else if (spcAdd.artiklRec().getInt(eArtikl.level2) == 12) {
                 if (stv.isJson(stv.gson.param, PKjson.artiklLoop)) {
-                    spcAdd.artiklRec(stv.loopRec); //РІС‹Р±СЂ. РІСЂСѓС‡РЅСѓСЋ
+                    spcAdd.artiklRec(stv.loopRec); //выбр. вручную
                 } else {
-                    stv.loopRec = spcAdd.artiklRec(); //РёР· РґРµС‚Р°Р»РёР·Р°С†РёРё Р°РІС‚Рѕ
+                    stv.loopRec = spcAdd.artiklRec(); //из детализации авто
                 }
-                //Р¦РІРµС‚
-                spcAdd.color(stv.loopColor, -3, -3);  //РїРµСЂРІ. Р·Р°РїРёСЃСЊ РІ С‚РµРєСЃС‚СѓСЂРµ Р°СЂС‚РёРєСѓР»РѕРІ РёР»Рё РІС‹Р±СЂ. РІСЂСѓС‡РЅСѓСЋ
+                //Цвет
+                spcAdd.color(stv.loopColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
                 if (stv.isJson(stv.gson.param, PKjson.colorLoop) == false) {
-                    if (UColor.colorFromElemOrSeri(spcAdd) == true) { //РїРѕРґР±РѕСЂ РїРѕ С†РІРµС‚Сѓ
+                    if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
                         stv.loopColor = spcAdd.colorID1;
                     }
                 }
-                //Р—Р°РјРѕРє  
+                //Замок  
             } else if (spcAdd.artiklRec().getInt(eArtikl.level2) == 9) {
                 if (stv.isJson(stv.gson.param, PKjson.artiklLock)) {
-                    spcAdd.artiklRec(stv.lockRec); //РІС‹Р±СЂ. РІСЂСѓС‡РЅСѓСЋ
+                    spcAdd.artiklRec(stv.lockRec); //выбр. вручную
                 } else {
-                    //stv.lockRec = spcAdd.artiklRec; //РёР· РґРµС‚Р°Р»РёР·Р°С†РёРё Р°РІС‚Рѕ
+                    //stv.lockRec = spcAdd.artiklRec; //из детализации авто
                 }
-                //Р¦РІРµС‚
-                spcAdd.color(stv.lockColor, -3, -3);  //РїРµСЂРІ. Р·Р°РїРёСЃСЊ РІ С‚РµРєСЃС‚СѓСЂРµ Р°СЂС‚РёРєСѓР»РѕРІ РёР»Рё РІС‹Р±СЂ. РІСЂСѓС‡РЅСѓСЋ
+                //Цвет
+                spcAdd.color(stv.lockColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
                 if (stv.isJson(stv.gson.param, PKjson.colorLock) == false) {
-                    if (UColor.colorFromElemOrSeri(spcAdd) == true) { //РїРѕРґР±РѕСЂ РїРѕ С†РІРµС‚Сѓ
+                    if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
                         stv.lockColor = spcAdd.colorID1;
                     }
                 }
@@ -281,7 +281,7 @@ public class SpcFurniture extends Cal5e {
 
     public ElemSimple determOfSide(HashMap<Integer, String> mapParam, AreaSimple area5e) {
 
-        //Р§РµСЂРµР· РїР°СЂР°РјРµС‚СЂ
+        //Через параметр
         if ("1".equals(mapParam.get(25010))) {
             return area5e.frames.get(Layout.BOTT);
         } else if ("2".equals(mapParam.get(25010))) {
@@ -291,12 +291,12 @@ public class SpcFurniture extends Cal5e {
         } else if ("4".equals(mapParam.get(25010))) {
             return area5e.frames.get(Layout.LEFT);
         } else {
-            //РўР°Рј РіРґРµ РєСЂРµРїРёС‚СЃСЏ СЂСѓС‡РєР°
+            //Там где крепится ручка
             return determOfSide(area5e);
         }
     }
 
-    //РўР°Рј РіРґРµ РєСЂРµРїРёС‚СЃСЏ СЂСѓС‡РєР°
+    //Там где крепится ручка
     public static ElemSimple determOfSide(AreaSimple area5e) {
         if (area5e instanceof AreaStvorka) {
             int id = ((AreaStvorka) area5e).typeOpen.id;
@@ -308,6 +308,6 @@ public class SpcFurniture extends Cal5e {
                 return area5e.frames.get(Layout.BOTT);
             }
         }
-        return area5e.frames.stream().findFirst().get();  //РїРµСЂРІР°СЏ РїРѕРїР°РІС€Р°СЏСЃСЏ        
+        return area5e.frames.stream().findFirst().get();  //первая попавшаяся        
     }
 }

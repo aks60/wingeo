@@ -86,7 +86,7 @@ public class ParColor extends javax.swing.JDialog {
                 if (col == 0) {
                     Record colorRec = qColor.get(row);
                     if (colorRec.getInt(eColor.groups_id) == 0 || colorRec.getInt(eColor.groups_id) == 100000) {
-                        return "РђРІС‚РѕРїРѕРґР±РѕСЂ";
+                        return "Автоподбор";
                     }
                     Record groupRec = qGroupsGrp.find(colorRec.get(eColor.groups_id), eGroups.id);
                     return groupRec.get(eGroups.name);

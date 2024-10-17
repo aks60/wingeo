@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum eSyssize implements Field {
-    up("0", "0", "0", "РЎРёСЃС‚РµРјРЅС‹Рµ РєРѕРЅСЃС‚Р°РЅС‚С‹", "SYSSIZE"),
-    id("4", "10", "0", "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ", "id"),
-    name("12", "32", "1", "РЎРёСЃС‚РµРјР° Р°СЂС‚РёРєСѓР»РѕРІ", "SNAME"),
-    prip("8", "15", "1", "РџСЂРёРїСѓСЃРє РЅР° СЃРІР°СЂРєСѓ", "SSIZP"),
-    naxl("8", "15", "1", "РќР°С…Р»РµСЃС‚ СЃС‚РІРѕСЂРєРё", "SSIZF"),
-    falz("8", "15", "1", "T- Р“Р»СѓР±РёРЅР° РґРѕ С„Р°Р»СЊС†Р°, РїРѕР»РєР°", "SSIZN"),
-    zax("8", "15", "1", "Р—Р°С…РѕРґ РёРјРїРѕСЃС‚Р°", "SSIZI");
-    //sunic("4", "10", "1", "ID СЃРёСЃС‚РµРјС‹", "SUNIC"),
+    up("0", "0", "0", "Системные константы", "SYSSIZE"),
+    id("4", "10", "0", "Идентификатор", "id"),
+    name("12", "32", "1", "Система артикулов", "SNAME"),
+    prip("8", "15", "1", "Припуск на сварку", "SSIZP"),
+    naxl("8", "15", "1", "Нахлест створки", "SSIZF"),
+    falz("8", "15", "1", "T- Глубина до фальца, полка", "SSIZN"),
+    zax("8", "15", "1", "Заход импоста", "SSIZI");
+    //sunic("4", "10", "1", "ID системы", "SUNIC"),
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());
 
@@ -45,7 +45,7 @@ public enum eSyssize implements Field {
 
     public static Record find(Record artiklRec) {
         int _id = artiklRec.getInt(eArtikl.syssize_id);
-        if (_id == -3) { //РµСЃР»Рё Р°СЂС‚. РІРёСЂС‚. С‚Рѕ return virtualRec();
+        if (_id == -3) { //если арт. вирт. то return virtualRec();
             return virtualRec();
         }
         if (Query.conf.equals("NET")) {
@@ -64,7 +64,7 @@ public enum eSyssize implements Field {
         return q.select(up, "order by", name);
     }
 
-    //Р’РёСЂС‚СѓР°Р». СЃРёСЃС‚РµРјРЅС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ
+    //Виртуал. системные переменные
     public static Record virtualRec() {
         Record record = up.newRecord(Query.SEL);
         record.setNo(id, -3);

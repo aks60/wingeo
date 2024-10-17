@@ -11,12 +11,12 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 public enum eSyspar1 implements Field {
-    up("0", "0", "0", "РџР°СЂР°РјРјРµС‚СЂС‹ СЃРёСЃС‚РµРјС‹ РїСЂРѕС„РёР»РµР№", "PARSYSP"),
-    id("4", "10", "0", "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ", "id"),
-    text("12", "64", "1", "Р—РЅР°С‡РµРЅРёСЏ РїР°СЂР°РјРµС‚СЂР°", "PTEXT"),
-    groups_id("4", "10", "0", "РќР°Р·РІР°РЅРёРµ РїР°СЂР°РјРµС‚СЂР°", "PNUMB"),
-    systree_id("4", "10", "0", "РЎРёСЃС‚РµРјР°", "systree_id"),
-    fixed("16", "5", "1", "Р—Р°РєСЂРµРїР»РµРЅРѕ", "PFIXX");
+    up("0", "0", "0", "Парамметры системы профилей", "PARSYSP"),
+    id("4", "10", "0", "Идентификатор", "id"),
+    text("12", "64", "1", "Значения параметра", "PTEXT"),
+    groups_id("4", "10", "0", "Название параметра", "PNUMB"),
+    systree_id("4", "10", "0", "Система", "systree_id"),
+    fixed("16", "5", "1", "Закреплено", "PFIXX");
   
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());

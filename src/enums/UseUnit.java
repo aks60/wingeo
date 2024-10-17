@@ -3,17 +3,17 @@ package enums;
 import static enums.TypeOpen1.values;
 
 public enum UseUnit implements Enam {
-    METR(1, "РїРѕРі.Рј."),
-    METR2(2, "РєРІ.Рј."),
-    PIE(3, "С€С‚."),
-    ML(4, "РјР»."),
-    KIT(5, "РєРѕРјРї."),
-    GRAM(6, "РіСЂР°РјРј."),
-    KG(7, "РєРі."),
-    LITER(8, "Р»РёС‚СЂ"),
-    DOSE(10, "РґРѕР·Р°"),
-    PAIR(11, "РїР°СЂР°"),
-    MONTH(12, "РјРµСЃСЏС†");
+    METR(1, "пог.м."),
+    METR2(2, "кв.м."),
+    PIE(3, "шт."),
+    ML(4, "мл."),
+    KIT(5, "комп."),
+    GRAM(6, "грамм."),
+    KG(7, "кг."),
+    LITER(8, "литр"),
+    DOSE(10, "доза"),
+    PAIR(11, "пара"),
+    MONTH(12, "месяц");
     
 
     public int id = 0;

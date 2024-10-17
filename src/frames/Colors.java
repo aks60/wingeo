@@ -119,7 +119,7 @@ public class Colors extends javax.swing.JFrame {
         UGui.buttonCellEditor(tab2, 0).addActionListener(event -> {
             UGui.stopCellEditing(tab1, tab2);
             int rgb = qColor.getAs(UGui.getIndexRec(tab2), eColor.rgb);
-            java.awt.Color color = JColorChooser.showDialog(this, "Р’С‹Р±РѕСЂ С†РІРµС‚Р°", new java.awt.Color(rgb));
+            java.awt.Color color = JColorChooser.showDialog(this, "Выбор цвета", new java.awt.Color(rgb));
             if (color != null) {
                 qColor.set(color.getRGB() & 0x00ffffff, UGui.getIndexRec(tab2), eColor.rgb);
                 qColor.execsql();
@@ -151,7 +151,7 @@ public class Colors extends javax.swing.JFrame {
 
         mInsert.setFont(frames.UGui.getFont(1,0));
         mInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        mInsert.setText("Р”РѕР±Р°РІРёС‚СЊ");
+        mInsert.setText("Добавить");
         mInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -161,7 +161,7 @@ public class Colors extends javax.swing.JFrame {
 
         mDelit.setFont(frames.UGui.getFont(1,0));
         mDelit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        mDelit.setText("РЈРґР°Р»РёС‚СЊ");
+        mDelit.setText("Удалить");
         mDelit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -170,7 +170,7 @@ public class Colors extends javax.swing.JFrame {
         ppmCrud.add(mDelit);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РўРµРєСЃС‚СѓСЂС‹");
+        setTitle("Текстуры");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 500));
         setPreferredSize(new java.awt.Dimension(900, 600));
@@ -186,7 +186,7 @@ public class Colors extends javax.swing.JFrame {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -201,7 +201,7 @@ public class Colors extends javax.swing.JFrame {
         });
 
         btnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        btnDel.setToolTipText(bundle.getString("РЈРґР°Р»РёС‚СЊ")); // NOI18N
+        btnDel.setToolTipText(bundle.getString("Удалить")); // NOI18N
         btnDel.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnDel.setFocusable(false);
         btnDel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -217,7 +217,7 @@ public class Colors extends javax.swing.JFrame {
         });
 
         btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        btnIns.setToolTipText(bundle.getString("Р”РѕР±Р°РІРёС‚СЊ")); // NOI18N
+        btnIns.setToolTipText(bundle.getString("Добавить")); // NOI18N
         btnIns.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnIns.setFocusable(false);
         btnIns.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -233,7 +233,7 @@ public class Colors extends javax.swing.JFrame {
         });
 
         btnRep.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c053.gif"))); // NOI18N
-        btnRep.setToolTipText(bundle.getString("РџРµС‡Р°С‚СЊ")); // NOI18N
+        btnRep.setToolTipText(bundle.getString("Печать")); // NOI18N
         btnRep.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnRep.setFocusable(false);
         btnRep.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -310,7 +310,7 @@ public class Colors extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РќР°Р·РІР°РЅРёРµ РіСЂСѓРїРї", "РљРѕРґ РіСЂСѓРїРїС‹", "РљРѕСЌС„С„РёС†РёРµРЅС‚", "ID"
+                "Название групп", "Код группы", "Коэффициент", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -360,7 +360,7 @@ public class Colors extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РљРѕРґ С‚РµРєСЃС‚СѓСЂС‹", "RGB", "РќР°Р·РІР°РЅРёРµ", "РљРѕСЌС„.(РѕСЃРЅРѕРІРЅ.С‚РµРєСЃС‚СѓСЂР°)", "РљРѕСЌС„.(РІРЅСѓС‚СЂ.С‚РµРєСЃС‚СѓСЂР°)", "РљРѕСЌС„.(РІРЅРµС€РЅ.С‚РµРєСЃС‚СѓСЂР°)", "Р”Р»СЏ РёР·РґРµР»РёР№", "ID"
+                "Код текстуры", "RGB", "Название", "Коэф.(основн.текстура)", "Коэф.(внутр.текстура)", "Коэф.(внешн.текстура)", "Для изделий", "ID"
             }
         ) {
             Class[] types = new Class [] {

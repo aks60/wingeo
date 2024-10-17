@@ -22,13 +22,13 @@ public class AreaArch extends AreaSimple {
         this.owner = this;
     }
 
-    //РџРѕР»РёРіРѕРЅ СЂР°РјС‹. Р¤СѓРЅРє. РІС‹РїРѕРЅСЏРµС‚СЃСЏ РїРѕСЃР»Рµ СЃРѕР·РґР°РЅРёСЏ СЂР°Рј РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+    //Полигон рамы. Функ. выпоняется после создания рам конструкции
     @Override
     public void setLocation() {
         ArrayList<Coordinate> list = new ArrayList<Coordinate>();
         Geometry arcA = null, arcB = null;
         try {
-            //РЎРѕР·РґР°РґРёРј РІРµСЂС€РёРЅС‹ Р°СЂРєРё
+            //Создадим вершины арки
             for (ElemSimple frame : this.frames) {
                 if (frame.h() != null) {
                     Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
@@ -37,14 +37,14 @@ public class AreaArch extends AreaSimple {
                     double ANG = Math.toDegrees(segm.angle());
 
                     if (ANG == 0) {
-                        arcB = UGeo.newLineArch(segm.p0.x, segm.p1.x, segm.p0.y, frame.h(), frame.id);  //СЃРѕР·Рґ. Р°СЂРєРё РЅР° РіРѕСЂРёР·РѕРЅС‚Р°Р»Рё 
+                        arcB = UGeo.newLineArch(segm.p0.x, segm.p1.x, segm.p0.y, frame.h(), frame.id);  //созд. арки на горизонтали 
                     } else {
-                        //РџРѕРІРѕСЂРѕС‚ РЅР° РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊ
+                        //Поворот на горизонталь
                         aff.setToRotation(Math.toRadians(-ANG), segm.p0.x, segm.p0.y);
-                        segm = UGeo.getSegment((LineString) aff.transform(segm.toGeometry(gf)));//С‚СЂР°РЅСЃС„РѕСЂРјР°С†РёСЏ Р»РёРЅРёРё РІ РіРѕСЂРёР·РѕРЅС‚
-                        arcA = UGeo.newLineArch(segm.p0.x, segm.p1.x, segm.p0.y, frame.h(), frame.id);  //СЃРѕР·Рґ. Р°СЂРєРё РЅР° РіРѕСЂС‚Р·РѕРЅС‚Р°Р»Рё   
+                        segm = UGeo.getSegment((LineString) aff.transform(segm.toGeometry(gf)));//трансформация линии в горизонт
+                        arcA = UGeo.newLineArch(segm.p0.x, segm.p1.x, segm.p0.y, frame.h(), frame.id);  //созд. арки на гортзонтали   
 
-                        //РћР±СЂР°С‚РЅС‹Р№ РїРѕРІРѕСЂРѕС‚
+                        //Обратный поворот
                         aff.setToRotation(Math.toRadians(ANG), segm.p0.x, segm.p0.y);
                         arcB = aff.transform(arcA);
                     }
@@ -63,20 +63,20 @@ public class AreaArch extends AreaSimple {
             //new Test().mpol = this.area;
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:AreaArch.setLocation" + toString() + e);
+            System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
         }
     }
 
-    //L - СЃРѕРµРґРёРЅРµРЅРёСЏ
+    //L - соединения
     @Override
     public void addJoining() {
         try {
             winc.listJoin.clear();
 
-            super.addJoining(); //T - СЃРѕРµРґРёРЅРµРЅРёСЏ
+            super.addJoining(); //T - соединения
 
-            //L - СЃРѕРµРґРёРЅРµРЅРёСЏ
-            for (int i = 0; i < this.frames.size(); i++) { //С†РёРєР» РїРѕ СЃС‚РѕСЂРѕРЅР°Рј СЂР°РјС‹
+            //L - соединения
+            for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам рамы
                 ElemFrame nextFrame = (ElemFrame) this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1);
                 winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.ANGL, this.frames.get(i), nextFrame));
             }

@@ -14,7 +14,7 @@ public class Scene extends javax.swing.JPanel {
     private ListenerReload listenerReload = null;
     private ListenerAction listenerAction = null;
     public Wincalc winc = null;
-    private Timer timer = new javax.swing.Timer(500, null); //Р·Р°Р»Р°С‘С‚ РёРЅРєСЂРёРјРµРЅС‚РЅСѓСЋ СЃРєРѕСЂРѕСЃС‚СЊ РєРѕРѕСЂРґ...
+    private Timer timer = new javax.swing.Timer(500, null); //залаёт инкриментную скорость коорд...
 
     public Scene(Canvas canvas, ListenerReload listenerReload, ListenerAction listenerAction) {
         initComponents();
@@ -36,7 +36,6 @@ public class Scene extends javax.swing.JPanel {
         canvas.init(winc);
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -63,7 +62,7 @@ public class Scene extends javax.swing.JPanel {
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c036.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnSave.setToolTipText(bundle.getString("РЎРѕС…СЂР°РЅРёС‚СЊ")); // NOI18N
+        btnSave.setToolTipText(bundle.getString("Сохранить")); // NOI18N
         btnSave.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnSave.setFocusable(false);
         btnSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -80,7 +79,7 @@ public class Scene extends javax.swing.JPanel {
         Tooll.add(btnSave);
 
         btnRevert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c039.gif"))); // NOI18N
-        btnRevert.setToolTipText(bundle.getString("РћС‚РјРµРЅРёС‚СЊ")); // NOI18N
+        btnRevert.setToolTipText(bundle.getString("Переместить вверх")); // NOI18N
         btnRevert.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnRevert.setFocusable(false);
         btnRevert.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -98,7 +97,7 @@ public class Scene extends javax.swing.JPanel {
         Tooll.add(filler1);
 
         btnMovUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c051.gif"))); // NOI18N
-        btnMovUp.setToolTipText(bundle.getString("РџРµСЂРµРјРµСЃС‚РёС‚СЊ РІРІРµСЂС…")); // NOI18N
+        btnMovUp.setToolTipText(bundle.getString("Переместить вниз")); // NOI18N
         btnMovUp.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnMovUp.setFocusable(false);
         btnMovUp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -115,7 +114,7 @@ public class Scene extends javax.swing.JPanel {
         Tooll.add(btnMovUp);
 
         btnMovDo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c052.gif"))); // NOI18N
-        btnMovDo.setToolTipText(bundle.getString("РџРµСЂРµРјРµСЃС‚РёС‚СЊ РІРЅРёР·")); // NOI18N
+        btnMovDo.setToolTipText(bundle.getString("Переместить вниз")); // NOI18N
         btnMovDo.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnMovDo.setFocusable(false);
         btnMovDo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -132,7 +131,7 @@ public class Scene extends javax.swing.JPanel {
         Tooll.add(btnMovDo);
 
         btnMovRi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c046.gif"))); // NOI18N
-        btnMovRi.setToolTipText(bundle.getString("РџРµСЂРµРјРµСЃС‚РёС‚СЊ РІРїСЂР°РІРѕ")); // NOI18N
+        btnMovRi.setToolTipText(bundle.getString("Переместить вправо")); // NOI18N
         btnMovRi.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnMovRi.setFocusable(false);
         btnMovRi.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -149,7 +148,7 @@ public class Scene extends javax.swing.JPanel {
         Tooll.add(btnMovRi);
 
         btnMovLe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c048.gif"))); // NOI18N
-        btnMovLe.setToolTipText(bundle.getString("РџРµСЂРµРјРµСЃС‚РёС‚СЊ РІР»РµРІРѕ")); // NOI18N
+        btnMovLe.setToolTipText(bundle.getString("Переместить влево")); // NOI18N
         btnMovLe.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnMovLe.setFocusable(false);
         btnMovLe.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

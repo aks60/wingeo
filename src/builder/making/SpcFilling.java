@@ -23,7 +23,7 @@ import java.util.Set;
 import org.locationtech.jts.geom.Coordinate;
 
 /**
- * Р—Р°РїРѕР»РЅРµРЅРёСЏ
+ * Заполнения
  */
 public class SpcFilling extends Cal5e {
 
@@ -49,7 +49,7 @@ public class SpcFilling extends Cal5e {
     @Override
     public void calc() {
         ArrayList<ElemSimple> elemGlassList = winc.listElem.filter(Type.GLASS);
-        //Р¦РёРєР» РїРѕ СЃРїРёСЃРєСѓ Р·Р°РїРѕР»РЅРµРЅРёР№
+        //Цикл по списку заполнений
         for (ElemSimple elemGlass : elemGlassList) {
             calc(elemGlass);
         }
@@ -57,37 +57,37 @@ public class SpcFilling extends Cal5e {
 
     public void calc(ElemSimple elemGlass) {
         try {
-            Double depth = elemGlass.artiklRec.getDbl(eArtikl.depth); //С‚РѕР»С‰РёРЅР° СЃС‚РµРєРґР°           
-            //List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(winc.root.frames);  //СЃРїРёСЃРѕРє СЂР°Рј РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+            Double depth = elemGlass.artiklRec.getDbl(eArtikl.depth); //толщина стекда           
+            //List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(winc.root.frames);  //список рам конструкции
 
             ArrayCom<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             Set<Double> hs = new LinkedHashSet();
             ((ElemGlass) elemGlass).areaFalz.setUserData(hs);
             List.of(((ElemGlass) elemGlass).areaFalz.getCoordinates()).forEach(p -> hs.add(p.z));
 
-            //Р¦РёРєР» РїРѕ СЃС‚РѕСЂРѕРЅР°Рј СЃС‚РµРєР»РѕРїР°РєРµС‚Р°
+            //Цикл по сторонам стеклопакета
             Double arr[] = hs.toArray(new Double[0]);
             for (int indexSegm = 0; indexSegm < arr.length; indexSegm++) {
 
                 ElemGlass elGlass = (ElemGlass) elemGlass;
-                elGlass.sideglass = indexSegm; //РёРЅРґРµРєСЃ СЃС‚РѕСЂРѕРЅС‹ СЃС‚РµРєР»РѕРїР°РєРµС‚Р° 
+                elGlass.sideglass = indexSegm; //индекс стороны стеклопакета 
                 elGlass.frameglass = listFrame.get(arr[indexSegm]);
 
-                //Р¦РёРєР» РїРѕ РіСЂСѓРїРїР°Рј Р·Р°РїРѕР»РЅРµРЅРёР№
+                //Цикл по группам заполнений
                 for (Record glasgrpRec : eGlasgrp.filter()) {
-                    if (UCom.containsNumbJust(glasgrpRec.getStr(eGlasgrp.depth), depth) == true) { //РґРѕСЃС‚СѓРїРЅС‹Рµ С‚РѕР»С‰РёРЅС‹ 
+                    if (UCom.containsNumbJust(glasgrpRec.getStr(eGlasgrp.depth), depth) == true) { //доступные толщины 
 
-                        //Р¦РёРєР» РїРѕ РїСЂРѕС„РёР»СЏРј РІ РіСЂСѓРїРїР°С… Р·Р°РїРѕР»РЅРµРЅРёР№
-                        List<Record> glasprofList = eGlasprof.filter2(glasgrpRec.getInt(eGlasgrp.id)); //СЃРїРёСЃРѕРє РїСЂРѕС„РёР»РµР№ РІ РіСЂСѓРїРїРµ Р·Р°РїРѕР»РЅРµРЅРёР№
+                        //Цикл по профилям в группах заполнений
+                        List<Record> glasprofList = eGlasprof.filter2(glasgrpRec.getInt(eGlasgrp.id)); //список профилей в группе заполнений
                         for (Record glasprofRec : glasprofList) {
-                            if (elGlass.frameglass.artiklRecAn.getInt(eArtikl.id) == glasprofRec.getInt(eGlasprof.artikl_id)) { //РµСЃР»Рё Р°СЂС‚РёРєСѓР»С‹ СЃРѕРІРїР°Р»Рё
-                                if (List.of(1, 2, 3, 4).contains(glasprofRec.getInt(eGlasprof.inside))) {  //РІРЅСѓС‚СЂРµРЅРЅРµРµ Р·Р°РїРѕР»РЅРµРЅРёРµ РґРѕРїСѓСЃС‚РёРјРѕ
+                            if (elGlass.frameglass.artiklRecAn.getInt(eArtikl.id) == glasprofRec.getInt(eGlasprof.artikl_id)) { //если артикулы совпали
+                                if (List.of(1, 2, 3, 4).contains(glasprofRec.getInt(eGlasprof.inside))) {  //внутреннее заполнение допустимо
 
-                                    //Р¤РР›Р¬РўР  РІР°СЂРёР°РЅС‚РѕРІ, РїР°СЂР°РјРµС‚СЂС‹ РЅР°РєР°РїР»РёРІР°СЋС‚СЃСЏ РІ СЃРїРµС†РёС„РёРєР°С†РёРё СЌР»РµРјРµРЅС‚Р°
+                                    //ФИЛЬТР вариантов, параметры накапливаются в спецификации элемента
                                     if (fillingVar.filter(elemGlass, glasgrpRec) == true) {
 
-                                        elGlass.gzazo = glasgrpRec.getDbl(eGlasgrp.gap); //Р·Р°Р·РѕСЂ РјРµР¶РґСѓ С„Р°Р»СЊС†РµРј Рё СЃС‚РµРєР»РѕРїР°РєРµС‚РѕРј
-                                        elGlass.axisMap.put(indexSegm, glasprofRec.getDbl(eGlasprof.gsize)); //СЂР°Р·РјРµСЂ РѕС‚ РѕСЃРё РґРѕ СЃС‚РµРєР»РѕРїР°РєРµС‚Р°
+                                        elGlass.gzazo = glasgrpRec.getDbl(eGlasgrp.gap); //зазор между фальцем и стеклопакетом
+                                        elGlass.axisMap.put(indexSegm, glasprofRec.getDbl(eGlasprof.gsize)); //размер от оси до стеклопакета
 
                                         if (shortPass == false) {
                                             List<Record> glasdetList = eGlasdet.filter(glasgrpRec.getInt(eGlasgrp.id), elemGlass.artiklRec.getDbl(eArtikl.depth));
@@ -103,30 +103,30 @@ public class SpcFilling extends Cal5e {
             //((ElemGlass) elemGlass).frameGlass = null;
             
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Filling.calc() " + e);
+            System.err.println("Ошибка:Filling.calc() " + e);
         } 
     }
 
     protected void detail(ElemSimple elemGlass, Record glasgrpRec, List<Record> glasdetList) {
         try {
-            //Р¦РёРєР» РїРѕ СЃРїРёСЃРєСѓ РґРµС‚Р°Р»РёР·Р°С†РёРё
+            //Цикл по списку детализации
             for (Record glasdetRec : glasdetList) {
 
-                HashMap<Integer, String> mapParam = new HashMap<Integer, String>(); //С‚СѓС‚ РЅР°РєР°РїР»РёРІР°СЋС‚СЃСЏ РїР°СЂР°РјРµС‚СЂС‹ element Рё specific                        
+                HashMap<Integer, String> mapParam = new HashMap<Integer, String>(); //тут накапливаются параметры element и specific                        
 
-                //Р¤РР›Р¬РўР  РґРµС‚Р°Р»РёР·Р°С†РёРё, РїР°СЂР°РјРµС‚СЂС‹ РЅР°РєР°РїР»РёРІР°СЋС‚СЃСЏ РІ mapParam
+                //ФИЛЬТР детализации, параметры накапливаются в mapParam
                 if (fillingDet.filter(mapParam, elemGlass, glasdetRec) == true) {
                     Record artiklRec = eArtikl.find(glasdetRec.getInt(eGlasdet.artikl_id), false);
-                    SpcRecord spcAdd = new SpcRecord("Р—РђРџ", glasdetRec, artiklRec, elemGlass, mapParam);
+                    SpcRecord spcAdd = new SpcRecord("ЗАП", glasdetRec, artiklRec, elemGlass, mapParam);
                     spcAdd.variantRec = glasgrpRec;
-                    //РџРѕРґР±РѕСЂ С‚РµРєСЃС‚СѓСЂС‹
+                    //Подбор текстуры
                     if (UColor.colorFromElemOrSeri(spcAdd)) {
                         elemGlass.addSpecific(spcAdd);
                     }
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Filling.detail() " + e);
+            System.err.println("Ошибка:Filling.detail() " + e);
         }
     }
 }

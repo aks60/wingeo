@@ -69,7 +69,7 @@ public class DicSysprof extends javax.swing.JDialog {
         tab2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РџСЂРѕС„РёР»Рё СЃРёСЃС‚РµРјС‹");
+        setTitle("Профили системы");
         setPreferredSize(new java.awt.Dimension(460, 500));
 
         north.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -78,7 +78,7 @@ public class DicSysprof extends javax.swing.JDialog {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -93,7 +93,7 @@ public class DicSysprof extends javax.swing.JDialog {
         });
 
         btnChoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c044.gif"))); // NOI18N
-        btnChoice.setToolTipText(bundle.getString("Р’С‹Р±СЂР°С‚СЊ")); // NOI18N
+        btnChoice.setToolTipText(bundle.getString("Выбрать")); // NOI18N
         btnChoice.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnChoice.setFocusable(false);
         btnChoice.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -108,7 +108,7 @@ public class DicSysprof extends javax.swing.JDialog {
         });
 
         btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c042.gif"))); // NOI18N
-        btnRemove.setToolTipText(bundle.getString("РћС‡РёСЃС‚РёС‚СЊ")); // NOI18N
+        btnRemove.setToolTipText(bundle.getString("Очистить")); // NOI18N
         btnRemove.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnRemove.setFocusable(false);
         btnRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -179,7 +179,7 @@ public class DicSysprof extends javax.swing.JDialog {
 
             },
             new String [] {
-                "РЎС‚РѕСЂРѕРЅР°", "РљРѕРґ Р°СЂРёРєСѓР»Р°", "РќР°РёРјРµРЅРѕРІР°РЅРёРµ Р°СЂС‚РёРєСѓР»Р°"
+                "Сторона", "Код арикула", "Наименование артикула"
             }
         ) {
             boolean[] canEdit = new boolean [] {

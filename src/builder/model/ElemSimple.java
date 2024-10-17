@@ -24,15 +24,15 @@ import org.locationtech.jts.geom.LineSegment;
 
 public abstract class ElemSimple extends Com5t {
 
-    //public double[] anglFlat = {0, 0, 0, 0}; //РјРёРЅ/РјР°С… РІРЅСѓС‚СЂРµРЅРЅРёР№ Рё РјРёРЅ/РјР°С… РІРЅРµС€РЅРёР№ СѓРіРѕР» Рє РїР»РѕСЃРєРѕСЃС‚Рё   
-    public double[] betweenHoriz = {0, 0}; //СѓРіРѕР» РјРµР¶РґСѓ РІРµРєС‚РѕСЂР°РјРё   
+    //public double[] anglFlat = {0, 0, 0, 0}; //мин/мах внутренний и мин/мах внешний угол к плоскости   
+    public double[] betweenHoriz = {0, 0}; //угол между векторами   
     private java.awt.Point pointPress = null;
-    public int passMask[] = {0, 0}; //РјР°СЃРєР° СЂРµРґР°РєС‚РёСЂ. [0]=0 -РЅР°С‡Р°Р»Рѕ, [0]=1 -РєРѕРЅРµС†, 
-    //[0]=2 -СЃРµСЂРµРґРёРЅР° РІРµРєС‚РѕСЂР°, [1] > 0 -РІРµС€Р°РµРј РѕР±СЂ. РїСЂРѕСЂРёСЃРѕРІРєРё РєСЂСѓР¶РєР° Рё СЂР°Р·СЂ. СЂРµРґР°РєС‚РёСЂРѕРІ. x,y
+    public int passMask[] = {0, 0}; //маска редактир. [0]=0 -начало, [0]=1 -конец, 
+    //[0]=2 -середина вектора, [1] > 0 -вешаем обр. прорисовки кружка и разр. редактиров. x,y
     public final double delta = 3;
     public final double SIZE = 20;
     private Timer timer = new Timer(160, null);
-    public SpcRecord spcRec = null; //СЃРїРµС†РёС„РёРєР°С†РёСЏ СЌР»РµРјРµРЅС‚Р°
+    public SpcRecord spcRec = null; //спецификация элемента
     public Color borderColor = Color.BLACK;
 
     public ElemSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
@@ -83,19 +83,19 @@ public abstract class ElemSimple extends Com5t {
                 } else if (key == KeyEvent.VK_RIGHT) {
                     dX = dxy;
                 }
-                //РљР»РёРєРЅСѓР» РЅР°С‡Р°Р»Рѕ РІРµРєС‚РѕСЂР°
+                //Кликнул начало вектора
                 if (passMask[0] == 0) {
                     X = dX / winc.scale + this.x1();
                     Y = dY / winc.scale + this.y1();
                     moveXY(X, Y);
 
-                    //РљР»РёРєРЅСѓР» РєРѕРЅРµС† РІРµРєС‚РѕСЂР°
+                    //Кликнул конец вектора
                 } else if (passMask[0] == 1) {
                     X = dX / winc.scale + this.x2();
                     Y = dY / winc.scale + this.y2();
                     moveXY(X, Y);
 
-                    //РљР»РёРєРЅСѓР» РїРѕ СЃРµСЂРµРґРёРЅРµ РІРµРєС‚РѕСЂР° 
+                    //Кликнул по середине вектора 
                 } else if (passMask[0] == 2) {
 
                     if (this.h() != null) {
@@ -130,25 +130,25 @@ public abstract class ElemSimple extends Com5t {
                 Coordinate wincPress = new Coordinate((evt.getX() - Canvas.translate[0]) / winc.scale, (evt.getY() - Canvas.translate[1]) / winc.scale);
                 boolean b = this.area.contains(gf.createPoint(wincPress));
 
-                //Р•СЃР»Рё РєР»РёРє РІРЅСѓС‚СЂРё РєРѕРЅС‚СѓСЂР°
+                //Если клик внутри контура
                 if (b == true) {
                     ++passMask[1];
                     LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
-                    double coef = segm.segmentFraction(wincPress); //РґРѕР»СЏ СЂР°СЃСЃС‚РѕСЏРЅРёСЏ (РІ [0,0, 1,0] ) РІРґРѕР»СЊ СЌС‚РѕРіРѕ РѕС‚СЂРµР·РєР°.
+                    double coef = segm.segmentFraction(wincPress); //доля расстояния (в [0,0, 1,0] ) вдоль этого отрезка.
 
-                    if (coef < .33) { //РєР»РёРєРЅСѓР» РЅР°С‡Р°Р»Рѕ РІРµРєС‚РѕСЂР°
+                    if (coef < .33) { //кликнул начало вектора
                         passMask[1] = (passMask[0] != 0) ? 1 : passMask[1];
                         passMask[0] = 0;
 
-                    } else if (coef > .67) {//РєР»РёРєРЅСѓР» РєРѕРЅРµС† РІРµРєС‚РѕСЂР°
+                    } else if (coef > .67) {//кликнул конец вектора
                         passMask[1] = (passMask[0] != 1) ? 1 : passMask[1];
                         passMask[0] = 1;
 
-                    } else {//РєР»РёРєРЅСѓР» РїРѕ СЃРµСЂРµРґРёРЅРµ РІРµРєС‚РѕСЂР°                 
+                    } else {//кликнул по середине вектора                 
                         passMask[1] = (passMask[0] != 2) ? 1 : passMask[1];
                         passMask[0] = 2;
                     }
-                } else { //РџСЂРѕРјР°С…, РІСЃС‘ РѕР±РЅСѓР»СЏСЋ
+                } else { //Промах, всё обнуляю
                     passMask = UCom.getArr(0, 0);
                     root.listenerPassEdit = null;
                 }
@@ -160,24 +160,24 @@ public abstract class ElemSimple extends Com5t {
             if (this.area != null) {
                 double X = 0, Y = 0;
                 double W = winc.canvas.getWidth(), H = winc.canvas.getHeight();
-                double dX = evt.getX() - pointPress.getX(); //РїСЂРёСЂРѕС‰РµРЅРёРµ РїРѕ РіРѕСЂРёР·РѕРЅС‚Р°Р»Рё
-                double dY = evt.getY() - pointPress.getY(); //РїСЂРёСЂРѕС‰РµРЅРёРµ РїРѕ РІРµСЂС‚РёРєР°Р»Рё 
+                double dX = evt.getX() - pointPress.getX(); //прирощение по горизонтали
+                double dY = evt.getY() - pointPress.getY(); //прирощение по вертикали 
 
-                //Р¤РёР»СЊС‚СЂ РґРІРёР¶СѓС…Рё РІРєР»-СЃСЏ РєРѕРіРґР° passMask[1] > 1 !!! 
+                //Фильтр движухи вкл-ся когда passMask[1] > 1 !!! 
                 if (passMask[1] > 1) {
                     pointPress = evt.getPoint();
 
-                    if (passMask[0] == 0) { //РЅР°С‡Р°Р»Рѕ РІРµРєС‚РѕСЂР°
+                    if (passMask[0] == 0) { //начало вектора
                         X = dX / winc.scale + x1();
                         Y = dY / winc.scale + y1();
                         moveXY(X, Y);
 
-                    } else if (passMask[0] == 1) { //РєРѕРЅРµС† РІРµРєС‚РѕСЂР°
+                    } else if (passMask[0] == 1) { //конец вектора
                         X = dX / winc.scale + x2();
                         Y = dY / winc.scale + y2();
                         moveXY(X, Y);
 
-                    } else if (passMask[0] == 2) { //СЃРµСЂРµРґРёРЅР° РІРµРєС‚РѕСЂР°
+                    } else if (passMask[0] == 2) { //середина вектора
                         X = dX / winc.scale + x2();
                         Y = dY / winc.scale + y2();
                         if (Y > 0 && List.of(Layout.BOTT, Layout.TOP, Layout.HORIZ).contains(layout())) {
@@ -253,36 +253,36 @@ public abstract class ElemSimple extends Com5t {
                 return (this.type == Type.IMPOST || this.type == Type.SHTULP) ? Layout.VERT : Layout.LEFT;
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:ElemSimple.layout() " + e);
+            System.err.println("Ошибка:ElemSimple.layout() " + e);
         }
         return Layout.ANY;
     }
 
-    //РўРѕС‡РєР° СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+    //Точка редактирования конструкции
     @Override
     public void paint() {
         if (this.area != null) {
             if (this.passMask[1] > 0) {
 
-                this.root.listenerPassEdit = () -> {  //РІРµС€Р°РµРј РіР»РѕР±Р°Р»СЊРЅС‹Р№ РѕР±СЂР°Р±РѕС‚С‡РёРє!
+                this.root.listenerPassEdit = () -> {  //вешаем глобальный обработчик!
                     winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
 
-                    //РҐРІРѕСЃС‚ РІРµРєС‚РѕСЂР°, С‚РѕС‡РєР° РєСЂСѓРі
+                    //Хвост вектора, точка круг
                     if (this.passMask[0] == 0) {
                         Arc2D arc = new Arc2D.Double(this.x1() - SIZE / 2, this.y1() - SIZE / 2, SIZE, SIZE, 0, 360, Arc2D.OPEN);
                         winc.gc2d.draw(arc);
 
-                        //РќР°С‡Р°Р»Рѕ РІРµРєС‚РѕСЂР°. С‚РѕС‡РєР° РєСЂСѓРі
+                        //Начало вектора. точка круг
                     } else if (this.passMask[0] == 1) {
                         Arc2D arc = new Arc2D.Double(this.x2() - SIZE / 2, this.y2() - SIZE / 2, SIZE, SIZE, 0, 360, Arc2D.OPEN);
                         winc.gc2d.draw(arc);
 
-                        //РЎРµСЂРµРґРёРЅР° РІРµРєС‚РѕСЂР°. С‚РѕС‡РєР° РєРІР°РґСЂР°С‚
+                        //Середина вектора. точка квадрат
                     } else if (this.passMask[0] == 2) {
-                        if (this.h() != null) { //Р°СЂРєР°
+                        if (this.h() != null) { //арка
                             List<Coordinate> list = Arrays.asList(owner.area.getGeometryN(0).getCoordinates())
                                     .stream().filter(c -> c.z == this.id).collect(toList());
-                            int i = list.size() / 2; //index СЃРµСЂРµРґРёРЅС‹ РґСѓРіРё
+                            int i = list.size() / 2; //index середины дуги
                             Coordinate c1 = list.get(i), c2 = list.get(i + 1);
                             Coordinate smid = new LineSegment(c1.x, c1.y, c2.x, c2.y).midPoint();
                             Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);

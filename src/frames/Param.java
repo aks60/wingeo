@@ -222,7 +222,7 @@ public class Param extends javax.swing.JFrame {
 
         mInsert.setFont(frames.UGui.getFont(1,0));
         mInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        mInsert.setText("Р”РѕР±Р°РІРёС‚СЊ");
+        mInsert.setText("Добавить");
         mInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -232,7 +232,7 @@ public class Param extends javax.swing.JFrame {
 
         mDelit.setFont(frames.UGui.getFont(1,0));
         mDelit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        mDelit.setText("РЈРґР°Р»РёС‚СЊ");
+        mDelit.setText("Удалить");
         mDelit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -241,7 +241,7 @@ public class Param extends javax.swing.JFrame {
         ppmCrud.add(mDelit);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РџР°СЂР°РјРµС‚СЂС‹");
+        setTitle("Параметры");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 500));
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -257,7 +257,7 @@ public class Param extends javax.swing.JFrame {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -272,7 +272,7 @@ public class Param extends javax.swing.JFrame {
         });
 
         btnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        btnDel.setToolTipText(bundle.getString("РЈРґР°Р»РёС‚СЊ")); // NOI18N
+        btnDel.setToolTipText(bundle.getString("Удалить")); // NOI18N
         btnDel.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnDel.setFocusable(false);
         btnDel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -288,7 +288,7 @@ public class Param extends javax.swing.JFrame {
         });
 
         btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        btnIns.setToolTipText(bundle.getString("Р’С‹Р±СЂР°С‚СЊ")); // NOI18N
+        btnIns.setToolTipText(bundle.getString("Выбрать")); // NOI18N
         btnIns.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnIns.setFocusable(false);
         btnIns.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -304,7 +304,7 @@ public class Param extends javax.swing.JFrame {
         });
 
         btnReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c053.gif"))); // NOI18N
-        btnReport.setToolTipText(bundle.getString("РџРµС‡Р°С‚СЊ")); // NOI18N
+        btnReport.setToolTipText(bundle.getString("Печать")); // NOI18N
         btnReport.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnReport.setFocusable(false);
         btnReport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -320,7 +320,7 @@ public class Param extends javax.swing.JFrame {
         });
 
         btnClone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c065.gif"))); // NOI18N
-        btnClone.setToolTipText(bundle.getString("РљР»РѕРЅРёСЂРѕРІР°С‚СЊ Р·Р°РїРёСЃСЊ")); // NOI18N
+        btnClone.setToolTipText(bundle.getString("Клонировать запись")); // NOI18N
         btnClone.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClone.setEnabled(false);
         btnClone.setFocusable(false);
@@ -337,7 +337,7 @@ public class Param extends javax.swing.JFrame {
         });
 
         btnChoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c044.gif"))); // NOI18N
-        btnChoice.setToolTipText(bundle.getString("Р’С‹Р±СЂР°С‚СЊ")); // NOI18N
+        btnChoice.setToolTipText(bundle.getString("Выбрать")); // NOI18N
         btnChoice.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnChoice.setFocusable(false);
         btnChoice.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -410,7 +410,7 @@ public class Param extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РќР°Р·РІР°РЅРёРµ РїР°СЂР°РјРµС‚СЂР°", "ID"
+                "Название параметра", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -457,7 +457,7 @@ public class Param extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Р—РЅР°С‡РµРЅРёРµ РїР°СЂР°РјРµС‚СЂР°", "РљРѕРјРїР»РµРєС‚С‹", "РЎРѕРµРґРёРЅРµРЅРёСЏ", "Р’СЃС‚Р°РІРєРё", "Р—Р°РїРѕР»РЅРµРЅРёСЏ", "Р¤СѓСЂРЅРёС‚СѓСЂР°", "РћС‚РєРѕСЃС‹", "РќР°РґРїРёСЃСЊ", "ID"
+                "Значение параметра", "Комплекты", "Соединения", "Вставки", "Заполнения", "Фурнитура", "Откосы", "Надпись", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -501,9 +501,9 @@ public class Param extends javax.swing.JFrame {
         }
 
         pan1.add(scr2);
-        scr2.getAccessibleContext().setAccessibleName("Р—РЅР°С‡РµРЅРёСЏ РїР°СЂР°РјРµС‚СЂРѕРІ");
+        scr2.getAccessibleContext().setAccessibleName("Значения параметров");
 
-        tabbPan.addTab(" РџР°СЂР°РјРµС‚СЂС‹ СЌР»РµРјРµРЅС‚РѕРІ РєРѕРЅСЃС‚СЂСѓРєС†РёР№", pan1);
+        tabbPan.addTab(" Параметры элементов конструкций", pan1);
 
         pan2.setLayout(new javax.swing.BoxLayout(pan2, javax.swing.BoxLayout.LINE_AXIS));
 
@@ -518,7 +518,7 @@ public class Param extends javax.swing.JFrame {
                 {"22222", null}
             },
             new String [] {
-                "РќР°Р·РІР°РЅРёРµ РїР°СЂР°РјРµС‚СЂР°", "ID"
+                "Название параметра", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -566,7 +566,7 @@ public class Param extends javax.swing.JFrame {
                 {null, "zzzzzzz", null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Р“СЂСѓРїРїР°", "РўРµРєСЃС‚СѓСЂР° РїСЂРѕС„РёР»СЏ", "Р“СЂСѓРїРїР°", "РўРµРєСЃС‚СѓСЂР° СЌР»РµРјРµРЅС‚Р°", "РЎРѕРµРґРёРЅРµРЅРёСЏ", "Р’СЃС‚Р°РІРєРё", "Р—Р°РїРѕР»РЅРµРЅРёСЏ", "Р¤СѓСЂРЅРёС‚СѓСЂР°", "РћС‚РєРѕСЃС‹", "РљРѕРјРїР»РµРєС‚С‹", "ID"
+                "Группа", "Текстура профиля", "Группа", "Текстура элемента", "Соединения", "Вставки", "Заполнения", "Фурнитура", "Откосы", "Комплекты", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -615,7 +615,7 @@ public class Param extends javax.swing.JFrame {
 
         pan2.add(scr4);
 
-        tabbPan.addTab(" РџР°СЂР°РјРµС‚СЂС‹ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёСЏ С‚РµРєСЃС‚СѓСЂ", pan2);
+        tabbPan.addTab(" Параметры соответствия текстур", pan2);
 
         centr.add(tabbPan, java.awt.BorderLayout.CENTER);
 
@@ -659,7 +659,7 @@ public class Param extends javax.swing.JFrame {
             UGui.insertRecordCur(tab1, eGroups.up, (record) -> {
                 record.setNo(eGroups.grup, TypeGrup.PARAM_USER.id);
                 record.setNo(eGroups.name, "");
-                //record.setDev(eGroups.name, "РџР°СЂ...");
+                 //record.setDev(eGroups.name, "Пар...");
             });
         } else if (tab2.getBorder() != null) {
             UGui.insertRecordCur(tab2, eParams.up, (record) -> {
@@ -703,15 +703,15 @@ public class Param extends javax.swing.JFrame {
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
         if (tab2.getBorder() != null) {
             int index = UGui.getIndexRec(tab2);
-            if (index != -1 && JOptionPane.showConfirmDialog(this, "Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РєР»РѕРЅРёСЂРѕРІР°С‚СЊ С‚РµРєСѓС‰СѓСЋ Р·Р°РїРёСЃСЊ?",
-                    "РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+            if (index != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
+                    "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 
                 Record paramClon = (Record) qParams.get(index).clone();
                 paramClon.setNo(eParams.up, Query.INS);
                 int paramID = Conn.genId(eParams.up);
                 paramClon.setNo(eParams.id, paramID);
-                paramClon.setNo(eParams.text, paramClon.getStr(eParams.text) + "-РєР»РѕРЅ");
-                eParams.up.query().add(paramClon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+                paramClon.setNo(eParams.text, paramClon.getStr(eParams.text) + "-клон");
+                eParams.up.query().add(paramClon);  //добавим запись в кэш
                 qParams.add(index, paramClon);
                 qParams.insert(paramClon);
                 ((DefaultTableModel) tab2.getModel()).fireTableRowsInserted(index, index);
@@ -720,14 +720,14 @@ public class Param extends javax.swing.JFrame {
             }
         } else if (tab4.getBorder() != null) {
             int index = UGui.getIndexRec(tab4);
-            if (index != -1 && JOptionPane.showConfirmDialog(this, "Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РєР»РѕРЅРёСЂРѕРІР°С‚СЊ С‚РµРєСѓС‰СѓСЋ Р·Р°РїРёСЃСЊ?",
-                    "РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+            if (index != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
+                    "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 
                 Record parmapClon = (Record) qParmap.get(index).clone();
                 parmapClon.setNo(eParmap.up, Query.INS);
                 int parmapID = Conn.genId(eParmap.up);
                 parmapClon.setNo(eParmap.id, parmapID);
-                eParmap.up.query().add(parmapClon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+                eParmap.up.query().add(parmapClon);  //добавим запись в кэш
                 qParmap.add(index, parmapClon);
                 qParmap.insert(parmapClon);
                 ((DefaultTableModel) tab4.getModel()).fireTableRowsInserted(index, index);

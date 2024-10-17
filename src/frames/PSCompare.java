@@ -45,9 +45,9 @@ import startup.Test;
 public class PSCompare extends javax.swing.JFrame {
 
     enum Fld {
-        ATYPM("СѓСЂРѕРІ1"), ATYPP("СѓСЂРѕРІ2"), ANUMB("Р°СЂС‚РёРєСѓР»"), CLNUM("color1"), CLNU1("color2"), CLNU2("color3"),
-        ALENG("РґР»РёРЅР°"), ARADI("С€РёСЂРёРЅР°"), AUG01("СѓРі1"), AUG02("СѓРі2"), AQTYP("РєРѕР»"), AQTYA("РїРѕРіРѕРЅР°Р¶"),
-        APERC("РЅРѕСЂРј.РѕС‚С…"), ASEB1("СЃРµР±РµСЃС‚"), APRC1("СЃС‚РѕРёРј.Р±РµР·.СЃРє.Р·Р° РµРґ.РёР·Рј"), APRCD("СЃС‚РѕРёРј.СЃРѕ.СЃРє.Р·Р°.РµРґ.РёР·Рј");
+        ATYPM("уров1"), ATYPP("уров2"), ANUMB("артикул"), CLNUM("color1"), CLNU1("color2"), CLNU2("color3"),
+        ALENG("длина"), ARADI("ширина"), AUG01("уг1"), AUG02("уг2"), AQTYP("кол"), AQTYA("погонаж"),
+        APERC("норм.отх"), ASEB1("себест"), APRC1("стоим.без.ск.за ед.изм"), APRCD("стоим.со.ск.за.ед.изм");
 
         Fld(Object o) {
         }
@@ -75,7 +75,7 @@ public class PSCompare extends javax.swing.JFrame {
             double k = (getWidth() / max_w > getHeight() / max_h) ? getHeight() / (max_h + 180) : getWidth() / (max_w + 40);
             double h2 = (this.getHeight()) / k;
             gc2d.scale(k, k);
-            gc2d.setStroke(new BasicStroke(6)); //С‚РѕР»С‰РёРЅР° Р»РёРЅРёРё
+            gc2d.setStroke(new BasicStroke(6)); //толщина линии
             gc2d.translate(10, -10);
 
             for (int i = 0; i < tab4.getRowCount(); i++) {
@@ -101,7 +101,7 @@ public class PSCompare extends javax.swing.JFrame {
     };
 
     /**
-     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РёР· РіР»Р°РІРЅРѕРіРѕ РјРµРЅСЋ
+     * Конструктор из главного меню
      */
     public PSCompare() {
         initComponents();
@@ -115,7 +115,7 @@ public class PSCompare extends javax.swing.JFrame {
     }
 
     /**
-     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РёР· СЃРїРµС†РёС„РёРєР°С†РёРё
+     * Конструктор из спецификации
      */
     public PSCompare(Wincalc winc) {
         initComponents();
@@ -139,7 +139,7 @@ public class PSCompare extends javax.swing.JFrame {
                 hmColor.put(rs.getInt("CNUMB"), rs.getString("CNAME"));
             }
         } catch (SQLException e) {
-            System.err.println("РћС€РёР±РєР°: DBCompare.loadingData().  " + e);
+            System.err.println("Ошибка: DBCompare.loadingData().  " + e);
         }
     }
 
@@ -148,7 +148,7 @@ public class PSCompare extends javax.swing.JFrame {
         try {
             cn = Test.connect1();
             Statement st = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            //=== РўР°Р±Р»РёС†Р° 4 === 
+            //=== Таблица 4 === 
             if (txt19.getText().isEmpty() == false) {
                 int npp = 0;
                 ((DefaultTableModel) tab4.getModel()).getDataVector().clear();
@@ -184,7 +184,7 @@ public class PSCompare extends javax.swing.JFrame {
                 ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
                 paintPanel.repaint();
 
-                //=== РўР°Р±Р»РёС†Р° 1 ===
+                //=== Таблица 1 ===
                 ((DefaultTableModel) tab1.getModel()).getDataVector().clear();
                 rs = st.executeQuery("select a.* from SPECPAU a where a.PUNIC = " + txt19.getText() + "and a.ONUMB = " + txt20.getText() + "  and clke != -1 order by a.anumb");
                 if (rs.isLast() == false) {
@@ -195,20 +195,20 @@ public class PSCompare extends javax.swing.JFrame {
                         for (int i = 0; i < Fld.values().length; i++) {
                             vectorRec.add(rs.getObject(Fld.values()[i].name()));
                         }
-                        vectorRec.set(4, hmColor.get(vectorRec.get(4)));  //С†РІРµС‚
-                        vectorRec.set(5, hmColor.get(vectorRec.get(5)));  //С†РІРµС‚
-                        vectorRec.set(6, hmColor.get(vectorRec.get(6)));  //С†РІРµС‚
-                        String artikl = rs.getString("ANUMB"); //Р°СЂС‚РёРєСѓР»                              
+                        vectorRec.set(4, hmColor.get(vectorRec.get(4)));  //цвет
+                        vectorRec.set(5, hmColor.get(vectorRec.get(5)));  //цвет
+                        vectorRec.set(6, hmColor.get(vectorRec.get(6)));  //цвет
+                        String artikl = rs.getString("ANUMB"); //артикул                              
                         Record artiklRec = eArtikl.data().stream().filter(r -> artikl.equals(r.get(eArtikl.code))).findFirst().orElse(eArtikl.up.newRecord(Query.SEL));
-                        vectorRec.add(4, artiklRec.get(eArtikl.name)); //РёРјСЏ Р°СЂС‚РёРєСѓР»Р°                 
-                        vectorRec.add(null); //СЃС‚РѕРёРј. СЌР»РµРјРµРЅС‚Р° Р±РµР· СЃРєРёРґРєРё
-                        vectorRec.add(null); //СЃС‚РѕРёРј. СЌР»РµРјРµРЅС‚Р° СЃРѕ СЃРєРёРґРєРѕР№                
+                        vectorRec.add(4, artiklRec.get(eArtikl.name)); //имя артикула                 
+                        vectorRec.add(null); //стоим. элемента без скидки
+                        vectorRec.add(null); //стоим. элемента со скидкой                
                         ((DefaultTableModel) tab1.getModel()).getDataVector().add(vectorRec);
                     }
                 }
                 rs.close();
             }
-            //=== РўР°Р±Р»РёС†Р° 6 ===
+            //=== Таблица 6 ===
             Vector vectorData = new Vector();
             Vector vectorColumn = new Vector(List.of("PUNIC", "PNUMB", "ONUMB", "ONAME", "OLENG", "OHEIG", "PDATE", "BPICT"));
             ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, a.oleng, a.oheig, b.pdate, a.bpict from listord a, listprj b "
@@ -257,7 +257,7 @@ public class PSCompare extends javax.swing.JFrame {
             tab6.getColumnModel().getColumn(5).setMaxWidth(80);
             rs.close();
         } catch (SQLException e) {
-            System.err.println("РћС€РёР±РєР°: DBCompare.loadingTab4().  " + e);
+            System.err.println("Ошибка: DBCompare.loadingTab4().  " + e);
         }
     }
 
@@ -276,7 +276,7 @@ public class PSCompare extends javax.swing.JFrame {
             if (winc.gson.ord != null) {
                 txt20.setText(String.valueOf(winc.gson.ord));
             }
-            //Р—Р°РїРѕР»РЅРёРј РЅР° Р±СѓРґСѓС€РµРµ hmSpc РёР· SA
+            //Заполним на будушее hmSpc из SA
             for (String art_code : setSpcSa) {
                 try {
                     if ("-".equals(art_code) == false) {
@@ -284,16 +284,16 @@ public class PSCompare extends javax.swing.JFrame {
                         hmSpc.put(art_code, new Vector(List.of(art_code, artiklRec.get(eArtikl.name), 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)));
                     }
                 } catch (Exception e) {
-                    System.err.println("РћС€РёР±РєР°:PSCompare.loadingTabGroup2()");
+                    System.err.println("Ошибка:PSCompare.loadingTabGroup2()");
                 }
             }
             winc.listSpec.forEach(specRec -> {
                 List<Double> val = hmSpc.get(specRec.artikl);
-                val.set(2, val.get(2) + specRec.count); //РєРѕР»РёС‡. РІ SA
-                val.set(4, val.get(4) + specRec.quant1); //РїРѕРіРѕРЅР°Р¶ РІ SA
+                val.set(2, val.get(2) + specRec.count); //колич. в SA
+                val.set(4, val.get(4) + specRec.quant1); //погонаж в SA
             });
 
-            //=== РўР°Р±Р»РёС†Р° 1 ===
+            //=== Таблица 1 ===
             ((DefaultTableModel) tab1.getModel()).getDataVector().clear();
             Statement st = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 //            ResultSet rs = st.executeQuery("select PUNIC from LISTPRJ where PNUMB = " + txt21.getText());
@@ -310,51 +310,51 @@ public class PSCompare extends javax.swing.JFrame {
                     for (int i = 0; i < Fld.values().length; i++) {
                         vectorRec.add(rs.getObject(Fld.values()[i].name()));
                     }
-                    vectorRec.set(4, hmColor.get(vectorRec.get(4)));  //С†РІРµС‚
-                    vectorRec.set(5, hmColor.get(vectorRec.get(5)));  //С†РІРµС‚
-                    vectorRec.set(6, hmColor.get(vectorRec.get(6)));  //С†РІРµС‚
-                    String artikl = rs.getString("ANUMB"); //Р°СЂС‚РёРєСѓР»
-                    //String artikl = rs.getString("ANUMB") + "- " + rs.getString("ANAME"); //Р°СЂС‚РёРєСѓР»
-                    double leng = rs.getDouble("ALENG"); //РґР»РёРЅР°
-                    double count = rs.getDouble("AQTYP"); //РєРѕР»РёС‡
-                    double pogonag = rs.getDouble("AQTYA"); //РїРѕРіРѕРЅР°Р¶
-                    double perc = rs.getDouble("APERC"); //РѕС‚С…РѕРґ
-                    double cost = rs.getDouble("APRC1"); //СЃС‚РѕРёРј.Р±РµР·.СЃРє.Р·Р° РµРґ.РёР·Рј
-                    double costdec = rs.getDouble("APRCD"); //СЃС‚РѕРёРј.СЃРѕ.СЃРє.Р·Р°.РµРґ.РёР·Рј                                
+                    vectorRec.set(4, hmColor.get(vectorRec.get(4)));  //цвет
+                    vectorRec.set(5, hmColor.get(vectorRec.get(5)));  //цвет
+                    vectorRec.set(6, hmColor.get(vectorRec.get(6)));  //цвет
+                    String artikl = rs.getString("ANUMB"); //артикул
+                    //String artikl = rs.getString("ANUMB") + "- " + rs.getString("ANAME"); //артикул
+                    double leng = rs.getDouble("ALENG"); //длина
+                    double count = rs.getDouble("AQTYP"); //колич
+                    double pogonag = rs.getDouble("AQTYA"); //погонаж
+                    double perc = rs.getDouble("APERC"); //отход
+                    double cost = rs.getDouble("APRC1"); //стоим.без.ск.за ед.изм
+                    double costdec = rs.getDouble("APRCD"); //стоим.со.ск.за.ед.изм                                
                     double value1 = (perc * pogonag / 100 + pogonag) * cost;
                     double value2 = (perc * pogonag / 100 + pogonag) * costdec;
                     Record artiklRec = eArtikl.data().stream().filter(r -> artikl.equals(r.get(eArtikl.code))).findFirst().orElse(eArtikl.up.newRecord(Query.SEL));
                     sum1 = sum1 + value1;
                     sum2 = sum2 + value2;
-                    vectorRec.add(4, artiklRec.get(eArtikl.name)); //РёРјСЏ Р°СЂС‚РёРєСѓР»Р°                
-                    vectorRec.add(value1); //СЃС‚РѕРёРј. СЌР»РµРјРµРЅС‚Р° Р±РµР· СЃРєРёРґРєРё
-                    vectorRec.add(value2); //СЃС‚РѕРёРј. СЌР»РµРјРµРЅС‚Р° СЃРѕ СЃРєРёРґРєРѕР№
+                    vectorRec.add(4, artiklRec.get(eArtikl.name)); //имя артикула                
+                    vectorRec.add(value1); //стоим. элемента без скидки
+                    vectorRec.add(value2); //стоим. элемента со скидкой
 
                     ((DefaultTableModel) tab1.getModel()).getDataVector().add(vectorRec);
 
-                    //Р—Р°РїРѕР»РЅРёРј РЅР° Р±СѓРґСѓС€РµРµ hmSpc РёР· PS
+                    //Заполним на будушее hmSpc из PS
                     setSpcPs.add(artikl);
                     List<Double> val = hmSpc.getOrDefault(artikl, new Vector(List.of(artikl, "=*=", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)));
-                    val.set(3, val.get(3) + count); //РєРѕР»РёС‡ РІ PS
-                    val.set(5, val.get(5) + pogonag); //РїРѕРіРѕРЅР°Р¶ РІ PS               
+                    val.set(3, val.get(3) + count); //колич в PS
+                    val.set(5, val.get(5) + pogonag); //погонаж в PS               
                 }
             }
             rs.close();
-            lab1.setText("РР·Рґ: punic=" + txt19.getText() + "    РџСЂРѕРµРєС‚: pnumb=" + winc.gson.prj + "  Р—Р°РєР°Р·: onumb="
-                    + winc.gson.ord + "   РЎС‚РѕРёРј.Р±РµР·.СЃРє = " + df2.format(sum1) + "   РЎС‚РѕРёРј.СЃРѕ.СЃРє = " + df2.format(sum2));
+            lab1.setText("Изд: punic=" + txt19.getText() + "    Проект: pnumb=" + winc.gson.prj + "  Заказ: onumb="
+                    + winc.gson.ord + "   Стоим.без.ск = " + df2.format(sum1) + "   Стоим.со.ск = " + df2.format(sum2));
 
-            //=== РўР°Р±Р»РёС†Р° 2 ===
+            //=== Таблица 2 ===
             ((DefaultTableModel) tab2.getModel()).getDataVector().clear();
             Set<String> setSpc1x = new HashSet<String>(setSpcSa);
             Set<String> setSpc2x = new HashSet<String>(setSpcPs);
             setSpc1x.removeAll(setSpcPs);
             setSpc2x.removeAll(setSpcSa);
-            ((DefaultTableModel) tab2.getModel()).getDataVector().add(new Vector(List.of("--- Р›РРЁРќРР• SAOkna  Р·Р°.РІС‹С‡.РџСЂРѕС„СЃС‚СЂРѕР№ ---")));
+            ((DefaultTableModel) tab2.getModel()).getDataVector().add(new Vector(List.of("--- ЛИШНИЕ SAOkna  за.выч.Профстрой ---")));
             setSpc1x.forEach(e -> ((DefaultTableModel) tab2.getModel()).getDataVector().add(new Vector(List.of(e))));
-            ((DefaultTableModel) tab2.getModel()).getDataVector().add(new Vector(List.of("--- РќР•Р”РћРЎРўРђР®Р©РР• РџСЂРѕС„РЎС‚СЂРѕР№  Р·Р°.РІС‹С‡.SAOkna ---")));
+            ((DefaultTableModel) tab2.getModel()).getDataVector().add(new Vector(List.of("--- НЕДОСТАЮЩИЕ ПрофСтрой  за.выч.SAOkna ---")));
             setSpc2x.forEach(e -> ((DefaultTableModel) tab2.getModel()).getDataVector().add(new Vector(List.of(e))));
             ((DefaultTableModel) tab2.getModel()).addRow(new Object[]{""});
-            ((DefaultTableModel) tab2.getModel()).addRow(new Object[]{"РЈСЃС‚Р°РЅРѕРІР»РµРЅР°СЏ С„СѓСЂРЅРёС‚СѓСЂР°"});
+            ((DefaultTableModel) tab2.getModel()).addRow(new Object[]{"Установленая фурнитура"});
             rs = st.executeQuery("select b.fname from savefur a, furnlst b where a.punic = " + txt19.getText() + " and a.onumb = " + txt20.getText() + " and a.funic = b.funic");
             if (rs.isLast() == false) {
                 while (rs.next()) {
@@ -363,7 +363,7 @@ public class PSCompare extends javax.swing.JFrame {
             }
             rs.close();
 
-            //=== РўР°Р±Р»РёС†Р° 3 ===
+            //=== Таблица 3 ===
             ((DefaultTableModel) tab3.getModel()).getDataVector().clear();
             for (Map.Entry<String, Vector> entry : hmSpc.entrySet()) {
                 Vector vec = entry.getValue();
@@ -371,7 +371,7 @@ public class PSCompare extends javax.swing.JFrame {
                 ((DefaultTableModel) tab3.getModel()).getDataVector().add(vec);
             }
 
-            //=== РўР°Р±Р»РёС†Р° 4 ===
+            //=== Таблица 4 ===
             npp = 0;
             ((DefaultTableModel) tab4.getModel()).getDataVector().clear();
             //rs = st.executeQuery("select * from SAVEELM where TYPP != 0 and PUNIC = " + txt19.getText() + "and ONUMB =" + txt20.getText() + "order by TYPP");
@@ -399,7 +399,7 @@ public class PSCompare extends javax.swing.JFrame {
             }
             rs.close();
 
-            //=== РўР°Р±Р»РёС†Р° 5 ===
+            //=== Таблица 5 ===
             try {
                 if (rsm.isLast() == false) {
                     while (rsm.next()) {
@@ -428,10 +428,10 @@ public class PSCompare extends javax.swing.JFrame {
                     }
                 }
             } catch (Exception e) {
-                System.err.println("РћС€РёР±РєР°:DBCompare.loadingTabGroup1() РўР°РІР»РёС†Р° CONNLST РѕС‚СЃСѓСЃС‚РІСѓРµС‚!");
+                System.err.println("Ошибка:DBCompare.loadingTabGroup1() Тавлица CONNLST отсуствует!");
             }
 
-            //=== РўР°Р±Р»РёС†Р° 6 ===
+            //=== Таблица 6 ===
             Vector vectorData = new Vector();
             Vector vectorColumn = new Vector(List.of("PUNIC", "PNUMB", "ONUMB", "ONAME", "OLENG", "OHEIG", "PDATE", "BPICT"));
             rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, a.oleng, a.oheig, b.pdate, a.bpict from listord a, listprj b "
@@ -476,7 +476,7 @@ public class PSCompare extends javax.swing.JFrame {
             tab6.getColumnModel().getColumn(5).setMaxWidth(80);
             rs.close();
 
-            //=== РўР°Р±Р»РёС†Р° 7 ===
+            //=== Таблица 7 ===
             ((DefaultTableModel) tab7.getModel()).getDataVector().clear();
             rs = st.executeQuery("select d.oname, c.pname, b.pname, e.ptext from savefup a "
                     + "left join parlist b on a.pnumb = b.pnumb and a.znumb = b.znumb "
@@ -496,13 +496,13 @@ public class PSCompare extends javax.swing.JFrame {
             }
             rs.close();
         } catch (SQLException e) {
-            System.err.println("РћС€РёР±РєР° SQL: DBCompare.loadingTabGroup2().  " + e);
+            System.err.println("Ошибка SQL: DBCompare.loadingTabGroup2().  " + e);
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°: DBCompare.loadingTabGroup2().  " + e);
+            System.err.println("Ошибка: DBCompare.loadingTabGroup2().  " + e);
         }
     }
 
-    //РЎСЂР°РІРЅРµРЅРёРµ СЃРїРµС†РёС„РёРєР°С†РёРё СЃ РїСЂРѕС„СЃС‚СЂРѕРµРј
+    //Сравнение спецификации с профстроем
     public static void iwinPs4(Wincalc winc, boolean detail) {
         System.out.println();
         System.out.println("Prj=" + winc.gson.prj + " Ord=" + winc.gson.ord);
@@ -517,22 +517,22 @@ public class PSCompare extends javax.swing.JFrame {
             int punic = rs.getInt("PUNIC");
             rs = st.executeQuery("select a.* from SPECPAU a where a.PUNIC = " + punic + " and a.ONUMB = " + winc.gson.ord + "  and clke != -1 order by a.anumb");
             while (rs.next()) {
-                //double leng = rs.getDbl("ALENG"); //РґР»РёРЅР°
-                //double count = rs.getDbl("AQTYP"); //РєРѕР»РёС‡
-                double pogonag = rs.getDouble("AQTYA"); //РїРѕРіРѕРЅР°Р¶
-                double perc = rs.getDouble("APERC"); //РѕС‚С…РѕРґ
-                double cost = rs.getDouble("APRC1"); //СЃС‚РѕРёРј.Р±РµР·.СЃРє.Р·Р° РµРґ.РёР·Рј
+                //double leng = rs.getDbl("ALENG"); //длина
+                //double count = rs.getDbl("AQTYP"); //колич
+                double pogonag = rs.getDouble("AQTYA"); //погонаж
+                double perc = rs.getDouble("APERC"); //отход
+                double cost = rs.getDouble("APRC1"); //стоим.без.ск.за ед.изм
                 double value1 = (perc * pogonag / 100 + pogonag) * cost;
                 double value2 = (hmDbPs.get(rs.getString("ANUMB")) == null) ? value1 : value1 + hmDbPs.get(rs.getString("ANUMB"));
                 String key = rs.getString("ANUMB");
-                hmDbPs.put(key, value2); //СЃС‚РѕРёРјРѕСЃС‚СЊ Р±РµР· СЃРєРёРґРєРё
+                hmDbPs.put(key, value2); //стоимость без скидки
             }
             conn.close();
 
             for (SpcRecord spc : winc.listSpec) {
                 String key = spc.artikl;
                 Double val = hmDbSa.getOrDefault(key, 0.0);
-                hmDbSa.put(key, val + spc.price1); //СЃС‚РѕРёРјРѕСЃС‚СЊ Р±РµР· СЃРєРёРґРєРё
+                hmDbSa.put(key, val + spc.price1); //стоимость без скидки
             }
 
             if (detail == true) {
@@ -556,7 +556,7 @@ public class PSCompare extends javax.swing.JFrame {
                 for (Map.Entry<String, Double> entry : hmDbSa.entrySet()) {
                     String key = entry.getKey();
                     Double value3 = entry.getValue();
-                    System.out.printf("%-32s%-16.2f", "Р›РёС€РЅРёРµ: " + key, value3);
+                    System.out.printf("%-32s%-16.2f", "Лишние: " + key, value3);
                     System.out.println();
                     jarTotal = jarTotal + value3;
                 }
@@ -580,7 +580,7 @@ public class PSCompare extends javax.swing.JFrame {
             System.out.println();
 
         } catch (SQLException e) {
-            System.err.println("РћС€РёР±РєР°: DBCompare.iwinPs4()  " + e);
+            System.err.println("Ошибка: DBCompare.iwinPs4()  " + e);
         }
     }
 
@@ -669,7 +669,7 @@ public class PSCompare extends javax.swing.JFrame {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -704,7 +704,7 @@ public class PSCompare extends javax.swing.JFrame {
         pan9.setPreferredSize(new java.awt.Dimension(40, 25));
 
         btnFindArtikl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c088.gif"))); // NOI18N
-        btnFindArtikl.setToolTipText(bundle.getString("РџРѕРёСЃРє Р·Р°РїРёСЃРё")); // NOI18N
+        btnFindArtikl.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
         btnFindArtikl.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnFindArtikl.setFocusable(false);
         btnFindArtikl.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -753,7 +753,7 @@ public class PSCompare extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "в„–РїРї", "ATYPM", "ATYPP", "РђСЂС‚РёРєСѓР»", "РќР°Р·РІР°РЅРёРµ", "РўРµРєСЃС‚СѓСЂР°", "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ", "Р’РЅРµС€РЅСЏСЏ", "Р”Р»РёРЅР°", "РЁРёСЂРёРЅР°", "РЈРіРѕР» 1", "РЈРіРѕР» 2", "РљРѕР»РёС‡РµСЃС‚РІРѕ", "РџРѕРіРѕРЅР°Р¶", "<html>РќРѕСЂРјР°<br/>РѕС‚С…РѕРґР°", "<html>РЎРµР±РµСЃС‚РѕРёРјРѕСЃС‚СЊ<br/> Р·Р° РµРґ.РёР·Рј.", "<html>РЎС‚.Р±РµР·.СЃРє<br/> Р·Р° РµРґ.РёР·Рј.", "<html>РЎС‚.СЃРѕ.СЃРє<br/> Р·Р° РµРґ.РёР·Рј.", "<html>РЎС‚РѕРёРј.<br/>Р±РµР·.СЃРєРёРґ.", "<html>РЎС‚РѕРёРј.<br/>СЃРѕ.СЃРєРёРґРє."
+                "№пп", "ATYPM", "ATYPP", "Артикул", "Название", "Текстура", "Внутренняя", "Внешняя", "Длина", "Ширина", "Угол 1", "Угол 2", "Количество", "Погонаж", "<html>Норма<br/>отхода", "<html>Себестоимость<br/> за ед.изм.", "<html>Ст.без.ск<br/> за ед.изм.", "<html>Ст.со.ск<br/> за ед.изм.", "<html>Стоим.<br/>без.скид.", "<html>Стоим.<br/>со.скидк."
             }
         ) {
             Class[] types = new Class [] {
@@ -801,7 +801,7 @@ public class PSCompare extends javax.swing.JFrame {
 
         pan4.add(scr, java.awt.BorderLayout.CENTER);
 
-        tabb.addTab("РЎРїРµС†РёС„РёРєР°С†РёСЏ\n", pan4);
+        tabb.addTab("Спецификация\n", pan4);
 
         pan3.setLayout(new javax.swing.BoxLayout(pan3, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -831,7 +831,7 @@ public class PSCompare extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "РЎРёСЃС‚РµРјР°", "РРјСЏ РїР°СЂ.", "РџР°СЂ.РёР·РґРµР»", "РџР°СЂ.СЃРёСЃС‚."
+                "Система", "Имя пар.", "Пар.издел", "Пар.сист."
             }
         ));
         tab7.setFillsViewportHeight(true);
@@ -851,7 +851,7 @@ public class PSCompare extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "в„–РїРї", "РђСЂС‚РёРєР»1", "РђСЂС‚РёРєР»2", "РўРёРї", "РђСЂС‚. Р°РЅР°Р»РѕРі1", "РђСЂС‚. Р°РЅР°Р»РѕРі2", "РќР°Р·РІР°РЅРёРµ", "Р’Р°СЂРёР°РЅС‚"
+                "№пп", "Артикл1", "Артикл2", "Тип", "Арт. аналог1", "Арт. аналог2", "Название", "Вариант"
             }
         ));
         tab5.setFillsViewportHeight(true);
@@ -869,10 +869,10 @@ public class PSCompare extends javax.swing.JFrame {
 
         pan3.add(scr5);
 
-        jLabel1.setText("10 - РџСЂРёР»РµРіР°СЋС‰РµРµ, 20 - РЈРіР»РѕРІРѕРµ РЅР° СѓСЃ, 30(31) - РЈРіР»РѕРІРѕРµ Р»РµРІРѕРµ(РїСЂР°РІРѕРµ), 40 - Рў - РѕР±СЂР°Р·РЅРѕРµ (РёРјРїРѕСЃС‚,СЂРёРіРµР»СЊ)");
+        jLabel1.setText("10 - Прилегающее, 20 - Угловое на ус, 30(31) - Угловое левое(правое), 40 - Т - образное (импост,ригель)");
         pan3.add(jLabel1);
 
-        tabb.addTab("РЎСЂР°РІРЅРµРЅРёРµ 1", pan3);
+        tabb.addTab("Сравнение 1", pan3);
 
         pan5.setLayout(new java.awt.BorderLayout());
 
@@ -884,7 +884,7 @@ public class PSCompare extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "РђСЂС‚РёРєСѓР»", "РќР°РёРјРµРЅРѕРІР°РЅРёРµ", "РљРѕР»РёС‡.  SA", "РљРѕР»РёС‡.  PS", "РџРѕРіРѕРЅР°Р¶  SA", "РџРѕРіРѕРЅР°Р¶  PS", "Р”РµР»СЊС‚Р°"
+                "Артикул", "Наименование", "Колич.  SA", "Колич.  PS", "Погонаж  SA", "Погонаж  PS", "Дельта"
             }
         ) {
             Class[] types = new Class [] {
@@ -909,7 +909,7 @@ public class PSCompare extends javax.swing.JFrame {
 
         pan5.add(scr3, java.awt.BorderLayout.CENTER);
 
-        tabb.addTab("РЎСЂР°РІРЅРµРЅРёРµ 2", pan5);
+        tabb.addTab("Сравнение 2", pan5);
 
         pan6.setLayout(new java.awt.BorderLayout());
 
@@ -925,7 +925,7 @@ public class PSCompare extends javax.swing.JFrame {
 
             },
             new String [] {
-                "в„–РїРї", "РџСЂРѕРµРєС‚", "Р—Р°РєР°Р·", "РђСЂС‚РёРєР»", "X1", "Y1", "X2", "Y2", "Р”Р»РёРЅР°", "РЁРёСЂРёРЅР°", "Р’С‹СЃРѕС‚Р°", "Р Р°РґРёСѓСЃ", "РўРёРї"
+                "№пп", "Проект", "Заказ", "Артикл", "X1", "Y1", "X2", "Y2", "Длина", "Ширина", "Высота", "Радиус", "Тип"
             }
         ) {
             Class[] types = new Class [] {
@@ -980,7 +980,7 @@ public class PSCompare extends javax.swing.JFrame {
         txt20.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         txt20.setPreferredSize(new java.awt.Dimension(40, 18));
 
-        btn1.setText("РџРµСЂРµСЃС‡РёС‚Р°С‚СЊ");
+        btn1.setText("Пересчитать");
         btn1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn1.setMaximumSize(new java.awt.Dimension(18, 18));
         btn1.setMinimumSize(new java.awt.Dimension(18, 18));
@@ -1056,7 +1056,7 @@ public class PSCompare extends javax.swing.JFrame {
 
         pan6.add(pan8, java.awt.BorderLayout.CENTER);
 
-        tabb.addTab("Р РёСЃСѓРЅРѕРє РєРѕРЅСЃС‚СЂСѓРєС†РёРё", pan6);
+        tabb.addTab("Рисунок конструкции", pan6);
 
         pan11.setLayout(new java.awt.BorderLayout());
 
@@ -1066,7 +1066,7 @@ public class PSCompare extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "РќРѕРјРµСЂ РїСЂРѕРµРєС‚Р°", "РќРѕРјРµСЂ Р·Р°РєР°Р·Р°", "РРјСЏ Р·Р°РєР°Р·Р°", "РЁРёСЂРёРЅР°", "Р’С‹СЃРѕС‚Р°", "Р РёСЃСѓРЅРѕРє"
+                "ID", "Номер проекта", "Номер заказа", "Имя заказа", "Ширина", "Высота", "Рисунок"
             }
         ));
         tab6.setFillsViewportHeight(true);
@@ -1083,7 +1083,7 @@ public class PSCompare extends javax.swing.JFrame {
 
         pan11.add(scr6, java.awt.BorderLayout.CENTER);
 
-        tabb.addTab("РЎРїРёСЃРѕРє Р·Р°РєР°Р·РѕРІ", pan11);
+        tabb.addTab("Список заказов", pan11);
 
         center.add(tabb, java.awt.BorderLayout.CENTER);
 

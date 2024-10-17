@@ -220,7 +220,7 @@ public enum App {
             //eProfile.appframe = frame;
             active = frame;
             frame.setName(this.name());
-            FrameToFile.setFrameSize(frame); //СЂР°Р·РјРµСЂС‹ РѕРєРЅР°
+            FrameToFile.setFrameSize(frame); //размеры окна
             frame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowDeiconified(java.awt.event.WindowEvent evt) {
                     Top.frame.setExtendedState(JFrame.NORMAL);
@@ -231,12 +231,12 @@ public enum App {
 //            if (eProp.dev == true) {
 //                endTime = System.currentTimeMillis();
 //                long elapsedTime = endTime - startTime;
-//                System.err.println(this.name() + " - " + elapsedTime + " РјСЃ");
+//                System.err.println(this.name() + " - " + elapsedTime + " мс");
 //            }
         } catch (Exception e) {
             //frame.dispose();
             //frame = null;
-            System.err.println("РћРЁРР‘РљРђ:startup.App.createFrame() " + e);
+            System.err.println("ОШИБКА:startup.App.createFrame() " + e);
         }
     }
 
@@ -246,7 +246,7 @@ public enum App {
             ResultSet rs = Conn.getConnection().createStatement().executeQuery("select current_user from rdb$database");
             rs.next();
             eProfile.user = rs.getString(1);
-            eProfile.profile = profile; //РїСЂРѕС„РёР»СЊ РїСЂРёР»РѕР¶РµРЅРёСЏ
+            eProfile.profile = profile; //профиль приложения
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
             if (profile.equals(eProfile.P01)) {
@@ -276,10 +276,10 @@ public enum App {
             }
             Top.frame.setName(profile.name());
             if (profile.equals(eProfile.P01)) {
-                FrameToFile.setFrameSize(Top.frame); //СЂР°Р·РјРµСЂС‹ РѕРєРЅР°
+                FrameToFile.setFrameSize(Top.frame); //размеры окна
             } else {
                 Top.frame.setLocation(0, 0);
-                Top.frame.setSize(screenSize.width, Top.frame.getHeight()); //СЂР°Р·РјРµСЂС‹ РіР». РѕРєРЅР°
+                Top.frame.setSize(screenSize.width, Top.frame.getHeight()); //размеры гл. окна
             }
 
             Top.frame.setVisible(true);
@@ -287,12 +287,12 @@ public enum App {
             //Top.frame.setState(Frame.ICONIFIED);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°: App.createApp()");
+            System.err.println("Ошибка: App.createApp()");
         }
     }
 
-    //РЎРїРёСЃРѕРє С‚Р°Р±Р»РёС† Р±Р°Р·С‹ РґР°РЅРЅС‹С…
-    public static Field[] db = { //РІ РїРѕСЂСЏРґРєРµ СѓРґР°Р»РµРЅРёСЏ РїСЂРё РєРѕРЅРІРµСЂС‚РёСЂРѕРІР°РЅРёСЏ РёР· Р±Р°Р·С‹ РїСЂРёС‘РјРЅРёРєР°
+    //Список таблиц базы данных
+    public static Field[] db = { //в порядке удаления при конвертирования из базы приёмника
         //eSetting.up, 
         eSyspar1.up, eSysprof.up, eSysfurn.up, eSysprod.up, eSysmodel.up,
         eKitpar2.up, eKitdet.up, eKits.up,

@@ -14,39 +14,39 @@ import common.ArraySpc;
 import java.util.List;
 
 /**
- * РЎРїРµС†РёС„РёРєР°С†РёСЏ СЌР»РµРјРµРЅС‚Р° РѕРєРЅР°
+ * Спецификация элемента окна
  */
 public class SpcRecord {
 
-    public ArraySpc<SpcRecord> spcList = new ArraySpc();  //СЃРїРёСЃРѕРє СЃРѕСЃС‚Р°РІРѕРІ, С„СѓСЂРЅРёС‚СѓСЂ Рё С‚.Рґ.
-    public HashMap<Integer, String> mapParam = null;  //РїР°СЂР°РјРµС‚СЂС‹ СЃРїРµС†РёС„РёРєР°С†РёРё
-    public ElemSimple elem5e = null;  //СЌР»РµРјРµРЅС‚ РїРѕСЂР°Р¶РґР°СЋС‰РёР№ СЃРїРµС†РёС„РёРєР°С†РёСЋ (РєРѕРЅС‚РµР№РЅРµСЂ)
-    public Record variantRec = null;  //РІР°СЂРёР°РЅС‚ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РёРІРµ
-    public Record detailRec = null;  //РґРµС‚Р°Р»РёР·Р°С†РёСЏ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РёРІРµ
-    public Record artiklRec = null;  //Р°СЂС‚РёРєСѓР» РІ РґРµС‚Р°Р»РёР·Р°С†РёРё РєРѕРЅСЃС‚СЂСѓРєС‚РёРІР°
+    public ArraySpc<SpcRecord> spcList = new ArraySpc();  //список составов, фурнитур и т.д.
+    public HashMap<Integer, String> mapParam = null;  //параметры спецификации
+    public ElemSimple elem5e = null;  //элемент пораждающий спецификацию (контейнер)
+    public Record variantRec = null;  //вариант в конструктиве
+    public Record detailRec = null;  //детализация в конструктиве
+    public Record artiklRec = null;  //артикул в детализации конструктива
 
     public double id = -1; //ID
-    public String place = "---";  //РњРµСЃС‚Рѕ СЂР°Р·РјРµС€РµРЅРёСЏ
-    public String name = "-";  //РќР°РёРјРµРЅРѕРІР°РЅРёРµ
-    public String artikl = "-";  //РђСЂС‚РёРєСѓР»
-    public int colorID1 = -3;  //РћСЃРЅ.С‚РµРєСЃС‚СѓСЂР°
-    public int colorID2 = -3;  //Р’РЅСѓС‚СЂ.С‚РµРєСЃС‚СѓСЂР°
-    public int colorID3 = -3;  //Р’РЅРµС€РЅ.С‚РµРєСЃС‚СѓСЂР°
-    public double width = -1;  //Р”Р»РёРЅР°
-    public double height = -1;  //РЁРёСЂРёРЅР°
-    public double weight = -1;  //РњР°СЃСЃР°
-    public double anglCut0 = -1;  //РЈРіРѕР»1
-    public double anglCut1 = -1;  //РЈРіРѕР»2
-    public double anglHoriz = 0; // РЈРіРѕР» Рє РіРѕСЂРёР·РѕРЅС‚Сѓ    
-    public double count = 1;  //РљРѕР». РµРґРёРЅРёС†
-    public int unit = 0;  //Р•Рґ.РёР·Рј   
-    public double waste = -1;  //РџСЂРѕС†РµРЅС‚ РѕС‚С…РѕРґР° СЃРј. eArtikl.otx_norm     
-    public double quant1 = 0;  //РљРѕР»РёС‡РµСЃС‚РІРѕ Р±РµР· РѕС‚С…РѕРґР°
-    public double quant2 = 0;  //РљРѕР»РёС‡РµСЃС‚РІРѕ СЃ РѕС‚С…РѕРґРѕРј
-    public double sebes1 = 0;  //РЎРµР±РµСЃС‚. Р·Р° РµРґ. Р±РµР· РѕС‚С…РѕРґР°     
-    public double sebes2 = 0;  //РЎРµР±РµСЃС‚. Р·Р° РµРґ. СЃ РѕС‚С…РѕРґРѕРј
-    public double price1 = 0;  //РЎС‚РѕРёРјРѕСЃС‚СЊ Р±РµР· СЃРєРёРґРєРё
-    public double price2 = 0;  //РЎС‚РѕРёРјРѕСЃС‚СЊ СЃ С‚РµС…РЅРѕР»РѕРіРёС‡РµСЃРєРѕР№ СЃРєРёРґРєРѕР№
+    public String place = "---";  //Место размешения
+    public String name = "-";  //Наименование
+    public String artikl = "-";  //Артикул
+    public int colorID1 = -3;  //Осн.текстура
+    public int colorID2 = -3;  //Внутр.текстура
+    public int colorID3 = -3;  //Внешн.текстура
+    public double width = -1;  //Длина
+    public double height = -1;  //Ширина
+    public double weight = -1;  //Масса
+    public double anglCut0 = -1;  //Угол1
+    public double anglCut1 = -1;  //Угол2
+    public double anglHoriz = 0; // Угол к горизонту    
+    public double count = 1;  //Кол. единиц
+    public int unit = 0;  //Ед.изм   
+    public double waste = -1;  //Процент отхода см. eArtikl.otx_norm     
+    public double quant1 = 0;  //Количество без отхода
+    public double quant2 = 0;  //Количество с отходом
+    public double sebes1 = 0;  //Себест. за ед. без отхода     
+    public double sebes2 = 0;  //Себест. за ед. с отходом
+    public double price1 = 0;  //Стоимость без скидки
+    public double price2 = 0;  //Стоимость с технологической скидкой
 
     public SpcRecord() {
     }
@@ -168,11 +168,11 @@ public class SpcRecord {
     }
 
     public static void write_csv(ArrayList<SpcRecord> spcList) {
-        //РЎРј. РёСЃС‚РѕСЂРёСЋ
+        //См. историю
     }
 
     public static void write_txt(ArrayList<SpcRecord> specList) {
-        //РЎРј. РёСЃС‚РѕСЂРёСЋ
+        //См. историю
     }
 
     public String toString() {

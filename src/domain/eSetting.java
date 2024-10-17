@@ -5,10 +5,10 @@ import dataset.MetaField;
 import dataset.Query;
 
 public enum eSetting implements Field {
-    up("0", "0", "0", "РЎРёСЃС‚РµРјРЅС‹Рµ РЅР°СЃС‚СЂРѕР№РєРё", "EMPTY"),
-    id("4", "10", "0", "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ", "id"),
-    name("12", "64", "1", "РќР°РёРјРµРЅРѕРІР°РЅРёРµ", "name"),
-    val("12", "32", "1", "Р—РЅР°С‡РµРЅРёРµ", "value");
+    up("0", "0", "0", "Системные настройки", "EMPTY"),
+    id("4", "10", "0", "Идентификатор", "id"),
+    name("12", "64", "1", "Наименование", "name"),
+    val("12", "32", "1", "Значение", "value");
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());
 

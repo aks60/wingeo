@@ -67,7 +67,7 @@ import javax.swing.table.DefaultTableColumnModel;
 import report.ExecuteCmd;
 import report.HtmlOfTable;
 
-//TODO РџСЂРѕС‚РµСЃС‚РёСЂРѕРІР°С‚СЊ РїР°СЂР°РјРµС‚СЂ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёСЏ С‚РµРєСЃС‚СѓСЂ
+//TODO Протестировать параметр соответствия текстур
 public class Furniturs extends javax.swing.JFrame {
 
     private Query qGroups = new Query(eGroups.values());
@@ -84,7 +84,7 @@ public class Furniturs extends javax.swing.JFrame {
     private Query qFurnpar2 = new Query(eFurnpar2.values());
     private ListenerRecord listenerArtikl, listenerPar1, listenerPar2, listenerTypset, listenerColor,
             listenerColvar, listenerSide1, listenerSide2, listenerSide3, listenerSide4, listenerVariant1, listenerVariant2;
-    private JTable tab2X = null; //Р°РєС‚РёРІРЅР°СЏ С‚Р°Р±Р»РёС†Р° СЃРїРµС†РёС„РёРєР°С†РёРё
+    private JTable tab2X = null; //активная таблица спецификации
     private int indexT1 = 0;
 
     public Furniturs() {
@@ -147,7 +147,7 @@ public class Furniturs extends javax.swing.JFrame {
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
 
-                //РўРµРєСЃС‚СѓСЂР°
+                //Текстура
                 if (val != null && eFurndet.color_fk == field) {
                     int colorFk = Integer.valueOf(val.toString());
 
@@ -163,7 +163,7 @@ public class Furniturs extends javax.swing.JFrame {
                         return "# " + qGroups.find(colorFk, eGroups.id).get(eGroups.name);
                     }
 
-                    //РџРѕРґР±РѕСЂ С‚РµРєСЃС‚СѓСЂС‹
+                    //Подбор текстуры
                 } else if (val != null && eFurndet.color_us == field) {
                     int types = Integer.valueOf(val.toString());
                     types = types & 0x0000000f;
@@ -171,13 +171,13 @@ public class Furniturs extends javax.swing.JFrame {
 
                 } else if (eFurndet.artikl_id == field) {
 
-                    //РќР°Р±РѕСЂ
+                    //Набор
                     if (qFurndet2a.get(row, eFurndet.furniture_id2) != null) {
                         int furniture_id2 = qFurndet2a.getAs(row, eFurndet.furniture_id2);
                         String name = qFurnall.find(furniture_id2, eFurniture.id).getStr(eFurniture.name);
-                        return (col == 0) ? "РќР°Р±РѕСЂ" : name;
+                        return (col == 0) ? "Набор" : name;
 
-                        //РђСЂС‚РёРєСѓР»
+                        //Артикул
                     } else if (val != null) {
                         int artikl_id = Integer.valueOf(val.toString());
                         Record recordArt = qArtikl.find(artikl_id, eArtikl.id);
@@ -192,7 +192,7 @@ public class Furniturs extends javax.swing.JFrame {
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
 
-                //РўРµРєСЃС‚СѓСЂР°
+                //Текстура
                 if (val != null && eFurndet.color_fk == field) {
                     int colorFk = Integer.valueOf(val.toString());
 
@@ -208,7 +208,7 @@ public class Furniturs extends javax.swing.JFrame {
                         return "# " + qGroups.find(colorFk, eGroups.id).get(eGroups.name);
                     }
 
-                    //РџРѕРґР±РѕСЂ С‚РµРєСЃС‚СѓСЂС‹
+                    //Подбор текстуры
                 } else if (val != null && eFurndet.color_us == field) {
                     int types = Integer.valueOf(val.toString());
                     types = types & 0x0000000f;
@@ -216,13 +216,13 @@ public class Furniturs extends javax.swing.JFrame {
 
                 } else if (eFurndet.artikl_id == field) {
 
-                    //РќР°Р±РѕСЂ
+                    //Набор
                     if (qFurndet2b.get(row, eFurndet.furniture_id2) != null) {
                         int furniture_id2 = qFurndet2b.getAs(row, eFurndet.furniture_id2);
                         String name = qFurnall.find(furniture_id2, eFurniture.id).getStr(eFurniture.name);
-                        return (col == 0) ? "РќР°Р±РѕСЂ" : name;
+                        return (col == 0) ? "Набор" : name;
 
-                        //РђСЂС‚РёРєСѓР»    
+                        //Артикул    
                     } else if (val != null) {
                         int artikl_id = Integer.valueOf(val.toString());
                         Record recordArt = qArtikl.find(artikl_id, eArtikl.id);
@@ -237,7 +237,7 @@ public class Furniturs extends javax.swing.JFrame {
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
 
-                //РўРµРєСЃС‚СѓСЂР°
+                //Текстура
                 if (val != null && eFurndet.color_fk == field) {
                     int colorFk = Integer.valueOf(val.toString());
 
@@ -253,20 +253,20 @@ public class Furniturs extends javax.swing.JFrame {
                         return "# " + qGroups.find(colorFk, eGroups.id).get(eGroups.name);
                     }
 
-                    //РџРѕРґР±РѕСЂ С‚РµРєСЃС‚СѓСЂС‹
+                    //Подбор текстуры
                 } else if (val != null && eFurndet.color_us == field) {
                     int types = Integer.valueOf(val.toString());
                     types = types & 0x0000000f;
                     return UseColor.MANUAL.find(types).text();
 
-                    //РќР°Р±РѕСЂ
+                    //Набор
                 } else if (eFurndet.artikl_id == field) {
                     if (qFurndet2c.get(row, eFurndet.furniture_id2) != null) {
                         int furniture_id2 = qFurndet2c.getAs(row, eFurndet.furniture_id2);
                         String name = qFurnall.find(furniture_id2, eFurniture.id).getStr(eFurniture.name);
-                        return (col == 0) ? "РќР°Р±РѕСЂ" : name;
+                        return (col == 0) ? "Набор" : name;
 
-                        //РђСЂС‚РёРєСѓР» 
+                        //Артикул 
                     } else if (val != null) {
                         int artikl_id = Integer.valueOf(val.toString());
                         Record recordArt = qArtikl.find(artikl_id, eArtikl.id);
@@ -492,7 +492,7 @@ public class Furniturs extends javax.swing.JFrame {
             new ParName(this, listenerPar1, eParams.joint, 21000);
         });
 
-        UGui.buttonCellEditor(tab4, 1, (componentCell) -> { //СЃР»СѓС€Р°С‚РµР»СЊ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ С‚РёРїР° Рё РІРёРґР° РґР°РЅРЅС‹С… Рё РІРёРґР° СЏС‡РµР№РєРё С‚Р°Р±Р»РёС†С‹
+        UGui.buttonCellEditor(tab4, 1, (componentCell) -> { //слушатель редактирование типа и вида данных и вида ячейки таблицы
             return UGui.cellParamTypeOrVid(tab4, componentCell, eFurnpar1.groups_id);
 
         }).addActionListener(event -> {
@@ -534,7 +534,7 @@ public class Furniturs extends javax.swing.JFrame {
             }
         });
 
-        UGui.buttonCellEditor(tab6, 1, (componentCell) -> { //СЃР»СѓС€Р°С‚РµР»СЊ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ С‚РёРїР° Рё РІРёРґР° РґР°РЅРЅС‹С… Рё РІРёРґР° СЏС‡РµР№РєРё С‚Р°Р±Р»РёС†С‹
+        UGui.buttonCellEditor(tab6, 1, (componentCell) -> { //слушатель редактирование типа и вида данных и вида ячейки таблицы
             return UGui.cellParamTypeOrVid(tab6, componentCell, eFurnpar2.groups_id);
 
         }).addActionListener(event -> {
@@ -708,7 +708,7 @@ public class Furniturs extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Furniturs.deteilFind()");
+            System.err.println("Ошибка:Furniturs.deteilFind()");
         }
     }
 
@@ -765,7 +765,7 @@ public class Furniturs extends javax.swing.JFrame {
 
         mInsert.setFont(frames.UGui.getFont(1,0));
         mInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        mInsert.setText("Р”РѕР±Р°РІРёС‚СЊ");
+        mInsert.setText("Добавить");
         mInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -775,7 +775,7 @@ public class Furniturs extends javax.swing.JFrame {
 
         mDelit.setFont(frames.UGui.getFont(1,0));
         mDelit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        mDelit.setText("РЈРґР°Р»РёС‚СЊ");
+        mDelit.setText("Удалить");
         mDelit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -787,7 +787,7 @@ public class Furniturs extends javax.swing.JFrame {
         pan6.setLayout(new java.awt.BorderLayout());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Р¤СѓСЂРЅРёС‚СѓСЂР°");
+        setTitle("Фурнитура");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 600));
         setName(""); // NOI18N
@@ -804,7 +804,7 @@ public class Furniturs extends javax.swing.JFrame {
 
         btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnIns.setToolTipText(bundle.getString("Р”РѕР±Р°РІРёС‚СЊ")); // NOI18N
+        btnIns.setToolTipText(bundle.getString("Добавить")); // NOI18N
         btnIns.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnIns.setFocusable(false);
         btnIns.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -820,7 +820,7 @@ public class Furniturs extends javax.swing.JFrame {
         });
 
         btnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        btnDel.setToolTipText(bundle.getString("РЈРґР°Р»РёС‚СЊ")); // NOI18N
+        btnDel.setToolTipText(bundle.getString("Удалить")); // NOI18N
         btnDel.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnDel.setFocusable(false);
         btnDel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -836,7 +836,7 @@ public class Furniturs extends javax.swing.JFrame {
         });
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -851,7 +851,7 @@ public class Furniturs extends javax.swing.JFrame {
         });
 
         btnReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c053.gif"))); // NOI18N
-        btnReport.setToolTipText(bundle.getString("РџРµС‡Р°С‚СЊ")); // NOI18N
+        btnReport.setToolTipText(bundle.getString("Печать")); // NOI18N
         btnReport.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnReport.setFocusable(false);
         btnReport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -867,7 +867,7 @@ public class Furniturs extends javax.swing.JFrame {
         });
 
         btnConstructiv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c088.gif"))); // NOI18N
-        btnConstructiv.setToolTipText(bundle.getString("РџРѕРёСЃРє Р·Р°РїРёСЃРё")); // NOI18N
+        btnConstructiv.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
         btnConstructiv.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnConstructiv.setFocusable(false);
         btnConstructiv.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -894,7 +894,7 @@ public class Furniturs extends javax.swing.JFrame {
         });
 
         btnFindSystree.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c089.gif"))); // NOI18N
-        btnFindSystree.setToolTipText(bundle.getString("РџРѕРёСЃРє Р·Р°РїРёСЃРё")); // NOI18N
+        btnFindSystree.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
         btnFindSystree.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnFindSystree.setFocusable(false);
         btnFindSystree.setMaximumSize(new java.awt.Dimension(25, 25));
@@ -909,7 +909,7 @@ public class Furniturs extends javax.swing.JFrame {
         });
 
         btnClone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c065.gif"))); // NOI18N
-        btnClone.setToolTipText(bundle.getString("РљР»РѕРЅРёСЂРѕРІР°С‚СЊ Р·Р°РїРёСЃСЊ")); // NOI18N
+        btnClone.setToolTipText(bundle.getString("Клонировать запись")); // NOI18N
         btnClone.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClone.setEnabled(false);
         btnClone.setFocusable(false);
@@ -989,7 +989,7 @@ public class Furniturs extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РќР°Р·РІР°РЅРёРµ", "Р’РёРґ", "РЎС‚РѕСЂРѕРЅР° СЂСѓС‡РєРё", "РџРѕ СЃРµСЂРµРґРёРЅРµ", "РљРѕРЅСЃС‚Р°РЅС‚РЅР°СЏ", "Р’Р°СЂРёР°С†РёРѕРЅРЅР°СЏ", "Р /2 РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ", "РЁРёСЂРёРЅР° РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ", "Р’С‹СЃРѕС‚Р° РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ", "Р’РµСЃ РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№", "РЎС‚РІРѕСЂРєР°", "РСЃРїРѕР»СЊР·. РїР°СЂР°РјРµС‚СЂС‹", "РћРіСЂР°РЅРёС‡РµРЅРёСЏ", "ID"
+                "Название", "Вид", "Сторона ручки", "По середине", "Константная", "Вариационная", "Р/2 максимальная", "Ширина максимальная", "Высота максимальная", "Вес максимальный", "Створка", "Использ. параметры", "Ограничения", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -1033,7 +1033,7 @@ public class Furniturs extends javax.swing.JFrame {
         group1.add(btnTab1);
         btnTab1.setFont(frames.UGui.getFont(0,0));
         btnTab1.setSelected(true);
-        btnTab1.setText("РћСЃРЅРѕРІРЅР°СЏ С„СѓСЂРЅРёС‚СѓСЂР°");
+        btnTab1.setText("Основная фурнитура");
         btnTab1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnTab1.setMaximumSize(new java.awt.Dimension(180, 26));
         btnTab1.setMinimumSize(new java.awt.Dimension(180, 26));
@@ -1047,7 +1047,7 @@ public class Furniturs extends javax.swing.JFrame {
 
         group1.add(btnTab2);
         btnTab2.setFont(frames.UGui.getFont(0,0));
-        btnTab2.setText("Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅР°СЏ С„СѓСЂРЅРёС‚СѓСЂР°");
+        btnTab2.setText("Дополнительная фурнитура");
         btnTab2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnTab2.setMaximumSize(new java.awt.Dimension(180, 26));
         btnTab2.setMinimumSize(new java.awt.Dimension(180, 26));
@@ -1061,7 +1061,7 @@ public class Furniturs extends javax.swing.JFrame {
 
         group1.add(btnTab3);
         btnTab3.setFont(frames.UGui.getFont(0,0));
-        btnTab3.setText("РЎРїРёСЃРѕРє РЅР°Р±РѕСЂРѕРІ");
+        btnTab3.setText("Список наборов");
         btnTab3.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnTab3.setMaximumSize(new java.awt.Dimension(180, 26));
         btnTab3.setMinimumSize(new java.awt.Dimension(180, 26));
@@ -1074,7 +1074,7 @@ public class Furniturs extends javax.swing.JFrame {
         pan12.add(btnTab3);
 
         btnSet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        btnSet.setToolTipText(bundle.getString("Р’С‹Р±СЂР°С‚СЊ СЃРїРёСЃРѕРє")); // NOI18N
+        btnSet.setToolTipText(bundle.getString("Выбрать список")); // NOI18N
         btnSet.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnSet.setEnabled(false);
         btnSet.setPreferredSize(new java.awt.Dimension(25, 25));
@@ -1096,7 +1096,7 @@ public class Furniturs extends javax.swing.JFrame {
         pan5.setLayout(new javax.swing.BoxLayout(pan5, javax.swing.BoxLayout.PAGE_AXIS));
 
         lab2.setFont(frames.UGui.getFont(0,0));
-        lab2.setText("                  РћРїРёСЃР°РЅРёРµ СЃС‚РѕСЂРѕРЅ");
+        lab2.setText("                  Описание сторон");
         lab2.setMaximumSize(new java.awt.Dimension(300, 46));
         lab2.setMinimumSize(new java.awt.Dimension(170, 26));
         lab2.setPreferredSize(new java.awt.Dimension(200, 26));
@@ -1111,7 +1111,7 @@ public class Furniturs extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РЎС‚РѕСЂРѕРЅР°", "РќР°Р·РЅР°С‡РµРЅРёРµ"
+                "Сторона", "Назначение"
             }
         ));
         tab3.setFillsViewportHeight(true);
@@ -1141,7 +1141,7 @@ public class Furniturs extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РџР°СЂР°РјРµС‚СЂ", "Р—РЅР°С‡РµРЅРёРµ"
+                "Параметр", "Значение"
             }
         ));
         tab4.setFillsViewportHeight(true);
@@ -1184,7 +1184,7 @@ public class Furniturs extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РђСЂС‚РёРєСѓР»", "РќР°Р·РІР°РЅРёРµ", "РўРµРєСЃС‚СѓСЂР°", "РџРѕРґР±РѕСЂ", "ID"
+                "Артикул", "Название", "Текстура", "Подбор", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -1221,7 +1221,7 @@ public class Furniturs extends javax.swing.JFrame {
             tab2a.getColumnModel().getColumn(4).setMaxWidth(60);
         }
 
-        tabb1.addTab("Р”РµС‚Р°Р»РёР·Р°С†РёСЏ (1 СѓСЂРѕРІРµРЅСЊ)", scr2a);
+        tabb1.addTab("Детализация (1 уровень)", scr2a);
 
         tab2c.setFont(frames.UGui.getFont(0,0));
         tab2c.setModel(new javax.swing.table.DefaultTableModel(
@@ -1229,7 +1229,7 @@ public class Furniturs extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РђСЂС‚РёРєСѓР»", "РќР°Р·РІР°РЅРёРµ", "РўРµРєСЃС‚СѓСЂР°", "РџРѕРґР±РѕСЂ", "ID"
+                "Артикул", "Название", "Текстура", "Подбор", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -1266,11 +1266,11 @@ public class Furniturs extends javax.swing.JFrame {
             tab2c.getColumnModel().getColumn(4).setMaxWidth(60);
         }
 
-        tabb1.addTab("Р”РµС‚Р°Р»РёР·Р°С†РёСЏ (3 СѓСЂРѕРІРµРЅСЊ)", scr2c);
+        tabb1.addTab("Детализация (3 уровень)", scr2c);
 
         pan9.add(tabb1);
 
-        scr2b.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Р”РµС‚Р°Р»РёР·Р°С†РёСЏ (2 СѓСЂРѕРІРµРЅСЊ)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr2b.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Детализация (2 уровень)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
         scr2b.setPreferredSize(new java.awt.Dimension(500, 120));
 
         tab2b.setFont(frames.UGui.getFont(0,0));
@@ -1279,7 +1279,7 @@ public class Furniturs extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РђСЂС‚РёРєСѓР»", "РќР°Р·РІР°РЅРёРµ", "РўРµРєСЃС‚СѓСЂР°", "РџРѕРґР±РѕСЂ", "ID"
+                "Артикул", "Название", "Текстура", "Подбор", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -1326,7 +1326,7 @@ public class Furniturs extends javax.swing.JFrame {
         pan10.setLayout(new javax.swing.BoxLayout(pan10, javax.swing.BoxLayout.PAGE_AXIS));
 
         lab1.setFont(frames.UGui.getFont(0,0));
-        lab1.setText("                  РћРіСЂР°РЅРёС‡РµРЅРёСЏ СЃС‚РѕСЂРѕРЅ");
+        lab1.setText("                  Ограничения сторон");
         lab1.setMaximumSize(new java.awt.Dimension(300, 46));
         lab1.setMinimumSize(new java.awt.Dimension(170, 26));
         lab1.setPreferredSize(new java.awt.Dimension(200, 26));
@@ -1341,7 +1341,7 @@ public class Furniturs extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РЎС‚РѕСЂРѕРЅР°", "РњРёРЅ. РґР»РёРЅР°", "РњР°РєСЃ. РґР»РёРЅР°", "РњРёРЅ. СѓРіРѕР»", "РњР°РєСЃ. СѓРіРѕР»"
+                "Сторона", "Мин. длина", "Макс. длина", "Мин. угол", "Макс. угол"
             }
         ) {
             Class[] types = new Class [] {
@@ -1379,7 +1379,7 @@ public class Furniturs extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РџР°СЂР°РјРµС‚СЂ", "Р—РЅР°С‡РµРЅРёРµ"
+                "Параметр", "Значение"
             }
         ));
         tab6.setFillsViewportHeight(true);
@@ -1462,7 +1462,7 @@ public class Furniturs extends javax.swing.JFrame {
         if (tab1.getBorder() != null) {
             UGui.insertRecordCur(tab1, eFurniture.up, (record) -> {
                 int types = (btnTab1.isSelected()) ? 0 : (btnTab2.isSelected()) ? 1 : -1;
-                record.setDev(eFurniture.name, (btnTab1.isSelected()) ? "РћСЃРЅ. С„СѓСЂРЅ." : (btnTab2.isSelected()) ? "Р”РѕРї. С„СѓСЂРЅ." : "РќР°Р±РѕСЂ С„СѓСЂРЅ.");
+                record.setDev(eFurniture.name, (btnTab1.isSelected()) ? "Осн. фурн." : (btnTab2.isSelected()) ? "Доп. фурн." : "Набор фурн.");
                 record.set(eFurniture.types, types);
                 List.of(eFurniture.max_height, eFurniture.max_width, eFurniture.max_p2).forEach(field -> record.set(field, 3000));
                 record.set(eFurniture.max_weight, 300);
@@ -1478,7 +1478,7 @@ public class Furniturs extends javax.swing.JFrame {
                     record.set(eFurndet.furndet_pk, record.getInt(eFurndet.id));
                 });
             } else {
-                JOptionPane.showMessageDialog(null, "РЎРЅР°С‡Р°Р»Р° Р·Р°РїРѕР»РЅРёС‚Рµ РѕСЃРЅРѕРІРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.NO_OPTION);
+                JOptionPane.showMessageDialog(this, "Сначала заполните основную таблицу", "Предупреждение", JOptionPane.NO_OPTION);
             }
 
         } else if (tab2b.getBorder() != null && tab5.getBorder() == null && tab6.getBorder() == null) {
@@ -1491,7 +1491,7 @@ public class Furniturs extends javax.swing.JFrame {
                     record.set(eFurndet.furndet_pk, pk);
                 });
             } else {
-                JOptionPane.showMessageDialog(null, "РЎРЅР°С‡Р°Р»Р° Р·Р°РїРѕР»РЅРёС‚Рµ РѕСЃРЅРѕРІРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.NO_OPTION);
+                JOptionPane.showMessageDialog(this, "Сначала заполните основную таблицу", "Предупреждение", JOptionPane.NO_OPTION);
             }
 
         } else if (tab2c.getBorder() != null && tab5.getBorder() == null && tab6.getBorder() == null) {
@@ -1504,7 +1504,7 @@ public class Furniturs extends javax.swing.JFrame {
                     record.set(eFurndet.furndet_pk, pk);
                 });
             } else {
-                JOptionPane.showMessageDialog(null, "РЎРЅР°С‡Р°Р»Р° Р·Р°РїРѕР»РЅРёС‚Рµ РѕСЃРЅРѕРІРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.NO_OPTION);
+                JOptionPane.showMessageDialog(this, "Сначала заполните основную таблицу", "Предупреждение", JOptionPane.NO_OPTION);
             }
 
         } else if (tab3.getBorder() != null) {
@@ -1523,7 +1523,7 @@ public class Furniturs extends javax.swing.JFrame {
 
         } else if (tab5.getBorder() != null) {
             JTable table = (UGui.getIndexRec(tab2c) != -1) ? tab2c
-                    : (UGui.getIndexRec(tab2b) != -1) ? tab2b : tab2a; //Р’РђР–РќРћ! РџРѕРёСЃРє РІС‹РґРµР»РµРЅРёСЏ СЃС‚СЂРѕРєРё СЃРЅРёР·Сѓ РІРІРµСЂС….
+                    : (UGui.getIndexRec(tab2b) != -1) ? tab2b : tab2a; //ВАЖНО! Поиск выделения строки снизу вверх.
             Query query = ((DefTableModel) table.getModel()).getQuery();
             if (UGui.getIndexRec(table) != -1) {
                 UGui.insertRecordCur(tab5, eFurnside2.up, (record) -> {
@@ -1553,7 +1553,7 @@ public class Furniturs extends javax.swing.JFrame {
     }//GEN-LAST:event_windowClosed
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        HtmlOfTable.load("Р¤СѓСЂРЅРёС‚СѓСЂР°", tab1);
+        HtmlOfTable.load("Фурнитура", tab1);
         ExecuteCmd.documentType(this);
     }//GEN-LAST:event_btnReport
 
@@ -1583,7 +1583,7 @@ public class Furniturs extends javax.swing.JFrame {
 
     private void btnConstructiv(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConstructiv
         JTable table = (UGui.getIndexRec(tab2c) != -1) ? tab2c
-                : (UGui.getIndexRec(tab2b) != -1) ? tab2b : tab2a; //Р’РђР–РќРћ! РџРѕРёСЃРє РІС‹РґРµР»РµРЅРёСЏ СЃС‚СЂРѕРєРё СЃРЅРёР·Сѓ РІРІРµСЂС….
+                : (UGui.getIndexRec(tab2b) != -1) ? tab2b : tab2a; //ВАЖНО! Поиск выделения строки снизу вверх.
         Record record = ((DefTableModel) table.getModel()).getQuery().get(UGui.getIndexRec(table));
         Record record2 = qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == record.getInt(eFurndet.artikl_id)).findFirst().orElse(eFurndet.up.newRecord(Query.SEL));
         ProgressBar.create(this, new ListenerFrame() {
@@ -1617,7 +1617,7 @@ public class Furniturs extends javax.swing.JFrame {
             UGui.setSelectedRow(tab1);
         }
 
-        //Р•СЃР»Рё РїРµСЂРµС…РѕРґ РЅР° РЅР°Р±РѕСЂ, СЃСЂР°Р·Сѓ РёС‰РµРј РµРіРѕ
+        //Если переход на набор, сразу ищем его
         if (btnTab3.isSelected() && furnitureId != null) {
 
             for (int index2 = 0; index2 < qFurniture.size(); ++index2) {
@@ -1639,7 +1639,7 @@ public class Furniturs extends javax.swing.JFrame {
                     list.add(record.getStr(eFurniture.name));
                 }
             }
-            Object result = JOptionPane.showInputDialog(Furniturs.this, "Р’С‹Р±РѕСЂ РЅР°Р±РѕСЂР°",
+            Object result = JOptionPane.showInputDialog(Furniturs.this, "Выбор набора",
                     "РќР°Р±РѕСЂС‹", JOptionPane.QUESTION_MESSAGE, null, list.toArray(), list.toArray()[0]);
             if (result != null) {
                 for (Record record2 : qFurnall) {
@@ -1668,14 +1668,14 @@ public class Furniturs extends javax.swing.JFrame {
                                 record.set(eFurndet.color_us, null);
                             });
                         } else {
-                            JOptionPane.showMessageDialog(null, "РЎРЅР°С‡Р°Р»Р° Р·Р°РїРѕР»РЅРёС‚Рµ РѕСЃРЅРѕРІРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.NO_OPTION);
+                            JOptionPane.showMessageDialog(null, "Сначала заполните основную таблицу", "Предупреждение", JOptionPane.NO_OPTION);
                         }
                     }
                 }
 
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Furniturs.btnInser2()");
+            System.err.println("Ошибка:Furniturs.btnInser2()");
         }
     }//GEN-LAST:event_btnInser2
 
@@ -1708,7 +1708,7 @@ public class Furniturs extends javax.swing.JFrame {
             for (int i = pathList.size(); i < 21; ++i) {
                 pathList.add(null);
             }
-            Object result = JOptionPane.showInputDialog(Furniturs.this, "Р¤СѓСЂРЅРёС‚СѓСЂР° РІ РІРµС‚РєР°С… СЃРёСЃС‚РµРј РїСЂРѕС„РёР»РµР№", "Р’РµС‚РєРё СЃРёСЃС‚РµРј РїСЂРѕС„РёР»РµР№",
+            Object result = JOptionPane.showInputDialog(Furniturs.this, "Фурнитура в ветках систем профилей", "Ветки систем профилей",
                     JOptionPane.QUESTION_MESSAGE, new ImageIcon(getClass().getResource("/resource/img24/c066.gif")), pathArr, pathArr[0]);
 
             if (result != null || result instanceof Integer) {
@@ -1724,7 +1724,7 @@ public class Furniturs extends javax.swing.JFrame {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(Furniturs.this, "Р’ СЃРёСЃС‚РµРјРµ РїСЂРѕС„РёР»РµР№ С„СѓСЂРЅРёС‚СѓСЂР° РЅРµ РЅР°Р№РґРµРЅР°", "РЎРѕРѕР±С‰РµРЅРёРµ", JOptionPane.NO_OPTION);
+            JOptionPane.showMessageDialog(Furniturs.this, "В системе профилей фурнитура не найдена", "Сообщение", JOptionPane.NO_OPTION);
         }
     }//GEN-LAST:event_btnFindSystree
 
@@ -1750,8 +1750,8 @@ public class Furniturs extends javax.swing.JFrame {
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
         int indexTab1 = UGui.getIndexRec(tab1);
         int indexTab2a = UGui.getIndexRec(tab2a);
-        if (indexTab1 != -1 && JOptionPane.showConfirmDialog(this, "Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РєР»РѕРЅРёСЂРѕРІР°С‚СЊ С‚РµРєСѓС‰СѓСЋ Р·Р°РїРёСЃСЊ?",
-                "РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+        if (indexTab1 != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
+                "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 
             List<Record> furnside1List = new ArrayList<Record>();
             Map<Record, Integer> furnside2Map = new HashMap<Record, Integer>();
@@ -1769,8 +1769,8 @@ public class Furniturs extends javax.swing.JFrame {
                 furnitureClon = (Record) furnitureRec.clone();
                 furnitureClon.setNo(eFurniture.up, Query.INS);
                 furnitureClon.setNo(eFurniture.id, Conn.genId(eFurniture.up));
-                furnitureClon.setNo(eFurniture.name, furnitureClon.getStr(eFurniture.name) + "-РєР»РѕРЅ");
-                eFurniture.up.query().add(furnitureClon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+                furnitureClon.setNo(eFurniture.name, furnitureClon.getStr(eFurniture.name) + "-клон");
+                eFurniture.up.query().add(furnitureClon);  //добавим запись в кэш
                 qFurniture.add(indexTab1, furnitureClon);
                 qFurnside1.forEach(rec -> furnside1List.add(rec));
                 for (Record furnside1Rec : furnside1List) {
@@ -1780,7 +1780,7 @@ public class Furniturs extends javax.swing.JFrame {
                     furnside1Clon.setNo(eFurnside1.id, Conn.genId(eFurnside1.up));
                     furnside1Clon.setNo(eFurnside1.furniture_id, furnitureClon.getInt(eFurniture.id));
                     qFurnpar1.forEach(rec -> furnpar1Map.put(rec, furnside1Clon.getInt(eFurnside1.id)));
-                    eFurnside1.up.query().add(furnside1Clon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+                    eFurnside1.up.query().add(furnside1Clon);  //добавим запись в кэш
                     qFurnside1.add(furnside1Clon);
                 }
                 for (Map.Entry<Record, Integer> it : furnpar1Map.entrySet()) {
@@ -1794,7 +1794,7 @@ public class Furniturs extends javax.swing.JFrame {
                 }
                 qFurndet2a.forEach(rec -> furndet2aList.add(rec));
 
-                //РљР»РѕРЅРёСЂСѓРµРј Р·Р°РїРёСЃСЊ tab2a
+                //Клонируем запись tab2a
             } else {
                 furndet2aList.add(qFurndet2a.get(UGui.getIndexRec(tab2a)));
             }
@@ -1811,7 +1811,7 @@ public class Furniturs extends javax.swing.JFrame {
                 qFurnside2.forEach(rec -> furnside2Map.put(rec, furndet2aClon.getInt(eFurndet.id)));
                 qFurnpar2.forEach(rec -> furnpar2Map.put(rec, furndet2aClon.getInt(eFurndet.id)));
                 qFurndet2b.forEach(rec -> furndet2bMap.put(rec, furndet2aClon.getInt(eFurndet.id)));
-                eFurndet.up.query().add(furndet2aClon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+                eFurndet.up.query().add(furndet2aClon);  //добавим запись в кэш
                 qFurndet2a.add(furndet2aClon);
             }
 
@@ -1831,24 +1831,24 @@ public class Furniturs extends javax.swing.JFrame {
                 qFurnside2.forEach(rec -> furnside2Map.put(rec, furndet2bClon.getInt(eFurndet.id)));
                 qFurnpar2.forEach(rec -> furnpar2Map.put(rec, furndet2bClon.getInt(eFurndet.id)));
                 qFurndet2c.forEach(rec -> furndet2cMap.put(rec, furndet2bClon.getInt(eFurndet.id)));
-                eFurndet.up.query().add(furndet2bClon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+                eFurndet.up.query().add(furndet2bClon);  //добавим запись в кэш
                 qFurndet2b.add(furndet2bClon);
             }
             clone2(furnside2Map, furnpar2Map);
             List.of(furnside2Map, furnpar2Map).forEach(it -> it.clear());
             List.of(qFurniture, qFurndet2a, qFurndet2b, qFurndet2c, qFurnside1, qFurnside2, qFurnpar1, qFurnpar2).forEach(q -> q.execsql());
             for (Map.Entry<Record, Integer> it : furndet2cMap.entrySet()) {
-                Record furndet2СЃRec = it.getKey();
-                qFurnside2.sql(eFurnside2.data(), eFurnside2.furndet_id, furndet2СЃRec.getInt(eFurnside2.id));
-                qFurnpar2.sql(eFurnpar2.data(), eFurnpar2.furndet_id, furndet2СЃRec.getInt(eFurndet.id));
-                Record furndet2cClon = (Record) furndet2СЃRec.clone();
+                Record furndet2сRec = it.getKey();
+                qFurnside2.sql(eFurnside2.data(), eFurnside2.furndet_id, furndet2сRec.getInt(eFurnside2.id));
+                qFurnpar2.sql(eFurnpar2.data(), eFurnpar2.furndet_id, furndet2сRec.getInt(eFurndet.id));
+                Record furndet2cClon = (Record) furndet2сRec.clone();
                 furndet2cClon.setNo(eFurndet.up, Query.INS);
                 furndet2cClon.setNo(eFurndet.id, Conn.genId(eFurndet.up));
                 furndet2cClon.setNo(eFurndet.furniture_id1, furnitureClon.getInt(eFurniture.id));
                 furndet2cClon.setNo(eFurndet.furndet_pk, it.getValue());
                 qFurnside2.forEach(rec -> furnside2Map.put(rec, furndet2cClon.getInt(eFurndet.id)));
                 qFurnpar2.forEach(rec -> furnpar2Map.put(rec, furndet2cClon.getInt(eFurndet.id)));
-                eFurndet.up.query().add(furndet2cClon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+                eFurndet.up.query().add(furndet2cClon);  //добавим запись в кэш
                 qFurndet2c.add(furndet2cClon);
             }
             clone2(furnside2Map, furnpar2Map);

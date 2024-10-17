@@ -19,7 +19,7 @@ import frames.swing.TableFieldFilter;
 import java.util.ArrayList;
 import startup.App;
 
-//РЎРїСЂР°РІРѕС‡РЅРёРє Р°СЂС‚РёРєСѓР»РѕРІ
+//Справочник артикулов
 public class DicArtikl extends javax.swing.JDialog {
 
     private ListenerRecord listener = null;
@@ -84,15 +84,15 @@ public class DicArtikl extends javax.swing.JDialog {
                 if (field == eArtikl.level2) {
                     Record record = qArtikl.get(row);
                     if (record.getInt(eArtikl.level1) == 1) {
-                        return "РџСЂРѕС„. " + TypeArt.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
+                        return "Проф. " + TypeArt.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
                     } else if (record.getInt(eArtikl.level1) == 2) {
-                        return "РђРєСЃ...  " + TypeArt.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
+                        return "Акс...  " + TypeArt.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
                     } else if (record.getInt(eArtikl.level1) == 3) {
-                        return "РџРѕРі...  " + TypeArt.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
+                        return "Пог...  " + TypeArt.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
                     } else if (record.getInt(eArtikl.level1) == 4) {
-                        return "РРЅСЃС‚..." + TypeArt.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
+                        return "Инст..." + TypeArt.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
                     } else if (record.getInt(eArtikl.level1) == 5) {
-                        return "Р—Р°Рї... " + TypeArt.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
+                        return "Зап... " + TypeArt.find(record.getInt(eArtikl.level1), record.getInt(eArtikl.level2));
                     } else {
                         return "";
                     }

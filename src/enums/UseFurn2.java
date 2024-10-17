@@ -3,10 +3,10 @@ package enums;
 import static enums.LayoutFurn1.values;
 
 public enum UseFurn2 implements Enam {
-    P1(-1, "Р’РµРґРѕРјР°СЏ"),
-    P2(0, "РћР±С‹С‡РЅР°СЏ"),
-    P3(1, "Р’РµРґСѓС‰Р°СЏ"),
-    P4(2, "РђРґР°РїС‚РµСЂ");
+    P1(-1, "Ведомая"),
+    P2(0, "Обычная"),
+    P3(1, "Ведущая"),
+    P4(2, "Адаптер");
 
     public int id;
     public String name;

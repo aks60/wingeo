@@ -2,40 +2,40 @@ package enums;
 
 public class PKjson {
 
-    public final static String ioknaParam = "ioknaParam"; //РџР°СЂР°РјРµС‚СЂС‹ iokna
-    public final static String artiklID = "artiklID"; //ID Р°СЂС‚РёРєСѓР»Р°
-    public final static String sysprofID = "sysprofID"; //ID РїСЂРѕС„РёР»СЏ
-    public final static String sysfurnID = "sysfurnID"; //ID Р¤СѓСЂРЅРёС‚СѓСЂС‹
-    public final static String artglasID = "artglasID"; //ID Р·Р°РїРѕР»РЅРµРЅРёСЏ
-    public final static String elementID = "elementID"; //ID СЃРѕСЃС‚Р°РІРѕРІ
-    public final static String parentID = "parentID"; //ID СЂРѕРґРёС‚РµР»СЏ
+    public final static String ioknaParam = "ioknaParam"; //Параметры iokna
+    public final static String artiklID = "artiklID"; //ID артикула
+    public final static String sysprofID = "sysprofID"; //ID профиля
+    public final static String sysfurnID = "sysfurnID"; //ID Фурнитуры
+    public final static String artglasID = "artglasID"; //ID заполнения
+    public final static String elementID = "elementID"; //ID составов
+    public final static String parentID = "parentID"; //ID родителя
 
-    public final static String artiklKnob = "artiklKnob"; //Р СѓС‡РєР° РЅР° СЃС‚РІРѕСЂРєРµ
-    public final static String artiklLoop = "artiklLoop"; //РџРѕРґРІРµСЃ РЅР° СЃС‚РІРѕСЂРєРµ
-    public final static String artiklLock = "artiklLock"; //Р—Р°РјРѕРє РЅР° СЃС‚РІРѕСЂРєРµ
-    public final static String artiklRasc = "artiklRasc"; //Р Р°СЃРєР»Р°РґРєР°
+    public final static String artiklKnob = "artiklKnob"; //Ручка на створке
+    public final static String artiklLoop = "artiklLoop"; //Подвес на створке
+    public final static String artiklLock = "artiklLock"; //Замок на створке
+    public final static String artiklRasc = "artiklRasc"; //Раскладка
     
-    public final static String colorKnob = "colorKnob"; //Р¦РІРµС‚ СЂСѓС‡РєРё СЃС‚РІРѕСЂРєРё 
-    public final static String colorLoop = "colorLoop"; //Р¦РІРµС‚ РїРѕРґРІРµСЃР°
-    public final static String colorLock = "colorLock"; //Р¦РІРµС‚ Р·Р°РјРєР°
-    public final static String colorGlass = "colorGlass"; //Р¦РІРµС‚ СЃС‚РµРєР»Р°
-    public final static String colorRasc = "colorRasc"; //Р¦РІРµС‚ СЂР°СЃРєР»Р°РґРєРё
+    public final static String colorKnob = "colorKnob"; //Цвет ручки створки 
+    public final static String colorLoop = "colorLoop"; //Цвет подвеса
+    public final static String colorLock = "colorLock"; //Цвет замка
+    public final static String colorGlass = "colorGlass"; //Цвет стекла
+    public final static String colorRasc = "colorRasc"; //Цвет раскладки
 
-    public final static String colorID1 = "colorID1"; //РўРµРєСЃС‚СѓСЂР°
-    public final static String colorID2 = "colorID2"; //РўРµРєСЃС‚СѓСЂР°
-    public final static String colorID3 = "colorID3"; //РўРµРєСЃС‚СѓСЂР°   
+    public final static String colorID1 = "colorID1"; //Текстура
+    public final static String colorID2 = "colorID2"; //Текстура
+    public final static String colorID3 = "colorID3"; //Текстура   
     
-    public final static String typeOpen = "typeOpen"; //РўРёРї РѕС‚РєСЂС‹РІР°РЅРёСЏ    
-    public final static String positionKnob = "positionKnob"; //РџРѕР»РѕР¶РµРЅРёРµ СЂСѓС‡РєРё РЅР° СЃС‚РІРѕСЂРєРµ      
-    public final static String heightKnob = "heightKnob"; //Р’С‹СЃРѕС‚Р° СЂСѓС‡РєРё РЅР° СЃС‚РІРѕСЂРєРµ 
+    public final static String typeOpen = "typeOpen"; //Тип открывания    
+    public final static String positionKnob = "positionKnob"; //Положение ручки на створке      
+    public final static String heightKnob = "heightKnob"; //Высота ручки на створке 
     
-    public final static String stvorkaBot = "stvorkaBot"; //Р­Р»РµРјРµРЅС‚    
-    public final static String stvorkaRig = "stvorkaRig"; //Р­Р»РµРјРµРЅС‚    
-    public final static String stvorkaTop = "stvorkaTop"; //Р­Р»РµРјРµРЅС‚    
-    public final static String stvorkaLef = "stvorkaLef"; //Р­Р»РµРјРµРЅС‚ 
+    public final static String stvorkaBot = "stvorkaBot"; //Элемент    
+    public final static String stvorkaRig = "stvorkaRig"; //Элемент    
+    public final static String stvorkaTop = "stvorkaTop"; //Элемент    
+    public final static String stvorkaLef = "stvorkaLef"; //Элемент 
     public final static String stvorkaSide[] = {PKjson.stvorkaLef, PKjson.stvorkaBot, PKjson.stvorkaRig, PKjson.stvorkaTop};
 
     
-    public final static String horRasc = "horRasc"; //РєРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕС‘РјРѕРІ СЂР°СЃРєР»Р°РґРєРё
-    public final static String verRasc = "verRasc"; //РєРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕС‘РјРѕРІ СЂР°СЃРєР»Р°РґРєРё
+    public final static String horRasc = "horRasc"; //количество проёмов раскладки
+    public final static String verRasc = "verRasc"; //количество проёмов раскладки
 }

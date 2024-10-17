@@ -17,7 +17,7 @@ import startup.App;
 
 /**
  * <p>
- * РЈРєР°Р·Р°С‚СЊ РїСѓС‚СЊ Рє Р‘Р” </p>
+ * Указать путь к БД </p>
  */
 public class PathToDb extends javax.swing.JDialog {
 
@@ -29,7 +29,7 @@ public class PathToDb extends javax.swing.JDialog {
 
         initComponents();
 
-        //Р—Р°РіСЂСѓР·РєР° РїР°СЂР°РјРµС‚СЂРѕРІ РІС…РѕРґР°
+        //Загрузка параметров входа
         labMes.setText("");
         edHost.setText(eProp.server(num_base));
         edPath.setText(eProp.base(num_base));
@@ -39,14 +39,14 @@ public class PathToDb extends javax.swing.JDialog {
         onCaretUpdate(null);
     }
 
-    //РЎРѕРµРґРёРЅРµРЅРёРµ СЃ Р‘Р”.
+    //Соединение с БД.
     public void connectToDb() {
         new SwingWorker() {
             @Override
             protected Object doInBackground() throws Exception {
                 progressBar.setIndeterminate(true);
                 labMes.setForeground(Color.BLUE);
-                labMes.setText("РЈСЃС‚Р°РЅРѕРІРєР° СЃРѕРµРґРёРЅРµРЅРёСЏ СЃ Р±Р°Р·РѕР№ РґР°РЅРЅС‹С…");
+                labMes.setText("Установка соединения с базой данных");
                 eExcep pass = Conn.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), null);
                 if (pass == eExcep.yesConn) {
 
@@ -64,17 +64,17 @@ public class PathToDb extends javax.swing.JDialog {
                         dispose();
 
                     } else {
-                        //РџРѕР»СѓС‡РёРј СЂРѕР»СЊ РїРѕ РёРјРµРЅРё Р»РѕРіРёРЅР°
+                        //Получим роль по имени логина
                         Statement st = Conn.getConnection().createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
                         //ResultSet rs = st.executeQuery("SELECT DISTINCT a.rdb$role_name , b.rdb$user FROM rdb$roles a, rdb$user_privileges b WHERE a.rdb$role_name = b.rdb$relation_name AND b.rdb$user = '" + edUser.getText() + "'");
                         ResultSet rs = st.executeQuery("SELECT u.RDB$USER, u.RDB$RELATION_NAME FROM RDB$USER_PRIVILEGES u WHERE u.RDB$USER = '" + edUser.getText().toUpperCase() + "'");
                         while (rs.next()) {
                             eProp.role = rs.getString("RDB$RELATION_NAME").trim();
                             Conn.getConnection().close();
-                            //РЎРѕРµРґРёРЅРµРЅРёРµ СЃ РЅРѕРІС‹РјРё РїСЂРёРІРµР»РµРіРёСЏРјРё
+                            //Соединение с новыми привелегиями
                             pass = Conn.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), eProp.role);
                             if (pass == eExcep.yesConn) {
-                                //РџРѕ РёРјРµРЅРё СЂРѕР»Рё РѕС‚РєСЂРѕРµРј РЅСѓР¶РЅРѕРµ РїСЂРёР»РѕР¶РµРЅРёРµ
+                                //По имени роли откроем нужное приложение
                                 if (App.Top.frame == null && eProfile.P02.roleSet.contains(eProp.role)) {
                                     App.createApp(eProfile.P02);
                                 } else if (App.Top.frame == null && eProfile.P03.roleSet.contains(eProp.role)) {
@@ -132,7 +132,7 @@ public class PathToDb extends javax.swing.JDialog {
         btnClose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РЈСЃС‚Р°РЅРѕРІРєР° СЃРѕРµРґРёРЅРµРЅРёСЏ СЃ Р±Р°Р·РѕР№ РґР°РЅРЅС‹С…");
+        setTitle("Установка соединения с базой данных");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -145,12 +145,12 @@ public class PathToDb extends javax.swing.JDialog {
         jPanel4.setPreferredSize(new java.awt.Dimension(510, 200));
 
         labMes.setFont(frames.UGui.getFont(0,1));
-        labMes.setText("РћС€РёР±РєР° СЃРѕРµРґРёРЅРµРЅРёСЏ СЃ Р±Р°Р·РѕР№ РґР°РЅРЅС‹С…!");
+        labMes.setText("Ошибка соединения с базой данных!");
         labMes.setMaximumSize(new java.awt.Dimension(200, 14));
         labMes.setPreferredSize(new java.awt.Dimension(390, 14));
 
         labUser1.setFont(frames.UGui.getFont(0,0));
-        labUser1.setText("РЎРµСЂРІРµСЂ");
+        labUser1.setText("Сервер");
         labUser1.setAlignmentX(0.5F);
         labUser1.setMaximumSize(new java.awt.Dimension(60, 14));
         labUser1.setPreferredSize(new java.awt.Dimension(60, 14));
@@ -166,7 +166,7 @@ public class PathToDb extends javax.swing.JDialog {
         });
 
         labUser2.setFont(frames.UGui.getFont(0,0));
-        labUser2.setText("Р¤Р°Р№Р» Р‘Р”");
+        labUser2.setText("Файл БД");
         labUser2.setAlignmentX(0.5F);
         labUser2.setMaximumSize(new java.awt.Dimension(60, 14));
         labUser2.setPreferredSize(new java.awt.Dimension(60, 14));
@@ -184,7 +184,7 @@ public class PathToDb extends javax.swing.JDialog {
         btnFile.setFont(frames.UGui.getFont(0,0));
         btnFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b033.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnFile.setToolTipText(bundle.getString("Р’С‹Р±СЂР°С‚СЊ С„Р°Р№Р»")); // NOI18N
+        btnFile.setToolTipText(bundle.getString("Выбрать файл")); // NOI18N
         btnFile.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnFile.setMaximumSize(new java.awt.Dimension(27, 16));
         btnFile.setMinimumSize(new java.awt.Dimension(27, 26));
@@ -196,7 +196,7 @@ public class PathToDb extends javax.swing.JDialog {
         });
 
         labUser3.setFont(frames.UGui.getFont(0,0));
-        labUser3.setText("РџРѕСЂС‚");
+        labUser3.setText("Порт");
         labUser3.setAlignmentX(0.5F);
 
         edPort.setFont(frames.UGui.getFont(0,0));
@@ -205,13 +205,13 @@ public class PathToDb extends javax.swing.JDialog {
         edPort.setPreferredSize(new java.awt.Dimension(60, 18));
 
         labUser.setFont(frames.UGui.getFont(0,0));
-        labUser.setText("РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ");
+        labUser.setText("Пользователь");
         labUser.setAlignmentX(0.5F);
         labUser.setMaximumSize(new java.awt.Dimension(120, 14));
         labUser.setPreferredSize(new java.awt.Dimension(96, 14));
 
         labPass.setFont(frames.UGui.getFont(0,0));
-        labPass.setText("РџР°СЂРѕР»СЊ");
+        labPass.setText("Пароль");
         labPass.setAlignmentX(0.5F);
         labPass.setMaximumSize(new java.awt.Dimension(120, 14));
         labPass.setPreferredSize(new java.awt.Dimension(96, 14));
@@ -331,7 +331,7 @@ public class PathToDb extends javax.swing.JDialog {
 
         btnClose.setFont(frames.UGui.getFont(0,0));
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b029.gif"))); // NOI18N
-        btnClose.setText("РћС‚РјРµРЅР°");
+        btnClose.setText("Отмена");
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnClose.setMaximumSize(new java.awt.Dimension(80, 25));
@@ -368,7 +368,7 @@ public class PathToDb extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    //РЎРѕР±С‹С‚РёРµ РІРІРѕРґР° РґР°РЅРЅС‹С…
+    //Событие ввода данных
     private void onCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_onCaretUpdate
         labMes.setText("");
         if (!edPath.getText().isEmpty()
@@ -382,11 +382,11 @@ public class PathToDb extends javax.swing.JDialog {
         }
 }//GEN-LAST:event_onCaretUpdate
 
-    //РќР°Р¶Р°Р» РєРЅРѕРїРєСѓ "РћРљ"
+    //Нажал кнопку "ОК"
     private void btnOk(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOk
         connectToDb();
 }//GEN-LAST:event_btnOk
-    //РќР°Р¶Р°Р» РєРЅРѕРїРєСѓ "РћРўРњР•РќРђ"
+    //Нажал кнопку "ОТМЕНА"
     private void btnClose(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClose
         if (App.Top.frame == null) {
             System.exit(0);

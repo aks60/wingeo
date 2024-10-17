@@ -31,14 +31,14 @@ public class DefCellEditorNumb extends DefaultCellEditor {
 
             @Override
             public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-                if (string != null && string.length() > 1 || UCom.check(string, patt)) { //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                if (string != null && string.length() > 1 || UCom.check(string, patt)) { //проверка на коррекность ввода
                     super.insertString(fb, offset, string, attr);
                 }
             }
 
             @Override
             public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String string, AttributeSet attrs) throws BadLocationException {
-                if (string != null && string.length() > 1 || UCom.check(string, patt)) {  //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                if (string != null && string.length() > 1 || UCom.check(string, patt)) {  //проверка на коррекность ввода
                     super.replace(fb, offset, length, string, attrs);
                 }
             }
@@ -55,14 +55,14 @@ public class DefCellEditorNumb extends DefaultCellEditor {
 
             @Override
             public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-                if (string != null && string.length() > 1 || UCom.check(string, patt)) { //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                if (string != null && string.length() > 1 || UCom.check(string, patt)) { //проверка на коррекность ввода
                     super.insertString(fb, offset, string, attr);
                 }
             }
 
             @Override
             public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String string, AttributeSet attrs) throws BadLocationException {
-                if (string != null && string.length() > 1 || UCom.check(string, patt)) {  //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                if (string != null && string.length() > 1 || UCom.check(string, patt)) {  //проверка на коррекность ввода
                     super.replace(fb, offset, length, string, attrs);
                 }
             }
@@ -95,7 +95,7 @@ public class DefCellEditorNumb extends DefaultCellEditor {
             return super.getTableCellEditorComponent(table, val, isSelected, row, column);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:DefCellEditor.getTableCellEditorComponent() " + e);
+            System.err.println("Ошибка:DefCellEditor.getTableCellEditorComponent() " + e);
             return null;
         }
     }

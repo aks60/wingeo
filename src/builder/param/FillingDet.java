@@ -19,7 +19,7 @@ import java.util.Set;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 
-//Р—Р°РїРѕР»РЅРµРЅРёСЏ
+//Заполнения
 public class FillingDet extends Par5s {
 
     public FillingDet(Wincalc winc) {
@@ -28,11 +28,11 @@ public class FillingDet extends Par5s {
 
     public boolean filter(HashMap<Integer, String> mapParam, ElemSimple elem5e, Record glasdetRec) {
 
-        List<Record> paramList = eGlaspar2.filter(glasdetRec.getInt(eGlasdet.id)); //СЃРїРёСЃРѕРє РїР°СЂР°РјРµС‚СЂРѕРІ РґРµС‚Р°Р»РёР·Р°С†РёРё  
+        List<Record> paramList = eGlaspar2.filter(glasdetRec.getInt(eGlasdet.id)); //список параметров детализации  
         if (filterParamDef(paramList) == false) {
-            return false; //РїР°СЂР°РјРµС‚СЂС‹ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+            return false; //параметры по умолчанию
         }
-        //Р¦РёРєР» РїРѕ РїР°СЂР°РјРµС‚СЂР°Рј Р·Р°РїРѕР»РЅРµРЅРёСЏ
+        //Цикл по параметрам заполнения
         for (Record rec : paramList) {
             if (check(mapParam, elem5e, rec) == false) {
                 return false;
@@ -46,8 +46,8 @@ public class FillingDet extends Par5s {
         int grup = rec.getInt(GRUP);
         try {
             switch (grup) {
-                case 14000: //Р”Р»СЏ С‚РµС…РЅРѕР»РѕРіРёС‡РµСЃРєРѕРіРѕ РєРѕРґР° РєРѕРЅС‚РµР№РЅРµСЂР°
-                case 15000: //Р”Р»СЏ С‚РµС…РЅРѕР»РѕРіРёС‡РµСЃРєРѕРіРѕ РєРѕРґР° РєРѕРЅС‚РµР№РЅРµСЂР° 
+                case 14000: //Для технологического кода контейнера
+                case 15000: //Для технологического кода контейнера 
                 {
                     ElemSimple elem = winc.root.frames.get(Layout.BOTT);
                     if (!UPar.is_STRING_XX000(rec.getStr(TEXT), elem)) {
@@ -55,8 +55,8 @@ public class FillingDet extends Par5s {
                     }
                 }
                 break;
-                case 14001: //Р•СЃР»Рё РїСЂРёР·РЅР°Рє СЃРѕСЃС‚Р°РІР° 
-                case 15001: //Р•СЃР»Рё РїСЂРёР·РЅР°Рє СЃРѕСЃС‚Р°РІР°    
+                case 14001: //Если признак состава 
+                case 15001: //Если признак состава    
                 {
                     ElemSimple e = winc.root.frames.get(Layout.BOTT);
                     if (UPar.is_11001_11002_12001_12002_13001_14001_15001_33001_34001(rec.getStr(TEXT), e) == false) {
@@ -64,46 +64,46 @@ public class FillingDet extends Par5s {
                     }
                 }
                 break;
-                case 14005: //РўРёРї РїСЂРѕРµРјР° 
-                case 15005: //РўРёРї РїСЂРѕРµРјР°
+                case 14005: //Тип проема 
+                case 15005: //Тип проема
                     if (!UPar.is_13003_14005_15005_37008(rec.getStr(TEXT), elem5e)) {
                         return false;
                     }
                     break;
-                case 14008: //Р­С„С„РµРєС‚РёРІРЅРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ РёР·Рґ., РјРј 
-                case 15008: //Р­С„С„РµРєС‚РёРІРЅРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ РёР·Рґ., РјРј                    
+                case 14008: //Эффективное заполнение изд., мм 
+                case 15008: //Эффективное заполнение изд., мм                    
                     if (UPar.is_1008_11008_12008_14008_15008_31008_34008_40008(rec.getStr(TEXT), winc) == false) {
                         return false;
                     }
                     break;
-                case 14009: //РђСЂРѕС‡РЅРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ 
-                case 15009: //РђСЂРѕС‡РЅРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ  
-                    if ("Р”Р°".equals(rec.getStr(TEXT)) && elem5e.owner.type != Type.ARCH) {
+                case 14009: //Арочное заполнение 
+                case 15009: //Арочное заполнение  
+                    if ("Да".equals(rec.getStr(TEXT)) && elem5e.owner.type != Type.ARCH) {
                         return false;
-                    } else if ("РќРµС‚".equals(rec.getStr(TEXT)) && elem5e.owner.type == Type.ARCH) {
+                    } else if ("Нет".equals(rec.getStr(TEXT)) && elem5e.owner.type == Type.ARCH) {
                         return false;
                     }
                     break;
-                case 14017: //РљРѕРґ СЃРёСЃС‚РµРјС‹ СЃРѕРґРµСЂР¶РёС‚ СЃС‚СЂРѕРєСѓ 
-                case 15017: //РљРѕРґ СЃРёСЃС‚РµРјС‹ СЃРѕРґРµСЂР¶РёС‚ СЃС‚СЂРѕРєСѓ                    
+                case 14017: //Код системы содержит строку 
+                case 15017: //Код системы содержит строку                    
                     if (UPar.is_13017_14017_24017_25017_31017_33017_34017_37017_38017(rec.getStr(TEXT), winc) == false) {
                         return false;
                     }
                     break;
-                case 14030:  //РљРѕР»РёС‡РµСЃС‚РІРѕ 
+                case 14030:  //Количество 
                     mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 14040:  //РџРѕСЂРѕРі СЂР°СЃС‡РµС‚Р°, РјРј 
+                case 14040:  //Порог расчета, мм 
                     mapParam.put(rec.getInt(GRUP), rec.getStr(TEXT));
                     break;
-                case 14050:  //РЁР°Рі, РјРј 
+                case 14050:  //Шаг, мм 
                     mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 14060:  //РљРѕР»РёС‡РµСЃС‚РІРѕ РЅР° С€Р°Рі 
+                case 14060:  //Количество на шаг 
                     mapParam.put(rec.getInt(GRUP), rec.getStr(TEXT));
                     break;
-                case 14065:  //РћРіСЂР°РЅРёС‡РµРЅРёРµ СѓРіР»Р°, В° РёР»Рё РўРѕС‡РЅС‹Р№ СѓРіРѕР» 
-                case 15055: //РћРіСЂР°РЅРёС‡РµРЅРёРµ СѓРіР»Р°, В° РёР»Рё РўРѕС‡РЅС‹Р№ СѓРіРѕР»  
+                case 14065:  //Ограничение угла, ° или Точный угол 
+                case 15055: //Ограничение угла, ° или Точный угол  
                 {
                     Geometry g = elem5e.area.getGeometryN(0);
                     for (int i = 0; i < g.getNumPoints(); i++) {
@@ -116,26 +116,26 @@ public class FillingDet extends Par5s {
                     }
                     return false;
                 }
-                case 14067:  //РљРѕРґС‹ РѕСЃРЅРѕРІРЅРѕР№ С‚РµРєСЃС‚СѓСЂС‹ РёР·РґРµР»РёСЏ 
-                case 15067:  //РљРѕРґС‹ РѕСЃРЅРѕРІРЅРѕР№ С‚РµРєСЃС‚СѓСЂС‹ РёР·РґРµР»РёСЏ    
+                case 14067:  //Коды основной текстуры изделия 
+                case 15067:  //Коды основной текстуры изделия    
                     if (UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID1) == false) {
                         return false;
                     }
                     break;
-                case 14068:  //РљРѕРґС‹ РІРЅСѓС‚СЂ. С‚РµРєСЃС‚СѓСЂС‹ РёР·РґРµР»РёСЏ 
-                case 15068:  //РљРѕРґС‹ РІРЅСѓС‚СЂ. С‚РµРєСЃС‚СѓСЂС‹ РёР·РґРµР»РёСЏ   
+                case 14068:  //Коды внутр. текстуры изделия 
+                case 15068:  //Коды внутр. текстуры изделия   
                     if (UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID2) == false) {
                         return false;
                     }
                     break;
-                case 14069:  //РљРѕРґС‹ РІРЅРµС€РЅ. С‚РµРєСЃС‚СѓСЂС‹ РёР·РґРµР»РёСЏ 
-                case 15069:  //РљРѕРґС‹ РІРЅРµС€РЅ. С‚РµРєСЃС‚СѓСЂС‹ РёР·РґРµР»РёСЏ     
+                case 14069:  //Коды внешн. текстуры изделия 
+                case 15069:  //Коды внешн. текстуры изделия     
                     if (UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID3) == false) {
                         return false;
                     }
                     break;
-                case 14081: //Р•СЃР»Рё Р°СЂС‚РёРєСѓР» РїСЂРѕС„РёР»СЏ РєРѕРЅС‚СѓСЂР° 
-                case 15081: //Р•СЃР»Рё Р°СЂС‚РёРєСѓР» РїСЂРѕС„РёР»СЏ РєРѕРЅС‚СѓСЂР° 
+                case 14081: //Если артикул профиля контура 
+                case 15081: //Если артикул профиля контура 
                 {
                     ElemSimple elem = (elem5e.owner.frames.isEmpty() == false) ? elem5e.owner.frames.get(Layout.BOTT) : elem5e.root.frames.get(Layout.BOTT);
                     if (rec.getStr(TEXT).equals(elem.artiklRecAn.getStr(eArtikl.code)) == false) {
@@ -143,8 +143,8 @@ public class FillingDet extends Par5s {
                     }
                 }
                 break;
-                case 14095: //Р•СЃР»Рё РїСЂРёР·РЅР°Рє СЃРёСЃС‚РµРјС‹ РєРѕРЅСЃС‚СЂСѓРєС†РёРё 
-                case 15095: //Р•СЃР»Рё РїСЂРёР·РЅР°Рє СЃРёСЃС‚РµРјС‹ РєРѕРЅСЃС‚СЂСѓРєС†РёРё  
+                case 14095: //Если признак системы конструкции 
+                case 15095: //Если признак системы конструкции  
                 {
                     Record systreeRec = eSystree.find(winc.nuni);
                     String[] arr = rec.getStr(TEXT).split(";");
@@ -160,40 +160,40 @@ public class FillingDet extends Par5s {
                     }
                 }
                 break;
-                case 15010:  //РЈСЃРµРєР°С‚СЊ РЅРёР¶РЅРёР№ С€С‚Р°РїРёРє 
-                case 15011:  //Р Р°СЃС‡РµС‚ СЂРµР·Р° С€С‚Р°РїРёРєР° 
+                case 15010:  //Усекать нижний штапик 
+                case 15011:  //Расчет реза штапика 
                     mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 15013:  //РџРѕРґР±РѕСЂ РґРёСЃС‚Р°РЅС†РёРѕРЅРЅС‹С… РІСЃС‚Р°РІРѕРє РїСЂРѕР»РµС‚Р° 
+                case 15013:  //Подбор дистанционных вставок пролета 
                     message(rec.getInt(GRUP));
                     break;
-                case 15027:  //Р Р°СЃСЃС‡РёС‚С‹РІР°С‚СЊ РґР»СЏ РїСЂРѕС„РёР»СЏ 
-                    if ("СЃ СѓРїР»РѕС‚РЅРёС‚РµР»РµРј".equals(rec.getStr(TEXT)) == true && elem5e.artiklRec.getInt(eArtikl.with_seal) == 0) {
+                case 15027:  //Рассчитывать для профиля 
+                    if ("с уплотнителем".equals(rec.getStr(TEXT)) == true && elem5e.artiklRec.getInt(eArtikl.with_seal) == 0) {
                         return false;
                     }
                     break;
-                case 15030:  //[ * РєРѕСЌС„-С‚ ] 
+                case 15030:  //[ * коэф-т ] 
                     mapParam.put(rec.getInt(GRUP), rec.getStr(TEXT));
                     break;
-                case 15040:  //РљРѕР»РёС‡РµСЃС‚РІРѕ 
+                case 15040:  //Количество 
                     mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 15045:  //Р”Р»РёРЅР°, РјРј 
+                case 15045:  //Длина, мм 
                     mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 15050:  //РџРѕРїСЂР°РІРєР°, РјРј 
+                case 15050:  //Поправка, мм 
                     mapParam.put(rec.getInt(GRUP), rec.getStr(TEXT));
                     break;
-                case 15051:  //РЈРґР»РёРЅРµРЅРёРµ РЅР° РѕРґРёРЅ РїРѕРі.Рј., РјРј 
+                case 15051:  //Удлинение на один пог.м., мм 
                     if (elem5e.spcRec.getParam("0", 31052).equals(rec.getStr(TEXT)) == false) {
                         mapParam.put(rec.getInt(GRUP), rec.getStr(TEXT));
                     }
                     break;
                 default:
-                    assert !(grup > 0 && grup < 50000) : "РљРѕРґ " + grup + "  РЅРµ РѕР±СЂР°Р±РѕС‚Р°РЅ!!!";
+                    assert !(grup > 0 && grup < 50000) : "Код " + grup + "  не обработан!!!";
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:param.FillingDet.check()  parametr=" + grup + "    " + e);
+            System.err.println("Ошибка:param.FillingDet.check()  parametr=" + grup + "    " + e);
             return false;
         }
         return true;

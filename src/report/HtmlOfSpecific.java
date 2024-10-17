@@ -25,7 +25,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-//РЎРїРµС†РёС„РёРєР°С†РёСЏ
+//Спецификация
 public class HtmlOfSpecific {
 
     private static int npp = 0;
@@ -40,7 +40,7 @@ public class HtmlOfSpecific {
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile, "UTF-8");
 
-            //Р—Р°РїРѕР»РЅРёРј РѕС‚С‡С‘С‚
+            //Заполним отчёт
             load1(projectRec, doc);
 
             String str = doc.html();
@@ -49,8 +49,8 @@ public class HtmlOfSpecific {
             ExecuteCmd.documentType(null);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERROR*2 " + e, "Р’РќРРњРђРќРР•!", 1);
-            System.err.println("РћС€РёР±РєР°:HtmlOfSpecific.specific()" + e);
+            JOptionPane.showMessageDialog(null, "ERROR*2 " + e, "ВНИМАНИЕ!", 1);
+            System.err.println("Ошибка:HtmlOfSpecific.specific()" + e);
         }
     }
 
@@ -61,14 +61,14 @@ public class HtmlOfSpecific {
         List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
         Wincalc winc = new builder.Wincalc();
 
-        //Р¦РёРєР» РїРѕ РєРѕРЅСЃС‚СЂСѓРєС†РёСЏРј Р·Р°РєР°Р·Р°
+        //Цикл по конструкциям заказа
         for (Record prjprodRec : prjprodList) {
             String script = prjprodRec.getStr(ePrjprod.script);
             winc.build(script);
             winc.specification(true);
-            spcList.addAll(winc.listSpec); //РґРѕР±Р°РІРёРј СЃРїРµС†РёС„РёРєР°С†РёСЋ
+            spcList.addAll(winc.listSpec); //добавим спецификацию
             
-            List<SpcRecord> list = SpcTariffic.kits(prjprodRec, winc, true); //РґРѕР±Р°РІРёРј РєРѕРјРїР»РµРєС‚С‹
+            List<SpcRecord> list = SpcTariffic.kits(prjprodRec, winc, true); //добавим комплекты
             list.forEach(rec -> kitList.add(new RSpecific(rec)));
         }
         
@@ -82,23 +82,23 @@ public class HtmlOfSpecific {
         List<RSpecific> s3 = RSpecific.groups(listSpc.stream().filter(s -> s.spc().artiklRec().getInt(eArtikl.level1) == 3).collect(toList()));
         List<RSpecific> s5 = listSpc.stream().filter(s -> s.spc().artiklRec().getInt(eArtikl.level1) == 5).collect(toList());
 
-        doc.getElementById("h01").text("РЎРјРµС‚Р° в„–" + projectRec.getStr(eProject.num_ord));       
+        doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord));       
         Elements template = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
         doc.getElementsByTag("tbody").get(0).html("");
 
-        template.get(0).getElementsByTag("td").get(0).selectFirst("b").text("РџР РћР¤РР›Р");
+        template.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ПРОФИЛИ");
         doc.getElementsByTag("tbody").append(template.get(0).html());
         s1.forEach(spc -> templateAdd(template, spc, doc));
-        template.get(0).getElementsByTag("td").get(0).selectFirst("b").text("РђРљРЎР•РЎРЎРЈРђР Р«");
+        template.get(0).getElementsByTag("td").get(0).selectFirst("b").text("АКСЕССУАРЫ");
         doc.getElementsByTag("tbody").append(template.get(0).html());
         s2.forEach(spc -> templateAdd(template, spc, doc));
-        template.get(0).getElementsByTag("td").get(0).selectFirst("b").text("РЈРџР›РћРўРќР•РќРРЇ");
+        template.get(0).getElementsByTag("td").get(0).selectFirst("b").text("УПЛОТНЕНИЯ");
         doc.getElementsByTag("tbody").append(template.get(0).html());
         s3.forEach(spc -> templateAdd(template, spc, doc));
-        template.get(0).getElementsByTag("td").get(0).selectFirst("b").text("Р—РђРџРћР›РќР•РќРРЇ");
+        template.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ЗАПОЛНЕНИЯ");
         doc.getElementsByTag("tbody").append(template.get(0).html());
         s5.forEach(spc -> templateAdd(template, spc, doc));
-        template.get(0).getElementsByTag("td").get(0).selectFirst("b").text("РљРћРњРџР›Р•РљРўР«");
+        template.get(0).getElementsByTag("td").get(0).selectFirst("b").text("КОМПЛЕКТЫ");
         doc.getElementsByTag("tbody").append(template.get(0).html());
         kitList.forEach(spc -> templateAdd(template, spc, doc));
 

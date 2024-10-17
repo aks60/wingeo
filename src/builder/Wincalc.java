@@ -47,34 +47,34 @@ import javax.swing.ImageIcon;
 
 public class Wincalc {
 
-    public Integer nuni = 0; //РєРѕРґ СЃРёСЃС‚РµРјС‹  
-    public double spcId = 0; //РґР»СЏ РіРµРЅРµСЂР°С†РёРё РєР»СЋС‡Р° РІ СЃРїРµС†РёС„РёРєР°С†РёРё
-    public int colorID1 = -1, colorID2 = 1, colorID3 = -1; //Р±Р°Р·РѕРІС‹Р№,РІРЅСѓС‚СЂ,РІРЅРµС‰РЅРёР№ 
-    public Record syssizRec = null; //СЃРёСЃС‚РµРјР° РєРѕРЅСЃС‚Р°РЅС‚
-    public double costpric1 = 0; //СЃРµР±РµСЃС‚. Р·Р° РµРґ. Р±РµР· РѕС‚С…РѕРґР°     
-    public double costpric2 = 0; //СЃРµР±РµСЃС‚. Р·Р° РµРґ. СЃ РѕС‚С…РѕРґРѕРј
-    public double price2 = 0; //СЃС‚РѕРёРјРѕСЃС‚СЊ Р±РµР· СЃРєРёРґРєРё
-    public double cost2 = 0; //СЃС‚РѕРёРјРѕСЃС‚СЊ СЃ С‚РµС…РЅРѕР»РѕРіРёС‡РµСЃРєРѕР№ СЃРєРёРґРєРѕР№
-    public double weight = 0; //РјР°СЃСЃР° РєРѕРЅСЃС‚СЂСѓРєС†РёРё  
-    public double count = 0; //РєРѕР»РёС‡. РµРґРёРЅРёС†
-    public BufferedImage bufferImg = null;  //РѕР±СЂР°Р· СЂРёСЃСѓРЅРєР°
-    public ImageIcon imageIcon = null; //СЂРёСЃСѓРЅРѕРє РєРѕРЅСЃС‚СЂСѓРєС†РёРё
-    public Graphics2D gc2d = null; //РіСЂР°С„РёС‡РµСЃРєРёР№ РєРѕС‚РµРєСЃС‚ СЂРёСЃСѓРЅРєР°  
-    public double scale = 1; //РєРѕСЌС„С„РёС†РёРµРЅС‚ СЃР¶Р°С‚РёСЏ
+    public Integer nuni = 0; //код системы  
+    public double spcId = 0; //для генерации ключа в спецификации
+    public int colorID1 = -1, colorID2 = 1, colorID3 = -1; //базовый,внутр,внещний 
+    public Record syssizRec = null; //система констант
+    public double costpric1 = 0; //себест. за ед. без отхода     
+    public double costpric2 = 0; //себест. за ед. с отходом
+    public double price2 = 0; //стоимость без скидки
+    public double cost2 = 0; //стоимость с технологической скидкой
+    public double weight = 0; //масса конструкции  
+    public double count = 0; //колич. единиц
+    public BufferedImage bufferImg = null;  //образ рисунка
+    public ImageIcon imageIcon = null; //рисунок конструкции
+    public Graphics2D gc2d = null; //графический котекст рисунка  
+    public double scale = 1; //коэффициент сжатия
     public Canvas canvas = null;
-    public GsonRoot gson = null; //РѕР±СЉРµРєС‚РЅР°СЏ РјРѕРґРµР»СЊ РєРѕРЅСЃС‚СЂСѓРєС†РёРё 1-РіРѕ СѓСЂРѕРІРЅСЏ
-    public AreaSimple root = null; //РѕР±СЉРµРєС‚РЅР°СЏ РјРѕРґРµР»СЊ РєРѕРЅСЃС‚СЂСѓРєС†РёРё 2-РіРѕ СѓСЂРѕРІРЅСЏ    
+    public GsonRoot gson = null; //объектная модель конструкции 1-го уровня
+    public AreaSimple root = null; //объектная модель конструкции 2-го уровня    
 
     public ArrayList<ListenerKey> keyboardPressed = new ArrayList<ListenerKey>();
     public ArrayList<ListenerMouse> mousePressed = new ArrayList<ListenerMouse>();
     public ArrayList<ListenerMouse> mouseDragged = new ArrayList<ListenerMouse>();
 
-    public HashMap<Integer, Record> mapPardef = new HashMap<>(); //РїР°СЂ. РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ + РЅР°Р»РѕР¶РµРЅРЅС‹Рµ РїР°СЂ. РєР»РёРµРЅС‚Р°
-    public ArrayCom<AreaSimple> listArea = new ArrayCom<AreaSimple>(root); //СЃРїРёСЃРѕРє Р°СЂРµР°.
-    public ArrayCom<ElemSimple> listElem = new ArrayCom<ElemSimple>(root); //СЃРїРёСЃРѕРє СЌР»РµРј.
-    public ArrayCom<Com5t> listAll = new ArrayCom<Com5t>(root); //СЃРїРёСЃРѕРє РІСЃРµС… РєРѕРјРїРѕРЅРµРЅС‚РѕРІ (area + elem)
-    public ArraySpc<SpcRecord> listSpec = new ArraySpc<SpcRecord>(); //СЃРїРµС†РёС„РёРєР°С†РёСЏ
-    public ArrayJoin listJoin = new ArrayJoin(); //СЃРїРёСЃРѕРє СЃРѕРµРґРёРЅРµРЅРёР№ СЂР°Рј Рё СЃС‚РІРѕСЂРѕРє 
+    public HashMap<Integer, Record> mapPardef = new HashMap<>(); //пар. по умолчанию + наложенные пар. клиента
+    public ArrayCom<AreaSimple> listArea = new ArrayCom<AreaSimple>(root); //список ареа.
+    public ArrayCom<ElemSimple> listElem = new ArrayCom<ElemSimple>(root); //список элем.
+    public ArrayCom<Com5t> listAll = new ArrayCom<Com5t>(root); //список всех компонентов (area + elem)
+    public ArraySpc<SpcRecord> listSpec = new ArraySpc<SpcRecord>(); //спецификация
+    public ArrayJoin listJoin = new ArrayJoin(); //список соединений рам и створок 
 
     public Wincalc() {
     }
@@ -84,15 +84,15 @@ public class Wincalc {
     }
 
     public void build(String script) {
-        //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script))); //РґР»СЏ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ
+        //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script))); //для тестирования
         //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
 
-        //РРЅРёС‚ СЃРІРѕР№СЃС‚РІ
+        //Инит свойств
         spcId = 0;
         mapPardef.clear();
         List.of((List) listArea, (List) listElem, (List) listSpec, (List) listAll, (List) listJoin).forEach(el -> el.clear());
 
-        //РЎРѕР·РґР°РЅРёРµ Gson РєР»Р°СЃСЃР°
+        //Создание Gson класса
         gson = new GsonBuilder().create().fromJson(script, GsonRoot.class);
 
         JsonParser parser = new JsonParser();
@@ -100,19 +100,19 @@ public class Wincalc {
 
         gson.setOwner(this);
 
-        //РРЅРёС‚ РєРѕРЅСЃС‚СЂСѓРєС‚РёРІР°
+        //Инит конструктива
         nuni = (gson.nuni == null) ? -3 : gson.nuni;
-        Record sysprofRec = eSysprof.find2(nuni, UseArtiklTo.FRAME); //РїРµСЂРІР°СЏ.Р·Р°РїРёСЃСЊ РєРѕСЂРѕР±РєРё
-        Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //Р°СЂС‚РёРєСѓР»
-        syssizRec = eSyssize.find(artiklRec); //СЃРёСЃС‚РµРјРЅС‹Рµ РєРѕРЅСЃС‚Р°РЅС‚С‹
+        Record sysprofRec = eSysprof.find2(nuni, UseArtiklTo.FRAME); //первая.запись коробки
+        Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
+        syssizRec = eSyssize.find(artiklRec); //системные константы
         colorID1 = (gson.color1 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1;
         colorID2 = (gson.color2 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2;
         colorID3 = (gson.color3 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3;
 
-        //РџР°СЂР°РјРµС‚СЂС‹ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+        //Параметры по умолчанию
         eSyspar1.filter(nuni).forEach(syspar1Rec -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), syspar1Rec));
 
-        //Р“Р»Р°РІРЅРѕРµ РѕРєРЅРѕ
+        //Главное окно
         if (Type.RECTANGL == gson.type) {
             root = new AreaRectangl(this, gson);
 
@@ -126,10 +126,10 @@ public class Wincalc {
             root = new AreaDoor(this, gson);
         }
 
-        //Р­Р»РµРјРµРЅС‚С‹ РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+        //Элементы конструкции
         creator(root, gson);
 
-        //РћР±РЅРѕРІР»РµРЅРёРµ РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+        //Обновление конструкции
         location();
     }
 
@@ -141,13 +141,13 @@ public class Wincalc {
 
                     if (Type.STVORKA == js.type) {
                         AreaSimple area5e = new AreaStvorka(this, js, owner);
-                        owner.childs.add(area5e); //РґРѕР±Р°РІРёРј СЂРµР±С‘РЅРєР° СЂРѕРґРёС‚РµР»СЋ
-                        hm.put(area5e, js); //РїРѕРіСЂСѓР¶РµРЅРёРµ Р°СЂРµР°
+                        owner.childs.add(area5e); //добавим ребёнка родителю
+                        hm.put(area5e, js); //погружение ареа
 
                     } else if (Type.AREA == js.type) {
                         AreaSimple area5e = new AreaSimple(this, js, owner);
-                        owner.childs.add(area5e); //РґРѕР±Р°РІРёРј СЂРµР±С‘РЅРєР° СЂРѕРґРёС‚РµР»СЋ
-                        hm.put(area5e, js); //РїРѕРіСЂСѓР¶РµРЅРёРµ Р°СЂРµР°
+                        owner.childs.add(area5e); //добавим ребёнка родителю
+                        hm.put(area5e, js); //погружение ареа
 
                     } else if (Type.FRAME_SIDE == js.type) {
                         ElemFrame elem5e = new ElemFrame(this, js.id, js, owner);
@@ -155,58 +155,58 @@ public class Wincalc {
 
                     } else if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).contains(js.type)) {
                         ElemCross elem5e = new ElemCross(this, js, owner);                        
-                        owner.childs.add(elem5e); //РґРѕР±Р°РІРёРј СЂРµР±С‘РЅРєР° СЂРѕРґРёС‚РµР»СЋ
+                        owner.childs.add(elem5e); //добавим ребёнка родителю
                         //UGeo.normalizeElem(elem5e);
 
                     } else if (Type.GLASS == js.type) {
                         ElemGlass elem5e = new ElemGlass(this, js, owner);
-                        owner.childs.add(elem5e); //РґРѕР±Р°РІРёРј СЂРµР±С‘РЅРєР° СЂРѕРґРёС‚РµР»СЋ
+                        owner.childs.add(elem5e); //добавим ребёнка родителю
 
                     } else if (Type.MOSQUIT == js.type) {
                         ElemMosquit elem5e = new ElemMosquit(this, js, owner);
-                        owner.childs.add(elem5e); //РґРѕР±Р°РІРёРј СЂРµР±С‘РЅРєР° СЂРѕРґРёС‚РµР»СЋ
+                        owner.childs.add(elem5e); //добавим ребёнка родителю
 
                     } else if (Type.BLINDS == js.type) {
                         ElemBlinds elem5e = new ElemBlinds(this, js, owner);
-                        owner.childs.add(elem5e); //РґРѕР±Р°РІРёРј СЂРµР±С‘РЅРєР° СЂРѕРґРёС‚РµР»СЋ
+                        owner.childs.add(elem5e); //добавим ребёнка родителю
                     }
                 }
-                //РўРµРїРµСЂСЊ РІР»РѕР¶РµРЅРЅС‹Рµ СЌР»РµРјРµРЅС‚С‹
+                //Теперь вложенные элементы
                 for (Map.Entry<AreaSimple, GsonElem> entry : hm.entrySet()) {
                     creator(entry.getKey(), entry.getValue());
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Wincalc.elements(*) " + e);
+            System.err.println("Ошибка:Wincalc.elements(*) " + e);
         }
     }
 
-    //РљР°Р»СЊРє.РєРѕРѕСЂРґ. СЌР»РµРјРµРЅС‚РѕРІ РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+    //Кальк.коорд. элементов конструкции
     public void location() {
         try {
-            //Р“Р»Р°РІРЅРѕРµ РѕРєРЅРѕ РѕРіСЂР°РЅРёС‡РµРЅРЅРѕРµ СЃС‚РѕСЂРѕРЅР°РјРё СЂР°РјС‹
+            //Главное окно ограниченное сторонами рамы
             root.setLocation();
 
-            //РРЅРёС‚. Р°СЂС‚РёРєСѓР»РѕРІ СЌР»РµРјРµРЅС‚РѕРІ РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+            //Инит. артикулов элементов конструкции
             listElem.forEach(e -> e.initArtikle());
 
-            //РЎРѕР·РґР°РЅРёРµ Рё РєРѕСЂСЂРµРєС†РёСЏ СЃС‚РѕСЂРѕРЅ СЃС‚РІРѕСЂРєРё
+            //Создание и коррекция сторон створки
             if (root.type == Type.DOOR) {
                 listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
             }
 
-            //РџРёР»РёРј РїРѕР»РёРіРѕРЅС‹ РЅР° Р°СЂРµР° Рё СЂР°СЃСЃС‡С‘С‚ РїРѕР»РёРіРѕРЅР° РёРјРїРѕСЃС‚РѕРІ
+            //Пилим полигоны на ареа и рассчёт полигона импостов
             listElem.filter(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).forEach(e -> e.setLocation());
 
-            //РЎРѕР·РґР°РЅРёРµ Рё РєРѕСЂСЂРµРєС†РёСЏ СЃС‚РѕСЂРѕРЅ СЃС‚РІРѕСЂРєРё
+            //Создание и коррекция сторон створки
             if (root.type != Type.DOOR) {
                 listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
             }
 
-            //РРЅРёС‚. Р°СЂС‚РёРєСѓР»РѕРІ СЃС‚РІРѕСЂРєРё
+            //Инит. артикулов створки
             listArea.filter(Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
 
-            //Р Р°СЃСЃС‡С‘С‚ РїРѕР»РёРіРѕРЅРѕРІ СЃС‚РѕСЂРѕРЅ СЂР°РјС‹
+            //Рассчёт полигонов сторон рамы
             if (root.type == Type.DOOR) {
                 for (ElemSimple elemSimple : listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS)) {
                     elemSimple.setLocation();
@@ -215,32 +215,32 @@ public class Wincalc {
                 listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
             }
 
-            //РЎРѕРµРґРёРЅРµРЅРёСЏ СЂР°Рј, РёРјРїРѕСЃС‚РѕРІ Рё СЃС‚РІРѕСЂРѕРє             
-            root.addJoining();  //L Рё T СЃРѕРµРґРёРЅРµРЅРёСЏ
-            listArea.filter(Type.STVORKA).forEach(e -> e.addJoining()); //РїСЂРёР». СЃРѕРµРґ.
+            //Соединения рам, импостов и створок             
+            root.addJoining();  //L и T соединения
+            listArea.filter(Type.STVORKA).forEach(e -> e.addJoining()); //прил. соед.
 
         } catch (Exception s) {
-            System.err.println("РћС€РёР±РєР°:Wincalc.location() " + s);
+            System.err.println("Ошибка:Wincalc.location() " + s);
         }
     }
 
-    //РЎРїРµС†РёС„РёРєР°С†РёСЏ Рё С‚Р°СЂРёС„РёРєР°С†РёСЏ 
+    //Спецификация и тарификация 
     public void specification(boolean norm_otx) {
         weight = 0;
         price2 = 0;
         cost2 = 0;
         try {
-            //РЎРїРµС†РёС„РёРєР°С†РёСЏ РІРµРґСѓС‰РёС… СЌР»РµРјРµРЅС‚РѕРІ РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+            //Спецификация ведущих элементов конструкции
             listElem.forEach(elem -> elem.setSpecific());
 
-            //Р”РµС‚Р°Р»Рё СЌР»РµРјРµРЅС‚Р° С‡РµСЂРµР· РєРѕРЅСЃС‚СЂСѓРєС‚РёРІ РїРѕРїР°РґР°СЋС‚ РІ СЃРїРµС†РёС„РёРєР°С†РёСЋ С‡РµСЂРµР· С„СѓРЅРєС†РёСЋ addSpecific();
-            new SpcJoining(this).calc(); //СЃРѕРµРґРёРЅРµРЅРёСЏ
-            new builder.making.SpcElement(this).calc(); //РІСЃС‚Р°РІРєРё
-            new builder.making.SpcFilling(this).calc(); //Р·Р°РїРѕР»РЅРµРЅРёСЏ
-            new builder.making.SpcFurniture(this).calc(); //С„СѓСЂРЅРёС‚СѓСЂР° 
-            new builder.making.SpcTariffic(this, norm_otx).calc(); //СЂР°СЃСЃС‡РёС‚Р°РµРј С‚Р°СЂРёС„РёРєР°С†РёСЋ
+            //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
+            new SpcJoining(this).calc(); //соединения
+            new builder.making.SpcElement(this).calc(); //вставки
+            new builder.making.SpcFilling(this).calc(); //заполнения
+            new builder.making.SpcFurniture(this).calc(); //фурнитура 
+            new builder.making.SpcTariffic(this, norm_otx).calc(); //рассчитаем тарификацию
 
-            //Р—Р°РїРѕР»РЅРёРј СЃРїРёСЃРѕРє СЃРїРµС†РёС„РёРєР°С†РёРё
+            //Заполним список спецификации
             for (ElemSimple elem5e : listElem) {
                 if (elem5e.spcRec.artikl.isEmpty() || elem5e.spcRec.artikl.trim().charAt(0) != '@') {
                     listSpec.add(elem5e.spcRec);
@@ -252,63 +252,63 @@ public class Wincalc {
                 }
             }
 
-            //РС‚РѕРіРѕРІР°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ
+            //Итоговая стоимость
             for (SpcRecord spc : listSpec) {
-                this.price2 = (this.price2 + spc.price1); //РѕР±С‰Р°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ Р±РµР· СЃРєРёРґРєРё
-                this.cost2 = (this.cost2 + spc.price2); //РѕР±С‰Р°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ СЃРѕ СЃРєРёРґРєРѕР№             
-                this.count = (this.count + spc.count); //РєРѕР»РёС‡. РµРґРёРЅРёС†                       
+                this.price2 = (this.price2 + spc.price1); //общая стоимость без скидки
+                this.cost2 = (this.cost2 + spc.price2); //общая стоимость со скидкой             
+                this.count = (this.count + spc.count); //колич. единиц                       
             }
 
-            //Р’РµСЃ РёР·РґРµР»РёСЏ
+            //Вес изделия
             ArrayList<ElemSimple> glassList = listElem.filter(Type.GLASS);
             for (ElemSimple el : glassList) {
-                this.weight += el.artiklRecAn.getDbl(eArtikl.density) * el.width() * el.height() / 1000000; //СѓРґ.РІРµСЃ * РїР»РѕС‰Р°РґСЊ = РІРµСЃ
+                this.weight += el.artiklRecAn.getDbl(eArtikl.density) * el.width() * el.height() / 1000000; //уд.вес * площадь = вес
             }
 
             Collections.sort(listSpec, (o1, o2) -> (o1.place.subSequence(0, 3) + o1.name + o1.width).compareTo(o2.place.subSequence(0, 3) + o2.name + o2.width));
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Wincalc.constructiv() " + e);
+            System.err.println("Ошибка:Wincalc.constructiv() " + e);
         } 
     }
 
-    //Р РёСЃСѓРµРј РєРѕРЅСЃС‚СЂСѓРєС†РёСЋ
+    //Рисуем конструкцию
     public void draw() {
         try {
 
-            //РџСЂРѕСЂРёСЃРѕРІРєР° СЃС‚РµРєР»РѕРїР°РєРµС‚РѕРІ
+            //Прорисовка стеклопакетов
             this.listElem.filter(Type.GLASS).stream().forEach(el -> el.paint());
 
-            //РџСЂРѕСЂРёСЃРѕРІРєР° СЂР°СЃРєР»Р°РґРѕРє
+            //Прорисовка раскладок
             this.listElem.filter(Type.GLASS).stream().forEach(el -> ((ElemGlass) el).rascladkaPaint());
 
-            //РџСЂРѕСЂРёСЃРѕРІРєР° РјРѕСЃРєРёС‚РѕРє
+            //Прорисовка москиток
             this.listElem.filter(Type.MOSQUIT).stream().forEach(el -> ((ElemMosquit) el).paint());
 
-            //РџСЂРѕСЂРёСЃРѕРІРєР° РёРјРїРѕСЃС‚РѕРІ
+            //Прорисовка импостов
             this.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA).stream().forEach(el -> el.paint());
 
-            //РџСЂРѕСЂРёСЃРѕРІРєР° СЂР°Рј
+            //Прорисовка рам
             this.listElem.filter(Type.FRAME_SIDE).stream().forEach(el -> el.paint());
 
-            //РџСЂРѕСЂРёСЃРѕРІРєР° РїСЂРѕС„РёР»РµР№ СЃС‚РІРѕСЂРѕРє
+            //Прорисовка профилей створок
             this.listElem.filter(Type.STVORKA_SIDE).stream().forEach(el -> el.paint());
 
-            //РџСЂРѕСЂРёСЃРѕРєР° С„СѓСЂРЅРёС‚СѓСЂС‹ СЃС‚РІРѕСЂРѕРє
+            //Прорисока фурнитуры створок
             this.listArea.filter(Type.STVORKA).stream().forEach(el -> el.paint());
 
-            //Р Р°Р·РјРµСЂРЅС‹Рµ Р»РёРЅРёРё
+            //Размерные линии
             if (this.scale > .1) {
                 this.root.paint();
             }
 
-// <editor-fold defaultstate="collapsed" desc="Р Р°СЃРєР»Р°РґРєР°"> 
+// <editor-fold defaultstate="collapsed" desc="Раскладка"> 
 /*            
-            //РџСЂРѕСЂРёСЃРѕРІРєР° СЂР°СЃРєР»Р°РґРѕРє
+            //Прорисовка раскладок
             winc.listElem.filter(Type.GLASS).stream().forEach(el -> el.rascladkaPaint());
-            РџСЂРѕСЂРёСЃРѕРІРєР° РјРѕСЃРєРёС‚РѕРє
+            Прорисовка москиток
             this.listElem.filter(Type.MOSKITKA).stream().forEach(el -> el.paint());
-            Р РёСЃСѓРЅРѕРє РІ РїР°РјСЏС‚СЊ
+            Рисунок в память
             if (winc.bufferImg != null) {
                 ByteArrayOutputStream byteArrOutStream = new ByteArrayOutputStream();
                 ImageIO.write(winc.bufferImg, "png", byteArrOutStream);
@@ -320,7 +320,7 @@ public class Wincalc {
              */
 // </editor-fold> 
         } catch (Exception s) {
-            System.err.println("РћС€РёР±РєР°:Wincalc.draw() " + s);
+            System.err.println("Ошибка:Wincalc.draw() " + s);
         }
     }
 

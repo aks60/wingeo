@@ -36,18 +36,18 @@ public class Com5t {
 
     public double id;
     public Wincalc winc = null;
-    public AreaSimple owner = null; //РІР»Р°РґРµР»РµС†
-    public AreaSimple root = null; //РіР»Р°РІРЅС‹Р№ РєР»Р°СЃСЃ РєРѕРЅСЃС‚СЂСѓРєС†РёРё
-    public GsonElem gson = null; //gson object РєРѕРЅСЃС‚СЂСѓРєС†РёРё    
-    public Type type = Type.NONE; //С‚РёРї СЌР»РµРјРµРЅС‚Р° РёР»Рё РѕРєРЅР°
-    public Geometry area = null; //Р°СЂРµР° РєРѕРјРїРѕРЅРµРЅС‚Р° 
+    public AreaSimple owner = null; //владелец
+    public AreaSimple root = null; //главный класс конструкции
+    public GsonElem gson = null; //gson object конструкции    
+    public Type type = Type.NONE; //тип элемента или окна
+    public Geometry area = null; //ареа компонента 
     public Timer timer = new javax.swing.Timer(1200, new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             winc.canvas.repaint();
         }
-    }); //РїРѕРґСЃРІРµС‚РєР° СЌР»РµРјРµРЅС‚Р° РєРѕРЅСЃС‚СЂСѓРєС†РёРё
-    public int colorID1 = -1, colorID2 = -1, colorID3 = -1; //1-Р±Р°Р·РѕРІС‹Р№ 2-РІРЅСѓС‚СЂРµРЅРЅРёР№ 3-РІРЅРµС€РЅРёР№ 
-    public Record sysprofRec = null, artiklRec = null, artiklRecAn = null; //РїСЂРѕС„РёР»СЊ СЃРёСЃС‚РµРјС‹, РјР°С‚.СЃСЂРµРґСЃС‚РІР°, Р°РЅР°Р»РѕРі.РјР°С‚.СЃСЂРµРґСЃС‚РІ
+    }); //подсветка элемента конструкции
+    public int colorID1 = -1, colorID2 = -1, colorID3 = -1; //1-базовый 2-внутренний 3-внешний 
+    public Record sysprofRec = null, artiklRec = null, artiklRecAn = null; //профиль системы, мат.средства, аналог.мат.средств
 
     public Com5t(Type type) {
         this.type = type;
@@ -75,7 +75,7 @@ public class Com5t {
     }
 
     /**
-     * Р”Р»РёРЅР° РєРѕРјРїРѕРЅРµРЅС‚Р°
+     * Длина компонента
      */
     public double length() {
 

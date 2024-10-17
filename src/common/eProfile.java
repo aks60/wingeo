@@ -6,21 +6,21 @@ import java.util.List;
 import java.util.Set;
 
 
-//РџСЂРѕС„РёР»Рё РїСЂРѕРµРєС‚Р°
+//Профили проекта
 public enum eProfile {
        
-    P01("SA.OKNA <РђР Рњ РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ>", "ADMIN_ALL"),  
-    P02("SA.OKNA <РђР Рњ РўРµС…РЅРѕР»РѕРі>", "TEXNOLOG_RO", "TEXNOLOG_RW"), 
-    P03("SA.OKNA <РђР Рњ РњРµРЅРµРґР¶РµСЂ>", "MANAGER_RO", "MANAGER_RW"); 
+    P01("SA.OKNA <АРМ Администратор>", "ADMIN_ALL"),  
+    P02("SA.OKNA <АРМ Технолог>", "TEXNOLOG_RO", "TEXNOLOG_RW"), 
+    P03("SA.OKNA <АРМ Менеджер>", "MANAGER_RO", "MANAGER_RW"); 
 
-    public final static int[] version = {2, 0}; //РІРµСЂСЃРёСЏ РїСЂРѕРіСЂР°РјРјС‹      
-    public static eProfile profile = null; //РїСЂРѕС„РёР»СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 
+    public final static int[] version = {2, 0}; //версия программы      
+    public static eProfile profile = null; //профиль пользователя 
     public static String user = null;
     
     public String title; 
     public Set<String> roleSet;  
      
-    //РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+    //Конструктор
     eProfile(String title, String... role) {
         this.title = title;
         List list = List.of(role);

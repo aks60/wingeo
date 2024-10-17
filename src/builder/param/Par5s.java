@@ -14,61 +14,61 @@ import javax.script.ScriptEngineManager;
 
 public class Par5s {
 
-    protected final int ID = 1;   //РљР»СЋС‡ РІ С‚Р°Р±Р»РёС†Рµ  
-    protected final int GRUP = 3;   //РљР»СЋС‡ РїР°СЂР°РјРµС‚СЂР°    
-    protected final int TEXT = 2;   //РўРµРєСЃС‚ 
+    protected final int ID = 1;   //Ключ в таблице  
+    protected final int GRUP = 3;   //Ключ параметра    
+    protected final int TEXT = 2;   //Текст 
     protected Wincalc winc = null;
     public boolean shortPass = false;
     protected String versionPs = eSetting.val(2);
     public HashMap<Integer, String> mapParamTmp = new HashMap<Integer, String>();
-    public Record detailRec = null; //С‚РµРєСѓС‰РёР№ СЌР»РµРјРµРЅС‚ РґРµС‚Р°Р»РёР·Р°С†РёРё
+    public Record detailRec = null; //текущий элемент детализации
     protected ArrayList<ListenerAction> listenerList = null;
 
     public Par5s(Wincalc winc) {
         this.winc = winc;
     }
 
-    //Р¤РёР»СЊС‚СЂ РїР°СЂР°РјРµС‚СЂРѕРІ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ + РІС‹Р±СЂР°РЅРЅС‹С… РєР»РёРµРЅС‚РѕРј
+    //Фильтр параметров по умолчанию + выбранных клиентом
     protected boolean filterParamDef(List<Record> paramList) {
 
         for (Record paramRec : paramList) {
             if (paramRec.getInt(GRUP) < 0) {
                 Record syspar1Rec = winc.mapPardef.get(paramRec.getInt(GRUP));
                 if (syspar1Rec == null) {
-                    return false; //РµСЃР»Рё РіСЂСѓРїРїС‹ РЅРµС‚
+                    return false; //если группы нет
                 }
                 if (paramRec.getStr(TEXT).equals(syspar1Rec.getStr(eSyspar1.text)) == false) {
-                    return false; //РµСЃР»Рё РіСЂСѓРїРїР° РµСЃС‚СЊ, Р° РїР°СЂР°РјРµС‚СЂ РЅРµ СЃРѕРІРїР°Р»
+                    return false; //если группа есть, а параметр не совпал
                 }
             }
         }
         return true;
     }
 
-    //РќРµРѕР±СЂР°Р±РѕС‚Р°РЅРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹
+    //Необработанные параметры
     protected void message(int code) {
 //        if (code >= 0) {
 //            //if (ParamList.find(code).pass() != 0) {
 //            String str = ParamList.find(code).text();
-//            System.err.println("РќРµ РѕР±СЂР°Р±РѕС‚Р°РЅ:  " + code + "-" + str);
+//            System.err.println("Не обработан:  " + code + "-" + str);
 //            //}
 //        }
     }
 
-    //РќРµРѕР±СЂР°Р±РѕС‚Р°РЅРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹
+    //Необработанные параметры
     protected void message(HashMap<Integer, String> mapParam, int code) {
         if (code >= 0) {
             if (ParamList.find(code).pass() != 0) {
-                System.err.println("Р’РќРРњРђРќРР•! РџРђР РђРђРњР•РўР  " + code + " VALUE " + mapParam.get(code) + " Р’ Р РђР—Р РђР‘РћРўРљР•.");
+                System.err.println("ВНИМАНИЕ! ПАРААМЕТР " + code + " VALUE " + mapParam.get(code) + " В РАЗРАБОТКЕ.");
             }
         }
     }
 
-    //РќРµРѕР±СЂР°Р±РѕС‚Р°РЅРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹
+    //Необработанные параметры
     protected void message(SpcRecord spc, int code) {
         if (code >= 0) {
             if (ParamList.find(code).pass() != 0) {
-                System.err.println("Р’РќРРњРђРќРР•! ID " + spc.id + " РџРђР РђРђРњР•РўР  " + code + " VALUE " + spc.getParam("-1", code) + " Р’ Р РђР—Р РђР‘РћРўРљР•.");
+                System.err.println("ВНИМАНИЕ! ID " + spc.id + " ПАРААМЕТР " + code + " VALUE " + spc.getParam("-1", code) + " В РАЗРАБОТКЕ.");
             }
         }
     }
@@ -90,7 +90,7 @@ public class Par5s {
             return engine.eval(script);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°: builder.param.Par5s.calcScript() " + e);
+            System.err.println("Ошибка: builder.param.Par5s.calcScript() " + e);
             return -1;
         }
     }

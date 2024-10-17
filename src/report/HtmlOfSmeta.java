@@ -46,7 +46,7 @@ public class HtmlOfSmeta {
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
             
-            //Р—Р°РїРѕР»РЅРёРј РѕС‚С‡С‘С‚
+            //Заполним отчёт
             load1(projectRec, doc);
 
             String str = doc.html();
@@ -55,10 +55,10 @@ public class HtmlOfSmeta {
             ExecuteCmd.documentType(null);
 
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "РќРµС‚ РґРѕСЃС‚СѓРїР° Рє С„Р°Р№Р»Сѓ. РџСЂРѕС†РµСЃСЃ РЅРµ РјРѕР¶РµС‚ РїРѕР»СѓС‡РёС‚СЊ РґРѕСЃС‚СѓРї Рє С„Р°Р№Р»Сѓ, С‚Р°Рє РєР°Рє СЌС‚РѕС‚ С„Р°Р№Р» Р·Р°РЅСЏС‚ РґСЂСѓРіРёРј РїСЂРѕС†РµСЃСЃРѕРј.", "Р’РќРРњРђРќРР•!", 1);
-            System.err.println("РћС€РёР±РєР°1:HtmlOfSmeta.smeta1()" + e);
+            JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
+            System.err.println("Ошибка1:HtmlOfSmeta.smeta1()" + e);
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°2:HtmlOfSmeta.smeta1()" + e);
+            System.err.println("Ошибка2:HtmlOfSmeta.smeta1()" + e);
         }
     }
 
@@ -69,7 +69,7 @@ public class HtmlOfSmeta {
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
 
-            //Р—Р°РїРѕР»РЅРёРј РѕС‚С‡С‘С‚
+            //Заполним отчёт
             load2(projectRec, doc);
 
             String str = doc.html();
@@ -78,26 +78,26 @@ public class HtmlOfSmeta {
             ExecuteCmd.documentType(null);
 
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "РќРµС‚ РґРѕСЃС‚СѓРїР° Рє С„Р°Р№Р»Сѓ. РџСЂРѕС†РµСЃСЃ РЅРµ РјРѕР¶РµС‚ РїРѕР»СѓС‡РёС‚СЊ РґРѕСЃС‚СѓРї Рє С„Р°Р№Р»Сѓ, С‚Р°Рє РєР°Рє СЌС‚РѕС‚ С„Р°Р№Р» Р·Р°РЅСЏС‚ РґСЂСѓРіРёРј РїСЂРѕС†РµСЃСЃРѕРј.", "Р’РќРРњРђРќРР•!", 1);
-            System.err.println("РћС€РёР±РєР°1:HtmlOfSmeta.smeta2()" + e);
+            JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
+            System.err.println("Ошибка1:HtmlOfSmeta.smeta2()" + e);
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°2:HtmlOfSmeta.smeta2()" + e);
+            System.err.println("Ошибка2:HtmlOfSmeta.smeta2()" + e);
         }
     }
 
     private static void load1(Record projectRec, Document doc) {
         int length = 400;
         double total = 0f;
-        double square = 0f; //РїР»РѕС‰Р°РґСЊ
+        double square = 0f; //площадь
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
             List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Record> prjkitAll = new ArrayList<Record>();
 
-            doc.getElementById("h01").text("РЎРјРµС‚Р° в„–" + projectRec.getStr(eProject.num_ord) + " РѕС‚ '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
+            doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
 
-            //РЎР•РљР¦РРЇ в„–2
+            //СЕКЦИЯ №2
             Element div2 = doc.getElementById("div2");
             String template2 = div2.html();
             List<Wincalc> wincList = wincList(prjprodList, length);
@@ -107,7 +107,7 @@ public class HtmlOfSmeta {
             }
             Elements tab2List = doc.getElementById("div2").getElementsByClass("tab2");
 
-            //Р¦РёРєР» РїРѕ РёР·РґРµР»РёСЏРј
+            //Цикл по изделиям
             for (int i = 0; i < prjprodList.size(); i++) {
 
                 Elements tdList = tab2List.get(i).getElementsByTag("td");
@@ -119,7 +119,7 @@ public class HtmlOfSmeta {
 
                 ArrayList<ElemSimple> glassList = winc.listElem.filter(Type.GLASS);
                 Elements captions2 = tab2List.get(i).getElementsByTag("caption");
-                captions2.get(0).text("РР·РґРµР»РёРµ в„– " + (i + 1));
+                captions2.get(0).text("Изделие № " + (i + 1));
                 tdList.get(2).text(prjprodRec.getStr(ePrjprod.name));
                 tdList.get(4).text(winc.width() + "x" + winc.height());
                 tdList.get(6).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / "
@@ -133,11 +133,11 @@ public class HtmlOfSmeta {
                 total += prjprodRec.getInt(ePrjprod.num) * winc.cost2;
             }
 
-            //РЎР•РљР¦РРЇ в„–3
+            //СЕКЦИЯ №3
             Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
             trList.get(0).getElementsByTag("td").get(1).text(df2.format(total));
             trList.get(1).getElementsByTag("td").get(0).text(MoneyInWords.inwords(total));
-            trList.get(3).getElementsByTag("td").get(0).text("РџР»РѕС‰Р°РґСЊ РёР·РґРµР»РёР№ РІ Р·Р°РєР°Р·Рµ : " + df1.format(square / 1000000) + " РєРІ.Рј.");
+            trList.get(3).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + df1.format(square / 1000000) + " кв.м.");
 
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");
             for (int i = 0; i < imgList.size(); i++) {
@@ -145,13 +145,13 @@ public class HtmlOfSmeta {
                 get.attr("src", "C:\\Users\\All Users\\Avers\\Okna\\img" + (i + 1) + ".gif");
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:HtmlOfSmeta.load1()" + e);
+            System.err.println("Ошибка:HtmlOfSmeta.load1()" + e);
         }
     }
 
     private static void load2(Record projectRec, Document doc) {
         double total = 0f;
-        double square = 0f; //РїР»РѕС‰Р°РґСЊ
+        double square = 0f; //площадь
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
@@ -159,17 +159,17 @@ public class HtmlOfSmeta {
             List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Record> prjkitAll = new ArrayList<Record>();
 
-            doc.getElementById("h01").text("РЎРјРµС‚Р° в„–" + projectRec.getStr(eProject.num_ord) + " РѕС‚ '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
+            doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
 
-            //РЎР•РљР¦РРЇ в„–1
+            //СЕКЦИЯ №1
             Elements attr = doc.getElementById("tab1").getElementsByTag("td");
             if (prjpartRec.getInt(ePrjpart.flag2) == 0) {
-                //Р§Р°СЃС‚.Р»РёС†Рѕ
+                //Част.лицо
                 attr.get(1).text(prjpartRec.getStr(ePrjpart.partner));
                 attr.get(5).text(prjpartRec.getStr(ePrjpart.addr_phone));
                 attr.get(9).text(prjpartRec.getStr(ePrjpart.addr_email));
 
-            } else {//РћСЂРіР°РЅРёР·Р°С†РёСЏ
+            } else {//Организация
                 attr.get(1).text(prjpartRec.getStr(ePrjpart.partner));
                 attr.get(5).text(prjpartRec.getStr(ePrjpart.org_phone));
                 attr.get(9).text(prjpartRec.getStr(ePrjpart.org_email));
@@ -180,7 +180,7 @@ public class HtmlOfSmeta {
             attr.get(7).text(sysuserRec.getStr(eSysuser.phone));
             attr.get(11).text(sysuserRec.getStr(eSysuser.email));
 
-            //РЎР•РљР¦РРЇ в„–2
+            //СЕКЦИЯ №2
             Element div2 = doc.getElementById("div2");
             String template2 = div2.html();
             List<Wincalc> wincList = URep.wincList(prjprodList, 400); 
@@ -191,7 +191,7 @@ public class HtmlOfSmeta {
             Elements tab2List = doc.getElementById("div2").getElementsByClass("tab2");
             Elements tab3List = doc.getElementById("div2").getElementsByClass("tab3");
 
-            //Р¦РёРєР» РїРѕ РёР·РґРµР»РёСЏРј
+            //Цикл по изделиям
             for (int i = 0; i < prjprodList.size(); i++) {
 
                 Elements tdList = tab2List.get(i).getElementsByTag("td");
@@ -203,7 +203,7 @@ public class HtmlOfSmeta {
 
                 ArrayList<ElemSimple> glassList = winc.listElem.filter(Type.GLASS);
                 Elements captions2 = tab2List.get(i).getElementsByTag("caption");
-                captions2.get(0).text("РР·РґРµР»РёРµ в„– " + (i + 1));
+                captions2.get(0).text("Изделие № " + (i + 1));
                 tdList.get(2).text(prjprodRec.getStr(ePrjprod.name));
                 tdList.get(4).text(prjprodRec.getStr(ePrjprod.name));
                 tdList.get(6).text(winc.width() + "x" + winc.height());
@@ -225,13 +225,13 @@ public class HtmlOfSmeta {
                     tab3List.get(i).html("");
                 } else {
                     Elements captions3 = tab3List.get(i).getElementsByTag("caption");
-                    captions3.get(0).text("РљРѕРјРїР»РµРєС‚Р°С†РёСЏ Рє РёР·РґРµР»РёСЋ в„– " + (i + 1));
+                    captions3.get(0).text("Комплектация к изделию № " + (i + 1));
                     String template3 = tab3List.get(i).getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
                     for (int k = 1; k < prjkitList.size(); k++) {
                         tab3List.get(i).getElementsByTag("tbody").get(0).append(template3);
                     }
 
-                    //Р¦РёРєР» РїРѕ СЃС‚СЂРѕРєР°Рј РєРѕРјРїР»РµРєС‚Р°С†РёРё
+                    //Цикл по строкам комплектации
                     for (int k = 0; k < prjkitList.size(); k++) {
 
                         Record prjkitRec = prjkitList.get(k);
@@ -253,7 +253,7 @@ public class HtmlOfSmeta {
                 }
             }
 
-            //РЎР•РљР¦РРЇ в„–3
+            //СЕКЦИЯ №3
             Element tab4Elem = doc.getElementById("tab4");
             Element tab5Elem = doc.getElementById("tab5");
             Element tab6Elem = doc.getElementById("tab6");
@@ -296,11 +296,11 @@ public class HtmlOfSmeta {
                 td5List.get(7).text(df1.format(440));
 
             }
-            //РЎР•РљР¦РРЇ в„–4
+            //СЕКЦИЯ №4
             Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
             trList.get(0).getElementsByTag("td").get(1).text(df2.format(total));
             trList.get(1).getElementsByTag("td").get(0).text(MoneyInWords.inwords(total));
-            trList.get(3).getElementsByTag("td").get(0).text("РџР»РѕС‰Р°РґСЊ РёР·РґРµР»РёР№ РІ Р·Р°РєР°Р·Рµ : " + df1.format(square / 1000000) + " РєРІ.Рј.");
+            trList.get(3).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + df1.format(square / 1000000) + " кв.м.");
 
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");
             for (int i = 0; i < imgList.size(); i++) {
@@ -308,7 +308,7 @@ public class HtmlOfSmeta {
                 get.attr("src", "C:\\Users\\All Users\\Avers\\Okna\\img" + (i + 1) + ".gif");
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:HtmlOfSmeta.load2() " + e);
+            System.err.println("Ошибка:HtmlOfSmeta.load2() " + e);
         }
     }
 

@@ -8,11 +8,11 @@ package enums;
 import static enums.UseSideTo.values;
 import static enums.TypeOpen1.values;
 
-//РћРіСЂР°РЅРёС‡РµРЅРёРµ СЃС‚РѕСЂРѕРЅ, РЅР°Р·РЅР°С‡РµРЅРёРµ СЃС‚РѕСЂРѕРЅС‹ С„СѓСЂРЅРёС‚СѓСЂС‹
+//Ограничение сторон, назначение стороны фурнитуры
 public enum UseFurn3 implements Enam {
-    P1(1, "РЎС‚РѕСЂРѕРЅР°"),
-    P2(2, "РћСЃСЊ РїРѕРІРѕСЂРѕС‚Р°"),
-    P3(3 , "РљСЂРµРїР»РµРЅРёРµ РїРµС‚РµР»СЊ");
+    P1(1, "Сторона"),
+    P2(2, "Ось поворота"),
+    P3(3 , "Крепление петель");
 
     public int id;
     public String name;

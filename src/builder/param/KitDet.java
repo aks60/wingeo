@@ -7,7 +7,7 @@ import builder.Wincalc;
 import domain.eKitdet;
 import domain.eKitpar2;
 
-//Р—Р°РїРѕР»РЅРµРЅРёСЏ
+//Заполнения
 public class KitDet extends Par5s {
 
     private double Q, L, H;
@@ -21,11 +21,11 @@ public class KitDet extends Par5s {
 
     public boolean filter(HashMap<Integer, String> mapParam, Record kitdetRec) {
 
-        List<Record> paramList = eKitpar2.filter(kitdetRec.getInt(eKitdet.id)); //СЃРїРёСЃРѕРє РїР°СЂР°РјРµС‚СЂРѕРІ РґРµС‚Р°Р»РёР·Р°С†РёРё  
+        List<Record> paramList = eKitpar2.filter(kitdetRec.getInt(eKitdet.id)); //список параметров детализации  
         if (filterParamDef(paramList) == false) {
-            return false; //РїР°СЂР°РјРµС‚СЂС‹ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+            return false; //параметры по умолчанию
         }
-        //Р¦РёРєР» РїРѕ РїР°СЂР°РјРµС‚СЂР°Рј Р·Р°РїРѕР»РЅРµРЅРёСЏ
+        //Цикл по параметрам заполнения
         for (Record rec : paramList) {
             if (check(mapParam, rec) == false) {
                 return false;
@@ -44,29 +44,29 @@ public class KitDet extends Par5s {
                 case 8060:
                 case 8061:
                 case 9060:
-                case 9061: //РљРѕР»РёС‡РµСЃС‚РІРѕ                     
+                case 9061: //Количество                     
                 {
                     Object v = calcScript(Q, L, H, rec.getStr(TEXT));
                     mapParam.put(grup, String.valueOf(v));
                 }
                 break;
-                case 7040:  //РџРѕСЂРѕРі СЂР°СЃС‡РµС‚Р°, РјРј 
+                case 7040:  //Порог расчета, мм 
                     mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 7050:  //РЁР°Рі, РјРј 
+                case 7050:  //Шаг, мм 
                     mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 7060:  //РљРѕР»РёС‡РµСЃС‚РІРѕ РЅР° С€Р°Рі 
+                case 7060:  //Количество на шаг 
                     mapParam.put(grup, rec.getStr(TEXT));
                     break;
                 case 7081:                   
-                case 8050:  //РџРѕРїСЂР°РІРєР°, РјРј 
+                case 8050:  //Поправка, мм 
                     mapParam.put(grup, rec.getStr(TEXT));
                     break;
                 case 8065:
                 case 8066:
                 case 9065:
-                case 9066: //Р”Р»РёРЅР°, РјРј                   
+                case 9066: //Длина, мм                   
                 {
                     Object v = calcScript(Q, L, H, rec.getStr(TEXT));
                     mapParam.put(grup, String.valueOf(v));
@@ -75,55 +75,55 @@ public class KitDet extends Par5s {
                 case 8070:
                 case 8071:
                 case 9070:
-                case 9071: //РЁРёСЂРёРЅР°, РјРј                     
+                case 9071: //Ширина, мм                     
                 {
                     Object v = calcScript(Q, L, H, rec.getStr(TEXT));
                     mapParam.put(grup, String.valueOf(v));
                 }
                 break;
-                case 8075: //РЈРіР»С‹ СЂРµР·Р° 
+                case 8075: //Углы реза 
                     mapParam.put(rec.getInt(GRUP), rec.getStr(TEXT));
                     break;
-                    //-----------------------РџР•Р РЎРџР•РљРўРР’Рђ------------------------
-                case 9081:  //Р•СЃР»Рё С€РёСЂРёРЅР° РєРѕРјРїР»РµРєС‚Р°, РјРј 
+                    //-----------------------ПЕРСПЕКТИВА------------------------
+                case 9081:  //Если ширина комплекта, мм 
                     message(rec.getInt(GRUP));
                     break;                     
-                case 8081:  //РЁРёСЂРёРЅР° РєРѕРјРїР»РµРєС‚Р°, РјРј 
+                case 8081:  //Ширина комплекта, мм 
                     message(rec.getInt(GRUP));
                     break;
-                case 9050:  //РџРѕРїСЂР°РІРєР° РґР»РёРЅС‹, РјРј 
+                case 9050:  //Поправка длины, мм 
                     message(rec.getInt(GRUP));
                     break;
-                case 9055:  //РџРѕРїСЂР°РІРєР° С€РёСЂРёРЅС‹, РјРј
+                case 9055:  //Поправка ширины, мм
                     message(rec.getInt(GRUP));
                     break;                    
-                case 8083:  //РќР°Р±СЂР°С‚СЊ РґР»РёРЅСѓ СЃ РЅР°С…Р»РµСЃС‚РѕРј, РјРј 
+                case 8083:  //Набрать длину с нахлестом, мм 
                     message(rec.getInt(GRUP));
                     break;                
-                case 9083:  //РќР°Р±СЂР°С‚СЊ РґР»РёРЅСѓ СЃ РЅР°С…Р»РµСЃС‚РѕРј/Р”Р»РёРЅР° , РјРј 
+                case 9083:  //Набрать длину с нахлестом/Длина , мм 
                     message(rec.getInt(GRUP));
                     break;                
-                case 8097:  //РўСЂСѓРґРѕР·Р°С‚СЂР°С‚С‹ РїРѕ РґР»РёРЅРµ 
+                case 8097:  //Трудозатраты по длине 
                     message(rec.getInt(GRUP));
                     break;
-                case 9097:  //РўСЂСѓРґРѕР·Р°С‚СЂР°С‚С‹ РїРѕ РїР»РѕС‰Р°РґРё 
+                case 9097:  //Трудозатраты по площади 
                     message(rec.getInt(GRUP));
                     break;
                 case 7098:                 
                 case 8098:                   
-                case 9098:  //Р‘СЂРёРіР°РґР° (СѓС‡Р°СЃС‚РѕРє) 
+                case 9098:  //Бригада (участок) 
                     message(rec.getInt(GRUP));
                     break;
                 case 7099:                   
                 case 8099:                  
-                case 9099:  //РўСЂСѓРґРѕР·Р°С‚СЂР°С‚С‹, С‡/С‡. 
+                case 9099:  //Трудозатраты, ч/ч. 
                     message(rec.getInt(GRUP));
                     break;
                 default:
-                    assert !(grup > 0 && grup < 50000) : "РљРѕРґ " + grup + "  РЅРµ РѕР±СЂР°Р±РѕС‚Р°РЅ!!!";
+                    assert !(grup > 0 && grup < 50000) : "Код " + grup + "  не обработан!!!";
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:param.FillingDet.check()  parametr=" + grup + "    " + e);
+            System.err.println("Ошибка:param.FillingDet.check()  parametr=" + grup + "    " + e);
             return false;
         }
         return true;

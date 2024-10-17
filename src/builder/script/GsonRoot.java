@@ -11,15 +11,15 @@ import java.util.List;
 
 public class GsonRoot extends GsonElem {
 
-    public String version = "2.0"; //РІРµСЂСЃРёСЏ 
-    public Integer prj = null; //PNUMB - РЅРѕРјРµСЂ С‚РµСЃС‚РёСЂСѓРµРјРѕРіРѕ РїСЂРѕРµРєС‚Р°, РїРѕР»Рµ РїРѕРєР° РЅСѓР¶РЅРѕ С‚РѕР»СЊРєРѕ РґР»СЏ С‚РµСЃС‚РѕРІ РїСЂРё СЃСЂР°РІРЅРµРЅРёРё СЃ PS4
-    public Integer pid = null; //PNUMB - РЅРѕРјРµСЂ С‚РµСЃС‚РёСЂСѓРµРјРѕРіРѕ РїСЂРѕРµРєС‚Р°, РїРѕР»Рµ РїРѕРєР° РЅСѓР¶РЅРѕ С‚РѕР»СЊРєРѕ РґР»СЏ С‚РµСЃС‚РѕРІ РїСЂРё СЃСЂР°РІРЅРµРЅРёРё СЃ PS4    
-    public Integer ord = null; //ONUMB - РЅРѕРјРµСЂ С‚РµСЃС‚РёСЂСѓРµРјРѕРіРѕ Р·Р°РєР°Р·Р°, РїРѕР»Рµ РїРѕРєР° РЅСѓР¶РЅРѕ С‚РѕР»СЊРєРѕ РґР»СЏ С‚РµСЃС‚РѕРІ РїСЂРё СЃСЂР°РІРЅРµРЅРёРё СЃ PS4 
-    public Integer nuni = null;  //nuni РїСЂРѕС„РёР»СЏ (PRO4_SYSPROF.NUNI)    
-    public String name = null;  //РЅР°Р·РІР°РЅРёРµ РїСЂРµРєС‚Р°
-    public Integer color1 = -3;  //РѕСЃРЅРѕРІРЅР°СЏ С‚РµРєСЃС‚СѓСЂР°
-    public Integer color2 = -3;  //РІРЅСѓС‚СЂРµРЅРЅСЏСЏ С‚РµРєСЃС‚СѓСЂР°
-    public Integer color3 = -3;  //РІРЅРµС€РЅСЏСЏ С‚РµРєСЃС‚СѓСЂР°       
+    public String version = "2.0"; //версия 
+    public Integer prj = null; //PNUMB - номер тестируемого проекта, поле пока нужно только для тестов при сравнении с PS4
+    public Integer pid = null; //PNUMB - номер тестируемого проекта, поле пока нужно только для тестов при сравнении с PS4    
+    public Integer ord = null; //ONUMB - номер тестируемого заказа, поле пока нужно только для тестов при сравнении с PS4 
+    public Integer nuni = null;  //nuni профиля (PRO4_SYSPROF.NUNI)    
+    public String name = null;  //название пректа
+    public Integer color1 = -3;  //основная текстура
+    public Integer color2 = -3;  //внутренняя текстура
+    public Integer color3 = -3;  //внешняя текстура       
 
     public GsonRoot(Type type, String name) {
         super();
@@ -57,7 +57,7 @@ public class GsonRoot extends GsonElem {
         }
     }
 
-    //РџРµСЂРµРјРµС‰РµРЅРёРµ РЅР° РєР°РЅРІРµ
+    //Перемещение на канве
     public void translate(GsonElem gson, Double dx, Double dy, Double scale) {
         if (gson.childs != null) {
             Double dX = (dx == 0) ? 0 : dx / scale;

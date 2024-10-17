@@ -51,7 +51,7 @@ public class Crypto {
     public Crypto() {
     }
 
-    //Р“РµРЅРµСЂР°С†РёСЏ РєР»СЋС‡РµР№
+    //Генерация ключей
     public static void writeFileKeyPair() throws NoSuchAlgorithmException,
             FileNotFoundException, IOException {
 
@@ -75,7 +75,7 @@ public class Crypto {
 
     public static void httpCrypto() {
         try {
-            //РџР°СЂР° РєР»СЋС‡РµР№ RSA
+            //Пара ключей RSA
             KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
             generator.initialize(2048);
             KeyPair pair = generator.generateKeyPair();
@@ -85,25 +85,25 @@ public class Crypto {
             System.out.println(List.of(privateKey.getEncoded()));
             System.out.println(List.of(publicKey.getEncoded()));
 
-            //РЁРёС„СЂРѕРІР°С‚СЊ 
+            //Шифровать 
             Cipher encryptCipher = Cipher.getInstance("RSA");
             encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
             byte[] secretMesBytes = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};
             String secretMesStr = new String(secretMesBytes, StandardCharsets.UTF_8);
             byte[] encryptedMesBytes = encryptCipher.doFinal(secretMesBytes);
-            String encodedMesStr = Base64.getEncoder().encodeToString(encryptedMesBytes); //Р·Р°РєРѕРґРёСЂРѕРІР°РЅРЅС‹Р№
+            String encodedMesStr = Base64.getEncoder().encodeToString(encryptedMesBytes); //закодированный
 
-            //Р Р°СЃС€РёС„СЂРѕРІС‹РІР°С‚СЊ
+            //Расшифровывать
             Cipher decryptCipher = Cipher.getInstance("RSA");
             decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
             byte[] decryptedMesBytes = decryptCipher.doFinal(encryptedMesBytes);
-            String decryptedMesStr = new String(decryptedMesBytes, StandardCharsets.UTF_8); //РґРµРєРѕРґРёСЂРѕРІР°РЅРЅС‹Р№
+            String decryptedMesStr = new String(decryptedMesBytes, StandardCharsets.UTF_8); //декодированный
 
-            //РЎСЂР°РІРЅРёС‚СЊ
+            //Сравнить
             System.out.println(secretMesStr);
             System.out.println(decryptedMesStr);
             if (secretMesStr.equals(decryptedMesStr)) {
-                System.out.println("РЈР Рђ РђРљРЎРЃРќРћР’");
+                System.out.println("УРА АКСЁНОВ");
             }
 
         } catch (InvalidKeyException e) {
@@ -121,27 +121,27 @@ public class Crypto {
 
     public void httpAsync(String server) {
         try {
-            //Р—Р°РіСЂСѓР·РёРј С„Р°Р№Р»
+            //Загрузим файл
             InputStream in = getClass().getResourceAsStream("/resource/securety/crypto.pub");
             byte[] bytes = in.readAllBytes();
             
-            //РџРѕР»СѓС‡РёРј РєР»СЋС‡
+            //Получим ключ
             X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
             KeyFactory kf = KeyFactory.getInstance("RSA");
             PublicKey publicKey = kf.generatePublic(ks);
             
-            //CР»СѓС‡Р°Р№РЅРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ
+            //Cлучайное сообщение
             SecureRandom random = new SecureRandom();
             String randomMes = new BigInteger(130, random).toString(32);
 
-            //РЁРёС„СЂРѕРІР°С‚СЊ СЃР»СѓС‡Р°Р№РЅРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ
+            //Шифровать случайное сообщение
             Cipher encryptCipher = Cipher.getInstance("RSA");
             encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
             byte[] randomMesBytes = randomMes.getBytes("UTF-8");
-            byte[] encryptMesBytes = encryptCipher.doFinal(randomMesBytes); //Р·Р°РєРѕРґРёСЂРѕРІР°РЅРЅС‹Р№ 
+            byte[] encryptMesBytes = encryptCipher.doFinal(randomMesBytes); //закодированный 
             String encodeMesStr = Base64.getEncoder().encodeToString(encryptMesBytes);
 
-            //РћС‚РїСЂР°РІРёС‚СЊ РЅР° СЃРµСЂРІРµСЂ Р·Р°РєРѕРґРёСЂРѕРІР°РЅРЅРѕРµ СЃР»СѓС‡Р°Р№РЅРѕРµ СЃРѕРѕР±С‰РµРЅРёРµtry 
+            //Отправить на сервер закодированное случайное сообщениеtry 
             var request = HttpRequest.newBuilder()
                     .uri(URI.create("http://" + server + ":8080/winnet/Crypto?action=secret&message=" + encodeMesStr))
                     .timeout(Duration.ofSeconds(16)).build();
@@ -149,23 +149,23 @@ public class Crypto {
             HttpClient client = HttpClient.newBuilder().executor(executor).build();
             client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(res -> {
 
-                //РџСЂРѕРІРµСЂРєР° СЃРµСЂРІРµСЂР°
+                //Проверка сервера
                 if (randomMes.equals(res.body().trim())) {
                     Conn.setHttpcheck(true);
-                    System.out.println("РЈР Рђ РђРљРЎ");
+                    System.out.println("УРА АКС");
                 }
                 return res;
             }).get();
             executor.shutdownNow();
 
         } catch (HttpTimeoutException e) {
-            System.err.println("РћС€РёР±РєР°: Crypto.httpAsync() в„–1 " + e);
+            System.err.println("Ошибка: Crypto.httpAsync() №1 " + e);
         } catch (ExecutionException e2) {
-            System.err.println("РћС€РёР±РєР°: Crypto.httpAsync() в„–2 " + e2);
+            System.err.println("Ошибка: Crypto.httpAsync() №2 " + e2);
         } catch (InterruptedException e3) {
-            System.err.println("РћС€РёР±РєР°: Crypto.httpAsync() в„–3 " + e3);
+            System.err.println("Ошибка: Crypto.httpAsync() №3 " + e3);
         } catch (Exception e4) {
-            System.err.println("РћС€РёР±РєР°: Crypto.httpAsync() в„–4 " + e4);
+            System.err.println("Ошибка: Crypto.httpAsync() №4 " + e4);
         }
     }
 
@@ -190,43 +190,43 @@ public class Crypto {
 
     public static void httpSynch() {
         try {
-            //Р—Р°РіСЂСѓР·РёРј С„Р°Р№Р»
+            //Загрузим файл
             URL url = Crypto.class.getResource("/resource/securety/crypto.pub");
             Path path = Paths.get(url.toURI());
             byte[] bytes = Files.readAllBytes(path);
 
-            //РџРѕР»СѓС‡РёРј РєР»СЋС‡
+            //Получим ключ
             X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
             KeyFactory kf = KeyFactory.getInstance("RSA");
             PublicKey publicKey = kf.generatePublic(ks);
 
-            //CР»СѓС‡Р°Р№РЅРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ
+            //Cлучайное сообщение
             SecureRandom random = new SecureRandom();
             String randomMes = new BigInteger(130, random).toString(32);
 
-            //РЁРёС„СЂРѕРІР°С‚СЊ СЃР»СѓС‡Р°Р№РЅРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ
+            //Шифровать случайное сообщение
             Cipher encryptCipher = Cipher.getInstance("RSA");
             encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
             byte[] randomMesBytes = randomMes.getBytes("UTF-8");
-            byte[] encryptMesBytes = encryptCipher.doFinal(randomMesBytes); //Р·Р°РєРѕРґРёСЂРѕРІР°РЅРЅС‹Р№ 
+            byte[] encryptMesBytes = encryptCipher.doFinal(randomMesBytes); //закодированный 
             String encodeMesStr = Base64.getEncoder().encodeToString(encryptMesBytes);
 
-            //РћС‚РїСЂР°РІРёС‚СЊ РЅР° СЃРµСЂРІРµСЂ Р·Р°РєРѕРґРёСЂРѕРІР°РЅРЅРѕРµ СЃР»СѓС‡Р°Р№РЅРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ
+            //Отправить на сервер закодированное случайное сообщение
             var request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&message=" + encodeMesStr)).build();
             var client = HttpClient.newHttpClient();
             HttpResponse.BodyHandler<String> asString = HttpResponse.BodyHandlers.ofString();
             HttpResponse<String> response = client.send(request, asString);
 
             if (randomMes.equals(response.body().trim())) {
-                System.out.println("httpSynch РЈР Рђ РўР« Р“Р•РќРР™");
+                System.out.println("httpSynch УРА ТЫ ГЕНИЙ");
             }
 
-            //РџРѕР»СѓС‡РµРЅРЅРѕРµ СЂР°Р·С€РёС„СЂРѕРІР°РЅРЅРѕРµ Р·Р°РєСЂ. РєР»СЋС‡РѕРј СЃРѕРѕР±С‰РµРЅРёРµ  
+            //Полученное разшифрованное закр. ключом сообщение  
             //System.out.println("httpSynch2 = " + randomMes);
             //System.out.println("httpSynch3 = " + response.body());
             //testServer(encodeMesStr);
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°: Crypto.httpSynch() " + e);
+            System.err.println("Ошибка: Crypto.httpSynch() " + e);
         }
     }
 
@@ -234,7 +234,7 @@ public class Crypto {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&username=sysdba"))
-                //.uri(URI.create("https://postman-echo.com/post")) //С‚РµСЃС‚ Р·Р°РїСЂРѕСЃР°!!!
+                //.uri(URI.create("https://postman-echo.com/post")) //тест запроса!!!
                 .header("Content-Type", "text/plain")
                 .POST(HttpRequest.BodyPublishers.ofString("Hi there!"))
                 .build();

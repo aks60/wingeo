@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//РќРµ РјРµРЅСЏС‚СЊ РёРЅРґРµРєСЃ РїРѕР»СЏ
+//Не менять индекс поля
 public enum eElempar1 implements Field {
-    up("0", "0", "0", "РџР°СЂР°РјРµС‚СЂС‹ СЃРѕСЃС‚Р°РІРѕРІ", "PARVSTM"),
-    id("4", "10", "0", "Р“СЂСѓРїРїР°", "id"), //СЃРј. eEnum РїР°СЂР°РјРµС‚СЂС‹
-    text("12", "64", "1", "Р—РЅР°С‡РµРЅРёСЏ РїР°СЂР°РјРµС‚СЂР°", "PTEXT"),
-    groups_id("4", "10", "0", "РќР°Р·РІР°РЅРёРµ РїР°СЂР°РјРµС‚СЂР°", "PNUMB"),
-    element_id("4", "10", "0", "Р’СЃС‚Р°РІРєР°", "element_id");
+    up("0", "0", "0", "Параметры составов", "PARVSTM"),
+    id("4", "10", "0", "Группа", "id"), //см. eEnum параметры
+    text("12", "64", "1", "Значения параметра", "PTEXT"),
+    groups_id("4", "10", "0", "Название параметра", "PNUMB"),
+    element_id("4", "10", "0", "Вставка", "element_id");
 
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());

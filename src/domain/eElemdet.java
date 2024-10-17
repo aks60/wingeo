@@ -7,14 +7,14 @@ import dataset.Record;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 
-//РќРµ РјРµРЅСЏС‚СЊ РёРЅРґРµРєСЃ РїРѕР»СЏ, СЃРј. UColor
+//Не менять индекс поля, см. UColor
 public enum eElemdet implements Field {
-    up("0", "0", "0", "РЎРїРµС†РёС„РёРєР°С†РёСЏ СЃРѕСЃС‚Р°РІРѕРІ", "VSTASPC"),
-    id("4", "10", "0", "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ", "id"),
-    color_us("5", "5", "1", "РџРѕРґР±РѕСЂ С‚РµРєСЃС‚СѓСЂС‹", "CTYPE"), // 0 - СѓРєР°Р·Р°РЅР° РІСЂСѓС‡РЅСѓСЋ 11 - РїСЂРѕС„РёР»СЊ 31 - РѕСЃРЅРѕРІРЅР°СЏ
-    color_fk("4", "10", "1", "РўРµРєСЃС‚СѓСЂР°", "CLNUM"),
-    artikl_id("4", "10", "1", "РђСЂС‚РёРєСѓР»", "artikl_id"),
-    element_id("4", "10", "0", "Р’СЃС‚Р°РІРєР°", "element_id");
+    up("0", "0", "0", "Спецификация составов", "VSTASPC"),
+    id("4", "10", "0", "Идентификатор", "id"),
+    color_us("5", "5", "1", "Подбор текстуры", "CTYPE"), // 0 - указана вручную 11 - профиль 31 - основная
+    color_fk("4", "10", "1", "Текстура", "CLNUM"),
+    artikl_id("4", "10", "1", "Артикул", "artikl_id"),
+    element_id("4", "10", "0", "Вставка", "element_id");
 
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());

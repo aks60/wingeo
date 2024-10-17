@@ -41,7 +41,7 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
         ((DefaultCellEditor) table.getDefaultEditor(Object.class)).getComponent().setFont(table.getFont());
         Field[] newArray = Arrays.copyOf(columns, columns.length + 1);
         newArray[newArray.length - 1] = query.fields().get(0).fields()[1];
-        this.columns = newArray; //РїРѕСЃР»РµРґРЅРёР№ СЃС‚РѕР»Р±РµС† РІСЃРµРіРґР° = ID
+        this.columns = newArray; //последний столбец всегда = ID
 
         editable = new Boolean[model.getColumnCount()];
         for (int index = 0; index < model.getColumnCount(); index++) {
@@ -74,7 +74,7 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
 
         for (int index = 0; index < columnModel.getColumnCount(); index++) {
             if (eProp.dev == false && "ID".equals(table.getColumnName(index))
-                    || "id".equals(table.getColumnName(index))) { //id - Artikles С„РёР»СЊС‚СЂ
+                    || "id".equals(table.getColumnName(index))) { //id - Artikles фильтр
                 TableColumn col = columnModel.getColumn(index);
                 col.setMinWidth(0);
                 col.setMaxWidth(0);
@@ -148,7 +148,7 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
         if (table.getColumnModel().getColumn(columnIndex).getCellEditor() instanceof DefCellEditorBtn) {
             if (((DefCellEditorBtn) table.getColumnModel().getColumn(columnIndex)
                     .getCellEditor()).getTextField().isEditable() == false) {
-                return; //РµСЃР»Рё DefCellEditor Рё СЂРµРґР°РєС‚РёСЂРѕРєР°РЅРёРµ Р·Р°РїСЂРµС‰РµРЅРѕ, РІСЃС‘ РѕСЃС‚Р°Р»СЊРЅРѕРµ СЃС‚Р°РЅРґР°СЂС‚РЅРѕ
+                return; //если DefCellEditor и редактирокание запрещено, всё остальное стандартно
             }
             setValueAt(aValue, rowIndex, columns[columnIndex]);
         } else {
@@ -156,7 +156,7 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
         }
     }
 
-    //Р—Р°РїРёСЃР°С‚СЊ Р·РЅР°С‡РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РѕС‚ row Рё field, С‚СѓС‚ РґРµР»Р°СЋС‚СЃСЏ РїСЂРѕРІРµСЂРєРё РЅР° РІРІРѕРґ РґР°РЅРЅС‹С… СЂР°СЃС€РёСЂРµРЅРЅРѕРіРѕ С‚РёРїР°.
+    //Записать значение элемента от row и field, тут делаются проверки на ввод данных расширенного типа.
     public void setValueAt(Object value, int row, Field field) {
         try {
             if (field.meta().edit() == true) {
@@ -186,7 +186,7 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
                 query.table(field).set(value, row, field);
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(App.active, "РќРµРІРµСЂРЅС‹Р№ С„РѕСЂРјР°С‚ РІРІРѕРґР° РґР°РЅРЅС‹С…", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(App.active, "Неверный формат ввода данных", "Предупреждение", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 

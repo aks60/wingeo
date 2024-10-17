@@ -27,121 +27,121 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Р Р°СЃС‡С‘С‚ СЃС‚РѕРёРјРѕСЃС‚Рё СЌР»РµРјРµРЅС‚РѕРІ РѕРєРЅР° Р°Р»РіРѕСЂРёС‚Рј СЃРј. РІ UML
+ * Расчёт стоимости элементов окна алгоритм см. в UML
  */
 public class SpcTariffic extends Cal5e {
 
     private static boolean norm_otx = true;
     private static int precision = Math.round(new Query(eGroups.values())
-            .sql(eGroups.data(), eGroups.up).get(0).getFloat(eGroups.val)); //РѕРєСЂСѓРіР»РµРЅРёРµ РґР»РёРЅС‹ РїСЂРѕС„РёР»РµР№
+            .sql(eGroups.data(), eGroups.up).get(0).getFloat(eGroups.val)); //округление длины профилей
 
     public SpcTariffic(Wincalc winc, boolean norm_otx) {
         super(winc);
         this.norm_otx = norm_otx;
     }
 
-    //Р Р°СЃСЃС‡С‘С‚ РєРѕРЅСЃС‚СЂСѓРєС†РёРё СЃ СѓС‡С‘С‚РѕРј 
-    //РІСЃРµС… СЃРєРёРґРѕРє Рё РЅР°С†РµРЅРѕРє
+    //Рассчёт конструкции с учётом 
+    //всех скидок и наценок
     public void calc() {
         try {
-            double percentMarkup = percentMarkup(winc); //РїСЂРѕС†РµРЅС‚РЅР°СЏ РЅР°РґР±Р°РІРєР° РЅР° РёР·РґРµР»РёСЏ СЃР»РѕР¶РЅРѕР№ С„РѕСЂРјС‹
+            double percentMarkup = percentMarkup(winc); //процентная надбавка на изделия сложной формы
 
-            //Р Р°СЃС‡С‘С‚ СЃРµР±РµСЃ-СЃС‚Рё Р·Р° РµРґ.РёР·Рј. Рё РєРѕР»РёС‡. РјР°С‚РµСЂРёР°Р»Р°
-            //С†РёРєР» РїРѕ СЌРґРµРјРµРЅС‚Р°Рј РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+            //Расчёт себес-сти за ед.изм. и колич. материала
+            //цикл по эдементам конструкции
             for (ElemSimple elem5e : winc.listElem) {
                 if (filter(elem5e)) {
 
-                    elem5e.spcRec.sebes1 += artdetPrice(elem5e.spcRec); //СЃРµР±РµСЃС‚. Р·Р° РµРґ. Р±РµР· РѕС‚С…РѕРґР° РїРѕ С‚Р°Р±Р». ARTDET СЃ РєРѕСЌС„. Рё РЅР°РґР±.
-                    elem5e.spcRec.quant1 = formatAmount(elem5e.spcRec); //РєРѕР»РёС‡РµСЃС‚РІРѕ Р±РµР· РѕС‚С…РѕРґР°
-                    elem5e.spcRec.quant2 = elem5e.spcRec.quant1;  //Р±Р°Р·РѕРІРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃ РѕС‚С…РѕРґРѕРј
+                    elem5e.spcRec.sebes1 += artdetPrice(elem5e.spcRec); //себест. за ед. без отхода по табл. ARTDET с коэф. и надб.
+                    elem5e.spcRec.quant1 = formatAmount(elem5e.spcRec); //количество без отхода
+                    elem5e.spcRec.quant2 = elem5e.spcRec.quant1;  //базовое количество с отходом
                     if (norm_otx == true) {
-                        elem5e.spcRec.quant2 = elem5e.spcRec.quant2 + (elem5e.spcRec.quant1 * elem5e.spcRec.waste / 100); //РєРѕР»РёС‡РµСЃС‚РІРѕ СЃ РѕС‚С…РѕРґРѕРј
+                        elem5e.spcRec.quant2 = elem5e.spcRec.quant2 + (elem5e.spcRec.quant1 * elem5e.spcRec.waste / 100); //количество с отходом
                     }
-                    //Р’Р»РѕР¶РµРЅРЅР°СЏ СЃРїРµС†РёС„РёРєР°С†РёСЏ
-                    //С†РёРєР» РїРѕ РґРµС‚Р°Р»РёР·Р°С†РёРё СЌРґРµРјРµРЅС‚Р°
-                    for (SpcRecord spСЃRec2 : elem5e.spcRec.spcList) {
-                        spСЃRec2.sebes1 += artdetPrice(spСЃRec2); //СЃРµР±РµСЃС‚. Р·Р° РµРґ. Р±РµР· РѕС‚С…РѕРґР°
-                        spСЃRec2.quant1 = formatAmount(spСЃRec2); //РєРѕР»РёС‡РµСЃС‚РІРѕ Р±РµР· РѕС‚С…РѕРґР°
-                        spСЃRec2.quant2 = spСЃRec2.quant1; //Р±Р°Р·РѕРІРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃ РѕС‚С…РѕРґРѕРј
+                    //Вложенная спецификация
+                    //цикл по детализации эдемента
+                    for (SpcRecord spсRec2 : elem5e.spcRec.spcList) {
+                        spсRec2.sebes1 += artdetPrice(spсRec2); //себест. за ед. без отхода
+                        spсRec2.quant1 = formatAmount(spсRec2); //количество без отхода
+                        spсRec2.quant2 = spсRec2.quant1; //базовое количество с отходом
                         if (norm_otx == true) {
-                            spСЃRec2.quant2 = spСЃRec2.quant2 + (spСЃRec2.quant1 * spСЃRec2.waste / 100); //РєРѕР»РёС‡РµСЃС‚РІРѕ СЃ РѕС‚С…РѕРґРѕРј
+                            spсRec2.quant2 = spсRec2.quant2 + (spсRec2.quant1 * spсRec2.waste / 100); //количество с отходом
                         }
                     }
                 }
             }
 
-            //Р Р°СЃСЃС‡С‘С‚ СЃ СѓС‡С‘С‚РѕРј РЅР°С†РµРЅРѕРє Рё СЃРєРёРґРѕРє
-            //С†РёРєР» РїРѕ СЌРґРµРјРµРЅС‚Р°Рј РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+            //Рассчёт с учётом наценок и скидок
+            //цикл по эдементам конструкции
             for (ElemSimple elem5e : winc.listElem) {
                 if (filter(elem5e)) {
 
-                    // <editor-fold defaultstate="collapsed" desc="РџСЂР°РІРёР»Р° СЂР°СЃСЃС‡.">                     
-                    //Р¦РёРєР» РїРѕ РїСЂР°РІРёР»Р°Рј СЂР°СЃС‡С‘С‚Р°.                 
+                    // <editor-fold defaultstate="collapsed" desc="Правила рассч.">                     
+                    //Цикл по правилам расчёта.                 
                     for (Record rulecalcRec : eRulecalc.list()) {
-                        //Р’СЃС‘ РѕР±РЅСѓР»СЏРµС‚СЃСЏ Рё СЂР°СЃСЃС‡РёС‚С‹РІР°РµС‚СЃСЏ РїРѕ С‚Р°Р±Р»РёС†Рµ РїСЂР°РІРёР» СЂР°СЃС‡С‘С‚Р°
-                        //РЈРІРµР»РёС‡РµРЅРёРµ СЃРµР±РµСЃС‚РѕРёРјРѕСЃС‚Рё РІ coeff СЂР°Р· Рё РЅР° incr РІРµР»РёС‡РёРЅСѓ РЅР°С†РµРЅРєРё.
+                        //Всё обнуляется и рассчитывается по таблице правил расчёта
+                        //Увеличение себестоимости в coeff раз и на incr величину наценки.
 
-                        //Р¤РёР»СЊС‚СЂ РїРѕ РїРѕР»СЋ 'С„РѕСЂРјР° РїСЂРѕС„РёР»СЏ', РІ Р·Р°РїРѕР»РЅРµРЅРёСЏС…. Р’ Р‘РёРњР°РєСЃ РёСЃРїРѕР»СЊР·СѓСЋРµСЃСЏ С‚РѕР»СЊРєРѕ 1, 4, 10, 12 РїР°СЂР°РјРµС‚СЂС‹
+                        //Фильтр по полю 'форма профиля', в заполнениях. В БиМакс используюеся только 1, 4, 10, 12 параметры
                         int form = (rulecalcRec.getInt(eRulecalc.form) == 0) ? 1 : rulecalcRec.getInt(eRulecalc.form);
-                        if (Type.GLASS == elem5e.type) {//С„РёР»СЊС‚СЂ РґР»СЏ СЃС‚РµРєР»РѕРїР°РєРµС‚Р°
+                        if (Type.GLASS == elem5e.type) {//фильтр для стеклопакета
 
-                            if (form == TypeForm.P00.id) {//РЅРµ РїСЂРѕРІРµСЂСЏС‚СЊ С„РѕСЂРјСѓ
+                            if (form == TypeForm.P00.id) {//не проверять форму
                                 rulecalcPrise(winc, rulecalcRec, elem5e.spcRec);
 
-                            } else if (form == TypeForm.P10.id && Type.TRAPEZE == elem5e.owner.type) { //РЅРµ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРѕРµ, РЅРµ Р°СЂРѕС‡РЅРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ
+                            } else if (form == TypeForm.P10.id && Type.TRAPEZE == elem5e.owner.type) { //не прямоугольное, не арочное заполнение
                                 rulecalcPrise(winc, rulecalcRec, elem5e.spcRec);
 
-                            } else if (form == TypeForm.P12.id && Type.ARCH == elem5e.owner.type) {//РЅРµ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ СЃ Р°СЂРєР°РјРё
+                            } else if (form == TypeForm.P12.id && Type.ARCH == elem5e.owner.type) {//не прямоугольное заполнение с арками
                                 rulecalcPrise(winc, rulecalcRec, elem5e.spcRec);
                             }
                         } else if (form == TypeForm.P04.id && elem5e.type == Type.FRAME_SIDE
-                                && elem5e.owner.type == Type.ARCH && elem5e.layout() == Layout.TOP) {  //РїСЂРѕС„РёР»СЊ СЃ СЂР°РґРёСѓСЃРѕРј  (С„РёР»СЊС‚СЂ РґР»СЏ Р°СЂРєРё РїСЂРѕС„РёР»СЏ AYPC.W62.0101)
-                            rulecalcPrise(winc, rulecalcRec, elem5e.spcRec); //РїСЂРѕС„РёР»СЊ СЃ СЂР°РґРёСѓСЃРѕРј
+                                && elem5e.owner.type == Type.ARCH && elem5e.layout() == Layout.TOP) {  //профиль с радиусом  (фильтр для арки профиля AYPC.W62.0101)
+                            rulecalcPrise(winc, rulecalcRec, elem5e.spcRec); //профиль с радиусом
 
                         } else {
-                            if (form == TypeForm.P00.id) {  //РЅРµ РїСЂРѕРІРµСЂСЏС‚СЊ С„РѕСЂРјСѓ
-                                rulecalcPrise(winc, rulecalcRec, elem5e.spcRec); //РІСЃС‘ РѕСЃС‚Р°Р»СЊРЅРѕРµ РЅРµ РїСЂРѕРІРµСЂСЏС‚СЊ С„РѕСЂРјСѓ
+                            if (form == TypeForm.P00.id) {  //не проверять форму
+                                rulecalcPrise(winc, rulecalcRec, elem5e.spcRec); //всё остальное не проверять форму
                             }
                         }
                     }
                     // </editor-fold>                     
                     Record systreeRec = eSystree.find(winc.nuni);
-                    elem5e.spcRec.sebes2 = elem5e.spcRec.sebes1 * elem5e.spcRec.quant2; //СЃРµР±РµСЃС‚. Р·Р° РµРґ. СЃ РѕС‚С…РѕРґРѕРј 
+                    elem5e.spcRec.sebes2 = elem5e.spcRec.sebes1 * elem5e.spcRec.quant2; //себест. за ед. с отходом 
                     Record artgrp1Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups1_id));
                     Record artgrp2Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups2_id));
-                    double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //РЅР°С†РµРЅРєР° РіСЂСѓРїРїС‹ РјР°С‚.С†РµРЅРЅРѕСЃС‚РµР№
-                    double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //СЃРєРёРґРєРё РіСЂСѓРїРїС‹ РјР°С‚.С†РµРЅРЅРѕСЃС‚РµР№
-                    double k3 = systreeRec.getDbl(eSystree.coef, 1); //РєРѕСЌС„. СЂРµРЅС‚Р°Р±РµР»СЊРЅРѕСЃС‚Рё
+                    double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
+                    double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
+                    double k3 = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
                     elem5e.spcRec.price1 = elem5e.spcRec.sebes2 * k1 * k3;
-                    elem5e.spcRec.price1 = elem5e.spcRec.price1 + (elem5e.spcRec.price1 / 100) * percentMarkup; //СЃС‚РѕРёРјРѕСЃС‚СЊ Р±РµР· СЃРєРёРґРєРё                     
-                    elem5e.spcRec.price2 = elem5e.spcRec.price1 - (elem5e.spcRec.price1 / 100) * k2; //СЃС‚РѕРёРјРѕСЃС‚СЊ СЃРѕ СЃРєРёРґРєРѕР№ 
+                    elem5e.spcRec.price1 = elem5e.spcRec.price1 + (elem5e.spcRec.price1 / 100) * percentMarkup; //стоимость без скидки                     
+                    elem5e.spcRec.price2 = elem5e.spcRec.price1 - (elem5e.spcRec.price1 / 100) * k2; //стоимость со скидкой 
 
-                    //Р¦РёРєР» РїРѕ РґРµС‚Р°Р»РёР·Р°С†РёРё
+                    //Цикл по детализации
                     for (SpcRecord spc : elem5e.spcRec.spcList) {
 
-                        // <editor-fold defaultstate="collapsed" desc="РџСЂР°РІРёР»Р° СЂР°СЃСЃС‡. РІР»РѕР¶РµРЅРЅС‹Рµ">  
-                        //Р¦РёРєР» РїРѕ РїСЂР°РІРёР»Р°Рј СЂР°СЃС‡С‘С‚Р°.
+                        // <editor-fold defaultstate="collapsed" desc="Правила рассч. вложенные">  
+                        //Цикл по правилам расчёта.
                         for (Record rulecalcRec : eRulecalc.list()) {
                             int form = (rulecalcRec.getInt(eRulecalc.form) == 0) ? 1 : rulecalcRec.getInt(eRulecalc.form);
-                            if (form == TypeForm.P00.id) { //РЅРµ РїСЂРѕРІРµСЂСЏС‚СЊ С„РѕСЂРјСѓ 
+                            if (form == TypeForm.P00.id) { //не проверять форму 
                                 rulecalcPrise(winc, rulecalcRec, spc);
                             }
                         }
                         // </editor-fold> 
-                        spc.sebes2 = spc.sebes1 * spc.quant2; //СЃРµР±РµСЃС‚. Р·Р° РµРґ. СЃ РѕС‚С…РѕРґРѕРј  
+                        spc.sebes2 = spc.sebes1 * spc.quant2; //себест. за ед. с отходом  
                         Record artgrp1bRec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups1_id));
                         Record artgrp2bRec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups2_id));
-                        double m1 = artgrp1bRec.getDbl(eGroups.val, 1);  //РЅР°С†РµРЅРєР° РіСЂСѓРїРїС‹ РјР°С‚.С†РµРЅРЅРѕСЃС‚РµР№
-                        double m2 = artgrp2bRec.getDbl(eGroups.val, 0);  //СЃРєРёРґРєРё РіСЂСѓРїРїС‹ РјР°С‚.С†РµРЅРЅРѕСЃС‚РµР№
-                        double m3 = systreeRec.getDbl(eSystree.coef); //РєРѕСЌС„. СЂРµРЅС‚Р°Р±РµР»СЊРЅРѕСЃС‚Рё
+                        double m1 = artgrp1bRec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
+                        double m2 = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
+                        double m3 = systreeRec.getDbl(eSystree.coef); //коэф. рентабельности
                         spc.price1 = spc.sebes2 * m1 * m3;
-                        spc.price1 = spc.price1 + (spc.price1 / 100) * percentMarkup; //СЃС‚РѕРёРјРѕСЃС‚СЊ Р±РµР· СЃРєРёРґРєРё                         
-                        spc.price2 = spc.price1 - (spc.price1 / 100) * m2; //СЃС‚РѕРёРјРѕСЃС‚СЊ СЃРѕ СЃРєРёРґРєРѕР№ 
+                        spc.price1 = spc.price1 + (spc.price1 / 100) * percentMarkup; //стоимость без скидки                         
+                        spc.price2 = spc.price1 - (spc.price1 / 100) * m2; //стоимость со скидкой 
                     }
                 }
             }
 
-            //Р Р°СЃС‡С‘С‚ РІРµСЃР° СЌР»РµРјРµРЅС‚Р° РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+            //Расчёт веса элемента конструкции
             for (ElemSimple elem5e : winc.listElem) {
                 if (filter(elem5e)) {
                     elem5e.spcRec.weight = elem5e.spcRec.quant1 * elem5e.spcRec.artiklRec().getDbl(eArtikl.density);
@@ -152,24 +152,24 @@ public class SpcTariffic extends Cal5e {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Tariffic.calc() " + e);
+            System.err.println("Ошибка:Tariffic.calc() " + e);
         }
     }
 
-    //РљРѕРјРїР»РµРєС‚С‹ РєРѕРЅСЃС‚СЂСѓРєС†РёРё    
+    //Комплекты конструкции    
     public static ArraySpc<SpcRecord> kits(Record prjprodRec, Wincalc winc, boolean norm_otx) {
         ArraySpc<SpcRecord> kitList = new ArraySpc();
         try {
-            Record systreeRec = eSystree.find(winc.nuni); //РґР»СЏ РЅР°С…РѕР¶Рґ. РєРѕСЌС„. СЂРµРЅС‚Р°Р±РµР»СЊРЅРѕСЃС‚Рё
-            double percentMarkup = percentMarkup(winc); //РїСЂРѕС†РµРЅС‚РЅР°СЏ РЅР°РґР±Р°РІРєР° РЅР° РёР·РґРµР»РёСЏ СЃР»РѕР¶РЅРѕР№ С„РѕСЂРјС‹
+            Record systreeRec = eSystree.find(winc.nuni); //для нахожд. коэф. рентабельности
+            double percentMarkup = percentMarkup(winc); //процентная надбавка на изделия сложной формы
             if (prjprodRec != null) {
                 List<Record> prjkitList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
 
-                //Р¦РёРєР» РїРѕ РєРѕРјРїР»РµРєС‚Р°Рј
+                //Цикл по комплектам
                 for (Record prjkitRec : prjkitList) {
                     Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.artikl_id), true);
                     if (artiklRec != null) {
-                        SpcRecord spc = new SpcRecord("РљРћРњРџ", ++winc.spcId, prjkitRec, artiklRec, null);
+                        SpcRecord spc = new SpcRecord("КОМП", ++winc.spcId, prjkitRec, artiklRec, null);
                         spc.width = prjkitRec.getDbl(ePrjkit.width);
                         spc.height = prjkitRec.getDbl(ePrjkit.height);
                         spc.count = prjkitRec.getDbl(ePrjkit.numb);
@@ -178,116 +178,116 @@ public class SpcTariffic extends Cal5e {
                         spc.colorID3 = prjkitRec.getInt(ePrjkit.color3_id);
                         spc.anglCut0 = prjkitRec.getDbl(ePrjkit.angl1);
                         spc.anglCut1 = prjkitRec.getDbl(ePrjkit.angl2);
-                        spc.quant1 = formatAmount(spc); //РєРѕР»РёС‡РµСЃС‚РІРѕ Р±РµР· РѕС‚С…РѕРґР°
-                        spc.quant2 = (norm_otx == true) ? spc.quant1 + (spc.quant1 * spc.waste / 100) : spc.quant1; //РєРѕР»РёС‡РµСЃС‚РІРѕ СЃ РѕС‚С…РѕРґРѕРј
-                        spc.sebes1 = artdetPrice(spc); //СЃРµР±РµСЃС‚. Р·Р° РµРґ. Р±РµР· РѕС‚С…РѕРґР° РїРѕ С‚Р°Р±Р». ARTDET СЃ РєРѕСЌС„. Рё РЅР°РґР±.
-                        spc.sebes2 = spc.sebes1 + (spc.sebes1 * (spc.quant2 - spc.quant1)); //СЃРµР±РµСЃС‚. Р·Р° РµРґ. СЃ РѕС‚С…РѕРґРѕРј 
+                        spc.quant1 = formatAmount(spc); //количество без отхода
+                        spc.quant2 = (norm_otx == true) ? spc.quant1 + (spc.quant1 * spc.waste / 100) : spc.quant1; //количество с отходом
+                        spc.sebes1 = artdetPrice(spc); //себест. за ед. без отхода по табл. ARTDET с коэф. и надб.
+                        spc.sebes2 = spc.sebes1 + (spc.sebes1 * (spc.quant2 - spc.quant1)); //себест. за ед. с отходом 
                         Record artgrp1Rec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups1_id));
                         Record artgrp2Rec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups2_id));
-                        double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //(koef)РЅР°С†РµРЅРєР° РіСЂСѓРїРїС‹ РјР°С‚.С†РµРЅРЅРѕСЃС‚РµР№
-                        double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //(%)СЃРєРёРґРєРё РіСЂСѓРїРїС‹ РјР°С‚.С†РµРЅРЅРѕСЃС‚РµР№
-                        double k3 = systreeRec.getDbl(eSystree.coef, 1); //РєРѕСЌС„. СЂРµРЅС‚Р°Р±РµР»СЊРЅРѕСЃС‚Рё
+                        double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //(koef)наценка группы мат.ценностей
+                        double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //(%)скидки группы мат.ценностей
+                        double k3 = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
                         double price = spc.count * spc.quant2 * spc.sebes2 * k1 * k3;
-                        spc.price1 = price; //СЃС‚РѕРёРјРѕСЃС‚СЊ Р±РµР· СЃРєРёРґРєРё                     
-                        spc.price2 = price - price / 100 * k2; //СЃС‚РѕРёРјРѕСЃС‚СЊ СЃРѕ СЃРєРёРґРєРѕР№ 
+                        spc.price1 = price; //стоимость без скидки                     
+                        spc.price2 = price - price / 100 * k2; //стоимость со скидкой 
                         kitList.add(spc);
                     }
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Tariffic.kits() " + e);
+            System.err.println("Ошибка:Tariffic.kits() " + e);
         }
         return kitList;
     }
 
-    //РЎРµР±РµСЃ-СЃС‚СЊ Р·Р° РµРґ. РёР·Рј. Р Р°СЃСЃС‡С‘С‚ С‚Р°СЂРёС„Р° РґР»СЏ Р·Р°РґР°РЅРЅРѕРіРѕ Р°СЂС‚РёРєСѓР»Р° Р·Р°РґР°РЅРЅС‹С… С†РІРµС‚РѕРІ РїРѕ С‚Р°Р±Р»РёС†Рµ eArtdet
+    //Себес-сть за ед. изм. Рассчёт тарифа для заданного артикула заданных цветов по таблице eArtdet
     private static double artdetPrice(SpcRecord specificRec) {
 
         double inPrice = 0;
-        Record color1Rec = eColor.find(specificRec.colorID1);  //РѕСЃРЅРѕРІРЅР°СЏ
-        Record color2Rec = eColor.find(specificRec.colorID2);  //РІРЅСѓС‚СЂРµРЅРЅСЏСЏ
-        Record color3Rec = eColor.find(specificRec.colorID3);  //РІРЅРµС€РЅСЏСЏ
+        Record color1Rec = eColor.find(specificRec.colorID1);  //основная
+        Record color2Rec = eColor.find(specificRec.colorID2);  //внутренняя
+        Record color3Rec = eColor.find(specificRec.colorID3);  //внешняя
 
-        Record kursBaseRec = eCurrenc.find(specificRec.artiklRec().getInt(eArtikl.currenc1_id));    // РєСЂРѕСЃСЃ-РєСѓСЂСЃ РІР°Р»СЋС‚С‹ РґР»СЏ РѕСЃРЅРѕРІРЅРѕР№ С‚РµРєСЃС‚СѓСЂС‹
-        Record kursNoBaseRec = eCurrenc.find(specificRec.artiklRec().getInt(eArtikl.currenc2_id));  // РєСЂРѕСЃСЃ-РєСѓСЂСЃ РІР°Р»СЋС‚С‹ РґР»СЏ РЅРµРѕСЃРЅРѕРІРЅС‹С… С‚РµРєСЃС‚СѓСЂ (РІРЅСѓС‚СЂРµРЅРЅСЏСЏ, РІРЅРµС€РЅСЏСЏ, РґРІСѓС…СЃС‚РѕСЂРѕРЅРЅСЏСЏ)
+        Record kursBaseRec = eCurrenc.find(specificRec.artiklRec().getInt(eArtikl.currenc1_id));    // кросс-курс валюты для основной текстуры
+        Record kursNoBaseRec = eCurrenc.find(specificRec.artiklRec().getInt(eArtikl.currenc2_id));  // кросс-курс валюты для неосновных текстур (внутренняя, внешняя, двухсторонняя)
 
-        //Р¦РёРєР» РїРѕ С‚Р°СЂРёС„РёРєР°С†РёРѕРЅРЅРѕР№ С‚Р°Р±Р»РёС†Рµ ARTDET РјР°С‚. С†РµРЅРЅРѕСЃС‚РµР№
+        //Цикл по тарификационной таблице ARTDET мат. ценностей
         for (Record artdetRec : eArtdet.filter(specificRec.artiklRec().getInt(eArtikl.id))) {
 
             double artdetPrice = 0;
             boolean artdetUsed = false;
 
-            //РЎР›РћР–Р•РќРР• РћРЎРќРћР’РќРћР™ Р Р”Р’РЈРҐРЎРўРћР РћРќРќР•Р™
-            //РµСЃР»Рё С‚Р°СЂРёС„ РґРІСѓС…СЃС‚РѕСЂРѕРЅРЅРµР№ С‚РµРєСЃС‚СѓСЂС‹ РЅРµ СЂР°РІРµРЅ 0, Рё РµСЃР»Рё
-            //С‚РµРєСЃС‚СѓСЂР°1 СЂР°РІРЅР° С‚РµРєСЃС‚СѓСЂР°2 Рё Р·Р°РґР°РЅРЅС‹Р№ С‚Р°СЂРёС„ РїСЂРёРјРµРЅРёРј
+            //СЛОЖЕНИЕ ОСНОВНОЙ И ДВУХСТОРОННЕЙ
+            //если тариф двухсторонней текстуры не равен 0, и если
+            //текстура1 равна текстура2 и заданный тариф применим
             if (artdetRec.getDbl(eArtdet.cost_c4) != 0
                     && color2Rec.getInt(eColor.id) == color3Rec.getInt(eColor.id)
                     && isTariff(artdetRec, color2Rec)) {
 
-                double k1 = artdetRec.getDbl(eArtdet.cost_c4); //С‚Р°СЂРёС„ РґРІСѓС…СЃС‚РѕСЂРѕРЅРЅРµР№ С‚РµРєСЃС‚СѓСЂС‹
-                double k2 = color2Rec.getDbl(eColor.coef2); //С†РµРЅРѕРІРѕР№ РєРѕСЌС„.РІРЅСѓС‚СЂРµРЅРЅРёР№ С‚РµРєСЃС‚СѓСЂС‹
-                double k3 = color3Rec.getDbl(eColor.coef3); //С†РµРЅРѕРІРѕР№ РєРѕСЌС„.РІРЅРµС€РЅРёР№ С‚РµРєСЃС‚СѓСЂС‹
-                double k5 = kursNoBaseRec.getDbl(eCurrenc.cross_cour); //РєСЂРѕСЃСЃ РєСѓСЂСЃ 
+                double k1 = artdetRec.getDbl(eArtdet.cost_c4); //тариф двухсторонней текстуры
+                double k2 = color2Rec.getDbl(eColor.coef2); //ценовой коэф.внутренний текстуры
+                double k3 = color3Rec.getDbl(eColor.coef3); //ценовой коэф.внешний текстуры
+                double k5 = kursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс 
                 artdetPrice += (k1 * Math.max(k2, k3) / k5);
 
-                if (isTariff(artdetRec, color1Rec)) { //РїРѕРґР±РёСЂР°РµРј С‚Р°СЂРёС„ РѕСЃРЅРѕРІРЅРѕР№ С‚РµРєСЃС‚СѓСЂС‹
-                    double m1 = artdetRec.getDbl(eArtdet.cost_unit); //С‚Р°СЂРёС„ РµРґРёРЅРёС†Р° РёР·РјРµСЂРµРЅРёСЏ
-                    double m2 = (specificRec.elem5e == null) ? 0 : specificRec.elem5e.artiklRec.getDbl(eArtikl.density); //СѓРґРµР»СЊРЅС‹Р№ РІРµСЃ                    
+                if (isTariff(artdetRec, color1Rec)) { //подбираем тариф основной текстуры
+                    double m1 = artdetRec.getDbl(eArtdet.cost_unit); //тариф единица измерения
+                    double m2 = (specificRec.elem5e == null) ? 0 : specificRec.elem5e.artiklRec.getDbl(eArtikl.density); //удельный вес                    
                     if (m1 > 0 && m2 > 0) {
                         artdetPrice += m1 * m2;
                     } else {
                         Record colgrpRec = eGroups.find(color1Rec.getInt(eColor.groups_id));
-                        double z1 = artdetRec.getDbl(eArtdet.cost_c1); //С‚Р°СЂРёС„ РѕСЃРЅРѕРІРЅРѕР№ С‚РµРєСЃС‚СѓСЂС‹"
-                        double z2 = color1Rec.getDbl(eColor.coef1); //С†РµРЅРѕРІРѕР№ РєРѕСЌС„.РѕСЃРЅРѕРІРЅРѕР№ С‚РµРєСЃС‚.
-                        double z3 = colgrpRec.getDbl(eGroups.val); //РєРѕСЌС„. РіСЂСѓРїРїС‹ С‚РµРєСЃС‚СѓСЂ
-                        double z5 = kursBaseRec.getDbl(eCurrenc.cross_cour); //РєСЂРѕСЃСЃ РєСѓСЂСЃ
+                        double z1 = artdetRec.getDbl(eArtdet.cost_c1); //тариф основной текстуры"
+                        double z2 = color1Rec.getDbl(eColor.coef1); //ценовой коэф.основной текст.
+                        double z3 = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
+                        double z5 = kursBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
                         artdetPrice += (z1 * z2 * z3 * z5) / z5;
                     }
                 }
                 artdetUsed = true;
 
-                //РЎР›РћР–Р•РќРР• РўР РЃРҐ РўР•РљРЎРўРЈР 
+                //СЛОЖЕНИЕ ТРЁХ ТЕКСТУР
             } else {
-                //РџРѕРґР±РёСЂР°РµРј С‚Р°СЂРёС„ РѕСЃРЅРѕРІРЅРѕР№ С‚РµРєСЃС‚СѓСЂС‹
+                //Подбираем тариф основной текстуры
                 if (isTariff(artdetRec, color1Rec)) {
                     Record colgrpRec = eGroups.find(color1Rec.getInt(eColor.groups_id));
-                    double k1 = artdetRec.getDbl(eArtdet.cost_c1); //С‚Р°СЂРёС„ РѕСЃРЅРѕРІРЅРѕР№ С‚РµРєСЃС‚СѓСЂС‹
-                    double k2 = color1Rec.getDbl(eColor.coef1); //С†РµРЅРѕРІРѕР№ РєРѕСЌС„.РѕСЃРЅРѕРІРЅРѕР№ С‚РµРєСЃС‚СѓСЂС‹
-                    double k3 = colgrpRec.getDbl(eGroups.val); //РєРѕСЌС„. РіСЂСѓРїРїС‹ С‚РµРєСЃС‚СѓСЂ
-                    double k5 = kursBaseRec.getDbl(eCurrenc.cross_cour); //РєСЂРѕСЃСЃ РєСѓСЂСЃ
+                    double k1 = artdetRec.getDbl(eArtdet.cost_c1); //тариф основной текстуры
+                    double k2 = color1Rec.getDbl(eColor.coef1); //ценовой коэф.основной текстуры
+                    double k3 = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
+                    double k5 = kursBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
                     artdetPrice += (k1 * k2 * k3) / k5;
                     artdetUsed = true;
                 }
-                //РџРѕРґР±РёСЂР°РµРј С‚Р°СЂРёС„ РІРЅСѓС‚СЂРµРЅРЅРµР№ С‚РµРєСЃС‚СѓСЂС‹
+                //Подбираем тариф внутренней текстуры
                 if (isTariff(artdetRec, color2Rec)) {
                     Record colgrpRec = eGroups.find(color2Rec.getInt(eColor.groups_id));
-                    double d1 = artdetRec.getDbl(eArtdet.cost_c2); //С‚Р°СЂРёС„ РІРЅСѓС‚СЂРµРЅРЅРёР№ С‚РµРєСЃС‚СѓСЂС‹
-                    double d2 = color2Rec.getDbl(eColor.coef2); //С†РµРЅРѕРІРѕР№ РєРѕСЌС„.РІРЅСѓС‚СЂРµРЅРЅРёР№ С‚РµРєСЃС‚СѓСЂС‹
-                    double d3 = colgrpRec.getDbl(eGroups.val); //РєРѕСЌС„. РіСЂСѓРїРїС‹ С‚РµРєСЃС‚СѓСЂ
-                    double d5 = kursNoBaseRec.getDbl(eCurrenc.cross_cour); //РєСЂРѕСЃСЃ РєСѓСЂСЃ
+                    double d1 = artdetRec.getDbl(eArtdet.cost_c2); //тариф внутренний текстуры
+                    double d2 = color2Rec.getDbl(eColor.coef2); //ценовой коэф.внутренний текстуры
+                    double d3 = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
+                    double d5 = kursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
                     artdetPrice += (d1 * d2 * d3) / d5;
                     artdetUsed = true;
                 }
-                //РџРѕРґР±РёСЂР°РµРј С‚Р°СЂРёС„ РІРЅРµС€РЅРµР№ С‚РµРєСЃС‚СѓСЂС‹
+                //Подбираем тариф внешней текстуры
                 if (isTariff(artdetRec, color3Rec)) {
                     Record colgrpRec = eGroups.find(color3Rec.getInt(eColor.groups_id));
-                    double w1 = artdetRec.getDbl(eArtdet.cost_c3); //РўР°СЂРёС„ РІРЅРµС€РЅРёР№ С‚РµРєСЃС‚СѓСЂС‹
-                    double w2 = color3Rec.getDbl(eColor.coef3); //С†РµРЅРѕРІРѕР№ РєРѕСЌС„.РІРЅРµС€РЅРёР№ С‚РµРєСЃС‚СѓСЂС‹
-                    double w3 = colgrpRec.getDbl(eGroups.val); //РєРѕСЌС„. РіСЂСѓРїРїС‹ С‚РµРєСЃС‚СѓСЂ
-                    double w5 = kursNoBaseRec.getDbl(eCurrenc.cross_cour); //РєСЂРѕСЃСЃ РєСѓСЂСЃ
+                    double w1 = artdetRec.getDbl(eArtdet.cost_c3); //Тариф внешний текстуры
+                    double w2 = color3Rec.getDbl(eColor.coef3); //ценовой коэф.внешний текстуры
+                    double w3 = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
+                    double w5 = kursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
                     artdetPrice += (w1 * w2 * w3) / w5;
                     artdetUsed = true;
                 }
             }
-            //РџСЂРѕРІРµСЂРєР° РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ С‚Р°СЂРёС„Р° (РќРµРїРѕРЅСЏС‚РЅР°СЏ РїСЂРѕРІРµСЂРєР°)
+            //Проверка минимального тарифа (Непонятная проверка)
             /*if (artdetUsed && artdetRec.getDbl(eArtdet.cost_min) != 0
                     && specificRec.quant1 != 0 && artdetPrice
                     * specificRec.quant1 < artdetRec.getDbl(eArtdet.cost_min)) {
 
                 artdetPrice = artdetRec.getDbl(eArtdet.cost_min) / specificRec.quant1;
             }*/
-            if (artdetUsed == true) { //РµСЃР»Рё Р±С‹Р»Рѕ РїРѕРїР°РґР°РЅРёРµ
-                if ("Р’РЎРў".equals(specificRec.place.substring(0, 3)) == true) {
+            if (artdetUsed == true) { //если было попадание
+                if ("ВСТ".equals(specificRec.place.substring(0, 3)) == true) {
                     if (specificRec.detailRec != null) {
                         Record elementRec = eElement.find(specificRec.detailRec.getInt(eElemdet.element_id));
                         if (elementRec.getDbl(eElement.markup) > 0) {
@@ -296,17 +296,17 @@ public class SpcTariffic extends Cal5e {
                     }
                 }
                 inPrice = inPrice + (artdetPrice
-                        * artdetRec.getDbl(eArtdet.coef)); //kРѕСЌС„. С‚РµРєСЃС‚СѓСЂС‹ РїРѕ С‚Р°Р±Р». ARTDET
+                        * artdetRec.getDbl(eArtdet.coef)); //kоэф. текстуры по табл. ARTDET
             }
         }
         return inPrice;
     }
 
-    //РџСЂР°РІРёР»Р° СЂР°СЃС‡С‘С‚Р°. Р¤РёР»СЊС‚СЂ РїРѕ РїРѕР»СЋ form, color(1,2,3) С‚Р°Р±Р»РёС†С‹ RULECALC
+    //Правила расчёта. Фильтр по полю form, color(1,2,3) таблицы RULECALC
     private static void rulecalcPrise(Wincalc winc, Record rulecalcRec, SpcRecord spcRec) {
 
         try {
-            //Р•СЃР»Рё Р°СЂС‚РёРєСѓР» РР›Р С‚РёРї РР›Р РїРѕРґС‚РёРї СЃРѕРІРїР°Р»Рё
+            //Если артикул ИЛИ тип ИЛИ подтип совпали
             if (spcRec.artiklRec().get(eArtikl.id) != null
                     && (spcRec.artiklRec().get(eArtikl.id).equals(rulecalcRec.get(eRulecalc.artikl_id)) == true || rulecalcRec.get(eRulecalc.artikl_id) == null)) {
 
@@ -317,14 +317,14 @@ public class SpcTariffic extends Cal5e {
 
                         if (rulecalcRec.getInt(eRulecalc.common) == 0) {
                             if (UCom.containsNumbJust(rulecalcRec.getStr(eRulecalc.quant), spcRec.quant2) == true) {
-                                spcRec.sebes1 = spcRec.sebes1 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.incr);  //СѓРІРµР»РёС‡РµРЅРёРµ СЃРµР±РµСЃС‚РѕРёРјРѕСЃС‚Рё РІ coegg СЂР°Р· Рё РЅР° incr РІРµР»РёС‡РёРЅСѓ РЅР°РґР±Р°РІРєРё
+                                spcRec.sebes1 = spcRec.sebes1 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.incr);  //увеличение себестоимости в coegg раз и на incr величину надбавки
                             }
 
-                        } else if (rulecalcRec.getInt(eRulecalc.common) == 1) { //РїРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЋ c СЂР°СЃС‡С‘С‚РѕРј РѕР±С‰РµРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° РїРѕ Р°СЂС‚РёРєСѓР»Сѓ, РїРѕРґС‚РёРїСѓ, С‚РёРїСѓ
+                        } else if (rulecalcRec.getInt(eRulecalc.common) == 1) { //по использованию c расчётом общего количества по артикулу, подтипу, типу
                             ArrayList<ElemSimple> elemList = winc.listElem;
                             double quantity3 = 0;
-                            if (rulecalcRec.get(eRulecalc.artikl_id) != null) { //РїРѕ Р°СЂС‚РёРєСѓР»Сѓ
-                                for (ElemSimple elem5e : elemList) { //СЃСѓРјРјРёСЂСѓСЋ РєРѕР»РёС‡. РІСЃРµС… СЌР»РµРјРµРЅС‚РѕРІ (РЅР°РїСЂРёРјРµСЂ С€С‚Р°РїРёРєРѕРІ)
+                            if (rulecalcRec.get(eRulecalc.artikl_id) != null) { //по артикулу
+                                for (ElemSimple elem5e : elemList) { //суммирую колич. всех элементов (например штапиков)
                                     if (filter(elem5e)) {
                                         if (elem5e.spcRec.artikl.equals(spcRec.artikl)) {
                                             quantity3 = quantity3 + elem5e.spcRec.quant1;
@@ -336,8 +336,8 @@ public class SpcTariffic extends Cal5e {
                                         }
                                     }
                                 }
-                            } else { //РїРѕ РїРѕРґС‚РёРїСѓ, С‚РёРїСѓ
-                                for (ElemSimple elem5e : elemList) { //СЃСѓРјРјРёСЂСѓСЋ РєРѕР»РёС‡. РІСЃРµС… СЌР»РµРјРµРЅС‚РѕРІ (РЅР°РїСЂРёРјРµСЂ С€С‚Р°РїРёРєРѕРІ)
+                            } else { //по подтипу, типу
+                                for (ElemSimple elem5e : elemList) { //суммирую колич. всех элементов (например штапиков)
                                     if (filter(elem5e)) {
                                         SpcRecord specifRec2 = elem5e.spcRec;
                                         if (specifRec2.artiklRec().getInt(eArtikl.level1) * 100 + specifRec2.artiklRec().getInt(eArtikl.level2) == rulecalcRec.getInt(eRulecalc.type)) {
@@ -352,40 +352,40 @@ public class SpcTariffic extends Cal5e {
                                 }
                             }
                             if (UCom.containsNumbJust(rulecalcRec.getStr(eRulecalc.quant), quantity3) == true) {
-                                spcRec.sebes1 = spcRec.sebes1 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.incr); //СѓРІРµР»РёС‡РµРЅРёРµ СЃРµР±РµСЃС‚РѕРёРјРѕСЃС‚Рё РІ coeff СЂР°Р· Рё РЅР° incr РІРµР»РёС‡РёРЅСѓ РЅР°РґР±Р°РІРєРё                      
+                                spcRec.sebes1 = spcRec.sebes1 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.incr); //увеличение себестоимости в coeff раз и на incr величину надбавки                      
                             }
                         }
                     }
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Tariffic.rulecalcPrise() " + e);
+            System.err.println("Ошибка:Tariffic.rulecalcPrise() " + e);
         }
     }
 
-    //Р’ Р·Р°РІ. РѕС‚ РµРґРёРЅРёС†С‹ РёР·Рј. С„РѕСЂРјР°С‚РёСЂСѓРµС‚СЃСЏ РєРѕР»РёС‡РµСЃС‚РІРѕ
+    //В зав. от единицы изм. форматируется количество
     private static double formatAmount(SpcRecord spcRec) {
-        //РќСѓР¶РЅР° РґРѕСЂР°Р±РѕС‚РєР° РґР»СЏ СЂР°СЃС‡С‘С‚Р° РїРѕ РјРёРЅРёРјР°Р»СЊРЅРѕРјСѓ С‚Р°СЂРёС„Сѓ. РЎРј. dll VirtualPro4::CalcArtTariff
+        //Нужна доработка для расчёта по минимальному тарифу. См. dll VirtualPro4::CalcArtTariff
 
-        if (UseUnit.METR.id == spcRec.artiklRec().getInt(eArtikl.unit)) { //РјРµС‚СЂС‹
+        if (UseUnit.METR.id == spcRec.artiklRec().getInt(eArtikl.unit)) { //метры
             return spcRec.count * round(spcRec.width, precision) / 1000;
 
-        } else if (UseUnit.METR2.id == spcRec.artiklRec().getInt(eArtikl.unit)) { //РєРІ. РјРµС‚СЂС‹
+        } else if (UseUnit.METR2.id == spcRec.artiklRec().getInt(eArtikl.unit)) { //кв. метры
             return spcRec.count * round(spcRec.width, precision) * round(spcRec.height, precision) / 1000000;
 
-        } else if (UseUnit.PIE.id == spcRec.artiklRec().getInt(eArtikl.unit)) { //С€С‚.
+        } else if (UseUnit.PIE.id == spcRec.artiklRec().getInt(eArtikl.unit)) { //шт.
             return spcRec.count;
 
-        } else if (UseUnit.KIT.id == spcRec.artiklRec().getInt(eArtikl.unit)) { //РєРѕРјРї.
+        } else if (UseUnit.KIT.id == spcRec.artiklRec().getInt(eArtikl.unit)) { //комп.
             return spcRec.count;
 
-        } else if (UseUnit.ML.id == spcRec.artiklRec().getInt(eArtikl.unit)) { //РјР»
+        } else if (UseUnit.ML.id == spcRec.artiklRec().getInt(eArtikl.unit)) { //мл
             return spcRec.count;
         }
         return 0;
     }
 
-    //РџСЂРѕС†РµРЅС‚РЅР°СЏ РЅР°РґР±Р°РІРєР° РЅР° РёР·РґРµР»РёСЏ СЃР»РѕР¶РЅРѕР№ С„РѕСЂРјС‹
+    //Процентная надбавка на изделия сложной формы
     private static double percentMarkup(Wincalc winc) {
         if (Type.ARCH == winc.root.type) {
             return eGroups.find(2101).getDbl(eGroups.val);
@@ -396,15 +396,15 @@ public class SpcTariffic extends Cal5e {
         return 0;
     }
 
-    //РџСЂРѕРІРµСЂСЏРµС‚, РґРѕР»Р¶РµРЅ Р»Рё РїСЂРёРјРµРЅСЏС‚СЊСЃСЏ Р·Р°РґР°РЅРЅС‹Р№ С‚Р°СЂРёС„ РјР°С‚-С†РµРЅРЅРѕСЃС‚Рё РґР»СЏ Р·Р°РґР°РЅРЅРѕР№ С‚РµРєСЃС‚СѓСЂС‹
+    //Проверяет, должен ли применяться заданный тариф мат-ценности для заданной текстуры
     public static boolean isTariff(Record artdetRec, Record colorRec) {
 
-        if (artdetRec.getInt(eArtdet.color_fk) < 0) { //СЌС‚РѕС‚ С‚Р°СЂРёС„ Р·Р°РґР°РЅ РґР»СЏ РіСЂСѓРїРїС‹ С‚РµРєСЃС‚СѓСЂ
+        if (artdetRec.getInt(eArtdet.color_fk) < 0) { //этот тариф задан для группы текстур
             if (colorRec.getInt(eColor.groups_id) == artdetRec.getInt(eArtdet.color_fk)) {
-                return true; //С‚РµРєСЃС‚СѓСЂР° РїСЂРёРЅР°РґР»РµР¶РёС‚ РіСЂСѓРїРїРµ
+                return true; //текстура принадлежит группе
             }
         } else if (colorRec.getInt(eColor.id) == artdetRec.getInt(eArtdet.color_fk)) {
-            return true; //С‚РµРєСЃС‚СѓСЂС‹ СЃРѕРІРїР°Р»Рё
+            return true; //текстуры совпали
         }
         return false;
     }
@@ -419,7 +419,7 @@ public class SpcTariffic extends Cal5e {
         return bd.doubleValue();
     }
 
-    //Р¤РёР»СЊС‚СЂ РЅР° С„Р°РЅС‚РѕРјС‹, РіСЂСЏР·РЅС‹Рµ С„РёС‡Рё...
+    //Фильтр на фантомы, грязные фичи...
     private static boolean filter(ElemSimple elem5e) {
         if (elem5e.artiklRec == null) {
             return false;

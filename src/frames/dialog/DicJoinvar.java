@@ -45,7 +45,7 @@ public class DicJoinvar extends javax.swing.JDialog {
 
     public void loadingModel() {
 
-        String[] titl = {"РќР°РёРјРµРЅРѕРІР°РЅРёРµ СЃРѕРµРґРёРЅРµРЅРёСЏ", "ID"};
+        String[] titl = {"Наименование соединения", "ID"};
         Object[][] rows = {{TypeJoin.FLAT.name, TypeJoin.FLAT.id}, {TypeJoin.ANGL.name, TypeJoin.ANGL.id}, {TypeJoin.ANG1.name, TypeJoin.ANG1.id},
         {TypeJoin.ANG2.name, TypeJoin.ANG2.id}, {TypeJoin.TIMP.name, TypeJoin.TIMP.id}, {TypeJoin.TCON.name, TypeJoin.TCON.id}};
         ((DefaultTableModel) tab1.getModel()).setDataVector(rows, titl);
@@ -97,7 +97,7 @@ public class DicJoinvar extends javax.swing.JDialog {
         tab1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РЎРїСЂРІРѕС‡РЅРёРє СЃРѕРµРґРёРЅРµРЅРёР№");
+        setTitle("Спрвочник соединений");
         setPreferredSize(new java.awt.Dimension(400, 240));
 
         south.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -123,7 +123,7 @@ public class DicJoinvar extends javax.swing.JDialog {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -138,7 +138,7 @@ public class DicJoinvar extends javax.swing.JDialog {
         });
 
         btnChoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c044.gif"))); // NOI18N
-        btnChoice.setToolTipText(bundle.getString("Р’С‹Р±СЂР°С‚СЊ")); // NOI18N
+        btnChoice.setToolTipText(bundle.getString("Выбрать")); // NOI18N
         btnChoice.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnChoice.setFocusable(false);
         btnChoice.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -153,7 +153,7 @@ public class DicJoinvar extends javax.swing.JDialog {
         });
 
         btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c042.gif"))); // NOI18N
-        btnRemove.setToolTipText(bundle.getString("РћС‡РёСЃС‚РёС‚СЊ")); // NOI18N
+        btnRemove.setToolTipText(bundle.getString("Очистить")); // NOI18N
         btnRemove.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnRemove.setFocusable(false);
         btnRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -207,7 +207,7 @@ public class DicJoinvar extends javax.swing.JDialog {
 
             },
             new String [] {
-                "РЎРѕРµРґРёРЅРµРЅРёРµ", "ID"
+                "Соединение", "ID"
             }
         ) {
             Class[] types = new Class [] {

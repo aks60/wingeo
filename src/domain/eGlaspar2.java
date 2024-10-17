@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//РќРµ РјРµРЅСЏС‚СЊ РёРЅРґРµРєСЃ РїРѕР»СЏ
+//Не менять индекс поля
 public enum eGlaspar2 implements Field {
-    up("0", "0", "0", "РџР°СЂР°Рј. СЃРїРµС†РёС„РёРєР°С†РёРё", "PARGLAS"),
-    id("4", "10", "0", "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ", "id"),
-    text("12", "64", "1", "Р—РЅР°С‡РµРЅРёСЏ РїР°СЂР°РјРµС‚СЂР°", "PTEXT"),
-    groups_id("4", "10", "0", "РќР°Р·РІР°РЅРёРµ РїР°СЂР°РјРµС‚СЂР°", "PNUMB"),
-    glasdet_id("4", "10", "0", "Р”РµС‚Р°Р»РёР·Р°С†РёСЏ", "glasdet_id");  
+    up("0", "0", "0", "Парам. спецификации", "PARGLAS"),
+    id("4", "10", "0", "Идентификатор", "id"),
+    text("12", "64", "1", "Значения параметра", "PTEXT"),
+    groups_id("4", "10", "0", "Название параметра", "PNUMB"),
+    glasdet_id("4", "10", "0", "Детализация", "glasdet_id");  
 
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());

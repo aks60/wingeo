@@ -24,7 +24,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-//РўРµРєСЃС‚СѓСЂР° Р°СЂС‚РёРєСѓР»РѕРІ
+//Текстура артикулов
 public class ParDefault extends javax.swing.JDialog {
 
     private ListenerRecord listener;

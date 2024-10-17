@@ -10,19 +10,19 @@ import java.util.List;
 
 public class GsonElem {
 
-    public static transient double gsonId = 0;  //РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ    
-    public double id = 0;  //РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ
-    public transient GsonElem owner = null;  //РІР»Р°РґРµР»РµС†
-    public List<GsonElem> childs = null; //СЃРїРёСЃРѕРє РґРµС‚РµР№
-    public JsonObject param = new JsonObject(); //РїР°СЂР°РјРµС‚СЂС‹ СЌР»РµРјРµРЅС‚Р°
-    public Type type = null; //С‚РёРї СЌР»РµРјРµРЅС‚Р°
+    public static transient double gsonId = 0;  //идентификатор    
+    public double id = 0;  //идентификатор
+    public transient GsonElem owner = null;  //владелец
+    public List<GsonElem> childs = null; //список детей
+    public JsonObject param = new JsonObject(); //параметры элемента
+    public Type type = null; //тип элемента
     public Double x1 = null, y1 = null, h = null, x2 = null, y2 = null;
 
     //Use GsonRoot
     public GsonElem() {
     }
 
-    //Use class Bimax, GsonScript, GsonElem, РњРћРЎРљРРўРљРђ
+    //Use class Bimax, GsonScript, GsonElem, МОСКИТКА
     public GsonElem(Type type) {
         this.id = ++gsonId;
         this.type = type;
@@ -72,7 +72,7 @@ public class GsonElem {
         this.x2 = x2;
         this.y2 = y2;
         this.h = h;
-        this.param = new Gson().fromJson(param, JsonObject.class); //РїР°СЂР°РјРµС‚СЂС‹ СЌР»РµРјРµРЅС‚Р°
+        this.param = new Gson().fromJson(param, JsonObject.class); //параметры элемента
     }
 
     public GsonElem addArea(GsonElem area) {
@@ -90,7 +90,7 @@ public class GsonElem {
     }
     
     /**
-     * РќР°Р·РЅР°С‡РёС‚СЊ СЂРѕРґРёС‚РµР»РµР№ РІСЃРµРј РґРµС‚СЏРј
+     * Назначить родителей всем детям
      */
     public void setOwner(Wincalc winc) {
         try {
@@ -101,7 +101,7 @@ public class GsonElem {
                 }
             });
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:GeoElem.setOwnerAndForm() " + e);
+            System.err.println("Ошибка:GeoElem.setOwnerAndForm() " + e);
         }
     }
 
@@ -122,7 +122,7 @@ public class GsonElem {
                 if (el.param != null && el.param.size() == 0) {
                     el.param = null;
                 }
-                el.serialize(this); //СЂРµРєСѓСЂСЃРёСЏ  
+                el.serialize(this); //рекурсия  
             }
         }
     }

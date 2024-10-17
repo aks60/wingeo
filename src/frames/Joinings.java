@@ -54,7 +54,7 @@ import javax.swing.JOptionPane;
 import report.ExecuteCmd;
 import report.HtmlOfTable;
 
-//Р’Р°СЂРёР°РЅС‚С‹ СЃРѕРµРґРёРЅРµРЅРёР№
+//Варианты соединений
 public class Joinings extends javax.swing.JFrame {
 
     private Query qGroups = new Query(eGroups.values());
@@ -68,7 +68,7 @@ public class Joinings extends javax.swing.JFrame {
     private int joinID = -1;
     private ListenerRecord listenerArtikl, listenerJoinvar, listenerColor, listenerColvar1, listenerColvar2, listenerColvar3;
 
-    //Р—Р°РїСѓСЃРє РёР· Tex (РіР»Р°РІРЅРѕРµ РјРµРЅСЋ)
+    //Запуск из Tex (главное меню)
     public Joinings() {
         initComponents();
         initElements();
@@ -78,7 +78,7 @@ public class Joinings extends javax.swing.JFrame {
         listenerAdd();
     }
 
-    //Р—Р°РїСѓСЃРє РёР· Systree
+    //Запуск из Systree
     public Joinings(ElemJoining join) {
         this.joinID = join.joiningRec.getInt(1);
         initComponents();
@@ -94,7 +94,7 @@ public class Joinings extends javax.swing.JFrame {
         }
     }
 
-    //Р—Р°РїСѓСЃРє РёР· Specific
+    //Запуск из Specific
     public Joinings(int deteilID) {
         initComponents();
         initElements();
@@ -311,7 +311,7 @@ public class Joinings extends javax.swing.JFrame {
             }
         });
 
-        UGui.buttonCellEditor(tab3, 1, (componentCell) -> { //СЃР»СѓС€Р°С‚РµР»СЊ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ С‚РёРїР°, РІРёРґР° РґР°РЅРЅС‹С… Рё РІРёРґР° СЏС‡РµР№РєРё С‚Р°Р±Р»РёС†С‹
+        UGui.buttonCellEditor(tab3, 1, (componentCell) -> { //слушатель редактирование типа, вида данных и вида ячейки таблицы
             return UGui.cellParamTypeOrVid(tab3, componentCell, eJoinpar1.groups_id);
 
         }).addActionListener(event -> {
@@ -390,7 +390,7 @@ public class Joinings extends javax.swing.JFrame {
             }
         });
 
-        UGui.buttonCellEditor(tab5, 1, (componentCell) -> { //СЃР»СѓС€Р°С‚РµР»СЊ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ С‚РёРїР°, РІРёРґР° РґР°РЅРЅС‹С… Рё РІРёРґР° СЏС‡РµР№РєРё С‚Р°Р±Р»РёС†С‹
+        UGui.buttonCellEditor(tab5, 1, (componentCell) -> { //слушатель редактирование типа, вида данных и вида ячейки таблицы
             return UGui.cellParamTypeOrVid(tab5, componentCell, eJoinpar2.groups_id);
 
         }).addActionListener(event -> {
@@ -504,18 +504,18 @@ public class Joinings extends javax.swing.JFrame {
             Query qVar = new Query(eJoinvar.values());
             Query qDet = new Query(eJoindet.values(), eArtikl.values());
 
-            //Р¦С‹РєР» РїРѕ СЃРѕРµРґРёРЅРµРЅРёСЏРј
+            //Цыкл по соединениям
             for (int index = 0; index < qJoining.size(); index++) {
                 int joining_id = qJoining.get(index).getInt(eJoining.id);
                 qVar.sql(eJoinvar.data(), eJoinvar.joining_id, joining_id).sort(eJoinvar.prio);
 
-                //Р¦С‹РєР» РїРѕ РІР°СЂРёР°РЅС‚Р°Рј СЃРѕРµРґРёРЅРµРЅРёСЏРј
+                //Цыкл по вариантам соединениям
                 for (int index2 = 0; index2 < qVar.size(); index2++) {
                     int joinvar_id = qVar.get(index2).getInt(eJoining.id);
                     //qDet.selects(eJoindet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eJoindet.artikl_id, "where", eJoindet.joinvar_id, "=", joinvar_id, "order by", eJoindet.artikl_id);
                     qDet.sql(eJoindet.data(), eJoindet.joinvar_id, joinvar_id).sort(eJoindet.artikl_id);
                     qDet.table(eArtikl.up).join(qDet, eArtikl.data(), eJoindet.artikl_id, eArtikl.id);
-                    //Р¦С‹РєР» РїРѕ РґРµС‚Р°Р»РёР·Р°С†РёРё СЃРѕРµРґРёРЅРµРЅРёР№
+                    //Цыкл по детализации соединений
                     for (int index3 = 0; index3 < qDet.size(); index3++) {
                         if (qDet.get(index3).getInt(eJoindet.id) == deteilID) {
 
@@ -531,7 +531,7 @@ public class Joinings extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Joinings.deteilFind() " + e);
+            System.err.println("Ошибка:Joinings.deteilFind() " + e);
         }
     }
 
@@ -571,7 +571,7 @@ public class Joinings extends javax.swing.JFrame {
 
         mInsert.setFont(frames.UGui.getFont(1,0));
         mInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        mInsert.setText("Р”РѕР±Р°РІРёС‚СЊ");
+        mInsert.setText("Добавить");
         mInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -581,7 +581,7 @@ public class Joinings extends javax.swing.JFrame {
 
         mDelit.setFont(frames.UGui.getFont(1,0));
         mDelit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        mDelit.setText("РЈРґР°Р»РёС‚СЊ");
+        mDelit.setText("Удалить");
         mDelit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -590,7 +590,7 @@ public class Joinings extends javax.swing.JFrame {
         ppmCrud.add(mDelit);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РЎРѕРµРґРёРЅРµРЅРёСЏ");
+        setTitle("Соединения");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 500));
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -606,7 +606,7 @@ public class Joinings extends javax.swing.JFrame {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -621,7 +621,7 @@ public class Joinings extends javax.swing.JFrame {
         });
 
         btnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        btnDel.setToolTipText(bundle.getString("РЈРґР°Р»РёС‚СЊ")); // NOI18N
+        btnDel.setToolTipText(bundle.getString("Удалить")); // NOI18N
         btnDel.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnDel.setFocusable(false);
         btnDel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -637,7 +637,7 @@ public class Joinings extends javax.swing.JFrame {
         });
 
         btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        btnIns.setToolTipText(bundle.getString("Р”РѕР±Р°РІРёС‚СЊ")); // NOI18N
+        btnIns.setToolTipText(bundle.getString("Добавить")); // NOI18N
         btnIns.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnIns.setFocusable(false);
         btnIns.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -653,7 +653,7 @@ public class Joinings extends javax.swing.JFrame {
         });
 
         btnReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c053.gif"))); // NOI18N
-        btnReport.setToolTipText(bundle.getString("РџРµС‡Р°С‚СЊ")); // NOI18N
+        btnReport.setToolTipText(bundle.getString("Печать")); // NOI18N
         btnReport.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnReport.setFocusable(false);
         btnReport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -669,7 +669,7 @@ public class Joinings extends javax.swing.JFrame {
         });
 
         btnFind1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c088.gif"))); // NOI18N
-        btnFind1.setToolTipText(bundle.getString("РџРѕРёСЃРє Р·Р°РїРёСЃРё")); // NOI18N
+        btnFind1.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
         btnFind1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnFind1.setFocusable(false);
         btnFind1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -696,7 +696,7 @@ public class Joinings extends javax.swing.JFrame {
         });
 
         btnClone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c065.gif"))); // NOI18N
-        btnClone.setToolTipText(bundle.getString("РљР»РѕРЅРёСЂРѕРІР°С‚СЊ Р·Р°РїРёСЃСЊ")); // NOI18N
+        btnClone.setToolTipText(bundle.getString("Клонировать запись")); // NOI18N
         btnClone.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClone.setFocusable(false);
         btnClone.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -712,7 +712,7 @@ public class Joinings extends javax.swing.JFrame {
         });
 
         btnFind2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c089.gif"))); // NOI18N
-        btnFind2.setToolTipText(bundle.getString("РџРѕРёСЃРє Р·Р°РїРёСЃРё")); // NOI18N
+        btnFind2.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
         btnFind2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnFind2.setFocusable(false);
         btnFind2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -783,7 +783,7 @@ public class Joinings extends javax.swing.JFrame {
         pan4.setPreferredSize(new java.awt.Dimension(600, 300));
         pan4.setLayout(new java.awt.BorderLayout());
 
-        scr1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "РЎРїРёСЃРєРё СЃРѕРµРґРёРЅРµРЅРёР№", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Списки соединений", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
 
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
@@ -791,7 +791,7 @@ public class Joinings extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РђСЂС‚РёРєСѓР» 1", "РђСЂС‚РёРєСѓР» 2", "РќР°Р·РІР°РЅРёРµ", "РћСЃРЅРѕРІРЅРѕР№", "РђРЅР°Р»РѕРі", "ID"
+                "Артикул 1", "Артикул 2", "Название", "Основной", "Аналог", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -837,7 +837,7 @@ public class Joinings extends javax.swing.JFrame {
         pan1.setPreferredSize(new java.awt.Dimension(260, 300));
         pan1.setLayout(new javax.swing.BoxLayout(pan1, javax.swing.BoxLayout.PAGE_AXIS));
 
-        scr2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Р’Р°СЂРёР°РЅС‚С‹ СЃРѕРµРґРёРЅРµРЅРёР№", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Варианты соединений", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
         scr2.setPreferredSize(new java.awt.Dimension(300, 234));
 
         tab2.setFont(frames.UGui.getFont(0,0));
@@ -846,7 +846,7 @@ public class Joinings extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РџСЂРёРѕСЂРёС‚РµС‚", "РќР°Р·РІР°РЅРёРµ", "Р—РµСЂРєР°Р»СЊРЅРѕСЃС‚СЊ", "ID"
+                "Приоритет", "Название", "Зеркальность", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -883,7 +883,7 @@ public class Joinings extends javax.swing.JFrame {
 
         pan1.add(scr2);
 
-        scr3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "РџР°СЂР°РјРµС‚СЂС‹", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Параметры", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
         scr3.setPreferredSize(new java.awt.Dimension(300, 234));
 
         tab3.setFont(frames.UGui.getFont(0,0));
@@ -892,7 +892,7 @@ public class Joinings extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РџР°СЂР°РјРµС‚СЂ", "Р—РЅР°С‡РµРЅРёРµ"
+                "Параметр", "Значение"
             }
         ));
         tab3.setFillsViewportHeight(true);
@@ -922,7 +922,7 @@ public class Joinings extends javax.swing.JFrame {
         pan3.setPreferredSize(new java.awt.Dimension(654, 234));
         pan3.setLayout(new javax.swing.BoxLayout(pan3, javax.swing.BoxLayout.LINE_AXIS));
 
-        scr4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Р”РµС‚Р°Р»РёР·Р°С†РёСЏ СЃРѕРµРґРёРЅРµРЅРёР№", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Детализация соединений", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
         scr4.setMaximumSize(new java.awt.Dimension(2000, 800));
         scr4.setPreferredSize(new java.awt.Dimension(600, 300));
 
@@ -932,7 +932,7 @@ public class Joinings extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РђСЂС‚РёРєСѓР»", "РќР°Р·РІР°РЅРёРµ", "РўРµРєСЃС‚СѓСЂР°", "РћСЃРЅРѕРІРЅР°СЏ", "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ", "Р’РЅРµС€РЅСЏСЏ", "ID"
+                "Артикул", "Название", "Текстура", "Основная", "Внутренняя", "Внешняя", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -972,7 +972,7 @@ public class Joinings extends javax.swing.JFrame {
 
         pan3.add(scr4);
 
-        scr5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "РџР°СЂР°РјРµС‚СЂС‹", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Параметры", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
         scr5.setMaximumSize(new java.awt.Dimension(600, 800));
         scr5.setPreferredSize(new java.awt.Dimension(260, 300));
 
@@ -982,7 +982,7 @@ public class Joinings extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РџР°СЂР°РјРµС‚СЂ", "Р—РЅР°С‡РµРЅРёРµ"
+                "Параметр", "Значение"
             }
         ));
         tab5.setFillsViewportHeight(true);
@@ -1049,7 +1049,7 @@ public class Joinings extends javax.swing.JFrame {
 
         if (tab1.getBorder() != null) {
             UGui.insertRecordCur(tab1, eJoining.up, (record) -> {
-                //record.setDev(eJoining.name, "РЎРѕРµРґРёРЅРµРЅРёРµ-");
+                //record.setDev(eJoining.name, "Соединение-");
             });
 
         } else if (tab2.getBorder() != null) {
@@ -1088,7 +1088,7 @@ public class Joinings extends javax.swing.JFrame {
     }//GEN-LAST:event_windowClosed
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        HtmlOfTable.load("РЎРѕРµРґРёРЅРµРЅРёСЏ", tab1);
+        HtmlOfTable.load("Соединения", tab1);
         ExecuteCmd.documentType(this);
     }//GEN-LAST:event_btnReport
 
@@ -1117,8 +1117,8 @@ public class Joinings extends javax.swing.JFrame {
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
         int index = UGui.getIndexRec(tab1);
-        if (index != -1 && JOptionPane.showConfirmDialog(this, "Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РєР»РѕРЅРёСЂРѕРІР°С‚СЊ С‚РµРєСѓС‰СѓСЋ Р·Р°РїРёСЃСЊ?",
-                "РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+        if (index != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
+                "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 
             List<Record> joinvarList = new ArrayList<Record>();
             List<Record> joindetList = new ArrayList<Record>();
@@ -1130,8 +1130,8 @@ public class Joinings extends javax.swing.JFrame {
             Record joiningClon = (Record) qJoining.get(index).clone();
             joiningClon.setNo(eJoining.up, Query.INS);
             joiningClon.setNo(eJoining.id, Conn.genId(eJoining.up));
-            joiningClon.setNo(eJoining.name, joiningClon.getStr(eJoining.name) + "-РєР»РѕРЅ");
-            eJoining.up.query().add(joiningClon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+            joiningClon.setNo(eJoining.name, joiningClon.getStr(eJoining.name) + "-клон");
+            eJoining.up.query().add(joiningClon);  //добавим запись в кэш
             qJoining.add(index, joiningClon);
             qJoining.insert(joiningClon);
 
@@ -1144,7 +1144,7 @@ public class Joinings extends javax.swing.JFrame {
                 joinvarClon.setNo(eJoinvar.joining_id, joiningClon.getInt(eJoining.id));
                 qJoinpar1.forEach(rec -> joinpar2Map.put(rec, joinvarClon.getInt(eJoinvar.id)));
                 qJoindet.forEach(rec -> joindetMap.put(rec, joinvarClon.getInt(eJoinvar.id)));
-                eJoinvar.up.query().add(joinvarClon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+                eJoinvar.up.query().add(joinvarClon);  //добавим запись в кэш
                 qJoinvar.add(joinvarClon);
             }
             for (Map.Entry<Record, Integer> it : joinpar2Map.entrySet()) {
@@ -1153,7 +1153,7 @@ public class Joinings extends javax.swing.JFrame {
                 joinpar1Clon.setNo(eJoinpar1.up, Query.INS);
                 joinpar1Clon.setNo(eJoinpar1.id, Conn.genId(eJoinpar1.up));
                 joinpar1Clon.setNo(eJoinpar1.joinvar_id, it.getValue());
-                eJoinpar1.up.query().add(joinpar1Clon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+                eJoinpar1.up.query().add(joinpar1Clon);  //добавим запись в кэш
                 qJoinpar1.add(joinpar1Clon);
             }
             for (Map.Entry<Record, Integer> it : joindetMap.entrySet()) {
@@ -1164,7 +1164,7 @@ public class Joinings extends javax.swing.JFrame {
                 joindetClon.setNo(eJoindet.id, Conn.genId(eJoindet.up));
                 joindetClon.setNo(eJoindet.joinvar_id, it.getValue());
                 qJoinpar2.forEach(rec -> joinpar2Map.put(rec, joindetClon.getInt(eJoindet.id)));
-                eJoindet.up.query().add(joindetClon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+                eJoindet.up.query().add(joindetClon);  //добавим запись в кэш
                 qJoindet.add(joindetClon);
             }
             for (Map.Entry<Record, Integer> it : joinpar2Map.entrySet()) {
@@ -1173,7 +1173,7 @@ public class Joinings extends javax.swing.JFrame {
                 joinpar2Clon.setNo(eJoinpar2.up, Query.INS);
                 joinpar2Clon.setNo(eJoinpar2.id, Conn.genId(eJoinpar2.up));
                 joinpar2Clon.setNo(eJoinpar2.joindet_id, it.getValue());
-                eJoinpar2.up.query().add(joinpar2Clon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+                eJoinpar2.up.query().add(joinpar2Clon);  //добавим запись в кэш
                 qJoinpar2.add(joinpar2Clon);
             }
             List.of(qJoinvar, qJoindet, qJoinpar1, qJoinpar2).forEach(q -> q.execsql());

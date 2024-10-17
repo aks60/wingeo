@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//РќРµ РјРµРЅСЏС‚СЊ РёРЅРґРµРєСЃ РїРѕР»СЏ
+//Не менять индекс поля
 public enum eKitpar2 implements Field {
-    up("0", "0", "0", "РџР°СЂРјРµС‚СЂС‹ РєРѕРјРїР»РµРєС‚РѕРІ", "PARKOMP"),
-    id("4", "10", "0", "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ", "id"),
-    text("12", "64", "1", "Р—РЅР°С‡РµРЅРёСЏ РїР°СЂР°РјРµС‚СЂР°", "PTEXT"),
-    groups_id("4", "10", "0", "РќР°Р·РІР°РЅРёРµ РїР°СЂР°РјРµС‚СЂР°", "PNUMB"),
-    kitdet_id("4", "10", "0", "РљРѕРјРїР»РµРєС‚С‹", "kitdet_id");
+    up("0", "0", "0", "Парметры комплектов", "PARKOMP"),
+    id("4", "10", "0", "Идентификатор", "id"),
+    text("12", "64", "1", "Значения параметра", "PTEXT"),
+    groups_id("4", "10", "0", "Название параметра", "PNUMB"),
+    kitdet_id("4", "10", "0", "Комплекты", "kitdet_id");
 
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());

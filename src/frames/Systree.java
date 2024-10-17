@@ -121,8 +121,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private Query qSysfurn = new Query(eSysfurn.values(), eFurniture.values());
     private Query qSyspar1b = new Query(eSyspar1.values());
     private Query qSyspar1a = new Query(eSyspar1.values());
-    private int systreeID = -1; //РІС‹Р±СЂР°РЅРЅР°СЏ СЃРёСЃС‚РµРјР° (nuni)
-    private int elementID = -1; //РІС‹Р±СЂР°РЅРЅР°СЏ СЃРёСЃС‚РµРјР° (nuni)
+    private int systreeID = -1; //выбранная система (nuni)
+    private int elementID = -1; //выбранная система (nuni)
     private boolean writeNuni = true;
     private Canvas canvas = new Canvas();
     private Scene scene = null;
@@ -157,8 +157,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }
 
     public final void loadingData() {
-        //РџРѕР»СѓС‡РёРј СЃРѕС…СЂР°РЅС‘РЅРЅСѓСЋ systreeID РїСЂРё РІС‹С…РѕРґРµ РёР· РїСЂРѕРіСЂР°РјРјС‹
-        Record sysprodRec = null; //РїСЂРё РѕС‚РєСЂС‹С‚РёРё СѓРєР°Р·С‹РІР°РµС‚ РЅР° РєРѕРЅСЃС‚СЂСѓРєС†РёСЋ
+        //Получим сохранённую systreeID при выходе из программы
+        Record sysprodRec = null; //при открытии указывает на конструкцию
         if (this.systreeID == -1 && "-1".equals(eProp.sysprodID.read()) != true) {
             sysprodRec = eSysprod.find(Integer.valueOf(eProp.sysprodID.read()));
         }
@@ -187,7 +187,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 sysNode.rec().set(eSystree.name, str);
                 sysNode.setUserObject(str);
                 setText(txt8, str);
-                qSystree.update(sysNode.rec()); //СЃРѕС…СЂР°РЅРёРј РІ Р±Р°Р·Рµ
+                qSystree.update(sysNode.rec()); //сохраним в базе
             }
 
             public void editingCanceled(ChangeEvent e) {
@@ -321,24 +321,24 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         Record recordRoot = eSystree.up.newRecord(Query.SEL);
         recordRoot.set(eSystree.id, -1);
         recordRoot.set(eSystree.parent_id, -1);
-        recordRoot.set(eSystree.name, "Р”РµСЂРµРІРѕ СЃРёСЃС‚РµРјС‹ РїСЂРѕС„РёР»РµР№");
+        recordRoot.set(eSystree.name, "Дерево системы профилей");
         DefMutableTreeNode rootTree = new DefMutableTreeNode(recordRoot);
         ArrayList<DefMutableTreeNode> nodeList = new ArrayList<DefMutableTreeNode>();
 
         //List<Record> rootList = qSystree.stream().filter(e -> e.getInt(eSystree.id) == e.getInt(eSystree.parent_id)).collect(toList());
         //List<Record> rootList2 = rootList.stream().sorted((e1, e2) -> e1.getStr(eSystree.name).compareTo(e2.getStr(eSystree.name))).collect(toList());
-        for (Record record : qSystree) { //РїРµСЂРІС‹Р№ СѓСЂРѕРІРµРЅСЊ
+        for (Record record : qSystree) { //первый уровень
             if (record.getInt(eSystree.parent_id) == record.getInt(eSystree.id)) {
                 DefMutableTreeNode node = new DefMutableTreeNode(record);
                 rootTree.add(node);
                 nodeList.add(node);
                 if (record.getInt(eSystree.id) == systreeID) {
-                    selectedPath = node.getPath(); //Р·Р°РїРѕРјРЅРёРј path РґР»СЏ nuni
+                    selectedPath = node.getPath(); //запомним path для nuni
                 }
             }
         }
-        ArrayList<DefMutableTreeNode> nodeList2 = addChild(nodeList);  //РІС‚РѕСЂРѕР№
-        ArrayList<DefMutableTreeNode> nodeList3 = addChild(nodeList2); //С‚СЂРµС‚РёР№
+        ArrayList<DefMutableTreeNode> nodeList2 = addChild(nodeList);  //второй
+        ArrayList<DefMutableTreeNode> nodeList3 = addChild(nodeList2); //третий
         ArrayList<DefMutableTreeNode> nodeList4 = addChild(nodeList3);
         ArrayList<DefMutableTreeNode> nodeList5 = addChild(nodeList4);
         ArrayList<DefMutableTreeNode> nodeList6 = addChild(nodeList5);
@@ -353,7 +353,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             winTree.setModel(new DefaultTreeModel(root));
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.loadingWinTree() " + e);
+            System.err.println("Ошибка:Systree.loadingWinTree() " + e);
         }
     }
 
@@ -369,7 +369,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 record.add(iwin2);
 
             } catch (Exception e) {
-                System.err.println("РћС€РёР±РєР°:Systree.loadingTab5() " + e);
+                System.err.println("Ошибка:Systree.loadingTab5() " + e);
             }
         }
         ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
@@ -390,8 +390,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 qSysfurn.table(eFurniture.up).join(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);
                 qSyspar1a.sql(eSyspar1.data(), eSyspar1.systree_id, sysNode.rec().getInt(eSystree.id));
 
-                lab1.setText("РЎРёСЃС‚РµРјР° ID = " + systreeID);
-                lab2.setText("Р­Р»РµРјРµРЅС‚ ID = -1");
+                lab1.setText("Система ID = " + systreeID);
+                lab2.setText("Элемент ID = -1");
                 Collections.sort(qSyspar1a, (o1, o2) -> qGroups.find(o1.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)
                         .compareTo(qGroups.find(o2.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)));
 
@@ -426,7 +426,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.selectionTree1() " + e);
+            System.err.println("Ошибка:Systree.selectionTree1() " + e);
         }
     }
 
@@ -438,14 +438,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 Wincalc winc = wincalc();
 
                 UGui.changePpmTree(winTree, ppmTree, winNode.com5t());
-                //РўР°Р№РјРµСЂ С†РІРµС‚Р°
+                //Таймер цвета
                 if (enums.Type.contains(winNode.com5t(), enums.Type.PARAM, enums.Type.FRAME, enums.Type.JOINING) == false) {
                     if (winc.canvas != null) {
                         winNode.com5t().timer.start();
                         winc.canvas.repaint();
                     }
                 }
-                //РљРѕРЅСЃС‚СЂСѓРєС†РёРё
+                //Конструкции
                 if (winNode.com5t().type == enums.Type.RECTANGL || winNode.com5t().type == enums.Type.DOOR || winNode.com5t().type == enums.Type.TRAPEZE || winNode.com5t().type == enums.Type.ARCH) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card12");
                     ((TitledBorder) pan12.getBorder()).setTitle(winc.root.type.name);
@@ -455,7 +455,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     setText(txt17, UCom.format(winc.width(), 1));
                     setText(txt22, UCom.format(winc.height(), 1));
 
-                    //РџР°СЂР°РјРµС‚СЂС‹
+                    //Параметры
                 } else if (winNode.com5t().type == enums.Type.PARAM) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card11");
                     qSyspar1b.clear();
@@ -464,7 +464,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                             .compareTo(qGroups.find(o2.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)));
                     ((DefTableModel) tab7.getModel()).fireTableDataChanged();
 
-                    //Р Р°РјР°, РёРјРїРѕСЃС‚...
+                    //Рама, импост...
                 } else if (List.of(enums.Type.FRAME_SIDE, enums.Type.STVORKA_SIDE, enums.Type.IMPOST,
                         enums.Type.STOIKA, enums.Type.SHTULP).contains(winNode.com5t().type)) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card13");
@@ -475,7 +475,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     setText(txt28, eColor.find(winNode.com5t().colorID2).getStr(eColor.name));
                     setText(txt29, eColor.find(winNode.com5t().colorID3).getStr(eColor.name));
 
-                    //РЎС‚РµРєР»РѕРїР°РєРµС‚
+                    //Стеклопакет
                 } else if (winNode.com5t().type == enums.Type.GLASS) {
                     ElemGlass elem = (ElemGlass) winNode.com5t();
                     ((CardLayout) pan7.getLayout()).show(pan7, "card15");
@@ -495,14 +495,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         ElemSimple el = winc.listElem.stream().filter(e -> e.type == enums.Type.IMPOST).findFirst().orElse(null);
                         double s1 = el.artiklRec.getDbl(eArtikl.height), s2 = el.artiklRec.getDbl(eArtikl.size_centr), s3 = el.artiklRec.getDbl(eArtikl.size_falz);
                         lab4.setText("DY: " + s1 + " - " + s2 + " - " + s3 + " + "
-                                + UCom.format(elem.deltaDY, 2) + " = " + UCom.format(s1 - s2 - s3 + elem.deltaDY, 2) + " РјРј.");
+                                + UCom.format(elem.deltaDY, 2) + " = " + UCom.format(s1 - s2 - s3 + elem.deltaDY, 2) + " мм.");
                     }
 
-                    //РЎС‚РІРѕСЂРєР°
+                    //Створка
                 } else if (winNode.com5t().type == enums.Type.STVORKA) {
-                    //СЂР°СЃС‡С‘С‚ СЂСѓС‡РєРё, 
-                    new SpcFurniture(wincalc(), true).calc();   //РїРµС‚Р»Рё, Р·Р°РјРєР°
-                    //С‡РµСЂРµР· СЃРѕРєСЂ. С‚Р°СЂРёС„РёРєР°С†РёСЋ
+                    //расчёт ручки, 
+                    new SpcFurniture(wincalc(), true).calc();   //петли, замка
+                    //через сокр. тарификацию
                     ((CardLayout) pan7.getLayout()).show(pan7, "card16");
                     AreaStvorka stv = (AreaStvorka) winNode.com5t();
                     int id = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
@@ -530,7 +530,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     setIcon(btn23, stv.isJson(stv.gson.param, PKjson.artiklLock));
                     setText(txt48, eColor.find(stv.lockColor).getStr(eColor.name));
                     setIcon(btn24, stv.isJson(stv.gson.param, PKjson.colorLock));
-                    List.of(txt54, txt55, txt60, txt56).forEach(e -> e.setText(null)); //РјРѕСЃРєРёС‚РєР°
+                    List.of(txt54, txt55, txt60, txt56).forEach(e -> e.setText(null)); //москитка
                     Com5t mosquit = stv.childs.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
                     if (mosquit != null) {
                         ElemMosquit mosq = (ElemMosquit) mosquit;
@@ -540,12 +540,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         setText(txt56, mosq.sysprofRec.getStr(eElement.name));
                     }
 
-                    //РЎРѕРµРґРёРЅРµРЅРёСЏ
+                    //Соединения
                 } else if (winNode.com5t().type == enums.Type.JOINING) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card17");
                     DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                     ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
-                    new SpcJoining(winc, true).calc();//Р·Р°РїРѕР»РЅРёРј СЃРѕРµРґРёРЅРµРЅРёСЏ РёР· РєРѕРЅСЃС‚СЂСѓРєС‚РёРІР°                                        
+                    new SpcJoining(winc, true).calc();//заполним соединения из конструктива                                        
                     ElemJoining ej1 = winc.listJoin.join(elem5e, 0);
                     ElemJoining ej2 = winc.listJoin.join(elem5e, 1);
                     ElemJoining ej3 = winc.listJoin.join(elem5e, 2);
@@ -572,29 +572,29 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 } else {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card18");
                 }
-                lab2.setText("Р­Р»РµРјРµРЅС‚ ID = " + UCom.format(winNode.com5t().id, 2));
+                lab2.setText("Элемент ID = " + UCom.format(winNode.com5t().id, 2));
                 List.of(pan12, pan13, pan15, pan16).forEach(it -> it.repaint());
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.selectionTree2() " + e);
+            System.err.println("Ошибка:Systree.selectionTree2() " + e);
         }
     }
 
-    //Р’С‹Р±РѕСЂ РґСЂСѓРіРѕР№ РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+    //Выбор другой конструкции
     public void selectionTab5() {
         int index = UGui.getIndexRec(tab5);
         if (index != -1) {
             Record sysprodRec = qSysprod.table(eSysprod.up).get(index);
             if (writeNuni == true) {
-                eProp.sysprodID.write(sysprodRec.getStr(eSysprod.id)); //Р·Р°РїРёС€РµРј С‚РµРєСѓС‰РёР№ sysprodID РІ С„Р°Р№Р»
+                eProp.sysprodID.write(sysprodRec.getStr(eSysprod.id)); //запишем текущий sysprodID в файл
             }
             App.Top.frame.setTitle(UGui.designTitle());
 
             Object w = sysprodRec.get(eSysprod.values().length);
-            if (w instanceof Wincalc) { //РїСЂРѕСЂРёСЃРѕРІРєР° РѕРєРЅР°               
+            if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc win = (Wincalc) w;
 
-                GsonElem.setMaxID(win); //СѓСЃС‚Р°РЅРѕРІРёРј РіРµРЅРµСЂР°С‚РѕСЂ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРІ
+                GsonElem.setMaxID(win); //установим генератор идентификаторов
 
                 loadingTree2(win);
 
@@ -675,7 +675,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 int groupsID = syspar1Rec.getInt(eSyspar1.groups_id);
                 new ParDefVal(this, listenerParam2, groupsID);
             } else {
-                JOptionPane.showMessageDialog(Systree.this, "РќРµРёР·РјРµРЅСЏРµРјС‹Р№ РїР°СЂР°РјРµС‚СЂ РІ СЃРёСЃС‚РµРјРµ", "Р’РќРРњРђРќРР•!", 1);
+                JOptionPane.showMessageDialog(Systree.this, "Неизменяемый параметр в системе", "ВНИМАНИЕ!", 1);
             }
         });
     }
@@ -692,24 +692,24 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             UGui.setSelectedIndex(tab2, index);
         };
 
-        //Р’СЃС‚Р°РІРєР° Р±РµР· UGui.insertRecordCur() С‚.Рє. СЂРёСЃСѓРЅРѕРє РґРѕР±Р°РІР»СЏРµС‚СЃСЏ РІ РґРѕРї. РїРѕР»Рµ
+        //Вставка без UGui.insertRecordCur() т.к. рисунок добавляется в доп. поле
         listenerModel = (record) -> {
             UGui.stopCellEditing(tab2, tab3, tab4, tab5);
 
-            //Р—Р°РїРёС€РµРј РІ СЃРєСЂРёРїС‚ РІРµС‚РєСѓ РёР· РєРѕС‚РѕСЂРѕРіРѕ Р±СѓРґРµС‚ СЃРѕР·РґР°РІР°С‚СЊСЃСЏ РѕРєРЅРѕ  
+            //Запишем в скрипт ветку из которого будет создаваться окно  
             String script = record.get(2).toString();
             JsonObject je = new GsonBuilder().create().fromJson(script, JsonObject.class);
             je.addProperty("nuni", systreeID);
             String script2 = new GsonBuilder().create().toJson(je);
 
-            //РЎРѕС…СЂР°РЅРёРј СЃРєСЂРёРїС‚ РІ Р±Р°Р·Рµ
+            //Сохраним скрипт в базе
             Record sysprodRec = eSysprod.up.newRecord(Query.INS);
             sysprodRec.setNo(eSysprod.id, Conn.genId(eSysprod.id));
             sysprodRec.setNo(eSysprod.npp, sysprodRec.get(eSysprod.id));
             sysprodRec.setNo(eSysprod.systree_id, systreeID);
             sysprodRec.setNo(eSysprod.name, record.get(1));
             sysprodRec.setNo(eSysprod.script, script2);
-            eSysprod.data().add(sysprodRec); //РґРѕР±Р°РІРёРј РІ РєСЌС€ РЅРѕРІСѓСЋ Р·Р°РїРёСЃСЊ
+            eSysprod.data().add(sysprodRec); //добавим в кэш новую запись
             qSysprod.insert(sysprodRec);
 
             loadingTab5();
@@ -717,7 +717,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
             for (int index = 0; index < qSysprod.size(); ++index) {
                 if (qSysprod.get(index, eSysprod.id) == sysprodRec.get(eSysprod.id)) {
-                    UGui.setSelectedIndex(tab5, index); //РІС‹РґРµР»РµРЅРёРµ СЂР°Р±РѕС‡РµР№ Р·Р°РїРёСЃРё
+                    UGui.setSelectedIndex(tab5, index); //выделение рабочей записи
                     UGui.scrollRectToRow(index, tab5);
                     winTree.setSelectionRow(0);
                 }
@@ -791,7 +791,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         node.add(node2);
                         nodeList2.add(node2);
                         if (record.getInt(eSystree.id) == systreeID) {
-                            selectedPath = node2.getPath(); //Р·Р°РїРѕРјРЅРёРј path РґР»СЏ nuni
+                            selectedPath = node2.getPath(); //запомним path для nuni
                         }
                     }
                 }
@@ -799,43 +799,43 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             return nodeList2;
 
         } catch (Exception e) {
-            System.err.println("РћРЁРР‘РљРђ:Systree.addChild() " + e);
+            System.err.println("ОШИБКА:Systree.addChild() " + e);
             return null;
         }
     }
 
     public void updateScript(double selectID) {
         try {
-            //РЎРѕС…СЂР°РЅРёРј СЃРєСЂРёРїС‚ РІ Р±Р°Р·Рµ
+            //Сохраним скрипт в базе
             String script = wincalc().gson.toJson();
             Record sysprodRec = qSysprod.get(UGui.getIndexRec(tab5));
             sysprodRec.set(eSysprod.script, script);
             qSysprod.update(sysprodRec);
 
-            //Р­РєР·РµРјРїР»СЏСЂ РЅРѕРІРѕРіРѕ СЃРєСЂРёРїС‚Р°
+            //Экземпляр нового скрипта
             Wincalc iwin = new Wincalc(script);
             iwin.imageIcon = Canvas.createIcon(iwin, 68);
             sysprodRec.setNo(eSysprod.values().length, iwin);
 
-            //Р—Р°РїРѕРјРЅРёРј РєСѓСЂСЃРѕСЂ
+            //Запомним курсор
             DefMutableTreeNode selectNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             double id = (selectNode != null) ? selectNode.com5t().id : -1;
 
-            //РџРµСЂРµРіСЂСѓР·РёРј winTree
+            //Перегрузим winTree
             loadingTree2(iwin);
 
-            //РЈСЃС‚Р°РЅРѕРІРёРј РєСѓСЂСЃРѕСЂ
+            //Установим курсор
             UGui.selectionPathWin(id, winTree);
 
-            //РџРµСЂРµСЂРёСЃСѓРµРј РєРѕРЅСЃС‚СЂСѓРєС†РёСЋ
+            //Перерисуем конструкцию
             canvas.init(iwin);
             canvas.draw();
 
-            //РћР±РЅРѕРІРёРј РїРѕР»СЏ С„РѕСЂРј
+            //Обновим поля форм
             selectionTree2();
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.updateScript() " + e);
+            System.err.println("Ошибка:Systree.updateScript() " + e);
         }
     }
 
@@ -871,7 +871,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 selectionTree2();
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.reload() " + e);
+            System.err.println("Ошибка:Systree.reload() " + e);
         }
         return qSysprod;
     }
@@ -1126,7 +1126,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         mInsert.setFont(frames.UGui.getFont(1,0));
         mInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        mInsert.setText("Р”РѕР±Р°РІРёС‚СЊ");
+        mInsert.setText("Добавить");
         mInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -1136,7 +1136,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         mDelit.setFont(frames.UGui.getFont(1,0));
         mDelit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        mDelit.setText("РЈРґР°Р»РёС‚СЊ");
+        mDelit.setText("Удалить");
         mDelit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -1145,10 +1145,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         ppmCrud.add(mDelit);
 
         addImpost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
-        addImpost.setText("Р”РѕР±Р°РІРёС‚СЊ РёРјРїРѕСЃС‚");
+        addImpost.setText("Добавить импост");
 
         addImpostHor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
-        addImpostHor.setText("РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅС‹Р№");
+        addImpostHor.setText("горизонтальный");
         addImpostHor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addImpostHorAction(evt);
@@ -1157,7 +1157,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         addImpost.add(addImpostHor);
 
         addImpostVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
-        addImpostVer.setText("РІРµСЂС‚РёРєР°Р»СЊРЅС‹Р№");
+        addImpostVer.setText("вертикальный");
         addImpostVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addImpostVerAction(evt);
@@ -1168,7 +1168,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         ppmTree.add(addImpost);
 
         removeImpost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
-        removeImpost.setText("РЈРґР°Р»РёС‚СЊ РёРјРїРѕСЃС‚");
+        removeImpost.setText("Удалить импост");
         removeImpost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeImpostAction(evt);
@@ -1177,7 +1177,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         ppmTree.add(removeImpost);
 
         addStvorka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
-        addStvorka.setText("Р”РѕР±Р°РІРёС‚СЊ СЃРІРѕСЂРєСѓ");
+        addStvorka.setText("Добавить сворку");
         addStvorka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addStvorkaAction(evt);
@@ -1186,7 +1186,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         ppmTree.add(addStvorka);
 
         removeStvorka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
-        removeStvorka.setText("РЈРґР°Р»РёС‚СЊ СЃС‚РІРѕСЂРєСѓ");
+        removeStvorka.setText("Удалить створку");
         removeStvorka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeStvorkaAction(evt);
@@ -1195,7 +1195,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         ppmTree.add(removeStvorka);
 
         removeMosquit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
-        removeMosquit.setText("РЈРґР°Р»РёС‚СЊ РјРѕСЃРєРёС‚РєСѓ");
+        removeMosquit.setText("Удалить москитку");
         removeMosquit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeMosquitAction(evt);
@@ -1204,7 +1204,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         ppmTree.add(removeMosquit);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РњРѕРґРµР»Рё СЃРёСЃС‚РµРјРЅС‹С… РїСЂРѕС„РёР»РµР№");
+        setTitle("Модели системных профилей");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 500));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -1218,7 +1218,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnIns.setToolTipText(bundle.getString("Р”РѕР±Р°РІРёС‚СЊ")); // NOI18N
+        btnIns.setToolTipText(bundle.getString("Добавить")); // NOI18N
         btnIns.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnIns.setFocusable(false);
         btnIns.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1234,7 +1234,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         btnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        btnDel.setToolTipText(bundle.getString("РЈРґР°Р»РёС‚СЊ")); // NOI18N
+        btnDel.setToolTipText(bundle.getString("Удалить")); // NOI18N
         btnDel.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnDel.setFocusable(false);
         btnDel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1250,7 +1250,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         btnReport1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c053.gif"))); // NOI18N
-        btnReport1.setToolTipText(bundle.getString("РџРµС‡Р°С‚СЊ")); // NOI18N
+        btnReport1.setToolTipText(bundle.getString("Печать")); // NOI18N
         btnReport1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnReport1.setFocusable(false);
         btnReport1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1266,7 +1266,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1292,7 +1292,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         btnFind1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c088.gif"))); // NOI18N
-        btnFind1.setToolTipText(bundle.getString("РџРѕРёСЃРє Р·Р°РїРёСЃРё")); // NOI18N
+        btnFind1.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
         btnFind1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnFind1.setMaximumSize(new java.awt.Dimension(25, 25));
         btnFind1.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -1304,7 +1304,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         btnMoveU.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c051.gif"))); // NOI18N
-        btnMoveU.setToolTipText(bundle.getString("РџРµСЂРµРјРµСЃС‚РёС‚СЊ РІРІРµСЂС…")); // NOI18N
+        btnMoveU.setToolTipText(bundle.getString("Переместить вверх")); // NOI18N
         btnMoveU.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnMoveU.setFocusable(false);
         btnMoveU.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1320,7 +1320,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         btnTree.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c086.gif"))); // NOI18N
-        btnTree.setToolTipText(bundle.getString("РР·РјРµРЅРёС‚СЊ РІРёРґ")); // NOI18N
+        btnTree.setToolTipText(bundle.getString("Изменить вид")); // NOI18N
         btnTree.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnTree.setFocusable(false);
         btnTree.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1336,7 +1336,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         btnMoveD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c052.gif"))); // NOI18N
-        btnMoveD.setToolTipText(bundle.getString("РџРµСЂРµРјРµСЃС‚РёС‚СЊ РІРЅРёР·")); // NOI18N
+        btnMoveD.setToolTipText(bundle.getString("Переместить вниз")); // NOI18N
         btnMoveD.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnMoveD.setFocusable(false);
         btnMoveD.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1352,7 +1352,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         btnFind2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c089.gif"))); // NOI18N
-        btnFind2.setToolTipText(bundle.getString("РџРѕРёСЃРє Р·Р°РїРёСЃРё")); // NOI18N
+        btnFind2.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
         btnFind2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnFind2.setFocusable(false);
         btnFind2.setMaximumSize(new java.awt.Dimension(25, 25));
@@ -1455,7 +1455,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
             },
             new String [] {
-                "РџР°СЂР°РјРµС‚СЂ РєРѕРЅСЃС‚СЂСѓРєС†РёРё", "Р—РЅР°С‡РµРЅРёРµ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ", "ID"
+                "Параметр конструкции", "Значение по умолчанию", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -1493,25 +1493,25 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         pan7.add(pan11, "card11");
 
-        pan12.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "РћСЃРЅРѕРІРЅС‹Рµ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
+        pan12.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Основные", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
         pan12.setToolTipText("");
         pan12.setPreferredSize(new java.awt.Dimension(300, 200));
 
-        pan21.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "РўРµРєСЃС‚СѓСЂР° РёР·РґРµР»РёСЏ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 0)));
+        pan21.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "Текстура изделия", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 0)));
         pan21.setPreferredSize(new java.awt.Dimension(308, 104));
 
         lab27.setFont(frames.UGui.getFont(0,0));
-        lab27.setText("РћСЃРЅРѕРІРЅР°СЏ");
+        lab27.setText("Основная");
         lab27.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab27.setPreferredSize(new java.awt.Dimension(80, 18));
 
         lab31.setFont(frames.UGui.getFont(0,0));
-        lab31.setText("Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ");
+        lab31.setText("Внутренняя");
         lab31.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab31.setPreferredSize(new java.awt.Dimension(80, 18));
 
         lab32.setFont(frames.UGui.getFont(0,0));
-        lab32.setText("Р’РЅРµС€РЅСЏСЏ");
+        lab32.setText("Внешняя");
         lab32.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab32.setPreferredSize(new java.awt.Dimension(80, 18));
 
@@ -1614,12 +1614,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         );
 
         lab35.setFont(frames.UGui.getFont(0,0));
-        lab35.setText("РЁРёСЂРёРЅР°");
+        lab35.setText("Ширина");
         lab35.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab35.setPreferredSize(new java.awt.Dimension(80, 18));
 
         lab38.setFont(frames.UGui.getFont(0,0));
-        lab38.setText("Р’С‹СЃРѕС‚Р°");
+        lab38.setText("Высота");
         lab38.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab38.setPreferredSize(new java.awt.Dimension(80, 18));
 
@@ -1670,16 +1670,16 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         pan7.add(pan12, "card12");
 
-        pan13.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Р Р°РјР°, РёРјРїРѕСЃС‚..", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
+        pan13.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Рама, импост..", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
         pan13.setPreferredSize(new java.awt.Dimension(300, 200));
 
         lab33.setFont(frames.UGui.getFont(0,0));
-        lab33.setText("РђСЂС‚РёРєСѓР»");
+        lab33.setText("Артикул");
         lab33.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab33.setPreferredSize(new java.awt.Dimension(80, 18));
 
         lab34.setFont(frames.UGui.getFont(0,0));
-        lab34.setText("РќР°Р·РІР°РЅРёРµ");
+        lab34.setText("Название");
         lab34.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab34.setPreferredSize(new java.awt.Dimension(80, 18));
 
@@ -1709,17 +1709,17 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         pan22.setPreferredSize(new java.awt.Dimension(308, 104));
 
         lab51.setFont(frames.UGui.getFont(0,0));
-        lab51.setText("РћСЃРЅРѕРІРЅР°СЏ");
+        lab51.setText("Основная");
         lab51.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab51.setPreferredSize(new java.awt.Dimension(80, 18));
 
         lab52.setFont(frames.UGui.getFont(0,0));
-        lab52.setText("Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ");
+        lab52.setText("Внутренняя");
         lab52.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab52.setPreferredSize(new java.awt.Dimension(80, 18));
 
         lab53.setFont(frames.UGui.getFont(0,0));
-        lab53.setText("Р’РЅРµС€РЅСЏСЏ");
+        lab53.setText("Внешняя");
         lab53.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab53.setPreferredSize(new java.awt.Dimension(80, 18));
 
@@ -1859,16 +1859,16 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         pan7.add(pan13, "card13");
 
-        pan15.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "РЎС‚РµРєР»РѕРїР°РєРµС‚", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
+        pan15.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Стеклопакет", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
         pan15.setPreferredSize(new java.awt.Dimension(300, 200));
 
         lab29.setFont(frames.UGui.getFont(0,0));
-        lab29.setText("РђСЂС‚РёРєСѓР»");
+        lab29.setText("Артикул");
         lab29.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab29.setPreferredSize(new java.awt.Dimension(80, 18));
 
         lab36.setFont(frames.UGui.getFont(0,0));
-        lab36.setText("РќР°Р·РІР°РЅРёРµ");
+        lab36.setText("Название");
         lab36.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab36.setPreferredSize(new java.awt.Dimension(80, 18));
 
@@ -1917,17 +1917,17 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         lab62.setFont(frames.UGui.getFont(0,0));
-        lab62.setText("Р Р°СЃРєР»Р°РґРєР°");
+        lab62.setText("Раскладка");
         lab62.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab62.setPreferredSize(new java.awt.Dimension(80, 18));
 
         lab64.setFont(frames.UGui.getFont(0,0));
-        lab64.setText("РќР°Р·РІР°РЅРёРµ");
+        lab64.setText("Название");
         lab64.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab64.setPreferredSize(new java.awt.Dimension(80, 18));
 
         lab65.setFont(frames.UGui.getFont(0,0));
-        lab65.setText("РўРµРєСЃС‚СѓСЂР°");
+        lab65.setText("Текстура");
         lab65.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab65.setPreferredSize(new java.awt.Dimension(80, 18));
 
@@ -1971,14 +1971,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         lab67.setFont(frames.UGui.getFont(0,0));
-        lab67.setText("РљРѕР». СЏС‡РµРµРє РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅС‹С…");
+        lab67.setText("Кол. ячеек горизонтальных");
         lab67.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab67.setMaximumSize(new java.awt.Dimension(147, 19));
         lab67.setMinimumSize(new java.awt.Dimension(64, 19));
         lab67.setPreferredSize(new java.awt.Dimension(128, 19));
 
         lab68.setFont(frames.UGui.getFont(0,0));
-        lab68.setText("РљРѕР». СЏС‡РµРµРє РІРµСЂС‚РёРєР°Р»СЊРЅС‹С…");
+        lab68.setText("Кол. ячеек вертикальных");
         lab68.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab68.setMaximumSize(new java.awt.Dimension(274, 19));
         lab68.setMinimumSize(new java.awt.Dimension(64, 19));
@@ -2012,7 +2012,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         lab4.setPreferredSize(new java.awt.Dimension(260, 18));
 
         lab40.setFont(frames.UGui.getFont(0,0));
-        lab40.setText("Р–Р°Р»СЋР·Рё");
+        lab40.setText("Жалюзи");
         lab40.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab40.setMaximumSize(new java.awt.Dimension(80, 18));
         lab40.setMinimumSize(new java.awt.Dimension(80, 18));
@@ -2036,7 +2036,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         lab72.setFont(frames.UGui.getFont(0,0));
-        lab72.setText("РќР°Р·РІР°РЅРёРµ");
+        lab72.setText("Название");
         lab72.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab72.setMaximumSize(new java.awt.Dimension(80, 18));
         lab72.setMinimumSize(new java.awt.Dimension(80, 18));
@@ -2048,7 +2048,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt62.setPreferredSize(new java.awt.Dimension(212, 18));
 
         lab73.setFont(frames.UGui.getFont(0,0));
-        lab73.setText("РўРµРєСЃС‚СѓСЂР°");
+        lab73.setText("Текстура");
         lab73.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab73.setMaximumSize(new java.awt.Dimension(80, 18));
         lab73.setMinimumSize(new java.awt.Dimension(80, 18));
@@ -2072,7 +2072,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         lab74.setFont(frames.UGui.getFont(0,0));
-        lab74.setText("РЎРѕСЃС‚Р°РІ");
+        lab74.setText("Состав");
         lab74.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab74.setMaximumSize(new java.awt.Dimension(80, 18));
         lab74.setMinimumSize(new java.awt.Dimension(80, 18));
@@ -2096,7 +2096,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         lab75.setFont(frames.UGui.getFont(0,0));
-        lab75.setText("Р Р°СЃРїРѕР»РѕР¶РµРЅРёРµ");
+        lab75.setText("Расположение");
         lab75.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab75.setMaximumSize(new java.awt.Dimension(80, 18));
         lab75.setMinimumSize(new java.awt.Dimension(80, 18));
@@ -2292,12 +2292,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         pan20.setPreferredSize(new java.awt.Dimension(308, 98));
 
         lab46.setFont(frames.UGui.getFont(0,0));
-        lab46.setText("Р’С‹СЃРѕС‚Р° СЂСѓС‡РєРё");
+        lab46.setText("Высота ручки");
         lab46.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab46.setPreferredSize(new java.awt.Dimension(80, 18));
 
         lab45.setFont(frames.UGui.getFont(0,0));
-        lab45.setText("РќР°РїСЂ. РѕС‚РєСЂ.");
+        lab45.setText("Напр. откр.");
         lab45.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab45.setPreferredSize(new java.awt.Dimension(80, 18));
 
@@ -2392,7 +2392,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt16.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab41.setFont(frames.UGui.getFont(0,0));
-        lab41.setText("РЁРёСЂРёРЅР°");
+        lab41.setText("Ширина");
         lab41.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab41.setPreferredSize(new java.awt.Dimension(80, 18));
 
@@ -2404,7 +2404,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt24.setPreferredSize(new java.awt.Dimension(48, 18));
 
         lab42.setFont(frames.UGui.getFont(0,0));
-        lab42.setText("Р’С‹СЃРѕС‚Р°");
+        lab42.setText("Высота");
         lab42.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab42.setPreferredSize(new java.awt.Dimension(60, 18));
 
@@ -2417,19 +2417,19 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt26.setPreferredSize(new java.awt.Dimension(48, 18));
 
         lab30.setFont(frames.UGui.getFont(0,0));
-        lab30.setText("Р¤СѓСЂРЅРёС‚СѓСЂР°");
+        lab30.setText("Фурнитура");
         lab30.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab30.setPreferredSize(new java.awt.Dimension(80, 18));
 
         lab25.setFont(frames.UGui.getFont(0,1));
-        lab25.setText("Р СѓС‡РєР°");
+        lab25.setText("Ручка");
         lab25.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab25.setMaximumSize(new java.awt.Dimension(80, 18));
         lab25.setMinimumSize(new java.awt.Dimension(80, 18));
         lab25.setPreferredSize(new java.awt.Dimension(80, 18));
 
         lab39.setFont(frames.UGui.getFont(0,0));
-        lab39.setText("РўРµРєСЃС‚СѓСЂР°");
+        lab39.setText("Текстура");
         lab39.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab39.setMaximumSize(new java.awt.Dimension(80, 18));
         lab39.setMinimumSize(new java.awt.Dimension(80, 18));
@@ -2441,14 +2441,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt59.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab70.setFont(frames.UGui.getFont(0,0));
-        lab70.setText("РќР°Р·РІР°РЅРёРµ");
+        lab70.setText("Название");
         lab70.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab70.setMaximumSize(new java.awt.Dimension(80, 18));
         lab70.setMinimumSize(new java.awt.Dimension(80, 18));
         lab70.setPreferredSize(new java.awt.Dimension(80, 18));
 
         lab26.setFont(frames.UGui.getFont(0,1));
-        lab26.setText("РџРµС‚Р»СЏ");
+        lab26.setText("Петля");
         lab26.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab26.setMaximumSize(new java.awt.Dimension(80, 18));
         lab26.setMinimumSize(new java.awt.Dimension(80, 18));
@@ -2472,7 +2472,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         lab48.setFont(frames.UGui.getFont(0,0));
-        lab48.setText("РќР°Р·РІР°РЅРёРµ");
+        lab48.setText("Название");
         lab48.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab48.setMaximumSize(new java.awt.Dimension(80, 18));
         lab48.setMinimumSize(new java.awt.Dimension(80, 18));
@@ -2484,7 +2484,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt57.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab44.setFont(frames.UGui.getFont(0,0));
-        lab44.setText("РўРµРєСЃС‚СѓСЂР°");
+        lab44.setText("Текстура");
         lab44.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab44.setMaximumSize(new java.awt.Dimension(80, 18));
         lab44.setMinimumSize(new java.awt.Dimension(80, 18));
@@ -2634,10 +2634,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 .addContainerGap(86, Short.MAX_VALUE))
         );
 
-        tabb2.addTab("РћСЃРЅРѕРІРЅ...", pan20);
+        tabb2.addTab("Основн...", pan20);
 
         lab71.setFont(frames.UGui.getFont(0,1));
-        lab71.setText("Р—Р°РјРѕРє");
+        lab71.setText("Замок");
         lab71.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab71.setMaximumSize(new java.awt.Dimension(80, 18));
         lab71.setMinimumSize(new java.awt.Dimension(80, 18));
@@ -2673,7 +2673,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         lab63.setFont(frames.UGui.getFont(0,0));
-        lab63.setText("РўРµРєСЃС‚СѓСЂР°");
+        lab63.setText("Текстура");
         lab63.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab63.setMaximumSize(new java.awt.Dimension(80, 18));
         lab63.setMinimumSize(new java.awt.Dimension(80, 18));
@@ -2690,14 +2690,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt58.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab3.setFont(frames.UGui.getFont(0,0));
-        lab3.setText("РќР°Р·РІР°РЅРёРµ");
+        lab3.setText("Название");
         lab3.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab3.setMaximumSize(new java.awt.Dimension(80, 18));
         lab3.setMinimumSize(new java.awt.Dimension(80, 18));
         lab3.setPreferredSize(new java.awt.Dimension(80, 18));
 
         lab28.setFont(frames.UGui.getFont(0,1));
-        lab28.setText("РњРѕСЃРє. СЃРµС‚РєР°");
+        lab28.setText("Моск. сетка");
         lab28.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab28.setMaximumSize(new java.awt.Dimension(80, 18));
         lab28.setMinimumSize(new java.awt.Dimension(80, 18));
@@ -2721,7 +2721,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         lab37.setFont(frames.UGui.getFont(0,0));
-        lab37.setText("РќР°Р·РІР°РЅРёРµ");
+        lab37.setText("Название");
         lab37.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab37.setMaximumSize(new java.awt.Dimension(80, 18));
         lab37.setMinimumSize(new java.awt.Dimension(80, 18));
@@ -2733,7 +2733,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt55.setPreferredSize(new java.awt.Dimension(212, 18));
 
         lab66.setFont(frames.UGui.getFont(0,0));
-        lab66.setText("РўРµРєСЃС‚СѓСЂР°");
+        lab66.setText("Текстура");
         lab66.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab66.setMaximumSize(new java.awt.Dimension(80, 18));
         lab66.setMinimumSize(new java.awt.Dimension(80, 18));
@@ -2757,7 +2757,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         lab43.setFont(frames.UGui.getFont(0,0));
-        lab43.setText("РЎРѕСЃС‚Р°РІ");
+        lab43.setText("Состав");
         lab43.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab43.setMaximumSize(new java.awt.Dimension(80, 18));
         lab43.setMinimumSize(new java.awt.Dimension(80, 18));
@@ -2868,7 +2868,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 .addGap(158, 158, 158))
         );
 
-        tabb2.addTab("Р”РѕРїРѕР»РЅ...", pan23);
+        tabb2.addTab("Дополн...", pan23);
 
         pan16.add(tabb2, java.awt.BorderLayout.CENTER);
 
@@ -2878,13 +2878,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         pan17.setPreferredSize(new java.awt.Dimension(300, 200));
 
         lab49.setFont(frames.UGui.getFont(0,0));
-        lab49.setText("1  СЃРѕРµРґРёРЅРµРЅРёРµ");
+        lab49.setText("1  соединение");
         lab49.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab49.setIconTextGap(1);
         lab49.setPreferredSize(new java.awt.Dimension(80, 18));
 
         lab50.setFont(frames.UGui.getFont(0,0));
-        lab50.setText("2  СЃРѕРµРґРёРЅРµРЅРёРµ");
+        lab50.setText("2  соединение");
         lab50.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab50.setPreferredSize(new java.awt.Dimension(80, 18));
 
@@ -2894,7 +2894,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt36.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab58.setFont(frames.UGui.getFont(0,0));
-        lab58.setText("РђСЂС‚РёРєСѓР» 1,2");
+        lab58.setText("Артикул 1,2");
         lab58.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab58.setIconTextGap(1);
         lab58.setPreferredSize(new java.awt.Dimension(80, 18));
@@ -2905,7 +2905,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt37.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab55.setFont(frames.UGui.getFont(0,0));
-        lab55.setText("Р’Р°СЂРёР°РЅС‚");
+        lab55.setText("Вариант");
         lab55.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab55.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         lab55.setIconTextGap(6);
@@ -2917,7 +2917,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt38.setPreferredSize(new java.awt.Dimension(180, 18));
 
         btn26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b018.gif"))); // NOI18N
-        btn26.setToolTipText(bundle.getString("РџРѕРёСЃРє Р·Р°РїРёСЃРё")); // NOI18N
+        btn26.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
         btn26.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn26.setMaximumSize(new java.awt.Dimension(18, 18));
         btn26.setMinimumSize(new java.awt.Dimension(18, 18));
@@ -2930,7 +2930,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         btn27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b018.gif"))); // NOI18N
-        btn27.setToolTipText(bundle.getString("РџРѕРёСЃРє Р·Р°РїРёСЃРё")); // NOI18N
+        btn27.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
         btn27.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn27.setMaximumSize(new java.awt.Dimension(18, 18));
         btn27.setMinimumSize(new java.awt.Dimension(18, 18));
@@ -2943,7 +2943,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         lab56.setFont(frames.UGui.getFont(0,0));
-        lab56.setText("Р’Р°СЂРёР°РЅС‚");
+        lab56.setText("Вариант");
         lab56.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab56.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         lab56.setIconTextGap(6);
@@ -2955,7 +2955,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt39.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab54.setFont(frames.UGui.getFont(0,0));
-        lab54.setText("3  РїСЂРёР»РµРіР°СЋС‰РµРµ");
+        lab54.setText("3  прилегающее");
         lab54.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab54.setPreferredSize(new java.awt.Dimension(80, 18));
 
@@ -2965,7 +2965,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt40.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab57.setFont(frames.UGui.getFont(0,0));
-        lab57.setText("Р’Р°СЂРёР°РЅС‚");
+        lab57.setText("Вариант");
         lab57.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab57.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         lab57.setIconTextGap(6);
@@ -2977,7 +2977,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt41.setPreferredSize(new java.awt.Dimension(180, 18));
 
         btn28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b018.gif"))); // NOI18N
-        btn28.setToolTipText(bundle.getString("РџРѕРёСЃРє Р·Р°РїРёСЃРё")); // NOI18N
+        btn28.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
         btn28.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn28.setMaximumSize(new java.awt.Dimension(18, 18));
         btn28.setMinimumSize(new java.awt.Dimension(18, 18));
@@ -2995,7 +2995,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt42.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab59.setFont(frames.UGui.getFont(0,0));
-        lab59.setText("РђСЂС‚РёРєСѓР» 1,2");
+        lab59.setText("Артикул 1,2");
         lab59.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab59.setIconTextGap(1);
         lab59.setPreferredSize(new java.awt.Dimension(80, 18));
@@ -3006,7 +3006,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt43.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab60.setFont(frames.UGui.getFont(0,0));
-        lab60.setText("РђСЂС‚РёРєСѓР» 1,2");
+        lab60.setText("Артикул 1,2");
         lab60.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab60.setIconTextGap(1);
         lab60.setPreferredSize(new java.awt.Dimension(80, 18));
@@ -3113,7 +3113,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         pan7.add(pan17, "card17");
 
-        pan18.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "РљРѕСЂРѕР±РєР°", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
+        pan18.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Коробка", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
 
         javax.swing.GroupLayout pan18Layout = new javax.swing.GroupLayout(pan18);
         pan18.setLayout(pan18Layout);
@@ -3137,44 +3137,44 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         tabb1.setPreferredSize(new java.awt.Dimension(540, 180));
 
         lab13.setFont(frames.UGui.getFont(0,0));
-        lab13.setText("Р—Р°РїРѕР»РЅ. РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ");
+        lab13.setText("Заполн. по умолчанию");
         lab13.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab13.setPreferredSize(new java.awt.Dimension(112, 18));
 
         lab14.setFont(frames.UGui.getFont(0,0));
-        lab14.setText("Р”РѕСЃС‚СѓРїРЅС‹Рµ С‚РѕР»С‰РёРЅС‹");
+        lab14.setText("Доступные толщины");
         lab14.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab14.setPreferredSize(new java.awt.Dimension(120, 18));
 
         lab15.setFont(frames.UGui.getFont(0,0));
-        lab15.setText("РћСЃРЅРѕРІРЅР°СЏ С‚РµРєСЃС‚СѓСЂР°");
+        lab15.setText("Основная текстура");
         lab15.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab15.setPreferredSize(new java.awt.Dimension(112, 18));
 
         lab16.setFont(frames.UGui.getFont(0,0));
-        lab16.setText("Р’РЅСѓС‚СЂ. С‚РµРєСЃС‚СѓСЂР°");
+        lab16.setText("Внутр. текстура");
         lab16.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab16.setPreferredSize(new java.awt.Dimension(112, 18));
 
         lab17.setFont(frames.UGui.getFont(0,0));
-        lab17.setText("Р’РЅРµС€РЅСЏСЏ С‚РµРєСЃС‚СѓСЂР°");
+        lab17.setText("Внешняя текстура");
         lab17.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab17.setPreferredSize(new java.awt.Dimension(112, 18));
 
         lab19.setFont(frames.UGui.getFont(0,0));
-        lab19.setText("РџСЂРёР·РЅР°Рє СЃРёСЃС‚РµРјС‹");
+        lab19.setText("Признак системы");
         lab19.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab19.setMaximumSize(new java.awt.Dimension(112, 18));
         lab19.setMinimumSize(new java.awt.Dimension(112, 18));
         lab19.setPreferredSize(new java.awt.Dimension(112, 18));
 
         lab20.setFont(frames.UGui.getFont(0,0));
-        lab20.setText("РЎРёСЃС‚РµРјР°");
+        lab20.setText("Система");
         lab20.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab20.setPreferredSize(new java.awt.Dimension(112, 18));
 
         lab24.setFont(frames.UGui.getFont(0,0));
-        lab24.setText("Р’РёРґ РёР·РґРµР»РёСЏ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ");
+        lab24.setText("Вид изделия по умолчанию");
         lab24.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab24.setPreferredSize(new java.awt.Dimension(120, 18));
 
@@ -3227,7 +3227,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt11.setPreferredSize(new java.awt.Dimension(70, 18));
 
         btn4.setText("...");
-        btn4.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btn4.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btn4.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn4.setMaximumSize(new java.awt.Dimension(21, 20));
         btn4.setMinimumSize(new java.awt.Dimension(21, 20));
@@ -3239,7 +3239,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         btn7.setText("...");
-        btn7.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btn7.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btn7.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn7.setMaximumSize(new java.awt.Dimension(21, 20));
         btn7.setMinimumSize(new java.awt.Dimension(21, 20));
@@ -3251,7 +3251,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         btn11.setText("...");
-        btn11.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btn11.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btn11.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn11.setMaximumSize(new java.awt.Dimension(21, 20));
         btn11.setMinimumSize(new java.awt.Dimension(21, 20));
@@ -3263,7 +3263,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         lab47.setFont(frames.UGui.getFont(0,0));
-        lab47.setText("РљРѕСЌС„. СЂРµРЅС‚Р°Р±РµР»СЊРЅРѕСЃС‚Рё");
+        lab47.setText("Коэф. рентабельности");
         lab47.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         txt35.setFont(frames.UGui.getFont(0,0));
@@ -3272,7 +3272,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt35.setPreferredSize(new java.awt.Dimension(80, 18));
 
         lab69.setFont(frames.UGui.getFont(0,0));
-        lab69.setText("РљРѕРґ СЃРёСЃС‚РµРјС‹");
+        lab69.setText("Код системы");
         lab69.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab69.setPreferredSize(new java.awt.Dimension(80, 18));
 
@@ -3389,7 +3389,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
-        tabb1.addTab("   РћСЃРЅРѕРІРЅС‹Рµ   ", pan6);
+        tabb1.addTab("   Основные   ", pan6);
 
         pan3.setLayout(new java.awt.BorderLayout());
 
@@ -3404,7 +3404,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "РџСЂРёРѕСЂРёС‚РµС‚", "РџСЂРёРјРµРЅРµРЅРёРµ", "РЎС‚РѕСЂРѕРЅР°", "РђСЂС‚РёРєСѓР»", "РќР°Р·РІР°РЅРёРµ", "ID"
+                "Приоритет", "Применение", "Сторона", "Артикул", "Название", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -3444,7 +3444,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         pan3.add(scr2, java.awt.BorderLayout.CENTER);
 
-        tabb1.addTab("   РџСЂРѕС„РёР»Рё   ", pan3);
+        tabb1.addTab("   Профили   ", pan3);
 
         pan4.setLayout(new java.awt.BorderLayout());
 
@@ -3459,7 +3459,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "РџСЂРёРѕСЂРёС‚РµС‚", "РќР°Р·РІР°РЅРёРµ  С„СѓСЂРЅРёС‚СѓСЂС‹", "РўРёРї РѕС‚РєСЂС‹РІР°РЅРёСЏ", "Р—Р°РјРµРЅР°", "РЈСЃС‚Р°РЅРѕРІРєР° СЂСѓС‡РєРё", "РђСЂС‚РёРєСѓР» СЂСѓС‡РєРё", "РђСЂС‚РёРєСѓР» РїРѕРґРІРµСЃР°", "ID"
+                "Приоритет", "Название  фурнитуры", "Тип открывания", "Замена", "Установка ручки", "Артикул ручки", "Артикул подвеса", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -3498,7 +3498,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         pan4.add(scr3, java.awt.BorderLayout.CENTER);
 
-        tabb1.addTab("   Р¤СѓСЂРЅРёС‚СѓСЂР°   ", pan4);
+        tabb1.addTab("   Фурнитура   ", pan4);
 
         pan5.setLayout(new java.awt.BorderLayout());
 
@@ -3510,7 +3510,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
             },
             new String [] {
-                "РџР°СЂР°РјРµС‚СЂ СЃРёСЃС‚РµРјС‹", "Р—РЅР°С‡РµРЅРёРµ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ", "Р—Р°РєСЂРµРїР»РµРЅРѕ", "ID"
+                "Параметр системы", "Значение по умолчанию", "Закреплено", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -3539,7 +3539,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         pan5.add(scr4, java.awt.BorderLayout.CENTER);
 
-        tabb1.addTab("   РџР°СЂР°РјРµС‚СЂС‹   ", pan5);
+        tabb1.addTab("   Параметры   ", pan5);
 
         pan10.setLayout(new java.awt.BorderLayout());
 
@@ -3553,7 +3553,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 {null, null}
             },
             new String [] {
-                "РќР°РёРјРµРЅРѕРІР°РЅРёРµ", "Р РёСЃСѓРЅРѕРє"
+                "Наименование", "Рисунок"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -3597,7 +3597,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         pan10.add(scr6, java.awt.BorderLayout.EAST);
 
-        tabb1.addTab("   РњРѕРґРµР»Рё   ", pan10);
+        tabb1.addTab("   Модели   ", pan10);
 
         split1.setBottomComponent(tabb1);
         tabb1.getAccessibleContext().setAccessibleName("<html><font size=\"3\">&nbsp;&nbsp;&nbsp\nРћСЃРЅРѕРІРЅС‹Рµ\n&nbsp;&nbsp;&nbsp");
@@ -3680,7 +3680,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private void btnInsert(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsert
         if (sysNode != null) {
             if (sysTree.getBorder() != null) {
-                if (JOptionPane.showConfirmDialog(this, "Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РґРѕР±Р°РІРёС‚СЊ РІРµС‚РєСѓ РІ СЃРёСЃС‚РµРјСѓ?", "РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ",
+                if (JOptionPane.showConfirmDialog(this, "Вы действительно хотите добавить ветку в систему?", "Подтверждение",
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
                     Record record = eSystree.up.newRecord(Query.INS);
                     int id = Conn.genId(eSystree.id);
@@ -3689,11 +3689,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     record.setNo(eSystree.parent_id, parent_id);
                     record.setNo(eSystree.name, "P" + id + "." + parent_id);
                     record.setNo(eSystree.coef, 1);
-                    qSystree.insert(record); //record СЃРѕС…СЂР°РЅРёРј РІ Р±Р°Р·Рµ
+                    qSystree.insert(record); //record сохраним в базе
                     record.set(eSystree.up, Query.SEL);
-                    qSystree.add(record); //РґРѕР±Р°РІРёРј record РІ СЃРїРёСЃРѕРє
+                    qSystree.add(record); //добавим record в список
                     DefMutableTreeNode newNode = new DefMutableTreeNode(record);
-                    ((DefaultTreeModel) sysTree.getModel()).insertNodeInto(newNode, sysNode, sysNode.getChildCount()); //РґРѕР±Р°РІРёРј node РІ tree
+                    ((DefaultTreeModel) sysTree.getModel()).insertNodeInto(newNode, sysNode, sysNode.getChildCount()); //добавим node в tree
                     TreeNode[] nodes = ((DefaultTreeModel) sysTree.getModel()).getPathToRoot(newNode);
                     sysTree.scrollPathToVisible(new TreePath(nodes));
                     sysTree.setSelectionPath(new TreePath(nodes));
@@ -3747,17 +3747,17 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 ImageIcon img = new ImageIcon(this.getClass().getResource("/resource/img24/c014.gif"));
 
                 if (sysNode.getChildCount() != 0) {
-                    JOptionPane.showMessageDialog(this, "РќРµР»СЊР·СЏ СѓРґР°Р»РёС‚СЊ С‚РµРєСѓС‰РёР№ СѓР·РµР» С‚. Рє. Сѓ РЅРµРіРѕ РµСЃС‚СЊ РїРѕРґС‡РёРЅС‘РЅРЅС‹Рµ Р·Р°РїРёСЃРё", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.NO_OPTION, img);
+                    JOptionPane.showMessageDialog(this, "Нельзя удалить текущий узел т. к. у него есть подчинённые записи", "Предупреждение", JOptionPane.NO_OPTION, img);
                     return;
                 }
                 for (JTable tab : List.of(tab2, tab3, tab4, tab5)) {
                     if (tab.getRowCount() != 0) {
-                        JOptionPane.showMessageDialog(this, "РџРµСЂРµРґ СѓРґР°Р»РµРЅРёРµРј Р·Р°РїРёСЃРё, СѓРґР°Р»РёС‚Рµ РґР°РЅРЅС‹Рµ РІ Р·Р°РІРёСЃРёРјС‹С… С‚Р°Р±Р»РёС†Р°С…", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.NO_OPTION, img);
+                        JOptionPane.showMessageDialog(this, "Перед удалением записи, удалите данные в зависимых таблицах", "Предупреждение", JOptionPane.NO_OPTION, img);
                         return;
                     }
                 }
                 DefMutableTreeNode parentNode = (DefMutableTreeNode) sysNode.getParent();
-                if (JOptionPane.showConfirmDialog(this, "РҐРѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ СѓР·РµР» <" + sysNode + ">?", "РџРѕРґС‚РІРµСЂРґРёС‚Рµ СѓРґР°Р»РµРЅРёРµ",
+                if (JOptionPane.showConfirmDialog(this, "Хотите удалить узел <" + sysNode + ">?", "Подтвердите удаление",
                         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null) == 0) {
                     UGui.stopCellEditing(sysTree);
                     if (qSystree.delete(sysNode.rec())) {
@@ -3813,16 +3813,16 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_btnClose
 
     private void sysprofToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysprofToFrame
-        try {
+         try {
             if (winNode != null) {
                 Layout layout = winNode.com5t().layout();
-                double selectID = winNode.com5t().id; //id СЌР»РµРјРµРЅС‚Р° РєРѕС‚РѕСЂС‹Р№ СѓР¶Рµ РµСЃС‚СЊ РІ РєРѕРЅСЃС‚СЂСѓРєС†РёРё, СЌС‚Рѕ Р»РёР±Рѕ РІРёСЂС‚СѓР°Р». Р»РёР±Рѕ РЅР°Р№РґРµРЅРЅС‹Р№ РїРѕ РїСЂРёРѕСЂРёС‚РµС‚Сѓ РїСЂРё РїРѕСЃС‚СЂРѕРµРЅРёРё РјРѕРґРµР»Рё
-                Query qSysprofFilter = new Query(eSysprof.values(), eArtikl.values()); //С‚СѓС‚ Р±СѓРґРµС‚ СЃРїРёСЃРѕРє РґРѕРїСѓСЃС‚РёРјС‹С… РїСЂРѕС„РёР»РµР№ РёР· РІРµС‚РєРё СЃРёСЃС‚РµРјС‹
-                //Р¦РёРєР» РїРѕ РїСЂРѕС„РёР»СЏРј РІРµС‚РєРё 
+                double selectID = winNode.com5t().id; //id элемента который уже есть в конструкции, это либо виртуал. либо найденный по приоритету при построении модели
+                Query qSysprofFilter = new Query(eSysprof.values(), eArtikl.values()); //тут будет список допустимых профилей из ветки системы
+                //Цикл по профилям ветки 
                 for (int index = 0; index < qSysprof.size(); ++index) {
                     Record sysprofRec = qSysprof.get(index);
 
-                    //РћС‚С„РёР»СЊС‚СЂСѓРµРј РїРѕРґС…РѕРґСЏС‰РёРµ РїРѕ РїР°СЂР°РјРµС‚СЂР°Рј
+                    //Отфильтруем подходящие по параметрам
                     if (winNode.com5t().type.id2 == sysprofRec.getInt(eSysprof.use_type)) {
                         int useSideId = sysprofRec.getInt(eSysprof.use_side);
                         if (useSideId == layout.id
@@ -3840,7 +3840,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
                 new DicSysprof(this, paramRec.getInt(eSysprof.id), (sysprofRec) -> {
                     Wincalc winc = wincalc();
-                    if (winNode.com5t().type == enums.Type.FRAME_SIDE) { //СЂР°РјР° РѕРєРЅР°
+                    if (winNode.com5t().type == enums.Type.FRAME_SIDE) { //рама окна
                         double elemId = winNode.com5t().id;
                         GsonElem gsonRama = winc.listAll.gson(elemId);
                         if (sysprofRec.get(1) == null) {
@@ -3850,7 +3850,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         }
                         updateScript(selectID);
 
-                    } else if (winNode.com5t().type == enums.Type.STVORKA_SIDE) { //СЂР°РјР° СЃС‚РІРѕСЂРєРё
+                    } else if (winNode.com5t().type == enums.Type.STVORKA_SIDE) { //рама створки
                         double stvId = winNode.com5t().owner.id;
                         GsonElem stvArea = (GsonElem) winc.listAll.gson(stvId);
                         JsonObject paramObj = stvArea.param;
@@ -3872,7 +3872,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         }
                         updateScript(selectID);
 
-                    } else {  //РёРјРїРѕСЃС‚
+                    } else {  //импост
                         double elemId = winNode.com5t().id;
                         GsonElem gsonElem = winc.listAll.gson(elemId);
                         if (sysprofRec.get(1) == null) {
@@ -3885,7 +3885,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }, qSysprofFilter);
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.sysprofToFrame() " + e);
+            System.err.println("Ошибка:Systree.sysprofToFrame() " + e);
         }
     }//GEN-LAST:event_sysprofToFrame
 
@@ -3954,7 +3954,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }, colorSet, true, false);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.colorToFrame() " + e);
+            System.err.println("Ошибка:Systree.colorToFrame() " + e);
         }
     }//GEN-LAST:event_colorToFrame
 
@@ -3986,14 +3986,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 new DicColor(this, listenerColor, colorSet, false, false);
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.colorToWindows() " + e);
+            System.err.println("Ошибка:Systree.colorToWindows() " + e);
         }
     }//GEN-LAST:event_colorToKorobka
 
     private void artiklToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToGlass
         try {
             double selectID = winNode.com5t().id;
-            //РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… С‚РѕР»С‰РёРЅ РІ РІРµС‚РєРµ СЃРёСЃС‚РµРјС‹ РЅР°РїСЂРёРјРµСЂ 4;5;8
+            //Список доступных толщин в ветке системы например 4;5;8
             String depth = sysNode.rec().getStr(eSystree.depth);
             if (depth != null && depth.isEmpty() == false) {
                 depth = depth.replace(";;;", ";").replace(";;", ";");
@@ -4002,7 +4002,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     depth = depth.substring(0, depth.length() - 1);
                 }
             }
-            //РЎРїРёСЃРѕРє СЃС‚РµРєР»РѕРїР°РєРµС‚РѕРІ
+            //Список стеклопакетов
             Query qData = new Query(eArtikl.values()), qArtikl = new Query(eArtikl.values());
             List<Double> listID = (depth != null && depth.isEmpty() == false)
                     ? List.of(depth.split(",")).stream().map(m -> Double.valueOf(m)).collect(Collectors.toList()) : new ArrayList();
@@ -4023,7 +4023,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }, qArtikl);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.artiklToGlass() " + e);
+            System.err.println("Ошибка:Systree.artiklToGlass() " + e);
         }
     }//GEN-LAST:event_artiklToGlass
 
@@ -4046,7 +4046,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }, qSysfurn, eFurniture.name);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.sysfurnToStvorka() " + e);
+            System.err.println("Ошибка:Systree.sysfurnToStvorka() " + e);
         }
     }//GEN-LAST:event_sysfurnToStvorka
 
@@ -4066,7 +4066,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }, TypeOpen1.REQUEST, TypeOpen1.LEFT, TypeOpen1.LEFTUP, TypeOpen1.LEFMOV,
                     TypeOpen1.RIGH, TypeOpen1.RIGHUP, TypeOpen1.RIGMOV, TypeOpen1.UPPER, TypeOpen1.EMPTY);
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.typeOpenToStvorka() " + e);
+            System.err.println("Ошибка:Systree.typeOpenToStvorka() " + e);
         }
     }//GEN-LAST:event_typeOpenToStvorka
 
@@ -4091,7 +4091,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }, qResult);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.handlToStvorka() " + e);
+            System.err.println("Ошибка:Systree.handlToStvorka() " + e);
         }
     }//GEN-LAST:event_handlToStvorka
 
@@ -4123,7 +4123,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }
 
             } catch (Exception e) {
-                System.err.println("РћС€РёР±РєР°:Systree.heightHandlToStvorka() " + e);
+                System.err.println("Ошибка:Systree.heightHandlToStvorka() " + e);
             }
 
         }, indexLayoutHandl);
@@ -4147,7 +4147,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }, colorSet, true, false);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.colorToHandl() " + e);
+            System.err.println("Ошибка:Systree.colorToHandl() " + e);
         }
     }//GEN-LAST:event_colorToHandl
 
@@ -4163,7 +4163,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 App.Joining.createFrame(Systree.this, elemJoin);
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.joinToFrame() " + e);
+            System.err.println("Ошибка:Systree.joinToFrame() " + e);
         }
     }//GEN-LAST:event_joinToFrame
 
@@ -4188,7 +4188,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }, qResult);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.loopToStvorka() " + e);
+            System.err.println("Ошибка:Systree.loopToStvorka() " + e);
         }
     }//GEN-LAST:event_loopToStvorka
 
@@ -4213,7 +4213,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }, qResult);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:frames.lockToStvorka " + e);
+            System.err.println("Ошибка:frames.lockToStvorka " + e);
         }
     }//GEN-LAST:event_lockToStvorka
 
@@ -4235,7 +4235,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }, colorSet, true, false);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.colorToHandl() " + e);
+            System.err.println("Ошибка:Systree.colorToHandl() " + e);
         }
     }//GEN-LAST:event_colorFromLoop
 
@@ -4257,7 +4257,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }, colorSet, true, false);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.colorToHandl() " + e);
+            System.err.println("Ошибка:Systree.colorToHandl() " + e);
         }
     }//GEN-LAST:event_colorFromLock
 
@@ -4283,7 +4283,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }, colorSet, false, false);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.colorFromGlass() " + e);
+            System.err.println("Ошибка:Systree.colorFromGlass() " + e);
         }
     }//GEN-LAST:event_colorFromGlass
 
@@ -4349,12 +4349,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
                 for (int i = 0; i < areaStv.gson.childs.size(); ++i) {
 
-                    if (artiklRec.get(1) == null) {  //СѓРґР°Р»РµРЅРёРµ                        
+                    if (artiklRec.get(1) == null) {  //удаление                        
                         if (mosq != null && areaStv.gson.childs.get(i).id == mosq.id) {
                             areaStv.gson.childs.remove(i);
                             break;
                         }
-                    } else {  //РІСЃС‚Р°РІРєР°
+                    } else {  //вставка
                         if (mosq != null) {
                             mosq.gson.param.remove("artiklID");
                             mosq.gson.param.addProperty(PKjson.artiklID, artiklRec.getStr(eArtikl.id));
@@ -4373,7 +4373,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }, qArtikl);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.mosquitToStvorka() " + e);
+            System.err.println("Ошибка:Systree.mosquitToStvorka() " + e);
         }
     }//GEN-LAST:event_mosquitToStvorka
 
@@ -4400,13 +4400,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }, qElements, eElement.name);
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.mosqToElements() " + e);
+            System.err.println("Ошибка:Systree.mosqToElements() " + e);
         }
     }//GEN-LAST:event_mosqToElements
 
     private void btnFind2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind2
         if (tab2.getBorder() != null) {
-            JOptionPane.showMessageDialog(Systree.this, "Р’ СЂР°Р·СЂР°Р±РѕС‚РєРµ...");
+            JOptionPane.showMessageDialog(Systree.this, "В разработке...");
 //            Record sysprofRec = qSysprof.get(UGui.getIndexRec(tab2));
 //            ProgressBar.create(this, new ListenerFrame() {
 //                public void actionRequest(Object obj) {
@@ -4444,7 +4444,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }, qArtikl);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.rascladkaToGlass() " + e);
+            System.err.println("Ошибка:Systree.rascladkaToGlass() " + e);
         }
     }//GEN-LAST:event_rascladkaToGlass
 
@@ -4466,7 +4466,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }, colorSet, false, false);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.colorToRascladka() " + e);
+            System.err.println("Ошибка:Systree.colorToRascladka() " + e);
         }
     }//GEN-LAST:event_colorToRascladka
 
@@ -4504,7 +4504,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }, colorSet, true, false);
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.colorToHandl() " + e);
+            System.err.println("Ошибка:Systree.colorToHandl() " + e);
         }
     }//GEN-LAST:event_mosqToColor
 
@@ -4594,7 +4594,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         Com5t stv = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
         for (int i = 0; i < stv.owner.gson.childs.size(); ++i) {
             if (stv.owner.gson.childs.get(i).id == stv.id) {
-                if (stv.owner.gson instanceof GsonRoot) { //РїРµСЂРІС‹Р№ СѓСЂРѕРІРµРЅСЊ
+                if (stv.owner.gson instanceof GsonRoot) { //первый уровень
 
                     if (wincalc().listElem.stream().anyMatch(e -> e.type == enums.Type.IMPOST)) {
                         GsonElem glass = new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS));
@@ -4603,7 +4603,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         GsonElem glass = new GsonElem(enums.Type.GLASS);
                         stv.owner.gson.childs.set(i, glass);
                     }
-                } else { //РІС‚РѕСЂРѕР№, С‚СЂРµС‚РёР№... СѓСЂРѕРІРЅРё
+                } else { //второй, третий... уровни
                     GsonElem glass = new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS));
                     stv.owner.gson.childs.set(i, glass);
                 }
@@ -4671,7 +4671,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }, qResult);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.handlToStvorka() " + e);
+            System.err.println("Ошибка:Systree.handlToStvorka() " + e);
         }
     }//GEN-LAST:event_btn30BlindsToStvorka
 
@@ -4703,7 +4703,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }, qBlinds);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.handlToStvorka() " + e);
+             System.err.println("Ошибка:Systree.handlToStvorka() " + e);
         }
     }//GEN-LAST:event_blindsToElement
 
@@ -4982,7 +4982,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     private void testBimax() {
         try {
-            Object prj = JOptionPane.showInputDialog(Systree.this, "РќРѕРјРµСЂ РїСЂРѕРµРєС‚Р°", "РџСЂРѕРµРєС‚", JOptionPane.QUESTION_MESSAGE);
+            Object prj = JOptionPane.showInputDialog(Systree.this, "Номер проекта", "Проект", JOptionPane.QUESTION_MESSAGE);
             if (prj != null) {
                 Record record = eSysprod.up.newRecord(Query.INS);
                 record.set(eSysprod.id, Conn.genId(eSysprod.up));
@@ -4999,7 +4999,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 UGui.scrollRectToIndex(qSysprod.size() - 1, tab5);
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Systree.testBimax()");
+            System.err.println("Ошибка:Systree.testBimax()");
         }
     }
 }

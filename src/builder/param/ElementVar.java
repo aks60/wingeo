@@ -18,7 +18,7 @@ import enums.TypeJoin;
 import java.util.ArrayList;
 import org.locationtech.jts.geom.Envelope;
 
-//РЎРѕСЃС‚Р°РІС‹ 31000, 37000
+//Составы 31000, 37000
 public class ElementVar extends Par5s {
 
     public ElementVar(Wincalc winc) {
@@ -29,11 +29,11 @@ public class ElementVar extends Par5s {
     public boolean filter(ElemSimple elem5e, Record elementRec) {
 
         listenerList.clear();
-        List<Record> paramList = eElempar1.filter(elementRec.getInt(eElement.id)); //СЃРїРёСЃРѕРє РїР°СЂР°РјРµС‚СЂРѕРІ РІР°СЂРёР°РЅС‚РѕРІ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ
+        List<Record> paramList = eElempar1.filter(elementRec.getInt(eElement.id)); //список параметров вариантов использования
         if (filterParamDef(paramList) == false) {
             return false;
         }
-        //Р¦РёРєР» РїРѕ РїР°СЂР°РјРµС‚СЂР°Рј СЃРѕСЃС‚Р°РІР°
+        //Цикл по параметрам состава
         for (Record rec : paramList) {
             if (check(elem5e, rec) == false) {
                 return false;
@@ -47,12 +47,12 @@ public class ElementVar extends Par5s {
         try {
             switch (grup) {
 
-                case 31000: //Р”Р»СЏ С‚РµС…РЅРѕР»РѕРіРёС‡РµСЃРєРѕРіРѕ РєРѕРґР° РєРѕРЅС‚РµР№РЅРµСЂР° 
+                case 31000: //Для технологического кода контейнера 
                     if (!UPar.is_STRING_XX000(rec.getStr(TEXT), elem5e)) {
                         return false;
                     }
                     break;
-                case 31001: //РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ РёР·РґРµР»РёСЏ, РјРј 
+                case 31001: //Максимальное заполнение изделия, мм 
                 {
                     List<ElemSimple> glassList = winc.listElem.filter(Type.GLASS);
                     double depth = 0;
@@ -66,14 +66,14 @@ public class ElementVar extends Par5s {
                     }
                 }
                 break;
-                case 31002:  //Р•СЃР»Рё РїСЂРѕС„РёР»СЊ 
-                    if ("Р°СЂРѕС‡РЅС‹Р№".equals(rec.getStr(TEXT)) == true && elem5e.area.getNumPoints() < Com5t.MAXSIDE) {
+                case 31002:  //Если профиль 
+                    if ("арочный".equals(rec.getStr(TEXT)) == true && elem5e.area.getNumPoints() < Com5t.MAXSIDE) {
                         return false;
-                    } else if ("РїСЂСЏРјРѕР№".equals(rec.getStr(TEXT)) == true && elem5e.area.getNumPoints() > Com5t.MAXSIDE) {
+                    } else if ("прямой".equals(rec.getStr(TEXT)) == true && elem5e.area.getNumPoints() > Com5t.MAXSIDE) {
                         return false;
                     }
                     break;
-                case 31003:  //Р•СЃР»Рё СЃРѕСЃРµРґРёРЅРµРЅРЅС‹Р№ Р°СЂС‚РёРєСѓР»  T-РѕР±СЂ.
+                case 31003:  //Если сосединенный артикул  T-обр.
                     if (rec.getStr(TEXT).equals(winc.listJoin.elem(elem5e, 0).artiklRecAn.getStr(eArtikl.code)) == true) {
                         if (winc.listJoin.join(elem5e, 0).type() != TypeJoin.TIMP && winc.listJoin.join(elem5e, 0).type() != TypeJoin.TCON) {
                             return false;
@@ -86,7 +86,7 @@ public class ElementVar extends Par5s {
                         return false;
                     }
                     break;
-                case 31004: //Р•СЃР»Рё РїСЂРёР»РµРіР°СЋС‰РёР№ Р°СЂС‚РёРєСѓР» 
+                case 31004: //Если прилегающий артикул 
                 {
                     ElemSimple el = winc.listJoin.elem(elem5e, 2);
                     if (el != null) {
@@ -98,30 +98,30 @@ public class ElementVar extends Par5s {
                     }
                 }
                 break;
-                case 31005:  //РљРѕРґС‹ РѕСЃРЅРѕРІРЅРѕР№ С‚РµРєСЃС‚СѓСЂС‹ РєРѕРЅС‚РµР№РЅРµСЂР° 
-                case 37005:  //РљРѕРґС‹ РѕСЃРЅРѕРІРЅРѕР№ С‚РµРєСЃС‚СѓСЂС‹ РєРѕРЅС‚РµР№РЅРµСЂР° 
+                case 31005:  //Коды основной текстуры контейнера 
+                case 37005:  //Коды основной текстуры контейнера 
                     if (UCom.containsColor(rec.getStr(TEXT), elem5e.colorID1) == false) {
                         return false;
                     }
                     break;
-                case 31006:  //РљРѕРґС‹ РІРЅСѓС‚СЂ. С‚РµРєСЃС‚СѓСЂС‹ РєРѕРЅС‚РµР№РЅРµСЂР° 
-                case 37006:  //РљРѕРґС‹ РІРЅСѓС‚СЂ. С‚РµРєСЃС‚СѓСЂС‹ РєРѕРЅС‚РµР№РЅРµСЂР°  
+                case 31006:  //Коды внутр. текстуры контейнера 
+                case 37006:  //Коды внутр. текстуры контейнера  
                     if (UCom.containsColor(rec.getStr(TEXT), elem5e.colorID2) == false) {
                         return false;
                     }
                     break;
-                case 31007:  //РљРѕРґС‹ РІРЅРµС€РЅ. С‚РµРєСЃС‚СѓСЂС‹ РєРѕРЅС‚РµР№РЅРµСЂР° 
-                case 37007:  //РљРѕРґС‹ РІРЅРµС€РЅ. С‚РµРєСЃС‚СѓСЂС‹ РєРѕРЅС‚РµР№РЅРµСЂР°  
+                case 31007:  //Коды внешн. текстуры контейнера 
+                case 37007:  //Коды внешн. текстуры контейнера  
                     if (UCom.containsColor(rec.getStr(TEXT), elem5e.colorID3) == false) {
                         return false;
                     }
                     break;
-                case 31008: //Р­С„С„РµРєС‚РёРІРЅРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ РёР·РґРµР»РёСЏ, РјРј 
+                case 31008: //Эффективное заполнение изделия, мм 
                     if (UPar.is_1008_11008_12008_14008_15008_31008_34008_40008(rec.getStr(TEXT), winc) == false) {
                         return false;
                     }
                     break;
-                case 31011: //РўРѕР»С‰РёРЅР° РІРЅРµС€РЅРµРіРѕ/РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ Р·Р°РїРѕР»РЅРµРЅРёСЏ, РјРј
+                case 31011: //Толщина внешнего/внутреннего заполнения, мм
                 {
                     List<ElemSimple> glassList = UPar.getGlassDepth(elem5e);
                     if (glassList.get(0).type == Type.GLASS && glassList.get(1).type == Type.GLASS) {
@@ -133,7 +133,7 @@ public class ElementVar extends Par5s {
                     }
                 }
                 break;
-                case 31012: //Р”Р»СЏ РІРЅРµС€РЅРµРіРѕ Р·Р°РїРѕР»РЅРµРЅРёСЏ, РјРј", С‚РѕР»СЊРєРѕ РґР»СЏ PS3
+                case 31012: //Для внешнего заполнения, мм", только для PS3
                 {
                     List<ElemSimple> glassList = UPar.getGlassDepth(elem5e);
                     if (glassList.get(1).type == Type.GLASS) {
@@ -144,7 +144,7 @@ public class ElementVar extends Par5s {
                     }
                 }
                 break;
-                case 31013: //Р”Р»СЏ РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ Р·Р°РїРѕР»РЅРµРЅРёСЏ, РјРј", С‚РѕР»СЊРєРѕ РґР»СЏ PS3
+                case 31013: //Для внутреннего заполнения, мм", только для PS3
                 {
                     List<ElemSimple> glassList = UPar.getGlassDepth(elem5e);
                     if (glassList.get(0).type == Type.GLASS) {
@@ -155,10 +155,10 @@ public class ElementVar extends Par5s {
                     }
                 }
                 break;
-                case 31014: //Р—Р°РїРѕР»РЅРµРЅРёСЏ РѕРґРёРЅР°РєРѕРІРѕР№ С‚РѕР»С‰РёРЅС‹ 
+                case 31014: //Заполнения одинаковой толщины 
                 {
                     List<ElemSimple> glassList = UPar.getGlassDepth(elem5e);
-                    if ("Р”Р°".equals(rec.getStr(TEXT)) == true) {
+                    if ("Да".equals(rec.getStr(TEXT)) == true) {
                         if (glassList.get(0).artiklRecAn.getDbl(eArtikl.depth) != glassList.get(1).artiklRecAn.getDbl(eArtikl.depth)) {
                             return false;
                         }
@@ -169,159 +169,159 @@ public class ElementVar extends Par5s {
                     }
                 }
                 break;
-                case 31015:  //Р Р°Р·Р±РёРµРЅРёРµ РїСЂРѕС„РёР»СЏ РїРѕ СѓСЂРѕРІРЅСЏРј 
+                case 31015:  //Разбиение профиля по уровням 
                     message(grup);
-                    if ("РђРІС‚Рѕ".equals(rec.getStr(TEXT)) == false) {
+                    if ("Авто".equals(rec.getStr(TEXT)) == false) {
                         return false;
                     }
                     break;
-                case 31016:  //Р—Р°Р·РѕСЂ_РЅР°_РјРµС‚СЂ,_РјРј/Р Р°Р·РјРµСЂ_,РјРј С‚РµСЂРјРѕСЂР°Р·СЂС‹РІР° 
+                case 31016:  //Зазор_на_метр,_мм/Размер_,мм терморазрыва 
                     message(grup);
                     break;
-                case 31017: //РљРѕРґ СЃРёСЃС‚РµРјС‹ СЃРѕРґРµСЂР¶РёС‚ СЃС‚СЂРѕРєСѓ 
-                case 37017: //РљРѕРґ СЃРёСЃС‚РµРјС‹ СЃРѕРґРµСЂР¶РёС‚ СЃС‚СЂРѕРєСѓ 
+                case 31017: //Код системы содержит строку 
+                case 37017: //Код системы содержит строку 
                     if (UPar.is_13017_14017_24017_25017_31017_33017_34017_37017_38017(rec.getStr(TEXT), winc) == false) {
                         return false;
                     }
                     break;
-                case 31019:  //РџСЂР°РІРёР»Рѕ РїРѕРґР±РѕСЂР° С‚РµРєСЃС‚СѓСЂ
+                case 31019:  //Правило подбора текстур
                     elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 31020:  //РћРіСЂР°РЅРёС‡РµРЅРёРµ СѓРіР»Р° Рє РіРѕСЂРёР·РѕРЅС‚Сѓ, В°
+                case 31020:  //Ограничение угла к горизонту, °
                     if (UCom.containsNumbJust(rec.getStr(TEXT), UGeo.anglHor(elem5e.x1(), elem5e.y1(), elem5e.x2(), elem5e.y2())) == false) {
                         return false;
                     }
                     break;
-                case 31033: //Р•СЃР»Рё РїСЂРµРґС‹РґСѓС‰РёР№ Р°СЂС‚РёРєСѓР» 
+                case 31033: //Если предыдущий артикул 
                     if (rec.getStr(TEXT).equals(winc.listJoin.elem(elem5e, 0).artiklRecAn.getStr(eArtikl.code)) == false) {
                         return false;
                     }
                     break;
-                case 31034:  //Р•СЃР»Рё СЃР»РµРґСѓСЋС‰РёР№ Р°СЂС‚РёРєСѓР» 
+                case 31034:  //Если следующий артикул 
                     if (rec.getStr(TEXT).equals(winc.listJoin.elem(elem5e, 1).artiklRecAn.getStr(eArtikl.code)) == false) {
                         return false;
                     }
                     break;
-                case 31035:  //РЈСЂРѕРІРµРЅСЊ СЃС‚РІРѕСЂРєРё 
+                case 31035:  //Уровень створки 
                     message(grup);
                     break;
-                case 31037:  //РќР°Р·РІР°РЅРёРµ С„СѓСЂРЅРёС‚СѓСЂС‹ СЃРѕРґРµСЂР¶РёС‚ 
+                case 31037:  //Название фурнитуры содержит 
                     if (UPar.is_31037_38037_39037_40037(elem5e, rec.getStr(TEXT)) == false) {
                         return false;
                     }
                     break;
-                case 31040:  //РџРѕРїСЂР°РІРєР° РіР°Р±Р°СЂРёС‚Р° РЅР°РєР»Р°РґРєРё, РјРј 
+                case 31040:  //Поправка габарита накладки, мм 
                     message(grup);
                     break;
-                case 31041:  //РћРіСЂР°РЅРёС‡РµРЅРёРµ РґР»РёРЅС‹ РїСЂРѕС„РёР»СЏ, РјРј 
+                case 31041:  //Ограничение длины профиля, мм 
                     if (UCom.containsNumbJust(rec.getStr(TEXT), elem5e.length()) == false) {
                         return false;
                     }
                     break;
-                case 31042: //РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР°, РјРј"
+                case 31042: //Максимальная длина, мм"
                     message(grup);
                     break;
-                case 31050: //РљРѕРЅС‚РµР№РЅРµСЂ РёРјРµРµС‚ С‚РёРї 
+                case 31050: //Контейнер имеет тип 
                     if (UPar.is_1005x6_2005x6_3005_4005_11005_12005_31050_33071_34071(rec.getStr(TEXT), elem5e) == false) {
                         return false;
                     }
                     break;
-                case 31051:  //Р•СЃР»Рё СЃС‚РІРѕСЂРєР° С„СѓСЂРЅРёС‚СѓСЂС‹ 
+                case 31051:  //Если створка фурнитуры 
                     if (elem5e.owner.type == Type.STVORKA) {
-                        if ("РІРµРґСѓС‰Р°СЏ".equals(rec.getStr(TEXT)) == true && ((AreaStvorka) elem5e.owner).knobRec.getInt(eArtikl.id) == -3) {
+                        if ("ведущая".equals(rec.getStr(TEXT)) == true && ((AreaStvorka) elem5e.owner).knobRec.getInt(eArtikl.id) == -3) {
                             return false;
-                        } else if ("РІРµРґРѕРјР°СЏ".equals(rec.getStr(TEXT)) == true && ((AreaStvorka) elem5e.owner).knobRec.getInt(eArtikl.id) != -3) {
+                        } else if ("ведомая".equals(rec.getStr(TEXT)) == true && ((AreaStvorka) elem5e.owner).knobRec.getInt(eArtikl.id) != -3) {
                             return false;
                         }
                     }
                     break;
-                case 31052:  //РџРѕРїСЂР°РІРєР° РІ СЃРїРµС†РёС„РёРєР°С†РёСЋ, РјРј 
+                case 31052:  //Поправка в спецификацию, мм 
                     listenerList.add(() -> {
                         elem5e.spcRec.width = elem5e.spcRec.width + rec.getDbl(TEXT);
                     });
                     break;
-                case 31054:  //РљРѕРґС‹ РѕСЃРЅРѕРІРЅРѕР№ С‚РµРєСЃС‚СѓСЂС‹ РёР·РґРµР»РёСЏ
-                case 37054:  //РљРѕРґС‹ РѕСЃРЅРѕРІРЅРѕР№ С‚РµРєСЃС‚СѓСЂС‹ РёР·РґРµР»РёСЏ    
+                case 31054:  //Коды основной текстуры изделия
+                case 37054:  //Коды основной текстуры изделия    
                     if (UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID1) == false) {
                         return false;
                     }
                     break;
-                case 31055:  //РљРѕРґС‹ РІРЅСѓС‚СЂ. Рё РІРЅРµС€РЅ. С‚РµРєСЃС‚СѓСЂС‹ РёР·Рґ.
-                case 37055:  //РљРѕРґС‹ РІРЅСѓС‚СЂ. Рё РІРЅРµС€РЅ. С‚РµРєСЃС‚СѓСЂС‹ РёР·Рґ. 
+                case 31055:  //Коды внутр. и внешн. текстуры изд.
+                case 37055:  //Коды внутр. и внешн. текстуры изд. 
                     if ((UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID2) == true
                             && UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID3) == true) == false) {
                         return false;
                     }
                     break;
-                case 31056:  //РљРѕРґС‹ РІРЅСѓС‚СЂ. РёР»Рё РІРЅРµС€. С‚РµРєСЃС‚СѓСЂС‹ РёР·Рґ. 
-                case 37056:  //РљРѕРґС‹ РІРЅСѓС‚. РёР»Рё РІРЅРµС€. С‚РµРєСЃС‚СѓСЂС‹ РёР·Рґ. 
+                case 31056:  //Коды внутр. или внеш. текстуры изд. 
+                case 37056:  //Коды внут. или внеш. текстуры изд. 
                     if (UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID2) == false
                             && UCom.containsColor(rec.getStr(TEXT), elem5e.winc.colorID3) == false) {
                         return false;
                     }
                     break;
-                case 31057:  //Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ С‚РµРєСЃС‚СѓСЂР° СЂР°РІРЅР° РІРЅРµС€РЅРµР№ 
+                case 31057:  //Внутренняя текстура равна внешней 
                     if (elem5e.colorID2 != elem5e.colorID3) {
                         return false;
                     }
                     break;
-                case 31060:  //Р”РѕРїСѓСЃС‚РёРјС‹Р№ СѓРіРѕР» РјРµР¶РґСѓ РїР»РѕСЃРєРѕСЃС‚СЏРјРё, В° 
+                case 31060:  //Допустимый угол между плоскостями, ° 
                     if ((UCom.containsNumbJust(rec.getStr(TEXT), winc.listJoin.join(elem5e, 0).angleBetween()) == true
                             || UCom.containsNumbJust(rec.getStr(TEXT), winc.listJoin.join(elem5e, 1).angleBetween()) == true) == false) {
                         return false;
                     }
                     break;
-                case 31073:  //РћС‚РїСЂР°РІРѕС‡РЅР°СЏ РјР°СЂРєР° С„Р°СЃР°РґР°
+                case 31073:  //Отправочная марка фасада
                     message(grup);
                     break;
-                case 31074:  //РќР° РїСЂРёР»РµРіР°СЋС‰РµР№ СЃС‚РІРѕСЂРєРµ
+                case 31074:  //На прилегающей створке
                     message(grup);
                     break;
-                case 31080:  //РЎРѕРѕР±С‰РµРЅРёРµ-РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ
+                case 31080:  //Сообщение-предупреждение
                     message(grup);
                     break;
-                case 31081:  //Р”Р»СЏ РІРЅРµС€РЅРµРіРѕ/РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ СѓРіР»Р° РїР»РѕСЃРєРѕСЃС‚Рё, В° 
+                case 31081:  //Для внешнего/внутреннего угла плоскости, ° 
                     message(grup);
                     break;
-                case 31085:  //РќР°РґРїРёСЃСЊ РЅР° СЌР»РµРјРµРЅС‚Рµ 
-                case 37085:  //РќР°РґРїРёСЃСЊ РЅР° СЌР»РµРјРµРЅС‚Рµ   
+                case 31085:  //Надпись на элементе 
+                case 37085:  //Надпись на элементе   
                     elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 31090:  //РР·РјРµРЅРµРЅРёРµ СЃС‚РѕСЂРѕРЅ РїРѕРєСЂР°СЃРєРё 
+                case 31090:  //Изменение сторон покраски 
                     listenerList.add(() -> {
-                        if ("Р”Р°".equals(rec.getStr(TEXT))) {
+                        if ("Да".equals(rec.getStr(TEXT))) {
                             int color = elem5e.spcRec.colorID2;
                             elem5e.spcRec.colorID2 = elem5e.spcRec.colorID3;
                             elem5e.spcRec.colorID2 = color;
                         }
                     });
                     break;
-                case 31095:  //Р•СЃР»Рё РїСЂРёР·РЅР°Рє СЃРёСЃС‚РµРјС‹ РєРѕРЅСЃС‚СЂСѓРєС†РёРё 
-                case 37095:  //Р•СЃР»Рё РїСЂРёР·РЅР°Рє СЃРёСЃС‚РµРјС‹ РєРѕРЅСЃС‚СЂСѓРєС†РёРё                    
+                case 31095:  //Если признак системы конструкции 
+                case 37095:  //Если признак системы конструкции                    
                     if (!UPar.is_11095_12095_31095_33095_34095_37095_38095_39095_40095(rec.getStr(TEXT), winc.nuni)) {
                         return false;
                     }
                     break;
-                case 31098:  //Р‘СЂРёРіР°РґР°, СѓС‡Р°СЃС‚РѕРє) 
+                case 31098:  //Бригада, участок) 
                     message(grup);
                     break;
-                case 31099:  //РўСЂСѓРґРѕР·Р°С‚СЂР°С‚С‹, С‡/С‡. 
-                case 37099:  //РўСЂСѓРґРѕР·Р°С‚СЂР°С‚С‹, С‡/С‡.  
+                case 31099:  //Трудозатраты, ч/ч. 
+                case 37099:  //Трудозатраты, ч/ч.  
                     elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 31097:  //РўСЂСѓРґРѕР·Р°С‚СЂР°С‚С‹ РїРѕ РґР»РёРЅРµ 
+                case 31097:  //Трудозатраты по длине 
                     message(grup);
                     break;
-                case 31800:  //РљРѕРґ РѕР±СЂР°Р±РѕС‚РєРё 
+                case 31800:  //Код обработки 
                     message(grup);
                     break;
-                case 31801:  //Р”РѕРї.РѕР±СЂР°Р±РѕС‚РєРё
+                case 31801:  //Доп.обработки
                     message(grup);
                     break;
-                case 37001:  //РЈСЃС‚Р°РЅРѕРІРєР° Р¶Р°Р»СЋР·Рё 
+                case 37001:  //Установка жалюзи 
                     message(grup);
                     break;
-                case 37002: //Р•СЃР»Рё Р°СЂС‚РёРєСѓР» РїСЂРѕС„РёР»СЏ РєРѕРЅС‚СѓСЂР°
+                case 37002: //Если артикул профиля контура
                 {
                     Object r = elem5e.root.frames.stream().filter(f -> f.artiklRecAn.getStr(eArtikl.code).equals(rec.getStr(TEXT))).findFirst().orElse(null);
                     if (r == null) {
@@ -329,37 +329,37 @@ public class ElementVar extends Par5s {
                     }
                 }
                 break;
-                case 37008:  //РўРёРї РїСЂРѕРµРјР° 
+                case 37008:  //Тип проема 
                     if (!UPar.is_13003_14005_15005_37008(rec.getStr(TEXT), elem5e)) {
                         return false;
                     }
                     break;
-                case 37009: //РўРёРї Р·Р°РїРѕР»РЅРµРЅРёСЏ 
+                case 37009: //Тип заполнения 
                 {
-                    if ("РџСЂСЏРјРѕСѓРіРѕР»СЊРЅРѕРµ".equals(rec.getStr(TEXT)) && elem5e.area.isRectangle() == false) {
+                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && elem5e.area.isRectangle() == false) {
                         return false;
 
-                    } else if ("РђСЂРѕС‡РЅРѕРµ".equals(rec.getStr(TEXT)) && elem5e.area.getNumPoints() > Com5t.MAXSIDE == false) {
+                    } else if ("Арочное".equals(rec.getStr(TEXT)) && elem5e.area.getNumPoints() > Com5t.MAXSIDE == false) {
                         return false;
 
-                    } else if ("РџСЂРѕРёР·РІРѕР»СЊРЅРѕРµ".equals(rec.getStr(TEXT))
+                    } else if ("Произвольное".equals(rec.getStr(TEXT))
                             && (elem5e.area.isRectangle() == true || elem5e.area.getNumPoints() > Com5t.MAXSIDE == true)) {
                         return false;
                     }
                 }
                 break;
-                case 37010:  //РћРіСЂР°РЅРёС‡РµРЅРёРµ С€РёСЂРёРЅС‹/РІС‹СЃРѕС‚С‹ Р»РёСЃС‚Р°, РјРј 
+                case 37010:  //Ограничение ширины/высоты листа, мм 
                     if (UCom.containsNumb(rec.getStr(TEXT), elem5e.width(), elem5e.height()) == false) {
                         return false;
                     }
                     break;
-                case 37030:  //РћРіСЂР°РЅРёС‡РµРЅРёРµ РїР»РѕС‰Р°РґРё, РєРІ.Рј. 
+                case 37030:  //Ограничение площади, кв.м. 
                     Envelope env = elem5e.area.getEnvelopeInternal();
                     if (UCom.containsNumbJust(rec.getStr(TEXT), env.getWidth() / 1000 * env.getHeight() / 1000) == false) {
                         return false;
                     }
                     break;
-                case 37042: //Р”РѕРїСѓСЃС‚РёРјРѕРµ СЃРѕРѕС‚РЅРѕС€РµРЅРёРµ РіР°Р±Р°СЂРёС‚РѕРІ Р±/Рј
+                case 37042: //Допустимое соотношение габаритов б/м
                 {
                     double max = (elem5e.width() > elem5e.height()) ? elem5e.width() : elem5e.height();
                     double min = (elem5e.width() > elem5e.height()) ? elem5e.height() : elem5e.width();
@@ -368,7 +368,7 @@ public class ElementVar extends Par5s {
                     }
                 }
                 break;
-                case 37043: //РњР°РєСЃ. СЃРѕРѕС‚РЅРѕС€РµРЅРёРµ РіР°Р±Р°СЂРёС‚РѕРІ (Р±/Рј)
+                case 37043: //Макс. соотношение габаритов (б/м)
                 {
                     double max = (elem5e.width() > elem5e.height()) ? elem5e.width() : elem5e.height();
                     double min = (elem5e.width() > elem5e.height()) ? elem5e.height() : elem5e.width();
@@ -377,41 +377,41 @@ public class ElementVar extends Par5s {
                     }
                 }
                 break;
-                case 37080: //РЎРѕРѕР±С‰РµРЅРёРµ-РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ
+                case 37080: //Сообщение-предупреждение
                     elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 37098:  //Р‘СЂРёРіР°РґР° СѓС‡Р°СЃС‚РѕРє
+                case 37098:  //Бригада участок
                     elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 37097:  //РўСЂСѓРґРѕР·Р°С‚СЂР°С‚С‹ РїРѕ 
+                case 37097:  //Трудозатраты по 
                     elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 37108:  //РљРѕСЌС„С„РёС†РёРµРЅС‚С‹ РђРљР¦РР 
+                case 37108:  //Коэффициенты АКЦИИ 
                     elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 37310:  //РЎРѕРїСЂРѕС‚РёРІР»РµРЅРёРµ С‚РµРїР»РѕРїРµСЂРµРґР°С‡Рµ, Рј2*В°РЎ/Р’С‚ 
+                case 37310:  //Сопротивление теплопередаче, м2*°С/Вт 
                     elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 37320:  //Р’РѕР·РґСѓС…РѕРїСЂРѕРЅРёС†Р°РµРјРѕСЃС‚СЊ, Рј3/ С‡*Рј2
+                case 37320:  //Воздухопроницаемость, м3/ ч*м2
                     elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 37330:  //Р—РІСѓРєРѕРёР·РѕР»СЏС†РёСЏ, РґР‘Рђ 
+                case 37330:  //Звукоизоляция, дБА 
                     elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 37340:  //РљРѕСЌС„С„РёС†РёРµРЅС‚ РїСЂРѕРїСѓСЃРєР°РЅРёСЏ СЃРІРµС‚Р° 
+                case 37340:  //Коэффициент пропускания света 
                     elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 37350:  //РЎРѕРїСЂРѕС‚РёРІР»РµРЅРёРµ РІРµС‚СЂРѕРІС‹Рј РЅР°РіСЂСѓР·РєР°Рј, РџР° 
+                case 37350:  //Сопротивление ветровым нагрузкам, Па 
                     elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 37351:  //РќРѕРјРµСЂ РїРѕРІРµСЂС…РЅРѕСЃС‚Рё 
+                case 37351:  //Номер поверхности 
                     elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
                 default:
-                    assert !(grup > 0 && grup < 50000) : "РљРѕРґ " + grup + "  РЅРµ РѕР±СЂР°Р±РѕС‚Р°РЅ!!!";
+                    assert !(grup > 0 && grup < 50000) : "Код " + grup + "  не обработан!!!";
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:param.ElementVar.check()  parametr=" + grup + "    " + e);
+            System.err.println("Ошибка:param.ElementVar.check()  parametr=" + grup + "    " + e);
             return false;
         }
 

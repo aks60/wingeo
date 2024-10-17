@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 
-//РџРѕР»Рµ С‚Р°Р±Р»РёС†С‹
+//Поле таблицы
 public interface Field {
 
     public static enum TYPE {
@@ -102,7 +102,7 @@ public interface Field {
             return value.toString();
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:РђС€СѓРґРІ.vrapper() " + e);
+            System.err.println("Ошибка:Ашудв.vrapper() " + e);
             return null;
         }
     }

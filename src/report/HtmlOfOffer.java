@@ -34,7 +34,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-//РљРѕРјРјРµСЂС‡РµСЃРєРѕРµ РїСЂРµРґР»РѕР¶РµРЅРёРµ
+//Коммерческое предложение
 public class HtmlOfOffer {
 
     private static DecimalFormat df0 = new DecimalFormat("0");
@@ -48,7 +48,7 @@ public class HtmlOfOffer {
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
 
-            //Р—Р°РїРѕР»РЅРёРј РѕС‚С‡С‘С‚
+            //Заполним отчёт
             load(projectRec, doc);
 
             String str = doc.html();
@@ -57,22 +57,22 @@ public class HtmlOfOffer {
             ExecuteCmd.documentType(null);
 
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "РќРµС‚ РґРѕСЃС‚СѓРїР° Рє С„Р°Р№Р»Сѓ. РџСЂРѕС†РµСЃСЃ РЅРµ РјРѕР¶РµС‚ РїРѕР»СѓС‡РёС‚СЊ РґРѕСЃС‚СѓРї Рє С„Р°Р№Р»Сѓ, С‚Р°Рє РєР°Рє СЌС‚РѕС‚ С„Р°Р№Р» Р·Р°РЅСЏС‚ РґСЂСѓРіРёРј РїСЂРѕС†РµСЃСЃРѕРј.", "Р’РќРРњРђРќРР•!", 1);
-            System.err.println("РћС€РёР±РєР°1:HtmlOfSmeta.smeta2()" + e);
+            JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
+            System.err.println("Ошибка1:HtmlOfSmeta.smeta2()" + e);
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°2:HtmlOfSmeta.smeta2()" + e);
+            System.err.println("Ошибка2:HtmlOfSmeta.smeta2()" + e);
         }
     }
 
     private static void load(Record projectRec, Document doc) {
         int length = 400;
-        double square = 0f; //РїР»РѕС‰Р°РґСЊ
+        double square = 0f; //площадь
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
             List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
 
-            doc.getElementById("h01").text("РљРѕРјРјРµСЂС‡РµСЃРєРѕРµ РїСЂРµРґР»РѕР¶РµРЅРёРµ РѕС‚ " + UGui.DateToStr(projectRec.get(eProject.date4)));
+            doc.getElementById("h01").text("Коммерческое предложение от " + UGui.DateToStr(projectRec.get(eProject.date4)));
 
             Element div2 = doc.getElementById("div2");
             String template2 = div2.html();
@@ -81,7 +81,7 @@ public class HtmlOfOffer {
                 div2.append(template2);
             }
             Elements tab4List = doc.getElementById("div2").getElementsByClass("tab4");
-            //Р¦РёРєР» РїРѕ РёР·РґРµР»РёСЏРј
+            //Цикл по изделиям
             for (int i = 0; i < prjprodList.size(); i++) {
 
                 Elements tdList = tab4List.get(i).getElementsByTag("td");
@@ -89,7 +89,7 @@ public class HtmlOfOffer {
                 square = square + winc.root.area.getGeometryN(0).getArea();
                 Record prjprodRec = prjprodList.get(i);
 
-                tdList.get(0).text("РР·РґРµР»РёРµ в„– " + (i + 1));
+                tdList.get(0).text("Изделие № " + (i + 1));
                 tdList.get(3).text(eSystree.systemProfile(6));
                 AreaStvorka area5e = (AreaStvorka) winc.listArea.filter(Type.STVORKA).get(0);
                 AreaStvorka stv = (area5e != null) ? ((AreaStvorka) area5e) : null;
@@ -116,7 +116,7 @@ public class HtmlOfOffer {
             }
             {
                 Elements trList = doc.getElementById("tab5").getElementsByTag("tr");
-                trList.get(0).getElementsByTag("td").get(2).text(df1.format(square / 1000000) + " РєРІ.Рј.");
+                trList.get(0).getElementsByTag("td").get(2).text(df1.format(square / 1000000) + " кв.м.");
                 trList.get(1).getElementsByTag("td").get(2).text(df2.format(projectRec.getDbl(eProject.price2)));
                 trList.get(2).getElementsByTag("td").get(2).text(df2.format(projectRec.getDbl(eProject.cost2)));
                 trList.get(3).getElementsByTag("td").get(2).text(df2.format(projectRec.getDbl(eProject.cost4)));
@@ -128,7 +128,7 @@ public class HtmlOfOffer {
                 get.attr("src", "C:\\Users\\All Users\\Avers\\Okna\\img" + (i + 1) + ".gif");
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:HtmlOfOffer.load()" + e);
+            System.err.println("Ошибка:HtmlOfOffer.load()" + e);
         }
     }
 

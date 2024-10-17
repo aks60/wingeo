@@ -55,7 +55,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
                             txtFilter.setName(table.getName());
                         }
                     } catch (Exception e) {
-                        System.err.println("РћРЁРР‘РљРђ:swing.FilterTable.mousePressed() " + e);
+                        System.err.println("ОШИБКА:swing.FilterTable.mousePressed() " + e);
                     }
                 }
             });
@@ -87,7 +87,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
 
         btn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c054.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btn1.setToolTipText(bundle.getString("Р¤РёР»СЊС‚СЂ/РџРѕРёСЃРє")); // NOI18N
+        btn1.setToolTipText(bundle.getString("Фильтр/Поиск")); // NOI18N
         btn1.setBorder(null);
         btn1.setMaximumSize(new java.awt.Dimension(30, 18));
         btn1.setMinimumSize(new java.awt.Dimension(30, 18));
@@ -99,7 +99,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
         });
 
         labFilter.setFont(frames.UGui.getFont(0,0));
-        labFilter.setText("РџРѕР»Рµ РЅРµ РІС‹Р±СЂР°РЅРѕ");
+        labFilter.setText("Поле не выбрано");
         labFilter.setMaximumSize(new java.awt.Dimension(120, 18));
         labFilter.setMinimumSize(new java.awt.Dimension(120, 18));
         labFilter.setPreferredSize(new java.awt.Dimension(120, 18));
@@ -117,7 +117,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
         });
 
         btn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b041.gif"))); // NOI18N
-        btn2.setToolTipText(bundle.getString("Р’СЃС‚Р°РІРёС‚СЊ РёР· Р±СѓС„РµСЂР° РѕР±РјРµРЅР° / РЈРґР°Р»РёС‚СЊ")); // NOI18N
+        btn2.setToolTipText(bundle.getString("Вставить из буфера обмена / Удалить")); // NOI18N
         btn2.setBorder(null);
         btn2.setMaximumSize(new java.awt.Dimension(30, 18));
         btn2.setMinimumSize(new java.awt.Dimension(30, 18));
@@ -129,7 +129,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
         });
 
         checkFilter.setFont(frames.UGui.getFont(0,0));
-        checkFilter.setText("РІ РєРѕРЅС†Рµ СЃС‚СЂРѕРєРё");
+        checkFilter.setText("в конце строки");
         checkFilter.setMaximumSize(new java.awt.Dimension(120, 18));
         checkFilter.setMinimumSize(new java.awt.Dimension(103, 18));
         checkFilter.setPreferredSize(new java.awt.Dimension(120, 18));
@@ -201,7 +201,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћРЁРР‘РљРђ:swing.FilterTable.txtCaretUpdate() " + e);
+            System.err.println("ОШИБКА:swing.FilterTable.txtCaretUpdate() " + e);
         }
     }//GEN-LAST:event_txtCaretUpdate
 

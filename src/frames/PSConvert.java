@@ -66,12 +66,12 @@ import startup.App;
 import static startup.Test.numDb;
 
 /**
- * Р’ РїСЃ3 Рё РїСЃ4 СЂР°Р·РЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕР»РµР№ РІ С‚Р°Р±Р»РёС†Р°С…, РЅРѕ СЃРїРёСЃРѕРє СЃС‚РѕР»Р±С†РѕРІ РІ
- * РїСЂРѕРіСЂР°РјРјРµ eEnum.values() РґР»СЏ РЅРёС… РѕРґРёРЅ. РћС‚СЃСѓС‚СЃС‚РІСѓСЋС‰РёРµ РїРѕР»СЏ РїСЃ3 РІ
- * eEnum.values() Р±СѓРґСѓС‚ Р·Р°РїРѕР»РЅСЏС‚СЊСЃСЏ РїСѓСЃС‚С‹С€РєР°РјРё. 3. РџРѕР»СЏ РЅРµ РІРѕС€РµРґС€РёРµ РІ СЃРїРёСЃРѕРє
- * СЃС‚РѕР»Р±С†РѕРІ eEnum.values() С‚РѕР¶Рµ Р±СѓРґСѓС‚ РїРµСЂРµРЅРѕСЃРёС‚СЊСЃСЏ РґР»СЏ sql update Рё РІ РєРѕРЅС†Рµ
- * СѓРґР°Р»СЏС‚СЊСЃСЏ. РћР±РЅРѕРІР»РµРЅРёРµ РґР°РЅРЅС‹С… РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ РїР°РєРµС‚РѕРј, РµСЃР»Рё Р±С‹Р»Р° РѕС€РёР±РєР°, РѕС‚РєР°С‚ Рё
- * РїР°РєРµС‚ РѕР±СЃР»СѓР¶РёРІР°РµС‚СЃСЏ РѕС‚РґРµР»СЊРЅС‹РјРё insert.
+ * В пс3 и пс4 разное количество полей в таблицах, но список столбцов в
+ * программе eEnum.values() для них один. Отсутствующие поля пс3 в
+ * eEnum.values() будут заполняться пустышками. 3. Поля не вошедшие в список
+ * столбцов eEnum.values() тоже будут переноситься для sql update и в конце
+ * удаляться. Обновление данных выполняется пакетом, если была ошибка, откат и
+ * пакет обслуживается отдельными insert.
  */
 public class PSConvert {
 
@@ -79,13 +79,13 @@ public class PSConvert {
     private static String versionPs = "4";
     private static Connection cn1;
     private static Connection cn2;
-    private static Statement st1; //РёСЃС‚РѕС‡РЅРёРє 
-    private static Statement st2;//РїСЂРёС‘РјРЅРёРє
+    private static Statement st1; //источник 
+    private static Statement st2;//приёмник
 
     public static void exec() {
-        cn1 = startup.Test.connect1(); //РёСЃС‚РѕС‡РЅРёРє
-        cn2 = startup.Test.connect2(); //РїСЂРёС‘РјРЅРёРє
-        if (JOptionPane.showConfirmDialog(null, "РљРћРќР’Р•Р РўРђР¦РРЇ Р‘РђР—Р« Р”РђРќРќР«РҐ в„– " + eProp.base_num.read(), "РљРћРќР’Р•Р РўРђР¦РРЇ",
+        cn1 = startup.Test.connect1(); //источник
+        cn2 = startup.Test.connect2(); //приёмник
+        if (JOptionPane.showConfirmDialog(null, "КОНВЕРТАЦИЯ БАЗЫ ДАННЫХ № " + eProp.base_num.read(), "КОНВЕРТАЦИЯ",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             script();
         }
@@ -102,14 +102,14 @@ public class PSConvert {
         try {
             cn2.setAutoCommit(false);
             Conn.setConnection(cn2);
-            st1 = cn1.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY); //РёСЃС‚РѕС‡РЅРёРє 
-            st2 = cn2.createStatement();//РїСЂРёС‘РјРЅРёРє
+            st1 = cn1.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY); //источник 
+            st2 = cn2.createStatement();//приёмник
             DatabaseMetaData mdb1 = cn1.getMetaData();
             DatabaseMetaData mdb2 = cn2.getMetaData();
             ResultSet resultSet1 = mdb1.getTables(null, null, null, new String[]{"TABLE"});
             ResultSet resultSet2 = mdb2.getTables(null, null, null, new String[]{"TABLE"});
-            List<String> listExistTable1 = new ArrayList<String>(); //С‚Р°Р±Р»РёС†С‹ РёСЃС‚РѕС‡РЅРёРєР°
-            List<String> listExistTable2 = new ArrayList<String>(); //С‚Р°Р±Р»РёС†С‹ РїСЂРёС‘РјРЅРёРєР°
+            List<String> listExistTable1 = new ArrayList<String>(); //таблицы источника
+            List<String> listExistTable2 = new ArrayList<String>(); //таблицы приёмника
 
             while (resultSet1.next()) {
                 listExistTable1.add(resultSet1.getString("TABLE_NAME"));
@@ -122,38 +122,38 @@ public class PSConvert {
                 listExistTable2.add(resultSet2.getString("TABLE_NAME"));
             }
 
-            //РЈРґР°Р»СЏРµРј С‚СЂРёРіРіРµСЂС‹, С‚Р°Р±Р»РёС†С‹, РіРµРЅРµСЂР°С‚РѕСЂС‹
-            println(Color.GREEN, "РЈРґР°Р»РµРЅРёРµ С‚СЂРёРіРіРµСЂРѕРІ, С‚Р°Р±Р»РёС†, РіРµРЅРµСЂР°С‚РѕСЂРѕРІ");
+            //Удаляем триггеры, таблицы, генераторы
+            println(Color.GREEN, "Удаление триггеров, таблиц, генераторов");
             executeSql("delete from rdb$triggers where rdb$trigger_source is not null and ((rdb$system_flag = 0) or (rdb$system_flag is null))");
             List.of(App.db).forEach(s -> executeSql("DROP TABLE " + s.tname() + ";"));
             executeSql("delete from rdb$generators where rdb$system_flag = 0");
 
-            println(Color.GREEN, "РџРµСЂРµРЅРѕСЃ РґР°РЅРЅС‹С…");
-            //Р¦РёРєР» РїРѕ РґРѕРјРµРЅР°Рј РїСЂРёР»РѕР¶РµРЅРёСЏ
+            println(Color.GREEN, "Перенос данных");
+            //Цикл по доменам приложения
             for (Field fieldUp : App.db) {
-                println(Color.GREEN, " *** РЎРµРєС†РёСЏ " + fieldUp.tname() + " ***");
+                println(Color.GREEN, " *** Секция " + fieldUp.tname() + " ***");
 
-                //РџРѕР»СЏ РЅРµ РІРѕС€РµРґС€РёРµ РІ eEnum.values()
-                HashMap<String, String[]> hmDeltaCol = deltaColumn(mdb1, fieldUp);//РІ РїРѕСЃР»РµРґСЃС‚РІРёРё Р±СѓРґСѓС‚ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ РґР»СЏ sql update
+                //Поля не вошедшие в eEnum.values()
+                HashMap<String, String[]> hmDeltaCol = deltaColumn(mdb1, fieldUp);//в последствии будут использоваться для sql update
 
-                //РЎРѕР·РґР°РЅРёРµ С‚Р°Р±Р»РёС†С‹ РїСЂРёС‘РјРЅРёРєР°
+                //Создание таблицы приёмника
                 for (String ddl : createTable(fieldUp.fields())) {
                     executeSql(ddl);
                 }
-                //Р”РѕР±Р°РІР»РµРЅРёРµ СЃС‚РѕР»Р±С†РѕРІ РЅРµ РІРѕС€РµРґС€РёС… РІ eEnum.values()
+                //Добавление столбцов не вошедших в eEnum.values()
                 for (Map.Entry<String, String[]> entry : hmDeltaCol.entrySet()) {
                     String deltaCol[] = entry.getValue();
                     executeSql("ALTER TABLE " + fieldUp.tname() + " ADD " + entry.getKey() + " " + UGui.typeField(Field.TYPE.type(deltaCol[0]), deltaCol[1]) + ";");
                 }
-                //РЎРѕР·РґР°РЅРёРµ РіРµРЅРµСЂР°С‚РѕСЂР°
+                //Создание генератора
                 executeSql("CREATE GENERATOR GEN_" + fieldUp.tname());
 
-                //РљРѕРЅРІРµСЂС‚РёСЂРѕРІР°РЅРёРµ РґР°РЅРЅС‹С… РІ С‚Р°Р±Р»РёС†Сѓ
+                //Конвертирование данных в таблицу
                 if (listExistTable1.contains(fieldUp.meta().fname) == true) {
                     convertTable(cn1, cn2, hmDeltaCol, fieldUp.fields());
                 }
 
-                //РћСЃРѕР±РµРЅРЅРѕСЃС‚Рё С‚Р°Р±Р»РёС†С‹ SYSTREE GROUPS Рё PARAMS
+                //Особенности таблицы SYSTREE GROUPS и PARAMS
                 if ("SYSTREE".equals(fieldUp.tname()) == true) {
                     executeSql("set generator GEN_SYSTREE to 10000");
                 } else if ("PARAMS".equals(fieldUp.tname()) == true) {
@@ -162,29 +162,29 @@ public class PSConvert {
                     executeSql("SET GENERATOR  GEN_GROUPS TO -10000");
                     //executeSql("ALTER TABLE GROUPS ADD FK INTEGER;");
                 }
-                //Р—Р°РїРѕР»РЅРµРЅРёРµ С‚Р°Р±Р»РёС†С‹ РєР»СЋС‡Р°РјРё
-                if ("id".equals(fieldUp.fields()[1].meta().fname)) { //РµСЃР»Рё РёРјРµРЅР° РєР»СЋС‡РµР№ СЃРѕРІРїР°РґР°СЋС‚
-                    executeSql("UPDATE " + fieldUp.tname() + " SET id = gen_id(gen_" + fieldUp.tname() + ", 1)"); //Р·Р°РїРѕР»РЅРµРЅРёРµ РєР»СЋС‡РµР№
+                //Заполнение таблицы ключами
+                if ("id".equals(fieldUp.fields()[1].meta().fname)) { //если имена ключей совпадают
+                    executeSql("UPDATE " + fieldUp.tname() + " SET id = gen_id(gen_" + fieldUp.tname() + ", 1)"); //заполнение ключей
                 }
-                //РћСЃРѕР±РµРЅРЅРѕСЃС‚Рё С‚Р°Р±Р»РёС†С‹ COLOR
+                //Особенности таблицы COLOR
                 if ("COLOR".equals(fieldUp.tname()) == true) {
                     int max1 = new Query(fieldUp.fields()[1]).select("select max(id) as id from " + fieldUp.tname()).get(0).getInt(1);
-                    int max2 = checkKeyColor(max1); //РїСЂРѕРІРµСЂРёРј РєР»СЋС‡ РЅР° СѓРЅРёРєР°Р»СЊРЅРѕСЃС‚СЊ
+                    int max2 = checkKeyColor(max1); //проверим ключ на уникальность
                     executeSql("set generator GEN_" + fieldUp.tname() + " to " + max2);
                 }
-                //РЎРѕР·РґР°РЅРёРµ С‚СЂРёРіРіРµСЂРѕРІ РіРµРЅРµСЂР°С‚РѕСЂРѕРІ
+                //Создание триггеров генераторов
                 executeSql("CREATE OR ALTER TRIGGER " + fieldUp.tname() + "_bi FOR " + fieldUp.tname() + " ACTIVE BEFORE INSERT POSITION 0 as begin"
                         + " if (new.id is null) then new.id = gen_id(gen_" + fieldUp.tname() + ", 1); end");
-                //DDL СЃРѕР·РґР°РЅРёРµ РїРµСЂРІРёС‡РЅРѕРіРѕ РєР»СЋС‡Р°
+                //DDL создание первичного ключа
                 executeSql("ALTER TABLE " + fieldUp.tname() + " ADD CONSTRAINT PK_" + fieldUp.tname() + " PRIMARY KEY (ID);");
             }
 
-            println(Color.GREEN, "Р”РѕР±Р°РІР»РµРЅРёРµ РєРѕРјРјРµРЅС‚Р°СЂРёРµРІ Рє РїРѕР»СЏРј");
+            println(Color.GREEN, "Добавление комментариев к полям");
             for (Field field : App.db) {
-                executeSql("COMMENT ON TABLE " + field.tname() + " IS '" + field.meta().descr() + "'"); //DDL РѕРїРёСЃР°РЅРёРµ С‚Р°Р±Р»РёС†
+                executeSql("COMMENT ON TABLE " + field.tname() + " IS '" + field.meta().descr() + "'"); //DDL описание таблиц
             }
 
-            println(Color.GREEN, "РЎРµРєС†РёСЏ СЃРѕР·РґР°РЅРёСЏ СЂРѕР»РµР№");
+            println(Color.GREEN, "Секция создания ролей");
             Set<String> set = new HashSet<String>();
             ResultSet rs = st2.executeQuery("select a.rdb$role_name from rdb$roles a where a.rdb$role_name != 'RDB$ADMIN'");
             while (rs.next()) {
@@ -203,10 +203,10 @@ public class PSConvert {
             executeSql("GRANT SELECT ON " + eSetting.up.tname() + " TO TEXNOLOG_RO");
             executeSql("GRANT ALL ON " + eSetting.up.tname() + " TO TEXNOLOG_RW");
 
-            if (eProp.dev == true) { //РїСЂРё СЌС‚РѕРј РІ firebird С‚Р°РєРёРµ Р»РѕРіРёРЅС‹ РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ СЃРѕР·РґР°РЅС‹
-                executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('MANAGER_RW','MANAGER','РњРµРЅРµРґР¶РµСЂ Рњ.Р.','89031237833','asd@jmail.com',null,null)");
-                executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('RDB$ADMIN','ADMIN','РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ Рњ.Р“.','89034327685','aks@jmail.com',null,null)");
-                executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('TEXNOLOG_RW','TEXNOLOG','РўРµС…РЅРѕР»РѕРі Р•.Р’.','89036782345','qsd@jmail.com',null,null)");
+            if (eProp.dev == true) { //при этом в firebird такие логины должны быть созданы
+                executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('MANAGER_RW','MANAGER','Менеджер М.И.','89031237833','asd@jmail.com',null,null)");
+                executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('RDB$ADMIN','ADMIN','Администратор М.Г.','89034327685','aks@jmail.com',null,null)");
+                executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('TEXNOLOG_RW','TEXNOLOG','Технолог Е.В.','89036782345','qsd@jmail.com',null,null)");
             }
             Conn.setConnection(cn2);
             deletePart(cn2, st2);
@@ -214,7 +214,7 @@ public class PSConvert {
             metaPart(cn2, st2);
             loadModels();
 
-            println(Color.GREEN, "РЈРґР°Р»РµРЅРёРµ Р»РёС‰РЅРёС… СЃС‚РѕР»Р±С†РѕРІ");
+            println(Color.GREEN, "Удаление лищних столбцов");
             for (Field fieldUp : App.db) {
                 HashMap<String, String[]> hmDeltaCol = deltaColumn(mdb1, fieldUp);
                 for (Map.Entry<String, String[]> entry : hmDeltaCol.entrySet()) {
@@ -224,9 +224,9 @@ public class PSConvert {
             cn2.commit();
             cn2.setAutoCommit(true);
 
-            println(Color.BLUE, "РћР‘РќРћР’Р›Р•РќРР• Р—РђР’Р•Р РЁР•РќРћ");
+            println(Color.BLUE, "ОБНОВЛЕНИЕ ЗАВЕРШЕНО");
         } catch (Exception e) {
-            println(Color.RED, "РћС€РёР±РєР°: script() " + e);
+            println(Color.RED, "Ошибка: script() " + e);
         }
     }
 
@@ -254,10 +254,10 @@ public class PSConvert {
     public static void convertTable(Connection cn1, Connection cn2, HashMap<String, String[]> hmDeltaCol, Field[] fields) {
         String sql = "";
         try {
-            int count = 0; //РєРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РїРёСЃРµР№ РґР»СЏ СЂР°СЃС‡С‘С‚Р° РєРѕР». РїР°РєРµС‚РѕРІ
+            int count = 0; //количество записей для расчёта кол. пакетов
             String tname1 = fields[0].meta().fname;
             String tname2 = fields[0].tname();
-            HashSet hsExistField = new HashSet(); //СЃРїРёСЃРѕРє РїРѕР»РµР№ РєРѕС‚РѕСЂС‹Рµ РµСЃС‚СЊ РІ РёСЃС‚РѕС‡РЅРёРєРµ Рё РІ eEnum.values()
+            HashSet hsExistField = new HashSet(); //список полей которые есть в источнике и в eEnum.values()
             boolean bash = true;
             Statement st1 = cn1.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             Statement st2 = cn2.createStatement();
@@ -265,16 +265,16 @@ public class PSConvert {
             if (rs1.next()) {
                 count = rs1.getInt(1);
             }
-            //Р¦РёРєР» РїРѕ РїР°РєРµС‚Р°Рј
+            //Цикл по пакетам
             for (int index_page = 0; index_page <= count / 500; ++index_page) {
 
-                println(Color.BLACK, "РўР°Р±Р»РёС†Р°:" + tname2 + " РїР°РєРµС‚:" + index_page);
+                println(Color.BLACK, "Таблица:" + tname2 + " пакет:" + index_page);
                 String nameCols2 = "";
                 rs1 = st1.executeQuery("select first 500 skip " + index_page * 500 + " * from " + tname1);
                 ResultSetMetaData md1 = rs1.getMetaData();
                 for (int index = 1; index <= md1.getColumnCount(); index++) {
 
-                    //РЎРїРёСЃРѕРє РїРѕР»РµР№ РєРѕС‚РѕСЂС‹Рµ РµСЃС‚СЊ РІ РёСЃС‚РѕС‡РЅРёРєРµ Рё РІ eEnum.values()
+                    //Список полей которые есть в источнике и в eEnum.values()
                     String fn = md1.getColumnLabel(index);
                     for (Field f : fields) {
                         if (f.meta().fname.equalsIgnoreCase(fn)) {
@@ -282,33 +282,33 @@ public class PSConvert {
                         }
                     }
                 }
-                //РЎС‚СЂРѕРєР° insert into(...)
+                //Строка insert into(...)
                 for (int index = 1; index < fields.length; index++) {
                     Field field = fields[index];
                     nameCols2 = nameCols2 + field.name() + ",";
                 }
-                for (Map.Entry<String, String[]> entry : hmDeltaCol.entrySet()) { //РїРѕР»СЏ РґР»СЏ sql update (РІ РєРѕРЅС†Рµ Р±СѓРґСѓС‚ СѓРґР°Р»РµРЅС‹)
+                for (Map.Entry<String, String[]> entry : hmDeltaCol.entrySet()) { //поля для sql update (в конце будут удалены)
                     nameCols2 = nameCols2 + entry.getKey() + ",";
                 }
                 nameCols2 = nameCols2.substring(0, nameCols2.length() - 1);
-                //РЎС‚СЂРѕРєР° values(...)
+                //Строка values(...)
                 while (rs1.next()) {
                     String nameVal2 = "";
-                    //Р¦РёРєР» РїРѕ РїРѕР»СЏРј eEnum.values()
+                    //Цикл по полям eEnum.values()
                     for (int index = 1; index < fields.length; index++) {
                         Field field = fields[index];
-                        if (hsExistField.contains(field)) { //С‚.Рє. ps3 Рё ps4 СЂР°Р·РЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕР»РµР№
+                        if (hsExistField.contains(field)) { //т.к. ps3 и ps4 разное количество полей
                             Object val = rs1.getObject(field.meta().fname);
                             nameVal2 = nameVal2 + Field.wrapper(val, field.meta().type()) + ",";
                         } else {
-                            if (field.meta().isnull() == false) { //РµСЃР»Рё not null С‚Рѕ С‚СѓРїРѕ РїРёС€Сѓ 0
+                            if (field.meta().isnull() == false) { //если not null то тупо пишу 0
                                 nameVal2 = nameVal2 + "0" + ",";
                             } else {
                                 nameVal2 = nameVal2 + "null" + ",";
                             }
                         }
                     }
-                    //Р¦РёРєР» РїРѕ РїРѕР»СЏРј РЅРµ РІРѕС€РµРґС€РёС… РІ eEnum.values()
+                    //Цикл по полям не вошедших в eEnum.values()
                     for (Map.Entry<String, String[]> entry : hmDeltaCol.entrySet()) {
                         Object val = rs1.getObject(entry.getKey());
                         nameVal2 = nameVal2 + Field.wrapper(val, Field.TYPE.type(entry.getValue()[0])) + ",";
@@ -318,7 +318,7 @@ public class PSConvert {
                     if (bash == true) {
                         st2.addBatch(sql);
                     } else {
-                        try {  //Р•СЃР»Рё Р±С‹Р»Р° РѕС€РёР±РєР° РІ РїР°РєРµС‚Рµ РІС‹РїРѕР»РЅСЏСЋ РѕС‚РґРµР»СЊРЅС‹Рµ sql insert
+                        try {  //Если была ошибка в пакете выполняю отдельные sql insert
                             st2.executeUpdate(sql);
                         } catch (SQLException e) {
                             println(Color.RED, "SCRIPT-INSERT:  " + sql + " => " + e);
@@ -327,7 +327,7 @@ public class PSConvert {
                 }
                 bash = true;
                 try {
-                    //РџР°РєРµС‚РЅС‹Р№ insert
+                    //Пакетный insert
                     st2.executeBatch();
                     cn2.commit();
                     st2.clearBatch();
@@ -340,13 +340,13 @@ public class PSConvert {
                 }
             }
         } catch (SQLException e) {
-            println(Color.RED, "РћС€РёР±РєР°: convertTable(), С‚Р°Р±Р»РёС†Р° " + fields[0].tname() + " - " + e);
+            println(Color.RED, "Ошибка: convertTable(), таблица " + fields[0].tname() + " - " + e);
         }
     }
 
     public static HashMap<String, String[]> deltaColumn(DatabaseMetaData mdb1, Field fieldUp) {
         try {
-            HashMap<String, String[]> hmDeltaCol = new HashMap<String, String[]>(); //РїРѕР»СЏ РЅРµ РІРѕС€РµРґС€РёРµ РІ eEnum.values(), РІ РїРѕСЃР»РµРґСЃС‚РІРёРё Р±СѓРґСѓС‚ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ РґР»СЏ sql update
+            HashMap<String, String[]> hmDeltaCol = new HashMap<String, String[]>(); //поля не вошедшие в eEnum.values(), в последствии будут использоваться для sql update
             ResultSet rsc1 = mdb1.getColumns(null, null, fieldUp.meta().fname, null);
             while (rsc1.next()) {
                 String table_name = rsc1.getString("TABLE_NAME");
@@ -370,27 +370,27 @@ public class PSConvert {
             }
             return hmDeltaCol;
         } catch (SQLException e) {
-            println(Color.RED, "РћС€РёР±РєР°: deltaColumn(). " + e);
+            println(Color.RED, "Ошибка: deltaColumn(). " + e);
             return null;
         }
     }
 
-    //РЎРµРєС†РёСЏ СѓРґР°Р»РµРЅРёСЏ РїРѕС‚РµСЂРµРЅРЅС‹С… СЃСЃС‹Р»РѕРє (С„Р°РЅС‚РѕРјРѕРІ)
+    //Секция удаления потеренных ссылок (фантомов)
     public static void deletePart(Connection cn2, Statement st2) {
         try {
-            println(Color.GREEN, "РЎРµРєС†РёСЏ СѓРґР°Р»РµРЅРёСЏ РїРѕС‚РµСЂРµРЅРЅС‹С… СЃСЃС‹Р»РѕРє (С„Р°РЅС‚РѕРјРѕРІ) Рё СѓРґР°Р»РµРЅРёСЏ Р·Р°РїРёСЃРµР№ РІ Р·Р°РІРёСЃРёРјС‹С… С‚Р°Р±Р»РёС†Р°С…");
+            println(Color.GREEN, "Секция удаления потеренных ссылок (фантомов) и удаления записей в зависимых таблицах");
             executeSql("delete from params where pnumb > 0");  //group > 0  
             deleteSql(eParmap.up, "psss", eColor.up, "cnumb"); //color_id1 
             deleteSql(eArtdet.up, "anumb", eArtikl.up, "code");//artikl_id
-            //С†РІРµС‚ РЅРµ РґРѕР»Р¶РµРЅ РІР»РёСЏС‚СЊ РіР»РѕР±Р°Р»СЊРЅРѕ, С‚РµСЂСЏСЋС‚СЃСЏ СЃСЃС‹Р»РєРё... ("delete from artdet where not exists (select id from color a where a.ccode = artdet.clcod and a.cnumb = artdet.clnum)");  //color_fk            
+            //цвет не должен влиять глобально, теряются ссылки... ("delete from artdet where not exists (select id from color a where a.ccode = artdet.clcod and a.cnumb = artdet.clnum)");  //color_fk            
             deleteSql(eElement.up, "anumb", eArtikl.up, "code");//artikl_id  
             deleteSql(eElemdet.up, "anumb", eArtikl.up, "code");//artikl_id
-            //С†РІРµС‚ РЅРµ РґРѕР»Р¶РµРЅ РІР»РёСЏС‚СЊ РіР»РѕР±Р°Р»СЊРЅРѕ РЅР° РєР°Р»СЊРєСѓР»СЏС†РёСЋ!!! executeSql("delete from elemdet where not exists (select id from color a where a.cnumb = elemdet.color_fk) and elemdet.color_fk > 0 and elemdet.color_fk != 100000"); //color_fk
+            //цвет не должен влиять глобально на калькуляцию!!! executeSql("delete from elemdet where not exists (select id from color a where a.cnumb = elemdet.color_fk) and elemdet.color_fk > 0 and elemdet.color_fk != 100000"); //color_fk
             deleteSql(eElemdet.up, "vnumb", eElement.up, "vnumb");//element_id
             deleteSql(eElempar1.up, "psss", eElement.up, "vnumb");//element_id   
             deleteSql(eElempar2.up, "psss", eElemdet.up, "aunic");//elemdet_id
-            //Р’РєР»СЋС‡РёС‚СЊ РІ РїСЂРѕРґР°РєС€РёРЅРµ!!!  deleteSql(eJoining.up, "anum1", eArtikl.up, "code");//artikl_id1
-            //Р’РєР»СЋС‡РёС‚СЊ РІ РїСЂРѕРґР°РєС€РёРЅРµ!!!  deleteSql(eJoining.up, "anum2", eArtikl.up, "code");//artikl_id2
+            //Включить в продакшине!!!  deleteSql(eJoining.up, "anum1", eArtikl.up, "code");//artikl_id1
+            //Включить в продакшине!!!  deleteSql(eJoining.up, "anum2", eArtikl.up, "code");//artikl_id2
             deleteSql(eJoinvar.up, "cconn", eJoining.up, "cconn");//joining_id
             deleteSql(eJoindet.up, "cunic", eJoinvar.up, "cunic");//joinvar_id
             executeSql("delete from joindet where not exists (select id from color a where a.cnumb = joindet.color_fk) and joindet.color_fk > 0 and joindet.color_fk != 100000"); //color_fk  
@@ -407,9 +407,9 @@ public class PSConvert {
             deleteSql(eFurnside2.up, "fincs", eFurndet.up, "id");
             deleteSql(eFurnpar1.up, "psss", eFurnside1.up, "fincr");//furnside_id
             deleteSql(eFurndet.up, "funic", eFurniture.up, "funic");//furniture_id            
-            //РёСЃРєР»СЋС‡РµРЅРёРµ РЅРµР·Р°РєРѕРЅС‡РµРЅРЅРѕР№ С‚СЂР°РЅР·Р°РєС†РёРё deleteSql(eFurndet.up, "anumb", eArtikl.up, "code");//artikl_id
-            //С‚РµСЂСЏРµС‚СЃСЏ СЃСЃС‹Р»РєР° РІ furnside2 executeSql("delete from furndet where not exists (select id from artikl a where a.code = furndet.anumb and furndet.anumb != 'РќРђР‘РћР ')");  //artikl_id
-            //С‚РµСЂСЏРµС‚СЃСЏ СЃСЃС‹Р»РєР° РІ furnside2 executeSql("delete from furndet where not exists (select id from color a where a.cnumb = furndet.color_fk) and furndet.color_fk > 0 and furndet.color_fk != 100000"); //color_fk           
+            //исключение незаконченной транзакции deleteSql(eFurndet.up, "anumb", eArtikl.up, "code");//artikl_id
+            //теряется ссылка в furnside2 executeSql("delete from furndet where not exists (select id from artikl a where a.code = furndet.anumb and furndet.anumb != 'НАБОР')");  //artikl_id
+            //теряется ссылка в furnside2 executeSql("delete from furndet where not exists (select id from color a where a.cnumb = furndet.color_fk) and furndet.color_fk > 0 and furndet.color_fk != 100000"); //color_fk           
             deleteSql(eFurnpar2.up, "psss", eFurndet.up, "id");//furndet_id           
             deleteSql(eSysprof.up, "anumb", eArtikl.up, "code");//artikl_id 
             deleteSql(eSysprof.up, "nuni", eSystree.up, "id");//systree_id 
@@ -423,15 +423,15 @@ public class PSConvert {
             deleteSql(eKitpar2.up, "psss", eKitdet.up, "kincr");//kitdet_id
 
         } catch (Exception e) {
-            println(Color.RED, "РћС€РёР±РєР°: deletePart().  " + e);
+            println(Color.RED, "Ошибка: deletePart().  " + e);
         }
     }
 
-    //РЎРµРєС†РёСЏ РєРѕСЂСЂРµРєС†РёРё РІРЅРµС€РЅРёС… РєР»СЋС‡РµР№
+    //Секция коррекции внешних ключей
     public static void updatePart(Connection cn2, Statement st2) {
         try {
-            println(Color.GREEN, "РЎРµРєС†РёСЏ РєРѕСЂСЂРµРєС†РёРё РІРЅРµС€РЅРёС… РєР»СЋС‡РµР№");
-            loadGroups("Р¤СѓРЅРєС†РёСЏ loadGroups()");
+            println(Color.GREEN, "Секция коррекции внешних ключей");
+            loadGroups("Функция loadGroups()");
             executeSql("3", "update " + eSetting.up.tname() + " set val = 'ps3' where id = 2");
             executeSql("insert into groups (grup, name) select distinct " + TypeGrup.SERI_ELEM.id + ", aseri from artikl");
             updateSql(eRulecalc.up, eRulecalc.artikl_id, "anumb", eArtikl.up, "code");
@@ -460,7 +460,7 @@ public class PSConvert {
             updateSql(eElement.up, eElement.groups1_id, "vlets", eGroups.up, "name");
             executeSql("update element set groups2_id = (select id from groups a where grup = 8 and a.name = element.vpref and a.npp = element.atypm)");
             executeSql("4", "update element set typset = vtype");
-            executeSql("3", "update element set typset = case vtype when 'РІРЅСѓС‚СЂРµРЅРЅРёР№' then 1  when 'Р°СЂРјРёСЂРѕРІР°РЅРёРµ' then 2 when 'Р»Р°РјРёРЅРёСЂРѕРІР°РЅРёРµ' then 3 when 'РїРѕРєСЂР°СЃРєР°' then 4 when 'СЃРѕСЃС‚Р°РІ_РЎ/Рџ' then 5 when 'РєСЂРѕРЅС€С‚РµР№РЅ_СЃС‚РѕР№РєРё' then 6 when 'РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕ' then 7 else null  end;");
+            executeSql("3", "update element set typset = case vtype when 'внутренний' then 1  when 'армирование' then 2 when 'ламинирование' then 3 when 'покраска' then 4 when 'состав_С/П' then 5 when 'кронштейн_стойки' then 6 when 'дополнительно' then 7 else null  end;");
             executeSql("update element set todef = 1  where vsets in (1,2)");
             executeSql("update element set toset = 1  where vsets = 1");
             updateSql(eElemdet.up, eElemdet.artikl_id, "anumb", eArtikl.up, "code");
@@ -505,27 +505,27 @@ public class PSConvert {
             executeSql("update glaspar1 b set b.groups_id = (select id from groups a where a.grup in (1, 7) and b.groups_id = a.npp) where b.groups_id < 0");
             executeSql("update glaspar2 b set b.groups_id = (select id from groups a where a.grup in (1, 7) and b.groups_id = a.npp) where b.groups_id < 0");
             executeSql("4", "update furniture set hand_set1 = cast(bin_and(thand, 1) as varchar(5)), hand_set2 = cast(bin_shr(bin_and(thand, 2), 1) as varchar(5)), hand_set3 = cast(bin_shr(bin_and(thand, 4), 2) as varchar(5))");
-            executeSql("update furniture set view_open = case fview when 'РїРѕРІРѕСЂРѕС‚РЅР°СЏ' then 1  when 'СЂР°Р·РґРІРёР¶РЅР°СЏ' then 2 when 'СЂР°Р·РґРІРёР¶РЅР°СЏ <=>' then 3 when 'СЂР°Р·РґРІРёР¶РЅР°СЏ |^|' then 4  else null  end;");
+            executeSql("update furniture set view_open = case fview when 'поворотная' then 1  when 'раздвижная' then 2 when 'раздвижная <=>' then 3 when 'раздвижная |^|' then 4  else null  end;");
             updateSql(eFurnside1.up, eFurnside1.furniture_id, "funic", eFurniture.up, "funic");
-            executeSql("update furnside1 set side_use = ( CASE  WHEN (FTYPE = 'СЃС‚РѕСЂРѕРЅР°') THEN 1 WHEN (FTYPE = 'РѕСЃСЊ РїРѕРІРѕСЂРѕС‚Р°') THEN 2 WHEN (FTYPE = 'РєСЂРµРїР»РµРЅРёРµ РїРµС‚РµР»СЊ') THEN 3 ELSE  (1) END )");
+            executeSql("update furnside1 set side_use = ( CASE  WHEN (FTYPE = 'сторона') THEN 1 WHEN (FTYPE = 'ось поворота') THEN 2 WHEN (FTYPE = 'крепление петель') THEN 3 ELSE  (1) END )");
             updateSql(eFurnside2.up, eFurnside2.furndet_id, "fincs", eFurndet.up, "id");
             updateSql(eFurnpar1.up, eFurnpar1.furnside_id, "psss", eFurnside1.up, "fincr");
             updateSql(eFurnpar2.up, eFurnpar2.furndet_id, "psss", eFurndet.up, "id");
             executeSql("update furnpar1 b set b.groups_id = (select id from groups a where a.grup in (1, 7) and b.groups_id = a.npp) where b.groups_id < 0");
             executeSql("update furnpar2 b set b.groups_id = (select id from groups a where a.grup in (1, 7) and b.groups_id = a.npp) where b.groups_id < 0");
             updateSql(eFurndet.up, eFurndet.furniture_id1, "funic", eFurniture.up, "funic");
-            executeSql("3", "update furndet set color_fk = (select id from color a where a.cnumb = furndet.color_fk) where furndet.color_fk > 0 and furndet.color_fk != 100000 and furndet.anumb != 'РљРћРњРџР›Р•РљРў'");
-            executeSql("4", "update furndet set color_fk = (select id from color a where a.cnumb = furndet.color_fk) where furndet.color_fk > 0 and furndet.color_fk != 100000 and furndet.anumb != 'РќРђР‘РћР '");
+            executeSql("3", "update furndet set color_fk = (select id from color a where a.cnumb = furndet.color_fk) where furndet.color_fk > 0 and furndet.color_fk != 100000 and furndet.anumb != 'КОМПЛЕКТ'");
+            executeSql("4", "update furndet set color_fk = (select id from color a where a.cnumb = furndet.color_fk) where furndet.color_fk > 0 and furndet.color_fk != 100000 and furndet.anumb != 'НАБОР'");
             executeSql("update furndet set color_fk = (select id from groups a where a.grup = 7 and a.npp = furndet.color_fk) where furndet.color_fk < 0");
             executeSql("3", "update furndet set color_us = (CASE  WHEN (color_us = 11) THEN 3003 WHEN (color_us = 21) THEN 4095 "
                     + "WHEN (color_us = 31) THEN 273 WHEN (color_us = 32) THEN 546 WHEN (color_us = 33) THEN 819 WHEN (color_us = 41) THEN 1638 WHEN (color_us = 42) THEN 1911 WHEN (color_us = 43) THEN 2184  ELSE  (0) END )");
-            executeSql("3", "update furndet set artikl_id = (select id from artikl a where a.code = furndet.anumb and furndet.anumb != 'РљРћРњРџР›Р•РљРў')");
-            executeSql("4", "update furndet set artikl_id = (select id from artikl a where a.code = furndet.anumb and furndet.anumb != 'РќРђР‘РћР ')");
-            executeSql("3", "update furndet set furniture_id2 = (CASE  WHEN (furndet.anumb = 'РљРћРњРџР›Р•РљРў') THEN color_fk ELSE  (null) END)");
-            executeSql("4", "update furndet set furniture_id2 = (CASE  WHEN (furndet.anumb = 'РќРђР‘РћР ') THEN color_fk ELSE  (null) END)");
+            executeSql("3", "update furndet set artikl_id = (select id from artikl a where a.code = furndet.anumb and furndet.anumb != 'КОМПЛЕКТ')");
+            executeSql("4", "update furndet set artikl_id = (select id from artikl a where a.code = furndet.anumb and furndet.anumb != 'НАБОР')");
+            executeSql("3", "update furndet set furniture_id2 = (CASE  WHEN (furndet.anumb = 'КОМПЛЕКТ') THEN color_fk ELSE  (null) END)");
+            executeSql("4", "update furndet set furniture_id2 = (CASE  WHEN (furndet.anumb = 'НАБОР') THEN color_fk ELSE  (null) END)");
             updateSql(eFurndet.up, eFurndet.furniture_id2, "furniture_id2", eFurniture.up, "funic");
             executeSql("update furndet set furndet_pk = id where furndet_pk = 0");
-            executeSql("update furndet set color_fk = null where furniture_id2 > 0"); //СЃСЃС‹Р»РєР° РЅР° РЅР°Р±РѕСЂ
+            executeSql("update furndet set color_fk = null where furniture_id2 > 0"); //ссылка на набор
             executeSql("set generator GEN_" + eFurndet.up.tname() + " to " + new Query(eFurndet.id).select("select max(id) as id from " + eFurndet.up.tname()).get(0, eFurndet.id));
             executeSql("update systree set parent_id = (select id from systree a where a.id = systree.npar and systree.npar != 0)");
             executeSql("update systree set parent_id = id where npar = 0");
@@ -535,8 +535,8 @@ public class PSConvert {
             updateSql(eSysfurn.up, eSysfurn.systree_id, "nuni", eSystree.up, "id");
             updateSql(eSysfurn.up, eSysfurn.artikl_id1, "aruch", eArtikl.up, "code");
             updateSql(eSysfurn.up, eSysfurn.artikl_id2, "apetl", eArtikl.up, "code");
-            executeSql("update sysfurn set side_open = (CASE  WHEN (NOTKR = 'Р·Р°РїСЂРѕСЃ') THEN 1 WHEN (NOTKR = 'Р»РµРІРѕРµ') THEN 2 WHEN (NOTKR = 'РїСЂР°РІРѕРµ') THEN 3 ELSE  (1) END )");
-            executeSql("update sysfurn set hand_pos = (CASE  WHEN (NRUCH = 'РїРѕ СЃРµСЂРµРґРёРЅРµ') THEN 1 WHEN (NRUCH = 'РєРѕРЅСЃС‚Р°РЅС‚РЅР°СЏ') THEN 2 ELSE  (1) END )");
+            executeSql("update sysfurn set side_open = (CASE  WHEN (NOTKR = 'запрос') THEN 1 WHEN (NOTKR = 'левое') THEN 2 WHEN (NOTKR = 'правое') THEN 3 ELSE  (1) END )");
+            executeSql("update sysfurn set hand_pos = (CASE  WHEN (NRUCH = 'по середине') THEN 1 WHEN (NRUCH = 'константная') THEN 2 ELSE  (1) END )");
             updateSql(eSyspar1.up, eSyspar1.systree_id, "psss", eSystree.up, "id");
             executeSql("update syspar1 b set b.groups_id = (select id from groups a where a.grup in (1, 7) and b.groups_id = a.npp) where b.groups_id < 0");
             //updateSql(eKits.up, eKits.artikl_id, "anumb", eArtikl.up, "code");
@@ -553,18 +553,18 @@ public class PSConvert {
             executeSql("update groups set npp = 0 where grup != " + TypeGrup.CATEG_VST.id);
             String db = (numDb == 1) ? eProp.base1.read() : (numDb == 2) ? eProp.base2.read() : eProp.base3.read();
             if (db.toUpperCase().contains("BIMAX.FDB")) {
-                executeSql("4", "update artikl set " + eArtikl.size_falz.name() + " = 20 where code = '336200'"); //РїРѕРїСЂР°РІРєР° С€С‚СѓР»СЊРїР° РІ bimax 
-                executeSql("delete from glaspar2 where groups_id = 15030 and text = '0,97'"); //РїСЂРµРґРїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕ РїР°СЂР°РјРµС‚СЂ РґРѕР±Р°РІР»РµРЅ РІ СЃР°РјРѕРј РєРѕРЅС†Рµ
+                executeSql("4", "update artikl set " + eArtikl.size_falz.name() + " = 20 where code = '336200'"); //поправка штульпа в bimax 
+                executeSql("delete from glaspar2 where groups_id = 15030 and text = '0,97'"); //предположительно параметр добавлен в самом конце
             }
         } catch (Exception e) {
-            println(Color.RED, "РћС€РёР±РєР°: updatePart().  " + e);
+            println(Color.RED, "Ошибка: updatePart().  " + e);
         }
     }
 
-    //РЎРµРєС†РёСЏ СЃСЃС‹Р»РѕС‡РЅРѕР№ С†РµР»РѕСЃС‚РЅРѕСЃС‚Рё
+    //Секция ссылочной целостности
     public static void metaPart(Connection cn2, Statement st2) {
         try {
-            println(Color.GREEN, "РЎРµРєС†РёСЏ СЃРѕР·РґР°РЅРёСЏ РІРЅРµС€РЅРёС… РєР»СЋС‡РµР№");
+            println(Color.GREEN, "Секция создания внешних ключей");
             alterTable("color", "fk_color1", "groups_id", "groups");
             alterTable("alter table color add constraint unq1_color unique (code, groups_id)");
             alterTable("alter table color add constraint unq2_color unique (name, groups_id)");
@@ -686,25 +686,25 @@ public class PSConvert {
                     + "delete from prjprod a where a.project_id = old.id; end");
 
         } catch (Exception e) {
-            println(Color.RED, "РћС€РёР±РєР°: metaPart().  " + e);
+            println(Color.RED, "Ошибка: metaPart().  " + e);
         }
     }
 
     public static void loadModels() {
         try {
-            println(Color.GREEN, "РЎРµРєС†РёСЏ Р·Р°РіСЂСѓР·РєРё С‚РµСЃС‚РѕРІС‹С… РјРѕРґРµР»РµР№");
+            println(Color.GREEN, "Секция загрузки тестовых моделей");
             cn2.commit();
             int index = 0;
             List<Integer> prjList = GsonScript.modelList("min");
             for (int prj : prjList) {
 
-                //Р—Р°РіСЂСѓР·РєР° РјРѕРґРµР»РµР№, С‚Р°Р±Р»РёС†Р° SYSMODEL.                 
+                //Загрузка моделей, таблица SYSMODEL.                 
                 String script = GsonScript.modelScript(prj);
                 if (script != null) {
-                    //РџСЂРё СЌС‚РѕРј nuni, prj, ord РІ СЃРєСЂРёРїС‚Рµ json РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚.
+                    //При этом nuni, prj, ord в скрипте json отсутствуют.
                     GsonRoot gson = new Gson().fromJson(script, GsonRoot.class);
                     String name = "<html> Kod:" + prj + " " + gson.name;
-                    println(Color.BLACK, name); //РІ РѕС‚С‡С‘С‚                   
+                    println(Color.BLACK, name); //в отчёт                   
                     Query q = new Query(eSysmodel.values());
                     Record record = eSysmodel.up.newRecord(Query.INS);
                     record.setNo(eSysmodel.id, Conn.genId(eSysmodel.up));
@@ -717,17 +717,17 @@ public class PSConvert {
             }
             cn2.commit();
         } catch (Exception e) {
-            println(Color.RED, "РћС€РёР±РєР°: modifyModels.  " + e);
+            println(Color.RED, "Ошибка: modifyModels.  " + e);
         }
         try {
             int index = 0;
             List<Integer> prjList = GsonScript.systemList("min");
             for (int prj : prjList) {
-                //Р—Р°РіСЂСѓР·РєР° С‚РµСЃС‚РѕРІС‹С… РєРѕРЅСЃС‚СЂСѓРєС†РёР№ РІ СЃРёСЃС‚РµРјСѓ, С‚Р°Р±Р»РёС†Р° SYSPROD.
+                //Загрузка тестовых конструкций в систему, таблица SYSPROD.
                 String script2 = GsonScript.scriptPath(prj);
                 if (script2 != null) {
                     GsonRoot gson2 = new Gson().fromJson(script2, GsonRoot.class);
-                    String name2 = "РџСЂРѕРµРєС‚:" + gson2.prj + "/Р—Р°РєР°Р·:" + gson2.ord + " " + gson2.name;
+                    String name2 = "Проект:" + gson2.prj + "/Заказ:" + gson2.ord + " " + gson2.name;
                     Query q2 = new Query(eSysprod.values());
                     Record record2 = eSysprod.up.newRecord(Query.INS);
                     record2.setNo(eSysprod.id, Conn.genId(eSysprod.up));
@@ -741,28 +741,28 @@ public class PSConvert {
             cn2.commit();
 
         } catch (Exception e) {
-            println(Color.RED, "РћС€РёР±РєР°: modifyProducts.  " + e);
+            println(Color.RED, "Ошибка: modifyProducts.  " + e);
         }
     }
 
     public static void loadGroups(String mes) {
         println(Color.BLACK, mes);
         try {
-            //Р Р°СЃС‡С‘С‚РЅС‹Рµ РґР°РЅРЅС‹Рµ
+            //Расчётные данные
             ResultSet rs = st1.executeQuery("select * from SYSDATA where SUNIC in (2002, 2003, 2004, 2005, 2007, 2009, 2010, 2013, 2055, 2056, 2057, 2058, 2062, 2073, 2101, 2104)");
             while (rs.next()) {
                 String sql = "insert into " + eGroups.up.tname() + "(ID, GRUP, NAME, VAL) values ("
                         + rs.getInt("SUNIC") + "," + TypeGrup.SYS_DATA.id + ",'" + rs.getString("SNAME") + "'," + rs.getString("SFLOT") + ")";
                 st2.executeUpdate(sql);
             }
-            //РЎРїРёСЃРѕРє РїР°СЂР°РјРµС‚СЂРѕРІ
+            //Список параметров
             rs = st1.executeQuery("select * from PARLIST where PCOLL != 1 and ZNUMB = 0");
             while (rs.next()) {
                 String sql = "insert into " + eGroups.up.tname() + "(ID, GRUP, NAME, NPP) values ("
                         + Conn.genId(eGroups.up) + "," + TypeGrup.PARAM_USER.id + ",'" + rs.getString("PNAME") + "'," + rs.getInt("PNUMB") + ")";
                 st2.executeUpdate(sql);
             }
-            //Р“СЂСѓРїРїС‹ С†РІРµС‚РѕРІ
+            //Группы цветов
             rs = st1.executeQuery("select * from GRUPCOL");
             while (rs.next()) {
                 String sql = "insert into " + eGroups.up.tname() + "(ID, GRUP, NAME, VAL, NPP) values ("
@@ -770,7 +770,7 @@ public class PSConvert {
                         + rs.getString("GKOEF") + "," + rs.getInt("GNUMB") + ")";
                 st2.executeUpdate(sql);
             }
-            //РњР¦ РіСЂСѓРїРїС‹ РЅР°С†РµРЅРѕРєР№
+            //МЦ группы наценокй
             rs = st1.executeQuery("select * from GRUPART");
             while (rs.next()) {
                 String sql = "insert into " + eGroups.up.tname() + "(ID, GRUP, NAME, VAL, NPP) values ("
@@ -778,7 +778,7 @@ public class PSConvert {
                         + rs.getString("MKOEF") + "," + rs.getInt("MUNIC") + ")";
                 st2.executeUpdate(sql);
             }
-            //РњР¦ РіСЂСѓРїРїС‹ СЃРєРёРґРѕРє
+            //МЦ группы скидок
             rs = st1.executeQuery("select * from DESCLST");
             while (rs.next()) {
                 String sql = "insert into " + eGroups.up.tname() + "(ID, GRUP, NAME, VAL, NPP) values ("
@@ -786,28 +786,28 @@ public class PSConvert {
                         + rs.getString("VDESC") + "," + rs.getInt("UDESC") + ")";
                 st2.executeUpdate(sql);
             }
-            //РљР°С‚РµРіРѕРіРёРё РїСЂРѕС„РёР»РµР№
+            //Категогии профилей
             rs = st1.executeQuery("select distinct APREF from ARTIKLS where APREF is not null");
             while (rs.next()) {
                 String sql = "insert into " + eGroups.up.tname() + "(ID, GRUP, NAME) values ("
                         + Conn.genId(eGroups.up) + "," + TypeGrup.CATEG_ELEM.id + ",'" + rs.getString("APREF") + "')";
                 st2.executeUpdate(sql);
             }
-            //РџР°СЂР°РјРµС‚СЂС‹ СЃРѕРѕС‚РІ. С†РІРµС‚РѕРІ
+            //Параметры соотв. цветов
             rs = st1.executeQuery("select * from PARLIST where PCOLL = 1 and ZNUMB = 0");
             while (rs.next()) {
                 String sql = "insert into " + eGroups.up.tname() + "(ID, GRUP, NAME, NPP) values ("
                         + Conn.genId(eGroups.up) + "," + TypeGrup.COLOR_MAP.id + ",'" + rs.getString("PNAME") + "'," + rs.getInt("PNUMB") + ")";
                 st2.executeUpdate(sql);
             }
-            //РљР°С‚РµРіРѕСЂРёРё РІСЃС‚Р°РІРѕРє
+            //Категории вставок
             rs = st1.executeQuery("select distinct VPREF, ATYPM from VSTALST order by  ATYPM, VPREF");
             while (rs.next()) {
                 String sql = "insert into " + eGroups.up.tname() + "(ID, GRUP, NAME, NPP) values ("
                         + Conn.genId(eGroups.up) + "," + TypeGrup.CATEG_VST.id + ",'" + rs.getString("VPREF") + "'," + rs.getInt("ATYPM") + ")";
                 st2.executeUpdate(sql);
             }
-            //РљР°С‚РµРіРѕСЂРёРё РєРѕРјРїР»РµРєС‚РѕРІ
+            //Категории комплектов
             rs = st1.executeQuery("select distinct KPREF from KOMPLST order by KPREF");
             while (rs.next()) {
                 String sql = "insert into " + eGroups.up.tname() + "(ID, GRUP, NAME, NPP) values ("
@@ -817,7 +817,7 @@ public class PSConvert {
             cn2.commit();
 
         } catch (SQLException e) {
-            println(Color.RED, "РћС€РёР±РєР°: modifyGroups().  " + e);
+            println(Color.RED, "Ошибка: modifyGroups().  " + e);
         }
     }
 
@@ -830,7 +830,7 @@ public class PSConvert {
                 recordList.add(new Integer[]{rs.getInt("ID"), rs.getInt("CNUMB")});
             }
         } catch (SQLException e) {
-            println(Color.RED, "РћС€РёР±РєР°: UPDATE-checkUniqueKeyColor().  " + e);
+            println(Color.RED, "Ошибка: UPDATE-checkUniqueKeyColor().  " + e);
         }
         for (Integer[] recordArr : recordList) {
             if (set.add(recordArr[0]) == false) {
@@ -857,7 +857,7 @@ public class PSConvert {
                 }
             }
             rs.close();
-            String postpref = (recordDelete == 0) ? "" : " Р’СЃРµРіРѕ/СѓРґР°Р»РµРЅРѕ = " + recordCount + "/" + recordDelete;
+            String postpref = (recordDelete == 0) ? "" : " Всего/удалено = " + recordCount + "/" + recordDelete;
             println(Color.BLACK, "delete from " + table1.tname() + " where not exists (select id from " + table2.tname()
                     + " a where a." + id2 + " = " + table1.tname() + "." + id1 + ")", Color.BLUE, postpref);
             st2.executeBatch();
@@ -865,7 +865,7 @@ public class PSConvert {
             st2.clearBatch();
 
         } catch (Exception e) {
-            println(Color.RED, "РћС€РёР±РєР°: deleteSql().  " + e);
+            println(Color.RED, "Ошибка: deleteSql().  " + e);
         }
     }
 
@@ -888,7 +888,7 @@ public class PSConvert {
                     st2.addBatch("update " + table1.tname() + " set " + fk1.name() + " = " + obj[0] + " where id = " + rs.getObject("id"));
                 }
             }
-            String postpref = (recordCount == recordUpdate) ? "" : " Р’СЃРµРіРѕ/РЅРµСѓРґР°С‡ = " + recordCount + "/" + (recordCount - recordUpdate);
+            String postpref = (recordCount == recordUpdate) ? "" : " Всего/неудач = " + recordCount + "/" + (recordCount - recordUpdate);
             println(Color.BLACK, "update " + table1.tname() + " set " + fk1.name() + " = (select id from "
                     + table2.tname() + " a where a." + id2 + " = " + table1.tname() + "." + id1 + ")", Color.BLUE, postpref);
             st2.executeBatch();
@@ -896,7 +896,7 @@ public class PSConvert {
             st2.clearBatch();
 
         } catch (Exception e) {
-            println(Color.RED, "РћС€РёР±РєР°: updateSql().  " + e);
+            println(Color.RED, "Ошибка: updateSql().  " + e);
         }
     }
 
@@ -907,7 +907,7 @@ public class PSConvert {
             st2.execute(str);
             cn2.commit();
         } catch (SQLException e) {
-            println(Color.BLUE, "РќР•РЈР”РђР§Рђ-SQL: executeSql(). " + str);
+            println(Color.BLUE, "НЕУДАЧА-SQL: executeSql(). " + str);
         }
     }
 
@@ -917,7 +917,7 @@ public class PSConvert {
             st2.execute(str);
             cn2.commit();
         } catch (SQLException e) {
-            println(Color.BLUE, "РќР•РЈР”РђР§Рђ-SQL: checkUniqueKeyColor(). РЎРІСЏР·СЊ РЅРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅР°");
+            println(Color.BLUE, "НЕУДАЧА-SQL: checkUniqueKeyColor(). Связь не установлена");
         }
     }
 
@@ -931,7 +931,7 @@ public class PSConvert {
             st2.execute(str);
             cn2.commit();
         } catch (Exception e) {
-            println(Color.RED, "РћС€РёР±РєР°:executeSql().  <" + str + ">  " + e);
+            println(Color.RED, "Ошибка:executeSql().  <" + str + ">  " + e);
         }
     }
 

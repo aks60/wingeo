@@ -20,14 +20,14 @@ import java.util.List;
 import org.locationtech.jts.geom.LineSegment;
 
 /**
- * РЈС‡Р°СЃС‚РІСѓРµС‚ РІ РґРѕРїСѓСЃС‚РёРјРѕСЃС‚Рё СЌР»РµРјРµРЅС‚Р° РІ РєРѕРЅСЃС‚СЂСѓРєС†РёРё С‡РµСЂРµР· РїР°СЂР°РјРµС‚СЂ
+ * Участвует в допустимости элемента в конструкции через параметр
  */
 class UPar {
 
-    //РўРѕР»С‰РёРЅР° РІРЅРµС€РЅРµРіРѕ/РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ Р·Р°РїРѕР»РЅРµРЅРёСЏ, РјРј
+    //Толщина внешнего/внутреннего заполнения, мм
     static List<ElemSimple> getGlassDepth(ElemSimple elem5e) {
         ElemSimple glass1 = null, glass2 = null;
-        //Р¦С‹РєР» РїРѕ СЃРїРёСЃРєСѓ СЌР»РµРјРµРЅС‚РѕРІ
+        //Цыкл по списку элементов
         for (ElemSimple el : elem5e.winc.listElem) {
             if (el.type == Type.GLASS) {
 
@@ -52,17 +52,17 @@ class UPar {
         return List.of((ElemSimple) glass1, (ElemSimple) glass2);
     }
 
-    //РўРёРї РїСЂРѕРµРјР° 
+    //Тип проема 
     static boolean is_13003_14005_15005_37008(String txt, ElemSimple elem5e) {
-        if ("РіР»СѓС…РѕР№".equals(txt) == true && elem5e.owner.type == Type.STVORKA == true) {
+        if ("глухой".equals(txt) == true && elem5e.owner.type == Type.STVORKA == true) {
             return false;
-        } else if ("РЅРµ РіР»СѓС…РѕР№".equals(txt) == true && elem5e.owner.type == Type.STVORKA == false) {
+        } else if ("не глухой".equals(txt) == true && elem5e.owner.type == Type.STVORKA == false) {
             return false;
         }
         return true;
     }
 
-    //РљРѕРЅС‚РµР№РЅРµСЂ С‚РёРїР°
+    //Контейнер типа
     static boolean is_1005x6_2005x6_3005_4005_11005_12005_31050_33071_34071(String txt, ElemSimple elem5e) {
 
         if (UCom.containsNumbJust(txt, elem5e.type.id) == false) {
@@ -71,7 +71,7 @@ class UPar {
         return true;
     }
 
-    //Р”Р»СЏ С‚РµС…РЅРѕР»РѕРіРёС‡РµСЃРєРѕРіРѕ РєРѕРґР° РєРѕРЅС‚РµР№РЅРµСЂР° 
+    //Для технологического кода контейнера 
     static boolean is_STRING_XX000(String txt, ElemSimple elem5e) {
         Record sysprofRec = elem5e.sysprofRec;
         if (elem5e.type == Type.GLASS) {
@@ -96,7 +96,7 @@ class UPar {
         return ret2;
     }
     
-    //Р•СЃР»Рё РїСЂРёР·РЅР°Рє СЃРёСЃС‚РµРјС‹ РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+    //Если признак системы конструкции
     static boolean is_11095_12095_31095_33095_34095_37095_38095_39095_40095(String txt, int nuni) {
         Record systreefRec = eSystree.find(nuni);
         String[] arr = txt.split(";");
@@ -113,7 +113,7 @@ class UPar {
         return true;
     }
 
-    //Р•СЃР»Рё РЅРѕРјРµСЂ СЃС‚РѕСЂРѕРЅС‹ РІ РєРѕРЅС‚СѓСЂРµ
+    //Если номер стороны в контуре
     static boolean is_INT_33066_34066(String txt, ElemSimple elem5e) {
         if ("1".equals(txt) == true && Layout.BOTT != elem5e.layout()) {
             return false;
@@ -127,12 +127,12 @@ class UPar {
         return true;
     }
 
-    //РџРµСЂСЃРїРµРєС‚РёРІР°
+    //Перспектива
     static boolean is_13081_13082_13086_13087(ElemSimple elem5e, String txt) {
         return true;
     }
 
-    //Р­С„С„РµРєС‚РёРІРЅРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ РёР·РґРµР»РёСЏ, РјРј 
+    //Эффективное заполнение изделия, мм 
     static boolean is_1008_11008_12008_14008_15008_31008_34008_40008(String txt, Wincalc winc) {
         double depth = 0;
         for (ElemSimple elem : winc.listElem) {
@@ -146,7 +146,7 @@ class UPar {
         return true;
     }
 
-    //РќРѕРјРµСЂ СЃС‚РѕСЂРѕРЅС‹ 
+    //Номер стороны 
     static boolean is_38010_39002(ElemSimple elem5e, String txt) {
         double anglHor = UGeo.anglHor(elem5e.x1(), elem5e.y1(), elem5e.x2(), elem5e.y2());
         
@@ -162,7 +162,7 @@ class UPar {
         return true;
     }
 
-    //РќР°Р·РІР°РЅРёРµ С„СѓСЂРЅРёС‚СѓСЂС‹ СЃРѕРґРµСЂР¶РёС‚ 
+    //Название фурнитуры содержит 
     static boolean is_31037_38037_39037_40037(ElemSimple elem5e, String txt) {
         if (Type.STVORKA == elem5e.owner.type) {
             AreaStvorka stv = (AreaStvorka) elem5e.owner;
@@ -171,35 +171,35 @@ class UPar {
                 return false;
             }
         } else {
-            return false; //РµСЃР»Рё СЌС‚Рѕ РЅРµ СЃС‚РІРѕСЂРєР°, С‚Рѕ Рё РЅР°Р·РІР°РЅРёРµ РЅРµС‚  
+            return false; //если это не створка, то и название нет  
         }
         return true;
     }
 
-    //Р”Р»СЏ С‚РёРїР° РѕС‚РєСЂС‹РІР°РЅРёСЏ
+    //Для типа открывания
     static boolean is_1039_38039_39039(ElemSimple elem5e, String txt) {
         if (elem5e.owner.type == Type.STVORKA) {
             AreaStvorka stv = (AreaStvorka) elem5e.owner;
-            if (!"С„СЂР°РјСѓРіР°".equals(txt) && stv.typeOpen == TypeOpen1.UPPER) { //С„СЂР°РјСѓРіР°
+            if (!"фрамуга".equals(txt) && stv.typeOpen == TypeOpen1.UPPER) { //фрамуга
                 return false;
-            } else if (!"РїРѕРІРѕСЂРѕС‚РЅРѕРµ".equals(txt) && (stv.typeOpen == TypeOpen1.LEFT || stv.typeOpen == TypeOpen1.RIGH)) { //РїРѕРІРѕСЂРѕС‚РЅРѕРµ
+            } else if (!"поворотное".equals(txt) && (stv.typeOpen == TypeOpen1.LEFT || stv.typeOpen == TypeOpen1.RIGH)) { //поворотное
                 return false;
-            } else if (!"РїРѕРІРѕСЂРѕС‚РЅРѕ-РѕС‚РєРёРґРЅРѕРµ".equals(txt) && (stv.typeOpen == TypeOpen1.LEFTUP || stv.typeOpen == TypeOpen1.RIGHUP)) { //РїРѕРІРѕСЂРѕС‚РЅРѕ-РѕС‚РєРёРґРЅРѕРµ
+            } else if (!"поворотно-откидное".equals(txt) && (stv.typeOpen == TypeOpen1.LEFTUP || stv.typeOpen == TypeOpen1.RIGHUP)) { //поворотно-откидное
                 return false;
-            } else if (!"СЂР°Р·РґРІРёР¶РЅРѕРµ".equals(txt) && (stv.typeOpen == TypeOpen1.LEFMOV || stv.typeOpen == TypeOpen1.RIGMOV)) { //СЂР°Р·РґРІРёР¶РЅРѕРµ
+            } else if (!"раздвижное".equals(txt) && (stv.typeOpen == TypeOpen1.LEFMOV || stv.typeOpen == TypeOpen1.RIGMOV)) { //раздвижное
                 return false;
             }
         }
         return true;
     }
 
-    //Р’РЅРµС€РЅРµРµ СЃРѕРµРґРёРЅРµРЅРёРµ
+    //Внешнее соединение
     static boolean is_31010_4010_11009_12009(String txt) {
 
         return true;
     }
 
-    //Р•СЃР»Рё РїСЂРёР·РЅР°Рє СЃРѕСЃС‚Р°РІР° 
+    //Если признак состава 
     static boolean is_11001_11002_12001_12002_13001_14001_15001_33001_34001(String txt, ElemSimple elem5e) {
         Record record = eElement.data().stream().filter(rec
                 -> elem5e.artiklRecAn.getInt(eArtikl.id) == rec.getInt(eElement.artikl_id)
@@ -210,7 +210,7 @@ class UPar {
         return true;
     }
 
-    //РљРѕРґ СЃРёСЃС‚РµРјС‹ СЃРѕРґРµСЂР¶РёС‚ СЃС‚СЂРѕРєСѓ 
+    //Код системы содержит строку 
     static boolean is_13017_14017_24017_25017_31017_33017_34017_37017_38017(String txt, Wincalc winc) {
         Record systreeRec = eSystree.find(winc.nuni);
         String[] s = txt.split("/");
@@ -223,7 +223,7 @@ class UPar {
 
     static boolean is_21010_21011_21012_21013(String txt, ElemSimple elem5e) {
         String[] arr = txt.split("-");
-        if (arr.length == 1) { //РњРёРЅРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР°, РјРј
+        if (arr.length == 1) { //Минимальная длина, мм
             if (UCom.getInt(txt) < elem5e.length()) {
                 return false;
             }

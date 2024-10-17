@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import startup.App;
 
-//РЈСЃС‚Р°РЅРѕРІРєР° СЃРѕРµРґРёРЅРµРЅРёСЏ
+//Установка соединения
 public class LogoToDb extends javax.swing.JDialog {
 
     private int countCon = 0;
@@ -20,7 +20,7 @@ public class LogoToDb extends javax.swing.JDialog {
         super(owner);
         initComponents();
 
-        //РђРІС‚РѕРїР°СЂРѕР»СЊ РїСЂРё С‚РµСЃС‚РёСЂРѕРІР°РЅРёРё
+        //Автопароль при тестировании
         if (eProp.dev == true) {
             if ("adm".equals(eProp.profile)) {
                 edUser.setText("SYSDBA"); //user
@@ -39,7 +39,7 @@ public class LogoToDb extends javax.swing.JDialog {
 
         } else {
             labMes.setForeground(Color.BLUE);
-            labMes.setText("Р’РІРµРґРёС‚Рµ Р»РѕРіРёРЅ Рё РїР°СЂРѕР»СЊ");
+            labMes.setText("Введите логин и пароль");
             edUser.setText(eProp.user.read());
             edPass.requestFocus();
             getRootPane().setDefaultButton(btnOk);
@@ -55,7 +55,7 @@ public class LogoToDb extends javax.swing.JDialog {
     }
 
     /**
-     * РљРѕРјР°РЅРґР° РЅР° СЃРѕРµРґРёРЅРµРЅРёРµ СЃ Р‘Р”.
+     * Команда на соединение с БД.
      */
     public void connectToDb() {
         if (++countCon > 3) {
@@ -68,12 +68,12 @@ public class LogoToDb extends javax.swing.JDialog {
             protected Object doInBackground() throws Exception {
                 progressBar.setIndeterminate(true);
                 labMes.setForeground(Color.BLUE);
-                labMes.setText("РЈСЃС‚Р°РЅРѕРІРєР° СЃРѕРµРґРёРЅРµРЅРёСЏ СЃ Р±Р°Р·РѕР№ РґР°РЅРЅС‹С…");
+                labMes.setText("Установка соединения с базой данных");
                 String num = eProp.base_num.read();
                 //JOptionPane.showMessageDialog(LogoToDb.this, " " + eProp.server(num) + " " +eProp.port(num) + " " +  eProp.base(num)
-                //+ " " + edUser.getText() + " " + edPass.getPassword(), "Р’РќРРњРђРќРР•!", 1);
+                //+ " " + edUser.getText() + " " + edPass.getPassword(), "ВНИМАНИЕ!", 1);
                 eExcep pass = Conn.connection(eProp.server(num), eProp.port(num), eProp.base(num), edUser.getText(), edPass.getPassword(), null);
-                //JOptionPane.showMessageDialog(LogoToDb.this, pass.mes, "Р’РќРРњРђРќРР•!", 1);
+                //JOptionPane.showMessageDialog(LogoToDb.this, pass.mes, "ВНИМАНИЕ!", 1);
                 if (pass == eExcep.yesConn) {
 
                     if ("SYSDBA".equalsIgnoreCase(edUser.getText())) {
@@ -84,16 +84,16 @@ public class LogoToDb extends javax.swing.JDialog {
                         dispose();
 
                     } else {
-                        //РџРѕР»СѓС‡РёРј СЂРѕР»СЊ РїРѕ РёРјРµРЅРё Р»РѕРіРёРЅР°
+                        //Получим роль по имени логина
                         Statement st = Conn.getConnection().createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
                         //ResultSet rs = st.executeQuery("SELECT DISTINCT a.rdb$role_name , b.rdb$user FROM rdb$roles a, rdb$user_privileges b WHERE a.rdb$role_name = b.rdb$relation_name AND b.rdb$user = '" + edUser.getText() + "'");
                         ResultSet rs = st.executeQuery("SELECT u.RDB$USER, u.RDB$RELATION_NAME FROM RDB$USER_PRIVILEGES u WHERE u.RDB$USER = '" + edUser.getText().toUpperCase() + "'");
                         if (rs.next()) {
                             eProp.role = rs.getString("RDB$RELATION_NAME").trim();
                             Conn.getConnection().close();
-                            //РЎРѕРµРґРёРЅРµРЅРёРµ СЃ РЅРѕРІС‹РјРё РїСЂРёРІРµР»РµРіРёСЏРјРё
+                            //Соединение с новыми привелегиями
                             pass = Conn.connection(eProp.server(num), eProp.port(num), eProp.base(num), edUser.getText(), edPass.getPassword(), eProp.role);
-                            //РџРѕ РёРјРµРЅРё СЂРѕР»Рё РѕС‚РєСЂРѕРµРј РЅСѓР¶РЅРѕРµ РїСЂРёР»РѕР¶РµРЅРёРµ
+                            //По имени роли откроем нужное приложение
                             if (pass == eExcep.yesConn) {
                                 if (eProfile.P02.roleSet.contains(eProp.role)) {
                                     App.createApp(eProfile.P02);
@@ -134,7 +134,7 @@ public class LogoToDb extends javax.swing.JDialog {
         btnClose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РђРІС‚РѕСЂРёР·Р°С†РёСЏ РґРѕСЃС‚СѓРїР°");
+        setTitle("Авторизация доступа");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setPreferredSize(new java.awt.Dimension(320, 228));
         setResizable(false);
@@ -143,7 +143,7 @@ public class LogoToDb extends javax.swing.JDialog {
         pan2.setPreferredSize(new java.awt.Dimension(280, 132));
 
         labPass.setFont(frames.UGui.getFont(0,0));
-        labPass.setText("РџР°СЂРѕР»СЊ");
+        labPass.setText("Пароль");
         labPass.setAlignmentX(0.5F);
         labPass.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         labPass.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -159,7 +159,7 @@ public class LogoToDb extends javax.swing.JDialog {
         });
 
         labUser.setFont(frames.UGui.getFont(0,0));
-        labUser.setText("РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ");
+        labUser.setText("Пользователь");
         labUser.setAlignmentX(0.5F);
         labUser.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         labUser.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -183,8 +183,8 @@ public class LogoToDb extends javax.swing.JDialog {
 
         labMes.setFont(frames.UGui.getFont(0,0));
         labMes.setForeground(new java.awt.Color(0, 0, 255));
-        labMes.setText("<html>РћС€РёР±РєР° СЃРѕРµРґРёРЅРµРЅРёСЏ СЃ Р±Р°Р·РѕР№ РґР°РЅРЅС‹С…!");
-        labMes.setToolTipText("РћС€РёР±РєР° СЃРѕРµРґРёРЅРµРЅРёСЏ СЃ Р±Р°Р·РѕР№ РґР°РЅРЅС‹С…!");
+        labMes.setText("<html>Ошибка соединения с базой данных!");
+        labMes.setToolTipText("Ошибка соединения с базой данных!");
         labMes.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         labMes.setPreferredSize(new java.awt.Dimension(240, 14));
 
@@ -227,7 +227,7 @@ public class LogoToDb extends javax.swing.JDialog {
 
         btnOk.setFont(frames.UGui.getFont(0,0));
         btnOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b028.gif"))); // NOI18N
-        btnOk.setText("РћРљ");
+        btnOk.setText("ОК");
         btnOk.setToolTipText("");
         btnOk.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnOk.setEnabled(false);
@@ -243,7 +243,7 @@ public class LogoToDb extends javax.swing.JDialog {
 
         btnClose.setFont(frames.UGui.getFont(0,0));
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b029.gif"))); // NOI18N
-        btnClose.setText("РћС‚РјРµРЅР°");
+        btnClose.setText("Отмена");
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnClose.setMaximumSize(new java.awt.Dimension(80, 25));

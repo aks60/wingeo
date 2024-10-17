@@ -29,14 +29,14 @@ public class DefCellEditorCheck extends DefaultCellEditor {
 
             @Override
             public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-                if (string.length() > 1 || UCom.check(string, pattern)) { //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                if (string.length() > 1 || UCom.check(string, pattern)) { //проверка на коррекность ввода
                     super.insertString(fb, offset, string, attr);
                 }
             }
 
             @Override
             public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String string, AttributeSet attrs) throws BadLocationException {
-                if (string.length() > 1 || UCom.check(string, pattern)) {  //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                if (string.length() > 1 || UCom.check(string, pattern)) {  //проверка на коррекность ввода
                     super.replace(fb, offset, length, string, attrs);
                 }
             }

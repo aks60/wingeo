@@ -11,17 +11,17 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * РЈС‡Р°СЃС‚РІСѓРµС‚ РІ РёР·РјРµРЅРёРё СЃРІРѕР№СЃС‚РІ СЌР»РµРјРµРЅС‚Р° РєРѕРЅСЃС‚СЂСѓРєС†РёРё С‡РµСЂРµР· РїР°СЂР°РјРµС‚СЂ
+ * Участвует в измении свойств элемента конструкции через параметр
  */
 public class UPar {
 
-    //РЈРєРѕСЂРѕС‡РµРЅРёРµ РјРј РѕС‚ РІС‹СЃРѕС‚С‹ СЂСѓС‡РєРё 
+    //Укорочение мм от высоты ручки 
     public static double to_25013(SpcRecord spcRec, SpcRecord spcAdd) {
 
-        String ps = spcAdd.getParam("null", 25013); //РЈРєРѕСЂРѕС‡РµРЅРёРµ РѕС‚
+        String ps = spcAdd.getParam("null", 25013); //Укорочение от
         if (!"null".equals(ps)) {
-            List<String> list = ParamList.find(25013).dict();  //[РґР»РёРЅС‹ СЃС‚РѕСЂРѕРЅС‹, РІС‹СЃРѕС‚С‹ СЂСѓС‡РєРё, СЃС‚РѕСЂРѕРЅР° РІС‹СЃ-СЂСѓС‡РєРё, РїРѕР»РѕРІРёРЅС‹ СЃС‚РѕСЂРѕРЅС‹]             
-            double dx = UCom.getDbl(spcAdd.getParam(0, 25030)); //"РЈРєРѕСЂРѕС‡РµРЅРёРµ, РјРј"
+            List<String> list = ParamList.find(25013).dict();  //[длины стороны, высоты ручки, сторона выс-ручки, половины стороны]             
+            double dx = UCom.getDbl(spcAdd.getParam(0, 25030)); //"Укорочение, мм"
 
             if (list.get(0).equals(ps)) {
                 return spcRec.width - dx;
@@ -41,24 +41,24 @@ public class UPar {
         return spcAdd.elem5e.length();
     }
 
-    //Р Р°СЃС‡С‘С‚ РєРѕР»РёС‡РµСЃС‚РІР° РµРґ. СЃ С€Р°РіРѕРј
+    //Расчёт количества ед. с шагом
     public static double to_14050_24050_33050_38050(SpcRecord spcRec, SpcRecord spcAdd) {
 
-        int step = Integer.valueOf(spcAdd.getParam(-1, 14050, 24050, 33050, 38050)); //РЁР°Рі, РјРј
+        int step = Integer.valueOf(spcAdd.getParam(-1, 14050, 24050, 33050, 38050)); //Шаг, мм
         if (step != -1) {
-            double width_begin = UCom.getDbl(spcAdd.getParam(0, 14040, 24040, 33040, 38040)); //РџРѕСЂРѕРі СЂР°СЃС‡РµС‚Р°, РјРј
-            int count_step = Integer.valueOf(spcAdd.getParam(1, 14060, 24060, 33060, 38060)); //"РљРѕР»РёС‡РµСЃС‚РІРѕ РЅР° С€Р°Рі"
+            double width_begin = UCom.getDbl(spcAdd.getParam(0, 14040, 24040, 33040, 38040)); //Порог расчета, мм
+            int count_step = Integer.valueOf(spcAdd.getParam(1, 14060, 24060, 33060, 38060)); //"Количество на шаг"
             double width_next = 0;
             if ("null".equals(spcAdd.getParam("null", 38004, 39005))) {
                 width_next = spcRec.elem5e.length() - width_begin;
 
-            } else if ("РїРѕ РїРµСЂРёРјРµС‚СЂСѓ".equals(spcAdd.getParam("null", 38004, 39005))) {
+            } else if ("по периметру".equals(spcAdd.getParam("null", 38004, 39005))) {
                 width_next = (spcRec.elem5e.width() * 2 + spcRec.elem5e.height() * 2) - width_begin;
 
-            } else if ("РїРѕ РїР»РѕС‰Р°РґРё".equals(spcAdd.getParam("null", 38004, 39005))) {
+            } else if ("по площади".equals(spcAdd.getParam("null", 38004, 39005))) {
                 width_next = spcRec.elem5e.width() * spcRec.elem5e.height() - width_begin;
 
-            } else if ("РґР»РёРЅР° РїРѕ РєРѕСЂРѕР±РєРµ".equals(spcAdd.getParam("null", 38004, 39005))
+            } else if ("длина по коробке".equals(spcAdd.getParam("null", 38004, 39005))
                     && "null".equals(spcAdd.getParam("null", 38010, 39002))) {
                 double length = 0;
                 if ("1".equals(spcAdd.getParam("null", 38010, 39002))) {
@@ -87,34 +87,34 @@ public class UPar {
         return 0;
     }
 
-    //Р Р°СЃС‡С‘С‚ РєРѕР»РёС‡РµСЃС‚РІР° РµРґ. СЃ С€Р°РіРѕРј
+    //Расчёт количества ед. с шагом
     public static double to_11050(SpcRecord spcAdd, ElemJoining elemJoin) {
 
-        int step = Integer.valueOf(spcAdd.getParam(-1, 11050)); //РЁР°Рі, РјРј
+        int step = Integer.valueOf(spcAdd.getParam(-1, 11050)); //Шаг, мм
         if (step != -1) {
-            double width_begin = UCom.getDbl(spcAdd.getParam(0, 11040)); //РџРѕСЂРѕРі СЂР°СЃС‡РµС‚Р°, РјРј
-            int count_step = Integer.valueOf(spcAdd.getParam(1, 11060)); //"РљРѕР»РёС‡РµСЃС‚РІРѕ РЅР° С€Р°Рі"
+            double width_begin = UCom.getDbl(spcAdd.getParam(0, 11040)); //Порог расчета, мм
+            int count_step = Integer.valueOf(spcAdd.getParam(1, 11060)); //"Количество на шаг"
             ElemSimple elem5e = null;
             double width_next = 0;
 
-            if ("Р”Р°".equals(spcAdd.getParam("РќРµС‚", 11010, 12010))) {
+            if ("Да".equals(spcAdd.getParam("Нет", 11010, 12010))) {
                 elem5e = elemJoin.elem1;
 
-            } else if ("Р”Р°".equals(spcAdd.getParam("РќРµС‚", 11020, 12020))) {
+            } else if ("Да".equals(spcAdd.getParam("Нет", 11020, 12020))) {
                 elem5e = elemJoin.elem2;
 
             } else {
-                elem5e = elemJoin.elem1; //РїРѕ СѓРјРѕР»С‡.
+                elem5e = elemJoin.elem1; //по умолч.
             }
-            if ("Р±РѕР»СЊС€РµР№".equals(spcAdd.getParam("", 11072, 12072))) {
+            if ("большей".equals(spcAdd.getParam("", 11072, 12072))) {
                 double length = (elem5e.width() > elem5e.height()) ? elem5e.width() : elem5e.height();
                 width_next = length - width_begin;
 
-            } else if ("РјРµРЅСЊС€РµР№".equals(spcAdd.getParam("", 11072, 12072))) {
+            } else if ("меньшей".equals(spcAdd.getParam("", 11072, 12072))) {
                 double length = (elem5e.width() < elem5e.height()) ? elem5e.width() : elem5e.height();
                 width_next = length - width_begin;
 
-            } else if ("РѕР±С‰РµР№".equals(spcAdd.getParam("", 11072, 12072))) {
+            } else if ("общей".equals(spcAdd.getParam("", 11072, 12072))) {
                 double length = elemJoin.elem2.width();
                 width_next = length - width_begin;
 
@@ -136,34 +136,34 @@ public class UPar {
         return 0;
     }
 
-    //РљРѕР»РёС‡РµСЃС‚РІРѕ РµРґ.
+    //Количество ед.
     public static double to_11030_12060_14030_15040_25060_33030_34060_38030_39060(SpcRecord spcAdd) {
         return UCom.getDbl(spcAdd.getParam(spcAdd.count,
                 11030, 12060, 14030, 15040, 25060, 33030, 34060, 38030, 39060));
     }
 
-    //РџРѕРїСЂР°РІРєР°, РјРј
+    //Поправка, мм
     public static double to_12050_15050_34051_39020(SpcRecord spcAdd) {
-        if (UseUnit.METR.id == spcAdd.artiklRec().getInt(eArtikl.unit)) { //РїРѕРі.Рј.
-            return UCom.getDbl(spcAdd.getParam(0, 12050, 15050, 34050, 34051, 39020)); //РџРѕРїСЂР°РІРєР°, РјРј
+        if (UseUnit.METR.id == spcAdd.artiklRec().getInt(eArtikl.unit)) { //пог.м.
+            return UCom.getDbl(spcAdd.getParam(0, 12050, 15050, 34050, 34051, 39020)); //Поправка, мм
         }
         return 0; //spcAdd.width;
     }
 
-    //Р”Р»РёРЅР°, РјРј
+    //Длина, мм
     public static double to_12065_15045_25040_34070_39070(SpcRecord spcAdd) {
-        if (UseUnit.METR.id == spcAdd.artiklRec().getInt(eArtikl.unit)) { //РїРѕРі.Рј.
-            return UCom.getDbl(spcAdd.getParam(spcAdd.width, 12065, 15045, 25040, 34070, 39070)); //Р”Р»РёРЅР°, РјРј 
+        if (UseUnit.METR.id == spcAdd.artiklRec().getInt(eArtikl.unit)) { //пог.м.
+            return UCom.getDbl(spcAdd.getParam(spcAdd.width, 12065, 15045, 25040, 34070, 39070)); //Длина, мм 
         }
         return spcAdd.width;
     }
 
-    //РљРѕСЌС„С„РёС†РёРµРЅС‚, [ * РєРѕСЌС„-С‚ ]
+    //Коэффициент, [ * коэф-т ]
     public static double to_12030_15030_25035_34030_39030(SpcRecord spcAdd) {
         return UCom.getDbl(spcAdd.getParam("1", 12030, 15030, 25035, 34030, 39030));
     }
 
-    //РљРѕСЌС„С„РёС†РёРµРЅС‚, [ / РєРѕСЌС„-С‚ ]
+    //Коэффициент, [ / коэф-т ]
     public static double to_12040_15031_25036_34040_39040(SpcRecord spcAdd) {
         return UCom.getDbl(spcAdd.getParam("1", 12040, 15031, 25036, 34040, 39040));
     }
@@ -174,7 +174,7 @@ public class UPar {
                 11030, 12060, 14030, 15040, 24030, 25060, 33030, 34060, 38030, 39060));
     }
 
-    //Р—Р°РґР°С‚СЊ РЈРіРѕР»_СЂРµР·Р°_1/РЈРіРѕР»_СЂРµР·Р°_2, В°
+    //Задать Угол_реза_1/Угол_реза_2, °
     public static void to_34077_39077(SpcRecord spcAdd) {
         if (spcAdd.getParam("-361", 34077, 39077).equals("-361") == false) {
             String[] arr = spcAdd.getParam("-1", 34077, 39077).split("/");
@@ -187,70 +187,70 @@ public class UPar {
         }
     }
 
-    //РЎС‚Р°РІРёС‚СЊ РѕРґРЅРѕРєСЂР°С‚РЅРѕ
+    //Ставить однократно
     public static double to_11070_12070_33078_34078(SpcRecord spcAdd) {
-        if ("Р”Р°".equals(spcAdd.getParam("РќРµС‚", 11070, 12070, 33078, 34078))) {
+        if ("Да".equals(spcAdd.getParam("Нет", 11070, 12070, 33078, 34078))) {
             return 1;
         } else {
             return spcAdd.count;
         }
     }
 
-    //РЈРіР»С‹ СЂРµР·Р°
+    //Углы реза
     public static void to_12075_34075_39075(ElemSimple elem5e, SpcRecord spcAdd) {
         String txt = spcAdd.getParam("null", 12075, 34075, 39075);
         if (!"null".equals(txt)) {
-            if ("РїРѕ РєРѕРЅС‚РµР№РЅРµСЂР°Рј".equals(txt)) {
+            if ("по контейнерам".equals(txt)) {
                 spcAdd.anglCut0 = elem5e.spcRec.anglCut0;
                 spcAdd.anglCut1 = elem5e.spcRec.anglCut1;
 
-            } else if ("СѓСЃС‚Р°РЅРѕРІРёС‚СЊ (90В° x 90В°)".equals(txt)) {
+            } else if ("установить (90° x 90°)".equals(txt)) {
                 spcAdd.anglCut0 = 90;
                 spcAdd.anglCut1 = 90;
 
-            } else if ("СѓСЃС‚Р°РЅРѕРІРёС‚СЊ (90В° x 45В°)".equals(txt)) {
+            } else if ("установить (90° x 45°)".equals(txt)) {
                 spcAdd.anglCut0 = 90;
                 spcAdd.anglCut1 = 45;
 
-            } else if ("СѓСЃС‚Р°РЅРѕРІРёС‚СЊ (45В° x 45В°)".equals(txt)) {
+            } else if ("установить (45° x 45°)".equals(txt)) {
                 spcAdd.anglCut0 = 45;
                 spcAdd.anglCut1 = 45;
             }
         }
     }
 
-    //Р’С‹СЃРѕС‚Сѓ СЃРґРµР»Р°С‚СЊ РґР»РёРЅРѕР№ 
+    //Высоту сделать длиной 
     public static void to_40007(SpcRecord spcAdd) {
-        if ("Р”Р°".equals(spcAdd.getParam("null", 40007))) {
+        if ("Да".equals(spcAdd.getParam("null", 40007))) {
             double height = spcAdd.height;
             spcAdd.height = spcAdd.width;
             spcAdd.width = height;
         }
     }
 
-    //РћРєСЂСѓРіР»СЏС‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ РґРѕ Р±Р»РёР¶Р°Р№С€РµРіРѕ
+    //Округлять количество до ближайшего
     public static double to_39063(SpcRecord spcAdd) {
         String txt = spcAdd.getParam("null", 39063);
         if (!"null".equals(txt)) {
 
-            if ("РјРµРЅСЊС€РµРіРѕ С†РµР»РѕРіРѕ С‡РёСЃР»Р°".equals(txt)) {
+            if ("меньшего целого числа".equals(txt)) {
                 return Math.floor(spcAdd.count);
 
-            } else if ("Р±РѕР»СЊС€РµРіРѕ С†РµР»РѕРіРѕ С‡РёСЃР»Р°".equals(txt)) {
+            } else if ("большего целого числа".equals(txt)) {
                 return Math.ceil(spcAdd.count);
 
-            } else if ("Р±РѕР»СЊС€РµРіРѕ С‡С‘С‚РЅРѕРіРѕ С‡РёСЃР»Р°".equals(txt)) {
+            } else if ("большего чётного числа".equals(txt)) {
                 return Math.round(spcAdd.count);
 
-            } else if ("Р±РѕР»СЊС€РµРіРѕ РЅРµС‡С‘С‚РЅРѕРіРѕ С‡РёСЃР»Р°".equals(txt)) {
+            } else if ("большего нечётного числа".equals(txt)) {
                 return Math.round(spcAdd.count) + 1;
             }
         }
         return spcAdd.count;
     }
 
-    //РџРѕРїСЂР°РІРєР° С€РёСЂРёРЅС‹/РІС‹СЃРѕС‚С‹, РјРј 
-    //РџРѕРїСЂР°РІРєР° РЅР° СЃС‚РѕСЂРѕРЅС‹ С‡РµС‚РЅС‹Рµ/РЅРµС‡РµС‚РЅС‹Рµ, РјРј     
+    //Поправка ширины/высоты, мм 
+    //Поправка на стороны четные/нечетные, мм     
     public static void to_40005_40010(SpcRecord spcAdd) {
         if (!"null".equals(spcAdd.getParam("null", 40005))) {
             String[] arr = spcAdd.getParam("null", 40005).split("/");
@@ -263,25 +263,25 @@ public class UPar {
         }
     }
 
-    //РљРѕР»РёС‡РµСЃС‚РІРѕ РµРґ.
+    //Количество ед.
     public static double to_7030_7031_8060_8061_9060_9061(HashMap<Integer, String> mapParam) {
         String numb = getParam(0, mapParam, 7030, 7031, 8060, 8061, 9060, 9061);
         return Double.valueOf(numb);
     }
 
-    //РџРѕРїСЂР°РІРєР°, РјРј
+    //Поправка, мм
     public static double to_8050(HashMap<Integer, String> mapParam) {
         String numb = getParam(0, mapParam, 8050);
         return Double.valueOf(numb);
     }
 
-    //Р”Р»РёРЅР°, РјРј
+    //Длина, мм
     public static Double to_8065_8066_9065_9066(HashMap<Integer, String> mapParam) {
         String numb = getParam(0, mapParam, 8065, 8066, 9065, 9066);
         return Double.valueOf(numb);
     }
 
-    //РЁРёСЂРёРЅР°, РјРј
+    //Ширина, мм
     public static Double to_8070_8071_9070_9071(HashMap<Integer, String> mapParam) {
         String numb = getParam("null", mapParam, 8070, 8071, 9070, 9071);
         if (!"null".equals(numb)) {
@@ -290,11 +290,11 @@ public class UPar {
         return null;
     }
 
-    //РЈРіР»С‹ СЂРµР·Р° "90С…90", "90С…45", "45С…90", "45С…45"
+    //Углы реза "90х90", "90х45", "45х90", "45х45"
     public static Double to_8075(HashMap<Integer, String> mapParam, int m) {
         String angl = getParam("null", mapParam, 8075);
         if (!"null".equals(angl)) {
-            String s[] = angl.split("С…");
+            String s[] = angl.split("х");
             return Double.valueOf(s[m]);
         }
         return null;

@@ -9,12 +9,12 @@ import javax.swing.table.DefaultTableModel;
 import common.listener.ListenerRecord;
 import java.util.Arrays;
 
-//Р’Р°СЂРёР°РЅС‚С‹ С‚РµРєСЃС‚СѓСЂ
+//Варианты текстур
 public class DicColvar extends javax.swing.JDialog {
 
     private ListenerRecord listener = null;
     private int colorFk = 0;
-    String[] titl = {"РќР°РёРјРµРЅРѕРІР°РЅРёРµ"};
+    String[] titl = {"Наименование"};
     Object[][] rows;
 
     public DicColvar(java.awt.Frame parent, ListenerRecord listenet, int colorFk) {
@@ -31,19 +31,19 @@ public class DicColvar extends javax.swing.JDialog {
         ((DefaultTableModel) tab1.getModel()).setRowCount(0);
         if (colorFk != -1) {
 
-            //РђРІС‚РѕРїРѕРґР±РѕСЂ, С‚РѕС‡РЅС‹Р№ РїРѕРґР±РѕСЂ
+            //Автоподбор, точный подбор
             if (colorFk == 0 || colorFk == 100000) {
                 rows = new Object[][]{{UseColor.PROF.name, UseColor.PROF.id}, {UseColor.GLAS.name, UseColor.GLAS.id},
                 {UseColor.COL1.name, UseColor.COL1.id}, {UseColor.COL2.name, UseColor.COL2.id}, {UseColor.COL3.name, UseColor.COL3.id},
                 {UseColor.C1SER.name, UseColor.C1SER.id}, {UseColor.C2SER.name, UseColor.C2SER.id}, {UseColor.C3SER.name, UseColor.C3SER.id}};
 
-                //Р’С‹Р±СЂР°РЅ РІСЂСѓС‡РЅСѓСЋ
+                //Выбран вручную
             } else if (colorFk > 0) {
                 rows = new Object[][]{{UseColor.MANUAL.name, UseColor.MANUAL.id}, {UseColor.PROF.name, UseColor.PROF.id}, {UseColor.GLAS.name, UseColor.GLAS.id},
                 {UseColor.COL1.name, UseColor.COL1.id}, {UseColor.COL2.name, UseColor.COL2.id}, {UseColor.COL3.name, UseColor.COL3.id},
                 {UseColor.C1SER.name, UseColor.C1SER.id}, {UseColor.C2SER.name, UseColor.C2SER.id}, {UseColor.C3SER.name, UseColor.C3SER.id}};
                 
-                //РџР°СЂР°РјРµС‚СЂ
+                //Параметр
             } else if (colorFk < 0) {
                 rows = new Object[][]{{UseColor.PROF.name, UseColor.PROF.id}, {UseColor.GLAS.name, UseColor.GLAS.id},
                 {UseColor.COL1.name, UseColor.COL1.id}, {UseColor.COL2.name, UseColor.COL2.id}, {UseColor.COL3.name, UseColor.COL3.id},               
@@ -70,7 +70,7 @@ public class DicColvar extends javax.swing.JDialog {
         south = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РЎРїСЂР°РІРѕС‡РЅРёРє РІР°СЂРёР°РЅС‚РѕРІ РїРѕРґР±РѕСЂР°");
+        setTitle("Справочник вариантов подбора");
         setPreferredSize(new java.awt.Dimension(200, 300));
 
         north.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -79,7 +79,7 @@ public class DicColvar extends javax.swing.JDialog {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -94,7 +94,7 @@ public class DicColvar extends javax.swing.JDialog {
         });
 
         btnChoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c044.gif"))); // NOI18N
-        btnChoice.setToolTipText(bundle.getString("Р’С‹Р±СЂР°С‚СЊ")); // NOI18N
+        btnChoice.setToolTipText(bundle.getString("Выбрать")); // NOI18N
         btnChoice.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnChoice.setFocusable(false);
         btnChoice.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -109,7 +109,7 @@ public class DicColvar extends javax.swing.JDialog {
         });
 
         btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c042.gif"))); // NOI18N
-        btnRemove.setToolTipText(bundle.getString("РћС‡РёСЃС‚РёС‚СЊ")); // NOI18N
+        btnRemove.setToolTipText(bundle.getString("Очистить")); // NOI18N
         btnRemove.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnRemove.setFocusable(false);
         btnRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -162,7 +162,7 @@ public class DicColvar extends javax.swing.JDialog {
 
             },
             new String [] {
-                "РќР°Р·РІР°РЅРёРµ СЃРѕРµРґРёРЅРµРЅРёСЏ"
+                "Название соединения"
             }
         ) {
             boolean[] canEdit = new boolean [] {

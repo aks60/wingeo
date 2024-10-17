@@ -99,7 +99,7 @@ public class Elements extends javax.swing.JFrame {
         Record record = eGroups.up.newRecord(Query.SEL);
         record.setNo(eGroups.id, -1);
         record.setNo(eGroups.npp, 1);
-        record.setNo(eGroups.name, "<html><font size='3' color='red'>&nbsp;&nbsp;&nbsp;РџР РћР¤РР›Р</font>");
+        record.setNo(eGroups.name, "<html><font size='3' color='red'>&nbsp;&nbsp;&nbsp;ПРОФИЛИ</font>");
         qGrCateg.add(0, record);
         for (int index = 0; index < qGrCateg.size(); ++index) {
             int level = qGrCateg.getAs(index, eGroups.npp);
@@ -107,7 +107,7 @@ public class Elements extends javax.swing.JFrame {
                 Record record2 = eGroups.up.newRecord(Query.SEL);
                 record2.setNo(eGroups.id, -5);
                 record2.setNo(eGroups.npp, 5);
-                record2.setNo(eGroups.name, "<html><font size='3' color='red'>&nbsp;&nbsp;Р—РђРџРћР›РќР•РќРРЇ</font>");
+                record2.setNo(eGroups.name, "<html><font size='3' color='red'>&nbsp;&nbsp;ЗАПОЛНЕНИЯ</font>");
                 qGrCateg.add(index, record2);
                 break;
             }
@@ -327,10 +327,10 @@ public class Elements extends javax.swing.JFrame {
             }
         });
 
-        UGui.buttonCellEditor(tab4, 1, (componentCell) -> { //РїРµСЂРІС‹Р№ СЃР»СѓС€Р°С‚РµР»СЊ РєРЅРѕРїРєРё, СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ С‚РёРїР° РґР°РЅРЅС‹С… Рё РІРёРґР° СЏС‡РµР№РєРё
+        UGui.buttonCellEditor(tab4, 1, (componentCell) -> { //первый слушатель кнопки, редактирование типа данных и вида ячейки
             return UGui.cellParamTypeOrVid(tab4, componentCell, eElempar1.groups_id);
 
-        }).addActionListener(event -> { //РІС‚РѕСЂРѕР№ СЃР»СѓС€Р°С‚РµР»СЊ РєРЅРѕРїРєРё, РІС‹Р±РѕСЂ РёР· СЃРїСЂР°РІРѕС‡РЅРёРєР° Р·РЅР°С‡РµРЅРёСЏ
+        }).addActionListener(event -> { //второй слушатель кнопки, выбор из справочника значения
             UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
             Record record = qElempar1.get(UGui.getIndexRec(tab4));
             int grup = record.getInt(eElempar1.groups_id);
@@ -372,7 +372,7 @@ public class Elements extends javax.swing.JFrame {
             }
         });
 
-        UGui.buttonCellEditor(tab5, 1, (componentCell) -> { //СЃР»СѓС€Р°С‚РµР»СЊ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ С‚РёРїР° Рё РІРёРґР° РґР°РЅРЅС‹С… Рё РІРёРґР° СЏС‡РµР№РєРё С‚Р°Р±Р»РёС†С‹
+        UGui.buttonCellEditor(tab5, 1, (componentCell) -> { //слушатель редактирование типа и вида данных и вида ячейки таблицы
             return UGui.cellParamTypeOrVid(tab5, componentCell, eElempar2.groups_id);
 
         }).addActionListener(event -> {
@@ -521,7 +521,7 @@ public class Elements extends javax.swing.JFrame {
         tab5 = new javax.swing.JTable();
         south = new javax.swing.JPanel();
 
-        itCateg1.setText("РџР РћР¤РР›Р");
+        itCateg1.setText("ПРОФИЛИ");
         itCateg1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmCategAction(evt);
@@ -529,7 +529,7 @@ public class Elements extends javax.swing.JFrame {
         });
         ppmCateg.add(itCateg1);
 
-        itCateg2.setText("Р—РђРџРћР›РќР•РќРРЇ");
+        itCateg2.setText("ЗАПОЛНЕНИЯ");
         itCateg2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmCategAction(evt);
@@ -539,7 +539,7 @@ public class Elements extends javax.swing.JFrame {
 
         mInsert.setFont(frames.UGui.getFont(1,0));
         mInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        mInsert.setText("Р”РѕР±Р°РІРёС‚СЊ");
+        mInsert.setText("Добавить");
         mInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -549,7 +549,7 @@ public class Elements extends javax.swing.JFrame {
 
         mDelit.setFont(frames.UGui.getFont(1,0));
         mDelit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        mDelit.setText("РЈРґР°Р»РёС‚СЊ");
+        mDelit.setText("Удалить");
         mDelit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -558,7 +558,7 @@ public class Elements extends javax.swing.JFrame {
         ppmCrud.add(mDelit);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Р’СЃС‚Р°РІРєРё");
+        setTitle("Вставки");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 500));
         setPreferredSize(new java.awt.Dimension(900, 600));
@@ -574,7 +574,7 @@ public class Elements extends javax.swing.JFrame {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -589,7 +589,7 @@ public class Elements extends javax.swing.JFrame {
         });
 
         btnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        btnDel.setToolTipText(bundle.getString("РЈРґР°Р»РёС‚СЊ")); // NOI18N
+        btnDel.setToolTipText(bundle.getString("Удалить")); // NOI18N
         btnDel.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnDel.setFocusable(false);
         btnDel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -605,7 +605,7 @@ public class Elements extends javax.swing.JFrame {
         });
 
         btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        btnIns.setToolTipText(bundle.getString("Р”РѕР±Р°РІРёС‚СЊ")); // NOI18N
+        btnIns.setToolTipText(bundle.getString("Добавить")); // NOI18N
         btnIns.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnIns.setFocusable(false);
         btnIns.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -621,7 +621,7 @@ public class Elements extends javax.swing.JFrame {
         });
 
         btnReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c053.gif"))); // NOI18N
-        btnReport.setToolTipText(bundle.getString("РџРµС‡Р°С‚СЊ")); // NOI18N
+        btnReport.setToolTipText(bundle.getString("Печать")); // NOI18N
         btnReport.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnReport.setFocusable(false);
         btnReport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -637,7 +637,7 @@ public class Elements extends javax.swing.JFrame {
         });
 
         btnFind1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c088.gif"))); // NOI18N
-        btnFind1.setToolTipText(bundle.getString("РџРѕРёСЃРє Р·Р°РїРёСЃРё")); // NOI18N
+        btnFind1.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
         btnFind1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnFind1.setFocusable(false);
         btnFind1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -664,8 +664,8 @@ public class Elements extends javax.swing.JFrame {
         });
 
         btnFind2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c089.gif"))); // NOI18N
-        btnFind2.setText(bundle.getString("РџРѕРёСЃРє Р·Р°РїРёСЃРё")); // NOI18N
-        btnFind2.setToolTipText(bundle.getString("РџРѕРёСЃРє Р·Р°РїРёСЃРё")); // NOI18N
+        btnFind2.setText(bundle.getString("Поиск записи")); // NOI18N
+        btnFind2.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
         btnFind2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnFind2.setFocusable(false);
         btnFind2.setMaximumSize(new java.awt.Dimension(25, 25));
@@ -680,7 +680,7 @@ public class Elements extends javax.swing.JFrame {
         });
 
         btnClone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c065.gif"))); // NOI18N
-        btnClone.setToolTipText(bundle.getString("РљР»РѕРЅРёСЂРѕРІР°С‚СЊ Р·Р°РїРёСЃСЊ")); // NOI18N
+        btnClone.setToolTipText(bundle.getString("Клонировать запись")); // NOI18N
         btnClone.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClone.setFocusable(false);
         btnClone.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -696,7 +696,7 @@ public class Elements extends javax.swing.JFrame {
         });
 
         btnMove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c050.gif"))); // NOI18N
-        btnMove.setToolTipText(bundle.getString("РџРµСЂРµРјРµСЃС‚РёС‚СЊ")); // NOI18N
+        btnMove.setToolTipText(bundle.getString("Переместить")); // NOI18N
         btnMove.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnMove.setFocusable(false);
         btnMove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -779,7 +779,7 @@ public class Elements extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РљР°С‚РµРіРѕСЂРёСЏ"
+                "Категория"
             }
         ) {
             Class[] types = new Class [] {
@@ -802,7 +802,7 @@ public class Elements extends javax.swing.JFrame {
 
         pan4.add(scr1, java.awt.BorderLayout.WEST);
 
-        scr2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "РЎРїРёСЃРєРё РІСЃС‚Р°РІРѕРє", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Списки вставок", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
         scr2.setPreferredSize(new java.awt.Dimension(454, 320));
 
         tab2.setFont(frames.UGui.getFont(0,0));
@@ -811,7 +811,7 @@ public class Elements extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РђСЂС‚РёРєСѓР»", "РќР°Р·РІР°РЅРёРµ", "РќР°РёРјРµРЅРѕРІР°РЅРёРµ РІСЃС‚Р°РІРѕРє", "РўРёРї СЃРѕСЃС‚Р°РІР°", "РџСЂРёР·РЅР°Рє СЃРѕСЃС‚Р°РІР°", "РЎРµСЂРёСЏ", "РЈРјРѕР»С‡Р°РЅРёРµ", "РћР±СЏР·Р°С‚РµР»СЊРЅРѕ", "РќР°С†РµРЅРєР°%", "ID"
+                "Артикул", "Название", "Наименование вставок", "Тип состава", "Признак состава", "Серия", "Умолчание", "Обязательно", "Наценка%", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -863,7 +863,7 @@ public class Elements extends javax.swing.JFrame {
         pan5.setPreferredSize(new java.awt.Dimension(240, 400));
         pan5.setLayout(new java.awt.BorderLayout());
 
-        scr4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "РџР°СЂР°РјРµС‚СЂС‹", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Параметры", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
         scr4.setPreferredSize(new java.awt.Dimension(260, 320));
 
         tab4.setFont(frames.UGui.getFont(0,0));
@@ -872,7 +872,7 @@ public class Elements extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РџР°СЂР°РјРµС‚СЂ", "Р—РЅР°С‡РµРЅРёРµ"
+                "Параметр", "Значение"
             }
         ));
         tab4.setFillsViewportHeight(true);
@@ -901,7 +901,7 @@ public class Elements extends javax.swing.JFrame {
         pan2.setPreferredSize(new java.awt.Dimension(800, 200));
         pan2.setLayout(new javax.swing.BoxLayout(pan2, javax.swing.BoxLayout.LINE_AXIS));
 
-        scr3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Р”РµС‚Р°Р»РёР·Р°С†РёСЏ РІСЃС‚Р°РІРѕРє", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Детализация вставок", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
         scr3.setMaximumSize(new java.awt.Dimension(2000, 800));
         scr3.setPreferredSize(new java.awt.Dimension(500, 2044));
 
@@ -911,7 +911,7 @@ public class Elements extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РђСЂС‚РёРєСѓР»", "РќР°Р·РІР°РЅРёРµ", "РўРµРєСЃС‚СѓСЂР°", "РћСЃРЅРѕРІРЅР°СЏ", "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ", "Р’РЅРµС€РЅСЏСЏ", "ID"
+                "Артикул", "Название", "Текстура", "Основная", "Внутренняя", "Внешняя", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -954,7 +954,7 @@ public class Elements extends javax.swing.JFrame {
 
         pan2.add(scr3);
 
-        scr5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "РџР°СЂР°РјРµС‚СЂС‹", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Параметры", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
         scr5.setMaximumSize(new java.awt.Dimension(600, 800));
         scr5.setPreferredSize(new java.awt.Dimension(240, 200));
 
@@ -964,7 +964,7 @@ public class Elements extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РџР°СЂР°РјРµС‚СЂ", "Р—РЅР°С‡РµРЅРёРµ"
+                "Параметр", "Значение"
             }
         ));
         tab5.setFillsViewportHeight(true);
@@ -1009,16 +1009,16 @@ public class Elements extends javax.swing.JFrame {
 
         JMenuItem ppm = (JMenuItem) evt.getSource();
         int level1 = (ppm == itCateg1) ? 1 : 5;
-        String result = JOptionPane.showInputDialog(Elements.this, "РќР°Р·РІР°РЅРёРµ", "РљР°С‚РµРіРѕСЂРёСЏ", JOptionPane.QUESTION_MESSAGE);
+        String result = JOptionPane.showInputDialog(Elements.this, "Название", "Категория", JOptionPane.QUESTION_MESSAGE);
         int id = Conn.genId(eGroups.up);
         if (result.isEmpty() && eProp.dev) {
-            result = (ppm == itCateg1) ? "РљР°С‚РµРі.РїСЂРѕС„-" + id : "РљР°С‚РµРі.Р·Р°Рї-" + id;
+            result = (ppm == itCateg1) ? "Катег.проф-" + id : "Катег.зап-" + id;
         }
         if (result.isEmpty() == false) {
             Record elemgrpRec = eGroups.up.newRecord(Query.INS);
             elemgrpRec.setNo(eGroups.id, id);
             elemgrpRec.setNo(eGroups.grup, TypeGrup.CATEG_VST.id);
-            elemgrpRec.setNo(eGroups.npp, level1); //-1 -РџР РћР¤РР›Р, -5 -Р—РђРџРћР›РќР•РќРРЇ
+            elemgrpRec.setNo(eGroups.npp, level1); //-1 -РџР РћР¤Р?Р›Р?, -5 -Р—РђРџРћР›РќР•РќР?РЇ
             elemgrpRec.setNo(eGroups.name, result);
             qGrCateg.insert(elemgrpRec);
             eGroups.up.query().add(elemgrpRec);
@@ -1069,8 +1069,8 @@ public class Elements extends javax.swing.JFrame {
                 Record elementRec = qElement.get(index);
                 List list = new LinkedList();
                 qGrCateg.forEach(rec -> list.add(rec.getStr(eGroups.name)));
-                Object result = JOptionPane.showInputDialog(Elements.this, "Р’СЃС‚Р°РІРєР°: " + elementRec.getStr(eElement.name),
-                    "РР·РјРµРЅРµРЅРёРµ РєР°С‚РµРіРѕСЂРёРё СЌР»РµРјРµРЅС‚Р° РІС‚Р°РІРєРё", JOptionPane.QUESTION_MESSAGE, null, list.toArray(), list.toArray()[0]);
+                Object result = JOptionPane.showInputDialog(Elements.this, "Вставка: " + elementRec.getStr(eElement.name),
+                    "Изменение категории элемента втавки", JOptionPane.QUESTION_MESSAGE, null, list.toArray(), list.toArray()[0]);
                 if (result != null) {
                     for (Record groupsRec : qGrCateg) {
                         if (result.equals(groupsRec.getStr(eGroups.name))) {
@@ -1082,14 +1082,14 @@ public class Elements extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Elements.btnMove()");
+            System.err.println("Ошибка:Elements.btnMove()");
         }
     }//GEN-LAST:event_btnMove
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
         int index = UGui.getIndexRec(tab2);
-        if (index != -1 && JOptionPane.showConfirmDialog(this, "Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РєР»РѕРЅРёСЂРѕРІР°С‚СЊ С‚РµРєСѓС‰СѓСЋ Р·Р°РїРёСЃСЊ?",
-            "РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+        if (index != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
+            "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 
         Map<Record, Integer> elempar2Map = new HashMap<Record, Integer>();
         List<Record> elempar1List = new ArrayList<Record>();
@@ -1103,7 +1103,7 @@ public class Elements extends javax.swing.JFrame {
         int elementID = Conn.genId(eElement.up);
         elementClon.setNo(eElement.id, elementID);
         elementClon.setNo(eElement.name, elementClon.getStr(eElement.name) + "-РєР»РѕРЅ");
-        eElement.up.query().add(elementClon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+        eElement.up.query().add(elementClon);  //добавим запись в кэш
         qElement.add(index, elementClon);
         qElement.table(eArtikl.up).add(index, artiklClon);
 
@@ -1112,7 +1112,7 @@ public class Elements extends javax.swing.JFrame {
             elempar1Clon.setNo(eElempar1.up, Query.INS);
             elempar1Clon.setNo(eElempar1.id, Conn.genId(eElempar1.up));
             elempar1Clon.setNo(eElempar1.element_id, elementID);
-            eElempar1.up.query().add(elempar1Clon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+            eElempar1.up.query().add(elempar1Clon);  //добавим запись в кэш
             qElempar1.add(elempar1Clon);
         }
         for (Record elemdetRec : elemdetList) {
@@ -1122,7 +1122,7 @@ public class Elements extends javax.swing.JFrame {
             elemdetClon.setNo(eElemdet.element_id, elementID);
             qElempar2.sql(eElempar2.data(), eElempar2.elemdet_id, elemdetRec.getInt(eElemdet.id));
             qElempar2.forEach(rec -> elempar2Map.put(rec, elemdetClon.getInt(eElemdet.id)));
-            eElemdet.up.query().add(elemdetClon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+            eElemdet.up.query().add(elemdetClon);  //добавим запись в кэш
             qElemdet.add(elemdetClon);
         }
         for (Map.Entry<Record, Integer> it : elempar2Map.entrySet()) {
@@ -1131,7 +1131,7 @@ public class Elements extends javax.swing.JFrame {
             elempar2Clon.setNo(eElempar2.up, Query.INS);
             elempar2Clon.setNo(eElempar2.id, Conn.genId(eElempar2.up));
             elempar2Clon.setNo(eElempar2.elemdet_id, it.getValue());
-            eElempar2.up.query().add(elempar2Clon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+            eElempar2.up.query().add(elempar2Clon);  //добавим запись в кэш
             qElempar2.add(elempar2Clon);
         }
 
@@ -1165,7 +1165,7 @@ public class Elements extends javax.swing.JFrame {
             for (int i = pathList.size(); i < 21; ++i) {
                 pathList.add(null);
             }
-            Object result = JOptionPane.showInputDialog(Elements.this, "РђСЂС‚РёРєСѓР» РІ СЃРёСЃС‚РµРјРµ РїСЂРѕС„РёР»РµР№", "РЎРѕРѕР±С‰РµРЅРёРµ", JOptionPane.QUESTION_MESSAGE,
+            Object result = JOptionPane.showInputDialog(Elements.this, "Артикул в системе профилей", "Сообщение", JOptionPane.QUESTION_MESSAGE,
                 new ImageIcon(getClass().getResource("/resource/img24/c066.gif")), pathList.toArray(), pathList.toArray()[0]);
             if (result != null || result instanceof Integer) {
                 for (int i = 0; i < pathList.size(); ++i) {
@@ -1180,7 +1180,7 @@ public class Elements extends javax.swing.JFrame {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(Elements.this, "Р’ СЃРёСЃС‚РµРјРµ РїСЂРѕС„РёР»РµР№ Р°СЂС‚РёРєСѓР» РЅРµ РЅР°Р№РґРµРЅ", "РЎРѕРѕР±С‰РµРЅРёРµ", JOptionPane.NO_OPTION);
+            JOptionPane.showMessageDialog(Elements.this, "В системе профилей артикул не найден", "Сообщение", JOptionPane.NO_OPTION);
         }
     }//GEN-LAST:event_btnFind2
 
@@ -1213,7 +1213,7 @@ public class Elements extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFind1
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        HtmlOfTable.load("Р’СЃС‚Р°РІРєРё", tab2);
+        HtmlOfTable.load("Вставки", tab2);
         ExecuteCmd.documentType(this);
     }//GEN-LAST:event_btnReport
 
@@ -1295,7 +1295,7 @@ public class Elements extends javax.swing.JFrame {
             if (record.getInt(eSystree.parent_id) == rec.getInt(eSystree.id)) {
                 path.insert(0, rec.getStr(eSystree.name) + "->");
                 if (rec.getInt(eSystree.id) != rec.getInt(eSystree.parent_id)) {
-                    findPathSystree(rec, path); //СЂРµРєСѓСЂСЃРёСЏ
+                    findPathSystree(rec, path); //рекурсия
                 }
             }
         }

@@ -8,10 +8,10 @@ import static domain.eGroups.up;
 import frames.UGui;
 
 public enum eKits implements Field {
-    up("0", "0", "0", "РљРѕРјРїР»РµРєС‚С‹", "KOMPLST"),
-    id("4", "10", "0", "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ", "id"),
-    name("12", "64", "1", "РќР°Р·РІР°РЅРёРµ РєРѕРјРїР»РµРєС‚Р°", "KNAME"), //РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ    
-    groups_id("4", "10", "0", "РљР°С‚РµРіРѕСЂРёРё", "groups_id");
+    up("0", "0", "0", "Комплекты", "KOMPLST"),
+    id("4", "10", "0", "Идентификатор", "id"),
+    name("12", "64", "1", "Название комплекта", "KNAME"), //для пользователя    
+    groups_id("4", "10", "0", "Категории", "groups_id");
    
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());

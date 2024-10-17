@@ -17,37 +17,37 @@ public class AreaDoor extends AreaSimple {
         this.owner = this;
     }
     
-    //РџРѕР»РёРіРѕРЅ СЂР°РјС‹. Р¤СѓРЅРє. РІС‹РїРѕРЅСЏРµС‚СЃСЏ РїРѕСЃР»Рµ СЃРѕР·РґР°РЅРёСЏ СЂР°Рј РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+    //Полигон рамы. Функ. выпоняется после создания рам конструкции
     @Override
     public void setLocation() {
         try {
             ArrayList<Coordinate> coo = new ArrayList<Coordinate>();
             Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
 
-            //Р’РµСЂС€РёРЅС‹ СЂР°РјС‹
+            //Вершины рамы
             this.frames.forEach(frame -> coo.add(new Coordinate(frame.x1(), frame.y1(), frame.id)));
             coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
 
-            //Рђrea СЂР°РјС‹
+            //Аrea рамы
             Polygon geo1 = gf.createPolygon(coo.toArray(new Coordinate[0]));                      
             Polygon geo2 = buffer(geo1, this.frames, 0);                     
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:AreaDoor.setLocation" + toString() + e);
+            System.err.println("Ошибка:AreaDoor.setLocation" + toString() + e);
         }
     }
 
-    //L - СЃРѕРµРґРёРЅРµРЅРёСЏ
+    //L - соединения
     @Override
     public void addJoining() {
         try {
             winc.listJoin.clear();
 
-            super.addJoining(); //T - СЃРѕРµРґРёРЅРµРЅРёСЏ
+            super.addJoining(); //T - соединения
 
-            //L - СЃРѕРµРґРёРЅРµРЅРёСЏ
-            for (int i = 0; i < this.frames.size(); i++) { //С†РёРєР» РїРѕ СЃС‚РѕСЂРѕРЅР°Рј СЂР°РјС‹
+            //L - соединения
+            for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам рамы
                 ElemFrame nextFrame = (ElemFrame) this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1);
                 winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.ANGL, this.frames.get(i), nextFrame));
             }

@@ -1,5 +1,5 @@
 /*
- * РЎРІСЏР·С‹РІР°РЅРёРµ Рё С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ РїРѕР»РµР№ JTextField СЃ РјРѕРґРµР»СЊСЋ РґР°РЅРЅС‹С…
+ * Связывание и форматирование полей JTextField с моделью данных
  */
 package frames.swing;
 
@@ -25,7 +25,7 @@ import javax.swing.text.PlainDocument;
 
 /**
  * <p>
- * Р’РёР·СѓР°Р»РёР·Р°С†РёСЏ РїРѕР»РµР№ </p>
+ * Визуализация полей </p>
  */
 public class TableFieldFormat {
 
@@ -34,28 +34,28 @@ public class TableFieldFormat {
     private HashMap<JTextComponent, Field> mapTxt = new HashMap(16);
     public static boolean update = false;
 
-    //РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+    //Конструктор
     public TableFieldFormat(JTree comp) {
         this.comp = comp;
     }
 
-    //РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+    //Конструктор
     public TableFieldFormat(JTable comp) {
         this.comp = comp;
         this.query = ((DefTableModel) comp.getModel()).getQuery();
     }
 
-    //РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+    //Конструктор
     public TableFieldFormat(JTable comp, Query query) {
         this.comp = comp;
         this.query = query;
     }
 
-    //Р”РѕР±Р°РІРёС‚СЊ РєРѕРјРїРѕРЅРµРЅС‚ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ
+    //Добавить компонент отображения
     public void add(Field field, JTextComponent jtxt) {
         mapTxt.put(jtxt, field);
 
-        if (field.meta().edit() == false) { //РµСЃР»Рё СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ Р·Р°РїСЂРµС‰РµРЅРѕ
+        if (field.meta().edit() == false) { //если редактирование запрещено
             jtxt.setEditable(false);
             jtxt.setBackground(new java.awt.Color(255, 255, 255));
         } else {
@@ -71,14 +71,14 @@ public class TableFieldFormat {
 
                     @Override
                     public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-                        if (string != null && string.length() > 1 || UCom.check(string, pattern)) { //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                        if (string != null && string.length() > 1 || UCom.check(string, pattern)) { //проверка на коррекность ввода
                             super.insertString(fb, offset, string, attr);
                         }
                     }
 
                     @Override
                     public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String string, AttributeSet attrs) throws BadLocationException {
-                        if (string != null && string.length() > 1 || UCom.check(string, pattern)) {  //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                        if (string != null && string.length() > 1 || UCom.check(string, pattern)) {  //проверка на коррекность ввода
                             super.replace(fb, offset, length, string, attrs);
                         }
                     }
@@ -88,7 +88,7 @@ public class TableFieldFormat {
         }
     }
 
-    //РћС‡РёСЃС‚РёС‚СЊ С‚РµРєСЃС‚
+    //Очистить текст
     public void clear() {
         try {
             update = false;
@@ -107,7 +107,7 @@ public class TableFieldFormat {
         }
     }
 
-    //Р—Р°РіСЂСѓР·РёС‚СЊ РґР°РЅРЅС‹Рµ РІ РєРѕРјРїРѕРЅРµРЅС‚С‹
+    //Загрузить данные в компоненты
     public void load() {
         try {
             if (comp instanceof JTable) {
@@ -128,11 +128,11 @@ public class TableFieldFormat {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:TableFieldFormat.load1() " + e);
+            System.err.println("Ошибка:TableFieldFormat.load1() " + e);
         }
     }
 
-    //Р—Р°РіСЂСѓР·РёС‚СЊ РґР°РЅРЅС‹Рµ РІ РєРѕРјРїРѕРЅРµРЅС‚С‹
+    //Загрузить данные в компоненты
     public void load(Integer index) {
         try {
             update = false;
@@ -149,7 +149,7 @@ public class TableFieldFormat {
                 update = true;
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:TableFieldFormat.load2() " + e);
+            System.err.println("Ошибка:TableFieldFormat.load2() " + e);
         }
     }
 
@@ -178,11 +178,11 @@ public class TableFieldFormat {
             jtxt.getCaret().setDot(1);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:TableFieldFormat.setText() " + e);
+            System.err.println("Ошибка:TableFieldFormat.setText() " + e);
         }
     }
 
-//Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ
+//Редактирование
     class DocListiner implements DocumentListener, ActionListener {
 
         private JTextComponent jtxt;
@@ -207,7 +207,7 @@ public class TableFieldFormat {
             fieldUpdate();
         }
 
-        //РџСЂРё СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРёРё РѕРґРЅРѕРіРѕ РёР· РїРѕР»РµР№
+        //При редактированиии одного из полей
         public void fieldUpdate() {
             try {
                 if (update == true) {
@@ -236,7 +236,7 @@ public class TableFieldFormat {
                     }
                 }
             } catch (Exception e) {
-                System.err.println("РћС€РёР±РєР°:TableFieldFormat.DocListiner.fieldUpdate() " + e);
+                System.err.println("Ошибка:TableFieldFormat.DocListiner.fieldUpdate() " + e);
             }
         }
     }

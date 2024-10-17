@@ -9,13 +9,13 @@ import frames.UGui;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 
-//РќРµ РјРµРЅСЏС‚СЊ РёРЅРґРµРєСЃ РїРѕР»СЏ
+//Не менять индекс поля
 public enum eJoinpar2 implements Field {
-    up("0", "0", "0", "РџР°СЂР°РјРµС‚СЂС‹ СЃРїРµС†РёС„РёРєР°С†РёР№ РІР°СЂРёР°РЅС‚РѕРІ", "PARCONS"),
-    id("4", "10", "0", "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ", "id"),
-    text("12", "64", "1", "Р—РЅР°С‡РµРЅРёСЏ РїР°СЂР°РјРµС‚СЂР°", "PTEXT"),
-    groups_id("4", "10", "0", "РќР°Р·РІР°РЅРёРµ РїР°СЂР°РјРµС‚СЂР°", "PNUMB"),
-    joindet_id("4", "10", "1", "Р”РµС‚Р°Р»РёР·Р°С†РёСЏ", "joindet_id");
+    up("0", "0", "0", "Параметры спецификаций вариантов", "PARCONS"),
+    id("4", "10", "0", "Идентификатор", "id"),
+    text("12", "64", "1", "Значения параметра", "PTEXT"),
+    groups_id("4", "10", "0", "Название параметра", "PNUMB"),
+    joindet_id("4", "10", "1", "Детализация", "joindet_id");
 
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());

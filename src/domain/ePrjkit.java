@@ -14,20 +14,20 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 public enum ePrjkit implements Field {
-    up("0", "0", "0", "РљРѕРјРїР»РµРєС‚С‹ РёР·РґРµР»РёСЏ", "EMPTY"),
-    id("4", "10", "0", "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ", "id"),
-    numb("8", "15", "1", "РљРѕР»РёС‡РµСЃС‚РІРѕ", "numb"),
-    width("8", "15", "1", "Р”Р»РёРЅР°", "width"),
-    height("8", "15", "1", "РЁРёСЂРёРЅР°", "height"),
-    color1_id("4", "10", "1", "РўРµРєСЃС‚СѓСЂР°", "color1_id"),
-    color2_id("4", "10", "1", "РўРµРєСЃС‚СѓСЂР°", "color2_id"),
-    color3_id("4", "10", "1", "РўРµРєСЃС‚СѓСЂР°", "color3_id"),
-    angl1("8", "15", "1", "РЈРіРѕР»", "angl1"),
-    angl2("8", "15", "1", "РЈРіРѕР»", "angl2"),
-    flag("5", "5", "1", "Р¤Р»Р°Рі РѕСЃРЅ-РіРѕ СЌР»РµРј. РєРѕРјРїР»РµРєС‚Р°", "flag"),
-    artikl_id("4", "10", "0", "РђСЂС‚РёРєСѓР»", "artikl_id"),
-    prjprod_id("4", "10", "1", "РР·РґРµР»РёРµ", "prjprod_id"),
-    project_id("4", "10", "0", "РџСЂРѕРµРєС‚", "project_id"); //РїРѕ РёРґРµРµ Р»РёС€РЅРµРµ РїРѕР»Рµ
+    up("0", "0", "0", "Комплекты изделия", "EMPTY"),
+    id("4", "10", "0", "Идентификатор", "id"),
+    numb("8", "15", "1", "Количество", "numb"),
+    width("8", "15", "1", "Длина", "width"),
+    height("8", "15", "1", "Ширина", "height"),
+    color1_id("4", "10", "1", "Текстура", "color1_id"),
+    color2_id("4", "10", "1", "Текстура", "color2_id"),
+    color3_id("4", "10", "1", "Текстура", "color3_id"),
+    angl1("8", "15", "1", "Угол", "angl1"),
+    angl2("8", "15", "1", "Угол", "angl2"),
+    flag("5", "5", "1", "Флаг осн-го элем. комплекта", "flag"),
+    artikl_id("4", "10", "0", "Артикул", "artikl_id"),
+    prjprod_id("4", "10", "1", "Изделие", "prjprod_id"),
+    project_id("4", "10", "0", "Проект", "project_id"); //по идее лишнее поле
 
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());

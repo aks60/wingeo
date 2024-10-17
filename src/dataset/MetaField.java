@@ -11,41 +11,41 @@ import java.util.Date;
  * @author Aksenov Sergey
  *
  * <p>
- * РњРµС‚РѕРґР°РЅРЅС‹Рµ С‚Р°Р±Р»РёС†С‹</p>
+ * Методанные таблицы</p>
  */
 public class MetaField {
 
     private static DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
-    private boolean isnull = false; //Р·Р°РїСЂРµС‚РёС‚СЊ null РІ С‚Р°Р±Р»РёС†Рµ
+    private boolean isnull = false; //запретить null в таблице
     private Field field = null; //enum
-    public String fname = null; //СЃР»СѓР¶РµР±РЅРѕРµ РґР»СЏ РїРµСЂРµРѕРїСЂРµРґРµР»РµРЅРёСЏ РёРјСЏ РїРѕР»СЏ
-    public String descr = ""; //РѕРїРёСЃР°РЅРёРµ РїРѕР»СЏ
-    private TYPE type = TYPE.OBJ; //С‚РёРї РїРѕР»СЏ
-    private Integer size = 0; //СЂР°Р·РјРµСЂ РїРѕР»СЏ
-    private Field.EDIT edit = Field.EDIT.TRUE; //Р·Р°РїСЂРµС‚РёС‚СЊ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РІ РІРёР·СѓР°Р»СЊРЅРѕРј РєРѕРјРїРѕРЅРµРЅС‚Рµ
+    public String fname = null; //служебное для переопределения имя поля
+    public String descr = ""; //описание поля
+    private TYPE type = TYPE.OBJ; //тип поля
+    private Integer size = 0; //размер поля
+    private Field.EDIT edit = Field.EDIT.TRUE; //запретить редактирование в визуальном компоненте
 
     public MetaField(Field e) {
         field = e;
         if (e instanceof Enum) {
-            this.fname = ((Enum) e).name(); //РёРјСЏ РїРѕР»СЏ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+            this.fname = ((Enum) e).name(); //имя поля по умолчанию
         }
     }
 
     public void init(Object... p) {
 
         if (p.length < 5) {
-            System.err.println("MetaField.init() - РћРЁРР‘РљРђ! РљРѕР»РёС‡РµСЃС‚РІРѕ РїР°СЂР°РјРµС‚СЂРѕРІ РјРµРЅСЊС€Рµ 4. РџРѕР»Рµ <" + p[0].toString() + ">");
+            System.err.println("MetaField.init() - ОШИБКА! Количество параметров меньше 4. Поле <" + p[0].toString() + ">");
             return;
         }
-        type(Integer.valueOf(p[Entity.type.ordinal()].toString())); //С‚РёРї РїРѕР»СЏ
+        type(Integer.valueOf(p[Entity.type.ordinal()].toString())); //тип поля
         this.size = Integer.valueOf(p[Entity.size.ordinal()].toString());
-        this.isnull = p[Entity.nullable.ordinal()].equals("1"); //СЂР°Р·СЂРµС€РµРЅРѕ null
-        this.descr = p[Entity.comment.ordinal()].toString(); //РѕРїРёСЃР°РЅРёРµ РїРѕР»СЏ 
-        this.fname = p[Entity.fname.ordinal()].toString(); //РїРµСЂРµРѕРїСЂРµРґРµР»РµРЅРёРµ РёРјРµРЅРё РїРѕР»СЏ
+        this.isnull = p[Entity.nullable.ordinal()].equals("1"); //разрешено null
+        this.descr = p[Entity.comment.ordinal()].toString(); //описание поля 
+        this.fname = p[Entity.fname.ordinal()].toString(); //переопределение имени поля
     }
 
     /**
-     * РџСЂРѕРІРµСЂРєР° РЅСѓР¶РЅР° РґР»СЏ РєРѕСЂСЂРµРєС‚РЅРѕРіРѕ РІРІРѕРґР° РґР°РЅРЅС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј
+     * Проверка нужна для корректного ввода данных пользователем
      */
     public String validateField(Object value) {
 
@@ -56,7 +56,7 @@ public class MetaField {
             if (value == null && isnull == true) {
                 return null;
             } else if (value == null && isnull == false) {
-                return "РџРѕР»Рµ <" + descr + "> РґРѕР»Р¶РЅРѕ РёРјРµС‚СЊ Р·РЅР°С‡РµРЅРёРµ";
+                return "Поле <" + descr + "> должно иметь значение";
             } else if (type.type == Integer.class) {
                 Integer.valueOf(String.valueOf(value));
             } else if (type.type == Double.class) {
@@ -72,16 +72,16 @@ public class MetaField {
                     try {
                         dateFormat.parse(value.toString());
                     } catch (ParseException e) {
-                        return "РџРѕР»Рµ <" + descr + "> Р·Р°РїРѕР»РЅРµРЅРѕ РЅРµ РєРѕСЂСЂРµРєС‚РЅРѕ";
+                        return "Поле <" + descr + "> заполнено не корректно";
                     }
 
                 }
             } else if (value.toString().length() > size) {
-                return "РџРѕР»Рµ <" + descr + "> РЅРµ РґРѕР»Р¶РЅРѕ РёРјРµС‚СЊ Р±РѕР»СЊС€Рµ "
-                        + String.valueOf(size) + " Р·РЅР°РєРѕРІ";
+                return "Поле <" + descr + "> не должно иметь больше "
+                        + String.valueOf(size) + " знаков";
             }
         } catch (Exception e) {
-            return "РџРѕР»Рµ <" + descr + "> Р·Р°РїРѕР»РЅРµРЅРѕ РЅРµ РєРѕСЂСЂРµРєС‚РЅРѕ";
+            return "Поле <" + descr + "> заполнено не корректно";
         }
         return null;
     }

@@ -23,7 +23,7 @@ public class Canvas extends javax.swing.JPanel {
 
     public static double translate[] = {2, 2};
     public Wincalc winc = null;
-    public static double margin = 200; //РґР»СЏ СЂР°Р·РјРµСЂРЅС‹С… Р»РёРЅРёР№ 
+    public static double margin = 200; //для размерных линий 
 
     public Canvas() {
         initComponents();
@@ -72,7 +72,7 @@ public class Canvas extends javax.swing.JPanel {
         this.requestFocus();
     }
 
-    //РџСЂРѕСЂРёСЃРѕРІРєР° РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+    //Прорисовка конструкции
     public void draw() {
         if (winc != null) {
             repaint();
@@ -98,7 +98,7 @@ public class Canvas extends javax.swing.JPanel {
             winc.gc2d = (Graphics2D) g;
             winc.gc2d.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, UCom.scaleFont(winc.scale)));
             winc.gc2d.setColor(getBackground());
-            winc.gc2d.setStroke(new BasicStroke(2)); //С‚РѕР»С‰РёРЅР° Р»РёРЅРёРё
+            winc.gc2d.setStroke(new BasicStroke(2)); //толщина линии
             winc.gc2d.translate(translate[0], translate[1]);
             winc.scale = scale();
             winc.gc2d.scale(winc.scale, winc.scale);
@@ -111,7 +111,7 @@ public class Canvas extends javax.swing.JPanel {
         }
     }
 
-    //РЎРѕР·РґР°РЅРёРµ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+    //Создание изображения конструкции
     public static ImageIcon createIcon(Wincalc winc, int length) {
         try {
             BufferedImage bi = new BufferedImage(length, length, BufferedImage.TYPE_INT_RGB);
@@ -123,7 +123,7 @@ public class Canvas extends javax.swing.JPanel {
                     ? length / (height + 200) : length / (width + 200);
             winc.gc2d.scale(winc.scale, winc.scale);
             //winc.upgrade();
-            winc.draw(); //СЂРёСЃСѓСЋ РєРѕРЅСЃС‚СЂСѓРєС†РёСЋ
+            winc.draw(); //рисую конструкцию
             return new ImageIcon(bi);
 
         } catch (Exception e) {

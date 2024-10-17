@@ -11,16 +11,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum eSysfurn implements Field {
-    up("0", "0", "0", "Р¤СѓСЂРЅРёС‚СѓСЂС‹ СЃРёСЃС‚РµРјС‹ РїСЂРѕС„РёР»РµР№", "SYSPROS"),
-    id("4", "10", "0", "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ", "id"),
-    npp("5", "5", "1", "РџСЂРёРѕСЂРёС‚РµС‚ РѕР±РІСЏР·РєРё", "FPORN"),
-    replac("5", "5", "1", "Р—Р°РјРµРЅР°", "FWHAT"),
-    side_open("5", "10", "1", "РЎС‚РѕСЂРѕРЅР° РѕС‚РєСЂС‹РІР°РЅРёСЏ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ", "side_open"),
-    hand_pos("5", "10", "1", "Р Р°СЃРїРѕР»РѕР¶РµРЅРёРµ СЂСѓС‡РєРё РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ", "hand_pos"),
-    furniture_id("4", "10", "1", "Р¤СѓСЂРЅРёС‚СѓСЂР°", "furniture_id"),
-    artikl_id1("4", "10", "1", "РђСЂС‚РёРєСѓР» СЂСѓС‡РєРё РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ", "artikl_id1"),
-    artikl_id2("4", "10", "1", "РђСЂС‚РёРєРєСѓР» РїРѕРґРІРµСЃР° (РїРµС‚Р»Рё) РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ", "artikl_id2"),
-    systree_id("4", "10", "0", "РЎРёСЃС‚РµРјР° РїСЂРѕС„РёР»РµР№", "systree_id");
+    up("0", "0", "0", "Фурнитуры системы профилей", "SYSPROS"),
+    id("4", "10", "0", "Идентификатор", "id"),
+    npp("5", "5", "1", "Приоритет обвязки", "FPORN"),
+    replac("5", "5", "1", "Замена", "FWHAT"),
+    side_open("5", "10", "1", "Сторона открывания по умолчанию", "side_open"),
+    hand_pos("5", "10", "1", "Расположение ручки по умолчанию", "hand_pos"),
+    furniture_id("4", "10", "1", "Фурнитура", "furniture_id"),
+    artikl_id1("4", "10", "1", "Артикул ручки по умолчанию", "artikl_id1"),
+    artikl_id2("4", "10", "1", "Артиккул подвеса (петли) по умолчанию", "artikl_id2"),
+    systree_id("4", "10", "0", "Система профилей", "systree_id");
    
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());
@@ -39,7 +39,7 @@ public enum eSysfurn implements Field {
 
     public static Query data() {
         if (query.size() == 0) {
-            query.select(up, "order by", npp, ",", id); //id - С‚.Рє. РїСЂРё РєРѕРЅРІРµСЂС‚РёСЂРѕРІ. РЅР°СЂСѓС€. РїРѕСЂСЏРґРѕРє СЃР»РµРґ.
+            query.select(up, "order by", npp, ",", id); //id - т.к. при конвертиров. наруш. порядок след.
             Query.listOpenTable.add(query);
         }
         return query;
@@ -69,7 +69,7 @@ public enum eSysfurn implements Field {
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(systree_id) == _nuni).findFirst().orElse(up.newRecord(Query.SEL));
         }
-        Query recordList = new Query(values()).select(up, "where", systree_id, "=", _nuni, "order by", npp, ",", id); //id - С‚.Рє. РїСЂРё РєРѕРІРµСЂС‚РёСЂРѕРІ. РЅР°СЂСѓС€. РїРѕСЂСЏРґРѕРє СЃР»РµРґ.
+        Query recordList = new Query(values()).select(up, "where", systree_id, "=", _nuni, "order by", npp, ",", id); //id - т.к. при ковертиров. наруш. порядок след.
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
     

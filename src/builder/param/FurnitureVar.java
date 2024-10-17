@@ -15,7 +15,7 @@ import enums.LayoutKnob;
 import enums.Type;
 import org.locationtech.jts.geom.Envelope;
 
-//Ð¤ÑƒÑ€Ð½Ð¸Ñ‚ÑƒÑ€Ð°
+//Ôóðíèòóðà
 public class FurnitureVar extends Par5s {
 
     public FurnitureVar(Wincalc winc) {
@@ -28,7 +28,7 @@ public class FurnitureVar extends Par5s {
         if (filterParamDef(paramList) == false) {
             return false;
         }
-        //Ð¦Ð¸ÐºÐ» Ð¿Ð¾ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð°Ð¼ Ñ„ÑƒÑ€Ð½Ð¸Ñ‚ÑƒÑ€Ñ‹
+        //Öèêë ïî ïàðàìåòðàì ôóðíèòóðû
         for (Record rec : paramList) {
             if (check(elem5e, rec) == false) {
                 return false;
@@ -42,20 +42,20 @@ public class FurnitureVar extends Par5s {
         try {
             switch (grup) {
 
-                case 21001:  //Ð¤Ð¾Ñ€Ð¼Ð° ÐºÐ¾Ð½Ñ‚ÑƒÑ€Ð° 
-                    //"ÐŸÑ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¾Ðµ", "ÐÐµ Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¾Ðµ", "ÐÐµ Ð°Ñ€Ð¾Ñ‡Ð½Ð¾Ðµ", "ÐÑ€Ð¾Ñ‡Ð½Ð¾Ðµ" (Type.AREA - Ð³Ð»ÑƒÑ…Ð°Ñ€ÑŒ)
-                    if ("Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð°Ñ".equals(rec.getStr(TEXT)) && Type.RECTANGL.equals(winc.root.type) == false
+                case 21001:  //Ôîðìà êîíòóðà 
+                    //"Ïðÿìîóãîëüíîå", "Íå ïðÿìîóãîëüíîå", "Íå àðî÷íîå", "Àðî÷íîå" (Type.AREA - ãëóõàðü)
+                    if ("ïðÿìîóãîëüíàÿ".equals(rec.getStr(TEXT)) && Type.RECTANGL.equals(winc.root.type) == false
                             && Type.AREA.equals(winc.root.type) == false && Type.STVORKA.equals(winc.root.type) == false) {
                         return false;
-                    } else if ("Ñ‚Ñ€Ð°Ð¿ÐµÑ†Ð¸ÐµÐ²Ð¸Ð´Ð½Ð°Ñ".equals(rec.getStr(TEXT)) && Type.TRAPEZE.equals(winc.root.type) == false) {
+                    } else if ("òðàïåöèåâèäíàÿ".equals(rec.getStr(TEXT)) && Type.TRAPEZE.equals(winc.root.type) == false) {
                         return false;
-                    } else if ("Ð°Ñ€Ð¾Ñ‡Ð½Ð°Ñ".equals(rec.getStr(TEXT)) && Type.ARCH.equals(winc.root.type) == false) {
+                    } else if ("àðî÷íàÿ".equals(rec.getStr(TEXT)) && Type.ARCH.equals(winc.root.type) == false) {
                         return false;
-                    } else if ("Ð½Ðµ Ð°Ñ€Ð¾Ñ‡Ð½Ð°Ñ".equals(rec.getStr(TEXT)) && Type.ARCH.equals(winc.root.type) == true) {
+                    } else if ("íå àðî÷íàÿ".equals(rec.getStr(TEXT)) && Type.ARCH.equals(winc.root.type) == true) {
                         return false;
                     }
                     break;
-                case 21004: //ÐÑ€Ñ‚Ð¸ÐºÑƒÐ» ÑÑ‚Ð²Ð¾Ñ€ÐºÐ¸ 
+                case 21004: //Àðòèêóë ñòâîðêè 
                 {
                     ElemSimple stv = winc.listElem.filter(Type.STVORKA_SIDE).get(0);
                     if (stv.artiklRecAn.getStr(eArtikl.code).equals(rec.getStr(TEXT)) == false) {
@@ -63,20 +63,20 @@ public class FurnitureVar extends Par5s {
                     }
                 }
                 break;
-                case 21005: //ÐÑ€Ñ‚Ð¸ÐºÑƒÐ» Ð·Ð°Ð¿Ð¾Ð»Ð½ÐµÐ½Ð¸Ñ Ð¿Ð¾ ÑƒÐ¼Ð¾Ð»Ñ‡Ð°Ð½Ð¸ÑŽ 
+                case 21005: //Àðòèêóë çàïîëíåíèÿ ïî óìîë÷àíèþ 
                 {
-                    Record sysreeRec = eSystree.find(winc.nuni); //Ð¿Ð¾ ÑƒÐ¼Ð¾Ð»Ñ‡Ð°Ð½Ð¸ÑŽ ÑÑ‚ÐµÐºÐ»Ð¾Ð¿Ð°ÐºÐµÑ‚
+                    Record sysreeRec = eSystree.find(winc.nuni); //ïî óìîë÷àíèþ ñòåêëîïàêåò
                     if (rec.getStr(TEXT).equals(sysreeRec.getStr(eSystree.glas)) == false) {
                         return false;
                     }
                 }
                 break;
-                case 21010: //ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ðµ Ð´Ð»Ð¸Ð½Ñ‹ ÑÑ‚Ð¾Ñ€Ð¾Ð½Ñ‹, Ð¼Ð¼ 
+                case 21010: //Îãðàíè÷åíèå äëèíû ñòîðîíû, ìì 
                         if (UPar.is_21010_21011_21012_21013(rec.getStr(TEXT), elem5e) == false) {
                             return false;
                         }
                     break;
-                case 21011: //ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ðµ Ð´Ð»Ð¸Ð½Ñ‹ Ñ€ÑƒÑ‡ÐºÐ° ÐºÐ¾Ð½ÑÑ‚Ð°Ð½Ñ‚Ð°, Ð¼Ð¼ 
+                case 21011: //Îãðàíè÷åíèå äëèíû ðó÷êà êîíñòàíòà, ìì 
                 {
                     AreaStvorka stv = (AreaStvorka) elem5e.owner;
                     if (stv.knobLayout == LayoutKnob.CONST) {
@@ -86,7 +86,7 @@ public class FurnitureVar extends Par5s {
                     }
                 }
                 break;
-                case 21012: //ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ðµ Ð´Ð»Ð¸Ð½Ñ‹ Ñ€ÑƒÑ‡ÐºÐ° Ð²Ð°Ñ€Ð¸Ð°Ñ†Ð¸Ð¾Ð½, Ð¼Ð¼ 
+                case 21012: //Îãðàíè÷åíèå äëèíû ðó÷êà âàðèàöèîí, ìì 
                 {
                     AreaStvorka stv = (AreaStvorka) elem5e.owner;
                     if (stv.knobLayout == LayoutKnob.VAR) {
@@ -96,7 +96,7 @@ public class FurnitureVar extends Par5s {
                     }
                 }
                 break;
-                case 21013: //ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ðµ Ð´Ð»Ð¸Ð½Ñ‹ Ñ€ÑƒÑ‡ÐºÐ° Ð¿Ð¾ ÑÐµÑ€ÐµÐ´Ð¸Ð½Ðµ, Ð¼Ð¼ 
+                case 21013: //Îãðàíè÷åíèå äëèíû ðó÷êà ïî ñåðåäèíå, ìì 
                 {
                     AreaStvorka stv = (AreaStvorka) elem5e.owner;
                     if (stv.knobLayout == LayoutKnob.MIDL) {
@@ -106,7 +106,7 @@ public class FurnitureVar extends Par5s {
                     }
                 }
                 break;
-                case 21016:  //Ð”Ð¾Ð¿ÑƒÑÑ‚Ð¸Ð¼Ð¾Ðµ ÑÐ¾Ð¾Ñ‚Ð½Ð¾ÑˆÐµÐ½Ð¸Ðµ Ð³Ð°Ð±Ð°Ñ€Ð¸Ñ‚Ð¾Ð² Ð±/Ð¼) 
+                case 21016:  //Äîïóñòèìîå ñîîòíîøåíèå ãàáàðèòîâ á/ì) 
                     Envelope env = elem5e.owner.area.getGeometryN(0).getEnvelopeInternal();
                     double max = (env.getWidth() > env.getHeight()) ? env.getWidth() : env.getHeight();
                     double min = (env.getWidth() < env.getHeight()) ? env.getWidth() : env.getHeight();
@@ -114,7 +114,7 @@ public class FurnitureVar extends Par5s {
                         return false;
                     }
                     break;
-                case 21037: //Ð”Ð¸Ð°Ð¿Ð°Ð·Ð¾Ð½ Ð²Ñ‹ÑÐ¾Ñ‚Ñ‹ Ð²Ð°Ñ€Ð¸Ð°Ñ†Ð¸Ð¾Ð½Ð½Ð¾Ð¹ Ñ€ÑƒÑ‡ÐºÐ¸, Ð¼Ð¼ 
+                case 21037: //Äèàïàçîí âûñîòû âàðèàöèîííîé ðó÷êè, ìì 
                 {
                     AreaStvorka stv = (AreaStvorka) elem5e.owner;
                     if (stv.knobLayout == LayoutKnob.VAR) {
@@ -125,27 +125,27 @@ public class FurnitureVar extends Par5s {
                     }
                 }
                 break;
-                case 21040:  //ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ðµ ÑƒÐ³Ð»Ð°
+                case 21040:  //Îãðàíè÷åíèå óãëà
                     if (UCom.containsNumbJust(rec.getStr(TEXT), UGeo.anglHor(elem5e.x1(), elem5e.y1(), elem5e.x2(), elem5e.y2())) == false) {
                         return false;
                     }
                     break;
-                case 21050:  //ÐžÑ€Ð¸ÐµÐ½Ñ‚Ð°Ñ†Ð¸Ñ ÑÑ‚Ð¾Ñ€Ð¾Ð½Ñ‹, Â° 
+                case 21050:  //Îðèåíòàöèÿ ñòîðîíû, ° 
                     if (UCom.containsNumbJust(rec.getStr(TEXT), UGeo.anglHor(elem5e.x1(), elem5e.y1(), elem5e.x2(), elem5e.y2())) == false) {
                         return false;
                     }
                     break;
-                case 21085:  //ÐÐ°Ð´Ð¿Ð¸ÑÑŒ Ð½Ð° ÑÑÐºÐ¸Ð·Ðµ 
+                case 21085:  //Íàäïèñü íà ýñêèçå 
                     elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 21088:  //Ð£Ñ€Ð°Ð²Ð½Ð¸Ð²Ð°Ð½Ð¸Ðµ ÑÐºÐ»Ð°Ð´Ð½Ñ‹Ñ… ÑÑ‚Ð²Ð¾Ñ€Ð¾Ðº 
+                case 21088:  //Óðàâíèâàíèå ñêëàäíûõ ñòâîðîê 
                     message(rec.getInt(GRUP));
                     break;
                 default:
-                    assert !(grup > 0 && grup < 50000) : "ÐšÐ¾Ð´ " + grup + "  Ð½Ðµ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚Ð°Ð½!!!";
+                    assert !(grup > 0 && grup < 50000) : "Êîä " + grup + "  íå îáðàáîòàí!!!";
             }
         } catch (Exception e) {
-            System.err.println("ÐžÑˆÐ¸Ð±ÐºÐ°: param.FurnitureVar.check()  parametr=" + grup + "    " + e);
+            System.err.println("Îøèáêà: param.FurnitureVar.check()  parametr=" + grup + "    " + e);
             return false;
         }
         return true;

@@ -34,7 +34,7 @@ public class Partner extends javax.swing.JFrame {
     private ListenerRecord listener = null;
     private Query qPrjpart = new Query(ePrjpart.values(), eSysuser.values());
     private TableFieldFormat rsv = null;
-    private String arrCateg[] = {"Р·Р°РєР°Р·С‡РёРє", "РїРѕСЃС‚Р°РІС€РёРє", "РѕС„РёСЃ", "РґРёР»РµСЂ", "СЃРїРµС†РёР°Р»СЊРЅС‹Р№"};
+    private String arrCateg[] = {"заказчик", "поставшик", "офис", "дилер", "специальный"};
 
     public Partner() {
         initComponents();
@@ -86,8 +86,8 @@ public class Partner extends javax.swing.JFrame {
         new DefTableModel(tab1, qPrjpart, ePrjpart.category, ePrjpart.partner, ePrjpart.login, ePrjpart.flag2);
 
         UGui.buttonCellEditor(tab1, 0).addActionListener(event -> {
-            Object result = JOptionPane.showInputDialog(Partner.this, "Р’С‹Р±РµСЂРёС‚Рµ РєР°С‚РµРіРѕСЂРёСЋ",
-                    "РР·РјРµРЅРµРЅРёРµ РєР°С‚РµРіРѕСЂРёРё РєРѕРЅС‚СЂР°РіРµРЅС‚Р°", JOptionPane.QUESTION_MESSAGE, null, arrCateg, arrCateg[0]);
+            Object result = JOptionPane.showInputDialog(Partner.this, "Выберите категорию",
+                    "Изменение категории контрагента", JOptionPane.QUESTION_MESSAGE, null, arrCateg, arrCateg[0]);
             if (result != null) {
                 UGui.stopCellEditing(tab1);
                 qPrjpart.set(result, UGui.getIndexRec(tab1), ePrjpart.category);
@@ -207,7 +207,7 @@ public class Partner extends javax.swing.JFrame {
 
         mInsert.setFont(frames.UGui.getFont(1,0));
         mInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        mInsert.setText("Р”РѕР±Р°РІРёС‚СЊ");
+        mInsert.setText("Добавить");
         mInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -217,7 +217,7 @@ public class Partner extends javax.swing.JFrame {
 
         mDelit.setFont(frames.UGui.getFont(1,0));
         mDelit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        mDelit.setText("РЈРґР°Р»РёС‚СЊ");
+        mDelit.setText("Удалить");
         mDelit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -226,7 +226,7 @@ public class Partner extends javax.swing.JFrame {
         ppmCrud.add(mDelit);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РљРѕРЅС‚СЂР°РіРµРЅС‚С‹");
+        setTitle("Контрагенты");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 500));
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -242,7 +242,7 @@ public class Partner extends javax.swing.JFrame {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -257,7 +257,7 @@ public class Partner extends javax.swing.JFrame {
         });
 
         btnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        btnDel.setToolTipText(bundle.getString("РЈРґР°Р»РёС‚СЊ")); // NOI18N
+        btnDel.setToolTipText(bundle.getString("Удалить")); // NOI18N
         btnDel.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnDel.setFocusable(false);
         btnDel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -273,7 +273,7 @@ public class Partner extends javax.swing.JFrame {
         });
 
         btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        btnIns.setToolTipText(bundle.getString("Р”РѕР±Р°РІРёС‚СЊ")); // NOI18N
+        btnIns.setToolTipText(bundle.getString("Добавить")); // NOI18N
         btnIns.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnIns.setFocusable(false);
         btnIns.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -289,7 +289,7 @@ public class Partner extends javax.swing.JFrame {
         });
 
         btnChoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c044.gif"))); // NOI18N
-        btnChoice.setToolTipText(bundle.getString("Р’С‹Р±СЂР°С‚СЊ")); // NOI18N
+        btnChoice.setToolTipText(bundle.getString("Выбрать")); // NOI18N
         btnChoice.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnChoice.setFocusable(false);
         btnChoice.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -305,7 +305,7 @@ public class Partner extends javax.swing.JFrame {
         });
 
         btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c042.gif"))); // NOI18N
-        btnRemove.setToolTipText(bundle.getString("РћС‡РёСЃС‚РёС‚СЊ")); // NOI18N
+        btnRemove.setToolTipText(bundle.getString("Очистить")); // NOI18N
         btnRemove.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnRemove.setFocusable(false);
         btnRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -326,7 +326,7 @@ public class Partner extends javax.swing.JFrame {
         });
 
         btnMoveU.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c051.gif"))); // NOI18N
-        btnMoveU.setToolTipText(bundle.getString("РџРµСЂРµРјРµСЃС‚РёС‚СЊ РІРІРµСЂС…")); // NOI18N
+        btnMoveU.setToolTipText(bundle.getString("Переместить вверх")); // NOI18N
         btnMoveU.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnMoveU.setFocusable(false);
         btnMoveU.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -342,7 +342,7 @@ public class Partner extends javax.swing.JFrame {
         });
 
         btnMoveD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c052.gif"))); // NOI18N
-        btnMoveD.setToolTipText(bundle.getString("РџРµСЂРµРјРµСЃС‚РёС‚СЊ РІРЅРёР·")); // NOI18N
+        btnMoveD.setToolTipText(bundle.getString("Переместить вниз")); // NOI18N
         btnMoveD.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnMoveD.setFocusable(false);
         btnMoveD.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -405,7 +405,7 @@ public class Partner extends javax.swing.JFrame {
         pan1.setPreferredSize(new java.awt.Dimension(540, 504));
         pan1.setLayout(new java.awt.BorderLayout());
 
-        scr1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "РЎРїРёСЃРѕРє РєРѕРЅС‚СЂР°РіРµРЅС‚РѕРІ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Список контрагентов", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
 
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
@@ -413,7 +413,7 @@ public class Partner extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РљР°С‚РµРіРѕСЂРёСЏ", "РљРѕРЅС‚СЂР°РіРµРЅС‚", "User", "РћСЂРіР°РЅРёР·Р°С†РёСЏ", "ID"
+                "Категория", "Контрагент", "User", "Организация", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -462,11 +462,11 @@ public class Partner extends javax.swing.JFrame {
         pan2.setPreferredSize(new java.awt.Dimension(260, 300));
         pan2.setLayout(new javax.swing.BoxLayout(pan2, javax.swing.BoxLayout.Y_AXIS));
 
-        pan7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "РњРµРЅРµРґР¶РµСЂ", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        pan7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Менеджер", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
         pan7.setPreferredSize(new java.awt.Dimension(243, 80));
 
         lab54.setFont(frames.UGui.getFont(0,0));
-        lab54.setText("Р¤РРћ");
+        lab54.setText("ФИО");
         lab54.setToolTipText("");
         lab54.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab54.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -479,7 +479,7 @@ public class Partner extends javax.swing.JFrame {
         txt19.setPreferredSize(new java.awt.Dimension(200, 18));
 
         lab56.setFont(frames.UGui.getFont(0,0));
-        lab56.setText("РўРµР»РµС„РѕРЅ");
+        lab56.setText("Телефон");
         lab56.setToolTipText("");
         lab56.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab56.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -551,7 +551,7 @@ public class Partner extends javax.swing.JFrame {
         pan4.setName(""); // NOI18N
 
         lab47.setFont(frames.UGui.getFont(0,0));
-        lab47.setText("РђРґСЂРµСЃ 1РіРѕ СѓСЂРѕРІРЅСЏ");
+        lab47.setText("Адрес 1го уровня");
         lab47.setToolTipText("");
         lab47.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab47.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -563,7 +563,7 @@ public class Partner extends javax.swing.JFrame {
         txt12.setPreferredSize(new java.awt.Dimension(120, 18));
 
         lab48.setFont(frames.UGui.getFont(0,0));
-        lab48.setText("РўРµР»РµС„РѕРЅ");
+        lab48.setText("Телефон");
         lab48.setToolTipText("");
         lab48.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab48.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -575,7 +575,7 @@ public class Partner extends javax.swing.JFrame {
         txt13.setPreferredSize(new java.awt.Dimension(120, 18));
 
         lab49.setFont(frames.UGui.getFont(0,0));
-        lab49.setText("РђРґСЂРµСЃ 2РіРѕ СѓСЂРѕРІРЅСЏ");
+        lab49.setText("Адрес 2го уровня");
         lab49.setToolTipText("");
         lab49.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab49.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -587,7 +587,7 @@ public class Partner extends javax.swing.JFrame {
         txt14.setPreferredSize(new java.awt.Dimension(120, 18));
 
         lab50.setFont(frames.UGui.getFont(0,0));
-        lab50.setText("РџСЂРёРјРµС‡Р°РЅРёРµ");
+        lab50.setText("Примечание");
         lab50.setToolTipText("");
         lab50.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab50.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -665,12 +665,12 @@ public class Partner extends javax.swing.JFrame {
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
-        tabb1.addTab("  Р§Р°СЃС‚РЅРѕРµ Р»РёС†Рѕ  ", pan4);
+        tabb1.addTab("  Частное лицо  ", pan4);
 
         pan3.setName(""); // NOI18N
 
         lab36.setFont(frames.UGui.getFont(0,0));
-        lab36.setText("РљРѕРЅС‚Р°РєС‚. Р»РёС†Рѕ");
+        lab36.setText("Контакт. лицо");
         lab36.setToolTipText("");
         lab36.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab36.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -682,7 +682,7 @@ public class Partner extends javax.swing.JFrame {
         txt8.setPreferredSize(new java.awt.Dimension(300, 18));
 
         lab37.setFont(frames.UGui.getFont(0,0));
-        lab37.setText("РђРґСЂРµСЃ 1РіРѕ СѓСЂРѕРІРЅ...");
+        lab37.setText("Адрес 1го уровн...");
         lab37.setToolTipText("");
         lab37.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab37.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -694,7 +694,7 @@ public class Partner extends javax.swing.JFrame {
         txt9.setPreferredSize(new java.awt.Dimension(300, 18));
 
         lab38.setFont(frames.UGui.getFont(0,0));
-        lab38.setText("РўРµР»РµС„РѕРЅ");
+        lab38.setText("Телефон");
         lab38.setToolTipText("");
         lab38.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab38.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -718,7 +718,7 @@ public class Partner extends javax.swing.JFrame {
         txt11.setPreferredSize(new java.awt.Dimension(300, 18));
 
         lab51.setFont(frames.UGui.getFont(0,0));
-        lab51.setText("РџСЂРёРјРµС‡Р°РЅРёРµ");
+        lab51.setText("Примечание");
         lab51.setToolTipText("");
         lab51.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab51.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -730,7 +730,7 @@ public class Partner extends javax.swing.JFrame {
         txt16.setPreferredSize(new java.awt.Dimension(300, 18));
 
         lab52.setFont(frames.UGui.getFont(0,0));
-        lab52.setText("РђРґСЂРµСЃ 2РіРѕ СѓСЂРѕРІРЅ...");
+        lab52.setText("Адрес 2го уровн...");
         lab52.setToolTipText("");
         lab52.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab52.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -804,17 +804,17 @@ public class Partner extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tabb1.addTab("  РћСЂРіР°РЅРёР·Р°С†РёСЏ  ", pan3);
+        tabb1.addTab("  Организация  ", pan3);
 
         pan2.add(tabb1);
 
         pan5.add(pan2, java.awt.BorderLayout.NORTH);
 
-        pan6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Р РµРєРІРёР·РёС‚С‹", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        pan6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Реквизиты", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
         pan6.setPreferredSize(new java.awt.Dimension(312, 200));
 
         lab40.setFont(frames.UGui.getFont(0,0));
-        lab40.setText("Р‘Р°РЅРє");
+        lab40.setText("Банк");
         lab40.setToolTipText("");
         lab40.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab40.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -826,7 +826,7 @@ public class Partner extends javax.swing.JFrame {
         txt1.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab41.setFont(frames.UGui.getFont(0,0));
-        lab41.setText("РРќРќ");
+        lab41.setText("ИНН");
         lab41.setToolTipText("");
         lab41.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab41.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -838,7 +838,7 @@ public class Partner extends javax.swing.JFrame {
         txt2.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab42.setFont(frames.UGui.getFont(0,0));
-        lab42.setText("Р /РЎ");
+        lab42.setText("Р/С");
         lab42.setToolTipText("");
         lab42.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab42.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -850,7 +850,7 @@ public class Partner extends javax.swing.JFrame {
         txt3.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab45.setFont(frames.UGui.getFont(0,0));
-        lab45.setText("Р‘РРљ");
+        lab45.setText("БИК");
         lab45.setToolTipText("");
         lab45.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab45.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -862,7 +862,7 @@ public class Partner extends javax.swing.JFrame {
         txt4.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab46.setFont(frames.UGui.getFont(0,0));
-        lab46.setText("Рљ/РЎ");
+        lab46.setText("К/С");
         lab46.setToolTipText("");
         lab46.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab46.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -874,7 +874,7 @@ public class Partner extends javax.swing.JFrame {
         txt5.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab43.setFont(frames.UGui.getFont(0,0));
-        lab43.setText("РљРџРџ");
+        lab43.setText("КПП");
         lab43.setToolTipText("");
         lab43.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab43.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -886,7 +886,7 @@ public class Partner extends javax.swing.JFrame {
         txt6.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab44.setFont(frames.UGui.getFont(0,0));
-        lab44.setText("РћР“Р Рќ");
+        lab44.setText("ОГРН");
         lab44.setToolTipText("");
         lab44.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab44.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -1001,7 +1001,7 @@ public class Partner extends javax.swing.JFrame {
             UGui.insertRecordCur(tab1, ePrjpart.up, (prjpartRec) -> {
                 try {
                     ResultSet rs = Conn.getConnection().createStatement()
-                            .executeQuery("SELECT current_user FROM rdb$database"); //РґС‘СЂРЅРµРј С‚РµРєСѓС‰РµРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+                            .executeQuery("SELECT current_user FROM rdb$database"); //дёрнем текущего пользователя
                     rs.next();
                     String login = rs.getString(1).trim();
                     prjpartRec.setNo(ePrjpart.login, login);
@@ -1014,7 +1014,7 @@ public class Partner extends javax.swing.JFrame {
                     //loadingData();
 
                 } catch (Exception e) {
-                    System.err.println("РћС€РёР±РєР°:Partner.btnInsert() " + e);
+                    System.err.println("Ошибка:Partner.btnInsert() " + e);
                 }
             });
         }

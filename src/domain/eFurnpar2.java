@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//РќРµ РјРµРЅСЏС‚СЊ РёРЅРґРµРєСЃ РїРѕР»СЏ
+//Не менять индекс поля
 public enum eFurnpar2 implements Field {
-    up("0", "0", "0", "РџР°СЂР°Рј.СЃРїРµС†РёС„РёРєР°С†РёР№ С„СѓСЂРЅРёС‚СѓСЂС‹", "PARFURS"),
-    id("4", "10", "0", "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ", "id"),
-    text("12", "64", "1", "Р—РЅР°С‡РµРЅРёСЏ РїР°СЂР°РјРµС‚СЂ", "PTEXT"),
-    groups_id("4", "10", "0", "РќР°Р·РІР°РЅРёРµ РїР°СЂР°РјРµС‚СЂР°", "PNUMB"),
-    furndet_id("4", "10", "0", "Р”РµС‚Р°Р»РёР·Р°С†РёСЏ", "furndet_id");
+    up("0", "0", "0", "Парам.спецификаций фурнитуры", "PARFURS"),
+    id("4", "10", "0", "Идентификатор", "id"),
+    text("12", "64", "1", "Значения параметр", "PTEXT"),
+    groups_id("4", "10", "0", "Название параметра", "PNUMB"),
+    furndet_id("4", "10", "0", "Детализация", "furndet_id");
     
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());

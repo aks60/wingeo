@@ -4,9 +4,9 @@ import static enums.TypeOpen2.values;
 
 public enum LayoutKnob implements Enam {
 
-    MIDL(1, "РџРѕ СЃРµСЂРµРґРёРЅРµ"),
-    CONST(2, "РљРѕРЅСЃС‚Р°РЅС‚РЅР°СЏ"),
-    VAR(3, "РЈСЃС‚Р°РЅРѕРІР»РµРЅР°");
+    MIDL(1, "По середине"),
+    CONST(2, "Константная"),
+    VAR(3, "Установлена");
     
 
     public int id = 0;

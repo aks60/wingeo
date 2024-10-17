@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * <p>
- * РўРµС…РЅРѕР»РѕРі</p>
+ * Технолог</p>
  */
 public class Tex extends javax.swing.JFrame {
 
@@ -47,8 +47,8 @@ public class Tex extends javax.swing.JFrame {
             String script = sysprodRec.getStr(eSysprod.script);
             if (script != null && script.isEmpty() == false) {
                 JsonElement script2 = new Gson().fromJson(script, JsonElement.class);
-                script2.getAsJsonObject().addProperty("nuni", sysprodRec.getInt(eSysprod.systree_id)); //Р·Р°РїРёС€РµРј nuni РІ script
-                winc.build(script2.toString()); //РєР°Р»СЊРєСѓР»СЏС†РёСЏ РёР·РґРµР»РёСЏ                
+                script2.getAsJsonObject().addProperty("nuni", sysprodRec.getInt(eSysprod.systree_id)); //запишем nuni в script
+                winc.build(script2.toString()); //калькуляция изделия                
             }
         }
     }
@@ -163,9 +163,9 @@ public class Tex extends javax.swing.JFrame {
         mn54 = new javax.swing.JMenuItem();
 
         spcSystem.setFont(frames.UGui.getFont(0,1));
-        spcSystem.setText("РЎРїРµС†РёС„РёРєР°С†РёСЏ СЃРёС‚РµРјС‹");
+        spcSystem.setText("Спецификация ситемы");
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        spcSystem.setToolTipText(bundle.getString("РџРµСЂРµСЃС‡РёС‚Р°С‚СЊ")); // NOI18N
+        spcSystem.setToolTipText(bundle.getString("Пересчитать")); // NOI18N
         spcSystem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 spcSystem(evt);
@@ -174,8 +174,8 @@ public class Tex extends javax.swing.JFrame {
         ppmSpecif.add(spcSystem);
 
         spcProduct.setFont(frames.UGui.getFont(0,1));
-        spcProduct.setText("РЎРїРµС†РёС„РёРєР°С†РёСЏ РїСЂРѕРґСѓРєС†РёРё");
-        spcProduct.setToolTipText(bundle.getString("РџРµСЂРµСЃС‡РёС‚Р°С‚СЊ")); // NOI18N
+        spcProduct.setText("Спецификация продукции");
+        spcProduct.setToolTipText(bundle.getString("Пересчитать")); // NOI18N
         spcProduct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 spcProductActionPerformed(evt);
@@ -184,7 +184,7 @@ public class Tex extends javax.swing.JFrame {
         ppmSpecif.add(spcProduct);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("SA.OKNA   <РђР Рњ РўРµС…РЅРѕР»РѕРі>");
+        setTitle("SA.OKNA   <АРМ Технолог>");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setPreferredSize(new java.awt.Dimension(800, 80));
         setResizable(false);
@@ -213,7 +213,7 @@ public class Tex extends javax.swing.JFrame {
         tb7.setPreferredSize(new java.awt.Dimension(94, 28));
 
         btn4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c015.gif"))); // NOI18N
-        btn4.setToolTipText(bundle.getString("РњРµРЅСЋ.РЈСЃС‚Р°РЅРѕРІРєРё")); // NOI18N
+        btn4.setToolTipText(bundle.getString("Меню.Установки")); // NOI18N
         btn4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
         btn4.setFocusable(false);
         btn4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -226,7 +226,7 @@ public class Tex extends javax.swing.JFrame {
         tb7.add(btn4);
 
         btn15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c018.gif"))); // NOI18N
-        btn15.setToolTipText(bundle.getString("РњРµРЅСЋ.РџСЂР°РІРёР»Р° СЂР°СЃС‡...")); // NOI18N
+        btn15.setToolTipText(bundle.getString("Меню.Правила расч...")); // NOI18N
         btn15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
         btn15.setFocusable(false);
         btn15.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -239,7 +239,7 @@ public class Tex extends javax.swing.JFrame {
         tb7.add(btn15);
 
         btn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c060.gif"))); // NOI18N
-        btn2.setToolTipText(bundle.getString("РњРµРЅСЋ.Р¦РµРЅРѕРІС‹Рµ РєРѕСЌС„...")); // NOI18N
+        btn2.setToolTipText(bundle.getString("Меню.Ценовые коэф...")); // NOI18N
         btn2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
         btn2.setFocusable(false);
         btn2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -259,7 +259,7 @@ public class Tex extends javax.swing.JFrame {
         tb1.setPreferredSize(new java.awt.Dimension(120, 28));
 
         btn14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c008.gif"))); // NOI18N
-        btn14.setToolTipText(bundle.getString("РњРµРЅСЋ.РљРѕРЅСЃС‚Р°РЅС‚С‹")); // NOI18N
+        btn14.setToolTipText(bundle.getString("Меню.Константы")); // NOI18N
         btn14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
         btn14.setFocusable(false);
         btn14.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -272,7 +272,7 @@ public class Tex extends javax.swing.JFrame {
         tb1.add(btn14);
 
         btn12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c010.gif"))); // NOI18N
-        btn12.setToolTipText(bundle.getString("РњРµРЅСЋ.РўРµРєСЃС‚СѓСЂС‹")); // NOI18N
+        btn12.setToolTipText(bundle.getString("Меню.Текстуры")); // NOI18N
         btn12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
         btn12.setFocusable(false);
         btn12.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
@@ -284,7 +284,7 @@ public class Tex extends javax.swing.JFrame {
         tb1.add(btn12);
 
         btn11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c022.gif"))); // NOI18N
-        btn11.setToolTipText(bundle.getString("РњРµРЅСЋ.РџР°СЂР°РјРµС‚СЂС‹")); // NOI18N
+        btn11.setToolTipText(bundle.getString("Меню.Параметры")); // NOI18N
         btn11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
         btn11.setFocusable(false);
         btn11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -297,7 +297,7 @@ public class Tex extends javax.swing.JFrame {
         tb1.add(btn11);
 
         btn16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c017.gif"))); // NOI18N
-        btn16.setToolTipText(bundle.getString("РњРµРЅСЋ.РЎРїСЂР°РІРѕС‡РЅРёРєРё")); // NOI18N
+        btn16.setToolTipText(bundle.getString("Меню.Справочники")); // NOI18N
         btn16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
         btn16.setFocusable(false);
         btn16.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -317,7 +317,7 @@ public class Tex extends javax.swing.JFrame {
         td5.setPreferredSize(new java.awt.Dimension(94, 28));
 
         btn51.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c021.gif"))); // NOI18N
-        btn51.setToolTipText(bundle.getString("РњРµРЅСЋ.РђСЂС‚РёРєСѓР»С‹")); // NOI18N
+        btn51.setToolTipText(bundle.getString("Меню.Артикулы")); // NOI18N
         btn51.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
         btn51.setFocusable(false);
         btn51.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -330,7 +330,7 @@ public class Tex extends javax.swing.JFrame {
         td5.add(btn51);
 
         btn52.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c012.gif"))); // NOI18N
-        btn52.setToolTipText(bundle.getString("РњРµРЅСЋ.РњРѕРґРµР»Рё")); // NOI18N
+        btn52.setToolTipText(bundle.getString("Меню.Модели")); // NOI18N
         btn52.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
         btn52.setFocusable(false);
         btn52.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -343,7 +343,7 @@ public class Tex extends javax.swing.JFrame {
         td5.add(btn52);
 
         btn53.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c028.gif"))); // NOI18N
-        btn53.setToolTipText(bundle.getString("РњРµРЅСЋ.РЎРёСЃС‚РµРјС‹")); // NOI18N
+        btn53.setToolTipText(bundle.getString("Меню.Системы")); // NOI18N
         btn53.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
         btn53.setFocusable(false);
         btn53.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -363,7 +363,7 @@ public class Tex extends javax.swing.JFrame {
         tb2.setPreferredSize(new java.awt.Dimension(172, 28));
 
         btn24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c024.gif"))); // NOI18N
-        btn24.setToolTipText(bundle.getString("РњРµРЅСЋ.РЎРѕРµРґРёРЅРµРЅРёСЏ")); // NOI18N
+        btn24.setToolTipText(bundle.getString("Меню.Соединения")); // NOI18N
         btn24.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
         btn24.setFocusable(false);
         btn24.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -376,7 +376,7 @@ public class Tex extends javax.swing.JFrame {
         tb2.add(btn24);
 
         btn25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c025.gif"))); // NOI18N
-        btn25.setToolTipText(bundle.getString("РњРµРЅСЋ.Р’СЃС‚Р°РІРєРё")); // NOI18N
+        btn25.setToolTipText(bundle.getString("Меню.Вставки")); // NOI18N
         btn25.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
         btn25.setFocusable(false);
         btn25.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -389,7 +389,7 @@ public class Tex extends javax.swing.JFrame {
         tb2.add(btn25);
 
         btn26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c026.gif"))); // NOI18N
-        btn26.setToolTipText(bundle.getString("РњРµРЅСЋ.Р—Р°РїРѕР»РЅРµРЅРёСЏ")); // NOI18N
+        btn26.setToolTipText(bundle.getString("Меню.Заполнения")); // NOI18N
         btn26.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
         btn26.setFocusable(false);
         btn26.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -402,7 +402,7 @@ public class Tex extends javax.swing.JFrame {
         tb2.add(btn26);
 
         btn27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c027.gif"))); // NOI18N
-        btn27.setToolTipText(bundle.getString("РњРµРЅСЋ.Р¤СѓСЂРЅРёС‚СѓСЂР°")); // NOI18N
+        btn27.setToolTipText(bundle.getString("Меню.Фурнитура")); // NOI18N
         btn27.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
         btn27.setFocusable(false);
         btn27.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -415,7 +415,7 @@ public class Tex extends javax.swing.JFrame {
         tb2.add(btn27);
 
         btn23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c023.gif"))); // NOI18N
-        btn23.setToolTipText(bundle.getString("РњРµРЅСЋ.РљРѕРјРїР»РµРєС‚С‹")); // NOI18N
+        btn23.setToolTipText(bundle.getString("Меню.Комплекты")); // NOI18N
         btn23.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
         btn23.setFocusable(false);
         btn23.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -428,7 +428,7 @@ public class Tex extends javax.swing.JFrame {
         tb2.add(btn23);
 
         btn21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c016.gif"))); // NOI18N
-        btn21.setToolTipText(bundle.getString("РњРµРЅСЋ.РЎРїРµС†РёС„РёРєР°С†РёСЏ")); // NOI18N
+        btn21.setToolTipText(bundle.getString("Меню.Спецификация")); // NOI18N
         btn21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
         btn21.setFocusable(false);
         btn21.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -446,7 +446,7 @@ public class Tex extends javax.swing.JFrame {
         tb8.setPreferredSize(new java.awt.Dimension(94, 28));
 
         btn17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c080.gif"))); // NOI18N
-        btn17.setToolTipText(bundle.getString("РњРµРЅСЋ.РљРѕРЅС‚СЂР°РіРµРЅС‚С‹")); // NOI18N
+        btn17.setToolTipText(bundle.getString("Меню.Контрагенты")); // NOI18N
         btn17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 255)));
         btn17.setFocusable(false);
         btn17.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -459,7 +459,7 @@ public class Tex extends javax.swing.JFrame {
         tb8.add(btn17);
 
         btn3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c081.gif"))); // NOI18N
-        btn3.setToolTipText(bundle.getString("РњРµРЅСЋ.Р—Р°РєР°Р·С‹")); // NOI18N
+        btn3.setToolTipText(bundle.getString("Меню.Заказы")); // NOI18N
         btn3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 255)));
         btn3.setFocusable(false);
         btn3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -472,7 +472,7 @@ public class Tex extends javax.swing.JFrame {
         tb8.add(btn3);
 
         btn22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c016.gif"))); // NOI18N
-        btn22.setToolTipText(bundle.getString("РњРµРЅСЋ.РЎРїРµС†РёС„РёРєР°С†РёСЏ")); // NOI18N
+        btn22.setToolTipText(bundle.getString("Меню.Спецификация")); // NOI18N
         btn22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 255)));
         btn22.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn22.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
@@ -492,7 +492,7 @@ public class Tex extends javax.swing.JFrame {
 
         buttonBaseGroup1.add(btnT7);
         btnT7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c057.gif"))); // NOI18N
-        btnT7.setToolTipText(bundle.getString("РњРµРЅСЋ.РЎРѕРµРґРёРЅРµРЅРёРµ СЃ Р‘Р”1")); // NOI18N
+        btnT7.setToolTipText(bundle.getString("Меню.Соединение с БД1")); // NOI18N
         btnT7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 204)));
         btnT7.setFocusable(false);
         btnT7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -506,7 +506,7 @@ public class Tex extends javax.swing.JFrame {
 
         buttonBaseGroup1.add(btnT8);
         btnT8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c058.gif"))); // NOI18N
-        btnT8.setToolTipText(bundle.getString("РњРµРЅСЋ.РЎРѕРµРґРёРЅРµРЅРёРµ СЃ Р‘Р”2")); // NOI18N
+        btnT8.setToolTipText(bundle.getString("Меню.Соединение с БД2")); // NOI18N
         btnT8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 204)));
         btnT8.setFocusable(false);
         btnT8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -520,7 +520,7 @@ public class Tex extends javax.swing.JFrame {
 
         buttonBaseGroup1.add(btnT9);
         btnT9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c059.gif"))); // NOI18N
-        btnT9.setToolTipText(bundle.getString("РњРµРЅСЋ.РЎРѕРµРґРёРЅРµРЅРёРµ СЃ Р‘Р”3")); // NOI18N
+        btnT9.setToolTipText(bundle.getString("Меню.Соединение с БД3")); // NOI18N
         btnT9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 204)));
         btnT9.setFocusable(false);
         btnT9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -553,7 +553,7 @@ public class Tex extends javax.swing.JFrame {
         tb4.add(btnTest);
 
         btn42.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        btn42.setToolTipText(bundle.getString("РњРµРЅСЋ.Р’С‹С…РѕРґ")); // NOI18N
+        btn42.setToolTipText(bundle.getString("Меню.Выход")); // NOI18N
         btn42.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         btn42.setFocusable(false);
         btn42.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -569,12 +569,12 @@ public class Tex extends javax.swing.JFrame {
 
         mn0.setPreferredSize(new java.awt.Dimension(800, 25));
 
-        mn01.setText(bundle.getString("РњРµРЅСЋ.РќР°СЃС‚СЂРѕР№РєРё")); // NOI18N
+        mn01.setText(bundle.getString("Меню.Настройки")); // NOI18N
         mn01.setFont(frames.UGui.getFont(1,1));
 
         mn12.setFont(frames.UGui.getFont(0,1));
         mn12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b031.gif"))); // NOI18N
-        mn12.setText(bundle.getString("РњРµРЅСЋ.РЈСЃС‚Р°РЅРѕРІРєРё")); // NOI18N
+        mn12.setText(bundle.getString("Меню.Установки")); // NOI18N
         mn12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnSetting(evt);
@@ -584,7 +584,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn15.setFont(frames.UGui.getFont(0,1));
         mn15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b031.gif"))); // NOI18N
-        mn15.setText(bundle.getString("РњРµРЅСЋ.РџСЂР°РІРёР»Р° СЂР°СЃС‡...")); // NOI18N
+        mn15.setText(bundle.getString("Меню.Правила расч...")); // NOI18N
         mn15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnRulecalc(evt);
@@ -594,7 +594,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn11.setFont(frames.UGui.getFont(0,1));
         mn11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b031.gif"))); // NOI18N
-        mn11.setText(bundle.getString("РњРµРЅСЋ.Р¦РµРЅРѕРІС‹Рµ РєРѕСЌС„...")); // NOI18N
+        mn11.setText(bundle.getString("Меню.Ценовые коэф...")); // NOI18N
         mn11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnGroup1(evt);
@@ -605,7 +605,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn14.setFont(frames.UGui.getFont(0,1));
         mn14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b009.gif"))); // NOI18N
-        mn14.setText(bundle.getString("РњРµРЅСЋ.Р’С‹С…РѕРґ")); // NOI18N
+        mn14.setText(bundle.getString("Меню.Выход")); // NOI18N
         mn14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnExit(evt);
@@ -615,12 +615,12 @@ public class Tex extends javax.swing.JFrame {
 
         mn0.add(mn01);
 
-        mn02.setText(bundle.getString("РњРµРЅСЋ.РЎРїСЂР°РІРѕС‡РЅРёРєРё")); // NOI18N
+        mn02.setText(bundle.getString("Меню.Справочники")); // NOI18N
         mn02.setFont(frames.UGui.getFont(1,1));
 
         mn26.setFont(frames.UGui.getFont(0,1));
         mn26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
-        mn26.setText(bundle.getString("РњРµРЅСЋ.РљРѕРЅСЃС‚Р°РЅС‚С‹")); // NOI18N
+        mn26.setText(bundle.getString("Меню.Константы")); // NOI18N
         mn26.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnSyssize(evt);
@@ -630,7 +630,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn21.setFont(frames.UGui.getFont(0,1));
         mn21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
-        mn21.setText(bundle.getString("РњРµРЅСЋ.РўРµРєСЃС‚СѓСЂС‹")); // NOI18N
+        mn21.setText(bundle.getString("Меню.Текстуры")); // NOI18N
         mn21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnColor(evt);
@@ -640,7 +640,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn23.setFont(frames.UGui.getFont(0,1));
         mn23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
-        mn23.setText(bundle.getString("РњРµРЅСЋ.РџР°СЂР°РјРµС‚СЂС‹")); // NOI18N
+        mn23.setText(bundle.getString("Меню.Параметры")); // NOI18N
         mn23.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnParametr(evt);
@@ -651,7 +651,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn22.setFont(frames.UGui.getFont(0,1));
         mn22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
-        mn22.setText(bundle.getString("РњРµРЅСЋ.РЎРїСЂР°РІРѕС‡РЅРёРєРё")); // NOI18N
+        mn22.setText(bundle.getString("Меню.Справочники")); // NOI18N
         mn22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnGroup2(evt);
@@ -661,12 +661,12 @@ public class Tex extends javax.swing.JFrame {
 
         mn0.add(mn02);
 
-        mn09.setText(bundle.getString("РњРµРЅСЋ.РњРѕРґРµР»Рё")); // NOI18N
+        mn09.setText(bundle.getString("Меню.Модели")); // NOI18N
         mn09.setFont(frames.UGui.getFont(1,1));
 
         mn94.setFont(frames.UGui.getFont(0,1));
         mn94.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b054.gif"))); // NOI18N
-        mn94.setText(bundle.getString("РњРµРЅСЋ.РђСЂС‚РёРєСѓР»С‹")); // NOI18N
+        mn94.setText(bundle.getString("Меню.Артикулы")); // NOI18N
         mn94.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mn94(evt);
@@ -676,7 +676,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn91.setFont(frames.UGui.getFont(0,1));
         mn91.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b054.gif"))); // NOI18N
-        mn91.setText(bundle.getString("РњРµРЅСЋ.РњРѕРґРµР»Рё")); // NOI18N
+        mn91.setText(bundle.getString("Меню.Модели")); // NOI18N
         mn91.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnBoxTypical(evt);
@@ -687,7 +687,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn92.setFont(frames.UGui.getFont(0,1));
         mn92.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b054.gif"))); // NOI18N
-        mn92.setText(bundle.getString("РњРµРЅСЋ.РЎРёСЃС‚РµРјС‹")); // NOI18N
+        mn92.setText(bundle.getString("Меню.Системы")); // NOI18N
         mn92.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mn42(evt);
@@ -697,12 +697,12 @@ public class Tex extends javax.swing.JFrame {
 
         mn0.add(mn09);
 
-        mn03.setText(bundle.getString("РњРµРЅСЋ.РЎРѕСЃС‚Р°РІС‹")); // NOI18N
+        mn03.setText(bundle.getString("Меню.Составы")); // NOI18N
         mn03.setFont(frames.UGui.getFont(1,1));
 
         mn31.setFont(frames.UGui.getFont(0,1));
         mn31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b056.gif"))); // NOI18N
-        mn31.setText(bundle.getString("РњРµРЅСЋ.РљРѕРјРїР»РµРєС‚С‹")); // NOI18N
+        mn31.setText(bundle.getString("Меню.Комплекты")); // NOI18N
         mn31.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnKits(evt);
@@ -712,7 +712,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn32.setFont(frames.UGui.getFont(0,1));
         mn32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b056.gif"))); // NOI18N
-        mn32.setText(bundle.getString("РњРµРЅСЋ.РЎРѕРµРґРёРЅРµРЅРёСЏ")); // NOI18N
+        mn32.setText(bundle.getString("Меню.Соединения")); // NOI18N
         mn32.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnJoining(evt);
@@ -722,7 +722,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn34.setFont(frames.UGui.getFont(0,1));
         mn34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b056.gif"))); // NOI18N
-        mn34.setText(bundle.getString("РњРµРЅСЋ.Р’СЃС‚Р°РІРєРё")); // NOI18N
+        mn34.setText(bundle.getString("Меню.Вставки")); // NOI18N
         mn34.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnElement(evt);
@@ -732,7 +732,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn35.setFont(frames.UGui.getFont(0,1));
         mn35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b056.gif"))); // NOI18N
-        mn35.setText(bundle.getString("РњРµРЅСЋ.Р—Р°РїРѕР»РЅРµРЅРёСЏ")); // NOI18N
+        mn35.setText(bundle.getString("Меню.Заполнения")); // NOI18N
         mn35.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnGlass(evt);
@@ -742,7 +742,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn36.setFont(frames.UGui.getFont(0,1));
         mn36.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b056.gif"))); // NOI18N
-        mn36.setText(bundle.getString("РњРµРЅСЋ.Р¤СѓСЂРЅРёС‚СѓСЂР°")); // NOI18N
+        mn36.setText(bundle.getString("Меню.Фурнитура")); // NOI18N
         mn36.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnFurnityra(evt);
@@ -753,7 +753,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn37.setFont(frames.UGui.getFont(0,1));
         mn37.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b056.gif"))); // NOI18N
-        mn37.setText(bundle.getString("РњРµРЅСЋ.РЎРїРµС†РёС„РёРєР°С†РёСЏ")); // NOI18N
+        mn37.setText(bundle.getString("Меню.Спецификация")); // NOI18N
         mn37.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnSpecif(evt);
@@ -763,13 +763,13 @@ public class Tex extends javax.swing.JFrame {
 
         mn0.add(mn03);
 
-        mn07.setText(bundle.getString("РњРµРЅСЋ.Р—Р°РєР°Р·С‹")); // NOI18N
+        mn07.setText(bundle.getString("Меню.Заказы")); // NOI18N
         mn07.setFont(frames.UGui.getFont(1,1));
         mn07.setPreferredSize(new java.awt.Dimension(67, 19));
 
         mn71.setFont(frames.UGui.getFont(0,1));
         mn71.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
-        mn71.setText(bundle.getString("РњРµРЅСЋ.РљРѕРЅС‚СЂР°РіРµРЅС‚С‹")); // NOI18N
+        mn71.setText(bundle.getString("Меню.Контрагенты")); // NOI18N
         mn71.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnPartn(evt);
@@ -779,7 +779,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn72.setFont(frames.UGui.getFont(0,1));
         mn72.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
-        mn72.setText(bundle.getString("РњРµРЅСЋ.Р—Р°РєР°Р·С‹")); // NOI18N
+        mn72.setText(bundle.getString("Меню.Заказы")); // NOI18N
         mn72.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnOrder(evt);
@@ -790,22 +790,22 @@ public class Tex extends javax.swing.JFrame {
 
         mn75.setFont(frames.UGui.getFont(0,1));
         mn75.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
-        mn75.setText(bundle.getString("РџРµСЂРµСЃС‡РёС‚Р°С‚СЊ")); // NOI18N
+        mn75.setText(bundle.getString("Пересчитать")); // NOI18N
         mn07.add(mn75);
 
         mn0.add(mn07);
 
-        mn06.setText(bundle.getString("РњРµРЅСЋ.РЎРµСЂРІРёСЃ")); // NOI18N
+        mn06.setText(bundle.getString("Меню.Сервис")); // NOI18N
         mn06.setFont(frames.UGui.getFont(1,1));
 
         mn63.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b028.gif"))); // NOI18N
-        mn63.setText(bundle.getString("РњРµРЅСЋ.РЈСЃС‚Р°РЅРѕРІРєР° СЃРѕРµРґРёРЅРµРЅРёСЏ")); // NOI18N
+        mn63.setText(bundle.getString("Меню.Установка соединения")); // NOI18N
         mn63.setFont(frames.UGui.getFont(0,1));
 
         buttonMenuGroup.add(mn631);
         mn631.setFont(frames.UGui.getFont(1,1));
         mn631.setSelected(true);
-        mn631.setText(bundle.getString("РњРµРЅСЋ.Р‘Р°Р·Р° 1")); // NOI18N
+        mn631.setText(bundle.getString("Меню.База 1")); // NOI18N
         mn631.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnBase(evt);
@@ -815,7 +815,7 @@ public class Tex extends javax.swing.JFrame {
 
         buttonMenuGroup.add(mn632);
         mn632.setFont(frames.UGui.getFont(1,1));
-        mn632.setText(bundle.getString("РњРµРЅСЋ.Р‘Р°Р·Р° 2")); // NOI18N
+        mn632.setText(bundle.getString("Меню.База 2")); // NOI18N
         mn632.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnBase(evt);
@@ -825,7 +825,7 @@ public class Tex extends javax.swing.JFrame {
 
         buttonMenuGroup.add(mn633);
         mn633.setFont(frames.UGui.getFont(1,1));
-        mn633.setText(bundle.getString("РњРµРЅСЋ.Р‘Р°Р·Р° 3")); // NOI18N
+        mn633.setText(bundle.getString("Меню.База 3")); // NOI18N
         mn633.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnBase(evt);
@@ -836,18 +836,18 @@ public class Tex extends javax.swing.JFrame {
         mn06.add(mn63);
 
         mn62.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b061.gif"))); // NOI18N
-        mn62.setText(bundle.getString("РњРµРЅСЋ.Р’РёРґ РёРЅС‚РµСЂС„РµР№СЃР°")); // NOI18N
+        mn62.setText(bundle.getString("Меню.Вид интерфейса")); // NOI18N
         mn62.setFont(frames.UGui.getFont(0,1));
         mn06.add(mn62);
 
         mn0.add(mn06);
 
-        mn05.setText(bundle.getString("РњРµРЅСЋ.РЎРїСЂР°РІРєР°")); // NOI18N
+        mn05.setText(bundle.getString("Меню.Справка")); // NOI18N
         mn05.setFont(frames.UGui.getFont(1,1));
 
         mn51.setFont(frames.UGui.getFont(0,1));
         mn51.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
-        mn51.setText(bundle.getString("РњРµРЅСЋ.РЎРїСЂР°РІРєР°")); // NOI18N
+        mn51.setText(bundle.getString("Меню.Справка")); // NOI18N
         mn51.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mn51ActionPerformed(evt);
@@ -857,7 +857,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn52.setFont(frames.UGui.getFont(0,1));
         mn52.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
-        mn52.setText(bundle.getString("РњРµРЅСЋ.Р§Р°СЃС‚Рѕ Р·Р°РґР°РІР°РµРјС‹Рµ РІРѕРїСЂРѕСЃС‹")); // NOI18N
+        mn52.setText(bundle.getString("Меню.Часто задаваемые вопросы")); // NOI18N
         mn52.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mHowTo(evt);
@@ -867,7 +867,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn54.setFont(frames.UGui.getFont(0,1));
         mn54.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
-        mn54.setText(bundle.getString("РњРµРЅСЋ.Рћ РїСЂРѕРіСЂР°РјРјРµ")); // NOI18N
+        mn54.setText(bundle.getString("Меню.О программе")); // NOI18N
         mn54.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnAboutBox(evt);
@@ -966,7 +966,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
 
         ProgressBar.create(Tex.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                App.Joining.createFrame(Tex.this); //РІСЃРµ СЃРѕРµРґРёРЅРµРЅРёСЏ
+                App.Joining.createFrame(Tex.this); //все соединения
             }
         });
     }//GEN-LAST:event_mnJoining
@@ -1109,7 +1109,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     private void mn2Specif(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn2Specif
         ProgressBar.create(Tex.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                    App.Specification.createFrame(Tex.this, 1);
+                App.Specification.createFrame(Tex.this, 1);
             }
         });
     }//GEN-LAST:event_mn2Specif

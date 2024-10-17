@@ -32,7 +32,7 @@ public class DicGroups extends javax.swing.JDialog {
     private Query qGroups = new Query(eGroups.values());
     private int ID = -1;
 
-    //NODO РўРѕС‡РєР° РІРјРµСЃС‚Рѕ Р·Р°РїСЏС‚РѕР№
+    //NODO Точка вместо запятой
     public DicGroups(java.awt.Frame parent, ListenerRecord listenet, Enam grup, int id, boolean del) {
         super(parent, true);
         this.grup = grup;
@@ -52,7 +52,7 @@ public class DicGroups extends javax.swing.JDialog {
 
     public void loadingModel() {
         if (grup.numb() == TypeGrup.SERI_ELEM.id) {
-            setTitle("РЎРµСЂРёРё");
+            setTitle("Серии");
             ((CardLayout) centr.getLayout()).show(centr, "pan1");
             tab1.setModel(new DefTableModel(tab1, qGroups, eGroups.name));
             ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
@@ -60,7 +60,7 @@ public class DicGroups extends javax.swing.JDialog {
             tab1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
 
         } else if (grup.numb() == TypeGrup.PRICE_INC.id) {
-            setTitle("Р“СЂСѓРїРїС‹ РЅР°С†РµРЅРѕРє");
+            setTitle("Группы наценок");
             ((CardLayout) centr.getLayout()).show(centr, "pan2");
             tab2.setModel(new DefTableModel(tab2, qGroups, eGroups.name, eGroups.val));
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
@@ -68,7 +68,7 @@ public class DicGroups extends javax.swing.JDialog {
             tab2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
 
         } else if (grup.numb() == TypeGrup.PRICE_DEC.id) {
-            setTitle("Р“СЂСѓРїРїС‹ СЃРєРёРґРѕРє");
+            setTitle("Группы скидок");
             ((CardLayout) centr.getLayout()).show(centr, "pan3");
             tab3.setModel(new DefTableModel(tab3, qGroups, eGroups.name, eGroups.val));
             ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
@@ -76,7 +76,7 @@ public class DicGroups extends javax.swing.JDialog {
             tab3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
 
         } else if (grup.numb() == TypeGrup.CATEG_ELEM.id) {
-            setTitle("РљР°С‚РµРіРѕСЂРёРё");
+            setTitle("Категории");
             ((CardLayout) centr.getLayout()).show(centr, "pan4");
             tab4.setModel(new DefTableModel(tab4, qGroups, eGroups.name));
             ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();

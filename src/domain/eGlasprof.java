@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum eGlasprof implements Field {
-    up("0", "0", "0", "РџСЂРѕС„РёР»Рё РІ РіСЂСѓРїРїРµ Р·Р°РїРѕР»РЅРµРЅРёСЏ", "GLASPRO"),
-    id("4", "10", "0", "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ", "id"),
-    gsize("8", "15", "1", "Р Р°Р·РјРµСЂ РѕС‚ РѕСЃРё РґРѕ СЃС‚РµРєР»РѕРїР°РєРµС‚Р°, РјРј", "ASIZE"),
-    inside("16", "5", "1", "Р’РЅСѓС‚СЂРµРЅРЅРµРµ Р·Р°РїРѕР»РЅРµРЅРёРµ", "toin"),
-    outside("16", "5", "1", "Р’РЅРЅС€РЅРµРµ Р·Р°РїРѕР»РЅРµРЅРёРµ", "toout"),
-    artikl_id("4", "10", "1", "РђСЂС‚РёРєСѓР»", "artikl_id"),
-    glasgrp_id("4", "10", "0", "Р“СЂСѓРїРїР°", "glasgrp_id");
+    up("0", "0", "0", "Профили в группе заполнения", "GLASPRO"),
+    id("4", "10", "0", "Идентификатор", "id"),
+    gsize("8", "15", "1", "Размер от оси до стеклопакета, мм", "ASIZE"),
+    inside("16", "5", "1", "Внутреннее заполнение", "toin"),
+    outside("16", "5", "1", "Внншнее заполнение", "toout"),
+    artikl_id("4", "10", "1", "Артикул", "artikl_id"),
+    glasgrp_id("4", "10", "0", "Группа", "glasgrp_id");
 
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());

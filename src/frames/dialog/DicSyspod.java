@@ -28,7 +28,7 @@ public class DicSyspod extends javax.swing.JDialog {
 
     private Wincalc winc = new Wincalc();
     private ListenerRecord listener = null;
-    private int systreeID = -1; //РІС‹Р±СЂР°РЅРЅР°СЏ СЃРёСЃС‚РµРјР°
+    private int systreeID = -1; //выбранная система
     private Query qSystree = new Query(eSystree.values());
     private Query qSysprod = new Query(eSysprod.values());
     private DefMutableTreeNode rootTree = null;
@@ -48,7 +48,7 @@ public class DicSyspod extends javax.swing.JDialog {
 
     public void loadingData() {
 
-        //РџРѕР»СѓС‡РёРј СЃРѕС…СЂ. ID СЃРёСЃС‚РµРјС‹ РїСЂРё РІС‹С…РѕРґРµ РёР· РїСЂРѕРіСЂР°РјРјС‹
+        //Получим сохр. ID системы при выходе из программы
         Record sysprodRec = eSysprod.find(Integer.valueOf(eProp.sysprodID.read()));
         if (sysprodRec != null) {
             systreeID = sysprodRec.getInt(eSysprod.systree_id);
@@ -82,7 +82,7 @@ public class DicSyspod extends javax.swing.JDialog {
         Record recordRoot = eSystree.up.newRecord(Query.SEL);
         recordRoot.set(eSystree.id, -1);
         recordRoot.set(eSystree.parent_id, -1);
-        recordRoot.set(eSystree.name, "Р”РµСЂРµРІРѕ СЃРёСЃС‚РµРјС‹ РїСЂРѕС„РёР»РµР№");
+        recordRoot.set(eSystree.name, "Дерево системы профилей");
         rootTree = new DefMutableTreeNode(recordRoot);
         ArrayList<DefMutableTreeNode> treeList = new ArrayList<DefMutableTreeNode>();
 
@@ -117,7 +117,7 @@ public class DicSyspod extends javax.swing.JDialog {
                 dm.addRow(arrayRec);
 
             } catch (Exception e) {
-                System.err.println("РћС€РёР±РєР°:DicSyspod.loadingTab2() " + e);
+                System.err.println("Ошибка:DicSyspod.loadingTab2() " + e);
             }
         }
     }
@@ -144,7 +144,7 @@ public class DicSyspod extends javax.swing.JDialog {
                 UGui.setSelectedRow(tab2);
             }
         } else {
-            //createWincalc(-1); //СЂРёСЃСѓРµРј РІРёСЂС‚СѓР°Р»РєСѓ
+            //createWincalc(-1); //рисуем виртуалку
         }
     }
 
@@ -159,7 +159,7 @@ public class DicSyspod extends javax.swing.JDialog {
                     node.add(node3);
                     nodeList2.add(node3);
                     if (record.getInt(eSystree.id) == systreeID) {
-                        selectedPath = node3.getPath(); //Р·Р°РїРѕРјРЅРёРј path РґР»СЏ nuni
+                        selectedPath = node3.getPath(); //запомним path для nuni
                     }
                 }
             }
@@ -185,7 +185,7 @@ public class DicSyspod extends javax.swing.JDialog {
         south = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РР·РґРµР»РёСЏ");
+        setTitle("Р?Р·РґРµР»РёСЏ");
 
         north.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         north.setMaximumSize(new java.awt.Dimension(32767, 31));

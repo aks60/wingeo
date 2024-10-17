@@ -47,7 +47,7 @@ public class ArrayCom<E extends Com5t> extends ArrayList<E> {
                 }
             }
         } catch (Exception e) {
-            System.err.println("–û—à–∏–±–∫–∞:ArrayCom.get()");
+            System.err.println("Œ¯Ë·Í‡:ArrayCom.get()");
         }
         return null;
     }

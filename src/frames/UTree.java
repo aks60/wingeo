@@ -18,13 +18,13 @@ public class UTree {
     private static DefMutableTreeNode root = null;
     private static DefMutableTreeNode frm = null;
 
-    //Р—Р°РіСЂСѓР·РєР° tree РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+    //Загрузка tree конструкции
     public static DefMutableTreeNode loadWinTree(Wincalc w) {
         try {
             winc = w;
             root = new DefMutableTreeNode(winc.root);
             root.add(new DefMutableTreeNode(new Com5t(Type.PARAM)));
-            //Р Р°РјР°
+            //Рама
             frm = root.add(new DefMutableTreeNode(new Com5t(Type.FRAME)));
             frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.LEFT)));
             frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
@@ -37,66 +37,66 @@ public class UTree {
             loadWinTree(winc.root.childs);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UTree.loadWinTree() " + e);
+            System.err.println("Ошибка:UTree.loadWinTree() " + e);
         }
         return root;
     }
 
-    //Р¤СѓРЅРєС†РёСЏ СЂРµРєСѓСЂСЃРёРё
+    //Функция рекурсии
     public static void loadWinTree(ArrayCom<Com5t> childs) {
         try {
             for (Com5t com : childs) {
-                //Р•СЃР»Рё СЌС‚Рѕ РЅРµ СЃС‚РІРѕСЂРєР°
+                //Если это не створка
                 if (com.type != Type.STVORKA) {
-                    //Р•СЃР»Рё СЌС‚Рѕ СЌР»РµРјРµРЅС‚
+                    //Если это элемент
                     if (com instanceof ElemSimple) {
                         frm.add(new DefMutableTreeNode(com));
                         if (com.type != Type.GLASS) {
                             frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING) {
                             }));
                         }
-                        //Р•СЃР»Рё СЌС‚Рѕ Р°СЂРµР°                   
+                        //Если это ареа                   
                     } else {
                         loadWinTree(((AreaSimple) com).childs);
                     }
                 } else {
-                    loadStvorka(com); //СЃС‚РІРѕСЂРєР°
+                    loadStvorka(com); //створка
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UTree.loadWinTree(2) " + e);
+            System.err.println("Ошибка:UTree.loadWinTree(2) " + e);
         }
     }
     
-    //Р—Р°РіСЂСѓР·РєР° tree Р°СЂС‚РёРєСѓР»РѕРІ
+    //Загрузка tree артикулов
     public static void loadArtTree(DefaultMutableTreeNode root) {
         DefaultMutableTreeNode node = null;
         
         for (TypeArt it : TypeArt.values()) {
             if (it.id1 == 1 && it.id2 == 0) {
-                node = new DefaultMutableTreeNode(TypeArt.X100); //"РџСЂРѕС„РёР»Рё"
+                node = new DefaultMutableTreeNode(TypeArt.X100); //"Профили"
 
             } else if (it.id1 == 2 && it.id2 == 0) {
                 root.add(node);
-                node = new DefaultMutableTreeNode(TypeArt.X200); //"РђРєСЃРµСЃСЃСѓР°СЂС‹"
+                node = new DefaultMutableTreeNode(TypeArt.X200); //"Аксессуары"
 
             } else if (it.id1 == 3 && it.id2 == 0) {
                 root.add(node);
-                node = new DefaultMutableTreeNode(TypeArt.X300); //"РџРѕРіРѕРЅР°Р¶"
+                node = new DefaultMutableTreeNode(TypeArt.X300); //"Погонаж"
 
             } else if (it.id1 == 4 && it.id2 == 0) {
                 root.add(node);
-                node = new DefaultMutableTreeNode(TypeArt.X400); //"РРЅСЃС‚СЂСѓРјРµРЅС‚"
+                node = new DefaultMutableTreeNode(TypeArt.X400); //"Инструмент"
 
             } else if (it.id1 == 5 && it.id2 == 0) {
                 root.add(node);
-                node = new DefaultMutableTreeNode(TypeArt.X500); //"Р—Р°РїРѕР»РЅРµРЅРёСЏ"
+                node = new DefaultMutableTreeNode(TypeArt.X500); //"Заполнения"
 
 //            } else if (it.id1 == 6 && it.id2 == 0) {
 //                root.add(node);
-//                node = new DefaultMutableTreeNode(TypeArt.X600); //"РќР°Р±РѕСЂС‹"                
+//                node = new DefaultMutableTreeNode(TypeArt.X600); //"Наборы"                
 
-            } else if (it.id2 > 0) {   //РѕСЃС‚Р°Р»СЊРЅРѕРµ       
+            } else if (it.id2 > 0) {   //остальное       
                 root.add(node);
                 node.add(new javax.swing.tree.DefaultMutableTreeNode(it));
             }
@@ -104,28 +104,28 @@ public class UTree {
         root.add(node);  
     }
     
-    //РЎС‚РІРѕСЂРєР°
+    //Створка
     public static void loadStvorka(Com5t com) {
         try {
-            DefMutableTreeNode nodeStv = root.add(new DefMutableTreeNode(com)); //СЃС‚РІРѕСЂРєР° РІСЃРµРіРґР° РЅР° РІРµСЂС…Сѓ, РЅРµС‚ СЃС‚РІРѕСЂРєР° РІ СЃС‚РІРѕСЂРєРµ
+            DefMutableTreeNode nodeStv = root.add(new DefMutableTreeNode(com)); //створка всегда на верху, нет створка в створке
             AreaSimple stv = (AreaSimple) com;
 
-            //Р¦С‹РєР» РїРѕ СЃС‚РѕСЂ. СЃС‚РІРѕСЂРєРё
+            //Цыкл по стор. створки
             for (int i = 0; i < stv.frames.size(); i++) {
                 ElemFrame frame = (ElemFrame) stv.frames.get(i);
                 nodeStv.add(new DefMutableTreeNode(frame));
                 nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
             }
 
-            //Р¦РёРєР» РїРѕ РґРµС‚СЏРј СЃС‚РІРѕСЂРєРё
+            //Цикл по детям створки
             for (Com5t com2 : ((AreaSimple) com).childs) {
-                //Р•СЃР»Рё СЌС‚Рѕ СЌР»РµРјРµРЅС‚
+                //Если это элемент
                 if (com2 instanceof ElemSimple) {
                     nodeStv.add(new DefMutableTreeNode(com2));
-                    if (com2.type != Type.GLASS && com2.type != Type.MOSQUIT) { //Р’ СЃС‚РµРєР»Рµ РЅРµС‚ СЃРѕРµРґРёРЅРµРЅРёР№
+                    if (com2.type != Type.GLASS && com2.type != Type.MOSQUIT) { //В стекле нет соединений
                         nodeStv.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
                     }
-                    //Р­С‚Рѕ Р°СЂРµР°
+                    //Это ареа
                 } else {
                     for (Com5t com3 : ((AreaSimple) com2).childs) {
                         if (com3 instanceof ElemSimple) {
@@ -147,7 +147,7 @@ public class UTree {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UTree.loadStvorka() " + e);
+            System.err.println("Ошибка:UTree.loadStvorka() " + e);
         }
     }
 

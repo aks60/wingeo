@@ -34,26 +34,26 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 
 public class AreaStvorka extends AreaSimple {
 
-    public SpcRecord spcRec = null; //СЃРїРµС†РёС„РёРєР°С†РёСЏ РјРѕСЃРєРёС‚РєРё
-    public Record sysfurnRec = eSysfurn.up.newRecord(Query.SEL); //С„СѓСЂРЅРёС‚СѓСЂР°
-    public Record knobRec = eArtikl.virtualRec(); //СЂСѓС‡РєР°
-    public Record loopRec = eArtikl.virtualRec(); //РїРѕРґРІРµСЃ(РїРµС‚Р»Рё)
-    public Record lockRec = eArtikl.up.newRecord(Query.SEL); //Р·Р°РјРѕРє
-    public Record mosqRec = eArtikl.virtualRec(); //РјРѕСЃРєРёС‚РєР°
-    public Record elementRec = eElement.up.newRecord(Query.SEL); //СЃРѕСЃС‚Р°РІ РјРѕСЃРєРёРґРєРё 
+    public SpcRecord spcRec = null; //спецификация москитки
+    public Record sysfurnRec = eSysfurn.up.newRecord(Query.SEL); //фурнитура
+    public Record knobRec = eArtikl.virtualRec(); //ручка
+    public Record loopRec = eArtikl.virtualRec(); //подвес(петли)
+    public Record lockRec = eArtikl.up.newRecord(Query.SEL); //замок
+    public Record mosqRec = eArtikl.virtualRec(); //москитка
+    public Record elementRec = eElement.up.newRecord(Query.SEL); //состав москидки 
 
-    public Geometry frameBox = null; //РїРѕР»РёРіРѕРЅ РІРµРєС‚РѕСЂРѕРІ СЃС‚РѕСЂРѕРЅ СЂР°РјС‹
-    public LineString lineOpenHor = null; //Р»РёРЅРёРё РіРѕСЂРёР·РѕРЅС‚. РѕС‚РєСЂС‹РІР°РЅРёСЏ
-    public LineString lineOpenVer = null; //Р»РёРЅРёРё РІРµСЂС‚РёРє. РѕС‚РєСЂС‹РІР°РЅРёСЏ
-    public Polygon knobOpen = null; //СЂСѓС‡РєР° РѕС‚РєСЂС‹РІР°РЅРёСЏ    
-    public int knobColor = -3; //С†РІРµС‚ СЂСѓС‡РєРё РІРёСЂС‚...
-    public int loopColor = -3; //С†РІРµС‚ РїРѕРґРІРµСЃР° РІРёСЂС‚...
-    public int lockColor = -3; //С†РІРµС‚ Р·Р°РјРєР° РІРёСЂС‚...
-    public int mosqColor = -3; //С†РІРµС‚ РјРѕСЃРєРёС‚РєРё РІРёСЂС‚...
+    public Geometry frameBox = null; //полигон векторов сторон рамы
+    public LineString lineOpenHor = null; //линии горизонт. открывания
+    public LineString lineOpenVer = null; //линии вертик. открывания
+    public Polygon knobOpen = null; //ручка открывания    
+    public int knobColor = -3; //цвет ручки вирт...
+    public int loopColor = -3; //цвет подвеса вирт...
+    public int lockColor = -3; //цвет замка вирт...
+    public int mosqColor = -3; //цвет москитки вирт...
 
-    public double knobHeight = 0; //РІС‹СЃРѕС‚Р° СЂСѓС‡РєРё
-    public TypeOpen1 typeOpen = TypeOpen1.EMPTY; //РЅР°РїСЂР°РІР»РµРЅРёРµ РѕС‚РєСЂС‹РІР°РЅРёСЏ
-    public LayoutKnob knobLayout = LayoutKnob.MIDL; //РїРѕР»РѕР¶РµРЅРёРµ СЂСѓС‡РєРё РЅР° СЃС‚РІРѕСЂРєРµ      
+    public double knobHeight = 0; //высота ручки
+    public TypeOpen1 typeOpen = TypeOpen1.EMPTY; //направление открывания
+    public LayoutKnob knobLayout = LayoutKnob.MIDL; //положение ручки на створке      
     public double offset[] = {0, 0, 0, 0};
 
     public AreaStvorka(Wincalc winc, GsonElem gson, AreaSimple owner) {
@@ -62,68 +62,68 @@ public class AreaStvorka extends AreaSimple {
     }
 
     /**
-     * Р¤СѓСЂРЅРёС‚СѓСЂР° РІС‹Р±РёСЂР°РµС‚СЃСЏ РІСЂСѓС‡РЅСѓСЋ РёР· СЃРїРёСЃРєР° СЃРёСЃС‚РµРјС‹ Р»РёР±Рѕ РїРµСЂРІР°СЏ РІ СЃРїРёСЃРєРµ
-     * СЃРёСЃС‚РµРјС‹.
+     * Фурнитура выбирается вручную из списка системы либо первая в списке
+     * системы.
      *
-     * Р СѓС‡РєР° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РёР· СЃРёСЃС‚. С„СѓСЂРЅРёС‚СѓСЂС‹ Р»РёР±Рѕ РµСЃР»Рё РµСЃС‚СЊ РїРѕРґР±РёСЂР°РµС‚СЃСЏ РёР· РґРµС‚Р°Р»РёР·Р°С†РёРё
-     * РІС‹Р±СЂ. С„СѓСЂРЅ. Р»РёР±Рѕ РІС‹Р±РёСЂР°РµС‚СЃСЏ РІСЂСѓС‡РЅСѓСЋ РёР· СЂСѓС‡РµРє С„С‹Р±СЂР°РЅРЅРѕР№ С„СѓСЂРЅРёС‚СѓСЂС‹. Р¦РІРµС‚
-     * РїРµСЂРІР°СЏ Р·Р°РїРёСЃСЊ РёР· С‚РµРєСЃС‚СѓСЂС‹ Р°СЂС‚РёРєСѓР»РѕРІ РёР»Рё РїРѕРґР±РѕСЂ РёР· С‚РµРєСЃС‚СѓСЂ РёР»Рё РІСЂСѓС‡РЅСѓСЋ.
+     * Ручка по умолчанию из сист. фурнитуры либо если есть подбирается из детализации
+     * выбр. фурн. либо выбирается вручную из ручек фыбранной фурнитуры. Цвет
+     * первая запись из текстуры артикулов или подбор из текстур или вручную.
      *
      */
     public void initArtikle(JsonObject param) {
         try {
-            //РџРѕРёСЃРє РїРѕ РїР°СЂР°РјРµС‚СЂСѓ РёР»Рё РїРµСЂРІР°СЏ Р·Р°РїРёСЃСЊ РёР· СЃРїРёСЃРєР°...
-            //Р¤СѓСЂРЅРёС‚СѓСЂР°
+            //Поиск по параметру или первая запись из списка...
+            //Фурнитура
             if (isJson(param, PKjson.sysfurnID)) {
                 sysfurnRec = eSysfurn.find2(param.get(PKjson.sysfurnID).getAsInt());
-            } else { //РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
-                sysfurnRec = eSysfurn.find3(winc.nuni); //РёС‰РµРј РїРµСЂРІСѓСЋ РІ СЃРёСЃС‚РµРјРµ
+            } else { //по умолчанию
+                sysfurnRec = eSysfurn.find3(winc.nuni); //ищем первую в системе
             }
-            //Р СѓС‡РєР°
+            //Ручка
             if (isJson(param, PKjson.artiklKnob)) {
                 knobRec = eArtikl.find(param.get(PKjson.artiklKnob).getAsInt(), false);
-            } else { //РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+            } else { //по умолчанию
                 knobRec = eArtikl.find(sysfurnRec.getInt(eSysfurn.artikl_id1), false);
             }
-            //РўРµРєСЃС‚СѓСЂР° СЂСѓС‡РєРё
+            //Текстура ручки
             if (isJson(param, PKjson.colorKnob)) {
                 knobColor = param.get(PKjson.colorKnob).getAsInt();
-            } else if (knobColor == -3) { //РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ (РїРµСЂРІР°СЏ РІ СЃРїРёСЃРєРµ)
+            } else if (knobColor == -3) { //по умолчанию (первая в списке)
                 knobColor = eArtdet.find(knobRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk);
-                if (knobColor < 0) { //РµСЃР»Рё РІСЃРµ С‚РµРєСЃС‚СѓСЂС‹ РіСЂСѓРїРїС‹
+                if (knobColor < 0) { //если все текстуры группы
                     List<Record> recordList = eColor.filter(knobColor);
                     if (recordList.isEmpty() == false) {
                         knobColor = eColor.filter(knobColor).get(0).getInt(eColor.id);
                     }
                 }
             }
-            //РџРѕРґРІРµСЃ (РїРµС‚Р»Рё)
+            //Подвес (петли)
             if (isJson(param, PKjson.artiklLoop)) {
                 loopRec = eArtikl.find(param.get(PKjson.artiklLoop).getAsInt(), false);
             } 
-            //РўРµРєСЃС‚СѓСЂР° РїРѕРґРІРµСЃР°
+            //Текстура подвеса
             if (isJson(param, PKjson.colorLoop)) {
                 loopColor = param.get(PKjson.colorLoop).getAsInt();
             }
-            //Р—Р°РјРѕРє
+            //Замок
             if (isJson(param, PKjson.artiklLock)) {
                 lockRec = eArtikl.find(param.get(PKjson.artiklLock).getAsInt(), false);
             }
-            //РўРµРєСЃС‚СѓСЂР° Р·Р°РјРєР°
+            //Текстура замка
             if (isJson(param, PKjson.colorLock)) {
                 lockColor = param.get(PKjson.colorLock).getAsInt();
             }
-            //РЎС‚РѕСЂРѕРЅР° РѕС‚РєСЂС‹РІР°РЅРёСЏ
+            //Сторона открывания
             if (isJson(param, PKjson.typeOpen)) {
                 typeOpen = TypeOpen1.get(param.get(PKjson.typeOpen).getAsInt());
             } else {
                 int index = sysfurnRec.getInt(eSysfurn.side_open);
                 typeOpen = (index == TypeOpen2.REQ.id) ? typeOpen : (index == TypeOpen2.LEF.id) ? TypeOpen1.RIGH : TypeOpen1.LEFT;
             }
-            //РџРѕР»РѕР¶РµРЅРёРµ СЂСѓС‡РєРё РЅР° СЃС‚РІРѕСЂРєРµ, СЂСѓС‡РєР° Р·Р°РґР°РЅР° РїР°СЂР°РјРµС‚СЂРѕРј
+            //Положение ручки на створке, ручка задана параметром
             if (isJson(param, PKjson.positionKnob)) {
                 int position = param.get(PKjson.positionKnob).getAsInt();
-                if (position == LayoutKnob.VAR.id) { //РІР°СЂРёР°С†РёРѕРЅРЅР°СЏ
+                if (position == LayoutKnob.VAR.id) { //вариационная
                     knobLayout = LayoutKnob.VAR;
                     if (isJson(param, PKjson.heightKnob)) {
                         knobHeight = param.get(PKjson.heightKnob).getAsInt();
@@ -131,36 +131,36 @@ public class AreaStvorka extends AreaSimple {
                             knobHeight = param.get(PKjson.heightKnob).getAsInt();
                         }
                     }
-                } else { //РїРѕ СЃРµСЂРµРґРёРЅРµ РёР»Рё РєРѕРЅСЃС‚Р°РЅС‚РЅР°СЏ
+                } else { //по середине или константная
                     knobLayout = (position == LayoutKnob.MIDL.id) ? LayoutKnob.MIDL : LayoutKnob.CONST;
                     //knobHeight = owner.area.getEnvelopeInternal().getHeight() / 2;
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:AreaStvorka.initArtikle() " + e);
+            System.err.println("Ошибка:AreaStvorka.initArtikle() " + e);
         }
     }
 
-    //РЎРѕР·РґР°РЅРёРµ Рё РєРѕСЂСЂРµРєС†РёСЏ СЃС‚РѕСЂРѕРЅ СЃС‚РІРѕСЂРєРё
+    //Создание и коррекция сторон створки
     public void setLocation() {
         try {
-            //owner.area - РµСЃР»Рё РЅРµС‚ РїРѕР»РёРіРѕРЅР° СЃС‚РІРѕСЂРєРё РІ РіР».РѕРєРЅРµ 
-            //this.area  - РїРѕР»СѓС‡Р°С‚РµС‚СЃСЏ РїСЂРё СЂР°СЃРїРёР»Рµ owner.area РёРјРїРѕСЃС‚РѕРј
+            //owner.area - если нет полигона створки в гл.окне 
+            //this.area  - получатется при распиле owner.area импостом
             this.frameBox = (winc.listElem.filter(Type.IMPOST).isEmpty())
                     || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
 
-            //РџРѕР»РёРіРѕРЅ СЃС‚РІРѕСЂРєРё СЃ СѓС‡С‘С‚РѕРј РЅР°С…Р»С‘СЃС‚Р° 
+            //Полигон створки с учётом нахлёста 
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            Polygon stvOuter = buffer(this.frameBox, winc.listElem, -dh); //РїРѕР»РёРіРѕРЅ РІРµРєС‚РѕСЂРѕРІ СЃС‚РѕСЂРѕРЅ СЃС‚РІРѕСЂРєРё СЃ СѓС‡С‘С‚РѕРј РЅР°С…Р». 
+            Polygon stvOuter = buffer(this.frameBox, winc.listElem, -dh); //полигон векторов сторон створки с учётом нахл. 
 
-            //Р•СЃР»Рё СЃС‚РѕСЂРѕРЅС‹ СЃС‚РІ. РµС‰С‘ РЅРµ СЃРѕР·РґР°РЅС‹ 
+            //Если стороны ств. ещё не созданы 
             if (this.frames.isEmpty()) {
                 Coordinate[] coo = stvOuter.getGeometryN(0).getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
 
-                    //РљРѕРѕСЂРґРёРЅР°С‚С‹ СЂР°Рј СЃС‚РІРѕСЂРѕРє
+                    //Координаты рам створок
                     GsonElem gson = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y);
-                    //Р’РїРёС…РЅСѓР» РїР°СЂР°РјРµС‚СЂС‹ РІ gson
+                    //Впихнул параметры в gson
                     if (isJson(this.gson.param, PKjson.stvorkaSide[i])) {
                         gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
                     }
@@ -168,43 +168,43 @@ public class AreaStvorka extends AreaSimple {
                     this.frames.add(sideStv);
                     coo[i].z = sideStv.id;
                 }
-                coo[coo.length - 1].z = coo[0].z;  //С‚.Рє РІ С†РёРєР»Рµ РЅРµС‚ РїРѕСЃР»РµРґРЅРµР№ С‚РѕС‡РєРё
+                coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
 
-            } else { //Р•СЃР»Рё СЃС‚РѕСЂРѕРЅС‹ СѓР¶Рµ СЃРѕР·РґР°РЅС‹
+            } else { //Если стороны уже созданы
                 Coordinate[] coo = stvOuter.getGeometryN(0).getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
                     ElemSimple elem = this.frames.get(i);
                     coo[i].z = elem.id;
-                    elem.setDimension(coo[i].x, coo[i].y, coo[i + 1].x, coo[i + 1].y); //Р·Р°РїРёС€РµРј РєРѕРѕСЂРґРёРЅР°С‚С‹
+                    elem.setDimension(coo[i].x, coo[i].y, coo[i + 1].x, coo[i + 1].y); //запишем координаты
                 }
-                coo[coo.length - 1].z = coo[0].z;  //С‚.Рє РІ С†РёРєР»Рµ РЅРµС‚ РїРѕСЃР»РµРґРЅРµР№ С‚РѕС‡РєРё
+                coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
             }
 
             Polygon stvInner = buffer(stvOuter, this.frames, 0);
             this.area = gf.createMultiPolygon(new Polygon[]{stvOuter, stvInner});
 
-            //Р’С‹СЃРѕС‚Р° СЂСѓС‡РєРё, Р»РёРЅРёРё РѕС‚РєСЂС‹РІР°РЅРёСЏ
+            //Высота ручки, линии открывания
             if (this.typeOpen != TypeOpen1.EMPTY) {
 
                 if (isJson(gson.param, PKjson.positionKnob) == false) {
-                    if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.MIDL.id) { //РїРѕ СЃРµСЂРµРґРёРЅРµ
+                    if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.MIDL.id) { //по середине
                         knobLayout = LayoutKnob.MIDL;
                         knobHeight = this.area.getEnvelopeInternal().getHeight() / 2;
-                    } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.CONST.id) { //РєРѕРЅСЃС‚Р°РЅС‚РЅР°СЏ
+                    } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.CONST.id) { //константная
                         knobLayout = LayoutKnob.CONST;
                         knobHeight = this.area.getEnvelopeInternal().getHeight() / 2;
                     }
                 }
 
-                //Р›РёРЅРёРё РіРѕСЂРёР·. РѕС‚РєСЂС‹РІР°РЅРёСЏ
+                //Линии гориз. открывания
                 ElemSimple stvside = TypeOpen1.getKnob(this, this.typeOpen);
                 int ind = UGeo.getIndex(this.area, stvside.id);
-                Coordinate h = UGeo.getSegment(area, ind).midPoint(); //РІС‹СЃРѕС‚Р° СЂСѓС‡РєРё РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+                Coordinate h = UGeo.getSegment(area, ind).midPoint(); //высота ручки по умолчанию
                 LineSegment s1 = UGeo.getSegment(area, ind - 1);
                 LineSegment s2 = UGeo.getSegment(area, ind + 1);
                 lineOpenHor = gf.createLineString(UGeo.arrCoord(s1.p0.x, s1.p0.y, h.x, h.y, s2.p1.x, s2.p1.y, h.x, h.y));
 
-                //Р›РёРЅРёРё РІРµСЂС‚РёРє. РѕС‚РєСЂС‹РІР°РЅРёСЏ
+                //Линии вертик. открывания
                 if (typeOpen == TypeOpen1.LEFTUP || typeOpen == TypeOpen1.RIGHUP) {
                     ElemSimple stv2 = this.frames.get(Layout.TOP);
                     ind = UGeo.getIndex(this.area, stv2.id);
@@ -213,15 +213,15 @@ public class AreaStvorka extends AreaSimple {
                     s2 = UGeo.getSegment(area, ind + 1);
                     lineOpenVer = gf.createLineString(UGeo.arrCoord(p2.x, p2.y, s1.p0.x, s1.p0.y, p2.x, p2.y, s2.p1.x, s2.p1.y));
                 }
-                //РџРѕР»РёРіРѕРЅ СЂСѓС‡РєРё
+                //Полигон ручки
                 double DX = 10, DY = 60;
                 if (knobLayout == LayoutKnob.VAR && this.knobHeight != 0) {
                     LineSegment lineSegm = UGeo.getSegment(area, ind);
-//                    h = lineSegm.pointAlong(1 - (this.knobHeight / lineSegm.getLength())); //РІС‹СЃРѕС‚Р° СЂСѓС‡РєРё РЅР° СЃС‚РІРѕСЂРєРµ
-                    h = lineSegm.pointAlong((this.knobHeight / lineSegm.getLength())); //РІС‹СЃРѕС‚Р° СЂСѓС‡РєРё РЅР° СЃС‚РІРѕСЂРєРµ
+//                    h = lineSegm.pointAlong(1 - (this.knobHeight / lineSegm.getLength())); //высота ручки на створке
+                    h = lineSegm.pointAlong((this.knobHeight / lineSegm.getLength())); //высота ручки на створке
                 }
-                Record sysprofRec = eSysprof.find5(winc.nuni, stvside.type.id2, UseSideTo.ANY, UseSideTo.ANY); //РўРђРљ Р”Р•Р›РђРўР¬ РќР•Р›Р¬Р—РЇ...
-                Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //Р°СЂС‚РёРєСѓР»
+                Record sysprofRec = eSysprof.find5(winc.nuni, stvside.type.id2, UseSideTo.ANY, UseSideTo.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
+                Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
                 double dx = artiklRec.getDbl(eArtikl.height) / 2;
                 if (typeOpen == TypeOpen1.UPPER) {
                     h.y = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? h.y - 2 * dx : h.y + 2 * dx;
@@ -233,7 +233,7 @@ public class AreaStvorka extends AreaSimple {
                 } else {
                     this.knobOpen = gf.createPolygon(UGeo.arrCoord(h.x - DX, h.y - DY, h.x + DX, h.y - DY, h.x + DX, h.y + DY, h.x - DX, h.y + DY));
                 }
-                //РќР°РїСЂР°РІР»РµРЅРёРµ РѕС‚РєСЂС‹РІР°РЅРёСЏ
+                //Направление открывания
                 if (typeOpen != TypeOpen1.UPPER) {
                     double anglHoriz = UGeo.anglHor(stvside.x1(), stvside.y1(), stvside.x2(), stvside.y2());
                     if (!(anglHoriz == 90 || anglHoriz == 270)) {
@@ -244,33 +244,33 @@ public class AreaStvorka extends AreaSimple {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:AreaStvorka.setLocation " + e);
+            System.err.println("Ошибка:AreaStvorka.setLocation " + e);
         }
     }
 
-    //L - СЃРѕРµРґРёРЅРµРЅРёСЏ, РїСЂРёР».СЃРѕРµРґ.
+    //L - соединения, прил.соед.
     @Override
     public void addJoining() {
         ArrayCom<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.STOIKA, Type.SHTULP);
         try {
-            //L - СЃРѕРµРґРёРЅРµРЅРёСЏ
-            for (int i = 0; i < this.frames.size(); i++) { //С†РёРєР» РїРѕ СЃС‚РѕСЂРѕРЅР°Рј СЃС‚РІРѕСЂРєРё
+            //L - соединения
+            for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам створки
                 ElemFrame elem1 = (ElemFrame) this.frames.get(i);
                 ElemFrame elem2 = (ElemFrame) this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1);
                 int lev1 = elem1.artiklRec.getInt(eArtikl.level1);
                 int lev2 = elem2.artiklRec.getInt(eArtikl.level2);
 
-                if ((lev1 == 1 && (lev2 == 1 || lev2 == 2)) == false) { //СѓРіР»РѕРІРѕРµ Р»РµРІРѕРµ/РїСЂР°РІРѕРµ
+                if ((lev1 == 1 && (lev2 == 1 || lev2 == 2)) == false) { //угловое левое/правое
                     TypeJoin type = (i == 0 || i == 2) ? TypeJoin.ANG2 : TypeJoin.ANG1;
                     winc.listJoin.add(new ElemJoining(this.winc, type, elem1, elem2));
-                } else { //СѓРіР»РѕРІРѕРµ РЅР° СѓСЃ
+                } else { //угловое на ус
                     winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.ANGL, elem1, elem2));
                 }
             }
-            //РџСЂРёР»РµРіР°СЋС‰РµРµ
+            //Прилегающее
             LineSegment segm = new LineSegment();
-            Coordinate coo1[] = this.area.getGeometryN(0).getCoordinates(); //РїРѕР»РёРіРѕРЅ РІРµРєС‚РѕСЂРѕРІ СЃС‚РѕСЂРѕРЅ СЃС‚РІРѕСЂРєРё
-            Coordinate coo2[] = this.frameBox.getGeometryN(0).getCoordinates(); //РїРѕР»РёРіРѕРЅ РІРµРєС‚РѕСЂРѕРІ СЃС‚РѕСЂРѕРЅ СЂР°РјС‹
+            Coordinate coo1[] = this.area.getGeometryN(0).getCoordinates(); //полигон векторов сторон створки
+            Coordinate coo2[] = this.frameBox.getGeometryN(0).getCoordinates(); //полигон векторов сторон рамы
 
             for (int j = 0; j < coo1.length - 1; j++) {
                 ElemSimple elemStv = elemList.get(coo1[j].z);
@@ -280,7 +280,7 @@ public class AreaStvorka extends AreaSimple {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:AreaStvorka.joining() " + e);
+            System.err.println("Ошибка:AreaStvorka.joining() " + e);
         }
     }
 
@@ -288,11 +288,11 @@ public class AreaStvorka extends AreaSimple {
         if (this.knobOpen != null) {
             winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
 
-            if (this.lineOpenHor != null) { //Р»РёРЅРёРё РіРѕСЂРёР·РѕРЅС‚. РѕС‚РєСЂС‹РІР°РЅРёСЏ
+            if (this.lineOpenHor != null) { //линии горизонт. открывания
                 Shape shape = new ShapeWriter().toShape(this.lineOpenHor);
                 winc.gc2d.draw(shape);
             }
-            if (this.lineOpenVer != null) { //Р»РёРЅРёРё РІРµСЂС‚РёРє. РѕС‚РєСЂС‹РІР°РЅРёСЏ
+            if (this.lineOpenVer != null) { //линии вертик. открывания
                 Shape shape = new ShapeWriter().toShape(this.lineOpenVer);
                 winc.gc2d.draw(shape);
             }

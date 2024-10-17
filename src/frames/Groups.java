@@ -50,7 +50,7 @@ public class Groups extends javax.swing.JFrame {
         loadingModel();
         List<Component> list = (mode == 1) ? List.of(pan1, pan2, pan5, pan6, pan7) : List.of(pan3, pan4);
         list.forEach(comp -> tabb.remove(comp));
-        setTitle((mode == 1) ? "РЎРїСЂР°РІРѕС‡РЅРёРєРё РњР¦" : "Р¦РµРЅРѕРІС‹Рµ РєРѕСЌС„С„РёС†РёРµРЅС‚С‹");
+        setTitle((mode == 1) ? "Справочники МЦ" : "Ценовые коэффициенты");
     }
 
     public Groups(int mode, ListenerRecord listener) {
@@ -63,7 +63,7 @@ public class Groups extends javax.swing.JFrame {
         loadingModel();
         List<Component> list = (mode == 1) ? List.of(pan1, pan2, pan5, pan6, pan7) : List.of(pan3, pan4);
         list.forEach(comp -> tabb.remove(comp));
-        setTitle((mode == 1) ? "РЎРїСЂР°РІРѕС‡РЅРёРєРё" : "РљРѕСЌС„С„РёС†РёРµРЅС‚С‹");
+        setTitle((mode == 1) ? "Справочники" : "Коэффициенты");
     }
 
     private void loadingData() {
@@ -99,13 +99,13 @@ public class Groups extends javax.swing.JFrame {
                     int id = qDecInc.getAs(row, eGroups.id);
                     if (id == 2073) {
                         if ((double) value == 3) {
-                            value = "1 РјРј";
+                            value = "1 мм";
                         } else if ((double) value == 2) {
-                            value = "0,5 РјРј";
+                            value = "0,5 мм";
                         } else if ((double) value == 1) {
-                            value = "0,1 РјРј";
+                            value = "0,1 мм";
                         } else if ((double) value == 0) {
-                            value = "С‚РѕС‡РЅРѕРµ";
+                            value = "точное";
                         }
                     } else if (id != -1 && (id == 2055 || id == 2056 || id == 2058 || id == 2101 || id == 2104)) {
                         value = UCom.format(value, scale) + "%";
@@ -118,28 +118,28 @@ public class Groups extends javax.swing.JFrame {
 
         UGui.buttonCellEditor(tab7, 1, (component) -> {
 
-            if (component instanceof DefCellEditorBtn) { //СѓСЃС‚Р°РЅРѕРІРёРј РІРёРґ Рё С‚РёРї СЏС‡РµР№РєРё
+            if (component instanceof DefCellEditorBtn) { //установим вид и тип ячейки
                 DefCellEditorBtn editor = (DefCellEditorBtn) component;
                 int groupsID = qDecInc.getAs(getIndexRec(tab7), eGroups.id);
                 if (groupsID == 2073) {
                     editor.getButton().setVisible(true);
                     editor.getTextField().setEnabled(false);
-                } else { //РІРІРѕРґРёРјС‹Рµ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј
+                } else { //вводимые пользователем
                     editor.getButton().setVisible(false);
                     editor.getTextField().setEnabled(true);
                     editor.getTextField().setEditable(true);
                 }
-            } else {  //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+            } else {  //проверка на коррекность ввода
                 String txt = (String) component;
                 return ("0123456789,".indexOf(txt) != -1);
             }
             return true;
 
         }).addActionListener(event -> {
-            String arrStr[] = {"С‚РѕС‡РЅРѕРµ", "0,1 РјРј", "0,5 РјРј", "1,0 РјРј"};
+            String arrStr[] = {"точное", "0,1 мм", "0,5 мм", "1,0 мм"};
             double arrDbl[] = {0, 1, 2, 3};
-            Object result = JOptionPane.showInputDialog(Groups.this, "Р’С‹Р±РµСЂРёС‚Рµ С‚РѕС‡РЅРѕСЃС‚СЊ СЂР°СЃСЃС‡С‘С‚Р°",
-                    "РћРєСЂСѓРіР»РµРЅРёРµ РґР»РёРЅС‹ РїСЂРѕС„РёР»РµР№", JOptionPane.QUESTION_MESSAGE, null, arrStr, arrStr[0]);
+            Object result = JOptionPane.showInputDialog(Groups.this, "Выберите точность рассчёта",
+                    "Округление длины профилей", JOptionPane.QUESTION_MESSAGE, null, arrStr, arrStr[0]);
             for (int i = 0; i < arrStr.length; ++i) {
                 if (arrStr[i].equals(result)) {
                     UGui.stopCellEditing(tab7);
@@ -192,7 +192,7 @@ public class Groups extends javax.swing.JFrame {
 
         mInsert.setFont(frames.UGui.getFont(1,0));
         mInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        mInsert.setText("Р”РѕР±Р°РІРёС‚СЊ");
+        mInsert.setText("Добавить");
         mInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -202,7 +202,7 @@ public class Groups extends javax.swing.JFrame {
 
         mDelit.setFont(frames.UGui.getFont(1,0));
         mDelit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        mDelit.setText("РЈРґР°Р»РёС‚СЊ");
+        mDelit.setText("Удалить");
         mDelit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -211,7 +211,7 @@ public class Groups extends javax.swing.JFrame {
         ppmCrud.add(mDelit);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Р¦РµРЅРѕРІС‹Рµ РєРѕСЌС„С„РёС†РёРµРЅС‚С‹");
+        setTitle("Ценовые коэффициенты");
         setMinimumSize(new java.awt.Dimension(700, 400));
         setPreferredSize(new java.awt.Dimension(600, 500));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -226,7 +226,7 @@ public class Groups extends javax.swing.JFrame {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -241,7 +241,7 @@ public class Groups extends javax.swing.JFrame {
         });
 
         btnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        btnDel.setToolTipText(bundle.getString("РЈРґР°Р»РёС‚СЊ")); // NOI18N
+        btnDel.setToolTipText(bundle.getString("Удалить")); // NOI18N
         btnDel.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnDel.setFocusable(false);
         btnDel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -257,7 +257,7 @@ public class Groups extends javax.swing.JFrame {
         });
 
         btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        btnIns.setToolTipText(bundle.getString("Р”РѕР±Р°РІРёС‚СЊ")); // NOI18N
+        btnIns.setToolTipText(bundle.getString("Добавить")); // NOI18N
         btnIns.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnIns.setFocusable(false);
         btnIns.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -273,7 +273,7 @@ public class Groups extends javax.swing.JFrame {
         });
 
         btnReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c053.gif"))); // NOI18N
-        btnReport.setToolTipText(bundle.getString("РџРµС‡Р°С‚СЊ")); // NOI18N
+        btnReport.setToolTipText(bundle.getString("Печать")); // NOI18N
         btnReport.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnReport.setFocusable(false);
         btnReport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -289,7 +289,7 @@ public class Groups extends javax.swing.JFrame {
         });
 
         btnMoveD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c052.gif"))); // NOI18N
-        btnMoveD.setToolTipText(bundle.getString("РџРµСЂРµРјРµСЃС‚РёС‚СЊ РІРЅРёР·")); // NOI18N
+        btnMoveD.setToolTipText(bundle.getString("Переместить вниз")); // NOI18N
         btnMoveD.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnMoveD.setFocusable(false);
         btnMoveD.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -305,7 +305,7 @@ public class Groups extends javax.swing.JFrame {
         });
 
         btnMoveU.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c051.gif"))); // NOI18N
-        btnMoveU.setToolTipText(bundle.getString("РџРµСЂРµРјРµСЃС‚РёС‚СЊ РІРІРµСЂС…")); // NOI18N
+        btnMoveU.setToolTipText(bundle.getString("Переместить вверх")); // NOI18N
         btnMoveU.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnMoveU.setFocusable(false);
         btnMoveU.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -321,7 +321,7 @@ public class Groups extends javax.swing.JFrame {
         });
 
         btnChoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c044.gif"))); // NOI18N
-        btnChoice.setToolTipText(bundle.getString("Р’С‹Р±СЂР°С‚СЊ")); // NOI18N
+        btnChoice.setToolTipText(bundle.getString("Выбрать")); // NOI18N
         btnChoice.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnChoice.setFocusable(false);
         btnChoice.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -404,7 +404,7 @@ public class Groups extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "РќР°Р·РІР°РЅРёРµ", "Р•Рґ. С‡РёСЃР»Рѕ", "РњРЅ. С‡РёСЃР»Рѕ", "РљСѓСЂСЃ", "ID"
+                "Название", "Ед. число", "Мн. число", "Курс", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -437,7 +437,7 @@ public class Groups extends javax.swing.JFrame {
 
         pan6.add(scr6, java.awt.BorderLayout.CENTER);
 
-        tabb.addTab("РљСѓСЂСЃС‹ РІР°Р»СЋС‚", pan6);
+        tabb.addTab("Курсы валют", pan6);
 
         pan7.setName("pan7"); // NOI18N
         pan7.setLayout(new java.awt.BorderLayout());
@@ -453,7 +453,7 @@ public class Groups extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "РќР°Р·РІР°РЅРёРµ", "РџР°СЂР°РјРµС‚СЂ", "ID"
+                "Название", "Параметр", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -482,7 +482,7 @@ public class Groups extends javax.swing.JFrame {
 
         pan7.add(scr7, java.awt.BorderLayout.CENTER);
 
-        tabb.addTab("Р Р°СЃСЃС‡С‘С‚РЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹", pan7);
+        tabb.addTab("Рассчётные параметры", pan7);
 
         pan2.setName("pan2"); // NOI18N
         pan2.setLayout(new java.awt.BorderLayout());
@@ -495,7 +495,7 @@ public class Groups extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РќР°Р·РІР°РЅРёРµ РіСЂСѓРїРїС‹", "РЎРєРёРґРєР° %", "ID"
+                "Название группы", "Скидка %", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -531,7 +531,7 @@ public class Groups extends javax.swing.JFrame {
 
         pan2.add(scr2, java.awt.BorderLayout.CENTER);
 
-        tabb.addTab("РЎРєРёРґРєРё РіСЂСѓРїРї РњР¦", pan2);
+        tabb.addTab("Скидки групп МЦ", pan2);
 
         pan1.setName("pan1"); // NOI18N
         pan1.setLayout(new java.awt.BorderLayout());
@@ -544,7 +544,7 @@ public class Groups extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РќР°Р·РІР°РЅРёРµ РіСЂСѓРїРїС‹", "РќР°С†РµРЅРєР° (РєРѕСЌС„)", "ID"
+                "Название группы", "Наценка (коэф)", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -580,7 +580,7 @@ public class Groups extends javax.swing.JFrame {
 
         pan1.add(scr1, java.awt.BorderLayout.CENTER);
 
-        tabb.addTab("РќР°С†РµРЅРєРё РіСЂСѓРїРї РњР¦", pan1);
+        tabb.addTab("Наценки групп МЦ", pan1);
 
         pan5.setName("pan5"); // NOI18N
         pan5.setLayout(new java.awt.BorderLayout());
@@ -594,7 +594,7 @@ public class Groups extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "РќР°РёРјРµРЅРѕРІР°РЅРёРµ РіСЂСѓРїРї", "РљРѕСЌС„С„РёС†РёРµРЅС‚", "ID"
+                "Наименование групп", "Коэффициент", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -629,7 +629,7 @@ public class Groups extends javax.swing.JFrame {
 
         pan5.add(scr5, java.awt.BorderLayout.CENTER);
 
-        tabb.addTab("РљРѕСЌС„. РіСЂСѓРїРї С‚РµРєСЃС‚СѓСЂ", pan5);
+        tabb.addTab("Коэф. групп текстур", pan5);
 
         pan3.setName("pan3"); // NOI18N
         pan3.setLayout(new java.awt.BorderLayout());
@@ -642,7 +642,7 @@ public class Groups extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РќР°РёРјРµРЅРѕРІР°РЅРёРµ", "ID"
+                "Наименование", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -675,7 +675,7 @@ public class Groups extends javax.swing.JFrame {
 
         pan3.add(scr3, java.awt.BorderLayout.CENTER);
 
-        tabb.addTab("       РЎРµСЂРёРё РњР¦      ", pan3);
+        tabb.addTab("       Серии МЦ      ", pan3);
 
         pan4.setName("pan4"); // NOI18N
         pan4.setLayout(new java.awt.BorderLayout());
@@ -689,7 +689,7 @@ public class Groups extends javax.swing.JFrame {
                 {null, null}
             },
             new String [] {
-                "РќР°РёРјРµРЅРѕРІР°РЅРёРµ", "ID"
+                "Наименование", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -723,7 +723,7 @@ public class Groups extends javax.swing.JFrame {
 
         pan4.add(scr4, java.awt.BorderLayout.CENTER);
 
-        tabb.addTab("     Р“СЂСѓРїРїС‹  РњР¦    ", pan4);
+        tabb.addTab("     Группы  МЦ    ", pan4);
 
         centr.add(tabb, java.awt.BorderLayout.CENTER);
 
@@ -754,39 +754,39 @@ public class Groups extends javax.swing.JFrame {
         if (tab1.getBorder() != null) {
             UGui.insertRecordCur(tab1, eGroups.up, (record) -> {
                 record.set(eGroups.val, 1);
-                //record.setDev(eGroups.name, "РќР°С†РµРЅРєР°");
+                //record.setDev(eGroups.name, "Наценка");
                 record.set(eGroups.grup, TypeGrup.PRICE_INC.id);
             });
 
         } else if (tab2.getBorder() != null) {
             UGui.insertRecordCur(tab2, eGroups.up, (record) -> {
                 record.set(eGroups.val, 0);
-                //record.setDev(eGroups.name, "РЎРєРёРґРєР°");
+                //record.setDev(eGroups.name, "Скидка");
                 record.set(eGroups.grup, TypeGrup.PRICE_DEC.id);
             });
 
         } else if (tab3.getBorder() != null) {
             UGui.insertRecordCur(tab3, eGroups.up, (record) -> {
                 record.set(eGroups.grup, TypeGrup.SERI_ELEM.id);
-                //record.setDev(eGroups.name, "РЎРµСЂРёСЏ");
+                //record.setDev(eGroups.name, "Серия");
             });
 
         } else if (tab4.getBorder() != null) {
             UGui.insertRecordCur(tab4, eGroups.up, (record) -> {
                 record.set(eGroups.grup, TypeGrup.CATEG_ELEM.id);
-                //record.setDev(eGroups.name, "РљР°С‚РµРі.");
+                //record.setDev(eGroups.name, "Катег.");
             });
 
         } else if (tab5.getBorder() != null) {
             UGui.insertRecordCur(tab5, eGroups.up, (record) -> {
                 record.set(eGroups.val, 1);
                 record.set(eGroups.grup, TypeGrup.COLOR_GRP.id);
-                //record.setDev(eGroups.name, "РљРѕСЌС„.");
+                //record.setDev(eGroups.name, "Коэф.");
             });
 
         } else if (tab6.getBorder() != null) {
             UGui.insertRecordCur(tab6, eCurrenc.up, (record) -> {
-                //record.setDev(eCurrenc.name, "РљСѓСЂСЃ");
+                //record.setDev(eCurrenc.name, "Курс");
             });
 
         }
@@ -871,7 +871,7 @@ public class Groups extends javax.swing.JFrame {
     }//GEN-LAST:event_tabMouseClicked
 
     private void btnChoice(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice
-        eGroups.data().execsql(); //РµСЃР»Рё РґРѕР±Р°РІРёР» Рё СЃСЂР°Р·Сѓ РІС‹Р±СЂР°Р»
+        eGroups.data().execsql(); //если добавил и сразу выбрал
         JTable table = UGui.tableFromBorder(tab1, tab2, tab3, tab4, tab4, tab6, tab7);
         int index = UGui.getIndexRec(table);
         if (index != -1) {

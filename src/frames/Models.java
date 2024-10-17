@@ -95,13 +95,13 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             try {
                 String script = record.getStr(eSysmodel.script);
                 Wincalc iwin2 = new Wincalc(script);
-                Cal5e joining = new SpcJoining(iwin2, true);//Ð·Ð°Ð¿Ð¾Ð»Ð½Ð¸Ð¼ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ Ð¸Ð· ÐºÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¸Ð²Ð°
+                Cal5e joining = new SpcJoining(iwin2, true);//çàïîëíèì ñîåäèíåíèÿ èç êîíñòðóêòèâà
                 joining.calc();
                 iwin2.imageIcon = Canvas.createIcon(iwin2, 68);
                 record.add(iwin2);
 
             } catch (Exception e) {
-                System.err.println("ÐžÑˆÐ¸Ð±ÐºÐ°:Models.loadingTab() " + e);
+                System.err.println("Îøèáêà:Models.loadingTab() " + e);
             }
         }
         ((DefaultTableModel) tab.getModel()).fireTableDataChanged();
@@ -113,7 +113,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         if (index != -1) {
             Record sysmodelRec = qSysmodel.get(index);
             Object w = sysmodelRec.get(eSysmodel.values().length);
-            if (w instanceof Wincalc) { //Ð¿Ñ€Ð¾Ñ€Ð¸ÑÐ¾Ð²ÐºÐ° Ð¾ÐºÐ½Ð°               
+            if (w instanceof Wincalc) { //ïðîðèñîâêà îêíà               
                 Wincalc win = (Wincalc) w;
                 scene.init(win);
                 canvas.draw();
@@ -137,7 +137,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 UGui.setSelectedIndex(tab1, index);
             }
         } catch (Exception e) {
-            System.err.println("ÐžÑˆÐ¸Ð±ÐºÐ°:Models.reload() " + e);
+            System.err.println("Îøèáêà:Models.reload() " + e);
         }
         return null;
     }
@@ -190,7 +190,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         south = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("ÐœÐ¾Ð´ÐµÐ»Ð¸ Ð²Ð¸Ñ€Ñ‚ÑƒÐ°Ð»ÑŒÐ½Ñ‹Ñ… Ð¿Ñ€Ð¾Ñ„Ð¸Ð»ÐµÐ¹");
+        setTitle("Ìîäåëè âèðòóàëüíûõ ïðîôèëåé");
         setFont(frames.UGui.getFont(0,1));
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 500));
@@ -211,7 +211,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Ð—Ð°ÐºÑ€Ñ‹Ñ‚ÑŒ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Çàêðûòü")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -226,7 +226,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         });
 
         btnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        btnDel.setToolTipText(bundle.getString("Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ")); // NOI18N
+        btnDel.setToolTipText(bundle.getString("Óäàëèòü")); // NOI18N
         btnDel.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnDel.setFocusable(false);
         btnDel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -242,7 +242,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         });
 
         btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        btnIns.setToolTipText(bundle.getString("Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ")); // NOI18N
+        btnIns.setToolTipText(bundle.getString("Äîáàâèòü")); // NOI18N
         btnIns.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnIns.setFocusable(false);
         btnIns.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -258,7 +258,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         });
 
         btnChoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c044.gif"))); // NOI18N
-        btnChoice.setToolTipText(bundle.getString("Ð’Ñ‹Ð±Ñ€Ð°Ñ‚ÑŒ")); // NOI18N
+        btnChoice.setToolTipText(bundle.getString("Âûáðàòü")); // NOI18N
         btnChoice.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnChoice.setFocusable(false);
         btnChoice.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -323,7 +323,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         });
 
         btnMoveU.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c051.gif"))); // NOI18N
-        btnMoveU.setToolTipText(bundle.getString("ÐŸÐµÑ€ÐµÐ¼ÐµÑÑ‚Ð¸Ñ‚ÑŒ Ð²Ð²ÐµÑ€Ñ…")); // NOI18N
+        btnMoveU.setToolTipText(bundle.getString("Ïåðåìåñòèòü ââåðõ")); // NOI18N
         btnMoveU.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnMoveU.setFocusable(false);
         btnMoveU.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -339,7 +339,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         });
 
         btnMoveD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c052.gif"))); // NOI18N
-        btnMoveD.setToolTipText(bundle.getString("ÐŸÐµÑ€ÐµÐ¼ÐµÑÑ‚Ð¸Ñ‚ÑŒ Ð²Ð½Ð¸Ð·")); // NOI18N
+        btnMoveD.setToolTipText(bundle.getString("Ïåðåìåñòèòü âíèç")); // NOI18N
         btnMoveD.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnMoveD.setFocusable(false);
         btnMoveD.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -433,7 +433,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 
             },
             new String [] {
-                "â„–", "ÐÐ°Ð¸Ð¼ÐµÐ½Ð¾Ð²Ð°Ð½Ð¸Ðµ", "Ð Ð¸ÑÑƒÐ½Ð¾Ðº"
+                "¹", "Íàèìåíîâàíèå", "Ðèñóíîê"
             }
         ) {
             Class[] types = new Class [] {
@@ -525,9 +525,9 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             record.set(eSysmodel.id, Conn.genId(eSysmodel.up));
             record.set(eSysmodel.npp, record.get(eSysmodel.id));
 
-            //Ð”Ð»Ñ Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ¸ ÑÐºÑ€Ð¸Ð¿Ñ‚Ð° Ð¸Ð· Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ñ‹ 
+            //Äëÿ çàãðóçêè ñêðèïòà èç ïðîãðàììû  
             if (eProp.dev == true) {
-                Object prj = JOptionPane.showInputDialog(Models.this, "ÐÐ¾Ð¼ÐµÑ€ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð°", "ÐŸÑ€Ð¾ÐµÐºÑ‚", JOptionPane.QUESTION_MESSAGE);
+                Object prj = JOptionPane.showInputDialog(Models.this, "Íîìåð ïðîåêòà", "Ïðîåêò", JOptionPane.QUESTION_MESSAGE);
                 if (prj != null) {
                     json = GsonScript.modelScript(Integer.valueOf(prj.toString()));
                     GsonRoot gsonRoot = new Gson().fromJson(json, GsonRoot.class);
@@ -535,14 +535,14 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                     record.set(eSysmodel.script, json);
                 }
             } else {
-                //Ð”Ð»Ñ Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ¸ ÑÐºÑ€Ð¸Ð¿Ñ‚Ð° Ñ Ð´Ð¸ÑÐºÐ°              
+                //Äëÿ çàãðóçêè ñêðèïòà ñ äèñêà              
                 JFileChooser chooser = new JFileChooser();
                 chooser.setCurrentDirectory(new File("."));
                 chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 chooser.setAcceptAllFileFilterUsed(false);
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Json (Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚ json)", "json");
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Json (ôîðìàò json)", "json");
                 chooser.setFileFilter(filter);
-                if (chooser.showDialog(this, "Ð’Ñ‹Ð±Ñ€Ð°Ñ‚ÑŒ") != JFileChooser.CANCEL_OPTION) {
+                if (chooser.showDialog(this, "Âûáðàòü") != JFileChooser.CANCEL_OPTION) {
                     String path = chooser.getSelectedFile().getPath();
                     JsonReader reader = new JsonReader(new FileReader(path));
                     GsonRoot gsonRoot = new Gson().fromJson(reader, GsonRoot.class);
@@ -575,7 +575,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 }
             }
         } catch (Exception e) {
-            System.err.println("ÐžÑˆÐ¸Ð±ÐºÐ°:Models.btnInsert()");
+            System.err.println("Îøèáêà:Models.btnInsert()");
         }
     }//GEN-LAST:event_btnInsert
 

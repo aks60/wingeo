@@ -29,8 +29,8 @@ import org.locationtech.jts.geom.Polygon;
 
 public class ElemFrame extends ElemSimple {
 
-    public double radiusArc = 0; //СЂР°РґРёСѓСЃ Р°СЂРєРё
-    public double lengthArc = 0; //РґР»РёРЅР° Р°СЂРєРё  
+    public double radiusArc = 0; //радиус арки
+    public double lengthArc = 0; //длина арки  
 
     public ElemFrame(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
         super(winc, id, gson, owner);
@@ -48,8 +48,8 @@ public class ElemFrame extends ElemSimple {
     }
 
     /**
-     * РџСЂРѕС„РёР»СЊ С‡РµСЂРµР· РїР°СЂР°РјРµС‚СЂ РёР»Рё РїРµСЂРІР°СЏ Р·Р°РїРёСЃСЊ РІ СЃРёСЃС‚РµРјРµ СЃРј. С‚Р°Р±Р». sysprof Р¦РІРµС‚
-     * РµСЃР»Рё РЅРµС‚ РїР°СЂР°РјРµС‚СЂР° С‚Рѕ Р±РµСЂС‘Рј winc.color.
+     * Профиль через параметр или первая запись в системе см. табл. sysprof Цвет
+     * если нет параметра то берём winc.color.
      */
     @Override
     public void initArtikle() {
@@ -58,10 +58,10 @@ public class ElemFrame extends ElemSimple {
             colorID2 = (isJson(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
             colorID3 = (isJson(gson.param, PKjson.colorID3)) ? gson.param.get(PKjson.colorID3).getAsInt() : winc.colorID3;
 
-            if (isJson(gson.param, PKjson.sysprofID)) { //РїСЂРѕС„РёР»Рё С‡РµСЂРµР· РїР°СЂР°РјРµС‚СЂ
+            if (isJson(gson.param, PKjson.sysprofID)) { //профили через параметр
                 sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());
 
-            } else if (owner.sysprofRec != null) { //РїСЂРѕС„РёР»Рё С‡РµСЂРµР· РїР°СЂР°РјРµС‚СЂ СЂР°РјС‹, СЃС‚РІРѕСЂРєРё
+            } else if (owner.sysprofRec != null) { //профили через параметр рамы, створки
                 sysprofRec = owner.sysprofRec;
             } else {
                 if (Layout.BOTT.equals(layout())) {
@@ -77,40 +77,40 @@ public class ElemFrame extends ElemSimple {
                 }
             }
 
-            artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //Р°СЂС‚РёРєСѓР»
-            artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true); //Р°РЅР°Р»РѕРі 
+            artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
+            artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true); //аналог 
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:ElemFrame.initConstructiv() " + e);
+            System.err.println("Ошибка:ElemFrame.initConstructiv() " + e);
         }
     }
 
-    //Р Р°СЃСЃС‡С‘С‚ РїРѕР»РёРіРѕРЅР° СЃС‚РѕСЂРѕРЅС‹ СЂР°РјС‹
+    //Рассчёт полигона стороны рамы
     @Override
     public void setLocation() {
         try {
             //new Test().mpol = owner.area;
-            Geometry geo1 = owner.area.getGeometryN(0), geo2 = owner.area.getGeometryN(1); //РІРЅРµС€РЅ. Рё РІРЅСѓС‚СЂ. Р°СЂРµР° Р°СЂРєРё.
+            Geometry geo1 = owner.area.getGeometryN(0), geo2 = owner.area.getGeometryN(1); //внешн. и внутр. ареа арки.
             Coordinate c1[] = geo1.getCoordinates(), c2[] = geo2.getCoordinates();
             for (int i = 0; i < c1.length; i++) {
                 if (c1[i].z == this.id) {
-                    if (this.h() != null) { //РїРѕР»РёРіРѕРЅ Р°СЂРєРё
+                    if (this.h() != null) { //полигон арки
 
                         List<Coordinate> list = new ArrayLoop();
-                        List<Coordinate> c1a = UGeo.getSegmentArch(c1, this); //РІРЅРµС€РЅ.РєРѕРѕСЂРґ.Р°СЂРєРё
-                        List<Coordinate> c2a = UGeo.getSegmentArch(c2, this); //РІРЅСѓС‚СЂ.РєРѕРѕСЂРґ.Р°СЂРєРё
-                        c2a.add(geo2.getCoordinates()[0]); //РїРѕСЃР».С‚РѕС‡РєР° Р°СЂРєРё
-                        Collections.reverse(c2a); //РїСЂРѕС‚РёРІ С‡Р°СЃ.СЃС‚СЂРµР»РєРё
+                        List<Coordinate> c1a = UGeo.getSegmentArch(c1, this); //внешн.коорд.арки
+                        List<Coordinate> c2a = UGeo.getSegmentArch(c2, this); //внутр.коорд.арки
+                        c2a.add(geo2.getCoordinates()[0]); //посл.точка арки
+                        Collections.reverse(c2a); //против час.стрелки
 
                         list.addAll(c1a);
                         list.addAll(c2a);
                         list.add(c1a.get(0));
 
-                        Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0])); //РїРѕР»РёРіРѕРЅ СЂР°РјС‹ Р°СЂРєРё
+                        Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0])); //полигон рамы арки
                         this.area = poly;
                         Coordinate coo[] = this.area.getCoordinates();                       
 
-                    } else { //РїРѕР»РёРіРѕРЅ СЂР°РјС‹   
+                    } else { //полигон рамы   
                         this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), c2[i + 1].x, c2[i + 1].y, c2[i].x, c2[i].y);
                     }
                     break;
@@ -118,20 +118,20 @@ public class ElemFrame extends ElemSimple {
             }
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:ElemFrame.setLocation" + toString() + e);
+            System.err.println("Ошибка:ElemFrame.setLocation" + toString() + e);
         }
     }
 
-    //Р“Р»Р°РІРЅР°СЏ СЃРїРµС†РёС„РёРєР°С†РёСЏ
+    //Главная спецификация
     @Override
-    public void setSpecific() {  //РґРѕР±Р°РІР»РµРЅРёРµ РѕСЃРЅРѕРІРЅРѕР№ СЃРїРµС†РёС„РёРєР°С†РёРё
+    public void setSpecific() {  //добавление основной спецификации
         try {
-            spcRec.place = "Р’РЎРў." + layout().name.substring(0, 1).toLowerCase();
+            spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
             spcRec.artiklRec(artiklRec);
             spcRec.color(colorID1, colorID2, colorID3);
             Coordinate coo[] = this.area.getCoordinates();
 
-            //РЈРіР»С‹ СЂРµР·Р° (Сѓ СЂР°РјС‹ РІСЃРµРіРґР° 4 РІРµСЂС€РёРЅС‹)
+            //Углы реза (у рамы всегда 4 вершины)
             if (this.h() == null) {
                 spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
                 spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 5], coo[coo.length - 4], coo[coo.length - 3]));
@@ -148,58 +148,58 @@ public class ElemFrame extends ElemSimple {
             spcRec.height = artiklRec.getDbl(eArtikl.height);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:ElemFrame.setSpecific() " + e);
+            System.err.println("Ошибка:ElemFrame.setSpecific() " + e);
         }
     }
 
-    //Р’Р»РѕР¶РµРЅР°СЏ СЃРїРµС†РёС„РёРєР°С†РёСЏ
+    //Вложеная спецификация
     @Override
-    public void addSpecific(SpcRecord spcAdd) { //РґРѕР±Р°РІР»РµРЅРёРµ СЃРїРµСЃРёС„РёРєР°С†РёР№ Р·Р°РІРёСЃРёРјС‹С… СЌР»РµРјРµРЅС‚РѕРІ
+    public void addSpecific(SpcRecord spcAdd) { //добавление спесификаций зависимых элементов
         try {
             if(spcAdd.artiklRec().getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;
             }            
-            spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //РєРѕР». РµРґ. СЃ СѓС‡С‘С‚РѕРј РїР°СЂР°Рј. 
-            spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //РєРѕР». РµРґ. СЃ С€Р°РіРѕРј
-            spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //РїРѕРїСЂР°РІРєР° РјРј
-            //РђСЂРјРёСЂРѕРІР°РЅРёРµ
+            spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
+            spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
+            spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм
+            //Армирование
             if (TypeArt.isType(spcAdd.artiklRec(), TypeArt.X107)) {
-                spcAdd.place = "Р’РЎРў." + layout().name.substring(0, 1).toLowerCase();
+                spcAdd.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
                 spcAdd.setAnglCut(90, 90);
                 spcRec.anglHoriz = UGeo.anglHor(x1(), y1(), x2(), y2());
 
                 spcAdd.width += length();
 
-                if ("РѕС‚ РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ СѓРіР»Р°".equals(spcAdd.getParam(null, 34010))) {
+                if ("от внутреннего угла".equals(spcAdd.getParam(null, 34010))) {
                     double dw1 = artiklRec.getDbl(eArtikl.height) / Math.tan(Math.toRadians(spcRec.anglCut0));
                     double dw2 = artiklRec.getDbl(eArtikl.height) / Math.tan(Math.toRadians(spcRec.anglCut1));
                     spcAdd.width = spcAdd.width + 2 * winc.syssizRec.getDbl(eSyssize.prip) - dw1 - dw2;
 
-                } else if ("РѕС‚ РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ С„Р°Р»СЊС†Р°".equals(spcAdd.getParam(null, 34010))) {
+                } else if ("от внутреннего фальца".equals(spcAdd.getParam(null, 34010))) {
                     Double dw1 = (artiklRec.getDbl(eArtikl.height) - artiklRec.getDbl(eArtikl.size_falz)) / Math.tan(Math.toRadians(spcRec.anglCut0));
                     Double dw2 = (artiklRec.getDbl(eArtikl.height) - artiklRec.getDbl(eArtikl.size_falz)) / Math.tan(Math.toRadians(spcRec.anglCut1));
                     spcAdd.width = spcAdd.width + 2 * winc.syssizRec.getDbl(eSyssize.prip) - dw1 - dw2;
                 }
 
             } else {
-                //Р’С‹Р±СЂР°РЅ Р°РІС‚Рѕ СЂР°СЃС‡РµС‚ РїРѕРґРІРµСЃР°
+                //Выбран авто расчет подвеса
                 if (spcAdd.getParam("null", 24013).equals("null") == false) {
-                    if (spcAdd.getParam("null", 24013).equals("Р”Р°")) {
+                    if (spcAdd.getParam("null", 24013).equals("Да")) {
                         int color = winc.colorID1;
                         if (winc.colorID1 != spcAdd.colorID1) {
                             return;
                         }
                     }
                 }
-                //РЈСЃС‚Р°РЅРѕРІРёС‚СЊ С‚РµРєСЃС‚СѓСЂСѓ
+                //Установить текстуру
                 if (spcAdd.getParam("null", 24006).equals("null") == false) {
                     int colorID = -1;
                     AreaStvorka elemStv = ((AreaStvorka) owner);
                     AreaSimple areaStv = ((AreaSimple) owner);
-                    if ("РїРѕ С‚РµРєСЃС‚СѓСЂРµ СЂСѓС‡РєРё".equals(spcAdd.getParam("null", 24006))) {
+                    if ("по текстуре ручки".equals(spcAdd.getParam("null", 24006))) {
                         colorID = UColor.colorFromArtikl(spcAdd.artiklRec().getInt(eArtikl.id), 1, elemStv.knobColor);
 
-                    } else if ("РїРѕ С‚РµРєСЃС‚СѓСЂРµ РїРѕРґРІРµСЃР°".equals(spcAdd.getParam("null", 24006))) {
+                    } else if ("по текстуре подвеса".equals(spcAdd.getParam("null", 24006))) {
                         for (ElemSimple elem : areaStv.frames) {
                             for (SpcRecord spc : elem.spcRec.spcList) {
                                 if (spc.artiklRec().getInt(eArtikl.level1) == 2 && spc.artiklRec().getInt(eArtikl.level2) == 12) {
@@ -208,7 +208,7 @@ public class ElemFrame extends ElemSimple {
                             }
                         }
 
-                    } else if ("РїРѕ С‚РµРєСЃС‚СѓСЂРµ Р·Р°РјРєР°".equals(spcAdd.getParam("null", 24006))) {
+                    } else if ("по текстуре замка".equals(spcAdd.getParam("null", 24006))) {
                         for (ElemSimple elem : areaStv.frames) {
                             for (SpcRecord spc : elem.spcRec.spcList) {
                                 if (spc.artiklRec().getInt(eArtikl.level1) == 2 && spc.artiklRec().getInt(eArtikl.level2) == 9) {
@@ -223,36 +223,36 @@ public class ElemFrame extends ElemSimple {
                         spcAdd.colorID3 = colorID;
                     }
                 }
-                //Р СѓС‡РєР° РѕС‚ РЅРёР·Р° СЃС‚РІРѕСЂРєРё, РјРј 
+                //Ручка от низа створки, мм 
                 if (spcAdd.getParam("null", 24072, 25072).equals("null") == false) {
                     if (builder.making.SpcFurniture.determOfSide(owner) == this) {
                         AreaStvorka stv = (AreaStvorka) owner;
                         stv.knobHeight = UCom.getDbl(spcAdd.getParam(stv.knobHeight, 24072, 25072));
                     }
                 }
-                //РЈРєРѕСЂРѕС‡РµРЅРёРµ РѕС‚
+                //Укорочение от
                 if (spcAdd.getParam("null", 25013).equals("null") == false) {
-                    if ("РґР»РёРЅС‹ СЃС‚РѕСЂРѕРЅС‹".equals(spcAdd.getParam("null", 25013))) {
-                        spcAdd.width = length() - UCom.getDbl(spcAdd.getParam(0, 25030)); //СѓРєРѕСЂРѕС‡РµРЅРёРµ, РјРј
+                    if ("длины стороны".equals(spcAdd.getParam("null", 25013))) {
+                        spcAdd.width = length() - UCom.getDbl(spcAdd.getParam(0, 25030)); //укорочение, мм
 
-                    } else if ("РІС‹СЃРѕС‚С‹ СЂСѓС‡РєРё".equals(spcAdd.getParam("null", 25013))) {
+                    } else if ("высоты ручки".equals(spcAdd.getParam("null", 25013))) {
                         AreaStvorka stv = (AreaStvorka) owner;
-                        spcAdd.width = stv.knobHeight - UCom.getDbl(spcAdd.getParam(0, 25030)); //СѓРєРѕСЂРѕС‡РµРЅРёРµ, РјРј
+                        spcAdd.width = stv.knobHeight - UCom.getDbl(spcAdd.getParam(0, 25030)); //укорочение, мм
 
-                    } else if ("СЃС‚РѕСЂРѕРЅР° - РІС‹СЃ. СЂСѓС‡РєРё".equals(spcAdd.getParam("null", 25013))) {
+                    } else if ("сторона - выс. ручки".equals(spcAdd.getParam("null", 25013))) {
                         AreaStvorka stv = (AreaStvorka) owner;
-                        spcAdd.width = lengthArc - stv.knobHeight - UCom.getDbl(spcAdd.getParam(0, 25030)); //СѓРєРѕСЂРѕС‡РµРЅРёРµ, РјРј                        
+                        spcAdd.width = lengthArc - stv.knobHeight - UCom.getDbl(spcAdd.getParam(0, 25030)); //укорочение, мм                        
 
-                    } else if ("РїРѕР»РѕРІРёРЅС‹ СЃС‚РѕСЂРѕРЅС‹".equals(spcAdd.getParam("null", 25013))) {
-                        spcAdd.width = (lengthArc / 2) - UCom.getDbl(spcAdd.getParam(0, 25030)); //СѓРєРѕСЂРѕС‡РµРЅРёРµ, РјРј 
+                    } else if ("половины стороны".equals(spcAdd.getParam("null", 25013))) {
+                        spcAdd.width = (lengthArc / 2) - UCom.getDbl(spcAdd.getParam(0, 25030)); //укорочение, мм 
                     }
                 }
-                //Р¤СѓСЂРЅРёС‚СѓСЂР°
+                //Фурнитура
                 if (TypeArt.isType(spcAdd.artiklRec(), TypeArt.X109)) {
-                    if (layout().id == Integer.valueOf(spcAdd.getParam("0", 24010, 25010, 38010, 39002))) {  //"РЅРѕРјРµСЂ СЃС‚РѕСЂРѕРЅС‹"   
-                        if ("null".equals(spcAdd.getParam("null", 25013)) == false //"СѓРєРѕСЂРѕС‡РµРЅРёРµ РѕС‚"
-                                && spcAdd.getParam(0, 25030).equals(0) == false) { //"СѓРєРѕСЂРѕС‡РµРЅРёРµ, РјРј"  
-                            spcAdd.width = UPar.to_25013(spcRec, spcAdd); //СѓРєРѕСЂРѕС‡РµРЅРёРµ РѕС‚ РІС‹СЃРѕС‚С‹ СЂСѓС‡РєРё
+                    if (layout().id == Integer.valueOf(spcAdd.getParam("0", 24010, 25010, 38010, 39002))) {  //"номер стороны"   
+                        if ("null".equals(spcAdd.getParam("null", 25013)) == false //"укорочение от"
+                                && spcAdd.getParam(0, 25030).equals(0) == false) { //"укорочение, мм"  
+                            spcAdd.width = UPar.to_25013(spcRec, spcAdd); //укорочение от высоты ручки
                         }
                     } else {
                         spcAdd.width += width() + winc.syssizRec.getDbl(eSyssize.prip) * 2;
@@ -262,28 +262,28 @@ public class ElemFrame extends ElemSimple {
                     spcAdd.width += spcRec.width;
                 }
             }
-            UPar.to_12075_34075_39075(this, spcAdd); //СѓРіР»С‹ СЂРµР·Р°
-            UPar.to_34077_39077(spcAdd); //Р·Р°РґР°С‚СЊ РЈРіРѕР»_СЂРµР·Р°_1/РЈРіРѕР»_СЂРµР·Р°_2
-            spcAdd.height = UCom.getDbl(spcAdd.getParam(spcAdd.height, 40006)); //РІС‹СЃРѕС‚Р° Р·Р°РїРѕР»РЅРµРЅРёСЏ, РјРј 
-            spcAdd.width = UPar.to_12065_15045_25040_34070_39070(spcAdd); //РґР»РёРЅР° РјРј
-            spcAdd.width = UCom.getDbl(spcAdd.getParam(spcAdd.width, 40004)); //С€РёСЂРёРЅР° Р·Р°РїРѕР»РЅРµРЅРёСЏ, РјРј        
-            spcAdd.width = spcAdd.width * UPar.to_12030_15030_25035_34030_39030(spcAdd);//"[ * РєРѕСЌС„-С‚ ]"
-            spcAdd.width = spcAdd.width / UPar.to_12040_15031_25036_34040_39040(spcAdd);//"[ / РєРѕСЌС„-С‚ ]"
-            UPar.to_40005_40010(spcAdd); //РџРѕРїСЂР°РІРєР° РЅР° СЃС‚РѕСЂРѕРЅС‹ С‡РµС‚РЅС‹Рµ/РЅРµС‡РµС‚РЅС‹Рµ (С€РёСЂРёРЅС‹/РІС‹СЃРѕС‚С‹), РјРј
-            UPar.to_40007(spcAdd); //РІС‹СЃРѕС‚Сѓ СЃРґРµР»Р°С‚СЊ РґР»РёРЅРѕР№
-            spcAdd.count = UPar.to_11070_12070_33078_34078(spcAdd); //СЃС‚Р°РІРёС‚СЊ РѕРґРЅРѕРєСЂР°С‚РЅРѕ
-            spcAdd.count = UPar.to_39063(spcAdd); //РѕРєСЂСѓРіР»СЏС‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ РґРѕ Р±Р»РёР¶Р°Р№С€РµРіРѕ
+            UPar.to_12075_34075_39075(this, spcAdd); //углы реза
+            UPar.to_34077_39077(spcAdd); //задать Угол_реза_1/Угол_реза_2
+            spcAdd.height = UCom.getDbl(spcAdd.getParam(spcAdd.height, 40006)); //высота заполнения, мм 
+            spcAdd.width = UPar.to_12065_15045_25040_34070_39070(spcAdd); //длина мм
+            spcAdd.width = UCom.getDbl(spcAdd.getParam(spcAdd.width, 40004)); //ширина заполнения, мм        
+            spcAdd.width = spcAdd.width * UPar.to_12030_15030_25035_34030_39030(spcAdd);//"[ * коэф-т ]"
+            spcAdd.width = spcAdd.width / UPar.to_12040_15031_25036_34040_39040(spcAdd);//"[ / коэф-т ]"
+            UPar.to_40005_40010(spcAdd); //Поправка на стороны четные/нечетные (ширины/высоты), мм
+            UPar.to_40007(spcAdd); //высоту сделать длиной
+            spcAdd.count = UPar.to_11070_12070_33078_34078(spcAdd); //ставить однократно
+            spcAdd.count = UPar.to_39063(spcAdd); //округлять количество до ближайшего
 
             if (spcRec.id != spcAdd.id) {
                 spcRec.spcList.add(spcAdd);
             }
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:ElemFrame.addSpecific() " + e);
+            System.err.println("Ошибка:ElemFrame.addSpecific() " + e);
         }
     }
 
-    //Р›РёРЅРёРё СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё
+    //Линии размерности
     @Override
     public void paint() {
         if (this.area != null) {

@@ -28,8 +28,8 @@ import java.util.List;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-//РўРµРєСЃС‚СѓСЂР° Р°СЂС‚РёРєСѓР»РѕРІ
-//РЈСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ РєСѓСЂСЃРѕСЂ РЅР° РїСЂРµРґС‹РґСѓС‰РµРј РІС‹Р±РѕСЂРµ С†РІРµС‚Р° СЃРј. РўРµРєСЃС‚СѓСЂС‹ Р°СЂС‚РёРєСѓР»РѕРІ
+//Текстура артикулов
+//Устанавливать курсор на предыдущем выборе цвета см. Текстуры артикулов
 public class DicColor extends javax.swing.JDialog {
 
     private ListenerRecord listener;
@@ -73,7 +73,7 @@ public class DicColor extends javax.swing.JDialog {
 //
 //        if (colorArr.length != 0) {
 //            for (Record rec : colorSet) {
-//                for (int i = 0; i < colorArr.length; i = i + 2) { //С‚РµСЃС‚СѓСЂС‹
+//                for (int i = 0; i < colorArr.length; i = i + 2) { //тестуры
 //                    if (rec.getInt(eColor.code) >= colorArr[i] && rec.getInt(eColor.code) <= colorArr[i + 1]) {
 //                        qColorAll.add(rec);
 //                    }
@@ -142,7 +142,7 @@ public class DicColor extends javax.swing.JDialog {
             });
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
             if (master == false) {
-                UGui.setSelectedRow(tab2); //Р±Р»РѕРєРёСЂСѓРµРј РІС‹Р±РѕСЂ РіСЂСѓРїРї С‚РµРєСЃС‚СѓСЂ
+                UGui.setSelectedRow(tab2); //блокируем выбор групп текстур
                 tab2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
                 tab1.setBorder(null);
             }
@@ -166,7 +166,7 @@ public class DicColor extends javax.swing.JDialog {
         south = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РЎРїСЂР°РІРѕС‡РЅРёРє С‚РµРєСЃС‚СѓСЂ");
+        setTitle("Справочник текстур");
         setPreferredSize(new java.awt.Dimension(412, 600));
 
         north.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -175,7 +175,7 @@ public class DicColor extends javax.swing.JDialog {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -190,7 +190,7 @@ public class DicColor extends javax.swing.JDialog {
         });
 
         btnChoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c044.gif"))); // NOI18N
-        btnChoice.setToolTipText(bundle.getString("Р’С‹Р±СЂР°С‚СЊ")); // NOI18N
+        btnChoice.setToolTipText(bundle.getString("Выбрать")); // NOI18N
         btnChoice.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnChoice.setFocusable(false);
         btnChoice.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -205,7 +205,7 @@ public class DicColor extends javax.swing.JDialog {
         });
 
         btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c042.gif"))); // NOI18N
-        btnRemove.setToolTipText(bundle.getString("РћС‡РёСЃС‚РёС‚СЊ")); // NOI18N
+        btnRemove.setToolTipText(bundle.getString("Очистить")); // NOI18N
         btnRemove.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnRemove.setFocusable(false);
         btnRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -260,7 +260,7 @@ public class DicColor extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Р“СЂСѓРїРїС‹ С‚РµРєСЃС‚СѓСЂ"
+                "Группы текстур"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -293,7 +293,7 @@ public class DicColor extends javax.swing.JDialog {
                 {null, null}
             },
             new String [] {
-                "РљРѕРґ С‚РµРєСЃС‚СѓСЂС‹", "РќР°Р·РІР°РЅРёРµ С‚РµРєСЃС‚СѓСЂС‹"
+                "Код текстуры", "Название текстуры"
             }
         ) {
             Class[] types = new Class [] {

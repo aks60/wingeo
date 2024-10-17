@@ -10,7 +10,7 @@ import startup.Main;
 
 /**
  * <p>
- * РЎРѕС…СЂРѕРЅРµРЅРёРµ СЂР°Р·РјРµСЂР° С„СЂРµР№РјР° РІ С„Р°Р№Р»Рµ </p>
+ * Сохронение размера фрейма в файле </p>
  */
 public class FrameToFile extends javax.swing.Timer implements ActionListener {
 
@@ -60,7 +60,7 @@ public class FrameToFile extends javax.swing.Timer implements ActionListener {
     }
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЂР°Р·РјРµСЂС‹ Рё РєРѕРѕСЂРґРёРЅР°С‚С‹ window
+     * Устанавливаем размеры и координаты window
      */
     public static void setFrameSize(Window frame) {
 
@@ -71,8 +71,8 @@ public class FrameToFile extends javax.swing.Timer implements ActionListener {
         String dx = eProp.load().getProperty(frame.getClass().getName() + "_width", null);
 
         if (eProp.locate == true) {
-            frameSize.height = (dy == null) ? frameSize.height : Integer.parseInt(dy); //СЂР°Р·РјРµСЂС‹ РѕРєРЅР°
-            frameSize.width = (dx == null) ? frameSize.width : Integer.parseInt(dx);  //СЂР°Р·РјРµСЂС‹ РѕРєРЅР°
+            frameSize.height = (dy == null) ? frameSize.height : Integer.parseInt(dy); //размеры окна
+            frameSize.width = (dx == null) ? frameSize.width : Integer.parseInt(dx);  //размеры окна
         }
         if (frameSize.height > screenSize.height) {
             frameSize.height = screenSize.height;
@@ -92,7 +92,7 @@ public class FrameToFile extends javax.swing.Timer implements ActionListener {
     }
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РєРѕРѕСЂРґРёРЅР°С‚С‹ window
+     * Устанавливаем координаты window
      */
     public static void setFrameSize(Window frame, int x, int y, int dx, int dy) {
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();

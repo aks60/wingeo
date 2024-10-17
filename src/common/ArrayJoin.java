@@ -18,40 +18,40 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
     }
 
     /**
-     * РџРѕР»СѓС‡РёС‚СЊ СЌР»РµРјРµРЅС‚ СЃРѕРµРґРёРЅРµРЅРёСЏ РїСЂРѕС„РёР»РµР№.
+     * Получить элемент соединения профилей.
      *
-     * @param elem - СЌР»РµРјРµРЅС‚ СЃРѕРµРґРёРЅРµРЅРёСЏ,
-     * @param side - СЃС‚РѕСЂРѕРЅР° СЃРѕРµРґРёРЅРµРЅРёСЏ 0-РїСЂРµРґ.Р°СЂС‚РёРєСѓР», 1-СЃР»РµРґ.Р°СЂС‚РёРєР»,
-     * 2-РїСЂРёР»РµРі.Р°СЂС‚РёРєР»
-     * @return - РєР»Р°СЃСЃ РѕРїРёСЃР°С‚РµР»СЊ СЃРѕРµРґРёРЅРµРЅРёСЏ
+     * @param elem - элемент соединения,
+     * @param side - сторона соединения 0-пред.артикул, 1-след.артикл,
+     * 2-прилег.артикл
+     * @return - класс описатель соединения
      */
     public ElemJoining join(ElemSimple elem, int side) {
         boolean imp = Type.isCross(elem.type);
         try {
             for (ElemJoining join : this) {
-                //РЈРіР».СЃРѕРµРґРёРЅРµРЅРёРµ
+                //Угл.соединение
                 if (imp == false && (side == 0 || side == 1)) {
-                    if (side == 0 && elem.x1() == join.elem1.x2() && elem.y1() == join.elem1.y2()) { //0-РїСЂРµРґ.Р°СЂС‚РёРєСѓР»
+                    if (side == 0 && elem.x1() == join.elem1.x2() && elem.y1() == join.elem1.y2()) { //0-пред.артикул
                         return join;
 
-                    } else if (side == 1 && elem.x2() == join.elem2.x1() && elem.y2() == join.elem2.y1()) { //1-СЃР»РµРґ.Р°СЂС‚РёРєР»
+                    } else if (side == 1 && elem.x2() == join.elem2.x1() && elem.y2() == join.elem2.y1()) { //1-след.артикл
                         return join;
                     }
-                    //T- СЃРѕРµРґРёРЅРµРЅРёРµ Р»РµРІРѕРµ
+                    //T- соединение левое
                 } else if (imp == true && side == 0 && elem.id == join.elem2.id) {
                     Coordinate[] line = UGeo.arrCoord(join.elem1.x1(), join.elem1.y1(), join.elem1.x2(), join.elem1.y2());
                     Coordinate point = new Coordinate(elem.x1(), elem.y1());
                     if (PointLocation.isOnLine(point, line)) {
                         return join;
                     }
-                    //T- СЃРѕРµРґРёРЅРµРЅРёРµ РїСЂР°РІРѕРµ
+                    //T- соединение правое
                 } else if (imp == true && side == 1 && elem.id == join.elem1.id) {
                     Coordinate[] line = UGeo.arrCoord(join.elem2.x1(), join.elem2.y1(), join.elem2.x2(), join.elem2.y2());
                     Coordinate point = new Coordinate(elem.x2(), elem.y2());
                     if (PointLocation.isOnLine(point, line)) {
                         return join;
                     }
-                    //РџСЂРёР».СЃРѕРµРґРёРЅРµРЅРёРµ
+                    //Прил.соединение
                 } else if (side == 2 && join.type() == TypeJoin.FLAT) {
                     if (elem.type == Type.STVORKA_SIDE && elem.equals(join.elem1)) {
                         return join;
@@ -61,49 +61,49 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:ArrayJoin.join() " + message(elem, side) + " " + e);
+            System.err.println("Ошибка:ArrayJoin.join() " + message(elem, side) + " " + e);
         }
         if (side != 2) {
-            System.out.println("РќРµСѓРґР°С‡Р°:ArrayJoin.join() " + message(elem, side));
+            System.out.println("Неудача:ArrayJoin.join() " + message(elem, side));
         }
         return null;
     }
 
     /**
-     * РџРѕР»СѓС‡РёС‚СЊ СЌР»РµРјРµРЅС‚ СЃРѕРµРґРёРЅРµРЅРёСЏ РїСЂРѕС„РёР»РµР№.
+     * Получить элемент соединения профилей.
      *
-     * @param elem - СЌР»РµРјРµРЅС‚ СЃРѕРµРґРёРЅРµРЅРёСЏ,
-     * @param side - СЃС‚РѕСЂРѕРЅР° СЃРѕРµРґРёРЅРµРЅРёСЏ 0-РїСЂРµРґ.Р°СЂС‚РёРєСѓР», 
-     * 1-СЃР»РµРґ.Р°СЂС‚РёРєР», 2-РїСЂРёР»РµРі.Р°СЂС‚РёРєР»
-     * @return - СЌР»РµРјРµРЅС‚ СЃРѕРµРґРёРЅРµРЅРёСЏ
+     * @param elem - элемент соединения,
+     * @param side - сторона соединения 0-пред.артикул, 
+     * 1-след.артикл, 2-прилег.артикл
+     * @return - элемент соединения
      */
     public ElemSimple elem(ElemSimple elem, int side) {
         boolean imp = Type.isCross(elem.type);
         try {
             for (ElemJoining join : this) {
-                //РЈРіР».СЃРѕРµРґРёРЅРµРЅРёРµ
+                //Угл.соединение
                 if (imp == false && (side == 0 || side == 1)) {
-                    if (side == 0 && elem.x1() == join.elem1.x2() && elem.y1() == join.elem1.y2()) { //0-РїСЂРµРґ.Р°СЂС‚РёРєСѓР»
+                    if (side == 0 && elem.x1() == join.elem1.x2() && elem.y1() == join.elem1.y2()) { //0-пред.артикул
                         return join.elem1;
 
-                    } else if (side == 1 && elem.x2() == join.elem2.x1() && elem.y2() == join.elem2.y1()) { //1-СЃР»РµРґ.Р°СЂС‚РёРєР»
+                    } else if (side == 1 && elem.x2() == join.elem2.x1() && elem.y2() == join.elem2.y1()) { //1-след.артикл
                         return join.elem2;
                     }
-                    //T- СЃРѕРµРґРёРЅРµРЅРёРµ Р»РµРІРѕРµ
+                    //T- соединение левое
                 } else if (imp == true && side == 0 && elem.id == join.elem2.id) {
                     Coordinate[] line = UGeo.arrCoord(join.elem1.x1(), join.elem1.y1(), join.elem1.x2(), join.elem1.y2());
                     Coordinate point = new Coordinate(elem.x1(), elem.y1());
                     if (PointLocation.isOnLine(point, line)) {
                         return join.elem1;
                     }
-                    //T- СЃРѕРµРґРёРЅРµРЅРёРµ РїСЂР°РІРѕРµ
+                    //T- соединение правое
                 } else if (imp == true && side == 1 && elem.id == join.elem1.id) {
                     Coordinate[] line = UGeo.arrCoord(join.elem2.x1(), join.elem2.y1(), join.elem2.x2(), join.elem2.y2());
                     Coordinate point = new Coordinate(elem.x2(), elem.y2());
                     if (PointLocation.isOnLine(point, line)) {
                         return join.elem2;
                     }
-                    //РџСЂРёР».СЃРѕРµРґРёРЅРµРЅРёРµ
+                    //Прил.соединение
                 } else if (side == 2 && join.type() == TypeJoin.FLAT) {
                     if (elem.type == Type.STVORKA_SIDE && elem.equals(join.elem1)) {
                         return join.elem2;
@@ -113,15 +113,15 @@ public class ArrayJoin extends ArrayList<ElemJoining> {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:ArrayJoin.elem() " + message(elem, side) + " " + e);
+            System.err.println("Ошибка:ArrayJoin.elem() " + message(elem, side) + " " + e);
         }
         if (side != 2) {
-            System.out.println("РќРµСѓРґР°С‡Р°:ArrayJoin.elem() " + message(elem, side));
+            System.out.println("Неудача:ArrayJoin.elem() " + message(elem, side));
         }
         return null;
     }    
 
     private static String message(ElemSimple elem, int side) {
-        return "РЎРѕРµРґРёРЅРµРЅРёРµ РЅРµ РЅР°Р№РґРµРЅРѕ РґР»СЏ elem.id=" + elem.id + ", side=" + side;
+        return "Соединение не найдено для elem.id=" + elem.id + ", side=" + side;
     }
 }

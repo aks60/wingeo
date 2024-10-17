@@ -6,12 +6,12 @@ import dataset.Query;
 import dataset.Record;
 
 public enum eSysprod implements Field {
-    up("0", "0", "0", "Ð¡Ð¸ÑÑ‚ÐµÐ¼Ð½Ñ‹Ðµ Ñ‚Ð¸Ð¿Ð¾Ð²Ñ‹Ðµ Ð¸Ð·Ð´ÐµÐ»Ð¸Ñ", "EMPTY"),
-    id("4", "10", "0", "Ð˜Ð´ÐµÐ½Ñ‚Ð¸Ñ„Ð¸ÐºÐ°Ñ‚Ð¾Ñ€", "id"),
-    npp("4", "10", "0", "ÐÐ¾Ð¼ÐµÑ€ Ð¿/Ð¿", "npp"),
-    name("12", "128", "1", "ÐÐ°Ð·Ð²Ð°Ð½Ð¸Ðµ Ð¸Ð·Ð´ÐµÐ»Ð¸Ñ", "name"),
-    script("12", "4096", "0", "Ð¡ÐºÑ€Ð¸Ð¿Ñ‚ Ð¿Ð¾ÑÑ‚Ñ€Ð¾ÐµÐ½Ð¸Ñ Ð¾ÐºÐ½Ð°", "script"),
-    systree_id("4", "10", "0", "Ð¡Ð¸ÑÑ‚ÐµÐ¼Ð°", "systree_id");
+    up("0", "0", "0", "Ñèñòåìíûå òèïîâûå èçäåëèÿ", "EMPTY"),
+    id("4", "10", "0", "Èäåíòèôèêàòîð", "id"),
+    npp("4", "10", "0", "Íîìåð ï/ï", "npp"),
+    name("12", "128", "1", "Íàçâàíèå èçäåëèÿ", "name"),
+    script("12", "4096", "0", "Ñêðèïò ïîñòðîåíèÿ îêíà", "script"),
+    systree_id("4", "10", "0", "Ñèñòåìà", "systree_id");
 
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());
@@ -40,7 +40,7 @@ public enum eSysprod implements Field {
         return query;
     }
     
-    public static Record find(int _id) { //ÐµÑÐ»Ð¸ Ð½Ðµ Ð½Ð°ÑˆÐ¾Ð» Ð½Ð°Ð´Ð¾ Ð²Ð¾Ð·Ð²Ñ€. null
+    public static Record find(int _id) { //åñëè íå íàøîë íàäî âîçâð. null
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(null);
         }

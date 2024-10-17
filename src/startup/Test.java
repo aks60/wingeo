@@ -74,7 +74,7 @@ public class Test {
             }
             return null;
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Test.connect() " + e);
+            System.err.println("Ошибка:Test.connect() " + e);
             return null;
         }
     }
@@ -109,7 +109,7 @@ public class Test {
         }
     }
 
-    //РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+    //Конструктор
     public Test() {
 
         frame = new JFrame();
@@ -190,7 +190,7 @@ public class Test {
             //new Joining(winc).calc();
             //winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
             //winc.gc2d = winc.bufferImg.createGraphics();
-            //winc.draw(); //СЂРёСЃСѓСЋ РєРѕРЅСЃС‚СЂСѓРєС†РёСЋ
+            //winc.draw(); //рисую конструкцию
 
             frames.PSCompare.iwinPs4(winc, true);
             //winc.listElem.forEach(it -> System.out.println(it));
@@ -224,7 +224,7 @@ public class Test {
     private static void param() {
 
         Conn.setConnection(Test.connect2());
-        WincalcTest.init(); //СЃРј. -601004,-604005,-700027
+        WincalcTest.init(); //см. -601004,-604005,-700027
 
         ElementTest t1 = new ElementTest();
         t1.elementVar();
@@ -262,11 +262,11 @@ public class Test {
                 Conn.setConnection(Test.connect2());
 
             } catch (Exception e) {
-                System.err.println("РћС€РёР±РєР°:main.Test.query()");
+                System.err.println("Ошибка:main.Test.query()");
             }
         }
         {
-            //РџРµСЂРµСЃС‡С‘С‚
+            //Пересчёт
             try {
                 java.sql.Statement statement = Conn.getConnection().createStatement();
                 Query q = new Query(eColor.values()).sql(eColor.data(), eColor.up).sort(eColor.id);
@@ -339,7 +339,7 @@ public class Test {
 //        engine.put("file", f);
 //        engine.eval("print(file.getAbsolutePath())");
         //https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Math/ceil
-        //РџРµСЂРµРјРµРЅРЅС‹Рµ СЃС†РµРЅР°СЂРёСЏ
+        //Переменные сценария
 //        double B = 3;
 //        double L = 1200;
 //        double H = 56;
@@ -349,27 +349,27 @@ public class Test {
 //        engine.eval("var obj = new Object(); obj.length = L; obj.height = H;");
 //        engine.eval("print(obj.length + obj.height);");
 //        engine.eval("print(Math.ceil(L + 33.3));");
-        //Р’С‹Р·РѕРІ Р¤СѓРЅРєС†РёР№ РЎС†РµРЅР°СЂРёСЏ Рё РњРµС‚РѕРґРѕРІ
+        //Вызов Функций Сценария и Методов
 //        String script = "function hello(name) { print('Hello, ' + name); }";
 //        engine.eval(script);
 //        Invocable inv = (Invocable) engine;
-//        inv.invokeFunction("hello", "РђРєСЃС‘РЅРѕРІ!!" );
-        //РћСЃРЅРѕРІР°РЅРЅС‹Рј РЅР° РѕР±СЉРµРєС‚Р°С… СЃС†РµРЅР°СЂРёСЏ
+//        inv.invokeFunction("hello", "Аксёнов!!" );
+        //Основанным на объектах сценария
 //        String script = "var obj = new Object(); obj.hello = function(name) { print('Hello, ' + name); }";
 //        engine.eval(script);
 //        Invocable inv = (Invocable) engine;
 //        Object obj = engine.get("obj");
-//        inv.invokeMethod(obj, "hello", "РђРєСЃС‘РЅРѕРІ!!" );
-        //Р РµР°Р»РёР·Р°С†РёСЏ РРЅС‚РµСЂС„РµР№СЃРѕРІ Java РЎС†РµРЅР°СЂРёСЏРјРё
-//        String script = "function run() { print('run called РђРєСЃС‘РЅРѕРІ'); }";
+//        inv.invokeMethod(obj, "hello", "Аксёнов!!" );
+        //Реализация Интерфейсов Java Сценариями
+//        String script = "function run() { print('run called Аксёнов'); }";
 //        engine.eval(script);
 //        Invocable inv = (Invocable) engine;
 //        Runnable r = inv.getInterface(Runnable.class);
 //        Thread th = new Thread(r);
 //        th.start();
 //
-        //РќР° РѕР±СЉРµРєС‚Р°С… РёР»Рё РѕР±СЉРµРєС‚РЅРѕ-РѕСЂРёРµРЅС‚РёСЂРѕРІР°РЅ
-//        String script = "var obj = new Object(); obj.run = function() { print('run method called РђРєСЃС‘РЅРѕРІ'); }";
+        //На объектах или объектно-ориентирован
+//        String script = "var obj = new Object(); obj.run = function() { print('run method called Аксёнов'); }";
 //        engine.eval(script);
 //        Object obj = engine.get("obj");
 //        Invocable inv = (Invocable) engine;
@@ -393,21 +393,21 @@ public class Test {
         double X1 = 862.743578 - 862.743567;
         double X2 = Math.round(X1 * 1000);
         double X3 = X2 / 1000;
-//        int a = 0; // РќР°С‡Р°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РґРёР°РїР°Р·РѕРЅР° - "РѕС‚"
-//        int b = 10; // РљРѕРЅРµС‡РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РґРёР°РїР°Р·РѕРЅР° - "РґРѕ"
+//        int a = 0; // Начальное значение диапазона - "от"
+//        int b = 10; // Конечное значение диапазона - "до"
 //
-//        int random_number1 = a + (int) (Math.random() * b); // Р“РµРЅРµСЂР°С†РёСЏ 1-РіРѕ С‡РёСЃР»Р°
-//        System.out.println("1-РѕРµ СЃР»СѓС‡Р°Р№РЅРѕРµ С‡РёСЃР»Рѕ: " + random_number1);
+//        int random_number1 = a + (int) (Math.random() * b); // Генерация 1-го числа
+//        System.out.println("1-ое случайное число: " + random_number1);
 //
-//        int random_number2 = a + (int) (Math.random() * b); // Р“РµРЅРµСЂР°С†РёСЏ 2-РіРѕ С‡РёСЃР»Р°
-//        System.out.println("2-РѕРµ СЃР»СѓС‡Р°Р№РЅРѕРµ С‡РёСЃР»Рѕ: " + random_number2);
+//        int random_number2 = a + (int) (Math.random() * b); // Генерация 2-го числа
+//        System.out.println("2-ое случайное число: " + random_number2);
 //
-//        int random_number3 = a + (int) (Math.random() * b); // Р“РµРЅРµСЂР°С†РёСЏ 3-РіРѕ С‡РёСЃР»Р°
-//        System.out.println("3-Рµ СЃР»СѓС‡Р°Р№РЅРѕРµ С‡РёСЃР»Рѕ: " + random_number3);
+//        int random_number3 = a + (int) (Math.random() * b); // Генерация 3-го числа
+//        System.out.println("3-е случайное число: " + random_number3);
     }
 
     public static void geom() {
-        //Toolkit.getDefaultToolkit().beep();//Р—Р’РЈРљ!!!!
+        //Toolkit.getDefaultToolkit().beep();//ЗВУК!!!!
         GeometryFactory gf = new GeometryFactory();
 
         Coordinate[] coord1 = new Coordinate[]{
@@ -530,19 +530,19 @@ public class Test {
         frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, 350.0)));
         frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0, 300.0)));
 
-        //РўСЂР°РµСЃС„РѕСЂРјР°С†РёСЏ Р»РёРЅРёРё РІ РіРѕСЂРёР·РѕРЅС‚
+        //Траесформация линии в горизонт
         LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
         //s1.normalize();
         //double H = 300.0, ANG = Math.toDegrees(s1.angle());
-        //aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //СѓРіРѕР» СЂРѕС‚Р°С†РёРё 
+        //aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации 
         //LineString l1 = (LineString) aff.transform(s1.toGeometry(gf));
-        //LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H, 4);  //СЃРѕР·Рґ. Р°СЂРєРё РЅР° РіРѕСЂС‚Р·РѕРЅС‚Р°Р»Рё 
+        //LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H, 4);  //созд. арки на гортзонтали 
         LineString arc1 = UGeo.newLineArch(s1.p1.x, s1.p0.x, s1.p0.y, 300, 4);
         Coordinate arr1[] = arc1.getCoordinates();
         List.of(arr1).forEach(c -> c.z = 4);
 
-        //РћР±СЂР°С‚РЅР°СЏ С‚СЂР°РЅСЃС„РѕСЂРјР°С†РёСЏ Р°СЂРєРё
-//        aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //СѓРіРѕР» СЂРѕС‚Р°С†РёРё  
+        //Обратная трансформация арки
+//        aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
 //        Geometry arc2 = aff.transform(arc1);
 //        Coordinate arr2[] = arc2.getCoordinates(); //Arrays.copyOf(arc2.getCoordinates(), arc2.getCoordinates().length);
 //        List.of(arr2).forEach(c -> c.z = 4);
@@ -596,13 +596,13 @@ public class Test {
         s1.normalize();
         double H = 200.0, DH = s1.p1.y - s1.p0.y, ANG = Math.toDegrees(s1.angle());
 
-        //РўСЂР°РµСЃС„РѕСЂРјР°С†РёСЏ Р»РёРЅРёРё РІ РіРѕСЂРёР·РѕРЅС‚
-        aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //СѓРіРѕР» СЂРѕС‚Р°С†РёРё      
+        //Траесформация линии в горизонт
+        aff.setToRotation(Math.toRadians(-ANG), s1.p0.x, s1.p0.y); //угол ротации      
         LineString l1 = (LineString) aff.transform(s1.toGeometry(gf));
-        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H, 4);  //СЃРѕР·Рґ. Р°СЂРєРё РЅР° РіРѕСЂС‚Р·РѕРЅС‚Р°Р»Рё  
+        LineString arc1 = UGeo.newLineArch(l1.getCoordinateN(0).x, l1.getCoordinateN(1).x, l1.getCoordinateN(0).y, H, 4);  //созд. арки на гортзонтали  
 
-        //РћР±СЂР°С‚РЅР°СЏ С‚СЂР°РЅСЃС„РѕСЂРјР°С†РёСЏ Р°СЂРєРё
-        aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //СѓРіРѕР» СЂРѕС‚Р°С†РёРё  
+        //Обратная трансформация арки
+        aff.setToRotation(Math.toRadians(ANG), s1.p0.x, s1.p0.y); //угол ротации  
         Geometry arc2 = aff.transform(arc1);
         Coordinate arr2[] = arc2.getCoordinates(); //Arrays.copyOf(arc2.getCoordinates(), arc2.getCoordinates().length);
         List.of(arr2).forEach(c -> c.z = 4);
@@ -625,15 +625,15 @@ public class Test {
         Double dH = 64.0;
         Double H = 300.0;
         Double L = 1300.0;
-        double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - СЂР°РґРёСѓСЃ Р°СЂРєРё
+        double R = (Math.pow(L / 2, 2) + Math.pow(H, 2)) / (2 * H);  //R = (L2 + H2) / 2H - радиус арки
 
-        //РЈРіРѕР» СЂРµР·Р°
+        //Угол реза
         double rad1 = Math.acos((L / 2) / R);
         double rad2 = Math.acos((L - 2 * dH) / ((R - dH) * 2));
         double a1 = R * Math.sin(rad1);
         double a2 = (R - dH) * Math.sin(rad2);
-        double ang3 = 90 - Math.toDegrees(Math.atan((a1 - a2) / dH)); //СѓРіРѕР» СЂРµР·Р° СЂР°РјС‹
-        double ang4 = 90 - (Math.toDegrees(rad1) - (90 - ang3)); //СѓРіРѕР» СЂРµР·Р° Р°СЂРєРё
+        double ang3 = 90 - Math.toDegrees(Math.atan((a1 - a2) / dH)); //угол реза рамы
+        double ang4 = 90 - (Math.toDegrees(rad1) - (90 - ang3)); //угол реза арки
 
         Polygon p1 = UGeo.newPolygon(0, 0, 0, H, L, H, L, 0);
         Polygon p2 = UGeo.newPolygon(0, 0, 0, H + L, dH, H + L, dH, 0);

@@ -28,7 +28,7 @@ public class UCom {
                 return true;
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UCom.check() " + e);
+            System.err.println("Ошибка:UCom.check() " + e);
         }
         return false;
     }
@@ -58,7 +58,7 @@ public class UCom {
             return df.format(val);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UCom.format() " + e);
+            System.err.println("Ошибка:UCom.format() " + e);
             return val.toString();
         }
     }
@@ -69,7 +69,7 @@ public class UCom {
             return df.format(val);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UCom.format2() " + e);
+            System.err.println("Ошибка:UCom.format2() " + e);
             return val.toString();
         }
     }
@@ -100,7 +100,7 @@ public class UCom {
             return Integer.valueOf(str);
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UCom.getInt()");
+            System.err.println("Ошибка:UCom.getInt()");
             return 0;
         }
     }
@@ -113,10 +113,10 @@ public class UCom {
                 return Float.valueOf(str);
 
             } catch (java.lang.NumberFormatException e) {
-                System.err.println("РћС€РёР±РєР°:UCom.getDbl() " + e);
+                System.err.println("Ошибка:UCom.getDbl() " + e);
             }
         }
-        throw new NumberFormatException("РћС€РёР±РєР°:UCom.getDbl(\"" + str + "\")");
+        throw new NumberFormatException("Ошибка:UCom.getDbl(\"" + str + "\")");
     }
 
     public static Double getDbl(Object obj, Double def) {
@@ -134,15 +134,15 @@ public class UCom {
             try {
                 return Double.valueOf(str);
             } catch (java.lang.NumberFormatException e) {
-                System.err.println("РћС€РёР±РєР°:UCom.getDbl() " + e);
+                System.err.println("Ошибка:UCom.getDbl() " + e);
             }
         }
-        throw new NumberFormatException("РћС€РёР±РєР°:UCom.getDbl(\"" + str + "\")");
+        throw new NumberFormatException("Ошибка:UCom.getDbl(\"" + str + "\")");
     }
 
     public static String firstUpperCase(String word) {
         if (word == null || word.isEmpty()) {
-            return "";//РёР»Рё return word;
+            return "";//или return word;
         }
         return word.substring(0, 1).toUpperCase() + word.substring(1);
     }
@@ -178,7 +178,7 @@ public class UCom {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UCom.parserInt() " + e);
+            System.err.println("Ошибка:UCom.parserInt() " + e);
             arrList = new ArrayList<Object>(List.of(-1, -1));
         }
         return arrList.stream().toArray(Integer[]::new);
@@ -215,14 +215,14 @@ public class UCom {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UCom.parserFloat() " + e);
+            System.err.println("Ошибка:UCom.parserFloat() " + e);
             arrList = new ArrayList<Object>(List.of(-1, -1));
         }
         return arrList.stream().toArray(Double[]::new);
     }
 
     //"180",  "30-179",  "0-89,99;90, 01-150;180, 01-269, 99;270, 01-359, 99"
-    //Р•СЃР»Рё РЅРµ РґРёР°РїР°Р·РѕРЅ, С‚Рѕ С‚РѕС‡РЅС‹Р№ РїРѕРёСЃРє
+    //Если не диапазон, то точный поиск
     public static boolean containsColor(String txt, int value) {
         try {
             if (txt == null || txt.isEmpty() || txt.equals("*")) {
@@ -234,7 +234,7 @@ public class UCom {
             String[] arr = txt.split(";");
             if (arr.length == 1) {
                 arr = arr[0].split("-");
-                if (arr.length == 1) { //РµСЃР»Рё РЅРµ РґРёР°РїР°Р·РѕРЅ, С‚Рѕ С‚РѕС‡РЅС‹Р№ РїРѕРёСЃРє
+                if (arr.length == 1) { //если не диапазон, то точный поиск
                     arrList.add(Integer.valueOf(arr[0]));
                     arrList.add(Integer.valueOf(arr[0]));
                 } else {
@@ -261,13 +261,13 @@ public class UCom {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UCom.containsColor() " + e);
+            System.err.println("Ошибка:UCom.containsColor() " + e);
         }
         return false;
     }
 
     //"180",  "30-179",  "0-89,99;90, 01-150;180, 01-269, 99;270, 01-359, 99"
-    //Р•СЃР»Рё РЅРµ РґРёР°РїР°Р·РѕРЅ, С‚Рѕ С‚РѕС‡РЅС‹Р№ РїРѕРёСЃРє
+    //Если не диапазон, то точный поиск
     public static boolean containsNumbJust(String txt, Number value) {
         try {
             if (txt == null || txt.isEmpty() || txt.equals("*")) {
@@ -278,7 +278,7 @@ public class UCom {
             String[] arr = txt.split(";");
             if (arr.length == 1) {
                 arr = arr[0].split("-");
-                if (arr.length == 1) { //РµСЃР»Рё РЅРµ РґРёР°РїР°Р·РѕРЅ, С‚Рѕ С‚РѕС‡РЅС‹Р№ РїРѕРёСЃРє
+                if (arr.length == 1) { //если не диапазон, то точный поиск
                     arrList.add(Double.valueOf(arr[0]));
                     arrList.add(Double.valueOf(arr[0]));
                 } else {
@@ -306,13 +306,13 @@ public class UCom {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UCom.containsNumbJust() " + e);
+            System.err.println("Ошибка:UCom.containsNumbJust() " + e);
         }
         return false;
     }
 
     //"180",  "30-179",  "0-89,99;90, 01-150;180, 01-269, 99;270, 01-359, 99"
-    //Р•СЃР»Рё РЅРµ РґРёР°РїР°Р·РѕРЅ, С‚Рѕ РїРѕРёСЃРє СЃ РЅСѓР»СЏ
+    //Если не диапазон, то поиск с нуля
     public static boolean containsNumbExp(String txt, Number value) {
         try {
             if (txt == null || txt.isEmpty() || txt.equals("*")) {
@@ -323,8 +323,8 @@ public class UCom {
             String[] arr = txt.split(";");
             if (arr.length == 1) {
                 arr = arr[0].split("-");
-                if (arr.length == 1) { //РµСЃР»Рё РЅРµ РґРёР°РїР°Р·РѕРЅ
-                    arrList.add(0.0);   //С‚Рѕ РїРѕРёСЃРє СЃ РЅСѓР»СЏ
+                if (arr.length == 1) { //если не диапазон
+                    arrList.add(0.0);   //то поиск с нуля
                     arrList.add(Double.valueOf(arr[0]));
                 } else {
                     arrList.add(Double.valueOf(arr[0]));
@@ -351,13 +351,13 @@ public class UCom {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UCom.containsNumbExp() " + e);
+            System.err.println("Ошибка:UCom.containsNumbExp() " + e);
         }
         return false;
     }
 
     //"288-488/1028,01-1128",  "2000,2-3000/0-1250@",  "55;/*"
-    //TODO РЅРµРѕР±С…РѕРґРёРјРѕ СѓС‡РµСЃС‚СЊ С‚Р°РєРѕР№ РІР°СЂРёР°РЅС‚ -27,5/-27,5 СЃРј. 34049
+    //TODO необходимо учесть такой вариант -27,5/-27,5 см. 34049
     public static boolean containsNumb(String txt, Number val1, Number val2) {
         try {
             if (txt == null || txt.isEmpty()) {
@@ -383,7 +383,7 @@ public class UCom {
             }
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UCom.containsNumb() " + e);
+            System.err.println("Ошибка:UCom.containsNumb() " + e);
         }
         return false;
     }
@@ -399,12 +399,12 @@ public class UCom {
                 return true;
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UCom.containsNumbAny() " + e);
+            System.err.println("Ошибка:UCom.containsNumbAny() " + e);
         }
         return false;
     }
     
-    //"РЎС‚РѕР№РєР° 172;РЎС‚РѕР№РєР° 240;
+    //"Стойка 172;Стойка 240;
     public static boolean containsStr(String str, String val) {
         try {
             String[] arr = str.split(";");
@@ -414,12 +414,12 @@ public class UCom {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UCom.containsStr() " + e);
+            System.err.println("Ошибка:UCom.containsStr() " + e);
         }
         return false;
     }
 
-    //"РЎС‚РѕР№РєР° 100;РЎС‚РѕР№РєР° 200/*",  "Slidors 60;@/Slidors 60;@"
+    //"Стойка 100;Стойка 200/*",  "Slidors 60;@/Slidors 60;@"
     public static boolean containsStr(String str, String val1, String val2) {
         try {
             if (str == null || str.isEmpty()) {
@@ -431,7 +431,7 @@ public class UCom {
                 return true;
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UCom.containsStr() " + e);
+            System.err.println("Ошибка:UCom.containsStr() " + e);
         }
         return false;
     }

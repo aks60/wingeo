@@ -10,11 +10,11 @@ import frames.UGui;
 import java.util.ArrayList;
 
 public enum eGlasgrp implements Field {
-    up("0", "0", "0", "Р“СЂСѓРїРїС‹ Р·Р°РїРѕР»РЅРµРЅРёСЏ", "GLASGRP"),
-    id("4", "10", "0", "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ", "id"),
-    name("12", "96", "1", "РќР°Р·РІР°РЅРёРµ РіСЂСѓРїРїС‹", "GNAME"),
-    gap("8", "15", "1", "Р—Р°Р·РѕСЂ", "GZAZO"),
-    depth("12", "128", "1", "Р”РѕСЃС‚СѓРїРЅС‹Рµ С‚РѕР»С‰РёРЅС‹", "BFRIC");
+    up("0", "0", "0", "Группы заполнения", "GLASGRP"),
+    id("4", "10", "0", "Идентификатор", "id"),
+    name("12", "96", "1", "Название группы", "GNAME"),
+    gap("8", "15", "1", "Зазор", "GZAZO"),
+    depth("12", "128", "1", "Доступные толщины", "BFRIC");
 
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());

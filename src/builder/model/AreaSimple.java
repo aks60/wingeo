@@ -32,9 +32,9 @@ import org.locationtech.jts.geom.LineString;
 public class AreaSimple extends Com5t {
 
     private DecimalFormat df1 = new DecimalFormat("#0.#");
-    public ArrayCom<ElemSimple> frames = new ArrayCom<ElemSimple>(this); //СЃРїРёСЃРѕРє СЂР°Рј
-    public ListenerPaint listenerPassEdit = null; //РґР»СЏ РїСЂРѕСЂРёСЃРѕРІРєРё С‚РѕС‡РµРє РґРІРёР¶РµРЅРёСЏ СЃРµРіРјРµРЅС‚РѕРІ
-    public ArrayCom<Com5t> childs = new ArrayCom<Com5t>(this); //РґРµС‚Рё
+    public ArrayCom<ElemSimple> frames = new ArrayCom<ElemSimple>(this); //список рам
+    public ListenerPaint listenerPassEdit = null; //для прорисовки точек движения сегментов
+    public ArrayCom<Com5t> childs = new ArrayCom<Com5t>(this); //дети
 
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson.id, gson, owner);
@@ -45,12 +45,12 @@ public class AreaSimple extends Com5t {
     }
 
     /**
-     * РџСЂРѕС„РёР»СЊ С‡РµСЂРµР· РїР°СЂР°РјРµС‚СЂ. PKjson_sysprofID РїСЂРёРјРµСЂ СЃС‚РІРѕСЂРєРё:sysprofID:1121,
-     * typeOpen:4, sysfurnID:2916} Р­С‚РѕРіРѕ РїР°СЂР°РјРµС‚СЂР° РЅРµС‚ РІ РёРЅС‚РµСЂС„РµР№СЃРµ РїСЂРѕРіСЂР°РјРјС‹,
-     * РѕРЅ СЃРґРµР»Р°РЅ РґР»СЏ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ СЃ ps4. Р”РµР»РµРіРёСЂСѓРµС‚СЃСЏ РґРµС‚СЊРјРё СЃРј. РєР»Р°СЃСЃ ElemFrame
+     * Профиль через параметр. PKjson_sysprofID пример створки:sysprofID:1121,
+     * typeOpen:4, sysfurnID:2916} Этого параметра нет в интерфейсе программы,
+     * он сделан для тестирования с ps4. Делегируется детьми см. класс ElemFrame
      */
     public void initConstructiv(JsonObject param) {
-        if (isJson(param, PKjson.sysprofID)) {//РїСЂРѕС„РёР»Рё С‡РµСЂРµР· РїР°СЂР°РјРµС‚СЂ
+        if (isJson(param, PKjson.sysprofID)) {//профили через параметр
             sysprofRec = eSysprof.find3(param.get(PKjson.sysprofID).getAsInt());
         } 
         //else if(this.owner.id == 0) {
@@ -59,77 +59,77 @@ public class AreaSimple extends Com5t {
     }
 
     /**
-     * РџР°СЂР°РјРµС‚СЂС‹ СЃРёСЃС‚РµРјС‹(С‚РµС…РЅРѕР»РѕРіР°) + РїР°СЂР°РјРµС‚СЂС‹ РјРµРЅРµРґР¶РµСЂР° Р’ С‚Р°Р±Р»РёС†Рµ syspar1 РґР»СЏ
-     * РєР°Р¶РґРѕР№ СЃРёСЃС‚РµРјС‹ Р»РµР¶Р°С‚ РїР°СЂР°РјРµС‚СЂС‹ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РѕС‚ С‚РµС…РЅРѕР»РѕРіР°. Рљ РїР°СЂР°РјРµС‚СЂР°Рј РѕС‚
-     * С‚РµС…РЅРѕР»РѕРіР° Р·Р°РјРµС€РёРІР°РµРј РїР°СЂР°РјРµС‚СЂС‹ РѕС‚ РјРµРЅРµРґР¶РµСЂР° СЃРј. СЃРєСЂРёСЂС‚, РЅР°РїСЂРёРјРµСЂ
-     * {"ioknaParam": [-8252]}. РџСЂРё СЌС‚РѕРј РІ winc.mapPardef Р±СѓРґСѓС‚ РёР·РјРµРЅРµРЅРёСЏ СЃ
-     * СѓС‡С‘С‚РѕРј РјРµРЅРµРґР¶РµСЂР°.
+     * Параметры системы(технолога) + параметры менеджера В таблице syspar1 для
+     * каждой системы лежат параметры по умолчанию от технолога. К параметрам от
+     * технолога замешиваем параметры от менеджера см. скрирт, например
+     * {"ioknaParam": [-8252]}. При этом в winc.mapPardef будут изменения с
+     * учётом менеджера.
      */
     protected void initParametr(JsonObject param) {
         try {
             if (isJson(param, null)) {
-                //Р”РѕР±Р°РІРёРј Рє РїР°СЂР°РјРµС‚СЂР°Рј СЃРёСЃС‚РµРјС‹ РєРѕРЅСЃС‚СЂСѓРєС†РёРё РїР°СЂР°РјРµС‚СЂС‹ РєРѕРЅРєСЂРµС‚РЅРѕР№ РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+                //Добавим к параметрам системы конструкции параметры конкретной конструкции
                 JsonArray ioknaParamArr = param.getAsJsonArray(PKjson.ioknaParam);
                 if (ioknaParamArr != null && !ioknaParamArr.isJsonNull() && ioknaParamArr.isJsonArray()) {
-                    //Р¦РёРєР» РїРѕ РїР°Р°РјРµС‚СЂР°Рј РјРµРЅРµРґР¶РµСЂР°
+                    //Цикл по пааметрам менеджера
                     ioknaParamArr.forEach(ioknaID -> {
 
                         //Record paramsRec, syspar1Rec;   
                         if (ioknaID.getAsInt() < 0) {
-                            Record paramsRec = eParams.find(ioknaID.getAsInt()); //РїР°СЂР°РјРµС‚СЂ РјРµРЅРµРґР¶РµСЂР°
+                            Record paramsRec = eParams.find(ioknaID.getAsInt()); //параметр менеджера
                             Record syspar1Rec = winc.mapPardef.get(paramsRec.getInt(eParams.groups_id));
-                            if (syspar1Rec != null) { //СЃРёС‚СѓР°С†РёСЏ РµСЃР»Рё РєРѕРЅСЃС‚СЂСѓРєС†РёСЏ СЃ nuni = -3, С‚.Рµ. РјРѕРґРµР»Рё
-                                syspar1Rec.setNo(eParams.text, paramsRec.getStr(eParams.text)); //РЅР°РєР»Р°РґС‹РІР°РµРј РїР°СЂР°РјРµС‚СЂ РјРµРЅРµРґР¶РµСЂР°
+                            if (syspar1Rec != null) { //ситуация если конструкция с nuni = -3, т.е. модели
+                                syspar1Rec.setNo(eParams.text, paramsRec.getStr(eParams.text)); //накладываем параметр менеджера
                             }
                         } else {
-                            Record paramsRec = eParmap.find(ioknaID.getAsInt()); //РїР°СЂР°РјРµС‚СЂ РјРµРЅРµРґР¶РµСЂР°
+                            Record paramsRec = eParmap.find(ioknaID.getAsInt()); //параметр менеджера
                             Record syspar1Rec = winc.mapPardef.get(paramsRec.getInt(eParmap.groups_id));
-                            if (syspar1Rec != null) { //СЃРёС‚СѓР°С†РёСЏ РµСЃР»Рё РєРѕРЅСЃС‚СЂСѓРєС†РёСЏ СЃ nuni = -3, С‚.Рµ. РјРѕРґРµР»Рё
+                            if (syspar1Rec != null) { //ситуация если конструкция с nuni = -3, т.е. модели
                                 String text = eColor.find(paramsRec.getInt(eParmap.color_id1)).getStr(eColor.name);
-                                syspar1Rec.setNo(eParams.text, text); //РЅР°РєР»Р°РґС‹РІР°РµРј РїР°СЂР°РјРµС‚СЂ РјРµРЅРµРґР¶РµСЂР°
+                                syspar1Rec.setNo(eParams.text, text); //накладываем параметр менеджера
                             }
                         }
                     });
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:AreaSimple.parametr() " + e);
+            System.err.println("Ошибка:AreaSimple.parametr() " + e);
         }
     }
 
     public void setLocation() {
     }
 
-    //Рў - СЃРѕРµРґРёРЅРµРЅРёСЏ
+    //Т - соединения
     public void addJoining() {
-        //T - СЃРѕРµРґРёРЅРµРЅРёСЏ
+        //T - соединения
         ArrayList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.STOIKA);
         ArrayList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.IMPOST);
 
-        //Р¦РёРєР» РїРѕ РёРјРїРѕСЃС‚Р°Рј
+        //Цикл по импостам
         for (ElemSimple imp : crosList) {
             LineString impost = UGeo.newLineStr(imp.x1(), imp.y1(), imp.x2(), imp.y2());
             Geometry p1 = UGeo.newPoint(imp.x1(), imp.y1()).buffer(.0001);
             Geometry p2 = UGeo.newPoint(imp.x2(), imp.y2()).buffer(.0001);
 
-            //Р¦РёРєР» РїРѕ РёРјРїРѕСЃС‚Р°Рј Рё СЂР°РјР°Рј
+            //Цикл по импостам и рамам
             for (ElemSimple frm : elemList) {
                 if (imp.id != frm.id) {
                     Geometry line = UGeo.newLineStr(frm.x1(), frm.y1(), frm.x2(), frm.y2());
 
                     if (frm.type == enums.Type.FRAME_SIDE) {
-                        if (line.intersects(p1)) { //Р»РµРІР°СЏ СЃС‚РѕСЂРѕРЅР°
+                        if (line.intersects(p1)) { //левая сторона
                             winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, frm, imp));
                         }
-                        if (line.intersects(p2)) { //РїСЂР°РІР°СЏ СЃС‚РѕСЂРѕРЅР°
+                        if (line.intersects(p2)) { //правая сторона
                             winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, imp, frm));;
                         }
 
                     } else if (frm.type == enums.Type.IMPOST && imp.owner.area.buffer(.0001).contains(line)) {
-                        if (line.intersects(p1)) { //Р»РµРІР°СЏ СЃС‚РѕСЂРѕРЅР°
+                        if (line.intersects(p1)) { //левая сторона
                             winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, frm, imp));
                         }
-                        if (line.intersects(p2)) { //РїСЂР°РІР°СЏ СЃС‚РѕСЂРѕРЅР°
+                        if (line.intersects(p2)) { //правая сторона
                             winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, imp, frm));;
                         }
                     }
@@ -138,7 +138,7 @@ public class AreaSimple extends Com5t {
         }
     }
 
-    //Р›РёРЅРёРё Рё РєРѕРѕСЂРґРёРЅР°С‚С‹ СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё
+    //Линии и координаты размерности
     @Override
     public void paint() {
         try {
@@ -194,23 +194,23 @@ public class AreaSimple extends Com5t {
             Collections.sort(listHor);
             Collections.sort(listVer);
 
-            Font font = new Font("Dialog", 0, UCom.scaleFont(winc.scale)); //СЂР°Р·РјРµСЂ С€СЂРёС„С‚Р° (СЃРј. canvas)
+            Font font = new Font("Dialog", 0, UCom.scaleFont(winc.scale)); //размер шрифта (см. canvas)
             winc.gc2d.setFont(font);
             AffineTransform orig = winc.gc2d.getTransform();
             Rectangle2D txt2D = font.getStringBounds("999.99", winc.gc2d.getFontRenderContext());
 
-            //РџРѕ РіРѕСЂРёР·РѕРЅС‚Р°Р»Рё
+            //По горизонтали
             for (int i = 1; i < listHor.size(); ++i) {
                 double dx = listHor.get(i) - listHor.get(i - 1);
                 if (Math.abs(dx) > 0.04) {
 
-                    String txt = UCom.format(dx, -1); //С‚РµРєСЃС‚ СЂР°Р·Рј.Р»РёРЅРёРё
-                    Rectangle2D rec2D = font.getStringBounds(txt, winc.gc2d.getFontRenderContext()); //Р»РѕРіРёС‡РµСЃРєРёРµ РіСЂР°РЅРёС†С‹ СЃС‚СЂРѕРєРё
-                    double tail[] = {listHor.get(i - 1), listHor.get(i)}; //x1, x2 С…РІРѕСЃС‚ РІСЂР°С‰РµРЅРёСЏ РІРµРєС‚РѕСЂР°
-                    int len = (int) Math.ceil(((dx) - (rec2D.getWidth() + 10)) / 2); //РґР»РёРЅР° РґРѕ РЅР°С‡Р°Р»Р°(РєРѕРЅС†Р°) С‚РµРєСЃС‚Р°
-                    double length = Math.round(dx); //РґР»РёРЅР° РІРµРєС‚РѕСЂР°
+                    String txt = UCom.format(dx, -1); //текст разм.линии
+                    Rectangle2D rec2D = font.getStringBounds(txt, winc.gc2d.getFontRenderContext()); //логические границы строки
+                    double tail[] = {listHor.get(i - 1), listHor.get(i)}; //x1, x2 хвост вращения вектора
+                    int len = (int) Math.ceil(((dx) - (rec2D.getWidth() + 10)) / 2); //длина до начала(конца) текста
+                    double length = Math.round(dx); //длина вектора
 
-                    //Р Р°Р·РјРµСЂРЅС‹Рµ Р»РёРЅРёРё
+                    //Размерные линии
                     Geometry lineTip1 = UGeo.lineTip((i == 1), tail[0], frameEnv.getMaxY() + rec2D.getHeight() / 2, 180, len);
                     Shape shape = new ShapeWriter().toShape(lineTip1);
                     winc.gc2d.draw(shape);
@@ -218,8 +218,8 @@ public class AreaSimple extends Com5t {
                     shape = new ShapeWriter().toShape(lineTip2);
                     winc.gc2d.draw(shape);
 
-                    //РўРµРєСЃС‚ РЅР° Р»РёРЅРёРё
-                    double pxy[] = {listHor.get(i - 1) + len + 8, frameEnv.getMaxY() + txt2D.getHeight() * .86}; //С‚РѕС‡РєР° РЅР°С‡Р°Р»Р° С‚РµРєСЃС‚Р°
+                    //Текст на линии
+                    double pxy[] = {listHor.get(i - 1) + len + 8, frameEnv.getMaxY() + txt2D.getHeight() * .86}; //точка начала текста
                     if (length < txt2D.getWidth()) {
                         pxy[1] = pxy[1] + txt2D.getHeight() / 2;
                         winc.gc2d.drawString(txt, (int) pxy[0], (int) (pxy[1]));
@@ -230,18 +230,18 @@ public class AreaSimple extends Com5t {
                 }
             }
 
-            //РџРѕ РІРµСЂС‚РёРєР°Р»Рё
+            //По вертикали
             for (int i = 1; i < listVer.size(); ++i) {
                 double dy = listVer.get(i) - listVer.get(i - 1);
                 if (Math.abs(dy) > 0.04) {
 
-                    String txt = UCom.format(dy, -1); //С‚РµРєСЃС‚ СЂР°Р·Рј.Р»РёРЅРёРё
-                    Rectangle2D rec2D = font.getStringBounds(txt, winc.gc2d.getFontRenderContext()); //Р»РѕРіРёС‡РµСЃРєРёРµ РіСЂР°РЅРёС†С‹ СЃС‚СЂРѕРєРё
-                    int tail[] = {(int) Math.ceil(listVer.get(i - 1)), (int) Math.ceil(listVer.get(i))};  //y1, y2 С…РІРѕСЃС‚ РІСЂР°С‰РµРЅРёСЏ РІРµРєС‚РѕСЂР°
-                    int len = (int) Math.round((dy - rec2D.getWidth() - 10) / 2); //РґР»РёРЅР° РґРѕ РЅР°С‡Р°Р»Р°(РєРѕРЅС†Р°) С‚РµРєСЃС‚Р°
-                    double length = Math.round(dy); //РґР»РёРЅР° РІРµРєС‚РѕСЂР°
+                    String txt = UCom.format(dy, -1); //текст разм.линии
+                    Rectangle2D rec2D = font.getStringBounds(txt, winc.gc2d.getFontRenderContext()); //логические границы строки
+                    int tail[] = {(int) Math.ceil(listVer.get(i - 1)), (int) Math.ceil(listVer.get(i))};  //y1, y2 хвост вращения вектора
+                    int len = (int) Math.round((dy - rec2D.getWidth() - 10) / 2); //длина до начала(конца) текста
+                    double length = Math.round(dy); //длина вектора
 
-                    //Р Р°Р·РјРµСЂРЅС‹Рµ Р»РёРЅРёРё
+                    //Размерные линии
                     Geometry lineTip1 = UGeo.lineTip((i == 1), frameEnv.getMaxX() + rec2D.getHeight() / 2, tail[0], -90, len);
                     Shape shape = new ShapeWriter().toShape(lineTip1);
                     winc.gc2d.draw(shape);
@@ -249,8 +249,8 @@ public class AreaSimple extends Com5t {
                     shape = new ShapeWriter().toShape(lineTip2);
                     winc.gc2d.draw(shape);
 
-                    //РўРµРєСЃС‚ РЅР° Р»РёРЅРёРё
-                    double pxy[] = {frameEnv.getMaxX() + txt2D.getHeight() - 6, listVer.get(i) - len}; //С‚РѕС‡РєР° РІСЂР°С€РµРЅРёСЏ Рё РЅР°С‡Р°Р»Р° С‚РµРєСЃС‚Р°                    
+                    //Текст на линии
+                    double pxy[] = {frameEnv.getMaxX() + txt2D.getHeight() - 6, listVer.get(i) - len}; //точка врашения и начала текста                    
                     if (length < (txt2D.getWidth())) {
                         winc.gc2d.drawString(txt, (int) (pxy[0] + 4), (int) (pxy[1] - txt2D.getHeight() / 2));
                     } else {
@@ -262,7 +262,7 @@ public class AreaSimple extends Com5t {
             }
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:AreaSimple.paint()");
+            System.err.println("Ошибка:AreaSimple.paint()");
         }
     }
 }

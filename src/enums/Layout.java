@@ -3,17 +3,17 @@ package enums;
 import static enums.TypeOpen1.values;
 import java.util.Arrays;
 
-//Р Р°СЃРїРѕР»РѕР¶РµРЅРёРµ area  Рё profile РѕР±СЉРµРґРёРЅРµРЅС‹ РІ РѕРґРёРЅ СЃРїРёСЃРѕРє Enum
+//Расположение area  и profile объединены в один список Enum
 public enum Layout implements Enam {
-    ANY(-1, "Р›СЋР±Р°СЏ"),
-    HORIZ(-2, "Р“РѕСЂ."),
-    VERT(-3, "Р’РµСЂС‚."),
-    BOTT(1, "РќРёР¶РЅ."),
-    RIGHT(2, "РџСЂР°РІ."),
-    TOP(3, "Р’РµСЂС…."),
-    LEFT(4, "Р›РµРІ."),
-    //TOPR(5, "Р’РµСЂС…-РџСЂР°РІР°СЏ"),
-    //TOPL(6, "Р’РµСЂС…-Р›РµРІР°СЏ"),
+    ANY(-1, "Любая"),
+    HORIZ(-2, "Гор."),
+    VERT(-3, "Верт."),
+    BOTT(1, "Нижн."),
+    RIGHT(2, "Прав."),
+    TOP(3, "Верх."),
+    LEFT(4, "Лев."),
+    //TOPR(5, "Верх-Правая"),
+    //TOPL(6, "Верх-Левая"),
     FULL(9, "");
     public int id;
     public String name;

@@ -1,15 +1,15 @@
 package frames.swing;
 
-//Ð¤Ð¸Ð»ÑŒÑ‚Ñ€, Ð¾Ñ‚Ð±Ð¸Ñ€Ð°ÑŽÑ‰Ð¸Ð¹ Ñ„Ð°Ð¹Ð»Ñ‹
+//Ôèëüòð, îòáèðàþùèé ôàéëû
 public class FileFilter extends javax.swing.filechooser.FileFilter {
 
-    //ÐŸÑ€Ð¸Ð½Ð¸Ð¼Ð°ÐµÐ¼ Ñ„Ð°Ð¹Ð» Ð¸Ð»Ð¸ Ð¾Ñ‚ÐºÐ°Ð·Ñ‹Ð²Ð°ÐµÐ¼ ÐµÐ¼Ñƒ
+    //Ïðèíèìàåì ôàéë èëè îòêàçûâàåì åìó
     public boolean accept(java.io.File f) {
-        // Ð²ÑÐµ ÐºÐ°Ñ‚Ð°Ð»Ð¾Ð³Ð¸ Ð¿Ñ€Ð¸Ð½Ð¸Ð¼Ð°ÐµÐ¼
+        // âñå êàòàëîãè ïðèíèìàåì
         if (f.isDirectory()) {
             return true;
         }
-        //Ð”Ð»Ñ Ñ„Ð°Ð¹Ð»Ð¾Ð² ÑÐ¼Ð¾Ñ‚Ñ€Ð¸Ð¼ Ð½Ð° Ñ€Ð°ÑÑˆÐ¸Ñ€ÐµÐ½Ð¸Ðµ
+        //Äëÿ ôàéëîâ ñìîòðèì íà ðàñøèðåíèå
         String fileName = f.getName();
         int i = fileName.lastIndexOf('.');
         if ((i > 0) && (i < (fileName.length() - 1))) {
@@ -21,8 +21,8 @@ public class FileFilter extends javax.swing.filechooser.FileFilter {
         return false;
     }
 
-    //Ð˜Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÐ¼ Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸Ðµ Ñ„Ð¸Ð»ÑŒÑ‚Ñ€Ð°
+    //Èîçâðàùàåì îïèñàíèå ôèëüòðà
     public String getDescription() {
-        return "Ð¤Ð°Ð¹Ð»Ñ‹ Ð±Ð°Ð· Ð´Ð°Ð½Ð½Ñ‹Ñ… (*.gdb; *.fdb))";
+        return "Ôàéëû áàç äàííûõ (*.gdb; *.fdb))";
     }
 }

@@ -142,7 +142,7 @@ public class Rulecalc extends javax.swing.JFrame {
 
         mInsert.setFont(frames.UGui.getFont(1,0));
         mInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        mInsert.setText("Р”РѕР±Р°РІРёС‚СЊ");
+        mInsert.setText("Добавить");
         mInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -152,7 +152,7 @@ public class Rulecalc extends javax.swing.JFrame {
 
         mDelit.setFont(frames.UGui.getFont(1,0));
         mDelit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        mDelit.setText("РЈРґР°Р»РёС‚СЊ");
+        mDelit.setText("Удалить");
         mDelit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -161,7 +161,7 @@ public class Rulecalc extends javax.swing.JFrame {
         ppmCrud.add(mDelit);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РџСЂР°РІРёР»Р° СЂР°СЃС‡С‘С‚Р°");
+        setTitle("Правила расчёта");
         setMinimumSize(new java.awt.Dimension(800, 400));
         setPreferredSize(new java.awt.Dimension(800, 500));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -176,7 +176,7 @@ public class Rulecalc extends javax.swing.JFrame {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -191,7 +191,7 @@ public class Rulecalc extends javax.swing.JFrame {
         });
 
         btnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        btnDel.setToolTipText(bundle.getString("РЈРґР°Р»РёС‚СЊ")); // NOI18N
+        btnDel.setToolTipText(bundle.getString("Удалить")); // NOI18N
         btnDel.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnDel.setFocusable(false);
         btnDel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -207,7 +207,7 @@ public class Rulecalc extends javax.swing.JFrame {
         });
 
         btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        btnIns.setToolTipText(bundle.getString("Р”РѕР±Р°РІРёС‚СЊ")); // NOI18N
+        btnIns.setToolTipText(bundle.getString("Добавить")); // NOI18N
         btnIns.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnIns.setFocusable(false);
         btnIns.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -223,7 +223,7 @@ public class Rulecalc extends javax.swing.JFrame {
         });
 
         btnReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c053.gif"))); // NOI18N
-        btnReport.setToolTipText(bundle.getString("РџРµС‡Р°С‚СЊ")); // NOI18N
+        btnReport.setToolTipText(bundle.getString("Печать")); // NOI18N
         btnReport.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnReport.setFocusable(false);
         btnReport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -239,7 +239,7 @@ public class Rulecalc extends javax.swing.JFrame {
         });
 
         btnFindArtikl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c090.gif"))); // NOI18N
-        btnFindArtikl.setToolTipText(bundle.getString("РџРѕРёСЃРє Р·Р°РїРёСЃРё")); // NOI18N
+        btnFindArtikl.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
         btnFindArtikl.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnFindArtikl.setFocusable(false);
         btnFindArtikl.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -300,7 +300,7 @@ public class Rulecalc extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РќР°Р·РІР°РЅРёРµ РїСЂР°РІРёР»Р°", "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ", "РђСЂС‚РёРєСѓР»", "РќР°Р·РІР°РЅРёРµ", "РљРѕР»РёС‡РµСЃС‚РІРѕ", "Р“Р°Р±Р°СЂРёС‚С‹", "РљРѕСЌС„С„РёС†РёРµРЅС‚", "РќР°РґР±Р°РІРєР°", "Р‘Р°Р·РѕРІР°СЏ С‚РµРєСЃС‚СѓСЂР°", "Р’РЅСѓС‚СЂ. С‚РµРєСЃС‚СѓСЂР°", "Р’РЅРµС€РЅ. С‚РµРєСЃС‚СѓСЂР°", "Р¤РѕСЂРјР° РїРѕР·РёС†РёРё", "ID"
+                "Название правила", "Использование", "Артикул", "Название", "Количество", "Габариты", "Коэффициент", "Надбавка", "Базовая текстура", "Внутр. текстура", "Внешн. текстура", "Форма позиции", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -371,14 +371,14 @@ public class Rulecalc extends javax.swing.JFrame {
 
     private void btnInsert(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsert
         UGui.insertRecordCur(tab2, eRulecalc.up, (record) -> {
-            //record.setDev(eRulecalc.name, "РџСЂР°РІРёР»Рѕ");
+            //record.setDev(eRulecalc.name, "Правило");
             record.set(eRulecalc.quant, 1);
             qRulecalc.table(eArtikl.up).add(eArtikl.up.newRecord(Query.SEL));
         });
     }//GEN-LAST:event_btnInsert
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        HtmlOfTable.load("РџСЂР°РІРёР»Р° СЂР°СЃС‡С‘С‚Р°", tab2);
+        HtmlOfTable.load("Правила расчёта", tab2);
         ExecuteCmd.documentType(this);
     }//GEN-LAST:event_btnReport
 

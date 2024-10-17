@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import common.listener.ListenerRecord;
 import java.util.Arrays;
 
-//РЎРїСЂР°РІРѕС‡РЅРёРє С„СѓСЂРЅРёС‚СѓСЂ
+//Справочник фурнитур
 public class DicHandl extends javax.swing.JDialog {
 
     private ListenerRecord listener = null;
@@ -52,14 +52,14 @@ public class DicHandl extends javax.swing.JDialog {
         btnRemove = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Р Р°СЃРїРѕР»РѕР¶РµРЅРёРµ СЂСѓС‡РєРё");
+        setTitle("Расположение ручки");
         setPreferredSize(new java.awt.Dimension(300, 200));
 
         centr.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         buttonGroup.add(rbt0);
         rbt0.setFont(frames.UGui.getFont(0,0));
-        rbt0.setText("РџРѕ СЃРµСЂРµРґРёРЅРµ");
+        rbt0.setText("По середине");
         rbt0.setMinimumSize(new java.awt.Dimension(85, 18));
         rbt0.setPreferredSize(new java.awt.Dimension(90, 23));
         rbt0.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -70,7 +70,7 @@ public class DicHandl extends javax.swing.JDialog {
 
         buttonGroup.add(rbt1);
         rbt1.setFont(frames.UGui.getFont(0,0));
-        rbt1.setText("РљРѕРЅСЃС‚Р°РЅС‚РЅР°СЏ");
+        rbt1.setText("Константная");
         rbt1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 rbtStateChanged(evt);
@@ -79,7 +79,7 @@ public class DicHandl extends javax.swing.JDialog {
 
         buttonGroup.add(rbt2);
         rbt2.setFont(frames.UGui.getFont(0,0));
-        rbt2.setText("РќР° РІС‹СЃРѕС‚Рµ");
+        rbt2.setText("На высоте");
         rbt2.setPreferredSize(new java.awt.Dimension(90, 23));
         rbt2.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -90,7 +90,7 @@ public class DicHandl extends javax.swing.JDialog {
         txt01.setFont(frames.UGui.getFont(0,0));
         txt01.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
-        jLabel1.setText("РјРј");
+        jLabel1.setText("мм");
 
         javax.swing.GroupLayout centrLayout = new javax.swing.GroupLayout(centr);
         centr.setLayout(centrLayout);
@@ -152,7 +152,7 @@ public class DicHandl extends javax.swing.JDialog {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -167,7 +167,7 @@ public class DicHandl extends javax.swing.JDialog {
         });
 
         btnChoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c044.gif"))); // NOI18N
-        btnChoice.setToolTipText(bundle.getString("Р’С‹Р±СЂР°С‚СЊ")); // NOI18N
+        btnChoice.setToolTipText(bundle.getString("Выбрать")); // NOI18N
         btnChoice.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnChoice.setFocusable(false);
         btnChoice.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -182,7 +182,7 @@ public class DicHandl extends javax.swing.JDialog {
         });
 
         btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c042.gif"))); // NOI18N
-        btnRemove.setToolTipText(bundle.getString("РћС‡РёСЃС‚РёС‚СЊ")); // NOI18N
+        btnRemove.setToolTipText(bundle.getString("Очистить")); // NOI18N
         btnRemove.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnRemove.setFocusable(false);
         btnRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

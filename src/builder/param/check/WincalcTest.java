@@ -89,7 +89,7 @@ public class WincalcTest {
         iwin4(); //-700027
     }
 
-    //-601004 "KBE 58\\1 РћРљРќРђ\\РћС‚РєСЂС‹РІР°РЅРёРµ РІРЅСѓС‚СЂСЊ (СЃС‚РІ. Z77)"
+    //-601004 "KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)"
     private static void iwin2() {
         try {
             iwin2 = new builder.Wincalc(); //-601004
@@ -117,11 +117,11 @@ public class WincalcTest {
             glass2_left = (ElemSimple) getElem(iwin2.root, 10);
             glass2_right = (ElemSimple) getElem(iwin2.root, 13);
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°: WinacalcTest.iwin2() " + e);
+            System.err.println("Ошибка: WinacalcTest.iwin2() " + e);
         }
     }
 
-    //-604005  "Wintech\\Termotech 742\\1 РћРљРќРђ"
+    //-604005  "Wintech\\Termotech 742\\1 ОКНА"
     private static void iwin3() {
         try {
             iwin3 = new builder.Wincalc(); //-604005
@@ -146,11 +146,11 @@ public class WincalcTest {
             glass3_top = (ElemSimple) getElem(iwin3.root, 6);
             glass3_left = (ElemSimple) getElem(iwin3.root, 10);
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°: WinacalcTest.iwin3() " + e);
+            System.err.println("Ошибка: WinacalcTest.iwin3() " + e);
         }
     }
 
-    //-700027  "Montblanc / Eco / 1 РћРљРќРђ (С€С‚СѓР»СЊРї)"
+    //-700027  "Montblanc / Eco / 1 ОКНА (штульп)"
     private static void iwin4() {
         try {
             iwin4 = new builder.Wincalc(); //-700027
@@ -176,11 +176,11 @@ public class WincalcTest {
             glass4_right = (ElemSimple) getElem(iwin4.root, 6);
             glass4_left = (ElemSimple) getElem(iwin4.root, 9);
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°: WinacalcTest.iwin4() " + e);
+            System.err.println("Ошибка: WinacalcTest.iwin4() " + e);
         }
     }
 
-    //РџРѕР»СѓС‡РёС‚СЊ СЌР»РµРјРµРЅС‚ РїРѕ РєР»СЋС‡Сѓ
+    //Получить элемент по ключу
     public static ElemSimple getElem(AreaSimple root, double id) {
         try {
             for (ElemSimple frm : root.frames) {
@@ -243,7 +243,7 @@ public class WincalcTest {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћРЁРР‘РљРђ: WinacalcTest.getElem() " + e);
+            System.err.println("ОШИБКА: WinacalcTest.getElem() " + e);
         }
         return null;
     }

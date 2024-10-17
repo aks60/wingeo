@@ -72,11 +72,11 @@ public class DefCellEditorBtn extends DefaultCellEditor {
             @Override
             public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
                 if (listenerCell != null) {
-                    if (string.length() > 1 || listenerCell.action(string)) { //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                    if (string.length() > 1 || listenerCell.action(string)) { //проверка на коррекность ввода
                         super.insertString(fb, offset, string, attr);
                     }
                 } else {
-                    if (string.length() > 1) { //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                    if (string.length() > 1) { //проверка на коррекность ввода
                         super.insertString(fb, offset, string, attr);
                     }
                 }
@@ -85,11 +85,11 @@ public class DefCellEditorBtn extends DefaultCellEditor {
             @Override
             public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String string, AttributeSet attrs) throws BadLocationException {
                 if (listenerCell != null) {
-                    if (string.length() > 1 || listenerCell.action(string)) {  //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                    if (string.length() > 1 || listenerCell.action(string)) {  //проверка на коррекность ввода
                         super.replace(fb, offset, length, string, attrs);
                     }
                 } else {
-                    if (string.length() > 1) {  //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                    if (string.length() > 1) {  //проверка на коррекность ввода
                         super.replace(fb, offset, length, string, attrs);
                     }
                 }
@@ -103,7 +103,7 @@ public class DefCellEditorBtn extends DefaultCellEditor {
 
         Field field = ((DefTableModel) table.getModel()).columns[column];
         if (((JTextField) editorComponent).isEditable() == false) {
-            ((JTextField) editorComponent).setEditable(field.meta().type() == Field.TYPE.STR); //СЂР°Р·СЂРµС€РёС‚СЊ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ СЃС‚СЂРёРЅРіСѓ
+            ((JTextField) editorComponent).setEditable(field.meta().type() == Field.TYPE.STR); //разрешить редактирование стрингу
         }
         if (field.meta().type() == Field.TYPE.DATE) {
             value = UGui.DateToStr(value);

@@ -12,13 +12,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum eSysprof implements Field {
-    up("0", "0", "0", "РџСЂРѕС„РёР»Рё СЃРёСЃС‚РµРјС‹", "SYSPROA"),
-    id("4", "10", "0", "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ", "id"),
-    npp("4", "10", "1", "РџСЂРёРѕСЂРёС‚РµС‚", "APRIO"), //0 - 1 -  2 -  3 -  4 -  5 -  6 - 10 -  1000 - "
-    use_type("5", "5", "1", "РўРёРї РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ", "ATYPE"),
-    use_side("5", "5", "1", "РЎС‚РѕСЂРѕРЅР° РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ", "ASETS"),
-    artikl_id("4", "10", "0", "РђСЂС‚РёРєСѓР»", "artikl_id"),
-    systree_id("4", "10", "0", "РЎРёСЃС‚РµРјР°", "systree_id");
+    up("0", "0", "0", "Профили системы", "SYSPROA"),
+    id("4", "10", "0", "Идентификатор", "id"),
+    npp("4", "10", "1", "Приоритет", "APRIO"), //0 - 1 -  2 -  3 -  4 -  5 -  6 - 10 -  1000 - "
+    use_type("5", "5", "1", "Тип использования", "ATYPE"),
+    use_side("5", "5", "1", "Сторона использования", "ASETS"),
+    artikl_id("4", "10", "0", "Артикул", "artikl_id"),
+    systree_id("4", "10", "0", "Система", "systree_id");
 
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());
@@ -58,10 +58,10 @@ public enum eSysprof implements Field {
             int minLevel = 32767;
             for (Map.Entry<Integer, Record> entry : mapPrio.entrySet()) {
 
-                if (entry.getKey() == 0) { //РµСЃР»Рё РЅСѓР»РµРІРѕР№ РїСЂРёРѕСЂРёС‚РµС‚
+                if (entry.getKey() == 0) { //если нулевой приоритет
                     return entry.getValue();
                 }
-                if (minLevel > entry.getKey()) { //РїРѕРґРЅРёРјР°РµРјСЃСЏ РІРІРµСЂС… РїРѕ РїСЂРёРѕСЂРёС‚РµС‚Сѓ
+                if (minLevel > entry.getKey()) { //поднимаемся вверх по приоритету
                     minLevel = entry.getKey();
                 }
             }

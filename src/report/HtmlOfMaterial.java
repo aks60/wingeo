@@ -22,7 +22,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-//Ð Ð°Ð·Ñ…Ð¾Ð´ Ð¼Ð°Ñ‚ÐµÑ€Ð¸Ð°Ð»Ð°
+//Ðàçõîä ìàòåðèàëà
 public class HtmlOfMaterial {
 
     private static DecimalFormat df1 = new DecimalFormat("#0.0");
@@ -35,7 +35,7 @@ public class HtmlOfMaterial {
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
 
-            //Ð—Ð°Ð¿Ð¾Ð»Ð½Ð¸Ð¼ Ð¾Ñ‚Ñ‡Ñ‘Ñ‚
+            //Çàïîëíèì îò÷¸ò
             load(projectRec, doc);
 
             String str = doc.html();
@@ -44,7 +44,7 @@ public class HtmlOfMaterial {
             ExecuteCmd.documentType(null);
 
         } catch (Exception e) {
-            System.err.println("ÐžÑˆÐ¸Ð±ÐºÐ°:HtmlOfMaterial.material()" + e);
+            System.err.println("Îøèáêà:HtmlOfMaterial.material()" + e);
         }
     }
 
@@ -62,7 +62,7 @@ public class HtmlOfMaterial {
         spcList2.forEach(el -> spcList3.add(new RSpecific(el)));
         double total = spcList3.stream().mapToDouble(spc -> spc.getCost1()).sum();
         
-        doc.getElementById("h01").text("Ð—Ð°ÐºÐ°Ð· â„–" + projectRec.getStr(eProject.num_ord));        
+        doc.getElementById("h01").text("Çàêàç ¹" + projectRec.getStr(eProject.num_ord));        
         String template = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
         spcList3.forEach(act -> doc.getElementsByTag("tbody").append(template));
         doc.getElementsByTag("tbody").get(0).getElementsByTag("tr").remove(1);        

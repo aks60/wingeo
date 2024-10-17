@@ -19,9 +19,9 @@ import domain.eSysprof;
 import enums.Type;
 import java.util.ArrayList;
 
-//TODO РЎРґРµР»Р°С‚СЊ СЃРѕСЃС‚Р°РІС‹ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёР№
+//TODO Сделать составы для заполнений
 /**
- * РЎРѕСЃС‚Р°РІС‹.
+ * Составы.
  */
 public class SpcElement extends Cal5e {
 
@@ -34,89 +34,89 @@ public class SpcElement extends Cal5e {
         elementDet = new ElementDet(winc);
     }
 
-    //РРґРµРј РїРѕ СЃРїРёСЃРєСѓ РїСЂРѕС„РёР»РµР№ СЃРјРѕС‚СЂРёРј, РµСЃС‚СЊ Р°РЅР°Р»РѕРі, СЂР°Р±РѕС‚Р°РµРј СЃ РЅРёРј.
+    //Идем по списку профилей смотрим, есть аналог, работаем с ним.
     @Override
     public void calc() {
         ArrayList<ElemSimple> listElem = winc.listElem.filter(Type.FRAME_SIDE,
-                Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA, Type.GLASS, Type.MOSQUIT); //СЃРїРёСЃРѕРє СЌР»РµРјРµРЅС‚РѕРІ РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+                Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA, Type.GLASS, Type.MOSQUIT); //список элементов конструкции
         try {
-            //Р¦РёРєР» РїРѕ СЃРїРёСЃРєСѓ СЌР»РµРјРµРЅС‚РѕРІ РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+            //Цикл по списку элементов конструкции
             for (ElemSimple elem5e : listElem) {
 
                 if (elem5e.type == Type.MOSQUIT) {
                     ElemMosquit elemMosq = (ElemMosquit) elem5e;
-                    //РџРѕ id - РїСЂРѕС„РёР»СЏ
+                    //По id - профиля
                     List<Record> elementList4 = List.of(eElement.find(elemMosq.sysprofRec.getInt(eElement.id)));
-                    //Р¦РёРєР» РїРѕ СЃРїРёСЃРєСѓ СЌР»РµРјРµРЅС‚РѕРІ СЃС‚РѕСЂРѕРЅ РјР°СЃРєРёС‚РєРё
+                    //Цикл по списку элементов сторон маскитки
                     for (int side : List.of(0, 90, 180, 270)) {
-                        elemMosq.anglHoriz = side; //СѓСЃС‚Р°РЅ. СѓРіРѕР». РїСЂРѕРІРµСЂСЏРµРјРѕР№ СЃС‚РѕСЂРѕРЅС‹
+                        elemMosq.anglHoriz = side; //устан. угол. проверяемой стороны
                         detail(elementList4, elemMosq);
                     }
                 } else {
-                    //РџРѕ artikl_id - Р°СЂС‚РёРєСѓР»Р° РїСЂРѕС„РёР»РµР№
+                    //По artikl_id - артикула профилей
                     int artiklID = elem5e.artiklRecAn.getInt(eArtikl.id);
                     List<Record> elementList3 = eElement.filter2(artiklID);
                     detail(elementList3, elem5e);
 
-                    //РџРѕ groups1_id - СЃРµСЂРёРё РїСЂРѕС„РёР»РµР№
-                    List<Record> elementList2 = eElement.filter4(elem5e.artiklRecAn); //СЃРїРёСЃРѕРє СЌР»РµРјРµРЅС‚РѕРІ РІ СЃРµСЂРёРё
+                    //По groups1_id - серии профилей
+                    List<Record> elementList2 = eElement.filter4(elem5e.artiklRecAn); //список элементов в серии
                     detail(elementList2, elem5e);
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:SpcElement.calc() " + e);
+            System.err.println("Ошибка:SpcElement.calc() " + e);
         }
     }
 
     protected void detail(List<Record> elementList, ElemSimple elem5e) {
         try {
-            //Р¦РёРєР» РїРѕ РІР°СЂРёР°РЅС‚Р°Рј
+            //Цикл по вариантам
             for (Record elementRec : elementList) {
 
-                //Р¤РР›Р¬РўР  РІР°СЂРёР°РЅС‚РѕРІ, РїР°СЂР°РјРµС‚СЂС‹ РЅР°РєР°РїР»РёРІР°СЋС‚СЃСЏ РІ СЃРїРµС†РёС„РёРєР°С†РёРё СЌР»РµРјРµРЅС‚Р°
+                //ФИЛЬТР вариантов, параметры накапливаются в спецификации элемента
                 if (elementVar.filter(elem5e, elementRec) == true) {
 
-                    //Р’С‹РїРѕР»РЅРёРј СѓСЃС‚Р°РЅРѕРІРѕС‡РЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ (РЅРµ СѓСЃРїРѕР»СЊР·СѓСЋ)
+                    //Выполним установочные параметры (не успользую)
                     elementVar.listenerFire();
 
-                    UColor.colorRuleFromParam(elem5e); //РїСЂР°РІРёР»Рѕ РїРѕРґР±РѕСЂР° С‚РµРєСЃС‚СѓСЂ РїРѕ РїР°СЂР°РјРµС‚СЂСѓ
-                    List<Record> elemdetList = eElemdet.find(elementRec.getInt(eElement.id)); //СЃРїРёСЃРѕРє СЌР»РµРј. РґРµС‚Р°Р»РёР·Р°С†РёРё
+                    UColor.colorRuleFromParam(elem5e); //правило подбора текстур по параметру
+                    List<Record> elemdetList = eElemdet.find(elementRec.getInt(eElement.id)); //список элем. детализации
 
-                    //Р¦РёРєР» РїРѕ РґРµС‚Р°Р»РёР·Р°С†РёРё
+                    //Цикл по детализации
                     for (Record elemdetRec : elemdetList) {
-                        HashMap<Integer, String> mapParam = new HashMap<Integer, String>(); //С‚СѓС‚ РЅР°РєР°РїР»РёРІР°СЋС‚СЃСЏ РїР°СЂР°РјРµС‚СЂС‹ РґРµС‚Р°Р»РёР·Р°С†РёРё
+                        HashMap<Integer, String> mapParam = new HashMap<Integer, String>(); //тут накапливаются параметры детализации
 
-                        //Р¤РР›Р¬РўР  РґРµС‚Р°Р»РёР·Р°С†РёРё, РїР°СЂР°РјРµС‚СЂС‹ РЅР°РєР°РїР»РёРІР°СЋС‚СЃСЏ РІ mapParam
+                        //ФИЛЬТР детализации, параметры накапливаются в mapParam
                         if (elementDet.filter(mapParam, elem5e, elemdetRec) == true) {
 
                             Record artiklRec = eArtikl.get(elemdetRec.getInt(eElemdet.artikl_id));
-                            SpcRecord spcAdd = new SpcRecord("Р’РЎРў", elemdetRec, artiklRec, elem5e, mapParam);
+                            SpcRecord spcAdd = new SpcRecord("ВСТ", elemdetRec, artiklRec, elem5e, mapParam);
 
-                            //РџРѕРґР±РѕСЂ С‚РµРєСЃС‚СѓСЂС‹
+                            //Подбор текстуры
                             if (UColor.colorFromElemOrSeri(spcAdd)) {
 
-                                //Р•СЃР»Рё РІ СЃРїРёСЃРєРµ РґРµС‚Р°Р»РёР·Р°С†РёРё СЌР»РµРј.РєРѕРЅС‚РµР№РЅРµСЂ, 
-                                //РЅР°РїСЂРёРјРµСЂ РїСЂРѕС„РёР»СЊ СЃ РїСЂРµС„РёРєСЃРѕРј @ РІ РѕСЃРЅ. СЃРїРµС†РёС„.
+                                //Если в списке детализации элем.контейнер, 
+                                //например профиль с префиксом @ в осн. специф.
                                 if (TypeArt.isType(artiklRec, TypeArt.X101, TypeArt.X102,
                                         TypeArt.X103, TypeArt.X104, TypeArt.X105)) {
-                                    elem5e.spcRec.artiklRec(spcAdd.artiklRec()); //РїРѕРґРјРµРЅР° Р°СЂС‚РёРєСѓР»Р° РІ РѕСЃРЅ.СЃРїРµС†.
+                                    elem5e.spcRec.artiklRec(spcAdd.artiklRec()); //подмена артикула в осн.спец.
                                     elem5e.spcRec.colorID1 = spcAdd.colorID1;
                                     elem5e.spcRec.colorID2 = spcAdd.colorID2;
                                     elem5e.spcRec.colorID3 = spcAdd.colorID3;
-                                    elem5e.addSpecific(elem5e.spcRec); //РІ СЃРїРµС†РёС„РёРєР°С†РёСЋ 
+                                    elem5e.addSpecific(elem5e.spcRec); //в спецификацию 
 
-                                    //РљРѕРЅС‚РµР№РЅРµСЂ РјР°СЃРєРёС‚РєР° РЅРµ СѓС‡Р°РІСЃС‚РІСѓРµС‚ РІ С†РёРєР»Рµ СЃС‚РѕСЂРѕРЅ
+                                    //Контейнер маскитка не учавствует в цикле сторон
                                 } else if (TypeArt.isType(artiklRec, TypeArt.X520)) {
                                     ElemMosquit alemMosq = (ElemMosquit) elem5e;
                                     if (alemMosq.anglHoriz == 0) {
-                                        elem5e.spcRec.artiklRec(spcAdd.artiklRec()); //РїРѕРґРјРµРЅР° Р°СЂС‚РёРєСѓР»Р° РІ РѕСЃРЅ.СЃРїРµС†.
+                                        elem5e.spcRec.artiklRec(spcAdd.artiklRec()); //подмена артикула в осн.спец.
                                         elem5e.spcRec.colorID1 = spcAdd.colorID1;
                                         elem5e.spcRec.colorID2 = spcAdd.colorID2;
                                         elem5e.spcRec.colorID3 = spcAdd.colorID3;
-                                        elem5e.addSpecific(elem5e.spcRec); //РІ СЃРїРµС†РёС„РёРєР°С†РёСЋ     
+                                        elem5e.addSpecific(elem5e.spcRec); //в спецификацию     
                                     }
                                 } else {
-                                    elem5e.addSpecific(spcAdd); //РІ СЃРїРµС†РёС„РёРєР°С†РёСЋ
+                                    elem5e.addSpecific(spcAdd); //в спецификацию
                                 }
                             }
                         }
@@ -124,7 +124,7 @@ public class SpcElement extends Cal5e {
                 }
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:Elements.detail() " + e);
+            System.err.println("Ошибка:Elements.detail() " + e);
         }
     }
 }

@@ -16,7 +16,7 @@ public class AreaTrapeze extends AreaSimple {
         super(winc, gson, null);
     }  
 
-    //РџРѕР»РёРіРѕРЅ СЂР°РјС‹. Р¤СѓРЅРє. РІС‹РїРѕРЅСЏРµС‚СЃСЏ РїРѕСЃР»Рµ СЃРѕР·РґР°РЅРёСЏ СЂР°Рј РєРѕРЅСЃС‚СЂСѓРєС†РёРё
+    //Полигон рамы. Функ. выпоняется после создания рам конструкции
     @Override
     public void setLocation() {
         try {
@@ -24,30 +24,30 @@ public class AreaTrapeze extends AreaSimple {
             Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
             double dh = artiklRec.getDbl(eArtikl.height);     
             
-            //Р’РµСЂС€РёРЅС‹ СЂР°РјС‹
+            //Вершины рамы
             this.frames.forEach(line -> coo.add(new Coordinate(line.x1(), line.y1(), line.id)));
             coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
             
-            //Рђrea СЂР°РјС‹
+            //Аrea рамы
             Polygon geo1 = gf.createPolygon(coo.toArray(new Coordinate[0]));   
             Polygon geo2 = buffer(geo1, this.frames, 0);                        
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:AreaRectangl.setLocation" + toString() + e);
+            System.err.println("Ошибка:AreaRectangl.setLocation" + toString() + e);
         }
     }
 
-    //L - СЃРѕРµРґРёРЅРµРЅРёСЏ
+    //L - соединения
     @Override
     public void addJoining() {
         try {
             winc.listJoin.clear();
             
-            super.addJoining(); //T - СЃРѕРµРґРёРЅРµРЅРёСЏ
+            super.addJoining(); //T - соединения
 
-            //L - СЃРѕРµРґРёРЅРµРЅРёСЏ
-            for (int i = 0; i < this.frames.size(); i++) { //С†РёРєР» РїРѕ СЃС‚РѕСЂРѕРЅР°Рј СЂР°РјС‹
+            //L - соединения
+            for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам рамы
                 ElemFrame nextFrame = (ElemFrame) this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1); 
                 winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.ANGL, this.frames.get(i), nextFrame));
             }
@@ -56,7 +56,7 @@ public class AreaTrapeze extends AreaSimple {
         }
     }
 
-    //Р›РёРЅРёРё СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё
+    //Линии размерности
     @Override    
     public void paint() {
         super.paint();

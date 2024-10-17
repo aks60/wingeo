@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum eFurnside1 implements Field {
-    up("0", "0", "0", "РћРїРёСЃР°РЅРёРµ СЃС‚РѕСЂРѕРЅ С„СѓСЂРЅРёС‚СѓСЂС‹", "FURNLEN"),
-    id("4", "10", "0", "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ", "id"),
-    side_num("5", "5", "1", "РЎС‚РѕСЂРѕРЅР°", "FNUMB"),
-    side_use("4", "10", "0", "РќР°Р·РЅР°С‡РµРЅРёРµ", "side_use"), //1-СЃС‚РѕСЂРѕРЅР°, 2-РѕСЃСЊ РїРѕРІРѕСЂРѕС‚Р°, 3-РєСЂРµРїР»РµРЅРёРµ РїРµС‚РµР»СЊ
-    furniture_id("4", "10", "0", "Р¤СѓСЂРЅРёС‚СѓСЂР°", "furniture_id");
+    up("0", "0", "0", "Описание сторон фурнитуры", "FURNLEN"),
+    id("4", "10", "0", "Идентификатор", "id"),
+    side_num("5", "5", "1", "Сторона", "FNUMB"),
+    side_use("4", "10", "0", "Назначение", "side_use"), //1-сторона, 2-ось поворота, 3-крепление петель
+    furniture_id("4", "10", "0", "Фурнитура", "furniture_id");
    
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());

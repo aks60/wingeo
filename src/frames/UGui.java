@@ -75,21 +75,21 @@ import startup.App;
 
 /**
  * <p>
- * РџР°СЂР°РјРµС‚СЂС‹ РїСЂРёР»РѕР¶РµРЅРёСЏ </p>
+ * Параметры приложения </p>
  */
 public class UGui {
 
-    private static GregorianCalendar appCalendar = new GregorianCalendar(); //РєР°Р»РµРЅРґР°СЂСЊ РїСЂРѕРіСЂР°РјРјС‹    
-    private static DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM); //С„РѕСЂРјР°С‚ РґР°С‚С‹
-    public static SimpleDateFormat simpleFormat = new SimpleDateFormat("dd.MM.yyyy"); //"yyyy-MM-dd" С„РѕСЂРјР°С‚ РґР»СЏ Р±Р°Р· РіРґРµ РґР°С‚С‹ utf8
+    private static GregorianCalendar appCalendar = new GregorianCalendar(); //календарь программы    
+    private static DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM); //формат даты
+    public static SimpleDateFormat simpleFormat = new SimpleDateFormat("dd.MM.yyyy"); //"yyyy-MM-dd" формат для баз где даты utf8
     private static int mes = 0;
 
-    // <editor-fold defaultstate="collapsed" desc="Р Р°Р±РѕС‚Р° СЃ РґР°С‚РѕР№..."> 
+    // <editor-fold defaultstate="collapsed" desc="Работа с датой..."> 
     public static DateFormat getDateFormat() {
         return dateFormat;
     }
 
-    // РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РґР°С‚С‹ РІ СЃС‚СЂРѕРєСѓ
+    // Преобразование даты в строку
     public static String getDateStr(Object obj) {
         if (obj == null) {
             return dateFormat.format(appCalendar.getTime());
@@ -98,16 +98,16 @@ public class UGui {
             GregorianCalendar gk = new GregorianCalendar();
             gk.setTime((Date) obj);
             int index = gk.get(GregorianCalendar.MONTH);
-            String monthName[] = {"СЏРЅРІР°СЂСЏ", "С„РµРІСЂР°Р»СЏ", "РјР°СЂС‚Р°", "Р°РїСЂРµР»СЏ", "РјР°СЏ",
-                "РёСЋРЅСЏ", "РёСЋР»СЏ", "Р°РІРіСѓСЃС‚Р°", "СЃРµРЅС‚СЏР±СЂСЏ", "РѕРєС‚СЏР±СЂСЏ", "РЅРѕСЏР±СЂСЏ", "РґРµРєР°Р±СЂСЏ"};
+            String monthName[] = {"января", "февраля", "марта", "апреля", "мая",
+                "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"};
             return "\" " + String.valueOf(gk.get(GregorianCalendar.DAY_OF_MONTH)) + " \"   "
-                    + monthName[index] + "    " + String.valueOf(gk.get(GregorianCalendar.YEAR)) + " Рі.";
+                    + monthName[index] + "    " + String.valueOf(gk.get(GregorianCalendar.YEAR)) + " г.";
         } else {
             return "";
         }
     }
 
-    //РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ С‚РµРєСѓС‰РµР№ РґР°С‚С‹ РІ СЃС‚СЂРѕРєСѓ
+    //Преобразование текущей даты в строку
     public static int getDateField(Object obj, int field) {
         if (obj instanceof Date) {
             GregorianCalendar gk = new GregorianCalendar();
@@ -118,12 +118,12 @@ public class UGui {
         }
     }
 
-    // РўРµРєСѓС‰Р°СЏ РґР°С‚Р°
+    // Текущая дата
     public static Date getDateCur() {
         return appCalendar.getTime();
     }
 
-    //РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ string РІ date
+    //Преобразование string в date
     public static Date StrToDate(String str) {
         try {
             return (Date) dateFormat.parse(str);
@@ -132,12 +132,12 @@ public class UGui {
         }
     }
 
-    // РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ date РІ string
+    // Преобразование date в string
     public static String DateToStr(Object date) {
         return (date instanceof java.util.Date) ? simpleFormat.format(date) : "";
     }
 
-    //РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ date РІ string
+    //Преобразование date в string
     public static String DateToSql(Object date) {
         if (date == null) {
             return simpleFormat.format(appCalendar.getTime());
@@ -148,12 +148,12 @@ public class UGui {
         return "";
     }
 
-    //РўРµРєСѓС‰РёР№ РіРѕРґ
+    //Текущий год
     public static int getYearCur() {
         return appCalendar.get(Calendar.YEAR);
     }
 
-    public static GregorianCalendar СЃalendar() {
+    public static GregorianCalendar сalendar() {
         return appCalendar;
     }
 // </editor-fold> 
@@ -289,7 +289,7 @@ public class UGui {
                             str = str.substring(6, 128);
                         }
                     }
-                    return eProfile.profile.title + "   РР·РґРµР»РёРµ: " + eSystree.patch(productRec.getInt(eSysprod.systree_id), "") + "/" + str;
+                    return eProfile.profile.title + "   Изделие: " + eSystree.patch(productRec.getInt(eSysprod.systree_id), "") + "/" + str;
                 }
 
             } else if (eProfile.profile == eProfile.P03) {
@@ -305,7 +305,7 @@ public class UGui {
                             str = str.substring(6, 128);
                         }
                     }
-                    return eProfile.profile.title + "   РР·РґРµР»РёРµ: " + eSystree.patch(productRec.getInt(ePrjprod.systree_id), "") + "/" + str;
+                    return eProfile.profile.title + "   Изделие: " + eSystree.patch(productRec.getInt(ePrjprod.systree_id), "") + "/" + str;
                 }
             }
             return "";
@@ -331,7 +331,7 @@ public class UGui {
                             str = str.substring(6, 128);
                         }
                     }
-                    return "<html><font size='3' color='blue'>РџСЂРѕРµРєС‚: " + str;
+                    return "<html><font size='3' color='blue'>Проект: " + str;
                 }
 
             } else if (eProfile.profile == eProfile.P03) {
@@ -347,7 +347,7 @@ public class UGui {
                             str = str.substring(6, 128);
                         }
                     }
-                    return "   РР·РґРµР»РёРµ: " + eSystree.patch(productRec.getInt(ePrjprod.systree_id), "") + "/" + str;
+                    return "   Изделие: " + eSystree.patch(productRec.getInt(ePrjprod.systree_id), "") + "/" + str;
                 }
             }
             return "";
@@ -371,7 +371,7 @@ public class UGui {
         }
     }
 
-    //РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РїСѓСЃС‚РѕР№ Р±РѕСЂРґРµСЂ
+    //Установить пустой бордер
     public static void createEmptyBorder(final Container c) {
         List<Component> comps = getAllComponents(c);
         for (Component comp : comps) {
@@ -381,7 +381,7 @@ public class UGui {
         }
     }
 
-    //РџРѕР»СѓС‡РёС‚СЊ С‚Р°Р±Р»РёС†Сѓ РѕС‚ РЅРµРїСѓСЃС‚РѕРіРѕ Р±РѕСЂРґРµСЂР°
+    //Получить таблицу от непустого бордера
     public static JTable tableFromBorder(JTable... tables) {
         for (JTable table : tables) {
             if (table.getBorder() != null) {
@@ -391,7 +391,7 @@ public class UGui {
         return null;
     }
 
-    //Р’СЃРµ РєРѕРјРїРѕРЅРµРЅС‚С‹ С„РѕСЂРјС‹
+    //Все компоненты формы
     public static List<Component> getAllComponents(final Container c) {
         Component[] comps = c.getComponents();
         List<Component> compList = new ArrayList<Component>();
@@ -404,7 +404,7 @@ public class UGui {
         return compList;
     }
 
-    //РўРёРїС‹ РґР°РЅРЅС‹С… РІ Р±Р°Р·Рµ
+    //Типы данных в базе
     public static String typeField(Field.TYPE type, Object size) {
 
         if (type == Field.TYPE.INT) {
@@ -425,7 +425,7 @@ public class UGui {
         return "";
     }
 
-    //Р РµРєСѓСЂСЃРёСЏ РїРѕРёСЃРєР° СЂРѕРґРёС‚РµР»СЏ
+    //Рекурсия поиска родителя
     public static Record findParent(Query table, int key) {
         for (Record record : table) {
             if (key == record.getInt(eSystree.id)) {
@@ -439,7 +439,7 @@ public class UGui {
         return null;
     }
 
-    //РџСЂРѕРєСЂСѓС‚РёС‚СЊ СЃРєСЂРѕР»Р»РёРЅРі Рё СЃРґРµР»Р°С‚СЊ СЏС‡РµР№РєСѓ РІРёРґРёРјРѕР№
+    //Прокрутить скроллинг и сделать ячейку видимой
     public static void scrollRectToIndex(int index, JTable table) {
         try {
             int row = table.convertRowIndexToView(index);
@@ -447,11 +447,11 @@ public class UGui {
                 scrollRectToRow(row, table);
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UGui.scrollRectToIndex() " + e);
+            System.err.println("Ошибка:UGui.scrollRectToIndex() " + e);
         }
     }
 
-    //РџСЂРѕРєСЂСѓС‚РёС‚СЊ СЃРєСЂРѕР»Р»РёРЅРі Рё СЃРґРµР»Р°С‚СЊ СЏС‡РµР№РєСѓ РІРёРґРёРјРѕР№
+    //Прокрутить скроллинг и сделать ячейку видимой
     public static void scrollRectToRow(int row, JTable table) {
         try {
             if (table.getRowCount() > row + 4) {
@@ -462,11 +462,11 @@ public class UGui {
                 table.scrollRectToVisible(cellRect);
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UGui.scrollRectToRow() " + e);
+            System.err.println("Ошибка:UGui.scrollRectToRow() " + e);
         }
     }
 
-    //Р’С‹РґРµР»РёС‚СЊ Р·Р°РїРёСЃСЊ
+    //Выделить запись
     public static void setSelectedRow(JTable table) {
 
         if (table.getRowCount() > 0) {
@@ -479,7 +479,7 @@ public class UGui {
         }
     }
 
-    //Р’С‹РґРµР»РёС‚СЊ Р·Р°РїРёСЃСЊ
+    //Выделить запись
     public static void setSelectedIndex(JTable table, int index) {
         if (table.getRowCount() > 0 && index != -1) {
 
@@ -493,7 +493,7 @@ public class UGui {
         }
     }
 
-    //Р’С‹РґРµР»РёС‚СЊ Р·Р°РїРёСЃСЊ РїРѕ РєР»СЋС‡Сѓ
+    //Выделить запись по ключу
     public static void setSelectedKey(JTable table, int id) {
         if (id != -1 && id != -3) {
             Query query = ((DefTableModel) table.getModel()).getQuery();
@@ -508,7 +508,7 @@ public class UGui {
         UGui.setSelectedRow(table);
     }
 
-    //Р’С‹РґРµР»РёС‚СЊ Р·Р°РїРёСЃСЊ РїРѕ РєР»СЋС‡Сѓ
+    //Выделить запись по ключу
     public static void setSelectedKey(JTable table, Query query, int id) {
         if (id != -1 && id != -3) {
             for (int i = 0; i < query.size(); ++i) {
@@ -534,7 +534,7 @@ public class UGui {
         return -1;
     }
 
-    //РџРѕР»СѓС‡РёС‚СЊ convertRowIndexToModel
+    //Получить convertRowIndexToModel
     public static int getIndexRec(JTable table) {
         if (table.getSelectedRow() != -1) {
             return table.convertRowIndexToModel(table.getSelectedRow());
@@ -542,7 +542,7 @@ public class UGui {
         return -1;
     }
 
-    //РџРѕР»СѓС‡РёС‚СЊ convertRowIndexToModel
+    //Получить convertRowIndexToModel
     public static int getIndexRec(JTable table, int def) {
         if (table.getSelectedRow() != -1) {
             return table.convertRowIndexToModel(table.getSelectedRow());
@@ -550,13 +550,13 @@ public class UGui {
         return def;
     }
 
-    //РџРѕРёСЃРє Record РІ РјРѕРґРµР»Рё РїРѕ row table
+    //Поиск Record в модели по row table
     public static Record findRecordModel(Query q, JTable table, int row) {
         int id = (int) table.getValueAt(row, table.getColumnCount() - 1);
         return q.stream().filter(rec -> rec.getInt(1) == 1).findFirst().orElse(null);
     }
 
-    //Р’СЃС‚Р°РІРёС‚СЊ Р·Р°РїРёСЃСЊ
+    //Вставить запись
     public static void insertRecordCur(JTable table, Field field, ListenerRecord listener) {
 
         int index = UGui.getIndexRec(table);
@@ -571,7 +571,7 @@ public class UGui {
             query.add(--index, record);
         }
 
-        field.query().add(record);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+        field.query().add(record);  //добавим запись в кэш
         listener.action(record);
 
         ((DefaultTableModel) table.getModel()).fireTableRowsInserted(index, index);
@@ -579,7 +579,7 @@ public class UGui {
         UGui.scrollRectToIndex(index, table);
     }
 
-    //Р’СЃС‚Р°РІРёС‚СЊ Р·Р°РїРёСЃСЊ
+    //Вставить запись
     public static void insertRecordEnd(JTable table, Field field, ListenerRecord listener) {
 
         Query query = ((DefTableModel) table.getModel()).getQuery();
@@ -588,22 +588,22 @@ public class UGui {
 
         listener.action(record);
 
-        query.add(record);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ Р·Р°РїСЂРѕСЃ
-        field.query().add(record);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+        query.add(record);  //добавим запись в запрос
+        field.query().add(record);  //добавим запись в кэш
 
         ((DefaultTableModel) table.getModel()).fireTableRowsInserted(query.size() - 1, query.size() - 1);
         UGui.setSelectedIndex(table, query.size() - 1);
         UGui.scrollRectToIndex(query.size() - 1, table);
     }
 
-    //РР·РјРµРЅРёС‚СЊ Р·Р°РїРёСЃСЊ
+    //Изменить запись
     public static void updateRecord(JTable table, ListenerRecord listener) {
         Record record = ((DefTableModel) table.getModel()).getQuery().get(UGui.getIndexRec(table));
         listener.action(record);
         ((DefaultTableModel) table.getModel()).fireTableRowsUpdated(table.getSelectedRow(), table.getSelectedRow());
     }
 
-    //РЈРґР°Р»РёС‚СЊ Р·Р°РїРёСЃСЊ
+    //Удалить запись
     public static void deleteRecord(JTable table) {
         if (table.getSelectedRow() != -1) {
             Query query = ((DefTableModel) table.getModel()).getQuery();
@@ -612,7 +612,7 @@ public class UGui {
             Record record = query.get(index);
             record.set(0, Query.DEL);
             if (query.delete(record)) {
-                Field f = query.fields().get(0); //Field РґРѕРјРµРЅР°
+                Field f = query.fields().get(0); //Field домена
 
                 query.removeRec(index);
                 delDomainRec(f.query(), record.getInt(1));
@@ -625,28 +625,28 @@ public class UGui {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(null, "РќРё РѕРґРЅР° РёР· Р·Р°РїРёСЃРµР№ РЅРµ РІС‹Р±СЂР°РЅР°", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.NO_OPTION);
+            JOptionPane.showMessageDialog(null, "Ни одна из записей не выбрана", "Предупреждение", JOptionPane.NO_OPTION);
         }
     }
 
-    //РџСЂРѕРІРµСЂРєР° РґРѕРїСѓСЃС‚РёРјРѕСЃС‚Рё СѓРґР°Р»РµРЅРёСЏ С‚Р°Р±Р»РёС†С‹
+    //Проверка допустимости удаления таблицы
     public static int isDeleteRecord(JTable table, java.awt.Window owner, JTable... tables) {
         ImageIcon img = new ImageIcon(owner.getClass().getResource("/resource/img24/c014.gif"));
         if (table.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(null, "РќРё РѕРґРЅР° РёР· Р·Р°РїРёСЃРµР№ РЅРµ РІС‹РІС‹РґРµР»РµРЅР°", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.NO_OPTION, img);
+            JOptionPane.showMessageDialog(null, "Ни одна из записей не вывыделена", "Предупреждение", JOptionPane.NO_OPTION, img);
             return 1;
         }
         for (JTable tab : tables) {
             if (tab.getRowCount() != 0) {
-                JOptionPane.showMessageDialog(owner, "РџРµСЂРµРґ СѓРґР°Р»РµРЅРёРµРј Р·Р°РїРёСЃРё, СѓРґР°Р»РёС‚Рµ РґР°РЅРЅС‹Рµ РІ Р·Р°РІРёСЃРёРјС‹С… С‚Р°Р±Р»РёС†Р°С…", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.NO_OPTION, img);
+                JOptionPane.showMessageDialog(owner, "Перед удалением записи, удалите данные в зависимых таблицах", "Предупреждение", JOptionPane.NO_OPTION, img);
                 return 1;
             }
         }
-        //return JOptionPane.showConfirmDialog(owner, "Р’С‹ СѓРІРµСЂРµРЅС‹, С‡С‚Рѕ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ С‚РµРєСѓС‰СѓСЋ Р·Р°РїРёСЃСЊ?", "РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        return JOptionPane.showConfirmDialog(owner, "Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ С‚РµРєСѓС‰СѓСЋ Р·Р°РїРёСЃСЊ?", "РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        //return JOptionPane.showConfirmDialog(owner, "Вы уверены, что хотите удалить текущую запись?", "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        return JOptionPane.showConfirmDialog(owner, "Вы действительно хотите удалить текущую запись?", "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
     }
 
-    //Р”РѕР±Р°РІРёС‚СЊ РЅРѕРІСѓСЋ Р·Р°РїРёСЃСЊ РІ РґРѕРјРµРЅt   
+    //Добавить новую запись в доменt   
     public static Record addDomainRec(Field field) {
         Record record = field.newRecord(Query.INS);
         field.query().add(record);
@@ -657,7 +657,7 @@ public class UGui {
         return false;
     }
 
-    //РЈРґР°Р»РёС‚СЊ Р·Р°РїРёСЃСЊ РІ РґРѕРјРµРЅРµ
+    //Удалить запись в домене
     public static boolean delDomainRec(Query query, int id) {
         for (int i = 0; i < query.size(); i++) {
             Record record = query.get(i);
@@ -669,12 +669,12 @@ public class UGui {
         return false;
     }
 
-    //РћР±РЅРѕРІР»РµРЅРёРµ Р·Р°РїРёСЃРё РІ С‚Р°Р±Р»РёС†Рµ JTable
+    //Обновление записи в таблице JTable
     public static void fireTableRowUpdated(JTable table) {
         ((DefaultTableModel) table.getModel()).fireTableRowsUpdated(table.getSelectedRow(), table.getSelectedRow());
     }
 
-    //РЈСЃС‚Р°РЅРѕРІРёС‚СЊ border Рё РІС‹РїРѕР»РЅРёС‚СЊ sql
+    //Установить border и выполнить sql
     public static void updateBorderAndSql(JTable table, List<JTable> tabList) {
         if (tabList != null) {
             tabList.forEach(tab -> tab.setBorder(null));
@@ -692,12 +692,12 @@ public class UGui {
         table.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
     }
 
-    //РџРѕР»СѓС‡РёС‚СЊ Query РёР· С‚Р°Р±Р»РёС†С‹
+    //Получить Query из таблицы
     public static Query getQuery(JTable table) {
         return ((DefTableModel) table.getModel()).getQuery();
     }
 
-    //РћС‡РёСЃС‚РёС‚СЊ С‚Р°Р±Р»РёС†С‹
+    //Очистить таблицы
     public static void clearTable(JTable... jTable) {
         for (JTable table : jTable) {
             if (table.getModel() instanceof DefTableModel) {
@@ -710,21 +710,21 @@ public class UGui {
         }
     }
 
-    //РРЅРєР°РїСЃСѓР»СЏС†РёСЏ РєРЅРѕРїРєРё РІ СЏС‡РµР№РєСѓ С‚Р°Р±Р»РёС†С‹
+    //Инкапсуляция кнопки в ячейку таблицы
     public static JButton buttonCellEditor(JTable table, int column) {
         JButton btn = new JButton("...");
         table.getColumnModel().getColumn(column).setCellEditor(new DefCellEditorBtn(btn));
         return btn;
     }
 
-    //РРЅРєР°РїСЃСѓР»СЏС†РёСЏ РєРЅРѕРїРєРё РІ СЏС‡РµР№РєСѓ С‚Р°Р±Р»РёС†С‹
+    //Инкапсуляция кнопки в ячейку таблицы
     public static JButton buttonCellEditor(JTable table, int column, ListenerObject listenerCell) {
         JButton btn = new JButton("...");
         table.getColumnModel().getColumn(column).setCellEditor(new DefCellEditorBtn(listenerCell, btn));
         return btn;
     }
 
-    //Р’С‹РєР»СЋС‡РёС‚СЊ СЂРµР¶РёРј СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ
+    //Выключить режим редактирования
     public static void stopCellEditing(JComponent... compList) {
         for (JComponent comp : compList) {
             if (comp instanceof JTable) {
@@ -739,31 +739,31 @@ public class UGui {
         }
     }
 
-    //Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РїР°СЂР°РјРµС‚СЂРѕРІ СЏС‡РµР№РєРё
+    //Редактирование параметров ячейки
     public static void cellParamNameOrValue(Record record, JTable table, Field id, Field text) {
         try {
             Query query = ((DefTableModel) table.getModel()).getQuery();
             Record record2 = query.get(UGui.getIndexRec(table));
 
-            //РќР°Р·РІР°РЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕРіРѕ РїР°СЂР°РјРµС‚СЂР°
+            //Название пользовательского параметра
             if (eGroups.values().length == record.size()) {
                 record2.set(id, record.getInt(eGroups.id));
                 record2.set(text, "");
 
-                //РќР°Р·РІР°РЅРёРµ СЃРёСЃС‚РµРјРЅРѕРіРѕ РїР°СЂР°РјРµС‚СЂР° РёР· PalList
+                //Название системного параметра из PalList
             } else if (record.size() == 2) {
                 record2.set(id, record.getInt(0));
                 record2.set(text, ParamList.find(record.getInt(0)).def());
 
-                //Р—Р°РїРёСЃСЊ Р·РЅР°С‡РµРЅРёСЏ РІ СЏС‡РµР№РєСѓ
+                //Запись значения в ячейку
             } else if (record.size() == 1) {
                 String val = record2.getStr(text);
 
-                //РЈРґР°Р»РµРЅРёРµ РґР°РЅРЅС‹С… РІ СЏС‡РµР№РєРµ
+                //Удаление данных в ячейке
                 if (record.get(0) == null) {
                     record2.set(text, "");
 
-                    //Р”РѕР±Р°РІР»РµРЅРёРµ РґР°РЅРЅС‹С… РІ СЏС‡РµР№РєРµ
+                    //Добавление данных в ячейке
                 } else if (val != null && val.isEmpty() == false) {
                     record2.set(text, val + ";" + record.getStr(0));
 
@@ -774,37 +774,37 @@ public class UGui {
             int index = UGui.getIndexRec(table);
             ((DefaultTableModel) table.getModel()).fireTableRowsUpdated(index, index);
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UGui.cellParamNameOrValue() " + e);
+            System.err.println("Ошибка:UGui.cellParamNameOrValue() " + e);
         }
     }
 
-    //Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ С‚РёРїР° РґР°РЅРЅС‹С… Рё РІРёРґР° СЏС‡РµР№РєРё С‚Р°Р±Р»РёС†С‹ 
-    //componentCell - DefCellEditorBtn Р»РёР±Рѕ String СЃРј. РєР»Р°СЃСЃ DefCellEditorBtn
+    //Редактирование типа данных и вида ячейки таблицы 
+    //componentCell - DefCellEditorBtn либо String см. класс DefCellEditorBtn
     public static boolean cellParamTypeOrVid(JTable table, Object componentCell, Field groups_id) {
         try {
             Query qXxxpar = ((DefTableModel) table.getModel()).getQuery();
             int groupsID = qXxxpar.getAs(UGui.getIndexRec(table), groups_id);
 
-            //Р•СЃР»Рё РєРѕРјРїРѕРЅРµРЅС‚ РєР»Р°СЃСЃ DefCellEditorBtn
-            //СѓСЃС‚Р°РЅРѕРІРёРј РІРёРґ Рё С‚РёРї СЏС‡РµР№РєРё
+            //Если компонент класс DefCellEditorBtn
+            //установим вид и тип ячейки
             if (componentCell instanceof DefCellEditorBtn) {
                 DefCellEditorBtn editor = (DefCellEditorBtn) componentCell;
 
-                //РџРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРёР№ СЃРїРёСЃРѕРє РїР°СЂР°РјРµС‚СЂРѕРІ
+                //Пользовательский список параметров
                 if (groupsID < 0) {
                     editor.getButton().setVisible(true);
                     editor.getTextField().setEnabled(false);
 
-                    //РЎРёСЃС‚РµРјРЅРµ РїР°СЂР°РјРµС‚СЂС‹
+                    //Системне параметры
                 } else {
                     Enam enam = ParamList.find(groupsID);
 
-                    //РЎРёСЃС‚РµРјРЅС‹Рµ, РІС‹Р±РѕСЂ РёР· СЃРїСЂР°РІРѕС‡РЅРёРєР°
+                    //Системные, выбор из справочника
                     if (enam.dict() != null) {
                         editor.getButton().setVisible(true);
                         editor.getTextField().setEnabled(false);
 
-                        //РЎРёСЃС‚РµРјРЅС‹Рµ РІРІРѕРґРёРјС‹Рµ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј
+                        //Системные вводимые пользователем
                     } else {
                         editor.getButton().setVisible(false);
                         editor.getTextField().setEnabled(true);
@@ -812,19 +812,19 @@ public class UGui {
                     }
                 }
 
-                //Р•СЃР»Рё РєРѕРјРїРѕРЅРµРЅС‚ РїСЂРѕСЃС‚Рѕ С‚РµРєСЃС‚, РёРґС‘С‚ РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
-                //РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРёР№ РїР°СЂР°РјРµС‚СЂ С‚РµРєСЃС‚РѕРј Р±РІС‚СЊ РЅРµ РјРѕР¶РµС‚ Рё РЅРµ РїСЂРѕРІРµСЂСЏРµС‚СЃСЏ
+                //Если компонент просто текст, идёт проверка на коррекность ввода
+                //пользовательский параметр текстом бвть не может и не проверяется
             } else if (groupsID > 0 && componentCell != null && componentCell instanceof String) {
                 String txt = (String) componentCell;
                 return ParamList.find(qXxxpar.getAs(UGui.getIndexRec(table), groups_id)).check(txt);
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°:UGui.cellParamTypeOrVid() " + e);
+            System.err.println("Ошибка:UGui.cellParamTypeOrVid() " + e);
         }
         return true;
     }
 
-    //Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РїР°СЂР°РјРµС‚СЂР° С‚РµРєСЃС‚СѓСЂС‹
+    //Редактирование параметра текстуры
     public static void cellParamColor(Record record, JTable table, Field color_fk, Field color_us, JTable... tables) {
         UGui.stopCellEditing(tables);
         int index = UGui.getIndexRec(table);
@@ -833,14 +833,14 @@ public class UGui {
         int group = (eGroups.values().length == record.size()) ? record.getInt(eGroups.id) : record.getInt(eColor.id);
         detailRec.set(color_fk, group);
 
-        if (group == 0 || group == 100000) { //Р°РІС‚РѕРїРѕР»Р±РѕСЂ/С‚РѕС‡РЅ.РїРѕРґР±РѕСЂ
+        if (group == 0 || group == 100000) { //автополбор/точн.подбор
             int val = UseColor.PROF.id + (UseColor.PROF.id << 4) + (UseColor.PROF.id << 8);
             detailRec.set(color_us, val);
 
-        } else if (group > 0) { //РІС‹Р±СЂР°РЅС‹ РІ СЂСѓС‡РЅСѓСЋ
+        } else if (group > 0) { //выбраны в ручную
             detailRec.set(color_us, 0);
 
-        } else { //РїР°СЂР°РјРµС‚СЂС‹ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёСЏ
+        } else { //параметры соответствия
             int val = UseColor.PROF.id + (UseColor.PROF.id << 4) + (UseColor.PROF.id << 8);
             detailRec.set(color_us, val);
         }
@@ -857,7 +857,7 @@ public class UGui {
         UGui.setSelectedIndex(table, index);
     }
 
-    //РџСЂРѕРіСЂР°РјРјРЅС‹Р№ РєР»РёРє РЅР° РєРѕРјРїРѕРЅРµРЅС‚Рµ
+    //Программный клик на компоненте
     public static void componentClick(JComponent comp) {
         try {
             Point p = comp.getLocationOnScreen();
@@ -871,23 +871,23 @@ public class UGui {
         }
     }
 
-    //РЎРїРёСЃРѕРє РґР»СЏ РІС‹Р±РѕСЂР° СЂСѓС‡РµРє, РїРѕРґРІРµСЃРѕРІ, РЅР°РєР»Р°РґРѕРє РІ СЃС‚РІРѕСЂРєРµ  
+    //Список для выбора ручек, подвесов, накладок в створке  
 //    public static Query artTypeToFurndetList(int furnitureID, Query qArtikl) {
 //        try {
 //            HashSet<Integer> filterSet = new HashSet<Integer>();
 //            Query qResult = new Query(eArtikl.values());
-//            Query qFurndet = new Query(eFurndet.values()).sql(eFurndet.data(), eFurndet.up, furnitureID); //РІСЃСЏ РґРµС‚Р°Р»РёР·Р°С†РёСЏ С„СѓСЂРЅРёС‚СѓСЂС‹
+//            Query qFurndet = new Query(eFurndet.values()).sql(eFurndet.data(), eFurndet.up, furnitureID); //вся детализация фурнитуры
 //
-//            //Р¦РёРєР» РґРµС‚Р°Р»РёР·Р°С†РёР№
-//            for (Record furndetRec1 : qFurndet) { //РїРµСЂРІС‹Р№ СѓСЂРѕРІРµРЅСЊ
+//            //Цикл детализаций
+//            for (Record furndetRec1 : qFurndet) { //первый уровень
 //                if (furndetRec1.getInt(eFurndet.furniture_id1) == furnitureID) {
 //
-//                    //Р¤РёР»СЊС‚СЂ РїРѕ РґРµС‚Р°Р»РёР·Р°С†РёРё РѕРїСЂРµРґРµР»С‘РЅРЅРѕРіРѕ С‚РёРїР° РѕРїСЂРµРґРµР»С‘РЅРЅРѕР№ С„СѓСЂРЅРёС‚СѓСЂС‹
-//                    if (furndetRec1.get(eFurndet.furniture_id2) == null) { //РќР• РќРђР‘РћР 
+//                    //Фильтр по детализации определённого типа определённой фурнитуры
+//                    if (furndetRec1.get(eFurndet.furniture_id2) == null) { //НЕ НАБОР
 //                        filterSet.add(furndetRec1.getInt(eFurndet.artikl_id));
 //
-//                    } else { //Р­РўРћ РќРђР‘РћР 
-//                        for (Record furndetRec2 : qFurndet) { //РІС‚РѕСЂРѕР№ СѓСЂРѕРІРµРЅСЊ
+//                    } else { //ЭТО НАБОР
+//                        for (Record furndetRec2 : qFurndet) { //второй уровень
 //                            if (furndetRec1.getInt(eFurndet.furniture_id2) == furndetRec2.getInt(eFurndet.furniture_id1)) {
 //                                filterSet.add(furndetRec2.getInt(eFurndet.artikl_id));
 //                            }
@@ -905,7 +905,7 @@ public class UGui {
 //            return qResult;
 //
 //        } catch (Exception e) {
-//            System.err.println("РћС€РёР±РєР°: frames.artTypeToFurndetList " + e);
+//            System.err.println("Ошибка: frames.artTypeToFurndetList " + e);
 //            return null;
 //        }
 //    }
@@ -914,17 +914,17 @@ public class UGui {
         try {
             HashSet<Integer> filterSet = new HashSet<Integer>();
             Query qResult = new Query(eArtikl.values());
-            Query qFurndet = new Query(eFurndet.values()).sql(eFurndet.data(), eFurndet.furniture_id1, furnitureID); //РІСЃСЏ РґРµС‚Р°Р»РёР·Р°С†РёСЏ РѕРїСЂРµРґРµР»С‘РЅРЅРѕР№ С„СѓСЂРЅРёС‚СѓСЂС‹
+            Query qFurndet = new Query(eFurndet.values()).sql(eFurndet.data(), eFurndet.furniture_id1, furnitureID); //вся детализация определённой фурнитуры
 
-            //Р¦РёРєР» РґРµС‚Р°Р»РёР·Р°С†РёР№
-            for (Record furndetRec1 : qFurndet) { //РїРµСЂРІС‹Р№ СѓСЂРѕРІРµРЅСЊ
+            //Цикл детализаций
+            for (Record furndetRec1 : qFurndet) { //первый уровень
                 
-                    //Р¤РёР»СЊС‚СЂ РїРѕ РґРµС‚Р°Р»РёР·Р°С†РёРё
-                    if (furndetRec1.get(eFurndet.furniture_id2) == null) { //РќР• РќРђР‘РћР 
+                    //Фильтр по детализации
+                    if (furndetRec1.get(eFurndet.furniture_id2) == null) { //НЕ НАБОР
                         filterSet.add(furndetRec1.getInt(eFurndet.artikl_id));
 
-                    } else { //Р­РўРћ РќРђР‘РћР 
-                        for (Record furndetRec2 : qFurndet) { //РІС‚РѕСЂРѕР№ СѓСЂРѕРІРµРЅСЊ
+                    } else { //ЭТО НАБОР
+                        for (Record furndetRec2 : qFurndet) { //второй уровень
                             if (furndetRec1.getInt(eFurndet.furniture_id2) == furndetRec2.getInt(eFurndet.furniture_id2)) {
                                 filterSet.add(furndetRec2.getInt(eFurndet.artikl_id));
                             }
@@ -941,12 +941,12 @@ public class UGui {
             return qResult;
 
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°: frames.artTypeToFurndetList " + e);
+            System.err.println("Ошибка: frames.artTypeToFurndetList " + e);
             return null;
         }
     }
 
-    //Р’СЃРµ РґРѕСЃС‚СѓРїРЅС‹Рµ С†РІРµС‚Р° Р°СЂС‚РёРєР»Р° artiklID
+    //Все доступные цвета артикла artiklID
     public static HashSet<Record> artiklToColorSet(int artiklID) {
         HashSet<Record> colorSet = new HashSet<Record>();
         Query artdetList = new Query(eArtdet.values()).sql(eArtdet.data(), eArtdet.artikl_id, artiklID);
@@ -965,7 +965,7 @@ public class UGui {
         return colorSet;
     }
 
-    //Р’СЃРµ РґРѕСЃС‚СѓРїРЅС‹Рµ С†РІРµС‚Р° Р°СЂС‚РёРєР»Р° artiklID
+    //Все доступные цвета артикла artiklID
     public static HashSet<Record> artiklToColorSet(int artiklID, int side) {
         HashSet<Record> colorSet = new HashSet<Record>();
         Field field = (side == 1) ? eArtdet.mark_c1 : (side == 2) ? eArtdet.mark_c2 : eArtdet.mark_c3;
@@ -985,13 +985,13 @@ public class UGui {
         return colorSet;
     }
 
-    //РџСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+    //Проверка на коррекность ввода
     public static void setDocumentFilter(int pattern, JTextField... txtField) {
         for (JTextField txtField2 : txtField) {
             ((PlainDocument) txtField2.getDocument()).setDocumentFilter(new DocumentFilter() {
 
                 public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String string, AttributeSet attrs) throws BadLocationException {
-                    if (string != null && string.length() > 1 || UCom.check(string, pattern)) { //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                    if (string != null && string.length() > 1 || UCom.check(string, pattern)) { //проверка на коррекность ввода
                         super.replace(fb, offset, length, string, attrs);
                     }
                 }

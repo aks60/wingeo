@@ -27,7 +27,7 @@ import javax.swing.tree.TreePath;
 import startup.App;
 import startup.Tex;
 
-//РЎРїСЂР°РІРѕС‡РЅРёРє Р°СЂС‚РёРєСѓР»РѕРІ
+//Справочник артикулов
 public class DicArtikl2 extends javax.swing.JDialog {
 
     private ListenerRecord listener = null;
@@ -70,7 +70,7 @@ public class DicArtikl2 extends javax.swing.JDialog {
     }
 
     public void loadingTree() {
-        DefaultMutableTreeNode treeNode1 = new DefaultMutableTreeNode("РњР°С‚. С†РµРЅРЅРѕСЃС‚Рё");
+        DefaultMutableTreeNode treeNode1 = new DefaultMutableTreeNode("Мат. ценности");
         UTree.loadArtTree(treeNode1);
         tree.setModel(new DefaultTreeModel(treeNode1));
         scrTree.setViewportView(tree);
@@ -120,7 +120,7 @@ public class DicArtikl2 extends javax.swing.JDialog {
         south = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РЎРїСЂР°РІРѕС‡РЅРёРє Р°СЂС‚РёРєСѓР»РѕРІ");
+        setTitle("Справочник артикулов");
         setPreferredSize(new java.awt.Dimension(600, 600));
 
         north.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -129,7 +129,7 @@ public class DicArtikl2 extends javax.swing.JDialog {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -144,7 +144,7 @@ public class DicArtikl2 extends javax.swing.JDialog {
         });
 
         btnChoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c044.gif"))); // NOI18N
-        btnChoice.setToolTipText(bundle.getString("Р’С‹Р±СЂР°С‚СЊ")); // NOI18N
+        btnChoice.setToolTipText(bundle.getString("Выбрать")); // NOI18N
         btnChoice.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnChoice.setFocusable(false);
         btnChoice.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -159,7 +159,7 @@ public class DicArtikl2 extends javax.swing.JDialog {
         });
 
         btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c042.gif"))); // NOI18N
-        btnRemove.setToolTipText(bundle.getString("РћС‡РёСЃС‚РёС‚СЊ")); // NOI18N
+        btnRemove.setToolTipText(bundle.getString("Очистить")); // NOI18N
         btnRemove.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnRemove.setFocusable(false);
         btnRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -174,7 +174,7 @@ public class DicArtikl2 extends javax.swing.JDialog {
         });
 
         btnArt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c064.gif"))); // NOI18N
-        btnArt.setToolTipText(bundle.getString("Р”РѕР±Р°РІРёС‚СЊ Рё РІС‹Р±СЂР°С‚СЊ")); // NOI18N
+        btnArt.setToolTipText(bundle.getString("Добавить и выбрать")); // NOI18N
         btnArt.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnArt.setFocusable(false);
         btnArt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -221,17 +221,17 @@ public class DicArtikl2 extends javax.swing.JDialog {
         centr.setPreferredSize(new java.awt.Dimension(460, 500));
         centr.setLayout(new java.awt.BorderLayout());
 
-        scrTree.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "РўРёРїС‹ Р°СЂС‚РёРєСѓР»РѕРІ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scrTree.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Типы артикулов", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
         scrTree.setPreferredSize(new java.awt.Dimension(200, 600));
 
         tree.setFont(frames.UGui.getFont(0,0));
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
-        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("РњР°С‚. С†РµРЅРЅРѕСЃС‚Рё");
-        javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("РџСЂРѕС„РёР»Рё");
+        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Мат. ценности");
+        javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Профили");
         treeNode2.add(treeNode3);
         treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("AРєСЃРµСЃСЃСѓР°СЂС‹");
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Р‘Р»Р°Р‘Р»Р°");
+        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Aксессуары");
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("БлаБла");
         treeNode2.add(treeNode3);
         treeNode1.add(treeNode2);
         tree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
@@ -240,7 +240,7 @@ public class DicArtikl2 extends javax.swing.JDialog {
 
         centr.add(scrTree, java.awt.BorderLayout.WEST);
 
-        scr1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "РЎРїРёСЃРѕРє Р°СЂС‚РёРєСѓР»РѕРІ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Список артикулов", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
         scr1.setPreferredSize(new java.awt.Dimension(350, 600));
 
         tab1.setFont(frames.UGui.getFont(0,0));
@@ -249,7 +249,7 @@ public class DicArtikl2 extends javax.swing.JDialog {
 
             },
             new String [] {
-                "РљРѕРґ Р°СЂРёРєСѓР»Р°", "РќР°РёРјРµРЅРѕРІР°РЅРёРµ Р°СЂС‚РёРєСѓР»Р°"
+                "Код арикула", "Наименование артикула"
             }
         ) {
             boolean[] canEdit = new boolean [] {

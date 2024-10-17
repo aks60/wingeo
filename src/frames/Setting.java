@@ -52,7 +52,7 @@ public class Setting extends javax.swing.JFrame {
         btnClose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РЈСЃС‚Р°РЅРѕРІРєРё grgergererherhreth");
+        setTitle("Установки grgergererherhreth");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setPreferredSize(new java.awt.Dimension(480, 580));
         setResizable(false);
@@ -66,7 +66,7 @@ public class Setting extends javax.swing.JFrame {
         panCentr.setPreferredSize(new java.awt.Dimension(480, 300));
         panCentr.setLayout(new javax.swing.BoxLayout(panCentr, javax.swing.BoxLayout.Y_AXIS));
 
-        pan3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "РЁСЂРёС„С‚"));
+        pan3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "Шрифт"));
         pan3.setPreferredSize(new java.awt.Dimension(480, 68));
         pan3.setRequestFocusEnabled(false);
         pan3.setLayout(new java.awt.BorderLayout());
@@ -74,7 +74,7 @@ public class Setting extends javax.swing.JFrame {
         textPane4.setEditable(false);
         textPane4.setBorder(null);
         textPane4.setFont(frames.UGui.getFont(0,0));
-        textPane4.setText("РЈСЃС‚Р°РЅРѕРІРєР° С€СЂРёС„С‚Р° РїСЂРѕРіСЂР°РјРјС‹");
+        textPane4.setText("Установка шрифта программы");
         textPane4.setPreferredSize(new java.awt.Dimension(160, 60));
         pan3.add(textPane4, java.awt.BorderLayout.WEST);
 
@@ -95,7 +95,7 @@ public class Setting extends javax.swing.JFrame {
         comboBox.setPreferredSize(new java.awt.Dimension(220, 22));
 
         jLabel8.setFont(frames.UGui.getFont(0,0));
-        jLabel8.setText("Р Р°Р·РјРµСЂ");
+        jLabel8.setText("Размер");
         jLabel8.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jLabel8.setMaximumSize(new java.awt.Dimension(50, 22));
         jLabel8.setMinimumSize(new java.awt.Dimension(50, 22));
@@ -103,7 +103,7 @@ public class Setting extends javax.swing.JFrame {
 
         btnProp2.setFont(frames.UGui.getFont(0,0));
         btnProp2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b031.gif"))); // NOI18N
-        btnProp2.setText("РЎРѕС…СЂР°РЅРёС‚СЊ С€СЂРёС„С‚ РІ РЅР°СЃС‚СЂРѕР№РєР°С… РїСЂРѕРіСЂР°РјРјС‹");
+        btnProp2.setText("Сохранить шрифт в настройках программы");
         btnProp2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnProp2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnProp2.setMaximumSize(new java.awt.Dimension(80, 25));
@@ -158,14 +158,14 @@ public class Setting extends javax.swing.JFrame {
 
         panCentr.add(pan3);
 
-        pan4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "РћС„РёСЃ "));
+        pan4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "Офис "));
         pan4.setPreferredSize(new java.awt.Dimension(480, 94));
         pan4.setLayout(new java.awt.BorderLayout());
 
         textPane3.setEditable(false);
         textPane3.setBorder(null);
         textPane3.setFont(frames.UGui.getFont(0,0));
-        textPane3.setText("РР·РјРµРЅРёС‚Рµ РїСѓС‚СЊ Рє РїСЂРѕРіСЂР°РјРјР°Рј Р·Р°РїСѓСЃРєР° РѕС‚С‡С‘С‚РѕРІ, РµСЃР»Рё РЅР°\nРІР°С€РµРј РєРѕРјРїСЊСЋС‚РµСЂРµ РґРёСЂРµРєС‚РѕСЂРёСЏ СѓСЃС‚Р°РЅРѕРІРєРё Office  Р±С‹Р»Р° РёР·РјРµРЅРµРЅР°  ");
+        textPane3.setText("Измените путь к программам запуска отчётов, если на\nвашем компьютере директория установки Office  была изменена  ");
         textPane3.setPreferredSize(new java.awt.Dimension(160, 40));
         pan4.add(textPane3, java.awt.BorderLayout.WEST);
 
@@ -213,7 +213,7 @@ public class Setting extends javax.swing.JFrame {
 
         btnProp3.setFont(frames.UGui.getFont(0,0));
         btnProp3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b031.gif"))); // NOI18N
-        btnProp3.setText("РЎРѕС…СЂР°РЅРёС‚СЊ РїР°СЂР°РјРµС‚СЂС‹ РѕС‚С‡С‘С‚РѕРІ");
+        btnProp3.setText("Сохранить параметры отчётов");
         btnProp3.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnProp3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnProp3.setMaximumSize(new java.awt.Dimension(80, 25));
@@ -267,21 +267,21 @@ public class Setting extends javax.swing.JFrame {
 
         panCentr.add(pan4);
 
-        pan5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "РЎРµСЂРІРµСЂ РѕР±РЅРѕРІР»РµРЅРёР№ "));
+        pan5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "Сервер обновлений "));
         pan5.setPreferredSize(new java.awt.Dimension(480, 44));
         pan5.setLayout(new java.awt.BorderLayout());
 
         textPane2.setEditable(false);
         textPane2.setBorder(null);
         textPane2.setFont(frames.UGui.getFont(0,0));
-        textPane2.setText("РЎ СЌС‚РѕРіРѕ СЃРµСЂРІРµСЂР° Р±СѓРґСѓС‚ СЃРєР°С‡РёРІР°С‚СЊСЃСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ");
+        textPane2.setText("С этого сервера будут скачиваться обновления");
         textPane2.setPreferredSize(new java.awt.Dimension(160, 20));
         pan5.add(textPane2, java.awt.BorderLayout.WEST);
 
         jPanel4.setPreferredSize(new java.awt.Dimension(305, 20));
 
         jLabel13.setFont(frames.UGui.getFont(0,0));
-        jLabel13.setText("РџСѓС‚СЊ");
+        jLabel13.setText("Путь");
         jLabel13.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jLabel13.setMaximumSize(new java.awt.Dimension(40, 22));
         jLabel13.setMinimumSize(new java.awt.Dimension(40, 22));
@@ -296,7 +296,7 @@ public class Setting extends javax.swing.JFrame {
 
         btnProp4.setFont(frames.UGui.getFont(0,0));
         btnProp4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b031.gif"))); // NOI18N
-        btnProp4.setText("РЎРѕС…СЂР°РЅРёС‚СЊ РїСѓС‚СЊ Рє СЃРµСЂРІРµСЂСѓ");
+        btnProp4.setText("Сохранить путь к серверу");
         btnProp4.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnProp4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnProp4.setMaximumSize(new java.awt.Dimension(80, 25));
@@ -342,14 +342,14 @@ public class Setting extends javax.swing.JFrame {
 
         panCentr.add(pan5);
 
-        pan6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "Р’РµСЂСЃРёСЏ РїСЂРѕРіСЂР°РјРјС‹ "));
+        pan6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "Версия программы "));
         pan6.setPreferredSize(new java.awt.Dimension(480, 30));
         pan6.setLayout(new java.awt.BorderLayout());
 
         jPanel3.setPreferredSize(new java.awt.Dimension(336, 40));
 
         checkBox1.setFont(frames.UGui.getFont(0,0));
-        checkBox1.setText(" РћС‚РєР°С‚РёС‚СЊ РЅР° РїСЂРµРґС‹РґСѓС‰СѓСЋ РІРµСЂСЃРёСЋ");
+        checkBox1.setText(" Откатить на предыдущую версию");
         checkBox1.setMaximumSize(new java.awt.Dimension(213, 22));
         checkBox1.setMinimumSize(new java.awt.Dimension(213, 22));
         checkBox1.setPreferredSize(new java.awt.Dimension(280, 22));
@@ -362,7 +362,7 @@ public class Setting extends javax.swing.JFrame {
         textPane1.setEditable(false);
         textPane1.setBorder(null);
         textPane1.setFont(frames.UGui.getFont(0,0));
-        textPane1.setText("РћС‚РєР°С‚ РЅР° РїСЂРµРґС‹РґСѓС‰СѓСЋ РІРµСЂСЃРёСЋ РїСЂРѕРіСЂР°РјРјС‹");
+        textPane1.setText("Откат на предыдущую версию программы");
         textPane1.setMinimumSize(new java.awt.Dimension(65, 14));
         textPane1.setPreferredSize(new java.awt.Dimension(160, 40));
 
@@ -399,7 +399,7 @@ public class Setting extends javax.swing.JFrame {
 
         btnClose.setFont(frames.UGui.getFont(0,0));
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        btnClose.setText("Р’С‹С…РѕРґ");
+        btnClose.setText("Выход");
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnClose.setMaximumSize(new java.awt.Dimension(80, 25));

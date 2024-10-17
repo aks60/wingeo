@@ -40,7 +40,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
 
-//Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РєРѕРјРїР»РµРєС‚С‹
+//Дополнительные комплекты
 public class DicKits extends javax.swing.JDialog {
 
     private ListenerObject<Query> listener = null;
@@ -189,11 +189,11 @@ public class DicKits extends javax.swing.JDialog {
         HashMap<Integer, String> mapParam = new HashMap<Integer, String>();
         KitDet kitDet = new KitDet(Q, L, H);
 
-        //Р¦РёРєР» РїРѕ СЃРїРёСЃРєСѓ РґРµС‚Р°Р»РёР·Р°С†РёРё
+        //Цикл по списку детализации
         for (Record kitdetRec : qKitdet) {
             mapParam.clear();
 
-            //Р¤РР›Р¬РўР  РґРµС‚Р°Р»РёР·Р°С†РёРё, РїР°СЂР°РјРµС‚СЂС‹ РЅР°РєР°РїР»РёРІР°СЋС‚СЃСЏ РІ mapParam
+            //ФИЛЬТР детализации, параметры накапливаются в mapParam
             if (kitDet.filter(mapParam, kitdetRec) == true) {
 
                 Record prjkitRec = ePrjkit.up.newRecord(Query.INS);
@@ -205,44 +205,44 @@ public class DicKits extends javax.swing.JDialog {
 
                 double count = UPar.to_7030_7031_8060_8061_9060_9061(mapParam);
                 count = (count == 0) ? Q : count;
-                prjkitRec.set(ePrjkit.numb, count); //РєРѕР»РёС‡РµСЃС‚РІРѕ    
+                prjkitRec.set(ePrjkit.numb, count); //количество    
 
-                //Р”Р»РёРЅР°, РјРј
+                //Длина, мм
                 Double width = UPar.to_8065_8066_9065_9066(mapParam);
-                prjkitRec.set(ePrjkit.width, width); //РґР»РёРЅР° РјРј   
+                prjkitRec.set(ePrjkit.width, width); //длина мм   
 
-                //РЁРёСЂРёРЅР°, РјРј
+                //Ширина, мм
                 Double height = UPar.to_8070_8071_9070_9071(mapParam);
                 if (height == null) {
                     Record artkitRec = eArtikl.get(kitdetRec.getInt(eKitdet.artikl_id));
                     height = artkitRec.getDbl(eArtikl.height);
                 }
-                prjkitRec.set(ePrjkit.height, height); //С€РёСЂРёРЅР°  
+                prjkitRec.set(ePrjkit.height, height); //ширина  
 
-                //РџРѕРїСЂР°РІРєР°, РјРј
+                //Поправка, мм
                 double correct = UPar.to_8050(mapParam);
-                prjkitRec.set(ePrjkit.width, width + correct); //РґР»РёРЅР° РјРј 
+                prjkitRec.set(ePrjkit.width, width + correct); //длина мм 
 
-                //РЈРіРѕР» СЂРµР·Р° 1
+                //Угол реза 1
                 Double angl1 = UPar.to_8075(mapParam, 0);
                 angl1 = (angl1 == null) ? 90 : angl1;
-                prjkitRec.set(ePrjkit.angl1, angl1); //СѓРіРѕР» 1  
+                prjkitRec.set(ePrjkit.angl1, angl1); //угол 1  
 
-                //РЈРіРѕР» СЂРµР·Р° 2
+                //Угол реза 2
                 Double angl2 = UPar.to_8075(mapParam, 1);
                 angl2 = (angl2 == null) ? 90 : angl2;
-                prjkitRec.set(ePrjkit.angl2, angl2); //СѓРіРѕР» 2
+                prjkitRec.set(ePrjkit.angl2, angl2); //угол 2
 
-                //РўРµРєСЃС‚СѓСЂР° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РёР· РґРµС‚Р°Р»РёР·Р°С†РёРё
+                //Текстура по умолчанию из детализации
                 prjkitRec.set(ePrjkit.color1_id, kitdetRec.get(eKitdet.color1_id));
                 prjkitRec.set(ePrjkit.color2_id, kitdetRec.get(eKitdet.color2_id));
                 prjkitRec.set(ePrjkit.color3_id, kitdetRec.get(eKitdet.color3_id));
 
                 int artiklID = kitdetRec.getInt(eKitdet.artikl_id);
 
-                //РђРІС‚РѕРїРѕРґР±РѕСЂ
+                //Автоподбор
                 if (colorID[0] != -1) {
-                    HashSet<Record> colorSet = UGui.artiklToColorSet(artiklID, 1); //РІСЃРµ С‚РµРєСЃС‚СѓСЂС‹ Р°СЂС‚РёРєСѓР»Р°
+                    HashSet<Record> colorSet = UGui.artiklToColorSet(artiklID, 1); //все текстуры артикула
                     for (Record colorRec : colorSet) {
                         if (colorID[0] == colorRec.getInt(eColor.id)) {
                             prjkitRec.set(ePrjkit.color1_id, colorID[0]); //color1
@@ -250,18 +250,18 @@ public class DicKits extends javax.swing.JDialog {
                     }
                 }
 
-                //РђРІС‚РѕРїРѕРґР±РѕСЂ
+                //Автоподбор
                 if (colorID[1] != -1) {
-                    HashSet<Record> colorSet = UGui.artiklToColorSet(artiklID, 2); //РІСЃРµ С‚РµРєСЃС‚СѓСЂС‹ Р°СЂС‚РёРєСѓР»Р°
+                    HashSet<Record> colorSet = UGui.artiklToColorSet(artiklID, 2); //все текстуры артикула
                     for (Record colorRec : colorSet) {
                         if (colorID[1] == colorRec.getInt(eColor.id)) {
                             prjkitRec.set(ePrjkit.color2_id, colorID[1]); //color2
                         }
                     }
                 }
-                //РђРІС‚РѕРїРѕРґР±РѕСЂ
+                //Автоподбор
                 if (colorID[2] != -1) {
-                    HashSet<Record> colorSet = UGui.artiklToColorSet(artiklID, 3); //РІСЃРµ С‚РµРєСЃС‚СѓСЂС‹ Р°СЂС‚РёРєСѓР»Р°
+                    HashSet<Record> colorSet = UGui.artiklToColorSet(artiklID, 3); //все текстуры артикула
                     for (Record colorRec : colorSet) {
                         if (colorID[2] == colorRec.getInt(eColor.id)) {
                             prjkitRec.set(ePrjkit.color3_id, colorID[2]); //color3
@@ -313,7 +313,7 @@ public class DicKits extends javax.swing.JDialog {
         checkFilter = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РЎРїСЂР°РІРѕС‡РЅРёРє РєРѕРјРїР»РµРєС‚РѕРІ");
+        setTitle("Справочник комплектов");
         setPreferredSize(new java.awt.Dimension(612, 650));
 
         north.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -322,7 +322,7 @@ public class DicKits extends javax.swing.JDialog {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -337,7 +337,7 @@ public class DicKits extends javax.swing.JDialog {
         });
 
         btnChoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c044.gif"))); // NOI18N
-        btnChoice.setToolTipText(bundle.getString("Р’С‹Р±СЂР°С‚СЊ")); // NOI18N
+        btnChoice.setToolTipText(bundle.getString("Выбрать")); // NOI18N
         btnChoice.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnChoice.setFocusable(false);
         btnChoice.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -381,7 +381,7 @@ public class DicKits extends javax.swing.JDialog {
         pan2.setPreferredSize(new java.awt.Dimension(513, 88));
 
         lab30.setFont(frames.UGui.getFont(0,0));
-        lab30.setText("РљРѕР». РєРѕРјРї.  ( Q )");
+        lab30.setText("Кол. комп.  ( Q )");
         lab30.setToolTipText("");
         lab30.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab30.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -389,7 +389,7 @@ public class DicKits extends javax.swing.JDialog {
         lab30.setPreferredSize(new java.awt.Dimension(92, 18));
 
         lab13.setFont(frames.UGui.getFont(0,0));
-        lab13.setText("Р”Р»РёРЅР°  ( L )");
+        lab13.setText("Длина  ( L )");
         lab13.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab13.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         lab13.setMinimumSize(new java.awt.Dimension(34, 14));
@@ -400,7 +400,7 @@ public class DicKits extends javax.swing.JDialog {
         txt1.setPreferredSize(new java.awt.Dimension(60, 18));
 
         lab14.setFont(frames.UGui.getFont(0,0));
-        lab14.setText("РЁРёСЂРёРЅР°  ( H )");
+        lab14.setText("Ширина  ( H )");
         lab14.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab14.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         lab14.setMinimumSize(new java.awt.Dimension(34, 14));
@@ -416,21 +416,21 @@ public class DicKits extends javax.swing.JDialog {
         txt3.setPreferredSize(new java.awt.Dimension(60, 18));
 
         lab27.setFont(frames.UGui.getFont(0,0));
-        lab27.setText("РћСЃРЅРѕРІРЅР°СЏ С‚РµРєСЃС‚СѓСЂР°");
+        lab27.setText("Основная текстура");
         lab27.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab27.setMaximumSize(new java.awt.Dimension(120, 18));
         lab27.setMinimumSize(new java.awt.Dimension(120, 18));
         lab27.setPreferredSize(new java.awt.Dimension(120, 18));
 
         lab31.setFont(frames.UGui.getFont(0,0));
-        lab31.setText("Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ С‚РµРєСЃС‚СѓСЂР°");
+        lab31.setText("Внутренняя текстура");
         lab31.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab31.setMaximumSize(new java.awt.Dimension(120, 18));
         lab31.setMinimumSize(new java.awt.Dimension(120, 18));
         lab31.setPreferredSize(new java.awt.Dimension(120, 18));
 
         lab32.setFont(frames.UGui.getFont(0,0));
-        lab32.setText("Р’РЅРµС€РЅСЏСЏ С‚РµРєСЃС‚СѓСЂР°");
+        lab32.setText("Внешняя текстура");
         lab32.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab32.setMaximumSize(new java.awt.Dimension(120, 18));
         lab32.setMinimumSize(new java.awt.Dimension(120, 18));
@@ -452,7 +452,7 @@ public class DicKits extends javax.swing.JDialog {
         txt14.setPreferredSize(new java.awt.Dimension(180, 18));
 
         btn9.setText("...");
-        btn9.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btn9.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btn9.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn9.setMaximumSize(new java.awt.Dimension(21, 20));
         btn9.setMinimumSize(new java.awt.Dimension(21, 20));
@@ -465,7 +465,7 @@ public class DicKits extends javax.swing.JDialog {
         });
 
         btn13.setText("...");
-        btn13.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btn13.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btn13.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn13.setMaximumSize(new java.awt.Dimension(21, 20));
         btn13.setMinimumSize(new java.awt.Dimension(21, 20));
@@ -478,7 +478,7 @@ public class DicKits extends javax.swing.JDialog {
         });
 
         btn14.setText("...");
-        btn14.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btn14.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btn14.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn14.setMaximumSize(new java.awt.Dimension(21, 20));
         btn14.setMinimumSize(new java.awt.Dimension(21, 20));
@@ -578,7 +578,7 @@ public class DicKits extends javax.swing.JDialog {
 
             },
             new String [] {
-                "РљР°С‚РµРіРѕСЂРёСЏ", "РќР°Р·РІР°РЅРёРµ РєРѕРјРїР»РµРєС‚Р°", "ID"
+                "Категория", "Название комплекта", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -626,7 +626,7 @@ public class DicKits extends javax.swing.JDialog {
 
             },
             new String [] {
-                "РђСЂС‚РёРєСѓР»", "РќР°Р·РІР°РЅРёРµ", "РћСЃРЅРѕРІРЅР°СЏ С‚РµРєСЃС‚СѓСЂР°", "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ С‚РµРєСЃС‚СѓСЂР°", "Р’РЅРµС€РЅСЏСЏ С‚РµРєСЃС‚СѓСЂР°", "Р•Рґ.РёР·РјРµСЂРµРЅРёСЏ", "РћСЃРЅРѕРІРЅРѕР№ СЌР»РµРјРµРЅС‚", "ID"
+                "Артикул", "Название", "Основная текстура", "Внутренняя текстура", "Внешняя текстура", "Ед.измерения", "Основной элемент", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -675,7 +675,7 @@ public class DicKits extends javax.swing.JDialog {
 
             },
             new String [] {
-                "РџР°СЂР°РјРµС‚СЂ", "Р—РЅР°С‡РµРЅРёРµ"
+                "Параметр", "Значение"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -706,7 +706,7 @@ public class DicKits extends javax.swing.JDialog {
 
         labFilter.setFont(frames.UGui.getFont(0,0));
         labFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c054.gif"))); // NOI18N
-        labFilter.setText("РџРѕР»Рµ");
+        labFilter.setText("Поле");
         labFilter.setMaximumSize(new java.awt.Dimension(100, 14));
         labFilter.setMinimumSize(new java.awt.Dimension(100, 14));
         labFilter.setPreferredSize(new java.awt.Dimension(100, 14));
@@ -726,7 +726,7 @@ public class DicKits extends javax.swing.JDialog {
         south.add(txtFilter);
 
         checkFilter.setFont(frames.UGui.getFont(0,0));
-        checkFilter.setText("РІ РєРѕРЅС†Рµ СЃС‚СЂРѕРєРё");
+        checkFilter.setText("в конце строки");
         south.add(checkFilter);
 
         getContentPane().add(south, java.awt.BorderLayout.SOUTH);

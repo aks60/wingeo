@@ -19,7 +19,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * РљР°Р»РµРЅРґР°СЂСЊ
+ * Календарь
  */
 public class DicDate extends javax.swing.JDialog {
 
@@ -33,8 +33,8 @@ public class DicDate extends javax.swing.JDialog {
         this.listener = listener;
         initComponents();
 
-        //Р”РёР°РїР°Р·РѕРЅ РІС‹Р±РѕСЂР°
-        listYear.setModel(new javax.swing.AbstractListModel() {//РґРёР°РїР°Р·РѕРЅ РІС‹Р±РѕСЂР°
+        //Диапазон выбора
+        listYear.setModel(new javax.swing.AbstractListModel() {//диапазон выбора
 
             public int getSize() {
                 return 100;
@@ -45,7 +45,7 @@ public class DicDate extends javax.swing.JDialog {
             }
         });
 
-        //РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј appCalendar РґР°С‚Сѓ
+        //Устанавливаем appCalendar дату
         int year = appCalendar.get(appCalendar.YEAR) + dxYear;
         appCalendar.set(appCalendar.YEAR, year);
 
@@ -56,35 +56,35 @@ public class DicDate extends javax.swing.JDialog {
         setVisible(true);
     }
 
-    //Р—Р°РїРѕР»РЅРµРЅРёРµ РјРѕРґРµР»Рё РґР°РЅРЅС‹С…
+    //Заполнение модели данных
     public void loadingTab() {
 
-        //Р—Р°РїРѕРјРёРЅР°РµРј С‚РµРєСѓС‰СѓСЋ РґР°С‚Сѓ
+        //Запоминаем текущую дату
         Date date = appCalendar.getTime();
         int month = appCalendar.get(Calendar.MONTH);
 
-        //РћС‡РёС‰Р°РµРј DataModelDay    
+        //Очищаем DataModelDay    
         for (int col = 0; col < tabDay.getColumnCount(); col++) {
             for (int row = 0; row < tabDay.getRowCount(); row++) {
                 tabDay.setValueAt(null, row, col);
             }
         }
-        //РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РѕР±СЉРµРєС‚ appCalendar РЅР° РїРµСЂРІС‹Р№ РґРµРЅСЊ С‚РµРєСѓС‰РµРіРѕ РјРµСЃСЏС†Р°
+        //Устанавливаем объект appCalendar на первый день текущего месяца
         appCalendar.set(Calendar.DAY_OF_MONTH, 1);
         int dx = appCalendar.get(Calendar.WEEK_OF_MONTH);
 
-        do { //Р—Р°РїРѕР»РЅСЏРµРј РјР°СЃСЃРёРІ DataModelDay РґРЅСЏРјРё РјРµСЃСЏС†Р°
+        do { //Заполняем массив DataModelDay днями месяца
             int day_of_week = overDay[appCalendar.get(Calendar.DAY_OF_WEEK) - 1];
             int week_of_month = appCalendar.get(Calendar.WEEK_OF_MONTH) - dx;
             int day_of_month = appCalendar.get(Calendar.DAY_OF_MONTH);
             tabDay.setValueAt(day_of_month, week_of_month, day_of_week);
 
-            appCalendar.add(Calendar.DAY_OF_MONTH, 1);  //РїРµСЂРµРґРІРёРіР°СЋ РѕР±СЉРµРєС‚ appCalendar РЅР° РЅРѕРІС‹Р№ РґРµРЅСЊ
+            appCalendar.add(Calendar.DAY_OF_MONTH, 1);  //передвигаю объект appCalendar на новый день
         } while (appCalendar.get(Calendar.MONTH) == month);
 
-        appCalendar.setTime(date); //РІРѕР·РІСЂР°С‰Р°РµРј С‚РµРєСѓС‰СѓСЋ РґР°С‚Сѓ
+        appCalendar.setTime(date); //возвращаем текущую дату
 
-        //Р’С‹РґРµР»СЏРµРј СЌР»РµРјРµРЅС‚С‹ РґР°С‚С‹
+        //Выделяем элементы даты
         int day_of_week = overDay[appCalendar.get(Calendar.DAY_OF_WEEK) - 1];
         int week_of_moth = appCalendar.get(Calendar.WEEK_OF_MONTH) - dx;
         tabDay.setRowSelectionInterval(week_of_moth, week_of_moth);
@@ -177,7 +177,7 @@ public class DicDate extends javax.swing.JDialog {
         listMonth.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         listMonth.setFont(frames.UGui.getFont(-1,0));
         listMonth.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "  1  РЇРЅРІР°СЂСЊ", "  2  Р¤РµРІСЂР°Р»СЊ", "  3  РњР°СЂС‚ ", "  4  РђРїСЂРµР»СЊ", "  5  РњР°Р№", "  6  РСЋРЅСЊ", "  7  РСЋР»СЊ", "  8  РђРІРіСѓСЃС‚", "  9  РЎРµРЅС‚СЏР±СЂСЊ", "10  РћРєС‚СЏР±СЂСЊ", "11  РќРѕСЏР±СЂСЊ", "12  Р”РµРєР°Р±СЂСЊ" };
+            String[] strings = { "  1  РЇРЅРІР°СЂСЊ", "  2  Р¤РµРІСЂР°Р»СЊ", "  3  РњР°СЂС‚ ", "  4  РђРїСЂРµР»СЊ", "  5  РњР°Р№", "  6  Р?СЋРЅСЊ", "  7  Р?СЋР»СЊ", "  8  РђРІРіСѓСЃС‚", "  9  РЎРµРЅС‚СЏР±СЂСЊ", "10  РћРєС‚СЏР±СЂСЊ", "11  РќРѕСЏР±СЂСЊ", "12  Р”РµРєР°Р±СЂСЊ" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -409,7 +409,7 @@ public class DicDate extends javax.swing.JDialog {
         dispose();
 }//GEN-LAST:event_okAction
 
-    //РЎРјРµРЅР° РґРЅСЏ
+    //Смена дня
     private void dayChanged(javax.swing.event.ListSelectionEvent evt) {
         if (evt.getValueIsAdjusting() == false) {
             int col = tabDay.getSelectedColumn();
@@ -425,7 +425,7 @@ public class DicDate extends javax.swing.JDialog {
         }
     }
 
-    //РЎРјРµРЅР° РіРѕРґР°
+    //Смена года
     private void yearChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_yearChanged
         if (evt.getValueIsAdjusting() == false) {
             int index = listYear.getSelectedIndex();
@@ -434,7 +434,7 @@ public class DicDate extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_yearChanged
 
-    //РЎРјРµРЅР° РјРµСЃСЏС†Р°
+    //Смена месяца
     private void monthChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_monthChanged
         if (evt.getValueIsAdjusting() == false) {
             int index = listMonth.getSelectedIndex();

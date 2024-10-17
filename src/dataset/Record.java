@@ -28,7 +28,7 @@ public class Record<E> extends ArrayList<E> {
         super(c);
     }
 
-    //–ò–ó–ú–ï–ù–ï–ù–ò–Ø –°–¢–ê–¢–£–°–ê –ó–ê–ü–ò–°–ò
+    //»«Ã≈Õ≈Õ»ﬂ —“¿“”—¿ «¿œ»—»
     public E set(int index, E element) {
         if (index != 0 && Query.SEL.equals(get(0))) {
             super.set(0, (E) Query.UPD);
@@ -37,22 +37,22 @@ public class Record<E> extends ArrayList<E> {
         return super.set(index, element);
     }
 
-    //–ò–ó–ú–ï–ù–ï–ù–ò–Ø –°–¢–ê–¢–£–°–ê –ó–ê–ü–ò–°–ò
+    //»«Ã≈Õ≈Õ»ﬂ —“¿“”—¿ «¿œ»—»
     public E set(Field field, E element) {
         return (E) set(field.ordinal(), element);
     }
 
-    //–ò–ó–ú–ï–ù–ï–ù–ò–Ø –°–¢–ê–¢–£–°–ê –ó–ê–ü–ò–°–ò
+    //»«Ã≈Õ≈Õ»ﬂ —“¿“”—¿ «¿œ»—»
     public E setNo(int index, E element) {
         return super.set(index, element);
     }
 
-    //–ó–ê–ü–ò–°–¨ –ë–ï–ó –ò–ó–ú–ï–ù–ï–ù–ò–Ø –°–¢–ê–¢–£–°–ê
+    //«¿œ»—‹ ¡≈« »«Ã≈Õ≈Õ»ﬂ —“¿“”—¿
     public E setNo(Field field, E element) {
         return super.set(field.ordinal(), element);
     }
 
-    //–ü—Ä–∏ —Ç–µ—Å—Ç–∏—Ä–æ–≤–∞–Ω–∏–∏ –¥–ª—è —Ä–∞–∑—Ä–∞–±–æ—Ç—á–∏–∫–∞
+    //œË ÚÂÒÚËÓ‚‡ÌËË ‰Îˇ ‡Á‡·ÓÚ˜ËÍ‡
     public void setDev(Field field, String element) {
 //        if (eProp.dev == true) {
 //            String val = element + " " + super.get(1);            
@@ -165,7 +165,7 @@ public class Record<E> extends ArrayList<E> {
         return (this.get(1) == ((Record) obj).get(1));
     }
 
-    //–ü—Ä–æ–≤–µ—Ä–∫–∞ –Ω–∞ –∫–æ—Ä—Ä–µ–∫—Ç–Ω–æ—Å—Ç—å –≤–≤–æ–¥–∞
+    //œÓ‚ÂÍ‡ Ì‡ ÍÓÂÍÚÌÓÒÚ¸ ‚‚Ó‰‡
     public String validateRec(ArrayList<Field> fields) {
         for (int index = 1; index < fields.size(); index++) {
             MetaField meta = fields.get(index).meta();
