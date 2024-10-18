@@ -316,7 +316,7 @@ public class PathToDb extends javax.swing.JDialog {
 
         btnOk.setFont(frames.UGui.getFont(0,0));
         btnOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b028.gif"))); // NOI18N
-        btnOk.setText("–û–ö");
+        btnOk.setText("Œ ");
         btnOk.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnOk.setEnabled(false);
         btnOk.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
