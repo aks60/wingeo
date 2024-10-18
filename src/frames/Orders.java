@@ -1252,7 +1252,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
         buttonGroup.add(btnF3);
         btnF3.setFont(frames.UGui.getFont(1,0));
-        btnF3.setText("?");
+        btnF3.setText(">");
         btnF3.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnF3.setFocusable(false);
         btnF3.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);

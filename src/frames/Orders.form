@@ -536,7 +536,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="frames.UGui.getFont(1,0)" type="code"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="&#x2211;"/>
+            <Property name="text" type="java.lang.String" value="&gt;"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
                 <EtchetBorder bevelType="0"/>
