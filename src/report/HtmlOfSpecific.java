@@ -38,13 +38,13 @@ public class HtmlOfSpecific {
             InputStream in = getClass().getResourceAsStream("/resource/report/Specific.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
-            Document doc = Jsoup.parse(tempFile, "UTF-8");
+            Document doc = Jsoup.parse(tempFile, "windows-1251");
 
             //Заполним отчёт
             load1(projectRec, doc);
 
             String str = doc.html();
-            str = new String(str.getBytes("UTF-8"));
+            str = new String(str.getBytes("windows-1251"));
             HtmlOfTable.write(str);
             ExecuteCmd.documentType(null);
 

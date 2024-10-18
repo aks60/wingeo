@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 //Преобразование документа в HTML </p>
 public class HtmlOfTable {
 
-    private static String charset = "UTF-8";
+    private static String charset = "windows-1251";
     private static int npp = 0;
 
     public static void load(String title, JTable table) {

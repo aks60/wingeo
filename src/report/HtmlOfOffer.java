@@ -52,7 +52,7 @@ public class HtmlOfOffer {
             load(projectRec, doc);
 
             String str = doc.html();
-            str = new String(str.getBytes("UTF-8"));
+            str = new String(str.getBytes("windows-1251"));
             HtmlOfTable.write(str);
             ExecuteCmd.documentType(null);
 

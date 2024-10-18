@@ -32,7 +32,7 @@ public enum Entity {
 
         try {
             String ename = "_e" + table.substring(0, 1).toUpperCase() + table.substring(1).toLowerCase();
-            PrintWriter writer = new PrintWriter("src/domain/" + ename + ".java", "UTF-8");
+            PrintWriter writer = new PrintWriter("src/domain/" + ename + ".java", "windows-1251");
             writer.println("");
             writer.println("package domain;");
             writer.println("import dataset.Field;");
