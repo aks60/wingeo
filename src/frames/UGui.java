@@ -876,7 +876,7 @@ public class UGui {
         try {
             HashSet<Integer> filterSet = new HashSet<Integer>();
             Query qResult = new Query(eArtikl.values());
-            Query qFurndet = new Query(eFurndet.values()).sql(eFurndet.data(), eFurndet.up, furnitureID); //вся детализация фурнитуры
+            Query qFurndet = new Query(eFurndet.values()).sql(eFurndet.data(), eFurndet.up); //вся детализация фурнитуры
 
             //Цикл детализаций
             for (Record furndetRec1 : qFurndet) { //первый уровень
@@ -896,44 +896,7 @@ public class UGui {
                 }
             }
             for (Integer id : filterSet) {
-//                Record artiklRec = qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == id).findFirst().orElse(null);
-                Record artiklRec = eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.id) == id).findFirst().orElse(null);
-                if (artiklRec != null) {
-                    qResult.add(artiklRec);
-                }
-            }
-            return qResult;
-
-        } catch (Exception e) {
-            System.err.println("Ошибка: frames.artTypeToFurndetList " + e);
-            return null;
-        }
-    }
-    
-    public static Query artTypeToFurndetList2(int furnitureID, Query qArtikl) {
-        try {
-            HashSet<Integer> filterSet = new HashSet<Integer>();
-            Query qResult = new Query(eArtikl.values());
-            Query qFurndet = new Query(eFurndet.values()).sql(eFurndet.data(), eFurndet.furniture_id1, furnitureID); //вся детализация определённой фурнитуры
-
-            //Цикл детализаций
-            for (Record furndetRec1 : qFurndet) { //первый уровень
-                
-                    //Фильтр по детализации
-                    if (furndetRec1.get(eFurndet.furniture_id2) == null) { //НЕ НАБОР
-                        filterSet.add(furndetRec1.getInt(eFurndet.artikl_id));
-
-                    } else { //ЭТО НАБОР
-                        for (Record furndetRec2 : qFurndet) { //второй уровень
-                            if (furndetRec1.getInt(eFurndet.furniture_id2) == furndetRec2.getInt(eFurndet.furniture_id2)) {
-                                filterSet.add(furndetRec2.getInt(eFurndet.artikl_id));
-                            }
-                        }
-                    }
-            }
-            for (Integer id : filterSet) {
-                //Record artiklRec = qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == id).findFirst().orElse(null);
-                Record artiklRec = eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.id) == id).findFirst().orElse(null);
+                Record artiklRec = qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == id).findFirst().orElse(null);
                 if (artiklRec != null) {
                     qResult.add(artiklRec);
                 }

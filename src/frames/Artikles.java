@@ -2430,7 +2430,7 @@ public class Artikles extends javax.swing.JFrame {
                 rsvArtikl.clear();
                 rsvArtikl.load();
             } else {
-                JOptionPane.showMessageDialog(this, "Р’С‹Р±РµСЂРёС‚Рµ С‚РёРї Р°СЂС‚РёРєСѓР»Р°", "Р’РќР?РњРђРќР?Р•!", 1);
+                JOptionPane.showMessageDialog(this, "Выберите тип артикула", "ВНИМАНИЕ!", 1);
             }
 
         } else if (tab2.getBorder() != null) {
@@ -2459,9 +2459,9 @@ public class Artikles extends javax.swing.JFrame {
         if (tab1.getBorder() != null) {
 
             if (UGui.isDeleteRecord(tab1, this, tab2) == 0) {
-                if (JOptionPane.showConfirmDialog(owner, "Р’РќР?РњРђРќР?Р•!\n  Р•СЃР»Рё Р°СЂС‚РёРєСѓР» РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІ РєРѕРјРїР»РµРєС‚Р°С…, "
-                        + "\n СЃРѕРµРґРёРЅРµРЅРёСЏС…, РІСЃС‚Р°РІРєР°С…, Р·Р°РїРѕР»РЅРµРЅРёСЏС…, С„СѓСЂРЅРёС‚СѓСЂРµ, \n С‚Рѕ Р·Р°РїРёСЃРё СЌС‚РѕРіРѕ Р°СЂС‚РёРєСѓР»Р° "
-                        + "Р±СѓРґСѓС‚ СѓРґР°Р»РµРЅС‹. \n Р’С‹ СѓРІРµСЂРµРЅС‹, С‡С‚Рѕ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ СѓСЂС‚РёРєСѓР» ?", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ",
+                if (JOptionPane.showConfirmDialog(owner, "ВНИМАНИЕ!\n  Если артикул используется в комплектах, "
+                        + "\n соединениях, вставках, заполнениях, фурнитуре, \n то записи этого артикула "
+                        + "будут удалены. \n Вы уверены, что хотите удалить уртикул ?", "Предупреждение",
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
                     UGui.deleteRecord(tab1);
                 }
@@ -2474,7 +2474,7 @@ public class Artikles extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDelete
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        HtmlOfTable.load("РЎРїРёСЃРѕРє Р°СЂС‚РёРєСѓР»РѕРІ", tab1);
+        HtmlOfTable.load("Список артикулов", tab1);
         ExecuteCmd.documentType(this);
     }//GEN-LAST:event_btnReport
 
@@ -2581,7 +2581,7 @@ public class Artikles extends javax.swing.JFrame {
                 list.add(str);
             }
             Object result = JOptionPane.showInputDialog(Artikles.this, artiklRec.getStr(eArtikl.name),
-                    "Р?Р·РјРµРЅРµРЅРёРµ С‚РёРїР° Р°СЂС‚РёРєСѓР»Р°", JOptionPane.QUESTION_MESSAGE, null, list.toArray(), list.toArray()[0]);
+                    "Изменение типа артикула", JOptionPane.QUESTION_MESSAGE, null, list.toArray(), list.toArray()[0]);
 
             if (result != null) {
                 for (TypeArt enam : TypeArt.values()) {
@@ -2658,8 +2658,8 @@ public class Artikles extends javax.swing.JFrame {
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
         int index = UGui.getIndexRec(tab1);
-        if (index != -1 && JOptionPane.showConfirmDialog(this, "Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РєР»РѕРЅРёСЂРѕРІР°С‚СЊ С‚РµРєСѓС‰СѓСЋ Р·Р°РїРёСЃСЊ?",
-                "РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+        if (index != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
+                "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 
             List<Record> artdetList = new ArrayList<Record>();
             qArtdet.forEach(rec -> artdetList.add(rec));
@@ -2668,9 +2668,9 @@ public class Artikles extends javax.swing.JFrame {
             artiklClon.setNo(eArtikl.up, Query.INS);
             int artiklID = Conn.genId(eArtikl.up);
             artiklClon.setNo(eArtikl.id, artiklID);
-            artiklClon.setNo(eArtikl.code, artiklClon.getStr(eArtikl.code) + "-РєР»РѕРЅ");
-            artiklClon.setNo(eArtikl.name, artiklClon.getStr(eArtikl.name) + "-РєР»РѕРЅ");
-            eArtikl.up.query().add(artiklClon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+            artiklClon.setNo(eArtikl.code, artiklClon.getStr(eArtikl.code) + "-клон");
+            artiklClon.setNo(eArtikl.name, artiklClon.getStr(eArtikl.name) + "-клон");
+            eArtikl.up.query().add(artiklClon);  //добавим запись в кэш
             qArtikl.add(++index, artiklClon);
             qArtikl.insert(artiklClon);
             
@@ -2679,7 +2679,7 @@ public class Artikles extends javax.swing.JFrame {
                 artdetClon.setNo(eArtdet.up, Query.INS);
                 artdetClon.setNo(eArtdet.id, Conn.genId(eArtdet.up));
                 artdetClon.setNo(eArtdet.artikl_id, artiklID);
-                eArtdet.up.query().add(artdetClon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
+                eArtdet.up.query().add(artdetClon);  //добавим запись в кэш
                 qArtdet.add(artdetClon);
             }
             qArtdet.execsql();
