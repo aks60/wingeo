@@ -147,7 +147,7 @@ public class ParName extends javax.swing.JDialog {
         south = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Р“СЂСѓРїРїС‹ РїР°СЂР°РјРµС‚СЂРѕРІ");
+        setTitle("Группы параметров");
 
         north.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         north.setMaximumSize(new java.awt.Dimension(32767, 31));
@@ -155,7 +155,7 @@ public class ParName extends javax.swing.JDialog {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -170,7 +170,7 @@ public class ParName extends javax.swing.JDialog {
         });
 
         btnChoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c044.gif"))); // NOI18N
-        btnChoice.setToolTipText(bundle.getString("Р’С‹Р±СЂР°С‚СЊ")); // NOI18N
+        btnChoice.setToolTipText(bundle.getString("Выбрать")); // NOI18N
         btnChoice.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnChoice.setFocusable(false);
         btnChoice.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -219,7 +219,7 @@ public class ParName extends javax.swing.JDialog {
         });
 
         btnParam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c064.gif"))); // NOI18N
-        btnParam.setToolTipText(bundle.getString("Р”РѕР±Р°РІРёС‚СЊ Рё РІС‹Р±СЂР°С‚СЊ")); // NOI18N
+        btnParam.setToolTipText(bundle.getString("Добавить и выбрать")); // NOI18N
         btnParam.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnParam.setFocusable(false);
         btnParam.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -275,7 +275,7 @@ public class ParName extends javax.swing.JDialog {
         pan1.setPreferredSize(new java.awt.Dimension(350, 400));
         pan1.setLayout(new java.awt.BorderLayout());
 
-        scr1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "РџР°СЂР°РјРµС‚СЂС‹ СЃРёСЃС‚РµРјС‹", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Параметры системы", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
 
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
@@ -283,7 +283,7 @@ public class ParName extends javax.swing.JDialog {
 
             },
             new String [] {
-                "РљРѕРґ", "РќР°Р·РІР°РЅРёРµ"
+                "Код", "Название"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -315,7 +315,7 @@ public class ParName extends javax.swing.JDialog {
         pan2.setPreferredSize(new java.awt.Dimension(350, 180));
         pan2.setLayout(new java.awt.BorderLayout());
 
-        scr2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "РџР°СЂР°РјРµС‚СЂС‹ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Параметры пользователя", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
 
         tab2.setFont(frames.UGui.getFont(0,0));
         tab2.setModel(new javax.swing.table.DefaultTableModel(
@@ -324,7 +324,7 @@ public class ParName extends javax.swing.JDialog {
                 {"2", "3"}
             },
             new String [] {
-                "РљРѕРґ", "РќР°Р·РІР°РЅРёРµ "
+                "Код", "Название "
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -355,7 +355,7 @@ public class ParName extends javax.swing.JDialog {
         pan3.setPreferredSize(new java.awt.Dimension(350, 400));
         pan3.setLayout(new java.awt.BorderLayout());
 
-        scr3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "РџРµСЂСЃРїРµРєС‚РёРІР° РёР»Рё СѓСЃС‚Р°СЂРµР»Рё", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Перспектива или устарели", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
 
         tab3.setFont(frames.UGui.getFont(0,0));
         tab3.setModel(new javax.swing.table.DefaultTableModel(
@@ -364,7 +364,7 @@ public class ParName extends javax.swing.JDialog {
                 {"1", "2"}
             },
             new String [] {
-                "РљРѕРґ", "РќР°Р·РІР°РЅРёРµ"
+                "Код", "Название"
             }
         ) {
             boolean[] canEdit = new boolean [] {

@@ -359,7 +359,7 @@ public class DicColor extends javax.swing.JDialog {
                 this.dispose();
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Р—Р°РїРёСЃСЊ РЅРµ РІС‹Р±СЂР°РЅР°", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.NO_OPTION);
+            JOptionPane.showMessageDialog(this, "Запись не выбрана", "Предупреждение", JOptionPane.NO_OPTION);
         }
     }//GEN-LAST:event_btnChoice
 
@@ -418,7 +418,7 @@ public class DicColor extends javax.swing.JDialog {
 
             if (colorArr.length != 0) {
                 for (Record rec : colorSrc) {
-                    for (int i = 0; i < colorArr.length; i = i + 2) { //С‚РµСЃС‚СѓСЂС‹
+                    for (int i = 0; i < colorArr.length; i = i + 2) { //тестуры
                         if (rec.getInt(eColor.code) >= colorArr[i] && rec.getInt(eColor.code) <= colorArr[i + 1]) {
                             colorRet.add(rec);
                         }
@@ -437,13 +437,13 @@ public class DicColor extends javax.swing.JDialog {
             artdetList.forEach(rec -> {
                 if (rec.getInt(field) == 1) {
 
-                    if (rec.getInt(eArtdet.color_fk) < 0) { //РІСЃРµ С‚РµРєСЃС‚СѓСЂС‹ РіСЂСѓРїС‹ color_fk                       
+                    if (rec.getInt(eArtdet.color_fk) < 0) { //все текстуры групы color_fk                        
                         colorSrc.forEach(rec2 -> {
                             if (rec2.getInt(eColor.groups_id) == rec.getInt(eArtdet.color_fk)) {
                                 colorSet.add(rec2);
                             }
                         });
-                    } else { //С‚РµРєСЃС‚СѓСЂР° color_fk 
+                    } else { //текстура color_fk 
                         colorSet.add(eColor.find(rec.getInt(eArtdet.color_fk)));
                     }
                 }

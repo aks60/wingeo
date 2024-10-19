@@ -740,22 +740,22 @@ public class DicKits extends javax.swing.JDialog {
 
     private void btnChoice(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice
         if (tab2.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(null, "РќРё РѕРґРЅР° РёР· Р·Р°РїРёСЃРµР№ РЅРµ РІС‹РґРµР»РµРЅР°", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.NO_OPTION);
+            JOptionPane.showMessageDialog(null, "Ни одна из записей не выделена", "Предупреждение", JOptionPane.NO_OPTION);
             return;
         }
         if (txt3.getText().isEmpty() && txt3.isEditable()) {
-            JOptionPane.showMessageDialog(this, "РЈРєР°Р¶РёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ РєРѕРјРїР»РµРєС‚РѕРІ.", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Укажите количество комплектов.", "Предупреждение", JOptionPane.INFORMATION_MESSAGE);
             return;
         } else if (txt2.getText().isEmpty() && txt2.isEditable()) {
-            JOptionPane.showMessageDialog(this, "РЈРєР°Р¶РёС‚Рµ РґР»РёРЅСѓ РєРѕРјРїР»РµРєС‚Р°.", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Укажите длину комплекта.", "Предупреждение", JOptionPane.INFORMATION_MESSAGE);
             return;
         } else if (txt1.getText().isEmpty() && txt1.isEditable()) {
-            JOptionPane.showMessageDialog(this, "РЈРєР°Р¶РёС‚Рµ С€РёСЂРёРЅСѓ РєРѕРјРїР»РµРєС‚Р°.", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Укажите ширину комплекта.", "Предупреждение", JOptionPane.INFORMATION_MESSAGE);
             return;
         } else if ((txt9.getText().isEmpty() && txt9.isEditable())
                 || (txt13.getText().isEmpty() && txt13.isEditable())
                 || (txt14.getText().isEmpty() && txt14.isEditable())) {
-            JOptionPane.showMessageDialog(this, "РЈРєР°Р¶РёС‚Рµ С‚РµРєСЃС‚СѓСЂСѓ РєРѕРјРїР»РµРєС‚Р°.", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Укажите текстуру комплекта.", "Предупреждение", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
@@ -815,7 +815,7 @@ public class DicKits extends javax.swing.JDialog {
                 }, false, false);
             }
         } catch (Exception e) {
-            System.err.println("РћС€РёР±РєР°: " + e);
+            System.err.println("Ошибка: " + e);
         }
     }//GEN-LAST:event_colorToWindows
 
@@ -894,14 +894,14 @@ public class DicKits extends javax.swing.JDialog {
 
             @Override
             public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-                if ("0123456789.,".indexOf(string) != -1) { //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                if ("0123456789.,".indexOf(string) != -1) { //проверка на коррекность ввода
                     super.insertString(fb, offset, string, attr);
                 }
             }
 
             @Override
             public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String string, AttributeSet attrs) throws BadLocationException {
-                if ("0123456789.,".indexOf(string) != -1) {  //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                if ("0123456789.,".indexOf(string) != -1) {  //проверка на коррекность ввода
                     super.replace(fb, offset, length, string, attrs);
                 }
             }
@@ -913,14 +913,14 @@ public class DicKits extends javax.swing.JDialog {
 
             @Override
             public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-                if ("0123456789.,".indexOf(string) != -1) { //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                if ("0123456789.,".indexOf(string) != -1) { //проверка на коррекность ввода
                     super.insertString(fb, offset, string, attr);
                 }
             }
 
             @Override
             public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String string, AttributeSet attrs) throws BadLocationException {
-                if ("0123456789.,".indexOf(string) != -1) {  //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                if ("0123456789.,".indexOf(string) != -1) {  //проверка на коррекность ввода
                     super.replace(fb, offset, length, string, attrs);
                 }
             }
@@ -932,14 +932,14 @@ public class DicKits extends javax.swing.JDialog {
 
             @Override
             public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-                if ("0123456789.,".indexOf(string) != -1) { //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                if ("0123456789.,".indexOf(string) != -1) { //проверка на коррекность ввода
                     super.insertString(fb, offset, string, attr);
                 }
             }
 
             @Override
             public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String string, AttributeSet attrs) throws BadLocationException {
-                if ("0123456789.,".indexOf(string) != -1) {  //РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєРЅРѕСЃС‚СЊ РІРІРѕРґР°
+                if ("0123456789.,".indexOf(string) != -1) {  //проверка на коррекность ввода
                     super.replace(fb, offset, length, string, attrs);
                 }
             }

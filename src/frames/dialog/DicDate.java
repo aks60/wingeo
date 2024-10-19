@@ -166,7 +166,7 @@ public class DicDate extends javax.swing.JDialog {
         lab4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РљР°Р»РµРЅРґР°СЂСЊ");
+        setTitle("Календарь");
         setResizable(false);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -177,7 +177,7 @@ public class DicDate extends javax.swing.JDialog {
         listMonth.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         listMonth.setFont(frames.UGui.getFont(-1,0));
         listMonth.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "  1  РЇРЅРІР°СЂСЊ", "  2  Р¤РµРІСЂР°Р»СЊ", "  3  РњР°СЂС‚ ", "  4  РђРїСЂРµР»СЊ", "  5  РњР°Р№", "  6  Р?СЋРЅСЊ", "  7  Р?СЋР»СЊ", "  8  РђРІРіСѓСЃС‚", "  9  РЎРµРЅС‚СЏР±СЂСЊ", "10  РћРєС‚СЏР±СЂСЊ", "11  РќРѕСЏР±СЂСЊ", "12  Р”РµРєР°Р±СЂСЊ" };
+            String[] strings = { "  1  Январь", "  2  Февраль", "  3  Март ", "  4  Апрель", "  5  Май", "  6  Июнь", "  7  Июль", "  8  Август", "  9  Сентябрь", "10  Октябрь", "11  Ноябрь", "12  Декабрь" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -207,7 +207,7 @@ public class DicDate extends javax.swing.JDialog {
                 {"", "", "", "", "", "", ""}
             },
             new String [] {
-                "РџРЅ", "Р’С‚", "РЎСЂ", "Р§С‚", "РџС‚", "РЎР±", "Р’СЃ"
+                "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -324,7 +324,7 @@ public class DicDate extends javax.swing.JDialog {
 
         labl1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         labl1.setForeground(new java.awt.Color(0, 0, 255));
-        labl1.setText(" Р“РѕРґ");
+        labl1.setText(" Год");
         labl1.setAlignmentY(6.0F);
         labl1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         labl1.setMaximumSize(new java.awt.Dimension(30, 19));
@@ -332,21 +332,21 @@ public class DicDate extends javax.swing.JDialog {
 
         lab2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lab2.setForeground(new java.awt.Color(0, 0, 255));
-        lab2.setText("    РњРµСЃСЏС†");
+        lab2.setText("    Месяц");
         lab2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         lab2.setMaximumSize(new java.awt.Dimension(54, 19));
         lab2.setPreferredSize(new java.awt.Dimension(54, 19));
 
         lab3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lab3.setForeground(new java.awt.Color(0, 0, 255));
-        lab3.setText(" РџРЅ    Р’С‚   РЎСЂ   Р§С‚     РџС‚");
+        lab3.setText(" Пн    Вт   Ср   Чт     Пт");
         lab3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         lab3.setMaximumSize(new java.awt.Dimension(54, 19));
         lab3.setPreferredSize(new java.awt.Dimension(54, 19));
 
         lab4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lab4.setForeground(new java.awt.Color(255, 0, 0));
-        lab4.setText("РЎР±    Р’СЃ");
+        lab4.setText("Сб    Вс");
         lab4.setAlignmentY(6.0F);
         lab4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         lab4.setMaximumSize(new java.awt.Dimension(30, 19));

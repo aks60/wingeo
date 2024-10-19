@@ -304,7 +304,7 @@ public class DicArtikl2 extends javax.swing.JDialog {
         if (index != -1) {
             record = qArtikl.get(index);
         } else {
-            JOptionPane.showMessageDialog(null, "РќРё РѕРґРЅР° РёР· Р·Р°РїРёСЃРµР№ РЅРµ РІС‹Р±СЂР°РЅР°", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.NO_OPTION);
+            JOptionPane.showMessageDialog(null, "Ни одна из записей не выбрана", "Предупреждение", JOptionPane.NO_OPTION);
             return;
 //            record = eArtikl.up.newRecord();
 //            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();

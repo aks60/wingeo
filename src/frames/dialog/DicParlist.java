@@ -57,7 +57,7 @@ public class DicParlist extends javax.swing.JDialog implements ListenerFrame<Obj
         tab1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Ð¡Ð¿Ñ€Ð°Ð²Ð¾Ñ‡Ð½Ð¸Ðº Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð²");
+        setTitle("Ñïðàâî÷íèê ïàðàìåòðîâ");
 
         north.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         north.setMaximumSize(new java.awt.Dimension(32767, 31));
@@ -65,7 +65,7 @@ public class DicParlist extends javax.swing.JDialog implements ListenerFrame<Obj
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Ð—Ð°ÐºÑ€Ñ‹Ñ‚ÑŒ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Çàêðûòü")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -80,7 +80,7 @@ public class DicParlist extends javax.swing.JDialog implements ListenerFrame<Obj
         });
 
         btnChoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c044.gif"))); // NOI18N
-        btnChoice.setToolTipText(bundle.getString("Ð’Ñ‹Ð±Ñ€Ð°Ñ‚ÑŒ")); // NOI18N
+        btnChoice.setToolTipText(bundle.getString("Âûáðàòü")); // NOI18N
         btnChoice.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnChoice.setFocusable(false);
         btnChoice.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -95,7 +95,7 @@ public class DicParlist extends javax.swing.JDialog implements ListenerFrame<Obj
         });
 
         btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c042.gif"))); // NOI18N
-        btnRemove.setToolTipText(bundle.getString("ÐžÑ‡Ð¸ÑÑ‚Ð¸Ñ‚ÑŒ")); // NOI18N
+        btnRemove.setToolTipText(bundle.getString("Î÷èñòèòü")); // NOI18N
         btnRemove.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnRemove.setFocusable(false);
         btnRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -165,7 +165,7 @@ public class DicParlist extends javax.swing.JDialog implements ListenerFrame<Obj
 
             },
             new String [] {
-                "numb", "ÐÐ°Ð·Ð²Ð°Ð½Ð¸Ðµ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð°"
+                "numb", "Íàçâàíèå ïàðàìåòðà"
             }
         ) {
             boolean[] canEdit = new boolean [] {

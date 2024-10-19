@@ -117,7 +117,7 @@ public class DicGroups extends javax.swing.JDialog {
         tab4 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РЎРїСЂР°РІРѕС‡РЅРёРє");
+        setTitle("Справочник");
 
         north.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         north.setMaximumSize(new java.awt.Dimension(32767, 31));
@@ -125,7 +125,7 @@ public class DicGroups extends javax.swing.JDialog {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -140,7 +140,7 @@ public class DicGroups extends javax.swing.JDialog {
         });
 
         btnChoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c044.gif"))); // NOI18N
-        btnChoice.setToolTipText(bundle.getString("Р’С‹Р±СЂР°С‚СЊ")); // NOI18N
+        btnChoice.setToolTipText(bundle.getString("Выбрать")); // NOI18N
         btnChoice.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnChoice.setFocusable(false);
         btnChoice.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -155,7 +155,7 @@ public class DicGroups extends javax.swing.JDialog {
         });
 
         btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c042.gif"))); // NOI18N
-        btnRemove.setToolTipText(bundle.getString("РћС‡РёСЃС‚РёС‚СЊ")); // NOI18N
+        btnRemove.setToolTipText(bundle.getString("Очистить")); // NOI18N
         btnRemove.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnRemove.setFocusable(false);
         btnRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -170,7 +170,7 @@ public class DicGroups extends javax.swing.JDialog {
         });
 
         btnMoveU.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c051.gif"))); // NOI18N
-        btnMoveU.setToolTipText(bundle.getString("РџРµСЂРµРјРµСЃС‚РёС‚СЊ РІРІРµСЂС…")); // NOI18N
+        btnMoveU.setToolTipText(bundle.getString("Переместить вверх")); // NOI18N
         btnMoveU.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnMoveU.setFocusable(false);
         btnMoveU.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -186,7 +186,7 @@ public class DicGroups extends javax.swing.JDialog {
         });
 
         btnMoveD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c052.gif"))); // NOI18N
-        btnMoveD.setToolTipText(bundle.getString("РџРµСЂРµРјРµСЃС‚РёС‚СЊ РІРЅРёР·")); // NOI18N
+        btnMoveD.setToolTipText(bundle.getString("Переместить вниз")); // NOI18N
         btnMoveD.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnMoveD.setFocusable(false);
         btnMoveD.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -202,7 +202,7 @@ public class DicGroups extends javax.swing.JDialog {
         });
 
         btnGroups.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c064.gif"))); // NOI18N
-        btnGroups.setToolTipText(bundle.getString("Р”РѕР±Р°РІРёС‚СЊ Рё РІС‹Р±СЂР°С‚СЊ")); // NOI18N
+        btnGroups.setToolTipText(bundle.getString("Добавить и выбрать")); // NOI18N
         btnGroups.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnGroups.setFocusable(false);
         btnGroups.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -277,7 +277,7 @@ public class DicGroups extends javax.swing.JDialog {
         });
         south.add(txtFilter);
 
-        checkFilter.setText("РІ РєРѕРЅС†Рµ СЃС‚СЂРѕРєРё");
+        checkFilter.setText("в конце строки");
         south.add(checkFilter);
 
         getContentPane().add(south, java.awt.BorderLayout.SOUTH);
@@ -297,7 +297,7 @@ public class DicGroups extends javax.swing.JDialog {
 
             },
             new String [] {
-                "РќР°РёРјРµРЅРѕРІР°РЅРёРµ"
+                "Наименование"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -337,7 +337,7 @@ public class DicGroups extends javax.swing.JDialog {
                 {"Name 0", null}
             },
             new String [] {
-                "РќР°РёРјРµРЅРѕРІР°РЅРёРµ", "РќР°С†РµРЅРєР° РєРѕРµС„."
+                "Наименование", "Наценка коеф."
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -383,7 +383,7 @@ public class DicGroups extends javax.swing.JDialog {
                 {null, null}
             },
             new String [] {
-                "РќР°РёРјРµРЅРѕРІР°РЅРёРµ", "РЎРєРёРґРєР° %"
+                "Наименование", "Скидка %"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -427,7 +427,7 @@ public class DicGroups extends javax.swing.JDialog {
                 {"Name 0"}
             },
             new String [] {
-                "РќР°РёРјРµРЅРѕРІР°РЅРёРµ"
+                "Наименование"
             }
         ) {
             boolean[] canEdit = new boolean [] {

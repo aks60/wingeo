@@ -77,7 +77,7 @@ public class ParDefVal extends javax.swing.JDialog {
         south = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РЎРїСЂР°РІРѕС‡РЅРёРє РїР°СЂР°РјРµС‚СЂРѕРІ");
+        setTitle("Справочник параметров");
 
         pannorth.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         pannorth.setMaximumSize(new java.awt.Dimension(32767, 31));
@@ -85,7 +85,7 @@ public class ParDefVal extends javax.swing.JDialog {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -100,7 +100,7 @@ public class ParDefVal extends javax.swing.JDialog {
         });
 
         btnChouce.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c044.gif"))); // NOI18N
-        btnChouce.setToolTipText(bundle.getString("Р’С‹Р±СЂР°С‚СЊ")); // NOI18N
+        btnChouce.setToolTipText(bundle.getString("Выбрать")); // NOI18N
         btnChouce.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnChouce.setFocusable(false);
         btnChouce.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -115,7 +115,7 @@ public class ParDefVal extends javax.swing.JDialog {
         });
 
         btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c042.gif"))); // NOI18N
-        btnRemove.setToolTipText(bundle.getString("РћС‡РёСЃС‚РёС‚СЊ")); // NOI18N
+        btnRemove.setToolTipText(bundle.getString("Очистить")); // NOI18N
         btnRemove.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnRemove.setFocusable(false);
         btnRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -167,7 +167,7 @@ public class ParDefVal extends javax.swing.JDialog {
                 {null, null}
             },
             new String [] {
-                "РќР°РёРјРµРЅРѕРІР°РЅРёРµ", "ID"
+                "Наименование", "ID"
             }
         ) {
             Class[] types = new Class [] {

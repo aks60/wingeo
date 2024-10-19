@@ -102,7 +102,7 @@ public class ParDefault extends javax.swing.JDialog {
         south = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("РџР°СЂР°РјРµС‚СЂС‹");
+        setTitle("Параметры");
 
         north.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         north.setMaximumSize(new java.awt.Dimension(32767, 31));
@@ -110,7 +110,7 @@ public class ParDefault extends javax.swing.JDialog {
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnClose.setToolTipText(bundle.getString("Р—Р°РєСЂС‹С‚СЊ")); // NOI18N
+        btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -125,7 +125,7 @@ public class ParDefault extends javax.swing.JDialog {
         });
 
         btnChoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c044.gif"))); // NOI18N
-        btnChoice.setToolTipText(bundle.getString("Р’С‹Р±СЂР°С‚СЊ")); // NOI18N
+        btnChoice.setToolTipText(bundle.getString("Выбрать")); // NOI18N
         btnChoice.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnChoice.setFocusable(false);
         btnChoice.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -175,7 +175,7 @@ public class ParDefault extends javax.swing.JDialog {
 
             },
             new String [] {
-                "РќР°Р·РІР°РЅРёРµ", "ID"
+                "Название", "ID"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -211,7 +211,7 @@ public class ParDefault extends javax.swing.JDialog {
                 {null, null, null}
             },
             new String [] {
-                "Р—РЅР°С‡РµРЅРёРµ", "ID", "GRUP"
+                "Значение", "ID", "GRUP"
             }
         ) {
             boolean[] canEdit = new boolean [] {
