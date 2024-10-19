@@ -4075,7 +4075,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             double stvorkaID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
             Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, 11);
-            //Query qArtikl = new Query(eArtikl.values()).sq3(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, 11, eArtikl.level2, 13);
             Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicArtikl(this, (artiklRec) -> {
 
