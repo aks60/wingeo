@@ -1705,7 +1705,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         });
 
-        pan22.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "РўРµРєСЃС‚СѓСЂР° РёР·РґРµР»РёСЏ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 0)));
+        pan22.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "Текстура изделия", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 0)));
         pan22.setPreferredSize(new java.awt.Dimension(308, 104));
 
         lab51.setFont(frames.UGui.getFont(0,0));
@@ -1895,7 +1895,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         txt18.setPreferredSize(new java.awt.Dimension(180, 18));
 
         lab61.setFont(frames.UGui.getFont(0,0));
-        lab61.setText("Р¦РІРµС‚");
+        lab61.setText("Цвет");
         lab61.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab61.setPreferredSize(new java.awt.Dimension(80, 18));
 
@@ -2282,7 +2282,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         pan7.add(pan15, "card15");
 
-        pan16.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "РЎС‚РІРѕСЂРєР°", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
+        pan16.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Створка", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
+        pan16.setName(""); // NOI18N
         pan16.setPreferredSize(new java.awt.Dimension(3100, 200));
         pan16.setLayout(new java.awt.BorderLayout());
 
@@ -2874,7 +2875,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         pan7.add(pan16, "card16");
 
-        pan17.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "РЎРѕРµРґРёРЅРµРЅРёСЏ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
+        pan17.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Соединения", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
         pan17.setPreferredSize(new java.awt.Dimension(300, 200));
 
         lab49.setFont(frames.UGui.getFont(0,0));
@@ -3600,7 +3601,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         tabb1.addTab("   Модели   ", pan10);
 
         split1.setBottomComponent(tabb1);
-        tabb1.getAccessibleContext().setAccessibleName("<html><font size=\"3\">&nbsp;&nbsp;&nbsp\nРћСЃРЅРѕРІРЅС‹Рµ\n&nbsp;&nbsp;&nbsp");
+        tabb1.getAccessibleContext().setAccessibleName("<html><font size=\"3\">&nbsp;&nbsp;&nbsp\nОсновные\n&nbsp;&nbsp;&nbsp");
 
         centr.add(split1, java.awt.BorderLayout.CENTER);
 
@@ -3813,7 +3814,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_btnClose
 
     private void sysprofToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysprofToFrame
-         try {
+        try {
             if (winNode != null) {
                 Layout layout = winNode.com5t().layout();
                 double selectID = winNode.com5t().id; //id элемента который уже есть в конструкции, это либо виртуал. либо найденный по приоритету при построении модели
@@ -3895,7 +3896,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             Field field = (evt.getSource() == btn18) ? eArtdet.mark_c1 : (evt.getSource() == btn19) ? eArtdet.mark_c2 : eArtdet.mark_c3;
             String colorTxt = (evt.getSource() == btn18) ? txt3.getText() : (evt.getSource() == btn19) ? txt4.getText() : txt5.getText();
             Query artdetList = new Query(eArtdet.values()).sql(eArtdet.data(), eArtdet.artikl_id, winNode.com5t().artiklRec.getInt(eArtikl.id));
-            
+
             HashSet<Record> colorSrc = DicColor.filterTxt(eColor.data(), colorTxt);
             HashSet<Record> colorSet = DicColor.filterDet(colorSrc, artdetList, field);
 
@@ -4305,33 +4306,29 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 qSysprof.execsql();
 
             } else if (tab3.getBorder() != null) {
-                if (tab3.getBorder() != null) {
-                    if (btn == btnMoveD && tab3.getSelectedRow() < tab3.getRowCount() - 1) {
-                        Collections.swap(qSysfurn, index, ++index2);
-                        Collections.swap(qSysfurn.table(eFurniture.up), index, index2);
+                if (btn == btnMoveD && tab3.getSelectedRow() < tab3.getRowCount() - 1) {
+                    Collections.swap(qSysfurn, index, ++index2);
+                    Collections.swap(qSysfurn.table(eFurniture.up), index, index2);
 
-                    } else if (btn == btnMoveU && tab3.getSelectedRow() > 0) {
-                        Collections.swap(qSysfurn, index, --index2);
-                        Collections.swap(qSysfurn.table(eFurniture.up), index, index2);
-                    }
-                    IntStream.range(0, qSysfurn.size()).forEach(i -> qSysfurn.set(i + 1, i, eSysfurn.npp));
-                    ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
-                    UGui.setSelectedIndex(tab3, index2);
+                } else if (btn == btnMoveU && tab3.getSelectedRow() > 0) {
+                    Collections.swap(qSysfurn, index, --index2);
+                    Collections.swap(qSysfurn.table(eFurniture.up), index, index2);
                 }
-                qSysprof.execsql();
+                IntStream.range(0, qSysfurn.size()).forEach(i -> qSysfurn.set(i + 1, i, eSysfurn.npp));
+                ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
+                UGui.setSelectedIndex(tab3, index2);
+                qSysfurn.execsql();
 
             } else if (tab5.getBorder() != null) {
-                if (tab5.getBorder() != null) {
-                    if (btn == btnMoveD && tab5.getSelectedRow() < tab5.getRowCount() - 1) {
-                        Collections.swap(qSysprod, index, ++index2);
+                if (btn == btnMoveD && tab5.getSelectedRow() < tab5.getRowCount() - 1) {
+                    Collections.swap(qSysprod, index, ++index2);
 
-                    } else if (btn == btnMoveU && tab5.getSelectedRow() > 0) {
-                        Collections.swap(qSysprod, index, --index2);
-                    }
-                    IntStream.range(0, qSysprod.size()).forEach(i -> qSysprod.set(i + 1, i, eSysprod.npp));
-                    ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
-                    UGui.setSelectedIndex(tab5, index2);
+                } else if (btn == btnMoveU && tab5.getSelectedRow() > 0) {
+                    Collections.swap(qSysprod, index, --index2);
                 }
+                IntStream.range(0, qSysprod.size()).forEach(i -> qSysprod.set(i + 1, i, eSysprod.npp));
+                ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
+                UGui.setSelectedIndex(tab5, index2);
                 qSysprod.execsql();
             }
         }
@@ -4702,7 +4699,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }, qBlinds);
 
         } catch (Exception e) {
-             System.err.println("Ошибка:Systree.handlToStvorka() " + e);
+            System.err.println("Ошибка:Systree.handlToStvorka() " + e);
         }
     }//GEN-LAST:event_blindsToElement
 

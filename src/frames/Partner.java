@@ -1067,11 +1067,9 @@ public class Partner extends javax.swing.JFrame {
         if (index != -1) {
             if (btn == btnMoveD && tab1.getSelectedRow() < tab1.getRowCount() - 1) {
                 Collections.swap(qPrjpart, index, ++index2);
-                Collections.swap(qPrjpart.table(eSysuser.up), index, index2);
 
             } else if (btn == btnMoveU && tab1.getSelectedRow() > 0) {
                 Collections.swap(qPrjpart, index, --index2);
-                Collections.swap(qPrjpart.table(eSysuser.up), index, index2);
             }
             IntStream.range(0, qPrjpart.size()).forEach(i -> qPrjpart.set(i + 1, i, ePrjpart.npp));
             ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();

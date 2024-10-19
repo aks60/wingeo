@@ -152,7 +152,7 @@ public class Crypto {
                 //Ïנמגונךא סונגונא
                 if (randomMes.equals(res.body().trim())) {
                     Conn.setHttpcheck(true);
-                    System.out.println("ÓÐÀ ÀÊÑ");
+                    //System.out.println("ÓÐÀ ÀÊÑ");
                 }
                 return res;
             }).get();

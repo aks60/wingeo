@@ -517,7 +517,7 @@ public class Query extends Table {
     public Query sort(Field... field) {
         try {
             if (field.length == 1 && field[0].meta().type() == Field.TYPE.INT) {
-                this.sort((rec1, rec2) -> rec1.getInt(field[0]) < rec2.getInt(field[0]) ? 1 : -1);
+                this.sort((rec1, rec2) -> Integer.compare(rec1.getInt(field[0]), rec2.getInt(field[0])));
 
             } else if (field.length == 1 && field[0].meta().type() == Field.TYPE.DBL) {
                 this.sort((rec1, rec2) -> Double.compare(rec1.getDbl(field[0]), rec2.getDbl(field[0])));
