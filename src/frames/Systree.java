@@ -384,7 +384,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             if (sysNode != null && sysNode.getChildCount() == 0) {
                 systreeID = sysNode.rec().getInt(eSystree.id);
                 rsvSystree.load();
-                qSysprof.sql(eSysprof.data(), eSysprof.systree_id, sysNode.rec().getInt(eSystree.id)).sort(eSysprof.use_type, eSysprof.npp);
+                qSysprof.sql(eSysprof.data(), eSysprof.systree_id, sysNode.rec().getInt(eSystree.id)).sort(eSysprof.npp);
                 qSysprof.table(eArtikl.up).join(qSysprof, eArtikl.data(), eSysprof.artikl_id, eArtikl.id);
                 qSysfurn.sql(eSysfurn.data(), eSysfurn.systree_id, sysNode.rec().getInt(eSystree.id)).sort(eSysfurn.npp);
                 qSysfurn.table(eFurniture.up).join(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);
