@@ -1,18 +1,24 @@
 package common;
 
 import builder.model.Com5t;
+import builder.model.ElemJoining;
+import builder.model.ElemSimple;
+import builder.model.UGeo;
 import builder.script.GsonElem;
 import dataset.Field;
 import dataset.Query;
 import domain.eColor;
 import enums.Layout;
 import enums.Type;
+import enums.TypeJoin;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.locationtech.jts.algorithm.PointLocation;
+import org.locationtech.jts.geom.Coordinate;
 
 public class UCom {
 
@@ -149,6 +155,68 @@ public class UCom {
             return "";//или return word;
         }
         return word.substring(0, 1).toUpperCase() + word.substring(1);
+    }
+
+    public static int max(Query query, Field field) {
+        return query.stream().max((a, b) -> {
+            if (a.getInt(field) > b.getInt(field)) {
+                return 1;
+            } else if (a.getInt(field) < b.getInt(field)) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }).get().getInt(field);
+    }
+
+    public static int scaleFont(double scale) {
+        if (scale > .44) {
+            return 50;
+        } else if (scale > .24) {
+            return 55;
+        } else if (scale > .18) {
+            return 62;
+        } else {
+            return 64;
+        }
+    }
+
+    public static <E extends Com5t> ArrayList<E> filter(ArrayList<E> lst, Type... type) {
+        List tp = List.of(type);
+        ArrayList<E> list2 = new ArrayList<E>();
+        for (E el : lst) {
+            if (tp.contains(el.type)) {
+                list2.add(el);
+            }
+        }
+        return list2;
+    }
+
+    public static ArrayList<Com5t> filterNo(ArrayList<Com5t> lst, Type... type) {
+        List tp = List.of(type);
+        ArrayList<Com5t> list2 = new ArrayList<Com5t>();
+        for (Com5t el : lst) {
+            if (tp.contains(el.type) == false) {
+                list2.add(el);
+            }
+        }
+        return list2;
+    }
+
+    public static <E extends Com5t> E layout(ArrayList<E> lst, Layout layout) {
+        try {
+            E elemFrame = lst.stream().filter(e -> e.layout() == layout).findFirst().get();
+            return elemFrame;
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UCom.layout()");
+        }
+        return null;
+    }
+
+    public static <E extends Com5t> GsonElem gson(ArrayList<E> list, final double ID) {
+        GsonElem gson = list.stream().filter(g -> g.id == ID).findFirst().get().gson;
+        return gson;
     }
 
     //1;79-10;0-10 => [1,1,79,10,0,10]
@@ -440,65 +508,111 @@ public class UCom {
         return false;
     }
 
-    public static int max(Query query, Field field) {
-        return query.stream().max((a, b) -> {
-            if (a.getInt(field) > b.getInt(field)) {
-                return 1;
-            } else if (a.getInt(field) < b.getInt(field)) {
-                return -1;
-            } else {
-                return 0;
-            }
-        }).get().getInt(field);
-    }
-
-    public static int scaleFont(double scale) {
-        if (scale > .44) {
-            return 50;
-        } else if (scale > .24) {
-            return 55;
-        } else if (scale > .18) {
-            return 62;
-        } else {
-            return 64;
-        }
-    }
-
-    public static <E extends Com5t> ArrayList<E> filter(ArrayList<E> lst, Type... type) {
-        List tp = List.of(type);
-        ArrayList<E> list2 = new ArrayList<E>();
-        for (E el : lst) {
-            if (tp.contains(el.type)) {
-                list2.add(el);
-            }
-        }
-        return list2;
-    }
-
-    public static ArrayList<Com5t> filterNo(ArrayList<Com5t> lst, Type... type) {
-        List tp = List.of(type);
-        ArrayList<Com5t> list2 = new ArrayList<Com5t>();
-        for (Com5t el : lst) {
-            if (tp.contains(el.type) == false) {
-                list2.add(el);
-            }
-        }
-        return list2;
-    }
-
-    public static <E extends Com5t> E layout(ArrayList<E> lst, Layout layout) {
+    /**
+     * Получить элемент соединения профилей.
+     *
+     * @param elem - элемент соединения,
+     * @param side - сторона соединения 0-пред.артикул, 1-след.артикл,
+     * 2-прилег.артикл
+     * @return - класс описатель соединения
+     */
+    public static ElemJoining join(ArrayList<ElemJoining> lst, ElemSimple elem, int side) {
+        boolean imp = Type.isCross(elem.type);
         try {
-            E elemFrame = lst.stream().filter(e -> e.layout() == layout).findFirst().get();
-            return elemFrame;
+            for (ElemJoining join : lst) {
+                //Угл.соединение
+                if (imp == false && (side == 0 || side == 1)) {
+                    if (side == 0 && elem.x1() == join.elem1.x2() && elem.y1() == join.elem1.y2()) { //0-пред.артикул
+                        return join;
 
+                    } else if (side == 1 && elem.x2() == join.elem2.x1() && elem.y2() == join.elem2.y1()) { //1-след.артикл
+                        return join;
+                    }
+                    //T- соединение левое
+                } else if (imp == true && side == 0 && elem.id == join.elem2.id) {
+                    Coordinate[] line = UGeo.arrCoord(join.elem1.x1(), join.elem1.y1(), join.elem1.x2(), join.elem1.y2());
+                    Coordinate point = new Coordinate(elem.x1(), elem.y1());
+                    if (PointLocation.isOnLine(point, line)) {
+                        return join;
+                    }
+                    //T- соединение правое
+                } else if (imp == true && side == 1 && elem.id == join.elem1.id) {
+                    Coordinate[] line = UGeo.arrCoord(join.elem2.x1(), join.elem2.y1(), join.elem2.x2(), join.elem2.y2());
+                    Coordinate point = new Coordinate(elem.x2(), elem.y2());
+                    if (PointLocation.isOnLine(point, line)) {
+                        return join;
+                    }
+                    //Прил.соединение
+                } else if (side == 2 && join.type() == TypeJoin.FLAT) {
+                    if (elem.type == Type.STVORKA_SIDE && elem.equals(join.elem1)) {
+                        return join;
+                    } else if (elem.equals(join.elem2)) {
+                        return join;
+                    }
+                }
+            }
         } catch (Exception e) {
-            System.err.println("Ошибка:UCom.layout()");
+            String message = "Соединение не найдено для elem.id=" + elem.id + ", side=" + side;
+            System.err.println("Ошибка:UCom.join() " + message + " " + e);
+        }
+        if (side != 2) {
+            String message = "Соединение не найдено для elem.id=" + elem.id + ", side=" + side;
+            System.out.println("Неудача:ArrayJoin.join() " + message);
         }
         return null;
     }
-    
-    public static <E extends Com5t> GsonElem gson(ArrayList<E> list, final double ID) {
-        GsonElem gson = list.stream().filter(g -> g.id == ID).findFirst().get().gson;
-        return gson;
+
+    /**
+     * Получить элемент соединения профилей.
+     *
+     * @param elem - элемент соединения,
+     * @param side - сторона соединения 0-пред.артикул, 1-след.артикл,
+     * 2-прилег.артикл
+     * @return - элемент соединения
+     */
+    public static ElemSimple elem(ArrayList<ElemJoining> lst, ElemSimple elem, int side) {
+        boolean imp = Type.isCross(elem.type);
+        try {
+            for (ElemJoining join : lst) {
+                //Угл.соединение
+                if (imp == false && (side == 0 || side == 1)) {
+                    if (side == 0 && elem.x1() == join.elem1.x2() && elem.y1() == join.elem1.y2()) { //0-пред.артикул
+                        return join.elem1;
+
+                    } else if (side == 1 && elem.x2() == join.elem2.x1() && elem.y2() == join.elem2.y1()) { //1-след.артикл
+                        return join.elem2;
+                    }
+                    //T- соединение левое
+                } else if (imp == true && side == 0 && elem.id == join.elem2.id) {
+                    Coordinate[] line = UGeo.arrCoord(join.elem1.x1(), join.elem1.y1(), join.elem1.x2(), join.elem1.y2());
+                    Coordinate point = new Coordinate(elem.x1(), elem.y1());
+                    if (PointLocation.isOnLine(point, line)) {
+                        return join.elem1;
+                    }
+                    //T- соединение правое
+                } else if (imp == true && side == 1 && elem.id == join.elem1.id) {
+                    Coordinate[] line = UGeo.arrCoord(join.elem2.x1(), join.elem2.y1(), join.elem2.x2(), join.elem2.y2());
+                    Coordinate point = new Coordinate(elem.x2(), elem.y2());
+                    if (PointLocation.isOnLine(point, line)) {
+                        return join.elem2;
+                    }
+                    //Прил.соединение
+                } else if (side == 2 && join.type() == TypeJoin.FLAT) {
+                    if (elem.type == Type.STVORKA_SIDE && elem.equals(join.elem1)) {
+                        return join.elem2;
+                    } else if (elem.equals(join.elem2)) {
+                        return join.elem1;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            String message = "Соединение не найдено для elem.id=" + elem.id + ", side=" + side;
+            System.err.println("Ошибка:ArrayJoin.elem() " + message + " " + e);
+        }
+        if (side != 2) {
+            String message = "Соединение не найдено для elem.id=" + elem.id + ", side=" + side;
+            System.out.println("Неудача:ArrayJoin.elem() " + message);
+        }
+        return null;
     }
 }

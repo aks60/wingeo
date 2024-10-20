@@ -15,13 +15,13 @@ import builder.model.AreaArch;
 import builder.model.AreaDoor;
 import builder.model.AreaTrapeze;
 import builder.model.ElemBlinds;
+import builder.model.ElemJoining;
 import builder.model.ElemMosquit;
 import builder.script.GsonElem;
 import builder.script.GsonRoot;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import common.ArrayJoin;
 import common.ArraySpc;
 import common.UCom;
 import common.listener.ListenerKey;
@@ -49,7 +49,7 @@ public class Wincalc {
     public Integer nuni = 0; //код системы  
     public double spcId = 0; //для генерации ключа в спецификации
     public int colorID1 = -1, colorID2 = 1, colorID3 = -1; //базовый,внутр,внещний 
-    public Record syssizRec = null; //система констант
+    public Record syssizRec = null; //система константт
     public double costpric1 = 0; //себест. за ед. без отхода     
     public double costpric2 = 0; //себест. за ед. с отходом
     public double price2 = 0; //стоимость без скидки
@@ -73,7 +73,7 @@ public class Wincalc {
     public ArrayList<ElemSimple> listElem = new ArrayList<ElemSimple>(); //список элем.
     public ArrayList<Com5t> listAll = new ArrayList<Com5t>(); //список всех компонентов (area + elem)
     public ArraySpc<SpcRecord> listSpec = new ArraySpc<SpcRecord>(); //спецификация
-    public ArrayJoin listJoin = new ArrayJoin(); //список соединений рам и створок 
+    public ArrayList<ElemJoining> listJoin = new ArrayList<ElemJoining>(); //список соединений рам и створок 
 
     public Wincalc() {
     }

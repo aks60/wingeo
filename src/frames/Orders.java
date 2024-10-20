@@ -488,9 +488,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
                     List.of(txt36, txt37, txt38, txt39, txt40, txt41, txt42, txt43, txt44).forEach(it -> it.setText(""));
                     new SpcJoining(winc, true).calc();//заполним соединения из конструктива 
-                    ElemJoining ej1 = winc.listJoin.join(elem5e, 0);
-                    ElemJoining ej2 = winc.listJoin.join(elem5e, 1);
-                    ElemJoining ej3 = winc.listJoin.join(elem5e, 2);
+                    ElemJoining ej1 = UCom.join(winc.listJoin, elem5e, 0);
+                    ElemJoining ej2 = UCom.join(winc.listJoin, elem5e, 1);
+                    ElemJoining ej3 = UCom.join(winc.listJoin, elem5e, 2);
 
                     if (ej1 != null) {
                         setText(txt36, ej1.joiningRec.getStr(eJoining.name));

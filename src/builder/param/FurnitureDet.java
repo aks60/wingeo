@@ -77,7 +77,7 @@ public class FurnitureDet extends Par5s {
                     message(rec.getInt(GRUP));
                     break;
                 case 24004: //Если створка прилегает к артикулу 
-                    if (areaStv.frames.stream().filter(el -> winc.listJoin.elem(el, 2).artiklRec.getStr(eArtikl.code).equals(rec.getStr(TEXT))).findFirst().orElse(null) == null) {
+                    if (areaStv.frames.stream().filter(el -> UCom.elem(winc.listJoin, el, 2).artiklRec.getStr(eArtikl.code).equals(rec.getStr(TEXT))).findFirst().orElse(null) == null) {
                         return false;
                     }
                     break;
