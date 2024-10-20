@@ -16,7 +16,6 @@ import builder.model.AreaDoor;
 import builder.model.AreaTrapeze;
 import builder.model.ElemBlinds;
 import builder.model.ElemMosquit;
-import builder.model.UGeo;
 import builder.script.GsonElem;
 import builder.script.GsonRoot;
 import com.google.gson.GsonBuilder;
@@ -24,7 +23,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import common.ArrayJoin;
 import common.ArraySpc;
-import common.ArrayCom;
+import common.UCom;
 import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
 import dataset.Record;
@@ -70,9 +69,9 @@ public class Wincalc {
     public ArrayList<ListenerMouse> mouseDragged = new ArrayList<ListenerMouse>();
 
     public HashMap<Integer, Record> mapPardef = new HashMap<>(); //пар. по умолчанию + наложенные пар. клиента
-    public ArrayCom<AreaSimple> listArea = new ArrayCom<AreaSimple>(root); //список ареа.
-    public ArrayCom<ElemSimple> listElem = new ArrayCom<ElemSimple>(root); //список элем.
-    public ArrayCom<Com5t> listAll = new ArrayCom<Com5t>(root); //список всех компонентов (area + elem)
+    public ArrayList<AreaSimple> listArea = new ArrayList<AreaSimple>(); //список ареа.
+    public ArrayList<ElemSimple> listElem = new ArrayList<ElemSimple>(); //список элем.
+    public ArrayList<Com5t> listAll = new ArrayList<Com5t>(); //список всех компонентов (area + elem)
     public ArraySpc<SpcRecord> listSpec = new ArraySpc<SpcRecord>(); //спецификация
     public ArrayJoin listJoin = new ArrayJoin(); //список соединений рам и створок 
 
@@ -192,32 +191,32 @@ public class Wincalc {
 
             //Создание и коррекция сторон створки
             if (root.type == Type.DOOR) {
-                listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
+                UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
             }
 
             //Пилим полигоны на ареа и рассчёт полигона импостов
-            listElem.filter(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).forEach(e -> e.setLocation());
+            UCom.filter(listElem, Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).forEach(e -> e.setLocation());
 
             //Создание и коррекция сторон створки
             if (root.type != Type.DOOR) {
-                listArea.filter(Type.STVORKA).forEach(e -> e.setLocation());
+                UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
             }
 
             //Инит. артикулов створки
-            listArea.filter(Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
+            UCom.filter(listArea, Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
 
             //Рассчёт полигонов сторон рамы
             if (root.type == Type.DOOR) {
-                for (ElemSimple elemSimple : listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS)) {
+                for (ElemSimple elemSimple : UCom.filter(listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS)) {
                     elemSimple.setLocation();
                 }
             } else {
-                listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
+                UCom.filter(listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
             }
 
             //Соединения рам, импостов и створок             
             root.addJoining();  //L и T соединения
-            listArea.filter(Type.STVORKA).forEach(e -> e.addJoining()); //прил. соед.
+            UCom.filter(listArea, Type.STVORKA).forEach(e -> e.addJoining()); //прил. соед.
 
         } catch (Exception s) {
             System.err.println("Ошибка:Wincalc.location() " + s);
@@ -260,7 +259,7 @@ public class Wincalc {
             }
 
             //Вес изделия
-            ArrayList<ElemSimple> glassList = listElem.filter(Type.GLASS);
+            ArrayList<ElemSimple> glassList = UCom.filter(listElem, Type.GLASS);
             for (ElemSimple el : glassList) {
                 this.weight += el.artiklRecAn.getDbl(eArtikl.density) * el.width() * el.height() / 1000000; //уд.вес * площадь = вес
             }
@@ -277,25 +276,25 @@ public class Wincalc {
         try {
 
             //Прорисовка стеклопакетов
-            this.listElem.filter(Type.GLASS).stream().forEach(el -> el.paint());
+            UCom.filter(this.listElem, Type.GLASS).stream().forEach(el -> el.paint());
 
             //Прорисовка раскладок
-            this.listElem.filter(Type.GLASS).stream().forEach(el -> ((ElemGlass) el).rascladkaPaint());
+            UCom.filter(this.listElem, Type.GLASS).stream().forEach(el -> ((ElemGlass) el).rascladkaPaint());
 
             //Прорисовка москиток
-            this.listElem.filter(Type.MOSQUIT).stream().forEach(el -> ((ElemMosquit) el).paint());
+            UCom.filter(this.listElem, Type.MOSQUIT).stream().forEach(el -> ((ElemMosquit) el).paint());
 
             //Прорисовка импостов
-            this.listElem.filter(Type.IMPOST, Type.SHTULP, Type.STOIKA).stream().forEach(el -> el.paint());
+            UCom.filter(this.listElem, Type.IMPOST, Type.SHTULP, Type.STOIKA).stream().forEach(el -> el.paint());
 
             //Прорисовка рам
-            this.listElem.filter(Type.FRAME_SIDE).stream().forEach(el -> el.paint());
+            UCom.filter(this.listElem, Type.FRAME_SIDE).stream().forEach(el -> el.paint());
 
             //Прорисовка профилей створок
-            this.listElem.filter(Type.STVORKA_SIDE).stream().forEach(el -> el.paint());
+            UCom.filter(this.listElem, Type.STVORKA_SIDE).stream().forEach(el -> el.paint());
 
             //Прорисока фурнитуры створок
-            this.listArea.filter(Type.STVORKA).stream().forEach(el -> el.paint());
+            UCom.filter(this.listArea, Type.STVORKA).stream().forEach(el -> el.paint());
 
             //Размерные линии
             if (this.scale > .1) {

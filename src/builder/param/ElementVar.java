@@ -54,7 +54,7 @@ public class ElementVar extends Par5s {
                     break;
                 case 31001: //Максимальное заполнение изделия, мм 
                 {
-                    List<ElemSimple> glassList = winc.listElem.filter(Type.GLASS);
+                    List<ElemSimple> glassList = UCom.filter(winc.listElem, Type.GLASS);
                     double depth = 0;
                     for (ElemSimple glass : glassList) {
                         if (glass.artiklRecAn.getDbl(eArtikl.depth) > depth) {

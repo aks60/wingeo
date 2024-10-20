@@ -3,7 +3,6 @@ package builder.model;
 import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
-import common.ArrayCom;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eColor;
@@ -11,6 +10,7 @@ import enums.Layout;
 import enums.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 import javax.swing.Timer;
@@ -115,7 +115,7 @@ public class Com5t {
         return true;
     }
 
-    public Polygon buffer(Geometry line, ArrayCom<? extends Com5t> list, double amend) {
+    public Polygon buffer(Geometry line, ArrayList<? extends Com5t> list, double amend) {
         return UGeo.bufferCross(line, list, amend);
         //return UGeo.bufferUnion(line, list, amend);
         //return UGeo.bufferPaddin(line, list, amend);

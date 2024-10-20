@@ -8,19 +8,17 @@ import domain.eGlasprof;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
+import builder.model.Com5t;
 import builder.model.ElemGlass;
 import builder.param.ElementDet;
 import builder.param.FillingDet;
 import builder.param.FillingVar;
 import builder.model.ElemSimple;
-import common.ArrayCom;
 import common.UCom;
-import dataset.Query;
 import enums.Type;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import org.locationtech.jts.geom.Coordinate;
 
 /**
  * Заполнения
@@ -48,10 +46,10 @@ public class SpcFilling extends Cal5e {
 
     @Override
     public void calc() {
-        ArrayList<ElemSimple> elemGlassList = winc.listElem.filter(Type.GLASS);
+        ArrayList<ElemSimple> elemGlassList = UCom.filter(winc.listElem, Type.GLASS);
         //Цикл по списку заполнений
         for (ElemSimple elemGlass : elemGlassList) {
-            calc(elemGlass);
+            calc((ElemSimple) elemGlass);
         }
     }
 
@@ -60,7 +58,7 @@ public class SpcFilling extends Cal5e {
             Double depth = elemGlass.artiklRec.getDbl(eArtikl.depth); //толщина стекда           
             //List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(winc.root.frames);  //список рам конструкции
 
-            ArrayCom<ElemSimple> listFrame = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+            ArrayList<ElemSimple> listFrame = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             Set<Double> hs = new LinkedHashSet();
             ((ElemGlass) elemGlass).areaFalz.setUserData(hs);
             List.of(((ElemGlass) elemGlass).areaFalz.getCoordinates()).forEach(p -> hs.add(p.z));
@@ -71,7 +69,8 @@ public class SpcFilling extends Cal5e {
 
                 ElemGlass elGlass = (ElemGlass) elemGlass;
                 elGlass.sideglass = indexSegm; //индекс стороны стеклопакета 
-                elGlass.frameglass = listFrame.get(arr[indexSegm]);
+                double ID = arr[indexSegm];
+                elGlass.frameglass = listFrame.stream().filter(e -> e.id == ID).findFirst().get();
 
                 //Цикл по группам заполнений
                 for (Record glasgrpRec : eGlasgrp.filter()) {

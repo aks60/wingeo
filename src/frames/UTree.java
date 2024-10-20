@@ -5,11 +5,12 @@ import builder.model.AreaSimple;
 import builder.model.Com5t;
 import builder.model.ElemFrame;
 import builder.model.ElemSimple;
-import common.ArrayCom;
+import common.UCom;
 import enums.Layout;
 import enums.Type;
 import enums.TypeArt;
 import frames.swing.DefMutableTreeNode;
+import java.util.ArrayList;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 public class UTree {
@@ -26,13 +27,13 @@ public class UTree {
             root.add(new DefMutableTreeNode(new Com5t(Type.PARAM)));
             //Рама
             frm = root.add(new DefMutableTreeNode(new Com5t(Type.FRAME)));
-            frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.LEFT)));
+            frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.LEFT)));
             frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
-            frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.BOTT)));
+            frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.BOTT)));
             frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
-            frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.RIGHT)));
+            frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.RIGHT)));
             frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
-            frm.add(new DefMutableTreeNode(winc.root.frames.get(Layout.TOP)));
+            frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.TOP)));
             frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
             loadWinTree(winc.root.childs);
 
@@ -43,7 +44,7 @@ public class UTree {
     }
 
     //Функция рекурсии
-    public static void loadWinTree(ArrayCom<Com5t> childs) {
+    public static void loadWinTree(ArrayList<Com5t> childs) {
         try {
             for (Com5t com : childs) {
                 //Если это не створка

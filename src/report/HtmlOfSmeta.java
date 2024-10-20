@@ -3,6 +3,7 @@ package report;
 import builder.Wincalc;
 import builder.model.ElemSimple;
 import common.MoneyInWords;
+import common.UCom;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eColor;
@@ -13,19 +14,13 @@ import domain.eProject;
 import domain.eSysuser;
 import enums.Type;
 import frames.UGui;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -117,7 +112,7 @@ public class HtmlOfSmeta {
                 List<Record> prjkitList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
                 prjkitAll.addAll(prjkitList);
 
-                ArrayList<ElemSimple> glassList = winc.listElem.filter(Type.GLASS);
+                ArrayList<ElemSimple> glassList = UCom.filter(winc.listElem, Type.GLASS);
                 Elements captions2 = tab2List.get(i).getElementsByTag("caption");
                 captions2.get(0).text("Изделие № " + (i + 1));
                 tdList.get(2).text(prjprodRec.getStr(ePrjprod.name));
@@ -201,7 +196,7 @@ public class HtmlOfSmeta {
                 List<Record> prjkitList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
                 prjkitAll.addAll(prjkitList);
 
-                ArrayList<ElemSimple> glassList = winc.listElem.filter(Type.GLASS);
+                ArrayList<ElemSimple> glassList = UCom.filter(winc.listElem, Type.GLASS);
                 Elements captions2 = tab2List.get(i).getElementsByTag("caption");
                 captions2.get(0).text("Изделие № " + (i + 1));
                 tdList.get(2).text(prjprodRec.getStr(ePrjprod.name));

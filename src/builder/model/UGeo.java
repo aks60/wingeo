@@ -2,7 +2,6 @@ package builder.model;
 
 import builder.making.SpcRecord;
 import static builder.model.Com5t.gf;
-import common.ArrayCom;
 import common.LineSegm;
 import dataset.Record;
 import domain.eArtikl;
@@ -192,7 +191,7 @@ public class UGeo {
         return ringToPolygon(line, geom);
     }
 
-    public static Polygon buffer(Geometry line, ArrayCom<? extends Com5t> list, double amend) {
+    public static Polygon buffer(Geometry line, ArrayList<? extends Com5t> list, double amend) {
 
         //Map дистанций
         Map<Double, Double> hm = new HashMap();
@@ -226,7 +225,7 @@ public class UGeo {
         coo2[coo2.length - 1].z = coo2[0].z;
         return (Polygon) line.getFactory().createPolygon(coo2);
     }
-    
+
     //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Coordinate[] arrCoord(double... d) {
         List<Coordinate> list = new ArrayList<Coordinate>();
@@ -331,7 +330,7 @@ public class UGeo {
         segm.normalize();
         return segm;
     }
-    
+
     public static int normalizeElem(Com5t c) {
 
         if (c.x2() < c.x1()) {
@@ -357,7 +356,7 @@ public class UGeo {
             return 1;
         }
         return 0;
-    }    
+    }
 
     public static Coordinate offset(LineSegment s1, LineSegment s2, double d) {
         LineSegment s3 = s1.offset(d);
@@ -464,7 +463,7 @@ public class UGeo {
     }
 
     //При вырождении полигона загибы на концах арки
-    public static Polygon bufferPaddin(Geometry poly, ArrayCom<? extends Com5t> list, double amend) {
+    public static Polygon bufferPaddin(Geometry poly, ArrayList<? extends Com5t> list, double amend) {
         LineSegment segm1, segm2, segm1a = null, segm2a = null, segm1b, segm2b, segm1c, segm2c;
         Coordinate cros1 = null, cros2 = null;
         List<Coordinate> outList = new ArrayList<Coordinate>();
@@ -479,7 +478,9 @@ public class UGeo {
                 segm2 = UGeo.getSegment(poly, i);
 
                 //Получим ширину сегментов             
-                Com5t e1 = list.get(segm1.p0.z), e2 = list.get(segm2.p0.z);
+                final double ID1 = segm1.p0.z, ID2 = segm2.p0.z;
+                Com5t e1 = list.stream().filter(e -> e.id == ID1).findFirst().get();
+                Com5t e2 = list.stream().filter(e -> e.id == ID2).findFirst().get();
                 Record rec1 = (e1.artiklRec == null) ? eArtikl.virtualRec() : e1.artiklRec;
                 Record rec2 = (e2.artiklRec == null) ? eArtikl.virtualRec() : e2.artiklRec;
                 double w1 = (rec1.getDbl(eArtikl.height) - rec1.getDbl(eArtikl.size_centr)) - amend;
@@ -540,7 +541,7 @@ public class UGeo {
     }
 
     //Обводка полигона, работает быстро. При вырождении полигона загибы на концах арки
-    public static Polygon bufferCross(Geometry str, ArrayCom<? extends Com5t> list, double amend) {
+    public static Polygon bufferCross(Geometry str, ArrayList<? extends Com5t> list, double amend) {
         int i = 0;
         Polygon result = gf.createPolygon();
         Com5t e1 = null, e2 = null;
@@ -559,13 +560,15 @@ public class UGeo {
 
                 //Перебор сегментов для вычисления точки пересечения
                 if (i > Com5t.MAXSIDE || (cross != null && i < Com5t.MAXSIDE)) {
-                    e1 = list.get(coo[i - 1].z);
+                    final double ID = coo[i - 1].z;
+                    e1 = list.stream().filter(e -> e.id == ID).findFirst().get();
                     seg1a.setCoordinates(coo[i - 1], coo[i]);
                     seg1b = seg1a.offset(-hm.get(e1.id));
                 }
                 if (i < Com5t.MAXSIDE || (cross != null && i > Com5t.MAXSIDE)) {
                     int j = (i == coo.length - 1) ? 1 : i + 1;
-                    e2 = list.get(coo[i].z);
+                    final double ID = coo[i].z;
+                    e2 = list.stream().filter(e -> e.id == ID).findFirst().get();
                     seg2a.setCoordinates(coo[i], coo[j]);
                     seg2b = seg2a.offset(-hm.get(e2.id));
                 }
@@ -612,7 +615,7 @@ public class UGeo {
     }
 
     //Обводка полигона, работает быстро. При вырождении полигона теряются p.z
-    public static Polygon bufferUnion(Geometry str, ArrayCom<? extends Com5t> list, Map<Double, Double> hm) {
+    public static Polygon bufferUnion(Geometry str, ArrayList<? extends Com5t> list, Map<Double, Double> hm) {
         try {
             List<Geometry> geoList = new ArrayList();
             List<Coordinate> arcStr = new ArrayList<Coordinate>(),
@@ -621,9 +624,10 @@ public class UGeo {
 
             Coordinate[] coo = str.getCoordinates();
             for (int i = 1; i < coo.length; i++) {
-
-                Com5t e1 = list.get(coo[i - 1].z);
-                Com5t e2 = list.get(coo[i].z);
+                
+                final double ID1 = coo[i - 1].z, ID2 = coo[i].z;
+                Com5t e1 = list.stream().filter(e -> e.id == ID1).findFirst().get();
+                Com5t e2 = list.stream().filter(e -> e.id == ID2).findFirst().get();
                 LineSegment seg1a = new LineSegm(coo[i - 1], coo[i], coo[i - 1].z);
                 LineSegment seg1b = seg1a.offset(-hm.get(e1.id));
 
@@ -669,7 +673,7 @@ public class UGeo {
     }
 
     //Ошибка если арка правильная! см. 604004 
-    public static Polygon bufferUnion(Geometry str, ArrayCom<? extends Com5t> list, double amend) {
+    public static Polygon bufferUnion(Geometry str, ArrayList<? extends Com5t> list, double amend) {
         try {
             Map<Double, Double> hm = new HashMap();
             for (Com5t el : list) {
@@ -684,8 +688,9 @@ public class UGeo {
             Coordinate[] coo = str.getCoordinates();
             for (int i = 1; i < coo.length; i++) {
 
-                Com5t e1 = list.get(coo[i - 1].z);
-                Com5t e2 = list.get(coo[i].z);
+                final double ID1 = coo[i - 1].z, ID2 = coo[i].z;
+                Com5t e1 = list.stream().filter(e -> e.id == ID1).findFirst().get();
+                Com5t e2 = list.stream().filter(e -> e.id == ID2).findFirst().get();       
                 LineSegment seg1a = new LineSegm(coo[i - 1], coo[i], coo[i - 1].z);
                 LineSegment seg1b = seg1a.offset(-hm.get(e1.id));
 

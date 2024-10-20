@@ -13,9 +13,7 @@ import builder.model.ElemMosquit;
 import builder.param.ElementDet;
 import builder.param.ElementVar;
 import builder.model.ElemSimple;
-import builder.model.UGeo;
-import dataset.Query;
-import domain.eSysprof;
+import common.UCom;
 import enums.Type;
 import java.util.ArrayList;
 
@@ -37,8 +35,8 @@ public class SpcElement extends Cal5e {
     //Идем по списку профилей смотрим, есть аналог, работаем с ним.
     @Override
     public void calc() {
-        ArrayList<ElemSimple> listElem = winc.listElem.filter(Type.FRAME_SIDE,
-                Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA, Type.GLASS, Type.MOSQUIT); //список элементов конструкции
+        ArrayList<ElemSimple> listElem = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, 
+                Type.IMPOST, Type.SHTULP, Type.STOIKA, Type.GLASS, Type.MOSQUIT); //список элементов конструкции
         try {
             //Цикл по списку элементов конструкции
             for (ElemSimple elem5e : listElem) {

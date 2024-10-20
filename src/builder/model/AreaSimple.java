@@ -4,7 +4,6 @@ import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import common.ArrayCom;
 import common.UCom;
 import common.listener.ListenerPaint;
 import dataset.Record;
@@ -32,9 +31,9 @@ import org.locationtech.jts.geom.LineString;
 public class AreaSimple extends Com5t {
 
     private DecimalFormat df1 = new DecimalFormat("#0.#");
-    public ArrayCom<ElemSimple> frames = new ArrayCom<ElemSimple>(this); //список рам
+    public ArrayList<ElemSimple> frames = new ArrayList<ElemSimple>(); //список рам
     public ListenerPaint listenerPassEdit = null; //для прорисовки точек движения сегментов
-    public ArrayCom<Com5t> childs = new ArrayCom<Com5t>(this); //дети
+    public ArrayList<Com5t> childs = new ArrayList<Com5t>(); //дети
 
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson.id, gson, owner);
@@ -103,8 +102,8 @@ public class AreaSimple extends Com5t {
     //Т - соединения
     public void addJoining() {
         //T - соединения
-        ArrayList<ElemSimple> crosList = winc.listElem.filter(Type.IMPOST, Type.STOIKA);
-        ArrayList<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.IMPOST);
+        ArrayList<ElemSimple> crosList = UCom.filter(winc.listElem, Type.IMPOST, Type.STOIKA);
+        ArrayList<ElemSimple> elemList = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.IMPOST);
 
         //Цикл по импостам
         for (ElemSimple imp : crosList) {
@@ -185,7 +184,7 @@ public class AreaSimple extends Com5t {
                         hsVer.add(c2.y);
                     }
                 }
-                for (ElemSimple elem5e : winc.listElem.filter(Type.IMPOST)) {
+                for (ElemSimple elem5e : UCom.filter(winc.listElem, Type.IMPOST)) {
                     hsVer.add(elem5e.y1());
                 }
             }

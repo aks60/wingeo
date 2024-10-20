@@ -2,6 +2,7 @@ package enums;
 
 import builder.model.AreaStvorka;
 import builder.model.ElemSimple;
+import common.UCom;
 import java.util.List;
 
 /**
@@ -64,13 +65,13 @@ public enum TypeOpen1 implements Enam {
 
     public static ElemSimple getKnob(AreaStvorka areaStv, TypeOpen1 typeOpen) {
         if (List.of(LEFT, LEFTUP, LEFMOV).contains(typeOpen)) {
-            return areaStv.frames.get(Layout.RIGHT);
+            return UCom.layout(areaStv.frames, Layout.RIGHT);
         } else if (List.of(RIGH, RIGHUP, RIGMOV).contains(typeOpen)) {
-            return areaStv.frames.get(Layout.LEFT);
+            return UCom.layout(areaStv.frames, Layout.LEFT);
         } else if (UPPER == typeOpen) {
-            return areaStv.frames.get(Layout.TOP);
+            return UCom.layout(areaStv.frames, Layout.TOP);
         } else {
-            return areaStv.frames.get(Layout.LEFT);
+            return UCom.layout(areaStv.frames, Layout.LEFT);
         }
     }
 }

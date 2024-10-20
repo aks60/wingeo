@@ -21,7 +21,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import common.ArraySpc;
-import common.ArrayCom;
 import common.UCom;
 import dataset.Field;
 import dataset.Query;
@@ -444,8 +443,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     AreaStvorka stv = (AreaStvorka) winNode.com5t();
                     AreaSimple sta = (AreaSimple) winNode.com5t();
                     int id = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
-                    setText(txt24, UCom.format(sta.frames.get(Layout.BOTT).width(), 1));
-                    double h = (sta.frames.get(Layout.RIGHT).height() > sta.frames.get(Layout.LEFT).height()) ? sta.frames.get(Layout.RIGHT).height() : sta.frames.get(Layout.LEFT).height();
+                    setText(txt24, UCom.format(UCom.layout(sta.frames, Layout.BOTT).width(), 1));
+                    double h = (UCom.layout(sta.frames, Layout.RIGHT).height() > UCom.layout(sta.frames, Layout.LEFT).height()) ? UCom.layout(sta.frames, Layout.RIGHT).height() : UCom.layout(sta.frames, Layout.LEFT).height();
                     setText(txt26, UCom.format(h, 1));
                     setText(txt20, eFurniture.find(id).getStr(eFurniture.name));
                     setIcon(btn10, stv.isJson(stv.gson.param, PKjson.sysfurnID));
@@ -473,7 +472,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     setText(txt48, eColor.find(stv.lockColor).getStr(eColor.name));
                     setIcon(btn24, stv.isJson(stv.gson.param, PKjson.colorLock));
                     //Москитка
-                    ArrayCom<Com5t> mosqList = ((AreaSimple) stv).childs.filter(enums.Type.MOSQUIT);
+                    ArrayList<Com5t> mosqList = UCom.filter(((AreaSimple) stv).childs, enums.Type.MOSQUIT);
                     if (mosqList.isEmpty() == false) {
                         ElemSimple mosq = (ElemSimple) mosqList.get(0);
                         setText(txt54, mosq.artiklRec.getStr(eArtikl.code));
@@ -3268,7 +3267,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 ListenerRecord listenerColor = (colorRec) -> {
 
                     if (colorRec.get(1) != null) {
-                        GsonElem jsonElem = wincalc().listAll.gson(selectID);
+                        GsonElem jsonElem = UCom.gson(wincalc().listAll, selectID);
                         if (jsonElem != null) {
                             if (evt.getSource() == btn9) {
                                 wincalc().gson.color1 = colorRec.getInt(eColor.id);
@@ -3317,8 +3316,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 new DicSysprof(this, (sysprofRec) -> {
                     Wincalc winc = wincalc();
                     if (winNode.com5t().type == enums.Type.FRAME_SIDE) { //рама окна
-                        double gsonId = winNode.com5t().id;
-                        GsonElem gsonRama = wincalc().listAll.gson(gsonId);
+                        final double gsonId = winNode.com5t().id;
+                        GsonElem gsonRama = UCom.gson(wincalc().listAll, gsonId);
                         if (sysprofRec.get(1) == null) {
                             gsonRama.param.remove(PKjson.sysprofID);
                         } else {
@@ -3328,7 +3327,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
                     } else if (winNode.com5t().type == enums.Type.STVORKA_SIDE) { //рама створки
                         double stvId = winNode.com5t().owner.id;
-                        GsonElem stvArea = (GsonElem) winc.listAll.gson(stvId);
+                        GsonElem stvArea = UCom.gson(wincalc().listAll, stvId);
                         JsonObject paramObj = stvArea.param;
                         String stvKey = null;
                         if (layout == Layout.BOTT) {
@@ -3350,7 +3349,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
                     } else {  //импост
                         double elemId = winNode.com5t().id;
-                        GsonElem gsonElem = winc.listAll.gson(elemId);
+                        GsonElem gsonElem = UCom.gson(wincalc().listAll, elemId);
                         if (sysprofRec.get(1) == null) {
                             gsonElem.param.remove(PKjson.sysprofID);
                         } else {
@@ -3382,7 +3381,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
                 String colorID = (evt.getSource() == btn18) ? PKjson.colorID1 : (evt.getSource() == btn19) ? PKjson.colorID2 : PKjson.colorID3;
                 double parentId = winNode.com5t().owner.id;
-                GsonElem parentArea = (GsonElem) wincalc().listAll.gson(parentId);
+                GsonElem parentArea = UCom.gson(wincalc().listAll, parentId);
 
                 if (winNode.com5t().type == enums.Type.STVORKA_SIDE) {
                     JsonObject paramObj = parentArea.param;
@@ -3445,7 +3444,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             qSysfurn.table(eFurniture.up).join(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);
             new DicName(this, (sysfurnRec) -> {
 
-                GsonElem stvArea = (GsonElem) wincalc().listAll.gson(windowsID);
+                GsonElem stvArea = UCom.gson(wincalc().listAll, windowsID);
                 if (sysfurnRec.get(1) == null) {
                     stvArea.param.remove(PKjson.sysfurnID);
                 } else {
@@ -3465,7 +3464,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             new DicEnums(this, (typeopenRec) -> {
 
                 double elemID = winNode.com5t().id;
-                GsonElem stvArea = (GsonElem) wincalc().listAll.gson(elemID);
+                GsonElem stvArea = UCom.gson(wincalc().listAll, elemID);
                 if (typeopenRec.get(1) == null) {
                     stvArea.param.remove(PKjson.typeOpen);
                 } else {
@@ -3487,7 +3486,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             HashSet<Record> colorSet = UGui.artiklToColorSet(stv.knobRec.getInt(eArtikl.id));
             DicColor frame = new DicColor(this, (colorRec) -> {
 
-                GsonElem stvArea = (GsonElem) wincalc().listAll.gson(selectID);
+                GsonElem stvArea = UCom.gson(wincalc().listAll, selectID);
                 if (colorRec.get(1) == null) {
                     stvArea.param.remove(PKjson.colorKnob);
                 } else {
@@ -3510,7 +3509,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicArtikl(this, (artiklRec) -> {
 
-                GsonElem stvArea = (GsonElem) wincalc().listAll.gson(stvorkaID);
+                GsonElem stvArea = UCom.gson(wincalc().listAll, stvorkaID);
                 stvArea.param.remove(PKjson.colorKnob);
                 if (artiklRec.get(1) == null) {
                     stvArea.param.remove(PKjson.artiklKnob);
@@ -3538,7 +3537,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         new DicHandl(this, (record) -> {
             try {
                 double selectID = areaStv.id;
-                GsonElem jsonStv = (GsonElem) wincalc().listAll.gson(selectID);
+                GsonElem jsonStv = UCom.gson(wincalc().listAll, selectID);
 
                 if (record.getInt(0) == 0) {
                     jsonStv.param.addProperty(PKjson.positionKnob, LayoutKnob.MIDL.id);
@@ -3585,7 +3584,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
             new DicArtikl(this, artiklID, (artiklRec) -> {
 
-                GsonElem glassElem = (GsonElem) wincalc().listAll.gson(selectID);
+                GsonElem glassElem = UCom.gson(wincalc().listAll, selectID);
                 if (artiklRec.get(1) == null) {
                     glassElem.param.remove(PKjson.artglasID);
                 } else {
@@ -3624,7 +3623,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicArtikl(this, (artiklRec) -> {
 
-                GsonElem stvArea = (GsonElem) wincalc().listAll.gson(selectID);
+                GsonElem stvArea = UCom.gson(wincalc().listAll, selectID);
                 stvArea.param.remove(PKjson.colorLoop);
                 if (artiklRec.get(1) == null) {
                     stvArea.param.remove(PKjson.artiklLoop);
@@ -3647,7 +3646,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             HashSet<Record> colorSet = UGui.artiklToColorSet(stv.loopRec.getInt(eArtikl.id));
             DicColor frame = new DicColor(this, (colorRec) -> {
 
-                GsonElem stvArea = (GsonElem) wincalc().listAll.gson(selectID);
+                GsonElem stvArea = UCom.gson(wincalc().listAll, selectID);
                 if (colorRec.get(1) == null) {
                     stvArea.param.remove(PKjson.colorLoop);
                 } else {
@@ -3670,7 +3669,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicArtikl(this, (artiklRec) -> {
 
-                GsonElem stvArea = (GsonElem) wincalc().listAll.gson(selectID);
+                GsonElem stvArea = UCom.gson(wincalc().listAll, selectID);
                 stvArea.param.remove(PKjson.colorLock);
                 if (artiklRec.get(1) == null) {
                     stvArea.param.remove(PKjson.artiklLock);
@@ -3693,7 +3692,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             HashSet<Record> colorSet = UGui.artiklToColorSet(stv.lockRec.getInt(eArtikl.id));
             DicColor frame = new DicColor(this, (colorRec) -> {
 
-                GsonElem stvArea = (GsonElem) wincalc().listAll.gson(selectID);
+                GsonElem stvArea = UCom.gson(wincalc().listAll, selectID);
                 if (colorRec.get(1) == null) {
                     stvArea.param.remove(PKjson.colorLock);
                 } else {
@@ -3742,7 +3741,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             HashSet<Record> colorSet = UGui.artiklToColorSet(glas.artiklRec.getInt(eArtikl.id));
             DicColor frame = new DicColor(this, (colorRec) -> {
 
-                GsonElem stvArea = (GsonElem) wincalc().listAll.gson(selectID);
+                GsonElem stvArea = UCom.gson(wincalc().listAll, selectID);
                 if (colorRec.get(1) == null) {
                     stvArea.param.remove(PKjson.colorGlass);
                 } else {
@@ -3838,7 +3837,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             new DicArtikl(this, (artiklRec) -> {
 
                 GsonElem gsonElem = null;
-                ArrayCom<Com5t> mosqList = ((AreaSimple) stvElem).childs.filter(enums.Type.MOSQUIT);
+                ArrayList<Com5t> mosqList = UCom.filter(((AreaSimple) stvElem).childs, enums.Type.MOSQUIT);
 
                 if (mosqList.isEmpty() == false) {
                     ElemSimple mosqElem = (ElemSimple) mosqList.get(0);
@@ -3867,7 +3866,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         try {
             double selectID = winNode.com5t().id;
             AreaStvorka stvElem = (AreaStvorka) winNode.com5t();
-            ArrayCom<Com5t> mosqList = ((AreaSimple) stvElem).childs.filter(enums.Type.MOSQUIT);
+            ArrayList<Com5t> mosqList = UCom.filter(((AreaSimple) stvElem).childs, enums.Type.MOSQUIT);
             if (mosqList.isEmpty() == false) {
                 ElemMosquit mosqElem = (ElemMosquit) mosqList.get(0);
                 HashSet<Record> colorSet = UGui.artiklToColorSet(mosqElem.artiklRec.getInt(eArtikl.id));
@@ -3891,7 +3890,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         try {
             double selectID = winNode.com5t().id;
             AreaSimple stvElem = (AreaSimple) winNode.com5t();
-            ArrayCom<Com5t> mosqList = ((AreaSimple) stvElem).childs.filter(enums.Type.MOSQUIT);
+            ArrayList<Com5t> mosqList = UCom.filter(stvElem.childs, enums.Type.MOSQUIT);
             if (mosqList.isEmpty() == false) {
                 ElemSimple mosqElem = (ElemSimple) mosqList.get(0);
                 Record artiklRec = mosqElem.artiklRec;

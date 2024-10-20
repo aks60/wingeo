@@ -50,7 +50,7 @@ public class SpcFurniture extends Cal5e {
 
     @Override
     public void calc() {
-        ArrayList<AreaSimple> stvorkaList = winc.listArea.filter(Type.STVORKA);
+        ArrayList<AreaSimple> stvorkaList = UCom.filter(winc.listArea, Type.STVORKA);
         try {
             //Подбор фурнитуры по параметрам
             List<Record> sysfurnList = eSysfurn.filter(winc.nuni); //список фурнитур в системе
@@ -94,7 +94,8 @@ public class SpcFurniture extends Cal5e {
             //Цикл по описанию сторон фурнитуры
             List<Record> furnsidetList = eFurnside1.filter(furnitureRec.getInt(eFurniture.id)); //список описания сторон
             for (Record furnside1Rec : furnsidetList) {
-                ElemSimple elemFrame = areaStv.frames.get((Layout) Layout.ANY.find(furnside1Rec.getInt(eFurnside1.side_num)));
+                Layout layout = (Layout) Layout.ANY.find(furnside1Rec.getInt(eFurnside1.side_num));
+                ElemSimple elemFrame = areaStv.frames.stream().filter(e -> e.layout() == layout).findFirst().get();
 
                 //ФИЛЬТР вариантов с учётом стороны
                 if (furnitureVar.filter(elemFrame, furnside1Rec) == false) {
@@ -171,16 +172,16 @@ public class SpcFurniture extends Cal5e {
                     }
                 }
                 if (side == 1) {
-                    el = areaStv.frames.get(Layout.BOTT);
+                    el = UCom.layout(areaStv.frames, Layout.BOTT);
                     length = el.length() - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
                 } else if (side == 2) {
-                    el = areaStv.frames.get(Layout.RIGHT);
+                    el = UCom.layout(areaStv.frames, Layout.RIGHT);
                     length = el.length() - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
                 } else if (side == 3) {
-                    el = areaStv.frames.get(Layout.TOP);
+                    el = UCom.layout(areaStv.frames, Layout.TOP);
                     length = el.length() - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
                 } else if (side == 4) {
-                    el = areaStv.frames.get(Layout.LEFT);
+                    el = UCom.layout(areaStv.frames, Layout.LEFT);
                     length = el.length() - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
                 }
                 if (length >= furnside2Rec.getDbl(eFurnside2.len_max) || (length < furnside2Rec.getDbl(eFurnside2.len_min))) {
@@ -283,13 +284,13 @@ public class SpcFurniture extends Cal5e {
 
         //Через параметр
         if ("1".equals(mapParam.get(25010))) {
-            return area5e.frames.get(Layout.BOTT);
+            return UCom.layout(area5e.frames, Layout.BOTT);
         } else if ("2".equals(mapParam.get(25010))) {
-            return area5e.frames.get(Layout.RIGHT);
+            return UCom.layout(area5e.frames, Layout.RIGHT);
         } else if ("3".equals(mapParam.get(25010))) {
-            return area5e.frames.get(Layout.TOP);
+            return UCom.layout(area5e.frames, Layout.TOP);
         } else if ("4".equals(mapParam.get(25010))) {
-            return area5e.frames.get(Layout.LEFT);
+            return UCom.layout(area5e.frames, Layout.LEFT);
         } else {
             //Там где крепится ручка
             return determOfSide(area5e);
@@ -301,11 +302,11 @@ public class SpcFurniture extends Cal5e {
         if (area5e instanceof AreaStvorka) {
             int id = ((AreaStvorka) area5e).typeOpen.id;
             if (List.of(1, 3, 11).contains(id)) {
-                return area5e.frames.get(Layout.LEFT);
+                return UCom.layout(area5e.frames, Layout.LEFT);
             } else if (List.of(2, 4, 12).contains(id)) {
-                return area5e.frames.get(Layout.RIGHT);
+                return UCom.layout(area5e.frames, Layout.RIGHT);
             } else {
-                return area5e.frames.get(Layout.BOTT);
+                return UCom.layout(area5e.frames, Layout.BOTT);
             }
         }
         return area5e.frames.stream().findFirst().get();  //первая попавшаяся        

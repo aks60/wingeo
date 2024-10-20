@@ -4,7 +4,6 @@ import builder.Wincalc;
 import builder.making.SpcFilling;
 import builder.making.SpcRecord;
 import builder.script.GsonElem;
-import common.ArrayCom;
 import common.UCom;
 import dataset.Record;
 import domain.eArtdet;
@@ -18,6 +17,7 @@ import enums.TypeArt;
 import enums.UseUnit;
 import java.awt.Color;
 import java.awt.Shape;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,7 +98,7 @@ public class ElemGlass extends ElemSimple {
     @Override
     public void setLocation() {
         try {
-            ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
+            ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
             Map<Double, Double> hm = new HashMap();
             for (Com5t el : list) {
                 Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
@@ -141,7 +141,7 @@ public class ElemGlass extends ElemSimple {
             //Фича определения gzazo и gaxis на раннем этапе построения. 
             new SpcFilling(winc, true).calc(this);
 
-            ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+            ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             Map<Double, Double> hm = new HashMap();
             for (Com5t el : list) {
                 Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
@@ -261,7 +261,7 @@ public class ElemGlass extends ElemSimple {
 
     public void rascladkaPaint() {
         if (this.rascRec.isVirtual() == false) {
-            ArrayCom<ElemSimple> list = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
+            ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
             Map<Double, Double> hm = new HashMap();
             for (Com5t el : list) {
                 Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;

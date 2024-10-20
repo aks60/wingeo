@@ -12,7 +12,6 @@ import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import common.ArrayCom;
 import common.eProp;
 import dataset.Conn;
 import dataset.Crypto;
@@ -452,7 +451,7 @@ public class Test {
         double M = 1500;
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
-        ArrayCom<Com5t> frames = new ArrayCom();
+        ArrayList<Com5t> frames = new ArrayList();
         frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
         frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, M)));
         frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, M)));
@@ -488,7 +487,7 @@ public class Test {
         //double M = 1500;
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
-        ArrayCom<Com5t> frames = new ArrayCom();
+        ArrayList<Com5t> frames = new ArrayList();
 
         frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
         frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, M)));
@@ -524,7 +523,7 @@ public class Test {
 
     private void draw5() {
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
-        ArrayCom<Com5t> frames = new ArrayCom();
+        ArrayList<Com5t> frames = new ArrayList();
         frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
         frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, 350.0)));
         frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, 350.0)));
@@ -587,7 +586,7 @@ public class Test {
         GeometryFactory gf = new GeometryFactory(new PrecisionModel(10));
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
-        ArrayCom<Com5t> frames = new ArrayCom();
+        ArrayList<Com5t> frames = new ArrayList();
         frames.add(new Com5t(1, new GsonElem(Type.FRAME_SIDE, 0.0, 300.0)));
         frames.add(new Com5t(2, new GsonElem(Type.FRAME_SIDE, 0.0, M)));
         frames.add(new Com5t(3, new GsonElem(Type.FRAME_SIDE, 1300.0, M)));

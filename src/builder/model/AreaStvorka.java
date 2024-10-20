@@ -4,7 +4,7 @@ import builder.Wincalc;
 import builder.making.SpcRecord;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
-import common.ArrayCom;
+import common.UCom;
 import dataset.Query;
 import dataset.Record;
 import domain.eArtdet;
@@ -23,6 +23,7 @@ import enums.TypeOpen1;
 import enums.TypeOpen2;
 import enums.UseSideTo;
 import java.awt.Shape;
+import java.util.ArrayList;
 import java.util.List;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
@@ -146,7 +147,7 @@ public class AreaStvorka extends AreaSimple {
         try {
             //owner.area - если нет полигона створки в гл.окне 
             //this.area  - получатется при распиле owner.area импостом
-            this.frameBox = (winc.listElem.filter(Type.IMPOST).isEmpty())
+            this.frameBox = (UCom.filter(winc.listElem, Type.IMPOST).isEmpty())
                     || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
 
             //Полигон створки с учётом нахлёста 
@@ -206,7 +207,7 @@ public class AreaStvorka extends AreaSimple {
 
                 //Линии вертик. открывания
                 if (typeOpen == TypeOpen1.LEFTUP || typeOpen == TypeOpen1.RIGHUP) {
-                    ElemSimple stv2 = this.frames.get(Layout.TOP);
+                    ElemSimple stv2 = UCom.layout(this.frames, Layout.TOP);
                     ind = UGeo.getIndex(this.area, stv2.id);
                     Coordinate p2 = UGeo.getSegment(area, ind).midPoint();
                     s1 = UGeo.getSegment(area, ind - 1);
@@ -251,7 +252,7 @@ public class AreaStvorka extends AreaSimple {
     //L - соединения, прил.соед.
     @Override
     public void addJoining() {
-        ArrayCom<ElemSimple> elemList = winc.listElem.filter(Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.STOIKA, Type.SHTULP);
+        ArrayList<ElemSimple> elemList = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.STOIKA, Type.SHTULP);
         try {
             //L - соединения
             for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам створки
@@ -273,8 +274,10 @@ public class AreaStvorka extends AreaSimple {
             Coordinate coo2[] = this.frameBox.getGeometryN(0).getCoordinates(); //полигон векторов сторон рамы
 
             for (int j = 0; j < coo1.length - 1; j++) {
-                ElemSimple elemStv = elemList.get(coo1[j].z);
-                ElemSimple elemFrm = elemList.get(coo2[j].z);
+               final double id1 = coo1[j].z;
+                ElemSimple elemStv = elemList.stream().filter(e -> e.id == id1).findFirst().get();
+               final double id2 = coo2[j].z;
+                ElemSimple elemFrm = elemList.stream().filter(e -> e.id == id2).findFirst().get();
                 if (elemStv != null && elemFrm != null) {
                     winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.FLAT, elemStv, elemFrm));
                 }
