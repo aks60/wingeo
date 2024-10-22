@@ -104,8 +104,9 @@ public class ElemGlass extends ElemSimple {
                 Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
                 hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - rec.getDbl(eArtikl.size_falz));
             }
-            this.areaFalz = UGeo.buffer(owner.area.getGeometryN(0), hm);  //полигон по фальцу для прорисовки и рассчёта штапик... 
+            this.areaFalz = UGeo.buffer(owner.area.getGeometryN(0), hm);  //полигон по фальцу для прорисовки и рассчёта штапик...
 
+                    
             Coordinate[] coo = this.areaFalz.getCoordinates();
             if (this.areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
                 coo[0].z = coo[1].z;
