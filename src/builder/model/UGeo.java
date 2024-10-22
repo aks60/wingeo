@@ -123,7 +123,7 @@ public class UGeo {
     }
 
     //Пилим многоугольник
-    public static Geometry[] splitPolygon(Geometry geom, ElemCross impost) {
+    public static Geometry[] splitPolygon2(Geometry geom, ElemCross impost) {
         try {
             Geometry poly = geom.getGeometryN(0);
             HashSet<Coordinate> hsCheck = new HashSet<Coordinate>();
@@ -198,7 +198,7 @@ public class UGeo {
     }
 
     //Пилим многоугольник     
-    public static Geometry[] splitPolygon2(final Geometry geom, final ElemCross impost) {
+    public static Geometry[] splitPolygon(Geometry geom, ElemCross impost) {
         try {
             List<Coordinate> lineCross = new ArrayList<Coordinate>();
             Coordinate impP0 = new Coordinate(impost.x1(), impost.y1());
@@ -213,8 +213,8 @@ public class UGeo {
                     lineCross.add(new Coordinate(crosP.x, crosP.y, segmP0.z));
                 }
             }
-            
-            LineString line = Com5t.gf.createLineString(lineCross.toArray(new Coordinate[0]));           
+            LineString line = Com5t.gf.createLineString(lineCross.toArray(new Coordinate[0]));
+
             Geometry gm = UGeo.splitPolygon(geom, line);
 
             gm.getGeometryN(0).normalize();
@@ -237,13 +237,15 @@ public class UGeo {
         } catch (Exception e) {
             System.out.println("Ошибка:UGeo.splitPolygonNew() " + e);
             return null;
-        }  
+        }
     }
 
     //см. //https://gis.stackexchange.com/questions/189976/jts-split-arbitrary-polygon-by-a-line
     public static Geometry splitPolygon(Geometry poly, Geometry line) {
+        //Тут ошибка/////////////////////
         Geometry nodedLinework = poly.getBoundary().union(line);
         Geometry polys = polygonize(nodedLinework);
+        /////////////////////////////////
         //Оставить только полигоны, находящиеся внутри входных данных
         List<Polygon> output = new ArrayList();
         for (int i = 0; i < polys.getNumGeometries(); i++) {
@@ -252,8 +254,10 @@ public class UGeo {
                 output.add(candpoly);
             }
         }
-        System.out.println(line);
-        System.out.println("GEO = " + nodedLinework.getNumGeometries());
+        if (poly.getFactory().createGeometryCollection(GeometryFactory.toGeometryArray(output)).getNumGeometries() < 2) {
+            System.out.println(line);
+            System.out.println("GEO = " + polys.getNumGeometries());
+        }
         return poly.getFactory().createGeometryCollection(GeometryFactory.toGeometryArray(output));
     }
 
@@ -267,16 +271,20 @@ public class UGeo {
     }
 
     public static Polygon buffer(Geometry line, Map<Double, Double> hm) {
-
-        Coordinate coo[] = line.getCoordinates();
-        double distance[] = new double[coo.length];
-        for (int i = 0; i < coo.length; ++i) {
-            distance[i] = hm.get(coo[i].z);
+        try {
+            Coordinate coo[] = line.getCoordinates();
+            double distance[] = new double[coo.length];
+            for (int i = 0; i < coo.length; ++i) {
+                distance[i] = hm.get(coo[i].z);
+            }
+            LineString ls = line.getFactory().createLineString(line.getCoordinates());
+            VariableBuffer geoBuffer = new VariableBuffer(ls, distance);
+            Geometry geom = geoBuffer.getResult();
+            return ringToPolygon(line, geom);
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.buffer() " + e);
+            return null;
         }
-        LineString ls = line.getFactory().createLineString(line.getCoordinates());
-        VariableBuffer geoBuffer = new VariableBuffer(ls, distance);
-        Geometry geom = geoBuffer.getResult();
-        return ringToPolygon(line, geom);
     }
 
     public static Polygon buffer(Geometry line, ArrayList<? extends Com5t> list, double amend) {
