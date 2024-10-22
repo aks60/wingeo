@@ -33,6 +33,7 @@ import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.util.LineStringExtracter;
 import org.locationtech.jts.operation.buffer.VariableBuffer;
 import org.locationtech.jts.operation.polygonize.Polygonizer;
+import startup.Test;
 
 //TODO ВАЖНО!!! Если вставить в глухое окно импост и мышкой зменить форму окна выскакивает исключение
 /**
@@ -255,6 +256,9 @@ public class UGeo {
             }
         }
         if (poly.getFactory().createGeometryCollection(GeometryFactory.toGeometryArray(output)).getNumGeometries() < 2) {
+            //new Test().mpol = polys;
+            new Test().mpol = nodedLinework;
+            System.out.println(poly);
             System.out.println(line);
             System.out.println("GEO = " + polys.getNumGeometries());
         }
