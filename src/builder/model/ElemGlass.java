@@ -97,16 +97,18 @@ public class ElemGlass extends ElemSimple {
     //Внутренний полигон створки/рамы для прорисовки
     @Override
     public void setLocation() {
+
         try {
             ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
+
             Map<Double, Double> hm = new HashMap();
             for (Com5t el : list) {
                 Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
                 hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - rec.getDbl(eArtikl.size_falz));
             }
-            this.areaFalz = UGeo.buffer(owner.area.getGeometryN(0), hm);  //полигон по фальцу для прорисовки и рассчёта штапик...
 
-                    
+            this.areaFalz = UGeo.buffer(owner.area.getGeometryN(0), hm);  //полигон по фальцу для прорисовки и рассчёта штапик...
+    
             Coordinate[] coo = this.areaFalz.getCoordinates();
             if (this.areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
                 coo[0].z = coo[1].z;
@@ -114,7 +116,6 @@ public class ElemGlass extends ElemSimple {
                 coo[2].z = coo[coo.length - 2].z;
                 coo[coo.length - 1].z = coo[1].z;
             }
-
             //Для тестирования
             if (owner.area.getNumPoints() > Com5t.MAXSIDE) {
                 this.deltaDY = this.areaFalz.getCoordinate().y - owner.area.getCoordinate().y;
