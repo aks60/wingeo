@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class SpcRecord {
 
-    public ArraySpc<SpcRecord> spcList = new ArraySpc();  //список составов, фурнитур и т.д.
+    public ArraySpc<SpcRecord> spcList = new ArraySpc<SpcRecord>(); //список составов, фурнитур и т. д.  
     public HashMap<Integer, String> mapParam = null;  //параметры спецификации
     public ElemSimple elem5e = null;  //элемент пораждающий спецификацию (контейнер)
     public Record variantRec = null;  //вариант в конструктиве
