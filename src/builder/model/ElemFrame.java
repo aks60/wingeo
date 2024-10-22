@@ -4,7 +4,6 @@ import builder.Wincalc;
 import builder.making.SpcRecord;
 import builder.making.UColor;
 import builder.script.GsonElem;
-import common.ArrayLoop;
 import common.UCom;
 import domain.eArtikl;
 import domain.eSysprof;
@@ -15,6 +14,7 @@ import enums.Type;
 import enums.TypeArt;
 import enums.UseSideTo;
 import java.awt.Shape;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -93,7 +93,7 @@ public class ElemFrame extends ElemSimple {
                 if (c1[i].z == this.id) {
                     if (this.h() != null) { //полигон арки
 
-                        List<Coordinate> list = new ArrayLoop();
+                        List<Coordinate> list = new ArrayList<Coordinate>();
                         List<Coordinate> c1a = UGeo.getSegmentArch(c1, this); //внешн.коорд.арки
                         List<Coordinate> c2a = UGeo.getSegmentArch(c2, this); //внутр.коорд.арки
                         c2a.add(geo2.getCoordinates()[0]); //посл.точка арки
