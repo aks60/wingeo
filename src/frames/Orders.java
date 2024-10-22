@@ -20,7 +20,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import common.ArraySpc;
 import common.UCom;
 import dataset.Field;
 import dataset.Query;
@@ -770,7 +769,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         cost2 = cost2 + win.cost2; //стоимость конструкции со скидкой менеджера
 
                         //Комплектация
-                        ArraySpc<SpcRecord> kitList = SpcTariffic.kits(prjprodRec, win, true); //комплекты
+                        ArrayList<SpcRecord> kitList = SpcTariffic.kits(prjprodRec, win, true); //комплекты
                         for (SpcRecord kit : kitList) {
                             price3 = price3 + kit.price1; //стоимость без скидки
                             cost3 = cost3 + kit.price2; //стоимость со скидками

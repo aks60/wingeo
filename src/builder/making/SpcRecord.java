@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Vector;
 import builder.model.ElemSimple;
 import builder.model.UPar;
-import common.ArraySpc;
 import java.util.List;
 
 /**
@@ -18,7 +17,7 @@ import java.util.List;
  */
 public class SpcRecord {
 
-    public ArraySpc<SpcRecord> spcList = new ArraySpc<SpcRecord>(); //список составов, фурнитур и т. д.  
+    public ArrayList<SpcRecord> spcList = new ArrayList<SpcRecord>(); //список составов, фурнитур и т. д.  
     public HashMap<Integer, String> mapParam = null;  //параметры спецификации
     public ElemSimple elem5e = null;  //элемент пораждающий спецификацию (контейнер)
     public Record variantRec = null;  //вариант в конструктиве

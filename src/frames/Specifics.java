@@ -17,7 +17,6 @@ import javax.swing.table.TableRowSorter;
 import builder.Wincalc;
 import builder.making.SpcRecord;
 import builder.making.SpcTariffic;
-import common.ArraySpc;
 import common.UCom;
 import domain.eSysprod;
 import java.awt.Component;
@@ -60,7 +59,7 @@ public class Specifics extends javax.swing.JFrame {
     private int manager = 0;
     private builder.Wincalc winc = new Wincalc();
     private TableFieldFilter filterTable = null;
-    private ArraySpc<SpcRecord> listSpc = new ArraySpc<SpcRecord>();
+    private ArrayList<SpcRecord> listSpc = new ArrayList<SpcRecord>();
 
     ImageIcon[] image = {new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b063.gif")),
         new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b076.gif")),
@@ -89,7 +88,7 @@ public class Specifics extends javax.swing.JFrame {
         if (manager == 1) {
             int prjprodID = Integer.valueOf(eProp.prjprodID.read());
             Record prjprodRec = ePrjprod.find(prjprodID);
-            ArraySpc<SpcRecord> listKit = SpcTariffic.kits(prjprodRec, winc, true); //комплекты
+            ArrayList<SpcRecord> listKit = SpcTariffic.kits(prjprodRec, winc, true); //комплекты
             this.listSpc.addAll(listKit);
         }
     }
@@ -555,7 +554,7 @@ public class Specifics extends javax.swing.JFrame {
 
     private void btnFind1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind1
         double id = UCom.getDbl(tab1.getValueAt(tab1.getSelectedRow(), 1).toString());
-        SpcRecord recordSpc = this.listSpc.find(id);
+        SpcRecord recordSpc = this.listSpc.stream().filter(it -> it.id == id).findFirst().get();;
         ProgressBar.create(this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 App.Artikles.createFrame(Specifics.this, recordSpc.artiklRec());
@@ -568,7 +567,7 @@ public class Specifics extends javax.swing.JFrame {
         if ("КОМ".equals(str) == false) {
 
             double id = UCom.getDbl(tab1.getValueAt(tab1.getSelectedRow(), 1).toString());
-            SpcRecord specificRec = this.listSpc.find(id);
+            SpcRecord specificRec = this.listSpc.stream().filter(it -> it.id == id).findFirst().get();
             Record variantRec = specificRec.variantRec;
             Record detailRec = specificRec.detailRec;
             if (detailRec != null) {

@@ -13,7 +13,6 @@ import enums.TypeForm;
 import enums.UseUnit;
 import builder.Wincalc;
 import builder.model.ElemSimple;
-import common.ArraySpc;
 import common.UCom;
 import dataset.Query;
 import domain.eElemdet;
@@ -157,8 +156,8 @@ public class SpcTariffic extends Cal5e {
     }
 
     //Комплекты конструкции    
-    public static ArraySpc<SpcRecord> kits(Record prjprodRec, Wincalc winc, boolean norm_otx) {
-        ArraySpc<SpcRecord> kitList = new ArraySpc();
+    public static ArrayList<SpcRecord> kits(Record prjprodRec, Wincalc winc, boolean norm_otx) {
+        ArrayList<SpcRecord> kitList = new ArrayList();
         try {
             Record systreeRec = eSystree.find(winc.nuni); //для нахожд. коэф. рентабельности
             double percentMarkup = percentMarkup(winc); //процентная надбавка на изделия сложной формы

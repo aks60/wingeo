@@ -22,7 +22,6 @@ import builder.script.GsonRoot;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import common.ArraySpc;
 import common.UCom;
 import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
@@ -72,7 +71,7 @@ public class Wincalc {
     public ArrayList<AreaSimple> listArea = new ArrayList<AreaSimple>(); //список ареа.
     public ArrayList<ElemSimple> listElem = new ArrayList<ElemSimple>(); //список элем.
     public ArrayList<Com5t> listAll = new ArrayList<Com5t>(); //список всех компонентов (area + elem)
-    public ArraySpc<SpcRecord> listSpec = new ArraySpc<SpcRecord>(); //спецификация
+    public ArrayList<SpcRecord> listSpec = new ArrayList<SpcRecord>(); //спецификация
     public ArrayList<ElemJoining> listJoin = new ArrayList<ElemJoining>(); //список соединений рам и створок 
 
     public Wincalc() {

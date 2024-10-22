@@ -3,7 +3,6 @@ package report;
 import builder.Wincalc;
 import builder.making.SpcRecord;
 import builder.making.SpcTariffic;
-import common.ArraySpc;
 import dataset.Record;
 import domain.eArtikl;
 import domain.ePrjprod;
