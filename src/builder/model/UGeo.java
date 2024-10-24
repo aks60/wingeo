@@ -488,7 +488,7 @@ public class UGeo {
 
     //https://stackoverflow.com/questions/4129241/split-a-polygon-with-a-linestring-in-jts
     public static void splitPolugon3() {
-
+        //https://gis.stackexchange.com/questions/197485/how-to-combine-linestrings-using-jts
     }
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
 
