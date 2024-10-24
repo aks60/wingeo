@@ -101,14 +101,14 @@ public class Test {
         try {
             //clearDataDB();
             //frames.PSConvert.exec();
-            //frame(args);
+            frame(args);
             //wincalc("min");
             //param();
             //query();
             //json();
             //uid();
             //script();
-            geom();
+            //geom();
             //new Crypto().httpAsync("31.172.66.46");       
 
         } catch (Exception e) {
@@ -422,17 +422,20 @@ public class Test {
             new Coordinate(800, 800, 3), new Coordinate(800, 200, 4),
             new Coordinate(200, 200, 1)};
 
-        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(600, 200, -1), new Coordinate(800, 400, -1)});
-        Polygon poly = gf.createPolygon(coord1);
-        Geometry geom = UGeo.splitPolyLine7(poly, line);
+        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(600, 100, -1), new Coordinate(800, 900, -1)});
+        Polygon poly = gf.createPolygon(coord1);        
+        Geometry intersection = poly.intersection( line );
+        System.out.println(intersection);
 
-        geom.getGeometryN(0).normalize();
-        geom.getGeometryN(1).normalize();
+//        Geometry geom = UGeo.splitPolyLine7(poly, line);
+//
+//        geom.getGeometryN(0).normalize();
+//        geom.getGeometryN(1).normalize();
+//
+//        System.out.println(List.of(geom.getGeometryN(0).getCoordinates()));
+//        System.out.println(List.of(geom.getGeometryN(1).getCoordinates()));
 
-        System.out.println(List.of(geom.getGeometryN(0).getCoordinates()));
-        System.out.println(List.of(geom.getGeometryN(1).getCoordinates()));
-
-        //new Test().mpol = geom.getGeometryN(1);
+//        new Test().mpol = intersection;
     }
 
     public static void clearDataDB() {
@@ -518,7 +521,7 @@ public class Test {
         Polygon poly = gf.createPolygon(coord1);
         Coordinate[] coo = poly.copy().getCoordinates();
 
-        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(650, 1381.5068493150684 + .000000000001, 0), new Coordinate(650, 0, -1)});
+        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(650, 1381.5068493150684, 0), new Coordinate(650, 0, -1)});
         
        // LineMerger merge = new LineMerger();
        // merge.add(poly);
@@ -530,7 +533,10 @@ public class Test {
         //Geometry nodedLinework = poly.getBoundary().union(line);
         //Geometry polys = polygonize(coll);        
 
-        Geometry geom = UGeo.splitPolyLine7(poly, line);
+        
+        
+        LineString line2 = UGeo.expandLine7(poly.getEnvelope(), line);
+        Geometry geom = UGeo.splitPolyLine7(poly, line2);
         
         //System.out.println(poly);
         //System.out.println(line);        

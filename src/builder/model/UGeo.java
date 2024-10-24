@@ -133,45 +133,6 @@ public class UGeo {
     }
 
     //Пилим многоугольник
-    public static Geometry[] splitPolyImp2(Polygon geom, ElemCross impost) {
-//        LineString lineImp = gf.createLineString(new Coordinate[]{
-//            new Coordinate(impost.x1(), impost.y1()),
-//            new Coordinate(impost.x2(), impost.y2())
-//        });
-        Geometry poly = geom.getGeometryN(0);
-        HashSet<Coordinate> hsCheck = new HashSet<Coordinate>();
-        Coordinate[] coo = poly.copy().getCoordinates();
-        LineSegment imp = new LineSegment(new Coordinate(impost.x1(), impost.y1()), new Coordinate(impost.x2(), impost.y2()));
-        imp.normalize();
-        List<Coordinate> exten = new ArrayList<Coordinate>(List.of(coo[0]));
-
-        //Вставим точки пересечения в список координат
-        for (int i = 1; i < coo.length; i++) {
-
-            //Точка пересечения сегмента и линии
-            Coordinate segmP0 = coo[i - 1], segmP1 = coo[i];
-            Coordinate crosC = Intersection.lineSegment(imp.p0, imp.p1, segmP0, segmP1);
-            hsCheck.add(coo[i]);
-
-            //Вставим точки
-            if (crosC != null) {
-
-                if (hsCheck.add(crosC)) {
-                    exten.add(crosC);
-                }
-            }
-            exten.add(coo[i]);
-        }
-//        Geometry geo = Com5t.gf.createLineString(exten.toArray(new Coordinate[0]));
-//        System.out.println(geo);
-//        //Geometry geo2 = polygonize2(geo);
-//        List lines = LineStringExtracter.getLines(geom);
-//        System.out.println(lines);
-        MultiLineString mls = gf.createMultiLineString(new LineString[]{geom.getExteriorRing()});
-        System.out.println(mls);
-        return null;
-    }
-
     public static Geometry[] splitPolyImp(Geometry geom, ElemCross impost) {
         try {
             Geometry poly = geom.getGeometryN(0);
@@ -462,9 +423,64 @@ public class UGeo {
     //Пилим многоугольник    
     public static Geometry[] splitPolyImp7(Geometry geom, ElemCross impost) {
         try {
+            LineString lineImp = gf.createLineString(new Coordinate[] {
+            new Coordinate(impost.x1(), impost.y1()),
+            new Coordinate(impost.x2(), impost.y2())});
+            
+            LineString line = expandLine7(geom, lineImp);
+            line.normalize();
+            LineString line2 = expandLine7(geom.getEnvelope(), lineImp);
+            line2.normalize();
+            
+            //Делим полигон линией
+            Geometry gm = UGeo.splitPolyLine7(geom, line2);
+
+            gm.getGeometryN(0).normalize();
+            gm.getGeometryN(1).normalize();
+
+            for (Coordinate c : gm.getGeometryN(0).getCoordinates()) {
+                if (c.equals2D(line.getCoordinateN(0)) || c.equals2D(line.getCoordinateN(1))) {
+                    c.z = impost.id;
+                }
+            }
+
+            for (Coordinate c : gm.getGeometryN(1).getCoordinates()) {
+                if (c.equals2D(line.getCoordinateN(0)) || c.equals2D(line.getCoordinateN(1))) {
+                    c.z = impost.id;
+                }
+            }
+
+            return new Geometry[]{line, gm.getGeometryN(0), gm.getGeometryN(1)};
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.splitPolygonImp() " + e);
+            return null;
+        }
+    }
+
+    //см. https://gis.stackexchange.com/questions/189976/jts-split-arbitrary-polygon-by-a-line
+    public static Geometry splitPolyLine7(final Geometry poly, final Geometry line) {
+
+        Geometry nodedLinework = poly.getBoundary().union(line);
+        Geometry polys = polygonize7(nodedLinework);
+
+        //Оставить только полигоны, находящиеся внутри входных данных
+        List<Polygon> output = new ArrayList();
+        for (int i = 0; i < polys.getNumGeometries(); i++) {
+            Polygon candpoly = (Polygon) polys.getGeometryN(i);
+            if (poly.contains(candpoly.getInteriorPoint())) {
+                output.add(candpoly);
+            }
+        }
+        GeometryCollection geometryCollection = gf.createGeometryCollection(GeometryFactory.toGeometryArray(output));
+        return geometryCollection;
+        //return gf.createGeometryCollection(new Geometry[] {polys.getGeometryN(0), polys.getGeometryN(1)});
+    }
+
+    public static LineString expandLine7(Geometry geom, LineString impost) {
             List<Coordinate> lineCross = new ArrayList<Coordinate>();
-            Coordinate impP0 = new Coordinate(impost.x1(), impost.y1());
-            Coordinate impP1 = new Coordinate(impost.x2(), impost.y2());;
+            Coordinate impP0 = new Coordinate(impost.getPointN(0).getX(), impost.getPointN(0).getY());
+            Coordinate impP1 = new Coordinate(impost.getPointN(1).getX(), impost.getPointN(1).getY());
             Coordinate[] coo = geom.copy().getCoordinates();
 
             for (int i = 1; i < coo.length; i++) {
@@ -476,59 +492,9 @@ public class UGeo {
                 }
             }
             LineString line = Com5t.gf.createLineString(lineCross.toArray(new Coordinate[0]));
-            line.normalize();
-            double angle = Math.atan2((line.getPointN(0).getX() - line.getPointN(1).getX()), (line.getPointN(0).getY() - line.getPointN(1).getY()));
-
-            //https://gis.stackexchange.com/questions/288043/how-to-increase-length-of-linestring-using-jts-functions
-            LineString line2 = Com5t.gf.createLineString(new Coordinate[]{
-                new Coordinate(lineCross.get(0).x + Math.sin(angle), lineCross.get(0).y - Math.cos(angle), impost.id),
-                new Coordinate(lineCross.get(1).x + Math.sin(angle), lineCross.get(1).y + Math.cos(angle), impost.id)});
-
-            //Делим полигон линией
-            Geometry gm = UGeo.splitPolyLine7(geom, line);
-
-            gm.getGeometryN(0).normalize();
-            gm.getGeometryN(1).normalize();
-
-            for (Coordinate c : gm.getGeometryN(0).getCoordinates()) {
-                if (c.equals2D(line.getCoordinateN(0))) {
-                    c.z = impost.id;
-                }
-            }
-
-            for (Coordinate c : gm.getGeometryN(1).getCoordinates()) {
-                if (c.equals2D(line.getCoordinateN(1))) {
-                    c.z = impost.id;
-                }
-            }
-
-            return new Geometry[]{line, gm.getGeometryN(0), gm.getGeometryN(1)};
-
-        } catch (Exception e) {
-            System.out.println("Ошибка:UGeo.splitPolygonImp() " + e);
-            return null;
-        }
+            return line;
     }
-
-    //см. https://gis.stackexchange.com/questions/189976/jts-split-arbitrary-polygon-by-a-line
-    public static Geometry splitPolyLine7(final Geometry poly, final Geometry line) {
-
-        Geometry nodedLinework = poly.getBoundary().union(line);
-        Geometry polys = polygonize7(nodedLinework);
-
-//        //Оставить только полигоны, находящиеся внутри входных данных
-//        List<Polygon> output = new ArrayList();
-//        for (int i = 0; i < polys.getNumGeometries(); i++) {
-//            Polygon candpoly = (Polygon) polys.getGeometryN(i);
-//            if (poly.contains(candpoly.getInteriorPoint())) {
-//                output.add(candpoly);
-//            }
-//        }
-//        GeometryCollection geometryCollection = gf.createGeometryCollection(GeometryFactory.toGeometryArray(output));
-//        return geometryCollection;
-        return gf.createGeometryCollection(new Geometry[] {polys.getGeometryN(0), polys.getGeometryN(1)});
-    }
-
+    
     public static Geometry polygonize7(Geometry geometry) {
         List lines = LineStringExtracter.getLines(geometry);
         Polygonizer polygonizer = new Polygonizer();
