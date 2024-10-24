@@ -124,7 +124,7 @@ public class UGeo {
     }
 
     //Пилим многоугольник
-    public static Geometry[] splitPolygon2(Geometry geom, ElemCross impost) {
+    public static Geometry[] splitPolyImp2(Geometry geom, ElemCross impost) {
         try {
             Geometry poly = geom.getGeometryN(0);
             HashSet<Coordinate> hsCheck = new HashSet<Coordinate>();
@@ -197,9 +197,9 @@ public class UGeo {
             return null;
         }
     }
-
+    
     //Пилим многоугольник     
-    public static Geometry[] splitPolygon(Geometry geom, ElemCross impost) {
+    public static Geometry[] splitPolyImp(Geometry geom, ElemCross impost) {
         try {
             List<Coordinate> lineCross = new ArrayList<Coordinate>();
             Coordinate impP0 = new Coordinate(impost.x1(), impost.y1());
@@ -215,8 +215,12 @@ public class UGeo {
                 }
             }
             LineString line = Com5t.gf.createLineString(lineCross.toArray(new Coordinate[0]));
-
-            Geometry gm = UGeo.splitPolygon(geom, line);
+            //line.normalize();
+            
+            //Делим полигон линией
+            //https://gis.stackexchange.com/questions/288043/how-to-increase-length-of-linestring-using-jts-functions
+            Geometry gm = UGeo.splitPolyLine(geom, gf.createLineString(new Coordinate[] {new Coordinate(line.getPointN(0).getX(), 
+                    line.getPointN(0).getX(), 1), new Coordinate(line.getPointN(1).getX(), line.getPointN(1).getY(), 1)}));
 
             gm.getGeometryN(0).normalize();
             gm.getGeometryN(1).normalize();
@@ -241,12 +245,13 @@ public class UGeo {
         }
     }
 
-    //см. //https://gis.stackexchange.com/questions/189976/jts-split-arbitrary-polygon-by-a-line
-    public static Geometry splitPolygon(Geometry poly, Geometry line) {
-        //Тут ошибка/////////////////////
+    //см. https://gis.stackexchange.com/questions/189976/jts-split-arbitrary-polygon-by-a-line
+    public static Geometry splitPolyLine(final Geometry poly, final Geometry line) {
+
+        //LineString line = UGeo.
         Geometry nodedLinework = poly.getBoundary().union(line);
         Geometry polys = polygonize(nodedLinework);
-        /////////////////////////////////
+
         //Оставить только полигоны, находящиеся внутри входных данных
         List<Polygon> output = new ArrayList();
         for (int i = 0; i < polys.getNumGeometries(); i++) {
@@ -255,14 +260,16 @@ public class UGeo {
                 output.add(candpoly);
             }
         }
+        GeometryCollection geometryCollection = gf.createGeometryCollection(GeometryFactory.toGeometryArray(output));
         if (poly.getFactory().createGeometryCollection(GeometryFactory.toGeometryArray(output)).getNumGeometries() < 2) {
             //new Test().mpol = polys;
-            new Test().mpol = nodedLinework;
-            System.out.println(poly);
-            System.out.println(line);
-            System.out.println("GEO = " + polys.getNumGeometries());
+            //new Test().mpol = nodedLinework;
+            //new Test().mpol = geometryCollection;
+            //System.out.println(poly);
+            //System.out.println(line);
+            //System.out.println("GEO = " + polys.getNumGeometries());
         }
-        return poly.getFactory().createGeometryCollection(GeometryFactory.toGeometryArray(output));
+        return geometryCollection;
     }
 
     public static Geometry polygonize(Geometry geometry) {
@@ -486,12 +493,11 @@ public class UGeo {
         return aff.transform(tip);
     }
 
-    //https://stackoverflow.com/questions/4129241/split-a-polygon-with-a-linestring-in-jts
-    public static void splitPolugon3() {
-        //https://gis.stackexchange.com/questions/197485/how-to-combine-linestrings-using-jts
-    }
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
-
+    //https://stackoverflow.com/questions/4129241/split-a-polygon-with-a-linestring-in-jts
+    public static void splitPolyImp3(Geometry geom, ElemCross impost) {
+       //https://gis.stackexchange.com/questions/197485/how-to-combine-linestrings-using-jts 
+    }
     //При вырождении полигона загибы на концах арки
     public static Polygon bufferPaddin(Geometry poly, ArrayList<? extends Com5t> list, double amend) {
         LineSegment segm1, segm2, segm1a = null, segm2a = null, segm1b, segm2b, segm1c, segm2c;
