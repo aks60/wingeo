@@ -485,6 +485,11 @@ public class UGeo {
         aff.setToRotation(Math.toRadians(angl), tipX, tipY);
         return aff.transform(tip);
     }
+
+    //https://stackoverflow.com/questions/4129241/split-a-polygon-with-a-linestring-in-jts
+    public static void splitPolugon3() {
+
+    }
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
 
     //ѕри вырождении полигона загибы на концах арки
