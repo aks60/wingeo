@@ -202,7 +202,7 @@ public class UGeo {
             return new Geometry[]{p0, p1, p2};
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.splitPolygonOld()" + e);
+            System.err.println("Ошибка:UGeo.splitPolyImp()" + e);
             return null;
         }
     }

@@ -414,26 +414,20 @@ public class Test {
     }
 
     public static void geom() {
-        //Toolkit.getDefaultToolkit().beep();//ÇÂÓÊ!!!!
-        GeometryFactory gf = new GeometryFactory();
-
         Coordinate[] coord1 = new Coordinate[]{
-            new Coordinate(200, 200, 1), new Coordinate(200, 800, 2),
-            new Coordinate(800, 800, 3), new Coordinate(800, 200, 4),
-            new Coordinate(200, 200, 1)};
+            new Coordinate(0, 0, 1), new Coordinate(0, 1400, 2),
+            new Coordinate(900, 1400, 3), new Coordinate(900, 0, 4),
+            new Coordinate(0, 0, 1)};
+        Polygon poly = gf.createPolygon(coord1);
+        Coordinate[] coo = poly.copy().getCoordinates();
 
-        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(600, 100, -1), new Coordinate(800, 900, -1)});
-        Polygon poly = gf.createPolygon(coord1);        
-        Geometry intersection = poly.intersection( line );
-        System.out.println(intersection);
-
-//        Geometry geom = UGeo.splitPolyLine7(poly, line);
-//
-//        geom.getGeometryN(0).normalize();
-//        geom.getGeometryN(1).normalize();
-//
-//        System.out.println(List.of(geom.getGeometryN(0).getCoordinates()));
-//        System.out.println(List.of(geom.getGeometryN(1).getCoordinates()));
+        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(450, 0, 8), new Coordinate(450, 1400, 8)});  
+        
+        Geometry geo = poly.union(line);
+        System.out.println(geo);
+        
+        Geometry polys = UGeo.polygonize7(geo);
+        System.out.println(polys);
 
 //        new Test().mpol = intersection;
     }
