@@ -853,6 +853,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     @Override
     public Query reload(boolean b) {
+        System.err.println("++++++++++++++");
         try {
             Wincalc win = wincalc();
 
