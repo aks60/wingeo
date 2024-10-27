@@ -88,8 +88,8 @@ public class SpcFurniture extends Cal5e {
     protected void variant(AreaSimple areaStv, Record furnitureRec, int count) {
         try {
             List<Record> furndetList1 = eFurndet.filter(furnitureRec.getInt(eFurniture.id)); //детализация первый уровень
-            List<Record> furndetList2 = furndetList1.stream()
-                    .filter(rec -> rec.getInt(eFurndet.id) != rec.getInt(eFurndet.furndet_pk)).collect(toList()); //детализация второй уровень
+            List<Record> furndetList2 = furndetList1.stream().filter(rec -> 
+                    rec.getInt(eFurndet.id) != rec.getInt(eFurndet.furndet_pk)).collect(toList()); //детализация второй уровень
 
             //Цикл по описанию сторон фурнитуры
             List<Record> furnsidetList = eFurnside1.filter(furnitureRec.getInt(eFurniture.id)); //список описания сторон

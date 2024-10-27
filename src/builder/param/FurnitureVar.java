@@ -14,6 +14,9 @@ import domain.eSystree;
 import enums.LayoutKnob;
 import enums.Type;
 import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.util.LineStringExtracter;
 
 //Фурнитура
 public class FurnitureVar extends Par5s {
@@ -44,6 +47,21 @@ public class FurnitureVar extends Par5s {
 
                 case 21001:  //Форма контура 
                     //"Прямоугольное", "Не прямоугольное", "Не арочное", "Арочное" (Type.AREA - глухарь)
+                    Geometry geom = elem5e.owner.area.getGeometryN(0);
+                    UGeo.PRINT(geom);
+                    if(geom.getNumPoints() == 5) {
+                       List<LineString> lineStr = LineStringExtracter.getLines(geom);
+                        for (int i = 1; i < lineStr.size(); i++) {
+                            LineString line1 = lineStr.get(i - 1);
+                            LineString line2 = lineStr.get(i);
+                            
+                        }
+                    }
+                    /*
+                    Прямоугольником называется параллелограмм, у которого все углы прямые.
+                    Трапецией называется четырёхугольник, у которого две стороны параллельны, а две другие — не параллельны
+                    Арка это колич. рёбер > Com5t.MAXSIDE
+                    */
                     if ("прямоугольная".equals(rec.getStr(TEXT)) && Type.RECTANGL.equals(winc.root.type) == false
                             && Type.AREA.equals(winc.root.type) == false && Type.STVORKA.equals(winc.root.type) == false) {
                         return false;
