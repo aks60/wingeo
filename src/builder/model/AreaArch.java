@@ -33,7 +33,7 @@ public class AreaArch extends AreaSimple {
                 if (frame.h() != null) {
                     Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
                     double dh = artiklRec.getDbl(eArtikl.height);
-                    LineSegment segm = UGeo.normalize(new LineSegment(frame.x1(), frame.y1(), frame.x2(), frame.y2()));
+                    LineSegment segm = UGeo.normalizeSegm(new LineSegment(frame.x1(), frame.y1(), frame.x2(), frame.y2()));
                     double ANG = Math.toDegrees(segm.angle());
 
                     if (ANG == 0) {
