@@ -7,16 +7,17 @@ import domain.eFurnside1;
 import java.util.List;
 import builder.Wincalc;
 import builder.model.AreaStvorka;
+import builder.model.Com5t;
 import builder.model.ElemSimple;
 import builder.model.UGeo;
 import common.UCom;
 import domain.eSystree;
 import enums.LayoutKnob;
 import enums.Type;
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.LineString;
-import org.locationtech.jts.geom.util.LineStringExtracter;
+import org.locationtech.jts.geom.LineSegment;
 
 //Фурнитура
 public class FurnitureVar extends Par5s {
@@ -45,31 +46,27 @@ public class FurnitureVar extends Par5s {
         try {
             switch (grup) {
 
-                case 21001:  //Форма контура 
-                    //"Прямоугольное", "Не прямоугольное", "Не арочное", "Арочное" (Type.AREA - глухарь)
+                case 21001:  //Форма контура - "Прямоугольное", "Не прямоугольное", "Не арочное", "Арочное" (Type.AREA - глухарь) 
+                    //Прямоугольником называется параллелограмм, у которого все углы прямые.
+                    //Трапецией называется четырёхугольник, у которого две стороны параллельны, а две другие — не параллельны
+                    //Арка это колич. рёбер > Com5t.MAXSIDE
                     Geometry geom = elem5e.owner.area.getGeometryN(0);
-                    UGeo.PRINT(geom);
-                    if(geom.getNumPoints() == 5) {
-                       List<LineString> lineStr = LineStringExtracter.getLines(geom);
-                        for (int i = 1; i < lineStr.size(); i++) {
-                            LineString line1 = lineStr.get(i - 1);
-                            LineString line2 = lineStr.get(i);
-                            
+                    Coordinate[] coo = geom.getCoordinates();
+                    if ("прямоугольная".equals(rec.getStr(TEXT)) && geom.isRectangle() == false) {
+                        return false;
+                    } else if ("трапециевидная".equals(rec.getStr(TEXT))) {                        
+                        if (coo.length == 5) {
+                            Object b1 = new LineSegment(coo[0], coo[1]).lineIntersection(new LineSegment(coo[2], coo[3]));
+                            Object b2 = new LineSegment(coo[1], coo[2]).lineIntersection(new LineSegment(coo[3], coo[4]));
+                            if (!((b1 == null && b2 != null) || (b1 != null && b2 == null))) {
+                                return false;
+                            }
+                        } else {
+                            return false;
                         }
-                    }
-                    /*
-                    Прямоугольником называется параллелограмм, у которого все углы прямые.
-                    Трапецией называется четырёхугольник, у которого две стороны параллельны, а две другие — не параллельны
-                    Арка это колич. рёбер > Com5t.MAXSIDE
-                    */
-                    if ("прямоугольная".equals(rec.getStr(TEXT)) && Type.RECTANGL.equals(winc.root.type) == false
-                            && Type.AREA.equals(winc.root.type) == false && Type.STVORKA.equals(winc.root.type) == false) {
+                    } else if ("арочная".equals(rec.getStr(TEXT)) && coo.length > Com5t.MAXSIDE) {
                         return false;
-                    } else if ("трапециевидная".equals(rec.getStr(TEXT)) && Type.TRAPEZE.equals(winc.root.type) == false) {
-                        return false;
-                    } else if ("арочная".equals(rec.getStr(TEXT)) && Type.ARCH.equals(winc.root.type) == false) {
-                        return false;
-                    } else if ("не арочная".equals(rec.getStr(TEXT)) && Type.ARCH.equals(winc.root.type) == true) {
+                    } else if ("не арочная".equals(rec.getStr(TEXT)) && coo.length < Com5t.MAXSIDE) {
                         return false;
                     }
                     break;
@@ -90,9 +87,9 @@ public class FurnitureVar extends Par5s {
                 }
                 break;
                 case 21010: //Ограничение длины стороны, мм 
-                        if (UPar.is_21010_21011_21012_21013(rec.getStr(TEXT), elem5e) == false) {
-                            return false;
-                        }
+                    if (UPar.is_21010_21011_21012_21013(rec.getStr(TEXT), elem5e) == false) {
+                        return false;
+                    }
                     break;
                 case 21011: //Ограничение длины ручка константа, мм 
                 {

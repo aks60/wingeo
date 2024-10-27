@@ -26,6 +26,7 @@ public class FurnitureTest {
 
     public void furnitureVar() {
         try {
+            //TODO Test - Форма контура
             grup = 21001; //Форма контура //eElement.find4(212)
             assert true == furnitureVar2.check(null, param("прямоугольная", grup)) : grup;
             assert false == furnitureVar3.check(null, param("прямоугольная", grup)) : grup;

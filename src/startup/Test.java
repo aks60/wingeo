@@ -101,9 +101,9 @@ public class Test {
         try {
             //clearDataDB();
             //frames.PSConvert.exec();
-            frame(args);
-            //wincalc("min");
-            //param();
+            //frame(args);
+            //wincalc("one");
+            param();
             //query();
             //json();
             //uid();
