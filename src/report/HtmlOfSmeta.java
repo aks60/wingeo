@@ -34,7 +34,7 @@ public class HtmlOfSmeta {
     private static DecimalFormat df1 = new DecimalFormat("0.0");
     private static DecimalFormat df2 = new DecimalFormat("#0.00");
 
-    public void smeta1(Record projectRec) {
+    public void parseDoc1(Record projectRec) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Smeta1.html");
             File tempFile = File.createTempFile("report", "html");
@@ -42,7 +42,7 @@ public class HtmlOfSmeta {
             Document doc = Jsoup.parse(tempFile);
             
             //Заполним отчёт
-            load1(projectRec, doc);
+            loadDoc1(projectRec, doc);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
@@ -57,7 +57,7 @@ public class HtmlOfSmeta {
         }
     }
 
-    public void smeta2(Record projectRec) {
+    public void parseDoc2(Record projectRec) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Smeta2.html");
             File tempFile = File.createTempFile("report", "html");
@@ -65,7 +65,7 @@ public class HtmlOfSmeta {
             Document doc = Jsoup.parse(tempFile);
 
             //Заполним отчёт
-            load2(projectRec, doc);
+            loadDoc2(projectRec, doc);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
@@ -80,7 +80,7 @@ public class HtmlOfSmeta {
         }
     }
 
-    private static void load1(Record projectRec, Document doc) {
+    private static void loadDoc1(Record projectRec, Document doc) {
         int length = 400;
         double total = 0f;
         double square = 0f; //площадь
@@ -144,7 +144,7 @@ public class HtmlOfSmeta {
         }
     }
 
-    private static void load2(Record projectRec, Document doc) {
+    private static void loadDoc2(Record projectRec, Document doc) {
         double total = 0f;
         double square = 0f; //площадь
         try {

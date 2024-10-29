@@ -33,7 +33,7 @@ public class HtmlOfInvoice {
     private static DecimalFormat df1 = new DecimalFormat("0.0");
     private static DecimalFormat df2 = new DecimalFormat("#0.00");
 
-    public void invoice1(Record projectRec) {
+    public void parseDoc1(Record projectRec) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Invoice1.html");
             File tempFile = File.createTempFile("report", "html");
@@ -41,7 +41,7 @@ public class HtmlOfInvoice {
             Document doc = Jsoup.parse(tempFile);
 
             //Заполним отчёт
-            load1(projectRec, doc);
+            loadDoc1(projectRec, doc);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
@@ -56,7 +56,7 @@ public class HtmlOfInvoice {
         }
     }
 
-    public void invoice2(Record projectRec) {
+    public void parseDoc2(Record projectRec) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Invoice2.html");
             File tempFile = File.createTempFile("report", "html");
@@ -64,7 +64,7 @@ public class HtmlOfInvoice {
             Document doc = Jsoup.parse(tempFile);
 
             //Заполним отчёт
-            load2(projectRec, doc);
+            loadDoc2(projectRec, doc);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
@@ -79,7 +79,7 @@ public class HtmlOfInvoice {
         }
     }
 
-    private static void load1(Record projectRec, Document doc) {
+    private static void loadDoc1(Record projectRec, Document doc) {
         double total = 0f;
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
@@ -132,7 +132,7 @@ public class HtmlOfInvoice {
         }
     }
 
-    private static void load2(Record projectRec, Document doc) {
+    private static void loadDoc2(Record projectRec, Document doc) {
         double total = 0f;
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));

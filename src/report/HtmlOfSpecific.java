@@ -31,7 +31,7 @@ public class HtmlOfSpecific {
     private static DecimalFormat df1 = new DecimalFormat("#0.0");
     private static DecimalFormat df2 = new DecimalFormat("#0.00");
 
-    public  void specific(Record projectRec) {
+    public  void parseDoc(Record projectRec) {
         try {
             npp = 0;
             InputStream in = getClass().getResourceAsStream("/resource/report/Specific.html");
@@ -40,7 +40,7 @@ public class HtmlOfSpecific {
             Document doc = Jsoup.parse(tempFile, "windows-1251");
 
             //Заполним отчёт
-            load1(projectRec, doc);
+            loadDoc1(projectRec, doc);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
@@ -53,7 +53,7 @@ public class HtmlOfSpecific {
         }
     }
 
-    private static void load1(Record projectRec, Document doc) {
+    private static void loadDoc1(Record projectRec, Document doc) {
         
         List<SpcRecord> spcList = new ArrayList<SpcRecord>();
         List<RSpecific> kitList = new ArrayList<RSpecific>();

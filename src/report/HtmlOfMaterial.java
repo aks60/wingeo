@@ -28,7 +28,7 @@ public class HtmlOfMaterial {
     private static DecimalFormat df1 = new DecimalFormat("#0.0");
     private static DecimalFormat df2 = new DecimalFormat("#0.00");
 
-    public void material(Record projectRec) {
+    public void parseDoc(Record projectRec) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Material.html");
             File tempFile = File.createTempFile("report", "html");
@@ -36,7 +36,7 @@ public class HtmlOfMaterial {
             Document doc = Jsoup.parse(tempFile);
 
             //Заполним отчёт
-            load(projectRec, doc);
+            loadDoc(projectRec, doc);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
@@ -48,7 +48,7 @@ public class HtmlOfMaterial {
         }
     }
 
-    private static void load(Record projectRec, Document doc) {
+    private static void loadDoc(Record projectRec, Document doc) {
 
         List<SpcRecord> spcList2 = new ArrayList<SpcRecord>();
         List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
@@ -78,6 +78,8 @@ public class HtmlOfMaterial {
             tdList.get(5).text(spc.getUnit());
             tdList.get(6).text(spc.getPrice());
             tdList.get(7).text(spc.getCost());
-        } 
+        }
+        doc.getElementsByTag("tfoot").get(0).selectFirst("tr:eq(0)")
+                .selectFirst("td:eq(1)").text(df1.format(total));        
     }
 }

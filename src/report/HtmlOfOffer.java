@@ -35,7 +35,7 @@ public class HtmlOfOffer {
     private static DecimalFormat df1 = new DecimalFormat("0.0");
     private static DecimalFormat df2 = new DecimalFormat("#0.00");
 
-    public  void offer(Record projectRec) {
+    public  void parseDoc(Record projectRec) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Offer.html");
             File tempFile = File.createTempFile("report", "html");
@@ -43,7 +43,7 @@ public class HtmlOfOffer {
             Document doc = Jsoup.parse(tempFile);
 
             //Заполним отчёт
-            load(projectRec, doc);
+            loadDoc(projectRec, doc);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
@@ -58,7 +58,7 @@ public class HtmlOfOffer {
         }
     }
 
-    private static void load(Record projectRec, Document doc) {
+    private static void loadDoc(Record projectRec, Document doc) {
         int length = 400;
         double square = 0f; //площадь
         try {

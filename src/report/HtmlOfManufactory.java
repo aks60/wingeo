@@ -25,7 +25,7 @@ public class HtmlOfManufactory {
     private static DecimalFormat df1 = new DecimalFormat("#0.0");
     private static DecimalFormat df2 = new DecimalFormat("#0.00");
 
-    public void manufactory(Record projectRec) {
+    public void parseDoc(Record projectRec) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Manufactory.html");
             File tempFile = File.createTempFile("report", "html");
@@ -33,7 +33,7 @@ public class HtmlOfManufactory {
             Document doc = Jsoup.parse(tempFile);
 
             //Заполним отчёт
-            load(projectRec, doc);
+            loadDoc(projectRec, doc);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
@@ -45,7 +45,7 @@ public class HtmlOfManufactory {
         }
     }
 
-    private static void load(Record projectRec, Document doc) {
+    private static void loadDoc(Record projectRec, Document doc) {
         try {
             List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Wincalc> wincList = URep.wincList(prjprodList, 400);
@@ -76,7 +76,7 @@ public class HtmlOfManufactory {
                 //Таблица №3 ПРОФИЛЬ / АРМИРОВАНИЕ  
                 Element tab3 = tab3List.get(i);
                 List<SpcRecord> spcList3 = new ArrayList(), spcList3a = new ArrayList();
-                loadTab3Specific(winc, tab3, template3Rec, spcList3, spcList3a); //спецификация для изделия 
+                loadTab3(winc, tab3, template3Rec, spcList3, spcList3a); //спецификация для изделия 
                 spcList3.forEach(act -> tab3.append(template3Rec));
                 tab3.getElementsByTag("tr").remove(1);
 
@@ -97,7 +97,7 @@ public class HtmlOfManufactory {
 
                 //Таблица №4 УПЛОТНИТЕЛИ 
                 Element tab4 = tab4List.get(i);
-                List<SpcRecord> spcList4 = loadTab4Specific(winc, tab4, template4Rec);
+                List<SpcRecord> spcList4 = loadTab4(winc, tab4, template4Rec);
                 spcList4.forEach(act -> tab4.append(template4Rec));
                 tab4.getElementsByTag("tr").remove(1);
 
@@ -112,7 +112,7 @@ public class HtmlOfManufactory {
 
                 //Таблица №5 ШТАПИК  
                 Element tab5 = tab5List.get(i);
-                List<SpcRecord> spcList5 = loadTab5Specific(winc, tab5, template5Rec);
+                List<SpcRecord> spcList5 = loadTab5(winc, tab5, template5Rec);
                 spcList5.forEach(act -> tab5.append(template5Rec));
                 tab5.getElementsByTag("tr").remove(1);
                 for (int j = 0; j < spcList5.size(); j++) { //заполним строки 
@@ -128,7 +128,7 @@ public class HtmlOfManufactory {
 
                 //Таблица №6 ЗАПОЛНЕНИЯ  
                 Element tab6 = tab6List.get(i);
-                List<SpcRecord> spcList6 = loadTab6Specific(winc, tab6, template6Rec);
+                List<SpcRecord> spcList6 = loadTab6(winc, tab6, template6Rec);
                 spcList6.forEach(act -> tab6.append(template6Rec));
                 tab6.getElementsByTag("tr").remove(1);
                 for (int j = 0; j < spcList6.size(); j++) { //заполним строки 
@@ -157,7 +157,7 @@ public class HtmlOfManufactory {
     }
 
     //ПРОФИЛЬ / АРМИРОВАНИЕ
-    public static void loadTab3Specific(Wincalc winc, Element tab, String templateRec, List<SpcRecord> spcList2, List<SpcRecord> spcList3) {
+    public static void loadTab3(Wincalc winc, Element tab, String templateRec, List<SpcRecord> spcList2, List<SpcRecord> spcList3) {
 
         winc.listSpec.forEach(spcRec -> { //профиля
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X100, TypeArt.X101, TypeArt.X102, TypeArt.X103, TypeArt.X104, TypeArt.X105) == true) {
@@ -176,7 +176,7 @@ public class HtmlOfManufactory {
     }
 
     //УПЛОТНИТЕЛИ
-    public static List<SpcRecord> loadTab4Specific(Wincalc winc, Element tab, String templateRec) {
+    public static List<SpcRecord> loadTab4(Wincalc winc, Element tab, String templateRec) {
 
         List<SpcRecord> spcList = new ArrayList();
         winc.listSpec.forEach(spcRec -> { 
@@ -188,7 +188,7 @@ public class HtmlOfManufactory {
     }
 
     //ШТАПИК
-    public static List<SpcRecord> loadTab5Specific(Wincalc winc, Element tab, String templateRec) {
+    public static List<SpcRecord> loadTab5(Wincalc winc, Element tab, String templateRec) {
 
         List<SpcRecord> spcList = new ArrayList();
         winc.listSpec.forEach(spcRec -> { 
@@ -200,7 +200,7 @@ public class HtmlOfManufactory {
     }
 
     //ЗАПОЛНЕНИЯ
-    public static List<SpcRecord> loadTab6Specific(Wincalc winc, Element tab, String templateRec) {
+    public static List<SpcRecord> loadTab6(Wincalc winc, Element tab, String templateRec) {
 
         List<SpcRecord> spcList = new ArrayList();
         winc.listSpec.forEach(spcRec -> { 

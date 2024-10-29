@@ -3286,7 +3286,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 }
             }
         } catch (Exception e) {
-            System.err.println("–û—à–∏–±–∫–∞: " + e);
+            System.err.println("Œ¯Ë·Í‡∞: " + e);
         }
     }//GEN-LAST:event_colorToKorobka
 
@@ -3431,7 +3431,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
             }, colorSet, true, false);
         } catch (Exception e) {
-            System.err.println("–û—à–∏–±–∫–∞: " + e);
+            System.err.println("Œ¯Ë·Í‡: " + e);
         }
     }//GEN-LAST:event_colorToFrame
 
@@ -3573,7 +3573,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     depth = depth.substring(0, depth.length() - 1);
                 }
             }
-            //–°–ø–∏—Å–æ–∫ —Å—Ç–µ–∫–ª–æ–ø–∞–∫–µ—Ç–æ–≤
+            //—ÔËÒÓÍ ÒÚÂÍÎÓÔ‡ÍÂÚÓ‚
             Query qData = new Query(eArtikl.values()), qArtikl = new Query(eArtikl.values());
             List<Double> listID = (depth != null && depth.isEmpty() == false)
                     ? List.of(depth.split(",")).stream().map(m -> Double.valueOf(m)).collect(Collectors.toList()) : new ArrayList();
@@ -3762,8 +3762,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private void menuItem11(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem11
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                //–û—Ç—á—ë—Ç
-                new HtmlOfMaterial().material(qProject.get(UGui.getIndexRec(tab1, 0)));
+                 //ŒÚ˜∏Ú
+                new HtmlOfMaterial().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem11
@@ -3771,8 +3771,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private void menuItem12(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem12
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                //–û—Ç—á—ë—Ç
-                new HtmlOfSpecific().specific(qProject.get(UGui.getIndexRec(tab1, 1)));
+                //ŒÚ˜∏Ú
+                new HtmlOfSpecific().parseDoc(qProject.get(UGui.getIndexRec(tab1, 1)));
             }
         });
     }//GEN-LAST:event_menuItem12
@@ -3781,8 +3781,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                //–û—Ç—á—ë—Ç
-                new  HtmlOfSmeta().smeta2(qProject.get(UGui.getIndexRec(tab1, 0)));
+                //ŒÚ˜∏Ú
+                new  HtmlOfSmeta().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem13
@@ -3791,8 +3791,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                //–û—Ç—á—ë—Ç
-                new HtmlOfSmeta().smeta1(qProject.get(UGui.getIndexRec(tab1, 0)));
+                //ŒÚ˜∏Ú
+                new HtmlOfSmeta().parseDoc1(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem14
@@ -3801,8 +3801,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                //–û—Ç—á—ë—Ç
-                new HtmlOfInvoice().invoice1(qProject.get(UGui.getIndexRec(tab1, 0)));
+                //ŒÚ˜∏Ú
+                new HtmlOfInvoice().parseDoc1(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem15
@@ -3811,8 +3811,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                //–û—Ç—á—ë—Ç
-                new HtmlOfInvoice().invoice2(qProject.get(UGui.getIndexRec(tab1, 0)));
+                //ŒÚ˜∏Ú
+                new HtmlOfInvoice().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem16
@@ -3821,8 +3821,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                //–û—Ç—á—ë—Ç
-                new HtmlOfOffer().offer(qProject.get(UGui.getIndexRec(tab1, 0)));
+                //ŒÚ˜∏Ú
+                new HtmlOfOffer().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem17
@@ -3932,7 +3932,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //–û—Ç—á—ë—Ç
-                new HtmlOfManufactory().manufactory(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new HtmlOfManufactory().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem18
