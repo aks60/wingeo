@@ -72,8 +72,8 @@ public class Manufactory {
             String fio = (qPrjpart.get(0).getInt(ePrjpart.flag1) == 1) 
                     ? qPrjpart.get(0).getStr(ePrjpart.org_contact)
                     : qPrjpart.get(0).getStr(ePrjpart.partner);
-            System.out.println(qPrjpart.get(0).getStr(ePrjpart.org_contact));
-            System.out.println(qPrjpart.get(0).getStr(ePrjpart.partner));
+           // System.out.println(qPrjpart.get(0).getStr(ePrjpart.org_contact));
+            //System.out.println(qPrjpart.get(0).getStr(ePrjpart.partner));
             
             //“‡·ÎËˆ‡ π1 «¿ ¿«◊» 
             Element tab1 =  doc.getElementById("tab1");
