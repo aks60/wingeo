@@ -1,4 +1,4 @@
-package report;
+package report.sup;
 
 import common.eProp;
 import java.io.BufferedOutputStream;

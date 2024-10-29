@@ -21,8 +21,8 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import report.ExecuteCmd;
-import report.HtmlOfTable;
+import report.sup.ExecuteCmd;
+import report.sup.RTable;
 import static frames.UGui.getIndexFind;
 import static frames.UGui.getIndexRec;
 

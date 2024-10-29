@@ -1,5 +1,6 @@
-package report;
+package report.sup;
 
+import report.sup.RColumn;
 import common.eProp;
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +14,7 @@ import java.io.FileNotFoundException;
 import javax.swing.JOptionPane;
 
 //Преобразование документа в HTML </p>
-public class HtmlOfTable {
+public class RTable {
 
     private static String charset = "windows-1251";
     private static int npp = 0;

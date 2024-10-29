@@ -17,8 +17,8 @@ import frames.UGui;
 import frames.swing.DefCellEditorNumb;
 import frames.swing.DefCellRendererNumb;
 import java.util.List;
-import report.ExecuteCmd;
-import report.HtmlOfTable;
+import report.sup.ExecuteCmd;
+import report.sup.RTable;
 
 public class DicCurrenc extends javax.swing.JDialog {
 

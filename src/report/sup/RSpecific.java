@@ -1,4 +1,4 @@
-package report;
+package report.sup;
 
 import builder.making.SpcRecord;
 import domain.eColor;

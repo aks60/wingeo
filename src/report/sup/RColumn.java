@@ -1,4 +1,4 @@
-package report;
+package report.sup;
 
 import java.util.ArrayList;
 import javax.swing.tree.DefaultMutableTreeNode;

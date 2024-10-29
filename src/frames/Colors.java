@@ -31,8 +31,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 import javax.swing.JOptionPane;
-import report.ExecuteCmd;
-import report.HtmlOfTable;
+import report.sup.ExecuteCmd;
+import report.sup.RTable;
 
 public class Colors extends javax.swing.JFrame {
 
@@ -500,7 +500,7 @@ public class Colors extends javax.swing.JFrame {
             tab = tab2;
         }
         if (tab != null) {
-            HtmlOfTable.load("Текстуры", tab);
+            RTable.load("Текстуры", tab);
             ExecuteCmd.documentType(this);
         }
     }//GEN-LAST:event_btnRepActionPerformed

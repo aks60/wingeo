@@ -47,8 +47,8 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
-import report.ExecuteCmd;
-import report.HtmlOfTable;
+import report.sup.ExecuteCmd;
+import report.sup.RTable;
 
 public class Specifics extends javax.swing.JFrame {
 
@@ -544,7 +544,7 @@ public class Specifics extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClose
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        HtmlOfTable.load("Отчёт по спецификации", tab1);
+        RTable.load("Отчёт по спецификации", tab1);
         ExecuteCmd.documentType(this);
     }//GEN-LAST:event_btnReport
 

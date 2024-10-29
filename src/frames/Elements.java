@@ -57,8 +57,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import javax.swing.ImageIcon;
-import report.ExecuteCmd;
-import report.HtmlOfTable;
+import report.sup.ExecuteCmd;
+import report.sup.RTable;
 
 public class Elements extends javax.swing.JFrame {
 
@@ -1213,7 +1213,7 @@ public class Elements extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFind1
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        HtmlOfTable.load("Вставки", tab2);
+        RTable.load("Вставки", tab2);
         ExecuteCmd.documentType(this);
     }//GEN-LAST:event_btnReport
 

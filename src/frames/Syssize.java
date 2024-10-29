@@ -15,8 +15,8 @@ import frames.swing.DefCellRendererNumb;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.table.TableColumn;
-import report.ExecuteCmd;
-import report.HtmlOfTable;
+import report.sup.ExecuteCmd;
+import report.sup.RTable;
 
 public class Syssize extends javax.swing.JFrame {
 
@@ -368,7 +368,7 @@ public class Syssize extends javax.swing.JFrame {
     }//GEN-LAST:event_mousePressed
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        HtmlOfTable.load("Правила расчёта", tab1);
+        RTable.load("Правила расчёта", tab1);
         ExecuteCmd.documentType(this);
     }//GEN-LAST:event_btnReport
 

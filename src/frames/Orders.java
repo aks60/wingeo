@@ -94,17 +94,17 @@ import javax.swing.text.JTextComponent;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
-import report.HtmlOfInvoice;
-import report.HtmlOfMaterial;
-import report.HtmlOfOffer;
-import report.HtmlOfSmeta;
-import report.HtmlOfSpecific;
+import report.Invoice;
+import report.Material;
+import report.Offer;
+import report.Smeta;
+import report.Specific;
 import startup.App;
 import common.listener.ListenerReload;
 import static dataset.Query.INS;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-import report.HtmlOfManufactory;
+import report.Manufactory;
 
 public class Orders extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -3763,7 +3763,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                  //Îò÷¸ò
-                new HtmlOfMaterial().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new Material().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem11
@@ -3772,7 +3772,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Îò÷¸ò
-                new HtmlOfSpecific().parseDoc(qProject.get(UGui.getIndexRec(tab1, 1)));
+                new Specific().parseDoc(qProject.get(UGui.getIndexRec(tab1, 1)));
             }
         });
     }//GEN-LAST:event_menuItem12
@@ -3782,7 +3782,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Îò÷¸ò
-                new  HtmlOfSmeta().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new  Smeta().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem13
@@ -3792,7 +3792,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Îò÷¸ò
-                new HtmlOfSmeta().parseDoc1(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new Smeta().parseDoc1(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem14
@@ -3802,7 +3802,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Îò÷¸ò
-                new HtmlOfInvoice().parseDoc1(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new Invoice().parseDoc1(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem15
@@ -3812,7 +3812,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Îò÷¸ò
-                new HtmlOfInvoice().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new Invoice().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem16
@@ -3822,7 +3822,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Îò÷¸ò
-                new HtmlOfOffer().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new Offer().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem17
@@ -3932,7 +3932,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //ÐžÑ‚Ñ‡Ñ‘Ñ‚
-                new HtmlOfManufactory().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new Manufactory().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem18

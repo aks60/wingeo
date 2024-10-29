@@ -52,8 +52,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
-import report.ExecuteCmd;
-import report.HtmlOfTable;
+import report.sup.ExecuteCmd;
+import report.sup.RTable;
 
 /**
  * Материальные ценности
@@ -2474,7 +2474,7 @@ public class Artikles extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDelete
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        HtmlOfTable.load("Список артикулов", tab1);
+        RTable.load("Список артикулов", tab1);
         ExecuteCmd.documentType(this);
     }//GEN-LAST:event_btnReport
 

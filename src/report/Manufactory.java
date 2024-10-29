@@ -1,5 +1,7 @@
 package report;
 
+import report.sup.RTable;
+import report.sup.ExecuteCmd;
 import builder.Wincalc;
 import builder.making.SpcRecord;
 import dataset.Record;
@@ -20,7 +22,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 //Задание в цех
-public class HtmlOfManufactory {
+public class Manufactory {
 
     private static DecimalFormat df1 = new DecimalFormat("#0.0");
     private static DecimalFormat df2 = new DecimalFormat("#0.00");
@@ -37,7 +39,7 @@ public class HtmlOfManufactory {
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
-            HtmlOfTable.write(str);
+            RTable.write(str);
             ExecuteCmd.documentType(null);
 
         } catch (Exception e) {

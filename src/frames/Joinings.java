@@ -51,8 +51,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import report.ExecuteCmd;
-import report.HtmlOfTable;
+import report.sup.ExecuteCmd;
+import report.sup.RTable;
 
 //Варианты соединений
 public class Joinings extends javax.swing.JFrame {
@@ -1087,7 +1087,7 @@ public class Joinings extends javax.swing.JFrame {
     }//GEN-LAST:event_windowClosed
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        HtmlOfTable.load("Соединения", tab1);
+        RTable.load("Соединения", tab1);
         ExecuteCmd.documentType(this);
     }//GEN-LAST:event_btnReport
 

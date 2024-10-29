@@ -1,5 +1,7 @@
 package report;
 
+import report.sup.RTable;
+import report.sup.ExecuteCmd;
 import builder.Wincalc;
 import common.MoneyInWords;
 import dataset.Record;
@@ -27,7 +29,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-public class HtmlOfInvoice {
+public class Invoice {
 
     private static DecimalFormat df0 = new DecimalFormat("0");
     private static DecimalFormat df1 = new DecimalFormat("0.0");
@@ -45,7 +47,7 @@ public class HtmlOfInvoice {
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
-            HtmlOfTable.write(str);
+            RTable.write(str);
             ExecuteCmd.documentType(null);
 
         } catch (FileNotFoundException e) {
@@ -68,7 +70,7 @@ public class HtmlOfInvoice {
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
-            HtmlOfTable.write(str);
+            RTable.write(str);
             ExecuteCmd.documentType(null);
 
         } catch (FileNotFoundException e) {

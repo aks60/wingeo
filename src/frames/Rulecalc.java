@@ -23,8 +23,8 @@ import frames.swing.DefCellEditorNumb;
 import frames.swing.TableFieldFilter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import report.ExecuteCmd;
-import report.HtmlOfTable;
+import report.sup.ExecuteCmd;
+import report.sup.RTable;
 import startup.App;
 
 public class Rulecalc extends javax.swing.JFrame {
@@ -378,7 +378,7 @@ public class Rulecalc extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsert
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        HtmlOfTable.load("Правила расчёта", tab2);
+        RTable.load("Правила расчёта", tab2);
         ExecuteCmd.documentType(this);
     }//GEN-LAST:event_btnReport
 

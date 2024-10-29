@@ -47,8 +47,8 @@ import frames.swing.DefCellEditorBtn;
 import frames.swing.DefCellEditorNumb;
 import frames.swing.TableFieldFilter;
 import java.awt.event.MouseEvent;
-import report.ExecuteCmd;
-import report.HtmlOfTable;
+import report.sup.ExecuteCmd;
+import report.sup.RTable;
 
 public class Fillings extends javax.swing.JFrame {
 
@@ -983,7 +983,7 @@ public class Fillings extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTest
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        HtmlOfTable.load("Заполнения", tab1);
+        RTable.load("Заполнения", tab1);
         ExecuteCmd.documentType(this);
     }//GEN-LAST:event_btnReport
 
