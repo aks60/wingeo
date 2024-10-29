@@ -4,18 +4,20 @@ import report.sup.RTable;
 import report.sup.ExecuteCmd;
 import builder.Wincalc;
 import builder.making.SpcRecord;
+import dataset.Query;
 import dataset.Record;
+import domain.ePrjpart;
 import domain.ePrjprod;
 import domain.eProject;
+import domain.eSysuser;
 import enums.TypeArt;
+import frames.UGui;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import static java.util.stream.Collectors.toList;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -49,29 +51,46 @@ public class Manufactory {
 
     private static void loadDoc(Record projectRec, Document doc) {
         try {
-            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
-            List<Wincalc> wincList = URep.wincList(prjprodList, 400);
-
-            //Заполним файл шаблонами заказов
-            Element div2 = doc.getElementById("div2");
-            String templateBody = div2.html();
-            for (int i = 1; i < prjprodList.size(); i++) {
-                div2.append(templateBody);
-            }
-
-            Elements tab2List = doc.getElementsByClass("tab2"), tab3List = doc.getElementsByClass("tab3"),
-                    tab4List = doc.getElementsByClass("tab4"), tab5List = doc.getElementsByClass("tab5"),
-                    tab6List = doc.getElementsByClass("tab6");
+            Elements tab2List = doc.getElementsByClass("tab2"),
+                    tab3List = doc.getElementsByClass("tab3"), tab4List = doc.getElementsByClass("tab4"),
+                    tab5List = doc.getElementsByClass("tab5"), tab6List = doc.getElementsByClass("tab6");
             String template2Rec = tab2List.get(0).getElementsByTag("tr").get(1).html(),
                     template3Rec = tab3List.get(0).getElementsByTag("tr").get(1).html(),
                     template4Rec = tab4List.get(0).getElementsByTag("tr").get(1).html(),
                     template5Rec = tab5List.get(0).getElementsByTag("tr").get(1).html(),
                     template6Rec = tab6List.get(0).getElementsByTag("tr").get(1).html();
 
-            //Цикл по изделиям
-            for (int i = 0; i < prjprodList.size(); i++) {
+            Query qPrjprod = new Query(ePrjprod.values()).sql(ePrjprod.data(), ePrjprod.project_id, projectRec.getInt(eProject.id));
+            Query qPrjpart = new Query(ePrjpart.values()).sql(ePrjpart.data(), ePrjpart.id, projectRec.getInt(eProject.prjpart_id));
+            qPrjpart.add(ePrjpart.up.newRecord("SEL"));
+            Query qSysuser = new Query(eSysuser.values()).sql(eSysuser.data(), eSysuser.login, qPrjpart.get(0).getInt(ePrjpart.login));  
+            qSysuser.add(eSysuser.up.newRecord("SEL"));
+            List<Wincalc> wincList = URep.wincList(qPrjprod, 400);
 
-                String script = prjprodList.get(i).getStr(ePrjprod.script);
+            doc.getElementById("h02").text("Заказ №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
+
+            String fio = (qPrjpart.get(0).getInt(ePrjpart.flag1) == 1) 
+                    ? qPrjpart.get(0).getStr(ePrjpart.org_contact)
+                    : qPrjpart.get(0).getStr(ePrjpart.partner);
+            System.out.println(qPrjpart.get(0).getStr(ePrjpart.org_contact));
+            System.out.println(qPrjpart.get(0).getStr(ePrjpart.partner));
+            
+            //Таблица №1 ЗАКАЗЧИК
+            Element tab1 =  doc.getElementById("tab1");
+            Elements tdList1 = tab1.getElementsByTag("tr").get(0).getElementsByTag("td");
+            tdList1.get(1).text(fio);
+
+            //Заполним файл шаблонами заказов
+            Element div2 = doc.getElementById("div2");
+            String templateBody = div2.html();
+            for (int i = 1; i < qPrjprod.size(); i++) {
+                div2.append(templateBody);
+            }
+
+            //Цикл по изделиям
+            for (int i = 0; i < qPrjprod.size(); i++) {
+
+                String script = qPrjprod.get(i).getStr(ePrjprod.script);
                 Wincalc winc = new Wincalc(script);
                 winc.specification(true);
 
@@ -142,7 +161,7 @@ public class Manufactory {
                     tdList6.get(4).text(str(spcList6.get(j).weight));
                     tdList6.get(5).text(str(spcList6.get(j).count));
                     tdList6.get(6).text(str(spcList6.get(j).weight));
-                }    
+                }
 
             }
 
@@ -163,7 +182,7 @@ public class Manufactory {
 
         winc.listSpec.forEach(spcRec -> { //профиля
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X100, TypeArt.X101, TypeArt.X102, TypeArt.X103, TypeArt.X104, TypeArt.X105) == true) {
-                spcList2.add(new  SpcRecord(spcRec));
+                spcList2.add(new SpcRecord(spcRec));
             }
         });
         spcList2.forEach(spcRec1 -> { //армирование
@@ -173,7 +192,7 @@ public class Manufactory {
                     spcRec3 = spcRec2;
                 }
             }
-            spcList3.add(new  SpcRecord(spcRec3));
+            spcList3.add(new SpcRecord(spcRec3));
         });
     }
 
@@ -181,9 +200,9 @@ public class Manufactory {
     public static List<SpcRecord> loadTab4(Wincalc winc, Element tab, String templateRec) {
 
         List<SpcRecord> spcList = new ArrayList();
-        winc.listSpec.forEach(spcRec -> { 
+        winc.listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X135) == true) {
-                spcList.add(new  SpcRecord(spcRec));
+                spcList.add(new SpcRecord(spcRec));
             }
         });
         return spcList;
@@ -193,9 +212,9 @@ public class Manufactory {
     public static List<SpcRecord> loadTab5(Wincalc winc, Element tab, String templateRec) {
 
         List<SpcRecord> spcList = new ArrayList();
-        winc.listSpec.forEach(spcRec -> { 
+        winc.listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X108) == true) {
-                spcList.add(new  SpcRecord(spcRec));
+                spcList.add(new SpcRecord(spcRec));
             }
         });
         return spcList;
@@ -205,9 +224,9 @@ public class Manufactory {
     public static List<SpcRecord> loadTab6(Wincalc winc, Element tab, String templateRec) {
 
         List<SpcRecord> spcList = new ArrayList();
-        winc.listSpec.forEach(spcRec -> { 
+        winc.listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X502) == true) {
-                spcList.add(new  SpcRecord(spcRec));
+                spcList.add(new SpcRecord(spcRec));
             }
         });
         return spcList;
