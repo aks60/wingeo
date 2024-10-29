@@ -58,7 +58,7 @@ public class FurnitureTest {
             assert true == furnitureVar2.check(stv2_left_4, param("74-360", grup)) : grup;
             assert false == furnitureVar2.check(stv2_left_4, param("12-55", grup)) : grup;
             
-            System.out.println("builder.param.check.FurnitureTest.furnitureVar() - ÂÛÏÎËÍÅÍÎ");
+            System.err.println("builder.param.check.FurnitureTest.furnitureVar() - ÂÛÏÎËÍÅÍÎ");
         } catch (Exception e) {
             System.err.println("Îøèáêà:furnitureTest.furnitureVar() " + e);
         }
@@ -137,7 +137,7 @@ public class FurnitureTest {
             assert true == furnitureDet4.check(mapParam, area4_stv_right, param("ïî ñåğåäèíå", grup)) : grup;
             assert false == furnitureDet4.check(mapParam, area4_stv_right, param("êîíñòàíòíàÿ", grup)) : grup;
             
-            System.out.println("builder.param.check.FurnitureTest.furnitureDet() - ÂÛÏÎËÍÅÍÎ");
+            System.err.println("builder.param.check.FurnitureTest.furnitureDet() - ÂÛÏÎËÍÅÍÎ");
         } catch (Exception e) {
             System.err.println("Îøèáêà:furnitureTest.furnitureDet() " + e);
         }

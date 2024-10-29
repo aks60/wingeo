@@ -225,7 +225,7 @@ public class ElementTest {
             assert true == elementVar4.check(glass4_left, param("1000-10010;", grup)) : grup;
             assert false == elementVar3.check(glass4_left, param("1010-1080;", grup)) : grup;
 
-            System.out.println("builder.param.check.ElementTest.elementVar() - ВЫПОЛНЕНО");
+            System.err.println("builder.param.check.ElementTest.elementVart() - ВЫПОЛНЕНО");
         } catch (Exception e) {
             System.err.println("Ошибка:ElementTest.elementVar() " + e);
         }
@@ -312,7 +312,7 @@ public class ElementTest {
             assert true == elementDet4.check(mapParam, stv4_right_3, param("поворотно-откидное", grup)) : grup;
             assert false == elementDet4.check(mapParam, stv4_right_3, param("поворотное", grup)) : grup;
 
-            System.out.println("builder.param.check.ElementTest.elementDet() - ВЫПОЛНЕНО");
+            System.err.println("builder.param.check.ElementTest.elementDet() - ВЫПОЛНЕНО");
         } catch (Exception e) {
             System.err.println("Ошибка:ElementTest.elementDet() " + e);
         }

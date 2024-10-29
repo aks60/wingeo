@@ -101,7 +101,7 @@ public class FillingTest {
             assert true == fillingVar4.check(stv4_right_3, param("1;2;", grup)) : grup;
             assert false == fillingVar4.check(stv4_right_3, param("2;9", grup)) : grup;
             
-            System.out.println("builder.param.check.FillingTest.fillingVar() - ВЫПОЛНЕНО");
+            System.err.println("builder.param.check.FillingTest.fillingVar() - ВЫПОЛНЕНО");
         } catch (Exception e) {
             System.err.println("Ошибка:FillingtTest.fillingVar() " + e);
         }
@@ -163,7 +163,7 @@ public class FillingTest {
             assert true == fillingDet4.check(mapParam, glass4_left, param("без уплотнителя", grup)) : grup;
             assert false == fillingDet4.check(mapParam, glass4_left, param("с уплотнителем", grup)) : grup;
             
-            System.out.println("builder.param.check.FillingTest.fillingDet() - ВЫПОЛНЕНО");
+            System.err.println("builder.param.check.FillingTest.fillingDet() - ВЫПОЛНЕНО");
         } catch (Exception e) {
             System.err.println("Ошибка:FillingTest.fillingDet() " + e);
         }

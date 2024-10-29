@@ -83,7 +83,7 @@ public class SpcRecord {
         ++elem5e.winc.spcId;
         this.id = id;
         this.elem5e = elem5e;
-        this.mapParam = new HashMap<Integer,String>();
+        this.mapParam = new HashMap<Integer, String>();
     }
 
     public SpcRecord(String place, Record detailRec, Record artiklRec, ElemSimple elem5e, HashMap<Integer, String> mapParam) {
@@ -152,8 +152,12 @@ public class SpcRecord {
 
     public Vector getVector(int npp) {
         double elemID = (elem5e == null) ? 0 : elem5e.id;
+        double height2 = (elem5e != null && elem5e.h() != null && artiklRec != null && artiklRec.getInt(eArtikl.level1) == 1 && artiklRec.getInt(eArtikl.level2) == 1)
+                ? (Math.pow(elem5e.winc.width() / 2, 2) + Math.pow(elem5e.h(), 2)) / (2 * elem5e.h()) : height;
+
+        System.out.println(height2);
         return new Vector(List.of(npp, id, elemID, place, artikl, name, eColor.find(colorID1).getStr(eColor.name), eColor.find(colorID2).getStr(eColor.name),
-                eColor.find(colorID3).getStr(eColor.name), width, height, weight, anglCut0, anglCut1, anglHoriz,
+                eColor.find(colorID3).getStr(eColor.name), width, height2, weight, anglCut0, anglCut1, anglHoriz,
                 count, UseUnit.getName(unit), waste, quant1, quant2, sebes1, sebes2, price1, price2));
     }
 

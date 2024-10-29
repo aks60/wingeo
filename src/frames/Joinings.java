@@ -1059,7 +1059,6 @@ public class Joinings extends javax.swing.JFrame {
             });
 
         } else if (tab3.getBorder() != null) {
-            //System.out.println("insertTab3()");
             UGui.insertRecordCur(tab3, eJoinpar1.up, (record) -> {
                 int id = qJoinvar.getAs(UGui.getIndexRec(tab2), eJoinvar.id);
                 record.set(eJoinpar1.joinvar_id, id);

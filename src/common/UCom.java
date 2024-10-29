@@ -557,7 +557,7 @@ public class UCom {
         }
         if (side != 2) {
             String message = "Соединение не найдено для elem.id=" + elem.id + ", side=" + side;
-            System.out.println("Неудача:ArrayJoin.join() " + message);
+            System.err.println("Неудача:ArrayJoin.join() " + message);
         }
         return null;
     }
@@ -611,7 +611,7 @@ public class UCom {
         }
         if (side != 2) {
             String message = "Соединение не найдено для elem.id=" + elem.id + ", side=" + side;
-            System.out.println("Неудача:ArrayJoin.elem() " + message);
+            System.err.println("Неудача:ArrayJoin.elem() " + message);
         }
         return null;
     }

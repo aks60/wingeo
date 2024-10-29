@@ -102,8 +102,8 @@ public class Test {
             //clearDataDB();
             //frames.PSConvert.exec();
             //frame(args);
-            //wincalc("one");
-            param();
+            wincalc("604005");
+            //param();
             //query();
             //json();
             //uid();
@@ -187,24 +187,7 @@ public class Test {
         Conn.setConnection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
 
-        if (_case.equals("one")) {
-            String script = GsonScript.scriptPath(604005);
-            winc.build(script);
-            //System.out.println(new com.google.gson.GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
-            //System.out.println(new com.google.gson.GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
-
-            winc.specification(true);
-            //new Joining(winc).calc();
-            //winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
-            //winc.gc2d = winc.bufferImg.createGraphics();
-            //winc.draw(); //рисую конструкцию
-
-            frames.PSCompare.iwinPs4(winc, true);
-            //winc.listElem.forEach(it -> System.out.println(it));
-            //winc.listJoin.forEach(it -> System.out.println(it.joiningRec));     
-            //winc.listJoin.forEach(it -> System.out.println(it));   
-
-        } else if (_case.equals("min")) {
+        if (_case.equals("min")) {
             List<Integer> prjList = GsonScript.systemList(_case);
             for (int prj : prjList) {
                 String script = GsonScript.scriptPath(prj);
@@ -225,7 +208,25 @@ public class Test {
                     frames.PSCompare.iwinPs4(winc, false);
                 }
             }
+        } else {
+
+            String script = GsonScript.scriptPath(Integer.valueOf(_case));
+            winc.build(script);
+            //System.out.println(new com.google.gson.GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script)));
+            //System.out.println(new com.google.gson.GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+
+            winc.specification(true);
+            //new Joining(winc).calc();
+            //winc.bufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+            //winc.gc2d = winc.bufferImg.createGraphics();
+            //winc.draw(); //рисую конструкцию
+
+            frames.PSCompare.iwinPs4(winc, true);
+            //winc.listElem.forEach(it -> System.out.println(it));
+            //winc.listJoin.forEach(it -> System.out.println(it.joiningRec));     
+            //winc.listJoin.forEach(it -> System.out.println(it));   
         }
+
     }
 
     private static void param() {
@@ -421,11 +422,11 @@ public class Test {
         Polygon poly = gf.createPolygon(coord1);
         Coordinate[] coo = poly.copy().getCoordinates();
 
-        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(450, 0, 8), new Coordinate(450, 1400, 8)});  
-        
+        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(450, 0, 8), new Coordinate(450, 1400, 8)});
+
         Geometry geo = poly.union(line);
         System.out.println(geo);
-        
+
         Geometry polys = UGeo.polygonize7(geo);
         System.out.println(polys);
 
@@ -452,36 +453,34 @@ public class Test {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">
-   public void draw10() {
+    public void draw10() {
         //POLYGON ((0 0, 0 1400, 1300 1363.013698630137, 1300 0, 0 0))
         //LINESTRING (650 1381.5068493150684, 650 0)
-            List<SegmentString> segmentStrings = new ArrayList<>();
-            segmentStrings.add(new NodedSegmentString(
-                    new Coordinate[]{
-                            new Coordinate(0, 0),
-                            new Coordinate(0, 1400),
-                            new Coordinate(1300, 1363.013698630137),
-                            new Coordinate(1300, 0),
-                            new Coordinate(1, 0),
-                            new Coordinate(0, 0)
-                    }, null));
+        List<SegmentString> segmentStrings = new ArrayList<>();
+        segmentStrings.add(new NodedSegmentString(
+                new Coordinate[]{
+                    new Coordinate(0, 0),
+                    new Coordinate(0, 1400),
+                    new Coordinate(1300, 1363.013698630137),
+                    new Coordinate(1300, 0),
+                    new Coordinate(1, 0),
+                    new Coordinate(0, 0)
+                }, null));
 
-            segmentStrings.add(new NodedSegmentString(
-                    new Coordinate[]{
-                            new Coordinate(650, 0),
-                            new Coordinate(650, 1381.5068493150684)
-                    }, null));
+        segmentStrings.add(new NodedSegmentString(
+                new Coordinate[]{
+                    new Coordinate(650, 0),
+                    new Coordinate(650, 1381.5068493150684)
+                }, null));
 
-            
-            
-            Collection<Polygon> polygons = getPolygons(segmentStrings);
-            for (Polygon polygon : polygons) {
-                System.out.println(polygon);
-            }
-            List<Polygon> lst = new ArrayList<Polygon>(polygons);
-            this.mpol = lst.get(0);
+        Collection<Polygon> polygons = getPolygons(segmentStrings);
+        for (Polygon polygon : polygons) {
+            System.out.println(polygon);
+        }
+        List<Polygon> lst = new ArrayList<Polygon>(polygons);
+        this.mpol = lst.get(0);
     }
-   
+
     private void draw9() {
 //GEOMETRYCOLLECTION (POLYGON ((100 150, 100 340, 350 340, 350 150, 100 150)), LINESTRING (220 340, 220 150))
 
@@ -505,7 +504,7 @@ public class Test {
 //        System.out.println(mls);
     }
 
-    private void draw8() {           
+    private void draw8() {
         //POLYGON ((0 0, 0 1400, 1300 1363.013698630137, 1300 0, 0 0))
         //LINESTRING (650 1381.5068493150684, 650 0)
         Coordinate[] coord1 = new Coordinate[]{
@@ -516,22 +515,19 @@ public class Test {
         Coordinate[] coo = poly.copy().getCoordinates();
 
         LineString line = gf.createLineString(new Coordinate[]{new Coordinate(650, 1381.5068493150684, 0), new Coordinate(650, 0, -1)});
-        
-       // LineMerger merge = new LineMerger();
-       // merge.add(poly);
-       // merge.add(line);
-       // Collection<LineString> coll = merge.getMergedLineStrings();
-      //gf.createLineString(coord1);
+
+        // LineMerger merge = new LineMerger();
+        // merge.add(poly);
+        // merge.add(line);
+        // Collection<LineString> coll = merge.getMergedLineStrings();
+        //gf.createLineString(coord1);
         //LineString[] larr = coll.toArray(new LineString[0]);
         //MultiLineString mls = gf.createMultiLineString(larr);        
         //Geometry nodedLinework = poly.getBoundary().union(line);
         //Geometry polys = polygonize(coll);        
-
-        
-        
         LineString line2 = UGeo.expandLine7(poly.getEnvelope(), line);
         Geometry geom = UGeo.splitPolyLine7(poly, line2);
-        
+
         //System.out.println(poly);
         //System.out.println(line);        
         System.out.println(geom);
@@ -540,7 +536,7 @@ public class Test {
         //mpol = poly;
         mpol = geom;
     }
-    
+
     private static Collection<Polygon> getPolygons(List<SegmentString> segmentStrings) {
         GeometryFactory factory = new GeometryFactory();
         MCIndexNoder noder = new MCIndexNoder();
@@ -559,7 +555,7 @@ public class Test {
 
         return polygonizer.getPolygons();
     }
-    
+
     public static Geometry polygonize(Collection<LineString> coll) {
         //List lines = LineStringExtracter.getLines(geometry);
         Polygonizer polygonizer = new Polygonizer();
@@ -569,7 +565,7 @@ public class Test {
         Polygon[] polyArray = GeometryFactory.toPolygonArray(polys);
         return gf.createGeometryCollection(polyArray);
     }
-    
+
     private void draw7() {
         double M = 1500;
         GeometricShapeFactory gsf = new GeometricShapeFactory();

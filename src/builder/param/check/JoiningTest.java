@@ -125,7 +125,7 @@ public class JoiningTest {
             assert true == joiningVar4.check(UCom.join(iwin4.listJoin, stv4_right_3, 1), param("89,98-90,1", grup)) : grup;
             assert true == joiningVar4.check(UCom.join(iwin4.listJoin, stv4_right_3, 1), param("90", grup)) : grup;
             
-            System.out.println("builder.param.check.JoiningTest.joiningVar() - бшонкмемн");
+            System.err.println("builder.param.check.JoiningTest.joiningVar() - бшонкмемн");
         } catch (Exception e) {
             System.err.println("нЬХАЙЮ:JoiningTest.joiningVar() " + e);
         }
@@ -173,7 +173,7 @@ public class JoiningTest {
             assert true == joiningDet2.check(mapParam, UCom.join(iwin2.listJoin, frame2_3, 1), param("1;5;4;", grup)) : grup;
             assert false == joiningDet2.check(mapParam, UCom.join(iwin2.listJoin, frame2_3, 1), param("5;4;", grup)) : grup;
             
-            System.out.println("builder.param.check.JoiningTest.joiningDet() - бшонкмемн");
+            System.err.println("builder.param.check.JoiningTest.joiningDet() - бшонкмемн");
         } catch (Exception e) {
             System.err.println("нЬХАЙЮ:JoiningTest.joiningDet() " + e);
         }

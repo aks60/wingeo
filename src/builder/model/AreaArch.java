@@ -14,6 +14,7 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
+import startup.Test;
 
 public class AreaArch extends AreaSimple {
 
@@ -42,14 +43,14 @@ public class AreaArch extends AreaSimple {
                         //Поворот на горизонталь
                         aff.setToRotation(Math.toRadians(-ANG), segm.p0.x, segm.p0.y);
                         segm = UGeo.getSegment((LineString) aff.transform(segm.toGeometry(gf)));//трансформация линии в горизонт
-                        arcA = UGeo.newLineArch(segm.p0.x, segm.p1.x, segm.p0.y, frame.h(), frame.id);  //созд. арки на гортзонтали   
+                        arcA = UGeo.newLineArch(segm.p0.x, segm.p1.x, segm.p0.y, frame.h(), frame.id);  //созд. арки на горизонтали   
 
                         //Обратный поворот
                         aff.setToRotation(Math.toRadians(ANG), segm.p0.x, segm.p0.y);
                         arcB = aff.transform(arcA);
                     }
                     List.of(arcB.getCoordinates()).forEach(c -> c.setZ(frame.id));
-                    list.addAll(List.of(arcB.getCoordinates()));
+                    list.addAll(List.of(arcB.getCoordinates()));                                        
 
                 } else {
                     list.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
@@ -60,6 +61,7 @@ public class AreaArch extends AreaSimple {
             Polygon geo1 = gf.createPolygon(list.toArray(new Coordinate[0])); 
             Polygon geo2 = buffer(geo1, this.frames, 0); 
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
+
             //new Test().mpol = this.area;
 
         } catch (Exception e) {
