@@ -120,9 +120,9 @@ public class Invoice {
                 Record prjprodRec = prjprodList.get(i);
                 tdList.get(1).text(prjprodRec.getStr(ePrjprod.name));
                 tdList.get(3).text(prjprodRec.getStr(ePrjprod.num));
-                tdList.get(4).text(df1.format(winc.cost2));
-                tdList.get(5).text(df1.format(prjprodRec.getInt(ePrjprod.num) * winc.cost2));
-                total += prjprodRec.getInt(ePrjprod.num) * winc.cost2;
+                tdList.get(4).text(df1.format(winc.price2));
+                tdList.get(5).text(df1.format(prjprodRec.getInt(ePrjprod.num) * winc.price2));
+                total += prjprodRec.getInt(ePrjprod.num) * winc.price2;
             }
             {
                 Elements trList = doc.getElementById("tab4").getElementsByTag("tbody").get(0).getElementsByTag("tr");
@@ -179,9 +179,9 @@ public class Invoice {
                 Record prjprodRec = prjprodList.get(i);
                 tdList.get(1).text(prjprodRec.getStr(ePrjprod.name));
                 tdList.get(3).text(prjprodRec.getStr(ePrjprod.num));
-                tdList.get(4).text(df1.format(winc.cost2));
-                tdList.get(5).text(df1.format(prjprodRec.getInt(ePrjprod.num) * winc.cost2));
-                double cost2 = prjprodRec.getInt(ePrjprod.num) * winc.cost2;
+                tdList.get(4).text(df1.format(winc.price2));
+                tdList.get(5).text(df1.format(prjprodRec.getInt(ePrjprod.num) * winc.price2));
+                double cost2 = prjprodRec.getInt(ePrjprod.num) * winc.price2;
                 tdList.get(7).text(df1.format(cost2 / 100 * 18));
                 tdList.get(8).text(df1.format(cost2 + cost2 / 100 * 18));
                 total += cost2 + cost2 / 100 * 18;

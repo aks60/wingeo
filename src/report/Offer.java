@@ -102,7 +102,7 @@ public class Offer {
                 tdList.get(17).text(prjprodRec.getStr(ePrjprod.num));
                 tdList.get(19).text(df2.format(winc.root.area.getGeometryN(0).getArea()));
                 tdList.get(21).text(df2.format(winc.weight));
-                tdList.get(23).text(df1.format(winc.price2));
+                tdList.get(23).text(df1.format(winc.price1));
             }
             {
                 Elements trList = doc.getElementById("tab2").getElementsByTag("tbody").get(0).getElementsByTag("tr");

@@ -49,10 +49,10 @@ public class Wincalc {
     public double spcId = 0; //для генерации ключа в спецификации
     public int colorID1 = -1, colorID2 = 1, colorID3 = -1; //базовый,внутр,внещний 
     public Record syssizRec = null; //система константт
-    public double costpric1 = 0; //себест. за ед. без отхода     
-    public double costpric2 = 0; //себест. за ед. с отходом
-    public double price2 = 0; //стоимость без скидки
-    public double cost2 = 0; //стоимость с технологической скидкой
+    public double sebes1 = 0; //себест. за ед. без отхода     
+    public double sebes2 = 0; //себест. за ед. с отходом
+    public double price1 = 0; //стоимость без скидки
+    public double price2 = 0; //стоимость с технологической скидкой
     public double weight = 0; //масса конструкции  
     public double count = 0; //колич. единиц
     public BufferedImage bufferImg = null;  //образ рисунка
@@ -225,8 +225,8 @@ public class Wincalc {
     //Спецификация и тарификация 
     public void specification(boolean norm_otx) {
         weight = 0;
+        price1 = 0;
         price2 = 0;
-        cost2 = 0;
         try {
             //Спецификация ведущих элементов конструкции
             listElem.forEach(elem -> elem.setSpecific());
@@ -252,8 +252,8 @@ public class Wincalc {
 
             //Итоговая стоимость
             for (SpcRecord spc : listSpec) {
-                this.price2 = (this.price2 + spc.price1); //общая стоимость без скидки
-                this.cost2 = (this.cost2 + spc.price2); //общая стоимость со скидкой             
+                this.price1 = (this.price1 + spc.price1); //общая стоимость без скидки
+                this.price2 = (this.price2 + spc.price2); //общая стоимость со скидкой             
                 this.count = (this.count + spc.count); //колич. единиц                       
             }
 

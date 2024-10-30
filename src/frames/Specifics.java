@@ -101,10 +101,10 @@ public class Specifics extends javax.swing.JFrame {
         Vector v = new Vector();
         v.add(listSpc.size() + 1);
         IntStream.range(1, vSize).forEach(action -> v.add(null));
-        v.set(v.size() - 1, winc.cost2); //стоимость со скидклй
-        v.set(v.size() - 2, winc.price2); //стоимость без скидки      
+        v.set(v.size() - 1, winc.price2); //стоимость со скидклй
+        v.set(v.size() - 2, winc.price1); //стоимость без скидки      
         dtm.addRow(v);
-        labSum.setText("Итого: " + UCom.format(winc.cost2, "#,##0.##"));
+        labSum.setText("Итого: " + UCom.format(winc.price2, "#,##0.##"));
     }
 
     public void createIwin() {

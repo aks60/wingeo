@@ -125,9 +125,9 @@ public class Smeta {
                 tdList.get(8).text(prjprodRec.getStr(ePrjprod.num));
                 tdList.get(10).text(UCom.format(winc.root.area.getGeometryN(0).getArea()/1000000, 2));
                 tdList.get(12).text(UCom.format(winc.weight, 2));
-                tdList.get(14).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price2, 9));
-                tdList.get(16).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.cost2, 9));
-                total += prjprodRec.getInt(ePrjprod.num) * winc.cost2;
+                tdList.get(14).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price1, 9));
+                tdList.get(16).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price2, 9));
+                total += prjprodRec.getInt(ePrjprod.num) * winc.price2;
             }
 
             //—≈ ÷»ﬂ π3
@@ -212,11 +212,11 @@ public class Smeta {
                 tdList.get(14).text(prjprodRec.getStr(ePrjprod.num));
                 tdList.get(16).text(UCom.format(winc.root.area.getGeometryN(0).getArea()/1000000, 2));
                 tdList.get(18).text(UCom.format(winc.weight, 2));
-                tdList.get(20).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price2, 9));
-                tdList.get(22).text(UCom.format(winc.price2 * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));
-                tdList.get(24).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.cost2, 9));
+                tdList.get(20).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price1, 9));
+                tdList.get(22).text(UCom.format(winc.price1 * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));
+                tdList.get(24).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price2, 9));
 
-                total += prjprodRec.getInt(ePrjprod.num) * winc.cost2;
+                total += prjprodRec.getInt(ePrjprod.num) * winc.price2;
 
                 if (prjkitList.size() == 0) {
                     tab3List.get(i).html("");
