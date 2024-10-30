@@ -1,15 +1,22 @@
 package report;
 
+import builder.model.AreaStvorka;
+import common.UCom;
 import report.sup.RTable;
 import report.sup.ExecuteCmd;
 import builder.Wincalc;
 import builder.making.SpcRecord;
 import dataset.Query;
 import dataset.Record;
+import domain.eSysfurn;
+import domain.eFurniture;
+import domain.eArtikl;
+import domain.eColor;
 import domain.ePrjpart;
 import domain.ePrjprod;
 import domain.eProject;
 import domain.eSysuser;
+import enums.Type;
 import enums.TypeArt;
 import frames.UGui;
 import java.io.File;
@@ -50,6 +57,7 @@ public class Manufactory {
     }
 
     private static void loadDoc(Record projectRec, Document doc) {
+        Double square = 0.0; //площадь
         try {
             Elements tab2List = doc.getElementsByClass("tab2"),
                     tab3List = doc.getElementsByClass("tab3"), tab4List = doc.getElementsByClass("tab4"),
@@ -65,42 +73,59 @@ public class Manufactory {
             qPrjpart.add(ePrjpart.up.newRecord("SEL"));
             Query qSysuser = new Query(eSysuser.values()).sql(eSysuser.data(), eSysuser.login, qPrjpart.get(0).getInt(ePrjpart.login));  
             qSysuser.add(eSysuser.up.newRecord("SEL"));
-            List<Wincalc> wincList = URep.wincList(qPrjprod, 400);
+            
 
             doc.getElementById("h02").text("Заказ №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
 
-            String fio = (qPrjpart.get(0).getInt(ePrjpart.flag1) == 1) 
-                    ? qPrjpart.get(0).getStr(ePrjpart.org_contact)
-                    : qPrjpart.get(0).getStr(ePrjpart.partner);
-           // System.out.println(qPrjpart.get(0).getStr(ePrjpart.org_contact));
-            //System.out.println(qPrjpart.get(0).getStr(ePrjpart.partner));
-            
             //Таблица №1 ЗАКАЗЧИК
+            String ord = qPrjpart.get(0).getStr(ePrjpart.partner); //заказчик
+            String kon = (qPrjpart.get(0).getInt(ePrjpart.flag2) == 1) //конт. лицо
+                    ? qPrjpart.get(0).getStr(ePrjpart.org_contact)
+                    : qSysuser.get(0).getStr(eSysuser.fio); 
             Element tab1 =  doc.getElementById("tab1");
-            Elements tdList1 = tab1.getElementsByTag("tr").get(0).getElementsByTag("td");
-            tdList1.get(1).text(fio);
+            tab1.getElementsByTag("tr").get(0).getElementsByTag("td").get(1).text(ord);
+            tab1.getElementsByTag("tr").get(1).getElementsByTag("td").get(1).text(kon);
 
             //Заполним файл шаблонами заказов
             Element div2 = doc.getElementById("div2");
             String templateBody = div2.html();
+            List<Wincalc> wincList = URep.wincList(qPrjprod, 400);
             for (int i = 1; i < qPrjprod.size(); i++) {
                 div2.append(templateBody);
-            }
-
+            }  
+            
             //Цикл по изделиям
             for (int i = 0; i < qPrjprod.size(); i++) {
-
-                String script = qPrjprod.get(i).getStr(ePrjprod.script);
-                Wincalc winc = new Wincalc(script);
-                winc.specification(true);
-
+                Record prjprodRec = qPrjprod.get(i);
+                Wincalc winc = wincList.get(i);
+                
+                //Таблица №2 ИЗДЕЛИЕ РЕКВИЗИТЫ  
+                square += winc.root.area.getGeometryN(0).getArea();
+                Record artiklRec = winc.root.frames.get(0).artiklRecAn;
+                Record colorRec1 = new Query(eColor.values()).sql(eColor.data(), eColor.id, winc.colorID1).get(0);
+                Record colorRec2 = new Query(eColor.values()).sql(eColor.data(), eColor.id, winc.colorID2).get(0);
+                Record colorRec3 = new Query(eColor.values()).sql(eColor.data(), eColor.id, winc.colorID3).get(0);
+                AreaStvorka areaStvorka = (AreaStvorka) UCom.filter(winc.listArea, Type.STVORKA).get(0);
+                Record furnitureRec = new Query(eFurniture.values()).sql(eFurniture.data(), eFurniture.id, areaStvorka.sysfurnRec.getInt(eSysfurn.furniture_id)).get(0);
+                
+                Element tab2 = tab2List.get(i);                                
+                tab2.getElementsByTag("tr").get(1).getElementsByTag("td").get(1).text(artiklRec.getStr(eArtikl.name));
+                tab2.getElementsByTag("tr").get(2).getElementsByTag("td").get(1).text(colorRec1.getStr(eColor.name) 
+                        + " / " + colorRec2.getStr(eColor.name)+ " / " + colorRec3.getStr(eColor.name));
+                tab2.getElementsByTag("tr").get(3).getElementsByTag("td").get(1).text(UCom.format(winc.width() / 1000, 3) 
+                        + " / " + UCom.format(winc.height() / 1000, 3));
+                tab2.getElementsByTag("tr").get(4).getElementsByTag("td").get(1).text(furnitureRec.getStr(eFurniture.name));
+                tab2.getElementsByTag("tr").get(5).getElementsByTag("td").get(1).text(prjprodRec.getStr(ePrjprod.num));
+                tab2.getElementsByTag("tr").get(6).getElementsByTag("td").get(1).text(UCom.format(square / 1000000, 2));
+                
+                
                 //Таблица №3 ПРОФИЛЬ / АРМИРОВАНИЕ  
                 Element tab3 = tab3List.get(i);
                 List<SpcRecord> spcList3 = new ArrayList(), spcList3a = new ArrayList();
                 loadTab3(winc, tab3, template3Rec, spcList3, spcList3a); //спецификация для изделия 
                 spcList3.forEach(act -> tab3.append(template3Rec));
                 tab3.getElementsByTag("tr").remove(1);
-
+                
                 for (int j = 0; j < spcList3.size(); j++) { //заполним строки 
                     Elements tdList3 = tab3.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
                     tdList3.get(0).text(String.valueOf(j + 1));
@@ -127,7 +152,7 @@ public class Manufactory {
                     tdList4.get(0).text(String.valueOf(j + 1));
                     tdList4.get(1).text(str(spcList4.get(j).artikl));
                     tdList4.get(2).text(str(spcList4.get(j).name));
-                    tdList4.get(3).text(str(spcList4.get(j).unit));
+                    tdList4.get(3).text("мм");
                     tdList4.get(4).text(str(spcList4.get(j).width));
                 }
 

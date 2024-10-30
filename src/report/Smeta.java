@@ -83,7 +83,6 @@ public class Smeta {
     }
 
     private static void loadDoc1(Record projectRec, Document doc) {
-        int length = 400;
         double total = 0f;
         double square = 0f; //ןכמשאהü
         try {
@@ -97,7 +96,7 @@ public class Smeta {
             //ÑÅÊÖÈ‗ ¹2
             Element div2 = doc.getElementById("div2");
             String template2 = div2.html();
-            List<Wincalc> wincList = wincList(prjprodList, length);
+            List<Wincalc> wincList = wincList(prjprodList, 400);
 
             for (int i = 1; i < prjprodList.size(); i++) {
                 div2.append(template2);
@@ -109,7 +108,7 @@ public class Smeta {
 
                 Elements tdList = tab2List.get(i).getElementsByTag("td");
                 Wincalc winc = wincList.get(i);
-                square = square + winc.root.area.getGeometryN(0).getArea();
+                square += winc.root.area.getGeometryN(0).getArea();
                 Record prjprodRec = prjprodList.get(i);
                 List<Record> prjkitList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
                 prjkitAll.addAll(prjkitList);

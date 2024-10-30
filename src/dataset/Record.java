@@ -35,7 +35,7 @@ public class Record {
 
     //»«Ã≈Õ≈Õ»ﬂ —“¿“”—¿ «¿œ»—»
     public Object set(Field field, Object element) {
-        return list.set(field.ordinal(), element);
+        return set(field.ordinal(), element);
     }
 
     //»«Ã≈Õ≈Õ»ﬂ —“¿“”—¿ «¿œ»—»
