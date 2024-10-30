@@ -35,14 +35,13 @@ public class Smeta {
 //    private static DecimalFormat df0 = new DecimalFormat("0");
 //    private static DecimalFormat df1 = new DecimalFormat("0.0");
 //    private static DecimalFormat df2 = new DecimalFormat("#0.00");
-
     public void parseDoc1(Record projectRec) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Smeta1.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
-            
+
             //Заполним отчёт
             loadDoc1(projectRec, doc);
 
@@ -85,6 +84,7 @@ public class Smeta {
     private static void loadDoc1(Record projectRec, Document doc) {
         double total = 0f;
         double square = 0f; //площадь
+        double square2 = 0f; //площадь
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
@@ -93,7 +93,6 @@ public class Smeta {
 
             doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
 
-           
             //Заполним файл шаблонами заказов
             Element div2 = doc.getElementById("div2");
             String template2 = div2.html();
@@ -108,12 +107,14 @@ public class Smeta {
 
                 Elements tdList = tab2List.get(i).getElementsByTag("td");
                 Wincalc winc = wincList.get(i);
-                square += winc.root.area.getGeometryN(0).getArea();
                 Record prjprodRec = prjprodList.get(i);
+                int count = prjprodRec.getInt(ePrjprod.num);
+                square += winc.root.area.getGeometryN(0).getArea();
+                square2 += count * square;
                 List<Record> prjkitList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
                 prjkitAll.addAll(prjkitList);
 
-                 //СЕКЦИЯ №2
+                //СЕКЦИЯ №2
                 ArrayList<ElemSimple> glassList = UCom.filter(winc.listElem, Type.GLASS);
                 Elements captions2 = tab2List.get(i).getElementsByTag("caption");
                 captions2.get(0).text("Изделие № " + (i + 1));
@@ -122,19 +123,19 @@ public class Smeta {
                 tdList.get(6).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / "
                         + eColor.find(winc.colorID2).getStr(eColor.name) + " / "
                         + eColor.find(winc.colorID3).getStr(eColor.name));
-                tdList.get(8).text(prjprodRec.getStr(ePrjprod.num));
-                tdList.get(10).text(UCom.format(winc.root.area.getGeometryN(0).getArea()/1000000, 2));
+                tdList.get(8).text(String.valueOf(count));
+                tdList.get(10).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
                 tdList.get(12).text(UCom.format(winc.weight, 2));
-                tdList.get(14).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price1, 9));
-                tdList.get(16).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price2, 9));
-                total += prjprodRec.getInt(ePrjprod.num) * winc.price2;
+                tdList.get(14).text(UCom.format(count * winc.price1, 9));
+                tdList.get(16).text(UCom.format(count * winc.price2, 9));
+                total += count * winc.price2;
             }
 
             //СЕКЦИЯ №3
             Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
             trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total, 2));
             trList.get(1).getElementsByTag("td").get(0).text(MoneyInWords.inwords(total));
-            trList.get(3).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square / 1000000, 2) + " кв.м.");
+            trList.get(3).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square2 / 1000000, 2) + " кв.м.");
 
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");
             for (int i = 0; i < imgList.size(); i++) {
@@ -180,7 +181,7 @@ public class Smeta {
             //СЕКЦИЯ №2
             Element div2 = doc.getElementById("div2");
             String template2 = div2.html();
-            List<Wincalc> wincList = URep.wincList(prjprodList, 400); 
+            List<Wincalc> wincList = URep.wincList(prjprodList, 400);
 
             for (int i = 1; i < prjprodList.size(); i++) {
                 div2.append(template2);
@@ -195,13 +196,14 @@ public class Smeta {
                 Wincalc winc = wincList.get(i);
                 square = square + winc.width() * winc.height();
                 Record prjprodRec = prjprodList.get(i);
+                int count = prjprodRec.getInt(ePrjprod.num);
                 List<Record> prjkitList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
                 prjkitAll.addAll(prjkitList);
 
                 ArrayList<ElemSimple> glassList = UCom.filter(winc.listElem, Type.GLASS);
                 Elements captions2 = tab2List.get(i).getElementsByTag("caption");
                 captions2.get(0).text("Изделие № " + (i + 1));
-                tdList.get(2).text(prjprodRec.getStr(ePrjprod.name)); 
+                tdList.get(2).text(prjprodRec.getStr(ePrjprod.name));
                 tdList.get(4).text(prjprodRec.getStr(ePrjprod.name));
                 tdList.get(6).text(UCom.format(winc.width() / 1000, 3) + " x " + UCom.format(winc.height() / 1000, 3));
                 tdList.get(8).text(glassList.get(0).artiklRecAn.getStr(eArtikl.code));
@@ -209,12 +211,12 @@ public class Smeta {
                 tdList.get(12).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / "
                         + eColor.find(winc.colorID2).getStr(eColor.name) + " / "
                         + eColor.find(winc.colorID3).getStr(eColor.name));
-                tdList.get(14).text(prjprodRec.getStr(ePrjprod.num));
-                tdList.get(16).text(UCom.format(winc.root.area.getGeometryN(0).getArea()/1000000, 2));
+                tdList.get(14).text(String.valueOf(count));
+                tdList.get(16).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
                 tdList.get(18).text(UCom.format(winc.weight, 2));
-                tdList.get(20).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price1, 9));
+                tdList.get(20).text(UCom.format(count * winc.price1, 9));
                 tdList.get(22).text(UCom.format(winc.price1 * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));
-                tdList.get(24).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price2, 9));
+                tdList.get(24).text(UCom.format(count * winc.price2, 9));
 
                 total += prjprodRec.getInt(ePrjprod.num) * winc.price2;
 
