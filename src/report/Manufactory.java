@@ -113,7 +113,7 @@ public class Manufactory {
                 tab2.getElementsByTag("tr").get(2).getElementsByTag("td").get(1).text(colorRec1.getStr(eColor.name) 
                         + " / " + colorRec2.getStr(eColor.name)+ " / " + colorRec3.getStr(eColor.name));
                 tab2.getElementsByTag("tr").get(3).getElementsByTag("td").get(1).text(UCom.format(winc.width() / 1000, 3) 
-                        + " / " + UCom.format(winc.height() / 1000, 3));
+                        + " x " + UCom.format(winc.height() / 1000, 3));
                 tab2.getElementsByTag("tr").get(4).getElementsByTag("td").get(1).text(furnitureRec.getStr(eFurniture.name));
                 tab2.getElementsByTag("tr").get(5).getElementsByTag("td").get(1).text(prjprodRec.getStr(ePrjprod.num));
                 tab2.getElementsByTag("tr").get(6).getElementsByTag("td").get(1).text(UCom.format(square / 1000000, 2));

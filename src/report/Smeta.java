@@ -32,9 +32,9 @@ import static report.URep.wincList;
 
 public class Smeta {
 
-    private static DecimalFormat df0 = new DecimalFormat("0");
-    private static DecimalFormat df1 = new DecimalFormat("0.0");
-    private static DecimalFormat df2 = new DecimalFormat("#0.00");
+//    private static DecimalFormat df0 = new DecimalFormat("0");
+//    private static DecimalFormat df1 = new DecimalFormat("0.0");
+//    private static DecimalFormat df2 = new DecimalFormat("#0.00");
 
     public void parseDoc1(Record projectRec) {
         try {
@@ -93,11 +93,11 @@ public class Smeta {
 
             doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
 
-            //СЕКЦИЯ №2
+           
+            //Заполним файл шаблонами заказов
             Element div2 = doc.getElementById("div2");
             String template2 = div2.html();
             List<Wincalc> wincList = wincList(prjprodList, 400);
-
             for (int i = 1; i < prjprodList.size(); i++) {
                 div2.append(template2);
             }
@@ -113,27 +113,28 @@ public class Smeta {
                 List<Record> prjkitList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
                 prjkitAll.addAll(prjkitList);
 
+                 //СЕКЦИЯ №2
                 ArrayList<ElemSimple> glassList = UCom.filter(winc.listElem, Type.GLASS);
                 Elements captions2 = tab2List.get(i).getElementsByTag("caption");
                 captions2.get(0).text("Изделие № " + (i + 1));
                 tdList.get(2).text(prjprodRec.getStr(ePrjprod.name));
-                tdList.get(4).text(winc.width() + "x" + winc.height());
+                tdList.get(4).text(UCom.format(winc.width() / 1000, 2) + " x " + UCom.format(winc.height() / 1000, 2));
                 tdList.get(6).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / "
                         + eColor.find(winc.colorID2).getStr(eColor.name) + " / "
                         + eColor.find(winc.colorID3).getStr(eColor.name));
                 tdList.get(8).text(prjprodRec.getStr(ePrjprod.num));
-                tdList.get(10).text(df2.format(winc.root.area.getGeometryN(0).getArea()));
-                tdList.get(12).text(df2.format(winc.weight));
-                tdList.get(14).text(df1.format(prjprodRec.getInt(ePrjprod.num) * winc.price2));
-                tdList.get(16).text(df1.format(prjprodRec.getInt(ePrjprod.num) * winc.cost2));
+                tdList.get(10).text(UCom.format(winc.root.area.getGeometryN(0).getArea()/1000000, 2));
+                tdList.get(12).text(UCom.format(winc.weight, 2));
+                tdList.get(14).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price2, 9));
+                tdList.get(16).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.cost2, 9));
                 total += prjprodRec.getInt(ePrjprod.num) * winc.cost2;
             }
 
             //СЕКЦИЯ №3
             Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
-            trList.get(0).getElementsByTag("td").get(1).text(df2.format(total));
+            trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total, 2));
             trList.get(1).getElementsByTag("td").get(0).text(MoneyInWords.inwords(total));
-            trList.get(3).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + df1.format(square / 1000000) + " кв.м.");
+            trList.get(3).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square / 1000000, 2) + " кв.м.");
 
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");
             for (int i = 0; i < imgList.size(); i++) {
@@ -200,20 +201,20 @@ public class Smeta {
                 ArrayList<ElemSimple> glassList = UCom.filter(winc.listElem, Type.GLASS);
                 Elements captions2 = tab2List.get(i).getElementsByTag("caption");
                 captions2.get(0).text("Изделие № " + (i + 1));
-                tdList.get(2).text(prjprodRec.getStr(ePrjprod.name));
+                tdList.get(2).text(prjprodRec.getStr(ePrjprod.name)); 
                 tdList.get(4).text(prjprodRec.getStr(ePrjprod.name));
-                tdList.get(6).text(winc.width() + "x" + winc.height());
+                tdList.get(6).text(UCom.format(winc.width() / 1000, 3) + " x " + UCom.format(winc.height() / 1000, 3));
                 tdList.get(8).text(glassList.get(0).artiklRecAn.getStr(eArtikl.code));
                 tdList.get(10).text("");
                 tdList.get(12).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / "
                         + eColor.find(winc.colorID2).getStr(eColor.name) + " / "
                         + eColor.find(winc.colorID3).getStr(eColor.name));
                 tdList.get(14).text(prjprodRec.getStr(ePrjprod.num));
-                tdList.get(16).text(df2.format(winc.root.area.getGeometryN(0).getArea()));
-                tdList.get(18).text(df2.format(winc.weight));
-                tdList.get(20).text(df1.format(prjprodRec.getInt(ePrjprod.num) * winc.price2));
-                tdList.get(22).text(df1.format(winc.price2 / winc.root.area.getGeometryN(0).getArea()));
-                tdList.get(24).text(df1.format(prjprodRec.getInt(ePrjprod.num) * winc.cost2));
+                tdList.get(16).text(UCom.format(winc.root.area.getGeometryN(0).getArea()/1000000, 2));
+                tdList.get(18).text(UCom.format(winc.weight, 2));
+                tdList.get(20).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price2, 9));
+                tdList.get(22).text(UCom.format(winc.price2 * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));
+                tdList.get(24).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.cost2, 9));
 
                 total += prjprodRec.getInt(ePrjprod.num) * winc.cost2;
 
@@ -240,11 +241,11 @@ public class Smeta {
                         td3List.get(1).text(artiklRec.getStr(eArtikl.code));
                         td3List.get(2).text(artiklRec.getStr(eArtikl.name));
                         td3List.get(3).text(eColor.find(winc.colorID1).getStr(eColor.name));
-                        td3List.get(4).text(df1.format(prjkitRec.getDbl(ePrjkit.width))
-                                + "x" + df1.format(prjkitRec.getDbl(ePrjkit.height)));
+                        td3List.get(4).text(UCom.format(prjkitRec.getDbl(ePrjkit.width), 2)
+                                + "x" + UCom.format(prjkitRec.getDbl(ePrjkit.height), 2));
                         td3List.get(5).text(prjkitRec.getStr(ePrjkit.numb));
-                        td3List.get(6).text(df1.format(0));
-                        td3List.get(7).text(df1.format(0));
+                        td3List.get(6).text(UCom.format(0, 1));
+                        td3List.get(7).text(UCom.format(0, 1));
                     }
                 }
             }
@@ -265,11 +266,11 @@ public class Smeta {
                 td4List.get(0).text(String.valueOf(i + 1));
                 td4List.get(1).text(prjprodRec.getStr(ePrjprod.name));
                 td4List.get(2).text(eColor.find(winc.colorID1).getStr(eColor.name));
-                td4List.get(3).text(df1.format(winc.width()));
-                td4List.get(4).text(df1.format(winc.height()));
+                td4List.get(3).text(UCom.format(winc.width(), 2));
+                td4List.get(4).text(UCom.format(winc.height(), 2));
                 td4List.get(5).text(prjprodRec.getStr(ePrjprod.num));
-                td4List.get(6).text(df1.format(0));
-                td4List.get(7).text(df1.format(0));
+                td4List.get(6).text(UCom.format(0, 2));
+                td4List.get(7).text(UCom.format(0, 2));
             }
 
             String template5 = tab5Elem.getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
@@ -285,18 +286,18 @@ public class Smeta {
                 td5List.get(1).text(artiklRec.getStr(eArtikl.code));
                 td5List.get(2).text(artiklRec.getStr(eArtikl.name));
                 td5List.get(3).text(eColor.find(prjkitRec.getInt(ePrjkit.color1_id)).getStr(eColor.name));
-                td5List.get(4).text(df1.format(prjkitRec.getDbl(ePrjkit.width))
-                        + "x" + df1.format(prjkitRec.getDbl(ePrjkit.height)));
+                td5List.get(4).text(UCom.format(prjkitRec.getDbl(ePrjkit.width), 2)
+                        + " x " + UCom.format(prjkitRec.getDbl(ePrjkit.height), 2));
                 td5List.get(5).text(prjkitRec.getStr(ePrjkit.numb));
-                td5List.get(6).text(df1.format(330));
-                td5List.get(7).text(df1.format(440));
+                td5List.get(6).text(UCom.format(330, 2));
+                td5List.get(7).text(UCom.format(440, 2));
 
             }
             //СЕКЦИЯ №4
             Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
-            trList.get(0).getElementsByTag("td").get(1).text(df2.format(total));
+            trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total, 2));
             trList.get(1).getElementsByTag("td").get(0).text(MoneyInWords.inwords(total));
-            trList.get(3).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + df1.format(square / 1000000) + " кв.м.");
+            trList.get(3).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square / 1000000, 2) + " кв.м.");
 
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");
             for (int i = 0; i < imgList.size(); i++) {
@@ -307,14 +308,4 @@ public class Smeta {
             System.err.println("Ошибка:HtmlOfSmeta.load2() " + e);
         }
     }
-
-//    private static byte[] toByteArray(BufferedImage bi) {
-//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//        try {
-//            ImageIO.write(bi, "png", outputStream);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return outputStream.toByteArray();
-//    }
 }
