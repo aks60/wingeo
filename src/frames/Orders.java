@@ -313,9 +313,10 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     public void loadingTab5() {
         Record projectRec = qProject.get(UGui.getIndexRec(tab1));
 
-        Object data[][] = {{" Конструкции", projectRec.getDbl(eProject.disc2, 0), projectRec.getDbl(eProject.price2, 0), projectRec.getDbl(eProject.cost2, 0)},
-        {" Комплектации", projectRec.getDbl(eProject.disc3, 0), projectRec.getDbl(eProject.price3, 0), projectRec.getDbl(eProject.cost3, 0)},
-        {" Итого за заказ", projectRec.getDbl(eProject.disc4, 0), projectRec.getDbl(eProject.price4, 0), projectRec.getDbl(eProject.cost4, 0)}};
+        Object data[][] = {
+            {" Конструкции", projectRec.getDbl(eProject.disc2, 0), projectRec.getDbl(eProject.price2, 0), projectRec.getDbl(eProject.cost2, 0)},
+            {" Комплектации", projectRec.getDbl(eProject.disc3, 0), projectRec.getDbl(eProject.price3, 0), projectRec.getDbl(eProject.cost3, 0)},
+            {" Итого за заказ", projectRec.getDbl(eProject.disc4, 0), projectRec.getDbl(eProject.price4, 0), projectRec.getDbl(eProject.cost4, 0)}};
 
         ((DefaultTableModel) tab5.getModel()).setDataVector(data, column);
         tab5.getColumnModel().getColumn(2).setCellRenderer(defaultTableCellRenderer);
@@ -3762,7 +3763,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private void menuItem11(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem11
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                 //Отчёт
+                //Отчёт
                 new Material().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
@@ -3782,7 +3783,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Отчёт
-                new  Smeta().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new Smeta().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem13
