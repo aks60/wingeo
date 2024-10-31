@@ -5,31 +5,21 @@ import report.sup.RSpecific;
 import report.sup.ExecuteCmd;
 import builder.Wincalc;
 import builder.making.SpcRecord;
+import common.UCom;
 import dataset.Record;
-import domain.eColor;
 import domain.ePrjprod;
 import domain.eProject;
-import enums.UseUnit;
-import frames.Specifics;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 //Разход материала
 public class Material {
-
-    private static DecimalFormat df1 = new DecimalFormat("#0.0");
-    private static DecimalFormat df2 = new DecimalFormat("#0.00");
 
     public void parseDoc(Record projectRec) {
         try {
@@ -83,6 +73,6 @@ public class Material {
             tdList.get(7).text(spc.getCost());
         }
         doc.getElementsByTag("tfoot").get(0).selectFirst("tr:eq(0)")
-                .selectFirst("td:eq(1)").text(df1.format(total));        
+                .selectFirst("td:eq(1)").text(UCom.format(total, 9));        
     }
 }

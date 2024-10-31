@@ -6,33 +6,27 @@ import report.sup.ExecuteCmd;
 import builder.Wincalc;
 import builder.making.SpcRecord;
 import builder.making.SpcTariffic;
+import common.UCom;
 import dataset.Record;
 import domain.eArtikl;
 import domain.ePrjprod;
 import domain.eProject;
 import frames.UGui;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 import javax.swing.JOptionPane;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 //Спецификация
 public class Specific {
 
     private static int npp = 0;
-    private static DecimalFormat df1 = new DecimalFormat("#0.0");
-    private static DecimalFormat df2 = new DecimalFormat("#0.00");
 
     public  void parseDoc(Record projectRec) {
         try {
@@ -58,6 +52,7 @@ public class Specific {
 
     private static void loadDoc1(Record projectRec, Document doc) {
         
+        //Elements tdList = tab2List.get(i).getElementsByTag("td");
         List<SpcRecord> spcList = new ArrayList<SpcRecord>();
         List<RSpecific> kitList = new ArrayList<RSpecific>();
         List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
@@ -110,7 +105,7 @@ public class Specific {
                 + s5.stream().mapToDouble(spc -> spc.getCost1()).sum()
                 + kitList.stream().mapToDouble(spc -> spc.getCost1()).sum();
         doc.getElementsByTag("tfoot").get(0).selectFirst("tr:eq(0)")
-                .selectFirst("td:eq(1)").text(df1.format(total));
+                .selectFirst("td:eq(1)").text(UCom.format(total, 9));
     }
 
     private static void templateAdd(Elements template, RSpecific spc, Document doc) {
