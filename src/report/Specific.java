@@ -21,6 +21,7 @@ import static java.util.stream.Collectors.toList;
 import javax.swing.JOptionPane;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 //Ñïåöèôèêàöèÿ
@@ -74,53 +75,60 @@ public class Specific {
         String num = projectRec.getStr(eProject.num_ord);
         String date = UGui.simpleFormat.format(projectRec.get(eProject.date4));
 
-        List<RSpecific> s1 = listSpc.stream().filter(s -> s.spc().artiklRec().getInt(eArtikl.level1) == 1).collect(toList());
-        List<RSpecific> s2 = RSpecific.groups(listSpc.stream().filter(s -> s.spc().artiklRec().getInt(eArtikl.level1) == 2).collect(toList()));
-        List<RSpecific> s3 = RSpecific.groups(listSpc.stream().filter(s -> s.spc().artiklRec().getInt(eArtikl.level1) == 3).collect(toList()));
-        List<RSpecific> s5 = listSpc.stream().filter(s -> s.spc().artiklRec().getInt(eArtikl.level1) == 5).collect(toList());
+        List<RSpecific> listSpc1 = listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 1).collect(toList());
+        List<RSpecific> listSpc2 = RSpecific.groups(listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 2).collect(toList()));
+        List<RSpecific> listSpc3 = RSpecific.groups(listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 3).collect(toList()));
+        List<RSpecific> listSpc5 = listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 5).collect(toList());
 
-        doc.getElementById("h01").text("Ñìåòà ¹" + projectRec.getStr(eProject.num_ord));       
-        Elements template = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
+        doc.getElementById("h01").text("Ñìåòà ¹" + projectRec.getStr(eProject.num_ord));   
+        Elements td = doc.getElementsByTag("thead").get(0).getElementsByTag("tr").get(0).getElementsByTag("th");
+        td.get(0).html(date);
+        
+        Elements templateRec = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
         doc.getElementsByTag("tbody").get(0).html("");
 
-        template.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ÏÐÎÔÈËÈ");
-        doc.getElementsByTag("tbody").append(template.get(0).html());
-        s1.forEach(spc -> templateAdd(template, spc, doc));
-        template.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ÀÊÑÅÑÑÓÀÐÛ");
-        doc.getElementsByTag("tbody").append(template.get(0).html());
-        s2.forEach(spc -> templateAdd(template, spc, doc));
-        template.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ÓÏËÎÒÍÅÍÈß");
-        doc.getElementsByTag("tbody").append(template.get(0).html());
-        s3.forEach(spc -> templateAdd(template, spc, doc));
-        template.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ÇÀÏÎËÍÅÍÈß");
-        doc.getElementsByTag("tbody").append(template.get(0).html());
-        s5.forEach(spc -> templateAdd(template, spc, doc));
-        template.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ÊÎÌÏËÅÊÒÛ");
-        doc.getElementsByTag("tbody").append(template.get(0).html());
-        kitList.forEach(spc -> templateAdd(template, spc, doc));
+        templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ÏÐÎÔÈËÈ");
+        doc.getElementsByTag("tbody").append(templateRec.get(0).html());
+        listSpc1.forEach(rec -> recordAdd(templateRec, rec, doc));
+        
+        templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ÀÊÑÅÑÑÓÀÐÛ");
+        doc.getElementsByTag("tbody").append(templateRec.get(0).html());
+        listSpc2.forEach(rec -> recordAdd(templateRec, rec, doc));
+        
+        templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ÓÏËÎÒÍÅÍÈß");
+        doc.getElementsByTag("tbody").append(templateRec.get(0).html());
+        listSpc3.forEach(rec -> recordAdd(templateRec, rec, doc));
+        
+        templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ÇÀÏÎËÍÅÍÈß");
+        doc.getElementsByTag("tbody").append(templateRec.get(0).html());
+        listSpc5.forEach(rec -> recordAdd(templateRec, rec, doc));
+        
+        templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ÊÎÌÏËÅÊÒÛ");
+        doc.getElementsByTag("tbody").append(templateRec.get(0).html());
+        kitList.forEach(rec -> recordAdd(templateRec, rec, doc));
 
-        double total = s1.stream().mapToDouble(spc -> spc.getCost1()).sum()
-                + s2.stream().mapToDouble(spc -> spc.getCost1()).sum()
-                + s3.stream().mapToDouble(spc -> spc.getCost1()).sum()
-                + s5.stream().mapToDouble(spc -> spc.getCost1()).sum()
+        double total = listSpc1.stream().mapToDouble(spc -> spc.getCost1()).sum()
+                + listSpc2.stream().mapToDouble(spc -> spc.getCost1()).sum()
+                + listSpc3.stream().mapToDouble(spc -> spc.getCost1()).sum()
+                + listSpc5.stream().mapToDouble(spc -> spc.getCost1()).sum()
                 + kitList.stream().mapToDouble(spc -> spc.getCost1()).sum();
         doc.getElementsByTag("tfoot").get(0).selectFirst("tr:eq(0)")
                 .selectFirst("td:eq(1)").text(UCom.format(total, 9));
     }
 
-    private static void templateAdd(Elements template, RSpecific spc, Document doc) {
+    private static void recordAdd(Elements template, RSpecific rec, Document doc) {
         Elements tdList = template.get(1).getElementsByTag("td");
         tdList.get(0).text(String.valueOf(++npp));
-        tdList.get(1).text(spc.getArtikl());
-        tdList.get(2).text(spc.getName());
-        tdList.get(3).text(spc.getColorID1());
-        tdList.get(4).text(spc.getWidth());
-        tdList.get(5).text(spc.getAngl());
-        tdList.get(6).text(spc.getUnit());        
-        tdList.get(7).text(spc.getCount());
-        tdList.get(8).text(spc.getWeight());        
-        tdList.get(9).text(spc.getPrice());
-        tdList.get(10).text(spc.getCost());
+        tdList.get(1).text(rec.getArtikl());
+        tdList.get(2).text(rec.getName());
+        tdList.get(3).text(rec.getColorID1());
+        tdList.get(4).text(rec.getWidth());
+        tdList.get(5).text(rec.getAngl());
+        tdList.get(6).text(rec.getUnit());        
+        tdList.get(7).text(rec.getCount());
+        tdList.get(8).text(rec.getWeight());        
+        tdList.get(9).text(rec.getPrice());
+        tdList.get(10).text(rec.getCost());
         doc.getElementsByTag("tbody").append(template.get(1).html());
     }
 }
