@@ -153,7 +153,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }
 
     public void loadingModel() {
-        new DefTableModel(tab1, qProject, eProject.num_ord, eProject.num_acc, eProject.date4, eProject.date6, eProject.prjpart_id, eProject.manager) {
+        new DefTableModel(tab1, qProject, eProject.num_ord, eProject.num_acc, eProject.date4, eProject.date5, eProject.date6, eProject.prjpart_id, eProject.manager) {
             @Override
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
@@ -213,6 +213,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         };
         tab1.getColumnModel().getColumn(2).setCellRenderer(defaultTableDateRenderer);
         tab1.getColumnModel().getColumn(3).setCellRenderer(defaultTableDateRenderer);
+        tab1.getColumnModel().getColumn(4).setCellRenderer(defaultTableDateRenderer);
         DefaultTableCellRenderer defaultTableCellRenderer = new DefaultTableCellRenderer() {
 
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -538,13 +539,24 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 GregorianCalendar calendar = (GregorianCalendar) obj;
                 UGui.stopCellEditing(tab1);
                 Record record2 = qProject.get(UGui.getIndexRec(tab1));
-                record2.set(eProject.date6, calendar.getTime());
+                record2.set(eProject.date5, calendar.getTime());
                 ((DefaultTableModel) tab1.getModel()).fireTableRowsUpdated(tab1.getSelectedRow(), tab1.getSelectedRow());
                 return true;
             }, 0);
         });
 
         UGui.buttonCellEditor(tab1, 4).addActionListener(event -> {
+            new DicDate(this, (obj) -> {
+                GregorianCalendar calendar = (GregorianCalendar) obj;
+                UGui.stopCellEditing(tab1);
+                Record record2 = qProject.get(UGui.getIndexRec(tab1));
+                record2.set(eProject.date6, calendar.getTime());
+                ((DefaultTableModel) tab1.getModel()).fireTableRowsUpdated(tab1.getSelectedRow(), tab1.getSelectedRow());
+                return true;
+            }, 0);
+        });
+
+        UGui.buttonCellEditor(tab1, 5).addActionListener(event -> {
             new Partner(Orders.this, (record) -> {
                 UGui.stopCellEditing(tab1, tab2, tab3, tab4);
                 Record record2 = qProject.get(UGui.getIndexRec(tab1));
@@ -1024,7 +1036,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         jmenu01.setFont(frames.UGui.getFont(0,1));
         ppReport.add(jmenu01);
 
-        jmenu02.setText(bundle.getString("Меню.Проект")); // NOI18N
+        jmenu02.setText(bundle.getString("Меню.Заказ")); // NOI18N
         jmenu02.setFont(frames.UGui.getFont(0,1));
 
         menuItem12.setFont(frames.UGui.getFont(0,1));
@@ -1308,7 +1320,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             }
         });
 
-        btnReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c032.gif"))); // NOI18N
+        btnReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c093.gif"))); // NOI18N
         btnReport.setToolTipText(bundle.getString("Печать")); // NOI18N
         btnReport.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnReport.setFocusable(false);
@@ -1401,18 +1413,18 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Номер заказа", "Номер счёта", "Дата от...", "Дата до...", "Контрагент", "User", "ID"
+                "Номер заказа", "Номер счёта", "Дата регистрации", "Дата расчёта", "Дата в произволство", "Контрагент", "User", "ID"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, true, true, true, true, false
+                true, true, true, true, true, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1438,12 +1450,13 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         if (tab1.getColumnModel().getColumnCount() > 0) {
             tab1.getColumnModel().getColumn(0).setPreferredWidth(60);
             tab1.getColumnModel().getColumn(1).setPreferredWidth(60);
-            tab1.getColumnModel().getColumn(2).setPreferredWidth(60);
-            tab1.getColumnModel().getColumn(3).setPreferredWidth(60);
-            tab1.getColumnModel().getColumn(4).setPreferredWidth(200);
-            tab1.getColumnModel().getColumn(5).setPreferredWidth(60);
-            tab1.getColumnModel().getColumn(6).setPreferredWidth(40);
-            tab1.getColumnModel().getColumn(6).setMaxWidth(60);
+            tab1.getColumnModel().getColumn(2).setPreferredWidth(80);
+            tab1.getColumnModel().getColumn(3).setPreferredWidth(80);
+            tab1.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tab1.getColumnModel().getColumn(5).setPreferredWidth(200);
+            tab1.getColumnModel().getColumn(6).setPreferredWidth(60);
+            tab1.getColumnModel().getColumn(7).setPreferredWidth(40);
+            tab1.getColumnModel().getColumn(7).setMaxWidth(60);
         }
 
         pan1.add(scr1, java.awt.BorderLayout.CENTER);
