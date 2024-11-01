@@ -75,7 +75,7 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="scrYear" max="32767" attributes="3"/>
                   <Component id="listMonth" alignment="0" max="32767" attributes="3"/>
-                  <Component id="tabDay" alignment="0" pref="194" max="32767" attributes="3"/>
+                  <Component id="tabDay" alignment="0" pref="242" max="32767" attributes="3"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="tool" min="-2" pref="35" max="-2" attributes="0"/>
@@ -369,7 +369,7 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnOk" alignment="3" max="32767" attributes="1"/>
-                      <Component id="btnClose" alignment="3" max="32767" attributes="1"/>
+                      <Component id="btnClose" alignment="3" pref="27" max="32767" attributes="1"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -382,7 +382,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/resource/img24/c037.gif"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="&#x41e;&#x442;&#x43c;&#x435;&#x43d;&#x430;"/>
+            <Property name="text" type="java.lang.String" value="&#x41e;&#x442;&#x43c;&#x435;&#x43d;&#x438;&#x442;&#x44c;"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
                 <EtchetBorder bevelType="0"/>

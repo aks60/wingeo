@@ -73,7 +73,7 @@ public class Specific {
         List<RSpecific> listSpc = new ArrayList<RSpecific>();
         spcList.forEach(rec -> listSpc.add(new RSpecific(rec)));
         String num = projectRec.getStr(eProject.num_ord);
-        String date = UGui.simpleFormat.format(projectRec.get(eProject.date4));
+        String date = UGui.simpleFormat.format(projectRec.get(eProject.date5));
 
         List<RSpecific> listSpc1 = listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 1).collect(toList());
         List<RSpecific> listSpc2 = RSpecific.groups(listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 2).collect(toList()));
@@ -81,8 +81,7 @@ public class Specific {
         List<RSpecific> listSpc5 = listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 5).collect(toList());
 
         doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord));   
-        Elements td = doc.getElementsByTag("thead").get(0).getElementsByTag("tr").get(0).getElementsByTag("th");
-        td.get(0).html(date);
+        doc.getElementsByTag("thead").get(0).getElementsByTag("tr").get(0).getElementsByTag("th").get(0).html("Дата: " + date + " г.");
         
         Elements templateRec = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
         doc.getElementsByTag("tbody").get(0).html("");

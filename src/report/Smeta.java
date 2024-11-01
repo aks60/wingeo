@@ -130,8 +130,9 @@ public class Smeta {
 
             //СЕКЦИЯ №3
             Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
-            trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total, 9));
+            trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total, 9) + " руб.");
             trList.get(1).getElementsByTag("td").get(0).text(MoneyInWords.inwords(total));
+            trList.get(2).getElementsByTag("td").get(1).text("333,33" + " руб.");            
             trList.get(3).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square2 / 1000000, 2) + " кв.м.");
 
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");

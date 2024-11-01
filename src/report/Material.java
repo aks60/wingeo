@@ -9,6 +9,7 @@ import common.UCom;
 import dataset.Record;
 import domain.ePrjprod;
 import domain.eProject;
+import frames.UGui;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -53,9 +54,11 @@ public class Material {
         }
         List<RSpecific> spcList3 = new ArrayList<RSpecific>();
         spcList2.forEach(el -> spcList3.add(new RSpecific(el)));
+        String date = UGui.simpleFormat.format(projectRec.get(eProject.date6));
         double total = spcList3.stream().mapToDouble(spc -> spc.getCost1()).sum();
         
-        doc.getElementById("h01").text("Заказ №" + projectRec.getStr(eProject.num_ord));        
+        doc.getElementById("h01").text("Заказ №" + projectRec.getStr(eProject.num_ord));    
+        doc.getElementsByTag("thead").get(0).getElementsByTag("tr").get(0).getElementsByTag("th").get(0).html("Дата изготовления заказа: " + date + " г.");
         String template = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
         spcList3.forEach(act -> doc.getElementsByTag("tbody").append(template));
         doc.getElementsByTag("tbody").get(0).getElementsByTag("tr").remove(1);        
