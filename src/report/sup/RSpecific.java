@@ -1,6 +1,7 @@
 package report.sup;
 
 import builder.making.SpcRecord;
+import domain.eArtikl;
 import domain.eColor;
 import enums.UseUnit;
 import java.text.DecimalFormat;
@@ -80,14 +81,14 @@ public class RSpecific {
         return df1.format(spc.width) + " x " + df2.format(spc.height);
     }
 
-    public String getPrice() {
+    public String getSebes2() {
         if (otx) {
             return df1.format(spc.sebes2);
         }
         return df1.format(spc.sebes1);
     }
 
-    public String getCost() {
+    public String getPrice2() {
         if (otx) {
             return df1.format(spc.price2);
         }
@@ -95,24 +96,40 @@ public class RSpecific {
     }
 
     //--------------------------------------------------------------------------  
-    public static List<RSpecific> groups(List<RSpecific> listSpr) {
-        HashSet<String> hs = new HashSet<String>();
+    public static List<RSpecific> groups2(List<RSpecific> listSpr) {
         List<RSpecific> list = new ArrayList<RSpecific>();
         Map<String, RSpecific> map = new HashMap<String, RSpecific>();
 
-        for (RSpecific sr : listSpr) {
-            String key = sr.spc.artikl + sr.spc.colorID1 + sr.spc.colorID2 + sr.spc.colorID3;
-            if (hs.add(key)) {
-                map.put(key, new RSpecific(sr.spc));
-            } else {
-                RSpecific s = map.get(key);
-                s.spc.weight = s.spc.weight + sr.spc.weight;
-                s.spc.count = s.spc.count + sr.spc.count;
-                s.spc.quant1 = s.spc.quant1 + sr.spc.quant1;
-                s.spc.quant2 = s.spc.quant2 + sr.spc.quant2;
-                s.spc.sebes2 = s.spc.sebes2 + sr.spc.sebes2;
-                s.spc.price1 = s.spc.price1 + sr.spc.price1;
-                s.spc.price2 = s.spc.price2 + sr.spc.price2;
+        for (RSpecific newRec : listSpr) {
+            String key = newRec.spc.artikl + "." + newRec.spc.colorID1 + "." + newRec.spc.colorID2 + "." + newRec.spc.colorID3;
+            RSpecific oldRec = map.put(key, new RSpecific(newRec.spc));
+            if (oldRec != null) {
+                newRec.spc.weight = newRec.spc.weight + oldRec.spc.weight;
+                newRec.spc.count = newRec.spc.count + oldRec.spc.count;
+                newRec.spc.quant1 = newRec.spc.quant1 + oldRec.spc.quant1;
+                newRec.spc.quant2 = newRec.spc.quant2 + oldRec.spc.quant2;
+                newRec.spc.sebes2 = newRec.spc.sebes2 + oldRec.spc.sebes2;
+                newRec.spc.price1 = newRec.spc.price1 + oldRec.spc.price1;
+                newRec.spc.price2 = newRec.spc.price2 + oldRec.spc.price2;
+            }
+        }
+        map.entrySet().forEach(act -> list.add(act.getValue()));
+        Collections.sort(list, (o1, o2) -> (o1.spc.name).compareTo(o2.spc.name));
+        return list;
+    }
+
+    public static List<RSpecific> groups3(List<RSpecific> listSpr) {
+        List<RSpecific> list = new ArrayList<RSpecific>();
+        Map<String, RSpecific> map = new HashMap<String, RSpecific>();
+
+        for (RSpecific newRec : listSpr) {
+            String key = newRec.spc.artikl + "." + newRec.spc.colorID1 + "." + newRec.spc.colorID2 + "." + newRec.spc.colorID3;
+            RSpecific oldRec = map.put(key, new RSpecific(newRec.spc));
+            if (oldRec != null) {
+                //int unitID = oldRec.spc.artiklRec().getInt(eArtikl.unit);
+                newRec.spc.count = newRec.spc.count + oldRec.spc.count;
+                newRec.spc.sebes2 = newRec.spc.sebes2 + oldRec.spc.sebes2;
+                newRec.spc.price2 = newRec.spc.price2 + oldRec.spc.price2;
             }
         }
         map.entrySet().forEach(act -> list.add(act.getValue()));

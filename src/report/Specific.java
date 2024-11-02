@@ -76,8 +76,8 @@ public class Specific {
         String date = UGui.simpleFormat.format(projectRec.get(eProject.date5));
 
         List<RSpecific> listSpc1 = listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 1).collect(toList());
-        List<RSpecific> listSpc2 = RSpecific.groups(listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 2).collect(toList()));
-        List<RSpecific> listSpc3 = RSpecific.groups(listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 3).collect(toList()));
+        List<RSpecific> listSpc2 = RSpecific.groups2(listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 2).collect(toList()));
+        List<RSpecific> listSpc3 = RSpecific.groups2(listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 3).collect(toList()));
         List<RSpecific> listSpc5 = listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 5).collect(toList());
 
         doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord));   
@@ -115,19 +115,19 @@ public class Specific {
                 .selectFirst("td:eq(1)").text(UCom.format(total, 9));
     }
 
-    private static void recordAdd(Elements template, RSpecific rec, Document doc) {
-        Elements tdList = template.get(1).getElementsByTag("td");
+    private static void recordAdd(Elements templateRec, RSpecific specificRec, Document doc) {
+        Elements tdList = templateRec.get(1).getElementsByTag("td");
         tdList.get(0).text(String.valueOf(++npp));
-        tdList.get(1).text(rec.getArtikl());
-        tdList.get(2).text(rec.getName());
-        tdList.get(3).text(rec.getColorID1());
-        tdList.get(4).text(rec.getWidth());
-        tdList.get(5).text(rec.getAngl());
-        tdList.get(6).text(rec.getUnit());        
-        tdList.get(7).text(rec.getCount());
-        tdList.get(8).text(rec.getWeight());        
-        tdList.get(9).text(rec.getPrice());
-        tdList.get(10).text(rec.getCost());
-        doc.getElementsByTag("tbody").append(template.get(1).html());
+        tdList.get(1).text(specificRec.getArtikl());
+        tdList.get(2).text(specificRec.getName());
+        tdList.get(3).text(specificRec.getColorID1());
+        tdList.get(4).text(specificRec.getWidth());
+        tdList.get(5).text(specificRec.getAngl());
+        tdList.get(6).text(specificRec.getUnit());        
+        tdList.get(7).text(specificRec.getCount());
+        tdList.get(8).text(specificRec.getWeight());        
+        tdList.get(9).text(specificRec.getSebes2());
+        tdList.get(10).text(specificRec.getPrice2());
+        doc.getElementsByTag("tbody").append(templateRec.get(1).html());
     }
 }

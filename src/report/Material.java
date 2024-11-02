@@ -5,6 +5,7 @@ import report.sup.RSpecific;
 import report.sup.ExecuteCmd;
 import builder.Wincalc;
 import builder.making.SpcRecord;
+import builder.making.SpcTariffic;
 import common.UCom;
 import dataset.Record;
 import domain.ePrjprod;
@@ -14,13 +15,17 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 //Разход материала
 public class Material {
+
+    private static int npp = 0;
 
     public void parseDoc(Record projectRec) {
         try {
@@ -44,38 +49,53 @@ public class Material {
 
     private static void loadDoc(Record projectRec, Document doc) {
 
-        List<SpcRecord> spcList2 = new ArrayList<SpcRecord>();
+        List<RSpecific> spcList = new ArrayList<RSpecific>();
+        List<SpcRecord> listSpc = new ArrayList<SpcRecord>();
+        List<SpcRecord> listKit = new ArrayList<SpcRecord>();        
+
         List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
         for (Record prjprodRec : prjprodList) {
+
             String script = prjprodRec.getStr(ePrjprod.script);
             Wincalc winc = new Wincalc(script);
             winc.specification(true);
-            spcList2.addAll(winc.listSpec);
+
+            listSpc.addAll(winc.listSpec);
+            listKit = SpcTariffic.kits(prjprodRec, winc, true); //добавим комплекты
         }
-        List<RSpecific> spcList3 = new ArrayList<RSpecific>();
-        spcList2.forEach(el -> spcList3.add(new RSpecific(el)));
-        String date = UGui.simpleFormat.format(projectRec.get(eProject.date6));
-        double total = spcList3.stream().mapToDouble(spc -> spc.getCost1()).sum();
+        listSpc.forEach(el -> spcList.add(new RSpecific(el)));
+        listKit.forEach(el -> spcList.add(new RSpecific(el)));
         
-        doc.getElementById("h01").text("Заказ №" + projectRec.getStr(eProject.num_ord));    
+      List<RSpecific> groupList = RSpecific.groups3(spcList);
+       
+        Elements templateRec = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
+        groupList.forEach(act -> doc.getElementsByTag("tbody").append(templateRec.get(0).html()));
+        
+        String date = UGui.simpleFormat.format(projectRec.get(eProject.date6));
+        double total = groupList.stream().mapToDouble(spc -> spc.getCost1()).sum();
+
+        doc.getElementById("h01").text("Заказ №" + projectRec.getStr(eProject.num_ord));
         doc.getElementsByTag("thead").get(0).getElementsByTag("tr").get(0).getElementsByTag("th").get(0).html("Дата изготовления заказа: " + date + " г.");
-        String template = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
-        spcList3.forEach(act -> doc.getElementsByTag("tbody").append(template));
-        doc.getElementsByTag("tbody").get(0).getElementsByTag("tr").remove(1);        
+
+        doc.getElementsByTag("tbody").get(0).getElementsByTag("tr").remove(1);
         Elements trList = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
-        for (int i = 0; i < spcList3.size(); i++) {
-            RSpecific spc = spcList3.get(i);
-            Elements tdList = trList.get(i).getElementsByTag("td");
-            tdList.get(0).text(String.valueOf(i + 1));
-            tdList.get(1).text(spc.getArtikl());
-            tdList.get(2).text(spc.getName());
-            tdList.get(3).text(spc.getColorID1());
-            tdList.get(4).text(spc.getCount());
-            tdList.get(5).text(spc.getUnit());
-            tdList.get(6).text(spc.getPrice());
-            tdList.get(7).text(spc.getCost());
+
+        for (int i = 0; i < groupList.size(); i++) {
+            recordAdd(trList.get(i).getElementsByTag("td"), groupList.get(i));
         }
+        
         doc.getElementsByTag("tfoot").get(0).selectFirst("tr:eq(0)")
-                .selectFirst("td:eq(1)").text(UCom.format(total, 9));        
+                .selectFirst("td:eq(1)").text(UCom.format(total, 9));
+    }
+
+    private static void recordAdd(Elements tdList, RSpecific spcRec) {
+        tdList.get(0).text(String.valueOf(++npp));
+        tdList.get(1).text(spcRec.getArtikl());
+        tdList.get(2).text(spcRec.getName());
+        tdList.get(3).text(spcRec.getColorID1());
+        tdList.get(4).text(spcRec.getCount());
+        tdList.get(5).text(spcRec.getUnit());
+        tdList.get(6).text(spcRec.getSebes2());
+        tdList.get(7).text(spcRec.getPrice2());
     }
 }

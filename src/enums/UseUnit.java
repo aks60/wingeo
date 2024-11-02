@@ -44,4 +44,13 @@ public enum UseUnit implements Enam {
         }
         return "";
     }
+    
+//    public static UseUnit getUnit(int index) {
+//        for (UseUnit unit: values()) {
+//            if (unit.id == index) {
+//                return unit.name;
+//            }
+//        }
+//        return "";
+//    }
 }
