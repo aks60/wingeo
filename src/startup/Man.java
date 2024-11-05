@@ -18,7 +18,7 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
-import report.Manufactory;
+import report.Target;
 import report.Material;
 import report.Offer;
 import report.Smeta;
@@ -610,7 +610,7 @@ public class Man extends javax.swing.JFrame {
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Отчёт
-                new Manufactory().parseDoc(projectRec);
+                new Target().parseDoc(projectRec);
             }
         });
     }//GEN-LAST:event_btn15

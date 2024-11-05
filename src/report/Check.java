@@ -29,7 +29,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-public class Invoice {
+public class Check {
 
     private static DecimalFormat df0 = new DecimalFormat("0");
     private static DecimalFormat df1 = new DecimalFormat("0.0");
@@ -37,7 +37,7 @@ public class Invoice {
 
     public void parseDoc1(Record projectRec) {
         try {
-            InputStream in = getClass().getResourceAsStream("/resource/report/Invoice1.html");
+            InputStream in = getClass().getResourceAsStream("/resource/report/Check1.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
@@ -54,13 +54,13 @@ public class Invoice {
             JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
             System.err.println("Ошибка1:HtmlOfInvoice.smeta1()" + e);
         } catch (Exception e) {
-            System.err.println("Ошибка2:HtmlOfInvoice.smeta1()" + e);
+            System.err.println("Ошибка2:Check.parseDoc1()" + e);
         }
     }
 
     public void parseDoc2(Record projectRec) {
         try {
-            InputStream in = getClass().getResourceAsStream("/resource/report/Invoice2.html");
+            InputStream in = getClass().getResourceAsStream("/resource/report/Check2.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
@@ -75,9 +75,9 @@ public class Invoice {
 
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
-            System.err.println("Ошибка1:HtmlOfInvoice.smeta2()" + e);
+            System.err.println("Ошибка1:Check.parseDoc2()" + e);
         } catch (Exception e) {
-            System.err.println("Ошибка2:HtmlOfInvoice.smeta2()" + e);
+            System.err.println("Ошибка2:Check.parseDoc2()" + e);
         }
     }
 
@@ -130,7 +130,7 @@ public class Invoice {
                 trList.get(1).getElementsByTag("td").get(0).text(MoneyInWords.inwords(total));
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:HtmlOfSmeta.load1()" + e);
+            System.err.println("Ошибка:Check.loadDoc1()" + e);
         }
     }
 
@@ -192,7 +192,7 @@ public class Invoice {
                 trList.get(1).getElementsByTag("td").get(0).text(MoneyInWords.inwords(total));
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:HtmlOfSmeta.load1()" + e);
+            System.err.println("Ошибка:Check.loadDoc2()" + e);
         }
     }
 

@@ -94,7 +94,7 @@ import javax.swing.text.JTextComponent;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
-import report.Invoice;
+import report.Check;
 import report.Material;
 import report.Offer;
 import report.Smeta;
@@ -104,7 +104,7 @@ import common.listener.ListenerReload;
 import static dataset.Query.INS;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-import report.Manufactory;
+import report.Target;
 
 public class Orders extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -812,6 +812,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 if (cost4 != projectRec.getDbl(eProject.cost4)) {
                     projectRec.set(eProject.cost4, cost4); //стоимость проекта со скидками менеджера
                 }
+                projectRec.set(eProject.date5, new GregorianCalendar().getTime());
+
                 qProject.execsql();
 
                 //Заполним вес, площадь
@@ -825,6 +827,12 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 tab5.setValueAt(projectRec.getDbl(eProject.cost3), 1, 3); //стоимость комплектации со скидкой
                 tab5.setValueAt(projectRec.getDbl(eProject.price4), 2, 2); //итого стоимость без скидки
                 tab5.setValueAt(projectRec.getDbl(eProject.cost4), 2, 3); //итого стоимость со скидкой
+
+                int index = UGui.getIndexRec(tab1);
+                if (index != -1) {
+                    ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
+                    UGui.setSelectedIndex(tab1, index);
+                }
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Orders.btnCalc() " + e);
@@ -3827,7 +3835,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Отчёт
-                new Invoice().parseDoc1(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new Check().parseDoc1(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem15
@@ -3837,7 +3845,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Отчёт
-                new Invoice().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new Check().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem16
@@ -3956,8 +3964,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private void menuItem18(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem18
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                //РћС‚С‡С‘С‚
-                new Manufactory().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
+                //Задание в цех
+                new Target().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem18
