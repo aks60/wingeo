@@ -87,8 +87,7 @@ public class Target {
             Elements tab2List = doc.getElementsByClass("tab2"),
                     tab3List = doc.getElementsByClass("tab3"), tab4List = doc.getElementsByClass("tab4"),
                     tab5List = doc.getElementsByClass("tab5"), tab6List = doc.getElementsByClass("tab6");
-            String template2Tr = tab2List.get(0).getElementsByTag("tr").get(1).html(),
-                    template3Tr = tab3List.get(0).getElementsByTag("tr").get(1).html(),
+            String  template3Tr = tab3List.get(0).getElementsByTag("tr").get(1).html(),
                     template4Tr = tab4List.get(0).getElementsByTag("tr").get(1).html(),
                     template5Tr = tab5List.get(0).getElementsByTag("tr").get(1).html(),
                     template6Rec = tab6List.get(0).getElementsByTag("tr").get(1).html();
@@ -108,6 +107,8 @@ public class Target {
                 Record furnitureRec = new Query(eFurniture.values()).sql(eFurniture.data(), eFurniture.id, areaStvorka.sysfurnRec.getInt(eSysfurn.furniture_id)).get(0);
 
                 Element tab2 = tab2List.get(i);
+                tab2.getElementsByTag("caption").get(0).getElementsByTag("b").get(0).text("Изделие № " + (i + 1));
+                
                 tab2.getElementsByTag("tr").get(1).getElementsByTag("td").get(1).text(artiklRec.getStr(eArtikl.name));
                 tab2.getElementsByTag("tr").get(2).getElementsByTag("td").get(1).text(colorRec1.getStr(eColor.name)
                         + " / " + colorRec2.getStr(eColor.name) + " / " + colorRec3.getStr(eColor.name));
