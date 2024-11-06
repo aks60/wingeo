@@ -315,9 +315,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         Record projectRec = qProject.get(UGui.getIndexRec(tab1));
 
         Object data[][] = {
-            {" Конструкции", projectRec.getDbl(eProject.disc2, 0), projectRec.getDbl(eProject.price2, 0), projectRec.getDbl(eProject.cost2, 0)},
-            {" Комплектации", projectRec.getDbl(eProject.disc3, 0), projectRec.getDbl(eProject.price3, 0), projectRec.getDbl(eProject.cost3, 0)},
-            {" Итого за заказ", projectRec.getDbl(eProject.disc4, 0), projectRec.getDbl(eProject.price4, 0), projectRec.getDbl(eProject.cost4, 0)}};
+            {" Конструкции", projectRec.getDbl(eProject.disc2, 0), projectRec.getDbl(eProject.price1a, 0), projectRec.getDbl(eProject.price2a, 0)},
+            {" Комплектации", projectRec.getDbl(eProject.disc3, 0), projectRec.getDbl(eProject.price1b, 0), projectRec.getDbl(eProject.price2b, 0)},
+            {" Итого за заказ", projectRec.getDbl(eProject.disc4, 0), projectRec.getDbl(eProject.price1c, 0), projectRec.getDbl(eProject.price2c, 0)}};
 
         ((DefaultTableModel) tab5.getModel()).setDataVector(data, column);
         tab5.getColumnModel().getColumn(2).setCellRenderer(defaultTableCellRenderer);
@@ -790,27 +790,27 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     }
                 }
                 //Сохраним новые кальк.данные в проекте
-                if (price2 != projectRec.getDbl(eProject.price2)) {
-                    projectRec.set(eProject.price2, price2); //стоимость конструкции без скидки менеджера
+                if (price2 != projectRec.getDbl(eProject.price1a)) {
+                    projectRec.set(eProject.price1a, price2); //стоимость конструкции без скидки менеджера
                 }
                 cost2 = cost2 - cost2 * projectRec.getDbl(eProject.disc2) / 100;
-                if (cost2 != projectRec.getDbl(eProject.cost2)) {
-                    projectRec.set(eProject.cost2, cost2); //стоимость конструкции со скидкой менеджера
+                if (cost2 != projectRec.getDbl(eProject.price2a)) {
+                    projectRec.set(eProject.price2a, cost2); //стоимость конструкции со скидкой менеджера
                 }
-                if (price3 != projectRec.getDbl(eProject.price3)) {
-                    projectRec.set(eProject.price3, price3); //стоимость комплектации без скидки менеджера
+                if (price3 != projectRec.getDbl(eProject.price1b)) {
+                    projectRec.set(eProject.price1b, price3); //стоимость комплектации без скидки менеджера
                 }
                 cost3 = cost3 - cost3 * projectRec.getDbl(eProject.disc3) / 100;
                 //System.err.println(cost3); // + " - " + projectRec.getDbl(eProject.cost3));
-                if (cost3 != projectRec.getDbl(eProject.cost3)) {
-                    projectRec.set(eProject.cost3, cost3); //стоимость комплектации со скидкой менеджера
+                if (cost3 != projectRec.getDbl(eProject.price2b)) {
+                    projectRec.set(eProject.price2b, cost3); //стоимость комплектации со скидкой менеджера
                 }
-                if (price2 + price3 != projectRec.getDbl(eProject.price4)) {
-                    projectRec.set(eProject.price4, price2 + price3); //стоимость проекта без скидок
+                if (price2 + price3 != projectRec.getDbl(eProject.price1c)) {
+                    projectRec.set(eProject.price1c, price2 + price3); //стоимость проекта без скидок
                 }
                 cost4 = (cost2 + cost3) - ((cost2 + cost3) * projectRec.getDbl(eProject.disc4) / 100);
-                if (cost4 != projectRec.getDbl(eProject.cost4)) {
-                    projectRec.set(eProject.cost4, cost4); //стоимость проекта со скидками менеджера
+                if (cost4 != projectRec.getDbl(eProject.price2c)) {
+                    projectRec.set(eProject.price2c, cost4); //стоимость проекта со скидками менеджера
                 }
                 projectRec.set(eProject.date5, new GregorianCalendar().getTime());
 
@@ -821,12 +821,12 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 txt7.setText(UCom.format(projectRec.getDbl(eProject.weight), 1)); //вес 
 
                 //Заполним таблицу
-                tab5.setValueAt(projectRec.getDbl(eProject.price2), 0, 2); //стоимость конструкций без скидки
-                tab5.setValueAt(projectRec.getDbl(eProject.cost2), 0, 3); //стоимость конструкций со скидкой
-                tab5.setValueAt(projectRec.getDbl(eProject.price3), 1, 2); //стоимость комплектации без скидки
-                tab5.setValueAt(projectRec.getDbl(eProject.cost3), 1, 3); //стоимость комплектации со скидкой
-                tab5.setValueAt(projectRec.getDbl(eProject.price4), 2, 2); //итого стоимость без скидки
-                tab5.setValueAt(projectRec.getDbl(eProject.cost4), 2, 3); //итого стоимость со скидкой
+                tab5.setValueAt(projectRec.getDbl(eProject.price1a), 0, 2); //стоимость конструкций без скидки
+                tab5.setValueAt(projectRec.getDbl(eProject.price2a), 0, 3); //стоимость конструкций со скидкой
+                tab5.setValueAt(projectRec.getDbl(eProject.price1b), 1, 2); //стоимость комплектации без скидки
+                tab5.setValueAt(projectRec.getDbl(eProject.price2b), 1, 3); //стоимость комплектации со скидкой
+                tab5.setValueAt(projectRec.getDbl(eProject.price1c), 2, 2); //итого стоимость без скидки
+                tab5.setValueAt(projectRec.getDbl(eProject.price2c), 2, 3); //итого стоимость со скидкой
 
                 int index = UGui.getIndexRec(tab1);
                 if (index != -1) {

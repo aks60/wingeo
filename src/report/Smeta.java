@@ -131,7 +131,7 @@ public class Smeta {
                 //td.get(14).text(UCom.format(projectRec.getDbl(eProject.cost2), 9));
                 td.get(16).text(UCom.format(winc.price2, 9));
                 //td.get(16).text(UCom.format(projectRec.getDbl(eProject.cost4), 9));
-                total += count * projectRec.getDbl(eProject.cost4);
+                total += count * projectRec.getDbl(eProject.price2c);
             }
 
             //—≈ ÷»ﬂ π3

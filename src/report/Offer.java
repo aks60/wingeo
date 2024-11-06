@@ -106,16 +106,16 @@ public class Offer {
             }
             {
                 Elements trList = doc.getElementById("tab2").getElementsByTag("tbody").get(0).getElementsByTag("tr");
-                trList.get(0).getElementsByTag("td").get(1).text(df2.format(projectRec.getDbl(eProject.cost2)));
-                trList.get(1).getElementsByTag("td").get(1).text(df2.format(projectRec.getDbl(eProject.cost3)));
-                trList.get(2).getElementsByTag("td").get(1).text(df2.format(projectRec.getDbl(eProject.cost4)));
+                trList.get(0).getElementsByTag("td").get(1).text(df2.format(projectRec.getDbl(eProject.price2a)));
+                trList.get(1).getElementsByTag("td").get(1).text(df2.format(projectRec.getDbl(eProject.price2b)));
+                trList.get(2).getElementsByTag("td").get(1).text(df2.format(projectRec.getDbl(eProject.price2c)));
             }
             {
                 Elements trList = doc.getElementById("tab5").getElementsByTag("tr");
                 trList.get(0).getElementsByTag("td").get(2).text(df1.format(square / 1000000) + " кв.м.");
-                trList.get(1).getElementsByTag("td").get(2).text(df2.format(projectRec.getDbl(eProject.price2)));
-                trList.get(2).getElementsByTag("td").get(2).text(df2.format(projectRec.getDbl(eProject.cost2)));
-                trList.get(3).getElementsByTag("td").get(2).text(df2.format(projectRec.getDbl(eProject.cost4)));
+                trList.get(1).getElementsByTag("td").get(2).text(df2.format(projectRec.getDbl(eProject.price1a)));
+                trList.get(2).getElementsByTag("td").get(2).text(df2.format(projectRec.getDbl(eProject.price2a)));
+                trList.get(3).getElementsByTag("td").get(2).text(df2.format(projectRec.getDbl(eProject.price2c)));
             }
 
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");
