@@ -3211,7 +3211,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 Record prjprodRec = ePrjprod.up.newRecord(INS);
                 prjprodRec.set(ePrjprod.id, Conn.genId(ePrjprod.up));
                 prjprodRec.set(ePrjprod.name, record.getStr(eSysprod.name));
-                prjprodRec.set(ePrjprod.num, 0);
+                prjprodRec.set(ePrjprod.num, 1);
                 prjprodRec.set(ePrjprod.script, record.getStr(eSysprod.script));
                 prjprodRec.set(ePrjprod.systree_id, record.getStr(eSysprod.systree_id));
                 prjprodRec.set(ePrjprod.project_id, qProject.getAs(UGui.getIndexRec(tab1), eProject.id));

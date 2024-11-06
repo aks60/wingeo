@@ -81,7 +81,6 @@ public class Smeta {
     private static void loadDoc1(Record projectRec, Document doc) {
         double total = 0f;
         double square = 0f; //площадь
-        double square2 = 0f; //площадь
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
@@ -102,14 +101,12 @@ public class Smeta {
             //Цикл по изделиям
             for (int i = 0; i < prjprodList.size(); i++) {
 
-                
                 Wincalc winc = wincList.get(i);
                 Record prjprodRec = prjprodList.get(i);
-                
+
                 int count = prjprodRec.getInt(ePrjprod.num);
-                square += winc.root.area.getGeometryN(0).getArea();
-                square2 += count * square;
-                
+                square += count * winc.root.area.getGeometryN(0).getArea();
+
                 List<Record> list = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
                 kitList.addAll(list);
 
@@ -117,7 +114,7 @@ public class Smeta {
                 ArrayList<ElemSimple> glassList = UCom.filter(winc.listElem, Type.GLASS);
                 Elements captions2 = tab2List.get(i).getElementsByTag("caption");
                 captions2.get(0).text("Изделие № " + (i + 1));
-                
+
                 Elements td = tab2List.get(i).getElementsByTag("td");
                 td.get(2).text(prjprodRec.getStr(ePrjprod.name));
                 td.get(4).text(UCom.format(winc.width() / 1000, 2) + " x " + UCom.format(winc.height() / 1000, 2));
@@ -128,16 +125,18 @@ public class Smeta {
                 td.get(10).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
                 td.get(12).text(UCom.format(winc.weight, 2));
                 td.get(14).text(UCom.format(winc.price1, 9));
-                td.get(16).text(UCom.format(winc.price2 - projectRec.getDbl(eProject.disc2) * winc.price2/100, 9));
-                total += count * projectRec.getDbl(eProject.price2c);
+                double price2n = winc.price2 - projectRec.getDbl(eProject.disc2) * winc.price2 / 100;
+                td.get(16).text(UCom.format(price2n, 9));
+                total += count * price2n;
             }
 
             //СЕКЦИЯ №3
+            double total2 = total + 18 * total / 100;
             Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
-            trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total, 9) + " руб.");
-            trList.get(1).getElementsByTag("td").get(0).text(MoneyInWords.inwords(total));
-            trList.get(2).getElementsByTag("td").get(1).text("333,33" + " руб.");            
-            trList.get(3).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square2 / 1000000, 2) + " кв.м.");
+            trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total2, 9) + " руб.");
+            trList.get(1).getElementsByTag("td").get(0).text(MoneyInWords.inwords(total2));
+            trList.get(2).getElementsByTag("td").get(1).text(UCom.format(18 * total / 100, 9) + " руб.");
+            trList.get(3).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square / 1000000, 2) + " кв.м.");
 
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");
             for (int i = 0; i < imgList.size(); i++) {
