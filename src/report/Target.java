@@ -22,19 +22,16 @@ import frames.UGui;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import report.sup.RSpecific;
 
 //Задание в цех
 public class Target {
-
-    private static DecimalFormat df1 = new DecimalFormat("#0.0");
-    private static DecimalFormat df2 = new DecimalFormat("#0.00");
 
     public void parseDoc(Record projectRec) {
         try {
@@ -120,73 +117,76 @@ public class Target {
 
                 //Таблица №3 ПРОФИЛЬ / АРМИРОВАНИЕ  
                 Element tab3 = tab3List.get(i);
-                List<SpcRecord> spcList3 = new ArrayList(), spcList3a = new ArrayList();
+                List<RSpecific> spcList3 = new ArrayList<RSpecific>(), spcList3a = new ArrayList<RSpecific>();
                 loadTab3(winc, tab3, template3Tr, spcList3, spcList3a); //спецификация для изделия 
                 spcList3.forEach(act -> tab3.append(template3Tr));
                 tab3.getElementsByTag("tr").remove(1);
 
                 for (int j = 0; j < spcList3.size(); j++) { //заполним строки 
-                    Elements tdList3 = tab3.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-                    tdList3.get(0).text(String.valueOf(j + 1));
-                    tdList3.get(1).text(str(spcList3.get(j).artikl));
-                    tdList3.get(2).text(str(spcList3.get(j).name));
-                    tdList3.get(3).text(str(spcList3.get(j).width));
-                    tdList3.get(4).text(str(spcList3.get(j).anglCut0));
-                    tdList3.get(5).text(str(spcList3.get(j).anglCut1));
-                    tdList3.get(6).text(str(spcList3.get(j).count));
-                    tdList3.get(7).text(str(spcList3.get(j).anglHoriz));
-                    tdList3.get(8).text("");
-                    tdList3.get(9).text(str(spcList3a.get(j).width));
-                    tdList3.get(10).text(str(spcList3a.get(j).artikl));
+                    Elements td = tab3.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
+                    RSpecific rs = spcList3.get(j);
+                    td.get(0).text(String.valueOf(j + 1));
+                    td.get(1).text(rs.artikl());
+                    td.get(2).text(rs.name());
+                    td.get(3).text(rs.width());
+                    td.get(4).text(rs.ang0());
+                    td.get(5).text(rs.ang1());
+                    td.get(6).text(rs.count());
+                    td.get(7).text(rs.anglHor());
+                    td.get(8).text("");
+                    td.get(9).text(rs.width());
+                    td.get(10).text(rs.artikl());
                 }
 
                 //Таблица №4 УПЛОТНИТЕЛИ 
                 Element tab4 = tab4List.get(i);
-                List<SpcRecord> spcList4 = loadTab4(winc, tab4, template4Tr);
+                List<RSpecific> spcList4 = loadTab4(winc, tab4, template4Tr);
                 spcList4.forEach(act -> tab4.append(template4Tr));
                 tab4.getElementsByTag("tr").remove(1);
 
                 for (int j = 0; j < spcList4.size(); j++) { //заполним строки 
-                    Elements tdList4 = tab4.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-                    tdList4.get(0).text(String.valueOf(j + 1));
-                    tdList4.get(1).text(str(spcList4.get(j).artikl));
-                    tdList4.get(2).text(str(spcList4.get(j).name));
-                    tdList4.get(3).text("мм");
-                    tdList4.get(4).text(str(spcList4.get(j).width));
+                    Elements td = tab4.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
+                    RSpecific rs = spcList4.get(j);
+                    td.get(0).text(String.valueOf(j + 1));
+                    td.get(1).text(rs.artikl());
+                    td.get(2).text(rs.name());
+                    td.get(3).text("мм");
+                    td.get(4).text(rs.width());
                 }
 
                 //Таблица №5 ШТАПИК  
                 Element tab5 = tab5List.get(i);
-                List<SpcRecord> spcList5 = loadTab5(winc, tab5, template5Tr);
+                List<RSpecific> spcList5 = loadTab5(winc, tab5, template5Tr);
                 spcList5.forEach(act -> tab5.append(template5Tr));
                 tab5.getElementsByTag("tr").remove(1);
                 for (int j = 0; j < spcList5.size(); j++) { //заполним строки 
-                    Elements tdList5 = tab5.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-                    tdList5.get(0).text(String.valueOf(j + 1));
-                    tdList5.get(1).text(str(spcList5.get(j).artikl));
-                    tdList5.get(2).text(str(spcList5.get(j).name));
-                    tdList5.get(3).text(str(spcList5.get(j).width));
-                    tdList5.get(4).text(str(spcList5.get(j).count));
-                    tdList5.get(5).text(str(spcList5.get(j).anglCut0));
-                    tdList5.get(6).text(str(spcList5.get(j).anglCut1));
+                    Elements td = tab5.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
+                    RSpecific rs = spcList5.get(j);
+                    td.get(0).text(String.valueOf(j + 1));
+                    td.get(1).text(rs.artikl());
+                    td.get(2).text(rs.name());
+                    td.get(3).text(rs.width());
+                    td.get(4).text(rs.count());
+                    td.get(5).text(rs.ang0());
+                    td.get(6).text(rs.ang1());
                 }
 
                 //Таблица №6 ЗАПОЛНЕНИЯ  
                 Element tab6 = tab6List.get(i);
-                List<SpcRecord> spcList6 = loadTab6(winc, tab6, template6Rec);
+                List<RSpecific> spcList6 = loadTab6(winc, tab6, template6Rec);
                 spcList6.forEach(act -> tab6.append(template6Rec));
                 tab6.getElementsByTag("tr").remove(1);
                 for (int j = 0; j < spcList6.size(); j++) { //заполним строки 
-                    Elements tdList6 = tab6.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-                    tdList6.get(0).text(String.valueOf(j + 1));
-                    tdList6.get(1).text(str(spcList6.get(j).name));
-                    tdList6.get(2).text(str(spcList6.get(j).width));
-                    tdList6.get(3).text(str(spcList6.get(j).height));
-                    tdList6.get(4).text(str(spcList6.get(j).weight));
-                    tdList6.get(5).text(str(spcList6.get(j).count));
-                    tdList6.get(6).text(str(spcList6.get(j).weight));
+                    Elements td = tab6.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
+                    RSpecific rs = spcList6.get(j);
+                    td.get(0).text(String.valueOf(j + 1));
+                    td.get(1).text(rs.name());
+                    td.get(2).text(rs.width());
+                    td.get(3).text(rs.height());
+                    td.get(4).text(rs.weight());
+                    td.get(5).text(rs.count());
+                    td.get(6).text(rs.weight());
                 }
-
             }
 
             //Загрузим изображения
@@ -202,66 +202,57 @@ public class Target {
     }
 
     //ПРОФИЛЬ / АРМИРОВАНИЕ
-    public static void loadTab3(Wincalc winc, Element tab, String templateRec, List<SpcRecord> spcList2, List<SpcRecord> spcList3) {
+    public static void loadTab3(Wincalc winc, Element tab, String templateRec, List<RSpecific> spcList2, List<RSpecific> spcList3) {
 
         winc.listSpec.forEach(spcRec -> { //профиля
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X100, TypeArt.X101, TypeArt.X102, TypeArt.X103, TypeArt.X104, TypeArt.X105) == true) {
-                spcList2.add(new SpcRecord(spcRec));
+                spcList2.add(new RSpecific(spcRec));
             }
         });
         spcList2.forEach(spcRec1 -> { //армирование
             SpcRecord spcRec3 = new SpcRecord();
             for (SpcRecord spcRec2 : winc.listSpec) {
-                if (TypeArt.isType(spcRec2.artiklRec(), TypeArt.X107) == true && spcRec2.elem5e.id == spcRec1.id) {
+                if (TypeArt.isType(spcRec2.artiklRec(), TypeArt.X107) == true && spcRec2.elem5e.id == spcRec1.id()) {
                     spcRec3 = spcRec2;
                 }
             }
-            spcList3.add(new SpcRecord(spcRec3));
+            spcList3.add(new RSpecific(spcRec3));
         });
     }
 
     //УПЛОТНИТЕЛИ
-    public static List<SpcRecord> loadTab4(Wincalc winc, Element tab, String templateRec) {
+    public static List<RSpecific> loadTab4(Wincalc winc, Element tab, String templateRec) {
 
-        List<SpcRecord> spcList = new ArrayList();
+        List<RSpecific> spcList = new ArrayList<RSpecific>();
         winc.listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X135) == true) {
-                spcList.add(new SpcRecord(spcRec));
+                spcList.add(new RSpecific(spcRec));
             }
         });
         return spcList;
     }
 
     //ШТАПИК
-    public static List<SpcRecord> loadTab5(Wincalc winc, Element tab, String templateRec) {
+    public static List<RSpecific> loadTab5(Wincalc winc, Element tab, String templateRec) {
 
-        List<SpcRecord> spcList = new ArrayList();
+        List<RSpecific> spcList = new ArrayList();
         winc.listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X108) == true) {
-                spcList.add(new SpcRecord(spcRec));
+                spcList.add(new RSpecific(spcRec));
             }
         });
         return spcList;
     }
 
     //ЗАПОЛНЕНИЯ
-    public static List<SpcRecord> loadTab6(Wincalc winc, Element tab, String templateRec) {
+    public static List<RSpecific> loadTab6(Wincalc winc, Element tab, String templateRec) {
 
-        List<SpcRecord> spcList = new ArrayList();
+        List<RSpecific> spcList = new ArrayList<RSpecific>();
         winc.listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X502) == true) {
-                spcList.add(new SpcRecord(spcRec));
+                spcList.add(new RSpecific(spcRec));
             }
         });
         return spcList;
-    }
-
-    private static String str(Object txt) {
-        if (txt == null) {
-            return "";
-        } else if (txt instanceof Number) {
-            return df2.format(txt);
-        }
-        return txt.toString();
     }
 }

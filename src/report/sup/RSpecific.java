@@ -1,21 +1,18 @@
 package report.sup;
 
 import builder.making.SpcRecord;
-import domain.eArtikl;
 import domain.eColor;
+import common.UCom;
 import enums.UseUnit;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
 public class RSpecific {
-
-    private static DecimalFormat df1 = new DecimalFormat("#0.0");
-    private static DecimalFormat df2 = new DecimalFormat("#0.00");
+    
     private SpcRecord spc;
     private boolean otx = true;
 
@@ -32,67 +29,90 @@ public class RSpecific {
         return spc;
     }
 
-    public String getArtikl() {
+    public double id() {
+        return spc.id;
+    }
+    
+    public String artikl() {
         return spc.artikl;
     }
 
-    public String getName() {
+    public String name() {
         return spc.name;
     }
 
-    public String getColorID1() {
+    public String cname1() {
         return eColor.find(spc.colorID1).getStr(eColor.name);
     }
 
-    public String getCount() {
+    public String count() {
         if (spc.unit == UseUnit.PIE.id) {
             return String.valueOf(spc.count);
         } else {
-            return df2.format(spc.quant2);
+            return UCom.format(spc.quant2, -2);
         }
     }
 
-    public String getUnit() {
+    public String unit() {
         return UseUnit.getName(spc.unit);
     }
 
-    public String getWidth() {
+    public String width() {
         if (spc.width > 0) {
-            return df2.format(spc.width);
+            return UCom.format(spc.width, -2);
+        }
+        return "";
+    }
+    
+    public String height() {
+        if (spc.height > 0) {
+            return UCom.format(spc.height, -2);
         }
         return "";
     }
 
-    public String getAngl() {
-        String anglCut0 = (spc.anglCut0 == 0 || spc.anglCut0 == -1) ? "" : df1.format(spc.anglCut0);
-        String anglCut1 = (spc.anglCut1 == 0 || spc.anglCut1 == -1) ? "" : df1.format(spc.anglCut1);
+    public String ang0() {
+      return UCom.format(spc.anglCut0, -1);  
+    }
+    
+    public String ang1() {
+      return UCom.format(spc.anglCut1, -1);  
+    }
+    
+    public String angles() {
+        String anglCut0 = (spc.anglCut0 == 0 || spc.anglCut0 == -1) ? "" : UCom.format(spc.anglCut0, -1);
+        String anglCut1 = (spc.anglCut1 == 0 || spc.anglCut1 == -1) ? "" : UCom.format(spc.anglCut1, -1);
         String X = ("".equals(anglCut0) && "".equals(anglCut0)) ? "" : "x";
         return anglCut0 + X + anglCut1;
     }
 
-    public String getWeight() {
+    public String anglHor() {
+        return UCom.format(spc.anglHoriz, -1);
+    }
+    
+    public String weight() {
         if (spc.weight > 0) {
-            return df2.format(spc.weight);
+            return UCom.format(spc.weight, -2);
         }
         return "";
     }
 
-    public String getSpace() {
-        return df1.format(spc.width) + " x " + df2.format(spc.height);
+    public String space() {
+        return UCom.format(spc.width, -1) + " x " + UCom.format(spc.height, -1);
     }
 
-    public String getSebes2() {
+    public String sebes2() {
         if (otx) {
-            return df1.format(spc.sebes2);
+            return UCom.format(spc.sebes2, -1);
         }
-        return df1.format(spc.sebes1);
+        return UCom.format(spc.sebes1, -1);
     }
 
-    public String getPrice2() {
+    public String price2() {
         if (otx) {
-            return df1.format(spc.price2);
+            return UCom.format(spc.price2, -1);
         }
-        return df1.format(spc.price1);
+        return UCom.format(spc.price1, -1);
     }
 
     //--------------------------------------------------------------------------  
@@ -137,11 +157,11 @@ public class RSpecific {
         return list;
     }
 
-    public double getCost1() {
+    public double cost1() {
         return spc.price1;
     }
 
-    public double getCost2() {
+    public double cost2() {
         return spc.price2;
     }
 }

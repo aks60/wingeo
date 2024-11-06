@@ -72,7 +72,7 @@ public class Material {
         groupList.forEach(act -> doc.getElementsByTag("tbody").append(templateRec.get(0).html()));
         
         String date = UGui.simpleFormat.format(projectRec.get(eProject.date6));
-        double total = groupList.stream().mapToDouble(spc -> spc.getCost1()).sum();
+        double total = groupList.stream().mapToDouble(spc -> spc.cost1()).sum();
 
         doc.getElementById("h01").text("Заказ №" + projectRec.getStr(eProject.num_ord));
         doc.getElementsByTag("thead").get(0).getElementsByTag("tr").get(0).getElementsByTag("th").get(0).html("Дата изготовления заказа: " + date + " г.");
@@ -90,12 +90,12 @@ public class Material {
 
     private static void recordAdd(Elements tdList, RSpecific spcRec) {
         tdList.get(0).text(String.valueOf(++npp));
-        tdList.get(1).text(spcRec.getArtikl());
-        tdList.get(2).text(spcRec.getName());
-        tdList.get(3).text(spcRec.getColorID1());
-        tdList.get(4).text(spcRec.getCount());
-        tdList.get(5).text(spcRec.getUnit());
-        tdList.get(6).text(spcRec.getSebes2());
-        tdList.get(7).text(spcRec.getPrice2());
+        tdList.get(1).text(spcRec.artikl());
+        tdList.get(2).text(spcRec.name());
+        tdList.get(3).text(spcRec.cname1());
+        tdList.get(4).text(spcRec.count());
+        tdList.get(5).text(spcRec.unit());
+        tdList.get(6).text(spcRec.sebes2());
+        tdList.get(7).text(spcRec.price2());
     }
 }

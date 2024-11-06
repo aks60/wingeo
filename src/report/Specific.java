@@ -53,7 +53,6 @@ public class Specific {
 
     private static void loadDoc1(Record projectRec, Document doc) {
         
-        //Elements tdList = tab2List.get(i).getElementsByTag("td");
         List<SpcRecord> spcList = new ArrayList<SpcRecord>();
         List<RSpecific> kitList = new ArrayList<RSpecific>();
         List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
@@ -105,12 +104,13 @@ public class Specific {
         templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("йнлокейрш");
         doc.getElementsByTag("tbody").append(templateRec.get(0).html());
         kitList.forEach(rec -> recordAdd(templateRec, rec, doc));
+        
 
-        double total = listSpc1.stream().mapToDouble(spc -> spc.getCost1()).sum()
-                + listSpc2.stream().mapToDouble(spc -> spc.getCost1()).sum()
-                + listSpc3.stream().mapToDouble(spc -> spc.getCost1()).sum()
-                + listSpc5.stream().mapToDouble(spc -> spc.getCost1()).sum()
-                + kitList.stream().mapToDouble(spc -> spc.getCost1()).sum();
+        double total = listSpc1.stream().mapToDouble(spc -> spc.cost1()).sum()
+                + listSpc2.stream().mapToDouble(spc -> spc.cost1()).sum()
+                + listSpc3.stream().mapToDouble(spc -> spc.cost1()).sum()
+                + listSpc5.stream().mapToDouble(spc -> spc.cost1()).sum()
+                + kitList.stream().mapToDouble(spc -> spc.cost1()).sum();
         doc.getElementsByTag("tfoot").get(0).selectFirst("tr:eq(0)")
                 .selectFirst("td:eq(1)").text(UCom.format(total, 9));
     }
@@ -118,16 +118,16 @@ public class Specific {
     private static void recordAdd(Elements templateRec, RSpecific specificRec, Document doc) {
         Elements tdList = templateRec.get(1).getElementsByTag("td");
         tdList.get(0).text(String.valueOf(++npp));
-        tdList.get(1).text(specificRec.getArtikl());
-        tdList.get(2).text(specificRec.getName());
-        tdList.get(3).text(specificRec.getColorID1());
-        tdList.get(4).text(specificRec.getWidth());
-        tdList.get(5).text(specificRec.getAngl());
-        tdList.get(6).text(specificRec.getUnit());        
-        tdList.get(7).text(specificRec.getCount());
-        tdList.get(8).text(specificRec.getWeight());        
-        tdList.get(9).text(specificRec.getSebes2());
-        tdList.get(10).text(specificRec.getPrice2());
+        tdList.get(1).text(specificRec.artikl());
+        tdList.get(2).text(specificRec.name());
+        tdList.get(3).text(specificRec.cname1());
+        tdList.get(4).text(specificRec.width());
+        tdList.get(5).text(specificRec.angles());
+        tdList.get(6).text(specificRec.unit());        
+        tdList.get(7).text(specificRec.count());
+        tdList.get(8).text(specificRec.weight());        
+        tdList.get(9).text(specificRec.sebes2());
+        tdList.get(10).text(specificRec.price2());
         doc.getElementsByTag("tbody").append(templateRec.get(1).html());
     }
 }
