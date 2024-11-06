@@ -102,7 +102,7 @@ public class Test {
             //clearDataDB();
             //frames.PSConvert.exec();
             //frame(args);
-            wincalc("604005");
+            //wincalc("604005");
             //param();
             //query();
             //json();

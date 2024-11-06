@@ -128,9 +128,7 @@ public class Smeta {
                 td.get(10).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
                 td.get(12).text(UCom.format(winc.weight, 2));
                 td.get(14).text(UCom.format(winc.price1, 9));
-                //td.get(14).text(UCom.format(projectRec.getDbl(eProject.cost2), 9));
-                td.get(16).text(UCom.format(winc.price2, 9));
-                //td.get(16).text(UCom.format(projectRec.getDbl(eProject.cost4), 9));
+                td.get(16).text(UCom.format(winc.price2 - projectRec.getDbl(eProject.disc2) * winc.price2/100, 9));
                 total += count * projectRec.getDbl(eProject.price2c);
             }
 
