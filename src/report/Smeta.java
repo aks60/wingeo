@@ -193,7 +193,7 @@ public class Smeta {
             //Цикл по изделиям
             for (int i = 0; i < prjprodList.size(); i++) {
 
-                Elements tdList = tab2List.get(i).getElementsByTag("td");
+                Elements td = tab2List.get(i).getElementsByTag("td");
                 Wincalc winc = wincList.get(i);
                 square = square + winc.width() * winc.height();
                 Record prjprodRec = prjprodList.get(i);
@@ -204,20 +204,20 @@ public class Smeta {
                 ArrayList<ElemSimple> glassList = UCom.filter(winc.listElem, Type.GLASS);
                 Elements captions2 = tab2List.get(i).getElementsByTag("caption");
                 captions2.get(0).text("Изделие № " + (i + 1));
-                tdList.get(2).text(prjprodRec.getStr(ePrjprod.name));
-                tdList.get(4).text(prjprodRec.getStr(ePrjprod.name));
-                tdList.get(6).text(UCom.format(winc.width() / 1000, 3) + " x " + UCom.format(winc.height() / 1000, 3));
-                tdList.get(8).text(glassList.get(0).artiklRecAn.getStr(eArtikl.code));
-                tdList.get(10).text("");
-                tdList.get(12).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / "
+                td.get(2).text(prjprodRec.getStr(ePrjprod.name));
+                td.get(4).text(prjprodRec.getStr(ePrjprod.name));
+                td.get(6).text(UCom.format(winc.width() / 1000, 3) + " x " + UCom.format(winc.height() / 1000, 3));
+                td.get(8).text(glassList.get(0).artiklRecAn.getStr(eArtikl.code));
+                td.get(10).text("");
+                td.get(12).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / "
                         + eColor.find(winc.colorID2).getStr(eColor.name) + " / "
                         + eColor.find(winc.colorID3).getStr(eColor.name));
-                tdList.get(14).text(String.valueOf(count));
-                tdList.get(16).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
-                tdList.get(18).text(UCom.format(winc.weight, 2));
-                tdList.get(20).text(UCom.format(count * winc.price1, 9));
-                tdList.get(22).text(UCom.format(winc.price1 * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));
-                tdList.get(24).text(UCom.format(count * winc.price2, 9));
+                td.get(14).text(String.valueOf(count));
+                td.get(16).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
+                td.get(18).text(UCom.format(winc.weight, 2));                
+                td.get(20).text(UCom.format(winc.price1 * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));
+                td.get(22).text(UCom.format(count * winc.price1, 9));
+                td.get(24).text(UCom.format(count * winc.price2, 9));
 
                 total += prjprodRec.getInt(ePrjprod.num) * winc.price2;
 
@@ -294,7 +294,6 @@ public class Smeta {
                 td5List.get(5).text(prjkitRec.getStr(ePrjkit.numb));
                 td5List.get(6).text(UCom.format(330, 2));
                 td5List.get(7).text(UCom.format(440, 2));
-
             }
             //СЕКЦИЯ №4
             Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
