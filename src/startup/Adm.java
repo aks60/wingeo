@@ -1256,7 +1256,7 @@ public class Adm extends javax.swing.JFrame {
     }//GEN-LAST:event_mnExit
 
     private void userDelete(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userDelete
-        if (JOptionPane.showConfirmDialog(this, "Р’С‹ СѓРІРµСЂРµРЅС‹, С‡С‚Рѕ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ С‚РµРєСѓС‰РµРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ?", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+        if (JOptionPane.showConfirmDialog(this, "Вы уверены, что хотите удалить текущего пользователя?", "Предупреждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             int row = tab4.getSelectedRow();
             if (row != -1) {
                 try {
@@ -1272,8 +1272,8 @@ public class Adm extends javax.swing.JFrame {
                     loadingTab4();
 
                 } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(this, "РћС€РёР±РєР° СѓРґР°Р»РµРЅРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ", "Р’РќР?РњРђРќР?Р•!", 1);
-                    System.err.println("РћС€РёР±РєР°:Adm.userDelete() " + e);
+                    JOptionPane.showMessageDialog(this, "Ошибка удаления пользователя", "ВНИМАНИЕ!", 1);
+                    System.err.println("Ошибка:Adm.userDelete() " + e);
                 }
             }
         }
@@ -1291,7 +1291,7 @@ public class Adm extends javax.swing.JFrame {
             int index1 = ("TEXNOLOG".equals(role)) ? 1 : 2;
             box1.setSelectedIndex(index1);
             
-            int index2 = ("С‡С‚РµРЅРёРµ-Р·Р°РїРёСЃСЊ".equals(tab4.getValueAt(row, 2))) ? 0 : 1;
+            int index2 = ("чтение-запись".equals(tab4.getValueAt(row, 2))) ? 0 : 1;
             box2.setSelectedIndex(index2);
             txt1.setText(String.valueOf(tab4.getValueAt(row, 1)));
             txt2.setText(String.valueOf(eProp.password));
@@ -1323,7 +1323,7 @@ public class Adm extends javax.swing.JFrame {
                 thread.join();
             }
         } catch (InterruptedException e) {
-            System.out.println("РћС€РёР±РєР°:Adm.windowClosed()");
+            System.out.println("Ошибка:Adm.windowClosed()");
         }
     }//GEN-LAST:event_windowClosed
 
@@ -1362,7 +1362,7 @@ public class Adm extends javax.swing.JFrame {
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File("."));
         chooser.setFileFilter(filter);
-        int result = chooser.showDialog(this, "Р’С‹Р±СЂР°С‚СЊ");
+        int result = chooser.showDialog(this, "Выбрать");
         if (result == JFileChooser.APPROVE_OPTION) {
             edPath.setText(chooser.getSelectedFile().getPath());
         }
@@ -1399,7 +1399,7 @@ public class Adm extends javax.swing.JFrame {
         Conn Src = new Conn();
         eExcep excep = Src.connection(edServer.getText().trim(), edPort.getText().trim(),
                 edPath.getText().trim(), edUser.getText().trim(), edPass.getText().toCharArray(), null);
-        JOptionPane.showMessageDialog(this, edPath.getText().trim() + "  \n" + excep.mes, "РЎРѕРѕР±С‰РµРЅРёРµ", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, edPath.getText().trim() + "  \n" + excep.mes, "Сообщение", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnTestBtnStartClick
 
     private void mn30mnExit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn30mnExit
@@ -1510,15 +1510,15 @@ public class Adm extends javax.swing.JFrame {
 
         JPasswordField pass1 = new JPasswordField();
         JPasswordField pass2 = new JPasswordField();
-        Object[] ob = {"РќРѕРІС‹Р№ РїР°СЂРѕР»СЊ SYSDBA", pass1, "РџРѕРґС‚РІРµСЂРґРёС‚Рµ РЅРѕРІС‹Р№ РїР°СЂРѕР»СЊ", pass2};
-        int result = JOptionPane.showConfirmDialog(null, ob, "Р?Р·РјРµРЅРµРЅРёРµ РїР°СЂРѕР»СЏ", JOptionPane.OK_CANCEL_OPTION);
+        Object[] ob = {"Новый пароль SYSDBA", pass1, "Подтвердите новый пароль", pass2};
+        int result = JOptionPane.showConfirmDialog(null, ob, "Изменение пароля", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             if (String.valueOf(pass1.getPassword()).equals(String.valueOf(pass2.getPassword()))) {
 
                 Conn.modifyPassword("sysdba", pass2.getPassword());
-                JOptionPane.showMessageDialog(this, "РћРїРµСЂР°С†РёСЏ РІС‹РїРѕР»РЅРµРЅР° СѓСЃРїРµС€РЅРѕ!", "Р?Р·РјРµРЅРµРЅРёРµ РїР°СЂРѕР»СЏ SYSDBA", JOptionPane.NO_OPTION);
+                JOptionPane.showMessageDialog(this, "Операция выполнена успешно!", "Изменение пароля SYSDBA", JOptionPane.NO_OPTION);
             } else {
-                JOptionPane.showMessageDialog(this, "Р?РјРµРЅР° РЅРµ СЃРѕРІРїР°Р»Рё", "РќРµСѓРґР°С‡Р°", JOptionPane.NO_OPTION);
+                JOptionPane.showMessageDialog(this, "Имена не совпали", "Неудача", JOptionPane.NO_OPTION);
             }
         }
 
@@ -1625,11 +1625,11 @@ public class Adm extends javax.swing.JFrame {
         setTitle(eProfile.profile.title);
         new FrameToFile(this, btnClose);
         appendToPane("\n", Color.GRAY);
-        appendToPane("    Р’РЅРёРјР°РЅРёРµ!!! РџРµСЂРµРЅРѕСЃ РґР°РЅРЅС‹С… РёР· РџСЂРѕС„РЎС‚СЂРѕР№-3 РґРѕР»Р¶РµРЅ\n", Color.GRAY);
-        appendToPane("    РІС‹РїРѕР»РЅСЏС‚СЊСЃСЏ РїРѕРґ СѓРїСЂР°РІР»РµРЅРёРµРј Firebird 2.1 РќР• Р’Р«РЁР•.\n", Color.GRAY);
-        appendToPane("    Р•СЃР»Рё РІРµСЂСЃРёСЏ РІС‹С€Рµ С‡РµРј 2.1 РїРµСЂРµСѓСЃС‚Р°РЅРѕРІРёС‚Рµ Firebird.\n", Color.GRAY);
+        appendToPane("    Внимание!!! Перенос данных из ПрофСтрой-3 должен\n", Color.GRAY);
+        appendToPane("    выполняться под управлением Firebird 2.1 НЕ ВЫШЕ.\n", Color.GRAY);
+        appendToPane("    Если версия выше чем 2.1 переустановите Firebird.\n", Color.GRAY);
         appendToPane("\n", Color.GRAY);
-        appendToPane("    PS. РЈ Р’Р°СЃ СѓСЃС‚Р°РЅРѕРІР»РµРЅР° РІРµСЂСЃРёСЏ Firebird " + Conn.version() + "\n", Color.GRAY);
+        appendToPane("    PS. У Вас установлена версия Firebird " + Conn.version() + "\n", Color.GRAY);
 
         LookAndFeel lookAndFeel = UIManager.getLookAndFeel();
         for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {

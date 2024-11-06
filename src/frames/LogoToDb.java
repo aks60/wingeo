@@ -227,7 +227,8 @@ public class LogoToDb extends javax.swing.JDialog {
 
         btnOk.setFont(frames.UGui.getFont(0,0));
         btnOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b028.gif"))); // NOI18N
-        btnOk.setText("ОК");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
+        btnOk.setText(bundle.getString("Отмена")); // NOI18N
         btnOk.setToolTipText("");
         btnOk.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnOk.setEnabled(false);
@@ -243,7 +244,7 @@ public class LogoToDb extends javax.swing.JDialog {
 
         btnClose.setFont(frames.UGui.getFont(0,0));
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b029.gif"))); // NOI18N
-        btnClose.setText("Отмена");
+        btnClose.setText(bundle.getString("Отмена")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnClose.setMaximumSize(new java.awt.Dimension(80, 25));

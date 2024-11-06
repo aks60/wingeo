@@ -316,7 +316,7 @@ public class PathToDb extends javax.swing.JDialog {
 
         btnOk.setFont(frames.UGui.getFont(0,0));
         btnOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b028.gif"))); // NOI18N
-        btnOk.setText("ОК");
+        btnOk.setText(bundle.getString("ОК")); // NOI18N
         btnOk.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnOk.setEnabled(false);
         btnOk.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -331,7 +331,7 @@ public class PathToDb extends javax.swing.JDialog {
 
         btnClose.setFont(frames.UGui.getFont(0,0));
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b029.gif"))); // NOI18N
-        btnClose.setText("Отмена");
+        btnClose.setText(bundle.getString("Отмена")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnClose.setMaximumSize(new java.awt.Dimension(80, 25));
