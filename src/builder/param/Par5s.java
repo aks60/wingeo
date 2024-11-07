@@ -12,6 +12,11 @@ import java.util.ArrayList;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Function;
+import org.mozilla.javascript.Scriptable;
+import org.mozilla.javascript.ScriptableObject;
+
 public class Par5s {
 
     protected final int ID = 1;   //Ключ в таблице  
@@ -83,6 +88,7 @@ public class Par5s {
         try {
             ScriptEngineManager factory = new ScriptEngineManager();
             ScriptEngine engine = factory.getEngineByName("nashorn"); //factory.getEngineByName("JavaScript");
+            Context cx = Context.enter();
             engine.put("Q", Q);
             engine.put("L", L);
             engine.put("H", H);
