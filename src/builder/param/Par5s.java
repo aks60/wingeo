@@ -11,11 +11,11 @@ import domain.eSyspar1;
 import java.util.ArrayList;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import org.apache.commons.jexl3.JexlBuilder;
+import org.apache.commons.jexl3.JexlEngine;
+import org.apache.commons.jexl3.JexlExpression;
+import org.apache.commons.jexl3.MapContext;
 
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.Function;
-import org.mozilla.javascript.Scriptable;
-import org.mozilla.javascript.ScriptableObject;
 
 public class Par5s {
 
@@ -86,21 +86,21 @@ public class Par5s {
 
     protected Object calcScript(double Q, double L, double H, String script) {
         try {
-            ScriptEngineManager factory = new ScriptEngineManager();
-            ScriptEngine engine = factory.getEngineByName("nashorn"); //factory.getEngineByName("JavaScript");
-            
-            Context cx = Context.enter();
-            ScriptableObject globalScope = cx.initStandardObjects();
-            
-            engine.put("Q", Q);
-            engine.put("L", L);
-            engine.put("H", H);
-            script = script.replace("ceil", "Math.ceil");
-            return engine.eval(script);
+            JexlEngine jexl = new JexlBuilder().create();
+            JexlExpression expression = jexl.createExpression(script);
+            MapContext context = new MapContext();
+            context.set("Q", Q);
+            context.set("L", L);
+            context.set("H", H);
+            Object result = expression.evaluate(context);
+            if(result == null) {
+                return 0;
+            }
+            return result;
 
         } catch (Exception e) {
-            System.err.println("Ошибка: builder.param.Par5s.calcScript() " + e);
-            return -1;
+            System.err.println("Ошибка: Par5s.calcScript() " + e);
+            return 0;
         }
     }
 }

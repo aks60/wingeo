@@ -103,8 +103,8 @@ public class ParamList {
         P4097(4097, 0, "Трудозатраты по длине", dic_AUTO_OK_NO),
         P4098(4098, 0, "Бригада (участок)", dic_TEAM),
         P4099(4099, 0, "Трудозатраты, ч/ч.", check_FLOAT),
-        P7030(7030, 0, "Количество", check_SCRIPT_Q),
-        P7031(7031, "Количество", check_SCRIPT_Q),
+        P7030(7030, 0, "Количество", check_STRING),
+        P7031(7031, "Количество", check_SCRIPT),
         P7040(7040, 0, "Порог расчета, мм", check_FLOAT),
         P7050(7050, 0, "Шаг, мм", check_FLOAT),
         P7060(7060, 0, "Количество на шаг", check_COUNT),
@@ -113,12 +113,12 @@ public class ParamList {
         P7098(7098, 0, "Бригада (участок)", dic_TEAM),
         P7099(7099, 0, "Трудозатраты, ч/ч.", check_FLOAT),
         P8050(8050, 0, "Поправка, мм", check_FLOAT),
-        P8060(8060, 0, "Количество", check_SCRIPT_Q),
-        P8061(8061, "Количество", check_SCRIPT_Q),
-        P8065(8065, 0, "Длина, мм", check_SCRIPT_L),
-        P8066(8066, "Длина, мм", check_SCRIPT_L),
-        P8070(8070, 0, "Ширина, мм", check_SCRIPT_H),
-        P8071(8071, "Ширина, мм", check_SCRIPT_H),
+        P8060(8060, 0, "Количество", check_SCRIPT),
+        P8061(8061, "Количество", check_SCRIPT),
+        P8065(8065, 0, "Длина, мм", check_SCRIPT),
+        P8066(8066, "Длина, мм", check_SCRIPT),
+        P8070(8070, 0, "Ширина, мм", check_SCRIPT),
+        P8071(8071, "Ширина, мм", check_SCRIPT),
         P8075(8075, "Углы реза", dic_8075),
         P8081(8081, 0, "Ширина комплекта, мм", check_FLOAT),
         P8083(8083, 0, "Набрать длину с нахлестом, мм", check_STRING),
@@ -127,12 +127,12 @@ public class ParamList {
         P8099(8099, 0, "Трудозатраты, ч/ч.", check_FLOAT),
         P9050(9050, 0, "Поправка длины, мм", check_FLOAT),
         P9055(9055, 0, "Поправка ширины, мм", check_FLOAT),
-        P9060(9060, 0, "Количество", check_SCRIPT_Q),
-        P9061(9061, "Количество", check_SCRIPT_Q),
-        P9065(9065, 0, "Длина, мм", check_SCRIPT_L),
-        P9066(9066, "Длина, мм", check_SCRIPT_L),
-        P9070(9070, 0, "Ширина, мм", check_SCRIPT_H),
-        P9071(9071, "Ширина, мм", check_SCRIPT_H),
+        P9060(9060, 0, "Количество", check_SCRIPT),
+        P9061(9061, "Количество", check_SCRIPT),
+        P9065(9065, 0, "Длина, мм", check_SCRIPT),
+        P9066(9066, "Длина, мм", check_SCRIPT),
+        P9070(9070, 0, "Ширина, мм", check_SCRIPT),
+        P9071(9071, "Ширина, мм", check_SCRIPT),
         P9081(9081, 0, "Если ширина комплекта, мм", check_STRING),
         P9083(9083, 0, "Набрать длину с нахлестом/Длина , мм", check_STRING),
         P9097(9097, 0, "Трудозатраты по площади", check_FLOAT),
@@ -470,7 +470,7 @@ public class ParamList {
         P38004(38004, "Расчет", dic_38004_39005),
         P38010(38010, "Номер стороны", check_INT),
         P38017(38017, 0, "Код системы содержит строку", check_STRING),
-        P38030(38030, "Количество", check_COUNT),
+        P38030(38030, "Количество", check_SCRIPT),
         P38037(38037, "Название фурнитуры содержит", check_STRING),
         P38039(38039, "Для типа открывания", dic_1039_38039_39039),
         P38040(38040, "Порог расчета, мм", check_FLOAT),
@@ -817,7 +817,7 @@ public class ParamList {
     };
 
     public static Checkparam check_COUNT = (c) -> {
-        return ("-0123456789,".indexOf(c) != -1);
+        return ("-0123456789.".indexOf(c) != -1);
     };
 
     public static Checkparam check_INT = (c) -> {
@@ -841,33 +841,28 @@ public class ParamList {
     };
 
     public static Checkparam check_FLOAT = (c) -> {
-        return ("0123456789-,".indexOf(c) != -1);
-    };
-    public static Checkparam check_SCRIPT_L = (c) -> {
-        return ("0123456789,L*+-".indexOf(c) != -1);
-    };
-    public static Checkparam check_SCRIPT_H = (c) -> {
-        return ("0123456789,H*+-".indexOf(c) != -1);
-    };
-    public static Checkparam check_SCRIPT_Q = (c) -> {
-        return ("0123456789,Q*+-".indexOf(c) != -1);
+        return ("0123456789-.".indexOf(c) != -1);
     };
 
     public static Checkparam check_FLOAT_MOD = (c) -> {
-        return ("0123456789,".indexOf(c) != -1);
+        return ("0123456789.".indexOf(c) != -1);
     };
 
     public static Checkparam check_FLOAT_LIST = (c) -> {
-        return ("0123456789,-;".indexOf(c) != -1);
+        return ("0123456789.-;".indexOf(c) != -1);
     };
 
     public static Checkparam check_FLOAT_LIST2 = (c) -> {
-        return ("0123456789,*;-/@".indexOf(c) != -1);
+        return ("0123456789.*;-/@".indexOf(c) != -1);
     };
 
     //см. 34049
     public static Checkparam check_FLOAT_LIST2b = (c) -> {
-        return ("0123456789,-/".indexOf(c) != -1);
+        return ("0123456789.-/".indexOf(c) != -1);
     };
+    
+    public static Checkparam check_SCRIPT = (c) -> {
+        return ("0123456789.LHQ+-*".indexOf(c) != -1);
+    };    
     // </editor-fold>      
 }

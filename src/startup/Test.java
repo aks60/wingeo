@@ -36,6 +36,10 @@ import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import org.apache.commons.jexl3.JexlBuilder;
+import org.apache.commons.jexl3.JexlEngine;
+import org.apache.commons.jexl3.JexlExpression;
+import org.apache.commons.jexl3.MapContext;
 import org.locationtech.jts.algorithm.RobustLineIntersector;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
@@ -107,9 +111,9 @@ public class Test {
             //query();
             //json();
             //uid();
-            //script();
+            script();
             //geom();
-            //new Crypto().httpAsync("31.172.66.46");       
+            //new Crypto().httpAsync("31.172.66.46");  
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
@@ -339,62 +343,25 @@ public class Test {
     }
 
     private static void script() throws Exception {
+        try {
+            double Q = 9;
+            double L = 8;
+            double H = 7;
+            String script = "5";
+            
+            JexlEngine jexl = new JexlBuilder().create();
+            JexlExpression expression = jexl.createExpression(script);
+            MapContext context = new MapContext();
+            context.set("Q", Q);
+            context.set("L", L);
+            context.set("H", H);
+            Object result = expression.evaluate(context);
+            
+            System.out.println("Result: " + result);
 
-//        ScriptEngineManager factory = new ScriptEngineManager();
-//        ScriptEngine engine = factory.getEngineByName("nashorn"); //factory.getEngineByName("JavaScript");
-//        Bindings scope = engine.createBindings();
-//        File f = new File("test.js");
-//        engine.put("file", f);
-//        engine.eval("print(file.getAbsolutePath())");
-        //https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Math/ceil
-        //Переменные сценария
-//        double B = 3;
-//        double L = 1200;
-//        double H = 56;
-//        engine.put("B", B);
-//        engine.put("L", L);
-//        engine.put("H", H);
-//        engine.eval("var obj = new Object(); obj.length = L; obj.height = H;");
-//        engine.eval("print(obj.length + obj.height);");
-//        engine.eval("print(Math.ceil(L + 33.3));");
-        //Вызов Функций Сценария и Методов
-//        String script = "function hello(name) { print('Hello, ' + name); }";
-//        engine.eval(script);
-//        Invocable inv = (Invocable) engine;
-//        inv.invokeFunction("hello", "Аксёнов!!" );
-        //Основанным на объектах сценария
-//        String script = "var obj = new Object(); obj.hello = function(name) { print('Hello, ' + name); }";
-//        engine.eval(script);
-//        Invocable inv = (Invocable) engine;
-//        Object obj = engine.get("obj");
-//        inv.invokeMethod(obj, "hello", "Аксёнов!!" );
-        //Реализация Интерфейсов Java Сценариями
-//        String script = "function run() { print('run called Аксёнов'); }";
-//        engine.eval(script);
-//        Invocable inv = (Invocable) engine;
-//        Runnable r = inv.getInterface(Runnable.class);
-//        Thread th = new Thread(r);
-//        th.start();
-//
-        //На объектах или объектно-ориентирован
-//        String script = "var obj = new Object(); obj.run = function() { print('run method called Аксёнов'); }";
-//        engine.eval(script);
-//        Object obj = engine.get("obj");
-//        Invocable inv = (Invocable) engine;
-//        Runnable r = inv.getInterface(obj, Runnable.class);
-//        Thread th = new Thread(r);
-//        th.start(); 
-//        
-//        double Q = 3;
-//        double L = 1200;
-//        double H = 56;
-//        engine.put("Q", Q);
-//        engine.put("L", L);
-//        engine.put("H", H);
-//    
-//        script ="Math.ceil((Q * 2 * L) + 3.3)";
-//        Object result = engine.eval(script);
-//        System.out.println(result);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }
 
     public static void random() {
