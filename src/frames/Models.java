@@ -95,7 +95,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             try {
                 String script = record.getStr(eSysmodel.script);
                 Wincalc iwin2 = new Wincalc(script);
-                Cal5e joining = new SpcJoining(iwin2, true);//заполним соединения из конструктива
+                SpcJoining joining = new SpcJoining(iwin2, true);//заполним соединения из конструктива
                 joining.calc();
                 iwin2.imageIcon = Canvas.createIcon(iwin2, 68);
                 record.add(iwin2);

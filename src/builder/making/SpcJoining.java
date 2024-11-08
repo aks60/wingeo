@@ -47,7 +47,6 @@ public class SpcJoining extends Cal5e {
         this.shortPass = shortPass;
     }
 
-    @Override
     public void calc() {
         try {
 

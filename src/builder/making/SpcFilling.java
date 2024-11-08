@@ -44,7 +44,6 @@ public class SpcFilling extends Cal5e {
         this.shortPass = shortPass;
     }
 
-    @Override
     public void calc() {
         ArrayList<ElemSimple> elemGlassList = UCom.filter(winc.listElem, Type.GLASS);
         //Цикл по списку заполнений

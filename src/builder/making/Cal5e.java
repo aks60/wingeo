@@ -14,7 +14,4 @@ public abstract class Cal5e {
     public Cal5e(Wincalc winc) {
         this.winc = winc;
     }
-
-    public void calc() {
-    }
 }

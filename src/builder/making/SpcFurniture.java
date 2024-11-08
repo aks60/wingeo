@@ -48,7 +48,6 @@ public class SpcFurniture extends Cal5e {
         this.shortPass = shortPass;
     }
 
-    @Override
     public void calc() {
         ArrayList<AreaSimple> stvorkaList = UCom.filter(winc.listArea, Type.STVORKA);
         try {

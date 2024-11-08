@@ -232,7 +232,7 @@ public class Wincalc {
             listElem.forEach(elem -> elem.setSpecific());
 
             //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
-            new SpcJoining(this).calc(); //соединения
+            new builder.making.SpcJoining(this).calc(); //соединения
             new builder.making.SpcElement(this).calc(); //вставки
             new builder.making.SpcFilling(this).calc(); //заполнения
             new builder.making.SpcFurniture(this).calc(); //фурнитура 
