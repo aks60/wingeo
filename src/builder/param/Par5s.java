@@ -7,17 +7,22 @@ import java.util.List;
 import builder.Wincalc;
 import builder.making.SpcRecord;
 import common.listener.ListenerAction;
+import common.listener.ListenerObject;
+import common.listener.ListenerRecord;
 import domain.eSyspar1;
 import java.util.ArrayList;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import org.apache.commons.jexl3.JexlBuilder;
 import org.apache.commons.jexl3.JexlEngine;
 import org.apache.commons.jexl3.JexlExpression;
 import org.apache.commons.jexl3.MapContext;
 
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Scriptable;
+import org.mozilla.javascript.ScriptableObject;
 
 public class Par5s {
+
+    protected ListenerRecord listener = null;
 
     protected final int ID = 1;   //Ключ в таблице  
     protected final int GRUP = 3;   //Ключ параметра    
@@ -84,7 +89,7 @@ public class Par5s {
         }
     }
 
-    protected Object calcScript(double Q, double L, double H, String script) {
+    protected Object calcScript2(double Q, double L, double H, String script) {
         try {
             JexlEngine jexl = new JexlBuilder().create();
             JexlExpression expression = jexl.createExpression(script);
@@ -93,7 +98,7 @@ public class Par5s {
             context.set("L", L);
             context.set("H", H);
             Object result = expression.evaluate(context);
-            if(result == null) {
+            if (result == null) {
                 return 0;
             }
             return result;
@@ -102,5 +107,23 @@ public class Par5s {
             System.err.println("Ошибка: Par5s.calcScript() " + e);
             return 0;
         }
+    }
+
+    protected Object calcScript(double q, double l, double h, String script) {      
+        try {
+            Context cx = Context.enter();
+            Scriptable scope = cx.initStandardObjects();
+            ScriptableObject.putProperty(scope, "Q", q);
+            ScriptableObject.putProperty(scope, "L", l);
+            ScriptableObject.putProperty(scope, "L", h);
+            Object result = cx.evaluateString(scope, script, "<cmd>", 1, null);
+            return result;
+
+        } catch (Exception e) {
+            System.err.println("Ошибка: " + e);
+        } finally {
+            Context.exit();
+        }
+        return 0;
     }
 }
