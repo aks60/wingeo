@@ -88,7 +88,10 @@ public class Par5s {
         try {
             ScriptEngineManager factory = new ScriptEngineManager();
             ScriptEngine engine = factory.getEngineByName("nashorn"); //factory.getEngineByName("JavaScript");
+            
             Context cx = Context.enter();
+            ScriptableObject globalScope = cx.initStandardObjects();
+            
             engine.put("Q", Q);
             engine.put("L", L);
             engine.put("H", H);
