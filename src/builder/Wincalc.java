@@ -49,10 +49,14 @@ public class Wincalc {
     public double spcId = 0; //для генерации ключа в спецификации
     public int colorID1 = -1, colorID2 = 1, colorID3 = -1; //базовый,внутр,внещний 
     public Record syssizRec = null; //система константт
-    public double sebes1 = 0; //себест. за ед. без отхода     
-    public double sebes2 = 0; //себест. за ед. с отходом
+    //public double sebes1 = 0; //себест. за ед. без отхода     
+    //public double sebes2 = 0; //себест. за ед. с отходом
     public double price1 = 0; //стоимость без скидки
     public double price2 = 0; //стоимость с технологической скидкой
+
+    //public double price1k = 0; //стоимость комп. с технологической скидкой
+    //public double price2k = 0; //стоимость комп. с технологической скидкой
+
     public double weight = 0; //масса конструкции  
     //public double count = 0; //колич. единиц
     public BufferedImage bufferImg = null;  //образ рисунка
@@ -70,9 +74,10 @@ public class Wincalc {
     public HashMap<Integer, Record> mapPardef = new HashMap<>(); //пар. по умолчанию + наложенные пар. клиента
     public ArrayList<AreaSimple> listArea = new ArrayList<AreaSimple>(); //список ареа.
     public ArrayList<ElemSimple> listElem = new ArrayList<ElemSimple>(); //список элем.
+    public ArrayList<ElemJoining> listJoin = new ArrayList<ElemJoining>(); //список соед.
     public ArrayList<Com5t> listAll = new ArrayList<Com5t>(); //список всех компонентов (area + elem)
     public ArrayList<SpcRecord> listSpec = new ArrayList<SpcRecord>(); //спецификация
-    public ArrayList<ElemJoining> listJoin = new ArrayList<ElemJoining>(); //список соединений рам и створок 
+    //public ArrayList<SpcRecord> listKit = new ArrayList<SpcRecord>(); //спецификация
 
     public Wincalc() {
     }
@@ -152,7 +157,7 @@ public class Wincalc {
                         root.frames.add(elem5e);
 
                     } else if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).contains(js.type)) {
-                        ElemCross elem5e = new ElemCross(this, js, owner);                        
+                        ElemCross elem5e = new ElemCross(this, js, owner);
                         owner.childs.add(elem5e); //добавим ребёнка родителю
                         //UGeo.normalizeElem(elem5e);
 
@@ -267,7 +272,7 @@ public class Wincalc {
 
         } catch (Exception e) {
             System.err.println("Ошибка:Wincalc.constructiv() " + e);
-        } 
+        }
     }
 
     //Рисуем конструкцию

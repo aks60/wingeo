@@ -761,7 +761,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             UGui.stopCellEditingAndExecSql();
             Record projectRec = qProject.get(UGui.getIndexRec(tab1));
             Record currencRec = qCurrenc.stream().filter(rec -> rec.get(eCurrenc.id).equals(projectRec.get(eProject.currenc_id))).findFirst().orElse(eCurrenc.up.newRecord(Query.SEL));
-            double square = 0, weight = 0, cost2 = 0, cost3 = 0, cost4, price2 = 0, price3 = 0, price4 = 0;
+            double square = 0, weight = 0,
+                    price1a = 0, price1b = 0, price1c = 0, //без скидки менеджера
+                    price2a = 0, price2b = 0, price2c = 0; //со скидкой менеджера
             //Пересчёт заказа
             if (UGui.getIndexRec(tab1) != -1) {
 
@@ -778,39 +780,39 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
                         square = square + prjprodRec.getDbl(ePrjprod.num) * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
                         weight = weight + prjprodRec.getDbl(ePrjprod.num) * win.weight; //вес изделий
-                        price2 = price2 + win.price1; //стоимость конструкции без скидки менеджера
-                        cost2 = cost2 + win.price2; //стоимость конструкции со скидкой менеджера
+                        price1a = price1a + win.price1; //стоимость конструкции без скидки менеджера
+                        price2a = price2a + win.price2; //стоимость конструкции со скидкой менеджера
 
                         //Комплектация
                         ArrayList<SpcRecord> kitList = SpcTariffic.kits(prjprodRec, win, true); //комплекты
                         for (SpcRecord kit : kitList) {
-                            price3 = price3 + kit.price1; //стоимость без скидки
-                            cost3 = cost3 + kit.price2; //стоимость со скидками
+                            price1b = price1b + kit.price1; //стоимость без скидки
+                            price2b = price2b + kit.price2; //стоимость со скидками
                         }
                     }
                 }
                 //Сохраним новые кальк.данные в проекте
-                if (price2 != projectRec.getDbl(eProject.price1a)) {
-                    projectRec.set(eProject.price1a, price2); //стоимость конструкции без скидки менеджера
+                if (price1a != projectRec.getDbl(eProject.price1a)) {
+                    projectRec.set(eProject.price1a, price1a); //стоимость конструкции без скидки менеджера
                 }
-                cost2 = cost2 - cost2 * projectRec.getDbl(eProject.disc2) / 100;
-                if (cost2 != projectRec.getDbl(eProject.price2a)) {
-                    projectRec.set(eProject.price2a, cost2); //стоимость конструкции со скидкой менеджера
+                price2a = price2a - price2a * projectRec.getDbl(eProject.disc2) / 100;
+                if (price2a != projectRec.getDbl(eProject.price2a)) {
+                    projectRec.set(eProject.price2a, price2a); //стоимость конструкции со скидкой менеджера
                 }
-                if (price3 != projectRec.getDbl(eProject.price1b)) {
-                    projectRec.set(eProject.price1b, price3); //стоимость комплектации без скидки менеджера
+                if (price1b != projectRec.getDbl(eProject.price1b)) {
+                    projectRec.set(eProject.price1b, price1b); //стоимость комплектации без скидки менеджера
                 }
-                cost3 = cost3 - cost3 * projectRec.getDbl(eProject.disc3) / 100;
-                //System.err.println(cost3); // + " - " + projectRec.getDbl(eProject.cost3));
-                if (cost3 != projectRec.getDbl(eProject.price2b)) {
-                    projectRec.set(eProject.price2b, cost3); //стоимость комплектации со скидкой менеджера
+                price2b = price2b - price2b * projectRec.getDbl(eProject.disc3) / 100;
+                if (price2b != projectRec.getDbl(eProject.price2b)) {
+                    projectRec.set(eProject.price2b, price2b); //стоимость комплектации со скидкой менеджера
                 }
-                if (price2 + price3 != projectRec.getDbl(eProject.price1c)) {
-                    projectRec.set(eProject.price1c, price2 + price3); //стоимость проекта без скидок
+                price1c = price1a + price1b;
+                if (price1a + price1b != projectRec.getDbl(eProject.price1c)) {
+                    projectRec.set(eProject.price1c, price1c); //стоимость проекта без скидок
                 }
-                cost4 = (cost2 + cost3) - ((cost2 + cost3) * projectRec.getDbl(eProject.disc4) / 100);
-                if (cost4 != projectRec.getDbl(eProject.price2c)) {
-                    projectRec.set(eProject.price2c, cost4); //стоимость проекта со скидками менеджера
+                price2c = (price2a + price2b) - ((price2a + price2b) * projectRec.getDbl(eProject.disc4) / 100);
+                if (price2c != projectRec.getDbl(eProject.price2c)) {
+                    projectRec.set(eProject.price2c, price2c); //стоимость проекта со скидками менеджера
                 }
                 projectRec.set(eProject.date5, new GregorianCalendar().getTime());
 

@@ -194,6 +194,8 @@ public class SpcTariffic extends Cal5e {
                         double price = spc.count * spc.quant2 * spc.sebes2 * k1 * k3;
                         spc.price1 = price; //стоимость без скидки                     
                         spc.price2 = price - price / 100 * k2; //стоимость со скидкой 
+                        //winc.price1k += spc.price1;
+                        //winc.price2k += spc.price2;
                         kitList.add(spc);
                     }
                 }
