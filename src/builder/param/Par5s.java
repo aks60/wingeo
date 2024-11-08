@@ -7,14 +7,9 @@ import java.util.List;
 import builder.Wincalc;
 import builder.making.SpcRecord;
 import common.listener.ListenerAction;
-import common.listener.ListenerObject;
 import common.listener.ListenerRecord;
 import domain.eSyspar1;
 import java.util.ArrayList;
-import org.apache.commons.jexl3.JexlBuilder;
-import org.apache.commons.jexl3.JexlEngine;
-import org.apache.commons.jexl3.JexlExpression;
-import org.apache.commons.jexl3.MapContext;
 
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
@@ -89,41 +84,42 @@ public class Par5s {
         }
     }
 
-    protected Object calcScript2(double Q, double L, double H, String script) {
-        try {
-            JexlEngine jexl = new JexlBuilder().create();
-            JexlExpression expression = jexl.createExpression(script);
-            MapContext context = new MapContext();
-            context.set("Q", Q);
-            context.set("L", L);
-            context.set("H", H);
-            Object result = expression.evaluate(context);
-            if (result == null) {
-                return 0;
-            }
-            return result;
-
-        } catch (Exception e) {
-            System.err.println("Ошибка: Par5s.calcScript() " + e);
-            return 0;
-        }
-    }
-
-    protected Object calcScript(double q, double l, double h, String script) {      
+    protected Object calcScript(double q, double l, double h, String script) {
         try {
             Context cx = Context.enter();
             Scriptable scope = cx.initStandardObjects();
             ScriptableObject.putProperty(scope, "Q", q);
             ScriptableObject.putProperty(scope, "L", l);
-            ScriptableObject.putProperty(scope, "L", h);
+            ScriptableObject.putProperty(scope, "H", h);
             Object result = cx.evaluateString(scope, script, "<cmd>", 1, null);
             return result;
 
         } catch (Exception e) {
-            System.err.println("Ошибка: " + e);
+            System.err.println("Ошибка: Par5s.calcScript() " + e);
         } finally {
             Context.exit();
         }
         return 0;
+    }
+
+    protected Object calcScrip2(double Q, double L, double H, String script) {
+//        try {
+//            JexlEngine jexl = new JexlBuilder().create();
+//            JexlExpression expression = jexl.createExpression(script);
+//            MapContext context = new MapContext();
+//            context.set("Q", Q);
+//            context.set("L", L);
+//            context.set("H", H);
+//            Object result = expression.evaluate(context);
+//            if (result == null) {
+//                return 0;
+//            }
+//            return result;
+//
+//        } catch (Exception e) {
+//            System.err.println("Ошибка: Par5s.calcScript() " + e);
+//            return 0;
+//        }
+        return null;
     }
 }

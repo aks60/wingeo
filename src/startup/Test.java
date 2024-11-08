@@ -36,15 +36,10 @@ import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import org.apache.commons.jexl3.JexlBuilder;
-import org.apache.commons.jexl3.JexlEngine;
-import org.apache.commons.jexl3.JexlExpression;
-import org.apache.commons.jexl3.MapContext;
 import org.locationtech.jts.algorithm.RobustLineIntersector;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
-import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.noding.IntersectionAdder;
 import org.locationtech.jts.noding.MCIndexNoder;
 import org.locationtech.jts.noding.NodedSegmentString;
@@ -343,25 +338,25 @@ public class Test {
     }
 
     private static void script() throws Exception {
-        try {
-            double Q = 9;
-            double L = 8;
-            double H = 7;
-            String script = "5";
-            
-            JexlEngine jexl = new JexlBuilder().create();
-            JexlExpression expression = jexl.createExpression(script);
-            MapContext context = new MapContext();
-            context.set("Q", Q);
-            context.set("L", L);
-            context.set("H", H);
-            Object result = expression.evaluate(context);
-            
-            System.out.println("Result: " + result);
-
-        } catch (Exception e) {
-            System.err.println(e);
-        }
+//        try {
+//            double Q = 9;
+//            double L = 8;
+//            double H = 7;
+//            String script = "5";
+//            
+//            JexlEngine jexl = new JexlBuilder().create();
+//            JexlExpression expression = jexl.createExpression(script);
+//            MapContext context = new MapContext();
+//            context.set("Q", Q);
+//            context.set("L", L);
+//            context.set("H", H);
+//            Object result = expression.evaluate(context);
+//            
+//            System.out.println("Result: " + result);
+//
+//        } catch (Exception e) {
+//            System.err.println(e);
+//        }
     }
 
     public static void random() {

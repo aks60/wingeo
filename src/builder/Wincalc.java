@@ -54,7 +54,7 @@ public class Wincalc {
     public double price1 = 0; //стоимость без скидки
     public double price2 = 0; //стоимость с технологической скидкой
     public double weight = 0; //масса конструкции  
-    public double count = 0; //колич. единиц
+    //public double count = 0; //колич. единиц
     public BufferedImage bufferImg = null;  //образ рисунка
     public ImageIcon imageIcon = null; //рисунок конструкции
     public Graphics2D gc2d = null; //графический котекст рисунка  
@@ -236,16 +236,16 @@ public class Wincalc {
             new builder.making.SpcElement(this).calc(); //вставки
             new builder.making.SpcFilling(this).calc(); //заполнени€
             new builder.making.SpcFurniture(this).calc(); //фурнитура 
-            new builder.making.SpcTariffic(this, norm_otx).calc(); //рассчитаем тарификацию
+            new builder.making.SpcTariffic(this, norm_otx).calc(); //тарификаци€
 
             //«аполним список спецификации
             for (ElemSimple elem5e : listElem) {
                 if (elem5e.spcRec.artikl.isEmpty() || elem5e.spcRec.artikl.trim().charAt(0) != '@') {
-                    listSpec.add(elem5e.spcRec);
+                    this.listSpec.add(elem5e.spcRec);
                 }
                 for (SpcRecord spc : elem5e.spcRec.spcList) {
                     if (spc.artikl.isEmpty() || spc.artikl.trim().charAt(0) != '@') {
-                        listSpec.add(spc);
+                        this.listSpec.add(spc);
                     }
                 }
             }
@@ -254,7 +254,7 @@ public class Wincalc {
             for (SpcRecord spc : listSpec) {
                 this.price1 = (this.price1 + spc.price1); //обща€ стоимость без скидки
                 this.price2 = (this.price2 + spc.price2); //обща€ стоимость со скидкой             
-                this.count = (this.count + spc.count); //колич. единиц                       
+                //this.count = (this.count + spc.count); //колич. единиц                       
             }
 
             //¬ес издели€
