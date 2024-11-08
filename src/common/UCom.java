@@ -14,6 +14,7 @@ import enums.TypeJoin;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +23,7 @@ import org.locationtech.jts.geom.Coordinate;
 
 public class UCom {
 
+    //private static SimpleDateFormat fd = new SimpleDateFormat("dd.MM.yyyy");
     private static DecimalFormat df = new DecimalFormat();
 
     public static boolean check(String val, int pattern) {

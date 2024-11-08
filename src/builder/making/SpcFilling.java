@@ -44,15 +44,15 @@ public class SpcFilling extends Cal5e {
         this.shortPass = shortPass;
     }
 
-    public void calc() {
+    public void fill() {
         ArrayList<ElemSimple> elemGlassList = UCom.filter(winc.listElem, Type.GLASS);
         //Цикл по списку заполнений
         for (ElemSimple elemGlass : elemGlassList) {
-            calc((ElemSimple) elemGlass);
+            fill((ElemSimple) elemGlass);
         }
     }
 
-    public void calc(ElemSimple elemGlass) {
+    public void fill(ElemSimple elemGlass) {
         try {
             Double depth = elemGlass.artiklRec.getDbl(eArtikl.depth); //толщина стекда           
             //List<ElemSimple> elemFrameList = new ArrayList<ElemSimple>(winc.root.frames);  //список рам конструкции

@@ -47,7 +47,7 @@ public class SpcJoining extends Cal5e {
         this.shortPass = shortPass;
     }
 
-    public void calc() {
+    public void join() {
         try {
 
             //Цикл по списку соединений

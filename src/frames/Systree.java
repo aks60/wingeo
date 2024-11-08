@@ -501,7 +501,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     //Створка
                 } else if (winNode.com5t().type == enums.Type.STVORKA) {
                     //расчёт ручки, 
-                    new SpcFurniture(wincalc(), true).calc();   //петли, замка
+                    new SpcFurniture(wincalc(), true).furn();   //петли, замка
                     //через сокр. тарификацию
                     ((CardLayout) pan7.getLayout()).show(pan7, "card16");
                     AreaStvorka stv = (AreaStvorka) winNode.com5t();
@@ -545,7 +545,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     ((CardLayout) pan7.getLayout()).show(pan7, "card17");
                     DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                     ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
-                    new SpcJoining(winc, true).calc();//заполним соединения из конструктива                                        
+                    new SpcJoining(winc, true).join();//заполним соединения из конструктива                                        
                     ElemJoining ej1 = UCom.join(winc.listJoin, elem5e, 0);
                     ElemJoining ej2 = UCom.join(winc.listJoin, elem5e, 1);
                     ElemJoining ej3 = UCom.join(winc.listJoin, elem5e, 2);

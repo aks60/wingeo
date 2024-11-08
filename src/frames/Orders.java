@@ -438,7 +438,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     //Створка
                 } else if (winNode.com5t().type == enums.Type.STVORKA) {
                     //расчёт ручки, 
-                    new SpcFurniture(wincalc(), true).calc();   //подвеса, замка
+                    new SpcFurniture(wincalc(), true).furn();   //подвеса, замка
                     //через сокр. тарификацию
                     ((CardLayout) pan8.getLayout()).show(pan8, "card16");
                     AreaStvorka stv = (AreaStvorka) winNode.com5t();
@@ -488,7 +488,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                     ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
                     List.of(txt36, txt37, txt38, txt39, txt40, txt41, txt42, txt43, txt44).forEach(it -> it.setText(""));
-                    new SpcJoining(winc, true).calc();//заполним соединения из конструктива 
+                    new SpcJoining(winc, true).join();//заполним соединения из конструктива 
                     ElemJoining ej1 = UCom.join(winc.listJoin, elem5e, 0);
                     ElemJoining ej2 = UCom.join(winc.listJoin, elem5e, 1);
                     ElemJoining ej3 = UCom.join(winc.listJoin, elem5e, 2);

@@ -232,10 +232,10 @@ public class Wincalc {
             listElem.forEach(elem -> elem.setSpecific());
 
             //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
-            new builder.making.SpcJoining(this).calc(); //соединения
-            new builder.making.SpcElement(this).calc(); //вставки
-            new builder.making.SpcFilling(this).calc(); //заполнения
-            new builder.making.SpcFurniture(this).calc(); //фурнитура 
+            new builder.making.SpcJoining(this).join(); //соединения
+            new builder.making.SpcElement(this).elem(); //вставки
+            new builder.making.SpcFilling(this).fill(); //заполнения
+            new builder.making.SpcFurniture(this).furn(); //фурнитура 
             new builder.making.SpcTariffic(this, norm_otx).calc(); //тарификация
 
             //Заполним список спецификации

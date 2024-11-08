@@ -33,7 +33,7 @@ public class SpcElement extends Cal5e {
     }
 
     //Идем по списку профилей смотрим, есть аналог, работаем с ним.
-    public void calc() {
+    public void elem() {
         ArrayList<ElemSimple> listElem = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, 
                 Type.IMPOST, Type.SHTULP, Type.STOIKA, Type.GLASS, Type.MOSQUIT); //список элементов конструкции
         try {

@@ -48,7 +48,7 @@ public class SpcFurniture extends Cal5e {
         this.shortPass = shortPass;
     }
 
-    public void calc() {
+    public void furn() {
         ArrayList<AreaSimple> stvorkaList = UCom.filter(winc.listArea, Type.STVORKA);
         try {
             //Подбор фурнитуры по параметрам

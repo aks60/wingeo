@@ -141,7 +141,7 @@ public class ElemGlass extends ElemSimple {
             spcRec.color(colorID1, colorID2, colorID3);
 
             //Фича определения gzazo и gaxis на раннем этапе построения. 
-            new SpcFilling(winc, true).calc(this);
+            new SpcFilling(winc, true).fill(this);
 
             ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             Map<Double, Double> hm = new HashMap();

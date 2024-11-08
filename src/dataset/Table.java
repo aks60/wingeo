@@ -1,6 +1,5 @@
 package dataset;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,8 +11,6 @@ public class Table extends ArrayList<Record> {
     protected Query root = null;
     protected HashMap<String, Query> mapQuery = new HashMap<String, Query>();
     protected ArrayList<Field> fields = new ArrayList<Field>(); 
-
-    private static SimpleDateFormat fd = new SimpleDateFormat("dd.MM.yyyy");
 
     public Table() {
     }
