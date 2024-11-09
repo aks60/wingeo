@@ -464,14 +464,12 @@ public class Test {
 
         Coordinate[] coord1 = new Coordinate[]{
             new Coordinate(0, 0, 1), new Coordinate(0, 1400, 2),
-            new Coordinate(1300, 1320, 3), new Coordinate(1320, 0, 4),
+            new Coordinate(1230, 1350, 3), new Coordinate(1300, 0, 4),
             new Coordinate(0, 0, 1)};
         Polygon poly = gf.createPolygon(coord1);
         LineString line = gf.createLineString(new Coordinate[]{new Coordinate(1200, 0, -8), new Coordinate(1300, 100, -8)});
 
-        Geometry[] geom = splitPolylin(poly, line);
-
-        mpol = geom[1];
+        mpol = poly;
         mlin = line;        
     }
 
@@ -504,12 +502,11 @@ public class Test {
 
         Polygon geom = UGeo.newPolygon(list);
         //Polygon geo2 = UGeo.bufferCross(geo1, hm, 0);
-//        Geometry geo2 = UGeo.splitPolyLine7(geo1, line1).getGeometryN(0);
-        Geometry[] geo3 = splitPolylin(geom, line1);
+        //Geometry geo2 = UGeo.splitPolyLine7(geo1, line1).getGeometryN(0);
 
-        this.mpol = geo3[0];
-        //this.mlin = line1;
-        //this.mpol = geo2;
+
+        this.mpol = geom;
+        this.mlin = line1;
     }
 
     private void draw6() {
@@ -693,40 +690,5 @@ public class Test {
         // System.out.println(list1);
     }
 
-    private Geometry[] splitPolylin(Polygon poly, LineString imp) {
-        boolean f = true;
-        List<Coordinate> ls1 = new ArrayList<Coordinate>();
-        List<Coordinate> ls2 = new ArrayList<Coordinate>();
-        Envelope env = poly.getEnvelopeInternal();
-        Coordinate coo[] = {
-            new Coordinate(env.getMinX(), env.getMinY()),
-            new Coordinate(env.getMinX(), env.getMaxY()),
-            new Coordinate(env.getMaxX(), env.getMaxY()),
-            new Coordinate(env.getMaxX(), env.getMinY()),
-            new Coordinate(env.getMinX(), env.getMinY())};
-
-        for (int i = 0; i < 4; i++) {
-            if (f) {
-                ls1.add(coo[i]);
-            }
-            Coordinate cross = Intersection.lineSegment(
-                    imp.getCoordinateN(0), imp.getCoordinateN(1), coo[i], coo[i + 1]);
-
-            if (cross != null) {
-                cross.z = -8;
-                ls1.add(cross);
-                ls2.add(cross);
-                f = !f;
-            }
-        }
-
-        ls1.add(coo[0]);
-        Geometry line = Com5t.gf.createLineString(ls2.toArray(new Coordinate[0]));
-        Geometry poly0 = gf.createPolygon(ls1.toArray(new Coordinate[0]));
-        Geometry poly1 = poly.intersection(poly0);
-        Geometry poly2 = poly.difference(poly0);       
-        return new Geometry[]{line, poly1, poly2};
-
-    }
 // </editor-fold>        
 }

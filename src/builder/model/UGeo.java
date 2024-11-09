@@ -3,6 +3,7 @@ package builder.model;
 import builder.making.SpcRecord;
 import static builder.model.Com5t.gf;
 import common.LineSegm;
+import common.UCom;
 import dataset.Record;
 import domain.eArtikl;
 import java.util.ArrayDeque;
@@ -139,7 +140,6 @@ public class UGeo {
 
                 Coordinate crosP = Intersection.lineSegment(lineImp.p0, lineImp.p1, coo[i - 1], coo[i]); //точка пересечения сегмента и линии                
                 checkHs.add(coo[i]);
-
                 //Вставим точку
                 if (crosP != null) {
                     crosTwo.add(crosP);
@@ -198,42 +198,6 @@ public class UGeo {
             return null;
         }
     }
-
-    public static Geometry[] splitPolygon9(Geometry poly, ElemCross impost) {
-        boolean f = true;
-        List<Coordinate> ls1 = new ArrayList<Coordinate>();
-        List<Coordinate> ls2 = new ArrayList<Coordinate>();
-        LineSegment imp = normalizeSegm(new LineSegment(
-                new Coordinate(impost.x1(), impost.y1()),
-                new Coordinate(impost.x2(), impost.y2())));
-        Envelope env = poly.getEnvelopeInternal();
-        Coordinate coo[] = {
-            new Coordinate(env.getMinX(), env.getMinY()),
-            new Coordinate(env.getMinX(), env.getMaxY()),
-            new Coordinate(env.getMaxX(), env.getMaxY()),
-            new Coordinate(env.getMaxX(), env.getMinY()),
-            new Coordinate(env.getMinX(), env.getMinY())};
-
-        for (int i = 0; i < 4; i++) {
-            if (f) {
-                ls1.add(coo[i]);
-            }
-            Coordinate cross = Intersection.lineSegment(
-                    imp.p0, imp.p1, coo[i], coo[i + 1]);
-
-            if (cross != null) {
-                ls1.add(cross);
-                ls2.add(cross);
-                f = !f;
-            }
-        }
-        ls1.add(coo[0]);
-        Geometry line = Com5t.gf.createLineString(ls2.toArray(new Coordinate[0]));
-        Geometry poly0 = gf.createPolygon(ls1.toArray(new Coordinate[0]));
-        Geometry poly1 = poly.intersection(poly0);
-        Geometry poly2 = poly.difference(poly0);       
-        return new Geometry[]{line, poly1, poly2};
-}
 
     public static Polygon buffer(Geometry line, Map<Double, Double> hm) {
         try {
@@ -455,6 +419,41 @@ public class UGeo {
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
     //Пилим многоугольник    
+    public static Geometry[] splitPolyImp6(Geometry poly, ElemCross impost) {
+        boolean f = true;
+        List<Coordinate> ls1 = new ArrayList<Coordinate>();
+        List<Coordinate> ls2 = new ArrayList<Coordinate>();
+        LineSegment imp = normalizeSegm(new LineSegment(
+                new Coordinate(impost.x1(), impost.y1()),
+                new Coordinate(impost.x2(), impost.y2())));
+        Envelope env = poly.getEnvelopeInternal();
+        Coordinate coo[] = {
+            new Coordinate(env.getMinX(), env.getMinY()),
+            new Coordinate(env.getMinX(), env.getMaxY()),
+            new Coordinate(env.getMaxX(), env.getMaxY()),
+            new Coordinate(env.getMaxX(), env.getMinY()),
+            new Coordinate(env.getMinX(), env.getMinY())};
+
+        for (int i = 0; i < 4; i++) {
+            if (f) {
+                ls1.add(coo[i]);
+            }
+            Coordinate cross = Intersection.lineSegment(
+                    imp.p0, imp.p1, coo[i], coo[i + 1]);
+
+            if (cross != null) {
+                ls1.add(cross);
+                f = !f;
+            }
+        }
+        ls1.add(coo[0]);               
+        Geometry line = Com5t.gf.createLineString(ls2.toArray(new Coordinate[0]));
+        Geometry poly0 = gf.createPolygon(ls1.toArray(new Coordinate[0]));
+        Geometry poly1 = poly.intersection(poly0);
+        Geometry poly2 = poly.difference(poly0);       
+        return new Geometry[]{line, poly1, poly2};
+}
+    
     public static Geometry[] splitPolyImp7(Geometry geom, ElemCross impost) {
         try {
             LineString lineImp = gf.createLineString(new Coordinate[]{
@@ -820,20 +819,36 @@ public class UGeo {
 
     public static void PRINT(Geometry g) {
         Coordinate coo[] = g.getCoordinates();
-        System.out.println(List.of(coo));
+        List<String> list = new ArrayList<String>();
+        for (int i = 0; i < coo.length; i++) {
+            list.add("{" + UCom.format(coo[i].x, 2) + " " + UCom.format(coo[i].y, 2) + " " + UCom.format(coo[i].z, 2) + "}");
+        }
+        System.out.println(list);
     }
 
     public static void PRINT(String s, Geometry g) {
         Coordinate coo[] = g.getCoordinates();
-        System.out.println(s + " " + List.of(coo));
+        List<String> list = new ArrayList<String>();
+        for (int i = 0; i < coo.length; i++) {
+            list.add("{" + UCom.format(coo[i].x, 2) + " " + UCom.format(coo[i].y, 2) + " " + UCom.format(coo[i].z, 2) + "}");
+        }        
+        System.out.println(s + " " + list);
     }
 
     public static void PRINT(Coordinate... coo) {
-        System.out.println(List.of(coo));
+        List<String> list = new ArrayList<String>();
+        for (int i = 0; i < coo.length; i++) {
+            list.add("{" + UCom.format(coo[i].x, 2) + " " + UCom.format(coo[i].y, 2) + " " + UCom.format(coo[i].z, 2) + "}");
+        }
+        System.out.println(list);
     }
 
     public static void PRINT(String s, Coordinate... coo) {
-        System.out.println(s + " " + List.of(coo));
+        List<String> list = new ArrayList<String>();
+        for (int i = 0; i < coo.length; i++) {
+            list.add("{" + UCom.format(coo[i].x, 2) + " " + UCom.format(coo[i].y, 2) + " " + UCom.format(coo[i].z, 2) + "}");
+        }     
+        System.out.println(s + " " + list);
     }
 
     public static List<Coordinate> formatVal(Geometry g) {
