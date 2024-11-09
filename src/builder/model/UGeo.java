@@ -198,7 +198,7 @@ public class UGeo {
         }
     }
 
-    //Новая реализация, запуск из теста!
+    //Новая реализация, запуск из Test.draw8()!
     public static Geometry[] splitPolygon(Geometry poly, LineString imp) {
         boolean f = true;
         List<Coordinate> ls = new ArrayList<Coordinate>();
