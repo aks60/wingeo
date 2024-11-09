@@ -72,7 +72,7 @@ public class Test {
 
             @Override
             public java.awt.Dimension getPreferredSize() {
-                return new java.awt.Dimension(800, 800);
+                return new java.awt.Dimension(800, 600);
             }
         };
         frame.add(p);
@@ -468,9 +468,10 @@ public class Test {
             new Coordinate(0, 0, 1)};
         Polygon poly = gf.createPolygon(coord1);
         LineString line = gf.createLineString(new Coordinate[]{new Coordinate(1200, 0, -8), new Coordinate(1300, 100, -8)});
+        Geometry[] geom = UGeo.splitPolygon(poly, line);
 
-        mpol = poly;
-        mlin = line;        
+        mpol = geom[0];
+        mlin = line;
     }
 
     private void draw7() {
@@ -503,7 +504,6 @@ public class Test {
         Polygon geom = UGeo.newPolygon(list);
         //Polygon geo2 = UGeo.bufferCross(geo1, hm, 0);
         //Geometry geo2 = UGeo.splitPolyLine7(geo1, line1).getGeometryN(0);
-
 
         this.mpol = geom;
         this.mlin = line1;
@@ -690,5 +690,5 @@ public class Test {
         // System.out.println(list1);
     }
 
-// </editor-fold>        
+// </editor-fold> 
 }

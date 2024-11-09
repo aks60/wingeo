@@ -188,7 +188,6 @@ public class UGeo {
             }
 
             return new Geometry[]{
-                Com5t.gf.createLineString(crosTwo.toArray(new Coordinate[0])),
                 normalizeGeo(Com5t.gf.createPolygon(cooL.toArray(new Coordinate[0]))),
                 normalizeGeo(Com5t.gf.createPolygon(cooR.toArray(new Coordinate[0])))
             };
@@ -197,6 +196,42 @@ public class UGeo {
             System.err.println("Ошибка:UGeo.splitPolygon()" + e);
             return null;
         }
+    }
+
+    //Новая реализация, запуск из теста!
+    public static Geometry[] splitPolygon(Geometry poly, LineString imp) {
+        boolean f = true;
+        List<Coordinate> ls = new ArrayList<Coordinate>();
+        
+        Envelope env = poly.getEnvelopeInternal();
+        Coordinate coo[] = {
+            new Coordinate(env.getMinX(), env.getMinY()),
+            new Coordinate(env.getMinX(), env.getMaxY()),
+            new Coordinate(env.getMaxX(), env.getMaxY()),
+            new Coordinate(env.getMaxX(), env.getMinY()),
+            new Coordinate(env.getMinX(), env.getMinY())};
+
+        for (int i = 0; i < 4; i++) {
+            if (f) {
+                ls.add(coo[i]);
+            }
+            Coordinate cross = Intersection.lineSegment(imp.getCoordinateN(0), imp.getCoordinateN(1), coo[i], coo[i + 1]);
+
+            if (cross != null) {                
+                ls.add(cross);
+                f = !f;
+            }
+        }
+        ls.add(coo[0]);
+        Geometry poly0 = gf.createPolygon(ls.toArray(new Coordinate[0]));
+        Geometry poly1 = poly.intersection(poly0);
+        Geometry poly2 = poly.difference(poly0);
+        poly1.normalize();
+        poly2.normalize();    
+        
+        UGeo.PRINT(poly1);
+        UGeo.PRINT(poly2);        
+        return new Geometry[]{poly1, poly2};
     }
 
     public static Polygon buffer(Geometry line, Map<Double, Double> hm) {
@@ -419,41 +454,6 @@ public class UGeo {
 
 // <editor-fold defaultstate="collapsed" desc="TEMP"> 
     //Пилим многоугольник    
-    public static Geometry[] splitPolyImp6(Geometry poly, ElemCross impost) {
-        boolean f = true;
-        List<Coordinate> ls1 = new ArrayList<Coordinate>();
-        List<Coordinate> ls2 = new ArrayList<Coordinate>();
-        LineSegment imp = normalizeSegm(new LineSegment(
-                new Coordinate(impost.x1(), impost.y1()),
-                new Coordinate(impost.x2(), impost.y2())));
-        Envelope env = poly.getEnvelopeInternal();
-        Coordinate coo[] = {
-            new Coordinate(env.getMinX(), env.getMinY()),
-            new Coordinate(env.getMinX(), env.getMaxY()),
-            new Coordinate(env.getMaxX(), env.getMaxY()),
-            new Coordinate(env.getMaxX(), env.getMinY()),
-            new Coordinate(env.getMinX(), env.getMinY())};
-
-        for (int i = 0; i < 4; i++) {
-            if (f) {
-                ls1.add(coo[i]);
-            }
-            Coordinate cross = Intersection.lineSegment(
-                    imp.p0, imp.p1, coo[i], coo[i + 1]);
-
-            if (cross != null) {
-                ls1.add(cross);
-                f = !f;
-            }
-        }
-        ls1.add(coo[0]);               
-        Geometry line = Com5t.gf.createLineString(ls2.toArray(new Coordinate[0]));
-        Geometry poly0 = gf.createPolygon(ls1.toArray(new Coordinate[0]));
-        Geometry poly1 = poly.intersection(poly0);
-        Geometry poly2 = poly.difference(poly0);       
-        return new Geometry[]{line, poly1, poly2};
-}
-    
     public static Geometry[] splitPolyImp7(Geometry geom, ElemCross impost) {
         try {
             LineString lineImp = gf.createLineString(new Coordinate[]{
@@ -831,7 +831,7 @@ public class UGeo {
         List<String> list = new ArrayList<String>();
         for (int i = 0; i < coo.length; i++) {
             list.add("{" + UCom.format(coo[i].x, 2) + " " + UCom.format(coo[i].y, 2) + " " + UCom.format(coo[i].z, 2) + "}");
-        }        
+        }
         System.out.println(s + " " + list);
     }
 
@@ -847,7 +847,7 @@ public class UGeo {
         List<String> list = new ArrayList<String>();
         for (int i = 0; i < coo.length; i++) {
             list.add("{" + UCom.format(coo[i].x, 2) + " " + UCom.format(coo[i].y, 2) + " " + UCom.format(coo[i].z, 2) + "}");
-        }     
+        }
         System.out.println(s + " " + list);
     }
 
