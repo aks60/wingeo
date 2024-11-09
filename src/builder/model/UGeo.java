@@ -27,6 +27,7 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import java.util.HashMap;
 import java.util.Map;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.GeometryCollection;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LinearRing;
@@ -197,6 +198,42 @@ public class UGeo {
             return null;
         }
     }
+
+    public static Geometry[] splitPolygon9(Geometry poly, ElemCross impost) {
+        boolean f = true;
+        List<Coordinate> ls1 = new ArrayList<Coordinate>();
+        List<Coordinate> ls2 = new ArrayList<Coordinate>();
+        LineSegment imp = normalizeSegm(new LineSegment(
+                new Coordinate(impost.x1(), impost.y1()),
+                new Coordinate(impost.x2(), impost.y2())));
+        Envelope env = poly.getEnvelopeInternal();
+        Coordinate coo[] = {
+            new Coordinate(env.getMinX(), env.getMinY()),
+            new Coordinate(env.getMinX(), env.getMaxY()),
+            new Coordinate(env.getMaxX(), env.getMaxY()),
+            new Coordinate(env.getMaxX(), env.getMinY()),
+            new Coordinate(env.getMinX(), env.getMinY())};
+
+        for (int i = 0; i < 4; i++) {
+            if (f) {
+                ls1.add(coo[i]);
+            }
+            Coordinate cross = Intersection.lineSegment(
+                    imp.p0, imp.p1, coo[i], coo[i + 1]);
+
+            if (cross != null) {
+                ls1.add(cross);
+                ls2.add(cross);
+                f = !f;
+            }
+        }
+        ls1.add(coo[0]);
+        Geometry line = Com5t.gf.createLineString(ls2.toArray(new Coordinate[0]));
+        Geometry poly0 = gf.createPolygon(ls1.toArray(new Coordinate[0]));
+        Geometry poly1 = poly.intersection(poly0);
+        Geometry poly2 = poly.difference(poly0);       
+        return new Geometry[]{line, poly1, poly2};
+}
 
     public static Polygon buffer(Geometry line, Map<Double, Double> hm) {
         try {

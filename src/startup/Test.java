@@ -1,6 +1,7 @@
 package startup;
 
 import builder.model.Com5t;
+import static builder.model.Com5t.gf;
 import builder.model.UGeo;
 import builder.param.check.ElementTest;
 import builder.param.check.FillingTest;
@@ -28,7 +29,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,16 +36,13 @@ import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import org.locationtech.jts.algorithm.RobustLineIntersector;
+import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
-import org.locationtech.jts.noding.IntersectionAdder;
-import org.locationtech.jts.noding.MCIndexNoder;
 import org.locationtech.jts.noding.NodedSegmentString;
 import org.locationtech.jts.noding.SegmentString;
 import org.locationtech.jts.operation.linemerge.LineMerger;
-import org.locationtech.jts.operation.polygonize.Polygonizer;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Test {
@@ -58,6 +55,41 @@ public class Test {
     public static Integer numDb = Integer.valueOf(eProp.base_num.read());
     private static GeometryFactory gf = new GeometryFactory();
     AffineTransformation aff = new AffineTransformation();
+
+    //Конструктор
+    public Test() {
+
+        frame = new JFrame();
+        //frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        JPanel p = new JPanel() {
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                paincomp(g);
+            }
+
+            @Override
+            public java.awt.Dimension getPreferredSize() {
+                return new java.awt.Dimension(800, 800);
+            }
+        };
+        frame.add(p);
+        frame.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent event) {
+            }
+
+            public void mouseReleased(MouseEvent event) {
+            }
+        });
+        frame.addMouseMotionListener(new MouseMotionAdapter() {
+            public void mouseDragged(MouseEvent event) {
+            }
+        });
+        frame.pack();
+        frame.setVisible(true);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="Connection[] connect(int numDb)">
     public static Connection connect1() {
@@ -99,64 +131,26 @@ public class Test {
         eProp.dev = true;
         try {
             //clearDataDB();
-            //frames.PSConvert.exec();
-            //frame(args);
+            //PSConvert.exec();
+            frame();
             //wincalc("604005");
             //param();
             //query();
             //json();
             //uid();
-            script();
-            //geom();
-            //new Crypto().httpAsync("31.172.66.46");  
+            //script();
+            //geom();  
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
         }
     }
 
-    //Конструктор
-    public Test() {
-
-        frame = new JFrame();
-        //frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        JPanel p = new JPanel() {
-
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                paincomp(g);
-            }
-
-            @Override
-            public java.awt.Dimension getPreferredSize() {
-                return new java.awt.Dimension(800, 800);
-            }
-        };
-        frame.add(p);
-        frame.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent event) {
-            }
-
-            public void mouseReleased(MouseEvent event) {
-            }
-        });
-        frame.addMouseMotionListener(new MouseMotionAdapter() {
-            public void mouseDragged(MouseEvent event) {
-            }
-        });
-        frame.pack();
-        frame.setVisible(true);
-
-        draw8();
-    }
-
-    public static void frame(String[] args) {
+    public static void frame() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Test();
+                new Test().draw8();
             }
         });
     }
@@ -165,8 +159,8 @@ public class Test {
 
         Graphics2D gc2d = (Graphics2D) g;
         //gc2d.translate(-80, -1840);
-        //gc2d.scale(4, 4);
         gc2d.translate(10, 10);
+        //gc2d.scale(4, 4);
         gc2d.scale(.4, .4);
 
         if (mlin != null) {
@@ -435,12 +429,12 @@ public class Test {
                     new Coordinate(650, 1381.5068493150684)
                 }, null));
 
-        Collection<Polygon> polygons = getPolygons(segmentStrings);
-        for (Polygon polygon : polygons) {
-            System.out.println(polygon);
-        }
-        List<Polygon> lst = new ArrayList<Polygon>(polygons);
-        this.mpol = lst.get(0);
+//        Collection<Polygon> polygons = getPolygons(segmentStrings);
+//        for (Polygon polygon : polygons) {
+//            System.out.println(polygon);
+//        }
+//        List<Polygon> lst = new ArrayList<Polygon>(polygons);
+//        this.mpol = lst.get(0);
     }
 
     private void draw9() {
@@ -467,65 +461,18 @@ public class Test {
     }
 
     private void draw8() {
-        //POLYGON ((0 0, 0 1400, 1300 1363.013698630137, 1300 0, 0 0))
-        //LINESTRING (650 1381.5068493150684, 650 0)
+
         Coordinate[] coord1 = new Coordinate[]{
             new Coordinate(0, 0, 1), new Coordinate(0, 1400, 2),
-            new Coordinate(1300, 1363.013698630137, 3), new Coordinate(1300, 0, 4),
+            new Coordinate(1300, 1320, 3), new Coordinate(1320, 0, 4),
             new Coordinate(0, 0, 1)};
         Polygon poly = gf.createPolygon(coord1);
-        Coordinate[] coo = poly.copy().getCoordinates();
+        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(1200, 0, -8), new Coordinate(1300, 100, -8)});
 
-        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(650, 1381.5068493150684, 0), new Coordinate(650, 0, -1)});
+        Geometry[] geom = splitPolylin(poly, line);
 
-        // LineMerger merge = new LineMerger();
-        // merge.add(poly);
-        // merge.add(line);
-        // Collection<LineString> coll = merge.getMergedLineStrings();
-        //gf.createLineString(coord1);
-        //LineString[] larr = coll.toArray(new LineString[0]);
-        //MultiLineString mls = gf.createMultiLineString(larr);        
-        //Geometry nodedLinework = poly.getBoundary().union(line);
-        //Geometry polys = polygonize(coll);        
-        LineString line2 = UGeo.expandLine7(poly.getEnvelope(), line);
-        Geometry geom = UGeo.splitPolyLine7(poly, line2);
-
-        //System.out.println(poly);
-        //System.out.println(line);        
-        System.out.println(geom);
-
-        // mlin = line;
-        //mpol = poly;
-        mpol = geom;
-    }
-
-    private static Collection<Polygon> getPolygons(List<SegmentString> segmentStrings) {
-        GeometryFactory factory = new GeometryFactory();
-        MCIndexNoder noder = new MCIndexNoder();
-        noder.setSegmentIntersector(new IntersectionAdder(new RobustLineIntersector()));
-        noder.computeNodes(segmentStrings);
-
-        Collection<NodedSegmentString> nodedSubstrings = noder.getNodedSubstrings();
-
-        List<LineString> lineStrings = new ArrayList<>();
-        for (NodedSegmentString nss : nodedSubstrings) {
-            lineStrings.add(factory.createLineString(nss.getCoordinates()));
-        }
-
-        Polygonizer polygonizer = new Polygonizer();
-        polygonizer.add(lineStrings);
-
-        return polygonizer.getPolygons();
-    }
-
-    public static Geometry polygonize(Collection<LineString> coll) {
-        //List lines = LineStringExtracter.getLines(geometry);
-        Polygonizer polygonizer = new Polygonizer();
-        polygonizer.add(coll);
-        Collection polys = polygonizer.getPolygons();
-        System.out.println(polys);
-        Polygon[] polyArray = GeometryFactory.toPolygonArray(polys);
-        return gf.createGeometryCollection(polyArray);
+        mpol = geom[1];
+        mlin = line;        
     }
 
     private void draw7() {
@@ -555,13 +502,14 @@ public class Test {
         hm.put(3.0, new Double[]{68.0, .0, .0});
         hm.put(4.0, new Double[]{68.0, .0, .0});
 
-        Polygon geo1 = UGeo.newPolygon(list);
+        Polygon geom = UGeo.newPolygon(list);
         //Polygon geo2 = UGeo.bufferCross(geo1, hm, 0);
-        Geometry geo2 = UGeo.splitPolyLine7(geo1, line1).getGeometryN(0);
+//        Geometry geo2 = UGeo.splitPolyLine7(geo1, line1).getGeometryN(0);
+        Geometry[] geo3 = splitPolylin(geom, line1);
 
-        //this.mpol = geo1;
-        this.mlin = geo1;
-        this.mpol = geo2;
+        this.mpol = geo3[0];
+        //this.mlin = line1;
+        //this.mpol = geo2;
     }
 
     private void draw6() {
@@ -743,6 +691,42 @@ public class Test {
         mlin = gf.createLineString(list1.toArray(new Coordinate[0]));
 
         // System.out.println(list1);
+    }
+
+    private Geometry[] splitPolylin(Polygon poly, LineString imp) {
+        boolean f = true;
+        List<Coordinate> ls1 = new ArrayList<Coordinate>();
+        List<Coordinate> ls2 = new ArrayList<Coordinate>();
+        Envelope env = poly.getEnvelopeInternal();
+        Coordinate coo[] = {
+            new Coordinate(env.getMinX(), env.getMinY()),
+            new Coordinate(env.getMinX(), env.getMaxY()),
+            new Coordinate(env.getMaxX(), env.getMaxY()),
+            new Coordinate(env.getMaxX(), env.getMinY()),
+            new Coordinate(env.getMinX(), env.getMinY())};
+
+        for (int i = 0; i < 4; i++) {
+            if (f) {
+                ls1.add(coo[i]);
+            }
+            Coordinate cross = Intersection.lineSegment(
+                    imp.getCoordinateN(0), imp.getCoordinateN(1), coo[i], coo[i + 1]);
+
+            if (cross != null) {
+                cross.z = -8;
+                ls1.add(cross);
+                ls2.add(cross);
+                f = !f;
+            }
+        }
+
+        ls1.add(coo[0]);
+        Geometry line = Com5t.gf.createLineString(ls2.toArray(new Coordinate[0]));
+        Geometry poly0 = gf.createPolygon(ls1.toArray(new Coordinate[0]));
+        Geometry poly1 = poly.intersection(poly0);
+        Geometry poly2 = poly.difference(poly0);       
+        return new Geometry[]{line, poly1, poly2};
+
     }
 // </editor-fold>        
 }
