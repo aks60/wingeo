@@ -1,6 +1,7 @@
 package builder.model;
 
 import builder.Wincalc;
+import builder.geom.CoordSequenceFactory;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import dataset.Record;
@@ -20,7 +21,6 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
-import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
@@ -30,7 +30,10 @@ public class Com5t {
 
     //public static GeometryFactory gf = new GeometryFactory(new PrecisionModel(1000));
     //public static GeometryFactory gf = new GeometryFactory(new PrecisionModel(1000000));
-    public static GeometryFactory gf = new GeometryFactory(new PrecisionModel());
+    //public static GeometryFactory gf = new GeometryFactory(new PrecisionModel());
+    public static GeometryFactory gf = new GeometryFactory(CoordSequenceFactory.instance());
+    public static CoordSequenceFactory sf = CoordSequenceFactory.instance();
+
     public static GeometricShapeFactory gsf = new GeometricShapeFactory(gf);
     public static AffineTransformation aff = new AffineTransformation();
 
