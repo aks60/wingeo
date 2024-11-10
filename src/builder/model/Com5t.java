@@ -26,7 +26,7 @@ import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Com5t {
 
-    public static int MAXSIDE = 200;
+    public static final int MAXSIDE = 200;
 
     //public static GeometryFactory gf = new GeometryFactory(new PrecisionModel(1000));
     //public static GeometryFactory gf = new GeometryFactory(new PrecisionModel(1000000));
