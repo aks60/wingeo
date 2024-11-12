@@ -11,14 +11,14 @@ public class Co7e extends Coordinate {
         this.m = 0.0;
     }
 
-    public Co7e(double x, double y, double m) {
-        super(x, y);
-        this.m = m;
-    }
-
     public Co7e(double x, double y) {
         super(x, y);
          this.m = 0.0;
+    }
+    
+    public Co7e(double x, double y, double m) {
+        super(x, y);
+        this.m = m;
     }
 
     public Co7e(double x, double y, double z, double m) {
@@ -35,10 +35,10 @@ public class Co7e extends Coordinate {
         }
     }
 
-    public Co7e(Co7e coord) {
-        super(coord);
-        m = coord.m;
-    }
+//    public Co7e(Co7e coord) {
+//        super(coord);
+//        m = coord.m;
+//    }
 
     public Co7e copy() {
         return new Co7e(this);
@@ -52,6 +52,10 @@ public class Co7e extends Coordinate {
         this.m = m;
     }
 
+    public void getCom5e() {
+        
+    }
+    
     @Override
     public void setCoordinate(Coordinate other) {
         x = other.x;
