@@ -69,12 +69,11 @@ public class ElemCross extends ElemSimple {
             Geometry[] geoSplit = UGeo.splitPolygon(owner.area.getGeometryN(0).copy(), this);
 
             //new Test().mpol = geoSplit[0];
-            owner.childs.get(0).area = (Polygon) geoSplit[0];
-            owner.childs.get(2).area = (Polygon) geoSplit[1];
+            owner.childs.get(0).area = (Polygon) geoSplit[1];
+            owner.childs.get(2).area = (Polygon) geoSplit[2];
 
             //Новые координаты импоста
-            Geometry lineImp = owner.area.getGeometryN(0).intersection(gf.createLineString( sf.create(
-                    new Coord[] {new Coord(this.x1(), this.y1(), this.id), new Coord(this.x2(), this.y2(), this.id)})));
+            Geometry lineImp = owner.area.getGeometryN(0).intersection(geoSplit[0]);
             
             if (lineImp.getGeometryType().equals("MultiLineString")) { //исправление коллизий
                 int index = (lineImp.getGeometryN(0).getLength() > lineImp.getGeometryN(1).getLength()) ? 0 : 1;

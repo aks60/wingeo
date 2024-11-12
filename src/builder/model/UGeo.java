@@ -188,6 +188,7 @@ public class UGeo {
             }
 
             return new Geometry[]{
+                Com5t.gf.createLineString(crosTwo.toArray(new Coordinate[0])),
                 normalizeGeo(Com5t.gf.createPolygon(cooL.toArray(new Coordinate[0]))),
                 normalizeGeo(Com5t.gf.createPolygon(cooR.toArray(new Coordinate[0])))
             };
@@ -202,7 +203,7 @@ public class UGeo {
     public static Geometry[] splitPolygon(Geometry poly, LineString imp) {
         boolean f = true;
         List<Coordinate> ls = new ArrayList<Coordinate>();
-        
+
         Envelope env = poly.getEnvelopeInternal();
         Coordinate coo[] = {
             new Coordinate(env.getMinX(), env.getMinY()),
@@ -217,7 +218,7 @@ public class UGeo {
             }
             Coordinate cross = Intersection.lineSegment(imp.getCoordinateN(0), imp.getCoordinateN(1), coo[i], coo[i + 1]);
 
-            if (cross != null) {                
+            if (cross != null) {
                 ls.add(cross);
                 f = !f;
             }
@@ -227,10 +228,10 @@ public class UGeo {
         Geometry poly1 = poly.intersection(poly0);
         Geometry poly2 = poly.difference(poly0);
         poly1.normalize();
-        poly2.normalize();    
-        
+        poly2.normalize();
+
         UGeo.PRINT(poly1);
-        UGeo.PRINT(poly2);        
+        UGeo.PRINT(poly2);
         return new Geometry[]{poly1, poly2};
     }
 

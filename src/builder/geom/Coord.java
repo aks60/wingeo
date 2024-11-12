@@ -16,6 +16,11 @@ public class Coord extends Coordinate {
         this.m = m;
     }
 
+    public Coord(double x, double y) {
+        super(x, y);
+         this.m = 0.0;
+    }
+
     public Coord(double x, double y, double z, double m) {
         super(x, y, z);
         this.m = m;

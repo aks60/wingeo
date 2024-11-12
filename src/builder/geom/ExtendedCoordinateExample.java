@@ -11,58 +11,59 @@
  */
 package builder.geom;
 
+import builder.model.Com5t;
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateSequence;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
 
-
 /**
  * @version 1.7
  */
-public class ExtendedCoordinateExample
-{
-    
-  public ExtendedCoordinateExample() {
-  }
+public class ExtendedCoordinateExample {
 
-  public static void main(String args[])
-  {
-    CoordSequenceFactory seqFact = CoordSequenceFactory.instance();
+    public ExtendedCoordinateExample() {
+    }
 
-    Coord[] array1 = new Coord[] {
-      new Coord(0, 0, 0, 91),
-      new Coord(10, 0, 0, 92),
-      new Coord(10, 10, 0, 93),
-      new Coord(0, 10, 0, 94),
-      new Coord(0, 0, 0, 91),
-    };
-    CoordinateSequence seq1 = seqFact.create(array1);
+    public static void main(String args[]) {
+        CoordSequenceFactory seqFact = CoordSequenceFactory.instance();
+        
+        Coord[] array1 = new Coord[]{
+            new Coord(0, 0, 0, 91),
+            new Coord(10, 0, 0, 92),
+            new Coord(10, 10, 0, 93),
+            new Coord(0, 10, 0, 94),
+            new Coord(0, 0, 0, 91),};
+        CoordinateSequence seq1 = seqFact.create(array1);
 
-    CoordinateSequence seq2 = seqFact.create(
-    new Coord[] {
-      new Coord(5, 5, 0, 91),
-      new Coord(15, 5, 0, 92),
-      new Coord(15, 15, 0, 93),
-      new Coord(5, 15, 0, 94),
-      new Coord(5, 5, 0, 91),
-    });
+        CoordinateSequence seq2 = seqFact.create(
+                new Coord[]{
+                    new Coord(5, 5, 0, 91),
+                    new Coord(15, 5, 0, 92),
+                    new Coord(15, 15, 0, 93),
+                    new Coord(5, 15, 0, 94),
+                    new Coord(5, 5, 0, 91),});
 
-    GeometryFactory fact = new GeometryFactory(
-        CoordSequenceFactory.instance());
+        GeometryFactory fact = new GeometryFactory(
+                CoordSequenceFactory.instance());
 
-    Geometry g1 = fact.createPolygon(fact.createLinearRing(seq1), null);
-    Geometry g2 = fact.createPolygon(fact.createLinearRing(seq2), null);
+        Geometry g1 = fact.createPolygon(fact.createLinearRing(seq1), null);
+        Geometry g2 = fact.createPolygon(fact.createLinearRing(seq2), null);
+        Coordinate cx[] = g2.getCoordinates();
+        Coordinate c = cx[0];
+        c.setM(777);
+        System.out.println("M = " + c.getM());
 
-    System.out.println("WKT for g1: " + g1);
-    System.out.println("Internal rep for g1: " + ((Polygon) g1).getExteriorRing().getCoordinateSequence());
+        System.out.println("WKT for g1: " + g1);
+        System.out.println("Internal rep for g1: " + ((Polygon) g1).getExteriorRing().getCoordinateSequence());
 
-    System.out.println("WKT for g2: " + g2);
-    System.out.println("Internal rep for g2: " + ((Polygon) g2).getExteriorRing().getCoordinateSequence());
+        System.out.println("WKT for g2: " + g2);
+        System.out.println("Internal rep for g2: " + ((Polygon) g2).getExteriorRing().getCoordinateSequence());
 
-    Geometry gInt = g1.intersection(g2);
+        Geometry gInt = g1.intersection(g2);
 
-    System.out.println("WKT for gInt: " + gInt);
-    System.out.println("Internal rep for gInt: " + ((Polygon) gInt).getExteriorRing().getCoordinateSequence());
-  }
+        System.out.println("WKT for gInt: " + gInt);
+        System.out.println("Internal rep for gInt: " + ((Polygon) gInt).getExteriorRing().getCoordinateSequence());
+    }
 }
