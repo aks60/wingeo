@@ -52,6 +52,9 @@ public class Com5t {
     public int colorID1 = -1, colorID2 = -1, colorID3 = -1; //1-базовый 2-внутренний 3-внешний 
     public Record sysprofRec = null, artiklRec = null, artiklRecAn = null; //профиль системы, мат.средства, аналог.мат.средств
 
+    public Com5t() {
+    }
+
     public Com5t(Type type) {
         this.type = type;
         timer.setRepeats(false);

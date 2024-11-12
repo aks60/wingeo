@@ -35,10 +35,10 @@ public class Co7e extends Coordinate {
         }
     }
 
-//    public Co7e(Co7e coord) {
-//        super(coord);
-//        m = coord.m;
-//    }
+    public Co7e(Co7e coord) {
+        super(coord);
+        m = coord.m;
+    }
 
     public Co7e copy() {
         return new Co7e(this);

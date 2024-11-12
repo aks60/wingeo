@@ -35,39 +35,42 @@ public class ExtendedCoordinateExample {
             new Coordinate(0, 0, 91),};
 
         Co7e[] arr1 = new Co7e[]{
-            new Co7e(0, 0, 0, 91.9),
+            new Co7e(0, 0, 0, 91),
             new Co7e(10, 0, 0, 92),
             new Co7e(10, 10, 0, 93),
-            new Co7e(0, 10, 0, 94), //new Co7e(0, 0, 0, 91),
+            new Co7e(0, 10, 0, 94),
+            new Co7e(0, 0, 0, 91),
+        };        
+        Co7e[] arr2 = new Co7e[]{
+            new Co7e(5, 5, 0, 91),
+            new Co7e(15, 5, 0, 92),
+            new Co7e(15, 15, 0, 93),
+            new Co7e(5, 15, 0, 94),
+            new Co7e(5, 5, 0, 91)
         };
 
         CoordinateSequence seq1 = sf.create(arr1);
-        CoordinateSequence seq2 = sf.create(
-                new Co7e[]{
-                    new Co7e(5, 5, 0, 91),
-                    new Co7e(15, 5, 0, 92),
-                    new Co7e(15, 15, 0, 93),
-                    new Co7e(5, 15, 0, 94),
-                    //new Co7e(5, 5, 0, 91)
-                });
+        CoordinateSequence seq2 = sf.create(arr2);
 
         GeometryFactory gf0 = new GeometryFactory();
         GeometryFactory gf1 = new GeometryFactory(Co7eSequenceFactory.instance());
-        Geometry g0 = gf0.createPolygon(arr0);
-        //Geometry g1 = gf1.createPolygon(gf1.createLinearRing(seq1), null);
-        //Geometry g0 = gf1.createPolygon(gf1.createLinearRing(seq2), null);
+        //Geometry g0 = gf0.createPolygon(arr0);
+//        Geometry g1 = gf1.createPolygon(gf1.createLinearRing(seq2), null);
+        Geometry g1 = gf1.createPolygon(arr2);
 
-        Coordinate cx[] = g0.getCoordinates();
+        Coordinate cx[] = g1.getCoordinates();
         Coordinate c = cx[0];
-
         if (c instanceof Co7e == true) {
-            System.out.println("++++++++++++++++++++++++");
-            c.setM(777.99);
-            System.out.println("M = " + c.getM());
-        } else {
-            System.out.println("------------------------");
+            System.out.println("Co7e = builder.geom.ExtendedCoordinateExample.main()");
         }
 
+//        if (c instanceof Co7e == true) {
+//            System.out.println("++++++++++++++++++++++++");
+//            c.setM(777.99);
+//            System.out.println("M = " + c.getM());
+//        } else {
+//            System.out.println("------------------------");
+//        }
 //        System.out.println("WKT for g1: " + g1);
 //        System.out.println("Internal rep for g1: " + ((Polygon) g1).getExteriorRing().getCoordinateSequence());
 //
