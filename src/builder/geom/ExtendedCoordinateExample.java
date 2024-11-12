@@ -27,26 +27,26 @@ public class ExtendedCoordinateExample {
     }
 
     public static void main(String args[]) {
-        CoordSequenceFactory seqFact = CoordSequenceFactory.instance();
+        Co7eSequenceFactory seqFact = Co7eSequenceFactory.instance();
         
-        Coord[] array1 = new Coord[]{
-            new Coord(0, 0, 0, 91),
-            new Coord(10, 0, 0, 92),
-            new Coord(10, 10, 0, 93),
-            new Coord(0, 10, 0, 94),
-            new Coord(0, 0, 0, 91),};
+        Co7e[] array1 = new Co7e[]{
+            new Co7e(0, 0, 0, 91),
+            new Co7e(10, 0, 0, 92),
+            new Co7e(10, 10, 0, 93),
+            new Co7e(0, 10, 0, 94),
+            new Co7e(0, 0, 0, 91),};
         CoordinateSequence seq1 = seqFact.create(array1);
 
         CoordinateSequence seq2 = seqFact.create(
-                new Coord[]{
-                    new Coord(5, 5, 0, 91),
-                    new Coord(15, 5, 0, 92),
-                    new Coord(15, 15, 0, 93),
-                    new Coord(5, 15, 0, 94),
-                    new Coord(5, 5, 0, 91),});
+                new Co7e[]{
+                    new Co7e(5, 5, 0, 91),
+                    new Co7e(15, 5, 0, 92),
+                    new Co7e(15, 15, 0, 93),
+                    new Co7e(5, 15, 0, 94),
+                    new Co7e(5, 5, 0, 91),});
 
         GeometryFactory fact = new GeometryFactory(
-                CoordSequenceFactory.instance());
+                Co7eSequenceFactory.instance());
 
         Geometry g1 = fact.createPolygon(fact.createLinearRing(seq1), null);
         Geometry g2 = fact.createPolygon(fact.createLinearRing(seq2), null);

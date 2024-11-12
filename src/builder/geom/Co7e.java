@@ -2,46 +2,46 @@ package builder.geom;
 
 import org.locationtech.jts.geom.Coordinate;
 
-public class Coord extends Coordinate {
+public class Co7e extends Coordinate {
 
     private double m;
 
-    public Coord() {
+    public Co7e() {
         super();
         this.m = 0.0;
     }
 
-    public Coord(double x, double y, double m) {
+    public Co7e(double x, double y, double m) {
         super(x, y);
         this.m = m;
     }
 
-    public Coord(double x, double y) {
+    public Co7e(double x, double y) {
         super(x, y);
          this.m = 0.0;
     }
 
-    public Coord(double x, double y, double z, double m) {
+    public Co7e(double x, double y, double z, double m) {
         super(x, y, z);
         this.m = m;
     }
 
-    public Coord(Coordinate coord) {
+    public Co7e(Coordinate coord) {
         super(coord);
-        if (coord instanceof Coord) {
-            m = ((Coord) coord).m;
+        if (coord instanceof Co7e) {
+            m = ((Co7e) coord).m;
         } else {
             m = Double.NaN;
         }
     }
 
-    public Coord(Coord coord) {
+    public Co7e(Co7e coord) {
         super(coord);
         m = coord.m;
     }
 
-    public Coord copy() {
-        return new Coord(this);
+    public Co7e copy() {
+        return new Co7e(this);
     }
 
     public double getM() {

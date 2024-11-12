@@ -4,42 +4,42 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateSequence;
 import org.locationtech.jts.geom.Envelope;
 
-public class CoordSequence implements CoordinateSequence {
+public class Co7eSequence implements CoordinateSequence {
 
-    public static Coord[] copy(Coordinate[] coordinates) {
-        Coord[] copy = new Coord[coordinates.length];
+    public static Co7e[] copy(Coordinate[] coordinates) {
+        Co7e[] copy = new Co7e[coordinates.length];
         for (int i = 0; i < coordinates.length; i++) {
-            copy[i] = new Coord(coordinates[i]);
+            copy[i] = new Co7e(coordinates[i]);
         }
         return copy;
     }
 
-    public static Coord[] copy(CoordinateSequence coordSeq) {
-        Coord[] copy = new Coord[coordSeq.size()];
+    public static Co7e[] copy(CoordinateSequence coordSeq) {
+        Co7e[] copy = new Co7e[coordSeq.size()];
         for (int i = 0; i < coordSeq.size(); i++) {
-            copy[i] = new Coord(coordSeq.getCoordinate(i));
+            copy[i] = new Co7e(coordSeq.getCoordinate(i));
         }
         return copy;
     }
 
-    private Coord[] coordinates;
+    private Co7e[] coordinates;
 
-    public CoordSequence(Coord[] coordinates) {
+    public Co7eSequence(Co7e[] coordinates) {
         this.coordinates = coordinates;
     }
 
-    public CoordSequence(Coordinate[] copyCoords) {
+    public Co7eSequence(Coordinate[] copyCoords) {
         coordinates = copy(copyCoords);
     }
 
-    public CoordSequence(CoordinateSequence coordSeq) {
+    public Co7eSequence(CoordinateSequence coordSeq) {
         coordinates = copy(coordSeq);
     }
 
-    public CoordSequence(int size) {
-        coordinates = new Coord[size];
+    public Co7eSequence(int size) {
+        coordinates = new Co7e[size];
         for (int i = 0; i < size; i++) {
-            coordinates[i] = new Coord();
+            coordinates[i] = new Co7e();
         }
     }
 
@@ -54,7 +54,7 @@ public class CoordSequence implements CoordinateSequence {
 
     @Override
     public Coordinate createCoordinate() {
-        return new Coord();
+        return new Co7e();
     }
 
     public Coordinate getCoordinate(int i) {
@@ -120,13 +120,13 @@ public class CoordSequence implements CoordinateSequence {
         return copy();
     }
 
-    public CoordSequence copy() {
-        Coord[] cloneCoordinates = new Coord[size()];
+    public Co7eSequence copy() {
+        Co7e[] cloneCoordinates = new Co7e[size()];
         for (int i = 0; i < coordinates.length; i++) {
             cloneCoordinates[i] = coordinates[i].copy();
         }
 
-        return new CoordSequence(cloneCoordinates);
+        return new Co7eSequence(cloneCoordinates);
     }
 
     public int size() {

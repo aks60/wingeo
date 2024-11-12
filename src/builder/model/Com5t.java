@@ -1,7 +1,7 @@
 package builder.model;
 
 import builder.Wincalc;
-import builder.geom.CoordSequenceFactory;
+import builder.geom.Co7eSequenceFactory;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import dataset.Record;
@@ -31,8 +31,8 @@ public class Com5t {
     //public static GeometryFactory gf = new GeometryFactory(new PrecisionModel(1000));
     //public static GeometryFactory gf = new GeometryFactory(new PrecisionModel(1000000));
     //public static GeometryFactory gf = new GeometryFactory(new PrecisionModel());
-    public static GeometryFactory gf = new GeometryFactory(CoordSequenceFactory.instance());
-    public static CoordSequenceFactory sf = CoordSequenceFactory.instance();
+    public static GeometryFactory gf = new GeometryFactory(Co7eSequenceFactory.instance());
+    public static Co7eSequenceFactory sf = Co7eSequenceFactory.instance();
 
     public static GeometricShapeFactory gsf = new GeometricShapeFactory(gf);
     public static AffineTransformation aff = new AffineTransformation();

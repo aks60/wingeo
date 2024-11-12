@@ -1,7 +1,7 @@
 package builder.model;
 
 import builder.Wincalc;
-import builder.geom.Coord;
+import builder.geom.Co7e;
 import builder.making.SpcRecord;
 import builder.script.GsonElem;
 import common.UCom;
