@@ -124,8 +124,8 @@ public class Smeta {
                 td.get(8).text(String.valueOf(count));
                 td.get(10).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
                 td.get(12).text(UCom.format(winc.weight, 2));
-                td.get(14).text(UCom.format(winc.price1, 9));
-                double price2n = winc.price2 - projectRec.getDbl(eProject.disc2) * winc.price2 / 100;
+                td.get(14).text(UCom.format(winc.price(1), 9));
+                double price2n = winc.price(2) - projectRec.getDbl(eProject.disc2) * winc.price(2) / 100;
                 td.get(16).text(UCom.format(price2n, 9));
                 total += count * price2n;
             }
@@ -215,11 +215,11 @@ public class Smeta {
                 td.get(14).text(String.valueOf(count));
                 td.get(16).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
                 td.get(18).text(UCom.format(winc.weight, 2));                
-                td.get(20).text(UCom.format(winc.price1 * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));
-                td.get(22).text(UCom.format(count * winc.price1, 9));
-                td.get(24).text(UCom.format(count * winc.price2, 9));
+                td.get(20).text(UCom.format(winc.price(1) * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));
+                td.get(22).text(UCom.format(count * winc.price(1), 9));
+                td.get(24).text(UCom.format(count * winc.price(2), 9));
 
-                total += prjprodRec.getInt(ePrjprod.num) * winc.price2;
+                total += prjprodRec.getInt(ePrjprod.num) * winc.price(2);
 
                 if (prjkitList.size() == 0) {
                     tab3List.get(i).html("");

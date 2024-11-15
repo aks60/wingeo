@@ -49,16 +49,9 @@ public class Wincalc {
     public double spcId = 0; //для генерации ключа в спецификации
     public int colorID1 = -1, colorID2 = 1, colorID3 = -1; //базовый,внутр,внещний 
     public Record syssizRec = null; //система константт
-    //public double sebes1 = 0; //себест. за ед. без отхода     
-    //public double sebes2 = 0; //себест. за ед. с отходом
-    public double price1 = 0; //стоимость без скидки
-    public double price2 = 0; //стоимость с технологической скидкой
-
-    //public double price1k = 0; //стоимость комп. с технологической скидкой
-    //public double price2k = 0; //стоимость комп. с технологической скидкой
-
+    private double price1 = 0; //стоимость без скидки
+    private double price2 = 0; //стоимость с технологической скидкой
     public double weight = 0; //масса конструкции  
-    //public double count = 0; //колич. единиц
     public BufferedImage bufferImg = null;  //образ рисунка
     public ImageIcon imageIcon = null; //рисунок конструкции
     public Graphics2D gc2d = null; //графический котекст рисунка  
@@ -77,7 +70,6 @@ public class Wincalc {
     public ArrayList<ElemJoining> listJoin = new ArrayList<ElemJoining>(); //список соед.
     public ArrayList<Com5t> listAll = new ArrayList<Com5t>(); //список всех компонентов (area + elem)
     public ArrayList<SpcRecord> listSpec = new ArrayList<SpcRecord>(); //спецификация
-    //public ArrayList<SpcRecord> listKit = new ArrayList<SpcRecord>(); //спецификация
 
     public Wincalc() {
     }
@@ -274,7 +266,7 @@ public class Wincalc {
             System.err.println("Ошибка:Wincalc.constructiv() " + e);
         }
     }
-
+    
     //Рисуем конструкцию
     public void draw() {
         try {
@@ -334,6 +326,10 @@ public class Wincalc {
 
     public double height() {
         return root.area.getGeometryN(0).getEnvelopeInternal().getHeight();
+    }
+
+    public double price(int index) {
+        return (index == 1) ? price1 : price2;
     }
     // </editor-fold>  
 }

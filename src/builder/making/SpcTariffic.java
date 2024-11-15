@@ -28,12 +28,7 @@ import java.util.List;
 /**
  * Расчёт стоимости элементов окна алгоритм см. в UML
  */
-public class SpcTariffic extends Cal5e {
-
-//    private static double winPrice1 = 0; //стоимость без скидки                     
-//    private static double winPrice2 = 0; //стоимость со скидкой                     
-//    private static double kitPrice1 = 0; //стоимость без скидки                     
-//    private static double kitPrice2 = 0; //стоимость со скидкой                     
+public class SpcTariffic extends Cal5e {            
 
     private static boolean norm_otx = true;
     private static int precision = Math.round(new Query(eGroups.values())
@@ -160,7 +155,9 @@ public class SpcTariffic extends Cal5e {
         }
     }
 
-    //Комплекты конструкции    
+    /**
+     * Комплекты конструкции. Комплекты могут быть не привязаны к изделиям
+     */
     public static ArrayList<SpcRecord> kits(Record prjprodRec, Wincalc winc, boolean norm_otx) {
         ArrayList<SpcRecord> kitList = new ArrayList();
         try {
