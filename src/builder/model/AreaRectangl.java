@@ -51,7 +51,7 @@ public class AreaRectangl extends AreaSimple {
                 winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.ANGL, this.frames.get(i), nextFrame));
             }
         } catch (Exception e) {
-            System.err.println("AreaRectangl.joining() " + e);
+            System.err.println("AreaRectangl.addJoining() " + e);
         }
     }
 
