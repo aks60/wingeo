@@ -210,8 +210,8 @@ public class UGeo {
             new Coordinate(env.getMinX(), env.getMaxY()),
             new Coordinate(env.getMaxX(), env.getMaxY()),
             new Coordinate(env.getMaxX(), env.getMinY()),
-            new Coordinate(env.getMinX(), env.getMinY())};
-
+            new Coordinate(env.getMinX(), env.getMinY()),
+        };
         for (int i = 0; i < 4; i++) {
             if (f) {
                 ls.add(coo[i]);

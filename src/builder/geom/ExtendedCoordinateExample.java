@@ -25,6 +25,7 @@ public class ExtendedCoordinateExample {
     }
 
     public static void main(String args[]) {
+    
         Co7eSequenceFactory sf = Co7eSequenceFactory.instance();
 
         Coordinate[] arr0 = new Coordinate[]{
