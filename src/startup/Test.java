@@ -132,8 +132,8 @@ public class Test {
         try {
             //clearDataDB();
             //PSConvert.exec();
-            frame();
-            //wincalc("604005");
+            //frame();
+            wincalc("min");
             //param();
             //query();
             //json();
@@ -464,14 +464,14 @@ public class Test {
 
         Coordinate[] coord1 = new Coordinate[]{
             new Coordinate(0, 0, 1), new Coordinate(0, 1400, 2),
-            new Coordinate(1230, 1350, 3), new Coordinate(1300, 0, 4),
+            new Coordinate(1250, 1350, 3), new Coordinate(1300, 0, 4),
             new Coordinate(0, 0, 1)};
         Polygon poly = gf.createPolygon(coord1);
-        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(1200, 0, -8), new Coordinate(1300, 100, -8)});
+        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(1200, 0), new Coordinate(1300, 100)});
         Geometry[] geom = UGeo.splitPolygon(poly, line);
 
         mpol = geom[0];
-        mlin = line;
+        mlin = geom[1];
     }
 
     private void draw7() {

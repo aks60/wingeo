@@ -65,14 +65,16 @@ public class ElemCross extends ElemSimple {
     public void setLocation() {
         try {
             //Пилим полигон импостом
-            Geometry[] geoSplit = UGeo.splitPolygon(owner.area.getGeometryN(0).copy(), this);
+            Geometry[] geoSplit = UGeo.splitPolygon2(owner.area.getGeometryN(0).copy(), this);
 
             //new Test().mpol = geoSplit[0];
             owner.childs.get(0).area = (Polygon) geoSplit[1];
             owner.childs.get(2).area = (Polygon) geoSplit[2];
 
             //Новые координаты импоста
-            Geometry lineImp = owner.area.getGeometryN(0).intersection(geoSplit[0]);
+            //Geometry lineImp = owner.area.getGeometryN(0).intersection(geoSplit[0]);
+            Geometry lineImp = geoSplit[0];
+            
             
             if (lineImp.getGeometryType().equals("MultiLineString")) { //исправление коллизий
                 int index = (lineImp.getGeometryN(0).getLength() > lineImp.getGeometryN(1).getLength()) ? 0 : 1;
