@@ -19,6 +19,7 @@ public class Kitcalc {
     //Комплекты конструкции
     public static ArrayList<TRecord> specificProd(Record prjprodRec, Wincalc winc, boolean norm_otx) {
         try {
+            clear();
             if (prjprodRec != null) {
                 List<dataset.Record> prjkitList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
                 return kits(prjkitList, winc, norm_otx);
@@ -32,6 +33,7 @@ public class Kitcalc {
     //Комплекты заказа
     public static ArrayList<TRecord> specificProj(Record projectdRec, Wincalc winc, boolean norm_otx) {
         try {
+            clear();
             if (projectdRec != null) {
                 List<dataset.Record> prjkitList = ePrjkit.filter4(projectdRec.getInt(eProject.id));
                 return kits(prjkitList, winc, norm_otx);
@@ -43,9 +45,7 @@ public class Kitcalc {
     }
 
     //Список комплектов (коэф.рентабельности не учитывается)
-    public static ArrayList<TRecord> kits(List<dataset.Record> prjkitList, Wincalc winc, boolean norm_otx) {
-        price1 = 0; //стоимость без скидки
-        price2 = 0; //стоимость с технологической скидкой         
+    public static ArrayList<TRecord> kits(List<dataset.Record> prjkitList, Wincalc winc, boolean norm_otx) {       
         ArrayList<TRecord> kitList = new ArrayList();
 
         //Цикл по комплектам
@@ -78,6 +78,11 @@ public class Kitcalc {
             }
         }
         return kitList;
+    }
+    
+    public static void clear() {
+        price1 = 0; //стоимость без скидки
+        price2 = 0; //стоимость с технологической скидкой          
     }
 
     public static double price(int index) {
