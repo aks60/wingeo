@@ -12,7 +12,7 @@ import java.util.List;
 import dataset.Record;
 import domain.eProject;
 
-public class Kitscalc {
+public class Kitcalc {
 
     private static double price1 = 0; //стоимость без скидки
     private static double price2 = 0; //стоимость с технологической скидкой    

@@ -1,6 +1,6 @@
 package report;
 
-import builder.Kitscalc;
+import builder.Kitcalc;
 import report.sup.RTable;
 import report.sup.RRecord;
 import report.sup.ExecuteCmd;
@@ -59,7 +59,7 @@ public class RMaterial {
             winc.specific(true);
 
             listSpc.addAll(winc.listSpec);
-            listKit = Kitscalc.specificProd(prjprodRec, winc.nppID, true); //добавим комплекты
+            listKit = Kitcalc.specificProd(prjprodRec, winc.nppID, true); //добавим комплекты
         }
         listSpc.forEach(el -> spcList.add(new RRecord(el)));
         listKit.forEach(el -> spcList.add(new RRecord(el)));
