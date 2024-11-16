@@ -758,6 +758,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
     public void calculate() {
         try {
+            int index = UGui.getIndexRec(tab1);
             UGui.stopCellEditingAndExecSql();
             Record projectRec = qProject.get(UGui.getIndexRec(tab1));
             Record currencRec = qCurrenc.stream().filter(rec -> rec.get(eCurrenc.id).equals(projectRec.get(eProject.currenc_id))).findFirst().orElse(eCurrenc.up.newRecord(Query.SEL));
@@ -828,10 +829,11 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 tab5.setValueAt(projectRec.getDbl(eProject.price1c), 2, 2); //итого стоимость без скидки
                 tab5.setValueAt(projectRec.getDbl(eProject.price2c), 2, 3); //итого стоимость со скидкой
 
-                int index = UGui.getIndexRec(tab1);
                 if (index != -1) {
                     ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
                     UGui.setSelectedIndex(tab1, index);
+                } else {
+                    UGui.setSelectedRow(tab1);
                 }
             }
         } catch (Exception e) {
