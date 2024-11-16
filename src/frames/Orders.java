@@ -356,7 +356,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab4);
         }
-        
+
         loadingTab4();
     }
 
@@ -782,15 +782,13 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         weight = weight + prjprodRec.getDbl(ePrjprod.num) * win.weight; //вес изделий
                         price1a = price1a + win.price(1); //стоимость конструкции без скидки менеджера
                         price2a = price2a + win.price(2); //стоимость конструкции со скидкой менеджера
-
-                        //Комплектация
-                        ArrayList<TRecord> kitList = Kitcalc.specificProj(prjprodRec, win.nppID, true); //комплекты
-                        for (TRecord kit : kitList) {
-                            price1b = price1b + kit.price1; //стоимость без скидки
-                            price2b = price2b + kit.price2; //стоимость со скидками
-                        }
                     }
                 }
+                //Комплектация
+                ArrayList<TRecord> kitList = Kitcalc.specificProj(projectRec, new Wincalc(), true); //комплекты 
+                price1b = Kitcalc.price(1); //стоимость без скидки
+                price2b = Kitcalc.price(2); //стоимость со скидкой               
+
                 //Сохраним новые кальк.данные в проекте
                 if (price1a != projectRec.getDbl(eProject.price1a)) {
                     projectRec.set(eProject.price1a, price1a); //стоимость конструкции без скидки менеджера

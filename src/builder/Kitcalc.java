@@ -6,7 +6,6 @@ import domain.eArtikl;
 import domain.eGroups;
 import domain.ePrjkit;
 import domain.ePrjprod;
-import domain.eSystree;
 import java.util.ArrayList;
 import java.util.List;
 import dataset.Record;
@@ -18,11 +17,11 @@ public class Kitcalc {
     private static double price2 = 0; //стоимость с технологической скидкой    
 
     //Комплекты конструкции
-    public static ArrayList<TRecord> specificProd(Record prjprodRec, double nppID, boolean norm_otx) { 
+    public static ArrayList<TRecord> specificProd(Record prjprodRec, Wincalc winc, boolean norm_otx) {
         try {
             if (prjprodRec != null) {
                 List<dataset.Record> prjkitList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
-                return kits(prjkitList, nppID, norm_otx);
+                return kits(prjkitList, winc, norm_otx);
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Kitscalc.specificProd() " + e);
@@ -31,11 +30,11 @@ public class Kitcalc {
     }
 
     //Комплекты заказа
-    public static ArrayList<TRecord> specificProj(Record projectdRec, double nppID, boolean norm_otx) {
+    public static ArrayList<TRecord> specificProj(Record projectdRec, Wincalc winc, boolean norm_otx) {
         try {
             if (projectdRec != null) {
                 List<dataset.Record> prjkitList = ePrjkit.filter4(projectdRec.getInt(eProject.id));
-                return kits(prjkitList, nppID, norm_otx);
+                return kits(prjkitList, winc, norm_otx);
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Kitscalc.specificProj() " + e);
@@ -44,7 +43,7 @@ public class Kitcalc {
     }
 
     //Список комплектов (коэф.рентабельности не учитывается)
-    public static ArrayList<TRecord> kits(List<dataset.Record> prjkitList, double nppID, boolean norm_otx) {
+    public static ArrayList<TRecord> kits(List<dataset.Record> prjkitList, Wincalc winc, boolean norm_otx) {
         price1 = 0; //стоимость без скидки
         price2 = 0; //стоимость с технологической скидкой         
         ArrayList<TRecord> kitList = new ArrayList();
@@ -53,7 +52,7 @@ public class Kitcalc {
         for (dataset.Record prjkitRec : prjkitList) {
             dataset.Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.artikl_id), true);
             if (artiklRec != null) {
-                TRecord rec = new TRecord("КОМП", ++nppID, prjkitRec, artiklRec, null);
+                TRecord rec = new TRecord("КОМП", ++winc.nppID, prjkitRec, artiklRec, null);
                 rec.width = prjkitRec.getDbl(ePrjkit.width);
                 rec.height = prjkitRec.getDbl(ePrjkit.height);
                 rec.count = prjkitRec.getDbl(ePrjkit.numb);
@@ -70,7 +69,7 @@ public class Kitcalc {
                 dataset.Record artgrp2Rec = eGroups.find(rec.artiklRec().getInt(eArtikl.groups2_id));
                 double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //(koef)наценка группы мат.ценностей
                 double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //(%)скидки группы мат.ценностей
-                double price = rec.count * rec.quant2 * rec.sebes2 * k1; 
+                double price = rec.count * rec.quant2 * rec.sebes2 * k1;
                 rec.price1 = price; //стоимость без скидки                     
                 rec.price2 = price - price / 100 * k2; //стоимость со скидкой 
                 price1 += rec.price1;
@@ -80,4 +79,9 @@ public class Kitcalc {
         }
         return kitList;
     }
+
+    public static double price(int index) {
+        return (index == 1) ? price1 : price2;
+    }
+
 }
