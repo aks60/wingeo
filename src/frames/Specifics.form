@@ -490,7 +490,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn22ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn22Calc"/>
           </Events>
         </Component>
       </SubComponents>
@@ -573,8 +573,8 @@
                     <Column editable="true" title="&lt;html&gt;&#x41a;&#x43e;&#x43b;. &#x441; &lt;br/&gt;&#x43e;&#x442;&#x445;&#x43e;&#x434;&#x43e;&#x43c;" type="java.lang.Double"/>
                     <Column editable="true" title="&#x431;&#x435;&#x437; &#x43e;&#x442;&#x445;" type="java.lang.Double"/>
                     <Column editable="true" title="&#x441; &#x43e;&#x442;&#x445;." type="java.lang.Double"/>
-                    <Column editable="true" title="&#x431;&#x435;&#x437; &#x441;&#x43a;." type="java.lang.Double"/>
-                    <Column editable="true" title="&#x441;&#x43e; &#x441;&#x43a;." type="java.lang.Double"/>
+                    <Column editable="true" title="&#x431;&#x435;&#x437; &#x441;&#x43a;&#x438;&#x434;&#x43a;&#x438;" type="java.lang.Double"/>
+                    <Column editable="true" title="&#x441;&#x43e; &#x441;&#x43a;&#x438;&#x434;&#x43a;&#x43e;&#x439;" type="java.lang.Double"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

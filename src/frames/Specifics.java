@@ -56,7 +56,7 @@ public class Specifics extends javax.swing.JFrame {
     private int manager = 0;
     private builder.Wincalc winc = new Wincalc();
     private TableFieldFilter filterTable = null;
-    private ArrayList<TRecord> listSpc = new ArrayList<TRecord>();
+    private ArrayList<TRecord> listTRec = new ArrayList<TRecord>();
 
     ImageIcon[] image = {new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b063.gif")),
         new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b076.gif")),
@@ -71,41 +71,41 @@ public class Specifics extends javax.swing.JFrame {
         createMenu();
         createIwin();
         loadingData();
-        loadingTab1(this.listSpc);
+        loadingTab1(this.listTRec);
         UGui.setSelectedRow(tab1);
     }
 
     public void loadingData() {
         
         UGui.stopCellEditingAndExecSql();
-        this.listSpc.clear();
-        this.listSpc.addAll(winc.listSpec); //добавим спецификацию
+        this.listTRec.clear();
+        this.listTRec.addAll(winc.listSpec); //добавим спецификацию
 
         //Если открыл менеджер добавим комплекты
         if (manager == 1) {
             int prjprodID = Integer.valueOf(eProp.prjprodID.read());
             Record prjprodRec = ePrjprod.find(prjprodID);
             ArrayList<TRecord> listKit = Kitcalc.specificProd(prjprodRec, winc, true); //комплекты
-            this.listSpc.addAll(listKit);
+            this.listTRec.addAll(listKit);
         }
     }
 
-    public void loadingTab1(List<TRecord> listSpc) {
+    public void loadingTab1(List<TRecord> listTRec) {
 
         DefaultTableModel dtm = ((DefaultTableModel) tab1.getModel());
         dtm.getDataVector().clear();
         dtm.fireTableDataChanged();
         int vSize = new TRecord().getVector(0).size();
-        for (int i = 0; i < listSpc.size(); i++) {
-            dtm.addRow(listSpc.get(i).getVector(i + 1));
+        for (int i = 0; i < listTRec.size(); i++) {
+            dtm.addRow(listTRec.get(i).getVector(i + 1));
         }
         Vector v = new Vector();
-        v.add(listSpc.size() + 1);
+        v.add(listTRec.size() + 1);
         IntStream.range(1, vSize).forEach(action -> v.add(null));
-        v.set(v.size() - 2, winc.price(1)); //стоимость без скидки
-        v.set(v.size() - 1, winc.price(2)); //стоимость со скидклй              
+        v.set(v.size() - 2, UCom.format(winc.price(1) + Kitcalc.price(1), "#,##0.##")); //стоимость без скидки
+        v.set(v.size() - 1, UCom.format(winc.price(2) + Kitcalc.price(2), "#,##0.##")); //стоимость со скидклй              
         dtm.addRow(v);
-        labSum.setText("Итого: " + UCom.format(winc.price(2), "#,##0.##"));
+        labSum.setText("Итого: " + UCom.format(winc.price(2) + Kitcalc.price(2), "#,##0.##"));
     }
 
     public void createIwin() {
@@ -140,7 +140,7 @@ public class Specifics extends javax.swing.JFrame {
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Мат. ценности");
         mnAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loadingTab1(listSpc);
+                loadingTab1(listTRec);
             }
         });
         UTree.loadArtTree(root);
@@ -156,7 +156,7 @@ public class Specifics extends javax.swing.JFrame {
             mn1.setFont(frames.UGui.getFont(0, 1));
             mn1.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    List<TRecord> listSpec = listSpc.stream().filter(rec
+                    List<TRecord> listSpec = listTRec.stream().filter(rec
                             -> rec.artiklRec().getInt(eArtikl.level1) == type.id1).collect(toList());
                     loadingTab1(listSpec);
                 }
@@ -172,7 +172,7 @@ public class Specifics extends javax.swing.JFrame {
                 mn2.setFont(frames.UGui.getFont(0, 0));
                 mn2.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        List<TRecord> listSpec = listSpc.stream().filter(rec
+                        List<TRecord> listSpec = listTRec.stream().filter(rec
                                 -> rec.artiklRec().getInt(eArtikl.level1) == typ2.id1
                                 && rec.artiklRec().getInt(eArtikl.level2) == typ2.id2).collect(toList());
                         loadingTab1(listSpec);
@@ -393,7 +393,7 @@ public class Specifics extends javax.swing.JFrame {
         btn22.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
         btn22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn22ActionPerformed(evt);
+                btn22Calc(evt);
             }
         });
 
@@ -470,7 +470,7 @@ public class Specifics extends javax.swing.JFrame {
                 {null, null, null, "", "", "", "", "", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nпп", "PK", "FK", "Расположенние", "Артикул", "Наименование", "Текстура", "Внутр..", "Внешн...", "Длина", "Ширина", "Масса", "реза1", "реза2", "гориз.", "<html>Кол.<br/>единиц", "<html>Един.<br/>изм.", "<html>Процент<br/> отхода", "<html>Кол.без<br/>отхода", "<html>Кол. с <br/>отходом", "без отх", "с отх.", "без ск.", "со ск."
+                "Nпп", "PK", "FK", "Расположенние", "Артикул", "Наименование", "Текстура", "Внутр..", "Внешн...", "Длина", "Ширина", "Масса", "реза1", "реза2", "гориз.", "<html>Кол.<br/>единиц", "<html>Един.<br/>изм.", "<html>Процент<br/> отхода", "<html>Кол.без<br/>отхода", "<html>Кол. с <br/>отходом", "без отх", "с отх.", "без скидки", "со скидкой"
             }
         ) {
             Class[] types = new Class [] {
@@ -551,7 +551,7 @@ public class Specifics extends javax.swing.JFrame {
 
     private void btnFind1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind1
         double id = UCom.getDbl(tab1.getValueAt(tab1.getSelectedRow(), 1).toString());
-        TRecord recordSpc = this.listSpc.stream().filter(it -> it.id == id).findFirst().get();;
+        TRecord recordSpc = this.listTRec.stream().filter(it -> it.id == id).findFirst().get();;
         ProgressBar.create(this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 App.Artikles.createFrame(Specifics.this, recordSpc.artiklRec());
@@ -564,7 +564,7 @@ public class Specifics extends javax.swing.JFrame {
         if ("КОМ".equals(str) == false) {
 
             double id = UCom.getDbl(tab1.getValueAt(tab1.getSelectedRow(), 1).toString());
-            TRecord specificRec = this.listSpc.stream().filter(it -> it.id == id).findFirst().get();
+            TRecord specificRec = this.listTRec.stream().filter(it -> it.id == id).findFirst().get();
             Record variantRec = specificRec.variantRec;
             Record detailRec = specificRec.detailRec;
             if (detailRec != null) {
@@ -597,11 +597,11 @@ public class Specifics extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFind2
 
     private void cbxCalcType(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCalcType
-        ProgressBar.create(this, new ListenerFrame() {
-            public void actionRequest(Object obj) {
-                btn22ActionPerformed(null);
-            }
-        });
+//        ProgressBar.create(this, new ListenerFrame() {
+//            public void actionRequest(Object obj) {
+                btn22Calc(null);
+//            }
+//        });
 
     }//GEN-LAST:event_cbxCalcType
 
@@ -614,27 +614,27 @@ public class Specifics extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTest
 
     private void btn23mnKits(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn23mnKits
-        List<TRecord> spc = this.listSpc.stream().filter(rec -> "КОМ".equals(rec.place.substring(0, 3))).collect(toList());
+        List<TRecord> spc = this.listTRec.stream().filter(rec -> "КОМ".equals(rec.place.substring(0, 3))).collect(toList());
         loadingTab1(spc);
     }//GEN-LAST:event_btn23mnKits
 
     private void btn24mnJoining(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn24mnJoining
-        List<TRecord> spc = this.listSpc.stream().filter(rec -> "СОЕ".equals(rec.place.substring(0, 3))).collect(toList());
+        List<TRecord> spc = this.listTRec.stream().filter(rec -> "СОЕ".equals(rec.place.substring(0, 3))).collect(toList());
         loadingTab1(spc);
     }//GEN-LAST:event_btn24mnJoining
 
     private void btn25mnElement(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn25mnElement
-        List<TRecord> spc = this.listSpc.stream().filter(rec -> "ВСТ".equals(rec.place.substring(0, 3))).collect(toList());
+        List<TRecord> spc = this.listTRec.stream().filter(rec -> "ВСТ".equals(rec.place.substring(0, 3))).collect(toList());
         loadingTab1(spc);
     }//GEN-LAST:event_btn25mnElement
 
     private void btn26mnGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn26mnGlass
-        List<TRecord> spc = this.listSpc.stream().filter(rec -> "ЗАП".equals(rec.place.substring(0, 3))).collect(toList());
+        List<TRecord> spc = this.listTRec.stream().filter(rec -> "ЗАП".equals(rec.place.substring(0, 3))).collect(toList());
         loadingTab1(spc);
     }//GEN-LAST:event_btn26mnGlass
 
     private void btn27mnFurnityra(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn27mnFurnityra
-        List<TRecord> spc = this.listSpc.stream().filter(rec -> "ФУР".equals(rec.place.substring(0, 3))).collect(toList());
+        List<TRecord> spc = this.listTRec.stream().filter(rec -> "ФУР".equals(rec.place.substring(0, 3))).collect(toList());
         loadingTab1(spc);
     }//GEN-LAST:event_btn27mnFurnityra
 
@@ -642,19 +642,19 @@ public class Specifics extends javax.swing.JFrame {
         ppmTree.show(north, btn21.getX(), btn21.getY() + 18);
     }//GEN-LAST:event_btn21mnSpecif
 
-    private void btn22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn22ActionPerformed
+    private void btn22Calc(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn22Calc
         ProgressBar.create(Specifics.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 UGui.stopCellEditingAndExecSql();
                 int index = UGui.getIndexRec(tab1);
                 createIwin();
                 loadingData();
-                loadingTab1(Specifics.this.listSpc);
+                loadingTab1(Specifics.this.listTRec);
                 UGui.setSelectedIndex(tab1, index);
                 UGui.scrollRectToRow(index, tab1);
             }
         });
-    }//GEN-LAST:event_btn22ActionPerformed
+    }//GEN-LAST:event_btn22Calc
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">     
     // Variables declaration - do not modify//GEN-BEGIN:variables
