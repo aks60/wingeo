@@ -355,10 +355,11 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab4);
         }
+        
+        loadingTab4();
     }
 
     public void selectionTab2() {
-        UGui.clearTable(tab4);
         Arrays.asList(tab1, tab2, tab3, tab4).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
         int index = UGui.getIndexRec(tab2);
         if (index != -1) {
@@ -382,8 +383,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             canvas.draw();
             winTree.setModel(new DefaultTreeModel(new DefMutableTreeNode("")));
         }
-
-        loadingTab4();
     }
 
     public void selectionTree() {
@@ -3233,16 +3232,25 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         } else if (tab4.getBorder() != null) {
             int index1 = UGui.getIndexRec(tab1);
             int index2 = UGui.getIndexRec(tab2);
-            if (index1 != -1 && index2 != -1) {
+            if (index1 != -1) {
                 if (((JButton) evt.getSource()) == btnIns) {
-                    UGui.insertRecordCur(tab4, ePrjkit.up, (record) -> {
-                        record.set(ePrjkit.prjprod_id, qPrjprod.get(index2, ePrjprod.id));
-                        record.set(ePrjkit.project_id, qProject.get(index1, eProject.id));
-                        record.set(ePrjkit.numb, 0);
-                        int index3 = UGui.getIndexFind(tab4, ePrjkit.id, record.get(ePrjkit.id));
-                        qPrjkit.table(eArtikl.up).add(index3, eArtikl.up.newRecord(Query.SEL));
-                    });
-                } else if (((JButton) evt.getSource()) == btnSet) {
+                    if (index2 != -1) { //вставляем запись в продукт
+                        UGui.insertRecordCur(tab4, ePrjkit.up, (record) -> {
+                            record.set(ePrjkit.prjprod_id, qPrjprod.get(index2, ePrjprod.id));
+                            record.set(ePrjkit.project_id, qProject.get(index1, eProject.id));
+                            record.set(ePrjkit.numb, 0);
+                            int index3 = UGui.getIndexFind(tab4, ePrjkit.id, record.get(ePrjkit.id));
+                            qPrjkit.table(eArtikl.up).add(index3, eArtikl.up.newRecord(Query.SEL));
+                        });
+                    } else { //вставляем запись в проект
+                        UGui.insertRecordCur(tab4, ePrjkit.up, (record) -> {
+                            record.set(ePrjkit.project_id, qProject.get(index1, eProject.id));
+                            record.set(ePrjkit.numb, 0);
+                            int index3 = UGui.getIndexFind(tab4, ePrjkit.id, record.get(ePrjkit.id));
+                            qPrjkit.table(eArtikl.up).add(index3, eArtikl.up.newRecord(Query.SEL));
+                        });
+                    }
+                } else if (((JButton) evt.getSource()) == btnSet) { //вставляем сразу несколько записей
                     DicKits frame = new DicKits(Orders.this, (q) -> {
                         loadingTab4();
                         return true;

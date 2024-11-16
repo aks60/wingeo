@@ -120,8 +120,8 @@ public class Com5t {
     }
 
     public Polygon buffer(Geometry line, ArrayList<? extends Com5t> list, double amend) {
-        //return UGeo.bufferCross(line, list, amend);
-        return UGeo.bufferUnion(line, list, amend);
+        return UGeo.bufferCross(line, list, amend);
+        //return UGeo.bufferUnion(line, list, amend);
         //return UGeo.bufferPaddin(line, list, amend);
         //return GeoBuffer.buffer(line, list, amend);
     }
