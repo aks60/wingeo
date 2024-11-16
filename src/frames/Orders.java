@@ -1,6 +1,6 @@
 package frames;
 
-import builder.Kitscalc;
+import builder.Kitcalc;
 import frames.swing.ProgressBar;
 import frames.swing.FrameToFile;
 import frames.dialog.DicCurrenc;
@@ -784,7 +784,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         price2a = price2a + win.price(2); //стоимость конструкции со скидкой менеджера
 
                         //Комплектация
-                        ArrayList<TRecord> kitList = Kitscalc.specific(prjprodRec, win, true); //комплекты
+                        ArrayList<TRecord> kitList = Kitcalc.specific(prjprodRec, win, true); //комплекты
                         for (TRecord kit : kitList) {
                             price1b = price1b + kit.price1; //стоимость без скидки
                             price2b = price2b + kit.price2; //стоимость со скидками

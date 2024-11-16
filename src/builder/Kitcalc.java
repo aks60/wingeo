@@ -11,7 +11,7 @@ import enums.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Kitscalc {
+public class Kitcalc {
 
     private static double price1 = 0; //стоимость без скидки
     private static double price2 = 0; //стоимость с технологической скидкой    
@@ -59,7 +59,7 @@ public class Kitscalc {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Kitscalc.kits() " + e);
+            System.err.println("Ошибка:Kitscalc.specific() " + e);
         }
         return kitList;
     }     
