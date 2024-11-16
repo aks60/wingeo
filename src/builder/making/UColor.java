@@ -53,9 +53,9 @@ public class UColor {
      * @param spcAdd - спецификацм элемента
      * @param side - строна элемента по которой ведётся подбор текстуры
      */
-    public static boolean colorFromElemOrSeri(SpcRecord spcAdd) {  //см. http://help.profsegment.ru/?id=1107 
+    public static boolean colorFromElemOrSeri(TRecord spcAdd) {  //см. http://help.profsegment.ru/?id=1107 
 
-        SpcRecord spcClon = new SpcRecord(spcAdd);
+        TRecord spcClon = new TRecord(spcAdd);
         int typesUS = spcClon.detailRec.getInt(COLOR_US);
         if (UseColor.isSeries(typesUS)) { //если серия
 
@@ -91,7 +91,7 @@ public class UColor {
      * @param seri
      * @return
      */
-    private static boolean colorFromProduct(SpcRecord spcAdd, int side, boolean seri) {  //см. http://help.profsegment.ru/?id=1107        
+    private static boolean colorFromProduct(TRecord spcAdd, int side, boolean seri) {  //см. http://help.profsegment.ru/?id=1107        
 
         int srcNumberUS = spcAdd.detailRec.getInt(COLOR_US);
         int srcColorFk = spcAdd.detailRec.getInt(COLOR_FK);
@@ -367,7 +367,7 @@ public class UColor {
     }
 
     //Первая запись цвета
-    private static int scanFromColorFirst(SpcRecord spc) {
+    private static int scanFromColorFirst(TRecord spc) {
         Record artdetRec = eArtdet.find(spc.detailRec.getInt(ARTIKL_ID));
         if (artdetRec.getInt(1) != -1) {
             int colorFK2 = artdetRec.getInt(eArtdet.color_fk);
@@ -387,7 +387,7 @@ public class UColor {
     }
 
     //Выдает цвет в соответствии с заданным вариантом подбора текстуры   
-    private static int getID_colorUS(SpcRecord spcAdd, int srcColorUS) {
+    private static int getID_colorUS(TRecord spcAdd, int srcColorUS) {
         try {
             switch (srcColorUS) {
                 case 0:
@@ -435,7 +435,7 @@ public class UColor {
     }
 
     //Сообщение неудачи
-    private static void colorFromMes(SpcRecord spc) {  //см. http://help.profsegment.ru/?id=1107        
+    private static void colorFromMes(TRecord spc) {  //см. http://help.profsegment.ru/?id=1107        
         String place = "---";
         if ("ВСТ".equals(spc.place)) {
             place = "Вставки";

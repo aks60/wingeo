@@ -31,7 +31,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 //Коммерческое предложение
-public class Offer {
+public class ROffer {
 
     private static DecimalFormat df0 = new DecimalFormat("0");
     private static DecimalFormat df1 = new DecimalFormat("0.0");

@@ -1,7 +1,7 @@
 package builder.model;
 
 import builder.Wincalc;
-import builder.making.SpcRecord;
+import builder.making.TRecord;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import common.UCom;
@@ -35,7 +35,7 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 
 public class AreaStvorka extends AreaSimple {
 
-    public SpcRecord spcRec = null; //спецификация москитки
+    public TRecord spcRec = null; //спецификация москитки
     public Record sysfurnRec = eSysfurn.up.newRecord(Query.SEL); //фурнитура
     public Record knobRec = eArtikl.virtualRec(); //ручка
     public Record loopRec = eArtikl.virtualRec(); //подвес(петли)

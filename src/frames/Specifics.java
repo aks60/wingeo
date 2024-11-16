@@ -15,8 +15,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import builder.Wincalc;
-import builder.making.SpcRecord;
-import builder.making.SpcTariffic;
+import builder.making.TRecord;
+import builder.making.TTariffic;
 import common.UCom;
 import domain.eSysprod;
 import java.awt.Component;
@@ -55,7 +55,7 @@ public class Specifics extends javax.swing.JFrame {
     private int manager = 0;
     private builder.Wincalc winc = new Wincalc();
     private TableFieldFilter filterTable = null;
-    private ArrayList<SpcRecord> listSpc = new ArrayList<SpcRecord>();
+    private ArrayList<TRecord> listSpc = new ArrayList<TRecord>();
 
     ImageIcon[] image = {new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b063.gif")),
         new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b076.gif")),
@@ -84,17 +84,17 @@ public class Specifics extends javax.swing.JFrame {
         if (manager == 1) {
             int prjprodID = Integer.valueOf(eProp.prjprodID.read());
             Record prjprodRec = ePrjprod.find(prjprodID);
-            ArrayList<SpcRecord> listKit = SpcTariffic.kits(prjprodRec, winc, true); //ÍÓÏÔÎÂÍÚ˚
+            ArrayList<TRecord> listKit = TTariffic.kits(prjprodRec, winc, true); //ÍÓÏÔÎÂÍÚ˚
             this.listSpc.addAll(listKit);
         }
     }
 
-    public void loadingTab1(List<SpcRecord> listSpc) {
+    public void loadingTab1(List<TRecord> listSpc) {
 
         DefaultTableModel dtm = ((DefaultTableModel) tab1.getModel());
         dtm.getDataVector().clear();
         dtm.fireTableDataChanged();
-        int vSize = new SpcRecord().getVector(0).size();
+        int vSize = new TRecord().getVector(0).size();
         for (int i = 0; i < listSpc.size(); i++) {
             dtm.addRow(listSpc.get(i).getVector(i + 1));
         }
@@ -155,7 +155,7 @@ public class Specifics extends javax.swing.JFrame {
             mn1.setFont(frames.UGui.getFont(0, 1));
             mn1.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    List<SpcRecord> listSpec = listSpc.stream().filter(rec
+                    List<TRecord> listSpec = listSpc.stream().filter(rec
                             -> rec.artiklRec().getInt(eArtikl.level1) == type.id1).collect(toList());
                     loadingTab1(listSpec);
                 }
@@ -171,7 +171,7 @@ public class Specifics extends javax.swing.JFrame {
                 mn2.setFont(frames.UGui.getFont(0, 0));
                 mn2.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        List<SpcRecord> listSpec = listSpc.stream().filter(rec
+                        List<TRecord> listSpec = listSpc.stream().filter(rec
                                 -> rec.artiklRec().getInt(eArtikl.level1) == typ2.id1
                                 && rec.artiklRec().getInt(eArtikl.level2) == typ2.id2).collect(toList());
                         loadingTab1(listSpec);
@@ -550,7 +550,7 @@ public class Specifics extends javax.swing.JFrame {
 
     private void btnFind1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind1
         double id = UCom.getDbl(tab1.getValueAt(tab1.getSelectedRow(), 1).toString());
-        SpcRecord recordSpc = this.listSpc.stream().filter(it -> it.id == id).findFirst().get();;
+        TRecord recordSpc = this.listSpc.stream().filter(it -> it.id == id).findFirst().get();;
         ProgressBar.create(this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 App.Artikles.createFrame(Specifics.this, recordSpc.artiklRec());
@@ -563,7 +563,7 @@ public class Specifics extends javax.swing.JFrame {
         if (" ŒÃ".equals(str) == false) {
 
             double id = UCom.getDbl(tab1.getValueAt(tab1.getSelectedRow(), 1).toString());
-            SpcRecord specificRec = this.listSpc.stream().filter(it -> it.id == id).findFirst().get();
+            TRecord specificRec = this.listSpc.stream().filter(it -> it.id == id).findFirst().get();
             Record variantRec = specificRec.variantRec;
             Record detailRec = specificRec.detailRec;
             if (detailRec != null) {
@@ -613,27 +613,27 @@ public class Specifics extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTest
 
     private void btn23mnKits(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn23mnKits
-        List<SpcRecord> spc = this.listSpc.stream().filter(rec -> " ŒÃ".equals(rec.place.substring(0, 3))).collect(toList());
+        List<TRecord> spc = this.listSpc.stream().filter(rec -> " ŒÃ".equals(rec.place.substring(0, 3))).collect(toList());
         loadingTab1(spc);
     }//GEN-LAST:event_btn23mnKits
 
     private void btn24mnJoining(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn24mnJoining
-        List<SpcRecord> spc = this.listSpc.stream().filter(rec -> "—Œ≈".equals(rec.place.substring(0, 3))).collect(toList());
+        List<TRecord> spc = this.listSpc.stream().filter(rec -> "—Œ≈".equals(rec.place.substring(0, 3))).collect(toList());
         loadingTab1(spc);
     }//GEN-LAST:event_btn24mnJoining
 
     private void btn25mnElement(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn25mnElement
-        List<SpcRecord> spc = this.listSpc.stream().filter(rec -> "¬—“".equals(rec.place.substring(0, 3))).collect(toList());
+        List<TRecord> spc = this.listSpc.stream().filter(rec -> "¬—“".equals(rec.place.substring(0, 3))).collect(toList());
         loadingTab1(spc);
     }//GEN-LAST:event_btn25mnElement
 
     private void btn26mnGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn26mnGlass
-        List<SpcRecord> spc = this.listSpc.stream().filter(rec -> "«¿œ".equals(rec.place.substring(0, 3))).collect(toList());
+        List<TRecord> spc = this.listSpc.stream().filter(rec -> "«¿œ".equals(rec.place.substring(0, 3))).collect(toList());
         loadingTab1(spc);
     }//GEN-LAST:event_btn26mnGlass
 
     private void btn27mnFurnityra(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn27mnFurnityra
-        List<SpcRecord> spc = this.listSpc.stream().filter(rec -> "‘”–".equals(rec.place.substring(0, 3))).collect(toList());
+        List<TRecord> spc = this.listSpc.stream().filter(rec -> "‘”–".equals(rec.place.substring(0, 3))).collect(toList());
         loadingTab1(spc);
     }//GEN-LAST:event_btn27mnFurnityra
 

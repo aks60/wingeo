@@ -1,7 +1,7 @@
 package builder.model;
 
 import builder.Wincalc;
-import builder.making.SpcRecord;
+import builder.making.TRecord;
 import builder.script.GsonElem;
 import common.UCom;
 import domain.eArtikl;
@@ -158,7 +158,7 @@ public class ElemCross extends ElemSimple {
 
     //Вложеная спецификация 
     @Override
-    public void addSpecific(SpcRecord spcAdd) { //добавление спесификаций зависимых элементов
+    public void addSpecific(TRecord spcAdd) { //добавление спесификаций зависимых элементов
         try {
             if(spcAdd.artiklRec().getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;

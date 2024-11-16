@@ -5,10 +5,10 @@ import frames.swing.FrameToFile;
 import frames.dialog.DicCurrenc;
 import builder.model.Com5t;
 import builder.Wincalc;
-import builder.making.SpcFurniture;
-import builder.making.SpcJoining;
-import builder.making.SpcRecord;
-import builder.making.SpcTariffic;
+import builder.making.TFurniture;
+import builder.making.TJoining;
+import builder.making.TRecord;
+import builder.making.TTariffic;
 import builder.making.UColor;
 import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
@@ -94,17 +94,17 @@ import javax.swing.text.JTextComponent;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
-import report.Check;
-import report.Material;
-import report.Offer;
-import report.Smeta;
-import report.Specific;
+import report.RCheck;
+import report.RMaterial;
+import report.ROffer;
+import report.RSmeta;
+import report.RSpecific;
 import startup.App;
 import common.listener.ListenerReload;
 import static dataset.Query.INS;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-import report.Target;
+import report.RTarget;
 
 public class Orders extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -437,7 +437,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     //Створка
                 } else if (winNode.com5t().type == enums.Type.STVORKA) {
                     //расчёт ручки, 
-                    new SpcFurniture(wincalc(), true).furn();   //подвеса, замка
+                    new TFurniture(wincalc(), true).furn();   //подвеса, замка
                     //через сокр. тарификацию
                     ((CardLayout) pan8.getLayout()).show(pan8, "card16");
                     AreaStvorka stv = (AreaStvorka) winNode.com5t();
@@ -487,7 +487,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                     ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
                     List.of(txt36, txt37, txt38, txt39, txt40, txt41, txt42, txt43, txt44).forEach(it -> it.setText(""));
-                    new SpcJoining(winc, true).join();//заполним соединения из конструктива 
+                    new TJoining(winc, true).join();//заполним соединения из конструктива 
                     ElemJoining ej1 = UCom.join(winc.listJoin, elem5e, 0);
                     ElemJoining ej2 = UCom.join(winc.listJoin, elem5e, 1);
                     ElemJoining ej3 = UCom.join(winc.listJoin, elem5e, 2);
@@ -783,8 +783,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         price2a = price2a + win.price(2); //стоимость конструкции со скидкой менеджера
 
                         //Комплектация
-                        ArrayList<SpcRecord> kitList = SpcTariffic.kits(prjprodRec, win, true); //комплекты
-                        for (SpcRecord kit : kitList) {
+                        ArrayList<TRecord> kitList = TTariffic.kits(prjprodRec, win, true); //комплекты
+                        for (TRecord kit : kitList) {
                             price1b = price1b + kit.price1; //стоимость без скидки
                             price2b = price2b + kit.price2; //стоимость со скидками
                         }
@@ -3806,7 +3806,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Отчёт
-                new Material().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new RMaterial().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem11
@@ -3815,7 +3815,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Отчёт
-                new Specific().parseDoc(qProject.get(UGui.getIndexRec(tab1, 1)));
+                new RSpecific().parseDoc(qProject.get(UGui.getIndexRec(tab1, 1)));
             }
         });
     }//GEN-LAST:event_menuItem12
@@ -3825,7 +3825,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Отчёт
-                new Smeta().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new RSmeta().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem13
@@ -3835,7 +3835,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Отчёт
-                new Smeta().parseDoc1(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new RSmeta().parseDoc1(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem14
@@ -3845,7 +3845,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Отчёт
-                new Check().parseDoc1(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new RCheck().parseDoc1(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem15
@@ -3855,7 +3855,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Отчёт
-                new Check().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new RCheck().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem16
@@ -3865,7 +3865,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Отчёт
-                new Offer().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new ROffer().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem17
@@ -3975,7 +3975,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Задание в цех
-                new Target().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new RTarget().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem18

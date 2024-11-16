@@ -18,10 +18,10 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
-import report.Target;
-import report.Material;
-import report.Offer;
-import report.Smeta;
+import report.RTarget;
+import report.RMaterial;
+import report.ROffer;
+import report.RSmeta;
 
 public class Man extends javax.swing.JFrame {
 
@@ -579,7 +579,7 @@ public class Man extends javax.swing.JFrame {
         ProgressBar.create(Man.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                new Smeta().parseDoc2(projectRec);
+                new RSmeta().parseDoc2(projectRec);
             }
         });
     }//GEN-LAST:event_btn9
@@ -610,7 +610,7 @@ public class Man extends javax.swing.JFrame {
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Отчёт
-                new Target().parseDoc(projectRec);
+                new RTarget().parseDoc(projectRec);
             }
         });
     }//GEN-LAST:event_btn15
@@ -620,7 +620,7 @@ public class Man extends javax.swing.JFrame {
         Record projectRec = eProject.find(orderID);
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                new Material().parseDoc(projectRec);
+                new RMaterial().parseDoc(projectRec);
             }
         });
     }//GEN-LAST:event_btn16
@@ -632,7 +632,7 @@ public class Man extends javax.swing.JFrame {
         ProgressBar.create(Man.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                new Offer().parseDoc(projectRec);
+                new ROffer().parseDoc(projectRec);
             }
         });
     }//GEN-LAST:event_btn17

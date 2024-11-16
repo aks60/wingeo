@@ -29,7 +29,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-public class Check {
+public class RCheck {
 
     private static DecimalFormat df0 = new DecimalFormat("0");
     private static DecimalFormat df1 = new DecimalFormat("0.0");

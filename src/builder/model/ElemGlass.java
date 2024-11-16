@@ -1,8 +1,8 @@
 package builder.model;
 
 import builder.Wincalc;
-import builder.making.SpcFilling;
-import builder.making.SpcRecord;
+import builder.making.TFilling;
+import builder.making.TRecord;
 import builder.script.GsonElem;
 import common.UCom;
 import dataset.Record;
@@ -141,7 +141,7 @@ public class ElemGlass extends ElemSimple {
             spcRec.color(colorID1, colorID2, colorID3);
 
             //Фича определения gzazo и gaxis на раннем этапе построения. 
-            new SpcFilling(winc, true).fill(this);
+            new TFilling(winc, true).fill(this);
 
             ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             Map<Double, Double> hm = new HashMap();
@@ -162,7 +162,7 @@ public class ElemGlass extends ElemSimple {
 
     //Вложенная спецификация
     @Override
-    public void addSpecific(SpcRecord spcAdd
+    public void addSpecific(TRecord spcAdd
     ) {
         try {
             if (spcAdd.artiklRec().getStr(eArtikl.code).substring(0, 1).equals("@")) {

@@ -1,7 +1,7 @@
 package builder.model;
 
 import builder.Wincalc;
-import builder.making.SpcRecord;
+import builder.making.TRecord;
 import builder.making.UColor;
 import builder.script.GsonElem;
 import common.UCom;
@@ -151,7 +151,7 @@ public class ElemFrame extends ElemSimple {
 
     //Вложеная спецификация
     @Override
-    public void addSpecific(SpcRecord spcAdd) { //добавление спесификаций зависимых элементов
+    public void addSpecific(TRecord spcAdd) { //добавление спесификаций зависимых элементов
         try {
             if(spcAdd.artiklRec().getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;
@@ -198,7 +198,7 @@ public class ElemFrame extends ElemSimple {
 
                     } else if ("по текстуре подвеса".equals(spcAdd.getParam("null", 24006))) {
                         for (ElemSimple elem : areaStv.frames) {
-                            for (SpcRecord spc : elem.spcRec.spcList) {
+                            for (TRecord spc : elem.spcRec.spcList) {
                                 if (spc.artiklRec().getInt(eArtikl.level1) == 2 && spc.artiklRec().getInt(eArtikl.level2) == 12) {
                                     colorID = UColor.colorFromArtikl(spcAdd.artiklRec().getInt(eArtikl.id), 1, spc.colorID1);
                                 }
@@ -207,7 +207,7 @@ public class ElemFrame extends ElemSimple {
 
                     } else if ("по текстуре замка".equals(spcAdd.getParam("null", 24006))) {
                         for (ElemSimple elem : areaStv.frames) {
-                            for (SpcRecord spc : elem.spcRec.spcList) {
+                            for (TRecord spc : elem.spcRec.spcList) {
                                 if (spc.artiklRec().getInt(eArtikl.level1) == 2 && spc.artiklRec().getInt(eArtikl.level2) == 9) {
                                     colorID = UColor.colorFromArtikl(spcAdd.artiklRec().getInt(eArtikl.id), 1, spc.colorID1);
                                 }
@@ -222,7 +222,7 @@ public class ElemFrame extends ElemSimple {
                 }
                 //Ручка от низа створки, мм 
                 if (spcAdd.getParam("null", 24072, 25072).equals("null") == false) {
-                    if (builder.making.SpcFurniture.determOfSide(owner) == this) {
+                    if (builder.making.TFurniture.determOfSide(owner) == this) {
                         AreaStvorka stv = (AreaStvorka) owner;
                         stv.knobHeight = UCom.getDbl(spcAdd.getParam(stv.knobHeight, 24072, 25072));
                     }

@@ -30,7 +30,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import static report.URep.wincList;
 
-public class Smeta {
+public class RSmeta {
 
     public void parseDoc1(Record projectRec) {
         try {

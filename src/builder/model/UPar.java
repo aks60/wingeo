@@ -1,6 +1,6 @@
 package builder.model;
 
-import builder.making.SpcRecord;
+import builder.making.TRecord;
 import domain.eArtikl;
 import builder.param.ParamList;
 import enums.UseUnit;
@@ -16,7 +16,7 @@ import java.util.List;
 public class UPar {
 
     //Укорочение мм от высоты ручки 
-    public static double to_25013(SpcRecord spcRec, SpcRecord spcAdd) {
+    public static double to_25013(TRecord spcRec, TRecord spcAdd) {
 
         String ps = spcAdd.getParam("null", 25013); //Укорочение от
         if (!"null".equals(ps)) {
@@ -42,7 +42,7 @@ public class UPar {
     }
 
     //Расчёт количества ед. с шагом
-    public static double to_14050_24050_33050_38050(SpcRecord spcRec, SpcRecord spcAdd) {
+    public static double to_14050_24050_33050_38050(TRecord spcRec, TRecord spcAdd) {
 
         int step = Integer.valueOf(spcAdd.getParam(-1, 14050, 24050, 33050, 38050)); //Шаг, мм
         if (step != -1) {
@@ -88,7 +88,7 @@ public class UPar {
     }
 
     //Расчёт количества ед. с шагом
-    public static double to_11050(SpcRecord spcAdd, ElemJoining elemJoin) {
+    public static double to_11050(TRecord spcAdd, ElemJoining elemJoin) {
 
         int step = Integer.valueOf(spcAdd.getParam(-1, 11050)); //Шаг, мм
         if (step != -1) {
@@ -137,13 +137,13 @@ public class UPar {
     }
 
     //Количество ед.
-    public static double to_11030_12060_14030_15040_25060_33030_34060_38030_39060(SpcRecord spcAdd) {
+    public static double to_11030_12060_14030_15040_25060_33030_34060_38030_39060(TRecord spcAdd) {
         return UCom.getDbl(spcAdd.getParam(spcAdd.count,
                 11030, 12060, 14030, 15040, 25060, 33030, 34060, 38030, 39060));
     }
 
     //Поправка, мм
-    public static double to_12050_15050_34051_39020(SpcRecord spcAdd) {
+    public static double to_12050_15050_34051_39020(TRecord spcAdd) {
         if (UseUnit.METR.id == spcAdd.artiklRec().getInt(eArtikl.unit)) { //пог.м.
             return UCom.getDbl(spcAdd.getParam(0, 12050, 15050, 34050, 34051, 39020)); //Поправка, мм
         }
@@ -151,7 +151,7 @@ public class UPar {
     }
 
     //Длина, мм
-    public static double to_12065_15045_25040_34070_39070(SpcRecord spcAdd) {
+    public static double to_12065_15045_25040_34070_39070(TRecord spcAdd) {
         if (UseUnit.METR.id == spcAdd.artiklRec().getInt(eArtikl.unit)) { //пог.м.
             return UCom.getDbl(spcAdd.getParam(spcAdd.width, 12065, 15045, 25040, 34070, 39070)); //Длина, мм 
         }
@@ -159,23 +159,23 @@ public class UPar {
     }
 
     //Коэффициент, [ * коэф-т ]
-    public static double to_12030_15030_25035_34030_39030(SpcRecord spcAdd) {
+    public static double to_12030_15030_25035_34030_39030(TRecord spcAdd) {
         return UCom.getDbl(spcAdd.getParam("1", 12030, 15030, 25035, 34030, 39030));
     }
 
     //Коэффициент, [ / коэф-т ]
-    public static double to_12040_15031_25036_34040_39040(SpcRecord spcAdd) {
+    public static double to_12040_15031_25036_34040_39040(TRecord spcAdd) {
         return UCom.getDbl(spcAdd.getParam("1", 12040, 15031, 25036, 34040, 39040));
     }
 
     //Othe
-    public static double to_11030_12060_14030_15040_24030_25060_33030_34060_38030_39060(SpcRecord spcAdd) {
+    public static double to_11030_12060_14030_15040_24030_25060_33030_34060_38030_39060(TRecord spcAdd) {
         return UCom.getDbl(spcAdd.getParam(spcAdd.quant1,
                 11030, 12060, 14030, 15040, 24030, 25060, 33030, 34060, 38030, 39060));
     }
 
     //Задать Угол_реза_1/Угол_реза_2, °
-    public static void to_34077_39077(SpcRecord spcAdd) {
+    public static void to_34077_39077(TRecord spcAdd) {
         if (spcAdd.getParam("-361", 34077, 39077).equals("-361") == false) {
             String[] arr = spcAdd.getParam("-1", 34077, 39077).split("/");
             if (arr[0].equals("*") == false) {
@@ -188,7 +188,7 @@ public class UPar {
     }
 
     //Ставить однократно
-    public static double to_11070_12070_33078_34078(SpcRecord spcAdd) {
+    public static double to_11070_12070_33078_34078(TRecord spcAdd) {
         if ("Да".equals(spcAdd.getParam("Нет", 11070, 12070, 33078, 34078))) {
             return 1;
         } else {
@@ -197,7 +197,7 @@ public class UPar {
     }
 
     //Углы реза
-    public static void to_12075_34075_39075(ElemSimple elem5e, SpcRecord spcAdd) {
+    public static void to_12075_34075_39075(ElemSimple elem5e, TRecord spcAdd) {
         String txt = spcAdd.getParam("null", 12075, 34075, 39075);
         if (!"null".equals(txt)) {
             if ("по контейнерам".equals(txt)) {
@@ -220,7 +220,7 @@ public class UPar {
     }
 
     //Высоту сделать длиной 
-    public static void to_40007(SpcRecord spcAdd) {
+    public static void to_40007(TRecord spcAdd) {
         if ("Да".equals(spcAdd.getParam("null", 40007))) {
             double height = spcAdd.height;
             spcAdd.height = spcAdd.width;
@@ -229,7 +229,7 @@ public class UPar {
     }
 
     //Округлять количество до ближайшего
-    public static double to_39063(SpcRecord spcAdd) {
+    public static double to_39063(TRecord spcAdd) {
         String txt = spcAdd.getParam("null", 39063);
         if (!"null".equals(txt)) {
 
@@ -251,7 +251,7 @@ public class UPar {
 
     //Поправка ширины/высоты, мм 
     //Поправка на стороны четные/нечетные, мм     
-    public static void to_40005_40010(SpcRecord spcAdd) {
+    public static void to_40005_40010(TRecord spcAdd) {
         if (!"null".equals(spcAdd.getParam("null", 40005))) {
             String[] arr = spcAdd.getParam("null", 40005).split("/");
             spcAdd.width = spcAdd.width + UCom.getDbl(arr[0]);

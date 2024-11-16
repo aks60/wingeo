@@ -1,7 +1,7 @@
 package builder.model;
 
 import builder.Wincalc;
-import builder.making.SpcRecord;
+import builder.making.TRecord;
 import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
 import common.UCom;
@@ -32,19 +32,19 @@ public abstract class ElemSimple extends Com5t {
     public final double delta = 3;
     public final double SIZE = 20;
     private Timer timer = new Timer(160, null);
-    public SpcRecord spcRec = null; //спецификация элемента
+    public TRecord spcRec = null; //спецификация элемента
     public Color borderColor = Color.BLACK;
 
     public ElemSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson.id, gson, owner);
-        this.spcRec = new SpcRecord(id, this);
+        this.spcRec = new TRecord(id, this);
         winc.listElem.add(this);
         winc.listAll.add(this);
     }
 
     public ElemSimple(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
         super(winc, id, gson, owner);
-        this.spcRec = new SpcRecord(id, this);
+        this.spcRec = new TRecord(id, this);
         winc.listElem.add(this);
         winc.listAll.add(this);
     }
@@ -60,7 +60,7 @@ public abstract class ElemSimple extends Com5t {
 
     public abstract void setSpecific();
 
-    public abstract void addSpecific(SpcRecord spcAdd);
+    public abstract void addSpecific(TRecord spcAdd);
 
     public void addEvents() {
         timer.setRepeats(false);

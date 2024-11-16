@@ -1,11 +1,11 @@
 package report;
 
 import report.sup.RTable;
-import report.sup.RSpecific;
+import report.sup.RRecord;
 import report.sup.ExecuteCmd;
 import builder.Wincalc;
-import builder.making.SpcRecord;
-import builder.making.SpcTariffic;
+import builder.making.TRecord;
+import builder.making.TTariffic;
 import common.UCom;
 import dataset.Record;
 import domain.ePrjprod;
@@ -23,7 +23,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 //Разход материала
-public class Material {
+public class RMaterial {
 
     private static int npp = 0;
 
@@ -49,9 +49,9 @@ public class Material {
 
     private static void loadDoc(Record projectRec, Document doc) {
 
-        List<RSpecific> spcList = new ArrayList<RSpecific>();
-        List<SpcRecord> listSpc = new ArrayList<SpcRecord>();
-        List<SpcRecord> listKit = new ArrayList<SpcRecord>();        
+        List<RRecord> spcList = new ArrayList<RRecord>();
+        List<TRecord> listSpc = new ArrayList<TRecord>();
+        List<TRecord> listKit = new ArrayList<TRecord>();        
 
         List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
         for (Record prjprodRec : prjprodList) {
@@ -61,12 +61,12 @@ public class Material {
             winc.specification(true);
 
             listSpc.addAll(winc.listSpec);
-            listKit = SpcTariffic.kits(prjprodRec, winc, true); //добавим комплекты
+            listKit = TTariffic.kits(prjprodRec, winc, true); //добавим комплекты
         }
-        listSpc.forEach(el -> spcList.add(new RSpecific(el)));
-        listKit.forEach(el -> spcList.add(new RSpecific(el)));
+        listSpc.forEach(el -> spcList.add(new RRecord(el)));
+        listKit.forEach(el -> spcList.add(new RRecord(el)));
         
-      List<RSpecific> groupList = RSpecific.groups3(spcList);
+      List<RRecord> groupList = RRecord.groups3(spcList);
        
         Elements templateRec = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
         groupList.forEach(act -> doc.getElementsByTag("tbody").append(templateRec.get(0).html()));
@@ -88,7 +88,7 @@ public class Material {
                 .selectFirst("td:eq(1)").text(UCom.format(total, 9));
     }
 
-    private static void recordAdd(Elements tdList, RSpecific spcRec) {
+    private static void recordAdd(Elements tdList, RRecord spcRec) {
         tdList.get(0).text(String.valueOf(++npp));
         tdList.get(1).text(spcRec.artikl());
         tdList.get(2).text(spcRec.name());

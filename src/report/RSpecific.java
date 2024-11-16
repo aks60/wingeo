@@ -1,11 +1,11 @@
 package report;
 
 import report.sup.RTable;
-import report.sup.RSpecific;
+import report.sup.RRecord;
 import report.sup.ExecuteCmd;
 import builder.Wincalc;
-import builder.making.SpcRecord;
-import builder.making.SpcTariffic;
+import builder.making.TRecord;
+import builder.making.TTariffic;
 import common.UCom;
 import dataset.Record;
 import domain.eArtikl;
@@ -25,7 +25,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 //Спецификация
-public class Specific {
+public class RSpecific {
 
     private static int npp = 0;
 
@@ -53,8 +53,8 @@ public class Specific {
 
     private static void loadDoc1(Record projectRec, Document doc) {
         
-        List<SpcRecord> spcList = new ArrayList<SpcRecord>();
-        List<RSpecific> kitList = new ArrayList<RSpecific>();
+        List<TRecord> spcList = new ArrayList<TRecord>();
+        List<RRecord> kitList = new ArrayList<RRecord>();
         List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
         Wincalc winc = new builder.Wincalc();
 
@@ -65,19 +65,19 @@ public class Specific {
             winc.specification(true);
             spcList.addAll(winc.listSpec); //добавим спецификацию
             
-            List<SpcRecord> list = SpcTariffic.kits(prjprodRec, winc, true); //добавим комплекты
-            list.forEach(rec -> kitList.add(new RSpecific(rec)));
+            List<TRecord> list = TTariffic.kits(prjprodRec, winc, true); //добавим комплекты
+            list.forEach(rec -> kitList.add(new RRecord(rec)));
         }
         
-        List<RSpecific> listSpc = new ArrayList<RSpecific>();
-        spcList.forEach(rec -> listSpc.add(new RSpecific(rec)));
+        List<RRecord> listSpc = new ArrayList<RRecord>();
+        spcList.forEach(rec -> listSpc.add(new RRecord(rec)));
         String num = projectRec.getStr(eProject.num_ord);
         String date = UGui.simpleFormat.format(projectRec.get(eProject.date5));
 
-        List<RSpecific> listSpc1 = listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 1).collect(toList());
-        List<RSpecific> listSpc2 = RSpecific.groups2(listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 2).collect(toList()));
-        List<RSpecific> listSpc3 = RSpecific.groups2(listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 3).collect(toList()));
-        List<RSpecific> listSpc5 = listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 5).collect(toList());
+        List<RRecord> listSpc1 = listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 1).collect(toList());
+        List<RRecord> listSpc2 = RRecord.groups2(listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 2).collect(toList()));
+        List<RRecord> listSpc3 = RRecord.groups2(listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 3).collect(toList()));
+        List<RRecord> listSpc5 = listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 5).collect(toList());
 
         doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord));   
         doc.getElementsByTag("thead").get(0).getElementsByTag("tr").get(0).getElementsByTag("th").get(0).html("Дата: " + date + " г.");
@@ -115,7 +115,7 @@ public class Specific {
                 .selectFirst("td:eq(1)").text(UCom.format(total, 9));
     }
 
-    private static void recordAdd(Elements templateRec, RSpecific specificRec, Document doc) {
+    private static void recordAdd(Elements templateRec, RRecord specificRec, Document doc) {
         Elements tdList = templateRec.get(1).getElementsByTag("td");
         tdList.get(0).text(String.valueOf(++npp));
         tdList.get(1).text(specificRec.artikl());

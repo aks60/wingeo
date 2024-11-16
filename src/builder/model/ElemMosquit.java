@@ -1,7 +1,7 @@
 package builder.model;
 
 import builder.Wincalc;
-import builder.making.SpcRecord;
+import builder.making.TRecord;
 import builder.script.GsonElem;
 import common.UCom;
 import dataset.Query;
@@ -77,7 +77,7 @@ public class ElemMosquit extends ElemSimple {
 
     //Вложенная спецификация
     @Override
-    public void addSpecific(SpcRecord spcAdd) {
+    public void addSpecific(TRecord spcAdd) {
         try {
             if(spcAdd.artiklRec().getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;

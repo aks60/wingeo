@@ -1,6 +1,6 @@
 package report.sup;
 
-import builder.making.SpcRecord;
+import builder.making.TRecord;
 import domain.eColor;
 import common.UCom;
 import enums.UseUnit;
@@ -11,21 +11,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RSpecific {
+public class RRecord {
     
-    private SpcRecord spc;
+    private TRecord spc;
     private boolean otx = true;
 
-    public RSpecific(SpcRecord spc) {
+    public RRecord(TRecord spc) {
         this.spc = spc;
     }
 
-    public RSpecific(SpcRecord spc, boolean otx) {
+    public RRecord(TRecord spc, boolean otx) {
         this.spc = spc;
         this.otx = otx;
     }
 
-    public SpcRecord spc() {
+    public TRecord spc() {
         return spc;
     }
 
@@ -116,13 +116,13 @@ public class RSpecific {
     }
 
     //--------------------------------------------------------------------------  
-    public static List<RSpecific> groups2(List<RSpecific> listSpr) {
-        List<RSpecific> list = new ArrayList<RSpecific>();
-        Map<String, RSpecific> map = new HashMap<String, RSpecific>();
+    public static List<RRecord> groups2(List<RRecord> listSpr) {
+        List<RRecord> list = new ArrayList<RRecord>();
+        Map<String, RRecord> map = new HashMap<String, RRecord>();
 
-        for (RSpecific newRec : listSpr) {
+        for (RRecord newRec : listSpr) {
             String key = newRec.spc.artikl + "." + newRec.spc.colorID1 + "." + newRec.spc.colorID2 + "." + newRec.spc.colorID3;
-            RSpecific oldRec = map.put(key, new RSpecific(newRec.spc));
+            RRecord oldRec = map.put(key, new RRecord(newRec.spc));
             if (oldRec != null) {
                 newRec.spc.weight = newRec.spc.weight + oldRec.spc.weight;
                 newRec.spc.count = newRec.spc.count + oldRec.spc.count;
@@ -138,13 +138,13 @@ public class RSpecific {
         return list;
     }
 
-    public static List<RSpecific> groups3(List<RSpecific> listSpr) {
-        List<RSpecific> list = new ArrayList<RSpecific>();
-        Map<String, RSpecific> map = new HashMap<String, RSpecific>();
+    public static List<RRecord> groups3(List<RRecord> listSpr) {
+        List<RRecord> list = new ArrayList<RRecord>();
+        Map<String, RRecord> map = new HashMap<String, RRecord>();
 
-        for (RSpecific newRec : listSpr) {
+        for (RRecord newRec : listSpr) {
             String key = newRec.spc.artikl + "." + newRec.spc.colorID1 + "." + newRec.spc.colorID2 + "." + newRec.spc.colorID3;
-            RSpecific oldRec = map.put(key, new RSpecific(newRec.spc));
+            RRecord oldRec = map.put(key, new RRecord(newRec.spc));
             if (oldRec != null) {
                 //int unitID = oldRec.spc.artiklRec().getInt(eArtikl.unit);
                 newRec.spc.count = newRec.spc.count + oldRec.spc.count;

@@ -8,7 +8,7 @@ import enums.Layout;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
-import builder.making.SpcRecord;
+import builder.making.TRecord;
 import builder.model.Com5t;
 import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
@@ -124,7 +124,7 @@ public class FurnitureDet extends Par5s {
                 case 24009:  //Коды текстуры подвеса 
                 case 25009:  //Коды текстуры подвеса                   
                     for (ElemSimple elem : areaStv.frames) {
-                        for (SpcRecord spc : elem.spcRec.spcList) {
+                        for (TRecord spc : elem.spcRec.spcList) {
                             if (spc.artiklRec().getInt(eArtikl.level1) == 2 && spc.artiklRec().getInt(eArtikl.level2) == 12) {
                                 String name = eColor.find(spc.colorID1).getStr(eColor.name);
                                 if (name.equals(rec.getStr(TEXT)) == false) {

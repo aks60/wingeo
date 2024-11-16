@@ -28,20 +28,20 @@ import org.locationtech.jts.geom.Envelope;
 /**
  * Фурнитура
  */
-public class SpcFurniture extends Cal5e {
+public class TFurniture extends Cal5e {
 
     private FurnitureVar furnitureVar = null;
     private FurnitureDet furnitureDet = null;
     private final List list = List.of(9, 11, 12); //замок, ручка, петля 
     private boolean max_size_message = true;
 
-    public SpcFurniture(Wincalc winc) {
+    public TFurniture(Wincalc winc) {
         super(winc);
         furnitureVar = new FurnitureVar(winc);
         furnitureDet = new FurnitureDet(winc);
     }
 
-    public SpcFurniture(Wincalc winc, boolean shortPass) {
+    public TFurniture(Wincalc winc, boolean shortPass) {
         super(winc);
         furnitureVar = new FurnitureVar(winc);
         furnitureDet = new FurnitureDet(winc);
@@ -194,7 +194,7 @@ public class SpcFurniture extends Cal5e {
                 if (artiklRec.getInt(eArtikl.id) != -1) { //артикул есть
 
                     ElemSimple sideStv = determOfSide(mapParam, areaStv);
-                    SpcRecord spcAdd = new SpcRecord("ФУРН", furndetRec, artiklRec, sideStv, mapParam);
+                    TRecord spcAdd = new TRecord("ФУРН", furndetRec, artiklRec, sideStv, mapParam);
 
                     //Ловим ручку, петлю, замок и 
                     //присваиваем знач. в свойства створки
@@ -229,7 +229,7 @@ public class SpcFurniture extends Cal5e {
 
     //Ловим ручку, подвес, замок и 
     //присваиваем знач. в створку    
-    private void setPropertyStv(AreaSimple areaStv, SpcRecord spcAdd) {
+    private void setPropertyStv(AreaSimple areaStv, TRecord spcAdd) {
         AreaStvorka stv = (AreaStvorka) areaStv;
 
         if (spcAdd.artiklRec().getInt(eArtikl.level1) == 2) {

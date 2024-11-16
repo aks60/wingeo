@@ -1,6 +1,6 @@
 package builder;
 
-import builder.making.SpcJoining;
+import builder.making.TJoining;
 import builder.model.AreaRectangl;
 import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
@@ -9,7 +9,7 @@ import builder.model.ElemCross;
 import builder.model.ElemFrame;
 import builder.model.ElemGlass;
 import builder.model.ElemSimple;
-import builder.making.SpcRecord;
+import builder.making.TRecord;
 import builder.making.UColor;
 import builder.model.AreaArch;
 import builder.model.AreaDoor;
@@ -69,7 +69,7 @@ public class Wincalc {
     public ArrayList<ElemSimple> listElem = new ArrayList<ElemSimple>(); //список элем.
     public ArrayList<ElemJoining> listJoin = new ArrayList<ElemJoining>(); //список соед.
     public ArrayList<Com5t> listAll = new ArrayList<Com5t>(); //список всех компонентов (area + elem)
-    public ArrayList<SpcRecord> listSpec = new ArrayList<SpcRecord>(); //спецификация
+    public ArrayList<TRecord> listSpec = new ArrayList<TRecord>(); //спецификация
 
     public Wincalc() {
     }
@@ -229,18 +229,18 @@ public class Wincalc {
             listElem.forEach(elem -> elem.setSpecific());
 
             //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
-            new builder.making.SpcJoining(this).join(); //соединения
-            new builder.making.SpcElement(this).elem(); //вставки
-            new builder.making.SpcFilling(this).fill(); //заполнения
-            new builder.making.SpcFurniture(this).furn(); //фурнитура 
-            new builder.making.SpcTariffic(this, norm_otx).calc(); //тарификация
+            new builder.making.TJoining(this).join(); //соединения
+            new builder.making.TElement(this).elem(); //вставки
+            new builder.making.TFilling(this).fill(); //заполнения
+            new builder.making.TFurniture(this).furn(); //фурнитура 
+            new builder.making.TTariffic(this, norm_otx).calc(); //тарификация
 
             //Заполним список спецификации
             for (ElemSimple elem5e : listElem) {
                 if (elem5e.spcRec.artikl.isEmpty() || elem5e.spcRec.artikl.trim().charAt(0) != '@') {
                     this.listSpec.add(elem5e.spcRec);
                 }
-                for (SpcRecord spc : elem5e.spcRec.spcList) {
+                for (TRecord spc : elem5e.spcRec.spcList) {
                     if (spc.artikl.isEmpty() || spc.artikl.trim().charAt(0) != '@') {
                         this.listSpec.add(spc);
                     }
@@ -248,7 +248,7 @@ public class Wincalc {
             }
 
             //Итоговая стоимость
-            for (SpcRecord spc : listSpec) {
+            for (TRecord spc : listSpec) {
                 this.price1 = (this.price1 + spc.price1); //общая стоимость без скидки
                 this.price2 = (this.price2 + spc.price2); //общая стоимость со скидкой             
                 //this.count = (this.count + spc.count); //колич. единиц                       

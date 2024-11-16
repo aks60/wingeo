@@ -1,6 +1,6 @@
 package builder.model;
 
-import builder.making.SpcRecord;
+import builder.making.TRecord;
 import static builder.model.Com5t.gf;
 import common.LineSegm;
 import common.UCom;
@@ -67,7 +67,7 @@ public class UGeo {
     }
 
     //”гол реза
-    public static double anglCut(SpcRecord spcRec, Geometry area, int index1, int index2, char direction) {
+    public static double anglCut(TRecord spcRec, Geometry area, int index1, int index2, char direction) {
         LineSegment s1a = UGeo.getSegment(area, index1);
         LineSegment s2a = UGeo.getSegment(area, index2);
         LineSegment s1b = s1a.offset(-spcRec.height);

@@ -23,20 +23,20 @@ import java.util.Set;
 /**
  * Заполнения
  */
-public class SpcFilling extends Cal5e {
+public class TFilling extends Cal5e {
 
     private FillingVar fillingVar = null;
     private FillingDet fillingDet = null;
     private ElementDet elementDet = null;
 
-    public SpcFilling(Wincalc winc) {
+    public TFilling(Wincalc winc) {
         super(winc);
         fillingVar = new FillingVar(winc);
         fillingDet = new FillingDet(winc);
         elementDet = new ElementDet(winc);
     }
 
-    public SpcFilling(Wincalc winc, boolean shortPass) {
+    public TFilling(Wincalc winc, boolean shortPass) {
         super(winc);
         fillingVar = new FillingVar(winc);
         fillingDet = new FillingDet(winc);
@@ -115,7 +115,7 @@ public class SpcFilling extends Cal5e {
                 //ФИЛЬТР детализации, параметры накапливаются в mapParam
                 if (fillingDet.filter(mapParam, elemGlass, glasdetRec) == true) {
                     Record artiklRec = eArtikl.find(glasdetRec.getInt(eGlasdet.artikl_id), false);
-                    SpcRecord spcAdd = new SpcRecord("ЗАП", glasdetRec, artiklRec, elemGlass, mapParam);
+                    TRecord spcAdd = new TRecord("ЗАП", glasdetRec, artiklRec, elemGlass, mapParam);
                     spcAdd.variantRec = glasgrpRec;
                     //Подбор текстуры
                     if (UColor.colorFromElemOrSeri(spcAdd)) {

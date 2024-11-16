@@ -15,9 +15,9 @@ import java.util.List;
 /**
  * Спецификация элемента окна
  */
-public class SpcRecord {
+public class TRecord {
 
-    public ArrayList<SpcRecord> spcList = new ArrayList<SpcRecord>(); //список составов, фурнитур и т. д.  
+    public ArrayList<TRecord> spcList = new ArrayList<TRecord>(); //список составов, фурнитур и т. д.  
     public HashMap<Integer, String> mapParam = null;  //параметры спецификации
     public ElemSimple elem5e = null;  //элемент пораждающий спецификацию (контейнер)
     public Record variantRec = null;  //вариант в конструктиве
@@ -47,10 +47,10 @@ public class SpcRecord {
     public double price1 = 0;  //Стоимость без скидки
     public double price2 = 0;  //Стоимость с технологической скидкой
 
-    public SpcRecord() {
+    public TRecord() {
     }
 
-    public SpcRecord(SpcRecord spec) {
+    public TRecord(TRecord spec) {
         this.id = spec.id;
         this.place = spec.place;
         this.artikl = spec.artikl;
@@ -79,14 +79,14 @@ public class SpcRecord {
         this.elem5e = spec.elem5e;
     }
 
-    public SpcRecord(double id, ElemSimple elem5e) {
+    public TRecord(double id, ElemSimple elem5e) {
         ++elem5e.winc.spcId;
         this.id = id;
         this.elem5e = elem5e;
         this.mapParam = new HashMap<Integer, String>();
     }
 
-    public SpcRecord(String place, Record detailRec, Record artiklRec, ElemSimple elem5e, HashMap<Integer, String> mapParam) {
+    public TRecord(String place, Record detailRec, Record artiklRec, ElemSimple elem5e, HashMap<Integer, String> mapParam) {
         this.id = ++elem5e.winc.spcId;
         this.elem5e = elem5e;
         this.mapParam = mapParam;
@@ -95,7 +95,7 @@ public class SpcRecord {
         artiklRec(artiklRec);
     }
 
-    public SpcRecord(String place, double id, Record detailRec, Record artiklRec, HashMap<Integer, String> mapParam) {
+    public TRecord(String place, double id, Record detailRec, Record artiklRec, HashMap<Integer, String> mapParam) {
         this.id = id;
         this.mapParam = mapParam;
         this.detailRec = detailRec;
@@ -121,7 +121,7 @@ public class SpcRecord {
         this.colorID3 = colorID3;
     }
 
-    public void copy(SpcRecord spec) {
+    public void copy(TRecord spec) {
         this.id = spec.id;
         this.place = spec.place;
         this.artikl = spec.artikl;
@@ -170,11 +170,11 @@ public class SpcRecord {
         return UPar.getParam(def, mapParam, p);
     }
 
-    public static void write_csv(ArrayList<SpcRecord> spcList) {
+    public static void write_csv(ArrayList<TRecord> spcList) {
         //См. историю
     }
 
-    public static void write_txt(ArrayList<SpcRecord> specList) {
+    public static void write_txt(ArrayList<TRecord> specList) {
         //См. историю
     }
 

@@ -14,6 +14,7 @@ import enums.UseUnit;
 import builder.Wincalc;
 import builder.model.ElemSimple;
 import common.UCom;
+import static common.UCom.round;
 import dataset.Query;
 import domain.eElemdet;
 import domain.eElement;
@@ -28,13 +29,13 @@ import java.util.List;
 /**
  * Расчёт стоимости элементов окна алгоритм см. в UML
  */
-public class SpcTariffic extends Cal5e {            
+public class TTariffic extends Cal5e {            
 
     private static boolean norm_otx = true;
-    private static int precision = Math.round(new Query(eGroups.values())
+    public static int precision = Math.round(new Query(eGroups.values())
             .sql(eGroups.data(), eGroups.up).get(0).getFloat(eGroups.val)); //округление длины профилей
 
-    public SpcTariffic(Wincalc winc, boolean norm_otx) {
+    public TTariffic(Wincalc winc, boolean norm_otx) {
         super(winc);
         this.norm_otx = norm_otx;
     }
@@ -58,7 +59,7 @@ public class SpcTariffic extends Cal5e {
                     }
                     //Вложенная спецификация
                     //цикл по детализации эдемента
-                    for (SpcRecord spсRec2 : elem5e.spcRec.spcList) {
+                    for (TRecord spсRec2 : elem5e.spcRec.spcList) {
                         spсRec2.sebes1 += artdetPrice(spсRec2); //себест. за ед. без отхода
                         spсRec2.quant1 = formatAmount(spсRec2); //количество без отхода
                         spсRec2.quant2 = spсRec2.quant1; //базовое количество с отходом
@@ -116,7 +117,7 @@ public class SpcTariffic extends Cal5e {
                     elem5e.spcRec.price2 = elem5e.spcRec.price1 - (elem5e.spcRec.price1 / 100) * k2; //стоимость со скидкой 
 
                     //Цикл по детализации
-                    for (SpcRecord spc : elem5e.spcRec.spcList) {
+                    for (TRecord spc : elem5e.spcRec.spcList) {
 
                         // <editor-fold defaultstate="collapsed" desc="Правила рассч. вложенные">  
                         //Цикл по правилам расчёта.
@@ -145,7 +146,7 @@ public class SpcTariffic extends Cal5e {
                 if (filter(elem5e)) {
                     elem5e.spcRec.weight = elem5e.spcRec.quant1 * elem5e.spcRec.artiklRec().getDbl(eArtikl.density);
 
-                    for (SpcRecord spec : elem5e.spcRec.spcList) {
+                    for (TRecord spec : elem5e.spcRec.spcList) {
                         spec.weight = spec.quant1 * spec.artiklRec().getDbl(eArtikl.density);
                     }
                 }
@@ -158,8 +159,8 @@ public class SpcTariffic extends Cal5e {
     /**
      * Комплекты конструкции. Комплекты могут быть не привязаны к изделиям
      */
-    public static ArrayList<SpcRecord> kits(Record prjprodRec, Wincalc winc, boolean norm_otx) {
-        ArrayList<SpcRecord> kitList = new ArrayList();
+    public static ArrayList<TRecord> kits(Record prjprodRec, Wincalc winc, boolean norm_otx) {
+        ArrayList<TRecord> kitList = new ArrayList();
         try {
             Record systreeRec = eSystree.find(winc.nuni); //для нахожд. коэф. рентабельности
             double percentMarkup = percentMarkup(winc); //процентная надбавка на изделия сложной формы
@@ -170,7 +171,7 @@ public class SpcTariffic extends Cal5e {
                 for (Record prjkitRec : prjkitList) {
                     Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.artikl_id), true);
                     if (artiklRec != null) {
-                        SpcRecord spc = new SpcRecord("КОМП", ++winc.spcId, prjkitRec, artiklRec, null);
+                        TRecord spc = new TRecord("КОМП", ++winc.spcId, prjkitRec, artiklRec, null);
                         spc.width = prjkitRec.getDbl(ePrjkit.width);
                         spc.height = prjkitRec.getDbl(ePrjkit.height);
                         spc.count = prjkitRec.getDbl(ePrjkit.numb);
@@ -204,7 +205,7 @@ public class SpcTariffic extends Cal5e {
     }
 
     //Себес-сть за ед. изм. Рассчёт тарифа для заданного артикула заданных цветов по таблице eArtdet
-    private static double artdetPrice(SpcRecord specificRec) {
+    public static double artdetPrice(TRecord specificRec) {
 
         double inPrice = 0;
         Record color1Rec = eColor.find(specificRec.colorID1);  //основная
@@ -306,7 +307,7 @@ public class SpcTariffic extends Cal5e {
     }
 
     //Правила расчёта. Фильтр по полю form, color(1,2,3) таблицы RULECALC
-    private static void rulecalcPrise(Wincalc winc, Record rulecalcRec, SpcRecord spcRec) {
+    private static void rulecalcPrise(Wincalc winc, Record rulecalcRec, TRecord spcRec) {
 
         try {
             //Если артикул ИЛИ тип ИЛИ подтип совпали
@@ -332,7 +333,7 @@ public class SpcTariffic extends Cal5e {
                                         if (elem5e.spcRec.artikl.equals(spcRec.artikl)) {
                                             quantity3 = quantity3 + elem5e.spcRec.quant1;
                                         }
-                                        for (SpcRecord specifRec2 : elem5e.spcRec.spcList) {
+                                        for (TRecord specifRec2 : elem5e.spcRec.spcList) {
                                             if (specifRec2.artikl.equals(spcRec.artikl)) {
                                                 quantity3 = quantity3 + specifRec2.quant1;
                                             }
@@ -342,11 +343,11 @@ public class SpcTariffic extends Cal5e {
                             } else { //по подтипу, типу
                                 for (ElemSimple elem5e : elemList) { //суммирую колич. всех элементов (например штапиков)
                                     if (filter(elem5e)) {
-                                        SpcRecord specifRec2 = elem5e.spcRec;
+                                        TRecord specifRec2 = elem5e.spcRec;
                                         if (specifRec2.artiklRec().getInt(eArtikl.level1) * 100 + specifRec2.artiklRec().getInt(eArtikl.level2) == rulecalcRec.getInt(eRulecalc.type)) {
                                             quantity3 = quantity3 + elem5e.spcRec.quant1;
                                         }
-                                        for (SpcRecord specifRec3 : specifRec2.spcList) {
+                                        for (TRecord specifRec3 : specifRec2.spcList) {
                                             if (specifRec3.artiklRec().getInt(eArtikl.level1) * 100 + specifRec3.artiklRec().getInt(eArtikl.level2) == rulecalcRec.getInt(eRulecalc.type)) {
                                                 quantity3 = quantity3 + specifRec3.quant1;
                                             }
@@ -366,15 +367,27 @@ public class SpcTariffic extends Cal5e {
         }
     }
 
+    //Процентная надбавка на изделия сложной формы
+    private static double percentMarkup(Wincalc winc) {
+        if (Type.ARCH == winc.root.type) {
+            return eGroups.find(2101).getDbl(eGroups.val);
+
+        } else if (Type.RECTANGL != winc.root.type) {
+            return eGroups.find(2104).getDbl(eGroups.val);
+        }
+        return 0;
+    }
+
+
     //В зав. от единицы изм. форматируется количество
-    private static double formatAmount(SpcRecord spcRec) {
+    public static double formatAmount(TRecord spcRec) {
         //Нужна доработка для расчёта по минимальному тарифу. См. dll VirtualPro4::CalcArtTariff
 
         if (UseUnit.METR.id == spcRec.artiklRec().getInt(eArtikl.unit)) { //метры
-            return spcRec.count * round(spcRec.width, precision) / 1000;
+            return spcRec.count * round(spcRec.width, TTariffic.precision) / 1000;
 
         } else if (UseUnit.METR2.id == spcRec.artiklRec().getInt(eArtikl.unit)) { //кв. метры
-            return spcRec.count * round(spcRec.width, precision) * round(spcRec.height, precision) / 1000000;
+            return spcRec.count * round(spcRec.width, TTariffic.precision) * round(spcRec.height, TTariffic.precision) / 1000000;
 
         } else if (UseUnit.PIE.id == spcRec.artiklRec().getInt(eArtikl.unit)) { //шт.
             return spcRec.count;
@@ -387,18 +400,7 @@ public class SpcTariffic extends Cal5e {
         }
         return 0;
     }
-
-    //Процентная надбавка на изделия сложной формы
-    private static double percentMarkup(Wincalc winc) {
-        if (Type.ARCH == winc.root.type) {
-            return eGroups.find(2101).getDbl(eGroups.val);
-
-        } else if (Type.RECTANGL != winc.root.type) {
-            return eGroups.find(2104).getDbl(eGroups.val);
-        }
-        return 0;
-    }
-
+        
     //Проверяет, должен ли применяться заданный тариф мат-ценности для заданной текстуры
     public static boolean isTariff(Record artdetRec, Record colorRec) {
 

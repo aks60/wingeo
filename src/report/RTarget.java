@@ -5,7 +5,7 @@ import common.UCom;
 import report.sup.RTable;
 import report.sup.ExecuteCmd;
 import builder.Wincalc;
-import builder.making.SpcRecord;
+import builder.making.TRecord;
 import dataset.Query;
 import dataset.Record;
 import domain.eSysfurn;
@@ -28,10 +28,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import report.sup.RSpecific;
+import report.sup.RRecord;
 
 //Задание в цех
-public class Target {
+public class RTarget {
 
     public void parseDoc(Record projectRec) {
         try {
@@ -117,14 +117,14 @@ public class Target {
 
                 //Таблица №3 ПРОФИЛЬ / АРМИРОВАНИЕ  
                 Element tab3 = tab3List.get(i);
-                List<RSpecific> spcList3 = new ArrayList<RSpecific>(), spcList3a = new ArrayList<RSpecific>();
+                List<RRecord> spcList3 = new ArrayList<RRecord>(), spcList3a = new ArrayList<RRecord>();
                 loadTab3(winc, tab3, template3Tr, spcList3, spcList3a); //спецификация для изделия 
                 spcList3.forEach(act -> tab3.append(template3Tr));
                 tab3.getElementsByTag("tr").remove(1);
 
                 for (int j = 0; j < spcList3.size(); j++) { //заполним строки 
                     Elements td = tab3.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-                    RSpecific rs = spcList3.get(j);
+                    RRecord rs = spcList3.get(j);
                     td.get(0).text(String.valueOf(j + 1));
                     td.get(1).text(rs.artikl());
                     td.get(2).text(rs.name());
@@ -140,13 +140,13 @@ public class Target {
 
                 //Таблица №4 УПЛОТНИТЕЛИ 
                 Element tab4 = tab4List.get(i);
-                List<RSpecific> spcList4 = loadTab4(winc, tab4, template4Tr);
+                List<RRecord> spcList4 = loadTab4(winc, tab4, template4Tr);
                 spcList4.forEach(act -> tab4.append(template4Tr));
                 tab4.getElementsByTag("tr").remove(1);
 
                 for (int j = 0; j < spcList4.size(); j++) { //заполним строки 
                     Elements td = tab4.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-                    RSpecific rs = spcList4.get(j);
+                    RRecord rs = spcList4.get(j);
                     td.get(0).text(String.valueOf(j + 1));
                     td.get(1).text(rs.artikl());
                     td.get(2).text(rs.name());
@@ -156,12 +156,12 @@ public class Target {
 
                 //Таблица №5 ШТАПИК  
                 Element tab5 = tab5List.get(i);
-                List<RSpecific> spcList5 = loadTab5(winc, tab5, template5Tr);
+                List<RRecord> spcList5 = loadTab5(winc, tab5, template5Tr);
                 spcList5.forEach(act -> tab5.append(template5Tr));
                 tab5.getElementsByTag("tr").remove(1);
                 for (int j = 0; j < spcList5.size(); j++) { //заполним строки 
                     Elements td = tab5.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-                    RSpecific rs = spcList5.get(j);
+                    RRecord rs = spcList5.get(j);
                     td.get(0).text(String.valueOf(j + 1));
                     td.get(1).text(rs.artikl());
                     td.get(2).text(rs.name());
@@ -173,12 +173,12 @@ public class Target {
 
                 //Таблица №6 ЗАПОЛНЕНИЯ  
                 Element tab6 = tab6List.get(i);
-                List<RSpecific> spcList6 = loadTab6(winc, tab6, template6Rec);
+                List<RRecord> spcList6 = loadTab6(winc, tab6, template6Rec);
                 spcList6.forEach(act -> tab6.append(template6Rec));
                 tab6.getElementsByTag("tr").remove(1);
                 for (int j = 0; j < spcList6.size(); j++) { //заполним строки 
                     Elements td = tab6.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-                    RSpecific rs = spcList6.get(j);
+                    RRecord rs = spcList6.get(j);
                     td.get(0).text(String.valueOf(j + 1));
                     td.get(1).text(rs.name());
                     td.get(2).text(rs.width());
@@ -202,55 +202,55 @@ public class Target {
     }
 
     //ПРОФИЛЬ / АРМИРОВАНИЕ
-    public static void loadTab3(Wincalc winc, Element tab, String templateRec, List<RSpecific> spcList2, List<RSpecific> spcList3) {
+    public static void loadTab3(Wincalc winc, Element tab, String templateRec, List<RRecord> spcList2, List<RRecord> spcList3) {
 
         winc.listSpec.forEach(spcRec -> { //профиля
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X100, TypeArt.X101, TypeArt.X102, TypeArt.X103, TypeArt.X104, TypeArt.X105) == true) {
-                spcList2.add(new RSpecific(spcRec));
+                spcList2.add(new RRecord(spcRec));
             }
         });
         spcList2.forEach(spcRec1 -> { //армирование
-            SpcRecord spcRec3 = new SpcRecord();
-            for (SpcRecord spcRec2 : winc.listSpec) {
+            TRecord spcRec3 = new TRecord();
+            for (TRecord spcRec2 : winc.listSpec) {
                 if (TypeArt.isType(spcRec2.artiklRec(), TypeArt.X107) == true && spcRec2.elem5e.id == spcRec1.id()) {
                     spcRec3 = spcRec2;
                 }
             }
-            spcList3.add(new RSpecific(spcRec3));
+            spcList3.add(new RRecord(spcRec3));
         });
     }
 
     //УПЛОТНИТЕЛИ
-    public static List<RSpecific> loadTab4(Wincalc winc, Element tab, String templateRec) {
+    public static List<RRecord> loadTab4(Wincalc winc, Element tab, String templateRec) {
 
-        List<RSpecific> spcList = new ArrayList<RSpecific>();
+        List<RRecord> spcList = new ArrayList<RRecord>();
         winc.listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X135) == true) {
-                spcList.add(new RSpecific(spcRec));
+                spcList.add(new RRecord(spcRec));
             }
         });
         return spcList;
     }
 
     //ШТАПИК
-    public static List<RSpecific> loadTab5(Wincalc winc, Element tab, String templateRec) {
+    public static List<RRecord> loadTab5(Wincalc winc, Element tab, String templateRec) {
 
-        List<RSpecific> spcList = new ArrayList();
+        List<RRecord> spcList = new ArrayList();
         winc.listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X108) == true) {
-                spcList.add(new RSpecific(spcRec));
+                spcList.add(new RRecord(spcRec));
             }
         });
         return spcList;
     }
 
     //ЗАПОЛНЕНИЯ
-    public static List<RSpecific> loadTab6(Wincalc winc, Element tab, String templateRec) {
+    public static List<RRecord> loadTab6(Wincalc winc, Element tab, String templateRec) {
 
-        List<RSpecific> spcList = new ArrayList<RSpecific>();
+        List<RRecord> spcList = new ArrayList<RRecord>();
         winc.listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X502) == true) {
-                spcList.add(new RSpecific(spcRec));
+                spcList.add(new RRecord(spcRec));
             }
         });
         return spcList;
