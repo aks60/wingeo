@@ -1,6 +1,6 @@
 package frames;
 
-import builder.Kitcalc;
+import builder.Kitscalc;
 import frames.swing.ProgressBar;
 import frames.swing.FrameToFile;
 import com.google.gson.Gson;
@@ -85,7 +85,7 @@ public class Specifics extends javax.swing.JFrame {
         if (manager == 1) {
             int prjprodID = Integer.valueOf(eProp.prjprodID.read());
             Record prjprodRec = ePrjprod.find(prjprodID);
-            ArrayList<TRecord> listKit = Kitcalc.specific(prjprodRec, winc, true); //комплекты
+            ArrayList<TRecord> listKit = Kitscalc.specificProd(prjprodRec, winc.nppID, true); //комплекты
             this.listSpc.addAll(listKit);
         }
     }

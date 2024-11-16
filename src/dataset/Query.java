@@ -14,7 +14,7 @@ import startup.App;
 
 public class Query extends Table {
 
-    public static String conf = "NET"; //или "APP"
+    public static String conf = "NET"; //или "APP" - вкл. для тестирования запросов
     private static String schema = "";
     public static String INS = "INS";
     public static String SEL = "SEL";

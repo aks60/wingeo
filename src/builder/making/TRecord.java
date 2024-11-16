@@ -80,14 +80,14 @@ public class TRecord {
     }
 
     public TRecord(double id, ElemSimple elem5e) {
-        ++elem5e.winc.spcId;
+        ++elem5e.winc.nppID;
         this.id = id;
         this.elem5e = elem5e;
         this.mapParam = new HashMap<Integer, String>();
     }
 
     public TRecord(String place, Record detailRec, Record artiklRec, ElemSimple elem5e, HashMap<Integer, String> mapParam) {
-        this.id = ++elem5e.winc.spcId;
+        this.id = ++elem5e.winc.nppID;
         this.elem5e = elem5e;
         this.mapParam = mapParam;
         this.detailRec = detailRec;
