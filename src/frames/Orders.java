@@ -1,5 +1,6 @@
 package frames;
 
+import builder.Kitscalc;
 import frames.swing.ProgressBar;
 import frames.swing.FrameToFile;
 import frames.dialog.DicCurrenc;
@@ -775,7 +776,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         String script = prjprodRec.getStr(ePrjprod.script);
                         JsonElement jsonElem = new Gson().fromJson(script, JsonElement.class);
                         win.build(jsonElem.toString()); //калкуляция                              
-                        win.specification(true); //конструктив  
+                        win.specific(true); //конструктив  
 
                         square = square + prjprodRec.getDbl(ePrjprod.num) * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
                         weight = weight + prjprodRec.getDbl(ePrjprod.num) * win.weight; //вес изделий
@@ -783,7 +784,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         price2a = price2a + win.price(2); //стоимость конструкции со скидкой менеджера
 
                         //Комплектация
-                        ArrayList<TRecord> kitList = TTariffic.kits(prjprodRec, win, true); //комплекты
+                        ArrayList<TRecord> kitList = Kitscalc.specific(prjprodRec, win, true); //комплекты
                         for (TRecord kit : kitList) {
                             price1b = price1b + kit.price1; //стоимость без скидки
                             price2b = price2b + kit.price2; //стоимость со скидками

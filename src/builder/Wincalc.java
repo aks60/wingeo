@@ -220,7 +220,7 @@ public class Wincalc {
     }
 
     //Спецификация и тарификация 
-    public void specification(boolean norm_otx) {
+    public void specific(boolean norm_otx) {
         weight = 0;
         price1 = 0;
         price2 = 0;
@@ -250,8 +250,7 @@ public class Wincalc {
             //Итоговая стоимость
             for (TRecord spc : listSpec) {
                 this.price1 = (this.price1 + spc.price1); //общая стоимость без скидки
-                this.price2 = (this.price2 + spc.price2); //общая стоимость со скидкой             
-                //this.count = (this.count + spc.count); //колич. единиц                       
+                this.price2 = (this.price2 + spc.price2); //общая стоимость со скидкой                                   
             }
 
             //Вес изделия

@@ -13,17 +13,17 @@ import java.util.List;
 
 public class Kitscalc {
 
-    private double price1 = 0; //стоимость без скидки
-    private double price2 = 0; //стоимость с технологической скидкой    
+    private static double price1 = 0; //стоимость без скидки
+    private static double price2 = 0; //стоимость с технологической скидкой    
     
     /**
      * Комплекты конструкции. Комплекты могут быть не привязаны к изделиям
      */
-    public static ArrayList<TRecord> kits(dataset.Record prjprodRec, Wincalc winc, boolean norm_otx) {
+    public static ArrayList<TRecord> specific(dataset.Record prjprodRec, Wincalc winc, boolean norm_otx) {
         ArrayList<TRecord> kitList = new ArrayList();
         try {
             dataset.Record systreeRec = eSystree.find(winc.nuni); //для нахожд. коэф. рентабельности
-            double percentMarkup = percentMarkup(winc); //процентная надбавка на изделия сложной формы
+            double percentMarkup = TTariffic.percentMarkup(winc); //процентная надбавка на изделия сложной формы
             if (prjprodRec != null) {
                 List<dataset.Record> prjkitList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
 
@@ -31,48 +31,36 @@ public class Kitscalc {
                 for (dataset.Record prjkitRec : prjkitList) {
                     dataset.Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.artikl_id), true);
                     if (artiklRec != null) {
-                        TRecord spc = new TRecord("КОМП", ++winc.spcId, prjkitRec, artiklRec, null);
-                        spc.width = prjkitRec.getDbl(ePrjkit.width);
-                        spc.height = prjkitRec.getDbl(ePrjkit.height);
-                        spc.count = prjkitRec.getDbl(ePrjkit.numb);
-                        spc.colorID1 = prjkitRec.getInt(ePrjkit.color1_id);
-                        spc.colorID2 = prjkitRec.getInt(ePrjkit.color2_id);
-                        spc.colorID3 = prjkitRec.getInt(ePrjkit.color3_id);
-                        spc.anglCut0 = prjkitRec.getDbl(ePrjkit.angl1);
-                        spc.anglCut1 = prjkitRec.getDbl(ePrjkit.angl2);
-                        spc.quant1 = TTariffic.formatAmount(spc); //количество без отхода
-                        spc.quant2 = (norm_otx == true) ? spc.quant1 + (spc.quant1 * spc.waste / 100) : spc.quant1; //количество с отходом
-                        spc.sebes1 = TTariffic.artdetPrice(spc); //себест. за ед. без отхода по табл. ARTDET с коэф. и надб.
-                        spc.sebes2 = spc.sebes1 + (spc.sebes1 * (spc.quant2 - spc.quant1)); //себест. за ед. с отходом 
-                        dataset.Record artgrp1Rec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups1_id));
-                        dataset.Record artgrp2Rec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups2_id));
+                        TRecord rec = new TRecord("КОМП", ++winc.spcId, prjkitRec, artiklRec, null);
+                        rec.width = prjkitRec.getDbl(ePrjkit.width);
+                        rec.height = prjkitRec.getDbl(ePrjkit.height);
+                        rec.count = prjkitRec.getDbl(ePrjkit.numb);
+                        rec.colorID1 = prjkitRec.getInt(ePrjkit.color1_id);
+                        rec.colorID2 = prjkitRec.getInt(ePrjkit.color2_id);
+                        rec.colorID3 = prjkitRec.getInt(ePrjkit.color3_id);
+                        rec.anglCut0 = prjkitRec.getDbl(ePrjkit.angl1);
+                        rec.anglCut1 = prjkitRec.getDbl(ePrjkit.angl2);
+                        rec.quant1 = TTariffic.formatAmount(rec); //количество без отхода
+                        rec.quant2 = (norm_otx == true) ? rec.quant1 + (rec.quant1 * rec.waste / 100) : rec.quant1; //количество с отходом
+                        rec.sebes1 = TTariffic.artdetPrice(rec); //себест. за ед. без отхода по табл. ARTDET с коэф. и надб.
+                        rec.sebes2 = rec.sebes1 + (rec.sebes1 * (rec.quant2 - rec.quant1)); //себест. за ед. с отходом 
+                        dataset.Record artgrp1Rec = eGroups.find(rec.artiklRec().getInt(eArtikl.groups1_id));
+                        dataset.Record artgrp2Rec = eGroups.find(rec.artiklRec().getInt(eArtikl.groups2_id));
                         double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //(koef)наценка группы мат.ценностей
                         double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //(%)скидки группы мат.ценностей
                         double k3 = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
-                        double price = spc.count * spc.quant2 * spc.sebes2 * k1 * k3;
-                        spc.price1 = price; //стоимость без скидки                     
-                        spc.price2 = price - price / 100 * k2; //стоимость со скидкой 
-                        //winc.price1k += spc.price1;
-                        //winc.price2k += spc.price2;
-                        kitList.add(spc);
+                        double price = rec.count * rec.quant2 * rec.sebes2 * k1 * k3;
+                        rec.price1 = price; //стоимость без скидки                     
+                        rec.price2 = price - price / 100 * k2; //стоимость со скидкой 
+                        price1 += rec.price1;
+                        price2 += rec.price2;
+                        kitList.add(rec);
                     }
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Tariffic.kits() " + e);
+            System.err.println("Ошибка:Kitscalc.kits() " + e);
         }
         return kitList;
-    }  
-
-    //Процентная надбавка на изделия сложной формы
-    private static double percentMarkup(Wincalc winc) {
-        if (Type.ARCH == winc.root.type) {
-            return eGroups.find(2101).getDbl(eGroups.val);
-
-        } else if (Type.RECTANGL != winc.root.type) {
-            return eGroups.find(2104).getDbl(eGroups.val);
-        }
-        return 0;
-    }
-    
+    }     
 }

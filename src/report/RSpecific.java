@@ -1,5 +1,6 @@
 package report;
 
+import builder.Kitscalc;
 import report.sup.RTable;
 import report.sup.RRecord;
 import report.sup.ExecuteCmd;
@@ -62,10 +63,10 @@ public class RSpecific {
         for (Record prjprodRec : prjprodList) {
             String script = prjprodRec.getStr(ePrjprod.script);
             winc.build(script);
-            winc.specification(true);
+            winc.specific(true);
             spcList.addAll(winc.listSpec); //добавим спецификацию
             
-            List<TRecord> list = TTariffic.kits(prjprodRec, winc, true); //добавим комплекты
+            List<TRecord> list = Kitscalc.specific(prjprodRec, winc, true); //добавим комплекты
             list.forEach(rec -> kitList.add(new RRecord(rec)));
         }
         

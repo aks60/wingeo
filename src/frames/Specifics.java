@@ -1,5 +1,6 @@
 package frames;
 
+import builder.Kitscalc;
 import frames.swing.ProgressBar;
 import frames.swing.FrameToFile;
 import com.google.gson.Gson;
@@ -84,7 +85,7 @@ public class Specifics extends javax.swing.JFrame {
         if (manager == 1) {
             int prjprodID = Integer.valueOf(eProp.prjprodID.read());
             Record prjprodRec = ePrjprod.find(prjprodID);
-            ArrayList<TRecord> listKit = TTariffic.kits(prjprodRec, winc, true); //комплекты
+            ArrayList<TRecord> listKit = Kitscalc.specific(prjprodRec, winc, true); //комплекты
             this.listSpc.addAll(listKit);
         }
     }
@@ -118,7 +119,7 @@ public class Specifics extends javax.swing.JFrame {
                 JsonElement je = new Gson().fromJson(script, JsonElement.class);
                 je.getAsJsonObject().addProperty("nuni", prjprodRec.getInt(ePrjprod.systree_id));
                 winc.build(je.toString());
-                winc.specification(true);
+                winc.specific(true);
             }
         } else {
             int sysprodID = Integer.valueOf(eProp.sysprodID.read());
@@ -130,7 +131,7 @@ public class Specifics extends javax.swing.JFrame {
                 JsonElement je = new Gson().fromJson(script, JsonElement.class);
                 je.getAsJsonObject().addProperty("nuni", sysprodRec.getInt(eSysprod.systree_id));
                 winc.build(je.toString());
-                winc.specification(cbx2.getSelectedIndex() == 0);
+                winc.specific(cbx2.getSelectedIndex() == 0);
             }
         }
     }

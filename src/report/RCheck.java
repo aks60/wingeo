@@ -203,7 +203,7 @@ public class RCheck {
                 Record prjprodRec = prjprodList.get(index);
                 String script = prjprodRec.getStr(ePrjprod.script);
                 Wincalc winc = new Wincalc(script);
-                winc.specification(true);
+                winc.specific(true);
                 list.add(winc);
             }
         } catch (Exception e) {

@@ -1,11 +1,11 @@
 package report;
 
+import builder.Kitscalc;
 import report.sup.RTable;
 import report.sup.RRecord;
 import report.sup.ExecuteCmd;
 import builder.Wincalc;
 import builder.making.TRecord;
-import builder.making.TTariffic;
 import common.UCom;
 import dataset.Record;
 import domain.ePrjprod;
@@ -15,9 +15,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -58,10 +56,10 @@ public class RMaterial {
 
             String script = prjprodRec.getStr(ePrjprod.script);
             Wincalc winc = new Wincalc(script);
-            winc.specification(true);
+            winc.specific(true);
 
             listSpc.addAll(winc.listSpec);
-            listKit = TTariffic.kits(prjprodRec, winc, true); //добавим комплекты
+            listKit = Kitscalc.specific(prjprodRec, winc, true); //добавим комплекты
         }
         listSpc.forEach(el -> spcList.add(new RRecord(el)));
         listKit.forEach(el -> spcList.add(new RRecord(el)));

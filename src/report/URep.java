@@ -20,7 +20,7 @@ public class URep {
                 Record prjprodRec = prjprodList.get(index);
                 String script = prjprodRec.getStr(ePrjprod.script);
                 Wincalc winc = new Wincalc(script);
-                winc.specification(true);
+                winc.specific(true);
                 winc.imageIcon = Canvas.createIcon(winc, length);
                 winc.bufferImg = new BufferedImage(length, length, BufferedImage.TYPE_INT_RGB);
                 winc.gc2d = winc.bufferImg.createGraphics();
