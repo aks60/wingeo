@@ -53,7 +53,7 @@ import report.sup.RTable;
 
 public class Specifics extends javax.swing.JFrame {
 
-    private int manager = 0;
+    private int kit = 0;
     private builder.Wincalc winc = new Wincalc();
     private TableFieldFilter filterTable = null;
     private ArrayList<TRecord> listTRec = new ArrayList<TRecord>();
@@ -64,10 +64,10 @@ public class Specifics extends javax.swing.JFrame {
         new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b031.gif"))
     };
 
-    public Specifics(int manager) {
+    public Specifics(int kit) {
         initComponents();
         initElements();
-        this.manager = manager;
+        this.kit = kit;
         createMenu();
         createIwin();
         loadingData();
@@ -82,7 +82,8 @@ public class Specifics extends javax.swing.JFrame {
         this.listTRec.addAll(winc.listSpec); //добавим спецификацию
 
         //Если открыл менеджер добавим комплекты
-        if (manager == 1) {
+        Kitcalc.init();
+        if (kit == 1) {
             int prjprodID = Integer.valueOf(eProp.prjprodID.read());
             Record prjprodRec = ePrjprod.find(prjprodID);
             ArrayList<TRecord> listKit = Kitcalc.specificProd(prjprodRec, winc, true); //комплекты
@@ -109,7 +110,7 @@ public class Specifics extends javax.swing.JFrame {
     }
 
     public void createIwin() {
-        if (manager == 1) {
+        if (kit == 1) {
             int prjprodID = Integer.valueOf(eProp.prjprodID.read());
             Record prjprodRec = ePrjprod.find(prjprodID);
             if (prjprodRec == null) {
