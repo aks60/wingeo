@@ -86,7 +86,7 @@ public class Specifics extends javax.swing.JFrame {
         if (kit == 1) {
             int prjprodID = Integer.valueOf(eProp.prjprodID.read());
             Record prjprodRec = ePrjprod.find(prjprodID);
-            ArrayList<TRecord> listKit = Kitcalc.specificProd(prjprodRec, winc, true); //комплекты
+            ArrayList<TRecord> listKit = Kitcalc.tarifficProd(prjprodRec, winc, true); //комплекты
             this.listTRec.addAll(listKit);
         }
     }

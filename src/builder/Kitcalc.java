@@ -22,11 +22,11 @@ public class Kitcalc {
     }
 
     //Комплекты конструкции
-    public static ArrayList<TRecord> specificProd(Record prjprodRec, Wincalc winc, boolean norm_otx) {
+    public static ArrayList<TRecord> tarifficProd(Record prjprodRec, Wincalc winc, boolean norm_otx) {
         try {
             if (prjprodRec != null) {
                 List<dataset.Record> kitList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
-                return kits(kitList, winc, norm_otx);
+                return calc(kitList, winc, norm_otx);
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Kitscalc.specificProd() " + e);
@@ -35,11 +35,11 @@ public class Kitcalc {
     }
 
     //Комплекты заказа
-    public static ArrayList<TRecord> specificProj(Record projectdRec, Wincalc winc, boolean norm_otx) {
+    public static ArrayList<TRecord> tarifficProj(Record projectdRec, Wincalc winc, boolean norm_otx) {
         try {            
             if (projectdRec != null) {
                 List<Record> kitList = ePrjkit.filter4(projectdRec.getInt(eProject.id));
-                return kits(kitList, winc, norm_otx);
+                return calc(kitList, winc, norm_otx);
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Kitscalc.specificProj() " + e);
@@ -48,7 +48,7 @@ public class Kitcalc {
     }
 
     //Список комплектов (коэф.рентабельности не учитывается)
-    public static ArrayList<TRecord> kits(List<Record> kitList, Wincalc winc, boolean norm_otx) {
+    private static ArrayList<TRecord> calc(List<Record> kitList, Wincalc winc, boolean norm_otx) {
         ArrayList<TRecord> outList = new ArrayList();
         init();
         //Цикл по комплектам

@@ -59,7 +59,7 @@ public class RMaterial {
             winc.specific(true);
 
             listSpc.addAll(winc.listSpec);
-            listKit = Kitcalc.specificProd(prjprodRec, winc, true); //добавим комплекты
+            listKit = Kitcalc.tarifficProd(prjprodRec, winc, true); //добавим комплекты
         }
         listSpc.forEach(el -> spcList.add(new RRecord(el)));
         listKit.forEach(el -> spcList.add(new RRecord(el)));
