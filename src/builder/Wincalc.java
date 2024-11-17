@@ -43,6 +43,8 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
 
+
+// см. алгоритм пше -> 804d27409d
 public class Wincalc {
 
     public Integer nuni = 0; //код системы  
