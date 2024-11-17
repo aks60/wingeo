@@ -62,7 +62,7 @@ public class TTariffic extends Cal5e {
                     for (TRecord spсRec2 : elem5e.spcRec.spcList) {
                         spсRec2.sebes1 += artdetPrice(spсRec2); //себест. за ед. без отхода
                         spсRec2.quant1 = formatAmount(spсRec2); //количество без отхода
-                        spсRec2.quant2 = spсRec2.quant1; //базовое количество с отходом
+                        spсRec2.quant2 = spсRec2.quant1; //количество с отходом
                         if (norm_otx == true) {
                             spсRec2.quant2 = spсRec2.quant2 + (spсRec2.quant1 * spсRec2.waste / 100); //количество с отходом
                         }

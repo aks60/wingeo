@@ -863,6 +863,17 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         buttonGroup = new javax.swing.ButtonGroup();
         ppReport = new javax.swing.JPopupMenu();
         jmenu01 = new javax.swing.JMenu();
+        menuItem19 = new javax.swing.JMenuItem();
+        menuItem20 = new javax.swing.JMenuItem();
+        menuItem21 = new javax.swing.JMenuItem();
+        sep4 = new javax.swing.JPopupMenu.Separator();
+        menuItem22 = new javax.swing.JMenuItem();
+        menuItem23 = new javax.swing.JMenuItem();
+        sep5 = new javax.swing.JPopupMenu.Separator();
+        menuItem24 = new javax.swing.JMenuItem();
+        menuItem25 = new javax.swing.JMenuItem();
+        sep6 = new javax.swing.JPopupMenu.Separator();
+        menuItem26 = new javax.swing.JMenuItem();
         jmenu02 = new javax.swing.JMenu();
         menuItem12 = new javax.swing.JMenuItem();
         menuItem11 = new javax.swing.JMenuItem();
@@ -1044,6 +1055,92 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
         jmenu01.setText(bundle.getString("Меню.Изделие")); // NOI18N
         jmenu01.setFont(frames.UGui.getFont(0,1));
+
+        menuItem19.setFont(frames.UGui.getFont(0,1));
+        menuItem19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
+        menuItem19.setText(bundle.getString("Меню.Спецификация")); // NOI18N
+        menuItem19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem19(evt);
+            }
+        });
+        jmenu01.add(menuItem19);
+
+        menuItem20.setFont(frames.UGui.getFont(0,1));
+        menuItem20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
+        menuItem20.setText(bundle.getString("Меню.Расход материалов")); // NOI18N
+        menuItem20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem20(evt);
+            }
+        });
+        jmenu01.add(menuItem20);
+
+        menuItem21.setFont(frames.UGui.getFont(0,1));
+        menuItem21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
+        menuItem21.setText(bundle.getString("Меню.Задание в цех")); // NOI18N
+        menuItem21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem21(evt);
+            }
+        });
+        jmenu01.add(menuItem21);
+        jmenu01.add(sep4);
+
+        menuItem22.setFont(frames.UGui.getFont(0,1));
+        menuItem22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
+        menuItem22.setText(bundle.getString("Меню.Смета")); // NOI18N
+        menuItem22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem22(evt);
+            }
+        });
+        jmenu01.add(menuItem22);
+
+        menuItem23.setFont(frames.UGui.getFont(0,1));
+        menuItem23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
+        menuItem23.setText(bundle.getString("Меню.Смета подробная")); // NOI18N
+        menuItem23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem23(evt);
+            }
+        });
+        jmenu01.add(menuItem23);
+        jmenu01.add(sep5);
+
+        menuItem24.setFont(frames.UGui.getFont(0,1));
+        menuItem24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
+        menuItem24.setText(bundle.getString("Меню.Счёт")); // NOI18N
+        menuItem24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem24(evt);
+            }
+        });
+        jmenu01.add(menuItem24);
+
+        menuItem25.setFont(frames.UGui.getFont(0,1));
+        menuItem25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
+        menuItem25.setText(bundle.getString("Меню.Счёт-фактура")); // NOI18N
+        menuItem25.setToolTipText("");
+        menuItem25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem25(evt);
+            }
+        });
+        jmenu01.add(menuItem25);
+        jmenu01.add(sep6);
+
+        menuItem26.setFont(frames.UGui.getFont(0,1));
+        menuItem26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
+        menuItem26.setText(bundle.getString("Меню.Ком-ое предл...")); // NOI18N
+        menuItem26.setToolTipText("");
+        menuItem26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem26(evt);
+            }
+        });
+        jmenu01.add(menuItem26);
+
         ppReport.add(jmenu01);
 
         jmenu02.setText(bundle.getString("Меню.Заказ")); // NOI18N
@@ -3815,8 +3912,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private void menuItem12(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem12
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                //Отчёт
-                new RSpecific().parseDoc(qProject.get(UGui.getIndexRec(tab1, 1)));
+                //Спецификация
+                new RSpecific().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 1)));
             }
         });
     }//GEN-LAST:event_menuItem12
@@ -3981,6 +4078,44 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         });
     }//GEN-LAST:event_menuItem18
 
+    private void menuItem19(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem19
+        ProgressBar.create(Orders.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                //Спецификация
+                Record prjprodRec = qPrjprod.get(UGui.getIndexRec(tab2));
+                new RSpecific().parseDoc1(prjprodRec);
+            }
+        });
+    }//GEN-LAST:event_menuItem19
+
+    private void menuItem20(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem20
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItem20
+
+    private void menuItem21(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem21
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItem21
+
+    private void menuItem22(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem22
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItem22
+
+    private void menuItem23(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem23
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItem23
+
+    private void menuItem24(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem24
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItem24
+
+    private void menuItem25(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem25
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItem25
+
+    private void menuItem26(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem26
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItem26
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn1;
@@ -4076,6 +4211,14 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private javax.swing.JMenuItem menuItem16;
     private javax.swing.JMenuItem menuItem17;
     private javax.swing.JMenuItem menuItem18;
+    private javax.swing.JMenuItem menuItem19;
+    private javax.swing.JMenuItem menuItem20;
+    private javax.swing.JMenuItem menuItem21;
+    private javax.swing.JMenuItem menuItem22;
+    private javax.swing.JMenuItem menuItem23;
+    private javax.swing.JMenuItem menuItem24;
+    private javax.swing.JMenuItem menuItem25;
+    private javax.swing.JMenuItem menuItem26;
     private javax.swing.JPanel north;
     private javax.swing.JPanel pan1;
     private javax.swing.JPanel pan11;
@@ -4110,6 +4253,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private javax.swing.JPopupMenu.Separator sep1;
     private javax.swing.JPopupMenu.Separator sep2;
     private javax.swing.JPopupMenu.Separator sep3;
+    private javax.swing.JPopupMenu.Separator sep4;
+    private javax.swing.JPopupMenu.Separator sep5;
+    private javax.swing.JPopupMenu.Separator sep6;
     private javax.swing.JPanel south;
     private javax.swing.JTable tab1;
     private javax.swing.JTable tab2;

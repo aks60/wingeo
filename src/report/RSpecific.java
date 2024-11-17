@@ -30,16 +30,19 @@ public class RSpecific {
 
     private static int npp = 0;
 
-    public  void parseDoc(Record projectRec) {
+    public  void parseDoc1(Record prjprodRec) {
         try {
             npp = 0;
             InputStream in = getClass().getResourceAsStream("/resource/report/Specific.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile, "windows-1251");
-
+            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
+            List<Record> prjprodList = new ArrayList<Record>();
+            prjprodList.add(prjprodRec);
+            
             //Заполним отчёт
-            loadDoc1(projectRec, doc);
+            loadDoc(projectRec, prjprodList, doc);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
@@ -48,15 +51,36 @@ public class RSpecific {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERROR*2 " + e, "ВНИМАНИЕ!", 1);
-            System.err.println("Ошибка:HtmlOfSpecific.specific()" + e);
+            System.err.println("Ошибка:RSpecific.parseDoc1()" + e);
+        }
+    }
+    public  void parseDoc2(Record projectRec) {
+        try {
+            npp = 0;
+            InputStream in = getClass().getResourceAsStream("/resource/report/Specific.html");
+            File tempFile = File.createTempFile("report", "html");
+            in.transferTo(new FileOutputStream(tempFile));
+            Document doc = Jsoup.parse(tempFile, "windows-1251");
+            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
+
+            //Заполним отчёт
+            loadDoc(projectRec, prjprodList, doc);
+
+            String str = doc.html();
+            str = new String(str.getBytes("windows-1251"));
+            RTable.write(str);
+            ExecuteCmd.documentType(null);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR*2 " + e, "ВНИМАНИЕ!", 1);
+            System.err.println("Ошибка:RSpecific.parseDoc2()" + e);
         }
     }
 
-    private static void loadDoc1(Record projectRec, Document doc) {
+    private static void loadDoc(Record projectRec, List<Record> prjprodList, Document doc) {
         
         List<TRecord> spcList = new ArrayList<TRecord>();
         List<RRecord> kitList = new ArrayList<RRecord>();
-        List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
         Wincalc winc = new builder.Wincalc();
 
         //Цикл по конструкциям заказа
