@@ -620,7 +620,7 @@ public class Man extends javax.swing.JFrame {
         Record projectRec = eProject.find(orderID);
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                new RMaterial().parseDoc(projectRec);
+                new RMaterial().parseDoc2(projectRec);
             }
         });
     }//GEN-LAST:event_btn16

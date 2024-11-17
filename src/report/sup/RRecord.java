@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class RRecord {
-    
+
     private TRecord spc;
     private boolean otx = true;
 
@@ -32,7 +32,7 @@ public class RRecord {
     public double id() {
         return spc.id;
     }
-    
+
     public String artikl() {
         return spc.artikl;
     }
@@ -63,7 +63,7 @@ public class RRecord {
         }
         return "";
     }
-    
+
     public String height() {
         if (spc.height > 0) {
             return UCom.format(spc.height, -2);
@@ -72,13 +72,13 @@ public class RRecord {
     }
 
     public String ang0() {
-      return UCom.format(spc.anglCut0, -1);  
+        return UCom.format(spc.anglCut0, -1);
     }
-    
+
     public String ang1() {
-      return UCom.format(spc.anglCut1, -1);  
+        return UCom.format(spc.anglCut1, -1);
     }
-    
+
     public String angles() {
         String anglCut0 = (spc.anglCut0 == 0 || spc.anglCut0 == -1) ? "" : UCom.format(spc.anglCut0, -1);
         String anglCut1 = (spc.anglCut1 == 0 || spc.anglCut1 == -1) ? "" : UCom.format(spc.anglCut1, -1);
@@ -89,7 +89,7 @@ public class RRecord {
     public String anglHor() {
         return UCom.format(spc.anglHoriz, -1);
     }
-    
+
     public String weight() {
         if (spc.weight > 0) {
             return UCom.format(spc.weight, -2);
@@ -99,6 +99,10 @@ public class RRecord {
 
     public String space() {
         return UCom.format(spc.width, -1) + " x " + UCom.format(spc.height, -1);
+    }
+
+    public String quant(int index) {
+        return (index == 1) ? UCom.format(spc.quant1, -1) : UCom.format(spc.quant2, -1);
     }
 
     public String sebes2() {
@@ -138,18 +142,26 @@ public class RRecord {
         return list;
     }
 
-    public static List<RRecord> groups3(List<RRecord> listSpr) {
+    public static List<RRecord> groups3(List<RRecord> listSpc) {
         List<RRecord> list = new ArrayList<RRecord>();
         Map<String, RRecord> map = new HashMap<String, RRecord>();
 
-        for (RRecord newRec : listSpr) {
+        for (RRecord newRec : listSpc) {
+
             String key = newRec.spc.artikl + "." + newRec.spc.colorID1 + "." + newRec.spc.colorID2 + "." + newRec.spc.colorID3;
+            //String key = newRec.spc.artikl + "." + newRec.spc.sebes2 + "." + newRec.spc.colorID1 + "." + newRec.spc.colorID2 + "." + newRec.spc.colorID3;
+
             RRecord oldRec = map.put(key, new RRecord(newRec.spc));
             if (oldRec != null) {
-                //int unitID = oldRec.spc.artiklRec().getInt(eArtikl.unit);
-                newRec.spc.count = newRec.spc.count + oldRec.spc.count;
-                newRec.spc.sebes2 = newRec.spc.sebes2 + oldRec.spc.sebes2;
-                newRec.spc.price2 = newRec.spc.price2 + oldRec.spc.price2;
+                newRec.spc.weight += oldRec.spc.weight;
+                newRec.spc.quant1 += oldRec.spc.quant1;
+                newRec.spc.quant2 += oldRec.spc.quant2;
+                newRec.spc.count += oldRec.spc.count;
+                newRec.spc.price1 += oldRec.spc.price1;
+                newRec.spc.price2 += oldRec.spc.price2;
+                if ("21315-01000".equals(newRec.spc.artikl)) {
+                    System.out.println(oldRec.spc.quant2);
+                }
             }
         }
         map.entrySet().forEach(act -> list.add(act.getValue()));

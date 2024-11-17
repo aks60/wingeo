@@ -3903,8 +3903,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private void menuItem11(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem11
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                //Отчёт
-                new RMaterial().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
+                //Расход мат.
+                new RMaterial().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem11
@@ -4082,14 +4082,18 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Спецификация
-                Record prjprodRec = qPrjprod.get(UGui.getIndexRec(tab2));
-                new RSpecific().parseDoc1(prjprodRec);
+                new RSpecific().parseDoc1(qPrjprod.get(UGui.getIndexRec(tab2)));
             }
         });
     }//GEN-LAST:event_menuItem19
 
     private void menuItem20(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem20
-        // TODO add your handling code here:
+        ProgressBar.create(Orders.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                //Расход мат.
+                new RMaterial().parseDoc1(qPrjprod.get(UGui.getIndexRec(tab2)));
+            }
+        });
     }//GEN-LAST:event_menuItem20
 
     private void menuItem21(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem21

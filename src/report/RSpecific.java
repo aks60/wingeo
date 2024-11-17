@@ -54,6 +54,7 @@ public class RSpecific {
             System.err.println("Ошибка:RSpecific.parseDoc1()" + e);
         }
     }
+    
     public  void parseDoc2(Record projectRec) {
         try {
             npp = 0;

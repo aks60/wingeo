@@ -25,15 +25,17 @@ public class RMaterial {
 
     private static int npp = 0;
 
-    public void parseDoc(Record projectRec) {
+    public void parseDoc1(Record prjprodRec) {
         try {
+            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
             InputStream in = getClass().getResourceAsStream("/resource/report/Material.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
+            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
 
             //Заполним отчёт
-            loadDoc(projectRec, doc);
+            loadDoc(projectRec, prjprodList, doc);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
@@ -45,30 +47,51 @@ public class RMaterial {
         }
     }
 
-    private static void loadDoc(Record projectRec, Document doc) {
+    public void parseDoc2(Record projectRec) {
+        try {
+            InputStream in = getClass().getResourceAsStream("/resource/report/Material.html");
+            File tempFile = File.createTempFile("report", "html");
+            in.transferTo(new FileOutputStream(tempFile));
+            Document doc = Jsoup.parse(tempFile);
+            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
+
+            //Заполним отчёт
+            loadDoc(projectRec, prjprodList, doc);
+
+            String str = doc.html();
+            str = new String(str.getBytes("windows-1251"));
+            RTable.write(str);
+            ExecuteCmd.documentType(null);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:HtmlOfMaterial.material()" + e);
+        }
+    }
+
+    private static void loadDoc(Record projectRec, List<Record> prjprodList, Document doc) {
 
         List<RRecord> spcList = new ArrayList<RRecord>();
-        List<TRecord> listSpc = new ArrayList<TRecord>();
-        List<TRecord> listKit = new ArrayList<TRecord>();        
+        List<TRecord> winSpc = new ArrayList<TRecord>();
+        List<TRecord> kitSpc = new ArrayList<TRecord>();
 
-        List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
+        //List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
         for (Record prjprodRec : prjprodList) {
 
             String script = prjprodRec.getStr(ePrjprod.script);
             Wincalc winc = new Wincalc(script);
             winc.specific(true);
 
-            listSpc.addAll(winc.listSpec);
-            listKit = Kitcalc.tarifficProd(prjprodRec, winc, true); //добавим комплекты
+            winSpc.addAll(winc.listSpec);
+            kitSpc = Kitcalc.tarifficProd(prjprodRec, winc, true); //добавим комплекты
         }
-        listSpc.forEach(el -> spcList.add(new RRecord(el)));
-        listKit.forEach(el -> spcList.add(new RRecord(el)));
-        
-      List<RRecord> groupList = RRecord.groups3(spcList);
-       
+        winSpc.forEach(el -> spcList.add(new RRecord(el)));
+        kitSpc.forEach(el -> spcList.add(new RRecord(el)));
+
+        List<RRecord> groupList = RRecord.groups3(spcList);
+
         Elements templateRec = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
         groupList.forEach(act -> doc.getElementsByTag("tbody").append(templateRec.get(0).html()));
-        
+
         String date = UGui.simpleFormat.format(projectRec.get(eProject.date6));
         double total = groupList.stream().mapToDouble(spc -> spc.cost1()).sum();
 
@@ -81,7 +104,7 @@ public class RMaterial {
         for (int i = 0; i < groupList.size(); i++) {
             recordAdd(trList.get(i).getElementsByTag("td"), groupList.get(i));
         }
-        
+
         doc.getElementsByTag("tfoot").get(0).selectFirst("tr:eq(0)")
                 .selectFirst("td:eq(1)").text(UCom.format(total, 9));
     }
@@ -91,7 +114,7 @@ public class RMaterial {
         tdList.get(1).text(spcRec.artikl());
         tdList.get(2).text(spcRec.name());
         tdList.get(3).text(spcRec.cname1());
-        tdList.get(4).text(spcRec.count());
+        tdList.get(4).text(spcRec.quant(2));
         tdList.get(5).text(spcRec.unit());
         tdList.get(6).text(spcRec.sebes2());
         tdList.get(7).text(spcRec.price2());

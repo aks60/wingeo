@@ -44,7 +44,7 @@ public class TTariffic extends Cal5e {
     //всех скидок и наценок
     public void calc() {
         try {
-            double percentMarkup = percentMarkup(winc); //процентная надбавка на изделия сложной формы
+            double k9 = percentMarkup(winc); //процентная надбавка на изделия сложной формы
 
             //Расчёт себес-сти за ед.изм. и колич. материала
             //цикл по эдементам конструкции
@@ -106,37 +106,37 @@ public class TTariffic extends Cal5e {
                     }
                     // </editor-fold>                     
                     Record systreeRec = eSystree.find(winc.nuni);
-                    elem5e.spcRec.sebes2 = elem5e.spcRec.sebes1 * elem5e.spcRec.quant2; //себест. за ед. с отходом 
+                    elem5e.spcRec.sebes2 = elem5e.spcRec.sebes1 + (elem5e.spcRec.waste * elem5e.spcRec.sebes1 / 100); //себест. за ед. с отходом 
                     Record artgrp1Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups1_id));
                     Record artgrp2Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups2_id));
-                    double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
-                    double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
+                    double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //коэф. наценка группы мат.ценностей
+                    double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //проц. скидки группы мат.ценностей
                     double k3 = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
-                    elem5e.spcRec.price1 = elem5e.spcRec.sebes2 * k1 * k3;
-                    elem5e.spcRec.price1 = elem5e.spcRec.price1 + (elem5e.spcRec.price1 / 100) * percentMarkup; //стоимость без скидки                     
-                    elem5e.spcRec.price2 = elem5e.spcRec.price1 - (elem5e.spcRec.price1 / 100) * k2; //стоимость со скидкой 
+                    elem5e.spcRec.price1 = elem5e.spcRec.quant2 * elem5e.spcRec.sebes2 * k1 * k3;
+                    elem5e.spcRec.price1 = elem5e.spcRec.price1 + k9 * elem5e.spcRec.price1 / 100; //стоимость без скидки                     
+                    elem5e.spcRec.price2 = elem5e.spcRec.price1 - k2 * elem5e.spcRec.price1 / 100; //стоимость со скидкой 
 
                     //Цикл по детализации
-                    for (TRecord spc : elem5e.spcRec.spcList) {
+                    for (TRecord rec : elem5e.spcRec.spcList) {
 
                         // <editor-fold defaultstate="collapsed" desc="Правила рассч. вложенные">  
                         //Цикл по правилам расчёта.
                         for (Record rulecalcRec : eRulecalc.list()) {
                             int form = (rulecalcRec.getInt(eRulecalc.form) == 0) ? 1 : rulecalcRec.getInt(eRulecalc.form);
                             if (form == TypeForm.P00.id) { //не проверять форму 
-                                rulecalcPrise(winc, rulecalcRec, spc);
+                                rulecalcPrise(winc, rulecalcRec, rec);
                             }
                         }
                         // </editor-fold> 
-                        spc.sebes2 = spc.sebes1 * spc.quant2; //себест. за ед. с отходом  
-                        Record artgrp1bRec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups1_id));
-                        Record artgrp2bRec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups2_id));
-                        double m1 = artgrp1bRec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
-                        double m2 = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
+                        rec.sebes2 = rec.sebes1  + (rec.waste * rec.sebes1 / 100); //себест. за ед. с отходом  
+                        Record artgrp1bRec = eGroups.find(rec.artiklRec().getInt(eArtikl.groups1_id));
+                        Record artgrp2bRec = eGroups.find(rec.artiklRec().getInt(eArtikl.groups2_id));
+                        double m1 = artgrp1bRec.getDbl(eGroups.val, 1);  //коэф. наценка группы мат.ценностей
+                        double m2 = artgrp2bRec.getDbl(eGroups.val, 0);  //проц. скидки группы мат.ценностей
                         double m3 = systreeRec.getDbl(eSystree.coef); //коэф. рентабельности
-                        spc.price1 = spc.sebes2 * m1 * m3;
-                        spc.price1 = spc.price1 + (spc.price1 / 100) * percentMarkup; //стоимость без скидки                         
-                        spc.price2 = spc.price1 - (spc.price1 / 100) * m2; //стоимость со скидкой 
+                        rec.price1 = elem5e.spcRec.quant2 * rec.sebes2 * m1 * m3;
+                        rec.price1 = rec.price1 + k9 * rec.price1 / 100; //стоимость без скидки                         
+                        rec.price2 = rec.price1 - m2 * rec.price1 / 100; //стоимость со скидкой 
                     }
                 }
             }
