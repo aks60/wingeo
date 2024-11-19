@@ -76,9 +76,7 @@ public class TTariffic extends Cal5e {
             //цикл по эдементам конструкции
             for (ElemSimple elem5e : winc.listElem) {
                 if (filter(elem5e)) {
-                    if (elem5e.id == 2.0) {
-                        System.out.println("1.sebes1 = " + elem5e.spcRec.sebes1);
-                    }
+
                     // <editor-fold defaultstate="collapsed" desc="ПРАВИЛА РАСЧЁТА">                     
                     //Цикл по правилам расчёта.                 
                     for (Record rulecalcRec : eRulecalc.list()) {
@@ -109,12 +107,9 @@ public class TTariffic extends Cal5e {
                         }
                     }
                     // </editor-fold>    
-                    if (elem5e.id == 2.0) {
-                        System.out.println("2.sebes1 = " + elem5e.spcRec.sebes1);
-                    }
                     //
                     Record systreeRec = eSystree.find(winc.nuni);
-                    elem5e.spcRec.sebes2 = elem5e.spcRec.sebes1 + (elem5e.spcRec.waste * elem5e.spcRec.sebes1 / 100); //себест. за ед. с отходом 
+                    elem5e.spcRec.sebes2 = elem5e.spcRec.sebes1 + (elem5e.spcRec.waste * 1 / 100); //себест. за ед. с отходом 
                     Record artgrp1Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups1_id));
                     Record artgrp2Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups2_id));
                     double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //коэф. наценка группы мат.ценностей
@@ -167,7 +162,7 @@ public class TTariffic extends Cal5e {
 
     public void calc() {
         try {
-            double percentMarkup = percentMarkup(winc); //процентная надбавка на изделия сложной формы
+            double k9 = percentMarkup(winc); //процентная надбавка на изделия сложной формы
 
             //Расчёт себес-сти за ед.изм. и колич. материала
             //цикл по эдементам конструкции
@@ -236,7 +231,7 @@ public class TTariffic extends Cal5e {
                     double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                     double k3 = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
                     elem5e.spcRec.price1 = elem5e.spcRec.sebes2 * k1 * k3;
-                    elem5e.spcRec.price1 = elem5e.spcRec.price1 + (elem5e.spcRec.price1 / 100) * percentMarkup; //стоимость без скидки                     
+                    elem5e.spcRec.price1 = elem5e.spcRec.price1 + (elem5e.spcRec.price1 / 100) * k9; //стоимость без скидки                     
                     elem5e.spcRec.price2 = elem5e.spcRec.price1 - (elem5e.spcRec.price1 / 100) * k2; //стоимость со скидкой 
 
                     //Цикл по детализации
@@ -258,7 +253,7 @@ public class TTariffic extends Cal5e {
                         double m2 = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                         double m3 = systreeRec.getDbl(eSystree.coef); //коэф. рентабельности
                         spc.price1 = spc.sebes2 * m1 * m3;
-                        spc.price1 = spc.price1 + (spc.price1 / 100) * percentMarkup; //стоимость без скидки                         
+                        spc.price1 = spc.price1 + (spc.price1 / 100) * k9; //стоимость без скидки                         
                         spc.price2 = spc.price1 - (spc.price1 / 100) * m2; //стоимость со скидкой 
                     }
                 }
@@ -330,11 +325,11 @@ public class TTariffic extends Cal5e {
                 //Подбираем тариф основной текстуры
                 if (isTariff(artdetRec, color1Rec)) {
                     Record colgrpRec = eGroups.find(color1Rec.getInt(eColor.groups_id));
-                    double k1 = artdetRec.getDbl(eArtdet.cost_c1); //тариф основной текстуры
-                    double k2 = color1Rec.getDbl(eColor.coef1); //ценовой коэф.основной текстуры
-                    double k3 = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
-                    double k5 = kursBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
-                    artdetPrice += (k1 * k2 * k3) / k5;
+                    double c1 = artdetRec.getDbl(eArtdet.cost_c1); //тариф основной текстуры
+                    double c2 = color1Rec.getDbl(eColor.coef1); //ценовой коэф.основной текстуры
+                    double c3 = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
+                    double c5 = kursBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
+                    artdetPrice += (c1 * c2 * c3) / c5;
                     artdetUsed = true;
                 }
                 //Подбираем тариф внутренней текстуры
@@ -350,11 +345,11 @@ public class TTariffic extends Cal5e {
                 //Подбираем тариф внешней текстуры
                 if (isTariff(artdetRec, color3Rec)) {
                     Record colgrpRec = eGroups.find(color3Rec.getInt(eColor.groups_id));
-                    double w1 = artdetRec.getDbl(eArtdet.cost_c3); //Тариф внешний текстуры
-                    double w2 = color3Rec.getDbl(eColor.coef3); //ценовой коэф.внешний текстуры
-                    double w3 = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
-                    double w5 = kursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
-                    artdetPrice += (w1 * w2 * w3) / w5;
+                    double e1 = artdetRec.getDbl(eArtdet.cost_c3); //Тариф внешний текстуры
+                    double e2 = color3Rec.getDbl(eColor.coef3); //ценовой коэф.внешний текстуры
+                    double e3 = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
+                    double e5 = kursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
+                    artdetPrice += (e1 * e2 * e3) / e5;
                     artdetUsed = true;
                 }
             }
