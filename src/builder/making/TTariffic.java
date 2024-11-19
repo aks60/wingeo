@@ -47,7 +47,7 @@ public class TTariffic extends Cal5e {
             double k9 = percentMarkup(winc); //процентная надбавка на изделия сложной формы
 
             //Расчёт себес-сти за ед.изм. и колич. материала
-            //цикл по эдементам конструкции
+            //цикл по элементам конструкции
             for (ElemSimple elem5e : winc.listElem) {
                 if (filter(elem5e)) {
 
