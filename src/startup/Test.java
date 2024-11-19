@@ -1,7 +1,6 @@
 package startup;
 
 import builder.model.Com5t;
-import static builder.model.Com5t.gf;
 import builder.model.UGeo;
 import builder.param.check.ElementTest;
 import builder.param.check.FillingTest;
@@ -34,9 +33,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
@@ -140,7 +139,7 @@ public class Test {
             //uid();
             //script();
             //geom(); 
-        
+
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
         }
@@ -391,19 +390,22 @@ public class Test {
 
     public static void clearDataDB() {
 
-        for (Field field : App.db) {
-            if (field.tname().equals("GROUPS") == true) {
-                System.out.println("delete from " + field.tname() + " where id < 0;");
-            } else if (field.tname().equals("SYSTREE") == false) {
-                System.out.println("delete from " + field.tname() + ";");
+        if (JOptionPane.showConfirmDialog(null, "ÓÄÀËÅÍÈÅ ÄÀÍÍÛÕ Â ÁÀÇÅ ¹ " + eProp.base_num.read(), "ÓÄÀËÅÍÈÅ",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+            for (Field field : App.db) {
+                if (field.tname().equals("GROUPS") == true) {
+                    System.out.println("delete from " + field.tname() + " where id < 0;");
+                } else if (field.tname().equals("SYSTREE") == false) {
+                    System.out.println("delete from " + field.tname() + ";");
+                }
             }
-        }
-        for (Field field : App.db) {
-            if (field.tname().equals("SYSTREE") == false) {
-                System.out.println("set generator gen_" + field.tname() + " to " + "0;");
-            }
-            if (field.tname().equals("GROUPS") == true) {
-                System.out.println("set generator gen_" + field.tname() + " to " + "-9999;");
+            for (Field field : App.db) {
+                if (field.tname().equals("SYSTREE") == false) {
+                    System.out.println("set generator gen_" + field.tname() + " to " + "0;");
+                }
+                if (field.tname().equals("GROUPS") == true) {
+                    System.out.println("set generator gen_" + field.tname() + " to " + "-9999;");
+                }
             }
         }
     }
