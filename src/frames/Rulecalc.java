@@ -43,7 +43,7 @@ public class Rulecalc extends javax.swing.JFrame {
 
     public void loadingData() {
         try {
-            qRulecalc.sql(eRulecalc.data(), eRulecalc.up).sort(eRulecalc.id);
+            qRulecalc.sql(eRulecalc.data(), eRulecalc.up).sort(eRulecalc.type);
             qRulecalc.table(eArtikl.up).join(qRulecalc, eArtikl.data(), eRulecalc.artikl_id, eArtikl.id);
         } catch (Exception e) {
             System.err.println("Ошибка:Rulecalc.loadingModel() " + e);

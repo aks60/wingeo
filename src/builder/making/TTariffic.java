@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * Расчёт стоимости элементов окна алгоритм см. в UML
  */
-public class TTariffic extends Cal5e {            
+public class TTariffic extends Cal5e {
 
     private static boolean norm_otx = true;
     public static int precision = Math.round(new Query(eGroups.values())
@@ -54,6 +54,7 @@ public class TTariffic extends Cal5e {
                     elem5e.spcRec.sebes1 += artdetPrice(elem5e.spcRec); //себест. за ед. без отхода по табл. ARTDET с коэф. и надб.
                     elem5e.spcRec.quant1 = formatAmount(elem5e.spcRec); //количество без отхода
                     elem5e.spcRec.quant2 = elem5e.spcRec.quant1;  //базовое количество с отходом
+                    //TODO Правила расчёта надо перенести сюда
                     if (norm_otx == true) {
                         elem5e.spcRec.quant2 = elem5e.spcRec.quant2 + (elem5e.spcRec.quant1 * elem5e.spcRec.waste / 100); //количество с отходом
                     }
@@ -63,6 +64,7 @@ public class TTariffic extends Cal5e {
                         spсRec2.sebes1 += artdetPrice(spсRec2); //себест. за ед. без отхода
                         spсRec2.quant1 = formatAmount(spсRec2); //количество без отхода
                         spсRec2.quant2 = spсRec2.quant1; //количество с отходом
+                        //TODO Правила расчёта надо перенести сюда
                         if (norm_otx == true) {
                             spсRec2.quant2 = spсRec2.quant2 + (spсRec2.quant1 * spсRec2.waste / 100); //количество с отходом
                         }
@@ -74,8 +76,10 @@ public class TTariffic extends Cal5e {
             //цикл по эдементам конструкции
             for (ElemSimple elem5e : winc.listElem) {
                 if (filter(elem5e)) {
-
-                    // <editor-fold defaultstate="collapsed" desc="Правила рассч.">                     
+                    if(elem5e.id == 2.0) {
+                        System.out.println("1.sebes1 = " + elem5e.spcRec.sebes1);
+                    } 
+                    // <editor-fold defaultstate="collapsed" desc="ПРАВИЛА РАСЧЁТА">                     
                     //Цикл по правилам расчёта.                 
                     for (Record rulecalcRec : eRulecalc.list()) {
                         //Всё обнуляется и рассчитывается по таблице правил расчёта
@@ -104,7 +108,11 @@ public class TTariffic extends Cal5e {
                             }
                         }
                     }
-                    // </editor-fold>                     
+                    // </editor-fold>    
+                    if(elem5e.id == 2.0) {
+                        System.out.println("2.sebes1 = " + elem5e.spcRec.sebes1);
+                    }                     
+                    //
                     Record systreeRec = eSystree.find(winc.nuni);
                     elem5e.spcRec.sebes2 = elem5e.spcRec.sebes1 + (elem5e.spcRec.waste * elem5e.spcRec.sebes1 / 100); //себест. за ед. с отходом 
                     Record artgrp1Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups1_id));
@@ -119,7 +127,7 @@ public class TTariffic extends Cal5e {
                     //Цикл по детализации
                     for (TRecord rec : elem5e.spcRec.spcList) {
 
-                        // <editor-fold defaultstate="collapsed" desc="Правила рассч. вложенные">  
+                        // <editor-fold defaultstate="collapsed" desc="ПРАВИЛА РАСЧЁТА">  
                         //Цикл по правилам расчёта.
                         for (Record rulecalcRec : eRulecalc.list()) {
                             int form = (rulecalcRec.getInt(eRulecalc.form) == 0) ? 1 : rulecalcRec.getInt(eRulecalc.form);
@@ -128,7 +136,8 @@ public class TTariffic extends Cal5e {
                             }
                         }
                         // </editor-fold> 
-                        rec.sebes2 = rec.sebes1  + (rec.waste * rec.sebes1 / 100); //себест. за ед. с отходом  
+                        //
+                        rec.sebes2 = rec.sebes1 + (rec.waste * rec.sebes1 / 100); //себест. за ед. с отходом  
                         Record artgrp1bRec = eGroups.find(rec.artiklRec().getInt(eArtikl.groups1_id));
                         Record artgrp2bRec = eGroups.find(rec.artiklRec().getInt(eArtikl.groups2_id));
                         double m1 = artgrp1bRec.getDbl(eGroups.val, 1);  //коэф. наценка группы мат.ценностей
@@ -351,7 +360,7 @@ public class TTariffic extends Cal5e {
         }
         return 0;
     }
-        
+
     //Проверяет, должен ли применяться заданный тариф мат-ценности для заданной текстуры
     public static boolean isTariff(Record artdetRec, Record colorRec) {
 
