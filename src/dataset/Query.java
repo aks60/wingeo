@@ -452,7 +452,7 @@ public class Query extends Table {
         }
         return this;
     }
-    
+
     public Query sq3(List<Record> data, Field field, int value, Field field2, int value2, Field field3, int value3) {
         clear();
         if (Query.conf.equals("NET")) {
@@ -463,8 +463,8 @@ public class Query extends Table {
             select(field.fields()[0], "where", field, "=", value, "and (", field2, "=", value2, "or", field3, "=", value3 + ")");
         }
         return this;
-    }   
-    
+    }
+
     public Query sql(List<Record> data, Field field, List listID) {
         clear();
         if (Query.conf.equals("NET")) {
@@ -482,24 +482,33 @@ public class Query extends Table {
         }
         return this;
     }
-    
+
     public Query join(List<Record> data, List<Record> data2, Field field, Field field2) {
         try {
             clear();
             if (field.meta().type() == Field.TYPE.INT && field2.meta().type() == Field.TYPE.INT) {
                 for (Record rec : data) {
+                    boolean f = true;
                     for (Record rec2 : data2) {
                         if (rec.getInt(field) == rec2.getInt(field2)) {
                             add(rec2);
+                            f = false;
                         }
+                    }
+                    if (f) {
+                        add(field2.newRecord(Query.SEL));
                     }
                 }
             } else if (field.meta().type() == Field.TYPE.STR && field2.meta().type() == Field.TYPE.STR) {
                 for (Record rec : data) {
+                    boolean f = true;
                     for (Record rec2 : data2) {
                         if (rec.getStr(field).trim().equals(rec2.getStr(field2).trim())) {
                             add(rec2);
                         }
+                    }
+                    if (f) {
+                        add(field2.newRecord(Query.SEL));
                     }
                 }
             }

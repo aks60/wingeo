@@ -42,69 +42,78 @@ public class Rulecalc extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        qRulecalc.sql(eRulecalc.data(), eRulecalc.up).sort(eRulecalc.type);
-        qRulecalc.table(eArtikl.up).join(qRulecalc, eArtikl.data(), eRulecalc.artikl_id, eArtikl.id);
+        try {
+            qRulecalc.sql(eRulecalc.data(), eRulecalc.up).sort(eRulecalc.id);
+            qRulecalc.table(eArtikl.up).join(qRulecalc, eArtikl.data(), eRulecalc.artikl_id, eArtikl.id);
+        } catch (Exception e) {
+            System.err.println("Ошибка:Rulecalc.loadingModel() " + e);
+        }
     }
 
     public void loadingModel() {
-        new DefTableModel(tab2, qRulecalc, eRulecalc.name, eRulecalc.type, eArtikl.code, eArtikl.name, eRulecalc.quant, eRulecalc.size,
-                eRulecalc.coeff, eRulecalc.incr, eRulecalc.color1, eRulecalc.color2, eRulecalc.color3, eRulecalc.form) {
+        try {
+            new DefTableModel(tab2, qRulecalc, eRulecalc.name, eRulecalc.type, eArtikl.code, eArtikl.name, eRulecalc.quant, eRulecalc.size,
+                    eRulecalc.coeff, eRulecalc.incr, eRulecalc.color1, eRulecalc.color2, eRulecalc.color3, eRulecalc.form) {
 
-            public Object getValueAt(int col, int row, Object val) {
+                public Object getValueAt(int col, int row, Object val) {
 
-                if (val != null) {
-                    Field field = columns[col];
-                    if (eRulecalc.type == field) {
-                        int val2 = Integer.valueOf(val.toString());
-                        return TypeArt.find(val2 / 100, 0) + "." + TypeArt.find(val2 / 100, val2 % 10);
+                    if (val != null) {
+                        Field field = columns[col];
+                        if (eRulecalc.type == field) {
+                            int val2 = Integer.valueOf(val.toString());
+                            return TypeArt.find(val2 / 100, 0) + "." + TypeArt.find(val2 / 100, val2 % 10);
 
-                    } else if (eRulecalc.form == field) {
-                        int val2 = (val.equals(0) == true) ? 1 : Integer.valueOf(val.toString());
-                        return TypeForm.P00.find(val2).text();
+                        } else if (eRulecalc.form == field) {
+                            int val2 = (val.equals(0) == true) ? 1 : Integer.valueOf(val.toString());
+                            return TypeForm.P00.find(val2).text();
+                        }
                     }
+                    return val;
                 }
-                return val;
-            }
-        };
+            };
 
-        tab2.getColumnModel().getColumn(4).setCellEditor(new DefCellEditorCheck(6));
-        tab2.getColumnModel().getColumn(5).setCellEditor(new DefCellEditorCheck(5));
-        tab2.getColumnModel().getColumn(6).setCellEditor(new DefCellEditorNumb(3));
-        tab2.getColumnModel().getColumn(7).setCellEditor(new DefCellEditorNumb(3));
-        tab2.getColumnModel().getColumn(8).setCellEditor(new DefCellEditorCheck(5));
-        tab2.getColumnModel().getColumn(9).setCellEditor(new DefCellEditorCheck(5));
-        tab2.getColumnModel().getColumn(10).setCellEditor(new DefCellEditorCheck(5));
+            tab2.getColumnModel().getColumn(4).setCellEditor(new DefCellEditorCheck(6));
+            tab2.getColumnModel().getColumn(5).setCellEditor(new DefCellEditorCheck(5));
+            tab2.getColumnModel().getColumn(6).setCellEditor(new DefCellEditorNumb(3));
+            tab2.getColumnModel().getColumn(7).setCellEditor(new DefCellEditorNumb(3));
+            tab2.getColumnModel().getColumn(8).setCellEditor(new DefCellEditorCheck(5));
+            tab2.getColumnModel().getColumn(9).setCellEditor(new DefCellEditorCheck(5));
+            tab2.getColumnModel().getColumn(10).setCellEditor(new DefCellEditorCheck(5));
 
-        UGui.buttonCellEditor(tab2, 1).addActionListener(event -> {
-            DicArtikl2 frame = new DicArtikl2(this, (artiklRec) -> {
-                UGui.stopCellEditing(tab2);
-                int val = artiklRec.getInt(eArtikl.level1) * 100 + artiklRec.getInt(eArtikl.level2);
-                qRulecalc.set(val, UGui.getIndexRec(tab2), eRulecalc.type);
-                ((DefaultTableModel) tab2.getModel()).fireTableRowsUpdated(tab2.getSelectedRow(), tab2.getSelectedRow());
-            }, 1, 2, 3, 4, 5);
-        });
+            UGui.buttonCellEditor(tab2, 1).addActionListener(event -> {
+                DicArtikl2 frame = new DicArtikl2(this, (artiklRec) -> {
+                    UGui.stopCellEditing(tab2);
+                    int val = artiklRec.getInt(eArtikl.level1) * 100 + artiklRec.getInt(eArtikl.level2);
+                    qRulecalc.set(val, UGui.getIndexRec(tab2), eRulecalc.type);
+                    ((DefaultTableModel) tab2.getModel()).fireTableRowsUpdated(tab2.getSelectedRow(), tab2.getSelectedRow());
+                }, 1, 2, 3, 4, 5);
+            });
 
-        UGui.buttonCellEditor(tab2, 2).addActionListener(event -> {
-            Record rulecalcRec = qRulecalc.get(UGui.getIndexRec(tab2));
-            int id = rulecalcRec.getInt(eRulecalc.artikl_id, -1);
-            int type = rulecalcRec.getInt(eRulecalc.type);
-            int[] arr = (type == -1) ? new int[]{1, 2, 3, 4, 5} : new int[]{type / 100};
-            new DicArtikl2(this, id, listenerArtikl, arr);
-        });
+            UGui.buttonCellEditor(tab2, 2).addActionListener(event -> {
+                Record rulecalcRec = qRulecalc.get(UGui.getIndexRec(tab2));
+                int id = rulecalcRec.getInt(eRulecalc.artikl_id, -1);
+                int type = rulecalcRec.getInt(eRulecalc.type);
+                int[] arr = (type == -1) ? new int[]{1, 2, 3, 4, 5} : new int[]{type / 100};
+                new DicArtikl2(this, id, listenerArtikl, arr);
+            });
 
-        UGui.buttonCellEditor(tab2, 3).addActionListener(event -> {
-            Record rulecalcRec = qRulecalc.get(UGui.getIndexRec(tab2));
-            int id = rulecalcRec.getInt(eRulecalc.artikl_id, -1);
-            int type = rulecalcRec.getInt(eRulecalc.type);
-            int[] arr = (type == -1) ? new int[]{1, 2, 3, 4, 5} : new int[]{type / 100};
-            new DicArtikl2(this, id, listenerArtikl, arr);
-        });
+            UGui.buttonCellEditor(tab2, 3).addActionListener(event -> {
+                Record rulecalcRec = qRulecalc.get(UGui.getIndexRec(tab2));
+                int id = rulecalcRec.getInt(eRulecalc.artikl_id, -1);
+                int type = rulecalcRec.getInt(eRulecalc.type);
+                int[] arr = (type == -1) ? new int[]{1, 2, 3, 4, 5} : new int[]{type / 100};
+                new DicArtikl2(this, id, listenerArtikl, arr);
+            });
 
-        UGui.buttonCellEditor(tab2, 11).addActionListener(event -> {
-            new DicEnums(this, (record) -> UGui.cellParamEnum(record, tab2, eRulecalc.form, tab2), TypeForm.values());
-        });
+            UGui.buttonCellEditor(tab2, 11).addActionListener(event -> {
+                new DicEnums(this, (record) -> UGui.cellParamEnum(record, tab2, eRulecalc.form, tab2), TypeForm.values());
+            });
 
-        UGui.setSelectedRow(tab2);
+            UGui.setSelectedRow(tab2);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:Rulecalc.loadingModel() " + e);
+        }
     }
 
     public void listenerSet() {
@@ -389,7 +398,7 @@ public class Rulecalc extends javax.swing.JFrame {
     }//GEN-LAST:event_mousePressed
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditingAndExecSql(getRootPane());  
+        UGui.stopCellEditingAndExecSql(getRootPane());
     }//GEN-LAST:event_windowClosed
 
     private void btnFindArtikl(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindArtikl
