@@ -51,7 +51,7 @@ public class TTariffic extends Cal5e {
             for (ElemSimple elem5e : winc.listElem) {
                 if (filter(elem5e)) {
 
-                    elem5e.spcRec.sebes1 += artdetPrice(elem5e.spcRec); //себест. за ед. без отхода по табл. ARTDET с коэф. и надб.
+                    elem5e.spcRec.sebes1 += artdetPrice(elem5e.spcRec); //себест. по табл. ARTDET и прав.расч.
                     elem5e.spcRec.quant1 = formatAmount(elem5e.spcRec); //количество без отхода  
 
                     if (norm_otx == false) {
@@ -118,36 +118,34 @@ public class TTariffic extends Cal5e {
                     double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                     double k3 = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
 
-                    elem5e.spcRec.sebes2 = elem5e.spcRec.sebes1 * k1 * k3; //стоимость за един.изм 
-
-                    double prc1 = elem5e.spcRec.sebes2 * elem5e.spcRec.quant2;
-                    elem5e.spcRec.price1 = prc1 + k9 * prc1 / 100; //стоимость без скидки                     
+                    double sbc1 = elem5e.spcRec.sebes1 * k1 * k3;
+                    elem5e.spcRec.sebes2 = sbc1 + k9 * sbc1 / 100; //стоимость за един.изм 
+                    elem5e.spcRec.price1 = elem5e.spcRec.sebes2 * elem5e.spcRec.quant2; //стоимость без скидки                     
                     elem5e.spcRec.price2 = elem5e.spcRec.price1 - k2 * elem5e.spcRec.price1 / 100; //стоимость со скидкой 
 
                     //Цикл по детализации
-                    for (TRecord spc : elem5e.spcRec.spcList) {
+                    for (TRecord spcRec : elem5e.spcRec.spcList) {
 
                         // <editor-fold defaultstate="collapsed" desc="Правила рассч. вложенные">  
                         //Цикл по правилам расчёта.
                         for (Record rulecalcRec : eRulecalc.list()) {
                             int form = (rulecalcRec.getInt(eRulecalc.form) == 0) ? 1 : rulecalcRec.getInt(eRulecalc.form);
                             if (form == TypeForm.P00.id) { //не проверять форму 
-                                rulecalcPrise(winc, rulecalcRec, spc);
+                                rulecalcPrise(winc, rulecalcRec, spcRec);
                             }
                         }
                         // </editor-fold> 
 
-                        Record artgrp1bRec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups1_id));
-                        Record artgrp2bRec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups2_id));
+                        Record artgrp1bRec = eGroups.find(spcRec.artiklRec().getInt(eArtikl.groups1_id));
+                        Record artgrp2bRec = eGroups.find(spcRec.artiklRec().getInt(eArtikl.groups2_id));
                         double m1 = artgrp1bRec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
                         double m2 = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                         double m3 = systreeRec.getDbl(eSystree.coef); //коэф. рентабельности
 
-                        spc.sebes2 = spc.sebes1 * spc.quant2; //себест. за ед. с отходом 
-
-                        double prc2 = spc.sebes2 * m1 * m3;
-                        spc.price1 = prc2 + (prc2 / 100) * k9; //стоимость без скидки                         
-                        spc.price2 = spc.price1 - (spc.price1 / 100) * m2; //стоимость со скидкой 
+                        double sbs2 = spcRec.sebes1 * m1 * m3;
+                        spcRec.sebes2 = sbs2 + k9 * sbs2 / 100; //стоимость за един.изм 
+                        spcRec.price1 = spcRec.sebes2 * spcRec.quant2; //стоимость без скидки                     
+                        spcRec.price2 = spcRec.price1 - m2 * spcRec.price1 / 100; //стоимость со скидкой 
                     }
                 }
             }

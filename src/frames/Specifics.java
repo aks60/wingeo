@@ -471,7 +471,7 @@ public class Specifics extends javax.swing.JFrame {
                 {null, null, null, "", "", "", "", "", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nпп", "PK", "FK", "Расположенние", "Артикул", "Наименование", "Текстура", "Внутр..", "Внешн...", "Длина", "Ширина", "Масса", "реза1", "реза2", "гориз.", "<html>Кол.<br/>единиц", "<html>Един.<br/>изм.", "<html>Процент<br/> отхода", "<html>Кол.без<br/>отхода", "<html>Кол. с <br/>отходом", "без отх", "с отх.", "без скидки", "со скидкой"
+                "Nпп", "PK", "FK", "Расположенние", "Артикул", "Наименование", "Текстура", "Внутр..", "Внешн...", "Длина", "Ширина", "Масса", "реза1", "реза2", "гориз.", "<html>Кол.<br/>единиц", "<html>Един.<br/>изм.", "<html>Процент<br/> отхода", "<html>Кол.без<br/>отхода", "<html>Кол. с <br/>отходом", "<html>Себес- <br/>тоимость", "за ед. измер", "без скидки", "со скидкой"
             }
         ) {
             Class[] types = new Class [] {
@@ -733,18 +733,17 @@ public class Specifics extends javax.swing.JFrame {
         });
         tab1.getTableHeader().setFont(frames.UGui.getFont(0, 0));
         TableColumnModel cm = tab1.getColumnModel();
+        
         ColumnGroup angl = new ColumnGroup("Угол");
         angl.add(cm.getColumn(12));
         angl.add(cm.getColumn(13));
         angl.add(cm.getColumn(14));
-        ColumnGroup sebe = new ColumnGroup("Себестоимость");
-        sebe.add(cm.getColumn(20));
-        sebe.add(cm.getColumn(21));
         ColumnGroup cost = new ColumnGroup("Стоимость");
+        cost.add(cm.getColumn(21));
         cost.add(cm.getColumn(22));
         cost.add(cm.getColumn(23));
+        
         GroupableTableHeader header = (GroupableTableHeader) tab1.getTableHeader();
-        header.addColumnGroup(sebe);
         header.addColumnGroup(angl);
         header.addColumnGroup(cost);
     }
