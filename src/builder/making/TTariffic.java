@@ -42,124 +42,6 @@ public class TTariffic extends Cal5e {
 
     //Рассчёт конструкции с учётом 
     //всех скидок и наценок
-    public void calc2() {
-        try {
-            double k9 = percentMarkup(winc); //процентная надбавка на изделия сложной формы
-
-            //Расчёт себес-сти за ед.изм. и колич. материала
-            //цикл по элементам конструкции
-            for (ElemSimple elem5e : winc.listElem) {
-                if (filter(elem5e)) {
-
-                    elem5e.spcRec.sebes1 += artdetPrice(elem5e.spcRec); //себест. за ед. без отхода по табл. ARTDET с коэф. и надб.
-                    elem5e.spcRec.quant1 = formatAmount(elem5e.spcRec); //количество без отхода
-                    elem5e.spcRec.quant2 = elem5e.spcRec.quant1;  //базовое количество с отходом
-                    //TODO Правила расчёта надо перенести сюда
-                    if (norm_otx == true) {
-                        elem5e.spcRec.quant2 = elem5e.spcRec.quant2 + (elem5e.spcRec.quant1 * elem5e.spcRec.waste / 100); //количество с отходом
-                    }
-                    //Вложенная спецификация
-                    //цикл по детализации эдемента
-                    for (TRecord spсRec2 : elem5e.spcRec.spcList) {
-                        spсRec2.sebes1 += artdetPrice(spсRec2); //себест. за ед. без отхода
-                        spсRec2.quant1 = formatAmount(spсRec2); //количество без отхода
-                        spсRec2.quant2 = spсRec2.quant1; //количество с отходом
-                        //TODO Правила расчёта надо перенести сюда
-                        if (norm_otx == true) {
-                            spсRec2.quant2 = spсRec2.quant2 + (spсRec2.quant1 * spсRec2.waste / 100); //количество с отходом
-                        }
-                    }
-                }
-            }
-
-            //Рассчёт с учётом наценок и скидок
-            //цикл по эдементам конструкции
-            for (ElemSimple elem5e : winc.listElem) {
-                if (filter(elem5e)) {
-
-                    // <editor-fold defaultstate="collapsed" desc="ПРАВИЛА РАСЧЁТА">                     
-                    //Цикл по правилам расчёта.                 
-                    for (Record rulecalcRec : eRulecalc.list()) {
-                        //Всё обнуляется и рассчитывается по таблице правил расчёта
-                        //Увеличение себестоимости в coeff раз и на incr величину наценки.
-
-                        //Фильтр по полю 'форма профиля', в заполнениях. В БиМакс используюеся только 1, 4, 10, 12 параметры
-                        int form = (rulecalcRec.getInt(eRulecalc.form) == 0) ? 1 : rulecalcRec.getInt(eRulecalc.form);
-                        if (Type.GLASS == elem5e.type) {//фильтр для стеклопакета
-
-                            if (form == TypeForm.P00.id) {//не проверять форму
-                                rulecalcPrise(winc, rulecalcRec, elem5e.spcRec);
-
-                            } else if (form == TypeForm.P10.id && Type.TRAPEZE == elem5e.owner.type) { //не прямоугольное, не арочное заполнение
-                                rulecalcPrise(winc, rulecalcRec, elem5e.spcRec);
-
-                            } else if (form == TypeForm.P12.id && Type.ARCH == elem5e.owner.type) {//не прямоугольное заполнение с арками
-                                rulecalcPrise(winc, rulecalcRec, elem5e.spcRec);
-                            }
-                        } else if (form == TypeForm.P04.id && elem5e.type == Type.FRAME_SIDE
-                                && elem5e.owner.type == Type.ARCH && elem5e.layout() == Layout.TOP) {  //профиль с радиусом  (фильтр для арки профиля AYPC.W62.0101)
-                            rulecalcPrise(winc, rulecalcRec, elem5e.spcRec); //профиль с радиусом
-
-                        } else {
-                            if (form == TypeForm.P00.id) {  //не проверять форму
-                                rulecalcPrise(winc, rulecalcRec, elem5e.spcRec); //всё остальное не проверять форму
-                            }
-                        }
-                    }
-                    // </editor-fold>    
-                    //
-                    Record systreeRec = eSystree.find(winc.nuni);
-                    elem5e.spcRec.sebes2 = elem5e.spcRec.sebes1 + (elem5e.spcRec.waste * 1 / 100); //себест. за ед. с отходом 
-                    Record artgrp1Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups1_id));
-                    Record artgrp2Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups2_id));
-                    double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //коэф. наценка группы мат.ценностей
-                    double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //проц. скидки группы мат.ценностей
-                    double k3 = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
-                    elem5e.spcRec.price1 = elem5e.spcRec.quant2 * elem5e.spcRec.sebes2 * k1 * k3;
-                    elem5e.spcRec.price1 = elem5e.spcRec.price1 + k9 * elem5e.spcRec.price1 / 100; //стоимость без скидки                     
-                    elem5e.spcRec.price2 = elem5e.spcRec.price1 - k2 * elem5e.spcRec.price1 / 100; //стоимость со скидкой 
-
-                    //Цикл по детализации
-                    for (TRecord rec : elem5e.spcRec.spcList) {
-
-                        // <editor-fold defaultstate="collapsed" desc="ПРАВИЛА РАСЧЁТА">  
-                        //Цикл по правилам расчёта.
-                        for (Record rulecalcRec : eRulecalc.list()) {
-                            int form = (rulecalcRec.getInt(eRulecalc.form) == 0) ? 1 : rulecalcRec.getInt(eRulecalc.form);
-                            if (form == TypeForm.P00.id) { //не проверять форму 
-                                rulecalcPrise(winc, rulecalcRec, rec);
-                            }
-                        }
-                        // </editor-fold> 
-                        //
-                        rec.sebes2 = rec.sebes1 + (rec.waste * rec.sebes1 / 100); //себест. за ед. с отходом  
-                        Record artgrp1bRec = eGroups.find(rec.artiklRec().getInt(eArtikl.groups1_id));
-                        Record artgrp2bRec = eGroups.find(rec.artiklRec().getInt(eArtikl.groups2_id));
-                        double m1 = artgrp1bRec.getDbl(eGroups.val, 1);  //коэф. наценка группы мат.ценностей
-                        double m2 = artgrp2bRec.getDbl(eGroups.val, 0);  //проц. скидки группы мат.ценностей
-                        double m3 = systreeRec.getDbl(eSystree.coef); //коэф. рентабельности
-                        rec.price1 = elem5e.spcRec.quant2 * rec.sebes2 * m1 * m3;
-                        rec.price1 = rec.price1 + k9 * rec.price1 / 100; //стоимость без скидки                         
-                        rec.price2 = rec.price1 - m2 * rec.price1 / 100; //стоимость со скидкой 
-                    }
-                }
-            }
-
-            //Расчёт веса элемента конструкции
-            for (ElemSimple elem5e : winc.listElem) {
-                if (filter(elem5e)) {
-                    elem5e.spcRec.weight = elem5e.spcRec.quant1 * elem5e.spcRec.artiklRec().getDbl(eArtikl.density);
-
-                    for (TRecord spec : elem5e.spcRec.spcList) {
-                        spec.weight = spec.quant1 * spec.artiklRec().getDbl(eArtikl.density);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:Tariffic.calc() " + e);
-        }
-    }
-
     public void calc() {
         try {
             double k9 = percentMarkup(winc); //процентная надбавка на изделия сложной формы
@@ -170,19 +52,24 @@ public class TTariffic extends Cal5e {
                 if (filter(elem5e)) {
 
                     elem5e.spcRec.sebes1 += artdetPrice(elem5e.spcRec); //себест. за ед. без отхода по табл. ARTDET с коэф. и надб.
-                    elem5e.spcRec.quant1 = formatAmount(elem5e.spcRec); //количество без отхода
-                    elem5e.spcRec.quant2 = elem5e.spcRec.quant1;  //базовое количество с отходом
-                    if (norm_otx == true) {
-                        elem5e.spcRec.quant2 = elem5e.spcRec.quant2 + (elem5e.spcRec.quant1 * elem5e.spcRec.waste / 100); //количество с отходом
+                    elem5e.spcRec.quant1 = formatAmount(elem5e.spcRec); //количество без отхода  
+
+                    if (norm_otx == false) {
+                        elem5e.spcRec.quant2 = elem5e.spcRec.quant1;  //количество без отхода
+                    } else {
+                        elem5e.spcRec.quant2 = elem5e.spcRec.quant1 + (elem5e.spcRec.quant1 * elem5e.spcRec.waste / 100); //количество с отходом                       
                     }
+
                     //Вложенная спецификация
                     //цикл по детализации эдемента
                     for (TRecord spсRec2 : elem5e.spcRec.spcList) {
                         spсRec2.sebes1 += artdetPrice(spсRec2); //себест. за ед. без отхода
                         spсRec2.quant1 = formatAmount(spсRec2); //количество без отхода
-                        spсRec2.quant2 = spсRec2.quant1; //базовое количество с отходом
-                        if (norm_otx == true) {
-                            spсRec2.quant2 = spсRec2.quant2 + (spсRec2.quant1 * spсRec2.waste / 100); //количество с отходом
+
+                        if (norm_otx == false) {
+                            spсRec2.quant2 = spсRec2.quant1; //количество без отхода  
+                        } else {
+                            spсRec2.quant2 = spсRec2.quant1 + (spсRec2.quant1 * spсRec2.waste / 100); //количество с отходом
                         }
                     }
                 }
@@ -222,17 +109,20 @@ public class TTariffic extends Cal5e {
                             }
                         }
                     }
-                    // </editor-fold>                     
+                    // </editor-fold> 
+
                     Record systreeRec = eSystree.find(winc.nuni);
-                    elem5e.spcRec.sebes2 = elem5e.spcRec.sebes1 * elem5e.spcRec.quant2; //себест. за ед. с отходом 
                     Record artgrp1Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups1_id));
                     Record artgrp2Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups2_id));
                     double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
                     double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                     double k3 = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
-                    elem5e.spcRec.price1 = elem5e.spcRec.sebes2 * k1 * k3;
-                    elem5e.spcRec.price1 = elem5e.spcRec.price1 + (elem5e.spcRec.price1 / 100) * k9; //стоимость без скидки                     
-                    elem5e.spcRec.price2 = elem5e.spcRec.price1 - (elem5e.spcRec.price1 / 100) * k2; //стоимость со скидкой 
+
+                    elem5e.spcRec.sebes2 = elem5e.spcRec.sebes1 * k1 * k3; //стоимость за един.изм 
+
+                    double prc1 = elem5e.spcRec.sebes2 * elem5e.spcRec.quant2;
+                    elem5e.spcRec.price1 = prc1 + k9 * prc1 / 100; //стоимость без скидки                     
+                    elem5e.spcRec.price2 = elem5e.spcRec.price1 - k2 * elem5e.spcRec.price1 / 100; //стоимость со скидкой 
 
                     //Цикл по детализации
                     for (TRecord spc : elem5e.spcRec.spcList) {
@@ -246,14 +136,17 @@ public class TTariffic extends Cal5e {
                             }
                         }
                         // </editor-fold> 
-                        spc.sebes2 = spc.sebes1 * spc.quant2; //себест. за ед. с отходом  
+
                         Record artgrp1bRec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups1_id));
                         Record artgrp2bRec = eGroups.find(spc.artiklRec().getInt(eArtikl.groups2_id));
                         double m1 = artgrp1bRec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
                         double m2 = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                         double m3 = systreeRec.getDbl(eSystree.coef); //коэф. рентабельности
-                        spc.price1 = spc.sebes2 * m1 * m3;
-                        spc.price1 = spc.price1 + (spc.price1 / 100) * k9; //стоимость без скидки                         
+
+                        spc.sebes2 = spc.sebes1 * spc.quant2; //себест. за ед. с отходом 
+
+                        double prc2 = spc.sebes2 * m1 * m3;
+                        spc.price1 = prc2 + (prc2 / 100) * k9; //стоимость без скидки                         
                         spc.price2 = spc.price1 - (spc.price1 / 100) * m2; //стоимость со скидкой 
                     }
                 }
