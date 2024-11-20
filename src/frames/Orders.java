@@ -336,6 +336,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }
 
     public void selectionTab1() {
+        
         UGui.clearTable(tab2, tab4);
         List.of(tab1, tab2, tab3, tab4).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
         if (tab1.getSelectedRow() != -1) {
@@ -351,13 +352,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             txt8.setText(UCom.format(projectRec.getDbl(eProject.square) / 1000000, 2));
 
             loadingTab2();
+            loadingTab4();
             loadingTab5();
-
-            ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
-            UGui.setSelectedRow(tab4);
         }
-
-        loadingTab4();
     }
 
     public void selectionTab2() {
