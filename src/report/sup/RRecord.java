@@ -13,6 +13,7 @@ import java.util.Map;
 
 public class RRecord {
 
+    private int mpp = 0;
     private TRecord spc;
     private boolean otx = true;
 
@@ -143,14 +144,11 @@ public class RRecord {
     }
 
     public static List<RRecord> groups3(List<RRecord> listSpc) {
-        List<RRecord> list = new ArrayList<RRecord>();
+        List<RRecord> listOut = new ArrayList<RRecord>();
         Map<String, RRecord> map = new HashMap<String, RRecord>();
-
         for (RRecord newRec : listSpc) {
 
             String key = newRec.spc.artikl + "." + newRec.spc.colorID1 + "." + newRec.spc.colorID2 + "." + newRec.spc.colorID3;
-            //String key = newRec.spc.artikl + "." + newRec.spc.sebes2 + "." + newRec.spc.colorID1 + "." + newRec.spc.colorID2 + "." + newRec.spc.colorID3;
-
             RRecord oldRec = map.put(key, new RRecord(newRec.spc));
             if (oldRec != null) {
                 newRec.spc.weight += oldRec.spc.weight;
@@ -159,14 +157,11 @@ public class RRecord {
                 newRec.spc.count += oldRec.spc.count;
                 newRec.spc.price1 += oldRec.spc.price1;
                 newRec.spc.price2 += oldRec.spc.price2;
-                if ("21315-01000".equals(newRec.spc.artikl)) {
-                    System.out.println(oldRec.spc.quant2);
-                }
             }
         }
-        map.entrySet().forEach(act -> list.add(act.getValue()));
-        Collections.sort(list, (o1, o2) -> (o1.spc.name).compareTo(o2.spc.name));
-        return list;
+        map.entrySet().forEach(act -> listOut.add(act.getValue()));
+        Collections.sort(listOut, (o1, o2) -> (o1.spc.name).compareTo(o2.spc.name));
+        return listOut;
     }
 
     public double cost1() {
@@ -175,5 +170,9 @@ public class RRecord {
 
     public double cost2() {
         return spc.price2;
+    }
+
+    public String toString() {
+        return spc.artikl + " - " + spc.name + " - " + spc.width + " - " + spc.quant2 + " - " + spc.price1;
     }
 }

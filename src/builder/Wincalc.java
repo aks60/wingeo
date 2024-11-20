@@ -223,9 +223,10 @@ public class Wincalc {
 
     //Спецификация и тарификация 
     public void specific(boolean norm_otx) {
-        weight = 0;
-        price1 = 0;
-        price2 = 0;
+        this.weight = 0;
+        this.price1 = 0;
+        this.price2 = 0;
+        this.listSpec.clear();
         try {
             //Спецификация ведущих элементов конструкции
             listElem.forEach(elem -> elem.setSpecific());
@@ -250,7 +251,7 @@ public class Wincalc {
             }
 
             //Итоговая стоимость
-            for (TRecord spc : listSpec) {
+            for (TRecord spc : this.listSpec) {
                 this.price1 = (this.price1 + spc.price1); //общая стоимость без скидки
                 this.price2 = (this.price2 + spc.price2); //общая стоимость со скидкой                                   
             }
@@ -261,7 +262,7 @@ public class Wincalc {
                 this.weight += el.artiklRecAn.getDbl(eArtikl.density) * el.width() * el.height() / 1000000; //уд.вес * площадь = вес
             }
 
-            Collections.sort(listSpec, (o1, o2) -> (o1.place.subSequence(0, 3) + o1.name + o1.width).compareTo(o2.place.subSequence(0, 3) + o2.name + o2.width));
+            Collections.sort(this.listSpec, (o1, o2) -> (o1.place.subSequence(0, 3) + o1.name + o1.width).compareTo(o2.place.subSequence(0, 3) + o2.name + o2.width));
 
         } catch (Exception e) {
             System.err.println("Ошибка:Wincalc.constructiv() " + e);

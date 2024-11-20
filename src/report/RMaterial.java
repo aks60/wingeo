@@ -27,13 +27,15 @@ public class RMaterial {
 
     public void parseDoc1(Record prjprodRec) {
         try {
-            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
             InputStream in = getClass().getResourceAsStream("/resource/report/Material.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
-            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
-
+            
+            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
+            List<Record> prjprodList = new ArrayList();
+            prjprodList.add(prjprodRec);
+            
             //Заполним отчёт
             loadDoc(projectRec, prjprodList, doc);
 
@@ -43,7 +45,7 @@ public class RMaterial {
             ExecuteCmd.documentType(null);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:HtmlOfMaterial.material()" + e);
+            System.err.println("Ошибка:RMaterial.parseDoc1()" + e);
         }
     }
 
@@ -64,7 +66,7 @@ public class RMaterial {
             ExecuteCmd.documentType(null);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:HtmlOfMaterial.material()" + e);
+            System.err.println("Ошибка:RMaterial.parseDoc2()" + e);
         }
     }
 
@@ -76,14 +78,14 @@ public class RMaterial {
 
         //List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
         for (Record prjprodRec : prjprodList) {
-
-            String script = prjprodRec.getStr(ePrjprod.script);
-            Wincalc winc = new Wincalc(script);
-            winc.specific(true);
-
-            winSpc.addAll(winc.listSpec);
-            kitSpc = Kitcalc.tarifficProd(prjprodRec, winc, true); //добавим комплекты
-        }
+            Object win = prjprodRec.get(ePrjprod.values().length);
+            if (win instanceof Wincalc) {
+                Wincalc win2 = (Wincalc) win;
+                win2.specific(true);
+                winSpc.addAll(win2.listSpec);
+                kitSpc = Kitcalc.tarifficProd(prjprodRec, win2, true); //добавим комплекты
+            }
+        }       
         winSpc.forEach(el -> spcList.add(new RRecord(el)));
         kitSpc.forEach(el -> spcList.add(new RRecord(el)));
 
