@@ -772,8 +772,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
                         Wincalc win = (Wincalc) w;
                         String script = prjprodRec.getStr(ePrjprod.script);
-                        JsonElement jsonElem = new Gson().fromJson(script, JsonElement.class);
-                        win.build(jsonElem.toString()); //калкул€ци€                              
+                        //JsonElement jsonElem = new Gson().fromJson(script, JsonElement.class);
+                        //win.build(jsonElem.toString()); //калкул€ци€                              
+                        win.build(script); //калкул€ци€                              
                         win.specific(true); //конструктив  
 
                         square = square + prjprodRec.getDbl(ePrjprod.num) * win.root.area.getGeometryN(0).getArea(); //площадь изделий  

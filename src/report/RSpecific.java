@@ -82,7 +82,7 @@ public class RSpecific {
         
         List<TRecord> spcList = new ArrayList<TRecord>();
         List<RRecord> kitList = new ArrayList<RRecord>();
-        Wincalc winc = new builder.Wincalc();
+        Wincalc winc = new Wincalc();
 
         //Цикл по конструкциям заказа
         for (Record prjprodRec : prjprodList) {

@@ -76,14 +76,15 @@ public class RMaterial {
         List<TRecord> winSpc = new ArrayList<TRecord>();
         List<TRecord> kitSpc = new ArrayList<TRecord>();
 
-        //List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
         for (Record prjprodRec : prjprodList) {
-            Object win = prjprodRec.get(ePrjprod.values().length);
-            if (win instanceof Wincalc) {
-                Wincalc win2 = (Wincalc) win;
-                win2.specific(true);
-                winSpc.addAll(win2.listSpec);
-                kitSpc = Kitcalc.tarifficProd(prjprodRec, win2, true); //добавим комплекты
+            Object w = prjprodRec.get(ePrjprod.values().length);
+            if (w instanceof Wincalc) {
+                Wincalc win = (Wincalc) w; 
+                String script = prjprodRec.getStr(ePrjprod.script);
+                win.build(script); //калкул€ци€ 
+                win.specific(true);
+                winSpc.addAll(win.listSpec);
+                kitSpc = Kitcalc.tarifficProd(prjprodRec, win, true); //добавим комплекты
             }
         }       
         winSpc.forEach(el -> spcList.add(new RRecord(el)));
