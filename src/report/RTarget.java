@@ -39,9 +39,11 @@ public class RTarget {
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
+            List<Record> prjprodList = new Query(ePrjprod.values()).sql(ePrjprod.data(), ePrjprod.project_id, projectRec.getInt(eProject.id));
+            List<Record> prjprodList2 = new Query(ePrjprod.values()).sql(ePrjprod.data(), ePrjprod.project_id, projectRec.getInt(eProject.id));
 
             //Заполним отчёт
-            loadDoc(projectRec, doc);
+            loadDoc(projectRec, prjprodList, doc);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
@@ -53,10 +55,9 @@ public class RTarget {
         }
     }
 
-    private static void loadDoc(Record projectRec, Document doc) {
+    private static void loadDoc(Record projectRec, List<Record> prjprodList, Document doc) {
         Double square = 0.0; //площадь
         try {
-            Query qPrjprod = new Query(ePrjprod.values()).sql(ePrjprod.data(), ePrjprod.project_id, projectRec.getInt(eProject.id));
             Query qPrjpart = new Query(ePrjpart.values()).sql(ePrjpart.data(), ePrjpart.id, projectRec.getInt(eProject.prjpart_id));
             qPrjpart.add(ePrjpart.up.newRecord("SEL"));
             Query qSysuser = new Query(eSysuser.values()).sql(eSysuser.data(), eSysuser.login, qPrjpart.get(0).getInt(ePrjpart.login));
@@ -76,8 +77,8 @@ public class RTarget {
             //Заполним файл шаблонами заказов
             Element div2 = doc.getElementById("div2");
             String templateBody = div2.html();
-            List<Wincalc> wincList = URep.wincList(qPrjprod, 400);
-            for (int i = 1; i < qPrjprod.size(); i++) {
+            List<Wincalc> wincList = URep.wincList(prjprodList, 400);
+            for (int i = 1; i < prjprodList.size(); i++) {
                 div2.append(templateBody);
             }
 
@@ -90,8 +91,8 @@ public class RTarget {
                     template6Rec = tab6List.get(0).getElementsByTag("tr").get(1).html();
 
             //Цикл по изделиям
-            for (int i = 0; i < qPrjprod.size(); i++) {
-                Record prjprodRec = qPrjprod.get(i);
+            for (int i = 0; i < prjprodList.size(); i++) {
+                Record prjprodRec = prjprodList.get(i);
                 Wincalc winc = wincList.get(i);
 
                 //Таблица №2 ИЗДЕЛИЕ РЕКВИЗИТЫ  
