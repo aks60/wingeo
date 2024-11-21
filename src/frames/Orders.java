@@ -1050,12 +1050,13 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         tab4 = new javax.swing.JTable();
         south = new javax.swing.JPanel();
 
+        jmenu01.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
         jmenu01.setText(bundle.getString("Меню.Изделие")); // NOI18N
         jmenu01.setFont(frames.UGui.getFont(0,1));
 
         menuItem19.setFont(frames.UGui.getFont(0,1));
-        menuItem19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
+        menuItem19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
         menuItem19.setText(bundle.getString("Меню.Спецификация")); // NOI18N
         menuItem19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1065,7 +1066,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         jmenu01.add(menuItem19);
 
         menuItem20.setFont(frames.UGui.getFont(0,1));
-        menuItem20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
+        menuItem20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
         menuItem20.setText(bundle.getString("Меню.Расход материалов")); // NOI18N
         menuItem20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1075,7 +1076,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         jmenu01.add(menuItem20);
 
         menuItem21.setFont(frames.UGui.getFont(0,1));
-        menuItem21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
+        menuItem21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
         menuItem21.setText(bundle.getString("Меню.Задание в цех")); // NOI18N
         menuItem21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1086,7 +1087,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         jmenu01.add(sep4);
 
         menuItem22.setFont(frames.UGui.getFont(0,1));
-        menuItem22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
+        menuItem22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
         menuItem22.setText(bundle.getString("Меню.Смета")); // NOI18N
         menuItem22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1096,7 +1097,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         jmenu01.add(menuItem22);
 
         menuItem23.setFont(frames.UGui.getFont(0,1));
-        menuItem23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
+        menuItem23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
         menuItem23.setText(bundle.getString("Меню.Смета подробная")); // NOI18N
         menuItem23.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1107,7 +1108,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         jmenu01.add(sep5);
 
         menuItem24.setFont(frames.UGui.getFont(0,1));
-        menuItem24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
+        menuItem24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
         menuItem24.setText(bundle.getString("Меню.Счёт")); // NOI18N
         menuItem24.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1117,7 +1118,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         jmenu01.add(menuItem24);
 
         menuItem25.setFont(frames.UGui.getFont(0,1));
-        menuItem25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
+        menuItem25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
         menuItem25.setText(bundle.getString("Меню.Счёт-фактура")); // NOI18N
         menuItem25.setToolTipText("");
         menuItem25.addActionListener(new java.awt.event.ActionListener() {
@@ -1129,7 +1130,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         jmenu01.add(sep6);
 
         menuItem26.setFont(frames.UGui.getFont(0,1));
-        menuItem26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
+        menuItem26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
         menuItem26.setText(bundle.getString("Меню.Ком-ое предл...")); // NOI18N
         menuItem26.setToolTipText("");
         menuItem26.addActionListener(new java.awt.event.ActionListener() {
@@ -1141,11 +1142,12 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
         ppReport.add(jmenu01);
 
+        jmenu02.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
         jmenu02.setText(bundle.getString("Меню.Заказ")); // NOI18N
         jmenu02.setFont(frames.UGui.getFont(0,1));
 
         menuItem12.setFont(frames.UGui.getFont(0,1));
-        menuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
+        menuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
         menuItem12.setText(bundle.getString("Меню.Спецификация")); // NOI18N
         menuItem12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1155,7 +1157,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         jmenu02.add(menuItem12);
 
         menuItem11.setFont(frames.UGui.getFont(0,1));
-        menuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
+        menuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
         menuItem11.setText(bundle.getString("Меню.Расход материалов")); // NOI18N
         menuItem11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1165,7 +1167,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         jmenu02.add(menuItem11);
 
         menuItem18.setFont(frames.UGui.getFont(0,1));
-        menuItem18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
+        menuItem18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
         menuItem18.setText(bundle.getString("Меню.Задание в цех")); // NOI18N
         menuItem18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1176,7 +1178,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         jmenu02.add(sep1);
 
         menuItem14.setFont(frames.UGui.getFont(0,1));
-        menuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
+        menuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
         menuItem14.setText(bundle.getString("Меню.Смета")); // NOI18N
         menuItem14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1186,7 +1188,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         jmenu02.add(menuItem14);
 
         menuItem13.setFont(frames.UGui.getFont(0,1));
-        menuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
+        menuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
         menuItem13.setText(bundle.getString("Меню.Смета подробная")); // NOI18N
         menuItem13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1197,7 +1199,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         jmenu02.add(sep2);
 
         menuItem15.setFont(frames.UGui.getFont(0,1));
-        menuItem15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
+        menuItem15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
         menuItem15.setText(bundle.getString("Меню.Счёт")); // NOI18N
         menuItem15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1207,7 +1209,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         jmenu02.add(menuItem15);
 
         menuItem16.setFont(frames.UGui.getFont(0,1));
-        menuItem16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
+        menuItem16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
         menuItem16.setText(bundle.getString("Меню.Счёт-фактура")); // NOI18N
         menuItem16.setToolTipText("");
         menuItem16.addActionListener(new java.awt.event.ActionListener() {
@@ -1219,7 +1221,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         jmenu02.add(sep3);
 
         menuItem17.setFont(frames.UGui.getFont(0,1));
-        menuItem17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
+        menuItem17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
         menuItem17.setText(bundle.getString("Меню.Ком-ое предл...")); // NOI18N
         menuItem17.setToolTipText("");
         menuItem17.addActionListener(new java.awt.event.ActionListener() {
@@ -1466,7 +1468,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(lab2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 370, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 356, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

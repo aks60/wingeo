@@ -1,5 +1,6 @@
 package report;
 
+import builder.Kitcalc;
 import builder.model.AreaStvorka;
 import common.UCom;
 import report.sup.RTable;
@@ -39,11 +40,11 @@ public class RTarget {
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
-            
+
             Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
             List<Record> prjprodList = new ArrayList();
             prjprodList.add(prjprodRec);
-            
+
             //Заполним отчёт
             loadDoc(projectRec, prjprodList, doc);
 
@@ -108,16 +109,25 @@ public class RTarget {
 
             Elements tab2List = doc.getElementsByClass("tab2"),
                     tab3List = doc.getElementsByClass("tab3"), tab4List = doc.getElementsByClass("tab4"),
-                    tab5List = doc.getElementsByClass("tab5"), tab6List = doc.getElementsByClass("tab6");
-            String  template3Tr = tab3List.get(0).getElementsByTag("tr").get(1).html(),
+                    tab5List = doc.getElementsByClass("tab5"), tab6List = doc.getElementsByClass("tab6"),
+                    tab7List = doc.getElementsByClass("tab7"), tab8List = doc.getElementsByClass("tab8"),
+                    tab9List = doc.getElementsByClass("tab9");
+            String template3Tr = tab3List.get(0).getElementsByTag("tr").get(1).html(),
                     template4Tr = tab4List.get(0).getElementsByTag("tr").get(1).html(),
                     template5Tr = tab5List.get(0).getElementsByTag("tr").get(1).html(),
-                    template6Rec = tab6List.get(0).getElementsByTag("tr").get(1).html();
+                    template6Tr = tab6List.get(0).getElementsByTag("tr").get(1).html(),
+                    template7Tr = tab7List.get(0).getElementsByTag("tr").get(1).html(),
+                    template8Tr = tab8List.get(0).getElementsByTag("tr").get(1).html(),
+                    template9Tr = tab9List.get(0).getElementsByTag("tr").get(1).html();
 
             //Цикл по изделиям
             for (int i = 0; i < prjprodList.size(); i++) {
                 Record prjprodRec = prjprodList.get(i);
                 Wincalc winc = wincList.get(i);
+
+                List<TRecord> listSpc = new ArrayList<TRecord>();
+                listSpc.addAll(winc.listSpec);
+                listSpc.addAll(Kitcalc.tarifficProd(prjprodRec, winc, true));
 
                 //Таблица №2 ИЗДЕЛИЕ РЕКВИЗИТЫ  
                 square += winc.root.area.getGeometryN(0).getArea();
@@ -130,7 +140,7 @@ public class RTarget {
 
                 Element tab2 = tab2List.get(i);
                 tab2.getElementsByTag("caption").get(0).getElementsByTag("b").get(0).text("Изделие № " + (i + 1));
-                
+
                 tab2.getElementsByTag("tr").get(1).getElementsByTag("td").get(1).text(artiklRec.getStr(eArtikl.name));
                 tab2.getElementsByTag("tr").get(2).getElementsByTag("td").get(1).text(colorRec1.getStr(eColor.name)
                         + " / " + colorRec2.getStr(eColor.name) + " / " + colorRec3.getStr(eColor.name));
@@ -142,30 +152,31 @@ public class RTarget {
 
                 //Таблица №3 ПРОФИЛЬ / АРМИРОВАНИЕ  
                 Element tab3 = tab3List.get(i);
-                List<RRecord> spcList3 = new ArrayList<RRecord>(), spcList3a = new ArrayList<RRecord>();
-                loadTab3(winc, tab3, template3Tr, spcList3, spcList3a); //спецификация для изделия 
+                List<TRecord> spcList3 = new ArrayList<TRecord>(), spcList3a = new ArrayList<TRecord>();
+                loadTab3(listSpc, tab3, template3Tr, spcList3, spcList3a); //спецификация для изделия 
                 spcList3.forEach(act -> tab3.append(template3Tr));
                 tab3.getElementsByTag("tr").remove(1);
 
                 for (int j = 0; j < spcList3.size(); j++) { //заполним строки 
                     Elements td = tab3.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-                    RRecord rs = spcList3.get(j);
+                    RRecord rs1 = new RRecord(spcList3.get(j));
+                    RRecord rs2 = new RRecord(spcList3a.get(j));
                     td.get(0).text(String.valueOf(j + 1));
-                    td.get(1).text(rs.artikl());
-                    td.get(2).text(rs.name());
-                    td.get(3).text(rs.width());
-                    td.get(4).text(rs.ang0());
-                    td.get(5).text(rs.ang1());
-                    td.get(6).text(rs.count());
-                    td.get(7).text(rs.anglHor());
+                    td.get(1).text(rs1.artikl());
+                    td.get(2).text(rs1.name());
+                    td.get(3).text(rs1.width());
+                    td.get(4).text(rs1.ang0());
+                    td.get(5).text(rs1.ang1());
+                    td.get(6).text(rs1.count());
+                    td.get(7).text(rs1.anglHor());
                     td.get(8).text("");
-                    td.get(9).text(rs.width());
-                    td.get(10).text(rs.artikl());
+                    td.get(9).text(rs2.width());
+                    td.get(10).text(rs2.artikl());
                 }
 
                 //Таблица №4 УПЛОТНИТЕЛИ 
                 Element tab4 = tab4List.get(i);
-                List<RRecord> spcList4 = loadTab4(winc, tab4, template4Tr);
+                List<RRecord> spcList4 = loadTab4(listSpc, tab4, template4Tr);
                 spcList4.forEach(act -> tab4.append(template4Tr));
                 tab4.getElementsByTag("tr").remove(1);
 
@@ -181,7 +192,7 @@ public class RTarget {
 
                 //Таблица №5 ШТАПИК  
                 Element tab5 = tab5List.get(i);
-                List<RRecord> spcList5 = loadTab5(winc, tab5, template5Tr);
+                List<RRecord> spcList5 = loadTab5(listSpc, tab5, template5Tr);
                 spcList5.forEach(act -> tab5.append(template5Tr));
                 tab5.getElementsByTag("tr").remove(1);
                 for (int j = 0; j < spcList5.size(); j++) { //заполним строки 
@@ -196,14 +207,23 @@ public class RTarget {
                     td.get(6).text(rs.ang1());
                 }
 
-                //Таблица №6 ЗАПОЛНЕНИЯ  
-                Element tab6 = tab6List.get(i);
-                List<RRecord> spcList6 = loadTab6(winc, tab6, template6Rec);
-                spcList6.forEach(act -> tab6.append(template6Rec));
+                //Таблица №6 АКСЕССУАРЫ  
+                Element tab6 = tab5List.get(i);
+                List<RRecord> spcList6 = loadTab6(listSpc, tab6, template5Tr);
+                spcList6.forEach(act -> tab5.append(template6Tr));
                 tab6.getElementsByTag("tr").remove(1);
-                for (int j = 0; j < spcList6.size(); j++) { //заполним строки 
-                    Elements td = tab6.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-                    RRecord rs = spcList6.get(j);
+                for (int j = 0; j < spcList5.size(); j++) { //заполним строки 
+
+                }
+
+                //Таблица №9 ЗАПОЛНЕНИЯ  
+                Element tab9 = tab9List.get(i);
+                List<RRecord> spcList9 = loadTab9(listSpc, tab9, template9Tr);
+                spcList9.forEach(act -> tab9.append(template9Tr));
+                tab9.getElementsByTag("tr").remove(1);
+                for (int j = 0; j < spcList9.size(); j++) { //заполним строки 
+                    Elements td = tab9.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
+                    RRecord rs = spcList9.get(j);
                     td.get(0).text(String.valueOf(j + 1));
                     td.get(1).text(rs.name());
                     td.get(2).text(rs.width());
@@ -227,57 +247,77 @@ public class RTarget {
     }
 
     //ПРОФИЛЬ / АРМИРОВАНИЕ
-    public static void loadTab3(Wincalc winc, Element tab, String templateRec, List<RRecord> spcList2, List<RRecord> spcList3) {
+    public static void loadTab3(List<TRecord> listSpec, Element tab, String templateRec, List<TRecord> spcList2, List<TRecord> spcList3) {
 
-        winc.listSpec.forEach(spcRec -> { //профиля
+        listSpec.forEach(spcRec -> { //профиля
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X100, TypeArt.X101, TypeArt.X102, TypeArt.X103, TypeArt.X104, TypeArt.X105) == true) {
-                spcList2.add(new RRecord(spcRec));
+                spcList2.add(spcRec);
             }
         });
         spcList2.forEach(spcRec1 -> { //армирование
-            TRecord spcRec3 = new TRecord();
-            for (TRecord spcRec2 : winc.listSpec) {
-                if (TypeArt.isType(spcRec2.artiklRec(), TypeArt.X107) == true && spcRec2.elem5e.id == spcRec1.id()) {
-                    spcRec3 = spcRec2;
+            int count = spcList3.size();
+            for (TRecord spcRec2 : listSpec) {
+                if (TypeArt.isType(spcRec2.artiklRec(), TypeArt.X107) == true && spcRec2.elem5e.id == spcRec1.id) {
+                    spcList3.add(spcRec2);
                 }
             }
-            spcList3.add(new RRecord(spcRec3));
+            if (count == spcList3.size()) {
+                spcList3.add(new TRecord());
+            }
         });
+        listSpec.removeAll(spcList2);
+        listSpec.removeAll(spcList3);
     }
 
     //УПЛОТНИТЕЛИ
-    public static List<RRecord> loadTab4(Wincalc winc, Element tab, String templateRec) {
+    public static List<RRecord> loadTab4(List<TRecord> listSpec, Element tab, String templateRec) {
 
         List<RRecord> spcList = new ArrayList<RRecord>();
-        winc.listSpec.forEach(spcRec -> {
+        listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X135) == true) {
                 spcList.add(new RRecord(spcRec));
             }
         });
+        listSpec.removeAll(spcList);
         return spcList;
     }
 
     //ШТАПИК
-    public static List<RRecord> loadTab5(Wincalc winc, Element tab, String templateRec) {
+    public static List<RRecord> loadTab5(List<TRecord> listSpec, Element tab, String templateRec) {
 
         List<RRecord> spcList = new ArrayList();
-        winc.listSpec.forEach(spcRec -> {
+        listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X108) == true) {
                 spcList.add(new RRecord(spcRec));
             }
         });
+        listSpec.removeAll(spcList);
+        return spcList;
+    }
+
+    //АКСЕССУАРЫ
+    public static List<RRecord> loadTab6(List<TRecord> listSpec, Element tab, String templateRec) {
+
+        List<RRecord> spcList = new ArrayList();
+        listSpec.forEach(spcRec -> {
+            if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X200) == true) {
+                spcList.add(new RRecord(spcRec));
+            }
+        });
+        listSpec.removeAll(spcList);
         return spcList;
     }
 
     //ЗАПОЛНЕНИЯ
-    public static List<RRecord> loadTab6(Wincalc winc, Element tab, String templateRec) {
+    public static List<RRecord> loadTab9(List<TRecord> listSpec, Element tab, String templateRec) {
 
         List<RRecord> spcList = new ArrayList<RRecord>();
-        winc.listSpec.forEach(spcRec -> {
+        listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X502) == true) {
                 spcList.add(new RRecord(spcRec));
             }
         });
+        listSpec.removeAll(spcList);
         return spcList;
     }
 }
