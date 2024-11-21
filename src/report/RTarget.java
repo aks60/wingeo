@@ -40,7 +40,7 @@ public class RTarget {
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
             List<Record> prjprodList = new Query(ePrjprod.values()).sql(ePrjprod.data(), ePrjprod.project_id, projectRec.getInt(eProject.id));
-            List<Record> prjprodList2 = new Query(ePrjprod.values()).sql(ePrjprod.data(), ePrjprod.project_id, projectRec.getInt(eProject.id));
+            //List<Record> prjprodList2 = new Query(ePrjprod.values()).sql(ePrjprod.data(), ePrjprod.project_id, projectRec.getInt(eProject.id));
 
             //Заполним отчёт
             loadDoc(projectRec, prjprodList, doc);
