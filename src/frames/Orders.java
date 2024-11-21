@@ -4071,7 +4071,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Задание в цех
-                new RTarget().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new RTarget().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
             }
         });
     }//GEN-LAST:event_menuItem18
@@ -4095,7 +4095,12 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }//GEN-LAST:event_menuItem20
 
     private void menuItem21(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem21
-        // TODO add your handling code here:
+        ProgressBar.create(Orders.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                //Расход мат.
+                new RTarget().parseDoc1(qPrjprod.get(UGui.getIndexRec(tab2)));
+            }
+        });
     }//GEN-LAST:event_menuItem21
 
     private void menuItem22(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem22

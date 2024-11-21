@@ -610,7 +610,7 @@ public class Man extends javax.swing.JFrame {
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Отчёт
-                new RTarget().parseDoc(projectRec);
+                new RTarget().parseDoc2(projectRec);
             }
         });
     }//GEN-LAST:event_btn15
