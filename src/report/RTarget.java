@@ -241,10 +241,10 @@ public class RTarget {
     //”œÀŒ“Õ»“≈À»
     public static void loadTab4(List<TRecord> listSpec, Element tab, String templateTr) {
 
-        List<RRecord> spcList = new ArrayList<RRecord>();
+        List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X135) == true) {
-                spcList.add(new RRecord(spcRec));
+                spcList.add(spcRec);
             }
         });
         listSpec.removeAll(spcList);
@@ -253,7 +253,7 @@ public class RTarget {
 
         for (int j = 0; j < spcList.size(); j++) { //Á‡ÔÓÎÌËÏ ÒÚÓÍË 
             Elements td = tab.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-            RRecord rs = spcList.get(j);
+            RRecord rs = new RRecord(spcList.get(j));
             td.get(0).text(String.valueOf(j + 1));
             td.get(1).text(rs.artikl());
             td.get(2).text(rs.name());
@@ -265,10 +265,10 @@ public class RTarget {
     //ÿ“¿œ» 
     public static void loadTab5(List<TRecord> listSpec, Element tab, String templateTr) {
 
-        List<RRecord> spcList = new ArrayList();
+        List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X108) == true) {
-                spcList.add(new RRecord(spcRec));
+                spcList.add(spcRec);
             }
         });
 
@@ -278,7 +278,7 @@ public class RTarget {
 
         for (int j = 0; j < spcList.size(); j++) { //Á‡ÔÓÎÌËÏ ÒÚÓÍË 
             Elements td = tab.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-            RRecord rs = spcList.get(j);
+            RRecord rs = new RRecord(spcList.get(j));
             td.get(0).text(String.valueOf(j + 1));
             td.get(1).text(rs.artikl());
             td.get(2).text(rs.name());
@@ -292,24 +292,25 @@ public class RTarget {
     //¿ —≈——”¿–€
     public static void loadTab6(List<TRecord> listSpec, Element tab, String templateTr) {
 
-        List<RRecord> spcList = new ArrayList();
+        List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X201, TypeArt.X202, TypeArt.X203,
                     TypeArt.X204, TypeArt.X205, TypeArt.X206, TypeArt.X215, TypeArt.X220,
                     TypeArt.X230, TypeArt.X231, TypeArt.X250, TypeArt.X290) == true) {
 
-                spcList.add(new RRecord(spcRec));
+                spcList.add(spcRec);
             }
         });
 
         listSpec.removeAll(spcList);
-        List<RRecord> spcList2 = RRecord.groups3(spcList);
+        
+        List<TRecord> spcList2 = RRecord.groups4T(spcList);
         spcList2.forEach(act -> tab.append(templateTr));
         tab.getElementsByTag("tr").remove(1);
 
         for (int j = 0; j < spcList2.size(); j++) { //Á‡ÔÓÎÌËÏ ÒÚÓÍË 
             Elements td = tab.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-            RRecord rs = spcList2.get(j);
+            RRecord rs = new RRecord(spcList2.get(j));
             td.get(0).text(String.valueOf(j + 1));
             td.get(1).text(rs.artikl());
             td.get(2).text(rs.name());
@@ -319,23 +320,23 @@ public class RTarget {
 
     //‘”–Õ»“”–¿ 
     public static void loadTab7(List<TRecord> listSpec, Element tab, String templateTr) {
-        List<RRecord> spcList = new ArrayList();
+        List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X209, TypeArt.X210,
                     TypeArt.X211, TypeArt.X212, TypeArt.X213, TypeArt.X214) == true) {
 
-                spcList.add(new RRecord(spcRec));
+                spcList.add(spcRec);
             }
         });
 
         listSpec.removeAll(spcList);
-        List<RRecord> spcList2 = RRecord.groups3(spcList);
+        List<TRecord> spcList2 = RRecord.groups4T(spcList);
         spcList2.forEach(act -> tab.append(templateTr));
         tab.getElementsByTag("tr").remove(1);
 
         for (int j = 0; j < spcList2.size(); j++) { //Á‡ÔÓÎÌËÏ ÒÚÓÍË 
             Elements td = tab.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-            RRecord rs = spcList2.get(j);
+            RRecord rs = new RRecord(spcList2.get(j));
             td.get(0).text(String.valueOf(j + 1));
             td.get(1).text(rs.artikl());
             td.get(2).text(rs.name());
@@ -347,10 +348,10 @@ public class RTarget {
     //«¿œŒÀÕ≈Õ»ﬂ
     public static void loadTab8(List<TRecord> listSpec, Element tab, String templateTr) {
 
-        List<RRecord> spcList = new ArrayList<RRecord>();
+        List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X502) == true) {
-                spcList.add(new RRecord(spcRec));
+                spcList.add(spcRec);
             }
         });
 
@@ -360,7 +361,7 @@ public class RTarget {
 
         for (int j = 0; j < spcList.size(); j++) { //Á‡ÔÓÎÌËÏ ÒÚÓÍË 
             Elements td = tab.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-            RRecord rs = spcList.get(j);
+            RRecord rs = new RRecord(spcList.get(j));
             td.get(0).text(String.valueOf(j + 1));
             td.get(1).text(rs.name());
             td.get(2).text(rs.width());
@@ -374,10 +375,10 @@ public class RTarget {
     //œ–Œ◊≈≈
     public static void loadTab9(List<TRecord> listSpec, Element tab, String templateTr) {
 
-        List<RRecord> spcList = new ArrayList();
+        List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
 
-            spcList.add(new RRecord(spcRec));
+            spcList.add(spcRec);
         });
 
         listSpec.removeAll(spcList);
@@ -386,7 +387,7 @@ public class RTarget {
 
         for (int j = 0; j < spcList.size(); j++) { //Á‡ÔÓÎÌËÏ ÒÚÓÍË 
             Elements td = tab.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-            RRecord rs = spcList.get(j);
+            RRecord rs = new  RRecord(spcList.get(j));
             td.get(0).text(String.valueOf(j + 1));
             td.get(1).text(rs.artikl());
             td.get(2).text(rs.name());

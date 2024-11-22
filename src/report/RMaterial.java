@@ -90,7 +90,7 @@ public class RMaterial {
         winSpc.forEach(el -> spcList.add(new RRecord(el)));
         kitSpc.forEach(el -> spcList.add(new RRecord(el)));
 
-        List<RRecord> groupList = RRecord.groups3(spcList);
+        List<RRecord> groupList = RRecord.groupsR(spcList);
 
         Elements templateRec = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
         groupList.forEach(act -> doc.getElementsByTag("tbody").append(templateRec.get(0).html()));

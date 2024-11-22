@@ -129,30 +129,28 @@ public class RRecord {
         return UCom.format(spc.price1, -1);
     }
 
-    //--------------------------------------------------------------------------  
-    public static List<RRecord> groups2(List<RRecord> listSpr) {
-        List<RRecord> listOut = new ArrayList<RRecord>();
-        Map<String, RRecord> map = new HashMap<String, RRecord>();
+    public static List<TRecord> groups4T(List<TRecord> listSpc) {
+        List<TRecord> listOut = new ArrayList<TRecord>();
+        Map<String, TRecord> map = new HashMap<String, TRecord>();
+        for (TRecord newRec : listSpc) {
 
-        for (RRecord newRec : listSpr) {
-            String key = newRec.spc.artikl + "." + newRec.spc.colorID1 + "." + newRec.spc.colorID2 + "." + newRec.spc.colorID3;
-            RRecord oldRec = map.put(key, new RRecord(newRec.spc));
+            String key = newRec.artikl + "." + newRec.colorID1 + "." + newRec.colorID2 + "." + newRec.colorID3;
+            TRecord oldRec = map.put(key, new TRecord(newRec));
             if (oldRec != null) {
-                newRec.spc.weight = newRec.spc.weight + oldRec.spc.weight;
-                newRec.spc.count = newRec.spc.count + oldRec.spc.count;
-                newRec.spc.quant1 = newRec.spc.quant1 + oldRec.spc.quant1;
-                newRec.spc.quant2 = newRec.spc.quant2 + oldRec.spc.quant2;
-                newRec.spc.sebes2 = newRec.spc.sebes2 + oldRec.spc.sebes2;
-                newRec.spc.price1 = newRec.spc.price1 + oldRec.spc.price1;
-                newRec.spc.price2 = newRec.spc.price2 + oldRec.spc.price2;
+                newRec.weight += oldRec.weight;
+                newRec.count += oldRec.count;                
+                newRec.quant1 += oldRec.quant1;
+                newRec.quant2 += oldRec.quant2;
+                newRec.price1 += oldRec.price1;
+                newRec.price2 += oldRec.price2;
             }
         }
         map.entrySet().forEach(act -> listOut.add(act.getValue()));
-        Collections.sort(listOut, (o1, o2) -> (o1.spc.name).compareTo(o2.spc.name));
+        Collections.sort(listOut, (o1, o2) -> (o1.name).compareTo(o2.name));
         return listOut;
     }
 
-    public static List<RRecord> groups3(List<RRecord> listSpc) {
+    public static List<RRecord> groupsR(List<RRecord> listSpc) {
         List<RRecord> listOut = new ArrayList<RRecord>();
         Map<String, RRecord> map = new HashMap<String, RRecord>();
         for (RRecord newRec : listSpc) {
@@ -161,9 +159,9 @@ public class RRecord {
             RRecord oldRec = map.put(key, new RRecord(newRec.spc));
             if (oldRec != null) {
                 newRec.spc.weight += oldRec.spc.weight;
+                newRec.spc.count += oldRec.spc.count;                
                 newRec.spc.quant1 += oldRec.spc.quant1;
                 newRec.spc.quant2 += oldRec.spc.quant2;
-                newRec.spc.count += oldRec.spc.count;
                 newRec.spc.price1 += oldRec.spc.price1;
                 newRec.spc.price2 += oldRec.spc.price2;
             }
@@ -171,8 +169,8 @@ public class RRecord {
         map.entrySet().forEach(act -> listOut.add(act.getValue()));
         Collections.sort(listOut, (o1, o2) -> (o1.spc.name).compareTo(o2.spc.name));
         return listOut;
-    }
-
+    } 
+    
     public double cost1() {
         return spc.price1;
     }
