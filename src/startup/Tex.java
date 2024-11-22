@@ -1363,7 +1363,14 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     }//GEN-LAST:event_menuItem21
 
     private void menuItem22(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem22
-        // TODO add your handling code here:
+        ProgressBar.create(Tex.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                //Задание в цех
+                int prjprodID = Integer.valueOf(eProp.prjprodID.read());
+                Record prjprodRec = ePrjprod.find(prjprodID);
+                new RSmeta().parseDoc1(prjprodRec);
+            }
+        });
     }//GEN-LAST:event_menuItem22
 
     private void menuItem23(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem23
