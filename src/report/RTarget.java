@@ -377,46 +377,24 @@ public class RTarget {
 
         List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
-
-            spcList.add(spcRec);
+                
+                spcList.add(spcRec);
         });
-
+        
         listSpec.removeAll(spcList);
-        spcList.forEach(act -> tab.append(templateTr));
+        List<TRecord> spcList2 = RRecord.groups4T(spcList);
+        spcList2.forEach(act -> tab.append(templateTr));
         tab.getElementsByTag("tr").remove(1);
 
-        for (int j = 0; j < spcList.size(); j++) { //заполним строки 
+        for (int j = 0; j < spcList2.size(); j++) { //заполним строки 
             Elements td = tab.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-            RRecord rs = new  RRecord(spcList.get(j));
+            RRecord rs = new RRecord(spcList2.get(j));
             td.get(0).text(String.valueOf(j + 1));
             td.get(1).text(rs.artikl());
             td.get(2).text(rs.name());
             td.get(3).text(rs.color(1));
             td.get(4).text(rs.unit());
             td.get(5).text(rs.count());
-
-        }
-
-//        List<RRecord> spcList = new ArrayList();
-//        listSpec.forEach(spcRec -> {
-//                
-//                spcList.add(new RRecord(spcRec));
-//        });
-//        
-//        listSpec.removeAll(spcList);
-//        List<RRecord> spcList2 = RRecord.groups3(spcList);
-//        spcList2.forEach(act -> tab.append(templateTr));
-//        tab.getElementsByTag("tr").remove(1);
-//
-//        for (int j = 0; j < spcList2.size(); j++) { //заполним строки 
-//            Elements td = tab.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-//            RRecord rs = spcList2.get(j);
-//            td.get(0).text(String.valueOf(j + 1));
-//            td.get(1).text(rs.artikl());
-//            td.get(2).text(rs.name());
-//            td.get(3).text(rs.color(1));
-//            td.get(4).text(rs.unit());
-//            td.get(5).text(rs.count());
-//        }         
+        }         
     }
 }
