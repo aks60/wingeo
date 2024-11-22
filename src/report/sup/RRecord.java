@@ -56,11 +56,11 @@ public class RRecord {
     }
 
     public String count() {
-        if (spc.unit == UseUnit.PIE.id) {
+        //if (spc.unit == UseUnit.PIE.id) {
             return String.valueOf(spc.count);
-        } else {
-            return UCom.format(spc.quant2, -2);
-        }
+        //} else {
+        //    return UCom.format(spc.quant2, -2);
+        //}
     }
 
     public String unit() {
@@ -69,7 +69,7 @@ public class RRecord {
 
     public String width() {
         if (spc.width > 0) {
-            return UCom.format(spc.width, -2);
+            return UCom.format(spc.width / 1000, -3);
         }
         return "";
     }
@@ -112,7 +112,9 @@ public class RRecord {
     }
 
     public String quant(int index) {
-        return (index == 1) ? UCom.format(spc.quant1, -1) : UCom.format(spc.quant2, -1);
+        //double quant = (index == 1) ? spc.quant1 : spc.quant2;
+        //return UCom.format(3.12345, 3);
+        return (index == 1) ? UCom.format(spc.quant1, 3) : UCom.format(spc.quant2, 3);
     }
 
     public String sebes2() {
@@ -150,7 +152,7 @@ public class RRecord {
         return listOut;
     }
 
-    public static List<RRecord> groupsR(List<RRecord> listSpc) {
+    public static List<RRecord> groups4R(List<RRecord> listSpc) {
         List<RRecord> listOut = new ArrayList<RRecord>();
         Map<String, RRecord> map = new HashMap<String, RRecord>();
         for (RRecord newRec : listSpc) {
@@ -170,6 +172,27 @@ public class RRecord {
         Collections.sort(listOut, (o1, o2) -> (o1.spc.name).compareTo(o2.spc.name));
         return listOut;
     } 
+    
+//    public static List<TRecord> groups5T(List<TRecord> listSpc) {
+//        List<TRecord> listOut = new ArrayList<TRecord>();
+//        Map<String, TRecord> map = new HashMap<String, TRecord>();
+//        for (TRecord newRec : listSpc) {
+//
+//            String key = newRec.artikl + "." + newRec.width + "." + newRec.colorID1 + "." + newRec.colorID2 + "." + newRec.colorID3;
+//            TRecord oldRec = map.put(key, new TRecord(newRec));
+//            if (oldRec != null) {
+//                //newRec.weight += oldRec.weight;
+//                newRec.count += oldRec.count;                
+//                //newRec.quant1 += oldRec.quant1;
+//                //newRec.quant2 += oldRec.quant2;
+//                newRec.price1 += oldRec.price1;
+//                newRec.price2 += oldRec.price2;
+//            }
+//        }
+//        map.entrySet().forEach(act -> listOut.add(act.getValue()));
+//        Collections.sort(listOut, (o1, o2) -> (o1.name).compareTo(o2.name));
+//        return listOut;
+//    }
     
     public double cost1() {
         return spc.price1;

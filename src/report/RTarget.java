@@ -65,7 +65,6 @@ public class RTarget {
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
             List<Record> prjprodList = new Query(ePrjprod.values()).sql(ePrjprod.data(), ePrjprod.project_id, projectRec.getInt(eProject.id));
-            //List<Record> prjprodList2 = new Query(ePrjprod.values()).sql(ePrjprod.data(), ePrjprod.project_id, projectRec.getInt(eProject.id));
 
             //Çàïîëíèì îò÷¸ò
             loadDoc(projectRec, prjprodList, doc);
@@ -123,6 +122,7 @@ public class RTarget {
             for (int i = 0; i < prjprodList.size(); i++) {
                 Record prjprodRec = prjprodList.get(i);
                 Wincalc winc = wincList.get(i);
+                int countNum = prjprodRec.getInt(ePrjprod.num);
 
                 List<TRecord> listSpc = new ArrayList<TRecord>();
                 listSpc.addAll(winc.listSpec);
@@ -141,41 +141,41 @@ public class RTarget {
                 tab2.getElementsByTag("caption").get(0).getElementsByTag("b").get(0).text("Èçäåëèå ¹ " + (i + 1));
 
                 tab2.getElementsByTag("tr").get(1).getElementsByTag("td").get(1).text(artiklRec.getStr(eArtikl.name));
-                tab2.getElementsByTag("tr").get(2).getElementsByTag("td").get(1).text(colorRec1.getStr(eColor.name) + " / "
-                        + colorRec2.getStr(eColor.name) + " / " + colorRec3.getStr(eColor.name));
-                tab2.getElementsByTag("tr").get(3).getElementsByTag("td").get(1).text(UCom.format(winc.width() / 1000, 3) + " x "
-                        + UCom.format(winc.height() / 1000, 3));
+                tab2.getElementsByTag("tr").get(2).getElementsByTag("td").get(1)
+                        .text(colorRec1.getStr(eColor.name) + " / " + colorRec2.getStr(eColor.name) + " / " + colorRec3.getStr(eColor.name));
+                tab2.getElementsByTag("tr").get(3).getElementsByTag("td").get(1)
+                        .text(UCom.format(winc.width() / 1000, 3) + " x " + UCom.format(winc.height() / 1000, 3));
                 tab2.getElementsByTag("tr").get(4).getElementsByTag("td").get(1).text(furnitureRec.getStr(eFurniture.name));
                 tab2.getElementsByTag("tr").get(5).getElementsByTag("td").get(1).text(prjprodRec.getStr(ePrjprod.num));
                 tab2.getElementsByTag("tr").get(6).getElementsByTag("td").get(1).text(UCom.format(square / 1000000, 2));
 
                 //Òàáëèöà ¹3 ÏĞÎÔÈËÜ / ÀĞÌÈĞÎÂÀÍÈÅ  
                 Element tab3 = tab3List.get(i);
-                loadTab3(listSpc, tab3, template3Tr); //ñïåöèôèêàöèÿ äëÿ èçäåëèÿ 
+                loadTab3(listSpc, tab3, template3Tr, countNum); //ñïåöèôèêàöèÿ äëÿ èçäåëèÿ 
 
                 //Òàáëèöà ¹4 ÓÏËÎÒÍÈÒÅËÈ 
                 Element tab4 = tab4List.get(i);
-                loadTab4(listSpc, tab4, template4Tr);
+                loadTab4(listSpc, tab4, template4Tr, countNum);
 
                 //Òàáëèöà ¹5 ØÒÀÏÈÊ  
                 Element tab5 = tab5List.get(i);
-                loadTab5(listSpc, tab5, template5Tr);
+                loadTab5(listSpc, tab5, template5Tr, countNum);
 
                 //Òàáëèöà ¹6 ÀÊÑÅÑÑÓÀĞÛ  
                 Element tab6 = tab6List.get(i);
-                loadTab6(listSpc, tab6, template6Tr);
+                loadTab6(listSpc, tab6, template6Tr, countNum);
 
                 //Òàáëèöà ¹7 ÔÓĞÍÈÒÓĞÀ   
                 Element tab7 = tab7List.get(i);
-                loadTab7(listSpc, tab7, template7Tr);
+                loadTab7(listSpc, tab7, template7Tr, countNum);
 
                 //Òàáëèöà ¹8 ÇÀÏÎËÍÅÍÈß    
                 Element tab8 = tab8List.get(i);
-                loadTab8(listSpc, tab8, template8Tr);
+                loadTab8(listSpc, tab8, template8Tr, countNum);
 
                 //Òàáëèöà ¹9 ÏĞÎ×ÅÅ 
                 Element tab9 = tab9List.get(i);
-                loadTab9(listSpc, tab9, template9Tr);
+                loadTab9(listSpc, tab9, template9Tr, countNum);
             }
 
             //Çàãğóçèì èçîáğàæåíèÿ
@@ -191,7 +191,7 @@ public class RTarget {
     }
 
     //ÏĞÎÔÈËÜ / ÀĞÌÈĞÎÂÀÍÈÅ
-    public static void loadTab3(List<TRecord> listSpec, Element tab, String templateTr) {
+    public static void loadTab3(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
         List<TRecord> spcListA = new ArrayList<TRecord>();
         List<TRecord> spcListB = new ArrayList<TRecord>();
 
@@ -230,7 +230,7 @@ public class RTarget {
             td.get(3).text(rsA.width());
             td.get(4).text(rsA.ang0());
             td.get(5).text(rsA.ang1());
-            td.get(6).text(rsA.count());
+            td.get(6).text(String.valueOf(rsA.spc().count * countNum));
             td.get(7).text(rsA.anglHor());
             td.get(8).text("");
             td.get(9).text(rsB.width());
@@ -239,7 +239,7 @@ public class RTarget {
     }
 
     //ÓÏËÎÒÍÈÒÅËÈ
-    public static void loadTab4(List<TRecord> listSpec, Element tab, String templateTr) {
+    public static void loadTab4(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
 
         List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
@@ -258,12 +258,13 @@ public class RTarget {
             td.get(1).text(rs.artikl());
             td.get(2).text(rs.name());
             td.get(3).text(rs.unit());
-            td.get(4).text(rs.width());
+            td.get(4).text(String.valueOf(rs.spc().count * countNum));
+            td.get(5).text(rs.width());
         }
     }
 
     //ØÒÀÏÈÊ
-    public static void loadTab5(List<TRecord> listSpec, Element tab, String templateTr) {
+    public static void loadTab5(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
 
         List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
@@ -283,14 +284,14 @@ public class RTarget {
             td.get(1).text(rs.artikl());
             td.get(2).text(rs.name());
             td.get(3).text(rs.width());
-            td.get(4).text(rs.count());
+            td.get(4).text(String.valueOf(rs.spc().count * countNum));
             td.get(5).text(rs.ang0());
             td.get(6).text(rs.ang1());
         }
     }
 
     //ÀÊÑÅÑÑÓÀĞÛ
-    public static void loadTab6(List<TRecord> listSpec, Element tab, String templateTr) {
+    public static void loadTab6(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
 
         List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
@@ -303,7 +304,7 @@ public class RTarget {
         });
 
         listSpec.removeAll(spcList);
-        
+
         List<TRecord> spcList2 = RRecord.groups4T(spcList);
         spcList2.forEach(act -> tab.append(templateTr));
         tab.getElementsByTag("tr").remove(1);
@@ -314,12 +315,12 @@ public class RTarget {
             td.get(0).text(String.valueOf(j + 1));
             td.get(1).text(rs.artikl());
             td.get(2).text(rs.name());
-            td.get(3).text(rs.count());
+            td.get(3).text(String.valueOf(rs.spc().count * countNum));
         }
     }
 
     //ÔÓĞÍÈÒÓĞÀ 
-    public static void loadTab7(List<TRecord> listSpec, Element tab, String templateTr) {
+    public static void loadTab7(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
         List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X209, TypeArt.X210,
@@ -341,12 +342,12 @@ public class RTarget {
             td.get(1).text(rs.artikl());
             td.get(2).text(rs.name());
             td.get(3).text(rs.unit());
-            td.get(4).text(rs.count());
+            td.get(4).text(String.valueOf(rs.spc().count * countNum));
         }
     }
 
     //ÇÀÏÎËÍÅÍÈß
-    public static void loadTab8(List<TRecord> listSpec, Element tab, String templateTr) {
+    public static void loadTab8(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
 
         List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
@@ -366,21 +367,21 @@ public class RTarget {
             td.get(1).text(rs.name());
             td.get(2).text(rs.width());
             td.get(3).text(rs.height());
-            td.get(4).text(rs.weight());
-            td.get(5).text(rs.count());
-            td.get(6).text(rs.weight());
+            td.get(4).text(UCom.format((rs.spc().width * rs.spc().height) / 1000000, 2));
+            td.get(5).text(String.valueOf(rs.spc().count * countNum));
+            td.get(6).text(UCom.format((rs.spc().width * rs.spc().height) / 1000000, 2));
         }
     }
 
     //ÏĞÎ×ÅÅ
-    public static void loadTab9(List<TRecord> listSpec, Element tab, String templateTr) {
+    public static void loadTab9(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
 
         List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
-                
-                spcList.add(spcRec);
+
+            spcList.add(spcRec);
         });
-        
+
         listSpec.removeAll(spcList);
         List<TRecord> spcList2 = RRecord.groups4T(spcList);
         spcList2.forEach(act -> tab.append(templateTr));
@@ -394,7 +395,7 @@ public class RTarget {
             td.get(2).text(rs.name());
             td.get(3).text(rs.color(1));
             td.get(4).text(rs.unit());
-            td.get(5).text(rs.count());
-        }         
+            td.get(5).text(String.valueOf(rs.spc().count * countNum));
+        }
     }
 }

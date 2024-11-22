@@ -31,11 +31,11 @@ public class RMaterial {
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
-            
+
             Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
             List<Record> prjprodList = new ArrayList();
             prjprodList.add(prjprodRec);
-            
+
             //«аполним отчЄт
             loadDoc(projectRec, prjprodList, doc);
 
@@ -77,20 +77,17 @@ public class RMaterial {
         List<TRecord> kitSpc = new ArrayList<TRecord>();
 
         for (Record prjprodRec : prjprodList) {
-            Object w = prjprodRec.get(ePrjprod.values().length);
-            if (w instanceof Wincalc) {
-                Wincalc win = (Wincalc) w; 
-                String script = prjprodRec.getStr(ePrjprod.script);
-                win.build(script); //калкул€ци€ 
-                win.specific(true);
-                winSpc.addAll(win.listSpec);
-                kitSpc = Kitcalc.tarifficProd(prjprodRec, win, true); //добавим комплекты
-            }
-        }       
+            String script = prjprodRec.getStr(ePrjprod.script);
+            Wincalc win = new Wincalc(script);
+            win.build(script); //калкул€ци€ 
+            win.specific(true);
+            winSpc.addAll(win.listSpec);
+            kitSpc = Kitcalc.tarifficProd(prjprodRec, win, true); //добавим комплекты
+        }
         winSpc.forEach(el -> spcList.add(new RRecord(el)));
         kitSpc.forEach(el -> spcList.add(new RRecord(el)));
 
-        List<RRecord> groupList = RRecord.groupsR(spcList);
+        List<RRecord> groupList = RRecord.groups4R(spcList);
 
         Elements templateRec = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
         groupList.forEach(act -> doc.getElementsByTag("tbody").append(templateRec.get(0).html()));
