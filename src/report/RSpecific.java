@@ -146,7 +146,7 @@ public class RSpecific {
         tdList.get(0).text(String.valueOf(++npp));
         tdList.get(1).text(specificRec.artikl());
         tdList.get(2).text(specificRec.name());
-        tdList.get(3).text(specificRec.cname1());
+        tdList.get(3).text(specificRec.color(1));
         tdList.get(4).text(specificRec.width());
         tdList.get(5).text(specificRec.angles());
         tdList.get(6).text(specificRec.unit());        

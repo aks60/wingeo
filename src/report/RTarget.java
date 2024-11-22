@@ -107,11 +107,10 @@ public class RTarget {
                 div2.append(templateBody);
             }
 
-            Elements tab2List = doc.getElementsByClass("tab2"),
-                    tab3List = doc.getElementsByClass("tab3"), tab4List = doc.getElementsByClass("tab4"),
-                    tab5List = doc.getElementsByClass("tab5"), tab6List = doc.getElementsByClass("tab6"),
-                    tab7List = doc.getElementsByClass("tab7"), tab8List = doc.getElementsByClass("tab8"),
-                    tab9List = doc.getElementsByClass("tab9");
+            Elements tab2List = doc.getElementsByClass("tab2"), tab3List = doc.getElementsByClass("tab3"),
+                    tab4List = doc.getElementsByClass("tab4"), tab5List = doc.getElementsByClass("tab5"),
+                    tab6List = doc.getElementsByClass("tab6"), tab7List = doc.getElementsByClass("tab7"),
+                    tab8List = doc.getElementsByClass("tab8"), tab9List = doc.getElementsByClass("tab9");
             String template3Tr = tab3List.get(0).getElementsByTag("tr").get(1).html(),
                     template4Tr = tab4List.get(0).getElementsByTag("tr").get(1).html(),
                     template5Tr = tab5List.get(0).getElementsByTag("tr").get(1).html(),
@@ -142,96 +141,41 @@ public class RTarget {
                 tab2.getElementsByTag("caption").get(0).getElementsByTag("b").get(0).text("Изделие № " + (i + 1));
 
                 tab2.getElementsByTag("tr").get(1).getElementsByTag("td").get(1).text(artiklRec.getStr(eArtikl.name));
-                tab2.getElementsByTag("tr").get(2).getElementsByTag("td").get(1).text(colorRec1.getStr(eColor.name)
-                        + " / " + colorRec2.getStr(eColor.name) + " / " + colorRec3.getStr(eColor.name));
-                tab2.getElementsByTag("tr").get(3).getElementsByTag("td").get(1).text(UCom.format(winc.width() / 1000, 3)
-                        + " x " + UCom.format(winc.height() / 1000, 3));
+                tab2.getElementsByTag("tr").get(2).getElementsByTag("td").get(1).text(colorRec1.getStr(eColor.name) + " / "
+                        + colorRec2.getStr(eColor.name) + " / " + colorRec3.getStr(eColor.name));
+                tab2.getElementsByTag("tr").get(3).getElementsByTag("td").get(1).text(UCom.format(winc.width() / 1000, 3) + " x "
+                        + UCom.format(winc.height() / 1000, 3));
                 tab2.getElementsByTag("tr").get(4).getElementsByTag("td").get(1).text(furnitureRec.getStr(eFurniture.name));
                 tab2.getElementsByTag("tr").get(5).getElementsByTag("td").get(1).text(prjprodRec.getStr(ePrjprod.num));
                 tab2.getElementsByTag("tr").get(6).getElementsByTag("td").get(1).text(UCom.format(square / 1000000, 2));
 
                 //Таблица №3 ПРОФИЛЬ / АРМИРОВАНИЕ  
                 Element tab3 = tab3List.get(i);
-                List<TRecord> spcList3 = new ArrayList<TRecord>(), spcList3a = new ArrayList<TRecord>();
-                loadTab3(listSpc, tab3, template3Tr, spcList3, spcList3a); //спецификация для изделия 
-                spcList3.forEach(act -> tab3.append(template3Tr));
-                tab3.getElementsByTag("tr").remove(1);
-
-                for (int j = 0; j < spcList3.size(); j++) { //заполним строки 
-                    Elements td = tab3.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-                    RRecord rs1 = new RRecord(spcList3.get(j));
-                    RRecord rs2 = new RRecord(spcList3a.get(j));
-                    td.get(0).text(String.valueOf(j + 1));
-                    td.get(1).text(rs1.artikl());
-                    td.get(2).text(rs1.name());
-                    td.get(3).text(rs1.width());
-                    td.get(4).text(rs1.ang0());
-                    td.get(5).text(rs1.ang1());
-                    td.get(6).text(rs1.count());
-                    td.get(7).text(rs1.anglHor());
-                    td.get(8).text("");
-                    td.get(9).text(rs2.width());
-                    td.get(10).text(rs2.artikl());
-                }
+                loadTab3(listSpc, tab3, template3Tr); //спецификация для изделия 
 
                 //Таблица №4 УПЛОТНИТЕЛИ 
                 Element tab4 = tab4List.get(i);
-                List<RRecord> spcList4 = loadTab4(listSpc, tab4, template4Tr);
-                spcList4.forEach(act -> tab4.append(template4Tr));
-                tab4.getElementsByTag("tr").remove(1);
-
-                for (int j = 0; j < spcList4.size(); j++) { //заполним строки 
-                    Elements td = tab4.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-                    RRecord rs = spcList4.get(j);
-                    td.get(0).text(String.valueOf(j + 1));
-                    td.get(1).text(rs.artikl());
-                    td.get(2).text(rs.name());
-                    td.get(3).text("мм");
-                    td.get(4).text(rs.width());
-                }
+                loadTab4(listSpc, tab4, template4Tr);
 
                 //Таблица №5 ШТАПИК  
                 Element tab5 = tab5List.get(i);
-                List<RRecord> spcList5 = loadTab5(listSpc, tab5, template5Tr);
-                spcList5.forEach(act -> tab5.append(template5Tr));
-                tab5.getElementsByTag("tr").remove(1);
-                for (int j = 0; j < spcList5.size(); j++) { //заполним строки 
-                    Elements td = tab5.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-                    RRecord rs = spcList5.get(j);
-                    td.get(0).text(String.valueOf(j + 1));
-                    td.get(1).text(rs.artikl());
-                    td.get(2).text(rs.name());
-                    td.get(3).text(rs.width());
-                    td.get(4).text(rs.count());
-                    td.get(5).text(rs.ang0());
-                    td.get(6).text(rs.ang1());
-                }
+                loadTab5(listSpc, tab5, template5Tr);
 
                 //Таблица №6 АКСЕССУАРЫ  
-                Element tab6 = tab5List.get(i);
-                List<RRecord> spcList6 = loadTab6(listSpc, tab6, template5Tr);
-                spcList6.forEach(act -> tab5.append(template6Tr));
-                tab6.getElementsByTag("tr").remove(1);
-                for (int j = 0; j < spcList5.size(); j++) { //заполним строки 
+                Element tab6 = tab6List.get(i);
+                loadTab6(listSpc, tab6, template6Tr);
 
-                }
+                //Таблица №7 ФУРНИТУРА   
+                Element tab7 = tab7List.get(i);
+                loadTab7(listSpc, tab7, template7Tr);
 
-                //Таблица №9 ЗАПОЛНЕНИЯ  
+                //Таблица №8 ЗАПОЛНЕНИЯ    
+                Element tab8 = tab8List.get(i);
+                loadTab8(listSpc, tab8, template8Tr);
+
+                //Таблица №9 ПРОЧЕЕ 
                 Element tab9 = tab9List.get(i);
-                List<RRecord> spcList9 = loadTab9(listSpc, tab9, template9Tr);
-                spcList9.forEach(act -> tab9.append(template9Tr));
-                tab9.getElementsByTag("tr").remove(1);
-                for (int j = 0; j < spcList9.size(); j++) { //заполним строки 
-                    Elements td = tab9.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
-                    RRecord rs = spcList9.get(j);
-                    td.get(0).text(String.valueOf(j + 1));
-                    td.get(1).text(rs.name());
-                    td.get(2).text(rs.width());
-                    td.get(3).text(rs.height());
-                    td.get(4).text(rs.weight());
-                    td.get(5).text(rs.count());
-                    td.get(6).text(rs.weight());
-                }
+                loadTab9(listSpc, tab9, template9Tr);
             }
 
             //Загрузим изображения
@@ -247,30 +191,55 @@ public class RTarget {
     }
 
     //ПРОФИЛЬ / АРМИРОВАНИЕ
-    public static void loadTab3(List<TRecord> listSpec, Element tab, String templateRec, List<TRecord> spcList2, List<TRecord> spcList3) {
+    public static void loadTab3(List<TRecord> listSpec, Element tab, String templateTr) {
+        List<TRecord> spcListA = new ArrayList<TRecord>();
+        List<TRecord> spcListB = new ArrayList<TRecord>();
 
-        listSpec.forEach(spcRec -> { //профиля
-            if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X100, TypeArt.X101, TypeArt.X102, TypeArt.X103, TypeArt.X104, TypeArt.X105) == true) {
-                spcList2.add(spcRec);
-            }
-        });
-        spcList2.forEach(spcRec1 -> { //армирование
-            int count = spcList3.size();
-            for (TRecord spcRec2 : listSpec) {
-                if (TypeArt.isType(spcRec2.artiklRec(), TypeArt.X107) == true && spcRec2.elem5e.id == spcRec1.id) {
-                    spcList3.add(spcRec2);
+        listSpec.forEach(spcRecA -> { //профиля
+            if (TypeArt.isType(spcRecA.artiklRec(), TypeArt.X101, TypeArt.X102, TypeArt.X103) == true) {
+
+                spcListA.add(spcRecA);
+                int count = spcListB.size();
+                for (TRecord spcRecB : listSpec) {
+                    if (TypeArt.isType(spcRecB.artiklRec(), TypeArt.X107) == true && spcRecB.elem5e.id == spcRecA.id) {
+                        spcListB.add(spcRecB);
+                    }
                 }
-            }
-            if (count == spcList3.size()) {
-                spcList3.add(new TRecord());
+                if (count == spcListB.size()) {
+                    spcListB.add(new TRecord());
+                }
+            } else if (TypeArt.isType(spcRecA.artiklRec(), TypeArt.X104, TypeArt.X105) == true) {
+                spcListA.add(spcRecA);
+                spcListB.add(new TRecord());
             }
         });
-        listSpec.removeAll(spcList2);
-        listSpec.removeAll(spcList3);
+
+        listSpec.removeAll(spcListA);
+        listSpec.removeAll(spcListB);
+
+        spcListA.forEach(act -> tab.append(templateTr));
+        tab.getElementsByTag("tr").remove(1);
+
+        for (int j = 0; j < spcListA.size(); j++) { //заполним строки 
+            Elements td = tab.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
+            RRecord rsA = new RRecord(spcListA.get(j));
+            RRecord rsB = new RRecord(spcListB.get(j));
+            td.get(0).text(String.valueOf(j + 1));
+            td.get(1).text(rsA.artikl());
+            td.get(2).text(rsA.name());
+            td.get(3).text(rsA.width());
+            td.get(4).text(rsA.ang0());
+            td.get(5).text(rsA.ang1());
+            td.get(6).text(rsA.count());
+            td.get(7).text(rsA.anglHor());
+            td.get(8).text("");
+            td.get(9).text(rsB.width());
+            td.get(10).text(rsB.artikl());
+        }
     }
 
     //УПЛОТНИТЕЛИ
-    public static List<RRecord> loadTab4(List<TRecord> listSpec, Element tab, String templateRec) {
+    public static void loadTab4(List<TRecord> listSpec, Element tab, String templateTr) {
 
         List<RRecord> spcList = new ArrayList<RRecord>();
         listSpec.forEach(spcRec -> {
@@ -279,11 +248,22 @@ public class RTarget {
             }
         });
         listSpec.removeAll(spcList);
-        return spcList;
+        spcList.forEach(act -> tab.append(templateTr));
+        tab.getElementsByTag("tr").remove(1);
+
+        for (int j = 0; j < spcList.size(); j++) { //заполним строки 
+            Elements td = tab.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
+            RRecord rs = spcList.get(j);
+            td.get(0).text(String.valueOf(j + 1));
+            td.get(1).text(rs.artikl());
+            td.get(2).text(rs.name());
+            td.get(3).text(rs.unit());
+            td.get(4).text(rs.width());
+        }
     }
 
     //ШТАПИК
-    public static List<RRecord> loadTab5(List<TRecord> listSpec, Element tab, String templateRec) {
+    public static void loadTab5(List<TRecord> listSpec, Element tab, String templateTr) {
 
         List<RRecord> spcList = new ArrayList();
         listSpec.forEach(spcRec -> {
@@ -291,25 +271,81 @@ public class RTarget {
                 spcList.add(new RRecord(spcRec));
             }
         });
+
         listSpec.removeAll(spcList);
-        return spcList;
+        spcList.forEach(act -> tab.append(templateTr));
+        tab.getElementsByTag("tr").remove(1);
+
+        for (int j = 0; j < spcList.size(); j++) { //заполним строки 
+            Elements td = tab.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
+            RRecord rs = spcList.get(j);
+            td.get(0).text(String.valueOf(j + 1));
+            td.get(1).text(rs.artikl());
+            td.get(2).text(rs.name());
+            td.get(3).text(rs.width());
+            td.get(4).text(rs.count());
+            td.get(5).text(rs.ang0());
+            td.get(6).text(rs.ang1());
+        }
     }
 
     //АКСЕССУАРЫ
-    public static List<RRecord> loadTab6(List<TRecord> listSpec, Element tab, String templateRec) {
+    public static void loadTab6(List<TRecord> listSpec, Element tab, String templateTr) {
 
         List<RRecord> spcList = new ArrayList();
         listSpec.forEach(spcRec -> {
-            if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X200) == true) {
+            if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X201, TypeArt.X202, TypeArt.X203,
+                    TypeArt.X204, TypeArt.X205, TypeArt.X206, TypeArt.X215, TypeArt.X220,
+                    TypeArt.X230, TypeArt.X231, TypeArt.X250, TypeArt.X290) == true) {
+
                 spcList.add(new RRecord(spcRec));
             }
         });
+
         listSpec.removeAll(spcList);
-        return spcList;
+        List<RRecord> spcList2 = RRecord.groups3(spcList);
+        spcList2.forEach(act -> tab.append(templateTr));
+        tab.getElementsByTag("tr").remove(1);
+
+        for (int j = 0; j < spcList2.size(); j++) { //заполним строки 
+            Elements td = tab.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
+            RRecord rs = spcList2.get(j);
+            td.get(0).text(String.valueOf(j + 1));
+            td.get(1).text(rs.artikl());
+            td.get(2).text(rs.name());
+            td.get(3).text(rs.count());
+        }
+    }
+
+    //ФУРНИТУРА 
+    public static void loadTab7(List<TRecord> listSpec, Element tab, String templateTr) {
+        List<RRecord> spcList = new ArrayList();
+        listSpec.forEach(spcRec -> {
+            if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X209, TypeArt.X210,
+                    TypeArt.X211, TypeArt.X212, TypeArt.X213, TypeArt.X214) == true) {
+
+                spcList.add(new RRecord(spcRec));
+            }
+        });
+
+        listSpec.removeAll(spcList);
+        List<RRecord> spcList2 = RRecord.groups3(spcList);
+        spcList2.forEach(act -> tab.append(templateTr));
+        tab.getElementsByTag("tr").remove(1);
+
+        for (int j = 0; j < spcList2.size(); j++) { //заполним строки 
+            Elements td = tab.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
+            RRecord rs = spcList2.get(j);
+            td.get(0).text(String.valueOf(j + 1));
+            td.get(1).text(rs.artikl());
+            td.get(2).text(rs.name());
+            td.get(3).text(rs.unit());
+            td.get(4).text(rs.count());
+        }
     }
 
     //ЗАПОЛНЕНИЯ
-    public static List<RRecord> loadTab9(List<TRecord> listSpec, Element tab, String templateRec) {
+    public static void loadTab8(List<TRecord> listSpec, Element tab, String templateTr) {
 
         List<RRecord> spcList = new ArrayList<RRecord>();
         listSpec.forEach(spcRec -> {
@@ -317,7 +353,69 @@ public class RTarget {
                 spcList.add(new RRecord(spcRec));
             }
         });
+
         listSpec.removeAll(spcList);
-        return spcList;
+        spcList.forEach(act -> tab.append(templateTr));
+        tab.getElementsByTag("tr").remove(1);
+
+        for (int j = 0; j < spcList.size(); j++) { //заполним строки 
+            Elements td = tab.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
+            RRecord rs = spcList.get(j);
+            td.get(0).text(String.valueOf(j + 1));
+            td.get(1).text(rs.name());
+            td.get(2).text(rs.width());
+            td.get(3).text(rs.height());
+            td.get(4).text(rs.weight());
+            td.get(5).text(rs.count());
+            td.get(6).text(rs.weight());
+        }
+    }
+
+    //ПРОЧЕЕ
+    public static void loadTab9(List<TRecord> listSpec, Element tab, String templateTr) {
+
+        List<RRecord> spcList = new ArrayList();
+        listSpec.forEach(spcRec -> {
+
+            spcList.add(new RRecord(spcRec));
+        });
+
+        listSpec.removeAll(spcList);
+        spcList.forEach(act -> tab.append(templateTr));
+        tab.getElementsByTag("tr").remove(1);
+
+        for (int j = 0; j < spcList.size(); j++) { //заполним строки 
+            Elements td = tab.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
+            RRecord rs = spcList.get(j);
+            td.get(0).text(String.valueOf(j + 1));
+            td.get(1).text(rs.artikl());
+            td.get(2).text(rs.name());
+            td.get(3).text(rs.color(1));
+            td.get(4).text(rs.unit());
+            td.get(5).text(rs.count());
+
+        }
+
+//        List<RRecord> spcList = new ArrayList();
+//        listSpec.forEach(spcRec -> {
+//                
+//                spcList.add(new RRecord(spcRec));
+//        });
+//        
+//        listSpec.removeAll(spcList);
+//        List<RRecord> spcList2 = RRecord.groups3(spcList);
+//        spcList2.forEach(act -> tab.append(templateTr));
+//        tab.getElementsByTag("tr").remove(1);
+//
+//        for (int j = 0; j < spcList2.size(); j++) { //заполним строки 
+//            Elements td = tab.getElementsByTag("tr").get(j + 1).getElementsByTag("td");
+//            RRecord rs = spcList2.get(j);
+//            td.get(0).text(String.valueOf(j + 1));
+//            td.get(1).text(rs.artikl());
+//            td.get(2).text(rs.name());
+//            td.get(3).text(rs.color(1));
+//            td.get(4).text(rs.unit());
+//            td.get(5).text(rs.count());
+//        }         
     }
 }

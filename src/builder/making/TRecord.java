@@ -178,6 +178,14 @@ public class TRecord {
         //См. историю
     }
 
+    public boolean equals(Object obj) {
+        if (obj instanceof TRecord) {
+            return this.id == ((TRecord) obj).id;
+        } else {
+            return super.equals(obj);
+        }
+    }
+
     public String toString() {
         return artikl + " - " + name;
     }

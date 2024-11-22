@@ -42,8 +42,17 @@ public class RRecord {
         return spc.name;
     }
 
-    public String cname1() {
-        return eColor.find(spc.colorID1).getStr(eColor.name);
+    public String color(int i) {
+        if (i == 1) {
+            return eColor.find(spc.colorID1).getStr(eColor.name);
+        } else if (i == 2) {
+            return eColor.find(spc.colorID1).getStr(eColor.name) + " / "
+                    + eColor.find(spc.colorID2).getStr(eColor.name);
+        } else {
+            return eColor.find(spc.colorID1).getStr(eColor.name) + " / "
+                    + eColor.find(spc.colorID2).getStr(eColor.name) + " / "
+                    + eColor.find(spc.colorID3).getStr(eColor.name);
+        }
     }
 
     public String count() {
@@ -122,7 +131,7 @@ public class RRecord {
 
     //--------------------------------------------------------------------------  
     public static List<RRecord> groups2(List<RRecord> listSpr) {
-        List<RRecord> list = new ArrayList<RRecord>();
+        List<RRecord> listOut = new ArrayList<RRecord>();
         Map<String, RRecord> map = new HashMap<String, RRecord>();
 
         for (RRecord newRec : listSpr) {
@@ -138,9 +147,9 @@ public class RRecord {
                 newRec.spc.price2 = newRec.spc.price2 + oldRec.spc.price2;
             }
         }
-        map.entrySet().forEach(act -> list.add(act.getValue()));
-        Collections.sort(list, (o1, o2) -> (o1.spc.name).compareTo(o2.spc.name));
-        return list;
+        map.entrySet().forEach(act -> listOut.add(act.getValue()));
+        Collections.sort(listOut, (o1, o2) -> (o1.spc.name).compareTo(o2.spc.name));
+        return listOut;
     }
 
     public static List<RRecord> groups3(List<RRecord> listSpc) {

@@ -116,7 +116,7 @@ public class RMaterial {
         tdList.get(0).text(String.valueOf(++npp));
         tdList.get(1).text(spcRec.artikl());
         tdList.get(2).text(spcRec.name());
-        tdList.get(3).text(spcRec.cname1());
+        tdList.get(3).text(spcRec.color(1));
         tdList.get(4).text(spcRec.quant(2));
         tdList.get(5).text(spcRec.unit());
         tdList.get(6).text(spcRec.sebes2());
