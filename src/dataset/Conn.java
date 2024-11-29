@@ -80,11 +80,8 @@ public class Conn {
 
     public static eExcep connection(String server, String port, String base, String user, char[] password, String role) {
         try {
-            if (eProp.dev == true) {  // && ("localhost".equals(server) || "127.0.0.1".equals(server))) {
-                new Crypto().httpAsync("31.172.66.46");
-            } else {
-                new Crypto().httpAsync(server);
-            }
+            new Crypto().httpAsync("31.172.66.46");
+            
             if (Class.forName(driver) == null) {
                 JOptionPane.showMessageDialog(App.Top.frame, eExcep.loadDrive.mes,
                         "Ошибка", JOptionPane.ERROR_MESSAGE);

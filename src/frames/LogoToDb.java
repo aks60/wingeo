@@ -37,12 +37,13 @@ public class LogoToDb extends javax.swing.JDialog {
             }
             connectToDb();
 
-        } else {
+        } else {              
             labMes.setForeground(Color.BLUE);
             labMes.setText("Введите логин и пароль");
             edUser.setText(eProp.user.read());
             edPass.requestFocus();
             getRootPane().setDefaultButton(btnOk);
+            
 //            if (List.of("SYSDBA", "TEXNOLOG", "MANAGER")
 //                    .contains(eProp.user.read().toUpperCase())) {
 //                //edPass.setText("masterkey");
@@ -228,8 +229,7 @@ public class LogoToDb extends javax.swing.JDialog {
         btnOk.setFont(frames.UGui.getFont(0,0));
         btnOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b028.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnOk.setText(bundle.getString("Отмена")); // NOI18N
-        btnOk.setToolTipText("");
+        btnOk.setText(bundle.getString("ОК")); // NOI18N
         btnOk.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnOk.setEnabled(false);
         btnOk.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);

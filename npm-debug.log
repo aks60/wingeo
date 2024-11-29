@@ -1,0 +1,63 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'login' ]
+2 info using npm@3.10.10
+3 info using node@v6.17.1
+4 verbose adduser before first PUT { _id: 'org.couchdb.user:conved',
+4 verbose adduser   name: 'conved',
+4 verbose adduser   password: 'XXXXX',
+4 verbose adduser   email: 'gonved60@gmail.com',
+4 verbose adduser   type: 'user',
+4 verbose adduser   roles: [],
+4 verbose adduser   date: '2024-11-29T12:07:32.674Z' }
+5 verbose request uri https://registry.npmjs.org/-/user/org.couchdb.user:conved
+6 verbose request new user, so can't send auth
+7 info attempt registry request try #1 at 15:07:32
+8 verbose request id 00d2e0dd0026df6b
+9 http request PUT https://registry.npmjs.org/-/user/org.couchdb.user:conved
+10 http 400 https://registry.npmjs.org/-/user/org.couchdb.user:conved
+11 verbose headers { date: 'Fri, 29 Nov 2024 12:07:41 GMT',
+11 verbose headers   'content-type': 'application/json',
+11 verbose headers   'content-length': '62',
+11 verbose headers   connection: 'keep-alive',
+11 verbose headers   'cf-ray': '8ea27a837ff72dfa-ARN',
+11 verbose headers   'cf-cache-status': 'DYNAMIC',
+11 verbose headers   vary: 'Accept-Encoding',
+11 verbose headers   server: 'cloudflare' }
+12 verbose request invalidating C:\Users\aks\AppData\Roaming\npm-cache\registry.npmjs.org\-\user\org.couchdb.user_3Aconved on PUT
+13 verbose adduser back [ { Error: That email has already been registered. : -/user/org.couchdb.user:conved
+13 verbose adduser       at makeError (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:302:12)
+13 verbose adduser       at CachingRegistryClient.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:290:14)
+13 verbose adduser       at Request._callback (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:210:14)
+13 verbose adduser       at Request.self.callback (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:187:22)
+13 verbose adduser       at emitTwo (events.js:106:13)
+13 verbose adduser       at Request.emit (events.js:191:7)
+13 verbose adduser       at Request.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:1048:10)
+13 verbose adduser       at emitOne (events.js:96:13)
+13 verbose adduser       at Request.emit (events.js:188:7)
+13 verbose adduser       at IncomingMessage.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:969:12) statusCode: 400, code: 'E400' },
+13 verbose adduser   { ok: false, error: 'That email has already been registered.' },
+13 verbose adduser   '{"ok":false,"error":"That email has already been registered."}' ]
+14 verbose stack Error: That email has already been registered. : -/user/org.couchdb.user:conved
+14 verbose stack     at makeError (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:302:12)
+14 verbose stack     at CachingRegistryClient.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:290:14)
+14 verbose stack     at Request._callback (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:210:14)
+14 verbose stack     at Request.self.callback (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:187:22)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at Request.emit (events.js:191:7)
+14 verbose stack     at Request.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:1048:10)
+14 verbose stack     at emitOne (events.js:96:13)
+14 verbose stack     at Request.emit (events.js:188:7)
+14 verbose stack     at IncomingMessage.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:969:12)
+15 verbose statusCode 400
+16 verbose cwd C:\Okna\wingeo
+17 error Windows_NT 6.1.7601
+18 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "login"
+19 error node v6.17.1
+20 error npm  v3.10.10
+21 error code E400
+22 error That email has already been registered. : -/user/org.couchdb.user:conved
+23 error If you need help, you may report this error at:
+23 error     <https://github.com/npm/npm/issues>
+24 verbose exit [ 1, true ]
