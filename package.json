@@ -1,17 +1,17 @@
 {
     "bin": {"wingeo": "jdeploy-bundle/jdeploy.js"},
-    "author": "Аксёнов Сергей",
-    "description": "Программа для расчёта окон",
+    "author": "Aksenov Sergey",
+    "description": "Plastic windows calculation program",
     "main": "index.js",
     "preferGlobal": true,
-    "repository": "",
+    "repository": "https://github.com/aks60/wingeo",
     "version": "2.0.1",
     "jdeploy": {
         "jdk": false,
-        "javaVersion": "20",
+        "javaVersion": "11",
         "jar": "dist/wingeo.jar",
         "javafx": false,
-        "title": "Wingeo"
+        "title": "wingeo"
     },
     "dependencies": {
         "command-exists-promise": "^2.0.2",
@@ -21,7 +21,7 @@
         "shelljs": "^0.8.4"
     },
     "license": "ISC",
-    "name": "SA-OKNA",
+    "name": "sa.okna",
     "files": ["jdeploy-bundle"],
     "scripts": {"test": "echo \"Error: no test specified\" && exit 1"}
 }
