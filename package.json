@@ -5,10 +5,12 @@
     "main": "index.js",
     "preferGlobal": true,
     "repository": "",
-    "version": "2.0.26",
+    "version": "2.0.35",
     "jdeploy": {
         "jdk": false,
+        "installers": ["win"],
         "javaVersion": "11",
+        "bundles": ["win"],
         "files": [{
             "includes": "lib/*.jar",
             "dir": "dist"

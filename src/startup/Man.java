@@ -482,9 +482,10 @@ public class Man extends javax.swing.JFrame {
         btn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b008.gif"))); // NOI18N
         btn2.setText(bundle.getString("Меню.Калндарь")); // NOI18N
         btn2.setActionCommand("");
+        btn2.setAlignmentY(0.0F);
         btn2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btn2.setMaximumSize(new java.awt.Dimension(120, 30));
-        btn2.setMinimumSize(new java.awt.Dimension(87, 26));
+        btn2.setMaximumSize(new java.awt.Dimension(96, 26));
+        btn2.setMinimumSize(new java.awt.Dimension(96, 26));
         btn2.setPreferredSize(new java.awt.Dimension(96, 26));
         pan1.add(btn2, java.awt.BorderLayout.CENTER);
         btn2.getAccessibleContext().setAccessibleName("");
