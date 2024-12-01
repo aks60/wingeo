@@ -23,11 +23,13 @@ public class Main {
         frame.setVisible(true);
     }
 
-    //java -jar C:\\Okna\\winapp\\dist\\winapp.jar tex loc
+    //java -jar C:\\Okna\\winapp\\dist\\winapp.jar tex
     public static void main(String[] args) {
 
         for (int index = 0; index < args.length; index++) {
+            
             eProp.dev = true;
+            
             if (index == 0 && args[0].equals("adm")) {
                 eProp.profile = args[0];
 

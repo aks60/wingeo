@@ -214,7 +214,6 @@ public class Tex extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SA.OKNA   <АРМ Технолог>");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
-        setPreferredSize(new java.awt.Dimension(800, 80));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -1273,11 +1272,16 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     }//GEN-LAST:event_mnGroup1
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-        ProgressBar.create(Tex.this, new ListenerFrame() {
-            public void actionRequest(Object obj) {
-                App.PSCompare.createFrame(Tex.this);
-            }
-        });
+//        ProgressBar.create(Tex.this, new ListenerFrame() {
+//            public void actionRequest(Object obj) {
+//                App.PSCompare.createFrame(Tex.this);
+//            }
+//        });
+        this.setResizable(true);
+        this.setPreferredSize(new java.awt.Dimension(800, 80));
+        this.setMinimumSize(new java.awt.Dimension(800, 80));
+
+       // this.setPreferredSize(new java.awt.Dimension(800, 80));
     }//GEN-LAST:event_btnTest
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated

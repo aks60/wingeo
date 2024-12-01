@@ -256,8 +256,8 @@ public enum App {
                 Top.frame = new Tex();
                 if (System.getProperty("os.name").equals("Windows 10") == true
                         || System.getProperty("os.name").equals("Windows 11") == true) {
-                    Top.frame.setPreferredSize(new java.awt.Dimension(800, 94));
-                    Top.frame.setMinimumSize(new java.awt.Dimension(800, 94));
+                    Top.frame.setPreferredSize(new java.awt.Dimension(800, 86));
+                    Top.frame.setMinimumSize(new java.awt.Dimension(800, 86));
                 } else if (System.getProperty("os.name").equals("Windows 7") == true) {
                     Top.frame.setPreferredSize(new java.awt.Dimension(800, 80));
                     Top.frame.setMinimumSize(new java.awt.Dimension(800, 80));
