@@ -94,12 +94,12 @@ public class Man extends javax.swing.JFrame {
 
         mn10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b031.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        mn10.setText(bundle.getString("РњРµРЅСЋ.РЈСЃС‚Р°РЅРѕРІРєРё")); // NOI18N
+        mn10.setText(bundle.getString("Меню.Установки")); // NOI18N
         mn10.setToolTipText("");
         mn10.setFont(frames.UGui.getFont(1,1));
 
         mn11.setFont(frames.UGui.getFont(1,1));
-        mn11.setText(bundle.getString("РњРµРЅСЋ.РўРµРєСЃС‚ СЏС‡РµР№РєРё")); // NOI18N
+        mn11.setText(bundle.getString("Меню.Текст ячейки")); // NOI18N
         mn11.setName("1"); // NOI18N
         mn11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,7 +109,7 @@ public class Man extends javax.swing.JFrame {
         mn10.add(mn11);
 
         mn12.setFont(frames.UGui.getFont(1,1));
-        mn12.setText(bundle.getString("РњРµРЅСЋ.Р¦РµР»РѕРµ С‡РёСЃР»Рѕ")); // NOI18N
+        mn12.setText(bundle.getString("Меню.Целое число")); // NOI18N
         mn12.setName("2"); // NOI18N
         mn12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,13 +121,13 @@ public class Man extends javax.swing.JFrame {
         ppmMain.add(mn10);
 
         mn60.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b028.gif"))); // NOI18N
-        mn60.setText(bundle.getString("РњРµРЅСЋ.Р‘Р°Р·Р° РґР°РЅРЅС‹С…")); // NOI18N
+        mn60.setText(bundle.getString("Меню.База данных")); // NOI18N
         mn60.setFont(frames.UGui.getFont(1,1));
 
         buttonBaseGroup.add(mn61);
         mn61.setFont(frames.UGui.getFont(1,1));
         mn61.setSelected(true);
-        mn61.setText(bundle.getString("РњРµРЅСЋ.Р‘Р°Р·Р° 1")); // NOI18N
+        mn61.setText(bundle.getString("Меню.База 1")); // NOI18N
         mn61.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnBase(evt);
@@ -137,7 +137,7 @@ public class Man extends javax.swing.JFrame {
 
         buttonBaseGroup.add(mn62);
         mn62.setFont(frames.UGui.getFont(1,1));
-        mn62.setText(bundle.getString("РњРµРЅСЋ.Р‘Р°Р·Р° 2")); // NOI18N
+        mn62.setText(bundle.getString("Меню.База 2")); // NOI18N
         mn62.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnBase(evt);
@@ -147,7 +147,7 @@ public class Man extends javax.swing.JFrame {
 
         buttonBaseGroup.add(mn63);
         mn63.setFont(frames.UGui.getFont(1,1));
-        mn63.setText(bundle.getString("РњРµРЅСЋ.Р‘Р°Р·Р° 3")); // NOI18N
+        mn63.setText(bundle.getString("Меню.База 3")); // NOI18N
         mn63.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnBase(evt);
@@ -158,14 +158,14 @@ public class Man extends javax.swing.JFrame {
         ppmMain.add(mn60);
 
         mn20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b061.gif"))); // NOI18N
-        mn20.setText(bundle.getString("РњРµРЅСЋ.Р’РёРґ РёРЅС‚РµСЂС„РµР№СЃР°")); // NOI18N
+        mn20.setText(bundle.getString("Меню.Вид интерфейса")); // NOI18N
         mn20.setFont(frames.UGui.getFont(1,1));
         ppmMain.add(mn20);
         ppmMain.add(sep1);
 
         mn30.setFont(frames.UGui.getFont(1,1));
         mn30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b009.gif"))); // NOI18N
-        mn30.setText(bundle.getString("РњРµРЅСЋ.Р’С‹С…РѕРґ")); // NOI18N
+        mn30.setText(bundle.getString("Меню.Выход")); // NOI18N
         mn30.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnExit(evt);
@@ -174,7 +174,7 @@ public class Man extends javax.swing.JFrame {
         ppmMain.add(mn30);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("SA.OKNA   <РђР Рњ РњРµРЅРµРґР¶РµСЂ>");
+        setTitle("SA.OKNA   <АРМ Менеджер>");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(423, 60));
         setPreferredSize(new java.awt.Dimension(659, 84));
@@ -206,7 +206,7 @@ public class Man extends javax.swing.JFrame {
         pan8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 12, 2));
 
         btn5.setFont(frames.UGui.getFont(0,1));
-        btn5.setText(bundle.getString("РњРµРЅСЋ.РљРѕРЅС‚СЂР°РіРµРЅС‚С‹")); // NOI18N
+        btn5.setText(bundle.getString("Меню.Контрагенты")); // NOI18N
         btn5.setActionCommand("");
         btn5.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn5.setMaximumSize(new java.awt.Dimension(120, 30));
@@ -221,7 +221,7 @@ public class Man extends javax.swing.JFrame {
         btn5.getAccessibleContext().setAccessibleName("");
 
         btn6.setFont(frames.UGui.getFont(0,1));
-        btn6.setText(bundle.getString("РњРµРЅСЋ.РљРѕРј-РѕРµ РїСЂРµРґР»...")); // NOI18N
+        btn6.setText("Заказы");
         btn6.setActionCommand("");
         btn6.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn6.setMaximumSize(new java.awt.Dimension(120, 30));
@@ -242,7 +242,7 @@ public class Man extends javax.swing.JFrame {
 
         btn13.setFont(frames.UGui.getFont(0,1));
         btn13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b009.gif"))); // NOI18N
-        btn13.setText(bundle.getString("РњРµРЅСЋ.Р’С‹С…РѕРґ")); // NOI18N
+        btn13.setText(bundle.getString("Меню.Выход")); // NOI18N
         btn13.setActionCommand("");
         btn13.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn13.setMaximumSize(new java.awt.Dimension(120, 30));
@@ -257,7 +257,7 @@ public class Man extends javax.swing.JFrame {
 
         pan5.add(pan2, java.awt.BorderLayout.EAST);
 
-        tabb4.addTab(bundle.getString("РњРµРЅСЋ.Р—Р°РєР°Р·С‹2"), new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b041.gif")), pan5); // NOI18N
+        tabb4.addTab("<html><font size=\"3\"><b>\nЗаказы\n&nbsp;&nbsp;&nbsp;&nbsp", new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b041.gif")), pan5); // NOI18N
 
         pan4.setMinimumSize(new java.awt.Dimension(281, 10));
         pan4.setPreferredSize(new java.awt.Dimension(308, 10));
@@ -266,7 +266,7 @@ public class Man extends javax.swing.JFrame {
         pan7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 12, 2));
 
         btn3.setFont(frames.UGui.getFont(0,1));
-        btn3.setText(bundle.getString("РњРµРЅСЋ.Р¦РµРЅРѕРІС‹Рµ РєРѕСЌС„...")); // NOI18N
+        btn3.setText(bundle.getString("Меню.Ценовые коэф...")); // NOI18N
         btn3.setActionCommand("");
         btn3.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn3.setMaximumSize(new java.awt.Dimension(120, 30));
@@ -282,7 +282,7 @@ public class Man extends javax.swing.JFrame {
         btn3.getAccessibleContext().setAccessibleDescription("");
 
         btn4.setFont(frames.UGui.getFont(0,1));
-        btn4.setText(bundle.getString("РњРµРЅСЋ.РљРѕРЅСЃС‚Р°РЅС‚С‹")); // NOI18N
+        btn4.setText(bundle.getString("Меню.Константы")); // NOI18N
         btn4.setActionCommand("");
         btn4.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn4.setMaximumSize(new java.awt.Dimension(120, 30));
@@ -297,7 +297,7 @@ public class Man extends javax.swing.JFrame {
         btn4.getAccessibleContext().setAccessibleName("");
 
         btn11.setFont(frames.UGui.getFont(0,1));
-        btn11.setText(bundle.getString("РњРµРЅСЋ.РўРµРєСЃС‚СѓСЂС‹")); // NOI18N
+        btn11.setText(bundle.getString("Меню.Текстуры")); // NOI18N
         btn11.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn11.setMaximumSize(new java.awt.Dimension(120, 30));
         btn11.setMinimumSize(new java.awt.Dimension(87, 26));
@@ -311,7 +311,7 @@ public class Man extends javax.swing.JFrame {
         btn11.getAccessibleContext().setAccessibleName("");
 
         btn18.setFont(frames.UGui.getFont(0,1));
-        btn18.setText(bundle.getString("РњРµРЅСЋ.РЎРїСЂР°РІРѕС‡РЅРёРєРё")); // NOI18N
+        btn18.setText(bundle.getString("Меню.Справочники")); // NOI18N
         btn18.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn18.setMaximumSize(new java.awt.Dimension(120, 30));
         btn18.setMinimumSize(new java.awt.Dimension(87, 26));
@@ -330,7 +330,7 @@ public class Man extends javax.swing.JFrame {
 
         btn12.setFont(frames.UGui.getFont(0,1));
         btn12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b009.gif"))); // NOI18N
-        btn12.setText("Р’С‹С…РѕРґ");
+        btn12.setText("Выход");
         btn12.setActionCommand("");
         btn12.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn12.setMaximumSize(new java.awt.Dimension(120, 30));
@@ -345,7 +345,7 @@ public class Man extends javax.swing.JFrame {
 
         pan4.add(pan10, java.awt.BorderLayout.EAST);
 
-        tabb4.addTab("<html><font size=\"3\"><b>\nРЎРїСЂР°РІРѕС‡РЅРёРєРё\n&nbsp;&nbsp;&nbsp;&nbsp", new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b010.gif")), pan4); // NOI18N
+        tabb4.addTab("<html><font size=\"3\"><b>\nСправочники\n&nbsp;&nbsp;&nbsp;&nbsp", new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b010.gif")), pan4); // NOI18N
 
         pan6.setMinimumSize(new java.awt.Dimension(281, 10));
         pan6.setPreferredSize(new java.awt.Dimension(308, 10));
@@ -354,7 +354,7 @@ public class Man extends javax.swing.JFrame {
         pan9.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 12, 2));
 
         btn8.setFont(frames.UGui.getFont(0,1));
-        btn8.setText(bundle.getString("РњРµРЅСЋ.РЎРїРµС†РёС„РёРєР°С†РёСЏ")); // NOI18N
+        btn8.setText(bundle.getString("Меню.Спецификация")); // NOI18N
         btn8.setActionCommand("");
         btn8.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn8.setMaximumSize(new java.awt.Dimension(120, 30));
@@ -369,7 +369,7 @@ public class Man extends javax.swing.JFrame {
         btn8.getAccessibleContext().setAccessibleName("");
 
         btn16.setFont(frames.UGui.getFont(0,1));
-        btn16.setText(bundle.getString("РњРµРЅСЋ.Р Р°СЃС…РѕРґ РјР°С‚РµСЂРёР°Р»РѕРІ")); // NOI18N
+        btn16.setText(bundle.getString("Меню.Расход материалов")); // NOI18N
         btn16.setActionCommand("");
         btn16.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn16.setMaximumSize(new java.awt.Dimension(120, 30));
@@ -383,7 +383,7 @@ public class Man extends javax.swing.JFrame {
         pan9.add(btn16);
 
         btn15.setFont(frames.UGui.getFont(0,1));
-        btn15.setText(bundle.getString("РњРµРЅСЋ.Р—Р°РґР°РЅРёРµ РІ С†РµС…")); // NOI18N
+        btn15.setText(bundle.getString("Меню.Задание в цех")); // NOI18N
         btn15.setActionCommand("");
         btn15.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn15.setMaximumSize(new java.awt.Dimension(120, 30));
@@ -397,7 +397,7 @@ public class Man extends javax.swing.JFrame {
         pan9.add(btn15);
 
         btn9.setFont(frames.UGui.getFont(0,1));
-        btn9.setText(bundle.getString("РњРµРЅСЋ.РЎРјРµС‚Р° РїРѕРґСЂРѕР±РЅР°СЏ")); // NOI18N
+        btn9.setText(bundle.getString("Меню.Смета подробная")); // NOI18N
         btn9.setActionCommand("");
         btn9.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn9.setMaximumSize(new java.awt.Dimension(120, 30));
@@ -412,7 +412,7 @@ public class Man extends javax.swing.JFrame {
         btn9.getAccessibleContext().setAccessibleName("");
 
         btn10.setFont(frames.UGui.getFont(0,1));
-        btn10.setText(bundle.getString("РњРµРЅСЋ.РЎС‡С‘С‚-С„Р°РєС‚СѓСЂР°")); // NOI18N
+        btn10.setText(bundle.getString("Меню.Счёт-фактура")); // NOI18N
         btn10.setActionCommand("");
         btn10.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn10.setMaximumSize(new java.awt.Dimension(120, 30));
@@ -427,7 +427,7 @@ public class Man extends javax.swing.JFrame {
         btn10.getAccessibleContext().setAccessibleName("");
 
         btn17.setFont(frames.UGui.getFont(0,1));
-        btn17.setText(bundle.getString("РњРµРЅСЋ.РљРѕРј-РѕРµ РїСЂРµРґР»...")); // NOI18N
+        btn17.setText(bundle.getString("Меню.Ком-ое предл...")); // NOI18N
         btn17.setActionCommand("");
         btn17.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn17.setMaximumSize(new java.awt.Dimension(120, 30));
@@ -447,7 +447,7 @@ public class Man extends javax.swing.JFrame {
 
         btn14.setFont(frames.UGui.getFont(0,1));
         btn14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b009.gif"))); // NOI18N
-        btn14.setText(bundle.getString("РњРµРЅСЋ.Р’С‹С…РѕРґ")); // NOI18N
+        btn14.setText(bundle.getString("Меню.Выход")); // NOI18N
         btn14.setActionCommand("");
         btn14.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn14.setMaximumSize(new java.awt.Dimension(120, 30));
@@ -462,10 +462,10 @@ public class Man extends javax.swing.JFrame {
 
         pan6.add(pan11, java.awt.BorderLayout.EAST);
 
-        tabb4.addTab("<html><font size=\"3\"><b>\nРћС‚С‡С‘С‚С‹\n&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp", new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b014.gif")), pan6); // NOI18N
+        tabb4.addTab("<html><font size=\"3\"><b>\nОтчёты\n&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp", new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b014.gif")), pan6); // NOI18N
 
         pan3.add(tabb4, java.awt.BorderLayout.CENTER);
-        tabb4.getAccessibleContext().setAccessibleName("<html><font size=\"3\"><b>\n&nbsp;&nbsp;\nРЎРїСЂР°РІРѕС‡РЅРёРєРё\n&nbsp;&nbsp;");
+        tabb4.getAccessibleContext().setAccessibleName("<html><font size=\"3\"><b>\n&nbsp;&nbsp;\nСправочники\n&nbsp;&nbsp;");
 
         tabb1.setPreferredSize(new java.awt.Dimension(126, 36));
         tabb1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -480,7 +480,7 @@ public class Man extends javax.swing.JFrame {
 
         btn2.setFont(frames.UGui.getFont(0,1));
         btn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b008.gif"))); // NOI18N
-        btn2.setText(bundle.getString("РњРµРЅСЋ.РљР°Р»РЅРґР°СЂСЊ")); // NOI18N
+        btn2.setText(bundle.getString("Меню.Калндарь")); // NOI18N
         btn2.setActionCommand("");
         btn2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn2.setMaximumSize(new java.awt.Dimension(120, 30));
@@ -490,7 +490,7 @@ public class Man extends javax.swing.JFrame {
         btn2.getAccessibleContext().setAccessibleName("");
         btn2.getAccessibleContext().setAccessibleDescription("");
 
-        tabb1.addTab("<html><font size=\"3\"><b> Р“Р». РјРµРЅСЋ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b016.gif")), pan1); // NOI18N
+        tabb1.addTab("<html><font size=\"3\"><b> Гл. меню &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b016.gif")), pan1); // NOI18N
 
         pan3.add(tabb1, java.awt.BorderLayout.WEST);
         tabb1.getAccessibleContext().setAccessibleName("");

@@ -243,10 +243,8 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;font size=&quot;3&quot;&gt;&lt;b&gt; &#x417;&#x430;&#x43a;&#x430;&#x437;&#x44b; &amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp ">
-                    <Property name="tabTitle" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x417;&#x430;&#x43a;&#x430;&#x437;&#x44b;2" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x417;&#x430;&#x43a;&#x430;&#x437;&#x44b;2&quot;)"/>
-                    </Property>
+                  <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;font size=&quot;3&quot;&gt;&lt;b&gt;&#xa;&#x417;&#x430;&#x43a;&#x430;&#x437;&#x44b;&#xa;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp">
+                    <Property name="tabTitle" type="java.lang.String" value="&lt;html&gt;&lt;font size=&quot;3&quot;&gt;&lt;b&gt;&#xa;&#x417;&#x430;&#x43a;&#x430;&#x437;&#x44b;&#xa;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp"/>
                     <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/resource/img16/b041.gif"/>
                     </Property>
@@ -305,9 +303,7 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="frames.UGui.getFont(0,1)" type="code"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x41a;&#x43e;&#x43c;-&#x43e;&#x435; &#x43f;&#x440;&#x435;&#x434;&#x43b;..." replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x41a;&#x43e;&#x43c;-&#x43e;&#x435; &#x43f;&#x440;&#x435;&#x434;&#x43b;...&quot;)"/>
-                        </Property>
+                        <Property name="text" type="java.lang.String" value="&#x417;&#x430;&#x43a;&#x430;&#x437;&#x44b;"/>
                         <Property name="actionCommand" type="java.lang.String" value=""/>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
