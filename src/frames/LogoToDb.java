@@ -131,17 +131,19 @@ public class LogoToDb extends javax.swing.JDialog {
         edUser = new javax.swing.JTextField();
         progressBar = new javax.swing.JProgressBar();
         labMes = new javax.swing.JLabel();
+        pan3 = new javax.swing.JPanel();
+        labImg = new javax.swing.JLabel();
         btnOk = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Авторизация доступа");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
-        setPreferredSize(new java.awt.Dimension(320, 228));
+        setPreferredSize(new java.awt.Dimension(350, 210));
         setResizable(false);
 
         pan2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
-        pan2.setPreferredSize(new java.awt.Dimension(280, 132));
+        pan2.setPreferredSize(new java.awt.Dimension(250, 132));
 
         labPass.setFont(frames.UGui.getFont(0,0));
         labPass.setText("Пароль");
@@ -152,7 +154,7 @@ public class LogoToDb extends javax.swing.JDialog {
 
         edPass.setFont(frames.UGui.getFont(0,0));
         edPass.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        edPass.setPreferredSize(new java.awt.Dimension(96, 18));
+        edPass.setPreferredSize(new java.awt.Dimension(120, 18));
         edPass.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 passonCaretUpdate(evt);
@@ -169,7 +171,7 @@ public class LogoToDb extends javax.swing.JDialog {
         edUser.setFont(frames.UGui.getFont(0,0));
         edUser.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         edUser.setMinimumSize(new java.awt.Dimension(0, 0));
-        edUser.setPreferredSize(new java.awt.Dimension(96, 18));
+        edUser.setPreferredSize(new java.awt.Dimension(120, 18));
         edUser.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 useronCaretUpdate(evt);
@@ -189,12 +191,25 @@ public class LogoToDb extends javax.swing.JDialog {
         labMes.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         labMes.setPreferredSize(new java.awt.Dimension(240, 14));
 
+        labImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/imgXX/k002.gif"))); // NOI18N
+
+        javax.swing.GroupLayout pan3Layout = new javax.swing.GroupLayout(pan3);
+        pan3.setLayout(pan3Layout);
+        pan3Layout.setHorizontalGroup(
+            pan3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labImg)
+        );
+        pan3Layout.setVerticalGroup(
+            pan3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labImg)
+        );
+
         javax.swing.GroupLayout pan2Layout = new javax.swing.GroupLayout(pan2);
         pan2.setLayout(pan2Layout);
         pan2Layout.setHorizontalGroup(
             pan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap(86, Short.MAX_VALUE)
                 .addGroup(pan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -205,15 +220,19 @@ public class LogoToDb extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(edPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(edUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(52, 52, 52))
+                            .addComponent(edUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+            .addGroup(pan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pan2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(pan3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(260, Short.MAX_VALUE)))
         );
         pan2Layout.setVerticalGroup(
             pan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 10, Short.MAX_VALUE)
+                .addGap(0, 18, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addGroup(pan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -223,13 +242,18 @@ public class LogoToDb extends javax.swing.JDialog {
                 .addGroup(pan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(edPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
+            .addGroup(pan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pan2Layout.createSequentialGroup()
+                    .addGap(20, 20, 20)
+                    .addComponent(pan3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         btnOk.setFont(frames.UGui.getFont(0,0));
         btnOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b028.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        btnOk.setText(bundle.getString("ОК")); // NOI18N
+        btnOk.setText(bundle.getString("Меню.ОК")); // NOI18N
         btnOk.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnOk.setEnabled(false);
         btnOk.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -261,20 +285,18 @@ public class LogoToDb extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(162, 162, 162)
+                .addComponent(btnOk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(btnOk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pan2, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(pan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -319,10 +341,12 @@ public class LogoToDb extends javax.swing.JDialog {
     private javax.swing.JButton btnOk;
     private javax.swing.JPasswordField edPass;
     private javax.swing.JTextField edUser;
+    private javax.swing.JLabel labImg;
     private javax.swing.JLabel labMes;
     private javax.swing.JLabel labPass;
     private javax.swing.JLabel labUser;
     private javax.swing.JPanel pan2;
+    private javax.swing.JPanel pan3;
     private javax.swing.JProgressBar progressBar;
     // End of variables declaration//GEN-END:variables
 // </editor-fold> 
