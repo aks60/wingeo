@@ -13,7 +13,7 @@ import static domain.eArtikl.groups4_id;
 public enum ePrjprod implements Field {
     up("0", "0", "0", "Изделия заказa", "EMPTY"),
     id("4", "10", "0", "Идентификатор", "id"),
-    num("5", "5", "1", "Количество", "num"),
+    num("5", "5", "1", "Количество единиц", "num"),
     name("12", "128", "1", "Название изделия", "name"),
     script("12", "4096", "0", "Скрипт построения окна", "script"),
     project_id("4", "10", "1", "Заказ", "project_id"),

@@ -777,10 +777,11 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         win.build(script); //калкуляция                              
                         win.specific(true); //конструктив  
 
-                        square = square + prjprodRec.getDbl(ePrjprod.num) * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
-                        weight = weight + prjprodRec.getDbl(ePrjprod.num) * win.weight; //вес изделий
-                        price1a = price1a + win.price(1); //стоимость конструкции без скидки менеджера
-                        price2a = price2a + win.price(2); //стоимость конструкции со скидкой менеджера
+                        double countWin = prjprodRec.getDbl(ePrjprod.num);
+                        square = square + countWin * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
+                        weight = weight + countWin * win.weight; //вес изделий
+                        price1a = price1a + countWin * win.price(1); //стоимость конструкций без скидки менеджера
+                        price2a = price2a + countWin * win.price(2); //стоимость конструкций со скидкой менеджера
                     }
                 }
                 //Комплектация

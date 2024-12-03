@@ -133,10 +133,12 @@ public class RSmeta {
             //СЕКЦИЯ №3
             double total2 = total + 18 * total / 100;
             Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
-            trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total2, 9) + " руб.");
-            trList.get(1).getElementsByTag("td").get(0).text(MoneyInWords.inwords(total2));
-            trList.get(2).getElementsByTag("td").get(1).text(UCom.format(18 * total / 100, 9) + " руб.");
-            trList.get(3).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square / 1000000, 2) + " кв.м.");
+            trList.get(0).getElementsByTag("td").get(1).text(UCom.format(777.7, 9) + " руб.");
+            trList.get(1).getElementsByTag("td").get(1).text(UCom.format(total2, 9) + " руб.");
+            trList.get(2).getElementsByTag("td").get(0).text("Сумма прописью : " + MoneyInWords.inwords(total2));
+            trList.get(3).getElementsByTag("td").get(0).text("включая НДС 18% : " + UCom.format(18 * total / 100, 9) + " руб.");
+            
+            trList.get(4).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square / 1000000, 2) + " кв.м.");
 
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");
             for (int i = 0; i < imgList.size(); i++) {
@@ -214,7 +216,7 @@ public class RSmeta {
                         + eColor.find(winc.colorID3).getStr(eColor.name));
                 td.get(14).text(String.valueOf(count));
                 td.get(16).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
-                td.get(18).text(UCom.format(winc.weight, 2));                
+                td.get(18).text(UCom.format(winc.weight, 2));
                 td.get(20).text(UCom.format(winc.price(1) * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));
                 td.get(22).text(UCom.format(count * winc.price(1), 9));
                 td.get(24).text(UCom.format(count * winc.price(2), 9));
