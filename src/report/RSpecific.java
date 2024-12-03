@@ -30,16 +30,16 @@ public class RSpecific {
 
     private static int npp = 0;
 
-    public  void parseDoc1(Record prjprodRec) {
+    public  void parseDoc(List<Record> prjprodList) {
         try {
             npp = 0;
             InputStream in = getClass().getResourceAsStream("/resource/report/Specific.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile, "windows-1251");
+            
+            Record prjprodRec = prjprodList.get(0);
             Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
-            List<Record> prjprodList = new ArrayList<Record>();
-            prjprodList.add(prjprodRec);
             
             //Заполним отчёт
             loadDoc(projectRec, prjprodList, doc);
@@ -52,29 +52,6 @@ public class RSpecific {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERROR*2 " + e, "ВНИМАНИЕ!", 1);
             System.err.println("Ошибка:RSpecific.parseDoc1()" + e);
-        }
-    }
-    
-    public  void parseDoc2(Record projectRec) {
-        try {
-            npp = 0;
-            InputStream in = getClass().getResourceAsStream("/resource/report/Specific.html");
-            File tempFile = File.createTempFile("report", "html");
-            in.transferTo(new FileOutputStream(tempFile));
-            Document doc = Jsoup.parse(tempFile, "windows-1251");
-            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
-
-            //Заполним отчёт
-            loadDoc(projectRec, prjprodList, doc);
-
-            String str = doc.html();
-            str = new String(str.getBytes("windows-1251"));
-            RTable.write(str);
-            ExecuteCmd.documentType(null);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERROR*2 " + e, "ВНИМАНИЕ!", 1);
-            System.err.println("Ошибка:RSpecific.parseDoc2()" + e);
         }
     }
 

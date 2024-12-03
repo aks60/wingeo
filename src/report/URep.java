@@ -2,14 +2,19 @@ package report;
 
 import builder.Wincalc;
 import common.eProp;
+import common.listener.ListenerFrame;
 import dataset.Record;
 import domain.ePrjprod;
+import frames.UGui;
 import frames.swing.Canvas;
+import frames.swing.ProgressBar;
+import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
+import static startup.Test.frame;
 
 public class URep {
     
@@ -39,4 +44,25 @@ public class URep {
         }
         return list;
     }    
+    
+//    public static void specificRep(int n, Window frame) {
+//        ProgressBar.create(frame.this, new ListenerFrame() {
+//            public void actionRequest(Object obj) {
+//                //Спецификация
+//                List<Record> prjprodList =  List.of(qPrjprod.get(UGui.getIndexRec(tab2)));
+//                new RSpecific().parseDoc(prjprodList);
+//            }
+//        });     
+//    }
+//    
+//    public static void materialRep(int n) {
+//        
+//    }
+//    
+//    public static void targetRep(int n) {
+//        
+//    }
+//    public static void smetaRep(int n) {
+//        
+//    }
 }

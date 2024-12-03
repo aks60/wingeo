@@ -575,14 +575,14 @@ public class Man extends javax.swing.JFrame {
     }//GEN-LAST:event_btn8
 
     private void btn9(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9
-        int orderID = Integer.valueOf(eProp.orderID.read());
-        Record projectRec = eProject.find(orderID);         
-        ProgressBar.create(Man.this, new ListenerFrame() {
-            @Override
-            public void actionRequest(Object obj) {
-                new RSmeta().parseDoc2(projectRec);
-            }
-        });
+//        int orderID = Integer.valueOf(eProp.orderID.read());
+//        Record projectRec = eProject.find(orderID);         
+//        ProgressBar.create(Man.this, new ListenerFrame() {
+//            @Override
+//            public void actionRequest(Object obj) {
+//                new RSmeta().parseDoc2(projectRec);
+//            }
+//        });
     }//GEN-LAST:event_btn9
 
     private void btn10(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn10
@@ -606,12 +606,14 @@ public class Man extends javax.swing.JFrame {
 
     private void btn15(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn15
 
-        int orderID = Integer.valueOf(eProp.orderID.read());
+        int orderID = Integer.valueOf(eProp.prjprodID.read());
         Record projectRec = eProject.find(orderID);
+        List<Record> prjprodList =  List.of(projectRec);
+        
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                //ΠΡ‚Ρ‡Ρ‘Ρ‚
-                new RTarget().parseDoc2(projectRec);
+                //Ηΰδΰνθε β φευ
+                new RTarget().parseDoc(prjprodList);
             }
         });
     }//GEN-LAST:event_btn15
@@ -619,9 +621,10 @@ public class Man extends javax.swing.JFrame {
     private void btn16(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn16
         int orderID = Integer.valueOf(eProp.orderID.read());
         Record projectRec = eProject.find(orderID);
+        List<Record> prjprodList =  List.of(projectRec);
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                new RMaterial().parseDoc2(projectRec);
+                new RMaterial().parseDoc(prjprodList);
             }
         });
     }//GEN-LAST:event_btn16

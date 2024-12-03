@@ -1339,7 +1339,8 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
                 //Спецификация
                 int prjprodID = Integer.valueOf(eProp.prjprodID.read());
                 Record prjprodRec = ePrjprod.find(prjprodID);
-                new RSpecific().parseDoc1(prjprodRec);
+                List<Record> prjprodList =  List.of(prjprodRec);
+                new RSpecific().parseDoc(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem19
@@ -1350,7 +1351,8 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
                 //Расход мат.
                 int prjprodID = Integer.valueOf(eProp.prjprodID.read());
                 Record prjprodRec = ePrjprod.find(prjprodID);
-                new RMaterial().parseDoc1(prjprodRec);
+                List<Record> prjprodList =  List.of(prjprodRec);
+                new RMaterial().parseDoc(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem20
@@ -1361,7 +1363,8 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
                 //Задание в цех
                 int prjprodID = Integer.valueOf(eProp.prjprodID.read());
                 Record prjprodRec = ePrjprod.find(prjprodID);
-                new RTarget().parseDoc1(prjprodRec);
+                List<Record> prjprodList =  List.of(prjprodRec);
+                new RTarget().parseDoc(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem21
@@ -1372,7 +1375,8 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
                 //Задание в цех
                 int prjprodID = Integer.valueOf(eProp.prjprodID.read());
                 Record prjprodRec = ePrjprod.find(prjprodID);
-                new RSmeta().parseDoc1(prjprodRec);
+                List<Record> prjprodList = List.of(prjprodRec);
+                new RSmeta().parseDoc1(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem22
@@ -1399,7 +1403,8 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
                 //Спецификация
                 int progectID = Integer.valueOf(eProp.orderID.read());
                 Record prjprodRec = eProject.find(progectID);
-                new RSpecific().parseDoc2(prjprodRec);
+                List<Record> prjprodList =  List.of(prjprodRec);
+                new RSpecific().parseDoc(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem12
@@ -1410,7 +1415,8 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
                 //Расход мат.
                 int progectID = Integer.valueOf(eProp.orderID.read());
                 Record prjprodRec = eProject.find(progectID);
-                new RMaterial().parseDoc2(prjprodRec);
+                List<Record> prjprodList =  List.of(prjprodRec);
+                new RMaterial().parseDoc(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem11
@@ -1420,8 +1426,9 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
             public void actionRequest(Object obj) {
                 //Задание в цех
                 int progectID = Integer.valueOf(eProp.orderID.read());
-                Record prjprodRec = eProject.find(progectID);
-                new RTarget().parseDoc2(prjprodRec);
+                Record prjojectRec = eProject.find(progectID);
+                List<Record> prjprodList = ePrjprod.filter(progectID);
+                new RTarget().parseDoc(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem18
@@ -1430,10 +1437,10 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
         ProgressBar.create(Tex.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                //Отчёт
+                //Смета
                 int progectID = Integer.valueOf(eProp.orderID.read());
-                Record prjprodRec = eProject.find(progectID);
-                new RSmeta().parseDoc1(prjprodRec);
+                List<Record> prjprodList = ePrjprod.filter(progectID);
+                new RSmeta().parseDoc1(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem14
@@ -1442,10 +1449,11 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
         ProgressBar.create(Tex.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                //Отчёт
+                //Смета
                 int progectID = Integer.valueOf(eProp.orderID.read());
                 Record prjprodRec = eProject.find(progectID);
-                new RSmeta().parseDoc2(prjprodRec);
+                List<Record> prjprodList = ePrjprod.filter(progectID);
+                new RSmeta().parseDoc2(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem13

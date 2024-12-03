@@ -25,16 +25,15 @@ public class RMaterial {
 
     private static int npp = 0;
 
-    public void parseDoc1(Record prjprodRec) {
+    public void parseDoc(List<Record> prjprodList) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Material.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
 
+            Record prjprodRec = prjprodList.get(0);
             Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
-            List<Record> prjprodList = new ArrayList();
-            prjprodList.add(prjprodRec);
 
             //Заполним отчёт
             loadDoc(projectRec, prjprodList, doc);
@@ -46,27 +45,6 @@ public class RMaterial {
 
         } catch (Exception e) {
             System.err.println("Ошибка:RMaterial.parseDoc1()" + e);
-        }
-    }
-
-    public void parseDoc2(Record projectRec) {
-        try {
-            InputStream in = getClass().getResourceAsStream("/resource/report/Material.html");
-            File tempFile = File.createTempFile("report", "html");
-            in.transferTo(new FileOutputStream(tempFile));
-            Document doc = Jsoup.parse(tempFile);
-            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
-
-            //Заполним отчёт
-            loadDoc(projectRec, prjprodList, doc);
-
-            String str = doc.html();
-            str = new String(str.getBytes("windows-1251"));
-            RTable.write(str);
-            ExecuteCmd.documentType(null);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:RMaterial.parseDoc2()" + e);
         }
     }
 

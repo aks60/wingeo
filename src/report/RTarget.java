@@ -34,37 +34,15 @@ import report.sup.RRecord;
 //Задание в цех
 public class RTarget {
 
-    public void parseDoc1(Record prjprodRec) {
+    public void parseDoc(List<Record> prjprodList) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Target.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
 
+            Record prjprodRec = prjprodList.get(0);
             Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
-            List<Record> prjprodList = new ArrayList();
-            prjprodList.add(prjprodRec);
-
-            //Заполним отчёт
-            loadDoc(projectRec, prjprodList, doc);
-
-            String str = doc.html();
-            str = new String(str.getBytes("windows-1251"));
-            RTable.write(str);
-            ExecuteCmd.documentType(null);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Target.parseDoc() " + e);
-        }
-    }
-
-    public void parseDoc2(Record projectRec) {
-        try {
-            InputStream in = getClass().getResourceAsStream("/resource/report/Target.html");
-            File tempFile = File.createTempFile("report", "html");
-            in.transferTo(new FileOutputStream(tempFile));
-            Document doc = Jsoup.parse(tempFile);
-            List<Record> prjprodList = new Query(ePrjprod.values()).sql(ePrjprod.data(), ePrjprod.project_id, projectRec.getInt(eProject.id));
 
             //Заполним отчёт
             loadDoc(projectRec, prjprodList, doc);

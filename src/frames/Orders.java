@@ -336,7 +336,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }
 
     public void selectionTab1() {
-        
+
         UGui.clearTable(tab2, tab4);
         List.of(tab1, tab2, tab3, tab4).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
         if (tab1.getSelectedRow() != -1) {
@@ -3905,7 +3905,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Расход мат.
-                new RMaterial().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
+                Record projectRec = qProject.get(UGui.getIndexRec(tab1));
+                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
+                new RMaterial().parseDoc(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem11
@@ -3914,7 +3916,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Спецификация
-                new RSpecific().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 1)));
+                Record projectRec = qProject.get(UGui.getIndexRec(tab1, 1));
+                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
+                new RSpecific().parseDoc(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem12
@@ -3923,8 +3927,10 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                //Отчёт
-                new RSmeta().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
+                //Смета
+                Record projectRec = qProject.get(UGui.getIndexRec(tab1, 1));
+                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));                
+                new RSmeta().parseDoc2(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem13
@@ -3934,7 +3940,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Отчёт
-                new RSmeta().parseDoc1(qProject.get(UGui.getIndexRec(tab1, 0)));
+                Record projectRec = qProject.get(UGui.getIndexRec(tab1));
+                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
+                new RSmeta().parseDoc1(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem14
@@ -3944,7 +3952,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Отчёт
-                new RCheck().parseDoc1(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new RCheck().parseDoc1(qProject.get(UGui.getIndexRec(tab1)));
             }
         });
     }//GEN-LAST:event_menuItem15
@@ -3954,7 +3962,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Отчёт
-                new RCheck().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new RCheck().parseDoc2(qProject.get(UGui.getIndexRec(tab1)));
             }
         });
     }//GEN-LAST:event_menuItem16
@@ -3964,7 +3972,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Отчёт
-                new ROffer().parseDoc(qProject.get(UGui.getIndexRec(tab1, 0)));
+                new ROffer().parseDoc(qProject.get(UGui.getIndexRec(tab1)));
             }
         });
     }//GEN-LAST:event_menuItem17
@@ -4074,7 +4082,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Задание в цех
-                new RTarget().parseDoc2(qProject.get(UGui.getIndexRec(tab1, 0)));
+                Record projectRec = qProject.get(UGui.getIndexRec(tab1));
+                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
+                new RTarget().parseDoc(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem18
@@ -4083,7 +4093,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Спецификация
-                new RSpecific().parseDoc1(qPrjprod.get(UGui.getIndexRec(tab2)));
+                List<Record> prjprodList = List.of(qPrjprod.get(UGui.getIndexRec(tab2)));
+                new RSpecific().parseDoc(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem19
@@ -4092,7 +4103,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Расход мат.
-                new RMaterial().parseDoc1(qPrjprod.get(UGui.getIndexRec(tab2)));
+                List<Record> prjprodList = List.of(qPrjprod.get(UGui.getIndexRec(tab2)));
+                new RMaterial().parseDoc(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem20
@@ -4101,21 +4113,30 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Расход мат.
-                new RTarget().parseDoc1(qPrjprod.get(UGui.getIndexRec(tab2)));
+                List<Record> prjprodList = List.of(qPrjprod.get(UGui.getIndexRec(tab2)));
+                new RTarget().parseDoc(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem21
 
     private void menuItem22(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem22
-        // TODO add your handling code here:
+        ProgressBar.create(Orders.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                //Смета
+                List<Record> prjprodList = List.of(qPrjprod.get(UGui.getIndexRec(tab2)));
+                new RSmeta().parseDoc1(prjprodList);
+            }
+        });
     }//GEN-LAST:event_menuItem22
 
     private void menuItem23(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem23
-        // TODO add your handling code here:
+        //Смета
+        List<Record> prjprodList = List.of(qPrjprod.get(UGui.getIndexRec(tab2)));
+        new RSmeta().parseDoc2(prjprodList);
     }//GEN-LAST:event_menuItem23
 
     private void menuItem24(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem24
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_menuItem24
 
     private void menuItem25(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem25

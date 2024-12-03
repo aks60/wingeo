@@ -32,15 +32,18 @@ import static report.URep.wincList;
 
 public class RSmeta {
 
-    public void parseDoc1(Record projectRec) {
+    public void parseDoc1(List<Record> prjprodList) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Smeta1.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
 
+            Record prjprodRec = prjprodList.get(0);
+            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
+
             //Заполним отчёт
-            loadDoc1(projectRec, doc);
+            loadDoc1(projectRec, prjprodList, doc);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
@@ -55,15 +58,17 @@ public class RSmeta {
         }
     }
 
-    public void parseDoc2(Record projectRec) {
+    public void parseDoc2(List<Record> prjprodList) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Smeta2.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
+            Record prjprodRec = prjprodList.get(0);
+            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
 
             //Заполним отчёт
-            loadDoc2(projectRec, doc);
+            loadDoc2(projectRec, prjprodList, doc);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
@@ -78,14 +83,12 @@ public class RSmeta {
         }
     }
 
-    private static void loadDoc1(Record projectRec, Document doc) {
-        double total1 = 0f;
-        double total2 = 0f;
+    private static void loadDoc1(Record projectRec, List<Record> prjprodList, Document doc) {
+        double total1 = 0f, total2 = 0f;
         double square = 0f; //площадь
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
-            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Record> kitList = new ArrayList<Record>();
 
             doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
@@ -133,14 +136,14 @@ public class RSmeta {
             }
 
             //СЕКЦИЯ №3
-            total2 = total2 + 18 * total2 / 100;
+            double nds = 18 * total2 / 100; //НДС
             Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
-            
+
             trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total1, 9) + " руб.");
-            trList.get(1).getElementsByTag("td").get(1).text(UCom.format(total2, 9) + " руб.");
-            trList.get(2).getElementsByTag("td").get(0).text("Сумма прописью : " + MoneyInWords.inwords(total2));
-            trList.get(3).getElementsByTag("td").get(0).text("включая НДС 18% : " + UCom.format(18 * total2 / 100, 9) + " руб.");
-            
+            trList.get(1).getElementsByTag("td").get(1).text(UCom.format(total2 + nds, 9) + " руб.");
+            trList.get(2).getElementsByTag("td").get(0).text("Сумма прописью : " + MoneyInWords.inwords(total2 + nds));
+            trList.get(3).getElementsByTag("td").get(0).text("включая НДС 18% : " + UCom.format(nds, 9) + " руб.");
+
             trList.get(4).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square / 1000000, 2) + " кв.м.");
 
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");
@@ -153,14 +156,13 @@ public class RSmeta {
         }
     }
 
-    private static void loadDoc2(Record projectRec, Document doc) {
-        double total = 0f;
+    private static void loadDoc2(Record projectRec, List<Record> prjprodList, Document doc) {
+        double total1 = 0f, total2 = 0f;
         double square = 0f; //площадь
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
             Record sysuserRec = (sysRec == null) ? eSysuser.virtualRec() : sysRec;
-            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Record> prjkitAll = new ArrayList<Record>();
 
             doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
@@ -224,7 +226,7 @@ public class RSmeta {
                 td.get(22).text(UCom.format(count * winc.price(1), 9));
                 td.get(24).text(UCom.format(count * winc.price(2), 9));
 
-                total += prjprodRec.getInt(ePrjprod.num) * winc.price(2);
+                total1 += prjprodRec.getInt(ePrjprod.num) * winc.price(2);
 
                 if (prjkitList.size() == 0) {
                     tab3List.get(i).html("");
@@ -256,6 +258,10 @@ public class RSmeta {
                         td3List.get(7).text(UCom.format(0, 1));
                     }
                 }
+                double price2n = winc.price(2) - projectRec.getDbl(eProject.disc2) * winc.price(2) / 100;
+                td.get(16).text(UCom.format(price2n, 9));
+                total1 += price2n;
+                total2 += count * price2n;                
             }
 
             //СЕКЦИЯ №3
@@ -301,10 +307,15 @@ public class RSmeta {
                 td5List.get(7).text(UCom.format(440, 2));
             }
             //СЕКЦИЯ №4
+            double nds = 18 * total2 / 100; //НДС
             Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
-            trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total, 2));
-            trList.get(1).getElementsByTag("td").get(0).text(MoneyInWords.inwords(total));
-            trList.get(3).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square / 1000000, 2) + " кв.м.");
+
+            trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total1, 9) + " руб.");
+            trList.get(1).getElementsByTag("td").get(1).text(UCom.format(total2 + nds, 9) + " руб.");
+            trList.get(2).getElementsByTag("td").get(0).text("Сумма прописью : " + MoneyInWords.inwords(total2 + nds));
+            trList.get(3).getElementsByTag("td").get(0).text("включая НДС 18% : " + UCom.format(nds, 9) + " руб.");
+
+            trList.get(4).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square / 1000000, 2) + " кв.м.");
 
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");
             for (int i = 0; i < imgList.size(); i++) {
