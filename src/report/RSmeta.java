@@ -135,6 +135,7 @@ public class RSmeta {
             //—≈ ÷»я є3
             total2 = total2 + 18 * total2 / 100;
             Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
+            
             trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total1, 9) + " руб.");
             trList.get(1).getElementsByTag("td").get(1).text(UCom.format(total2, 9) + " руб.");
             trList.get(2).getElementsByTag("td").get(0).text("—умма прописью : " + MoneyInWords.inwords(total2));
