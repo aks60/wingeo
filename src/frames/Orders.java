@@ -1283,7 +1283,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             }
         });
 
-        btnSet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c086.gif"))); // NOI18N
+        btnSet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c031.gif"))); // NOI18N
         btnSet.setToolTipText(bundle.getString("Выбрать список")); // NOI18N
         btnSet.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnSet.setEnabled(false);
