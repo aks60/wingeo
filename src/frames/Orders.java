@@ -3928,7 +3928,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             @Override
             public void actionRequest(Object obj) {
                 //Смета
-                Record projectRec = qProject.get(UGui.getIndexRec(tab1, 1));
+                Record projectRec = qProject.get(UGui.getIndexRec(tab1));
                 List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));                
                 new RSmeta().parseDoc2(prjprodList);
             }
