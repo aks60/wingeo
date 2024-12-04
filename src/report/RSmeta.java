@@ -1,5 +1,6 @@
 package report;
 
+import builder.Kitcalc;
 import report.sup.RTable;
 import report.sup.ExecuteCmd;
 import builder.Wincalc;
@@ -84,12 +85,12 @@ public class RSmeta {
     }
 
     private static void loadDoc1(Record projectRec, List<Record> prjprodList, Document doc) {
-        double total1 = 0f, total2 = 0f;
-        double square = 0f; //площадь
+        double total = 0;   //стоимость за все
+        double square = 0f;  //площадь
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
-            List<Record> kitList = new ArrayList<Record>();
+            //List<Record> kitList = new ArrayList<Record>();
 
             doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
 
@@ -111,40 +112,39 @@ public class RSmeta {
                 int count = prjprodRec.getInt(ePrjprod.num);
                 square += count * winc.root.area.getGeometryN(0).getArea();
 
-                List<Record> list = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
-                kitList.addAll(list);
+                //List<Record> list = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
+                //kitList.addAll(list);
 
                 //СЕКЦИЯ №2
                 ArrayList<ElemSimple> glassList = UCom.filter(winc.listElem, Type.GLASS);
                 Elements captions2 = tab2List.get(i).getElementsByTag("caption");
                 captions2.get(0).text("Изделие № " + (i + 1));
 
-                Elements td = tab2List.get(i).getElementsByTag("td");
-                td.get(2).text(prjprodRec.getStr(ePrjprod.name));
-                td.get(4).text(UCom.format(winc.width() / 1000, 2) + " x " + UCom.format(winc.height() / 1000, 2));
-                td.get(6).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / "
-                        + eColor.find(winc.colorID2).getStr(eColor.name) + " / "
-                        + eColor.find(winc.colorID3).getStr(eColor.name));
-                td.get(8).text(String.valueOf(count));
-                td.get(10).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
-                td.get(12).text(UCom.format(winc.weight, 2));
-                td.get(14).text(UCom.format(winc.price(1), 9));
-                double price2n = winc.price(2) - projectRec.getDbl(eProject.disc2) * winc.price(2) / 100;
-                td.get(16).text(UCom.format(price2n, 9));
-                total1 += price2n;
-                total2 += count * price2n;
+                tab2List.get(0).getElementsByTag("td").get(2).text(prjprodRec.getStr(ePrjprod.name));
+                tab2List.get(1).getElementsByTag("td").get(2).text(UCom.format(winc.width() / 1000, 2) + " x " + UCom.format(winc.height() / 1000, 2));
+                tab2List.get(2).getElementsByTag("td").get(2).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / "
+                        + eColor.find(winc.colorID2).getStr(eColor.name) + " / " + eColor.find(winc.colorID3).getStr(eColor.name));
+                tab2List.get(3).getElementsByTag("td").get(2).text(String.valueOf(count));
+                tab2List.get(4).getElementsByTag("td").get(2).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
+                tab2List.get(5).getElementsByTag("td").get(2).text(UCom.format(winc.weight, 2));
+                tab2List.get(6).getElementsByTag("td").get(2).text(UCom.format(winc.price(1), 9));
+                
+                double price2 = winc.price(2) - projectRec.getDbl(eProject.disc2) * winc.price(2) / 100;
+                tab2List.get(7).getElementsByTag("td").get(2).text(UCom.format(price2, 9));
+                total += count * price2;
             }
 
             //СЕКЦИЯ №3
-            double nds = 18 * total2 / 100; //НДС
+            Kitcalc.tarifficProj(projectRec, new Wincalc(), true);
+            double nds = 18 * (total + Kitcalc.price(2)) / 100; //НДС
             Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
 
-            trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total1, 9) + " руб.");
-            trList.get(1).getElementsByTag("td").get(1).text(UCom.format(total2 + nds, 9) + " руб.");
-            trList.get(2).getElementsByTag("td").get(0).text("Сумма прописью : " + MoneyInWords.inwords(total2 + nds));
-            trList.get(3).getElementsByTag("td").get(0).text("включая НДС 18% : " + UCom.format(nds, 9) + " руб.");
-
-            trList.get(4).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square / 1000000, 2) + " кв.м.");
+            trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total, 9) + " руб."); //всего за изделия
+            trList.get(1).getElementsByTag("td").get(1).text(UCom.format(Kitcalc.price(2), 9) + " руб."); //всего за комплекты
+            trList.get(2).getElementsByTag("td").get(1).text(UCom.format(total + Kitcalc.price(2) + nds, 9) + " руб."); //ИТОГО ПО ЗАКАЗУ 
+            trList.get(3).getElementsByTag("td").get(0).text("Сумма прописью : " + MoneyInWords.inwords(total + nds));
+            trList.get(4).getElementsByTag("td").get(0).text("включая НДС 18% : " + UCom.format(nds, 9) + " руб.");
+            trList.get(5).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square / 1000000, 2) + " кв.м.");
 
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");
             for (int i = 0; i < imgList.size(); i++) {
@@ -163,7 +163,7 @@ public class RSmeta {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
             Record sysuserRec = (sysRec == null) ? eSysuser.virtualRec() : sysRec;
-            List<Record> prjkitAll = new ArrayList<Record>();
+            List<Record> prjkitSumList = new ArrayList<Record>();
 
             doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
 
@@ -203,24 +203,26 @@ public class RSmeta {
                 //Изделие
                 Record prjprodRec = prjprodList.get(i);
                 Wincalc winc = wincList.get(i);
-                List<Record> prjkitList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
-                loadTab2(prjprodList, prjkitAll, winc, tab2List, i);
-                prjkitAll.addAll(prjkitList);
+                List<Record> prjkitOneList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
+                
+                loadTab2(prjprodList, prjkitSumList, winc, tab2List, i);   
+                
+                prjkitSumList.addAll(prjkitOneList);
                 int count = prjprodRec.getInt(ePrjprod.num);
                 Elements td = tab2List.get(i).getElementsByTag("td");
                 total1 += prjprodRec.getInt(ePrjprod.num) * winc.price(2);
 
                 //Комплектация к изделию
-                if (prjkitList.isEmpty()) {
+                if (prjkitOneList.isEmpty()) {
                     tab3List.get(i).html("");
                 } else {
                     Elements captions3 = tab3List.get(i).getElementsByTag("caption");
                     captions3.get(0).text("Комплектация к изделию № " + (i + 1));
                     String template3 = tab3List.get(i).getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
-                    for (int k = 1; k < prjkitList.size(); k++) {
+                    for (int k = 1; k < prjkitOneList.size(); k++) {
                         tab3List.get(i).getElementsByTag("tbody").get(0).append(template3);
                     }
-                    loadTab3(prjkitList, winc, tab3List, i);
+                    loadTab3(prjkitOneList, winc, tab3List, i);
                 }
 
                 double price2n = winc.price(2) - projectRec.getDbl(eProject.disc2) * winc.price(2) / 100;
@@ -243,11 +245,11 @@ public class RSmeta {
 
             //Комплектация все
             String template5 = tab5Elem.getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
-            prjkitAll.forEach(act -> tab5Elem.getElementsByTag("tbody").append(template5));
-            for (int i = 1; i < prjkitAll.size(); i++) {
+            prjkitSumList.forEach(act -> tab5Elem.getElementsByTag("tbody").append(template5));
+            for (int i = 1; i < prjkitSumList.size(); i++) {
                 tab5Elem.getElementsByTag("tbody").append(template4);
             }
-            loadTab5(prjkitAll, tab5Elem);
+            loadTab5(prjkitSumList, tab5Elem);
 
             //СЕКЦИЯ №4
             double nds = 18 * total2 / 100; //НДС
