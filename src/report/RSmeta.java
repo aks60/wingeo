@@ -211,7 +211,7 @@ public class RSmeta {
                 total1 += prjprodRec.getInt(ePrjprod.num) * winc.price(2);
 
                 //Комплектация к изделию
-                if (prjkitList.size() == 0) {
+                if (prjkitList.isEmpty()) {
                     tab3List.get(i).html("");
                 } else {
                     Elements captions3 = tab3List.get(i).getElementsByTag("caption");
