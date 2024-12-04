@@ -136,6 +136,7 @@ public class LogoToDb extends javax.swing.JDialog {
         pan4 = new javax.swing.JPanel();
         btnOk = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(86, 0), new java.awt.Dimension(6, 0), new java.awt.Dimension(50, 32767));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Авторизация доступа");
@@ -233,7 +234,7 @@ public class LogoToDb extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addGroup(pan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -243,17 +244,17 @@ public class LogoToDb extends javax.swing.JDialog {
                 .addGroup(pan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(edPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
             .addGroup(pan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pan2Layout.createSequentialGroup()
                     .addGap(20, 20, 20)
                     .addComponent(pan3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(51, Short.MAX_VALUE)))
+                    .addContainerGap(46, Short.MAX_VALUE)))
         );
 
         getContentPane().add(pan2, java.awt.BorderLayout.CENTER);
 
-        pan4.setAlignmentY(0.0F);
+        pan4.setPreferredSize(new java.awt.Dimension(175, 40));
         pan4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         btnOk.setFont(frames.UGui.getFont(0,0));
@@ -287,6 +288,7 @@ public class LogoToDb extends javax.swing.JDialog {
             }
         });
         pan4.add(btnClose);
+        pan4.add(filler1);
 
         getContentPane().add(pan4, java.awt.BorderLayout.SOUTH);
 
@@ -326,6 +328,7 @@ public class LogoToDb extends javax.swing.JDialog {
     private javax.swing.JButton btnOk;
     private javax.swing.JPasswordField edPass;
     private javax.swing.JTextField edUser;
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel labImg;
     private javax.swing.JLabel labMes;
     private javax.swing.JLabel labPass;
