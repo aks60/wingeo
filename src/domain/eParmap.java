@@ -57,7 +57,17 @@ public enum eParmap implements Field {
         Query recordList = new Query(values()).select(up, "where", id, "=", parmapID);
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
-    
+
+    public static Record find3(String name, int groupsID) {
+
+        if (Query.conf.equals("NET")) {
+            List<Record> list = data().stream().filter(rec -> rec.getInt(groups_id) == groupsID).collect(toList());
+            return list.stream().filter(rec -> name.equals(eColor.find(rec.getInt(eParmap.color_id1)).getStr(eColor.name))).findFirst().orElse(up.newRecord(Query.SEL));
+        }
+        List<Record> list = new Query(values()).select(up, "where", groups_id, "=", groupsID);
+        return list.stream().filter(rec -> name.equals(eColor.find(rec.getInt(eParmap.color_id1)).getStr(eColor.name))).findFirst().orElse(up.newRecord(Query.SEL));
+    }
+        
     public static List<Record> filter3(int groupsID) {
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(groups_id) == groupsID).collect(toList());
@@ -65,16 +75,6 @@ public enum eParmap implements Field {
         return new Query(values()).select(up, "where", groups_id, "=", groupsID);
     }    
 
-    public static Record find3(String name, int groupsID) {
-
-        if (Query.conf.equals("NET")) {
-            List<Record> list = data().stream().filter(rec -> rec.getInt(groups_id) == groupsID).collect(toList());
-            return list.stream().filter(rec -> name.equals(eColor.get(rec.getInt(eParmap.color_id1)).getStr(eColor.name))).findFirst().orElse(up.newRecord(Query.SEL));
-        }
-        List<Record> list = new Query(values()).select(up, "where", groups_id, "=", groupsID);
-        return list.stream().filter(rec -> name.equals(eColor.get(rec.getInt(eParmap.color_id1)).getStr(eColor.name))).findFirst().orElse(up.newRecord(Query.SEL));
-    }
-    
     public static List<Record> filter(int colorID) {
 
         if (Query.conf.equals("NET")) {

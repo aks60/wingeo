@@ -140,7 +140,7 @@ public class Artikles extends javax.swing.JFrame {
                 } else if (field == eArtikl.analog_id) {
                     int analogId = qArtikl.get(row).getInt(eArtikl.analog_id);
                     if (analogId != -1) {
-                        return eArtikl.get(analogId).get(eArtikl.code);
+                        return eArtikl.find(analogId).get(eArtikl.code);
                     }
                 }
                 return val;

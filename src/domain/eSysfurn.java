@@ -48,15 +48,7 @@ public enum eSysfurn implements Field {
     public Query query() {
         return query;
     }
-  
-    public static List<Record> filter(int _nuni) {
-        if (Query.conf.equals("NET")) {
-            return data().stream().filter(rec -> rec.getInt(systree_id) == _nuni).collect(Collectors.toList());
-        }
-        Query recordList = new Query(values()).select(up, "where", systree_id, "=", _nuni, "order by", npp);
-        return (recordList.isEmpty() == true) ? new ArrayList<Record>() : recordList;
-    }
-
+    
     public static Record find2(int _id) {
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(up.newRecord(Query.SEL));
@@ -79,6 +71,14 @@ public enum eSysfurn implements Field {
         }
         Query recordList = new Query(values()).select(up, "where", systree_id, "=", _nuni, "and", side_open, "=", _side_open, "order by", npp);
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
+    }
+  
+    public static List<Record> filter(int _nuni) {
+        if (Query.conf.equals("NET")) {
+            return data().stream().filter(rec -> rec.getInt(systree_id) == _nuni).collect(Collectors.toList());
+        }
+        Query recordList = new Query(values()).select(up, "where", systree_id, "=", _nuni, "order by", npp);
+        return (recordList.isEmpty() == true) ? new ArrayList<Record>() : recordList;
     }
 
     public String toString() {

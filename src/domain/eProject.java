@@ -46,6 +46,11 @@ public enum eProject implements Field {
     eProject(Object... p) {
         meta.init(p);
     }
+
+    public MetaField meta() {
+        return meta;
+    }
+    
     public static Record find(int _id) {
         if (_id == -3) {
             return up.newRecord(Query.SEL);
@@ -57,10 +62,6 @@ public enum eProject implements Field {
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
     
-    public MetaField meta() {
-        return meta;
-    }
-
     public Field[] fields() {
         return values();
     }

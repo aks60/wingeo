@@ -91,23 +91,23 @@ public class DicKits extends javax.swing.JDialog {
                     return UseColor.automatic[1];
 
                 } else if (val != null && col == 0) {
-                    return eArtikl.get((int) val).getStr(eArtikl.code);
+                    return eArtikl.find((int) val).getStr(eArtikl.code);
 
                 } else if (val != null && col == 1) {
-                    return eArtikl.get((int) val).getStr(eArtikl.name);
+                    return eArtikl.find((int) val).getStr(eArtikl.name);
 
                 } else if (val != null && columns[col] == eKitdet.color1_id) {
-                    return eColor.get((int) val).getStr(eColor.name);
+                    return eColor.find((int) val).getStr(eColor.name);
 
                 } else if (val != null && columns[col] == eKitdet.color2_id) {
-                    return eColor.get((int) val).getStr(eColor.name);
+                    return eColor.find((int) val).getStr(eColor.name);
 
                 } else if (val != null && columns[col] == eKitdet.color3_id) {
-                    return eColor.get((int) val).getStr(eColor.name);
+                    return eColor.find((int) val).getStr(eColor.name);
 
                 } else if (val != null && col == 5) { //columns[col] == eArtikl.unit) {
                     int id = qKitdet.getAs(row, eKitdet.artikl_id);
-                    Record record = eArtikl.get(id);
+                    Record record = eArtikl.find(id);
                     return UseUnit.getName(record.getInt(eArtikl.unit));
                 }
                 return val;
@@ -214,7 +214,7 @@ public class DicKits extends javax.swing.JDialog {
                 //Ўирина, мм
                 Double height = UPar.to_8070_8071_9070_9071(mapParam);
                 if (height == null) {
-                    Record artkitRec = eArtikl.get(kitdetRec.getInt(eKitdet.artikl_id));
+                    Record artkitRec = eArtikl.find(kitdetRec.getInt(eKitdet.artikl_id));
                     height = artkitRec.getDbl(eArtikl.height);
                 }
                 prjkitRec.set(ePrjkit.height, height); //ширина  

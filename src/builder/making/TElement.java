@@ -86,7 +86,7 @@ public class TElement extends Cal5e {
                         //ФИЛЬТР детализации, параметры накапливаются в mapParam
                         if (elementDet.filter(mapParam, elem5e, elemdetRec) == true) {
 
-                            Record artiklRec = eArtikl.get(elemdetRec.getInt(eElemdet.artikl_id));
+                            Record artiklRec = eArtikl.find(elemdetRec.getInt(eElemdet.artikl_id));
                             TRecord spcAdd = new TRecord("ВСТ", elemdetRec, artiklRec, elem5e, mapParam);
 
                             //Подбор текстуры

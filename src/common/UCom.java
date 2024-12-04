@@ -306,7 +306,7 @@ public class UCom {
             if (txt == null || txt.isEmpty() || txt.equals("*")) {
                 return true;
             }
-            int code = eColor.get(value).getInt(eColor.code);
+            int code = eColor.find(value).getInt(eColor.code);
             ArrayList<Integer> arrList = new ArrayList<Integer>();
             txt = txt.replace(",", ".");
             String[] arr = txt.split(";");

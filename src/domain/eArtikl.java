@@ -77,12 +77,12 @@ public enum eArtikl implements Field {
         return query;
     }
 
-    public static Record get(int id) {
-        if (id == -3) {
+    public static Record find(int _id) {
+        if (_id == -3) {
             return virtualRec();
         }
         data();
-        Record rec = map.get(id);
+        Record rec = map.get(_id);
         return (rec == null) ? virtualRec() : rec;
     }
 

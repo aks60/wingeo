@@ -188,13 +188,13 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         return "Заказ № " + qProject.get(UGui.getIndexRec(tab1)).get(eProject.num_ord);
                     }
                 } else if (val != null && columns[col] == ePrjkit.color1_id) {
-                    return eColor.get((int) val).getStr(eColor.name);
+                    return eColor.find((int) val).getStr(eColor.name);
 
                 } else if (val != null && columns[col] == ePrjkit.color2_id) {
-                    return eColor.get((int) val).getStr(eColor.name);
+                    return eColor.find((int) val).getStr(eColor.name);
 
                 } else if (val != null && columns[col] == ePrjkit.color3_id) {
-                    return eColor.get((int) val).getStr(eColor.name);
+                    return eColor.find((int) val).getStr(eColor.name);
 
                 }
                 return val;

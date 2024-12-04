@@ -82,7 +82,7 @@ public class TTariffic extends Cal5e {
 
                     // <editor-fold defaultstate="collapsed" desc="Правила рассч.">                     
                     //Цикл по правилам расчёта.                 
-                    for (Record rulecalcRec : eRulecalc.list()) {
+                    for (Record rulecalcRec : eRulecalc.filter()) {
                         //Всё обнуляется и рассчитывается по таблице правил расчёта
                         //Увеличение себестоимости в coeff раз и на incr величину наценки.
 
@@ -128,7 +128,7 @@ public class TTariffic extends Cal5e {
 
                         // <editor-fold defaultstate="collapsed" desc="Правила рассч. вложенные">  
                         //Цикл по правилам расчёта.
-                        for (Record rulecalcRec : eRulecalc.list()) {
+                        for (Record rulecalcRec : eRulecalc.filter()) {
                             int form = (rulecalcRec.getInt(eRulecalc.form) == 0) ? 1 : rulecalcRec.getInt(eRulecalc.form);
                             if (form == TypeForm.P00.id) { //не проверять форму 
                                 rulecalcPrise(winc, rulecalcRec, spcRec);

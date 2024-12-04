@@ -64,14 +64,14 @@ public enum eArtdet implements Field {
         return query;
     }
     
-    public static Record find(int artiklID) {
-        if (artiklID == -3) {
+    public static Record find(int _id) {
+        if (_id == -3) {
             return record();
         }
         if (Query.conf.equals("NET")) {
-            return data().stream().filter(rec -> rec.getInt(artikl_id) == artiklID).findFirst().orElse(record());
+            return data().stream().filter(rec -> rec.getInt(artikl_id) == _id).findFirst().orElse(record());
         }
-        List<Record> record = new Query(values()).select("select first 1 * from " + up.tname() + " where " + artikl_id.name() + " = " + artiklID);
+        List<Record> record = new Query(values()).select("select first 1 * from " + up.tname() + " where " + artikl_id.name() + " = " + _id);
         return (record.size() == 0) ? record() : record.get(0);
     }
     

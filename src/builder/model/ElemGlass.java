@@ -79,7 +79,7 @@ public class ElemGlass extends ElemSimple {
             rascRec = eArtikl.find(gson.param.get(PKjson.artiklRasc).getAsInt(), false);
             //Текстура
             if (isJson(gson.param, PKjson.colorRasc)) {
-                rascColor = eColor.get(gson.param.get(PKjson.colorRasc).getAsInt()).getInt(eColor.id);
+                rascColor = eColor.find(gson.param.get(PKjson.colorRasc).getAsInt()).getInt(eColor.id);
             } else {
                 rascColor = eArtdet.find(rascRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk); //цвет по умолчанию
             }

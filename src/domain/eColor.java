@@ -57,7 +57,7 @@ public enum eColor implements Field {
     public Query query() {
         return query;
     }
-    
+
     public static int rgb(int id) {
         if (id == -3) {
             return virtualRec().getInt(rgb);
@@ -67,25 +67,29 @@ public enum eColor implements Field {
         return (rec == null) ? virtualRec().getInt(rgb) : rec.getInt(rgb);
     }
 
-    public static Record get(int id) {
-        if (id == -3) {
-            return virtualRec();
-        }
-        data();
-        Record rec = map.get(id);
-        return (rec == null) ? virtualRec() : rec;
-    }
-
     public static Record find(int _id) {
         if (_id == -3) {
             return virtualRec();
         }
         if (Query.conf.equals("NET")) {
-            return data().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(up.newRecord(Query.SEL));
+            data();
+            Record rec = map.get(_id);
+            return (rec == null) ? virtualRec() : rec;
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
         return (recordList.isEmpty() == true) ? virtualRec() : recordList.get(0);
     }
+
+//    public static Record find(int _id) {
+//        if (_id == -3) {
+//            return virtualRec();
+//        }
+//        if (Query.conf.equals("NET")) {
+//            return data().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(up.newRecord(Query.SEL));
+//        }
+//        Query recordList = new Query(values()).select(up, "where", id, "=", _id);
+//        return (recordList.isEmpty() == true) ? virtualRec() : recordList.get(0);
+//    }
 
     public static List<Record> filter(int _colgrp_id) {
 

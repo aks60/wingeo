@@ -81,23 +81,23 @@ public class Kits extends javax.swing.JFrame {
                     return UseColor.automatic[1];
 
                 } else if (val != null && col == 0) {
-                    return eArtikl.get((int) val).getStr(eArtikl.code);
+                    return eArtikl.find((int) val).getStr(eArtikl.code);
 
                 } else if (val != null && col == 1) {
-                    return eArtikl.get((int) val).getStr(eArtikl.name);
+                    return eArtikl.find((int) val).getStr(eArtikl.name);
 
                 } else if (val != null && columns[col] == eKitdet.color1_id) {
-                    return eColor.get((int) val).getStr(eColor.name);
+                    return eColor.find((int) val).getStr(eColor.name);
 
                 } else if (val != null && columns[col] == eKitdet.color2_id) {
-                    return eColor.get((int) val).getStr(eColor.name);
+                    return eColor.find((int) val).getStr(eColor.name);
 
                 } else if (val != null && columns[col] == eKitdet.color3_id) {
-                    return eColor.get((int) val).getStr(eColor.name);
+                    return eColor.find((int) val).getStr(eColor.name);
 
                 } else if (val != null && col == 5) { //columns[col] == eArtikl.unit) {
                     int id = qKitdet.getAs(row, eKitdet.artikl_id);
-                    Record record = eArtikl.get(id);
+                    Record record = eArtikl.find(id);
                     return UseUnit.getName(record.getInt(eArtikl.unit));
                 }
                 return val;
@@ -203,7 +203,7 @@ public class Kits extends javax.swing.JFrame {
                 int param = -1;
                 Record recordDet = qKitdet.get(index);
                 int artikl_id = recordDet.getInt(eKitdet.artikl_id);
-                Record recordArt = eArtikl.get(artikl_id);
+                Record recordArt = eArtikl.find(artikl_id);
                 if (UseUnit.PIE.id == recordArt.getInt(eArtikl.unit)) {
                     param = 7000;
                 } else if (UseUnit.METR.id == recordArt.getInt(eArtikl.unit)) {

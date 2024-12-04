@@ -53,7 +53,7 @@ public enum eRulecalc implements Field {
         return query;
     }
   
-    public static List<Record> list() {
+    public static List<Record> filter() {
         if (Query.conf.equals("NET")) {
             return data();
         }

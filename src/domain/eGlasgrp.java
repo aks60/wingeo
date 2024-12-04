@@ -43,19 +43,19 @@ public enum eGlasgrp implements Field {
         return query;
     }
     
-    public static ArrayList<Record>  filter() {
-        if (Query.conf.equals("NET")) {
-            return data();
-        }
-        return new Query(values()).select(up);
-    }
-    
     public static Record find(int glasgrpId) {
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> rec.getInt(id) == glasgrpId).findFirst().orElse(up.newRecord(Query.SEL));
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", glasgrpId);
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
+    }
+    
+    public static ArrayList<Record>  filter() {
+        if (Query.conf.equals("NET")) {
+            return data();
+        }
+        return new Query(values()).select(up);
     }
     
     public String toString() {

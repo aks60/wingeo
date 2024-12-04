@@ -54,7 +54,6 @@ public enum ePrjprod implements Field {
         return (recordList.isEmpty() == true) ? null : recordList.get(0);
     }
 
-    
     public static List<Record> filter(int _project_id) {
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _project_id == rec.getInt(project_id)).collect(Collectors.toList());
