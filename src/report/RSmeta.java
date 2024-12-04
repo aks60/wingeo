@@ -85,12 +85,10 @@ public class RSmeta {
     }
 
     private static void loadDoc1(Record projectRec, List<Record> prjprodList, Document doc) {
-        double total = 0;   //стоимость за все
-        double square = 0f;  //площадь
+        double total = 0, square = 0f;
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
-            //List<Record> kitList = new ArrayList<Record>();
 
             doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
 
@@ -112,25 +110,22 @@ public class RSmeta {
                 int count = prjprodRec.getInt(ePrjprod.num);
                 square += count * winc.root.area.getGeometryN(0).getArea();
 
-                //List<Record> list = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
-                //kitList.addAll(list);
-
                 //СЕКЦИЯ №2
-                ArrayList<ElemSimple> glassList = UCom.filter(winc.listElem, Type.GLASS);
                 Elements captions2 = tab2List.get(i).getElementsByTag("caption");
                 captions2.get(0).text("Изделие № " + (i + 1));
+                Elements tr2List = tab2List.get(i).getElementsByTag("tr");
 
-                tab2List.get(0).getElementsByTag("td").get(2).text(prjprodRec.getStr(ePrjprod.name));
-                tab2List.get(1).getElementsByTag("td").get(2).text(UCom.format(winc.width() / 1000, 2) + " x " + UCom.format(winc.height() / 1000, 2));
-                tab2List.get(2).getElementsByTag("td").get(2).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / "
+                tr2List.get(1).getElementsByTag("td").get(1).text(prjprodRec.getStr(ePrjprod.name));
+                tr2List.get(2).getElementsByTag("td").get(1).text(UCom.format(winc.width() / 1000, 2) + " x " + UCom.format(winc.height() / 1000, 2));
+                tr2List.get(3).getElementsByTag("td").get(1).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / "
                         + eColor.find(winc.colorID2).getStr(eColor.name) + " / " + eColor.find(winc.colorID3).getStr(eColor.name));
-                tab2List.get(3).getElementsByTag("td").get(2).text(String.valueOf(count));
-                tab2List.get(4).getElementsByTag("td").get(2).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
-                tab2List.get(5).getElementsByTag("td").get(2).text(UCom.format(winc.weight, 2));
-                tab2List.get(6).getElementsByTag("td").get(2).text(UCom.format(winc.price(1), 9));
-                
+                tr2List.get(4).getElementsByTag("td").get(1).text(String.valueOf(count));
+                tr2List.get(5).getElementsByTag("td").get(1).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
+                tr2List.get(6).getElementsByTag("td").get(1).text(UCom.format(winc.weight, 2));
+                tr2List.get(7).getElementsByTag("td").get(1).text(UCom.format(winc.price(1), 9));
                 double price2 = winc.price(2) - projectRec.getDbl(eProject.disc2) * winc.price(2) / 100;
-                tab2List.get(7).getElementsByTag("td").get(2).text(UCom.format(price2, 9));
+                tr2List.get(8).getElementsByTag("td").get(1).text(UCom.format(price2, 9));
+
                 total += count * price2;
             }
 
@@ -204,9 +199,9 @@ public class RSmeta {
                 Record prjprodRec = prjprodList.get(i);
                 Wincalc winc = wincList.get(i);
                 List<Record> prjkitOneList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
-                
-                loadTab2(prjprodList, prjkitSumList, winc, tab2List, i);   
-                
+
+                loadTab2(prjprodList, prjkitSumList, winc, tab2List, i);
+
                 prjkitSumList.addAll(prjkitOneList);
                 int count = prjprodRec.getInt(ePrjprod.num);
                 Elements td = tab2List.get(i).getElementsByTag("td");
@@ -283,20 +278,21 @@ public class RSmeta {
         ArrayList<ElemSimple> glassList = UCom.filter(winc.listElem, Type.GLASS);
         Elements captions2 = tab2List.get(index).getElementsByTag("caption");
         captions2.get(0).text("Изделие № " + (index + 1));
-        td.get(2).text(prjprodRec.getStr(ePrjprod.name));
-        td.get(4).text(prjprodRec.getStr(ePrjprod.name));
-        td.get(6).text(UCom.format(winc.width() / 1000, 3) + " x " + UCom.format(winc.height() / 1000, 3));
-        td.get(8).text(glassList.get(0).artiklRecAn.getStr(eArtikl.code));
-        td.get(10).text("");
-        td.get(12).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / "
-                + eColor.find(winc.colorID2).getStr(eColor.name) + " / "
-                + eColor.find(winc.colorID3).getStr(eColor.name));
-        td.get(14).text(String.valueOf(count));
-        td.get(16).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
-        td.get(18).text(UCom.format(winc.weight, 2));
-        td.get(20).text(UCom.format(winc.price(1) * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));
-        td.get(22).text(UCom.format(count * winc.price(1), 9));
-        td.get(24).text(UCom.format(count * winc.price(2), 9));
+        Elements tr2Rec = tab2List.get(index).getElementsByTag("tbody").get(0).getElementsByTag("tr");
+
+        tr2Rec.get(1).getElementsByTag("td").get(1).text(prjprodRec.getStr(ePrjprod.name));
+        tr2Rec.get(2).getElementsByTag("td").get(1).text(prjprodRec.getStr(ePrjprod.name));
+        tr2Rec.get(3).getElementsByTag("td").get(1).text(UCom.format(winc.width() / 1000, 3) + " x " + UCom.format(winc.height() / 1000, 3));
+        tr2Rec.get(4).getElementsByTag("td").get(1).text(glassList.get(0).artiklRecAn.getStr(eArtikl.code));
+        tr2Rec.get(5).getElementsByTag("td").get(1).text("");
+        tr2Rec.get(6).getElementsByTag("td").get(1).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / "
+                + eColor.find(winc.colorID2).getStr(eColor.name) + " / " + eColor.find(winc.colorID3).getStr(eColor.name));
+        tr2Rec.get(7).getElementsByTag("td").get(1).text(String.valueOf(count));
+        tr2Rec.get(8).getElementsByTag("td").get(1).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
+        tr2Rec.get(9).getElementsByTag("td").get(1).text(UCom.format(winc.weight, 2));
+        tr2Rec.get(10).getElementsByTag("td").get(1).text(UCom.format(winc.price(1) * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));
+        tr2Rec.get(11).getElementsByTag("td").get(1).text(UCom.format(count * winc.price(1), 9));
+        tr2Rec.get(12).getElementsByTag("td").get(1).text(UCom.format(count * winc.price(2), 9));
     }
 
     //Комплектация к изделию
@@ -309,17 +305,17 @@ public class RSmeta {
             Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.artikl_id), true);
 
             Elements tr3List = tab3List.get(index).getElementsByTag("tr");
-            Elements td3List = tr3List.get(k + 1).getElementsByTag("td");
+            Elements td3Rec = tr3List.get(k + 1).getElementsByTag("td");
 
-            td3List.get(0).text(String.valueOf(k + 1));
-            td3List.get(1).text(artiklRec.getStr(eArtikl.code));
-            td3List.get(2).text(artiklRec.getStr(eArtikl.name));
-            td3List.get(3).text(eColor.find(winc.colorID1).getStr(eColor.name));
-            td3List.get(4).text(UCom.format(prjkitRec.getDbl(ePrjkit.width), 2)
+            td3Rec.get(0).text(String.valueOf(k + 1));
+            td3Rec.get(1).text(artiklRec.getStr(eArtikl.code));
+            td3Rec.get(2).text(artiklRec.getStr(eArtikl.name));
+            td3Rec.get(3).text(eColor.find(winc.colorID1).getStr(eColor.name));
+            td3Rec.get(4).text(UCom.format(prjkitRec.getDbl(ePrjkit.width), 2)
                     + "x" + UCom.format(prjkitRec.getDbl(ePrjkit.height), 2));
-            td3List.get(5).text(prjkitRec.getStr(ePrjkit.numb));
-            td3List.get(6).text(UCom.format(0, 1));
-            td3List.get(7).text(UCom.format(0, 1));
+            td3Rec.get(5).text(prjkitRec.getStr(ePrjkit.numb));
+            td3Rec.get(6).text(UCom.format(0, 1));
+            td3Rec.get(7).text(UCom.format(0, 1));
         }
     }
 
@@ -331,15 +327,15 @@ public class RSmeta {
         for (int i = 0; i < prjprodList.size(); i++) {
             Record prjprodRec = prjprodList.get(i);
             Wincalc winc = wincList.get(i);
-            Elements td4List = tr4List.get(i).getElementsByTag("td");
-            td4List.get(0).text(String.valueOf(i + 1));
-            td4List.get(1).text(prjprodRec.getStr(ePrjprod.name));
-            td4List.get(2).text(eColor.find(winc.colorID1).getStr(eColor.name));
-            td4List.get(3).text(UCom.format(winc.width(), 2));
-            td4List.get(4).text(UCom.format(winc.height(), 2));
-            td4List.get(5).text(prjprodRec.getStr(ePrjprod.num));
-            td4List.get(6).text(UCom.format(0, 2));
-            td4List.get(7).text(UCom.format(0, 2));
+            Elements td4Rec = tr4List.get(i).getElementsByTag("td");
+            td4Rec.get(0).text(String.valueOf(i + 1));
+            td4Rec.get(1).text(prjprodRec.getStr(ePrjprod.name));
+            td4Rec.get(2).text(eColor.find(winc.colorID1).getStr(eColor.name));
+            td4Rec.get(3).text(UCom.format(winc.width(), 2));
+            td4Rec.get(4).text(UCom.format(winc.height(), 2));
+            td4Rec.get(5).text(prjprodRec.getStr(ePrjprod.num));
+            td4Rec.get(6).text(UCom.format(0, 2));
+            td4Rec.get(7).text(UCom.format(0, 2));
         }
     }
 
@@ -350,17 +346,17 @@ public class RSmeta {
 
         for (int i = 1; i < prjkitAll.size(); i++) {
             Record prjkitRec = prjkitAll.get(i);
-            Elements td5List = tr5List.get(i).getElementsByTag("td");
             Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.artikl_id), true);
-            td5List.get(0).text(String.valueOf(i + 1));
-            td5List.get(1).text(artiklRec.getStr(eArtikl.code));
-            td5List.get(2).text(artiklRec.getStr(eArtikl.name));
-            td5List.get(3).text(eColor.find(prjkitRec.getInt(ePrjkit.color1_id)).getStr(eColor.name));
-            td5List.get(4).text(UCom.format(prjkitRec.getDbl(ePrjkit.width), 2)
+            Elements td5Rec = tr5List.get(i).getElementsByTag("td");
+            td5Rec.get(0).text(String.valueOf(i + 1));
+            td5Rec.get(1).text(artiklRec.getStr(eArtikl.code));
+            td5Rec.get(2).text(artiklRec.getStr(eArtikl.name));
+            td5Rec.get(3).text(eColor.find(prjkitRec.getInt(ePrjkit.color1_id)).getStr(eColor.name));
+            td5Rec.get(4).text(UCom.format(prjkitRec.getDbl(ePrjkit.width), 2)
                     + " x " + UCom.format(prjkitRec.getDbl(ePrjkit.height), 2));
-            td5List.get(5).text(prjkitRec.getStr(ePrjkit.numb));
-            td5List.get(6).text(UCom.format(330, 2));
-            td5List.get(7).text(UCom.format(440, 2));
+            td5Rec.get(5).text(prjkitRec.getStr(ePrjkit.numb));
+            td5Rec.get(6).text(UCom.format(330, 2));
+            td5Rec.get(7).text(UCom.format(440, 2));
         }
     }
 }
