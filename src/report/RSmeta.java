@@ -200,116 +200,59 @@ public class RSmeta {
             //Цикл по изделиям
             for (int i = 0; i < prjprodList.size(); i++) {
 
-                Elements td = tab2List.get(i).getElementsByTag("td");
-                Wincalc winc = wincList.get(i);
-                square = square + winc.width() * winc.height();
+                //Изделие
                 Record prjprodRec = prjprodList.get(i);
-                int count = prjprodRec.getInt(ePrjprod.num);
+                Wincalc winc = wincList.get(i);
                 List<Record> prjkitList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
+                loadTab2(prjprodList, prjkitAll, winc, tab2List, i);
                 prjkitAll.addAll(prjkitList);
-
-                ArrayList<ElemSimple> glassList = UCom.filter(winc.listElem, Type.GLASS);
-                Elements captions2 = tab2List.get(i).getElementsByTag("caption");
-                captions2.get(0).text("Изделие № " + (i + 1));
-                td.get(2).text(prjprodRec.getStr(ePrjprod.name));
-                td.get(4).text(prjprodRec.getStr(ePrjprod.name));
-                td.get(6).text(UCom.format(winc.width() / 1000, 3) + " x " + UCom.format(winc.height() / 1000, 3));
-                td.get(8).text(glassList.get(0).artiklRecAn.getStr(eArtikl.code));
-                td.get(10).text("");
-                td.get(12).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / "
-                        + eColor.find(winc.colorID2).getStr(eColor.name) + " / "
-                        + eColor.find(winc.colorID3).getStr(eColor.name));
-                td.get(14).text(String.valueOf(count));
-                td.get(16).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
-                td.get(18).text(UCom.format(winc.weight, 2));
-                td.get(20).text(UCom.format(winc.price(1) * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));
-                td.get(22).text(UCom.format(count * winc.price(1), 9));
-                td.get(24).text(UCom.format(count * winc.price(2), 9));
-
+                int count = prjprodRec.getInt(ePrjprod.num);
+                Elements td = tab2List.get(i).getElementsByTag("td");
                 total1 += prjprodRec.getInt(ePrjprod.num) * winc.price(2);
 
+                //Комплектация к изделию
                 if (prjkitList.size() == 0) {
                     tab3List.get(i).html("");
                 } else {
                     Elements captions3 = tab3List.get(i).getElementsByTag("caption");
                     captions3.get(0).text("Комплектация к изделию № " + (i + 1));
                     String template3 = tab3List.get(i).getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
-
-                    //Цикл по строкам комплектации
-                    for (int k = 0; k < prjkitList.size(); k++) {
-
+                    for (int k = 1; k < prjkitList.size(); k++) {
                         tab3List.get(i).getElementsByTag("tbody").get(0).append(template3);
-                        
-                        Record prjkitRec = prjkitList.get(k);
-                        Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.artikl_id), true);
-
-                        Elements tr3List = tab3List.get(i).getElementsByTag("tr");
-                        Elements td3List = tr3List.get(k + 1).getElementsByTag("td");
-
-                        td3List.get(0).text(String.valueOf(k + 1));
-                        td3List.get(1).text(artiklRec.getStr(eArtikl.code));
-                        td3List.get(2).text(artiklRec.getStr(eArtikl.name));
-                        td3List.get(3).text(eColor.find(winc.colorID1).getStr(eColor.name));
-                        td3List.get(4).text(UCom.format(prjkitRec.getDbl(ePrjkit.width), 2)
-                                + "x" + UCom.format(prjkitRec.getDbl(ePrjkit.height), 2));
-                        td3List.get(5).text(prjkitRec.getStr(ePrjkit.numb));
-                        td3List.get(6).text(UCom.format(0, 1));
-                        td3List.get(7).text(UCom.format(0, 1));
                     }
+                    loadTab3(prjkitList, winc, tab3List, i);
                 }
+
                 double price2n = winc.price(2) - projectRec.getDbl(eProject.disc2) * winc.price(2) / 100;
                 td.get(16).text(UCom.format(price2n, 9));
                 total1 += price2n;
-                total2 += count * price2n;                
+                total2 += count * price2n;
             }
 
             //СЕКЦИЯ №3
             Element tab4Elem = doc.getElementById("tab4");
             Element tab5Elem = doc.getElementById("tab5");
             Element tab6Elem = doc.getElementById("tab6");
+
+            //Изделия все
             String template4 = tab4Elem.getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
             for (int i = 1; i < prjprodList.size(); i++) {
                 tab4Elem.getElementsByTag("tbody").append(template4);
             }
-            Elements tr4List = tab4Elem.getElementsByTag("tbody").get(0).getElementsByTag("tr");
-            for (int i = 0; i < prjprodList.size(); i++) {
-                Record prjprodRec = prjprodList.get(i);
-                Wincalc winc = wincList.get(i);
-                Elements td4List = tr4List.get(i).getElementsByTag("td");
-                td4List.get(0).text(String.valueOf(i + 1));
-                td4List.get(1).text(prjprodRec.getStr(ePrjprod.name));
-                td4List.get(2).text(eColor.find(winc.colorID1).getStr(eColor.name));
-                td4List.get(3).text(UCom.format(winc.width(), 2));
-                td4List.get(4).text(UCom.format(winc.height(), 2));
-                td4List.get(5).text(prjprodRec.getStr(ePrjprod.num));
-                td4List.get(6).text(UCom.format(0, 2));
-                td4List.get(7).text(UCom.format(0, 2));
-            }
+            loadTab4(prjprodList, wincList, tab4Elem);
 
+            //Комплектация все
             String template5 = tab5Elem.getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
+            prjkitAll.forEach(act -> tab5Elem.getElementsByTag("tbody").append(template5));
             for (int i = 1; i < prjkitAll.size(); i++) {
-                tab5Elem.getElementsByTag("tbody").append(template5);
+                tab5Elem.getElementsByTag("tbody").append(template4);
             }
-            Elements tr5List = tab5Elem.getElementsByTag("tbody").get(0).getElementsByTag("tr");
-            for (int i = 1; i < prjkitAll.size(); i++) {
-                Record prjkitRec = prjkitAll.get(i);
-                Elements td5List = tr5List.get(i).getElementsByTag("td");
-                Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.artikl_id), true);
-                td5List.get(0).text(String.valueOf(i + 1));
-                td5List.get(1).text(artiklRec.getStr(eArtikl.code));
-                td5List.get(2).text(artiklRec.getStr(eArtikl.name));
-                td5List.get(3).text(eColor.find(prjkitRec.getInt(ePrjkit.color1_id)).getStr(eColor.name));
-                td5List.get(4).text(UCom.format(prjkitRec.getDbl(ePrjkit.width), 2)
-                        + " x " + UCom.format(prjkitRec.getDbl(ePrjkit.height), 2));
-                td5List.get(5).text(prjkitRec.getStr(ePrjkit.numb));
-                td5List.get(6).text(UCom.format(330, 2));
-                td5List.get(7).text(UCom.format(440, 2));
-            }
+            loadTab5(prjkitAll, tab5Elem);
+
             //СЕКЦИЯ №4
             double nds = 18 * total2 / 100; //НДС
             Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
 
-            //trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total1, 9) + " руб.");
             trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total2 + nds, 9) + " руб.");
             trList.get(1).getElementsByTag("td").get(0).text("Сумма прописью : " + MoneyInWords.inwords(total2 + nds));
             trList.get(2).getElementsByTag("td").get(0).text("включая НДС 18% : " + UCom.format(nds, 9) + " руб.");
@@ -323,6 +266,99 @@ public class RSmeta {
             }
         } catch (Exception e) {
             System.err.println("Ошибка:HtmlOfSmeta.load2() " + e);
+        }
+    }
+
+    //Изделие
+    public static void loadTab2(List<Record> prjprodList, List<Record> prjkitAll, Wincalc winc, Elements tab2List, int index) {
+
+        Elements td = tab2List.get(index).getElementsByTag("td");
+        Record prjprodRec = prjprodList.get(index);
+        int count = prjprodRec.getInt(ePrjprod.num);
+        List<Record> prjkitList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
+        prjkitAll.addAll(prjkitList);
+
+        ArrayList<ElemSimple> glassList = UCom.filter(winc.listElem, Type.GLASS);
+        Elements captions2 = tab2List.get(index).getElementsByTag("caption");
+        captions2.get(0).text("Изделие № " + (index + 1));
+        td.get(2).text(prjprodRec.getStr(ePrjprod.name));
+        td.get(4).text(prjprodRec.getStr(ePrjprod.name));
+        td.get(6).text(UCom.format(winc.width() / 1000, 3) + " x " + UCom.format(winc.height() / 1000, 3));
+        td.get(8).text(glassList.get(0).artiklRecAn.getStr(eArtikl.code));
+        td.get(10).text("");
+        td.get(12).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / "
+                + eColor.find(winc.colorID2).getStr(eColor.name) + " / "
+                + eColor.find(winc.colorID3).getStr(eColor.name));
+        td.get(14).text(String.valueOf(count));
+        td.get(16).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
+        td.get(18).text(UCom.format(winc.weight, 2));
+        td.get(20).text(UCom.format(winc.price(1) * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));
+        td.get(22).text(UCom.format(count * winc.price(1), 9));
+        td.get(24).text(UCom.format(count * winc.price(2), 9));
+    }
+
+    //Комплектация к изделию
+    public static void loadTab3(List<Record> prjkitList, Wincalc winc, Elements tab3List, int index) {
+
+        //Цикл по строкам комплектации
+        for (int k = 0; k < prjkitList.size(); k++) {
+
+            Record prjkitRec = prjkitList.get(k);
+            Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.artikl_id), true);
+
+            Elements tr3List = tab3List.get(index).getElementsByTag("tr");
+            Elements td3List = tr3List.get(k + 1).getElementsByTag("td");
+
+            td3List.get(0).text(String.valueOf(k + 1));
+            td3List.get(1).text(artiklRec.getStr(eArtikl.code));
+            td3List.get(2).text(artiklRec.getStr(eArtikl.name));
+            td3List.get(3).text(eColor.find(winc.colorID1).getStr(eColor.name));
+            td3List.get(4).text(UCom.format(prjkitRec.getDbl(ePrjkit.width), 2)
+                    + "x" + UCom.format(prjkitRec.getDbl(ePrjkit.height), 2));
+            td3List.get(5).text(prjkitRec.getStr(ePrjkit.numb));
+            td3List.get(6).text(UCom.format(0, 1));
+            td3List.get(7).text(UCom.format(0, 1));
+        }
+    }
+
+    //Изделия все
+    public static void loadTab4(List<Record> prjprodList, List<Wincalc> wincList, Element tab4Elem) {
+
+        Elements tr4List = tab4Elem.getElementsByTag("tbody").get(0).getElementsByTag("tr");
+
+        for (int i = 0; i < prjprodList.size(); i++) {
+            Record prjprodRec = prjprodList.get(i);
+            Wincalc winc = wincList.get(i);
+            Elements td4List = tr4List.get(i).getElementsByTag("td");
+            td4List.get(0).text(String.valueOf(i + 1));
+            td4List.get(1).text(prjprodRec.getStr(ePrjprod.name));
+            td4List.get(2).text(eColor.find(winc.colorID1).getStr(eColor.name));
+            td4List.get(3).text(UCom.format(winc.width(), 2));
+            td4List.get(4).text(UCom.format(winc.height(), 2));
+            td4List.get(5).text(prjprodRec.getStr(ePrjprod.num));
+            td4List.get(6).text(UCom.format(0, 2));
+            td4List.get(7).text(UCom.format(0, 2));
+        }
+    }
+
+    //Комплектация все
+    public static void loadTab5(List<Record> prjkitAll, Element tab5Elem) {
+
+        Elements tr5List = tab5Elem.getElementsByTag("tbody").get(0).getElementsByTag("tr");
+
+        for (int i = 1; i < prjkitAll.size(); i++) {
+            Record prjkitRec = prjkitAll.get(i);
+            Elements td5List = tr5List.get(i).getElementsByTag("td");
+            Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.artikl_id), true);
+            td5List.get(0).text(String.valueOf(i + 1));
+            td5List.get(1).text(artiklRec.getStr(eArtikl.code));
+            td5List.get(2).text(artiklRec.getStr(eArtikl.name));
+            td5List.get(3).text(eColor.find(prjkitRec.getInt(ePrjkit.color1_id)).getStr(eColor.name));
+            td5List.get(4).text(UCom.format(prjkitRec.getDbl(ePrjkit.width), 2)
+                    + " x " + UCom.format(prjkitRec.getDbl(ePrjkit.height), 2));
+            td5List.get(5).text(prjkitRec.getStr(ePrjkit.numb));
+            td5List.get(6).text(UCom.format(330, 2));
+            td5List.get(7).text(UCom.format(440, 2));
         }
     }
 }
