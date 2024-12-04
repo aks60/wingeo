@@ -149,7 +149,7 @@ public class Tex extends javax.swing.JFrame {
         mn36 = new javax.swing.JMenuItem();
         mn38 = new javax.swing.JPopupMenu.Separator();
         mn37 = new javax.swing.JMenuItem();
-        mn07 = new javax.swing.JMenu();
+        mn10 = new javax.swing.JMenu();
         mn71 = new javax.swing.JMenuItem();
         mn72 = new javax.swing.JMenuItem();
         mn74 = new javax.swing.JPopupMenu.Separator();
@@ -790,19 +790,18 @@ public class Tex extends javax.swing.JFrame {
 
         mn0.add(mn03);
 
-        mn07.setText(bundle.getString("Меню.Заказ")); // NOI18N
-        mn07.setFont(frames.UGui.getFont(1,1));
-        mn07.setPreferredSize(new java.awt.Dimension(67, 19));
+        mn10.setText(bundle.getString("Меню.Заказ")); // NOI18N
+        mn10.setFont(frames.UGui.getFont(1,1));
 
         mn71.setFont(frames.UGui.getFont(0,1));
         mn71.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
-        mn71.setText(bundle.getString("Меню.Контрагенты")); // NOI18N
+        mn71.setText("Конт-ты");
         mn71.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnPartn(evt);
             }
         });
-        mn07.add(mn71);
+        mn10.add(mn71);
 
         mn72.setFont(frames.UGui.getFont(0,1));
         mn72.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
@@ -812,15 +811,15 @@ public class Tex extends javax.swing.JFrame {
                 mnOrder(evt);
             }
         });
-        mn07.add(mn72);
-        mn07.add(mn74);
+        mn10.add(mn72);
+        mn10.add(mn74);
 
         mn75.setFont(frames.UGui.getFont(0,1));
         mn75.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
         mn75.setText(bundle.getString("Пересчитать")); // NOI18N
-        mn07.add(mn75);
+        mn10.add(mn75);
 
-        mn0.add(mn07);
+        mn0.add(mn10);
 
         mn08.setText(bundle.getString("Меню.Отчёты")); // NOI18N
         mn08.setFont(frames.UGui.getFont(1,1));
@@ -1550,9 +1549,9 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     private javax.swing.JMenu mn03;
     private javax.swing.JMenu mn05;
     private javax.swing.JMenu mn06;
-    private javax.swing.JMenu mn07;
     private javax.swing.JMenu mn08;
     private javax.swing.JMenu mn09;
+    private javax.swing.JMenu mn10;
     private javax.swing.JMenuItem mn11;
     private javax.swing.JMenuItem mn12;
     private javax.swing.JSeparator mn13;
