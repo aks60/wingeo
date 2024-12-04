@@ -234,13 +234,12 @@ public class RSmeta {
                     Elements captions3 = tab3List.get(i).getElementsByTag("caption");
                     captions3.get(0).text("Комплектация к изделию № " + (i + 1));
                     String template3 = tab3List.get(i).getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
-                    for (int k = 1; k < prjkitList.size(); k++) {
-                        tab3List.get(i).getElementsByTag("tbody").get(0).append(template3);
-                    }
 
                     //Цикл по строкам комплектации
                     for (int k = 0; k < prjkitList.size(); k++) {
 
+                        tab3List.get(i).getElementsByTag("tbody").get(0).append(template3);
+                        
                         Record prjkitRec = prjkitList.get(k);
                         Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.artikl_id), true);
 
@@ -310,12 +309,12 @@ public class RSmeta {
             double nds = 18 * total2 / 100; //НДС
             Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
 
-            trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total1, 9) + " руб.");
-            trList.get(1).getElementsByTag("td").get(1).text(UCom.format(total2 + nds, 9) + " руб.");
-            trList.get(2).getElementsByTag("td").get(0).text("Сумма прописью : " + MoneyInWords.inwords(total2 + nds));
-            trList.get(3).getElementsByTag("td").get(0).text("включая НДС 18% : " + UCom.format(nds, 9) + " руб.");
+            //trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total1, 9) + " руб.");
+            trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total2 + nds, 9) + " руб.");
+            trList.get(1).getElementsByTag("td").get(0).text("Сумма прописью : " + MoneyInWords.inwords(total2 + nds));
+            trList.get(2).getElementsByTag("td").get(0).text("включая НДС 18% : " + UCom.format(nds, 9) + " руб.");
 
-            trList.get(4).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square / 1000000, 2) + " кв.м.");
+            trList.get(3).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square / 1000000, 2) + " кв.м.");
 
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");
             for (int i = 0; i < imgList.size(); i++) {

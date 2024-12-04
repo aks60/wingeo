@@ -1382,7 +1382,10 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     }//GEN-LAST:event_menuItem22
 
     private void menuItem23(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem23
-        // TODO add your handling code here:
+                int prjprodID = Integer.valueOf(eProp.prjprodID.read());
+                Record prjprodRec = ePrjprod.find(prjprodID);
+                List<Record> prjprodList =  List.of(prjprodRec);
+                new RSmeta().parseDoc2(prjprodList);
     }//GEN-LAST:event_menuItem23
 
     private void menuItem24(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem24
@@ -1451,7 +1454,6 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
             public void actionRequest(Object obj) {
                 //Смета
                 int progectID = Integer.valueOf(eProp.orderID.read());
-                Record prjprodRec = eProject.find(progectID);
                 List<Record> prjprodList = ePrjprod.filter(progectID);
                 new RSmeta().parseDoc2(prjprodList);
             }
