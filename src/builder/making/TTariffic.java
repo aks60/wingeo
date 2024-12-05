@@ -42,7 +42,7 @@ public class TTariffic extends Cal5e {
 
     //Рассчёт конструкции с учётом 
     //всех скидок и наценок
-    public void calc() {
+    public void calculate() {
         try {
             double k9 = percentMarkup(winc); //процентная надбавка на изделия сложной формы
 

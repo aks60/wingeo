@@ -236,7 +236,7 @@ public class Wincalc {
             new builder.making.TElement(this).elem(); //вставки
             new builder.making.TFilling(this).fill(); //заполнения
             new builder.making.TFurniture(this).furn(); //фурнитура 
-            new builder.making.TTariffic(this, norm_otx).calc(); //тарификация
+            new builder.making.TTariffic(this, norm_otx).calculate(); //тарификация
 
             //Заполним список спецификации
             for (ElemSimple elem5e : listElem) {
