@@ -114,14 +114,14 @@ public class TTariffic extends Cal5e {
                     Record systreeRec = eSystree.find(winc.nuni);
                     Record artgrp1Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups1_id));
                     Record artgrp2Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups2_id));
-                    double k1 = artgrp1Rec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
-                    double k2 = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
-                    double k3 = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
+                    double artgrpK1 = artgrp1Rec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
+                    double artgrpK2 = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
+                    double rentabK = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
 
-                    double sbc1 = elem5e.spcRec.sebes1 * k1 * k3;
+                    double sbc1 = elem5e.spcRec.sebes1 * artgrpK1 * rentabK;
                     elem5e.spcRec.sebes2 = sbc1 + k9 * sbc1 / 100; //стоимость за един.изм 
                     elem5e.spcRec.price1 = elem5e.spcRec.sebes2 * elem5e.spcRec.quant2; //стоимость без скидки                     
-                    elem5e.spcRec.price2 = elem5e.spcRec.price1 - k2 * elem5e.spcRec.price1 / 100; //стоимость со скидкой 
+                    elem5e.spcRec.price2 = elem5e.spcRec.price1 - artgrpK2 * elem5e.spcRec.price1 / 100; //стоимость со скидкой 
 
                     //Цикл по детализации
                     for (TRecord spcRec : elem5e.spcRec.spcList) {
@@ -189,11 +189,11 @@ public class TTariffic extends Cal5e {
                     && color2Rec.getInt(eColor.id) == color3Rec.getInt(eColor.id)
                     && isTariff(artdetRec, color2Rec)) {
 
-                double k1 = artdetRec.getDbl(eArtdet.cost_c4); //тариф двухсторонней текстуры
-                double k2 = color2Rec.getDbl(eColor.coef2); //ценовой коэф.внутренний текстуры
-                double k3 = color3Rec.getDbl(eColor.coef3); //ценовой коэф.внешний текстуры
-                double k5 = kursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс 
-                artdetPrice += (k1 * Math.max(k2, k3) / k5);
+                double twocolorK = artdetRec.getDbl(eArtdet.cost_c4); //тариф двухсторонней текстуры
+                double incolorK = color2Rec.getDbl(eColor.coef2); //ценовой коэф.внутренний текстуры
+                double outcolorK = color3Rec.getDbl(eColor.coef3); //ценовой коэф.внешний текстуры
+                double croscursK = kursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс 
+                artdetPrice += (twocolorK * Math.max(incolorK, outcolorK) / croscursK);
 
                 if (isTariff(artdetRec, color1Rec)) { //подбираем тариф основной текстуры
                     double m1 = artdetRec.getDbl(eArtdet.cost_unit); //тариф единица измерения
