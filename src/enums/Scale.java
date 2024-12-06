@@ -9,7 +9,7 @@ import domain.eCurrenc;
 import domain.eGroups;
 import domain.eRulecalc;
 
-//Ценообразование
+//Шкала ценообразования
 public enum Scale {
     systreeK(1, "коэффициент рентабельности"), //SYSTREE 
 

@@ -17,7 +17,6 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import builder.Wincalc;
 import builder.making.TRecord;
-import builder.making.TTariffic;
 import common.UCom;
 import domain.eSysprod;
 import java.awt.Component;
@@ -37,6 +36,7 @@ import frames.swing.DefCellRendererNumb;
 import frames.swing.TableFieldFilter;
 import frames.swing.col.ColumnGroup;
 import frames.swing.col.GroupableTableHeader;
+import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.stream.IntStream;
 import javax.swing.DefaultListCellRenderer;
@@ -76,7 +76,7 @@ public class Specifics extends javax.swing.JFrame {
     }
 
     public void loadingData() {
-        
+
         UGui.stopCellEditingAndExecSql();
         this.listTRec.clear();
         this.listTRec.addAll(winc.listSpec); //добавим спецификацию
@@ -190,6 +190,7 @@ public class Specifics extends javax.swing.JFrame {
 
         ppmTree = new javax.swing.JPopupMenu();
         mnAll = new javax.swing.JMenuItem();
+        ppmTab1 = new javax.swing.JPopupMenu();
         north = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
         btnReport = new javax.swing.JButton();
@@ -484,6 +485,11 @@ public class Specifics extends javax.swing.JFrame {
         });
         tab1.setFillsViewportHeight(true);
         tab1.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tab1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tab1MouseClicked(evt);
+            }
+        });
         scr1.setViewportView(tab1);
         if (tab1.getColumnModel().getColumnCount() > 0) {
             tab1.getColumnModel().getColumn(0).setPreferredWidth(32);
@@ -600,7 +606,7 @@ public class Specifics extends javax.swing.JFrame {
     private void cbxCalcType(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCalcType
 //        ProgressBar.create(this, new ListenerFrame() {
 //            public void actionRequest(Object obj) {
-                btn22Calc(null);
+        btn22Calc(null);
 //            }
 //        });
 
@@ -657,6 +663,23 @@ public class Specifics extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_btn22Calc
 
+    private void tab1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tab1MouseClicked
+        if (evt.getButton() == MouseEvent.BUTTON3) {
+            JTable table = List.of(tab1).stream().filter(it -> it == evt.getSource()).findFirst().get();
+            List.of(tab1).forEach(tab -> tab.setBorder(null));
+            table.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
+
+            JMenuItem jMenuItem = new javax.swing.JMenuItem();
+            jMenuItem.setText("aksenov 1");
+            ppmTab1.add(jMenuItem);
+            jMenuItem = new javax.swing.JMenuItem();
+            jMenuItem.setText("aksenov 2");
+            ppmTab1.add(jMenuItem);
+
+            ppmTab1.show(table, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_tab1MouseClicked
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code">     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn21;
@@ -678,6 +701,7 @@ public class Specifics extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnAll;
     private javax.swing.JPanel north;
     private javax.swing.JPanel pan1;
+    private javax.swing.JPopupMenu ppmTab1;
     private javax.swing.JPopupMenu ppmTree;
     private javax.swing.JScrollPane scr1;
     private javax.swing.JPanel south;
@@ -733,7 +757,7 @@ public class Specifics extends javax.swing.JFrame {
         });
         tab1.getTableHeader().setFont(frames.UGui.getFont(0, 0));
         TableColumnModel cm = tab1.getColumnModel();
-        
+
         ColumnGroup angl = new ColumnGroup("”гол");
         angl.add(cm.getColumn(12));
         angl.add(cm.getColumn(13));
@@ -742,7 +766,7 @@ public class Specifics extends javax.swing.JFrame {
         cost.add(cm.getColumn(21));
         cost.add(cm.getColumn(22));
         cost.add(cm.getColumn(23));
-        
+
         GroupableTableHeader header = (GroupableTableHeader) tab1.getTableHeader();
         header.addColumnGroup(angl);
         header.addColumnGroup(cost);
