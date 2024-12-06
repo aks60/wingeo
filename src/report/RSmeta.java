@@ -367,9 +367,7 @@ public class RSmeta {
                 td5Rec.get(2).text(artiklRec.getStr(eArtikl.name));
                 td5Rec.get(3).text(eColor.find(prjkitRec.colorID1).getStr(eColor.name));
                 td5Rec.get(4).text(UCom.format(prjkitRec.width, 2) + " x " + UCom.format(prjkitRec.height, 2));
-                td5Rec.get(5).text(String.valueOf(prjkitRec.count * countProd));
-                //td5Rec.get(6).text(UCom.format(prjkitRec.sebes2 * prjkitRec.quant2, 2));
-                //td5Rec.get(7).text(UCom.format(prjkitRec.price2, 2));                
+                td5Rec.get(5).text(String.valueOf(prjkitRec.count * countProd));               
                 td5Rec.get(6).text(UCom.format(prjkitRec.sebes2 * prjkitRec.quant2 * prjkitRec.count * countProd, 2));
                 td5Rec.get(7).text(UCom.format(prjkitRec.price2 * prjkitRec.count * countProd, 2));
             }
