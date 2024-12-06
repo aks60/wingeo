@@ -22,7 +22,9 @@ public class TRecord {
     public ElemSimple elem5e = null;  //элемент пораждающий спецификацию (контейнер)
     public Record variantRec = null;  //вариант в конструктиве
     public Record detailRec = null;  //детализация в конструктиве
-    public Record artiklRec = null;  //артикул в детализации конструктива
+    
+    public Record artiklRec = null;  //артикул элемента
+    public Record artdetRec[] = {null, null, null};  //текстуры артикула
 
     public double id = -1; //ID
     public String place = "---";  //Место размешения

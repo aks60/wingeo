@@ -31,7 +31,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import startup.App;
 import common.listener.ListenerFrame;
 import domain.eArtikl;
+import domain.eColor;
+import domain.eGroups;
 import domain.ePrjprod;
+import domain.eSystree;
+import enums.Scale;
 import frames.swing.DefCellRendererNumb;
 import frames.swing.TableFieldFilter;
 import frames.swing.col.ColumnGroup;
@@ -57,6 +61,7 @@ public class Specifics extends javax.swing.JFrame {
     private builder.Wincalc winc = new Wincalc();
     private TableFieldFilter filterTable = null;
     private ArrayList<TRecord> listTRec = new ArrayList<TRecord>();
+    private JMenuItem menuItem = new javax.swing.JMenuItem();
 
     ImageIcon[] image = {new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b063.gif")),
         new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b076.gif")),
@@ -664,19 +669,36 @@ public class Specifics extends javax.swing.JFrame {
     }//GEN-LAST:event_btn22Calc
 
     private void tab1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tab1MouseClicked
+
         if (evt.getButton() == MouseEvent.BUTTON3) {
-            JTable table = List.of(tab1).stream().filter(it -> it == evt.getSource()).findFirst().get();
-            List.of(tab1).forEach(tab -> tab.setBorder(null));
-            table.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
 
-            JMenuItem jMenuItem = new javax.swing.JMenuItem();
-            jMenuItem.setText("aksenov 1");
-            ppmTab1.add(jMenuItem);
-            jMenuItem = new javax.swing.JMenuItem();
-            jMenuItem.setText("aksenov 2");
-            ppmTab1.add(jMenuItem);
+            ppmTab1.removeAll();
+            TRecord record = listTRec.get(UGui.getIndexRec(tab1));
+            Record systreeRec = eSystree.find(winc.nuni);
+            Record artiklRec = record.artiklRec;
+            Record color1Rec = eColor.find(record.colorID1);  //основная
+            Record color2Rec = eColor.find(record.colorID2);  //внутренняя
+            Record color3Rec = eColor.find(record.colorID3);  //внешняя
+            Record colorRec[] = {color1Rec, color2Rec, color3Rec};
+            Record groups1Rec = eGroups.find(color1Rec.getInt(eColor.groups_id));
+            Record groups2Rec = eGroups.find(color2Rec.getInt(eColor.groups_id));
+            Record groups3Rec = eGroups.find(color3Rec.getInt(eColor.groups_id));
+            Record groupsRec[] = {groups1Rec, groups2Rec, groups3Rec};
 
-            ppmTab1.show(table, evt.getX(), evt.getY());
+            Scale.init(winc, artiklRec, record.artdetRec, groupsRec, colorRec, null);
+
+            setText(new JMenuItem(), record.id + " - ИДЕНТИФИКАТОР ЗАПИСИ (PK)");
+            for (int index = 0; index < Scale.values().length; ++index) {
+                
+                Scale scale = Scale.values()[index];
+                if (scale.v == -777) {
+                    setText(new JMenuItem(), scale.s);
+                } else {
+                    setText(new JMenuItem(), scale.v + scale.s);
+                }
+            }
+
+            ppmTab1.show(tab1, evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_tab1MouseClicked
 
@@ -770,6 +792,13 @@ public class Specifics extends javax.swing.JFrame {
         GroupableTableHeader header = (GroupableTableHeader) tab1.getTableHeader();
         header.addColumnGroup(angl);
         header.addColumnGroup(cost);
+    }
+
+    private void setText(JMenuItem comp, Object txt) {
+        //String str = (txt == null) ? "" : txt.toString();
+        //System.out.println(txt);
+        comp.setText(txt.toString());
+        ppmTab1.add(comp);
     }
 
     class DefCellRendererSpc extends DefCellRendererNumb {
