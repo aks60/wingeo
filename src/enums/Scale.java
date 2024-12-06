@@ -9,36 +9,39 @@ import domain.eCurrenc;
 import domain.eGroups;
 import domain.eRulecalc;
 
+//Ценообразование
 public enum Scale {
-    systreeK("коэффициент рентабельности"), //SYSTREE 
+    systreeK(1, "коэффициент рентабельности"), //SYSTREE 
 
-    artiklK("koef. наценка группы мат.ценностей"), //ARTIKL
-    artiklS("проц. скидки группы мат.ценностей"), //ARTIKL
+    artiklK(1, "kоэф. наценки группы мат.ценностей"), //ARTIKL
+    artiklS(0, "проц. скидки группы мат.ценностей"), //ARTIKL
+    artiklW(0, "проц. отхода мат.ценностей"), //ARTIKL
 
-    artdetT1("тариф основн. текстуры"), //ARTDET
-    artdetT2("тариф внутр. текстуры"), //ARTDET 
-    artdetT3("тариф внешн. текстуры"), //ARTDET 
-    artdet2T("тариф двухст. текстуры"), //ARTDET 
-    artdetK("kоэф. ценовой текстуры"), //ARTDET 
+    artdetT1(0, "тариф основн. текстуры"), //ARTDET
+    artdetT2(0, "тариф внутр. текстуры"), //ARTDET 
+    artdetT3(0, "тариф внешн. текстуры"), //ARTDET 
+    artdet2T(0, "тариф двухст. текстуры"), //ARTDET 
+    artdetK(1, "kоэф. ценовой текстуры"), //ARTDET 
 
-    grpcursK1("кросс-курс основной текстуры"), //GROUPS 
-    grpcursK2("кросс-курс неосновных текстур"), //GROUPS 
-    grpcolK("kоэф. группы текстуры"), //GROUPS
-    grpformN("надбавка на изд. сложной формы"), //GROUPS 
+    grpcursK1(1, "коэф. курс валют основной текстуры"), //GROUPS 
+    grpcursK2(1, "коэф. курс валют неосновных текстур"), //GROUPS     
+    grpformN1(0, "проц. наценка на изд. сложной формы"), //GROUPS 
+    grpformN2(0, "проц. наценка на изд. непрямоуг-ми коробками"), //GROUPS 
+    grpcolorK(1, "kоэф. группы текстуры"), //GROUPS
 
-    colorK1("коэф. основной текстуры"), //COLOR 
-    colorK2("коэф. внутренний текстуры"), //COLOR 
-    colorK3("коэф. внешний текстуры"), //COLOR 
+    colorK1(1, "коэф. основной текстуры"), //COLOR 
+    colorK2(1, "коэф. внутренний текстуры"), //COLOR 
+    colorK3(1, "коэф. внешний текстуры"), //COLOR 
 
-    rulecalcK("коэф. правил расчёта"), //RULECALC 
-    rulecalcN("надб. правил расчёта");  //RULECALC 
+    rulecalcK(1, "коэф. правил расчёта"), //RULECALC 
+    rulecalcN(0, "руб. надб. правил расчёта");  //RULECALC 
 
     public double v;
     public String s;
 
-    Scale(String s) {
+    Scale(double v, String s) {
 
-        this.v = 0;
+        this.v = v;
         this.s = s;
     }
 
@@ -63,14 +66,14 @@ public enum Scale {
 
         if (groupsRec != null) {
             if (Type.ARCH == winc.root.type) { //надбавка на изд. сложной формы
-                grpformN.v = eGroups.find(2101).getDbl(eGroups.val);
+                grpformN1.v = eGroups.find(2101).getDbl(eGroups.val);
 
             } else if (Type.RECTANGL != winc.root.type) {
-                grpformN.v = eGroups.find(2104).getDbl(eGroups.val);
+                grpformN1.v = eGroups.find(2104).getDbl(eGroups.val);
             } else {
-                grpformN.v = 0;
+                grpformN1.v = 0;
             }
-            grpcolK.v = groupsRec.getDbl(eGroups.val); //коэф. группы текстур         
+            grpcolorK.v = groupsRec.getDbl(eGroups.val); //коэф. группы текстур         
         }
 
         if (colorRec != null) {
