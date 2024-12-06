@@ -355,7 +355,7 @@ public class RSmeta {
             for (int i = 1; i < prjkitAll.size(); i++) {
 
                 Record prjkitDb = prjkitAll.get(i).detailRec;
-                Record prjprodDb = ePrjprod.find(prjkitDb.getInt(ePrjkit.id));
+                Record prjprodDb = ePrjprod.find(prjkitDb.getInt(ePrjkit.prjprod_id));
                 Object obj = prjprodDb.get(ePrjprod.num);
                 int countProd = (obj == null) ? 1 : Integer.valueOf(String.valueOf(obj));
 

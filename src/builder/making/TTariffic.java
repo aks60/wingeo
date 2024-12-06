@@ -14,17 +14,14 @@ import enums.UseUnit;
 import builder.Wincalc;
 import builder.model.ElemSimple;
 import common.UCom;
-import static common.UCom.round;
 import dataset.Query;
 import domain.eElemdet;
 import domain.eElement;
-import domain.ePrjkit;
-import domain.ePrjprod;
+import enums.Scale;
 import enums.Type;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Расчёт стоимости элементов окна алгоритм см. в UML
@@ -44,7 +41,7 @@ public class TTariffic extends Cal5e {
     //всех скидок и наценок
     public void calculate() {
         try {
-            double k9 = percentMarkup(winc); //процентная надбавка на изделия сложной формы
+            Scale.grpformN.v = percentMarkup(winc); //процентная надбавка на изделия сложной формы
 
             //Расчёт себес-сти за ед.изм. и колич. материала
             //цикл по эдементам конструкции
@@ -114,14 +111,14 @@ public class TTariffic extends Cal5e {
                     Record systreeRec = eSystree.find(winc.nuni);
                     Record artgrp1Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups1_id));
                     Record artgrp2Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups2_id));
-                    double artgrpK1 = artgrp1Rec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
-                    double artgrpK2 = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
-                    double rentabK = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
+                    Scale.artiklK.v = artgrp1Rec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
+                    Scale.artiklS.v = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
+                    Scale.systreeK.v = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
 
-                    double sbc1 = elem5e.spcRec.sebes1 * artgrpK1 * rentabK;
-                    elem5e.spcRec.sebes2 = sbc1 + k9 * sbc1 / 100; //стоимость за един.изм 
+                    double sbc1 = elem5e.spcRec.sebes1 * Scale.artiklK.v * Scale.systreeK.v;
+                    elem5e.spcRec.sebes2 = sbc1 + Scale.grpformN.v * sbc1 / 100; //стоимость за един.изм 
                     elem5e.spcRec.price1 = elem5e.spcRec.sebes2 * elem5e.spcRec.quant2; //стоимость без скидки                     
-                    elem5e.spcRec.price2 = elem5e.spcRec.price1 - artgrpK2 * elem5e.spcRec.price1 / 100; //стоимость со скидкой 
+                    elem5e.spcRec.price2 = elem5e.spcRec.price1 - Scale.artiklS.v * elem5e.spcRec.price1 / 100; //стоимость со скидкой 
 
                     //Цикл по детализации
                     for (TRecord spcRec : elem5e.spcRec.spcList) {
@@ -138,14 +135,14 @@ public class TTariffic extends Cal5e {
 
                         Record artgrp1bRec = eGroups.find(spcRec.artiklRec().getInt(eArtikl.groups1_id));
                         Record artgrp2bRec = eGroups.find(spcRec.artiklRec().getInt(eArtikl.groups2_id));
-                        double m1 = artgrp1bRec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
-                        double m2 = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
-                        double m3 = systreeRec.getDbl(eSystree.coef); //коэф. рентабельности
+                        Scale.artiklK.v = artgrp1bRec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
+                        Scale.artiklS.v = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
+                        Scale.systreeK.v = systreeRec.getDbl(eSystree.coef); //коэф. рентабельности
 
-                        double sbs2 = spcRec.sebes1 * m1 * m3;
-                        spcRec.sebes2 = sbs2 + k9 * sbs2 / 100; //стоимость за един.изм 
+                        double sbs2 = spcRec.sebes1 * Scale.artiklK.v * Scale.systreeK.v;
+                        spcRec.sebes2 = sbs2 + Scale.grpformN.v * sbs2 / 100; //стоимость за един.изм 
                         spcRec.price1 = spcRec.sebes2 * spcRec.quant2; //стоимость без скидки                     
-                        spcRec.price2 = spcRec.price1 - m2 * spcRec.price1 / 100; //стоимость со скидкой 
+                        spcRec.price2 = spcRec.price1 - Scale.artiklS.v * spcRec.price1 / 100; //стоимость со скидкой 
                     }
                 }
             }
@@ -173,8 +170,8 @@ public class TTariffic extends Cal5e {
         Record color2Rec = eColor.find(specificRec.colorID2);  //внутренняя
         Record color3Rec = eColor.find(specificRec.colorID3);  //внешняя
 
-        Record kursBaseRec = eCurrenc.find(specificRec.artiklRec().getInt(eArtikl.currenc1_id));    // кросс-курс валюты для основной текстуры
-        Record kursNoBaseRec = eCurrenc.find(specificRec.artiklRec().getInt(eArtikl.currenc2_id));  // кросс-курс валюты для неосновных текстур (внутренняя, внешняя, двухсторонняя)
+        Record cursYesBaseRec = eCurrenc.find(specificRec.artiklRec().getInt(eArtikl.currenc1_id));    // кросс-курс валюты для основной текстуры
+        Record cursNoBaseRec = eCurrenc.find(specificRec.artiklRec().getInt(eArtikl.currenc2_id));  // кросс-курс валюты для неосновных текстур (внутренняя, внешняя, двухсторонняя)
 
         //Цикл по тарификационной таблице ARTDET мат. ценностей
         for (Record artdetRec : eArtdet.filter(specificRec.artiklRec().getInt(eArtikl.id))) {
@@ -189,11 +186,11 @@ public class TTariffic extends Cal5e {
                     && color2Rec.getInt(eColor.id) == color3Rec.getInt(eColor.id)
                     && isTariff(artdetRec, color2Rec)) {
 
-                double twocolorK = artdetRec.getDbl(eArtdet.cost_c4); //тариф двухсторонней текстуры
-                double incolorK = color2Rec.getDbl(eColor.coef2); //ценовой коэф.внутренний текстуры
-                double outcolorK = color3Rec.getDbl(eColor.coef3); //ценовой коэф.внешний текстуры
-                double croscursK = kursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс 
-                artdetPrice += (twocolorK * Math.max(incolorK, outcolorK) / croscursK);
+                Scale.artdet2T.v = artdetRec.getDbl(eArtdet.cost_c4); //тариф двухсторонней текстуры
+                Scale.colorK2.v = color2Rec.getDbl(eColor.coef2); //ценовой коэф.внутренний текстуры
+                Scale.colorK3.v = color3Rec.getDbl(eColor.coef3); //ценовой коэф.внешний текстуры
+                Scale.grpcursK2.v = cursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс не осн. текст. 
+                artdetPrice += (Scale.artdet2T.v * Math.max(Scale.colorK2.v, Scale.colorK3.v) / Scale.grpcursK2.v);
 
                 if (isTariff(artdetRec, color1Rec)) { //подбираем тариф основной текстуры
                     double m1 = artdetRec.getDbl(eArtdet.cost_unit); //тариф единица измерения
@@ -202,11 +199,11 @@ public class TTariffic extends Cal5e {
                         artdetPrice += m1 * m2;
                     } else {
                         Record colgrpRec = eGroups.find(color1Rec.getInt(eColor.groups_id));
-                        double z1 = artdetRec.getDbl(eArtdet.cost_c1); //тариф основной текстуры"
-                        double z2 = color1Rec.getDbl(eColor.coef1); //ценовой коэф.основной текст.
-                        double z3 = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
-                        double z5 = kursBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
-                        artdetPrice += (z1 * z2 * z3 * z5) / z5;
+                        Scale.artdetT1.v = artdetRec.getDbl(eArtdet.cost_c1); //тариф основной текстуры"
+                        Scale.colorK1.v = color1Rec.getDbl(eColor.coef1); //ценовой коэф.основной текст.
+                        Scale.grpcolK.v = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
+                        Scale.grpcursK1.v = cursYesBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
+                        artdetPrice += (Scale.artdetT1.v * Scale.colorK1.v * Scale.grpcolK.v * Scale.grpcursK1.v) / Scale.grpcursK1.v;
                     }
                 }
                 artdetUsed = true;
@@ -216,31 +213,31 @@ public class TTariffic extends Cal5e {
                 //Подбираем тариф основной текстуры
                 if (isTariff(artdetRec, color1Rec)) {
                     Record colgrpRec = eGroups.find(color1Rec.getInt(eColor.groups_id));
-                    double c1 = artdetRec.getDbl(eArtdet.cost_c1); //тариф основной текстуры
-                    double c2 = color1Rec.getDbl(eColor.coef1); //ценовой коэф.основной текстуры
-                    double c3 = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
-                    double c5 = kursBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
-                    artdetPrice += (c1 * c2 * c3) / c5;
+                    Scale.artdetT1.v = artdetRec.getDbl(eArtdet.cost_c1); //тариф основной текстуры
+                    Scale.colorK1.v = color1Rec.getDbl(eColor.coef1); //ценовой коэф. основной текстуры
+                    Scale.grpcolK.v = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
+                    Scale.grpcursK1.v = cursYesBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
+                    artdetPrice += (Scale.artdetT1.v * Scale.colorK1.v * Scale.grpcolK.v) / Scale.grpcursK1.v;
                     artdetUsed = true;
                 }
                 //Подбираем тариф внутренней текстуры
                 if (isTariff(artdetRec, color2Rec)) {
                     Record colgrpRec = eGroups.find(color2Rec.getInt(eColor.groups_id));
-                    double d1 = artdetRec.getDbl(eArtdet.cost_c2); //тариф внутренний текстуры
-                    double d2 = color2Rec.getDbl(eColor.coef2); //ценовой коэф.внутренний текстуры
-                    double d3 = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
-                    double d5 = kursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
-                    artdetPrice += (d1 * d2 * d3) / d5;
+                    Scale.artdetT2.v = artdetRec.getDbl(eArtdet.cost_c2); //тариф внутренний текстуры
+                    Scale.colorK2.v = color2Rec.getDbl(eColor.coef2); //ценовой коэф. внутренний текстуры
+                    Scale.grpcolK.v = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
+                    Scale.grpcursK2.v = cursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
+                    artdetPrice += (Scale.artdetT2.v * Scale.colorK2.v * Scale.grpcolK.v) / Scale.grpcursK2.v;
                     artdetUsed = true;
                 }
                 //Подбираем тариф внешней текстуры
                 if (isTariff(artdetRec, color3Rec)) {
                     Record colgrpRec = eGroups.find(color3Rec.getInt(eColor.groups_id));
-                    double e1 = artdetRec.getDbl(eArtdet.cost_c3); //Тариф внешний текстуры
-                    double e2 = color3Rec.getDbl(eColor.coef3); //ценовой коэф.внешний текстуры
-                    double e3 = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
-                    double e5 = kursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
-                    artdetPrice += (e1 * e2 * e3) / e5;
+                    Scale.artdetT3.v = artdetRec.getDbl(eArtdet.cost_c3); //тариф внешний текстуры
+                    Scale.colorK3.v = color3Rec.getDbl(eColor.coef3); //ценовой коэф.внешний текстуры
+                    Scale.grpcolK.v = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
+                    Scale.grpcursK2.v = cursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
+                    artdetPrice += (Scale.artdetT3.v * Scale.colorK3.v * Scale.grpcolK.v) / Scale.grpcursK2.v;
                     artdetUsed = true;
                 }
             }
@@ -317,7 +314,9 @@ public class TTariffic extends Cal5e {
                                 }
                             }
                             if (UCom.containsNumbJust(rulecalcRec.getStr(eRulecalc.quant), quantity3) == true) {
-                                spcRec.sebes1 = spcRec.sebes1 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.incr); //увеличение себестоимости в coeff раз и на incr величину надбавки                      
+                                Scale.rulecalcK.v = rulecalcRec.getDbl(eRulecalc.coeff);
+                                Scale.rulecalcN.v = rulecalcRec.getDbl(eRulecalc.incr);
+                                spcRec.sebes1 = spcRec.sebes1 * Scale.rulecalcK.v + Scale.rulecalcN.v; //увеличение себестоимости в coeff раз и на incr величину надбавки                      
                             }
                         }
                     }

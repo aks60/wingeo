@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import dataset.Record;
 import domain.eProject;
+import enums.Scale;
 
 public class Kitcalc {
 
@@ -75,10 +76,10 @@ public class Kitcalc {
                 rec.sebes2 = rec.sebes1  + (rec.waste * rec.sebes1 / 100); //себест. за ед. с отходом 
                 Record artgrp1Rec = eGroups.find(rec.artiklRec().getInt(eArtikl.groups1_id));
                 Record artgrp2Rec = eGroups.find(rec.artiklRec().getInt(eArtikl.groups2_id));
-                double artgrpK1 = artgrp1Rec.getDbl(eGroups.val, 1);  //koef. наценка группы мат.ценностей
-                double artgrpK2 = artgrp2Rec.getDbl(eGroups.val, 0);  //проц. скидки группы мат.ценностей
-                rec.price1 = rec.quant2 * rec.sebes2 * artgrpK1; //стоимость без скидки                     
-                rec.price2 = rec.price1 -  artgrpK2 * rec.price1 / 100; //стоимость со скидкой 
+                Scale.artiklK.v = artgrp1Rec.getDbl(eGroups.val, 1);  //koef. наценка группы мат.ценностей
+                Scale.artiklS.v = artgrp2Rec.getDbl(eGroups.val, 0);  //проц. скидки группы мат.ценностей
+                rec.price1 = rec.quant2 * rec.sebes2 * Scale.artiklK.v; //стоимость без скидки                     
+                rec.price2 = rec.price1 -  Scale.artiklS.v * rec.price1 / 100; //стоимость со скидкой 
                 price1 += rec.price1;
                 price2 += rec.price2;
                 kitList.add(rec);
