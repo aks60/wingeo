@@ -196,6 +196,7 @@ public class Specifics extends javax.swing.JFrame {
         ppmTree = new javax.swing.JPopupMenu();
         mnAll = new javax.swing.JMenuItem();
         ppmTab1 = new javax.swing.JPopupMenu();
+        mmm = new javax.swing.JMenuItem();
         north = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
         btnReport = new javax.swing.JButton();
@@ -226,6 +227,10 @@ public class Specifics extends javax.swing.JFrame {
         mnAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b031.gif"))); // NOI18N
         mnAll.setText("œÓÍ‡Á‡Ú¸ ‚Ò∏");
         ppmTree.add(mnAll);
+
+        mmm.setForeground(new java.awt.Color(51, 0, 255));
+        mmm.setText("jMenuItem1");
+        ppmTab1.add(mmm);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("—ÔÂˆËÙËÍ‡ˆËˇ");
@@ -687,12 +692,21 @@ public class Specifics extends javax.swing.JFrame {
 
             Scale.init(winc, artiklRec, record.artdetRec, groupsRec, colorRec, null);
 
-            setText(new JMenuItem(), record.id + " - »ƒ≈Õ“»‘» ¿“Œ– «¿œ»—» (PK)");
+            JMenuItem mx = new JMenuItem();
+            mx.setForeground(new java.awt.Color(255, 0, 255));
+            setText(mx, "PK = " + record.id + " - »ƒ≈Õ“»‘» ¿“Œ– «¿œ»—»");
             for (int index = 0; index < Scale.values().length; ++index) {
-                
+
                 Scale scale = Scale.values()[index];
+                JMenuItem mi = new JMenuItem();
+
                 if (scale.v == -777) {
-                    setText(new JMenuItem(), scale.s);
+                    mi.setFont(new java.awt.Font("Tahoma", 1, 11));
+                    mi.setForeground(new java.awt.Color(0, 0, 255));
+                    setText(mi, scale.s);
+                } else if (scale.v == -888) {
+                    mi.setForeground(new java.awt.Color(0, 0, 255));
+                    setText(mi, scale.s);
                 } else {
                     setText(new JMenuItem(), scale.v + scale.s);
                 }
@@ -720,6 +734,7 @@ public class Specifics extends javax.swing.JFrame {
     private javax.swing.JPanel centr;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel labSum;
+    private javax.swing.JMenuItem mmm;
     private javax.swing.JMenuItem mnAll;
     private javax.swing.JPanel north;
     private javax.swing.JPanel pan1;
