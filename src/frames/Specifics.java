@@ -701,7 +701,7 @@ public class Specifics extends javax.swing.JFrame {
                 JMenuItem mi = new JMenuItem();
 
                 if (scale.v == -777) {
-                    mi.setFont(new java.awt.Font("Tahoma", 1, 11));
+                    //mi.setFont(new java.awt.Font("Tahoma", 1, 11));
                     mi.setForeground(new java.awt.Color(0, 0, 255));
                     setText(mi, scale.s);
                 } else if (scale.v == -888) {

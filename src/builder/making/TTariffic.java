@@ -48,26 +48,16 @@ public class TTariffic extends Cal5e {
             for (ElemSimple elem5e : winc.listElem) {
                 if (filter(elem5e)) {
 
-                    elem5e.spcRec.sebes1 += artdetPrice(elem5e.spcRec); //себест. по табл. ARTDET и прав.расч.
                     elem5e.spcRec.quant1 = formatAmount(elem5e.spcRec); //количество без отхода  
-
-                    if (norm_otx == false) {
-                        elem5e.spcRec.quant2 = elem5e.spcRec.quant1;  //количество без отхода
-                    } else {
-                        elem5e.spcRec.quant2 = elem5e.spcRec.quant1 + (elem5e.spcRec.quant1 * elem5e.spcRec.waste / 100); //количество с отходом                       
-                    }
-
+                    elem5e.spcRec.quant2 = (norm_otx == true) ? elem5e.spcRec.quant1 + (elem5e.spcRec.quant1 * elem5e.spcRec.waste / 100) : elem5e.spcRec.quant1; //количество с отходом
+                    elem5e.spcRec.sebes1 += artdetPrice(elem5e.spcRec); //себест. по табл. ARTDET и прав.расч.
+                    
                     //Вложенная спецификация
                     //цикл по детализации эдемента
-                    for (TRecord spсRec2 : elem5e.spcRec.spcList) {
-                        spсRec2.sebes1 += artdetPrice(spсRec2); //себест. за ед. без отхода
+                    for (TRecord spсRec2 : elem5e.spcRec.spcList) { 
                         spсRec2.quant1 = formatAmount(spсRec2); //количество без отхода
-
-                        if (norm_otx == false) {
-                            spсRec2.quant2 = spсRec2.quant1; //количество без отхода  
-                        } else {
-                            spсRec2.quant2 = spсRec2.quant1 + (spсRec2.quant1 * spсRec2.waste / 100); //количество с отходом
-                        }
+                        spсRec2.quant2 = (norm_otx == true) ? spсRec2.quant1 + (spсRec2.quant1 * spсRec2.waste / 100) : spсRec2.quant1; //количество с отходом
+                        spсRec2.sebes1 += artdetPrice(spсRec2); //себест. за ед. без отхода
                     }
                 }
             }
@@ -114,9 +104,9 @@ public class TTariffic extends Cal5e {
                     Scale.artiklK.v = artgrp1Rec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
                     Scale.artiklS.v = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                     Scale.systreeK.v = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
-
-                    double sbc1 = elem5e.spcRec.sebes1 * Scale.artiklK.v * Scale.systreeK.v;
-                    elem5e.spcRec.sebes2 = sbc1 + Scale.grpformN1.v * sbc1 / 100; //стоимость за един.изм 
+                    
+                    double sbs1 = elem5e.spcRec.sebes1 * Scale.artiklK.v * Scale.systreeK.v;
+                    elem5e.spcRec.sebes2 = sbs1 + Scale.grpformN1.v * sbs1 / 100; //стоимость за един.изм 
                     elem5e.spcRec.price1 = elem5e.spcRec.sebes2 * elem5e.spcRec.quant2; //стоимость без скидки                     
                     elem5e.spcRec.price2 = elem5e.spcRec.price1 - Scale.artiklS.v * elem5e.spcRec.price1 / 100; //стоимость со скидкой 
 

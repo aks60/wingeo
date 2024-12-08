@@ -342,7 +342,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         if (tab1.getSelectedRow() != -1) {
 
             Record projectRec = qProject.get(UGui.getIndexRec(tab1));
-            lab2.setText("Заказ № " + projectRec.getStr(eProject.num_ord));
+            //lab2.setText("Заказ № " + projectRec.getStr(eProject.num_ord));
             int orderID = qProject.getAs(UGui.getIndexRec(tab1), eProject.id);
             eProp.orderID.write(String.valueOf(orderID));
 
@@ -898,9 +898,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         btnF2 = new javax.swing.JToggleButton();
         btnF3 = new javax.swing.JToggleButton();
         btnTest = new javax.swing.JButton();
-        lab2 = new javax.swing.JLabel();
         btnFind = new javax.swing.JButton();
-        btnReport = new javax.swing.JButton();
+        btnReport = new javax.swing.JToggleButton();
         centr = new javax.swing.JPanel();
         tabb1 = new javax.swing.JTabbedPane();
         pan1 = new javax.swing.JPanel();
@@ -1407,11 +1406,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             }
         });
 
-        lab2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lab2.setText("Заказ №");
-        lab2.setMaximumSize(new java.awt.Dimension(120, 24));
-        lab2.setPreferredSize(new java.awt.Dimension(120, 24));
-
         btnFind.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c090.gif"))); // NOI18N
         btnFind.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
         btnFind.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -1429,18 +1423,16 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         });
 
         btnReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c093.gif"))); // NOI18N
-        btnReport.setToolTipText(bundle.getString("Печать")); // NOI18N
+        btnReport.setText(bundle.getString("Меню.Отчёты")); // NOI18N
         btnReport.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btnReport.setFocusable(false);
-        btnReport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnReport.setMaximumSize(new java.awt.Dimension(25, 25));
+        btnReport.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnReport.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnReport.setMaximumSize(new java.awt.Dimension(80, 250));
         btnReport.setMinimumSize(new java.awt.Dimension(25, 25));
-        btnReport.setPreferredSize(new java.awt.Dimension(25, 25));
-        btnReport.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btnReport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnReport.setPreferredSize(new java.awt.Dimension(80, 25));
         btnReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReport(evt);
+                btnRepor(evt);
             }
         });
 
@@ -1467,9 +1459,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 .addComponent(btnF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(lab2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 356, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 450, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1479,10 +1469,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(northLayout.createSequentialGroup()
                 .addGroup(northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                    .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCalc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFind, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnReport, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(northLayout.createSequentialGroup()
                         .addGroup(northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -1493,8 +1482,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                             .addComponent(btnSet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lab2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -3897,10 +3886,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         }
     }//GEN-LAST:event_colorFromGlass
 
-    private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        ppReport.show(north, btnReport.getX(), btnReport.getY() + 18);
-    }//GEN-LAST:event_btnReport
-
     private void menuItem11(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem11
         ProgressBar.create(Orders.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
@@ -3929,7 +3914,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             public void actionRequest(Object obj) {
                 //Смета
                 Record projectRec = qProject.get(UGui.getIndexRec(tab1));
-                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));                
+                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
                 new RSmeta().parseDoc2(prjprodList);
             }
         });
@@ -4147,6 +4132,10 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         // TODO add your handling code here:
     }//GEN-LAST:event_menuItem26
 
+    private void btnRepor(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRepor
+        ppReport.show(north, btnReport.getX(), btnReport.getY() + 18);
+    }//GEN-LAST:event_btnRepor
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn1;
@@ -4179,7 +4168,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private javax.swing.JToggleButton btnF3;
     private javax.swing.JButton btnFind;
     private javax.swing.JButton btnIns;
-    private javax.swing.JButton btnReport;
+    private javax.swing.JToggleButton btnReport;
     private javax.swing.JButton btnSet;
     private javax.swing.JButton btnTest;
     private javax.swing.ButtonGroup buttonGroup;
@@ -4189,7 +4178,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private javax.swing.JMenu jmenu01;
     private javax.swing.JMenu jmenu02;
     private javax.swing.JLabel lab1;
-    private javax.swing.JLabel lab2;
     private javax.swing.JLabel lab26;
     private javax.swing.JLabel lab27;
     private javax.swing.JLabel lab28;
