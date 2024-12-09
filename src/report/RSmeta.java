@@ -312,7 +312,7 @@ public class RSmeta {
                 td3Rec.get(1).text(artiklRec.getStr(eArtikl.code));
                 td3Rec.get(2).text(artiklRec.getStr(eArtikl.name));
                 td3Rec.get(3).text(eColor.find(winc.colorID1).getStr(eColor.name));
-                td3Rec.get(4).text(UCom.format(prjkitRec.width, 2) + "x" + UCom.format(prjkitRec.height, 2));
+                td3Rec.get(4).text(UCom.dimension(prjkitRec.width, prjkitRec.height, prjkitRec.unit));
                 td3Rec.get(5).text(UCom.format(prjkitRec.quant2 * countProd, 2));
                 td3Rec.get(6).text(UCom.format(prjkitRec.sebes2, 2));
                 td3Rec.get(7).text(UCom.format(prjkitRec.price2 * countProd, 2));
@@ -370,7 +370,7 @@ public class RSmeta {
                 td5Rec.get(1).text(artiklRec.getStr(eArtikl.code));
                 td5Rec.get(2).text(artiklRec.getStr(eArtikl.name));
                 td5Rec.get(3).text(eColor.find(prjkitRec.colorID1).getStr(eColor.name));
-                td5Rec.get(4).text(UCom.format(prjkitRec.width, 2) + " x " + UCom.format(prjkitRec.height, 2));
+                td5Rec.get(4).text(UCom.dimension(prjkitRec.width, prjkitRec.height, prjkitRec.unit));
                 td5Rec.get(5).text(UCom.format(prjkitRec.quant2 * countProd, 2));
                 td5Rec.get(6).text(UCom.format(prjkitRec.sebes2, 2));
                 td5Rec.get(7).text(UCom.format(prjkitRec.price2 * countProd, 2));

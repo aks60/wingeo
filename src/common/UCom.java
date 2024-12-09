@@ -621,4 +621,26 @@ public class UCom {
         }
         return null;
     }
+    
+    
+    /**
+     * Габариты мм.
+     */
+    public static String dimension(double width, double height, int unit) {
+        if (UseUnit.METR.id == unit) { //метры
+            if (width > 0 && height > 0) {
+                return UCom.format(width, 2) + "x" + UCom.format(height, 2);
+            } else {
+                return "";
+            }
+
+        } else if (UseUnit.METR2.id == unit) { //кв. метры
+            if (width > 0 && height > 0) {
+                return UCom.format(width, 2) + "x" + UCom.format(height, 2);
+            } else {
+                return "";
+            }
+        }
+        return "";
+    }
 }
