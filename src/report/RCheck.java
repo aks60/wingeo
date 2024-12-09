@@ -3,7 +3,7 @@ package report;
 import report.sup.RTable;
 import report.sup.ExecuteCmd;
 import builder.Wincalc;
-import common.MoneyInWords;
+import common.UMon;
 import dataset.Record;
 import domain.ePrjpart;
 import domain.ePrjprod;
@@ -127,7 +127,7 @@ public class RCheck {
             {
                 Elements trList = doc.getElementById("tab4").getElementsByTag("tbody").get(0).getElementsByTag("tr");
                 trList.get(0).getElementsByTag("td").get(1).text(df2.format(total));
-                trList.get(1).getElementsByTag("td").get(0).text(MoneyInWords.inwords(total));
+                trList.get(1).getElementsByTag("td").get(0).text(UMon.inwords(total));
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Check.loadDoc1()" + e);
@@ -189,7 +189,7 @@ public class RCheck {
             {
                 Elements trList = doc.getElementById("tab4").getElementsByTag("tbody").get(0).getElementsByTag("tr");
                 trList.get(0).getElementsByTag("td").get(1).text(df2.format(total));
-                trList.get(1).getElementsByTag("td").get(0).text(MoneyInWords.inwords(total));
+                trList.get(1).getElementsByTag("td").get(0).text(UMon.inwords(total));
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Check.loadDoc2()" + e);

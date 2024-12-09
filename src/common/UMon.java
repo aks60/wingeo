@@ -1,7 +1,10 @@
 package common;
 
 // ласс дл€ преобразовани€ double-числа в рубли-копейки прописью
-public class MoneyInWords {
+
+import builder.making.TRecord;
+
+public class UMon {
     private static final String dig1[][] = {{"одна", "две", "три", "четыре", "п€ть", "шесть", "семь", "восемь", "дев€ть"},
                                             {"один", "два"}}; //dig[0] - female, dig[1] - male
     private static final String dig10[]  = {"дес€ть","одиннадцать", "двенадцать", "тринадцать", "четырнадцать", 
@@ -81,5 +84,10 @@ public class MoneyInWords {
             return num2words(num, 1) + " " + skop + " " + leword[0][iw];
         } else 
             return "error: слишком много рублей " + skop + " " + leword[0][iw];
+    }
+    
+    public static double operat(TRecord record) {
+        
+        return 0;
     }
  }
