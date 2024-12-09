@@ -62,8 +62,8 @@ public class RTarget {
         try {
             Query qPrjpart = new Query(ePrjpart.values()).sql(ePrjpart.data(), ePrjpart.id, projectRec.getInt(eProject.prjpart_id));
             qPrjpart.add(ePrjpart.up.newRecord("SEL"));
-            Query qSysuser = new Query(eSysuser.values()).sql(eSysuser.data(), eSysuser.login, qPrjpart.get(0).getInt(ePrjpart.login));
-            qSysuser.add(eSysuser.up.newRecord("SEL"));
+            Query qSysuser = new Query(eSysuser.values()).sql(eSysuser.data(), eSysuser.login, qPrjpart.get(0).getStr(ePrjpart.login));
+            qSysuser.add(eSysuser.up.newRecord("SEL")); //если qSysuser.size() == 0
 
             doc.getElementById("h02").text("Заказ №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
 

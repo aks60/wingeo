@@ -325,7 +325,7 @@ public class Query extends Table {
             if (value instanceof Integer) {
                 addAll(data.stream().filter(rec -> rec.getInt(field) == Integer.valueOf(value.toString())).collect(Collectors.toList()));
             } else if (value instanceof String) {
-                addAll(data.stream().filter(rec -> String.valueOf(value).equals(rec.getStr(field))).collect(Collectors.toList()));
+                addAll(data.stream().filter(rec -> String.valueOf(value).trim().equals(rec.getStr(field).trim())).collect(Collectors.toList()));
             }
         } else {
             select(field.fields()[0], "where", field, "=", value);
