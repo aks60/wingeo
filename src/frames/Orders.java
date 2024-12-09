@@ -307,7 +307,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
         int id = projectRec.getInt(eProject.id);
         qPrjkit.sql(ePrjkit.data(), ePrjkit.project_id, id);
-        qPrjkit.table(eArtikl.up).join(qPrjkit, eArtikl.data(), ePrjkit.artikl_id, eArtikl.id);
+        qPrjkit.table(eArtikl.up).join2(qPrjkit, eArtikl.data(), ePrjkit.artikl_id, eArtikl.id);
         ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
         UGui.setSelectedRow(tab4);
     }
@@ -3428,7 +3428,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 double selectID = winNode.com5t().id;
                 int systreeID = qPrjprod.getAs(UGui.getIndexRec(tab2), ePrjprod.systree_id);
                 Query qSysprof = new Query(eSysprof.values(), eArtikl.values()).sql(eSysprof.data(), eSysprof.systree_id, systreeID);
-                qSysprof.table(eArtikl.up).join(qSysprof, eArtikl.data(), eSysprof.artikl_id, eArtikl.id);
+                qSysprof.table(eArtikl.up).join2(qSysprof, eArtikl.data(), eSysprof.artikl_id, eArtikl.id);
                 Query qSysprof2 = new Query(eSysprof.values(), eArtikl.values());
 
                 //Отфильтруем подходящие по параметрам
@@ -3571,7 +3571,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             double windowsID = winNode.com5t().id;
             int systreeID = qPrjprod.getAs(UGui.getIndexRec(tab2), ePrjprod.systree_id);
             Query qSysfurn = new Query(eSysfurn.values(), eFurniture.values()).sql(eSysfurn.data(), eSysfurn.systree_id, systreeID);
-            qSysfurn.table(eFurniture.up).join(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);
+            qSysfurn.table(eFurniture.up).join2(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);
             new DicName(this, (sysfurnRec) -> {
 
                 GsonElem stvArea = UCom.gson(wincalc().listAll, windowsID);

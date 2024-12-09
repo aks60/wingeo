@@ -214,7 +214,7 @@ public class Elements extends javax.swing.JFrame {
 
             } else {
                 qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
-                qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                qElement.table(eArtikl.up).join2(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
             }
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab2);
@@ -230,7 +230,7 @@ public class Elements extends javax.swing.JFrame {
             Record record = qElement.table(eElement.up).get(index);
             Integer p1 = record.getInt(eElement.id);
             qElemdet.sql(eElemdet.data(), eElemdet.element_id, p1);
-            qElemdet.table(eArtikl.up).join(qElemdet, eArtikl.data(), eElemdet.artikl_id, eArtikl.id);
+            qElemdet.table(eArtikl.up).join2(qElemdet, eArtikl.data(), eElemdet.artikl_id, eArtikl.id);
             qElempar1.sql(eElempar1.data(), eElempar1.element_id, p1);
             ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
             ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();

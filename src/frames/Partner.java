@@ -13,15 +13,17 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import common.listener.ListenerRecord;
 import dataset.Conn;
-import dataset.Field;
 import domain.eSysuser;
 import frames.swing.DefCellRendererBool;
 import frames.swing.TableFieldFilter;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -69,8 +71,10 @@ public class Partner extends javax.swing.JFrame {
 
     public void loadingData() {
         if (Query.conf.equals("NET")) {
-            qPrjpart.join(eSysuser.data(), ePrjpart.data(), eSysuser.login, ePrjpart.login).sort(ePrjpart.npp);
-            qPrjpart.table(eSysuser.up).join(qPrjpart, eSysuser.data(), ePrjpart.login, eSysuser.login);
+
+                //qPrjpart.join(eSysuser.data(), ePrjpart.data(), eSysuser.login, ePrjpart.login).sort(ePrjpart.npp);
+                qPrjpart.sql(ePrjpart.data(), ePrjpart.up);
+                qPrjpart.table(eSysuser.up).join2(qPrjpart, eSysuser.data(), ePrjpart.login, eSysuser.login);
         } else {
             qPrjpart.select(ePrjpart.up, "left join", eSysuser.up, "on", ePrjpart.login, "=", eSysuser.login,
                     "where", ePrjpart.login, "=", eSysuser.login, "order by", ePrjpart.npp);
@@ -1010,9 +1014,8 @@ public class Partner extends javax.swing.JFrame {
                     Record sysuserRec = new Query(eSysuser.values()).sql(eSysuser.data(), eSysuser.login, login).get(0);
                     qPrjpart.table(eSysuser.up).add(sysuserRec);
                     qPrjpart.insert(prjpartRec);
-                   
-                    //loadingData();
 
+                    //loadingData();
                 } catch (Exception e) {
                     System.err.println("Ошибка:Partner.btnInsert() " + e);
                 }
@@ -1035,7 +1038,7 @@ public class Partner extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRemove
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditingAndExecSql(getRootPane());  
+        UGui.stopCellEditingAndExecSql(getRootPane());
         if (owner != null)
             owner.setEnabled(true);
     }//GEN-LAST:event_windowClosed

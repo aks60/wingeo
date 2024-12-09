@@ -488,6 +488,32 @@ public class Query extends Table {
             clear();
             if (field.meta().type() == Field.TYPE.INT && field2.meta().type() == Field.TYPE.INT) {
                 for (Record rec : data) {
+                    for (Record rec2 : data2) {
+                        if (rec.getInt(field) == rec2.getInt(field2)) {
+                            add(rec2);
+                        }
+                    }
+                }
+            } else if (field.meta().type() == Field.TYPE.STR && field2.meta().type() == Field.TYPE.STR) {
+                for (Record rec : data) {
+                    for (Record rec2 : data2) {
+                        if (rec.getStr(field).trim().equals(rec2.getStr(field2).trim())) {
+                            add(rec2);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:Query.join()");
+        }
+        return this;
+    }
+    
+    public Query join2(List<Record> data, List<Record> data2, Field field, Field field2) {
+        try {
+            clear();
+            if (field.meta().type() == Field.TYPE.INT && field2.meta().type() == Field.TYPE.INT) {
+                for (Record rec : data) {
                     boolean f = true;
                     for (Record rec2 : data2) {
                         if (rec.getInt(field) == rec2.getInt(field2)) {
