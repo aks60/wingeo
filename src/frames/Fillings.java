@@ -172,9 +172,9 @@ public class Fillings extends javax.swing.JFrame {
             Record record = qGlasgrp.table(eGlasgrp.up).get(index);
             Integer id = record.getInt(eGlasgrp.id);
             qGlasdet.sql(eGlasdet.data(), eGlasdet.glasgrp_id, id).sort(eGlasdet.depth);
-            qGlasdet.table(eArtikl.up).join2(qGlasdet, eArtikl.data(), eGlasdet.artikl_id, eArtikl.id);
+            qGlasdet.table(eArtikl.up).join(qGlasdet, eArtikl.data(), eGlasdet.artikl_id, eArtikl.id);
             qGlasprof.sql(eGlasprof.data(), eGlasprof.glasgrp_id, id);
-            qGlasprof.table(eArtikl.up).join2(qGlasprof, eArtikl.data(), eGlasprof.artikl_id, eArtikl.id);
+            qGlasprof.table(eArtikl.up).join(qGlasprof, eArtikl.data(), eGlasprof.artikl_id, eArtikl.id);
             qGlaspar1.sql(eGlaspar1.data(), eGlaspar1.glasgrp_id, id);
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
             ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
@@ -410,7 +410,7 @@ public class Fillings extends javax.swing.JFrame {
         for (int index = 0; index < qGlasgrp.size(); index++) {
             int glasgrpID = qGlasgrp.get(index).getInt(eGlasgrp.id);
             qGlasdet2.sql(eGlasdet.data(), eGlasdet.glasgrp_id, glasgrpID).sort(eGlasdet.depth);
-            qGlasdet2.table(eArtikl.up).join2(qGlasdet2, eArtikl.data(), eGlasdet.artikl_id, eArtikl.id);
+            qGlasdet2.table(eArtikl.up).join(qGlasdet2, eArtikl.data(), eGlasdet.artikl_id, eArtikl.id);
             for (int index2 = 0; index2 < qGlasdet2.size(); index2++) {
                 if (qGlasdet2.get(index2).getInt(eGlasdet.id) == deteilID) {
                     UGui.setSelectedIndex(tab1, index);

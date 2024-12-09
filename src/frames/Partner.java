@@ -71,10 +71,9 @@ public class Partner extends javax.swing.JFrame {
 
     public void loadingData() {
         if (Query.conf.equals("NET")) {
-
-                //qPrjpart.join(eSysuser.data(), ePrjpart.data(), eSysuser.login, ePrjpart.login).sort(ePrjpart.npp);
-                qPrjpart.sql(ePrjpart.data(), ePrjpart.up);
-                qPrjpart.table(eSysuser.up).join2(qPrjpart, eSysuser.data(), ePrjpart.login, eSysuser.login);
+            //qPrjpart.sql(eSysuser.data(), ePrjpart.data(), eSysuser.login, ePrjpart.login).sort(ePrjpart.npp);
+            qPrjpart.sql(ePrjpart.data(), ePrjpart.up);
+            qPrjpart.table(eSysuser.up).join(qPrjpart, eSysuser.data(), ePrjpart.login, eSysuser.login);
         } else {
             qPrjpart.select(ePrjpart.up, "left join", eSysuser.up, "on", ePrjpart.login, "=", eSysuser.login,
                     "where", ePrjpart.login, "=", eSysuser.login, "order by", ePrjpart.npp);

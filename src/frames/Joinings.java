@@ -514,7 +514,7 @@ public class Joinings extends javax.swing.JFrame {
                     int joinvar_id = qVar.get(index2).getInt(eJoining.id);
                     //qDet.selects(eJoindet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eJoindet.artikl_id, "where", eJoindet.joinvar_id, "=", joinvar_id, "order by", eJoindet.artikl_id);
                     qDet.sql(eJoindet.data(), eJoindet.joinvar_id, joinvar_id).sort(eJoindet.artikl_id);
-                    qDet.table(eArtikl.up).join2(qDet, eArtikl.data(), eJoindet.artikl_id, eArtikl.id);
+                    qDet.table(eArtikl.up).join(qDet, eArtikl.data(), eJoindet.artikl_id, eArtikl.id);
                     //Цыкл по детализации соединений
                     for (int index3 = 0; index3 < qDet.size(); index3++) {
                         if (qDet.get(index3).getInt(eJoindet.id) == deteilID) {

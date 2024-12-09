@@ -483,7 +483,7 @@ public class Query extends Table {
         return this;
     }
 
-    public Query join(List<Record> data, List<Record> data2, Field field, Field field2) {
+    public Query sql(List<Record> data, List<Record> data2, Field field, Field field2) {
         try {
             clear();
             if (field.meta().type() == Field.TYPE.INT && field2.meta().type() == Field.TYPE.INT) {
@@ -509,7 +509,7 @@ public class Query extends Table {
         return this;
     }
     
-    public Query join2(List<Record> data, List<Record> data2, Field field, Field field2) {
+    public Query join(List<Record> data, List<Record> data2, Field field, Field field2) {
         try {
             clear();
             if (field.meta().type() == Field.TYPE.INT && field2.meta().type() == Field.TYPE.INT) {
@@ -531,6 +531,7 @@ public class Query extends Table {
                     for (Record rec2 : data2) {
                         if (rec.getStr(field).trim().equals(rec2.getStr(field2).trim())) {
                             add(rec2);
+                            f = false;
                         }
                     }
                     if (f) {
