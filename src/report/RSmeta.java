@@ -8,6 +8,7 @@ import builder.making.TRecord;
 import builder.model.ElemSimple;
 import common.MoneyInWords;
 import common.UCom;
+import dataset.Query;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eColor;
@@ -156,9 +157,9 @@ public class RSmeta {
         double square = 0f; //площадь
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
-            Record sysRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
-            Record sysuserRec = (sysRec == null) ? eSysuser.virtualRec() : sysRec;
-
+            Query qSysuser = new Query(eSysuser.values()).sql(eSysuser.data(), eSysuser.login, prjpartRec.getStr(ePrjpart.login));
+            qSysuser.add(eSysuser.up.newRecord("SEL")); //если qSysuser.size() == 0                       
+            Record sysuserRec = qSysuser.get(0);
             doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
 
             //СЕКЦИЯ №1
@@ -168,6 +169,7 @@ public class RSmeta {
                 attr.get(1).text(prjpartRec.getStr(ePrjpart.partner));
                 attr.get(5).text(prjpartRec.getStr(ePrjpart.addr_phone));
                 attr.get(9).text(prjpartRec.getStr(ePrjpart.addr_email));
+                attr.get(13).text("");
 
             } else {//Организация
                 attr.get(1).text(prjpartRec.getStr(ePrjpart.partner));
