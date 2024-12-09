@@ -42,7 +42,7 @@ public enum Scale {
     grpformN1(0, " - проц. наценка на изд. сложной формы"), //GROUPS 
     grpformN2(0, " - проц. наценка на изд. непрямоуг-ми коробками"), //GROUPS 
 
-    separator9(-777, "  ПРАВИЛА РАСЧЁТА: <font size='2' color='black'> (см. Настр.->Цен.коэф.)"),
+    separator9(-777, "<html><font size='3' color='blue'> ПРАВИЛА РАСЧЁТА: <html><font size='2' color='black'> (см. Настр.->Цен.коэф.)"),
     rulecalcK(1, " - коэф. правил расчёта"), //RULECALC 
     rulecalcN(0, " - руб. надб. правил расчёта");  //RULECALC 
 

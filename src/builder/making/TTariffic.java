@@ -54,18 +54,22 @@ public class TTariffic extends Cal5e {
                     
                     //Вложенная спецификация
                     //цикл по детализации эдемента
-                    for (TRecord spсRec2 : elem5e.spcRec.spcList) { 
-                        spсRec2.quant1 = formatAmount(spсRec2); //количество без отхода
-                        spсRec2.quant2 = (norm_otx == true) ? spсRec2.quant1 + (spсRec2.quant1 * spсRec2.waste / 100) : spсRec2.quant1; //количество с отходом
-                        spсRec2.sebes1 += artdetPrice(spсRec2); //себест. за ед. без отхода
+                    for (TRecord spcRec : elem5e.spcRec.spcList) { 
+                        spcRec.quant1 = formatAmount(spcRec); //количество без отхода
+                        spcRec.quant2 = (norm_otx == true) ? spcRec.quant1 + (spcRec.quant1 * spcRec.waste / 100) : spcRec.quant1; //количество с отходом
+                        spcRec.sebes1 += artdetPrice(spcRec); //себест. за ед. без отхода
                     }
                 }
             }
 
-            //Рассчёт с учётом наценок и скидок
+            //Расчёт с учётом наценок и скидок
             //цикл по эдементам конструкции
             for (ElemSimple elem5e : winc.listElem) {
                 if (filter(elem5e)) {
+
+//                    elem5e.spcRec.quant1 = formatAmount(elem5e.spcRec); //количество без отхода  
+//                    elem5e.spcRec.quant2 = (norm_otx == true) ? elem5e.spcRec.quant1 + (elem5e.spcRec.quant1 * elem5e.spcRec.waste / 100) : elem5e.spcRec.quant1; //количество с отходом
+//                    elem5e.spcRec.sebes1 += artdetPrice(elem5e.spcRec); //себест. по табл. ARTDET и прав.расч.
 
                     // <editor-fold defaultstate="collapsed" desc="Правила рассч.">                     
                     //Цикл по правилам расчёта.                 
@@ -112,7 +116,11 @@ public class TTariffic extends Cal5e {
 
                     //Цикл по детализации
                     for (TRecord spcRec : elem5e.spcRec.spcList) {
-
+                        
+//                        spcRec.quant1 = formatAmount(spcRec); //количество без отхода
+//                        spcRec.quant2 = (norm_otx == true) ? spcRec.quant1 + (spcRec.quant1 * spcRec.waste / 100) : spcRec.quant1; //количество с отходом
+//                        spcRec.sebes1 += artdetPrice(spcRec); //себест. за ед. без отхода                        
+                        
                         // <editor-fold defaultstate="collapsed" desc="Правила рассч. вложенные">  
                         //Цикл по правилам расчёта.
                         for (Record rulecalcRec : eRulecalc.filter()) {
@@ -232,9 +240,9 @@ public class TTariffic extends Cal5e {
                     Record colgrpRec = eGroups.find(color3Rec.getInt(eColor.groups_id));
                     Scale.artdetT3.v = artdetRec.getDbl(eArtdet.cost_c3); //тариф внешний текстуры
                     Scale.colorK3.v = color3Rec.getDbl(eColor.coef3); //ценовой коэф.внешний текстуры
-                    Scale.grpcolorK1.v = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
+                    Scale.grpcolorK3.v = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
                     Scale.grpcursK2.v = cursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
-                    artdetPrice += (Scale.artdetT3.v * Scale.colorK3.v * Scale.grpcolorK1.v) / Scale.grpcursK2.v;
+                    artdetPrice += (Scale.artdetT3.v * Scale.colorK3.v * Scale.grpcolorK3.v) / Scale.grpcursK2.v;
                     artdetUsed = true;
                 }
             }
@@ -276,7 +284,7 @@ public class TTariffic extends Cal5e {
 
                         if (rulecalcRec.getInt(eRulecalc.common) == 0) {
                             if (UCom.containsNumbJust(rulecalcRec.getStr(eRulecalc.quant), spcRec.quant2) == true) {
-                                spcRec.sebes1 = spcRec.sebes1 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.incr);  //увеличение себестоимости в coegg раз и на incr величину надбавки
+                                spcRec.sebes1 = spcRec.sebes1 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.incr);  //увеличение себестоимости в coeff раз и на incr величину надбавки
                             }
 
                         } else if (rulecalcRec.getInt(eRulecalc.common) == 1) { //по использованию c расчётом общего количества по артикулу, подтипу, типу

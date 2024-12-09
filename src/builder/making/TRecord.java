@@ -188,7 +188,7 @@ public class TRecord {
         }
     }
 
-    public String toString() {
-        return artikl + " - " + name;
-    }
+//    public String toString() {
+//        return artikl + " - " + name;
+//    }
 }
