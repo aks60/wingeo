@@ -123,8 +123,8 @@ public class RSmeta {
                 tr2List.get(4).getElementsByTag("td").get(1).text(String.valueOf(count));
                 tr2List.get(5).getElementsByTag("td").get(1).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
                 tr2List.get(6).getElementsByTag("td").get(1).text(UCom.format(winc.weight, 2));
-                tr2List.get(7).getElementsByTag("td").get(1).text(UCom.format(winc.price(1), 9));
-                double price2 = winc.price(2) - projectRec.getDbl(eProject.disc2) * winc.price(2) / 100;
+                tr2List.get(7).getElementsByTag("td").get(1).text(UCom.format(winc.price1(), 9));
+                double price2 = winc.price2() - projectRec.getDbl(eProject.disc2) * winc.price2() / 100;
                 tr2List.get(8).getElementsByTag("td").get(1).text(UCom.format(price2, 9));
 
                 total += count * price2;
@@ -202,11 +202,11 @@ public class RSmeta {
                 int countProd = prjprodRec.getInt(ePrjprod.num);
                 Kitcalc.tarifficProd(prjprodRec, winc, true);
 
-                loadTab2(prjprodList, winc, tab2List, i, countProd);
+                loadTab2(projectRec, prjprodList, winc, tab2List, i, countProd);
 
                 //int count = prjprodRec.getInt(ePrjprod.num);
                 Elements td = tab2List.get(i).getElementsByTag("td");
-                total1 += prjprodRec.getInt(ePrjprod.num) * winc.price(2);
+                total1 += prjprodRec.getInt(ePrjprod.num) * winc.price2();
 
                 //Комплектация к изделию
                 if (Kitcalc.kits().isEmpty()) {
@@ -220,11 +220,11 @@ public class RSmeta {
                     }
                     loadTab3(Kitcalc.kits(), winc, tab3List, i, countProd);
                 }
-
-                double price2n = winc.price(2) - projectRec.getDbl(eProject.disc2) * winc.price(2) / 100;
-                td.get(16).text(UCom.format(price2n, 9));
-                total1 += price2n;
-                total2 += countProd * price2n;
+                
+                square += countProd * winc.root.area.getGeometryN(0).getArea();
+                double price3 = winc.price2() - projectRec.getDbl(eProject.disc2) * winc.price2() / 100; //со скидкой менеджера
+                total1 += price3;
+                total2 += countProd * price3;
             }
 
             //СЕКЦИЯ №3
@@ -267,7 +267,7 @@ public class RSmeta {
     }
 
     //Изделие
-    public static void loadTab2(List<Record> prjprodList, Wincalc winc, Elements tab2List, int indexProd, int countProd) {
+    public static void loadTab2(Record projectRec, List<Record> prjprodList, Wincalc winc, Elements tab2List, int indexProd, int countProd) {
         try {
             Elements td = tab2List.get(indexProd).getElementsByTag("td");
             Record prjprodRec = prjprodList.get(indexProd);
@@ -284,12 +284,13 @@ public class RSmeta {
             tr2Rec.get(5).getElementsByTag("td").get(1).text("");
             tr2Rec.get(6).getElementsByTag("td").get(1).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / "
                     + eColor.find(winc.colorID2).getStr(eColor.name) + " / " + eColor.find(winc.colorID3).getStr(eColor.name));
-            tr2Rec.get(7).getElementsByTag("td").get(1).text(String.valueOf(countProd));
+            tr2Rec.get(7).getElementsByTag("td").get(1).text(String.valueOf(countProd));         
             tr2Rec.get(8).getElementsByTag("td").get(1).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
             tr2Rec.get(9).getElementsByTag("td").get(1).text(UCom.format(winc.weight, 2));
-            tr2Rec.get(10).getElementsByTag("td").get(1).text(UCom.format(winc.price(1) * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));
-            tr2Rec.get(11).getElementsByTag("td").get(1).text(UCom.format(countProd * winc.price(1), 9));
-            tr2Rec.get(12).getElementsByTag("td").get(1).text(UCom.format(countProd * winc.price(2), 9));
+            tr2Rec.get(10).getElementsByTag("td").get(1).text(UCom.format(winc.price1() * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));
+            tr2Rec.get(11).getElementsByTag("td").get(1).text(UCom.format(countProd * winc.price1(), 9));
+            double price3 = winc.price2() - projectRec.getDbl(eProject.disc2) * winc.price2() / 100; //со скидкой менеджера
+            tr2Rec.get(12).getElementsByTag("td").get(1).text(UCom.format(countProd * price3, 9));
 
         } catch (Exception e) {
             System.err.println("Ошибка: RSmeta.loadTab2() " + e);
@@ -340,8 +341,8 @@ public class RSmeta {
                 td4Rec.get(3).text(UCom.format(winc.width(), 2));
                 td4Rec.get(4).text(UCom.format(winc.height(), 2));
                 td4Rec.get(5).text(String.valueOf(countProd));
-                td4Rec.get(6).text(UCom.format(winc.price(2), 2));
-                td4Rec.get(7).text(UCom.format(countProd * winc.price(2), 2));
+                td4Rec.get(6).text(UCom.format(winc.price2(), 2));
+                td4Rec.get(7).text(UCom.format(countProd * winc.price2(), 2));
                 total += UCom.getDbl(td4Rec.get(7).text());
             }
             Elements tdFoot = tab4Elem.getElementsByTag("tfoot").get(0).getElementsByTag("td");

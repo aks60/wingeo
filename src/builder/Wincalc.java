@@ -330,8 +330,12 @@ public class Wincalc {
         return root.area.getGeometryN(0).getEnvelopeInternal().getHeight();
     }
 
-    public double price(int index) {
-        return (index == 1) ? price1 : price2;
+    public double price1() {
+        return price1;
+    }
+    
+    public double price2() {
+        return price2;
     }
     // </editor-fold>  
 }

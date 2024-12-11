@@ -778,8 +778,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         double countWin = prjprodRec.getDbl(ePrjprod.num);
                         square = square + countWin * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
                         weight = weight + countWin * win.weight; //вес изделий
-                        price1a = price1a + countWin * win.price(1); //стоимость конструкций без скидки менеджера
-                        price2a = price2a + countWin * win.price(2); //стоимость конструкций со скидкой менеджера
+                        price1a = price1a + countWin * win.price1(); //стоимость конструкций без скидки менеджера
+                        price2a = price2a + countWin * win.price2(); //стоимость конструкций со скидкой менеджера
                     }
                 }
                 //Комплектация
