@@ -9,7 +9,6 @@ import builder.Wincalc;
 import builder.making.TFurniture;
 import builder.making.TJoining;
 import builder.making.TRecord;
-import builder.making.TTariffic;
 import builder.making.UColor;
 import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
@@ -19,7 +18,6 @@ import builder.model.ElemSimple;
 import builder.script.GsonElem;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import common.UCom;
 import dataset.Field;
@@ -3273,8 +3271,21 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 UGui.deleteRecord(tab1);
             }
         } else if (tab2.getBorder() != null) {
-            if (UGui.isDeleteRecord(tab2, this, tab4) == 0) {
-                UGui.deleteRecord(tab2);
+            ImageIcon img = new ImageIcon(this.getClass().getResource("/resource/img24/c014.gif"));
+            if (tab2.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Ни одна из записей не вывыделена", "Предупреждение", JOptionPane.NO_OPTION, img);
+            } else {
+                Record prjprod = qPrjprod.get(UGui.getIndexRec(tab2));
+                long count = qPrjkit.stream().filter(rec -> rec.getInt(ePrjkit.prjprod_id) == prjprod.getInt(ePrjprod.id)).count();
+                if (count == 0) {
+                    if (JOptionPane.showConfirmDialog(this, "Вы действительно хотите удалить текущую запись?", "Подтверждение",
+                             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+                        UGui.deleteRecord(tab2);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Перед удалением записи, удалите данные в зависимых таблицах", 
+                            "Предупреждение", JOptionPane.NO_OPTION, img);
+                }
             }
         } else if (tab4.getBorder() != null) {
             //TODO Если вставить комплект, а потом сразу удалить возникает ошибка

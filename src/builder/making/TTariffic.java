@@ -43,8 +43,8 @@ public class TTariffic extends Cal5e {
         try {
             Scale.grpformN1.v = percentMarkup(winc); //процентная надбавка на изделия сложной формы
 
-            //Расчёт себес-сти за ед.изм. и колич. материала
-            //цикл по эдементам конструкции
+            //Расчёт себес-сти и колич. материала
+            //сделано для подготовки данных для правил расчёта
             for (ElemSimple elem5e : winc.listElem) {
                 if (filter(elem5e)) {
 
@@ -66,10 +66,6 @@ public class TTariffic extends Cal5e {
             //цикл по эдементам конструкции
             for (ElemSimple elem5e : winc.listElem) {
                 if (filter(elem5e)) {
-
-//                    elem5e.spcRec.quant1 = formatAmount(elem5e.spcRec); //количество без отхода  
-//                    elem5e.spcRec.quant2 = (norm_otx == true) ? elem5e.spcRec.quant1 + (elem5e.spcRec.quant1 * elem5e.spcRec.waste / 100) : elem5e.spcRec.quant1; //количество с отходом
-//                    elem5e.spcRec.sebes1 += artdetPrice(elem5e.spcRec); //себест. по табл. ARTDET и прав.расч.
 
                     // <editor-fold defaultstate="collapsed" desc="Правила рассч.">                     
                     //Цикл по правилам расчёта.                 
@@ -101,7 +97,7 @@ public class TTariffic extends Cal5e {
                         }
                     }
                     // </editor-fold> 
-
+                     
                     Record systreeRec = eSystree.find(winc.nuni);
                     Record artgrp1Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups1_id));
                     Record artgrp2Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups2_id));
@@ -116,11 +112,7 @@ public class TTariffic extends Cal5e {
 
                     //Цикл по детализации
                     for (TRecord spcRec : elem5e.spcRec.spcList) {
-                        
-//                        spcRec.quant1 = formatAmount(spcRec); //количество без отхода
-//                        spcRec.quant2 = (norm_otx == true) ? spcRec.quant1 + (spcRec.quant1 * spcRec.waste / 100) : spcRec.quant1; //количество с отходом
-//                        spcRec.sebes1 += artdetPrice(spcRec); //себест. за ед. без отхода                        
-                        
+
                         // <editor-fold defaultstate="collapsed" desc="Правила рассч. вложенные">  
                         //Цикл по правилам расчёта.
                         for (Record rulecalcRec : eRulecalc.filter()) {
@@ -130,7 +122,7 @@ public class TTariffic extends Cal5e {
                             }
                         }
                         // </editor-fold> 
-
+                        
                         Record artgrp1bRec = eGroups.find(spcRec.artiklRec().getInt(eArtikl.groups1_id));
                         Record artgrp2bRec = eGroups.find(spcRec.artiklRec().getInt(eArtikl.groups2_id));
                         Scale.artiklK.v = artgrp1bRec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
@@ -140,7 +132,7 @@ public class TTariffic extends Cal5e {
                         double sbs2 = spcRec.sebes1 * Scale.artiklK.v * Scale.systreeK.v;
                         spcRec.sebes2 = sbs2 + Scale.grpformN1.v * sbs2 / 100; //стоимость за един.изм 
                         spcRec.price1 = spcRec.sebes2 * spcRec.quant2; //стоимость без скидки                     
-                        spcRec.price2 = spcRec.price1 - Scale.artiklS.v * spcRec.price1 / 100; //стоимость со скидкой 
+                        spcRec.price2 = spcRec.price1 - Scale.artiklS.v * spcRec.price1 / 100; //стоимость со скидкой                                   
                     }
                 }
             }
@@ -191,7 +183,6 @@ public class TTariffic extends Cal5e {
                 artdetPrice += (Scale.artdet2T.v * Math.max(Scale.colorK2.v, Scale.colorK3.v) / Scale.grpcursK2.v);
 
                 if (isTariff(artdetRec, color1Rec)) { //подбираем тариф основной текстуры
-                    
                     specificRec.artdetRec[0] = artdetRec;
                     specificRec.artdetRec[1] = artdetRec;
                     specificRec.artdetRec[2] = artdetRec;
@@ -205,7 +196,8 @@ public class TTariffic extends Cal5e {
                         Scale.colorK1.v = color1Rec.getDbl(eColor.coef1); //ценовой коэф.основной текст.
                         Scale.grpcolorK1.v = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
                         Scale.grpcursK1.v = cursYesBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
-                        artdetPrice += (Scale.artdetT1.v * Scale.colorK1.v * Scale.grpcolorK1.v * Scale.grpcursK1.v) / Scale.grpcursK1.v;
+                        
+                        artdetPrice += (Scale.artdetT1.v * Scale.colorK1.v * Scale.grpcolorK1.v * Scale.grpcursK1.v) / Scale.grpcursK1.v;                      
                     }
                 }
                 artdetUsed = true;
@@ -220,6 +212,7 @@ public class TTariffic extends Cal5e {
                     Scale.colorK1.v = color1Rec.getDbl(eColor.coef1); //ценовой коэф. основной текстуры
                     Scale.grpcolorK1.v = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
                     Scale.grpcursK1.v = cursYesBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
+   
                     artdetPrice += (Scale.artdetT1.v * Scale.colorK1.v * Scale.grpcolorK1.v) / Scale.grpcursK1.v;
                     artdetUsed = true;
                 }
@@ -231,6 +224,7 @@ public class TTariffic extends Cal5e {
                     Scale.colorK2.v = color2Rec.getDbl(eColor.coef2); //ценовой коэф. внутренний текстуры
                     Scale.grpcolorK1.v = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
                     Scale.grpcursK2.v = cursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
+                        
                     artdetPrice += (Scale.artdetT2.v * Scale.colorK2.v * Scale.grpcolorK1.v) / Scale.grpcursK2.v;
                     artdetUsed = true;
                 }
@@ -242,7 +236,8 @@ public class TTariffic extends Cal5e {
                     Scale.colorK3.v = color3Rec.getDbl(eColor.coef3); //ценовой коэф.внешний текстуры
                     Scale.grpcolorK3.v = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
                     Scale.grpcursK2.v = cursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
-                    artdetPrice += (Scale.artdetT3.v * Scale.colorK3.v * Scale.grpcolorK3.v) / Scale.grpcursK2.v;
+                        
+                    artdetPrice += (Scale.artdetT3.v * Scale.colorK3.v * Scale.grpcolorK3.v) / Scale.grpcursK2.v;                   
                     artdetUsed = true;
                 }
             }
@@ -258,17 +253,17 @@ public class TTariffic extends Cal5e {
                     if (specificRec.detailRec != null) {
                         Record elementRec = eElement.find(specificRec.detailRec.getInt(eElemdet.element_id));
                         if (elementRec.getDbl(eElement.markup) > 0) {
-                            artdetPrice = artdetPrice + (artdetPrice * (elementRec.getDbl(eElement.markup))) / 100;
+                            artdetPrice = artdetPrice + (artdetPrice * (elementRec.getDbl(eElement.markup))) / 100;                            
                         }
                     }
                 }
                 inPrice = inPrice + (artdetPrice
-                        * artdetRec.getDbl(eArtdet.coef)); //kоэф. текстуры по табл. ARTDET
+                        * artdetRec.getDbl(eArtdet.coef)); //kоэф. текстуры по табл. ARTDET               
             }
         }
         return inPrice;
-    }
-
+    }   
+    
     //Правила расчёта. Фильтр по полю form, color(1,2,3) таблицы RULECALC
     private static void rulecalcPrise(Wincalc winc, Record rulecalcRec, TRecord spcRec) {
 
