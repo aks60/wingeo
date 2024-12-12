@@ -38,7 +38,7 @@ public enum eProject implements Field {
     date6("93", "19", "1", "Дата отпр. в производство", "WDATE"),
     owner("12", "32", "1",  "User", "owner"),
     currenc_id("4", "10", "1", "Валюта", "CNUMB"),
-    vendor_id("4", "10", "1", "Продавец", "vendor_id"), //пока не использую
+    vendor_id("4", "10", "1", "Продавец", "vendor_id"),
     prjpart_id("4", "10", "1", "Контрагент", "prjpart_id"); //Покупатель, дилер, плательщик ...
 
     private MetaField meta = new MetaField(this);

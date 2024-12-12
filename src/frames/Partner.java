@@ -13,7 +13,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import common.listener.ListenerRecord;
 import dataset.Conn;
+import domain.eArtikl;
 import domain.eSysuser;
+import enums.TypeArt;
 import frames.swing.DefCellRendererBool;
 import frames.swing.TableFieldFilter;
 import java.awt.event.MouseEvent;
@@ -28,6 +30,8 @@ import java.util.stream.IntStream;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 
 public class Partner extends javax.swing.JFrame {
 
@@ -47,14 +51,14 @@ public class Partner extends javax.swing.JFrame {
         btnRemove.setVisible(false);
     }
 
-    public Partner(int id) {
+    public Partner(int ID) {
         initComponents();
         initElements();
-        this.prjpartID = id;
         loadingData();
         loadingModel();
         btnChoice.setVisible(false);
         btnRemove.setVisible(false);
+        setSelectionID(ID);
     }
 
     public Partner(Frame owner, ListenerRecord listener) {
@@ -81,11 +85,7 @@ public class Partner extends javax.swing.JFrame {
     }
 
     public void loadingModel() {
-        if (prjpartID != -1) {
-            Record record = ePrjpart.find(prjpartID);
-            qPrjpart.clear();
-            qPrjpart.add(record);
-        }
+        
         new DefTableModel(tab1, qPrjpart, ePrjpart.category, ePrjpart.partner, ePrjpart.login, ePrjpart.flag2);
 
         UGui.buttonCellEditor(tab1, 0).addActionListener(event -> {
@@ -136,6 +136,16 @@ public class Partner extends javax.swing.JFrame {
             tabb1.setSelectedIndex(i);
         }
         rsv.load(index);
+    }
+
+    public void setSelectionID(int ID) {
+        for (int index = 0; index < qPrjpart.size(); ++index) {
+            int id = qPrjpart.getAs(index, ePrjpart.id);
+            if (id == ID) {
+                UGui.setSelectedIndex(tab1, index);
+                UGui.scrollRectToRow(index, tab1);
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")

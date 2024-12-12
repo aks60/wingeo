@@ -152,11 +152,15 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }
 
     public void loadingModel() {
-        new DefTableModel(tab1, qProject, eProject.num_ord, eProject.num_acc, eProject.date4, eProject.date5, eProject.date6, eProject.prjpart_id, eProject.manager) {
+        new DefTableModel(tab1, qProject, eProject.num_ord, eProject.num_acc, eProject.date4, eProject.date5,
+                eProject.date6, eProject.prjpart_id, eProject.vendor_id, eProject.manager) {
             @Override
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
                 if (field == eProject.prjpart_id) {
+                    Record record = qPrjpart.stream().filter(rec -> rec.get(ePrjpart.id).equals(val)).findFirst().orElse(ePrjpart.up.newRecord(Query.SEL));
+                    return record.get(ePrjpart.partner);
+                } else if (field == eProject.vendor_id) {
                     Record record = qPrjpart.stream().filter(rec -> rec.get(ePrjpart.id).equals(val)).findFirst().orElse(ePrjpart.up.newRecord(Query.SEL));
                     return record.get(ePrjpart.partner);
                 }
@@ -556,6 +560,15 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 UGui.stopCellEditing(tab1, tab2, tab3, tab4);
                 Record record2 = qProject.get(UGui.getIndexRec(tab1));
                 record2.set(eProject.prjpart_id, record.getInt(ePrjpart.id));
+                ((DefaultTableModel) tab1.getModel()).fireTableRowsUpdated(tab1.getSelectedRow(), tab1.getSelectedRow());
+            });
+        });
+
+        UGui.buttonCellEditor(tab1, 6).addActionListener(event -> {
+            new Partner(Orders.this, (record) -> {
+                UGui.stopCellEditing(tab1, tab2, tab3, tab4);
+                Record record2 = qProject.get(UGui.getIndexRec(tab1));
+                record2.set(eProject.vendor_id, record.getInt(ePrjpart.id));
                 ((DefaultTableModel) tab1.getModel()).fireTableRowsUpdated(tab1.getSelectedRow(), tab1.getSelectedRow());
             });
         });
@@ -1508,18 +1521,18 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Номер заказа", "Номер счёта", "Дата регистрации", "Дата расчёта", "Дата в произволство", "Контрагент", "User", "ID"
+                "Номер заказа", "Номер счёта", "Дата регистрации", "Дата расчёта", "Дата в произволство", "Контрагент", "Продавец", "User", "ID"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, true, true, true, true, true, false
+                true, true, true, true, true, true, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1549,9 +1562,10 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             tab1.getColumnModel().getColumn(3).setPreferredWidth(80);
             tab1.getColumnModel().getColumn(4).setPreferredWidth(80);
             tab1.getColumnModel().getColumn(5).setPreferredWidth(200);
-            tab1.getColumnModel().getColumn(6).setPreferredWidth(60);
-            tab1.getColumnModel().getColumn(7).setPreferredWidth(40);
-            tab1.getColumnModel().getColumn(7).setMaxWidth(60);
+            tab1.getColumnModel().getColumn(6).setPreferredWidth(200);
+            tab1.getColumnModel().getColumn(7).setPreferredWidth(60);
+            tab1.getColumnModel().getColumn(8).setPreferredWidth(40);
+            tab1.getColumnModel().getColumn(8).setMaxWidth(60);
         }
 
         pan1.add(scr1, java.awt.BorderLayout.CENTER);
@@ -3279,11 +3293,11 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 long count = qPrjkit.stream().filter(rec -> rec.getInt(ePrjkit.prjprod_id) == prjprod.getInt(ePrjprod.id)).count();
                 if (count == 0) {
                     if (JOptionPane.showConfirmDialog(this, "Вы действительно хотите удалить текущую запись?", "Подтверждение",
-                             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
                         UGui.deleteRecord(tab2);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Перед удалением записи, удалите данные в зависимых таблицах", 
+                    JOptionPane.showMessageDialog(this, "Перед удалением записи, удалите данные в зависимых таблицах",
                             "Предупреждение", JOptionPane.NO_OPTION, img);
                 }
             }
@@ -3949,7 +3963,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             public void actionRequest(Object obj) {
                 //Счёт
                 Record projectRec = qProject.get(UGui.getIndexRec(tab1));
-                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));                
+                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
                 new RCheck().parseDoc1(prjprodList);
             }
         });
@@ -3961,7 +3975,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             public void actionRequest(Object obj) {
                 //Счёт-фактура
                 Record projectRec = qProject.get(UGui.getIndexRec(tab1));
-                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));                
+                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
                 new RCheck().parseDoc2(prjprodList);
             }
         });
@@ -4070,10 +4084,10 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }//GEN-LAST:event_ppmActionItems
 
     private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
+        JTable table = List.of(tab1, tab2, tab4).stream().filter(it -> it == evt.getSource()).findFirst().get();
+        List.of(tab1, tab2, tab4).forEach(tab -> tab.setBorder(null));
+        table.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
         if (evt.getButton() == MouseEvent.BUTTON3) {
-            JTable table = List.of(tab1, tab2, tab4).stream().filter(it -> it == evt.getSource()).findFirst().get();
-            List.of(tab1, tab2, tab4).forEach(tab -> tab.setBorder(null));
-            table.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
             ppmCrud.show(table, evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_tabMouseClicked
@@ -4382,18 +4396,28 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ((DefaultMutableTreeNode) model.getRoot()).removeAllChildren();
         model.reload();
         tabb1.addChangeListener(new javax.swing.event.ChangeListener() {
+            
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
 
+                if (tabb1.getSelectedIndex() == 0) {
+                    btnSet.setEnabled(false);
+                    btnIns.setEnabled(true);
+                    btnDel.setEnabled(true);
+                    btnFind.setEnabled(true);
+                }
                 if (tabb1.getSelectedIndex() == 1) {
                     canvas.init(wincalc());  //т.к. при смене вклвдки терятся keyPressed(KeyEvent event)
+                    btnSet.setEnabled(false);
+                    btnIns.setEnabled(false);
+                    btnDel.setEnabled(false);                    
+                    btnFind.setEnabled(false);                    
 
                 } else if (tabb1.getSelectedIndex() == 2) {
                     btnSet.setEnabled(true);
+                    btnIns.setEnabled(true);
+                    btnDel.setEnabled(true);                    
                     btnFind.setEnabled(true);
 
-                } else {
-                    btnSet.setEnabled(false);
-                    btnFind.setEnabled(false);
                 }
             }
         });
