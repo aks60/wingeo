@@ -1463,10 +1463,10 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
         ProgressBar.create(Tex.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                //Îò÷¸ò
+                //Ñ÷¸ò
                 int progectID = Integer.valueOf(eProp.orderID.read());
-                Record prjprodRec = eProject.find(progectID);
-                new RCheck().parseDoc1(prjprodRec);
+                List<Record> prjprodList = ePrjprod.filter(progectID);
+                new RCheck().parseDoc1(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem15
@@ -1475,10 +1475,10 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
         ProgressBar.create(Tex.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                //Îò÷¸ò
+                //Ñ÷¸ò-ôàêòóðà
                 int progectID = Integer.valueOf(eProp.orderID.read());
-                Record prjprodRec = eProject.find(progectID);
-                new RCheck().parseDoc2(prjprodRec);
+                List<Record> prjprodList = ePrjprod.filter(progectID);
+                new RCheck().parseDoc2(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem16

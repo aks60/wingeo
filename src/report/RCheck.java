@@ -38,12 +38,15 @@ public class RCheck {
     private static DecimalFormat df1 = new DecimalFormat("0.0");
     private static DecimalFormat df2 = new DecimalFormat("#0.00");
 
-    public void parseDoc1(Record projectRec) {
+    public void parseDoc1(List<Record> prjprodList) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Check1.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
+            
+            Record prjprodRec = prjprodList.get(0);
+            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));            
 
             //Заполним отчёт
             loadDoc1(projectRec, doc);
@@ -61,12 +64,15 @@ public class RCheck {
         }
     }
 
-    public void parseDoc2(Record projectRec) {
+    public void parseDoc2(List<Record> prjprodList) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Check2.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
+            
+            Record prjprodRec = prjprodList.get(0);
+            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));            
 
             //Заполним отчёт
             loadDoc2(projectRec, doc);
@@ -121,11 +127,13 @@ public class RCheck {
                 Elements tdList = trList.get(i).getElementsByTag("td");
                 Wincalc winc = wincList.get(i);
                 Record prjprodRec = prjprodList.get(i);
+                tdList.get(0).text(String.valueOf(i + 1));
                 tdList.get(1).text(prjprodRec.getStr(ePrjprod.name));
-                //tdList.get(2).text(UseUnit.getName(unit));
+                tdList.get(2).text("шт.");
                 tdList.get(3).text(prjprodRec.getStr(ePrjprod.num));
                 tdList.get(4).text(UCom.format(winc.price2(), 9));
-                tdList.get(5).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price2(), 9));
+                tdList.get(5).text("nds");
+                tdList.get(6).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price2(), 9));
                 total += prjprodRec.getInt(ePrjprod.num) * winc.price2();
             }
             {
@@ -145,7 +153,7 @@ public class RCheck {
             List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Wincalc> wincList = wincList(prjprodList);
 
-            doc.getElementById("h01").text("Счёт №" + projectRec.getStr(eProject.num_acc) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
+            doc.getElementById("h01").text("Счёт-фактура №" + projectRec.getStr(eProject.num_acc) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
 
             //СЕКЦИЯ №2
             {

@@ -3923,7 +3923,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                //Смета
+                //Смета подробная
                 Record projectRec = qProject.get(UGui.getIndexRec(tab1));
                 List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
                 new RSmeta().parseDoc2(prjprodList);
@@ -3935,7 +3935,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                //Отчёт
+                //Смета
                 Record projectRec = qProject.get(UGui.getIndexRec(tab1));
                 List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
                 new RSmeta().parseDoc1(prjprodList);
@@ -3947,8 +3947,10 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                //Отчёт
-                new RCheck().parseDoc1(qProject.get(UGui.getIndexRec(tab1)));
+                //Счёт
+                Record projectRec = qProject.get(UGui.getIndexRec(tab1));
+                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));                
+                new RCheck().parseDoc1(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem15
@@ -3957,8 +3959,10 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ProgressBar.create(Orders.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                //Отчёт
-                new RCheck().parseDoc2(qProject.get(UGui.getIndexRec(tab1)));
+                //Счёт-фактура
+                Record projectRec = qProject.get(UGui.getIndexRec(tab1));
+                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));                
+                new RCheck().parseDoc2(prjprodList);
             }
         });
     }//GEN-LAST:event_menuItem16
