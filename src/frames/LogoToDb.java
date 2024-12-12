@@ -37,13 +37,13 @@ public class LogoToDb extends javax.swing.JDialog {
             }
             connectToDb();
 
-        } else {              
+        } else {
             labMes.setForeground(Color.BLUE);
             labMes.setText("¬ведите логин и пароль");
             edUser.setText(eProp.user.read());
             edPass.requestFocus();
             getRootPane().setDefaultButton(btnOk);
-            
+
 //            if (List.of("SYSDBA", "TEXNOLOG", "MANAGER")
 //                    .contains(eProp.user.read().toUpperCase())) {
 //                //edPass.setText("masterkey");
@@ -106,6 +106,8 @@ public class LogoToDb extends javax.swing.JDialog {
                                 eProp.save();
                                 dispose();
                             }
+                        } else {
+                            pass = eExcep.noUser;
                         }
                     }
                 }

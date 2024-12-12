@@ -618,6 +618,7 @@ public class PSConvert {
             alterTable("syspar1", "fk_syspar2", "groups_id", "groups");
             alterTable("sysprod", "fk_sysprod1", "systree_id", "systree");
             alterTable("project", "fk_project1", "prjpart_id", "prjpart");
+            alterTable("project", "fk_project2", "vendor_id", "prjpart");
             alterTable("prjprod", "fk_prjprod1", "project_id", "project");
             alterTable("prjprod", "fk_prjprod2", "systree_id", "systree");
             alterTable("prjkit", "fk_prjkit1", "prjprod_id", "prjprod");
@@ -681,6 +682,9 @@ public class PSConvert {
             executeSql("create or alter trigger furndet_bd for furndet active before delete position 0 as begin "
                     + "delete from furnpar2 a where a.furndet_id = old.id; "
                     + "delete from furnside2 a where a.furndet_id = old.id; end");
+            executeSql("create or alter trigger prjpart_bd for prjpart active before delete position 0 as begin "
+                    + "update project a set a.vendor_id = null where a.vendor_id = old.id; "
+                    + "update project a set a.prjpart_id = null where a.prjpart_id = old.id; ");
             executeSql("create or alter trigger project_bd for project active before delete position 0 as begin "
                     + "delete from prjkit a where a.project_id = old.id; "
                     + "delete from prjprod a where a.project_id = old.id; end");
