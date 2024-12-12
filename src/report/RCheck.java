@@ -3,11 +3,13 @@ package report;
 import report.sup.RTable;
 import report.sup.ExecuteCmd;
 import builder.Wincalc;
+import common.UCom;
 import common.UMon;
 import dataset.Record;
 import domain.ePrjpart;
 import domain.ePrjprod;
 import domain.eProject;
+import enums.UseUnit;
 import frames.UGui;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -120,14 +122,15 @@ public class RCheck {
                 Wincalc winc = wincList.get(i);
                 Record prjprodRec = prjprodList.get(i);
                 tdList.get(1).text(prjprodRec.getStr(ePrjprod.name));
+                //tdList.get(2).text(UseUnit.getName(unit));
                 tdList.get(3).text(prjprodRec.getStr(ePrjprod.num));
-                tdList.get(4).text(df1.format(winc.price2()));
-                tdList.get(5).text(df1.format(prjprodRec.getInt(ePrjprod.num) * winc.price2()));
+                tdList.get(4).text(UCom.format(winc.price2(), 9));
+                tdList.get(5).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price2(), 9));
                 total += prjprodRec.getInt(ePrjprod.num) * winc.price2();
             }
             {
-                Elements trList = doc.getElementById("tab4").getElementsByTag("tbody").get(0).getElementsByTag("tr");
-                trList.get(0).getElementsByTag("td").get(1).text(df2.format(total));
+                Elements trList = doc.getElementById("tab5").getElementsByTag("tbody").get(0).getElementsByTag("tr");
+                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total, 9) + " руб.");
                 trList.get(1).getElementsByTag("td").get(0).text(UMon.inwords(total));
             }
         } catch (Exception e) {
@@ -188,7 +191,7 @@ public class RCheck {
                 total += cost2 + cost2 / 100 * 18;
             }
             {
-                Elements trList = doc.getElementById("tab4").getElementsByTag("tbody").get(0).getElementsByTag("tr");
+                Elements trList = doc.getElementById("tab5").getElementsByTag("tbody").get(0).getElementsByTag("tr");
                 trList.get(0).getElementsByTag("td").get(1).text(df2.format(total));
                 trList.get(1).getElementsByTag("td").get(0).text(UMon.inwords(total));
             }
