@@ -132,12 +132,12 @@ public class RSmeta {
 
             //СЕКЦИЯ №3
             Kitcalc.tarifficProj(projectRec, new Wincalc(), true);
-            double nds = 18 * (total + Kitcalc.price(2)) / 100; //НДС
+            double nds = 18 * (total + Kitcalc.price2()) / 100; //НДС
             Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
 
             trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total, 9) + " руб."); //всего за изделия
-            trList.get(1).getElementsByTag("td").get(1).text(UCom.format(Kitcalc.price(2), 9) + " руб."); //всего за комплекты
-            trList.get(2).getElementsByTag("td").get(1).text(UCom.format(total + Kitcalc.price(2) + nds, 9) + " руб."); //ИТОГО ПО ЗАКАЗУ 
+            trList.get(1).getElementsByTag("td").get(1).text(UCom.format(Kitcalc.price2(), 9) + " руб."); //всего за комплекты
+            trList.get(2).getElementsByTag("td").get(1).text(UCom.format(total + Kitcalc.price2() + nds, 9) + " руб."); //ИТОГО ПО ЗАКАЗУ 
             trList.get(3).getElementsByTag("td").get(0).text("Сумма прописью : " + UMon.inwords(total + nds));
             trList.get(4).getElementsByTag("td").get(0).text("включая НДС 18% : " + UCom.format(nds, 9) + " руб.");
             trList.get(5).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square / 1000000, 2) + " кв.м.");

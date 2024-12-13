@@ -132,6 +132,7 @@ public class RCheck {
                 tdList.get(2).text("רע.");
                 tdList.get(3).text(prjprodRec.getStr(ePrjprod.num));
                 tdList.get(4).text(UCom.format(winc.price2(), 9));
+                
                 tdList.get(5).text("nds");
                 tdList.get(6).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price2(), 9));
                 total += prjprodRec.getInt(ePrjprod.num) * winc.price2();

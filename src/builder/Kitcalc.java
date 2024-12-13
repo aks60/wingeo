@@ -90,6 +90,8 @@ public class Kitcalc {
                 rec.sebes2 = sbs + Scale.grpformN1.v * sbs / 100; //стоимость за един.изм 
                 rec.price1 = rec.sebes2 * rec.quant2; //стоимость без скидки                     
                 rec.price2 = rec.price1 - Scale.artiklS.v * rec.price1 / 100; //стоимость со скидкой 
+                price1 += rec.price1;
+                price2 += rec.price2;                
                 kitList.add(rec);
             }
         }
@@ -137,8 +139,16 @@ public class Kitcalc {
         return kitList;
     }
 
-    public static double price(int index) {
-        return (index == 1) ? price1 : price2;
+//    public static double price(int index) {
+//        return (index == 1) ? price1 : price2;
+//    }
+    
+    public static double price1() {
+        return price1;
+    }
+    
+    public static double price2() {
+        return price2;
     }
 
 }
