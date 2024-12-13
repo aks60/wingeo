@@ -87,11 +87,10 @@ public class Specifics extends javax.swing.JFrame {
         this.listTRec.addAll(winc.listSpec); //добавим спецификацию
 
         //Если открыл менеджер добавим комплекты
-        Kitcalc.init();
         if (kit == 1) {
             int prjprodID = Integer.valueOf(eProp.prjprodID.read());
             Record prjprodRec = ePrjprod.find(prjprodID);
-            ArrayList<TRecord> listKit = Kitcalc.tarifficProd(prjprodRec, winc, true); //комплекты
+            ArrayList<TRecord> listKit = Kitcalc.tarifficProd(prjprodRec, winc, true, false); //комплекты
             this.listTRec.addAll(listKit);
         }
     }

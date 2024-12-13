@@ -365,7 +365,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         if (index != -1) {
             Record prjprodRec = qPrjprod.get(index);
             eProp.prjprodID.write(prjprodRec.getStr(ePrjprod.id)); //запишем текущий prjprodID в файл
-            App.Top.frame.setTitle(UGui.designTitle());
+            //App.Top.frame.setTitle(UGui.designTitle());
             Object w = prjprodRec.get(ePrjprod.values().length);
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc win = (Wincalc) w;
@@ -395,7 +395,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 //Конструкции
                 if (winNode.com5t().type == enums.Type.RECTANGL || winNode.com5t().type == enums.Type.DOOR || winNode.com5t().type == enums.Type.TRAPEZE || winNode.com5t().type == enums.Type.ARCH) {
                     ((CardLayout) pan8.getLayout()).show(pan8, "card12");
-                    ((TitledBorder) pan12.getBorder()).setTitle(winc.root.type.name);
+                    //((TitledBorder) pan12.getBorder()).setTitle(winc.root.type.name);
                     setText(txt9, eColor.find(winc.colorID1).getStr(eColor.name));
                     setText(txt13, eColor.find(winc.colorID2).getStr(eColor.name));
                     setText(txt14, eColor.find(winc.colorID3).getStr(eColor.name));
@@ -796,7 +796,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     }
                 }
                 //Комплектация
-                ArrayList<TRecord> kitList = Kitcalc.tarifficProj(projectRec, new Wincalc(), true); //комплекты 
+                ArrayList<TRecord> kitList = Kitcalc.tarifficProj(projectRec, new Wincalc(), true, true); //комплекты 
                 price1b = Kitcalc.price1(); //стоимость без скидки
                 price2b = Kitcalc.price2(); //стоимость со скидкой               
 
@@ -885,7 +885,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         sep6 = new javax.swing.JPopupMenu.Separator();
         menuItem26 = new javax.swing.JMenuItem();
         jmenu02 = new javax.swing.JMenu();
-        menuItem12 = new javax.swing.JMenuItem();
+        menuItem27 = new javax.swing.JMenuItem();
         menuItem11 = new javax.swing.JMenuItem();
         menuItem18 = new javax.swing.JMenuItem();
         sep1 = new javax.swing.JPopupMenu.Separator();
@@ -1157,15 +1157,15 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         jmenu02.setText(bundle.getString("Меню.Заказ")); // NOI18N
         jmenu02.setFont(frames.UGui.getFont(0,1));
 
-        menuItem12.setFont(frames.UGui.getFont(0,1));
-        menuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        menuItem12.setText(bundle.getString("Меню.Спецификация")); // NOI18N
-        menuItem12.addActionListener(new java.awt.event.ActionListener() {
+        menuItem27.setFont(frames.UGui.getFont(0,1));
+        menuItem27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
+        menuItem27.setText(bundle.getString("Меню.Спецификация")); // NOI18N
+        menuItem27.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem12(evt);
+                menuItem27ActionPerformed(evt);
             }
         });
-        jmenu02.add(menuItem12);
+        jmenu02.add(menuItem27);
 
         menuItem11.setFont(frames.UGui.getFont(0,1));
         menuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
@@ -3922,17 +3922,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         });
     }//GEN-LAST:event_menuItem11
 
-    private void menuItem12(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem12
-        ProgressBar.create(Orders.this, new ListenerFrame() {
-            public void actionRequest(Object obj) {
-                //Спецификация
-                Record projectRec = qProject.get(UGui.getIndexRec(tab1, 1));
-                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
-                new RSpecific().parseDoc(prjprodList);
-            }
-        });
-    }//GEN-LAST:event_menuItem12
-
     private void menuItem13(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem13
         ProgressBar.create(Orders.this, new ListenerFrame() {
             @Override
@@ -4165,6 +4154,17 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ppReport.show(north, btnReport.getX(), btnReport.getY() + 18);
     }//GEN-LAST:event_btnRepor
 
+    private void menuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem27ActionPerformed
+        ProgressBar.create(Orders.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                //Специфик.
+                Record projectRec = qProject.get(UGui.getIndexRec(tab1));
+                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
+                new RSpecific().parseDoc(prjprodList);
+            }
+        });
+    }//GEN-LAST:event_menuItem27ActionPerformed
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn1;
@@ -4252,7 +4252,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private javax.swing.JMenuItem mDelit;
     private javax.swing.JMenuItem mInsert;
     private javax.swing.JMenuItem menuItem11;
-    private javax.swing.JMenuItem menuItem12;
     private javax.swing.JMenuItem menuItem13;
     private javax.swing.JMenuItem menuItem14;
     private javax.swing.JMenuItem menuItem15;
@@ -4267,6 +4266,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private javax.swing.JMenuItem menuItem24;
     private javax.swing.JMenuItem menuItem25;
     private javax.swing.JMenuItem menuItem26;
+    private javax.swing.JMenuItem menuItem27;
     private javax.swing.JPanel north;
     private javax.swing.JPanel pan1;
     private javax.swing.JPanel pan11;

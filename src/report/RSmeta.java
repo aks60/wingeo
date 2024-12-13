@@ -108,8 +108,8 @@ public class RSmeta {
                 Wincalc winc = wincList.get(i);
                 Record prjprodRec = prjprodList.get(i);
 
-                int count = prjprodRec.getInt(ePrjprod.num);
-                square += count * winc.root.area.getGeometryN(0).getArea();
+                int numProd = prjprodRec.getInt(ePrjprod.num);
+                square += numProd * winc.root.area.getGeometryN(0).getArea();
 
                 //—≈ ÷»ﬂ π2
                 Elements captions2 = tab2List.get(i).getElementsByTag("caption");
@@ -120,18 +120,18 @@ public class RSmeta {
                 tr2List.get(2).getElementsByTag("td").get(1).text(UCom.format(winc.width() / 1000, 2) + " x " + UCom.format(winc.height() / 1000, 2));
                 tr2List.get(3).getElementsByTag("td").get(1).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / "
                         + eColor.find(winc.colorID2).getStr(eColor.name) + " / " + eColor.find(winc.colorID3).getStr(eColor.name));
-                tr2List.get(4).getElementsByTag("td").get(1).text(String.valueOf(count));
+                tr2List.get(4).getElementsByTag("td").get(1).text(String.valueOf(numProd));
                 tr2List.get(5).getElementsByTag("td").get(1).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
                 tr2List.get(6).getElementsByTag("td").get(1).text(UCom.format(winc.weight, 2));
-                tr2List.get(7).getElementsByTag("td").get(1).text(UCom.format(winc.price1(), 9));
+                tr2List.get(7).getElementsByTag("td").get(1).text(UCom.format(winc.price1() * numProd, 9));
                 double price2 = winc.price2() - projectRec.getDbl(eProject.disc2) * winc.price2() / 100;
-                tr2List.get(8).getElementsByTag("td").get(1).text(UCom.format(price2, 9));
+                tr2List.get(8).getElementsByTag("td").get(1).text(UCom.format(price2 * numProd, 9));
 
-                total += count * price2;
+                total += numProd * price2;
             }
 
             //—≈ ÷»ﬂ π3
-            Kitcalc.tarifficProj(projectRec, new Wincalc(), true);
+            Kitcalc.tarifficProj(projectRec, new Wincalc(), true, true);
             double nds = 18 * (total + Kitcalc.price2()) / 100; //Õƒ—
             Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
 
@@ -200,7 +200,7 @@ public class RSmeta {
                 Record prjprodRec = prjprodList.get(i);
                 Wincalc winc = wincList.get(i);
                 int countProd = prjprodRec.getInt(ePrjprod.num);
-                Kitcalc.tarifficProd(prjprodRec, winc, true);
+                Kitcalc.tarifficProd(prjprodRec, winc, true, true);
 
                 loadTab2(projectRec, prjprodList, winc, tab2List, i, countProd);
 
@@ -239,7 +239,7 @@ public class RSmeta {
             loadTab4(prjprodList, wincList, tab4Elem);
 
             // ÓÏÔÎÂÍÚ‡ˆËˇ ‚ÒÂ
-            ArrayList<TRecord> prjkitAllList = Kitcalc.tarifficProj(projectRec, new Wincalc(), true);
+            ArrayList<TRecord> prjkitAllList = Kitcalc.tarifficProj(projectRec, new Wincalc(), true, true);
             String template5 = tab5Elem.getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
             for (int i = 1; i < prjkitAllList.size(); i++) {
                 tab5Elem.getElementsByTag("tbody").append(template5);

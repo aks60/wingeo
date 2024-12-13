@@ -53,14 +53,16 @@ public class RMaterial {
         List<RRecord> spcList = new ArrayList<RRecord>();
         List<TRecord> winSpc = new ArrayList<TRecord>();
         List<TRecord> kitSpc = new ArrayList<TRecord>();
+        Wincalc winc = new Wincalc();
 
         for (Record prjprodRec : prjprodList) {
             String script = prjprodRec.getStr(ePrjprod.script);
-            Wincalc win = new Wincalc(script);
-            win.build(script); //калкул€ци€ 
-            win.specific(true);
-            winSpc.addAll(win.listSpec);
-            kitSpc = Kitcalc.tarifficProd(prjprodRec, win, true); //добавим комплекты
+            if (script.isEmpty() == false) {
+                winc.build(script); //калкул€ци€ 
+                winc.specific(true);
+                winSpc.addAll(winc.listSpec);
+            }
+            kitSpc = Kitcalc.tarifficProd(prjprodRec, winc, true, true); //добавим комплекты
         }
         winSpc.forEach(el -> spcList.add(new RRecord(el)));
         kitSpc.forEach(el -> spcList.add(new RRecord(el)));

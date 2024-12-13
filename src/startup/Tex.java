@@ -168,7 +168,7 @@ public class Tex extends javax.swing.JFrame {
         sep6 = new javax.swing.JPopupMenu.Separator();
         menuItem26 = new javax.swing.JMenuItem();
         jmenu02 = new javax.swing.JMenu();
-        menuItem12 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         menuItem11 = new javax.swing.JMenuItem();
         menuItem18 = new javax.swing.JMenuItem();
         sep1 = new javax.swing.JPopupMenu.Separator();
@@ -919,15 +919,15 @@ public class Tex extends javax.swing.JFrame {
         jmenu02.setText(bundle.getString("Меню.Заказ")); // NOI18N
         jmenu02.setFont(frames.UGui.getFont(0,1));
 
-        menuItem12.setFont(frames.UGui.getFont(0,1));
-        menuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        menuItem12.setText(bundle.getString("Меню.Спецификация")); // NOI18N
-        menuItem12.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem1.setFont(frames.UGui.getFont(0,1));
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
+        jMenuItem1.setText(bundle.getString("Меню.Спецификация")); // NOI18N
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem12(evt);
+                menuItem1(evt);
             }
         });
-        jmenu02.add(menuItem12);
+        jmenu02.add(jMenuItem1);
 
         menuItem11.setFont(frames.UGui.getFont(0,1));
         menuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
@@ -1399,28 +1399,15 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
         // TODO add your handling code here:
     }//GEN-LAST:event_menuItem26
 
-    private void menuItem12(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem12
-        ProgressBar.create(Tex.this, new ListenerFrame() {
-            public void actionRequest(Object obj) {
-                //Спецификация
-                int progectID = Integer.valueOf(eProp.orderID.read());
-                Record prjprodRec = eProject.find(progectID);
-                List<Record> prjprodList =  List.of(prjprodRec);
-                new RSpecific().parseDoc(prjprodList);
-            }
-        });
-    }//GEN-LAST:event_menuItem12
-
     private void menuItem11(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem11
         ProgressBar.create(Tex.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Расход мат.
                 int progectID = Integer.valueOf(eProp.orderID.read());
-                Record prjprodRec = eProject.find(progectID);
-                List<Record> prjprodList =  List.of(prjprodRec);
+                List<Record> prjprodList = ePrjprod.filter(progectID);
                 new RMaterial().parseDoc(prjprodList);
             }
-        });
+        });      
     }//GEN-LAST:event_menuItem11
 
     private void menuItem18(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem18
@@ -1495,6 +1482,18 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
         });
     }//GEN-LAST:event_menuItem17
 
+    private void menuItem1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem1
+          ProgressBar.create(Tex.this, new ListenerFrame() {
+            @Override
+            public void actionRequest(Object obj) {
+                //Специфик.
+                int progectID = Integer.valueOf(eProp.orderID.read());
+                List<Record> prjprodList = ePrjprod.filter(progectID);
+                new RSpecific().parseDoc(prjprodList);
+            }
+        });
+    }//GEN-LAST:event_menuItem1
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn11;
@@ -1525,10 +1524,10 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     private javax.swing.ButtonGroup buttonBaseGroup2;
     private javax.swing.ButtonGroup buttonLookAndFeelGroup;
     private javax.swing.ButtonGroup buttonMenuGroup;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu jmenu01;
     private javax.swing.JMenu jmenu02;
     private javax.swing.JMenuItem menuItem11;
-    private javax.swing.JMenuItem menuItem12;
     private javax.swing.JMenuItem menuItem13;
     private javax.swing.JMenuItem menuItem14;
     private javax.swing.JMenuItem menuItem15;

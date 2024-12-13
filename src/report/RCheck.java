@@ -1,5 +1,6 @@
 package report;
 
+import builder.Kitcalc;
 import report.sup.RTable;
 import report.sup.ExecuteCmd;
 import builder.Wincalc;
@@ -132,10 +133,12 @@ public class RCheck {
                 tdList.get(2).text("רע.");
                 tdList.get(3).text(prjprodRec.getStr(ePrjprod.num));
                 tdList.get(4).text(UCom.format(winc.price2(), 9));
-                
-                tdList.get(5).text("nds");
-                tdList.get(6).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price2(), 9));
-                total += prjprodRec.getInt(ePrjprod.num) * winc.price2();
+                Kitcalc.tarifficProd(prjprodRec, new Wincalc(), true, true);
+                double numProd = prjprodRec.getInt(ePrjprod.num);
+                double nds = 18 * (winc.price2() + Kitcalc.price2()) * numProd / 100;
+                tdList.get(5).text(UCom.format(nds, 2));
+                tdList.get(6).text(UCom.format(numProd * (winc.price2() + Kitcalc.price2()) + nds, 9));
+                total += numProd * (winc.price2() + Kitcalc.price2()) + nds;
             }
             {
                 Elements trList = doc.getElementById("tab5").getElementsByTag("tbody").get(0).getElementsByTag("tr");
