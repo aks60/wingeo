@@ -35,19 +35,15 @@ import org.jsoup.select.Elements;
 //—˜∏Ú
 public class RCheck {
 
-    private static DecimalFormat df0 = new DecimalFormat("0");
-    private static DecimalFormat df1 = new DecimalFormat("0.0");
-    private static DecimalFormat df2 = new DecimalFormat("#0.00");
-
     public void parseDoc1(List<Record> prjprodList) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Check1.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
-            
+
             Record prjprodRec = prjprodList.get(0);
-            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));            
+            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
 
             //«‡ÔÓÎÌËÏ ÓÚ˜∏Ú
             loadDoc1(projectRec, doc);
@@ -71,9 +67,9 @@ public class RCheck {
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
-            
+
             Record prjprodRec = prjprodList.get(0);
-            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));            
+            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
 
             //«‡ÔÓÎÌËÏ ÓÚ˜∏Ú
             loadDoc2(projectRec, doc);
@@ -94,51 +90,75 @@ public class RCheck {
     private static void loadDoc1(Record projectRec, Document doc) {
         double total = 0f;
         try {
-            Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
+            Record prjpart1Rec = ePrjpart.find(projectRec.getInt(eProject.vendor_id));
+            Record prjpart2Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Wincalc> wincList = wincList(prjprodList);
 
             doc.getElementById("h01").text("—˜∏Ú π" + projectRec.getStr(eProject.num_acc) + " ÓÚ '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
+            //—≈ ÷»ﬂ π1
+            {
+                Elements trList = doc.getElementById("tab1").getElementsByTag("tbody").get(0).getElementsByTag("tr");
+                trList.get(0).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.partner));
 
+                if (prjpart1Rec.getInt(ePrjpart.flag2) == 0) {
+                    trList.get(1).getElementsByTag("td").get(1)
+                            .text(prjpart1Rec.getStr(ePrjpart.addr_leve1) + " " + prjpart1Rec.getStr(ePrjpart.addr_leve2));
+                    trList.get(2).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.addr_phone));
+                } else {
+                    trList.get(1).getElementsByTag("td").get(1)
+                            .text(prjpart1Rec.getStr(ePrjpart.addr_leve1) + " " + prjpart1Rec.getStr(ePrjpart.addr_leve2));
+                    trList.get(2).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.addr_phone));
+                }
+                trList.get(4).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.bank_inn));
+                trList.get(5).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.bank_rs));
+                trList.get(6).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.bank_bik));
+                trList.get(7).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.bank_ks));
+                trList.get(8).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.bank_kpp));
+            }
             //—≈ ÷»ﬂ π2
             {
                 Elements trList = doc.getElementById("tab2").getElementsByTag("tbody").get(0).getElementsByTag("tr");
-                trList.get(0).getElementsByTag("td").get(1).text(prjpartRec.getStr(ePrjpart.partner));
-                if (prjpartRec.getInt(ePrjpart.flag2) == 1) {
-                    trList.get(1).getElementsByTag("td").get(1).text(prjpartRec.getStr(ePrjpart.org_leve1)
-                            + " " + prjpartRec.getStr(ePrjpart.org_leve2));
-                    trList.get(2).getElementsByTag("td").get(1).text(prjpartRec.getStr(ePrjpart.org_phone));
+                trList.get(0).getElementsByTag("td").get(1).text(prjpart2Rec.getStr(ePrjpart.partner));
 
+                if (prjpart2Rec.getInt(ePrjpart.flag2) == 0) {
+                    trList.get(1).getElementsByTag("td").get(1)
+                            .text(prjpart2Rec.getStr(ePrjpart.addr_leve1) + " " + prjpart2Rec.getStr(ePrjpart.addr_leve2));
+                    trList.get(2).getElementsByTag("td").get(1).text(prjpart2Rec.getStr(ePrjpart.addr_phone));
                 } else {
-                    trList.get(1).getElementsByTag("td").get(1).text(prjpartRec.getStr(ePrjpart.addr_leve1)
-                            + " " + prjpartRec.getStr(ePrjpart.addr_leve2));
-                    trList.get(2).getElementsByTag("td").get(1).text(prjpartRec.getStr(ePrjpart.addr_phone));
+                    trList.get(1).getElementsByTag("td").get(1)
+                            .text(prjpart2Rec.getStr(ePrjpart.org_leve1) + " " + prjpart2Rec.getStr(ePrjpart.org_leve2));
+                    trList.get(2).getElementsByTag("td").get(1).text(prjpart2Rec.getStr(ePrjpart.org_phone));
                 }
-                trList.get(3).getElementsByTag("td").get(1).text(prjpartRec.getStr(ePrjpart.bank_inn));
+                trList.get(3).getElementsByTag("td").get(1).text(prjpart2Rec.getStr(ePrjpart.bank_inn));
             }
             //—≈ ÷»ﬂ π3
-            String templateRow = doc.getElementById("tab3").getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
-            for (int i = 1; i < prjprodList.size(); i++) {
-                doc.getElementById("tab3").getElementsByTag("tbody").append(templateRow);
-            }
-            //÷ËÍÎ ÔÓ ËÁ‰ÂÎËˇÏ
-            for (int i = 0; i < prjprodList.size(); i++) {
-
+            {
+                String templateRow = doc.getElementById("tab3").getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
+                for (int i = 1; i < prjprodList.size(); i++) {
+                    doc.getElementById("tab3").getElementsByTag("tbody").append(templateRow);
+                }
                 Elements trList = doc.getElementById("tab3").getElementsByTag("tbody").get(0).getElementsByTag("tr");
-                Elements tdList = trList.get(i).getElementsByTag("td");
-                Wincalc winc = wincList.get(i);
-                Record prjprodRec = prjprodList.get(i);
-                tdList.get(0).text(String.valueOf(i + 1));
-                tdList.get(1).text(prjprodRec.getStr(ePrjprod.name));
-                tdList.get(2).text("¯Ú.");
-                tdList.get(3).text(prjprodRec.getStr(ePrjprod.num));
-                tdList.get(4).text(UCom.format(winc.price2(), 9));
-                Kitcalc.tarifficProd(prjprodRec, new Wincalc(), true, true);
-                double numProd = prjprodRec.getInt(ePrjprod.num);
-                double nds = 18 * (winc.price2() + Kitcalc.price2()) * numProd / 100;
-                tdList.get(5).text(UCom.format(nds, 2));
-                tdList.get(6).text(UCom.format(numProd * (winc.price2() + Kitcalc.price2()) + nds, 9));
-                total += numProd * (winc.price2() + Kitcalc.price2()) + nds;
+                //÷ËÍÎ ÔÓ ËÁ‰ÂÎËˇÏ
+                for (int i = 0; i < prjprodList.size(); i++) {
+
+                    Elements tdList = trList.get(i).getElementsByTag("td");
+                    Wincalc winc = wincList.get(i);
+                    Record prjprodRec = prjprodList.get(i);
+                    Kitcalc.tarifficProd(prjprodRec, new Wincalc(), true, true);
+                    double numProd = prjprodRec.getInt(ePrjprod.num);
+                    double nds = 18 * (winc.price2() + Kitcalc.price2()) * numProd / 100;
+                    
+                    tdList.get(0).text(String.valueOf(i + 1));
+                    tdList.get(1).text(prjprodRec.getStr(ePrjprod.name));
+                    tdList.get(2).text("¯Ú.");
+                    tdList.get(3).text(prjprodRec.getStr(ePrjprod.num));
+                    tdList.get(4).text(UCom.format(winc.price2(), 9));
+                    tdList.get(5).text(UCom.format(nds, 2));
+                    tdList.get(6).text(UCom.format(numProd * (winc.price2() + Kitcalc.price2()) + nds, 9));
+                    
+                    total += numProd * (winc.price2() + Kitcalc.price2()) + nds;
+                }
             }
             {
                 Elements trList = doc.getElementById("tab5").getElementsByTag("tbody").get(0).getElementsByTag("tr");
@@ -153,60 +173,82 @@ public class RCheck {
     private static void loadDoc2(Record projectRec, Document doc) {
         double total = 0f;
         try {
-            Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
+            Record prjpart1Rec = ePrjpart.find(projectRec.getInt(eProject.vendor_id));
+            Record prjpart2Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Wincalc> wincList = wincList(prjprodList);
 
             doc.getElementById("h01").text("—˜∏Ú-Ù‡ÍÚÛ‡ π" + projectRec.getStr(eProject.num_acc) + " ÓÚ '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
-
+            //—≈ ÷»ﬂ π1
+            {
+                Elements trList = doc.getElementById("tab1").getElementsByTag("tbody").get(0).getElementsByTag("tr");
+                if (prjpart1Rec.getInt(ePrjpart.flag2) == 1) {
+                    trList.get(0).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.partner));                    
+                    trList.get(1).getElementsByTag("td").get(1)
+                            .text(prjpart1Rec.getStr(ePrjpart.org_leve1) + " " + prjpart1Rec.getStr(ePrjpart.org_leve2));
+                } else {
+                    trList.get(0).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.partner));                   
+                    trList.get(1).getElementsByTag("td").get(1)
+                            .text(prjpart1Rec.getStr(ePrjpart.addr_leve1) + " " + prjpart1Rec.getStr(ePrjpart.addr_leve2));
+                }
+                trList.get(2).getElementsByTag("td").get(1)
+                        .text(prjpart1Rec.getStr(ePrjpart.bank_inn) + " / " + prjpart1Rec.getStr(ePrjpart.bank_kpp));
+            }
             //—≈ ÷»ﬂ π2
             {
                 Elements trList = doc.getElementById("tab1").getElementsByTag("tbody").get(0).getElementsByTag("tr");
-                if (prjpartRec.getInt(ePrjpart.flag2) == 1) {
-                    trList.get(4).getElementsByTag("td").get(1).text(prjpartRec.getStr(ePrjpart.partner)
-                            + " " + prjpartRec.getStr(ePrjpart.org_leve1)
-                            + " " + prjpartRec.getStr(ePrjpart.org_leve2));
-                    trList.get(5).getElementsByTag("td").get(1).text(prjpartRec.getStr(ePrjpart.partner));
-                    trList.get(6).getElementsByTag("td").get(1).text(prjpartRec.getStr(ePrjpart.org_leve1)
-                            + " " + prjpartRec.getStr(ePrjpart.org_leve2));
-
+                if (prjpart2Rec.getInt(ePrjpart.flag2) == 1) {
+                    trList.get(4).getElementsByTag("td").get(1)
+                            .text(prjpart2Rec.getStr(ePrjpart.org_leve1) + " " + prjpart2Rec.getStr(ePrjpart.org_leve2));
+                    trList.get(5).getElementsByTag("td").get(1).text(prjpart2Rec.getStr(ePrjpart.partner));
+                    trList.get(6).getElementsByTag("td").get(1).text(prjpart2Rec.getStr(ePrjpart.org_leve1)
+                            + " " + prjpart2Rec.getStr(ePrjpart.org_leve2));
                 } else {
-                    trList.get(4).getElementsByTag("td").get(1).text(prjpartRec.getStr(ePrjpart.partner)
-                            + " " + prjpartRec.getStr(ePrjpart.addr_leve1)
-                            + " " + prjpartRec.getStr(ePrjpart.addr_leve2));
-                    trList.get(5).getElementsByTag("td").get(1).text(prjpartRec.getStr(ePrjpart.partner));
-                    trList.get(6).getElementsByTag("td").get(1).text(prjpartRec.getStr(ePrjpart.addr_leve1)
-                            + " " + prjpartRec.getStr(ePrjpart.addr_leve2));
+                    trList.get(4).getElementsByTag("td").get(1)
+                            .text(prjpart2Rec.getStr(ePrjpart.addr_leve1) + " " + prjpart2Rec.getStr(ePrjpart.addr_leve2));
+                    trList.get(5).getElementsByTag("td").get(1).text(prjpart2Rec.getStr(ePrjpart.partner));
+                    trList.get(6).getElementsByTag("td").get(1).text(prjpart2Rec.getStr(ePrjpart.addr_leve1)
+                            + " " + prjpart2Rec.getStr(ePrjpart.addr_leve2));
                 }
-                trList.get(7).getElementsByTag("td").get(1).text(prjpartRec.getStr(ePrjpart.bank_inn)
-                        + " / " + prjpartRec.getStr(ePrjpart.bank_kpp));
+                trList.get(7).getElementsByTag("td").get(1)
+                        .text(prjpart2Rec.getStr(ePrjpart.bank_inn) + " / " + prjpart2Rec.getStr(ePrjpart.bank_kpp));
             }
             //—≈ ÷»ﬂ π3
-            String templateRow = doc.getElementById("tab3").getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
-            for (int i = 1; i < prjprodList.size(); i++) {
-                doc.getElementById("tab3").getElementsByTag("tbody").append(templateRow);
-            }
-            //÷ËÍÎ ÔÓ ËÁ‰ÂÎËˇÏ
-            for (int i = 0; i < prjprodList.size(); i++) {
-
+            {
+                String templateRow = doc.getElementById("tab3").getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
+                for (int i = 1; i < prjprodList.size(); i++) {
+                    doc.getElementById("tab3").getElementsByTag("tbody").append(templateRow);
+                }
                 Elements trList = doc.getElementById("tab3").getElementsByTag("tbody").get(0).getElementsByTag("tr");
-                Elements tdList = trList.get(i).getElementsByTag("td");
-                Wincalc winc = wincList.get(i);
-                Record prjprodRec = prjprodList.get(i);
-                tdList.get(1).text(prjprodRec.getStr(ePrjprod.name));
-                tdList.get(3).text(prjprodRec.getStr(ePrjprod.num));
-                tdList.get(4).text(df1.format(winc.price2()));
-                tdList.get(5).text(df1.format(prjprodRec.getInt(ePrjprod.num) * winc.price2()));
-                double cost2 = prjprodRec.getInt(ePrjprod.num) * winc.price2();
-                tdList.get(7).text(df1.format(cost2 / 100 * 18));
-                tdList.get(8).text(df1.format(cost2 + cost2 / 100 * 18));
-                total += cost2 + cost2 / 100 * 18;
+                //÷ËÍÎ ÔÓ ËÁ‰ÂÎËˇÏ
+                for (int i = 0; i < prjprodList.size(); i++) {
+
+                    Elements tdList = trList.get(i).getElementsByTag("td");
+                    Wincalc winc = wincList.get(i);
+                    Record prjprodRec = prjprodList.get(i);
+                    Kitcalc.tarifficProd(prjprodRec, new Wincalc(), true, true);
+                    double numProd = prjprodRec.getInt(ePrjprod.num);
+                    double nds = 18 * (winc.price2() + Kitcalc.price2()) * numProd / 100;
+                    double cost2 = prjprodRec.getInt(ePrjprod.num) * winc.price2();
+                    
+                    tdList.get(0).text(prjprodRec.getStr(ePrjprod.name));
+                    tdList.get(1).text("¯Ú.");
+                    tdList.get(2).text(prjprodRec.getStr(ePrjprod.num));
+                    tdList.get(3).text(UCom.format(winc.price2(), 2));
+                    tdList.get(4).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price2(), 2));
+                    tdList.get(6).text(UCom.format(cost2 / 100 * 18, 2));
+                    tdList.get(7).text(UCom.format(cost2 + cost2 / 100 * 18, 2));
+                    
+                    total += cost2 + cost2 / 100 * 18;
+                }
             }
+            //—≈ ÷»ﬂ π4
             {
                 Elements trList = doc.getElementById("tab5").getElementsByTag("tbody").get(0).getElementsByTag("tr");
-                trList.get(0).getElementsByTag("td").get(1).text(df2.format(total));
+                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total, 2));
                 trList.get(1).getElementsByTag("td").get(0).text(UMon.inwords(total));
             }
+
         } catch (Exception e) {
             System.err.println("Œ¯Ë·Í‡:Check.loadDoc2()" + e);
         }

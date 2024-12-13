@@ -135,7 +135,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     public Orders(boolean menureport) {
         initComponents();
         scene = new Scene(canvas, this, this);
-        btnReport.setVisible(menureport);
+        //btnReport.setVisible(menureport);
         initElements();
         loadingData();
         loadingModel();
@@ -3872,7 +3872,11 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             if (record != null) {
                 ProgressBar.create(this, new ListenerFrame() {
                     public void actionRequest(Object obj) {
-                        App.Partner.createFrame(Orders.this, record.getInt(eProject.prjpart_id));
+                        if (tab1.getSelectedColumn() == 5) {
+                            App.Partner.createFrame(Orders.this, record.getInt(eProject.prjpart_id));
+                        } else {
+                            App.Partner.createFrame(Orders.this, record.getInt(eProject.vendor_id));
+                        }
                     }
                 });
             }
@@ -4396,7 +4400,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         ((DefaultMutableTreeNode) model.getRoot()).removeAllChildren();
         model.reload();
         tabb1.addChangeListener(new javax.swing.event.ChangeListener() {
-            
+
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
 
                 if (tabb1.getSelectedIndex() == 0) {
@@ -4409,13 +4413,13 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     canvas.init(wincalc());  //т.к. при смене вклвдки терятся keyPressed(KeyEvent event)
                     btnSet.setEnabled(false);
                     btnIns.setEnabled(false);
-                    btnDel.setEnabled(false);                    
-                    btnFind.setEnabled(false);                    
+                    btnDel.setEnabled(false);
+                    btnFind.setEnabled(false);
 
                 } else if (tabb1.getSelectedIndex() == 2) {
                     btnSet.setEnabled(true);
                     btnIns.setEnabled(true);
-                    btnDel.setEnabled(true);                    
+                    btnDel.setEnabled(true);
                     btnFind.setEnabled(true);
 
                 }
