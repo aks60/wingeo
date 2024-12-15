@@ -144,8 +144,9 @@ public class LogoToDb extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Авторизация доступа");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
-        setMinimumSize(new java.awt.Dimension(348, 210));
-        setPreferredSize(new java.awt.Dimension(348, 210));
+        setMinimumSize(new java.awt.Dimension(348, 206));
+        setPreferredSize(new java.awt.Dimension(348, 206));
+        setResizable(false);
 
         pan2.setAlignmentX(0.0F);
         pan2.setMinimumSize(new java.awt.Dimension(250, 132));
@@ -169,7 +170,7 @@ public class LogoToDb extends javax.swing.JDialog {
 
         progressBar.setBorder(null);
         progressBar.setFocusable(false);
-        progressBar.setMinimumSize(new java.awt.Dimension(10, 3));
+        progressBar.setMinimumSize(new java.awt.Dimension(10, 2));
         progressBar.setPreferredSize(new java.awt.Dimension(220, 3));
         progressBar.setRequestFocusEnabled(false);
         progressBar.setVerifyInputWhenFocusTarget(false);
@@ -238,7 +239,7 @@ public class LogoToDb extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(labMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pan5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -253,7 +254,8 @@ public class LogoToDb extends javax.swing.JDialog {
 
         getContentPane().add(pan2, java.awt.BorderLayout.CENTER);
 
-        pan4.setPreferredSize(new java.awt.Dimension(175, 46));
+        pan4.setMinimumSize(new java.awt.Dimension(175, 42));
+        pan4.setPreferredSize(new java.awt.Dimension(175, 42));
         pan4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         btnOk.setFont(frames.UGui.getFont(0,0));
