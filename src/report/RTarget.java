@@ -104,7 +104,7 @@ public class RTarget {
 
                 List<TRecord> listSpc = new ArrayList<TRecord>();
                 listSpc.addAll(winc.listSpec);
-                listSpc.addAll(Kitcalc.tarifficProd(prjprodRec, winc, true, true));
+                listSpc.addAll(Kitcalc.tarifficProd(winc, prjprodRec, 0, true, true));
 
                 //“‡·ÎËˆ‡ π2 »«ƒ≈À»≈ –≈ ¬»«»“€  
                 square += winc.root.area.getGeometryN(0).getArea();

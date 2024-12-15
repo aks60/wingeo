@@ -69,7 +69,7 @@ public class RSpecific {
                 winc.specific(true);
                 spcList.addAll(winc.listSpec); //добавим спецификацию
             }
-            List<TRecord> list = Kitcalc.tarifficProd(prjprodRec, winc, true, false); //добавим комплекты
+            List<TRecord> list = Kitcalc.tarifficProd(winc, prjprodRec, 0, true, false); //добавим комплекты
             list.forEach(rec -> kitList.add(new RRecord(rec)));
         }
 

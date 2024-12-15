@@ -145,7 +145,7 @@ public class RCheck {
                     Elements tdList = trList.get(i).getElementsByTag("td");
                     Wincalc winc = wincList.get(i);
                     Record prjprodRec = prjprodList.get(i);
-                    Kitcalc.tarifficProd(prjprodRec, new Wincalc(), true, true);
+                    Kitcalc.tarifficProd(new Wincalc(), prjprodRec, 0, true, true);
                     double numProd = prjprodRec.getInt(ePrjprod.num);
                     double nds = 18 * (winc.price2() + Kitcalc.price2()) * numProd / 100;
                     
@@ -226,7 +226,7 @@ public class RCheck {
                     Elements tdList = trList.get(i).getElementsByTag("td");
                     Wincalc winc = wincList.get(i);
                     Record prjprodRec = prjprodList.get(i);
-                    Kitcalc.tarifficProd(prjprodRec, new Wincalc(), true, true);
+                    Kitcalc.tarifficProd(new Wincalc(), prjprodRec, 0, true, true);
                     double numProd = prjprodRec.getInt(ePrjprod.num);
                     double nds = 18 * (winc.price2() + Kitcalc.price2()) * numProd / 100;
                     double cost2 = prjprodRec.getInt(ePrjprod.num) * winc.price2();

@@ -796,7 +796,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     }
                 }
                 //Комплектация
-                ArrayList<TRecord> kitList = Kitcalc.tarifficProj(projectRec, new Wincalc(), true, true); //комплекты 
+                ArrayList<TRecord> kitList = Kitcalc.tarifficProj(new Wincalc(), projectRec, 0, true, true); //комплекты 
                 price1b = Kitcalc.price1(); //стоимость без скидки
                 price2b = Kitcalc.price2(); //стоимость со скидкой               
 
