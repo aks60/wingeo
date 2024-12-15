@@ -387,7 +387,7 @@ public class RSmeta {
                 total += UCom.getDbl(td5Rec.get(7).text());
             }
             Elements tdFoot = tab5Elem.getElementsByTag("tfoot").get(0).getElementsByTag("td");
-            tdFoot.get(1).text(UCom.format(total, 2));
+            tdFoot.get(1).text(UCom.format(total, 2));  //всего за комплекты
 
         } catch (Exception e) {
             System.err.println("Ошибка: RSmeta.loadTab5() " + e);
