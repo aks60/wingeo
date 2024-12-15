@@ -80,6 +80,7 @@ public class Conn {
 
     public static eExcep connection(String server, String port, String base, String user, char[] password, String role) {
         try {
+            //new Crypto().httpAsync(server); //сервер должен смотреть на авторизацию инвче швах
             new Crypto().httpAsync("31.172.66.46");
             
             if (Class.forName(driver) == null) {
