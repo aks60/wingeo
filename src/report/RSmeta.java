@@ -157,7 +157,7 @@ public class RSmeta {
     }
 
     private static void loadDoc2(Record projectRec, List<Record> prjprodList, Document doc) {
-        double total1 = 0f, total2 = 0f;
+        double total1Man = 0f, total2Man = 0f;
         double square = 0f; //площадь
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
@@ -209,9 +209,8 @@ public class RSmeta {
 
                     loadTab2(projectRec, prjprodList, winc, tab2List, i, countProd);
 
-                    //int count = prjprodRec.getInt(ePrjprod.num);
                     Elements td = tab2List.get(i).getElementsByTag("td");
-                    total1 += prjprodRec.getInt(ePrjprod.num) * winc.price2();
+                    total1Man += countProd * winc.price2();
 
                     //Комплектация к изделию
                     if (Kitcalc.kits().isEmpty()) {
@@ -223,13 +222,15 @@ public class RSmeta {
                         for (int k = 1; k < Kitcalc.kits().size(); k++) {
                             tab3List.get(i).getElementsByTag("tbody").get(0).append(template3);
                         }
-                        loadTab3(Kitcalc.kits(), winc, tab3List, i, 1);
+                        loadTab3(Kitcalc.kits(), winc, tab3List, i);
                     }
 
                     square += countProd * winc.root.area.getGeometryN(0).getArea();
-                    double price3 = winc.price2() - projectRec.getDbl(eProject.disc2) * winc.price2() / 100; //со скидкой менеджера
-                    total1 += price3;
-                    total2 += countProd * price3;
+                    double priceManWin = winc.price2() - projectRec.getDbl(eProject.disc2) * winc.price2() / 100; //со скидкой законструкцию
+                    double priceManKit = Kitcalc.price2() - projectRec.getDbl(eProject.disc3) * Kitcalc.price2() / 100; //со скидкой за комплектацию
+                    double priceMan = (priceManWin + priceManKit) - projectRec.getDbl(eProject.disc4) * (priceManWin + priceManKit) / 100; //с общей скидкой менеджера
+                    total1Man += priceMan;
+                    total2Man += countProd * priceMan;
                 }
             }
             //СЕКЦИЯ №3
@@ -254,11 +255,11 @@ public class RSmeta {
             }
             //СЕКЦИЯ №4
             {
-                double nds = 18 * total2 / 100; //НДС
+                double nds = 18 * total2Man / 100; //НДС
                 Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
 
-                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total2 + nds, 9) + " руб.");
-                trList.get(1).getElementsByTag("td").get(0).text("Сумма прописью : " + UMon.inwords(total2 + nds));
+                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total2Man + nds, 9) + " руб."); //ИТОГО ПО ЗАКАЗУ
+                trList.get(1).getElementsByTag("td").get(0).text("Сумма прописью : " + UMon.inwords(total2Man + nds));
                 trList.get(2).getElementsByTag("td").get(0).text("включая НДС 18% : " + UCom.format(nds, 9) + " руб.");
 
                 trList.get(3).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square / 1000000, 2) + " кв.м.");
@@ -307,7 +308,7 @@ public class RSmeta {
     }
 
     //Комплектация к изделию
-    public static void loadTab3(List<TRecord> kitList, Wincalc winc, Elements tab3List, int index, int countProd) {
+    public static void loadTab3(List<TRecord> kitList, Wincalc winc, Elements tab3List, int index) {
         try {
             //Цикл по строкам комплектации
             for (int k = 0; k < kitList.size(); k++) {
@@ -323,16 +324,16 @@ public class RSmeta {
                 td3Rec.get(2).text(artiklRec.getStr(eArtikl.name));
                 td3Rec.get(3).text(eColor.find(winc.colorID1).getStr(eColor.name));
                 td3Rec.get(4).text(UCom.dimension(prjkitRec.width, prjkitRec.height, prjkitRec.unit));
-                td3Rec.get(5).text(UCom.format(prjkitRec.quant2 * countProd, 2));
+                td3Rec.get(5).text(UCom.format(prjkitRec.quant2, 2));
                 td3Rec.get(6).text(UCom.format(prjkitRec.sebes2, 2));
-                td3Rec.get(7).text(UCom.format(prjkitRec.price2 * countProd, 2));
+                td3Rec.get(7).text(UCom.format(prjkitRec.price2, 2));
             }
 
         } catch (Exception e) {
             System.err.println("Ошибка: RSmeta.loadTab3() " + e);
         }
     }
-
+    
     //Изделия все
     public static void loadTab4(List<Record> prjprodList, List<Wincalc> wincList, Element tab4Elem) {
         try {
@@ -369,10 +370,6 @@ public class RSmeta {
             Elements tr5List = tab5Elem.getElementsByTag("tbody").get(0).getElementsByTag("tr");
             for (int i = 0; i < prjkitList.size(); i++) {
 
-                Record prjkitDb = prjkitList.get(i).detailRec;
-                Record prjprodDb = ePrjprod.find(prjkitDb.getInt(ePrjkit.prjprod_id));
-                int countProd = (prjprodDb == null) ? 1 : Integer.valueOf(prjprodDb.getStr(ePrjprod.num));
-
                 TRecord prjkitRec = prjkitList.get(i);
                 Record artiklRec = prjkitRec.artiklRec;
                 Elements td5Rec = tr5List.get(i).getElementsByTag("td");
@@ -381,9 +378,9 @@ public class RSmeta {
                 td5Rec.get(2).text(artiklRec.getStr(eArtikl.name));
                 td5Rec.get(3).text(eColor.find(prjkitRec.colorID1).getStr(eColor.name));
                 td5Rec.get(4).text(UCom.dimension(prjkitRec.width, prjkitRec.height, prjkitRec.unit));
-                td5Rec.get(5).text(UCom.format(prjkitRec.quant2 * countProd, 2));
+                td5Rec.get(5).text(UCom.format(prjkitRec.quant2, 2));
                 td5Rec.get(6).text(UCom.format(prjkitRec.sebes2, 2));
-                td5Rec.get(7).text(UCom.format(prjkitRec.price2 * countProd, 2));
+                td5Rec.get(7).text(UCom.format(prjkitRec.price2, 2));
                 total += UCom.getDbl(td5Rec.get(7).text());
             }
             Elements tdFoot = tab5Elem.getElementsByTag("tfoot").get(0).getElementsByTag("td");
