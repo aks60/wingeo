@@ -44,8 +44,12 @@ public enum Scale {
 
     separator9(-777, "<html><font size='3' color='blue'> ПРАВИЛА РАСЧЁТА: <html><font size='2' color='black'> (см. Настр.->Цен.коэф.)"),
     rulecalcK(1, " - коэф. правил расчёта"), //RULECALC 
-    rulecalcN(0, " - руб. надб. правил расчёта");  //RULECALC 
+    rulecalcN(0, " - руб. надб. правил расчёта"),  //RULECALC 
 
+    projectK1(0, " - kоэф. конструкций скидки менеджера"), //PROJECT
+    projectK2(0, " - kоэф. комплектации скидки менеджера"); //PROJECT
+            
+            
     public double v;
     public String s;
 

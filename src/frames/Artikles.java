@@ -55,6 +55,7 @@ import javax.swing.table.TableColumn;
 import report.sup.ExecuteCmd;
 import report.sup.RTable;
 
+//TODO Если при открытом окне открыть Цвета и доьавить нов. цвет то его уже не втавить в детализ. артикулов
 /**
  * Материальные ценности
  */

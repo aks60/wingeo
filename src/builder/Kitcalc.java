@@ -52,14 +52,14 @@ public class Kitcalc {
     }
 
     //Список комплектов (коэф.рентабельности может не учитываться)
-    private static ArrayList<TRecord> calculate(Wincalc winc, List<Record> listKit, double discKit, boolean normOtx, boolean numProd) {
+    private static ArrayList<TRecord> calculate(Wincalc winc, List<Record> listKit, double discKit, boolean normOtx, boolean numbProd) {
         init();
         //Цикл по комплектам
         for (Record prjkitRec : listKit) {
-            int numprod = 1;
-            if (numProd == true) {
+            int countProd = 1;
+            if (numbProd == true) {
                 Record prjprodRec = ePrjprod.find(prjkitRec.getInt(ePrjkit.prjprod_id));
-                numprod = (prjprodRec != null) ? prjprodRec.getInt(ePrjprod.num) : 1;
+                countProd = (prjprodRec != null) ? prjprodRec.getInt(ePrjprod.num) : 1;
             }
             Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.artikl_id), true);
 
@@ -69,7 +69,7 @@ public class Kitcalc {
                 TRecord rec = new TRecord("КОМП", ++winc.nppID, prjkitRec, artiklRec, null);
                 rec.width = prjkitRec.getDbl(ePrjkit.width);
                 rec.height = prjkitRec.getDbl(ePrjkit.height);
-                rec.count = prjkitRec.getDbl(ePrjkit.numb) * numprod;
+                rec.count = prjkitRec.getDbl(ePrjkit.numb) * countProd;
                 rec.colorID1 = prjkitRec.getInt(ePrjkit.color1_id);
                 rec.colorID2 = prjkitRec.getInt(ePrjkit.color2_id);
                 rec.colorID3 = prjkitRec.getInt(ePrjkit.color3_id);
@@ -100,8 +100,6 @@ public class Kitcalc {
                 price1 += rec.price1;
                 price2 += rec.price2;
                 kitList.add(rec);
-
-                System.out.println(rec.price2);
             }
         }
         return kitList;
