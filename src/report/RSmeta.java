@@ -115,7 +115,6 @@ public class RSmeta {
                     Record prjprodRec = prjprodList.get(i);
 
                     int numProd = prjprodRec.getInt(ePrjprod.num);
-                    double price=  winc.price2() - discWin * winc.price2() / 100;
                     square += numProd * winc.root.area.getGeometryN(0).getArea();
 
                     Elements captions2 = tab2List.get(i).getElementsByTag("caption");
@@ -129,9 +128,9 @@ public class RSmeta {
                     tr2List.get(5).getElementsByTag("td").get(1).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
                     tr2List.get(6).getElementsByTag("td").get(1).text(UCom.format(winc.weight, 2));
                     tr2List.get(7).getElementsByTag("td").get(1).text(UCom.format(numProd * winc.price1(), 9));
-                    tr2List.get(8).getElementsByTag("td").get(1).text(UCom.format(numProd * price, 9));
+                    tr2List.get(8).getElementsByTag("td").get(1).text(UCom.format(numProd * (winc.price2() - discWin * winc.price2() / 100), 9));
 
-                    total += numProd * price;
+                    total += numProd * (winc.price2() - discWin * winc.price2() / 100);
                 }                
             }
             //СЕКЦИЯ №2
@@ -339,7 +338,7 @@ public class RSmeta {
                 
                 Record prjprodRec = prjprodList.get(i);
                 Wincalc winc = wincList.get(i);
-                int countProd = prjprodRec.getInt(ePrjprod.num);
+                int numProd = prjprodRec.getInt(ePrjprod.num);
                 double priceMan = winc.price2() - discWin * winc.price2() / 100; //со скидкой менеджера
                 Elements tdRec = trList.get(i).getElementsByTag("td");
                 
@@ -348,11 +347,11 @@ public class RSmeta {
                 tdRec.get(2).text(eColor.find(winc.colorID1).getStr(eColor.name));
                 tdRec.get(3).text(UCom.format(winc.width(), 2));
                 tdRec.get(4).text(UCom.format(winc.height(), 2));
-                tdRec.get(5).text(String.valueOf(countProd));
+                tdRec.get(5).text(String.valueOf(numProd));
                 tdRec.get(6).text(UCom.format(winc.price2(), 2));                
-                tdRec.get(7).text(UCom.format(countProd * priceMan, 2));
+                tdRec.get(7).text(UCom.format(numProd * priceMan, 2));
                 
-                total += countProd * priceMan;
+                total += numProd * priceMan;
             }
             Elements tdFoot = tabElem.getElementsByTag("tfoot").get(0).getElementsByTag("td");
             tdFoot.get(1).text(UCom.format(total, 2));

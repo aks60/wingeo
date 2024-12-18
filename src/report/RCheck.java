@@ -134,8 +134,10 @@ public class RCheck {
             }
             //СЕКЦИЯ №3
             {
+                double discWin = projectRec.getDbl(eProject.disc2) + projectRec.getDbl(eProject.disc4);
+                double discKit = projectRec.getDbl(eProject.disc3) + projectRec.getDbl(eProject.disc4);
                 String templateRow = doc.getElementById("tab3").getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
-                for (int i = 1; i < prjprodList.size(); i++) {
+                for (int i = 0; i < prjprodList.size(); i++) {
                     doc.getElementById("tab3").getElementsByTag("tbody").append(templateRow);
                 }
                 Elements trList = doc.getElementById("tab3").getElementsByTag("tbody").get(0).getElementsByTag("tr");
@@ -145,25 +147,33 @@ public class RCheck {
                     Elements tdList = trList.get(i).getElementsByTag("td");
                     Wincalc winc = wincList.get(i);
                     Record prjprodRec = prjprodList.get(i);
-                    Kitcalc.tarifficProd(new Wincalc(), prjprodRec, 0, true, true);
                     double numProd = prjprodRec.getInt(ePrjprod.num);
-                    double nds = 18 * (winc.price2() + Kitcalc.price2()) * numProd / 100;
-                    
+
                     tdList.get(0).text(String.valueOf(i + 1));
                     tdList.get(1).text(prjprodRec.getStr(ePrjprod.name));
                     tdList.get(2).text("шт.");
-                    tdList.get(3).text(prjprodRec.getStr(ePrjprod.num));
-                    tdList.get(4).text(UCom.format(winc.price2(), 9));
-                    tdList.get(5).text(UCom.format(nds, 2));
-                    tdList.get(6).text(UCom.format(numProd * (winc.price2() + Kitcalc.price2()) + nds, 9));
-                    
-                    total += numProd * (winc.price2() + Kitcalc.price2()) + nds;
+                    tdList.get(3).text(String.valueOf(numProd));
+                    tdList.get(4).text(UCom.format(winc.price2() - discWin * winc.price2() / 100, 9));
+                    tdList.get(5).text(UCom.format(numProd * winc.price2() * 20 / 120, 9));
+                    tdList.get(6).text(UCom.format(numProd * (winc.price2() - discWin * winc.price2() / 100), 9)); //со скидкой менеджера
+
+                    total += numProd * (winc.price2() - discWin * winc.price2() / 100);
                 }
+                Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true);
+                int index = prjprodList.size();
+                Elements tdList = trList.get(index).getElementsByTag("td");
+                tdList.get(0).text(String.valueOf(index + 1));
+                tdList.get(1).text("Комплекты заказа");
+                tdList.get(2).text("");
+                tdList.get(3).text("");
+                tdList.get(4).text("");
+                tdList.get(5).text(UCom.format(Kitcalc.price2() * 20 / 120, 9));
+                tdList.get(6).text(UCom.format(Kitcalc.price2(), 9));
             }
             {
                 Elements trList = doc.getElementById("tab5").getElementsByTag("tbody").get(0).getElementsByTag("tr");
-                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total, 9) + " руб.");
-                trList.get(1).getElementsByTag("td").get(0).text(UMon.inwords(total));
+                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total + Kitcalc.price2(), 9) + " руб.");
+                trList.get(1).getElementsByTag("td").get(0).text(UMon.inwords(total + Kitcalc.price2()));
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Check.loadDoc1()" + e);
@@ -177,17 +187,19 @@ public class RCheck {
             Record prjpart2Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Wincalc> wincList = wincList(prjprodList);
+            double discKit = projectRec.getDbl(eProject.disc3) + projectRec.getDbl(eProject.disc4);
+            double discWin = projectRec.getDbl(eProject.disc2) + projectRec.getDbl(eProject.disc4);
 
             doc.getElementById("h01").text("Счёт-фактура №" + projectRec.getStr(eProject.num_acc) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
             //СЕКЦИЯ №1
             {
                 Elements trList = doc.getElementById("tab1").getElementsByTag("tbody").get(0).getElementsByTag("tr");
                 if (prjpart1Rec.getInt(ePrjpart.flag2) == 1) {
-                    trList.get(0).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.partner));                    
+                    trList.get(0).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.partner));
                     trList.get(1).getElementsByTag("td").get(1)
                             .text(prjpart1Rec.getStr(ePrjpart.org_leve1) + " " + prjpart1Rec.getStr(ePrjpart.org_leve2));
                 } else {
-                    trList.get(0).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.partner));                   
+                    trList.get(0).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.partner));
                     trList.get(1).getElementsByTag("td").get(1)
                             .text(prjpart1Rec.getStr(ePrjpart.addr_leve1) + " " + prjpart1Rec.getStr(ePrjpart.addr_leve2));
                 }
@@ -216,7 +228,7 @@ public class RCheck {
             //СЕКЦИЯ №3
             {
                 String templateRow = doc.getElementById("tab3").getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
-                for (int i = 1; i < prjprodList.size(); i++) {
+                for (int i = 0; i < prjprodList.size(); i++) {
                     doc.getElementById("tab3").getElementsByTag("tbody").append(templateRow);
                 }
                 Elements trList = doc.getElementById("tab3").getElementsByTag("tbody").get(0).getElementsByTag("tr");
@@ -228,25 +240,41 @@ public class RCheck {
                     Record prjprodRec = prjprodList.get(i);
                     Kitcalc.tarifficProd(new Wincalc(), prjprodRec, 0, true, true);
                     double numProd = prjprodRec.getInt(ePrjprod.num);
-                    double nds = 18 * (winc.price2() + Kitcalc.price2()) * numProd / 100;
-                    double cost2 = prjprodRec.getInt(ePrjprod.num) * winc.price2();
-                    
-                    tdList.get(0).text(prjprodRec.getStr(ePrjprod.name));
-                    tdList.get(1).text("шт.");
-                    tdList.get(2).text(prjprodRec.getStr(ePrjprod.num));
-                    tdList.get(3).text(UCom.format(winc.price2(), 2));
-                    tdList.get(4).text(UCom.format(prjprodRec.getInt(ePrjprod.num) * winc.price2(), 2));
-                    tdList.get(6).text(UCom.format(cost2 / 100 * 18, 2));
-                    tdList.get(7).text(UCom.format(cost2 + cost2 / 100 * 18, 2));
-                    
-                    total += cost2 + cost2 / 100 * 18;
+                    double nds = winc.price2() * 20 / 120;
+
+                    tdList.get(0).text(String.valueOf(1 + i));
+                    tdList.get(1).text(prjprodRec.getStr(ePrjprod.name));
+                    tdList.get(2).text("шт.");
+                    tdList.get(3).text(String.valueOf(numProd));
+                    tdList.get(4).text(UCom.format(winc.price2() - nds - discWin * winc.price2() / 100, 9));
+                    tdList.get(5).text(UCom.format(numProd * (winc.price2() - nds - discWin * winc.price2() / 100), 9));
+                    tdList.get(6).text("");
+                    tdList.get(7).text("20%");
+                    tdList.get(8).text(UCom.format(numProd * nds, 9));
+                    tdList.get(9).text(UCom.format(numProd * (winc.price2() - discWin * winc.price2() / 100), 9));
+
+                    total += numProd * (winc.price2() - discWin * winc.price2() / 100);
                 }
+                Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true);
+                int index = prjprodList.size();
+                double nds = Kitcalc.price2() * 20 / 120;
+                Elements tdList = trList.get(index).getElementsByTag("td");
+                tdList.get(0).text(String.valueOf(index + 1));
+                tdList.get(1).text("Комплекты заказа");
+                tdList.get(2).text("");
+                tdList.get(3).text("");
+                tdList.get(4).text("");
+                tdList.get(5).text(UCom.format(Kitcalc.price2() - discKit * Kitcalc.price2() / 100 - nds, 9));
+                tdList.get(6).text("");
+                tdList.get(6).text("20%");
+                tdList.get(8).text(UCom.format(nds, 9));
+                tdList.get(9).text(UCom.format(Kitcalc.price2(), 9));
             }
             //СЕКЦИЯ №4
             {
                 Elements trList = doc.getElementById("tab5").getElementsByTag("tbody").get(0).getElementsByTag("tr");
-                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total, 2));
-                trList.get(1).getElementsByTag("td").get(0).text(UMon.inwords(total));
+                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total + Kitcalc.price2(), 2));
+                trList.get(1).getElementsByTag("td").get(0).text(UMon.inwords(total + Kitcalc.price2()));
             }
 
         } catch (Exception e) {
