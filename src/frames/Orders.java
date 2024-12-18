@@ -4372,6 +4372,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
 
+        menuItem27.setVisible(false);
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
         //UGui.documentFilter(3, txt7);
         List.of(btnIns, btnDel).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab1)));

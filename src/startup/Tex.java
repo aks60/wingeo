@@ -1622,6 +1622,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
                 mnIt.setSelected(true);
             }
         }
+        jMenuItem1.setVisible(false);
         if ("Nimbus".equals(lookAndFeel.getName())) {
             tb6.setPreferredSize(new Dimension(97, 28));
         }

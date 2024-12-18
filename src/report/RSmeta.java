@@ -106,7 +106,7 @@ public class RSmeta {
                 for (int i = 1; i < prjprodList.size(); i++) {
                     div2.append(template2);
                 }
-                Elements tab2List = doc.getElementById("div2").getElementsByClass("tab2");
+                Elements tabList = doc.getElementById("div2").getElementsByClass("tab2");
 
                 //Цикл по изделиям
                 for (int i = 0; i < prjprodList.size(); i++) {
@@ -117,18 +117,18 @@ public class RSmeta {
                     int numProd = prjprodRec.getInt(ePrjprod.num);
                     square += numProd * winc.root.area.getGeometryN(0).getArea();
 
-                    Elements captions2 = tab2List.get(i).getElementsByTag("caption");
+                    Elements captions2 = tabList.get(i).getElementsByTag("caption");
                     captions2.get(0).text("Изделие № " + (i + 1));
-                    Elements tr2List = tab2List.get(i).getElementsByTag("tr");
+                    Elements trList = tabList.get(i).getElementsByTag("tr");
 
-                    tr2List.get(1).getElementsByTag("td").get(1).text(prjprodRec.getStr(ePrjprod.name));
-                    tr2List.get(2).getElementsByTag("td").get(1).text(UCom.format(winc.width() / 1000, 2) + " x " + UCom.format(winc.height() / 1000, 2));
-                    tr2List.get(3).getElementsByTag("td").get(1).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / " + eColor.find(winc.colorID2).getStr(eColor.name) + " / " + eColor.find(winc.colorID3).getStr(eColor.name));
-                    tr2List.get(4).getElementsByTag("td").get(1).text(String.valueOf(numProd));
-                    tr2List.get(5).getElementsByTag("td").get(1).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
-                    tr2List.get(6).getElementsByTag("td").get(1).text(UCom.format(winc.weight, 2));
-                    tr2List.get(7).getElementsByTag("td").get(1).text(UCom.format(numProd * winc.price1(), 9));
-                    tr2List.get(8).getElementsByTag("td").get(1).text(UCom.format(numProd * (winc.price2() - discWin * winc.price2() / 100), 9));
+                    trList.get(1).getElementsByTag("td").get(1).text(prjprodRec.getStr(ePrjprod.name));
+                    trList.get(2).getElementsByTag("td").get(1).text(UCom.format(winc.width() / 1000, 2) + " x " + UCom.format(winc.height() / 1000, 2));
+                    trList.get(3).getElementsByTag("td").get(1).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / " + eColor.find(winc.colorID2).getStr(eColor.name) + " / " + eColor.find(winc.colorID3).getStr(eColor.name));
+                    trList.get(4).getElementsByTag("td").get(1).text(String.valueOf(numProd));
+                    trList.get(5).getElementsByTag("td").get(1).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
+                    trList.get(6).getElementsByTag("td").get(1).text(UCom.format(winc.weight, 2));
+                    trList.get(7).getElementsByTag("td").get(1).text(UCom.format(numProd * winc.price1(), 9));
+                    trList.get(8).getElementsByTag("td").get(1).text(UCom.format(numProd * (winc.price2() - discWin * winc.price2() / 100), 9));
 
                     total += numProd * (winc.price2() - discWin * winc.price2() / 100);
                 }                

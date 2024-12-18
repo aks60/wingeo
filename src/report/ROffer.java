@@ -81,19 +81,22 @@ public class ROffer {
             for (int i = 0; i < prjprodList.size(); i++) {
 
                 Elements tdList = tab4List.get(i).getElementsByTag("td");
+                Elements trRec = tab4List.get(i).getElementsByTag("tbody").get(0).getElementsByTag("tr");
                 Wincalc winc = wincList.get(i);
                 square = square + winc.root.area.getGeometryN(0).getArea();
                 Record prjprodRec = prjprodList.get(i);
 
-                tdList.get(0).text("Изделие № " + (i + 1));
+                //tdList.get(0).text("Изделие № " + (i + 1));
+                trRec.get(0).getElementsByTag("td").get(0).text("ИзделиеXXX № " + (i + 1));
                 tdList.get(3).text(eSystree.systemProfile(6));
                 AreaStvorka area5e = (AreaStvorka) UCom.filter(winc.listArea, Type.STVORKA).get(0);
                 AreaStvorka stv = (area5e != null) ? ((AreaStvorka) area5e) : null;
                 int furniture_id = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
                 String fname = (furniture_id != -1) ? eFurniture.find(furniture_id).getStr(eFurniture.name) : "";
-                tdList.get(5).text(fname);
                 ElemSimple elemGlass = (ElemSimple) UCom.filter(winc.listElem, Type.GLASS).get(0);
                 String gname = (elemGlass != null) ? elemGlass.artiklRec.getStr(eArtikl.code) + " - " + elemGlass.artiklRec.getStr(eArtikl.name) : "";
+                
+                tdList.get(5).text(fname);
                 tdList.get(7).text(gname);
                 tdList.get(9).text(eColor.find(winc.colorID1).getStr(eColor.name));
                 tdList.get(11).text(eColor.find(winc.colorID2).getStr(eColor.name));
