@@ -53,7 +53,7 @@ public enum eSystree implements Field {
     public Query query() {
         return query;
     }
-    
+
     public static String patch(int _nuni, String patch) {
         List<Record> recordList = null;
         if (Query.conf.equals("NET")) {
@@ -88,14 +88,19 @@ public enum eSystree implements Field {
     }
 
     //Система профилей
-    public static String systemProfile(int id) {
+    public static String systemProfile(int ID) {
         String ret = "";
         try {
             Statement statement = Conn.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet recordset = statement.executeQuery("with recursive tree as (select * from systree where id = "
-                    + id + " union all select * from systree a join tree b on a.id = b.parent_id and b.id != b.parent_id) select * from tree");
+                    + ID + " union all select * from systree a join tree b on a.id = b.parent_id and b.id != b.parent_id) select * from tree");
+            recordset.next();
             while (recordset.next()) {
-                ret = recordset.getString("name") + " / " + ret;
+                if (ret.isEmpty() == true) {
+                    ret = recordset.getString("name");
+                } else {
+                    ret = recordset.getString("name") + " / " + ret;
+                }
             }
             statement.close();
 
