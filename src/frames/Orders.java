@@ -782,21 +782,21 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     if (w instanceof Wincalc) {
 
                         Wincalc win = (Wincalc) w;
-                        String script = prjprodRec.getStr(ePrjprod.script);
-                        //JsonElement jsonElem = new Gson().fromJson(script, JsonElement.class);
-                        //win.build(jsonElem.toString()); //калкуляция                              
+                        String script = prjprodRec.getStr(ePrjprod.script);                             
                         win.build(script); //калкуляция                              
                         win.specific(true); //конструктив  
 
-                        double countWin = prjprodRec.getDbl(ePrjprod.num);
-                        square = square + countWin * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
-                        weight = weight + countWin * win.weight; //вес изделий
-                        price1a = price1a + countWin * win.price1(); //стоимость конструкций без скидки менеджера
-                        price2a = price2a + countWin * win.price2(); //стоимость конструкций со скидкой менеджера
+                        double numProd = prjprodRec.getDbl(ePrjprod.num);
+                        square += numProd * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
+                        weight += numProd * win.weight; //вес изделий
+                        
+                        price1a += numProd * win.price1(); //стоимость конструкций без скидки менеджера
+                        price2a += numProd * win.price2(); //стоимость конструкций со скидкой менеджера
                     }
                 }
                 //Комплектация
-                ArrayList<TRecord> kitList = Kitcalc.tarifficProj(new Wincalc(), projectRec, 0, true, true); //комплекты 
+                double discKit = projectRec.getDbl(eProject.disc3) + projectRec.getDbl(eProject.disc4);
+                ArrayList<TRecord> kitList = Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true); //комплекты 
                 price1b = Kitcalc.price1(); //стоимость без скидки
                 price2b = Kitcalc.price2(); //стоимость со скидкой               
 
@@ -804,14 +804,14 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 if (price1a != projectRec.getDbl(eProject.price1a)) {
                     projectRec.set(eProject.price1a, price1a); //стоимость конструкции без скидки менеджера
                 }
-                price2a = price2a - price2a * projectRec.getDbl(eProject.disc2) / 100;
+                price2a = price2a - price2a * projectRec.getDbl(eProject.disc2) / 100 - price2a * projectRec.getDbl(eProject.disc4) / 100;
                 if (price2a != projectRec.getDbl(eProject.price2a)) {
                     projectRec.set(eProject.price2a, price2a); //стоимость конструкции со скидкой менеджера
                 }
                 if (price1b != projectRec.getDbl(eProject.price1b)) {
                     projectRec.set(eProject.price1b, price1b); //стоимость комплектации без скидки менеджера
                 }
-                price2b = price2b - price2b * projectRec.getDbl(eProject.disc3) / 100;
+                //price2b = price2b - price2b * projectRec.getDbl(eProject.disc3) / 100 - price2b * projectRec.getDbl(eProject.disc4) / 100;
                 if (price2b != projectRec.getDbl(eProject.price2b)) {
                     projectRec.set(eProject.price2b, price2b); //стоимость комплектации со скидкой менеджера
                 }
@@ -819,7 +819,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 if (price1a + price1b != projectRec.getDbl(eProject.price1c)) {
                     projectRec.set(eProject.price1c, price1c); //стоимость проекта без скидок
                 }
-                price2c = (price2a + price2b) - ((price2a + price2b) * projectRec.getDbl(eProject.disc4) / 100);
+                price2c = price2a + price2b;
                 if (price2c != projectRec.getDbl(eProject.price2c)) {
                     projectRec.set(eProject.price2c, price2c); //стоимость проекта со скидками менеджера
                 }

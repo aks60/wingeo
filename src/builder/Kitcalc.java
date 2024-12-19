@@ -56,10 +56,10 @@ public class Kitcalc {
         init();
         //Цикл по комплектам
         for (Record prjkitRec : listKit) {
-            int countProd = 1;
+            int numProd = 1;
             if (numbProd == true) {
                 Record prjprodRec = ePrjprod.find(prjkitRec.getInt(ePrjkit.prjprod_id));
-                countProd = (prjprodRec != null) ? prjprodRec.getInt(ePrjprod.num) : 1;
+                numProd = (prjprodRec != null) ? prjprodRec.getInt(ePrjprod.num) : 1;
             }
             Record artiklRec = eArtikl.find(prjkitRec.getInt(ePrjkit.artikl_id), true);
 
@@ -69,7 +69,7 @@ public class Kitcalc {
                 TRecord rec = new TRecord("КОМП", ++winc.nppID, prjkitRec, artiklRec, null);
                 rec.width = prjkitRec.getDbl(ePrjkit.width);
                 rec.height = prjkitRec.getDbl(ePrjkit.height);
-                rec.count = prjkitRec.getDbl(ePrjkit.numb) * countProd;
+                rec.count = prjkitRec.getDbl(ePrjkit.numb) * numProd;
                 rec.colorID1 = prjkitRec.getInt(ePrjkit.color1_id);
                 rec.colorID2 = prjkitRec.getInt(ePrjkit.color2_id);
                 rec.colorID3 = prjkitRec.getInt(ePrjkit.color3_id);

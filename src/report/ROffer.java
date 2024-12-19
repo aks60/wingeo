@@ -63,7 +63,11 @@ public class ROffer {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
             List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
-            double discWin = projectRec.getDbl(eProject.disc2) + projectRec.getDbl(eProject.disc4);
+            double discWin = projectRec.getDbl(eProject.disc2);
+            double discPrj = projectRec.getDbl(eProject.disc4);
+            double price2a = projectRec.getDbl(eProject.price2a) - discPrj * projectRec.getDbl(eProject.price2a) / 100;
+            double price2b = projectRec.getDbl(eProject.price2b) - discPrj * projectRec.getDbl(eProject.price2b) / 100;
+            //double price2c = projectRec.getDbl(eProject.price2c) - discPrj * projectRec.getDbl(eProject.price2c) / 100;
             
             doc.getElementById("h01").text("Коммерческое предложение от " + UGui.DateToStr(projectRec.get(eProject.date4)));
             
@@ -89,8 +93,8 @@ public class ROffer {
             //СЕКЦИЯ №2
             {
                 Elements trList = doc.getElementById("tab2").getElementsByTag("tbody").get(0).getElementsByTag("tr");
-                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(projectRec.getDbl(eProject.price2a), 9));
-                trList.get(1).getElementsByTag("td").get(1).text(UCom.format(projectRec.getDbl(eProject.price2b), 9));
+                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(price2a - discPrj * price2a / 100 , 9));
+                trList.get(1).getElementsByTag("td").get(1).text( UCom.format(price2b - discPrj * price2b / 100 , 9));
                 trList.get(2).getElementsByTag("td").get(1).text(UCom.format(projectRec.getDbl(eProject.price2c), 9));
             }
             //СЕКЦИЯ №3
@@ -132,7 +136,7 @@ public class ROffer {
                     trRec.get(10).getElementsByTag("td").get(1).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
                     trRec.get(11).getElementsByTag("td").get(1).text(UCom.format(winc.weight, 2));
                     trRec.get(12).getElementsByTag("td").get(1).text(UCom.format(numProd * winc.price1(), 9));
-                    trRec.get(13).getElementsByTag("td").get(1).text(UCom.format(numProd * (winc.price2() - discWin * winc.price2() / 100), 9));
+                    trRec.get(13).getElementsByTag("td").get(1).text(UCom.format(numProd * (winc.price2() - (discWin + discPrj) * winc.price2() / 100), 9));
                 }
             }
             //СЕКЦИЯ №4

@@ -87,7 +87,7 @@ public class RSmeta {
     }
 
     private static void loadDoc1(List<Record> prjprodList, Document doc) {
-        double total = 0, square = 0f;
+        double square = 0f;
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
@@ -129,21 +129,17 @@ public class RSmeta {
                     trList.get(6).getElementsByTag("td").get(1).text(UCom.format(winc.weight, 2));
                     trList.get(7).getElementsByTag("td").get(1).text(UCom.format(numProd * winc.price1(), 9));
                     trList.get(8).getElementsByTag("td").get(1).text(UCom.format(numProd * (winc.price2() - discWin * winc.price2() / 100), 9));
-
-                    total += numProd * (winc.price2() - discWin * winc.price2() / 100);
                 }                
             }
             //СЕКЦИЯ №2
             {
                 Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
                 Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true);
-                double totalSum = total + Kitcalc.price2();
- 
-                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total, 9) + " руб."); //всего за изделия
-                trList.get(1).getElementsByTag("td").get(1).text(UCom.format(Kitcalc.price2(), 9) + " руб.+"); //всего за комплекты
-                trList.get(2).getElementsByTag("td").get(1).text(UCom.format(totalSum, 9) + " руб."); //ИТОГО ПО ЗАКАЗУ 
-                trList.get(3).getElementsByTag("td").get(0).text("Сумма прописью : " + UMon.inwords(totalSum));
-                trList.get(4).getElementsByTag("td").get(0).text("включая НДС 20% : " + UCom.format(totalSum * 20 / 120, 9) + " руб.");
+                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(projectRec.getDbl(eProject.price2a), 9) + " руб."); //всего за изделия
+                trList.get(1).getElementsByTag("td").get(1).text(UCom.format(projectRec.getDbl(eProject.price2b), 9) + " руб.+"); //всего за комплекты
+                trList.get(2).getElementsByTag("td").get(1).text(UCom.format(projectRec.getDbl(eProject.price2c), 9) + " руб."); //ИТОГО ПО ЗАКАЗУ 
+                trList.get(3).getElementsByTag("td").get(0).text("Сумма прописью : " + UMon.inwords(projectRec.getDbl(eProject.price2c)));
+                trList.get(4).getElementsByTag("td").get(0).text("включая НДС 20% : " + UCom.format(projectRec.getDbl(eProject.price2c) * 20 / 120, 9) + " руб.");
                 trList.get(5).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square / 1000000, 2) + " кв.м.");
 
                 Elements imgList = doc.getElementById("div2").getElementsByTag("img");
@@ -242,7 +238,7 @@ public class RSmeta {
                 totalTab4 = loadTab4(prjprodList, wincList, tab4Elem);
 
                 //Комплектация все
-                ArrayList<TRecord> prjkitAllList = Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true);
+                ArrayList<TRecord> prjkitAllList = Kitcalc.tarifficProj(new Wincalc(), projectRec, 0, true, true);
                 String template5 = tab5Elem.getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
                 for (int i = 1; i < prjkitAllList.size(); i++) {
                     tab5Elem.getElementsByTag("tbody").append(template5);
@@ -354,7 +350,7 @@ public class RSmeta {
                 total += numProd * priceMan;
             }
             Elements tdFoot = tabElem.getElementsByTag("tfoot").get(0).getElementsByTag("td");
-            tdFoot.get(1).text(UCom.format(total, 2));
+            tdFoot.get(1).text(UCom.format(projectRec.getDbl(eProject.price2a), 2));
 
         } catch (Exception e) {
             System.err.println("Ошибка: RSmeta.loadTab4() " + e);
@@ -386,7 +382,7 @@ public class RSmeta {
                 total += prjkitRec.price2;
             }
             Elements tdFoot = tabElem.getElementsByTag("tfoot").get(0).getElementsByTag("td");
-            tdFoot.get(1).text(UCom.format(total, 2));  //всего за комплекты
+            tdFoot.get(1).text(UCom.format(projectRec.getDbl(eProject.price2b), 2));  //всего за комплекты
 
         } catch (Exception e) {
             System.err.println("Ошибка: RSmeta.loadTab5() " + e);
