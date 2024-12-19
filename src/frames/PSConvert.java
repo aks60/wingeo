@@ -684,7 +684,7 @@ public class PSConvert {
                     + "delete from furnside2 a where a.furndet_id = old.id; end");
             executeSql("create or alter trigger prjpart_bd for prjpart active before delete position 0 as begin "
                     + "update project a set a.vendor_id = null where a.vendor_id = old.id; "
-                    + "update project a set a.prjpart_id = null where a.prjpart_id = old.id; ");
+                    + "update project a set a.prjpart_id = null where a.prjpart_id = old.id; end");
             executeSql("create or alter trigger project_bd for project active before delete position 0 as begin "
                     + "delete from prjkit a where a.project_id = old.id; "
                     + "delete from prjprod a where a.project_id = old.id; end");

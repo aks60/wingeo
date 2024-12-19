@@ -63,14 +63,14 @@ public class ROffer {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
             List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
-            double discWin = projectRec.getDbl(eProject.disc2);
-            double discPrj = projectRec.getDbl(eProject.disc4);
-            double price2a = projectRec.getDbl(eProject.price2a) - discPrj * projectRec.getDbl(eProject.price2a) / 100;
-            double price2b = projectRec.getDbl(eProject.price2b) - discPrj * projectRec.getDbl(eProject.price2b) / 100;
+            double discWin = projectRec.getDbl(eProject.disc_win);
+            double discPrj = projectRec.getDbl(eProject.disc_all);
+            double price2a = projectRec.getDbl(eProject.price2win) - discPrj * projectRec.getDbl(eProject.price2win) / 100;
+            double price2b = projectRec.getDbl(eProject.price2kit) - discPrj * projectRec.getDbl(eProject.price2kit) / 100;
             //double price2c = projectRec.getDbl(eProject.price2c) - discPrj * projectRec.getDbl(eProject.price2c) / 100;
-            
+
             doc.getElementById("h01").text("Коммерческое предложение от " + UGui.DateToStr(projectRec.get(eProject.date4)));
-            
+
             //СЕКЦИЯ №1
             {
                 Elements trList = doc.getElementById("tab1").getElementsByTag("tbody").get(0).getElementsByTag("tr");
@@ -93,9 +93,10 @@ public class ROffer {
             //СЕКЦИЯ №2
             {
                 Elements trList = doc.getElementById("tab2").getElementsByTag("tbody").get(0).getElementsByTag("tr");
-                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(price2a - discPrj * price2a / 100 , 9));
-                trList.get(1).getElementsByTag("td").get(1).text( UCom.format(price2b - discPrj * price2b / 100 , 9));
-                trList.get(2).getElementsByTag("td").get(1).text(UCom.format(projectRec.getDbl(eProject.price2c), 9));
+                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(price2a - discPrj * price2a / 100, 9));
+                trList.get(1).getElementsByTag("td").get(1).text(UCom.format(price2b - discPrj * price2b / 100, 9));
+                trList.get(2).getElementsByTag("td").get(1)
+                        .text(UCom.format(projectRec.getDbl(eProject.price2win) + projectRec.getDbl(eProject.price2kit), 9));
             }
             //СЕКЦИЯ №3
             {
@@ -114,14 +115,14 @@ public class ROffer {
                     int numProd = prjprodRec.getInt(ePrjprod.num);
                     Elements trRec = tabList.get(i).getElementsByTag("tbody").get(0).getElementsByTag("tr");
                     Wincalc winc = wincList.get(i);
-                    square = square + winc.root.area.getGeometryN(0).getArea();                    
-                    
+                    square = square + winc.root.area.getGeometryN(0).getArea();
+
                     AreaStvorka area5e = (AreaStvorka) UCom.filter(winc.listArea, Type.STVORKA).get(0);
                     AreaStvorka stv = (area5e != null) ? ((AreaStvorka) area5e) : null;
                     int furniture_id = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
                     String fname = (furniture_id != -1) ? eFurniture.find(furniture_id).getStr(eFurniture.name) : "";
                     ElemSimple elemGlass = (ElemSimple) UCom.filter(winc.listElem, Type.GLASS).get(0);
-                    String gname = (elemGlass != null) ? elemGlass.artiklRec.getStr(eArtikl.code) + " - " + elemGlass.artiklRec.getStr(eArtikl.name) : "";                    
+                    String gname = (elemGlass != null) ? elemGlass.artiklRec.getStr(eArtikl.code) + " - " + elemGlass.artiklRec.getStr(eArtikl.name) : "";
 
                     trRec.get(0).getElementsByTag("td").get(0).text("Изделие № " + (i + 1));
                     imgList.get(i).attr("src", "C:\\Users\\All Users\\Avers\\Okna\\img" + (i + 1) + ".gif");
@@ -143,9 +144,10 @@ public class ROffer {
             {
                 Elements trList = doc.getElementById("tab5").getElementsByTag("tr");
                 trList.get(0).getElementsByTag("td").get(2).text(UCom.format(square / 1000000, 9) + " кв.м.");
-                trList.get(1).getElementsByTag("td").get(2).text(UCom.format(projectRec.getDbl(eProject.price1a), 9));
-                trList.get(2).getElementsByTag("td").get(2).text(UCom.format(projectRec.getDbl(eProject.price2a), 9));
-                trList.get(3).getElementsByTag("td").get(2).text(UCom.format(projectRec.getDbl(eProject.price2c), 9));
+                trList.get(1).getElementsByTag("td").get(2).text(UCom.format(projectRec.getDbl(eProject.price1win), 9));
+                trList.get(2).getElementsByTag("td").get(2).text(UCom.format(projectRec.getDbl(eProject.price2win), 9));
+                trList.get(3).getElementsByTag("td").get(2).
+                        text(UCom.format(projectRec.getDbl(eProject.price2win) + projectRec.getDbl(eProject.price2kit), 9));
             }
 
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");

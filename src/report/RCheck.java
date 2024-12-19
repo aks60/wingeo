@@ -134,8 +134,8 @@ public class RCheck {
             }
             //—≈ ÷»ﬂ π3
             {
-                double discWin = projectRec.getDbl(eProject.disc2) + projectRec.getDbl(eProject.disc4);
-                double discKit = projectRec.getDbl(eProject.disc3) + projectRec.getDbl(eProject.disc4);
+                double discWin = projectRec.getDbl(eProject.disc_win) + projectRec.getDbl(eProject.disc_all);
+                double discKit = projectRec.getDbl(eProject.disc_kit) + projectRec.getDbl(eProject.disc_all);
                 String templateRow = doc.getElementById("tab3").getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
                 for (int i = 0; i < prjprodList.size(); i++) {
                     doc.getElementById("tab3").getElementsByTag("tbody").append(templateRow);
@@ -187,8 +187,8 @@ public class RCheck {
             Record prjpart2Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Wincalc> wincList = wincList(prjprodList);
-            double discKit = projectRec.getDbl(eProject.disc3) + projectRec.getDbl(eProject.disc4);
-            double discWin = projectRec.getDbl(eProject.disc2) + projectRec.getDbl(eProject.disc4);
+            double discKit = projectRec.getDbl(eProject.disc_kit) + projectRec.getDbl(eProject.disc_all);
+            double discWin = projectRec.getDbl(eProject.disc_win) + projectRec.getDbl(eProject.disc_all);
 
             doc.getElementById("h01").text("—˜∏Ú-Ù‡ÍÚÛ‡ π" + projectRec.getStr(eProject.num_acc) + " ÓÚ '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
             //—≈ ÷»ﬂ π1

@@ -318,9 +318,11 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         Record projectRec = qProject.get(UGui.getIndexRec(tab1));
 
         Object data[][] = {
-            {" Конструкции", projectRec.getDbl(eProject.disc2, 0), projectRec.getDbl(eProject.price1a, 0), projectRec.getDbl(eProject.price2a, 0)},
-            {" Комплектации", projectRec.getDbl(eProject.disc3, 0), projectRec.getDbl(eProject.price1b, 0), projectRec.getDbl(eProject.price2b, 0)},
-            {" Итого за заказ", projectRec.getDbl(eProject.disc4, 0), projectRec.getDbl(eProject.price1c, 0), projectRec.getDbl(eProject.price2c, 0)}};
+            {" Конструкции", projectRec.getDbl(eProject.disc_win, 0), projectRec.getDbl(eProject.price1win, 0), projectRec.getDbl(eProject.price2win, 0)},
+            {" Комплектации", projectRec.getDbl(eProject.disc_kit, 0), projectRec.getDbl(eProject.price1kit, 0), projectRec.getDbl(eProject.price2kit, 0)},
+            {" Итого за заказ", projectRec.getDbl(eProject.disc_all, 0), 
+                projectRec.getDbl(eProject.price1win, 0) + projectRec.getDbl(eProject.price1kit, 0), 
+                projectRec.getDbl(eProject.price2win, 0) + projectRec.getDbl(eProject.price2kit, 0)}};
 
         ((DefaultTableModel) tab5.getModel()).setDataVector(data, column);
         tab5.getColumnModel().getColumn(2).setCellRenderer(defaultTableCellRenderer);
@@ -771,8 +773,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             Record projectRec = qProject.get(UGui.getIndexRec(tab1));
             Record currencRec = qCurrenc.stream().filter(rec -> rec.get(eCurrenc.id).equals(projectRec.get(eProject.currenc_id))).findFirst().orElse(eCurrenc.up.newRecord(Query.SEL));
             double square = 0, weight = 0,
-                    price1a = 0, price1b = 0, price1c = 0, //без скидки менеджера
-                    price2a = 0, price2b = 0, price2c = 0; //со скидкой менеджера
+                    price1a = 0, price1b = 0, //без скидки менеджера
+                    price2a = 0, price2b = 0; //со скидкой менеджера
             //Пересчёт заказа
             if (UGui.getIndexRec(tab1) != -1) {
 
@@ -795,34 +797,34 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     }
                 }
                 //Комплектация
-                double discKit = projectRec.getDbl(eProject.disc3) + projectRec.getDbl(eProject.disc4);
+                double discKit = projectRec.getDbl(eProject.disc_kit) + projectRec.getDbl(eProject.disc_all);
                 ArrayList<TRecord> kitList = Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true); //комплекты 
                 price1b = Kitcalc.price1(); //стоимость без скидки
                 price2b = Kitcalc.price2(); //стоимость со скидкой               
 
                 //Сохраним новые кальк.данные в проекте
-                if (price1a != projectRec.getDbl(eProject.price1a)) {
-                    projectRec.set(eProject.price1a, price1a); //стоимость конструкции без скидки менеджера
+                if (price1a != projectRec.getDbl(eProject.price1win)) {
+                    projectRec.set(eProject.price1win, price1a); //стоимость конструкции без скидки менеджера
                 }
-                price2a = price2a - price2a * projectRec.getDbl(eProject.disc2) / 100 - price2a * projectRec.getDbl(eProject.disc4) / 100;
-                if (price2a != projectRec.getDbl(eProject.price2a)) {
-                    projectRec.set(eProject.price2a, price2a); //стоимость конструкции со скидкой менеджера
+                price2a = price2a - price2a * projectRec.getDbl(eProject.disc_win) / 100 - price2a * projectRec.getDbl(eProject.disc_all) / 100;
+                if (price2a != projectRec.getDbl(eProject.price2win)) {
+                    projectRec.set(eProject.price2win, price2a); //стоимость конструкции со скидкой менеджера
                 }
-                if (price1b != projectRec.getDbl(eProject.price1b)) {
-                    projectRec.set(eProject.price1b, price1b); //стоимость комплектации без скидки менеджера
+                if (price1b != projectRec.getDbl(eProject.price1kit)) {
+                    projectRec.set(eProject.price1kit, price1b); //стоимость комплектации без скидки менеджера
                 }
                 //price2b = price2b - price2b * projectRec.getDbl(eProject.disc3) / 100 - price2b * projectRec.getDbl(eProject.disc4) / 100;
-                if (price2b != projectRec.getDbl(eProject.price2b)) {
-                    projectRec.set(eProject.price2b, price2b); //стоимость комплектации со скидкой менеджера
+                if (price2b != projectRec.getDbl(eProject.price2kit)) {
+                    projectRec.set(eProject.price2kit, price2b); //стоимость комплектации со скидкой менеджера
                 }
-                price1c = price1a + price1b;
-                if (price1a + price1b != projectRec.getDbl(eProject.price1c)) {
-                    projectRec.set(eProject.price1c, price1c); //стоимость проекта без скидок
-                }
-                price2c = price2a + price2b;
-                if (price2c != projectRec.getDbl(eProject.price2c)) {
-                    projectRec.set(eProject.price2c, price2c); //стоимость проекта со скидками менеджера
-                }
+//                price1c = price1a + price1b;
+//                if (price1a + price1b != projectRec.getDbl(eProject.price1c)) {
+//                    projectRec.set(eProject.price1c, price1c); //стоимость проекта без скидок
+//                }
+//                price2c = price2a + price2b;
+//                if (price2c != projectRec.getDbl(eProject.price2c)) {
+//                    projectRec.set(eProject.price2c, price2c); //стоимость проекта со скидками менеджера
+//                }
                 projectRec.set(eProject.date5, new GregorianCalendar().getTime());
 
                 qProject.execsql();
@@ -832,12 +834,12 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 txt7.setText(UCom.format(projectRec.getDbl(eProject.weight), 1)); //вес 
 
                 //Заполним таблицу
-                tab5.setValueAt(projectRec.getDbl(eProject.price1a), 0, 2); //стоимость конструкций без скидки
-                tab5.setValueAt(projectRec.getDbl(eProject.price2a), 0, 3); //стоимость конструкций со скидкой
-                tab5.setValueAt(projectRec.getDbl(eProject.price1b), 1, 2); //стоимость комплектации без скидки
-                tab5.setValueAt(projectRec.getDbl(eProject.price2b), 1, 3); //стоимость комплектации со скидкой
-                tab5.setValueAt(projectRec.getDbl(eProject.price1c), 2, 2); //итого стоимость без скидки
-                tab5.setValueAt(projectRec.getDbl(eProject.price2c), 2, 3); //итого стоимость со скидкой
+                tab5.setValueAt(projectRec.getDbl(eProject.price1win), 0, 2); //стоимость конструкций без скидки
+                tab5.setValueAt(projectRec.getDbl(eProject.price2win), 0, 3); //стоимость конструкций со скидкой
+                tab5.setValueAt(projectRec.getDbl(eProject.price1kit), 1, 2); //стоимость комплектации без скидки
+                tab5.setValueAt(projectRec.getDbl(eProject.price2kit), 1, 3); //стоимость комплектации со скидкой
+                tab5.setValueAt(projectRec.getDbl(eProject.price1win) + projectRec.getDbl(eProject.price1kit), 2, 2); //итого стоимость без скидки
+                tab5.setValueAt(projectRec.getDbl(eProject.price2win) + projectRec.getDbl(eProject.price2kit), 2, 3); //итого стоимость со скидкой
 
                 if (index != -1) {
                     ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
@@ -1730,12 +1732,12 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     super.setValueAt(aValue, row, column);
                     Record projectRec = qProject.get(UGui.getIndexRec(tab1));
 
-                    if (row == 0 && column == 1 && aValue.equals(projectRec.get(eProject.disc2)) == false) {
-                        projectRec.set(eProject.disc2, aValue);
-                    } else if (row == 1 && column == 1 && aValue.equals(projectRec.get(eProject.disc3)) == false) {
-                        projectRec.set(eProject.disc3, aValue);
-                    } else if (row == 2 && column == 1 && aValue.equals(projectRec.get(eProject.disc4)) == false) {
-                        projectRec.set(eProject.disc4, aValue);
+                    if (row == 0 && column == 1 && aValue.equals(projectRec.get(eProject.disc_win)) == false) {
+                        projectRec.set(eProject.disc_win, aValue);
+                    } else if (row == 1 && column == 1 && aValue.equals(projectRec.get(eProject.disc_kit)) == false) {
+                        projectRec.set(eProject.disc_kit, aValue);
+                    } else if (row == 2 && column == 1 && aValue.equals(projectRec.get(eProject.disc_all)) == false) {
+                        projectRec.set(eProject.disc_all, aValue);
                     }
                     loadingTab5();
                 } catch (Exception e) {
