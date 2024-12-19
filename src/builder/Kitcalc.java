@@ -96,7 +96,7 @@ public class Kitcalc {
                 rec.sebes2 = sbs + Scale.grpformN1.v * sbs / 100; //стоимость за един.изм 
                 rec.price1 = rec.sebes2 * rec.quant2; //стоимость без скидки                     
                 double priceTex = rec.price1 - Scale.artiklS.v * rec.price1 / 100; //стоимость с техн. скидкой 
-                rec.price2 = (discKit == 0) ? priceTex : priceTex - discKit * priceTex / 100; //стоимость с техн.скидк. и скид.менеджера
+                rec.price2 = priceTex - discKit * priceTex / 100; //стоимость с техн.скидк. и скид.менеджера
                 price1 += rec.price1;
                 price2 += rec.price2;
                 kitList.add(rec);
