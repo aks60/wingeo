@@ -56,41 +56,6 @@ public class Test {
     private static GeometryFactory gf = new GeometryFactory();
     AffineTransformation aff = new AffineTransformation();
 
-    //Конструктор
-    public Test() {
-
-        frame = new JFrame();
-        //frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        JPanel p = new JPanel() {
-
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                paincomp(g);
-            }
-
-            @Override
-            public java.awt.Dimension getPreferredSize() {
-                return new java.awt.Dimension(800, 600);
-            }
-        };
-        frame.add(p);
-        frame.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent event) {
-            }
-
-            public void mouseReleased(MouseEvent event) {
-            }
-        });
-        frame.addMouseMotionListener(new MouseMotionAdapter() {
-            public void mouseDragged(MouseEvent event) {
-            }
-        });
-        frame.pack();
-        frame.setVisible(true);
-    }
-
     // <editor-fold defaultstate="collapsed" desc="Connection[] connect(int numDb)">
     public static Connection connect1() {
         try {
@@ -125,7 +90,7 @@ public class Test {
     }
 
     // </editor-fold>     
-    //java -jar C:\\Okna\\winapp\\dist\\winapp.jar dev loc
+
     public static void main(String[] args) throws Exception {
 
         eProp.dev = true;
@@ -133,7 +98,7 @@ public class Test {
             //clearDataDB();
             //PSConvert.exec();
             //frame();
-            //wincalc("min");
+            wincalc("min");
             //param();
             //query();
             //json();
@@ -146,6 +111,41 @@ public class Test {
         }
     }
 
+    //Конструктор
+    public Test() {
+
+        frame = new JFrame();
+        //frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        JPanel p = new JPanel() {
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                paincomp(g);
+            }
+
+            @Override
+            public java.awt.Dimension getPreferredSize() {
+                return new java.awt.Dimension(800, 600);
+            }
+        };
+        frame.add(p);
+        frame.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent event) {
+            }
+
+            public void mouseReleased(MouseEvent event) {
+            }
+        });
+        frame.addMouseMotionListener(new MouseMotionAdapter() {
+            public void mouseDragged(MouseEvent event) {
+            }
+        });
+        frame.pack();
+        frame.setVisible(true);
+    }
+    
     public static void frame() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override

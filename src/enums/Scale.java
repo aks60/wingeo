@@ -98,7 +98,7 @@ public enum Scale {
 
         if (rulecalcRec != null) {
             Scale.rulecalcK.v = rulecalcRec.getDbl(eRulecalc.coeff);
-            Scale.rulecalcN.v = rulecalcRec.getDbl(eRulecalc.incr);
+            Scale.rulecalcN.v = rulecalcRec.getDbl(eRulecalc.suppl);
         }
     }
 }
