@@ -125,7 +125,7 @@ public class FurnitureDet extends Par5s {
                 case 25009:  //Коды текстуры подвеса                   
                     for (ElemSimple elem : areaStv.frames) {
                         for (TRecord spc : elem.spcRec.spcList) {
-                            if (spc.artiklRec().getInt(eArtikl.level1) == 2 && spc.artiklRec().getInt(eArtikl.level2) == 12) {
+                            if (spc.artiklRec.getInt(eArtikl.level1) == 2 && spc.artiklRec.getInt(eArtikl.level2) == 12) {
                                 String name = eColor.find(spc.colorID1).getStr(eColor.name);
                                 if (name.equals(rec.getStr(TEXT)) == false) {
                                     return false;

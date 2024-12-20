@@ -78,10 +78,10 @@ public class RSpecific {
         String num = projectRec.getStr(eProject.num_ord);
         String date = UGui.simpleFormat.format(projectRec.get(eProject.date5));
 
-        List<RRecord> listSpc1 = listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 1).collect(toList());
-        List<RRecord> listSpc2 = RRecord.groups4R(listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 2).collect(toList()));
-        List<RRecord> listSpc3 = RRecord.groups4R(listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 3).collect(toList()));
-        List<RRecord> listSpc5 = listSpc.stream().filter(rec -> rec.spc().artiklRec().getInt(eArtikl.level1) == 5).collect(toList());
+        List<RRecord> listSpc1 = listSpc.stream().filter(rec -> rec.spc().artiklRec.getInt(eArtikl.level1) == 1).collect(toList());
+        List<RRecord> listSpc2 = RRecord.groups4R(listSpc.stream().filter(rec -> rec.spc().artiklRec.getInt(eArtikl.level1) == 2).collect(toList()));
+        List<RRecord> listSpc3 = RRecord.groups4R(listSpc.stream().filter(rec -> rec.spc().artiklRec.getInt(eArtikl.level1) == 3).collect(toList()));
+        List<RRecord> listSpc5 = listSpc.stream().filter(rec -> rec.spc().artiklRec.getInt(eArtikl.level1) == 5).collect(toList());
 
         doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord));
         doc.getElementsByTag("thead").get(0).getElementsByTag("tr").get(0).getElementsByTag("th").get(0).html("Дата: " + date + " г.");

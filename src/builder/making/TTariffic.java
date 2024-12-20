@@ -99,8 +99,8 @@ public class TTariffic extends Cal5e {
                     // </editor-fold> 
                      
                     Record systreeRec = eSystree.find(winc.nuni);
-                    Record artgrp1Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups1_id));
-                    Record artgrp2Rec = eGroups.find(elem5e.spcRec.artiklRec().getInt(eArtikl.groups2_id));
+                    Record artgrp1Rec = eGroups.find(elem5e.spcRec.artiklRec.getInt(eArtikl.groups1_id));
+                    Record artgrp2Rec = eGroups.find(elem5e.spcRec.artiklRec.getInt(eArtikl.groups2_id));
                     Scale.artiklK.v = artgrp1Rec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
                     Scale.artiklS.v = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                     Scale.systreeK.v = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
@@ -123,8 +123,8 @@ public class TTariffic extends Cal5e {
                         }
                         // </editor-fold> 
                         
-                        Record artgrp1bRec = eGroups.find(spcRec.artiklRec().getInt(eArtikl.groups1_id));
-                        Record artgrp2bRec = eGroups.find(spcRec.artiklRec().getInt(eArtikl.groups2_id));
+                        Record artgrp1bRec = eGroups.find(spcRec.artiklRec.getInt(eArtikl.groups1_id));
+                        Record artgrp2bRec = eGroups.find(spcRec.artiklRec.getInt(eArtikl.groups2_id));
                         Scale.artiklK.v = artgrp1bRec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
                         Scale.artiklS.v = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                         Scale.systreeK.v = systreeRec.getDbl(eSystree.coef); //коэф. рентабельности
@@ -140,10 +140,10 @@ public class TTariffic extends Cal5e {
             //–асчЄт веса элемента конструкции
             for (ElemSimple elem5e : winc.listElem) {
                 if (filter(elem5e)) {
-                    elem5e.spcRec.weight = elem5e.spcRec.quant1 * elem5e.spcRec.artiklRec().getDbl(eArtikl.density);
+                    elem5e.spcRec.weight = elem5e.spcRec.quant1 * elem5e.spcRec.artiklRec.getDbl(eArtikl.density);
 
                     for (TRecord spec : elem5e.spcRec.spcList) {
-                        spec.weight = spec.quant1 * spec.artiklRec().getDbl(eArtikl.density);
+                        spec.weight = spec.quant1 * spec.artiklRec.getDbl(eArtikl.density);
                     }
                 }
             }
@@ -160,11 +160,11 @@ public class TTariffic extends Cal5e {
         Record color2Rec = eColor.find(specificRec.colorID2);  //внутренн€€
         Record color3Rec = eColor.find(specificRec.colorID3);  //внешн€€
 
-        Record cursYesBaseRec = eCurrenc.find(specificRec.artiklRec().getInt(eArtikl.currenc1_id));    // кросс-курс валюты дл€ основной текстуры
-        Record cursNoBaseRec = eCurrenc.find(specificRec.artiklRec().getInt(eArtikl.currenc2_id));  // кросс-курс валюты дл€ неосновных текстур (внутренн€€, внешн€€, двухсторонн€€)
+        Record cursYesBaseRec = eCurrenc.find(specificRec.artiklRec.getInt(eArtikl.currenc1_id));    // кросс-курс валюты дл€ основной текстуры
+        Record cursNoBaseRec = eCurrenc.find(specificRec.artiklRec.getInt(eArtikl.currenc2_id));  // кросс-курс валюты дл€ неосновных текстур (внутренн€€, внешн€€, двухсторонн€€)
 
         //÷икл по тарификационной таблице ARTDET мат. ценностей
-        for (Record artdetRec : eArtdet.filter(specificRec.artiklRec().getInt(eArtikl.id))) {
+        for (Record artdetRec : eArtdet.filter(specificRec.artiklRec.getInt(eArtikl.id))) {
 
             double artdetPrice = 0;
             boolean artdetUsed = false;
@@ -269,10 +269,10 @@ public class TTariffic extends Cal5e {
 
         try {
             //≈сли артикул »Ћ» тип »Ћ» подтип совпали
-            if (spcRec.artiklRec().get(eArtikl.id) != null
-                    && (spcRec.artiklRec().get(eArtikl.id).equals(rulecalcRec.get(eRulecalc.artikl_id)) == true || rulecalcRec.get(eRulecalc.artikl_id) == null)) {
+            if (spcRec.artiklRec.get(eArtikl.id) != null
+                    && (spcRec.artiklRec.get(eArtikl.id).equals(rulecalcRec.get(eRulecalc.artikl_id)) == true || rulecalcRec.get(eRulecalc.artikl_id) == null)) {
 
-                if ((spcRec.artiklRec().getInt(eArtikl.level1) * 100 + spcRec.artiklRec().getInt(eArtikl.level2)) == rulecalcRec.getInt(eRulecalc.type)) {
+                if ((spcRec.artiklRec.getInt(eArtikl.level1) * 100 + spcRec.artiklRec.getInt(eArtikl.level2)) == rulecalcRec.getInt(eRulecalc.type)) {
                     if (UCom.containsColor(rulecalcRec.getStr(eRulecalc.color1), spcRec.colorID1) == true
                             && UCom.containsColor(rulecalcRec.getStr(eRulecalc.color2), spcRec.colorID2) == true
                             && UCom.containsColor(rulecalcRec.getStr(eRulecalc.color3), spcRec.colorID3) == true) {
@@ -302,11 +302,11 @@ public class TTariffic extends Cal5e {
                                 for (ElemSimple elem5e : elemList) { //суммирую колич. всех элементов (например штапиков)
                                     if (filter(elem5e)) {
                                         TRecord specifRec2 = elem5e.spcRec;
-                                        if (specifRec2.artiklRec().getInt(eArtikl.level1) * 100 + specifRec2.artiklRec().getInt(eArtikl.level2) == rulecalcRec.getInt(eRulecalc.type)) {
+                                        if (specifRec2.artiklRec.getInt(eArtikl.level1) * 100 + specifRec2.artiklRec.getInt(eArtikl.level2) == rulecalcRec.getInt(eRulecalc.type)) {
                                             quantity3 = quantity3 + elem5e.spcRec.quant1;
                                         }
                                         for (TRecord specifRec3 : specifRec2.spcList) {
-                                            if (specifRec3.artiklRec().getInt(eArtikl.level1) * 100 + specifRec3.artiklRec().getInt(eArtikl.level2) == rulecalcRec.getInt(eRulecalc.type)) {
+                                            if (specifRec3.artiklRec.getInt(eArtikl.level1) * 100 + specifRec3.artiklRec.getInt(eArtikl.level2) == rulecalcRec.getInt(eRulecalc.type)) {
                                                 quantity3 = quantity3 + specifRec3.quant1;
                                             }
                                         }
@@ -342,19 +342,19 @@ public class TTariffic extends Cal5e {
     public static double formatAmount(TRecord spcRec) {
         //Ќужна доработка дл€ расчЄта по минимальному тарифу. —м. dll VirtualPro4::CalcArtTariff
 
-        if (UseUnit.METR.id == spcRec.artiklRec().getInt(eArtikl.unit)) { //метры
+        if (UseUnit.METR.id == spcRec.artiklRec.getInt(eArtikl.unit)) { //метры
             return spcRec.count * round(spcRec.width, TTariffic.precision) / 1000;
 
-        } else if (UseUnit.METR2.id == spcRec.artiklRec().getInt(eArtikl.unit)) { //кв. метры
+        } else if (UseUnit.METR2.id == spcRec.artiklRec.getInt(eArtikl.unit)) { //кв. метры
             return spcRec.count * round(spcRec.width, TTariffic.precision) * round(spcRec.height, TTariffic.precision) / 1000000;
 
-        } else if (UseUnit.PIE.id == spcRec.artiklRec().getInt(eArtikl.unit)) { //шт.
+        } else if (UseUnit.PIE.id == spcRec.artiklRec.getInt(eArtikl.unit)) { //шт.
             return spcRec.count;
 
-        } else if (UseUnit.KIT.id == spcRec.artiklRec().getInt(eArtikl.unit)) { //комп.
+        } else if (UseUnit.KIT.id == spcRec.artiklRec.getInt(eArtikl.unit)) { //комп.
             return spcRec.count;
 
-        } else if (UseUnit.ML.id == spcRec.artiklRec().getInt(eArtikl.unit)) { //мл
+        } else if (UseUnit.ML.id == spcRec.artiklRec.getInt(eArtikl.unit)) { //мл
             return spcRec.count;
         }
         return 0;
@@ -389,9 +389,9 @@ public class TTariffic extends Cal5e {
             return false;
         } else if (elem5e.artiklRec.getInt(eArtikl.id) == -3) {
             return false;
-        } else if (elem5e.spcRec.artiklRec() == null) {
+        } else if (elem5e.spcRec.artiklRec == null) {
             return false;
-        } else if (elem5e.spcRec.artiklRec().getInt(eArtikl.id) == -3) {
+        } else if (elem5e.spcRec.artiklRec.getInt(eArtikl.id) == -3) {
             return false;
         }
         return true;

@@ -174,19 +174,19 @@ public class RTarget {
         List<TRecord> spcListB = new ArrayList<TRecord>();
 
         listSpec.forEach(spcRecA -> { //профиля
-            if (TypeArt.isType(spcRecA.artiklRec(), TypeArt.X101, TypeArt.X102, TypeArt.X103) == true) {
+            if (TypeArt.isType(spcRecA.artiklRec, TypeArt.X101, TypeArt.X102, TypeArt.X103) == true) {
 
                 spcListA.add(spcRecA);
                 int count = spcListB.size();
                 for (TRecord spcRecB : listSpec) {
-                    if (TypeArt.isType(spcRecB.artiklRec(), TypeArt.X107) == true && spcRecB.elem5e.id == spcRecA.id) {
+                    if (TypeArt.isType(spcRecB.artiklRec, TypeArt.X107) == true && spcRecB.elem5e.id == spcRecA.id) {
                         spcListB.add(spcRecB);
                     }
                 }
                 if (count == spcListB.size()) {
                     spcListB.add(new TRecord());
                 }
-            } else if (TypeArt.isType(spcRecA.artiklRec(), TypeArt.X104, TypeArt.X105) == true) {
+            } else if (TypeArt.isType(spcRecA.artiklRec, TypeArt.X104, TypeArt.X105) == true) {
                 spcListA.add(spcRecA);
                 spcListB.add(new TRecord());
             }
@@ -221,7 +221,7 @@ public class RTarget {
 
         List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
-            if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X135) == true) {
+            if (TypeArt.isType(spcRec.artiklRec, TypeArt.X135) == true) {
                 spcList.add(spcRec);
             }
         });
@@ -246,7 +246,7 @@ public class RTarget {
 
         List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
-            if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X108) == true) {
+            if (TypeArt.isType(spcRec.artiklRec, TypeArt.X108) == true) {
                 spcList.add(spcRec);
             }
         });
@@ -273,7 +273,7 @@ public class RTarget {
 
         List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
-            if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X201, TypeArt.X202, TypeArt.X203,
+            if (TypeArt.isType(spcRec.artiklRec, TypeArt.X201, TypeArt.X202, TypeArt.X203,
                     TypeArt.X204, TypeArt.X205, TypeArt.X206, TypeArt.X215, TypeArt.X220,
                     TypeArt.X230, TypeArt.X231, TypeArt.X250, TypeArt.X290) == true) {
 
@@ -301,7 +301,7 @@ public class RTarget {
     public static void loadTab7(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
         List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
-            if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X209, TypeArt.X210,
+            if (TypeArt.isType(spcRec.artiklRec, TypeArt.X209, TypeArt.X210,
                     TypeArt.X211, TypeArt.X212, TypeArt.X213, TypeArt.X214) == true) {
 
                 spcList.add(spcRec);
@@ -329,7 +329,7 @@ public class RTarget {
 
         List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
-            if (TypeArt.isType(spcRec.artiklRec(), TypeArt.X502) == true) {
+            if (TypeArt.isType(spcRec.artiklRec, TypeArt.X502) == true) {
                 spcList.add(spcRec);
             }
         });

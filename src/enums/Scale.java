@@ -27,9 +27,9 @@ public enum Scale {
     artdet2T(0, " - тариф двухст. текстуры"), //ARTDET 	
     separator2(-777, "<html><font size='3' color='blue'> ЦЕНОВЫЕ КОЭФ. ТЕКСТУР:"),
     separator3(-888, "<html><font size='2' color='black'> см. Модели->Артикулы"),
-    artdetK1(1, " - kоэф. основн. текстуры"), //ARTDET 
-    artdetK2(1, " - kоэф. внутр. текстуры"), //ARTDET 
-    artdetK3(1, " - kоэф. внешн. текстуры"), //ARTDET 
+    artdetK1(1, " - kоэф. ценовой (осн.текстура)"), //ARTDET 
+    artdetK2(1, " - kоэф. ценовой (внутр.текстура)"), //ARTDET 
+    artdetK3(1, " - kоэф. ценовой (внешн.текстура)"), //ARTDET 
     separator4(-888, "<html><font size='2' color='black'> <font size='2' color='black'> см. Справочники->Текстуры"),
     colorK1(1, " - коэф. основной текстуры"), //COLOR 
     colorK2(1, " - коэф. внутренний текстуры"), //COLOR 

@@ -160,7 +160,7 @@ public class ElemCross extends ElemSimple {
     @Override
     public void addSpecific(TRecord spcAdd) { //добавление спесификаций зависимых элементов
         try {
-            if(spcAdd.artiklRec().getStr(eArtikl.code).substring(0, 1).equals("@")) {
+            if(spcAdd.artiklRec.getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;
             }
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
@@ -168,11 +168,11 @@ public class ElemCross extends ElemSimple {
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм 
 
             //Армирование
-            if (TypeArt.isType(spcAdd.artiklRec(), TypeArt.X107)) {
+            if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X107)) {
                 spcAdd.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
                 spcAdd.setAnglCut(90, 90);
             }
-            if (List.of(1, 3, 5).contains(spcAdd.artiklRec().getInt(eArtikl.level1)) && spcRec.id != spcAdd.id) {
+            if (List.of(1, 3, 5).contains(spcAdd.artiklRec.getInt(eArtikl.level1)) && spcRec.id != spcAdd.id) {
                 spcAdd.width += spcRec.width;
             }
             UPar.to_12075_34075_39075(this, spcAdd); //углы реза

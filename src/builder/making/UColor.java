@@ -59,7 +59,7 @@ public class UColor {
         int typesUS = spcClon.detailRec.getInt(COLOR_US);
         if (UseColor.isSeries(typesUS)) { //если сери€
 
-            List<Record> artseriList = eArtikl.filter(spcClon.artiklRec().getInt(eArtikl.groups4_id));
+            List<Record> artseriList = eArtikl.filter(spcClon.artiklRec.getInt(eArtikl.groups4_id));
             for (Record artseriRec : artseriList) {
                 spcClon.artiklRec(artseriRec);
                 if (UColor.colorFromProduct(spcClon, 1, true)
@@ -104,7 +104,7 @@ public class UColor {
         try {
             int srcColorUS = (side == 1) ? srcNumberUS & 0x0000000f : (side == 2)
                     ? (srcNumberUS & 0x000000f0) >> 4 : (srcNumberUS & 0x00000f00) >> 8; //тип подбора                
-            int elemArtID = spcAdd.artiklRec().getInt(eArtikl.id);
+            int elemArtID = spcAdd.artiklRec.getInt(eArtikl.id);
 
             //÷вет элемента по которому подбираю из варианта подбора
             int originColorID = getID_colorUS(spcAdd, srcColorUS);
@@ -120,7 +120,7 @@ public class UColor {
                     } else {
                         resultColorID = scanFromProfSide(elemArtID, srcColorFk, side); //теоритически это должно железно работать!!!
                         if (resultColorID == -1) {
-                            if (spcAdd.artiklRec().getInt(eArtikl.level1) == 2 && (spcAdd.artiklRec().getInt(eArtikl.level2) == 11 || spcAdd.artiklRec().getInt(eArtikl.level2) == 13)) {
+                            if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2 && (spcAdd.artiklRec.getInt(eArtikl.level2) == 11 || spcAdd.artiklRec.getInt(eArtikl.level2) == 13)) {
                                 return false;
                             }
                             resultColorID = scanFromColorFirst(spcAdd); //перва€ в списке и это неправильно

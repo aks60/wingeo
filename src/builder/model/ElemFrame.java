@@ -153,14 +153,14 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void addSpecific(TRecord spcAdd) { //добавление спесификаций зависимых элементов
         try {
-            if(spcAdd.artiklRec().getStr(eArtikl.code).substring(0, 1).equals("@")) {
+            if(spcAdd.artiklRec.getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;
             }            
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм
             //Армирование
-            if (TypeArt.isType(spcAdd.artiklRec(), TypeArt.X107)) {
+            if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X107)) {
                 spcAdd.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
                 spcAdd.setAnglCut(90, 90);
                 spcRec.anglHoriz = UGeo.anglHor(x1(), y1(), x2(), y2());
@@ -194,13 +194,13 @@ public class ElemFrame extends ElemSimple {
                     AreaStvorka elemStv = ((AreaStvorka) owner);
                     AreaSimple areaStv = ((AreaSimple) owner);
                     if ("по текстуре ручки".equals(spcAdd.getParam("null", 24006))) {
-                        colorID = UColor.colorFromArtikl(spcAdd.artiklRec().getInt(eArtikl.id), 1, elemStv.knobColor);
+                        colorID = UColor.colorFromArtikl(spcAdd.artiklRec.getInt(eArtikl.id), 1, elemStv.knobColor);
 
                     } else if ("по текстуре подвеса".equals(spcAdd.getParam("null", 24006))) {
                         for (ElemSimple elem : areaStv.frames) {
                             for (TRecord spc : elem.spcRec.spcList) {
-                                if (spc.artiklRec().getInt(eArtikl.level1) == 2 && spc.artiklRec().getInt(eArtikl.level2) == 12) {
-                                    colorID = UColor.colorFromArtikl(spcAdd.artiklRec().getInt(eArtikl.id), 1, spc.colorID1);
+                                if (spc.artiklRec.getInt(eArtikl.level1) == 2 && spc.artiklRec.getInt(eArtikl.level2) == 12) {
+                                    colorID = UColor.colorFromArtikl(spcAdd.artiklRec.getInt(eArtikl.id), 1, spc.colorID1);
                                 }
                             }
                         }
@@ -208,8 +208,8 @@ public class ElemFrame extends ElemSimple {
                     } else if ("по текстуре замка".equals(spcAdd.getParam("null", 24006))) {
                         for (ElemSimple elem : areaStv.frames) {
                             for (TRecord spc : elem.spcRec.spcList) {
-                                if (spc.artiklRec().getInt(eArtikl.level1) == 2 && spc.artiklRec().getInt(eArtikl.level2) == 9) {
-                                    colorID = UColor.colorFromArtikl(spcAdd.artiklRec().getInt(eArtikl.id), 1, spc.colorID1);
+                                if (spc.artiklRec.getInt(eArtikl.level1) == 2 && spc.artiklRec.getInt(eArtikl.level2) == 9) {
+                                    colorID = UColor.colorFromArtikl(spcAdd.artiklRec.getInt(eArtikl.id), 1, spc.colorID1);
                                 }
                             }
                         }
@@ -245,7 +245,7 @@ public class ElemFrame extends ElemSimple {
                     }
                 }
                 //Фурнитура
-                if (TypeArt.isType(spcAdd.artiklRec(), TypeArt.X109)) {
+                if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X109)) {
                     if (layout().id == Integer.valueOf(spcAdd.getParam("0", 24010, 25010, 38010, 39002))) {  //"номер стороны"   
                         if ("null".equals(spcAdd.getParam("null", 25013)) == false //"укорочение от"
                                 && spcAdd.getParam(0, 25030).equals(0) == false) { //"укорочение, мм"  
@@ -255,7 +255,7 @@ public class ElemFrame extends ElemSimple {
                         spcAdd.width += width() + winc.syssizRec.getDbl(eSyssize.prip) * 2;
                     }
 
-                } else if (List.of(1, 3, 5).contains(spcAdd.artiklRec().getInt(eArtikl.level1)) && spcRec.id != spcAdd.id) {
+                } else if (List.of(1, 3, 5).contains(spcAdd.artiklRec.getInt(eArtikl.level1)) && spcRec.id != spcAdd.id) {
                     spcAdd.width += spcRec.width;
                 }
             }

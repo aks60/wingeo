@@ -198,8 +198,8 @@ public class TFurniture extends Cal5e {
 
                     //Ловим ручку, петлю, замок и 
                     //присваиваем знач. в свойства створки
-                    if (spcAdd.artiklRec().getInt(eArtikl.level1) == 2
-                            && list.contains(spcAdd.artiklRec().getInt(eArtikl.level2)) == true) {
+                    if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2
+                            && list.contains(spcAdd.artiklRec.getInt(eArtikl.level2)) == true) {
                         setPropertyStv(areaStv, spcAdd);
                     } else {
                         UColor.colorFromElemOrSeri(spcAdd);
@@ -232,13 +232,13 @@ public class TFurniture extends Cal5e {
     private void setPropertyStv(AreaSimple areaStv, TRecord spcAdd) {
         AreaStvorka stv = (AreaStvorka) areaStv;
 
-        if (spcAdd.artiklRec().getInt(eArtikl.level1) == 2) {
+        if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2) {
             //Ручка
-            if (spcAdd.artiklRec().getInt(eArtikl.level2) == 11) {
+            if (spcAdd.artiklRec.getInt(eArtikl.level2) == 11) {
                 if (stv.isJson(stv.gson.param, PKjson.artiklKnob)) {
                     spcAdd.artiklRec(stv.knobRec); //выбр. вручную
                 } else {
-                    stv.knobRec = spcAdd.artiklRec(); //из детализации авто
+                    stv.knobRec = spcAdd.artiklRec; //из детализации авто
                 }
                 //Цвет
                 spcAdd.color(stv.knobColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
@@ -248,11 +248,11 @@ public class TFurniture extends Cal5e {
                     }
                 }
                 //Подвес
-            } else if (spcAdd.artiklRec().getInt(eArtikl.level2) == 12) {
+            } else if (spcAdd.artiklRec.getInt(eArtikl.level2) == 12) {
                 if (stv.isJson(stv.gson.param, PKjson.artiklLoop)) {
                     spcAdd.artiklRec(stv.loopRec); //выбр. вручную
                 } else {
-                    stv.loopRec = spcAdd.artiklRec(); //из детализации авто
+                    stv.loopRec = spcAdd.artiklRec; //из детализации авто
                 }
                 //Цвет
                 spcAdd.color(stv.loopColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
@@ -262,7 +262,7 @@ public class TFurniture extends Cal5e {
                     }
                 }
                 //Замок  
-            } else if (spcAdd.artiklRec().getInt(eArtikl.level2) == 9) {
+            } else if (spcAdd.artiklRec.getInt(eArtikl.level2) == 9) {
                 if (stv.isJson(stv.gson.param, PKjson.artiklLock)) {
                     spcAdd.artiklRec(stv.lockRec); //выбр. вручную
                 } else {

@@ -83,8 +83,8 @@ public class Kitcalc {
                     Scale.grpformN1.v = TTariffic.percentMarkup(winc); //процентная надбавка на изделия сложной формы
                 }
 
-                Record artgrp1bRec = eGroups.find(rec.artiklRec().getInt(eArtikl.groups1_id));
-                Record artgrp2bRec = eGroups.find(rec.artiklRec().getInt(eArtikl.groups2_id));
+                Record artgrp1bRec = eGroups.find(rec.artiklRec.getInt(eArtikl.groups1_id));
+                Record artgrp2bRec = eGroups.find(rec.artiklRec.getInt(eArtikl.groups2_id));
                 Scale.artiklK.v = artgrp1bRec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
                 Scale.artiklS.v = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей               
 
@@ -130,8 +130,8 @@ public class Kitcalc {
                     Scale.grpformN1.v = TTariffic.percentMarkup(win); //процентная надбавка на изделия сложной формы
                 }
 
-                Record artgrp1bRec = eGroups.find(rec.artiklRec().getInt(eArtikl.groups1_id));
-                Record artgrp2bRec = eGroups.find(rec.artiklRec().getInt(eArtikl.groups2_id));
+                Record artgrp1bRec = eGroups.find(rec.artiklRec.getInt(eArtikl.groups1_id));
+                Record artgrp2bRec = eGroups.find(rec.artiklRec.getInt(eArtikl.groups2_id));
                 Scale.artiklK.v = artgrp1bRec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
                 Scale.artiklS.v = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей               
 

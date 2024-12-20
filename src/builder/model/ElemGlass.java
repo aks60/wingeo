@@ -165,21 +165,21 @@ public class ElemGlass extends ElemSimple {
     public void addSpecific(TRecord spcAdd
     ) {
         try {
-            if (spcAdd.artiklRec().getStr(eArtikl.code).substring(0, 1).equals("@")) {
+            if (spcAdd.artiklRec.getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;
             }
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм         
-            if (TypeArt.X502.isType(spcAdd.artiklRec())) {
+            if (TypeArt.X502.isType(spcAdd.artiklRec)) {
                 return;  //если стеклопакет сразу выход
             }
 
             //Погонные метры.
-            if (UseUnit.METR.id == spcAdd.artiklRec().getInt(eArtikl.unit)) {
+            if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
                 Coordinate coo[] = this.areaFalz.getCoordinates();
-                spcAdd.height = spcAdd.artiklRec().getDbl(eArtikl.height);
+                spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
                 spcAdd.anglHoriz = UGeo.anglHor(frameglass); //угол к горизонту 
 
                 //Арка
@@ -242,7 +242,7 @@ public class ElemGlass extends ElemSimple {
                 spcAdd.width = spcAdd.width / UPar.to_12040_15031_25036_34040_39040(spcAdd); //"[ / коэф-т ]" 
 
                 //Штуки   
-            } else if (UseUnit.PIE.id == spcAdd.artiklRec().getInt(eArtikl.unit)) {
+            } else if (UseUnit.PIE.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
                 if (spcAdd.mapParam.get(13014) != null) {
                     LineSegment s2 = UGeo.getSegment(this.areaFalz, sideglass);

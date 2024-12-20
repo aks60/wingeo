@@ -113,10 +113,6 @@ public class TRecord {
         this.artiklRec = artiklRec;
     }
 
-    public Record artiklRec() {
-        return artiklRec;
-    }
-
     public void color(int colorID1, int colorID2, int colorID3) {
         this.colorID1 = colorID1;
         this.colorID2 = colorID2;
