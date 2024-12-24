@@ -45,9 +45,9 @@ public class TRecord {
     public double quant1 = 0;  //Количество без отхода
     public double quant2 = 0;  //Количество (с отх./без отх.)
     public double costprice = 0;  //Себестоимость   
-    public double price1 = 0;  //Стоимость. за единицу измерения
-    public double price2 = 0;  //Стоимость без технологической скидки
-    public double price3 = 0;  //Стоимость с технологической скидкой
+    public double price = 0;  //Цена за единицу измерения
+    public double cost1 = 0;  //Стоимость без технологической скидки
+    public double cost2 = 0;  //Стоимость с технологической скидкой
 
     public TRecord() {
     }
@@ -73,9 +73,9 @@ public class TRecord {
         this.waste = spec.waste;
         this.quant2 = spec.quant2;
         this.costprice = spec.costprice;
-        this.price1 = spec.price1;
-        this.price2 = spec.price2;
-        this.price3 = spec.price3;
+        this.price = spec.price;
+        this.cost1 = spec.cost1;
+        this.cost2 = spec.cost2;
         this.anglHoriz = spec.anglHoriz;
         this.mapParam = spec.mapParam;
         this.elem5e = spec.elem5e;
@@ -140,9 +140,9 @@ public class TRecord {
         this.waste = spec.waste;
         this.quant2 = spec.quant2;
         this.costprice = spec.costprice;
-        this.price1 = spec.price1;
-        this.price2 = spec.price2;
-        this.price3 = spec.price3;
+        this.price = spec.price;
+        this.cost1 = spec.cost1;
+        this.cost2 = spec.cost2;
         this.anglHoriz = spec.anglHoriz;
         this.mapParam = spec.mapParam;
         this.elem5e = spec.elem5e;
@@ -156,7 +156,7 @@ public class TRecord {
         //System.out.println(height2);
         return new Vector(List.of(npp, id, elemID, place, artikl, name, eColor.find(colorID1).getStr(eColor.name), eColor.find(colorID2).getStr(eColor.name),
                 eColor.find(colorID3).getStr(eColor.name), width, height2, weight, anglCut0, anglCut1, anglHoriz,
-                count, UseUnit.getName(unit), waste, quant1, quant2, costprice, price1, price2, price3));
+                count, UseUnit.getName(unit), waste, quant1, quant2, costprice, price, cost1, cost2));
     }
 
     public void setAnglCut(double angl0, double angl1) {

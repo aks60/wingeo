@@ -252,8 +252,8 @@ public class Wincalc {
 
             //Итоговая стоимость
             for (TRecord spc : this.listSpec) {
-                this.price1 = (this.price1 + spc.price2); //общая стоимость без скидки
-                this.price2 = (this.price2 + spc.price3); //общая стоимость со скидкой                                   
+                this.price1 = (this.price1 + spc.cost1); //общая стоимость без скидки
+                this.price2 = (this.price2 + spc.cost2); //общая стоимость со скидкой                                   
             }
 
             //Вес изделия

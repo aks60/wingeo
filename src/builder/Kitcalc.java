@@ -93,12 +93,12 @@ public class Kitcalc {
                 rec.costprice += TTariffic.artdetCostPrice(rec); //себест. по табл. ARTDET и прав.расч.
 
                 double sbs = rec.costprice * Scale.artiklK.v * Scale.systreeK.v;
-                rec.price1 = sbs + Scale.grpformN1.v * sbs / 100; //стоимость за един.изм 
-                rec.price2 = rec.price1 * rec.quant2; //стоимость без скидки                     
-                double priceTex = rec.price2 - Scale.artiklS.v * rec.price2 / 100; //стоимость с техн. скидкой 
-                rec.price3 = priceTex - discKit * priceTex / 100; //стоимость с техн.скидк. и скид.менеджера
-                price1 += rec.price2;
-                price2 += rec.price3;
+                rec.price = sbs + Scale.grpformN1.v * sbs / 100; //цена за един.изм 
+                rec.cost1 = rec.price * rec.quant2; //стоимость без скидки                     
+                double priceTex = rec.cost1 - Scale.artiklS.v * rec.cost1 / 100; //стоимость с техн. скидкой 
+                rec.cost2 = priceTex - discKit * priceTex / 100; //стоимость с техн.скидк. и скид.менеджера
+                price1 += rec.cost1;
+                price2 += rec.cost2;
                 kitList.add(rec);
             }
         }
@@ -146,12 +146,12 @@ public class Kitcalc {
                 rec.costprice += TTariffic.artdetCostPrice(rec); //себест. по табл. ARTDET и прав.расч.
 
                 double sbs = rec.costprice * Scale.artiklK.v * Scale.systreeK.v;
-                rec.price1 = sbs + Scale.grpformN1.v * sbs / 100; //стоимость за един.изм 
-                rec.price2 = rec.price1 * rec.quant2; //стоимость без скидки                     
-                double priceTex = rec.price2 - Scale.artiklS.v * rec.price2 / 100; //стоимость с техн. скидкой 
-                rec.price3 = priceTex - discKit * priceTex / 100; //стоимость с техн.скидк. и скид.менеджера
-                price1 += rec.price2;
-                price2 += rec.price3;
+                rec.price = sbs + Scale.grpformN1.v * sbs / 100; //цена за един.изм 
+                rec.cost1 = rec.price * rec.quant2; //стоимость без скидки                     
+                double priceTex = rec.cost1 - Scale.artiklS.v * rec.cost1 / 100; //стоимость с техн. скидкой 
+                rec.cost2 = priceTex - discKit * priceTex / 100; //стоимость с техн.скидк. и скид.менеджера
+                price1 += rec.cost1;
+                price2 += rec.cost2;
                 kitList.add(rec);
             }
         }
@@ -193,11 +193,11 @@ public class Kitcalc {
                 rec.costprice += TTariffic.artdetCostPrice(rec); //себест. по табл. ARTDET и прав.расч.
 
                 double sbs = rec.costprice * Scale.artiklK.v * Scale.systreeK.v;
-                rec.price1 = sbs + Scale.grpformN1.v * sbs / 100; //стоимость за един.изм 
-                rec.price2 = rec.price1 * rec.quant2; //стоимость без скидки                     
-                rec.price3 = rec.price2 - Scale.artiklS.v * rec.price2 / 100; //стоимость со скидкой 
-                price1 += rec.price2;
-                price2 += rec.price3;
+                rec.price = sbs + Scale.grpformN1.v * sbs / 100; //цена за един.изм 
+                rec.cost1 = rec.price * rec.quant2; //стоимость без скидки                     
+                rec.cost2 = rec.cost1 - Scale.artiklS.v * rec.cost1 / 100; //стоимость со скидкой 
+                price1 += rec.cost1;
+                price2 += rec.cost2;
                 kitList.add(rec);
             }
         }

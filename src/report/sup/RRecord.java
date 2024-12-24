@@ -121,16 +121,16 @@ public class RRecord {
 
     public String sebes2() {
         if (otx) {
-            return UCom.format(spc.price1, -1);
+            return UCom.format(spc.price, -1);
         }
         return UCom.format(spc.costprice, -1);
     }
 
     public String price2() {
         if (otx) {
-            return UCom.format(spc.price3, -1);
+            return UCom.format(spc.cost2, -1);
         }
-        return UCom.format(spc.price2, -1);
+        return UCom.format(spc.cost1, -1);
     }
 
     public static List<TRecord> groups4T(List<TRecord> listSpc) {
@@ -145,8 +145,8 @@ public class RRecord {
                 newRec.count += oldRec.count;
                 newRec.quant1 += oldRec.quant1;
                 newRec.quant2 += oldRec.quant2;
-                newRec.price2 += oldRec.price2;
-                newRec.price3 += oldRec.price3;
+                newRec.cost1 += oldRec.cost1;
+                newRec.cost2 += oldRec.cost2;
             }
         }
         map.entrySet().forEach(act -> listOut.add(act.getValue()));
@@ -166,8 +166,8 @@ public class RRecord {
                 newRec.spc.count += oldRec.spc.count;
                 newRec.spc.quant1 += oldRec.spc.quant1;
                 newRec.spc.quant2 += oldRec.spc.quant2;
-                newRec.spc.price2 += oldRec.spc.price2;
-                newRec.spc.price3 += oldRec.spc.price3;
+                newRec.spc.cost1 += oldRec.spc.cost1;
+                newRec.spc.cost2 += oldRec.spc.cost2;
             }
         }
         map.entrySet().forEach(act -> listOut.add(act.getValue()));
@@ -176,14 +176,14 @@ public class RRecord {
     }
 
     public double cost1() {
-        return spc.price2;
+        return spc.cost1;
     }
 
     public double cost2() {
-        return spc.price3;
+        return spc.cost2;
     }
 
     public String toString() {
-        return spc.artikl + " - " + spc.name + " - " + spc.width + " - " + spc.quant2 + " - " + spc.price2;
+        return spc.artikl + " - " + spc.name + " - " + spc.width + " - " + spc.quant2 + " - " + spc.cost1;
     }
 }
