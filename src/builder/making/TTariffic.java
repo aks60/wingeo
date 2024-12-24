@@ -50,14 +50,14 @@ public class TTariffic extends Cal5e {
 
                     elem5e.spcRec.quant1 = formatAmount(elem5e.spcRec); //количество без отхода  
                     elem5e.spcRec.quant = (norm_otx == true) ? elem5e.spcRec.quant1 + (elem5e.spcRec.quant1 * elem5e.spcRec.waste / 100) : elem5e.spcRec.quant1; //количество с отходом
-                    elem5e.spcRec.sebes += artdetPrice(elem5e.spcRec); //себест. по табл. ARTDET и прав.расч.
+                    elem5e.spcRec.sebes += artdetCostPrice(elem5e.spcRec); //себест. по табл. ARTDET и прав.расч.
 
                     //Вложенная спецификация
                     //цикл по детализации эдемента
                     for (TRecord spcRec : elem5e.spcRec.spcList) {
                         spcRec.quant1 = formatAmount(spcRec); //количество без отхода
                         spcRec.quant = (norm_otx == true) ? spcRec.quant1 + (spcRec.quant1 * spcRec.waste / 100) : spcRec.quant1; //количество с отходом
-                        spcRec.sebes += artdetPrice(spcRec); //себест. за ед. без отхода
+                        spcRec.sebes += artdetCostPrice(spcRec); //себест. за ед. без отхода
                     }
                 }
             }
@@ -78,21 +78,21 @@ public class TTariffic extends Cal5e {
                         if (Type.GLASS == elem5e.type) {//фильтр для стеклопакета
 
                             if (form == TypeForm.P00.id) {//не проверять форму
-                                rulecalcPrise(winc, rulecalcRec, elem5e.spcRec);
+                                rulecalcCostPrise(winc, rulecalcRec, elem5e.spcRec);
 
                             } else if (form == TypeForm.P10.id && Type.TRAPEZE == elem5e.owner.type) { //не прямоугольное, не арочное заполнение
-                                rulecalcPrise(winc, rulecalcRec, elem5e.spcRec);
+                                rulecalcCostPrise(winc, rulecalcRec, elem5e.spcRec);
 
                             } else if (form == TypeForm.P12.id && Type.ARCH == elem5e.owner.type) {//не прямоугольное заполнение с арками
-                                rulecalcPrise(winc, rulecalcRec, elem5e.spcRec);
+                                rulecalcCostPrise(winc, rulecalcRec, elem5e.spcRec);
                             }
                         } else if (form == TypeForm.P04.id && elem5e.type == Type.FRAME_SIDE
                                 && elem5e.owner.type == Type.ARCH && elem5e.layout() == Layout.TOP) {  //профиль с радиусом  (фильтр для арки профиля AYPC.W62.0101)
-                            rulecalcPrise(winc, rulecalcRec, elem5e.spcRec); //профиль с радиусом
+                            rulecalcCostPrise(winc, rulecalcRec, elem5e.spcRec); //профиль с радиусом
 
                         } else {
                             if (form == TypeForm.P00.id) {  //не проверять форму
-                                rulecalcPrise(winc, rulecalcRec, elem5e.spcRec); //всё остальное не проверять форму
+                                rulecalcCostPrise(winc, rulecalcRec, elem5e.spcRec); //всё остальное не проверять форму
                             }
                         }
                     }
@@ -118,7 +118,7 @@ public class TTariffic extends Cal5e {
                         for (Record rulecalcRec : eRulecalc.filter()) {
                             int form = (rulecalcRec.getInt(eRulecalc.form) == 0) ? 1 : rulecalcRec.getInt(eRulecalc.form);
                             if (form == TypeForm.P00.id) { //не проверять форму 
-                                rulecalcPrise(winc, rulecalcRec, spcRec);
+                                rulecalcCostPrise(winc, rulecalcRec, spcRec);
                             }
                         }
                         // </editor-fold> 
@@ -153,7 +153,7 @@ public class TTariffic extends Cal5e {
     }
 
     //Себес-сть за ед. изм. Рассчёт тарифа для заданного артикула заданных цветов по таблице eArtdet
-    public static double artdetPrice(TRecord specificRec) {
+    public static double artdetCostPrice(TRecord specificRec) {
 
         double inPrice = 0;
         Record color1Rec = eColor.find(specificRec.colorID1);  //основная
@@ -258,46 +258,14 @@ public class TTariffic extends Cal5e {
                     }
                 }
                 inPrice = inPrice + (artdetPrice
-                        * artdetRec.getDbl(eArtdet.coef)); //kоэф. текстуры по табл. ARTDET               
+                        * artdetRec.getDbl(eArtdet.coef)); //kоэф. накл. расходов по табл. ARTDET               
             }
         }
         return inPrice;
     }
 
-    //УДАЛИТЬ !!! Правила расчёта. Фильтр по форме конструкции 
-    public static void rulecalcFilter(Wincalc winc, ElemSimple elem5e) {
-
-        for (Record rulecalcRec : eRulecalc.filter()) {
-            //Всё обнуляется и рассчитывается по таблице правил расчёта
-            //Увеличение себестоимости/стоимости в coeff раз и на incr величину наценки.
-
-            //Фильтр по полю 'форма профиля', в заполнениях. В БиМакс используюеся только 1, 4, 10, 12 параметры
-            int form = (rulecalcRec.getInt(eRulecalc.form) == 0) ? 1 : rulecalcRec.getInt(eRulecalc.form);
-            if (Type.GLASS == elem5e.type) {//фильтр для стеклопакета
-
-                if (form == TypeForm.P00.id) {//не проверять форму
-                    rulecalcPrise(winc, rulecalcRec, elem5e.spcRec);
-
-                } else if (form == TypeForm.P10.id && Type.TRAPEZE == elem5e.owner.type) { //не прямоугольное, не арочное заполнение
-                    rulecalcPrise(winc, rulecalcRec, elem5e.spcRec);
-
-                } else if (form == TypeForm.P12.id && Type.ARCH == elem5e.owner.type) {//не прямоугольное заполнение с арками
-                    rulecalcPrise(winc, rulecalcRec, elem5e.spcRec);
-                }
-            } else if (form == TypeForm.P04.id && elem5e.type == Type.FRAME_SIDE
-                    && elem5e.owner.type == Type.ARCH && elem5e.layout() == Layout.TOP) {  //профиль с радиусом  (фильтр для арки профиля AYPC.W62.0101)
-                rulecalcPrise(winc, rulecalcRec, elem5e.spcRec); //профиль с радиусом
-
-            } else {
-                if (form == TypeForm.P00.id) {  //не проверять форму
-                    rulecalcPrise(winc, rulecalcRec, elem5e.spcRec); //всё остальное не проверять форму
-                }
-            }
-        }
-    }
-
     //Правила расчёта. Фильтр остальные
-    public static void rulecalcPrise(Wincalc winc, Record rulecalcRec, TRecord spcRec) {
+    public static void rulecalcCostPrise(Wincalc winc, Record rulecalcRec, TRecord spcRec) {
 
         try {
             //Фильтр артикул совпал
@@ -307,9 +275,6 @@ public class TTariffic extends Cal5e {
 
                 //Фильтр тип и подтип совпали
                 if ((spcRec.artiklRec.getInt(eArtikl.level1) * 100 + spcRec.artiklRec.getInt(eArtikl.level2)) == rulecalcRec.getInt(eRulecalc.type)) {
-
-                    //Object o1 = (spcRec.artiklRec.getInt(eArtikl.level1) * 100 + spcRec.artiklRec.getInt(eArtikl.level2));
-                    //Object o2 = rulecalcRec.getInt(eRulecalc.type);
                     //Фильтр коды текстур попали в диапазон
                     if (UCom.containsColor(rulecalcRec.getStr(eRulecalc.color1), spcRec.colorID1) == true
                             && UCom.containsColor(rulecalcRec.getStr(eRulecalc.color2), spcRec.colorID2) == true
