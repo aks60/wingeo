@@ -58,6 +58,8 @@ public enum eProp {
     public static boolean dev = false;      //признак разработки и тестирования
     public static boolean locate = true;   //координаты фрейма разработки и тестирования
     public static String profile = "";     //профиль разработки и тестирования
+    public static boolean overcost = true;
+    public static boolean techwast = true;
 
     //Значение по умолчанию
     eProp(String value) {
