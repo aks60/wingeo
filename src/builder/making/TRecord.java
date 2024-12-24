@@ -45,7 +45,7 @@ public class TRecord {
     public double quant1 = 0;  //Количество без отхода
     public double quant2 = 0;  //Количество (с отх./без отх.)
     public double costprice = 0;  //Себестоимость   
-    public double price1 = 0;  //Стоимость. за единицу
+    public double price1 = 0;  //Стоимость. за единицу измерения
     public double price2 = 0;  //Стоимость без технологической скидки
     public double price3 = 0;  //Стоимость с технологической скидкой
 
