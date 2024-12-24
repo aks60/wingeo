@@ -57,7 +57,7 @@ public class TTariffic extends Cal5e {
                     for (TRecord spcRec : elem5e.spcRec.spcList) {
                         spcRec.quant1 = formatAmount(spcRec); //количество без отхода
                         spcRec.quant2 = (norm_otx == true) ? spcRec.quant1 + (spcRec.quant1 * spcRec.waste / 100) : spcRec.quant1; //количество с отходом
-                        spcRec.costprice += artdetCostPrice(spcRec); //себест. за ед. без отхода
+                        spcRec.costprice += artdetCostPrice(spcRec); //себест. по табл. ARTDET и прав.расч.
                     }
                 }
             }
@@ -222,10 +222,10 @@ public class TTariffic extends Cal5e {
                     Record colgrpRec = eGroups.find(color2Rec.getInt(eColor.groups_id));
                     Scale.artdetT2.v = artdetRec.getDbl(eArtdet.cost_c2); //тариф внутренний текстуры
                     Scale.colorK2.v = color2Rec.getDbl(eColor.coef2); //ценовой коэф. внутренний текстуры
-                    Scale.grpcolorK1.v = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
+                    Scale.grpcolorK2.v = colgrpRec.getDbl(eGroups.val); //коэф. группы текстур
                     Scale.grpcursK2.v = cursNoBaseRec.getDbl(eCurrenc.cross_cour); //кросс курс
 
-                    artdetPrice += (Scale.artdetT2.v * Scale.colorK2.v * Scale.grpcolorK1.v) / Scale.grpcursK2.v;
+                    artdetPrice += (Scale.artdetT2.v * Scale.colorK2.v * Scale.grpcolorK2.v) / Scale.grpcursK2.v;
                     artdetUsed = true;
                 }
                 //Подбираем тариф внешней текстуры
@@ -264,7 +264,7 @@ public class TTariffic extends Cal5e {
         return inPrice;
     }
 
-    //Себес-сть. Рассчёт тарифа по правилам расчёта
+    //Себес-сть по правилам расчёта
     public static void rulecalcCostPrise(Wincalc winc, Record rulecalcRec, TRecord spcRec) {
 
         try {
@@ -345,6 +345,14 @@ public class TTariffic extends Cal5e {
         }
     }
 
+    //Цена за ед. и стоимость
+    public static void artiklPriceAndCost(TRecord specificRec, Record artiklRec) {
+        
+        Record color1Rec = eColor.find(specificRec.colorID1);  //основная
+        Record color2Rec = eColor.find(specificRec.colorID2);  //внутренняя
+        Record color3Rec = eColor.find(specificRec.colorID3);  //внешняя
+    }
+    
     //Процентная надбавка на изделия сложной формы
     public static double percentMarkup(Wincalc winc) {
         if (Type.ARCH == winc.root.type) {

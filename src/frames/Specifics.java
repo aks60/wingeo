@@ -107,7 +107,6 @@ public class Specifics extends javax.swing.JFrame {
         Vector v = new Vector();
         v.add(listTRec.size() + 1);
         IntStream.range(1, vSize).forEach(action -> v.add(null));
-        v.set(v.size() - 2, UCom.format(winc.price1() + Kitcalc.price1, "#,##0.##")); //стоимость без скидки
         v.set(v.size() - 1, UCom.format(winc.price2() + Kitcalc.price2, "#,##0.##")); //стоимость со скидклй              
         dtm.addRow(v);
         labSum.setText("Итого: " + UCom.format(winc.price2() + Kitcalc.price2, "#,##0.##"));
@@ -477,15 +476,15 @@ public class Specifics extends javax.swing.JFrame {
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, "", "", "", "", "", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, "", "", "", "", "", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, "", "", "", "", "", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, "", "", "", "", "", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nпп", "PK", "FK", "Расположенние", "Артикул", "Наименование", "Текстура", "Внутр..", "Внешн...", "Длина", "Ширина", "Масса", "реза1", "реза2", "гориз.", "<html>Кол.<br/>единиц", "<html>Един.<br/>изм.", "<html>Процент<br/> отхода", "<html>Кол.без<br/>отхода", "<html>Кол. с <br/>отходом", "<html>Себес- <br/>тоимость", "за ед. измер", "без скидки", "со скидкой"
+                "Nпп", "PK", "FK", "Расположенние", "Артикул", "Наименование", "Текстура", "Внутр..", "Внешн...", "Длина", "Ширина", "Масса", "реза1", "реза2", "гориз.", "<html>Кол.<br/>единиц", "<html>Един.<br/>изм.", "<html>Процент<br/> отхода", "<html>Кол. с <br/>отходом", "<html>Себес- <br/>тоимость", "за ед. измер", "без скидки", "со скидкой"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -520,12 +519,11 @@ public class Specifics extends javax.swing.JFrame {
             tab1.getColumnModel().getColumn(15).setPreferredWidth(30);
             tab1.getColumnModel().getColumn(16).setPreferredWidth(40);
             tab1.getColumnModel().getColumn(17).setPreferredWidth(40);
-            tab1.getColumnModel().getColumn(18).setPreferredWidth(48);
-            tab1.getColumnModel().getColumn(19).setPreferredWidth(46);
+            tab1.getColumnModel().getColumn(18).setPreferredWidth(46);
+            tab1.getColumnModel().getColumn(19).setPreferredWidth(44);
             tab1.getColumnModel().getColumn(20).setPreferredWidth(44);
-            tab1.getColumnModel().getColumn(21).setPreferredWidth(44);
+            tab1.getColumnModel().getColumn(21).setPreferredWidth(58);
             tab1.getColumnModel().getColumn(22).setPreferredWidth(58);
-            tab1.getColumnModel().getColumn(23).setPreferredWidth(58);
         }
 
         centr.add(scr1, java.awt.BorderLayout.CENTER);
@@ -771,12 +769,11 @@ public class Specifics extends javax.swing.JFrame {
         tab1.getColumnModel().getColumn(13).setCellRenderer(new DefCellRendererSpc(2));
         tab1.getColumnModel().getColumn(14).setCellRenderer(new DefCellRendererSpc(1));
         tab1.getColumnModel().getColumn(15).setCellRenderer(new DefCellRendererSpc(1));
-        tab1.getColumnModel().getColumn(18).setCellRenderer(new DefCellRendererSpc(2));
+        tab1.getColumnModel().getColumn(18).setCellRenderer(new DefCellRendererSpc(2)); 
         tab1.getColumnModel().getColumn(19).setCellRenderer(new DefCellRendererSpc(2));
         tab1.getColumnModel().getColumn(20).setCellRenderer(new DefCellRendererSpc(2));
-        tab1.getColumnModel().getColumn(21).setCellRenderer(new DefCellRendererSpc(2));
+        tab1.getColumnModel().getColumn(21).setCellRenderer(new DefCellRendererSpc(9));
         tab1.getColumnModel().getColumn(22).setCellRenderer(new DefCellRendererSpc(9));
-        tab1.getColumnModel().getColumn(23).setCellRenderer(new DefCellRendererSpc(9));
         if ("Nimbus".equals(eProp.lookandfeel.read())) {
             for (int i = 15; i < 22; i++) {
                 tab1.getColumnModel().getColumn(i).setPreferredWidth(tab1.getColumnModel().getColumn(i).getPreferredWidth() + tab1.getColumnModel().getColumn(i).getPreferredWidth() / 3);
@@ -799,9 +796,9 @@ public class Specifics extends javax.swing.JFrame {
         angl.add(cm.getColumn(13));
         angl.add(cm.getColumn(14));
         ColumnGroup cost = new ColumnGroup("Стоимость");
+        cost.add(cm.getColumn(20));
         cost.add(cm.getColumn(21));
         cost.add(cm.getColumn(22));
-        cost.add(cm.getColumn(23));
 
         GroupableTableHeader header = (GroupableTableHeader) tab1.getTableHeader();
         header.addColumnGroup(angl);

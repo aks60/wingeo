@@ -27,9 +27,9 @@ public enum Scale {
     artdet2T(0, " - тариф двухст. текстуры"), //ARTDET 	
     separator2(-777, "<html><font size='3' color='blue'> ЦЕНОВЫЕ КОЭФ. ТЕКСТУР:"),
     separator3(-888, "<html><font size='2' color='black'> см. Модели->Артикулы"),
-    artdetK1(1, " - kоэф. ценовой (осн.текстура)"), //ARTDET 
-    artdetK2(1, " - kоэф. ценовой (внутр.текстура)"), //ARTDET 
-    artdetK3(1, " - kоэф. ценовой (внешн.текстура)"), //ARTDET 
+    artdetK1(1, " - kоэф. накл.расходов (осн.текстура)"), //ARTDET 
+    artdetK2(1, " - kоэф. накл.расходов (внутр.текстура)"), //ARTDET 
+    artdetK3(1, " - kоэф. накл.расходов (внешн.текстура)"), //ARTDET 
     separator4(-888, "<html><font size='2' color='black'> <font size='2' color='black'> см. Справочники->Текстуры"),
     colorK1(1, " - коэф. основной текстуры"), //COLOR 
     colorK2(1, " - коэф. внутренний текстуры"), //COLOR 
@@ -76,9 +76,9 @@ public enum Scale {
         artdetT2.v = artdetRec[1].getDbl(eArtdet.cost_c2); //тариф внутр текстуры
         artdetT3.v = artdetRec[2].getDbl(eArtdet.cost_c3); //тариф внешн текстуры
         
-        artdetK1.v = artdetRec[0].getDbl(eArtdet.coef); //ценовой коэф. основн. текстуры
-        artdetK2.v = artdetRec[1].getDbl(eArtdet.coef); //ценовой коэф. внутр. текстуры
-        artdetK3.v = artdetRec[2].getDbl(eArtdet.coef); //ценовой коэф. внешн. текстуры 
+        artdetK1.v = artdetRec[0].getDbl(eArtdet.coef); //коэф. накл.расходов основн. текстуры 
+        artdetK2.v = artdetRec[1].getDbl(eArtdet.coef); //коэф. накл.расходов внутр. текстуры
+        artdetK3.v = artdetRec[2].getDbl(eArtdet.coef); //коэф. накл.расходов внешн. текстуры 
 
         if (Type.ARCH == winc.root.type) { //надбавка на изд. сложной формы
             grpformN1.v = eGroups.find(2101).getDbl(eGroups.val);
