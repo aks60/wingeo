@@ -36,13 +36,13 @@ public enum eProp {
     base3("C:\\Okna\\fbase\\BASE.FDB?encoding=win1251", "C:\\Okna\\fbase\\BASE3.FDB?encoding=win1251"),
     path_app(System.getProperty("user.home") + "/Avers/Okna", "C:\\Users\\aksenov\\Desktop\\winapp.jar"),
     path_prop(System.getProperty("user.home") + "/Avers/Okna", "C:\\ProgramData\\Avers\\Okna"), //Аркаим или Arkaim
-    cmd_def("I", "I"), 
+    cmd_def("I", "I"),
     cmd_word("/usr/bin/oowriter ", "cmd /c start winword.exe "),
     cmd_excel("/usr/bin/oocalc ", "cmd /c start excel.exe "),
-    cmd_html("/usr/bin/firefox ", "cmd /c start iexplore.exe "),       
-//    cmd_word("libreoffice -writer ", "cmd /c start winword.exe "), 
-//    cmd_excel("libreoffice -calc ", "cmd /c start excel.exe "),
-//    cmd_html("firefox ", "cmd /c start iexplore.exe "),
+    cmd_html("/usr/bin/firefox ", "cmd /c start iexplore.exe "),
+    //    cmd_word("libreoffice -writer ", "cmd /c start winword.exe "), 
+    //    cmd_excel("libreoffice -calc ", "cmd /c start excel.exe "),
+    //    cmd_html("firefox ", "cmd /c start iexplore.exe "),
     fontname("Dialog"),
     fontsize("11");
     private static Properties prop = null;
@@ -56,10 +56,10 @@ public enum eProp {
     public static Locale locale = new Locale("ru", "RU");
     public static String fb = "fb";
     public static boolean dev = false;      //признак разработки и тестирования
-    public static boolean locate = true;   //координаты фрейма разработки и тестирования
-    public static String profile = "";     //профиль разработки и тестирования
-    public static boolean overcost = true;
-    public static boolean techwast = true;
+    public static boolean locate = true;    //координаты фрейма разработки и тестирования
+    public static String profile = "";      //профиль разработки и тестирования
+    public static boolean overcost = true;  //учитывать коэф. накладных расходов  в себестимости
+    public static boolean techwast = true;  //учитывать проц. отхода в себестимости
 
     //Значение по умолчанию
     eProp(String value) {
@@ -130,7 +130,7 @@ public enum eProp {
             System.err.println("Ошибка сохранения property в файле " + e);
         }
     }
-    
+
     public static String port(String num) {
         return (num.equals("1")) ? eProp.port1.read() : (num.equals("2")) ? eProp.port2.read() : eProp.port3.read();
     }
@@ -139,7 +139,7 @@ public enum eProp {
         eProp p = (num.equals("1")) ? eProp.port1 : (num.equals("2")) ? eProp.port2 : eProp.port3;
         p.write(name);
     }
-    
+
     public static String server(String num) {
         return (num.equals("1")) ? eProp.server1.read() : (num.equals("2")) ? eProp.server2.read() : eProp.server3.read();
     }
