@@ -116,14 +116,14 @@ public class RRecord {
     public String quant(int index) {
         //double quant = (index == 1) ? spc.quant1 : spc.quant2;
         //return UCom.format(3.12345, 3);
-        return (index == 1) ? UCom.format(spc.quant1, 3) : UCom.format(spc.quant, 3);
+        return (index == 1) ? UCom.format(spc.quant1, 3) : UCom.format(spc.quant2, 3);
     }
 
     public String sebes2() {
         if (otx) {
             return UCom.format(spc.price1, -1);
         }
-        return UCom.format(spc.sebes, -1);
+        return UCom.format(spc.costprice, -1);
     }
 
     public String price2() {
@@ -144,7 +144,7 @@ public class RRecord {
                 newRec.weight += oldRec.weight;
                 newRec.count += oldRec.count;
                 newRec.quant1 += oldRec.quant1;
-                newRec.quant += oldRec.quant;
+                newRec.quant2 += oldRec.quant2;
                 newRec.price2 += oldRec.price2;
                 newRec.price3 += oldRec.price3;
             }
@@ -165,7 +165,7 @@ public class RRecord {
                 newRec.spc.weight += oldRec.spc.weight;
                 newRec.spc.count += oldRec.spc.count;
                 newRec.spc.quant1 += oldRec.spc.quant1;
-                newRec.spc.quant += oldRec.spc.quant;
+                newRec.spc.quant2 += oldRec.spc.quant2;
                 newRec.spc.price2 += oldRec.spc.price2;
                 newRec.spc.price3 += oldRec.spc.price3;
             }
@@ -184,6 +184,6 @@ public class RRecord {
     }
 
     public String toString() {
-        return spc.artikl + " - " + spc.name + " - " + spc.width + " - " + spc.quant + " - " + spc.price2;
+        return spc.artikl + " - " + spc.name + " - " + spc.width + " - " + spc.quant2 + " - " + spc.price2;
     }
 }

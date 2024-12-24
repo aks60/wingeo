@@ -89,12 +89,12 @@ public class Kitcalc {
                 Scale.artiklS.v = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей               
 
                 rec.quant1 = TTariffic.formatAmount(rec); //количество без отхода  
-                rec.quant = (normOtx == true) ? rec.quant1 + (rec.quant1 * rec.waste / 100) : rec.quant1; //количество с отходом
-                rec.sebes += TTariffic.artdetCostPrice(rec); //себест. по табл. ARTDET и прав.расч.
+                rec.quant2 = (normOtx == true) ? rec.quant1 + (rec.quant1 * rec.waste / 100) : rec.quant1; //количество с отходом
+                rec.costprice += TTariffic.artdetCostPrice(rec); //себест. по табл. ARTDET и прав.расч.
 
-                double sbs = rec.sebes * Scale.artiklK.v * Scale.systreeK.v;
+                double sbs = rec.costprice * Scale.artiklK.v * Scale.systreeK.v;
                 rec.price1 = sbs + Scale.grpformN1.v * sbs / 100; //стоимость за един.изм 
-                rec.price2 = rec.price1 * rec.quant; //стоимость без скидки                     
+                rec.price2 = rec.price1 * rec.quant2; //стоимость без скидки                     
                 double priceTex = rec.price2 - Scale.artiklS.v * rec.price2 / 100; //стоимость с техн. скидкой 
                 rec.price3 = priceTex - discKit * priceTex / 100; //стоимость с техн.скидк. и скид.менеджера
                 price1 += rec.price2;
@@ -142,12 +142,12 @@ public class Kitcalc {
                 Scale.artiklS.v = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей               
 
                 rec.quant1 = TTariffic.formatAmount(rec); //количество без отхода  
-                rec.quant = (normOtx == true) ? rec.quant1 + (rec.quant1 * rec.waste / 100) : rec.quant1; //количество с отходом
-                rec.sebes += TTariffic.artdetCostPrice(rec); //себест. по табл. ARTDET и прав.расч.
+                rec.quant2 = (normOtx == true) ? rec.quant1 + (rec.quant1 * rec.waste / 100) : rec.quant1; //количество с отходом
+                rec.costprice += TTariffic.artdetCostPrice(rec); //себест. по табл. ARTDET и прав.расч.
 
-                double sbs = rec.sebes * Scale.artiklK.v * Scale.systreeK.v;
+                double sbs = rec.costprice * Scale.artiklK.v * Scale.systreeK.v;
                 rec.price1 = sbs + Scale.grpformN1.v * sbs / 100; //стоимость за един.изм 
-                rec.price2 = rec.price1 * rec.quant; //стоимость без скидки                     
+                rec.price2 = rec.price1 * rec.quant2; //стоимость без скидки                     
                 double priceTex = rec.price2 - Scale.artiklS.v * rec.price2 / 100; //стоимость с техн. скидкой 
                 rec.price3 = priceTex - discKit * priceTex / 100; //стоимость с техн.скидк. и скид.менеджера
                 price1 += rec.price2;
@@ -189,12 +189,12 @@ public class Kitcalc {
                 Scale.artiklS.v = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей               
 
                 rec.quant1 = TTariffic.formatAmount(rec); //количество без отхода  
-                rec.quant = (norm_otx == true) ? rec.quant1 + (rec.quant1 * rec.waste / 100) : rec.quant1; //количество с отходом
-                rec.sebes += TTariffic.artdetCostPrice(rec); //себест. по табл. ARTDET и прав.расч.
+                rec.quant2 = (norm_otx == true) ? rec.quant1 + (rec.quant1 * rec.waste / 100) : rec.quant1; //количество с отходом
+                rec.costprice += TTariffic.artdetCostPrice(rec); //себест. по табл. ARTDET и прав.расч.
 
-                double sbs = rec.sebes * Scale.artiklK.v * Scale.systreeK.v;
+                double sbs = rec.costprice * Scale.artiklK.v * Scale.systreeK.v;
                 rec.price1 = sbs + Scale.grpformN1.v * sbs / 100; //стоимость за един.изм 
-                rec.price2 = rec.price1 * rec.quant; //стоимость без скидки                     
+                rec.price2 = rec.price1 * rec.quant2; //стоимость без скидки                     
                 rec.price3 = rec.price2 - Scale.artiklS.v * rec.price2 / 100; //стоимость со скидкой 
                 price1 += rec.price2;
                 price2 += rec.price3;
