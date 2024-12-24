@@ -38,6 +38,7 @@ public enum eArtikl implements Field {
     sel_color("5", "5", "1", "Подбор текстур", "ACOLL"),
     with_seal("5", "5", "1", "С уплотнением", "AWORK"),
     otx_norm("8", "15", "1", "Норма отхода", "AOUTS"),
+    //coeff("8", "15", "1", "Ценовой коэффициент", "AKOEF"),
     groups1_id("4", "10", "1", "Группы наценок", "groups1_id"),
     groups2_id("4", "10", "1", "Группы скидок", "groups2_id"),
     groups3_id("4", "10", "1", "Категория профилей", "groups3_id"),
