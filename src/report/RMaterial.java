@@ -49,7 +49,7 @@ public class RMaterial {
     }
 
     private static void loadDoc(Record projectRec, List<Record> prjprodList, Document doc) {
-
+        npp = 0;
         List<RRecord> spcList = new ArrayList<RRecord>();
         List<TRecord> winSpc = new ArrayList<TRecord>();
         List<TRecord> kitSpc = new ArrayList<TRecord>();
@@ -68,6 +68,8 @@ public class RMaterial {
         kitSpc.forEach(el -> spcList.add(new RRecord(el)));
 
         List<RRecord> groupList = RRecord.groups4R(spcList);
+        //int npp = 0;
+        //groupList.forEach(rec -> rec.id());
 
         Elements templateRec = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
         groupList.forEach(act -> doc.getElementsByTag("tbody").append(templateRec.get(0).html()));

@@ -107,10 +107,10 @@ public class Specifics extends javax.swing.JFrame {
         Vector v = new Vector();
         v.add(listTRec.size() + 1);
         IntStream.range(1, vSize).forEach(action -> v.add(null));
-        v.set(v.size() - 2, UCom.format(winc.price1() + Kitcalc.price1(), "#,##0.##")); //стоимость без скидки
-        v.set(v.size() - 1, UCom.format(winc.price2() + Kitcalc.price2(), "#,##0.##")); //стоимость со скидклй              
+        v.set(v.size() - 2, UCom.format(winc.price1() + Kitcalc.price1, "#,##0.##")); //стоимость без скидки
+        v.set(v.size() - 1, UCom.format(winc.price2() + Kitcalc.price2, "#,##0.##")); //стоимость со скидклй              
         dtm.addRow(v);
-        labSum.setText("Итого: " + UCom.format(winc.price2() + Kitcalc.price2(), "#,##0.##"));
+        labSum.setText("Итого: " + UCom.format(winc.price2() + Kitcalc.price2, "#,##0.##"));
     }
 
     public void createIwin() {

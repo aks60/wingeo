@@ -799,8 +799,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 // омплектаци€
                 double discKit = projectRec.getDbl(eProject.disc_kit) + projectRec.getDbl(eProject.disc_all);
                 ArrayList<TRecord> kitList = Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true); //комплекты 
-                price1b = Kitcalc.price1(); //стоимость без скидки
-                price2b = Kitcalc.price2(); //стоимость со скидкой               
+                price1b = Kitcalc.price1; //стоимость без скидки
+                price2b = Kitcalc.price2; //стоимость со скидкой               
 
                 //—охраним новые кальк.данные в проекте
                 if (price1a != projectRec.getDbl(eProject.price1win)) {

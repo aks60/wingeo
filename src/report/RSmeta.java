@@ -213,16 +213,16 @@ public class RSmeta {
                     Elements td = tab2List.get(i).getElementsByTag("td");
 
                     //Комплектация к изделию
-                    if (Kitcalc.kits().isEmpty()) {
+                    if (Kitcalc.kitList.isEmpty()) {
                         tab3List.get(i).html("");
                     } else {
                         Elements captions3 = tab3List.get(i).getElementsByTag("caption");
                         captions3.get(0).text("Комплектация к изделию № " + (i + 1));
                         String template3 = tab3List.get(i).getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
-                        for (int k = 1; k < Kitcalc.kits().size(); k++) {
+                        for (int k = 1; k < Kitcalc.kitList.size(); k++) {
                             tab3List.get(i).getElementsByTag("tbody").get(0).append(template3);
                         }
-                        loadTab3(Kitcalc.kits(), winc, tab3List, i);
+                        loadTab3(Kitcalc.kitList, winc, tab3List, i);
                     }
 
                     square += numProd * winc.root.area.getGeometryN(0).getArea();
