@@ -49,15 +49,15 @@ public class TTariffic extends Cal5e {
                 if (filter(elem5e)) {
 
                     elem5e.spcRec.quant1 = formatAmount(elem5e.spcRec); //количество без отхода  
-                    elem5e.spcRec.quant2 = (norm_otx == true) ? elem5e.spcRec.quant1 + (elem5e.spcRec.quant1 * elem5e.spcRec.waste / 100) : elem5e.spcRec.quant1; //количество с отходом
-                    elem5e.spcRec.sebes1 += artdetPrice(elem5e.spcRec); //себест. по табл. ARTDET и прав.расч.
+                    elem5e.spcRec.quant = (norm_otx == true) ? elem5e.spcRec.quant1 + (elem5e.spcRec.quant1 * elem5e.spcRec.waste / 100) : elem5e.spcRec.quant1; //количество с отходом
+                    elem5e.spcRec.sebes += artdetPrice(elem5e.spcRec); //себест. по табл. ARTDET и прав.расч.
 
                     //Вложенная спецификация
                     //цикл по детализации эдемента
                     for (TRecord spcRec : elem5e.spcRec.spcList) {
                         spcRec.quant1 = formatAmount(spcRec); //количество без отхода
-                        spcRec.quant2 = (norm_otx == true) ? spcRec.quant1 + (spcRec.quant1 * spcRec.waste / 100) : spcRec.quant1; //количество с отходом
-                        spcRec.sebes1 += artdetPrice(spcRec); //себест. за ед. без отхода
+                        spcRec.quant = (norm_otx == true) ? spcRec.quant1 + (spcRec.quant1 * spcRec.waste / 100) : spcRec.quant1; //количество с отходом
+                        spcRec.sebes += artdetPrice(spcRec); //себест. за ед. без отхода
                     }
                 }
             }
@@ -105,10 +105,10 @@ public class TTariffic extends Cal5e {
                     Scale.artiklS.v = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                     Scale.systreeK.v = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
 
-                    double sbs1 = elem5e.spcRec.sebes1 * Scale.artiklK.v * Scale.systreeK.v;
-                    elem5e.spcRec.sebes2 = sbs1 + Scale.grpformN1.v * sbs1 / 100; //стоимость за един.изм 
-                    elem5e.spcRec.price1 = elem5e.spcRec.sebes2 * elem5e.spcRec.quant2; //стоимость без скидки                     
-                    elem5e.spcRec.price2 = elem5e.spcRec.price1 - Scale.artiklS.v * elem5e.spcRec.price1 / 100; //стоимость со скидкой 
+                    double sbs1 = elem5e.spcRec.sebes * Scale.artiklK.v * Scale.systreeK.v;
+                    elem5e.spcRec.price1 = sbs1 + Scale.grpformN1.v * sbs1 / 100; //стоимость за един.изм 
+                    elem5e.spcRec.price2 = elem5e.spcRec.price1 * elem5e.spcRec.quant; //стоимость без скидки                     
+                    elem5e.spcRec.price3 = elem5e.spcRec.price2 - Scale.artiklS.v * elem5e.spcRec.price2 / 100; //стоимость со скидкой 
 
                     //Цикл по детализации
                     for (TRecord spcRec : elem5e.spcRec.spcList) {
@@ -129,10 +129,10 @@ public class TTariffic extends Cal5e {
                         Scale.artiklS.v = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                         Scale.systreeK.v = systreeRec.getDbl(eSystree.coef); //коэф. рентабельности
 
-                        double sbs2 = spcRec.sebes1 * Scale.artiklK.v * Scale.systreeK.v;
-                        spcRec.sebes2 = sbs2 + Scale.grpformN1.v * sbs2 / 100; //стоимость за един.изм 
-                        spcRec.price1 = spcRec.sebes2 * spcRec.quant2; //стоимость без скидки                     
-                        spcRec.price2 = spcRec.price1 - Scale.artiklS.v * spcRec.price1 / 100; //стоимость со скидкой                                   
+                        double sbs2 = spcRec.sebes * Scale.artiklK.v * Scale.systreeK.v;
+                        spcRec.price1 = sbs2 + Scale.grpformN1.v * sbs2 / 100; //стоимость за един.изм 
+                        spcRec.price2 = spcRec.price1 * spcRec.quant; //стоимость без скидки                     
+                        spcRec.price3 = spcRec.price2 - Scale.artiklS.v * spcRec.price2 / 100; //стоимость со скидкой                                   
                     }
                 }
             }
@@ -318,12 +318,12 @@ public class TTariffic extends Cal5e {
                         //Правило по количеству элемента
                         if (rulecalcRec.getInt(eRulecalc.common) == 0) {
                             //Фильтр по количеству отдельного элемента
-                            if (UCom.containsNumbJust(rulecalcRec.getStr(eRulecalc.quant), spcRec.quant2) == true) {
+                            if (UCom.containsNumbJust(rulecalcRec.getStr(eRulecalc.quant), spcRec.quant) == true) {
                                 //По себестоимости или стоимости
                                 if (rulecalcRec.getInt(eRulecalc.sebes) == 1) {
-                                    spcRec.sebes1 = spcRec.sebes1 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение себестоимости в coeff раз и на incr величину надбавки
+                                    spcRec.sebes = spcRec.sebes * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение себестоимости в coeff раз и на incr величину надбавки
                                 } else {
-                                    spcRec.price1 = spcRec.price1 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение стоимости в coeff раз и на incr величину надбавки                                   
+                                    spcRec.price2 = spcRec.price2 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение стоимости в coeff раз и на incr величину надбавки                                   
                                 }
                             }
 
@@ -366,9 +366,9 @@ public class TTariffic extends Cal5e {
                             if (UCom.containsNumbJust(rulecalcRec.getStr(eRulecalc.quant), quantity3) == true) {
                                 //По себестоимости или стоимости
                                 if (rulecalcRec.getInt(eRulecalc.sebes) == 1) {
-                                    spcRec.sebes1 = spcRec.sebes1 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение себестоимости в coeff раз и на incr величину надбавки
+                                    spcRec.sebes = spcRec.sebes * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение себестоимости в coeff раз и на incr величину надбавки
                                 } else {
-                                    spcRec.price1 = spcRec.price1 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение стоимости в coeff раз и на incr величину надбавки                                   
+                                    spcRec.price2 = spcRec.price2 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение стоимости в coeff раз и на incr величину надбавки                                   
                                 }
                             }
                         }

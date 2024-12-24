@@ -317,9 +317,9 @@ public class RSmeta {
                 tdRec.get(2).text(artiklRec.getStr(eArtikl.name));
                 tdRec.get(3).text(eColor.find(prjkitRec.colorID1).getStr(eColor.name));
                 tdRec.get(4).text(UCom.dimension(prjkitRec.width, prjkitRec.height, prjkitRec.unit));
-                tdRec.get(5).text(UCom.format(prjkitRec.quant2, 2));
-                tdRec.get(6).text(UCom.format(prjkitRec.sebes2 - discKit * prjkitRec.sebes2 / 100, 2));
-                tdRec.get(7).text(UCom.format(prjkitRec.price2, 2));
+                tdRec.get(5).text(UCom.format(prjkitRec.quant, 2));
+                tdRec.get(6).text(UCom.format(prjkitRec.price1 - discKit * prjkitRec.price1 / 100, 2));
+                tdRec.get(7).text(UCom.format(prjkitRec.price3, 2));
             }
 
         } catch (Exception e) {
@@ -378,11 +378,11 @@ public class RSmeta {
                 tdRec.get(2).text(artiklRec.getStr(eArtikl.name));
                 tdRec.get(3).text(eColor.find(prjkitRec.colorID1).getStr(eColor.name));
                 tdRec.get(4).text(UCom.dimension(prjkitRec.width, prjkitRec.height, prjkitRec.unit));
-                tdRec.get(5).text(UCom.format(prjkitRec.quant2, 2));
-                tdRec.get(6).text(UCom.format(prjkitRec.sebes2 - discKit * prjkitRec.sebes2 / 100, 2));
-                tdRec.get(7).text(UCom.format(prjkitRec.price2, 2));
+                tdRec.get(5).text(UCom.format(prjkitRec.quant, 2));
+                tdRec.get(6).text(UCom.format(prjkitRec.price1 - discKit * prjkitRec.price1 / 100, 2));
+                tdRec.get(7).text(UCom.format(prjkitRec.price3, 2));
                 
-                total += prjkitRec.price2;
+                total += prjkitRec.price3;
             }
             Elements tdFoot = tabElem.getElementsByTag("tfoot").get(0).getElementsByTag("td");
             tdFoot.get(1).text(UCom.format(projectRec.getDbl(eProject.price2kit), 2));  //всего за комплекты

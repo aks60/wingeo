@@ -116,21 +116,21 @@ public class RRecord {
     public String quant(int index) {
         //double quant = (index == 1) ? spc.quant1 : spc.quant2;
         //return UCom.format(3.12345, 3);
-        return (index == 1) ? UCom.format(spc.quant1, 3) : UCom.format(spc.quant2, 3);
+        return (index == 1) ? UCom.format(spc.quant1, 3) : UCom.format(spc.quant, 3);
     }
 
     public String sebes2() {
         if (otx) {
-            return UCom.format(spc.sebes2, -1);
+            return UCom.format(spc.price1, -1);
         }
-        return UCom.format(spc.sebes1, -1);
+        return UCom.format(spc.sebes, -1);
     }
 
     public String price2() {
         if (otx) {
-            return UCom.format(spc.price2, -1);
+            return UCom.format(spc.price3, -1);
         }
-        return UCom.format(spc.price1, -1);
+        return UCom.format(spc.price2, -1);
     }
 
     public static List<TRecord> groups4T(List<TRecord> listSpc) {
@@ -144,9 +144,9 @@ public class RRecord {
                 newRec.weight += oldRec.weight;
                 newRec.count += oldRec.count;
                 newRec.quant1 += oldRec.quant1;
-                newRec.quant2 += oldRec.quant2;
-                newRec.price1 += oldRec.price1;
+                newRec.quant += oldRec.quant;
                 newRec.price2 += oldRec.price2;
+                newRec.price3 += oldRec.price3;
             }
         }
         map.entrySet().forEach(act -> listOut.add(act.getValue()));
@@ -165,9 +165,9 @@ public class RRecord {
                 newRec.spc.weight += oldRec.spc.weight;
                 newRec.spc.count += oldRec.spc.count;
                 newRec.spc.quant1 += oldRec.spc.quant1;
-                newRec.spc.quant2 += oldRec.spc.quant2;
-                newRec.spc.price1 += oldRec.spc.price1;
+                newRec.spc.quant += oldRec.spc.quant;
                 newRec.spc.price2 += oldRec.spc.price2;
+                newRec.spc.price3 += oldRec.spc.price3;
             }
         }
         map.entrySet().forEach(act -> listOut.add(act.getValue()));
@@ -176,14 +176,14 @@ public class RRecord {
     }
 
     public double cost1() {
-        return spc.price1;
-    }
-
-    public double cost2() {
         return spc.price2;
     }
 
+    public double cost2() {
+        return spc.price3;
+    }
+
     public String toString() {
-        return spc.artikl + " - " + spc.name + " - " + spc.width + " - " + spc.quant2 + " - " + spc.price1;
+        return spc.artikl + " - " + spc.name + " - " + spc.width + " - " + spc.quant + " - " + spc.price2;
     }
 }

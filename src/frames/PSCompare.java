@@ -532,7 +532,7 @@ public class PSCompare extends javax.swing.JFrame {
             for (TRecord spc : winc.listSpec) {
                 String key = spc.artikl;
                 Double val = hmDbSa.getOrDefault(key, 0.0);
-                hmDbSa.put(key, val + spc.price1); //стоимость без скидки
+                hmDbSa.put(key, val + spc.price2); //стоимость без скидки
             }
 
             if (detail == true) {

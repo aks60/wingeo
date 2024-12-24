@@ -43,11 +43,11 @@ public class TRecord {
     public int unit = 0;  //Ед.изм   
     public double waste = -1;  //Процент отхода см. eArtikl.otx_norm     
     public double quant1 = 0;  //Количество без отхода
-    public double quant2 = 0;  //Количество с отходом
-    public double sebes1 = 0;  //Себест. за ед. без отхода     
-    public double sebes2 = 0;  //Себест. за ед. с отходом
-    public double price1 = 0;  //Стоимость без скидки
-    public double price2 = 0;  //Стоимость с технологической скидкой
+    public double quant = 0;  //Количество (с отх./без отх.)
+    public double sebes = 0;   //Себест. за единицу    
+    public double price1 = 0;  //Стоимость. за единицу
+    public double price2 = 0;  //Стоимость без технологической скидки
+    public double price3 = 0;  //Стоимость с технологической скидкой
 
     public TRecord() {
     }
@@ -71,11 +71,11 @@ public class TRecord {
         this.unit = spec.unit;
         this.quant1 = spec.quant1;
         this.waste = spec.waste;
-        this.quant2 = spec.quant2;
-        this.sebes1 = spec.sebes1;
-        this.sebes2 = spec.sebes2;
+        this.quant = spec.quant;
+        this.sebes = spec.sebes;
         this.price1 = spec.price1;
         this.price2 = spec.price2;
+        this.price3 = spec.price3;
         this.anglHoriz = spec.anglHoriz;
         this.mapParam = spec.mapParam;
         this.elem5e = spec.elem5e;
@@ -138,11 +138,11 @@ public class TRecord {
         this.unit = spec.unit;
         this.quant1 = spec.quant1;
         this.waste = spec.waste;
-        this.quant2 = spec.quant2;
-        this.sebes1 = spec.sebes1;
-        this.sebes2 = spec.sebes2;
+        this.quant = spec.quant;
+        this.sebes = spec.sebes;
         this.price1 = spec.price1;
         this.price2 = spec.price2;
+        this.price3 = spec.price3;
         this.anglHoriz = spec.anglHoriz;
         this.mapParam = spec.mapParam;
         this.elem5e = spec.elem5e;
@@ -156,7 +156,7 @@ public class TRecord {
         //System.out.println(height2);
         return new Vector(List.of(npp, id, elemID, place, artikl, name, eColor.find(colorID1).getStr(eColor.name), eColor.find(colorID2).getStr(eColor.name),
                 eColor.find(colorID3).getStr(eColor.name), width, height2, weight, anglCut0, anglCut1, anglHoriz,
-                count, UseUnit.getName(unit), waste, quant1, quant2, sebes1, sebes2, price1, price2));
+                count, UseUnit.getName(unit), waste, quant1, quant, sebes, price1, price2, price3));
     }
 
     public void setAnglCut(double angl0, double angl1) {
