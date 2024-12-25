@@ -429,6 +429,18 @@ public class Query extends Table {
         return this;
     }
 
+    public Query sql(List<Record> data, Field field, int value, Field field2, int value2, int value3, int value4, int value5, int value6) {
+        clear();
+        if (Query.conf.equals("NET")) {
+            addAll(data.stream().filter(rec -> rec.getInt(field) == value && (rec.getInt(field2) == value2
+                    || rec.getInt(field2) == value3 || rec.getInt(field2) == value4 || rec.getInt(field2) == value5 || rec.getInt(field2) == value6)
+            ).collect(Collectors.toList()));
+        } else {
+            select(field.fields()[0], "where", field, "=", value, "and", field2, "in (", value2, ",", value3, ",", value4, ",", value5, ",", value6 + ")");
+        }
+        return this;
+    }
+
     public Query sql(List<Record> data, Field field, int value, Field field2, int value2, Field field3, int value3) {
         clear();
         if (Query.conf.equals("NET")) {
@@ -461,6 +473,20 @@ public class Query extends Table {
             ).collect(Collectors.toList()));
         } else {
             select(field.fields()[0], "where", field, "=", value, "and (", field2, "=", value2, "or", field3, "=", value3 + ")");
+        }
+        return this;
+    }
+
+    public Query sq3(List<Record> data, Field field, int value, Field field2, int value2, Field field3, int value3, Field field4, int value4, Field field5, int value5) {
+        clear();
+        if (Query.conf.equals("NET")) {
+            addAll(data.stream().filter(rec -> rec.getInt(field) == value
+                    && (rec.getInt(field2) == value2 || rec.getInt(field3) == value3
+                    || rec.getInt(field4) == value4 || rec.getInt(field5) == value5)
+            ).collect(Collectors.toList()));
+        } else {
+            select(field.fields()[0], "where", field, "=", value, "and (", field2, "=", value2,
+                    "or", field3, "=", value3, "or", field4, "=", value4, "or", field5, "=", value5 + ")");
         }
         return this;
     }
@@ -508,7 +534,7 @@ public class Query extends Table {
         }
         return this;
     }
-    
+
     public Query join(List<Record> data, List<Record> data2, Field field, Field field2) {
         try {
             clear();

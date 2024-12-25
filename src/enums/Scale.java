@@ -52,6 +52,12 @@ public enum Scale {
             
     public double v;
     public String s;
+    
+    public static double arc_form = eGroups.find(2001).getDbl(eGroups.val); //наценка на изделие с коробками арочной формы 
+    public static double non_rect = eGroups.find(2004).getDbl(eGroups.val); //наценка на изделие с непрямоуголными коробками     
+    public static boolean norm_cost = !(eGroups.find(2007).getInt(eGroups.val) == 0); //учитывать норму отхода в себестоимости
+    public static boolean nakl_cost = !(eGroups.find(2027).getInt(eGroups.val) == 0); //учитывать накладные расходы в себестоимости 
+    public static int precision = Math.round(eGroups.find(2073).getFloat(eGroups.val)); //округление длины профилей
 
     Scale(double v, String s) {
 

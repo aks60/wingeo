@@ -76,7 +76,7 @@ public class Groups extends javax.swing.JFrame {
         qCategProf.sql(eGroups.data(), eGroups.grup, 6).sort(eGroups.npp, eGroups.name);
         qCategVst.sql(eGroups.data(), eGroups.grup, 8).sort(eGroups.npp, eGroups.name);
         qCategKit.sql(eGroups.data(), eGroups.grup, 10).sort(eGroups.npp, eGroups.name);
-        qDecInc.sql(eGroups.data(), eGroups.grup, 9, eGroups.id, 2101, 2104, 2073).sort(eGroups.npp, eGroups.name);
+        qDecInc.sql(eGroups.data(), eGroups.grup, 9, eGroups.id, 2101, 2104, 2073, 2007, 2027).sort(eGroups.npp, eGroups.name);
     }
 
     public void loadingModel() {
