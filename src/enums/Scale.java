@@ -13,8 +13,8 @@ import domain.eRulecalc;
 public enum Scale {
 
     systreeK(1, " - коэффициент рентабельности"), //SYSTREE     
-    grpcursK1(1, " - коэф. курса валют основной текстуры"), //GROUPS 
-    grpcursK2(1, " - коэф. курса валют неосновных текстур"), //GROUPS  
+    grpcursK1(1, " - кросс-курс валют основной текстуры"), //GROUPS 
+    grpcursK2(1, " - кросс-курс валют неосновных текстур"), //GROUPS  
 
     artiklK(1, " - kоэф. наценки группы мат.ценностей"), //ARTIKL
     artiklS(0, " - проц. скидки группы мат.ценностей"), //ARTIKL
@@ -58,6 +58,9 @@ public enum Scale {
     public static boolean norm_cost = !(eGroups.find(2007).getInt(eGroups.val) == 0); //учитывать норму отхода в себестоимости
     public static boolean nakl_cost = !(eGroups.find(2027).getInt(eGroups.val) == 0); //учитывать накладные расходы в себестоимости 
     public static int precision = Math.round(eGroups.find(2073).getFloat(eGroups.val)); //округление длины профилей
+    
+    //public static Record cursYesBase = null; //кросс-курс валюты дл€ основной текстуры
+    //public static Record cursNoBase = null;  //кросс-курс валюты дл€ неосновных текстур (внутренн€€, внешн€€, двухсторонн€€)
 
     Scale(double v, String s) {
 

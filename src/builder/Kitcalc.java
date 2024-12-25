@@ -90,7 +90,7 @@ public class Kitcalc {
 
                 rec.quant1 = TTariffic.formatAmount(rec); //количество без отхода  
                 rec.quant2 = (normOtx == true) ? rec.quant1 + (rec.quant1 * rec.waste / 100) : rec.quant1; //количество с отходом
-                rec.costprice += TTariffic.artdetCostPrice(rec); //себест. по табл. ARTDET и прав.расч.
+                rec.costprice += TTariffic.artdetCostprice(rec); //себест. по табл. ARTDET и прав.расч.
 
                 double sbs = rec.costprice * Scale.artiklK.v * Scale.systreeK.v;
                 rec.price = sbs + Scale.grpformN1.v * sbs / 100; //цена за един.изм 
@@ -143,7 +143,7 @@ public class Kitcalc {
 
                 rec.quant1 = TTariffic.formatAmount(rec); //количество без отхода  
                 rec.quant2 = (normOtx == true) ? rec.quant1 + (rec.quant1 * rec.waste / 100) : rec.quant1; //количество с отходом
-                rec.costprice += TTariffic.artdetCostPrice(rec); //себест. по табл. ARTDET и прав.расч.
+                rec.costprice += TTariffic.artdetCostprice(rec); //себест. по табл. ARTDET и прав.расч.
 
                 double sbs = rec.costprice * Scale.artiklK.v * Scale.systreeK.v;
                 rec.price = sbs + Scale.grpformN1.v * sbs / 100; //цена за един.изм 
@@ -190,7 +190,7 @@ public class Kitcalc {
 
                 rec.quant1 = TTariffic.formatAmount(rec); //количество без отхода  
                 rec.quant2 = (norm_otx == true) ? rec.quant1 + (rec.quant1 * rec.waste / 100) : rec.quant1; //количество с отходом
-                rec.costprice += TTariffic.artdetCostPrice(rec); //себест. по табл. ARTDET и прав.расч.
+                rec.costprice += TTariffic.artdetCostprice(rec); //себест. по табл. ARTDET и прав.расч.
 
                 double sbs = rec.costprice * Scale.artiklK.v * Scale.systreeK.v;
                 rec.price = sbs + Scale.grpformN1.v * sbs / 100; //цена за един.изм 
