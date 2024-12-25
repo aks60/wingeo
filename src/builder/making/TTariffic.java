@@ -268,7 +268,7 @@ public class TTariffic extends Cal5e {
                                     if (rulecalcRec.getInt(eRulecalc.sebes) == 1) {
                                         spcRec.costprice = spcRec.costprice * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение себестоимости в coeff раз и на incr величину надбавки
                                     } else {
-                                        spcRec.cost1 = spcRec.cost1 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение стоимости в coeff раз и на incr величину надбавки                                   
+                                        spcRec.price = spcRec.price * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение стоимости в coeff раз и на incr величину надбавки                                   
                                     }
                                 }
 
@@ -313,7 +313,7 @@ public class TTariffic extends Cal5e {
                                     if (rulecalcRec.getInt(eRulecalc.sebes) == 1) {
                                         spcRec.costprice = spcRec.costprice * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение себестоимости в coeff раз и на incr величину надбавки
                                     } else {
-                                        spcRec.cost1 = spcRec.cost1 * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение стоимости в coeff раз и на incr величину надбавки                                   
+                                        spcRec.price = spcRec.price * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение стоимости в coeff раз и на incr величину надбавки                                   
                                     }
                                 }
                             }
@@ -326,11 +326,16 @@ public class TTariffic extends Cal5e {
     }
 
     //Цена за ед. и стоимость
-    public static void artiklPriceAndCost(TRecord specificRec, Record artiklRec) {
+    public static void artiklPriceAndCost(TRecord specificRec) {
 
         Record color1Rec = eColor.find(specificRec.colorID1);  //основная
         Record color2Rec = eColor.find(specificRec.colorID2);  //внутренняя
         Record color3Rec = eColor.find(specificRec.colorID3);  //внешняя
+        
+        Record artdetRec1 = specificRec.artdetRec[0];
+        Record artdetRec2 = specificRec.artdetRec[1];
+        Record artdetRec3 = specificRec.artdetRec[2];
+        
     }
 
     //Процентная надбавка на изделия сложной формы
