@@ -66,15 +66,15 @@ public class Kitcalc {
             if (artiklRec != null) {
 
                 //Спецификация
-                TRecord rec = new TRecord("КОМП", ++winc.nppID, prjkitRec, artiklRec, null);
-                rec.width = prjkitRec.getDbl(ePrjkit.width);
-                rec.height = prjkitRec.getDbl(ePrjkit.height);
-                rec.count = prjkitRec.getDbl(ePrjkit.numb) * numProd;
-                rec.colorID1 = prjkitRec.getInt(ePrjkit.color1_id);
-                rec.colorID2 = prjkitRec.getInt(ePrjkit.color2_id);
-                rec.colorID3 = prjkitRec.getInt(ePrjkit.color3_id);
-                rec.anglCut0 = prjkitRec.getDbl(ePrjkit.angl1);
-                rec.anglCut1 = prjkitRec.getDbl(ePrjkit.angl2);
+                TRecord spcRec = new TRecord("КОМП", ++winc.nppID, prjkitRec, artiklRec, null);
+                spcRec.width = prjkitRec.getDbl(ePrjkit.width);
+                spcRec.height = prjkitRec.getDbl(ePrjkit.height);
+                spcRec.count = prjkitRec.getDbl(ePrjkit.numb) * numProd;
+                spcRec.colorID1 = prjkitRec.getInt(ePrjkit.color1_id);
+                spcRec.colorID2 = prjkitRec.getInt(ePrjkit.color2_id);
+                spcRec.colorID3 = prjkitRec.getInt(ePrjkit.color3_id);
+                spcRec.anglCut0 = prjkitRec.getDbl(ePrjkit.angl1);
+                spcRec.anglCut1 = prjkitRec.getDbl(ePrjkit.angl2);
 
                 //Тарификация    
                 if (winc.listElem.isEmpty() == false) {
@@ -83,23 +83,23 @@ public class Kitcalc {
                     Scale.grpformN1.v = TTariffic.percentMarkup(winc); //процентная надбавка на изделия сложной формы
                 }
 
-                Record artgrp1bRec = eGroups.find(rec.artiklRec.getInt(eArtikl.groups1_id));
-                Record artgrp2bRec = eGroups.find(rec.artiklRec.getInt(eArtikl.groups2_id));
+                Record artgrp1bRec = eGroups.find(spcRec.artiklRec.getInt(eArtikl.groups1_id));
+                Record artgrp2bRec = eGroups.find(spcRec.artiklRec.getInt(eArtikl.groups2_id));
                 Scale.artiklK.v = artgrp1bRec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
                 Scale.artiklS.v = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей               
 
-                rec.quant1 = TTariffic.formatAmount(rec); //количество без отхода  
-                rec.quant2 = (normOtx == true) ? rec.quant1 + (rec.quant1 * rec.waste / 100) : rec.quant1; //количество с отходом
-                rec.costprice += TTariffic.artdetCostprice(rec); //себест. по табл. ARTDET и прав.расч.
+                spcRec.quant1 = TTariffic.formatAmount(spcRec); //количество без отхода  
+                spcRec.quant2 = (normOtx == true) ? spcRec.quant1 + (spcRec.quant1 * spcRec.waste / 100) : spcRec.quant1; //количество с отходом
+                TTariffic.artdetCostAndPrice(spcRec); //себест. по табл. ARTDET и прав.расч.
 
-                double sbs = rec.costprice * Scale.artiklK.v * Scale.systreeK.v;
-                rec.price = sbs + Scale.grpformN1.v * sbs / 100; //цена за един.изм 
-                rec.cost1 = rec.price * rec.quant2; //стоимость без скидки                     
-                double priceTex = rec.cost1 - Scale.artiklS.v * rec.cost1 / 100; //стоимость с техн. скидкой 
-                rec.cost2 = priceTex - discKit * priceTex / 100; //стоимость с техн.скидк. и скид.менеджера
-                price1 += rec.cost1;
-                price2 += rec.cost2;
-                kitList.add(rec);
+                double sbs = spcRec.costprice * Scale.artiklK.v * Scale.systreeK.v;
+                spcRec.price = sbs + Scale.grpformN1.v * sbs / 100; //цена за един.изм 
+                spcRec.cost1 = spcRec.price * spcRec.quant2; //стоимость без скидки                     
+                double priceTex = spcRec.cost1 - Scale.artiklS.v * spcRec.cost1 / 100; //стоимость с техн. скидкой 
+                spcRec.cost2 = priceTex - discKit * priceTex / 100; //стоимость с техн.скидк. и скид.менеджера
+                price1 += spcRec.cost1;
+                price2 += spcRec.cost2;
+                kitList.add(spcRec);
             }
         }
         return kitList;
@@ -119,15 +119,15 @@ public class Kitcalc {
             if (artiklRec != null) {
 
                 //Спецификация
-                TRecord rec = new TRecord("КОМП", ++winc.nppID, prjkitRec, artiklRec, null);
-                rec.width = prjkitRec.getDbl(ePrjkit.width);
-                rec.height = prjkitRec.getDbl(ePrjkit.height);
-                rec.count = prjkitRec.getDbl(ePrjkit.numb) * numProd;
-                rec.colorID1 = prjkitRec.getInt(ePrjkit.color1_id);
-                rec.colorID2 = prjkitRec.getInt(ePrjkit.color2_id);
-                rec.colorID3 = prjkitRec.getInt(ePrjkit.color3_id);
-                rec.anglCut0 = prjkitRec.getDbl(ePrjkit.angl1);
-                rec.anglCut1 = prjkitRec.getDbl(ePrjkit.angl2);
+                TRecord spcRec = new TRecord("КОМП", ++winc.nppID, prjkitRec, artiklRec, null);
+                spcRec.width = prjkitRec.getDbl(ePrjkit.width);
+                spcRec.height = prjkitRec.getDbl(ePrjkit.height);
+                spcRec.count = prjkitRec.getDbl(ePrjkit.numb) * numProd;
+                spcRec.colorID1 = prjkitRec.getInt(ePrjkit.color1_id);
+                spcRec.colorID2 = prjkitRec.getInt(ePrjkit.color2_id);
+                spcRec.colorID3 = prjkitRec.getInt(ePrjkit.color3_id);
+                spcRec.anglCut0 = prjkitRec.getDbl(ePrjkit.angl1);
+                spcRec.anglCut1 = prjkitRec.getDbl(ePrjkit.angl2);
 
                 //Тарификация    
                 if (winc.listElem.isEmpty() == false) {
@@ -136,23 +136,23 @@ public class Kitcalc {
                     Scale.grpformN1.v = TTariffic.percentMarkup(winc); //процентная надбавка на изделия сложной формы
                 }
 
-                Record artgrp1bRec = eGroups.find(rec.artiklRec.getInt(eArtikl.groups1_id));
-                Record artgrp2bRec = eGroups.find(rec.artiklRec.getInt(eArtikl.groups2_id));
+                Record artgrp1bRec = eGroups.find(spcRec.artiklRec.getInt(eArtikl.groups1_id));
+                Record artgrp2bRec = eGroups.find(spcRec.artiklRec.getInt(eArtikl.groups2_id));
                 Scale.artiklK.v = artgrp1bRec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
                 Scale.artiklS.v = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей               
 
-                rec.quant1 = TTariffic.formatAmount(rec); //количество без отхода  
-                rec.quant2 = (normOtx == true) ? rec.quant1 + (rec.quant1 * rec.waste / 100) : rec.quant1; //количество с отходом
-                rec.costprice += TTariffic.artdetCostprice(rec); //себест. по табл. ARTDET и прав.расч.
+                spcRec.quant1 = TTariffic.formatAmount(spcRec); //количество без отхода  
+                spcRec.quant2 = (normOtx == true) ? spcRec.quant1 + (spcRec.quant1 * spcRec.waste / 100) : spcRec.quant1; //количество с отходом
+                TTariffic.artdetCostAndPrice(spcRec); //себест. по табл. ARTDET и прав.расч.
 
-                double sbs = rec.costprice * Scale.artiklK.v * Scale.systreeK.v;
-                rec.price = sbs + Scale.grpformN1.v * sbs / 100; //цена за един.изм 
-                rec.cost1 = rec.price * rec.quant2; //стоимость без скидки                     
-                double priceTex = rec.cost1 - Scale.artiklS.v * rec.cost1 / 100; //стоимость с техн. скидкой 
-                rec.cost2 = priceTex - discKit * priceTex / 100; //стоимость с техн.скидк. и скид.менеджера
-                price1 += rec.cost1;
-                price2 += rec.cost2;
-                kitList.add(rec);
+                double sbs = spcRec.costprice * Scale.artiklK.v * Scale.systreeK.v;
+                spcRec.price = sbs + Scale.grpformN1.v * sbs / 100; //цена за един.изм 
+                spcRec.cost1 = spcRec.price * spcRec.quant2; //стоимость без скидки                     
+                double priceTex = spcRec.cost1 - Scale.artiklS.v * spcRec.cost1 / 100; //стоимость с техн. скидкой 
+                spcRec.cost2 = priceTex - discKit * priceTex / 100; //стоимость с техн.скидк. и скид.менеджера
+                price1 += spcRec.cost1;
+                price2 += spcRec.cost2;
+                kitList.add(spcRec);
             }
         }
         return kitList;
@@ -166,15 +166,15 @@ public class Kitcalc {
             if (artiklRec != null) {
 
                 //Спецификация
-                TRecord rec = new TRecord("КОМП", ++win.nppID, prjkitRec, artiklRec, null);
-                rec.width = prjkitRec.getDbl(ePrjkit.width);
-                rec.height = prjkitRec.getDbl(ePrjkit.height);
-                rec.count = prjkitRec.getDbl(ePrjkit.numb);
-                rec.colorID1 = prjkitRec.getInt(ePrjkit.color1_id);
-                rec.colorID2 = prjkitRec.getInt(ePrjkit.color2_id);
-                rec.colorID3 = prjkitRec.getInt(ePrjkit.color3_id);
-                rec.anglCut0 = prjkitRec.getDbl(ePrjkit.angl1);
-                rec.anglCut1 = prjkitRec.getDbl(ePrjkit.angl2);
+                TRecord spcRec = new TRecord("КОМП", ++win.nppID, prjkitRec, artiklRec, null);
+                spcRec.width = prjkitRec.getDbl(ePrjkit.width);
+                spcRec.height = prjkitRec.getDbl(ePrjkit.height);
+                spcRec.count = prjkitRec.getDbl(ePrjkit.numb);
+                spcRec.colorID1 = prjkitRec.getInt(ePrjkit.color1_id);
+                spcRec.colorID2 = prjkitRec.getInt(ePrjkit.color2_id);
+                spcRec.colorID3 = prjkitRec.getInt(ePrjkit.color3_id);
+                spcRec.anglCut0 = prjkitRec.getDbl(ePrjkit.angl1);
+                spcRec.anglCut1 = prjkitRec.getDbl(ePrjkit.angl2);
 
                 //Тарификация    
                 if (win.listElem.isEmpty() == false) {
@@ -183,22 +183,22 @@ public class Kitcalc {
                     Scale.grpformN1.v = TTariffic.percentMarkup(win); //процентная надбавка на изделия сложной формы
                 }
 
-                Record artgrp1bRec = eGroups.find(rec.artiklRec.getInt(eArtikl.groups1_id));
-                Record artgrp2bRec = eGroups.find(rec.artiklRec.getInt(eArtikl.groups2_id));
+                Record artgrp1bRec = eGroups.find(spcRec.artiklRec.getInt(eArtikl.groups1_id));
+                Record artgrp2bRec = eGroups.find(spcRec.artiklRec.getInt(eArtikl.groups2_id));
                 Scale.artiklK.v = artgrp1bRec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
                 Scale.artiklS.v = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей               
 
-                rec.quant1 = TTariffic.formatAmount(rec); //количество без отхода  
-                rec.quant2 = (norm_otx == true) ? rec.quant1 + (rec.quant1 * rec.waste / 100) : rec.quant1; //количество с отходом
-                rec.costprice += TTariffic.artdetCostprice(rec); //себест. по табл. ARTDET и прав.расч.
+                spcRec.quant1 = TTariffic.formatAmount(spcRec); //количество без отхода  
+                spcRec.quant2 = (norm_otx == true) ? spcRec.quant1 + (spcRec.quant1 * spcRec.waste / 100) : spcRec.quant1; //количество с отходом
+                TTariffic.artdetCostAndPrice(spcRec); //себест. по табл. ARTDET и прав.расч.
 
-                double sbs = rec.costprice * Scale.artiklK.v * Scale.systreeK.v;
-                rec.price = sbs + Scale.grpformN1.v * sbs / 100; //цена за един.изм 
-                rec.cost1 = rec.price * rec.quant2; //стоимость без скидки                     
-                rec.cost2 = rec.cost1 - Scale.artiklS.v * rec.cost1 / 100; //стоимость со скидкой 
-                price1 += rec.cost1;
-                price2 += rec.cost2;
-                kitList.add(rec);
+                double sbs = spcRec.costprice * Scale.artiklK.v * Scale.systreeK.v;
+                spcRec.price = sbs + Scale.grpformN1.v * sbs / 100; //цена за един.изм 
+                spcRec.cost1 = spcRec.price * spcRec.quant2; //стоимость без скидки                     
+                spcRec.cost2 = spcRec.cost1 - Scale.artiklS.v * spcRec.cost1 / 100; //стоимость со скидкой 
+                price1 += spcRec.cost1;
+                price2 += spcRec.cost2;
+                kitList.add(spcRec);
             }
         }
         return kitList;
