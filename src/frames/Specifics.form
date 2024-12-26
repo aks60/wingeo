@@ -582,12 +582,12 @@
                     <Column editable="true" title="&#x440;&#x435;&#x437;&#x430;1" type="java.lang.Double"/>
                     <Column editable="true" title="&#x440;&#x435;&#x437;&#x430;2" type="java.lang.Double"/>
                     <Column editable="true" title="&#x433;&#x43e;&#x440;&#x438;&#x437;." type="java.lang.Object"/>
-                    <Column editable="true" title="&lt;html&gt;&#x41a;&#x43e;&#x43b;.&lt;br/&gt;&#x435;&#x434;&#x438;&#x43d;&#x438;&#x446;" type="java.lang.Object"/>
-                    <Column editable="true" title="&lt;html&gt;&#x415;&#x434;&#x438;&#x43d;.&lt;br/&gt;&#x438;&#x437;&#x43c;." type="java.lang.Object"/>
+                    <Column editable="true" title="&lt;html&gt;&#x41a;&#x43e;&#x43b;.&lt;br/&gt;&#x435;&#x434;." type="java.lang.Object"/>
+                    <Column editable="true" title="&lt;html&gt;&#x415;&#x434;.&lt;br/&gt;&#x438;&#x437;&#x43c;." type="java.lang.Object"/>
                     <Column editable="true" title="&lt;html&gt;&#x41f;&#x440;&#x43e;&#x446;&#x435;&#x43d;&#x442;&lt;br/&gt; &#x43e;&#x442;&#x445;&#x43e;&#x434;&#x430;" type="java.lang.Double"/>
                     <Column editable="true" title="&lt;html&gt;&#x41a;&#x43e;&#x43b;. &#x441; &lt;br/&gt;&#x43e;&#x442;&#x445;&#x43e;&#x434;&#x43e;&#x43c;" type="java.lang.Double"/>
                     <Column editable="true" title="&lt;html&gt;&#x421;&#x435;&#x431;&#x435;&#x441;- &lt;br/&gt;&#x442;&#x43e;&#x438;&#x43c;&#x43e;&#x441;&#x442;&#x44c;" type="java.lang.Double"/>
-                    <Column editable="true" title="&#x437;&#x430; &#x435;&#x434;. &#x438;&#x437;&#x43c;&#x435;&#x440;" type="java.lang.Double"/>
+                    <Column editable="true" title="&lt;html&gt;&#x426;&#x435;&#x43d;&#x430;&lt;br/&gt;&#x437;&#x430; &#x435;&#x434;. &#x438;&#x437;&#x43c;&#x435;&#x440;" type="java.lang.Double"/>
                     <Column editable="true" title="&#x431;&#x435;&#x437; &#x441;&#x43a;&#x438;&#x434;&#x43a;&#x438;" type="java.lang.Double"/>
                     <Column editable="true" title="&#x441;&#x43e; &#x441;&#x43a;&#x438;&#x434;&#x43a;&#x43e;&#x439;" type="java.lang.Double"/>
                   </Table>

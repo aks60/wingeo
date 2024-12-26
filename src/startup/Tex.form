@@ -432,9 +432,12 @@
                   <Image iconType="3" name="/resource/img16/b057.gif"/>
                 </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x421;&#x43f;&#x435;&#x446;&#x438;&#x444;&#x438;&#x43a;&#x430;&#x446;&#x438;&#x44f;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41f;&#x435;&#x440;&#x435;&#x441;&#x447;&#x438;&#x442;&#x430;&#x442;&#x44c;&quot;)"/>
+                  <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x421;&#x43f;&#x435;&#x446;&#x438;&#x444;&#x438;&#x43a;&#x430;&#x446;&#x438;&#x44f;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x421;&#x43f;&#x435;&#x446;&#x438;&#x444;&#x438;&#x43a;&#x430;&#x446;&#x438;&#x44f;&quot;)"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mn2Specif"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

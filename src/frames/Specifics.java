@@ -480,7 +480,7 @@ public class Specifics extends javax.swing.JFrame {
                 {null, null, null, "", "", "", "", "", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nпп", "PK", "FK", "Расположенние", "Артикул", "Наименование", "Текстура", "Внутр..", "Внешн...", "Длина", "Ширина", "Масса", "реза1", "реза2", "гориз.", "<html>Кол.<br/>единиц", "<html>Един.<br/>изм.", "<html>Процент<br/> отхода", "<html>Кол. с <br/>отходом", "<html>Себес- <br/>тоимость", "за ед. измер", "без скидки", "со скидкой"
+                "Nпп", "PK", "FK", "Расположенние", "Артикул", "Наименование", "Текстура", "Внутр..", "Внешн...", "Длина", "Ширина", "Масса", "реза1", "реза2", "гориз.", "<html>Кол.<br/>ед.", "<html>Ед.<br/>изм.", "<html>Процент<br/> отхода", "<html>Кол. с <br/>отходом", "<html>Себес- <br/>тоимость", "<html>Цена<br/>за ед. измер", "без скидки", "со скидкой"
             }
         ) {
             Class[] types = new Class [] {
@@ -795,8 +795,7 @@ public class Specifics extends javax.swing.JFrame {
         angl.add(cm.getColumn(12));
         angl.add(cm.getColumn(13));
         angl.add(cm.getColumn(14));
-        ColumnGroup cost = new ColumnGroup("Стоимость");
-        cost.add(cm.getColumn(20));
+        ColumnGroup cost = new ColumnGroup("Стоимость");       
         cost.add(cm.getColumn(21));
         cost.add(cm.getColumn(22));
 

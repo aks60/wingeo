@@ -816,7 +816,12 @@ public class Tex extends javax.swing.JFrame {
 
         mn75.setFont(frames.UGui.getFont(0,1));
         mn75.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
-        mn75.setText(bundle.getString("Пересчитать")); // NOI18N
+        mn75.setText(bundle.getString("Меню.Спецификация")); // NOI18N
+        mn75.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mn2Specif(evt);
+            }
+        });
         mn10.add(mn75);
 
         mn0.add(mn10);
