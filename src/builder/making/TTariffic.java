@@ -247,7 +247,7 @@ public class TTariffic extends Cal5e {
                     if (spcRec.detailRec != null) {
                         Record elementRec = eElement.find(spcRec.detailRec.getInt(eElemdet.element_id));
                         if (elementRec.getDbl(eElement.markup) > 0) {
-                            price += (costprice * (elementRec.getDbl(eElement.markup))) / 100;
+                            price += price * elementRec.getDbl(eElement.markup) / 100;
                         }
                     }
                 }
