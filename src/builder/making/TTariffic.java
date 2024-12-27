@@ -103,7 +103,7 @@ public class TTariffic extends Cal5e {
                         double artiklS = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                         double systreeK = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
                         
-                        elem5e.spcRec.price += elem5e.spcRec.costprice; //цена за ед.
+                        elem5e.spcRec.price += elem5e.spcRec.costprice; //цена за един.изм 
                         double value = elem5e.spcRec.price * artiklK * systreeK;
                         elem5e.spcRec.price = value + grpformN1 * value / 100; //цена за един.изм 
                         elem5e.spcRec.cost1 = elem5e.spcRec.price * elem5e.spcRec.quant2; //стоимость без скидки                     
@@ -128,7 +128,7 @@ public class TTariffic extends Cal5e {
                         double artiklS = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
                         double systreeK = systreeRec.getDbl(eSystree.coef); //коэф. рентабельности
 
-                        spcRec.price += spcRec.costprice; //цена за ед.                        
+                        spcRec.price += spcRec.costprice; //цена за един.изм                        
                         double value = spcRec.costprice * artiklK * systreeK;
                         spcRec.price = value + grpformN1 * value / 100; //цена за един.изм 
                         spcRec.cost1 = spcRec.price * spcRec.quant2; //стоимость без скидки                     

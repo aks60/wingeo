@@ -167,13 +167,13 @@ public class RCheck {
                 tdList.get(2).text("");
                 tdList.get(3).text("");
                 tdList.get(4).text("");
-                tdList.get(5).text(UCom.format(Kitcalc.price2 * 20 / 120, 9));
-                tdList.get(6).text(UCom.format(Kitcalc.price2, 9));
+                tdList.get(5).text(UCom.format(Kitcalc.cost2 * 20 / 120, 9));
+                tdList.get(6).text(UCom.format(Kitcalc.cost2, 9));
             }
             {
                 Elements trList = doc.getElementById("tab5").getElementsByTag("tbody").get(0).getElementsByTag("tr");
-                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total + Kitcalc.price2, 9) + " руб.");
-                trList.get(1).getElementsByTag("td").get(0).text(UMon.inwords(total + Kitcalc.price2));
+                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total + Kitcalc.cost2, 9) + " руб.");
+                trList.get(1).getElementsByTag("td").get(0).text(UMon.inwords(total + Kitcalc.cost2));
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Check.loadDoc1()" + e);
@@ -257,24 +257,24 @@ public class RCheck {
                 }
                 Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true);
                 int index = prjprodList.size();
-                double nds = Kitcalc.price2 * 20 / 120;
+                double nds = Kitcalc.cost2 * 20 / 120;
                 Elements tdList = trList.get(index).getElementsByTag("td");
                 tdList.get(0).text(String.valueOf(index + 1));
                 tdList.get(1).text("Комплекты заказа");
                 tdList.get(2).text("");
                 tdList.get(3).text("");
                 tdList.get(4).text("");
-                tdList.get(5).text(UCom.format(Kitcalc.price2 - discKit * Kitcalc.price2 / 100 - nds, 9));
+                tdList.get(5).text(UCom.format(Kitcalc.cost2 - discKit * Kitcalc.cost2 / 100 - nds, 9));
                 tdList.get(6).text("");
                 tdList.get(6).text("20%");
                 tdList.get(8).text(UCom.format(nds, 9));
-                tdList.get(9).text(UCom.format(Kitcalc.price2, 9));
+                tdList.get(9).text(UCom.format(Kitcalc.cost2, 9));
             }
             //СЕКЦИЯ №4
             {
                 Elements trList = doc.getElementById("tab5").getElementsByTag("tbody").get(0).getElementsByTag("tr");
-                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total + Kitcalc.price2, 2));
-                trList.get(1).getElementsByTag("td").get(0).text(UMon.inwords(total + Kitcalc.price2));
+                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total + Kitcalc.cost2, 2));
+                trList.get(1).getElementsByTag("td").get(0).text(UMon.inwords(total + Kitcalc.cost2));
             }
 
         } catch (Exception e) {
