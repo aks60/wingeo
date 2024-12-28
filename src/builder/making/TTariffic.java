@@ -27,11 +27,11 @@ import java.util.ArrayList;
  */
 public class TTariffic extends Cal5e {
 
-    private boolean norm_cost = true;
+    private boolean norm_otx = true;
 
-    public TTariffic(Wincalc winc, boolean norm_cost) {
+    public TTariffic(Wincalc winc, boolean norm_otx) {
         super(winc);
-        this.norm_cost = norm_cost;
+        this.norm_otx = norm_otx;
     }
 
     //Рассчёт конструкции с учётом 
@@ -46,14 +46,14 @@ public class TTariffic extends Cal5e {
                 if (filterPhantom(elem5e)) {
 
                     elem5e.spcRec.quant1 = formatAmount(elem5e.spcRec); //количество без отхода  
-                    elem5e.spcRec.quant2 = (norm_cost == true) ? elem5e.spcRec.quant1 + (elem5e.spcRec.quant1 * elem5e.spcRec.waste / 100) : elem5e.spcRec.quant1; //количество с отходом
+                    elem5e.spcRec.quant2 = (norm_otx == true) ? elem5e.spcRec.quant1 + (elem5e.spcRec.quant1 * elem5e.spcRec.waste / 100) : elem5e.spcRec.quant1; //количество с отходом
                     elem5e.spcRec.costprice = artdetCostprice(elem5e.spcRec); //себест. по табл. ARTDET и прав.расч.
 
                     //Вложенная спецификация
                     //цикл по детализации эдемента
                     for (TRecord spcRec : elem5e.spcRec.spcList) {
                         spcRec.quant1 = formatAmount(spcRec); //количество без отхода
-                        spcRec.quant2 = (norm_cost == true) ? spcRec.quant1 + (spcRec.quant1 * spcRec.waste / 100) : spcRec.quant1; //количество с отходом
+                        spcRec.quant2 = (norm_otx == true) ? spcRec.quant1 + (spcRec.quant1 * spcRec.waste / 100) : spcRec.quant1; //количество с отходом
                         spcRec.costprice = artdetCostprice(spcRec); //себест. по табл. ARTDET и прав.расч.
                     }
                 }

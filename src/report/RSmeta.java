@@ -135,14 +135,14 @@ public class RSmeta {
             {
                 Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
                 Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true);
-                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(projectRec.getDbl(eProject.price2win), 9) + " руб."); //всего за изделия
-                trList.get(1).getElementsByTag("td").get(1).text(UCom.format(projectRec.getDbl(eProject.price2kit), 9) + " руб.+"); //всего за комплекты
+                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(projectRec.getDbl(eProject.cost2_win), 9) + " руб."); //всего за изделия
+                trList.get(1).getElementsByTag("td").get(1).text(UCom.format(projectRec.getDbl(eProject.cost2_kit), 9) + " руб.+"); //всего за комплекты
                 trList.get(2).getElementsByTag("td").get(1)
-                        .text(UCom.format(projectRec.getDbl(eProject.price2win) + projectRec.getDbl(eProject.price2kit), 9) + " руб."); //ИТОГО ПО ЗАКАЗУ 
+                        .text(UCom.format(projectRec.getDbl(eProject.cost2_win) + projectRec.getDbl(eProject.cost2_kit), 9) + " руб."); //ИТОГО ПО ЗАКАЗУ 
                 trList.get(3).getElementsByTag("td").get(0)
-                        .text("Сумма прописью : " + UMon.inwords(projectRec.getDbl(eProject.price2win) + projectRec.getDbl(eProject.price2kit)));
+                        .text("Сумма прописью : " + UMon.inwords(projectRec.getDbl(eProject.cost2_win) + projectRec.getDbl(eProject.cost2_kit)));
                 trList.get(4).getElementsByTag("td").get(0)
-                        .text("включая НДС 20% : " + UCom.format((projectRec.getDbl(eProject.price2win) + projectRec.getDbl(eProject.price2kit)) * 20 / 120, 9) + " руб.");
+                        .text("включая НДС 20% : " + UCom.format((projectRec.getDbl(eProject.cost2_win) + projectRec.getDbl(eProject.cost2_kit)) * 20 / 120, 9) + " руб.");
                 trList.get(5).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square / 1000000, 2) + " кв.м.");
 
                 Elements imgList = doc.getElementById("div2").getElementsByTag("img");
@@ -353,7 +353,7 @@ public class RSmeta {
                 total += numProd * priceMan;
             }
             Elements tdFoot = tabElem.getElementsByTag("tfoot").get(0).getElementsByTag("td");
-            tdFoot.get(1).text(UCom.format(projectRec.getDbl(eProject.price2win), 2));
+            tdFoot.get(1).text(UCom.format(projectRec.getDbl(eProject.cost2_win), 2));
 
         } catch (Exception e) {
             System.err.println("Ошибка: RSmeta.loadTab4() " + e);
@@ -385,7 +385,7 @@ public class RSmeta {
                 total += prjkitRec.cost2;
             }
             Elements tdFoot = tabElem.getElementsByTag("tfoot").get(0).getElementsByTag("td");
-            tdFoot.get(1).text(UCom.format(projectRec.getDbl(eProject.price2kit), 2));  //всего за комплекты
+            tdFoot.get(1).text(UCom.format(projectRec.getDbl(eProject.cost2_kit), 2));  //всего за комплекты
 
         } catch (Exception e) {
             System.err.println("Ошибка: RSmeta.loadTab5() " + e);

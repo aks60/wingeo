@@ -70,10 +70,11 @@ public class Specifics extends javax.swing.JFrame {
     };
 
     public Specifics(int kit) {
-        initComponents();
+        initComponents();      
         initElements();
         this.kit = kit;
         createMenu();
+        
         createIwin();
         loadingData();
         loadingTab1(this.listTRec);
@@ -123,7 +124,7 @@ public class Specifics extends javax.swing.JFrame {
                 JsonElement je = new Gson().fromJson(script, JsonElement.class);
                 je.getAsJsonObject().addProperty("nuni", prjprodRec.getInt(ePrjprod.systree_id));
                 winc.build(je.toString());
-                winc.specific(true);
+                winc.specific(cbx2.getSelectedIndex() == 0);
             }
         } else {
             int sysprodID = Integer.valueOf(eProp.sysprodID.read());
@@ -135,6 +136,7 @@ public class Specifics extends javax.swing.JFrame {
                 JsonElement je = new Gson().fromJson(script, JsonElement.class);
                 je.getAsJsonObject().addProperty("nuni", sysprodRec.getInt(eSysprod.systree_id));
                 winc.build(je.toString());
+                int norm_otx = (eGroups.find(2007).getInt(eGroups.val) == 0) ? 0 : 1; //учитывать норму отхода в себестоимости
                 winc.specific(cbx2.getSelectedIndex() == 0);
             }
         }
@@ -306,11 +308,6 @@ public class Specifics extends javax.swing.JFrame {
         cbx2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Учитывать норму отх.", "Без нормы отхода " }));
         cbx2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         cbx2.setPreferredSize(new java.awt.Dimension(180, 25));
-        cbx2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxCalcType(evt);
-            }
-        });
 
         btnTest.setText("Test");
         btnTest.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -610,15 +607,6 @@ public class Specifics extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnFind2
 
-    private void cbxCalcType(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCalcType
-//        ProgressBar.create(this, new ListenerFrame() {
-//            public void actionRequest(Object obj) {
-        btn22Calc(null);
-//            }
-//        });
-
-    }//GEN-LAST:event_cbxCalcType
-
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
         ProgressBar.create(Specifics.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
@@ -769,7 +757,7 @@ public class Specifics extends javax.swing.JFrame {
         tab1.getColumnModel().getColumn(13).setCellRenderer(new DefCellRendererSpc(2));
         tab1.getColumnModel().getColumn(14).setCellRenderer(new DefCellRendererSpc(1));
         tab1.getColumnModel().getColumn(15).setCellRenderer(new DefCellRendererSpc(1));
-        tab1.getColumnModel().getColumn(18).setCellRenderer(new DefCellRendererSpc(2)); 
+        tab1.getColumnModel().getColumn(18).setCellRenderer(new DefCellRendererSpc(2));
         tab1.getColumnModel().getColumn(19).setCellRenderer(new DefCellRendererSpc(2));
         tab1.getColumnModel().getColumn(20).setCellRenderer(new DefCellRendererSpc(2));
         tab1.getColumnModel().getColumn(21).setCellRenderer(new DefCellRendererSpc(9));
@@ -788,6 +776,13 @@ public class Specifics extends javax.swing.JFrame {
             }
 
         });
+        cbx2.setSelectedIndex((eGroups.find(2007).getInt(eGroups.val) == 0) ? 1 : 0);//учитывать норму отхода в себестоимости      
+        cbx2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn22Calc(null);
+            }
+        });
+        
         tab1.getTableHeader().setFont(frames.UGui.getFont(0, 0));
         TableColumnModel cm = tab1.getColumnModel();
 
@@ -795,7 +790,7 @@ public class Specifics extends javax.swing.JFrame {
         angl.add(cm.getColumn(12));
         angl.add(cm.getColumn(13));
         angl.add(cm.getColumn(14));
-        ColumnGroup cost = new ColumnGroup("Стоимость");       
+        ColumnGroup cost = new ColumnGroup("Стоимость");
         cost.add(cm.getColumn(21));
         cost.add(cm.getColumn(22));
 
