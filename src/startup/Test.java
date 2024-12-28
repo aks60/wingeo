@@ -47,7 +47,6 @@ import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Test {
 
-    //public ArrayList<ListenerMouse> mouseDragged = new ArrayList<ListenerMouse>();
     private JFrame frame = null;
     public Geometry mlin = null;
     public Geometry mpol = null;
