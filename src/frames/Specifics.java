@@ -48,6 +48,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -70,11 +71,10 @@ public class Specifics extends javax.swing.JFrame {
     };
 
     public Specifics(int kit) {
-        initComponents();      
-        initElements();
+        initComponents();
         this.kit = kit;
+        initElements();
         createMenu();
-        
         createIwin();
         loadingData();
         loadingTab1(this.listTRec);
@@ -88,7 +88,7 @@ public class Specifics extends javax.swing.JFrame {
         this.listTRec.addAll(winc.listSpec); //добавим спецификацию
 
         //Если открыл менеджер добавим комплекты
-        if (kit == 1) {
+        if (this.kit == 1) {
             int prjprodID = Integer.valueOf(eProp.prjprodID.read());
             Record prjprodRec = ePrjprod.find(prjprodID);
             ArrayList<TRecord> listKit = Kitcalc.tarifficProd(winc, prjprodRec, 0, true, false); //комплекты
@@ -114,7 +114,7 @@ public class Specifics extends javax.swing.JFrame {
     }
 
     public void createIwin() {
-        if (kit == 1) {
+        if (this.kit == 1) {
             int prjprodID = Integer.valueOf(eProp.prjprodID.read());
             Record prjprodRec = ePrjprod.find(prjprodID);
             if (prjprodRec == null) {
@@ -477,7 +477,7 @@ public class Specifics extends javax.swing.JFrame {
                 {null, null, null, "", "", "", "", "", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nпп", "PK", "FK", "Расположенние", "Артикул", "Наименование", "Текстура", "Внутр..", "Внешн...", "Длина", "Ширина", "Масса", "реза1", "реза2", "гориз.", "<html>Кол.<br/>ед.", "<html>Ед.<br/>изм.", "<html>Проц.<br/> отхода", "<html>Кол. с <br/>отходом", "<html>Себес- <br/>тоимость", "<html>Цена<br/>за ед. измер", "<html>Стоимость<br/>без скидки", "<html>Стоимость<br/>со скидкой"
+                "Nпп", "PK", "FK", "Расположенние", "Артикул", "Наименование", "Текстура", "Внутр..", "Внешн...", "Длина", "Ширина", "Масса", "реза1", "реза2", "гориз.", "<html>Кол.<br/>ед.", "<html>Ед.<br/>изм.", "<html>Проц.<br/> отхода", "<html>Кол. с <br/>отходом", "<html>Себес- <br/>тоимость", "<html>Цена<br/>за ед. измер", "<html>Стоимость<br/>без скидки", "Стоимость"
             }
         ) {
             Class[] types = new Class [] {
@@ -510,9 +510,9 @@ public class Specifics extends javax.swing.JFrame {
             tab1.getColumnModel().getColumn(9).setPreferredWidth(48);
             tab1.getColumnModel().getColumn(10).setPreferredWidth(48);
             tab1.getColumnModel().getColumn(11).setPreferredWidth(46);
-            tab1.getColumnModel().getColumn(12).setPreferredWidth(36);
-            tab1.getColumnModel().getColumn(13).setPreferredWidth(36);
-            tab1.getColumnModel().getColumn(14).setPreferredWidth(38);
+            tab1.getColumnModel().getColumn(12).setPreferredWidth(35);
+            tab1.getColumnModel().getColumn(13).setPreferredWidth(35);
+            tab1.getColumnModel().getColumn(14).setPreferredWidth(35);
             tab1.getColumnModel().getColumn(15).setPreferredWidth(30);
             tab1.getColumnModel().getColumn(16).setPreferredWidth(40);
             tab1.getColumnModel().getColumn(17).setPreferredWidth(40);
@@ -767,6 +767,10 @@ public class Specifics extends javax.swing.JFrame {
                 tab1.getColumnModel().getColumn(i).setPreferredWidth(tab1.getColumnModel().getColumn(i).getPreferredWidth() + tab1.getColumnModel().getColumn(i).getPreferredWidth() / 3);
             }
         }
+        if (this.kit == 0) {
+            ((DefaultTableColumnModel) tab1.getColumnModel()).getColumn(21).setMinWidth(0);
+            ((DefaultTableColumnModel) tab1.getColumnModel()).getColumn(21).setMaxWidth(0);
+        }
         cbx2.setRenderer(new DefaultListCellRenderer() {
 
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -782,7 +786,7 @@ public class Specifics extends javax.swing.JFrame {
                 btn22Calc(null);
             }
         });
-        
+
         tab1.getTableHeader().setFont(frames.UGui.getFont(0, 0));
         TableColumnModel cm = tab1.getColumnModel();
 
@@ -790,11 +794,10 @@ public class Specifics extends javax.swing.JFrame {
         angl.add(cm.getColumn(12));
         angl.add(cm.getColumn(13));
         angl.add(cm.getColumn(14));
-        
+
 //        ColumnGroup cost = new ColumnGroup("Стоимость");
 //        cost.add(cm.getColumn(21));
 //        cost.add(cm.getColumn(22));
-
         GroupableTableHeader header = (GroupableTableHeader) tab1.getTableHeader();
         header.addColumnGroup(angl);
         //header.addColumnGroup(cost);
