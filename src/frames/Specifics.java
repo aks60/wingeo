@@ -477,7 +477,7 @@ public class Specifics extends javax.swing.JFrame {
                 {null, null, null, "", "", "", "", "", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nпп", "PK", "FK", "Расположенние", "Артикул", "Наименование", "Текстура", "Внутр..", "Внешн...", "Длина", "Ширина", "Масса", "реза1", "реза2", "гориз.", "<html>Кол.<br/>ед.", "<html>Ед.<br/>изм.", "<html>Проц.<br/> отхода", "<html>Кол. с <br/>отходом", "<html>Себес- <br/>тоимость", "<html>Цена<br/>за ед. измер", "без скидки", "со скидкой"
+                "Nпп", "PK", "FK", "Расположенние", "Артикул", "Наименование", "Текстура", "Внутр..", "Внешн...", "Длина", "Ширина", "Масса", "реза1", "реза2", "гориз.", "<html>Кол.<br/>ед.", "<html>Ед.<br/>изм.", "<html>Проц.<br/> отхода", "<html>Кол. с <br/>отходом", "<html>Себес- <br/>тоимость", "<html>Цена<br/>за ед. измер", "<html>Стоимость<br/>без скидки", "<html>Стоимость<br/>со скидкой"
             }
         ) {
             Class[] types = new Class [] {
@@ -519,8 +519,8 @@ public class Specifics extends javax.swing.JFrame {
             tab1.getColumnModel().getColumn(18).setPreferredWidth(46);
             tab1.getColumnModel().getColumn(19).setPreferredWidth(44);
             tab1.getColumnModel().getColumn(20).setPreferredWidth(44);
-            tab1.getColumnModel().getColumn(21).setPreferredWidth(58);
-            tab1.getColumnModel().getColumn(22).setPreferredWidth(58);
+            tab1.getColumnModel().getColumn(21).setPreferredWidth(60);
+            tab1.getColumnModel().getColumn(22).setPreferredWidth(60);
         }
 
         centr.add(scr1, java.awt.BorderLayout.CENTER);
@@ -790,13 +790,14 @@ public class Specifics extends javax.swing.JFrame {
         angl.add(cm.getColumn(12));
         angl.add(cm.getColumn(13));
         angl.add(cm.getColumn(14));
-        ColumnGroup cost = new ColumnGroup("Стоимость");
-        cost.add(cm.getColumn(21));
-        cost.add(cm.getColumn(22));
+        
+//        ColumnGroup cost = new ColumnGroup("Стоимость");
+//        cost.add(cm.getColumn(21));
+//        cost.add(cm.getColumn(22));
 
         GroupableTableHeader header = (GroupableTableHeader) tab1.getTableHeader();
         header.addColumnGroup(angl);
-        header.addColumnGroup(cost);
+        //header.addColumnGroup(cost);
     }
 
     private void setText(JMenuItem comp, Object txt) {
