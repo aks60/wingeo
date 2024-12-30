@@ -477,7 +477,7 @@ public class Specifics extends javax.swing.JFrame {
                 {null, null, null, "", "", "", "", "", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nпп", "PK", "FK", "Расположенние", "Артикул", "Наименование", "Текстура", "Внутр..", "Внешн...", "Длина", "Ширина", "Масса", "реза1", "реза2", "гориз.", "<html>Кол.<br/>ед.", "<html>Ед.<br/>изм.", "<html>Проц.<br/> отхода", "<html>Кол. с <br/>отходом", "<html>Себес- <br/>тоимость", "<html>Цена<br/>за ед. измер", "<html>Стоимость<br/>без скидки", "Стоимость"
+                "Nпп", "PK", "FK", "Расположенние", "Артикул", "Наименование", "Текстура", "Внутр..", "Внешн...", "Длина", "Ширина", "Масса", "реза1", "реза2", "гориз.", "<html>Кол.<br/>ед.", "<html>Ед.<br/>изм.", "<html>Проц.<br/> отхода", "<html>Кол. с <br/>отходом", "<html>Себес- <br/>тоимость", "<html>Цена<br/>за ед. измер", "<html>Стоимость<br/>без скидки", "<html>Стоимость<br/>со скидкой"
             }
         ) {
             Class[] types = new Class [] {
@@ -768,8 +768,8 @@ public class Specifics extends javax.swing.JFrame {
             }
         }
         if (this.kit == 0) {
-            ((DefaultTableColumnModel) tab1.getColumnModel()).getColumn(21).setMinWidth(0);
-            ((DefaultTableColumnModel) tab1.getColumnModel()).getColumn(21).setMaxWidth(0);
+            ((DefaultTableColumnModel) tab1.getColumnModel()).getColumn(22).setMinWidth(0);
+            ((DefaultTableColumnModel) tab1.getColumnModel()).getColumn(22).setMaxWidth(0);
         }
         cbx2.setRenderer(new DefaultListCellRenderer() {
 

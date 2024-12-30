@@ -586,7 +586,7 @@
                     <Column editable="true" title="&lt;html&gt;&#x421;&#x435;&#x431;&#x435;&#x441;- &lt;br/&gt;&#x442;&#x43e;&#x438;&#x43c;&#x43e;&#x441;&#x442;&#x44c;" type="java.lang.Double"/>
                     <Column editable="true" title="&lt;html&gt;&#x426;&#x435;&#x43d;&#x430;&lt;br/&gt;&#x437;&#x430; &#x435;&#x434;. &#x438;&#x437;&#x43c;&#x435;&#x440;" type="java.lang.Double"/>
                     <Column editable="true" title="&lt;html&gt;&#x421;&#x442;&#x43e;&#x438;&#x43c;&#x43e;&#x441;&#x442;&#x44c;&lt;br/&gt;&#x431;&#x435;&#x437; &#x441;&#x43a;&#x438;&#x434;&#x43a;&#x438;" type="java.lang.Double"/>
-                    <Column editable="true" title="&#x421;&#x442;&#x43e;&#x438;&#x43c;&#x43e;&#x441;&#x442;&#x44c;" type="java.lang.Double"/>
+                    <Column editable="true" title="&lt;html&gt;&#x421;&#x442;&#x43e;&#x438;&#x43c;&#x43e;&#x441;&#x442;&#x44c;&lt;br/&gt;&#x441;&#x43e; &#x441;&#x43a;&#x438;&#x434;&#x43a;&#x43e;&#x439;" type="java.lang.Double"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
