@@ -34,13 +34,13 @@ import domain.eArtikl;
 import domain.eColor;
 import domain.eGroups;
 import domain.ePrjprod;
+import domain.eProject;
 import domain.eSystree;
 import enums.Scale;
 import frames.swing.DefCellRendererNumb;
 import frames.swing.TableFieldFilter;
 import frames.swing.col.ColumnGroup;
 import frames.swing.col.GroupableTableHeader;
-import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.stream.IntStream;
@@ -92,7 +92,9 @@ public class Specifics extends javax.swing.JFrame {
         if (this.kit == 1) {
             int prjprodID = Integer.valueOf(eProp.prjprodID.read());
             Record prjprodRec = ePrjprod.find(prjprodID);
-            ArrayList<TRecord> listKit = Kitcalc.tarifficProd(winc, prjprodRec, 0, true, false); //комплекты
+            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
+            double discKit = projectRec.getDbl(eProject.disc_kit);
+            ArrayList<TRecord> listKit = Kitcalc.tarifficProd(winc, prjprodRec, discKit, true, false); //комплекты
             this.listTRec.addAll(listKit);
         }
     }
@@ -109,9 +111,9 @@ public class Specifics extends javax.swing.JFrame {
         Vector v = new Vector();
         v.add(listTRec.size() + 1);
         IntStream.range(1, vSize).forEach(action -> v.add(null));
-        v.set(v.size() - 1, UCom.format(winc.price2() + Kitcalc.cost2, "#,##0.##")); //стоимость со скидклй              
+        v.set(v.size() - 1, UCom.format(winc.cost2 + Kitcalc.cost2, "#,##0.##")); //стоимость со скидклй              
         dtm.addRow(v);
-        labSum.setText("Итого: " + UCom.format(winc.price2() + Kitcalc.cost2, "#,##0.##"));
+        labSum.setText("Итого: " + UCom.format(winc.cost2 + Kitcalc.cost2, "#,##0.##"));
     }
 
     public void createIwin() {

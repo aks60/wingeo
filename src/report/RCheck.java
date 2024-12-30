@@ -153,11 +153,11 @@ public class RCheck {
                     tdList.get(1).text(prjprodRec.getStr(ePrjprod.name));
                     tdList.get(2).text("шт.");
                     tdList.get(3).text(String.valueOf(numProd));
-                    tdList.get(4).text(UCom.format(winc.price2() - discWin * winc.price2() / 100, 9));
-                    tdList.get(5).text(UCom.format(numProd * winc.price2() * 20 / 120, 9));
-                    tdList.get(6).text(UCom.format(numProd * (winc.price2() - discWin * winc.price2() / 100), 9)); //со скидкой менеджера
+                    tdList.get(4).text(UCom.format(winc.cost2 - discWin * winc.cost2 / 100, 9));
+                    tdList.get(5).text(UCom.format(numProd * winc.cost2 * 20 / 120, 9));
+                    tdList.get(6).text(UCom.format(numProd * (winc.cost2 - discWin * winc.cost2 / 100), 9)); //со скидкой менеджера
 
-                    total += numProd * (winc.price2() - discWin * winc.price2() / 100);
+                    total += numProd * (winc.cost2 - discWin * winc.cost2 / 100);
                 }
                 Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true);
                 int index = prjprodList.size();
@@ -240,20 +240,20 @@ public class RCheck {
                     Record prjprodRec = prjprodList.get(i);
                     Kitcalc.tarifficProd(new Wincalc(), prjprodRec, 0, true, true);
                     double numProd = prjprodRec.getInt(ePrjprod.num);
-                    double nds = winc.price2() * 20 / 120;
+                    double nds = winc.cost2 * 20 / 120;
 
                     tdList.get(0).text(String.valueOf(1 + i));
                     tdList.get(1).text(prjprodRec.getStr(ePrjprod.name));
                     tdList.get(2).text("шт.");
                     tdList.get(3).text(String.valueOf(numProd));
-                    tdList.get(4).text(UCom.format(winc.price2() - nds - discWin * winc.price2() / 100, 9));
-                    tdList.get(5).text(UCom.format(numProd * (winc.price2() - nds - discWin * winc.price2() / 100), 9));
+                    tdList.get(4).text(UCom.format(winc.cost2 - nds - discWin * winc.cost2 / 100, 9));
+                    tdList.get(5).text(UCom.format(numProd * (winc.cost2 - nds - discWin * winc.cost2 / 100), 9));
                     tdList.get(6).text("");
                     tdList.get(7).text("20%");
                     tdList.get(8).text(UCom.format(numProd * nds, 9));
-                    tdList.get(9).text(UCom.format(numProd * (winc.price2() - discWin * winc.price2() / 100), 9));
+                    tdList.get(9).text(UCom.format(numProd * (winc.cost2 - discWin * winc.cost2 / 100), 9));
 
-                    total += numProd * (winc.price2() - discWin * winc.price2() / 100);
+                    total += numProd * (winc.cost2 - discWin * winc.cost2 / 100);
                 }
                 Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true);
                 int index = prjprodList.size();

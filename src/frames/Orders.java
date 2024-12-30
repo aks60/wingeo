@@ -767,7 +767,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         //}
     }
 
-    public void calculate() {
+     public void calculate() {
         try {
             int index = UGui.getIndexRec(tab1);
             UGui.stopCellEditingAndExecSql();
@@ -793,8 +793,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         square += numProd * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
                         weight += numProd * win.weight; //вес изделий
                         
-                        cost1_win += numProd * win.price1(); //стоимость конструкций без скидки менеджера
-                        cost2_win += numProd * win.price2(); //стоимость конструкций со скидкой менеджера
+                        cost1_win += numProd * win.cost1; //стоимость конструкций без скидки менеджера
+                        cost2_win += numProd * win.cost2; //стоимость конструкций со скидкой менеджера
                     }
                 }
                 //Комплектация

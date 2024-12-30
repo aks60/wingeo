@@ -136,8 +136,8 @@ public class ROffer {
                     trRec.get(9).getElementsByTag("td").get(1).text(prjprodRec.getStr(ePrjprod.num));
                     trRec.get(10).getElementsByTag("td").get(1).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
                     trRec.get(11).getElementsByTag("td").get(1).text(UCom.format(winc.weight, 2));
-                    trRec.get(12).getElementsByTag("td").get(1).text(UCom.format(numProd * winc.price1(), 9));
-                    trRec.get(13).getElementsByTag("td").get(1).text(UCom.format(numProd * (winc.price2() - (discWin + discPrj) * winc.price2() / 100), 9));
+                    trRec.get(12).getElementsByTag("td").get(1).text(UCom.format(numProd * winc.cost1, 9));
+                    trRec.get(13).getElementsByTag("td").get(1).text(UCom.format(numProd * (winc.cost2 - (discWin + discPrj) * winc.cost2 / 100), 9));
                 }
             }
             //—≈ ÷»ﬂ π4

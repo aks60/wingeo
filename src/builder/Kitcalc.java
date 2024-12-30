@@ -92,12 +92,12 @@ public class Kitcalc {
                 spcRec.quant1 = TTariffic.formatAmount(spcRec); //количество без отхода  
                 spcRec.quant2 = (normOtx == true) ? spcRec.quant1 + (spcRec.quant1 * spcRec.waste / 100) : spcRec.quant1; //количество с отходом
                 spcRec.costprice = TTariffic.artdetCostprice(spcRec); //себест. по табл. ARTDET и прав.расч.
-
+                spcRec.costprice = spcRec.costprice - spcRec.costprice * artiklS / 100; //себесстоимость со скидкой 
                 spcRec.price = spcRec.costprice;
                 double value = spcRec.price * artiklK * systreeK;
                 spcRec.price = value + grpformN1 * value / 100; //цена за един.изм 
                 spcRec.cost1 = spcRec.price * spcRec.quant2; //стоимость без скидки                     
-                spcRec.cost2 = spcRec.cost1 - artiklS * discKit * spcRec.cost1 / 100; //стоимость с техн.скидк. и скид.менеджера
+                spcRec.cost2 = spcRec.cost1 - discKit * spcRec.cost1 / 100; //стоимость со скид.менеджера
                 cost1 += spcRec.cost1;
                 cost2 += spcRec.cost2;
                 kitList.add(spcRec);

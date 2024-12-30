@@ -51,8 +51,8 @@ public class Wincalc {
     public double nppID = 0; //для генерации ключа в спецификации
     public int colorID1 = -1, colorID2 = 1, colorID3 = -1; //базовый,внутр,внещний 
     public Record syssizRec = null; //система константт
-    private double price1 = 0; //стоимость без скидки
-    private double price2 = 0; //стоимость с технологической скидкой
+    public double cost1 = 0; //стоимость без скидки
+    public double cost2 = 0; //стоимость со скидкой
     public double weight = 0; //масса конструкции  
     public BufferedImage bufferImg = null;  //образ рисунка
     public ImageIcon imageIcon = null; //рисунок конструкции
@@ -224,8 +224,8 @@ public class Wincalc {
     //Спецификация и тарификация 
     public void specific(boolean norm_otx) {
         this.weight = 0;
-        this.price1 = 0;
-        this.price2 = 0;
+        this.cost1 = 0;
+        this.cost2 = 0;
         this.listSpec.clear();
         try {
             //Спецификация ведущих элементов конструкции
@@ -252,8 +252,8 @@ public class Wincalc {
 
             //Итоговая стоимость
             for (TRecord spc : this.listSpec) {
-                this.price1 = (this.price1 + spc.cost1); //общая стоимость без скидки
-                this.price2 = (this.price2 + spc.cost2); //общая стоимость со скидкой                                   
+                this.cost1 = (this.cost1 + spc.cost1); //общая стоимость без скидки
+                this.cost2 = (this.cost2 + spc.cost2); //общая стоимость со скидкой                                   
             }
 
             //Вес изделия
@@ -328,14 +328,6 @@ public class Wincalc {
 
     public double height() {
         return root.area.getGeometryN(0).getEnvelopeInternal().getHeight();
-    }
-
-    public double price1() {
-        return price1;
-    }
-    
-    public double price2() {
-        return price2;
     }
     // </editor-fold>  
 }
