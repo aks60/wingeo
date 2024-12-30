@@ -40,6 +40,7 @@ import frames.swing.DefCellRendererNumb;
 import frames.swing.TableFieldFilter;
 import frames.swing.col.ColumnGroup;
 import frames.swing.col.GroupableTableHeader;
+import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.stream.IntStream;
@@ -762,6 +763,7 @@ public class Specifics extends javax.swing.JFrame {
         tab1.getColumnModel().getColumn(20).setCellRenderer(new DefCellRendererSpc(2));
         tab1.getColumnModel().getColumn(21).setCellRenderer(new DefCellRendererSpc(9));
         tab1.getColumnModel().getColumn(22).setCellRenderer(new DefCellRendererSpc(9));
+
         if ("Nimbus".equals(eProp.lookandfeel.read())) {
             for (int i = 15; i < 22; i++) {
                 tab1.getColumnModel().getColumn(i).setPreferredWidth(tab1.getColumnModel().getColumn(i).getPreferredWidth() + tab1.getColumnModel().getColumn(i).getPreferredWidth() / 3);
@@ -786,21 +788,14 @@ public class Specifics extends javax.swing.JFrame {
                 btn22Calc(null);
             }
         });
-
-        tab1.getTableHeader().setFont(frames.UGui.getFont(0, 0));
         TableColumnModel cm = tab1.getColumnModel();
-
         ColumnGroup angl = new ColumnGroup("Угол");
         angl.add(cm.getColumn(12));
         angl.add(cm.getColumn(13));
         angl.add(cm.getColumn(14));
-
-//        ColumnGroup cost = new ColumnGroup("Стоимость");
-//        cost.add(cm.getColumn(21));
-//        cost.add(cm.getColumn(22));
         GroupableTableHeader header = (GroupableTableHeader) tab1.getTableHeader();
         header.addColumnGroup(angl);
-        //header.addColumnGroup(cost);
+        tab1.getTableHeader().setFont(frames.UGui.getFont(-1, 0));
     }
 
     private void setText(JMenuItem comp, Object txt) {

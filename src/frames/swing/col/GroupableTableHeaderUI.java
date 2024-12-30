@@ -74,7 +74,8 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI {
           JLabel header = new JLabel();
             header.setForeground(table.getTableHeader().getForeground());
             header.setBackground(table.getTableHeader().getBackground());
-            header.setFont(table.getTableHeader().getFont());
+            header.setFont(table.getTableHeader().getFont());;
+            //header.setFont(frames.UGui.getFont(-1, 0));
 
           header.setHorizontalAlignment(JLabel.CENTER);
           header.setText(value.toString());
