@@ -33,15 +33,18 @@ import org.jsoup.select.Elements;
 //Коммерческое предложение
 public class ROffer {
 
-    public void parseDoc(Record projectRec) {
+    public void parseDoc(List<Record> prjprodList) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Offer.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
             Document doc = Jsoup.parse(tempFile);
 
+            Record prjprodRec = prjprodList.get(0);
+            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id)); 
+            
             //Заполним отчёт
-            loadDoc(projectRec, doc);
+            loadDoc(projectRec, doc);       
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));

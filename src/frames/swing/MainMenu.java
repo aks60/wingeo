@@ -1,18 +1,19 @@
 package frames.swing;
 
+import common.eProp;
 import common.listener.ListenerFrame;
 import domain.ePrjprod;
 import java.util.List;
+import report.RCheck;
+import report.RMaterial;
+import report.ROffer;
+import report.RSmeta;
 import report.RSpecific;
+import report.RTarget;
 
 public class MainMenu {
 
     private static javax.swing.JFrame frame;
-    private static int prjprodID;
-    private static int progectID;
-    private static dataset.Record prjprodRec;
-    private static dataset.Record projectRec;
-
     private static javax.swing.Icon icon;
     private static java.util.ResourceBundle bundle;
 
@@ -21,6 +22,10 @@ public class MainMenu {
         icon = new javax.swing.ImageIcon(frame.getClass().getResource("/resource/img16/b058.gif"));
         bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", locale);
 
+        //prjprodID = Integer.valueOf(eProp.prjprodID.read());
+        //prjprodRec = ePrjprod.find(prjprodID);
+        //progectID = Integer.valueOf(eProp.orderID.read());
+        //projectRec = eProject.find(progectID);
         if (men instanceof javax.swing.JMenu) {
 
             javax.swing.JMenu menu = (javax.swing.JMenu) men;
@@ -93,7 +98,9 @@ public class MainMenu {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ProgressBar.create(frame, new ListenerFrame() {
                     public void actionRequest(Object obj) {
-                       new RSpecific().parseDoc(List.of(prjprodRec));
+                        int prjprodID = Integer.valueOf(eProp.prjprodID.read());
+                        List<dataset.Record> prjprodList = List.of(ePrjprod.find(prjprodID));
+                        new RSpecific().parseDoc(prjprodList);
                     }
                 });
             }
@@ -105,7 +112,13 @@ public class MainMenu {
         menuItem02.setText(bundle.getString("Меню.Расход материалов"));
         menuItem02.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //menuItem20(evt);
+                ProgressBar.create(frame, new ListenerFrame() {
+                    public void actionRequest(Object obj) {
+                        int prjprodID = Integer.valueOf(eProp.prjprodID.read());
+                        List<dataset.Record> prjprodList = List.of(ePrjprod.find(prjprodID));
+                        new RMaterial().parseDoc(prjprodList);
+                    }
+                });
             }
         });
         jmenu01.add(menuItem02);
@@ -115,7 +128,13 @@ public class MainMenu {
         menuItem03.setText(bundle.getString("Меню.Задание в цех"));
         menuItem03.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //menuItem21(evt);
+                ProgressBar.create(frame, new ListenerFrame() {
+                    public void actionRequest(Object obj) {
+                        int prjprodID = Integer.valueOf(eProp.prjprodID.read());
+                        List<dataset.Record> prjprodList = List.of(ePrjprod.find(prjprodID));
+                        new RTarget().parseDoc(prjprodList);
+                    }
+                });
             }
         });
         jmenu01.add(menuItem03);
@@ -126,7 +145,13 @@ public class MainMenu {
         menuItem04.setText(bundle.getString("Меню.Смета"));
         menuItem04.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //menuItem22(evt);
+                ProgressBar.create(frame, new ListenerFrame() {
+                    public void actionRequest(Object obj) {
+                        int prjprodID = Integer.valueOf(eProp.prjprodID.read());
+                        List<dataset.Record> prjprodList = List.of(ePrjprod.find(prjprodID));
+                        new RSmeta().parseDoc1(prjprodList);
+                    }
+                });
             }
         });
         jmenu01.add(menuItem04);
@@ -136,7 +161,13 @@ public class MainMenu {
         menuItem05.setText(bundle.getString("Меню.Смета подробная"));
         menuItem05.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //menuItem23(evt);
+                ProgressBar.create(frame, new ListenerFrame() {
+                    public void actionRequest(Object obj) {
+                        int prjprodID = Integer.valueOf(eProp.prjprodID.read());
+                        List<dataset.Record> prjprodList = List.of(ePrjprod.find(prjprodID));
+                        new RSmeta().parseDoc2(prjprodList);
+                    }
+                });
             }
         });
         jmenu01.add(menuItem05);
@@ -147,7 +178,13 @@ public class MainMenu {
         menuItem06.setText(bundle.getString("Меню.Счёт"));
         menuItem06.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //menuItem24(evt);
+                ProgressBar.create(frame, new ListenerFrame() {
+                    public void actionRequest(Object obj) {
+                        int prjprodID = Integer.valueOf(eProp.prjprodID.read());
+                        List<dataset.Record> prjprodList = List.of(ePrjprod.find(prjprodID));
+                        new RCheck().parseDoc1(prjprodList);
+                    }
+                });
             }
         });
         jmenu01.add(menuItem06);
@@ -158,7 +195,13 @@ public class MainMenu {
         menuItem07.setToolTipText("");
         menuItem07.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //menuItem25(evt);
+                ProgressBar.create(frame, new ListenerFrame() {
+                    public void actionRequest(Object obj) {
+                        int prjprodID = Integer.valueOf(eProp.prjprodID.read());
+                        List<dataset.Record> prjprodList = List.of(ePrjprod.find(prjprodID));
+                        new RCheck().parseDoc2(prjprodList);
+                    }
+                });
             }
         });
         jmenu01.add(menuItem07);
@@ -170,7 +213,13 @@ public class MainMenu {
         menuItem06.setToolTipText("");
         menuItem06.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //menuItem26(evt);
+                ProgressBar.create(frame, new ListenerFrame() {
+                    public void actionRequest(Object obj) {
+                        int prjprodID = Integer.valueOf(eProp.prjprodID.read());
+                        List<dataset.Record> prjprodList = List.of(ePrjprod.find(prjprodID));
+                        new ROffer().parseDoc(prjprodList);
+                    }
+                });
             }
         });
         jmenu01.add(menuItem06);
@@ -182,7 +231,9 @@ public class MainMenu {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ProgressBar.create(frame, new ListenerFrame() {
                     public void actionRequest(Object obj) {
-                       new RSpecific().parseDoc(ePrjprod.filter(progectID));
+                        int progectID = Integer.valueOf(eProp.orderID.read());
+                        List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
+                        new RSpecific().parseDoc(prjprodList);
                     }
                 });
             }
@@ -194,7 +245,13 @@ public class MainMenu {
         menuItem22.setText(bundle.getString("Меню.Расход материалов"));
         menuItem22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //menuItem11(evt);
+                ProgressBar.create(frame, new ListenerFrame() {
+                    public void actionRequest(Object obj) {
+                        int progectID = Integer.valueOf(eProp.orderID.read());
+                        List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
+                        new RMaterial().parseDoc(prjprodList);
+                    }
+                });
             }
         });
         jmenu02.add(menuItem22);
@@ -204,7 +261,13 @@ public class MainMenu {
         menuItem23.setText(bundle.getString("Меню.Задание в цех"));
         menuItem23.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //menuItem18(evt);
+                ProgressBar.create(frame, new ListenerFrame() {
+                    public void actionRequest(Object obj) {
+                        int progectID = Integer.valueOf(eProp.orderID.read());
+                        List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
+                        new RTarget().parseDoc(prjprodList);
+                    }
+                });
             }
         });
         jmenu02.add(menuItem23);
@@ -215,7 +278,13 @@ public class MainMenu {
         menuItem24.setText(bundle.getString("Меню.Смета"));
         menuItem24.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //menuItem14(evt);
+                ProgressBar.create(frame, new ListenerFrame() {
+                    public void actionRequest(Object obj) {
+                        int progectID = Integer.valueOf(eProp.orderID.read());
+                        List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
+                        new RSmeta().parseDoc1(prjprodList);
+                    }
+                });
             }
         });
         jmenu02.add(menuItem24);
@@ -225,7 +294,13 @@ public class MainMenu {
         menuItem25.setText(bundle.getString("Меню.Смета подробная"));
         menuItem25.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //menuItem13(evt);
+                ProgressBar.create(frame, new ListenerFrame() {
+                    public void actionRequest(Object obj) {
+                        int progectID = Integer.valueOf(eProp.orderID.read());
+                        List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
+                        new RSmeta().parseDoc2(prjprodList);
+                    }
+                });
             }
         });
         jmenu02.add(menuItem25);
@@ -236,7 +311,13 @@ public class MainMenu {
         menuItem26.setText(bundle.getString("Меню.Счёт"));
         menuItem26.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //menuItem15(evt);
+                ProgressBar.create(frame, new ListenerFrame() {
+                    public void actionRequest(Object obj) {
+                        int progectID = Integer.valueOf(eProp.orderID.read());
+                        List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
+                        new RCheck().parseDoc1(prjprodList);
+                    }
+                });
             }
         });
         jmenu02.add(menuItem26);
@@ -247,7 +328,13 @@ public class MainMenu {
         menuItem27.setToolTipText("");
         menuItem27.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //menuItem16(evt);
+                ProgressBar.create(frame, new ListenerFrame() {
+                    public void actionRequest(Object obj) {
+                        int progectID = Integer.valueOf(eProp.orderID.read());
+                        List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
+                        new RCheck().parseDoc2(prjprodList);
+                    }
+                });
             }
         });
         jmenu02.add(menuItem27);
@@ -259,7 +346,13 @@ public class MainMenu {
         menuItem28.setToolTipText("");
         menuItem28.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //menuItem17(evt);
+                ProgressBar.create(frame, new ListenerFrame() {
+                    public void actionRequest(Object obj) {
+                        int progectID = Integer.valueOf(eProp.orderID.read());
+                        List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
+                        new ROffer().parseDoc(prjprodList);
+                    }
+                });                
             }
         });
         jmenu02.add(menuItem28);

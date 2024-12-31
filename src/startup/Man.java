@@ -11,6 +11,7 @@ import common.eProp;
 import dataset.Conn;
 import dataset.Query;
 import dataset.Record;
+import domain.ePrjprod;
 import domain.eProject;
 import frames.Orders;
 import frames.PathToDb;
@@ -608,8 +609,8 @@ public class Man extends javax.swing.JFrame {
 
         int orderID = Integer.valueOf(eProp.prjprodID.read());
         Record projectRec = eProject.find(orderID);
-        List<Record> prjprodList =  List.of(projectRec);
-        
+        List<Record> prjprodList = List.of(projectRec);
+
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 //Задание в цех
@@ -621,7 +622,7 @@ public class Man extends javax.swing.JFrame {
     private void btn16(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn16
         int orderID = Integer.valueOf(eProp.orderID.read());
         Record projectRec = eProject.find(orderID);
-        List<Record> prjprodList =  List.of(projectRec);
+        List<Record> prjprodList = List.of(projectRec);
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 new RMaterial().parseDoc(prjprodList);
@@ -632,11 +633,13 @@ public class Man extends javax.swing.JFrame {
     private void btn17(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn17
 
         int orderID = Integer.valueOf(eProp.orderID.read());
-        Record projectRec = eProject.find(orderID);        
+        Record projectRec = eProject.find(orderID);
         ProgressBar.create(Man.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                new ROffer().parseDoc(projectRec);
+                int prjprodID = Integer.valueOf(eProp.prjprodID.read());
+                List<dataset.Record> prjprodList = List.of(ePrjprod.find(prjprodID));
+                new ROffer().parseDoc(prjprodList);
             }
         });
     }//GEN-LAST:event_btn17
