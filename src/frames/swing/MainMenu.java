@@ -1,7 +1,13 @@
 package frames.swing;
 
+import common.listener.ListenerFrame;
+import domain.ePrjprod;
+import java.util.List;
+import report.RSpecific;
+
 public class MainMenu {
 
+    private static javax.swing.JFrame frame;
     private static int prjprodID;
     private static int progectID;
     private static dataset.Record prjprodRec;
@@ -10,15 +16,15 @@ public class MainMenu {
     private static javax.swing.Icon icon;
     private static java.util.ResourceBundle bundle;
 
-    public static void init(Object men, javax.swing.JFrame frame, java.util.Locale locale) {
-        
+    public static void init(Object men, javax.swing.JFrame frm, java.util.Locale locale) {
+        frame = frm;
         icon = new javax.swing.ImageIcon(frame.getClass().getResource("/resource/img16/b058.gif"));
         bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", locale);
-        
+
         if (men instanceof javax.swing.JMenu) {
-            
+
             javax.swing.JMenu menu = (javax.swing.JMenu) men;
-                   
+
             javax.swing.JMenu jmenu01 = new javax.swing.JMenu();
             menu.add(jmenu01);
             jmenu01.setIcon(icon);
@@ -30,13 +36,13 @@ public class MainMenu {
             jmenu02.setIcon(icon);
             jmenu02.setText(bundle.getString("Меню.Заказ"));
             jmenu02.setFont(frames.UGui.getFont(0, 1));
-            
+
             add(jmenu01, jmenu02);
 
         } else if (men instanceof javax.swing.JPopupMenu) {
-            
+
             javax.swing.JPopupMenu menu = (javax.swing.JPopupMenu) men;
-                    
+
             javax.swing.JMenu jmenu01 = new javax.swing.JMenu();
             menu.add(jmenu01);
             jmenu01.setIcon(icon);
@@ -48,7 +54,7 @@ public class MainMenu {
             jmenu02.setIcon(icon);
             jmenu02.setText(bundle.getString("Меню.Заказ"));
             jmenu02.setFont(frames.UGui.getFont(0, 1));
-            
+
             add(jmenu01, jmenu02);
         }
     }
@@ -85,7 +91,11 @@ public class MainMenu {
         menuItem01.setText(bundle.getString("Меню.Спецификация"));
         menuItem01.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //menuItem19(evt);
+                ProgressBar.create(frame, new ListenerFrame() {
+                    public void actionRequest(Object obj) {
+                       new RSpecific().parseDoc(List.of(prjprodRec));
+                    }
+                });
             }
         });
         jmenu01.add(menuItem01);
@@ -170,7 +180,11 @@ public class MainMenu {
         menuItem21.setText(bundle.getString("Меню.Спецификация"));
         menuItem21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //menuItem1(evt);
+                ProgressBar.create(frame, new ListenerFrame() {
+                    public void actionRequest(Object obj) {
+                       new RSpecific().parseDoc(ePrjprod.filter(progectID));
+                    }
+                });
             }
         });
         jmenu02.add(menuItem21);
