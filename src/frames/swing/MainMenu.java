@@ -4,39 +4,63 @@ import common.eProp;
 import domain.ePrjprod;
 import domain.eProject;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.*;
-
 
 public class MainMenu {
 
-    
     private static int prjprodID;
     private static dataset.Record prjprodRec;
-    //private static List<dataset.Record> prjprodListOne;
+    
+    private static javax.swing.Icon icon;
+    private static java.util.ResourceBundle bundle;
 
     private static int progectID;
     private static dataset.Record projectRec;
-    //private static List<dataset.Record> prjprodListAll;
-    
-    public static void init(javax.swing.JFrame frame, javax.swing.JMenu mn08) {
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale);
-        javax.swing.Icon icon = new javax.swing.ImageIcon(frame.getClass().getResource("/resource/img16/b058.gif"));
+    public static void init(javax.swing.JFrame frame, Locale locale) {
+       
+        icon = new javax.swing.ImageIcon(frame.getClass().getResource("/resource/img16/b058.gif"));  
+        bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", locale);
         
-        prjprodID = Integer.valueOf(eProp.prjprodID.read());
-        prjprodRec = ePrjprod.find(prjprodID);
-        //prjprodListOne = List.of(prjprodRec);
-
-        progectID = Integer.valueOf(eProp.orderID.read());
-        projectRec = eProject.find(progectID);
-        //prjprodListAll = ePrjprod.filter(progectID);
-
+    }
+    
+    public static void addMenu(javax.swing.JMenu menu) {
+                
         javax.swing.JMenu jmenu01 = new javax.swing.JMenu();
-        mn08.add(jmenu01);
+        menu.add(jmenu01);
         jmenu01.setIcon(icon); // NOI18N
         jmenu01.setText(bundle.getString("Меню.Изделие")); // NOI18N
-        jmenu01.setFont(frames.UGui.getFont(0, 1));     
+        jmenu01.setFont(frames.UGui.getFont(0, 1));  
         
+        javax.swing.JMenu jmenu02 = new javax.swing.JMenu();
+        menu.add(jmenu02);
+        jmenu02.setIcon(icon); // NOI18N
+        jmenu02.setText(bundle.getString("Меню.Заказ")); // NOI18N
+        jmenu02.setFont(frames.UGui.getFont(0, 1)); 
+        
+        add(jmenu01, jmenu02);
+    }
+
+    public static void addPopupMenu(javax.swing.JPopupMenu menu) {
+        
+        javax.swing.JMenu jmenu01 = new javax.swing.JMenu();
+        menu.add(jmenu01);
+        jmenu01.setIcon(icon); // NOI18N
+        jmenu01.setText(bundle.getString("Меню.Изделие")); // NOI18N
+        jmenu01.setFont(frames.UGui.getFont(0, 1));  
+        
+        javax.swing.JMenu jmenu02 = new javax.swing.JMenu();
+        menu.add(jmenu02);
+        jmenu02.setIcon(icon); // NOI18N
+        jmenu02.setText(bundle.getString("Меню.Заказ")); // NOI18N
+        jmenu02.setFont(frames.UGui.getFont(0, 1));  
+        
+        add(jmenu01, jmenu02);
+    }
+    
+    public static void add(javax.swing.JMenu jmenu01, javax.swing.JMenu jmenu02) {
+
         javax.swing.JMenuItem menuItem01 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem menuItem02 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem menuItem03 = new javax.swing.JMenuItem();
@@ -45,13 +69,7 @@ public class MainMenu {
         javax.swing.JMenuItem menuItem06 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem menuItem07 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem menuItem08 = new javax.swing.JMenuItem();
-        
-        javax.swing.JMenu jmenu02 = new javax.swing.JMenu();
-        mn08.add(jmenu02);
-        jmenu02.setIcon(icon); // NOI18N
-        jmenu02.setText(bundle.getString("Меню.Заказ")); // NOI18N
-        jmenu02.setFont(frames.UGui.getFont(0, 1));
-        
+
         javax.swing.JMenuItem menuItem21 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem menuItem22 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem menuItem23 = new javax.swing.JMenuItem();
@@ -60,7 +78,7 @@ public class MainMenu {
         javax.swing.JMenuItem menuItem26 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem menuItem27 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem menuItem28 = new javax.swing.JMenuItem();
-        
+
         javax.swing.JPopupMenu.Separator sep1 = new javax.swing.JPopupMenu.Separator();
         javax.swing.JPopupMenu.Separator sep2 = new javax.swing.JPopupMenu.Separator();
         javax.swing.JPopupMenu.Separator sep3 = new javax.swing.JPopupMenu.Separator();
@@ -152,7 +170,6 @@ public class MainMenu {
             }
         });
         jmenu01.add(menuItem06);
-
 
         menuItem21.setFont(frames.UGui.getFont(0, 1));
         menuItem21.setIcon(icon); // NOI18N

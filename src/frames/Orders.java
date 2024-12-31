@@ -101,6 +101,7 @@ import report.RSpecific;
 import startup.App;
 import common.listener.ListenerReload;
 import static dataset.Query.INS;
+import frames.swing.MainMenu;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import report.RTarget;
@@ -321,8 +322,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         Object data[][] = {
             {" Конструкции", projectRec.getDbl(eProject.disc_win, 0), projectRec.getDbl(eProject.cost1_win, 0), projectRec.getDbl(eProject.cost2_win, 0)},
             {" Комплектации", projectRec.getDbl(eProject.disc_kit, 0), projectRec.getDbl(eProject.cost1_kit, 0), projectRec.getDbl(eProject.cost2_kit, 0)},
-            {" Итого за заказ", projectRec.getDbl(eProject.disc_all, 0), 
-                projectRec.getDbl(eProject.cost1_win, 0) + projectRec.getDbl(eProject.cost1_kit, 0), 
+            {" Итого за заказ", projectRec.getDbl(eProject.disc_all, 0),
+                projectRec.getDbl(eProject.cost1_win, 0) + projectRec.getDbl(eProject.cost1_kit, 0),
                 projectRec.getDbl(eProject.cost2_win, 0) + projectRec.getDbl(eProject.cost2_kit, 0)}};
 
         ((DefaultTableModel) tab5.getModel()).setDataVector(data, column);
@@ -767,7 +768,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         //}
     }
 
-     public void calculate() {
+    public void calculate() {
         try {
             int index = UGui.getIndexRec(tab1);
             UGui.stopCellEditingAndExecSql();
@@ -785,14 +786,14 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     if (w instanceof Wincalc) {
 
                         Wincalc win = (Wincalc) w;
-                        String script = prjprodRec.getStr(ePrjprod.script);                             
+                        String script = prjprodRec.getStr(ePrjprod.script);
                         win.build(script); //калкуляция                              
                         win.specific(norm_otx); //конструктив  
 
                         double numProd = prjprodRec.getDbl(ePrjprod.num);
                         square += numProd * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
                         weight += numProd * win.weight; //вес изделий
-                        
+
                         cost1_win += numProd * win.cost1; //стоимость конструкций без скидки менеджера
                         cost2_win += numProd * win.cost2; //стоимость конструкций со скидкой менеджера
                     }
@@ -4366,7 +4367,11 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
 
-        menuItem27.setVisible(false);
+        //menuItem27.setVisible(false);
+
+        MainMenu.init(this, common.eProp.locale);
+        MainMenu.addPopupMenu(ppReport); 
+
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
         //UGui.documentFilter(3, txt7);
         List.of(btnIns, btnDel).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab1)));

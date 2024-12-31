@@ -20,6 +20,7 @@ import domain.eProject;
 import frames.swing.MainMenu;
 import java.awt.Dimension;
 import java.util.List;
+import java.util.Locale;
 import report.RCheck;
 import report.RMaterial;
 import report.ROffer;
@@ -1236,7 +1237,8 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
             }
         }
 
-        MainMenu.init(this, mn08);        
+        MainMenu.init(this, common.eProp.locale);
+        MainMenu.addMenu(mn08);        
         
         if ("Nimbus".equals(lookAndFeel.getName())) {
             tb6.setPreferredSize(new Dimension(97, 28));
