@@ -1237,8 +1237,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
             }
         }
 
-        MainMenu.init(this, common.eProp.locale);
-        MainMenu.addMenu(mn08);        
+        MainMenu.init(mn08, this, common.eProp.locale);       
         
         if ("Nimbus".equals(lookAndFeel.getName())) {
             tb6.setPreferredSize(new Dimension(97, 28));

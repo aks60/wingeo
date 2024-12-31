@@ -867,30 +867,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
         buttonGroup = new javax.swing.ButtonGroup();
         ppReport = new javax.swing.JPopupMenu();
-        jmenu01 = new javax.swing.JMenu();
-        menuItem19 = new javax.swing.JMenuItem();
-        menuItem20 = new javax.swing.JMenuItem();
-        menuItem21 = new javax.swing.JMenuItem();
-        sep4 = new javax.swing.JPopupMenu.Separator();
-        menuItem22 = new javax.swing.JMenuItem();
-        menuItem23 = new javax.swing.JMenuItem();
-        sep5 = new javax.swing.JPopupMenu.Separator();
-        menuItem24 = new javax.swing.JMenuItem();
-        menuItem25 = new javax.swing.JMenuItem();
-        sep6 = new javax.swing.JPopupMenu.Separator();
-        menuItem26 = new javax.swing.JMenuItem();
-        jmenu02 = new javax.swing.JMenu();
-        menuItem27 = new javax.swing.JMenuItem();
-        menuItem11 = new javax.swing.JMenuItem();
-        menuItem18 = new javax.swing.JMenuItem();
-        sep1 = new javax.swing.JPopupMenu.Separator();
-        menuItem14 = new javax.swing.JMenuItem();
-        menuItem13 = new javax.swing.JMenuItem();
-        sep2 = new javax.swing.JPopupMenu.Separator();
-        menuItem15 = new javax.swing.JMenuItem();
-        menuItem16 = new javax.swing.JMenuItem();
-        sep3 = new javax.swing.JPopupMenu.Separator();
-        menuItem17 = new javax.swing.JMenuItem();
         ppmCrud = new javax.swing.JPopupMenu();
         mInsert = new javax.swing.JMenuItem();
         mDelit = new javax.swing.JMenuItem();
@@ -1056,189 +1032,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         tab4 = new javax.swing.JTable();
         south = new javax.swing.JPanel();
 
-        jmenu01.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
-        jmenu01.setText(bundle.getString("Меню.Изделие")); // NOI18N
-        jmenu01.setFont(frames.UGui.getFont(0,1));
-
-        menuItem19.setFont(frames.UGui.getFont(0,1));
-        menuItem19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        menuItem19.setText(bundle.getString("Меню.Спецификация")); // NOI18N
-        menuItem19.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem19(evt);
-            }
-        });
-        jmenu01.add(menuItem19);
-
-        menuItem20.setFont(frames.UGui.getFont(0,1));
-        menuItem20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        menuItem20.setText(bundle.getString("Меню.Расход материалов")); // NOI18N
-        menuItem20.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem20(evt);
-            }
-        });
-        jmenu01.add(menuItem20);
-
-        menuItem21.setFont(frames.UGui.getFont(0,1));
-        menuItem21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        menuItem21.setText(bundle.getString("Меню.Задание в цех")); // NOI18N
-        menuItem21.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem21(evt);
-            }
-        });
-        jmenu01.add(menuItem21);
-        jmenu01.add(sep4);
-
-        menuItem22.setFont(frames.UGui.getFont(0,1));
-        menuItem22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        menuItem22.setText(bundle.getString("Меню.Смета")); // NOI18N
-        menuItem22.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem22(evt);
-            }
-        });
-        jmenu01.add(menuItem22);
-
-        menuItem23.setFont(frames.UGui.getFont(0,1));
-        menuItem23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        menuItem23.setText(bundle.getString("Меню.Смета подробная")); // NOI18N
-        menuItem23.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem23(evt);
-            }
-        });
-        jmenu01.add(menuItem23);
-        jmenu01.add(sep5);
-
-        menuItem24.setFont(frames.UGui.getFont(0,1));
-        menuItem24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        menuItem24.setText(bundle.getString("Меню.Счёт")); // NOI18N
-        menuItem24.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem24(evt);
-            }
-        });
-        jmenu01.add(menuItem24);
-
-        menuItem25.setFont(frames.UGui.getFont(0,1));
-        menuItem25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        menuItem25.setText(bundle.getString("Меню.Счёт-фактура")); // NOI18N
-        menuItem25.setToolTipText("");
-        menuItem25.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem25(evt);
-            }
-        });
-        jmenu01.add(menuItem25);
-        jmenu01.add(sep6);
-
-        menuItem26.setFont(frames.UGui.getFont(0,1));
-        menuItem26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        menuItem26.setText(bundle.getString("Меню.Ком-ое предл...")); // NOI18N
-        menuItem26.setToolTipText("");
-        menuItem26.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem26(evt);
-            }
-        });
-        jmenu01.add(menuItem26);
-
-        ppReport.add(jmenu01);
-
-        jmenu02.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        jmenu02.setText(bundle.getString("Меню.Заказ")); // NOI18N
-        jmenu02.setFont(frames.UGui.getFont(0,1));
-
-        menuItem27.setFont(frames.UGui.getFont(0,1));
-        menuItem27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        menuItem27.setText(bundle.getString("Меню.Спецификация")); // NOI18N
-        menuItem27.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem27ActionPerformed(evt);
-            }
-        });
-        jmenu02.add(menuItem27);
-
-        menuItem11.setFont(frames.UGui.getFont(0,1));
-        menuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        menuItem11.setText(bundle.getString("Меню.Расход материалов")); // NOI18N
-        menuItem11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem11(evt);
-            }
-        });
-        jmenu02.add(menuItem11);
-
-        menuItem18.setFont(frames.UGui.getFont(0,1));
-        menuItem18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        menuItem18.setText(bundle.getString("Меню.Задание в цех")); // NOI18N
-        menuItem18.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem18(evt);
-            }
-        });
-        jmenu02.add(menuItem18);
-        jmenu02.add(sep1);
-
-        menuItem14.setFont(frames.UGui.getFont(0,1));
-        menuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        menuItem14.setText(bundle.getString("Меню.Смета")); // NOI18N
-        menuItem14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem14(evt);
-            }
-        });
-        jmenu02.add(menuItem14);
-
-        menuItem13.setFont(frames.UGui.getFont(0,1));
-        menuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        menuItem13.setText(bundle.getString("Меню.Смета подробная")); // NOI18N
-        menuItem13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem13(evt);
-            }
-        });
-        jmenu02.add(menuItem13);
-        jmenu02.add(sep2);
-
-        menuItem15.setFont(frames.UGui.getFont(0,1));
-        menuItem15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        menuItem15.setText(bundle.getString("Меню.Счёт")); // NOI18N
-        menuItem15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem15(evt);
-            }
-        });
-        jmenu02.add(menuItem15);
-
-        menuItem16.setFont(frames.UGui.getFont(0,1));
-        menuItem16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        menuItem16.setText(bundle.getString("Меню.Счёт-фактура")); // NOI18N
-        menuItem16.setToolTipText("");
-        menuItem16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem16(evt);
-            }
-        });
-        jmenu02.add(menuItem16);
-        jmenu02.add(sep3);
-
-        menuItem17.setFont(frames.UGui.getFont(0,1));
-        menuItem17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b058.gif"))); // NOI18N
-        menuItem17.setText(bundle.getString("Меню.Ком-ое предл...")); // NOI18N
-        menuItem17.setToolTipText("");
-        menuItem17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem17(evt);
-            }
-        });
-        jmenu02.add(menuItem17);
-
-        ppReport.add(jmenu02);
-
         mInsert.setFont(frames.UGui.getFont(1,0));
         mInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
         mInsert.setText("Добавить");
@@ -1275,6 +1068,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         north.setPreferredSize(new java.awt.Dimension(800, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -3910,75 +3704,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         }
     }//GEN-LAST:event_colorFromGlass
 
-    private void menuItem11(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem11
-        ProgressBar.create(Orders.this, new ListenerFrame() {
-            public void actionRequest(Object obj) {
-                //Расход мат.
-                Record projectRec = qProject.get(UGui.getIndexRec(tab1));
-                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
-                new RMaterial().parseDoc(prjprodList);
-            }
-        });
-    }//GEN-LAST:event_menuItem11
-
-    private void menuItem13(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem13
-        ProgressBar.create(Orders.this, new ListenerFrame() {
-            @Override
-            public void actionRequest(Object obj) {
-                //Смета подробная
-                Record projectRec = qProject.get(UGui.getIndexRec(tab1));
-                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
-                new RSmeta().parseDoc2(prjprodList);
-            }
-        });
-    }//GEN-LAST:event_menuItem13
-
-    private void menuItem14(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem14
-        ProgressBar.create(Orders.this, new ListenerFrame() {
-            @Override
-            public void actionRequest(Object obj) {
-                //Смета
-                Record projectRec = qProject.get(UGui.getIndexRec(tab1));
-                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
-                new RSmeta().parseDoc1(prjprodList);
-            }
-        });
-    }//GEN-LAST:event_menuItem14
-
-    private void menuItem15(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem15
-        ProgressBar.create(Orders.this, new ListenerFrame() {
-            @Override
-            public void actionRequest(Object obj) {
-                //Счёт
-                Record projectRec = qProject.get(UGui.getIndexRec(tab1));
-                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
-                new RCheck().parseDoc1(prjprodList);
-            }
-        });
-    }//GEN-LAST:event_menuItem15
-
-    private void menuItem16(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem16
-        ProgressBar.create(Orders.this, new ListenerFrame() {
-            @Override
-            public void actionRequest(Object obj) {
-                //Счёт-фактура
-                Record projectRec = qProject.get(UGui.getIndexRec(tab1));
-                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
-                new RCheck().parseDoc2(prjprodList);
-            }
-        });
-    }//GEN-LAST:event_menuItem16
-
-    private void menuItem17(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem17
-        ProgressBar.create(Orders.this, new ListenerFrame() {
-            @Override
-            public void actionRequest(Object obj) {
-                //Отчёт
-                new ROffer().parseDoc(qProject.get(UGui.getIndexRec(tab1)));
-            }
-        });
-    }//GEN-LAST:event_menuItem17
-
     private void mosquitToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mosquitToStvorka
         try {
             AreaSimple stvElem = (AreaSimple) winNode.com5t();
@@ -4080,89 +3805,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         }
     }//GEN-LAST:event_tabMouseClicked
 
-    private void menuItem18(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem18
-        ProgressBar.create(Orders.this, new ListenerFrame() {
-            public void actionRequest(Object obj) {
-                //Задание в цех
-                Record projectRec = qProject.get(UGui.getIndexRec(tab1));
-                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
-                new RTarget().parseDoc(prjprodList);
-            }
-        });
-    }//GEN-LAST:event_menuItem18
-
-    private void menuItem19(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem19
-        ProgressBar.create(Orders.this, new ListenerFrame() {
-            public void actionRequest(Object obj) {
-                //Спецификация
-                List<Record> prjprodList = List.of(qPrjprod.get(UGui.getIndexRec(tab2)));
-                new RSpecific().parseDoc(prjprodList);
-            }
-        });
-    }//GEN-LAST:event_menuItem19
-
-    private void menuItem20(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem20
-        ProgressBar.create(Orders.this, new ListenerFrame() {
-            public void actionRequest(Object obj) {
-                //Расход мат.
-                List<Record> prjprodList = List.of(qPrjprod.get(UGui.getIndexRec(tab2)));
-                new RMaterial().parseDoc(prjprodList);
-            }
-        });
-    }//GEN-LAST:event_menuItem20
-
-    private void menuItem21(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem21
-        ProgressBar.create(Orders.this, new ListenerFrame() {
-            public void actionRequest(Object obj) {
-                //Расход мат.
-                List<Record> prjprodList = List.of(qPrjprod.get(UGui.getIndexRec(tab2)));
-                new RTarget().parseDoc(prjprodList);
-            }
-        });
-    }//GEN-LAST:event_menuItem21
-
-    private void menuItem22(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem22
-        ProgressBar.create(Orders.this, new ListenerFrame() {
-            public void actionRequest(Object obj) {
-                //Смета
-                List<Record> prjprodList = List.of(qPrjprod.get(UGui.getIndexRec(tab2)));
-                new RSmeta().parseDoc1(prjprodList);
-            }
-        });
-    }//GEN-LAST:event_menuItem22
-
-    private void menuItem23(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem23
-        //Смета
-        List<Record> prjprodList = List.of(qPrjprod.get(UGui.getIndexRec(tab2)));
-        new RSmeta().parseDoc2(prjprodList);
-    }//GEN-LAST:event_menuItem23
-
-    private void menuItem24(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem24
-
-    }//GEN-LAST:event_menuItem24
-
-    private void menuItem25(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem25
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menuItem25
-
-    private void menuItem26(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem26
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menuItem26
-
     private void btnRepor(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRepor
         ppReport.show(north, btnReport.getX(), btnReport.getY() + 18);
     }//GEN-LAST:event_btnRepor
-
-    private void menuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem27ActionPerformed
-        ProgressBar.create(Orders.this, new ListenerFrame() {
-            public void actionRequest(Object obj) {
-                //Специфик.
-                Record projectRec = qProject.get(UGui.getIndexRec(tab1));
-                List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
-                new RSpecific().parseDoc(prjprodList);
-            }
-        });
-    }//GEN-LAST:event_menuItem27ActionPerformed
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -4203,8 +3848,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private javax.swing.JPanel centr;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jmenu01;
-    private javax.swing.JMenu jmenu02;
     private javax.swing.JLabel lab1;
     private javax.swing.JLabel lab26;
     private javax.swing.JLabel lab27;
@@ -4250,22 +3893,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private javax.swing.JLabel lab8;
     private javax.swing.JMenuItem mDelit;
     private javax.swing.JMenuItem mInsert;
-    private javax.swing.JMenuItem menuItem11;
-    private javax.swing.JMenuItem menuItem13;
-    private javax.swing.JMenuItem menuItem14;
-    private javax.swing.JMenuItem menuItem15;
-    private javax.swing.JMenuItem menuItem16;
-    private javax.swing.JMenuItem menuItem17;
-    private javax.swing.JMenuItem menuItem18;
-    private javax.swing.JMenuItem menuItem19;
-    private javax.swing.JMenuItem menuItem20;
-    private javax.swing.JMenuItem menuItem21;
-    private javax.swing.JMenuItem menuItem22;
-    private javax.swing.JMenuItem menuItem23;
-    private javax.swing.JMenuItem menuItem24;
-    private javax.swing.JMenuItem menuItem25;
-    private javax.swing.JMenuItem menuItem26;
-    private javax.swing.JMenuItem menuItem27;
     private javax.swing.JPanel north;
     private javax.swing.JPanel pan1;
     private javax.swing.JPanel pan11;
@@ -4297,12 +3924,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private javax.swing.JScrollPane scr4;
     private javax.swing.JScrollPane scr5;
     private javax.swing.JScrollPane scr6;
-    private javax.swing.JPopupMenu.Separator sep1;
-    private javax.swing.JPopupMenu.Separator sep2;
-    private javax.swing.JPopupMenu.Separator sep3;
-    private javax.swing.JPopupMenu.Separator sep4;
-    private javax.swing.JPopupMenu.Separator sep5;
-    private javax.swing.JPopupMenu.Separator sep6;
     private javax.swing.JPanel south;
     private javax.swing.JTable tab1;
     private javax.swing.JTable tab2;
@@ -4369,8 +3990,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
         //menuItem27.setVisible(false);
 
-        MainMenu.init(this, common.eProp.locale);
-        MainMenu.addPopupMenu(ppReport); 
+        MainMenu.init(ppReport, this, common.eProp.locale);
 
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
         //UGui.documentFilter(3, txt7);
