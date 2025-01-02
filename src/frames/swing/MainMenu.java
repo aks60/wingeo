@@ -207,11 +207,11 @@ public class MainMenu {
         jmenu01.add(menuItem07);
         jmenu01.add(sep6);
 
-        menuItem06.setFont(frames.UGui.getFont(0, 1));
-        menuItem06.setIcon(icon);
-        menuItem06.setText(bundle.getString("Меню.Ком-ое предл..."));
-        menuItem06.setToolTipText("");
-        menuItem06.addActionListener(new java.awt.event.ActionListener() {
+        menuItem08.setFont(frames.UGui.getFont(0, 1));
+        menuItem08.setIcon(icon);
+        menuItem08.setText(bundle.getString("Меню.Ком-ое предл..."));
+        menuItem08.setToolTipText("");
+        menuItem08.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ProgressBar.create(frame, new ListenerFrame() {
                     public void actionRequest(Object obj) {
@@ -222,7 +222,7 @@ public class MainMenu {
                 });
             }
         });
-        jmenu01.add(menuItem06);
+        jmenu01.add(menuItem08);
 
         menuItem21.setFont(frames.UGui.getFont(0, 1));
         menuItem21.setIcon(icon);
