@@ -59,7 +59,7 @@ import report.sup.RTable;
 
 public class Specifics extends javax.swing.JFrame {
 
-    private int kit = 0;
+    private int man = 0;
     private builder.Wincalc winc = new Wincalc();
     private TableFieldFilter filterTable = null;
     private ArrayList<TRecord> listTRec = new ArrayList<TRecord>();
@@ -71,9 +71,9 @@ public class Specifics extends javax.swing.JFrame {
         new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b031.gif"))
     };
 
-    public Specifics(int kit) {
+    public Specifics(int man) {
         initComponents();
-        this.kit = kit;
+        this.man = man;
         initElements();
         createMenu();
         createIwin();
@@ -89,7 +89,7 @@ public class Specifics extends javax.swing.JFrame {
         this.listTRec.addAll(winc.listSpec); //добавим спецификацию
 
         //Если открыл менеджер добавим комплекты
-        if (this.kit == 1) {
+        if (this.man == 1) {
             int prjprodID = Integer.valueOf(eProp.prjprodID.read());
             Record prjprodRec = ePrjprod.find(prjprodID);
             Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
@@ -117,7 +117,7 @@ public class Specifics extends javax.swing.JFrame {
     }
 
     public void createIwin() {
-        if (this.kit == 1) {
+        if (this.man == 1) {
             int prjprodID = Integer.valueOf(eProp.prjprodID.read());
             Record prjprodRec = ePrjprod.find(prjprodID);
             if (prjprodRec == null) {
@@ -771,7 +771,7 @@ public class Specifics extends javax.swing.JFrame {
                 tab1.getColumnModel().getColumn(i).setPreferredWidth(tab1.getColumnModel().getColumn(i).getPreferredWidth() + tab1.getColumnModel().getColumn(i).getPreferredWidth() / 3);
             }
         }
-        if (this.kit == 0) {
+        if (this.man == 0) {
             ((DefaultTableColumnModel) tab1.getColumnModel()).getColumn(22).setMinWidth(0);
             ((DefaultTableColumnModel) tab1.getColumnModel()).getColumn(22).setMaxWidth(0);
         }
