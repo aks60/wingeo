@@ -891,8 +891,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         pan11 = new javax.swing.JPanel();
         pan9 = new javax.swing.JPanel();
         pan19 = new javax.swing.JPanel();
-        lab1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         lab7 = new javax.swing.JLabel();
         txt7 = new javax.swing.JTextField();
         txt8 = new javax.swing.JTextField();
@@ -1257,7 +1255,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 .addComponent(btnF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 450, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 462, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1360,22 +1358,10 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         pan11.setPreferredSize(new java.awt.Dimension(400, 500));
         pan11.setLayout(new java.awt.BorderLayout());
 
-        pan9.setPreferredSize(new java.awt.Dimension(450, 145));
+        pan9.setPreferredSize(new java.awt.Dimension(450, 120));
         pan9.setLayout(new java.awt.BorderLayout());
 
-        pan19.setPreferredSize(new java.awt.Dimension(450, 70));
-
-        lab1.setFont(frames.UGui.getFont(0,0));
-        lab1.setText("Тип расчтета");
-        lab1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        lab1.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
-        lab1.setMinimumSize(new java.awt.Dimension(34, 14));
-        lab1.setPreferredSize(new java.awt.Dimension(86, 20));
-
-        jComboBox1.setFont(frames.UGui.getFont(0,0));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "По спецификации" }));
-        jComboBox1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        jComboBox1.setPreferredSize(new java.awt.Dimension(180, 20));
+        pan19.setPreferredSize(new java.awt.Dimension(450, 45));
 
         lab7.setFont(frames.UGui.getFont(0,0));
         lab7.setText("Вес");
@@ -1409,41 +1395,31 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             pan19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan19Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pan19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pan19Layout.createSequentialGroup()
-                        .addComponent(lab8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lab7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pan19Layout.createSequentialGroup()
-                        .addComponent(lab1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(lab8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lab7, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(122, 122, 122))
         );
         pan19Layout.setVerticalGroup(
             pan19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan19Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addGroup(pan19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lab1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pan19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lab8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lab7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pan9.add(pan19, java.awt.BorderLayout.NORTH);
 
         scr5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        scr5.setPreferredSize(new java.awt.Dimension(450, 80));
+        scr5.setPreferredSize(new java.awt.Dimension(450, 76));
 
         tab5.setFont(frames.UGui.getFont(0,0));
         tab5.setModel(new javax.swing.table.DefaultTableModel(
@@ -3796,9 +3772,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private javax.swing.JButton btnTest;
     private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JPanel centr;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel lab1;
     private javax.swing.JLabel lab26;
     private javax.swing.JLabel lab27;
     private javax.swing.JLabel lab28;
