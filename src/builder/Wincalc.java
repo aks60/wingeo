@@ -1,6 +1,5 @@
 package builder;
 
-import builder.making.TJoining;
 import builder.model.AreaRectangl;
 import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
@@ -23,10 +22,13 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import common.UCom;
+import common.eProp;
 import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
 import dataset.Record;
 import domain.eArtikl;
+import domain.ePrjprod;
+import domain.eProject;
 import domain.eSyspar1;
 import domain.eSysprof;
 import domain.eSyssize;
@@ -42,7 +44,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
-
+import javax.swing.JOptionPane;
+import static startup.App.Top;
 
 // см. алгоритм git -> 804d27409d
 public class Wincalc {
@@ -72,6 +75,7 @@ public class Wincalc {
     public ArrayList<ElemJoining> listJoin = new ArrayList<ElemJoining>(); //список соед.
     public ArrayList<Com5t> listAll = new ArrayList<Com5t>(); //список всех компонентов (area + elem)
     public ArrayList<TRecord> listSpec = new ArrayList<TRecord>(); //спецификация
+    public ArrayList<TRecord> listKit = new ArrayList<TRecord>(); //комплектация
 
     public Wincalc() {
     }
@@ -223,6 +227,10 @@ public class Wincalc {
 
     //Спецификация и тарификация 
     public void specific(boolean norm_otx) {
+        specific(norm_otx, false);
+    }
+
+    public void specific(boolean norm_otx, boolean man) {
         this.weight = 0;
         this.cost1 = 0;
         this.cost2 = 0;
@@ -249,11 +257,26 @@ public class Wincalc {
                     }
                 }
             }
+            //Если спецификация на продукт менеджера
+            if (man == true) {
+                int prjprodID = Integer.valueOf(eProp.prjprodID.read());
+                Record prjprodRec = ePrjprod.find(prjprodID);
+                Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
+                if (prjprodRec != null) {
+                    //Скидка менеджера
+                    double disc = projectRec.getDbl(eProject.disc_all) + projectRec.getDbl(eProject.disc_win);
+                    for (TRecord tRecord : this.listSpec) {
+                        tRecord.cost2 = tRecord.cost2 - disc * tRecord.cost2 / 100; //скидка менеджера
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(Top.frame, "Выберите конструкцию в списке заказов", "Предупреждение", JOptionPane.OK_OPTION);
+                }
+            }
 
             //Итоговая стоимость
             for (TRecord spc : this.listSpec) {
-                this.cost1 = (this.cost1 + spc.cost1); //общая стоимость без скидки
-                this.cost2 = (this.cost2 + spc.cost2); //общая стоимость со скидкой                                   
+                this.cost1 += spc.cost1; //общая стоимость без скидки
+                this.cost2 += spc.cost2; //общая стоимость со скидкой                                   
             }
 
             //Вес изделия
@@ -268,7 +291,7 @@ public class Wincalc {
             System.err.println("Ошибка:Wincalc.constructiv() " + e);
         }
     }
-    
+
     //Рисуем конструкцию
     public void draw() {
         try {

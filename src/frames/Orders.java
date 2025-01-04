@@ -773,7 +773,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             int index = UGui.getIndexRec(tab1);
             UGui.stopCellEditingAndExecSql();
             Record projectRec = qProject.get(UGui.getIndexRec(tab1));
-            Record currencRec = qCurrenc.stream().filter(rec -> rec.get(eCurrenc.id).equals(projectRec.get(eProject.currenc_id))).findFirst().orElse(eCurrenc.up.newRecord(Query.SEL));
+            //Record currencRec = qCurrenc.stream().filter(rec -> rec.get(eCurrenc.id).equals(projectRec.get(eProject.currenc_id))).findFirst().orElse(eCurrenc.up.newRecord(Query.SEL));
             double square = 0, weight = 0,
                     cost1_win = 0, cost1_kit = 0, //без скидки менеджера
                     cost2_win = 0, cost2_kit = 0; //со скидкой менеджера
@@ -788,7 +788,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         Wincalc win = (Wincalc) w;
                         String script = prjprodRec.getStr(ePrjprod.script);
                         win.build(script); //калкуляция                              
-                        win.specific(norm_otx); //конструктив  
+                        win.specific(norm_otx, true); //конструктив  
 
                         double numProd = prjprodRec.getDbl(ePrjprod.num);
                         square += numProd * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
@@ -808,7 +808,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 if (cost1_win != projectRec.getDbl(eProject.cost1_win)) {
                     projectRec.set(eProject.cost1_win, cost1_win); //стоимость конструкции без скидки менеджера
                 }
-                cost2_win = cost2_win - cost2_win * projectRec.getDbl(eProject.disc_win) / 100 - cost2_win * projectRec.getDbl(eProject.disc_all) / 100;
+                //cost2_win = cost2_win - cost2_win * projectRec.getDbl(eProject.disc_win) / 100 - cost2_win * projectRec.getDbl(eProject.disc_all) / 100;
                 if (cost2_win != projectRec.getDbl(eProject.cost2_win)) {
                     projectRec.set(eProject.cost2_win, cost2_win); //стоимость конструкции со скидкой менеджера
                 }

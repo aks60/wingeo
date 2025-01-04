@@ -59,7 +59,7 @@ import report.sup.RTable;
 
 public class Specifics extends javax.swing.JFrame {
 
-    private int man = 0;
+    private boolean man = false;
     private builder.Wincalc winc = new Wincalc();
     private TableFieldFilter filterTable = null;
     private ArrayList<TRecord> listTRec = new ArrayList<TRecord>();
@@ -71,31 +71,57 @@ public class Specifics extends javax.swing.JFrame {
         new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b031.gif"))
     };
 
-    public Specifics(int man) {
+    public Specifics(boolean man) {
         initComponents();
         this.man = man;
         initElements();
         createMenu();
-        createIwin();
         loadingData();
         loadingTab1(this.listTRec);
         UGui.setSelectedRow(tab1);
     }
 
     public void loadingData() {
-
         UGui.stopCellEditingAndExecSql();
         this.listTRec.clear();
-        this.listTRec.addAll(winc.listSpec); //добавим спецификацию
 
-        //Если открыл менеджер добавим комплекты
-        if (this.man == 1) {
+        //Со скидкой менеджера и комплектов
+        if (this.man == true) {
             int prjprodID = Integer.valueOf(eProp.prjprodID.read());
             Record prjprodRec = ePrjprod.find(prjprodID);
             Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
-            double discKit = projectRec.getDbl(eProject.disc_kit);
-            ArrayList<TRecord> listKit = Kitcalc.tarifficProd(winc, prjprodRec, discKit, true, false); //комплекты
-            this.listTRec.addAll(listKit);
+
+            if (prjprodRec != null) {
+                String script = prjprodRec.getStr(ePrjprod.script);
+                JsonElement je = new Gson().fromJson(script, JsonElement.class);
+                je.getAsJsonObject().addProperty("nuni", prjprodRec.getInt(ePrjprod.systree_id));
+                winc.build(je.toString());
+                winc.specific(cbx2.getSelectedIndex() == 0, true);
+                this.listTRec.addAll(winc.listSpec); //добавим спецификацию                
+
+                //Добавим комплекты
+                double discKit = projectRec.getDbl(eProject.disc_kit) + projectRec.getDbl(eProject.disc_all);
+                ArrayList<TRecord> listKit = Kitcalc.tarifficProd(winc, prjprodRec, discKit, true, false); //комплекты
+                this.listTRec.addAll(listKit);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Выберите конструкцию в списке заказов", "Предупреждение", JOptionPane.OK_OPTION);
+            }
+
+            //Без скидки менеджера и комплектов
+        } else {
+            int sysprodID = Integer.valueOf(eProp.sysprodID.read());
+            Record sysprodRec = eSysprod.find(sysprodID);
+            if (sysprodRec != null) {
+                String script = sysprodRec.getStr(eSysprod.script);
+                JsonElement je = new Gson().fromJson(script, JsonElement.class);
+                je.getAsJsonObject().addProperty("nuni", sysprodRec.getInt(eSysprod.systree_id));
+                winc.build(je.toString());
+                winc.specific(cbx2.getSelectedIndex() == 0, false);
+                this.listTRec.addAll(winc.listSpec); //добавим спецификацию                   
+            } else {
+                JOptionPane.showMessageDialog(this, "Выберите конструкцию в системе профилей", "Предупреждение", JOptionPane.OK_OPTION);
+            }
         }
     }
 
@@ -111,38 +137,15 @@ public class Specifics extends javax.swing.JFrame {
         Vector v = new Vector();
         v.add(listTRec.size() + 1);
         IntStream.range(1, vSize).forEach(action -> v.add(null));
-        v.set(v.size() - 1, UCom.format(winc.cost2 + Kitcalc.cost2, "#,##0.##")); //стоимость со скидклй              
-        dtm.addRow(v);
-        labSum.setText("Итого: " + UCom.format(winc.cost2 + Kitcalc.cost2, "#,##0.##"));
-    }
 
-    public void createIwin() {
-        if (this.man == 1) {
-            int prjprodID = Integer.valueOf(eProp.prjprodID.read());
-            Record prjprodRec = ePrjprod.find(prjprodID);
-            if (prjprodRec == null) {
-                JOptionPane.showMessageDialog(this, "Выберите конструкцию в списке заказов", "Предупреждение", JOptionPane.OK_OPTION);
-            } else {
-                String script = prjprodRec.getStr(ePrjprod.script);
-                JsonElement je = new Gson().fromJson(script, JsonElement.class);
-                je.getAsJsonObject().addProperty("nuni", prjprodRec.getInt(ePrjprod.systree_id));
-                winc.build(je.toString());
-                winc.specific(cbx2.getSelectedIndex() == 0);
-            }
-        } else {
-            int sysprodID = Integer.valueOf(eProp.sysprodID.read());
-            Record sysprodRec = eSysprod.find(sysprodID);
-            if (sysprodRec == null) {
-                JOptionPane.showMessageDialog(this, "Выберите конструкцию в системе профилей", "Предупреждение", JOptionPane.OK_OPTION);
-            } else {
-                String script = sysprodRec.getStr(eSysprod.script);
-                JsonElement je = new Gson().fromJson(script, JsonElement.class);
-                je.getAsJsonObject().addProperty("nuni", sysprodRec.getInt(eSysprod.systree_id));
-                winc.build(je.toString());
-                int norm_otx = (eGroups.find(2007).getInt(eGroups.val) == 0) ? 0 : 1; //учитывать норму отхода в себестоимости
-                winc.specific(cbx2.getSelectedIndex() == 0);
-            }
-        }
+        double total1 = (this.man == true) ? winc.cost1 + Kitcalc.cost1 : winc.cost1;
+        double total2 = (this.man == true) ? winc.cost2 + Kitcalc.cost2 : winc.cost2;
+        
+        v.set(v.size() - 12, UCom.format(this.winc.weight, "#,##0.##"));           
+        v.set(v.size() - 2, UCom.format(total1, "#,##0.##"));           
+        v.set(v.size() - 1, UCom.format(total2, "#,##0.##"));           
+        dtm.addRow(v);
+        labSum.setText("Итого: " + UCom.format(total2, "#,##0.##"));
     }
 
     public void createMenu() {
@@ -652,7 +655,6 @@ public class Specifics extends javax.swing.JFrame {
             public void actionRequest(Object obj) {
                 UGui.stopCellEditingAndExecSql();
                 int index = UGui.getIndexRec(tab1);
-                createIwin();
                 loadingData();
                 loadingTab1(Specifics.this.listTRec);
                 UGui.setSelectedIndex(tab1, index);
@@ -771,7 +773,7 @@ public class Specifics extends javax.swing.JFrame {
                 tab1.getColumnModel().getColumn(i).setPreferredWidth(tab1.getColumnModel().getColumn(i).getPreferredWidth() + tab1.getColumnModel().getColumn(i).getPreferredWidth() / 3);
             }
         }
-        if (this.man == 0) {
+        if (this.man == false) {
             ((DefaultTableColumnModel) tab1.getColumnModel()).getColumn(22).setMinWidth(0);
             ((DefaultTableColumnModel) tab1.getColumnModel()).getColumn(22).setMaxWidth(0);
         }

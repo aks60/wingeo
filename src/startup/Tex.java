@@ -930,7 +930,7 @@ private void mn51ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:ev
 private void mnSpecif(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnSpecif
     ProgressBar.create(Tex.this, new ListenerFrame() {
         public void actionRequest(Object obj) {
-            App.Specification.createFrame(Tex.this, 0);
+            App.Specification.createFrame(Tex.this, false);
         }
     });
 }//GEN-LAST:event_mnSpecif
@@ -1127,7 +1127,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     private void mn2Specif(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn2Specif
         ProgressBar.create(Tex.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                App.Specification.createFrame(Tex.this, 1);
+                App.Specification.createFrame(Tex.this, true);
             }
         });
     }//GEN-LAST:event_mn2Specif

@@ -204,7 +204,7 @@ public enum App {
                     frame = new Models();
                     break;
                 case Specification:
-                    frame = new Specifics((int) param[0]);
+                    frame = new Specifics((boolean) param[0]);
                     break;
                 case Syssize:
                     frame = new Syssize();
