@@ -51,7 +51,7 @@ public class Kitcalc {
         return null;
     }
 
-    //Список комплектов (коэф.рентабельности может не учитываться)
+    //Список комплектов (коэф.рентабельности и сложн.форм не учитываются)
     private static ArrayList<TRecord> calculate(Wincalc winc, List<Record> listKit, double discKit, boolean normOtx, boolean isNumProd) {
         init();
         //Цикл по комплектам

@@ -353,7 +353,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             eProp.orderID.write(String.valueOf(orderID));
 
             Record currencRec = qCurrenc.stream().filter(rec -> rec.get(eCurrenc.id).equals(projectRec.get(eProject.currenc_id))).findFirst().orElse(eCurrenc.up.newRecord(Query.SEL));
-            txt3.setText(currencRec.getStr(eCurrenc.name));
             txt7.setText(UCom.format(projectRec.getDbl(eProject.weight), 1));
             txt8.setText(UCom.format(projectRec.getDbl(eProject.square) / 1000000, 2));
 
@@ -803,6 +802,12 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 ArrayList<TRecord> kitList = Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true); //комплекты               
 
                 //Сохраним новые кальк.данные в проекте
+                if (weight != projectRec.getDbl(eProject.weight)) {
+                    projectRec.set(eProject.weight, weight);  //вес изделий
+                }
+                if (square != projectRec.getDbl(eProject.square)) {
+                    projectRec.set(eProject.square, square);  //площадь изделий 
+                }
                 if (cost1_win != projectRec.getDbl(eProject.cost1_win)) {
                     projectRec.set(eProject.cost1_win, cost1_win); //стоимость конструкции без скидки менеджера
                 }
@@ -888,9 +893,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         pan19 = new javax.swing.JPanel();
         lab1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        lab3 = new javax.swing.JLabel();
-        txt3 = new javax.swing.JTextField();
-        btn1 = new javax.swing.JButton();
         lab7 = new javax.swing.JLabel();
         txt7 = new javax.swing.JTextField();
         txt8 = new javax.swing.JTextField();
@@ -1375,30 +1377,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         jComboBox1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jComboBox1.setPreferredSize(new java.awt.Dimension(180, 20));
 
-        lab3.setFont(frames.UGui.getFont(0,0));
-        lab3.setText("Валюта");
-        lab3.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        lab3.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
-        lab3.setPreferredSize(new java.awt.Dimension(60, 18));
-
-        txt3.setFont(frames.UGui.getFont(0,0));
-        txt3.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt3.setFocusable(false);
-        txt3.setPreferredSize(new java.awt.Dimension(62, 20));
-
-        btn1.setText("...");
-        btn1.setToolTipText(bundle.getString("Выбрать")); // NOI18N
-        btn1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btn1.setMaximumSize(new java.awt.Dimension(21, 20));
-        btn1.setMinimumSize(new java.awt.Dimension(21, 20));
-        btn1.setName("btn1"); // NOI18N
-        btn1.setPreferredSize(new java.awt.Dimension(21, 20));
-        btn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn1ActionPerformed(evt);
-            }
-        });
-
         lab7.setFont(frames.UGui.getFont(0,0));
         lab7.setText("Вес");
         lab7.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -1423,7 +1401,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         lab8.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab8.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         lab8.setMinimumSize(new java.awt.Dimension(34, 14));
-        lab8.setPreferredSize(new java.awt.Dimension(60, 18));
+        lab8.setPreferredSize(new java.awt.Dimension(86, 18));
 
         javax.swing.GroupLayout pan19Layout = new javax.swing.GroupLayout(pan19);
         pan19.setLayout(pan19Layout);
@@ -1433,25 +1411,18 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 .addContainerGap()
                 .addGroup(pan19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pan19Layout.createSequentialGroup()
-                        .addComponent(lab3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lab8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lab7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txt7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pan19Layout.createSequentialGroup()
                         .addComponent(lab1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(122, 122, 122))))
+                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(122, 122, 122))
         );
         pan19Layout.setVerticalGroup(
             pan19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1465,10 +1436,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     .addComponent(lab8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lab7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lab3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -3181,19 +3149,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         }
     }//GEN-LAST:event_stateChanged
 
-    private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
-        DicCurrenc frame = new DicCurrenc(this, (currencRec) -> {
-
-            int index = UGui.getIndexRec(tab1);
-            if (index != -1) {
-                Record record2 = qProject.get(index);
-                record2.set(eProject.currenc_id, currencRec.get(eCurrenc.id));
-                txt3.setText(currencRec.getStr(eCurrenc.name));
-            }
-            UGui.stopCellEditing(tab1, tab2, tab4, tab3);
-        });
-    }//GEN-LAST:event_btn1ActionPerformed
-
     private void colorToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToKorobka
         try {
             if (winNode != null) {
@@ -3807,7 +3762,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn1;
     private javax.swing.JButton btn10;
     private javax.swing.JButton btn12;
     private javax.swing.JButton btn13;
@@ -3849,7 +3803,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private javax.swing.JLabel lab27;
     private javax.swing.JLabel lab28;
     private javax.swing.JLabel lab29;
-    private javax.swing.JLabel lab3;
     private javax.swing.JLabel lab30;
     private javax.swing.JLabel lab31;
     private javax.swing.JLabel lab32;
@@ -3944,7 +3897,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private javax.swing.JTextField txt27;
     private javax.swing.JTextField txt28;
     private javax.swing.JTextField txt29;
-    private javax.swing.JTextField txt3;
     private javax.swing.JTextField txt30;
     private javax.swing.JTextField txt31;
     private javax.swing.JTextField txt32;
@@ -3983,13 +3935,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1);
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
-
-        //menuItem27.setVisible(false);
-
         MainMenu.init(ppReport, this, common.eProp.locale);
-
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
-        //UGui.documentFilter(3, txt7);
+
         List.of(btnIns, btnDel).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab1)));
         winTree.getSelectionModel().addTreeSelectionListener(tse -> selectionTree());
         DefaultTreeCellRenderer rnd2 = (DefaultTreeCellRenderer) winTree.getCellRenderer();
