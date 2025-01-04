@@ -42,8 +42,8 @@ public class Kitcalc {
     public static ArrayList<TRecord> tarifficProj(Wincalc win, Record projectdRec, double discKit, boolean normOtx, boolean numProd) {
         try {
             if (projectdRec != null) {
-                List<Record> kitList = ePrjkit.filter4(projectdRec.getInt(eProject.id));
-                return calculate(win, kitList, discKit, normOtx, numProd);
+                List<Record> prjkitList = ePrjkit.filter4(projectdRec.getInt(eProject.id));
+                return calculate(win, prjkitList, discKit, normOtx, numProd);
             }
         } catch (Exception e) {
             System.err.println("ќшибка:Kitscalc.specificProj() " + e);
@@ -77,25 +77,16 @@ public class Kitcalc {
                 spcRec.anglCut1 = prjkitRec.getDbl(ePrjkit.angl2);
 
                 //“ј–»‘» ј÷»я 
-                double systreeK = 1, grpformN1 = 0; 
-                if (winc.listElem.isEmpty() == false) {
-                    Record systreeRec = eSystree.find(winc.nuni);
-                    systreeK = systreeRec.getDbl(eSystree.coef); //коэф. рентабельности
-                    grpformN1 = TTariffic.percentMarkup(winc); //процентна€ надбавка на издели€ сложной формы
-                }
-
                 Record artgrp1bRec = eGroups.find(spcRec.artiklRec.getInt(eArtikl.groups1_id));
                 Record artgrp2bRec = eGroups.find(spcRec.artiklRec.getInt(eArtikl.groups2_id));
                 double artiklK = artgrp1bRec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
                 double artiklS = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей               
-
                 spcRec.quant1 = TTariffic.formatAmount(spcRec); //количество без отхода  
                 spcRec.quant2 = (normOtx == true) ? spcRec.quant1 + (spcRec.quant1 * spcRec.waste / 100) : spcRec.quant1; //количество с отходом
                 spcRec.costprice = TTariffic.artdetCostprice(spcRec); //себест. по табл. ARTDET и прав.расч.
                 spcRec.costprice = spcRec.costprice - spcRec.costprice * artiklS / 100; //себесстоимость со скидкой 
                 spcRec.price = spcRec.costprice;
-                double value = spcRec.price * artiklK * systreeK;
-                spcRec.price = value + grpformN1 * value / 100; //цена за един.изм 
+                spcRec.price = spcRec.price * artiklK; //цена за един.изм 
                 spcRec.cost1 = spcRec.price * spcRec.quant2; //стоимость без скидки                     
                 spcRec.cost2 = spcRec.cost1 - discKit * spcRec.cost1 / 100; //стоимость со скид.менеджера
                 cost1 += spcRec.cost1;

@@ -775,8 +775,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             Record projectRec = qProject.get(UGui.getIndexRec(tab1));
             //Record currencRec = qCurrenc.stream().filter(rec -> rec.get(eCurrenc.id).equals(projectRec.get(eProject.currenc_id))).findFirst().orElse(eCurrenc.up.newRecord(Query.SEL));
             double square = 0, weight = 0,
-                    cost1_win = 0, cost1_kit = 0, //без скидки менеджера
-                    cost2_win = 0, cost2_kit = 0; //со скидкой менеджера
+                    cost1_win = 0, //без скидки менеджера
+                    cost2_win = 0; //со скидкой менеджера
             //Пересчёт заказа
             if (UGui.getIndexRec(tab1) != -1) {
 
@@ -800,24 +800,20 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 }
                 //Комплектация
                 double discKit = projectRec.getDbl(eProject.disc_kit) + projectRec.getDbl(eProject.disc_all);
-                ArrayList<TRecord> kitList = Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true); //комплекты 
-                cost1_kit = Kitcalc.cost1; //стоимость без скидки
-                cost2_kit = Kitcalc.cost2; //стоимость со скидкой               
+                ArrayList<TRecord> kitList = Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true); //комплекты               
 
                 //Сохраним новые кальк.данные в проекте
                 if (cost1_win != projectRec.getDbl(eProject.cost1_win)) {
                     projectRec.set(eProject.cost1_win, cost1_win); //стоимость конструкции без скидки менеджера
                 }
-                //cost2_win = cost2_win - cost2_win * projectRec.getDbl(eProject.disc_win) / 100 - cost2_win * projectRec.getDbl(eProject.disc_all) / 100;
                 if (cost2_win != projectRec.getDbl(eProject.cost2_win)) {
                     projectRec.set(eProject.cost2_win, cost2_win); //стоимость конструкции со скидкой менеджера
                 }
-                if (cost1_kit != projectRec.getDbl(eProject.cost1_kit)) {
-                    projectRec.set(eProject.cost1_kit, cost1_kit); //стоимость комплектации без скидки менеджера
+                if (Kitcalc.cost1 != projectRec.getDbl(eProject.cost1_kit)) {
+                    projectRec.set(eProject.cost1_kit, Kitcalc.cost1); //стоимость комплектации без скидки менеджера
                 }
-                //price2b = price2b - price2b * projectRec.getDbl(eProject.disc3) / 100 - price2b * projectRec.getDbl(eProject.disc4) / 100;
-                if (cost2_kit != projectRec.getDbl(eProject.cost2_kit)) {
-                    projectRec.set(eProject.cost2_kit, cost2_kit); //стоимость комплектации со скидкой менеджера
+                if (Kitcalc.cost2 != projectRec.getDbl(eProject.cost2_kit)) {
+                    projectRec.set(eProject.cost2_kit, Kitcalc.cost2); //стоимость комплектации со скидкой менеджера
                 }
                 projectRec.set(eProject.date5, new GregorianCalendar().getTime());
                 qProject.execsql();
