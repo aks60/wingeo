@@ -75,7 +75,7 @@ public class RMaterial {
         groupList.forEach(act -> doc.getElementsByTag("tbody").append(templateRec.get(0).html()));
 
         String date = UGui.simpleFormat.format(projectRec.get(eProject.date6));
-        double total = groupList.stream().mapToDouble(spc -> spc.cost1()).sum();
+        double total = groupList.stream().mapToDouble(rec -> rec.spc().cost1).sum();
 
         doc.getElementById("h01").text("Заказ №" + projectRec.getStr(eProject.num_ord));
         doc.getElementsByTag("thead").get(0).getElementsByTag("tr").get(0).getElementsByTag("th").get(0).html("Дата изготовления заказа: " + date + " г.");
@@ -96,9 +96,9 @@ public class RMaterial {
         tdList.get(1).text(spcRec.artikl());
         tdList.get(2).text(spcRec.name());
         tdList.get(3).text(spcRec.color(1));
-        tdList.get(4).text(spcRec.quant(2));
+        tdList.get(4).text(spcRec.quant2());
         tdList.get(5).text(spcRec.unit());
         tdList.get(6).text(spcRec.costprice());
-        tdList.get(7).text(spcRec.price2());
+        tdList.get(7).text(spcRec.price());
     }
 }

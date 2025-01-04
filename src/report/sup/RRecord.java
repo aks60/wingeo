@@ -113,24 +113,16 @@ public class RRecord {
         return UCom.format(spc.width, -1) + " x " + UCom.format(spc.height, -1);
     }
 
-    public String quant(int index) {
-        //double quant = (index == 1) ? spc.quant1 : spc.quant2;
-        //return UCom.format(3.12345, 3);
-        return (index == 1) ? UCom.format(spc.quant1, 3) : UCom.format(spc.quant2, 3);
+    public String quant2() {
+        return UCom.format(spc.quant2, 3);
     }
 
     public String costprice() {
-        if (otx) {
-            return UCom.format(spc.price, -1);
-        }
         return UCom.format(spc.costprice, -1);
     }
 
-    public String price2() {
-        if (otx) {
-            return UCom.format(spc.cost2, -1);
-        }
-        return UCom.format(spc.cost1, -1);
+    public String price() {
+        return UCom.format(spc.price, -1);
     }
 
     public static List<TRecord> groups4T(List<TRecord> listSpc) {
@@ -175,12 +167,12 @@ public class RRecord {
         return listOut;
     }
 
-    public double cost1() {
-        return spc.cost1;
+    public String cost1() {
+        return UCom.format(spc.cost1, -1);
     }
 
-    public double cost2() {
-        return spc.cost2;
+    public String cost2() {
+        return UCom.format(spc.cost2, -1);
     }
 
     public String toString() {

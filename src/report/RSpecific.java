@@ -110,11 +110,11 @@ public class RSpecific {
         doc.getElementsByTag("tbody").append(templateRec.get(0).html());
         kitList.forEach(rec -> recordAdd(templateRec, rec, doc));
 
-        double total = listSpc1.stream().mapToDouble(spc -> spc.cost1()).sum()
-                + listSpc2.stream().mapToDouble(spc -> spc.cost1()).sum()
-                + listSpc3.stream().mapToDouble(spc -> spc.cost1()).sum()
-                + listSpc5.stream().mapToDouble(spc -> spc.cost1()).sum()
-                + kitList.stream().mapToDouble(spc -> spc.cost1()).sum();
+        double total = listSpc1.stream().mapToDouble(rec -> rec.spc().cost2).sum()
+                + listSpc2.stream().mapToDouble(rec -> rec.spc().cost2).sum()
+                + listSpc3.stream().mapToDouble(rec -> rec.spc().cost2).sum()
+                + listSpc5.stream().mapToDouble(rec -> rec.spc().cost2).sum()
+                + kitList.stream().mapToDouble(rec -> rec.spc().cost2).sum();
         doc.getElementsByTag("tfoot").get(0).selectFirst("tr:eq(0)")
                 .selectFirst("td:eq(1)").text(UCom.format(total, 9));
     }
@@ -128,10 +128,10 @@ public class RSpecific {
         tdList.get(4).text(specificRec.width());
         tdList.get(5).text(specificRec.angles());
         tdList.get(6).text(specificRec.unit());
-        tdList.get(7).text(specificRec.count());
+        tdList.get(7).text(specificRec.quant2());
         tdList.get(8).text(specificRec.weight());
-        tdList.get(9).text(specificRec.costprice());
-        tdList.get(10).text(specificRec.price2());
+        tdList.get(9).text(specificRec.price());
+        tdList.get(10).text(specificRec.cost2());
         doc.getElementsByTag("tbody").append(templateRec.get(1).html());
     }
 }
