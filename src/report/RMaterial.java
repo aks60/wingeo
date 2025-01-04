@@ -98,7 +98,7 @@ public class RMaterial {
         tdList.get(3).text(spcRec.color(1));
         tdList.get(4).text(spcRec.quant(2));
         tdList.get(5).text(spcRec.unit());
-        tdList.get(6).text(spcRec.sebes2());
+        tdList.get(6).text(spcRec.costprice());
         tdList.get(7).text(spcRec.price2());
     }
 }

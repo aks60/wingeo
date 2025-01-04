@@ -119,7 +119,7 @@ public class RRecord {
         return (index == 1) ? UCom.format(spc.quant1, 3) : UCom.format(spc.quant2, 3);
     }
 
-    public String sebes2() {
+    public String costprice() {
         if (otx) {
             return UCom.format(spc.price, -1);
         }

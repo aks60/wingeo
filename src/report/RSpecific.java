@@ -66,10 +66,11 @@ public class RSpecific {
             String script = prjprodRec.getStr(ePrjprod.script);
             if (script.isEmpty() == false) {
                 winc.build(script);
-                winc.specific(true);
+                winc.specific(true, true);
                 spcList.addAll(winc.listSpec); //добавим спецификацию
             }
-            List<TRecord> list = Kitcalc.tarifficProd(winc, prjprodRec, 0, true, false); //добавим комплекты
+            double discKit = projectRec.getDbl(eProject.disc_kit) + projectRec.getDbl(eProject.disc_all);
+            List<TRecord> list = Kitcalc.tarifficProd(winc, prjprodRec, discKit, true, false); //добавим комплекты
             list.forEach(rec -> kitList.add(new RRecord(rec)));
         }
 
@@ -83,7 +84,7 @@ public class RSpecific {
         List<RRecord> listSpc3 = RRecord.groups4R(listSpc.stream().filter(rec -> rec.spc().artiklRec.getInt(eArtikl.level1) == 3).collect(toList()));
         List<RRecord> listSpc5 = listSpc.stream().filter(rec -> rec.spc().artiklRec.getInt(eArtikl.level1) == 5).collect(toList());
 
-        doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord));
+        doc.getElementById("h01").text("Заказ №" + projectRec.getStr(eProject.num_ord));
         doc.getElementsByTag("thead").get(0).getElementsByTag("tr").get(0).getElementsByTag("th").get(0).html("Дата: " + date + " г.");
 
         Elements templateRec = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
@@ -129,7 +130,7 @@ public class RSpecific {
         tdList.get(6).text(specificRec.unit());
         tdList.get(7).text(specificRec.count());
         tdList.get(8).text(specificRec.weight());
-        tdList.get(9).text(specificRec.sebes2());
+        tdList.get(9).text(specificRec.costprice());
         tdList.get(10).text(specificRec.price2());
         doc.getElementsByTag("tbody").append(templateRec.get(1).html());
     }
