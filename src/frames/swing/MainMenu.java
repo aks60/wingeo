@@ -116,7 +116,7 @@ public class MainMenu {
                     public void actionRequest(Object obj) {
                         int prjprodID = Integer.valueOf(eProp.prjprodID.read());
                         List<dataset.Record> prjprodList = List.of(ePrjprod.find(prjprodID));
-                        new RMaterial().parseDoc(prjprodList);
+                        new RMaterial().parseDoc1(prjprodList);
                     }
                 });
             }
@@ -250,7 +250,7 @@ public class MainMenu {
                     public void actionRequest(Object obj) {
                         int progectID = Integer.valueOf(eProp.orderID.read());
                         List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
-                        new RMaterial().parseDoc(prjprodList);
+                        new RMaterial().parseDoc2(prjprodList);
                     }
                 });
             }

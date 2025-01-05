@@ -625,7 +625,7 @@ public class Man extends javax.swing.JFrame {
         List<Record> prjprodList = List.of(projectRec);
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                new RMaterial().parseDoc(prjprodList);
+                new RMaterial().parseDoc2(prjprodList);
             }
         });
     }//GEN-LAST:event_btn16

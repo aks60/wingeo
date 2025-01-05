@@ -25,7 +25,7 @@ public class RMaterial {
 
     private static int npp = 0;
 
-    public void parseDoc(List<Record> prjprodList) {
+    public void parseDoc1(List<Record> prjprodList) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Material.html");
             File tempFile = File.createTempFile("report", "html");
@@ -36,7 +36,30 @@ public class RMaterial {
             Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
 
             //Заполним отчёт
-            loadDoc(projectRec, prjprodList, doc);
+            loadDoc1(projectRec, prjprodList, doc);
+
+            String str = doc.html();
+            str = new String(str.getBytes("windows-1251"));
+            RTable.write(str);
+            ExecuteCmd.documentType(null);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:RMaterial.parseDoc1()" + e);
+        }
+    }
+    
+    public void parseDoc2(List<Record> prjprodList) {
+        try {
+            InputStream in = getClass().getResourceAsStream("/resource/report/Material.html");
+            File tempFile = File.createTempFile("report", "html");
+            in.transferTo(new FileOutputStream(tempFile));
+            Document doc = Jsoup.parse(tempFile);
+
+            Record prjprodRec = prjprodList.get(0);
+            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
+
+            //Заполним отчёт
+            loadDoc2(projectRec, prjprodList, doc);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
@@ -48,10 +71,11 @@ public class RMaterial {
         }
     }
 
-    private static void loadDoc(Record projectRec, List<Record> prjprodList, Document doc) {
+    private static void loadDoc1(Record projectRec, List<Record> prjprodList, Document doc) {
         npp = 0;
         List<RRecord> spcList = new ArrayList<RRecord>();
-        List<TRecord> winList = new ArrayList<TRecord>();      
+        List<TRecord> winList = new ArrayList<TRecord>();
+        List<TRecord> kitList = new ArrayList<TRecord>();
         Wincalc winc = new Wincalc();
 
         for (Record prjprodRec : prjprodList) {
@@ -60,11 +84,55 @@ public class RMaterial {
                 winc.build(script); //калкуляция 
                 winc.specific(true, true);
                 winList.addAll(winc.listSpec);
-            }            
+                kitList.addAll(Kitcalc.tarifficProd(winc, prjprodRec, 0, true, true)); //добавим комплекты
+            }
+        }
+        double discKit = projectRec.getDbl(eProject.disc_kit) + projectRec.getDbl(eProject.disc_all);
+        Kitcalc.tarifficFree(winc, projectRec, discKit, true, true); //добавим комплекты
+
+        winList.forEach(rec -> spcList.add(new RRecord(rec)));
+        kitList.forEach(el -> spcList.add(new RRecord(el)));
+        Kitcalc.kitList.forEach(rec -> spcList.add(new RRecord(rec)));
+
+        List<RRecord> groupList = RRecord.groups4R(spcList);
+
+        Elements templateRec = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
+        groupList.forEach(act -> doc.getElementsByTag("tbody").append(templateRec.get(0).html()));
+
+        String date = UGui.simpleFormat.format(projectRec.get(eProject.date6));
+        double total = groupList.stream().mapToDouble(rec -> rec.spc().cost1).sum();
+
+        doc.getElementById("h01").text("Заказ №" + projectRec.getStr(eProject.num_ord));
+        doc.getElementsByTag("thead").get(0).getElementsByTag("tr").get(0).getElementsByTag("th").get(0).html("Дата изготовления заказа: " + date + " г.");
+
+        doc.getElementsByTag("tbody").get(0).getElementsByTag("tr").remove(1);
+        Elements trList = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
+
+        for (int i = 0; i < groupList.size(); i++) {
+            recordAdd(trList.get(i).getElementsByTag("td"), groupList.get(i));
+        }
+
+        doc.getElementsByTag("tfoot").get(0).selectFirst("tr:eq(0)")
+                .selectFirst("td:eq(1)").text(UCom.format(total + Kitcalc.cost1, 9));
+    }
+    
+    private static void loadDoc2(Record projectRec, List<Record> prjprodList, Document doc) {
+        npp = 0;
+        List<RRecord> spcList = new ArrayList<RRecord>();
+        List<TRecord> winList = new ArrayList<TRecord>();
+        Wincalc winc = new Wincalc();
+
+        for (Record prjprodRec : prjprodList) {
+            String script = prjprodRec.getStr(ePrjprod.script);
+            if (script.isEmpty() == false) {
+                winc.build(script); //калкуляция 
+                winc.specific(true, true);
+                winList.addAll(winc.listSpec);
+            }
         }
         double discKit = projectRec.getDbl(eProject.disc_kit) + projectRec.getDbl(eProject.disc_all);
         Kitcalc.tarifficProj(winc, projectRec, discKit, true, true); //добавим комплекты
-        
+
         winList.forEach(rec -> spcList.add(new RRecord(rec)));
         Kitcalc.kitList.forEach(rec -> spcList.add(new RRecord(rec)));
 

@@ -26,6 +26,19 @@ public class Kitcalc {
     }
 
     //Комплекты конструкции
+    public static ArrayList<TRecord> tarifficFree(Wincalc win, Record projectdRec, double discKit, boolean normOtx, boolean numProd) {
+        try {
+            if (projectdRec != null) {
+                List<Record> prjkitList = ePrjkit.filter5(projectdRec.getInt(eProject.id));
+                return calculate(win, prjkitList, discKit, normOtx, numProd);
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:Kitscalc.tarifficFree() " + e);
+        }
+        return null;
+    }
+    
+    //Комплекты конструкции
     public static ArrayList<TRecord> tarifficProd(Wincalc win, Record prjprodRec, double discKit, boolean normOtx, boolean numProd) {
         try {
             if (prjprodRec != null) {

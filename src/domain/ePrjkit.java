@@ -78,11 +78,18 @@ public enum ePrjkit implements Field {
         return new Query(values()).select(up, "where", prjprod_id, "=", prjprodID);
     }
     
-    public static List<Record> filter4(Integer prjprodID) {
+    public static List<Record> filter4(Integer projectID) {
         if (Query.conf.equals("NET")) {
-            return data().stream().filter(rec -> prjprodID.equals(rec.get(project_id))).collect(Collectors.toList());
+            return data().stream().filter(rec -> projectID.equals(rec.get(project_id))).collect(Collectors.toList());
         }
-        return new Query(values()).select(up, "where", prjprod_id, "=", prjprodID);
+        return new Query(values()).select(up, "where", prjprod_id, "=", projectID);
+    }
+    
+    public static List<Record> filter5(Integer projectID) {
+        if (Query.conf.equals("NET")) {
+            return data().stream().filter(rec -> projectID.equals(rec.get(project_id)) && rec.get(prjprod_id) == null).collect(Collectors.toList());
+        }
+        return new Query(values()).select(up, "where", project_id, "=", projectID, " and prjprod_id is null");
     }
 
     public String toString() {
