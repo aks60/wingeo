@@ -224,21 +224,22 @@ public class MainMenu {
         });
         jmenu01.add(menuItem08);
 
-        menuItem21.setFont(frames.UGui.getFont(0, 1));
-        menuItem21.setIcon(icon);
-        menuItem21.setText(bundle.getString("Меню.Спецификация"));
-        menuItem21.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ProgressBar.create(frame, new ListenerFrame() {
-                    public void actionRequest(Object obj) {
-                        int progectID = Integer.valueOf(eProp.orderID.read());
-                        List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
-                        new RSpecific().parseDoc(prjprodList);
-                    }
-                });
-            }
-        });
-        jmenu02.add(menuItem21);
+
+//        menuItem21.setFont(frames.UGui.getFont(0, 1));
+//        menuItem21.setIcon(icon);
+//        menuItem21.setText(bundle.getString("Меню.Спецификация"));
+//        menuItem21.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                ProgressBar.create(frame, new ListenerFrame() {
+//                    public void actionRequest(Object obj) {
+//                        int progectID = Integer.valueOf(eProp.orderID.read());
+//                        List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
+//                        new RSpecific().parseDoc(prjprodList);
+//                    }
+//                });
+//            }
+//        });
+//        jmenu02.add(menuItem21);
 
         menuItem22.setFont(frames.UGui.getFont(0, 1));
         menuItem22.setIcon(icon);

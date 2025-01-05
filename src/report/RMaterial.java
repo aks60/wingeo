@@ -51,25 +51,24 @@ public class RMaterial {
     private static void loadDoc(Record projectRec, List<Record> prjprodList, Document doc) {
         npp = 0;
         List<RRecord> spcList = new ArrayList<RRecord>();
-        List<TRecord> winSpc = new ArrayList<TRecord>();
-        List<TRecord> kitSpc = new ArrayList<TRecord>();
+        List<TRecord> winList = new ArrayList<TRecord>();      
         Wincalc winc = new Wincalc();
 
         for (Record prjprodRec : prjprodList) {
             String script = prjprodRec.getStr(ePrjprod.script);
             if (script.isEmpty() == false) {
                 winc.build(script); //калкул€ци€ 
-                winc.specific(true);
-                winSpc.addAll(winc.listSpec);
-            }
-            kitSpc = Kitcalc.tarifficProd(winc, prjprodRec, 0, true, true); //добавим комплекты
+                winc.specific(true, true);
+                winList.addAll(winc.listSpec);
+            }            
         }
-        winSpc.forEach(el -> spcList.add(new RRecord(el)));
-        kitSpc.forEach(el -> spcList.add(new RRecord(el)));
+        double discKit = projectRec.getDbl(eProject.disc_kit) + projectRec.getDbl(eProject.disc_all);
+        Kitcalc.tarifficProj(winc, projectRec, discKit, true, true); //добавим комплекты
+        
+        winList.forEach(rec -> spcList.add(new RRecord(rec)));
+        Kitcalc.kitList.forEach(rec -> spcList.add(new RRecord(rec)));
 
         List<RRecord> groupList = RRecord.groups4R(spcList);
-        //int npp = 0;
-        //groupList.forEach(rec -> rec.id());
 
         Elements templateRec = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
         groupList.forEach(act -> doc.getElementsByTag("tbody").append(templateRec.get(0).html()));
@@ -98,7 +97,7 @@ public class RMaterial {
         tdList.get(3).text(spcRec.color(1));
         tdList.get(4).text(spcRec.quant2());
         tdList.get(5).text(spcRec.unit());
-        tdList.get(6).text(spcRec.costprice());
-        tdList.get(7).text(spcRec.price());
+        tdList.get(6).text(spcRec.price());
+        tdList.get(7).text(spcRec.cost1());
     }
 }
