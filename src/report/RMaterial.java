@@ -88,11 +88,9 @@ public class RMaterial {
             }
         }
         double discKit = projectRec.getDbl(eProject.disc_kit) + projectRec.getDbl(eProject.disc_all);
-        Kitcalc.tarifficFree(winc, projectRec, discKit, true, true); //добавим комплекты
 
         winList.forEach(rec -> spcList.add(new RRecord(rec)));
-        kitList.forEach(el -> spcList.add(new RRecord(el)));
-        Kitcalc.kitList.forEach(rec -> spcList.add(new RRecord(rec)));
+        kitList.forEach(rec -> spcList.add(new RRecord(rec)));
 
         List<RRecord> groupList = RRecord.groups4R(spcList);
 
@@ -113,7 +111,7 @@ public class RMaterial {
         }
 
         doc.getElementsByTag("tfoot").get(0).selectFirst("tr:eq(0)")
-                .selectFirst("td:eq(1)").text(UCom.format(total + Kitcalc.cost1, 9));
+                .selectFirst("td:eq(1)").text(UCom.format(total, 9));
     }
     
     private static void loadDoc2(Record projectRec, List<Record> prjprodList, Document doc) {

@@ -88,18 +88,32 @@ public enum eSystree implements Field {
     }
 
     //Система профилей
-    public static String systemProfile(int ID) {
-        String ret = "";
+    public static String nameSysprof(int ID) {
+        String str = "";
+        if (Query.conf.equals("NET")) {
+            try {
+
+                Record systreeRec = find(ID);
+                while (systreeRec.getInt(id) != systreeRec.getInt(parent_id)) {
+                    str = systreeRec.getInt(name) + "/" + str;
+                    systreeRec = find(systreeRec.getInt(parent_id));
+                }
+                return str;
+            } catch (Exception e) {
+                System.err.println(e);
+                return "";
+            }
+        }
         try {
             Statement statement = Conn.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet recordset = statement.executeQuery("with recursive tree as (select * from systree where id = "
                     + ID + " union all select * from systree a join tree b on a.id = b.parent_id and b.id != b.parent_id) select * from tree");
             recordset.next();
             while (recordset.next()) {
-                if (ret.isEmpty() == true) {
-                    ret = recordset.getString("name");
+                if (str.isEmpty() == true) {
+                    str = recordset.getString("name");
                 } else {
-                    ret = recordset.getString("name") + " / " + ret;
+                    str = recordset.getString("name") + "/" + str;
                 }
             }
             statement.close();
@@ -107,7 +121,7 @@ public enum eSystree implements Field {
         } catch (SQLException e) {
             System.err.println(e);
         }
-        return ret;
+        return str;
     }
 
     public String toString() {

@@ -291,7 +291,7 @@ public class RSmeta {
             trRec.get(7).getElementsByTag("td").get(1).text(String.valueOf(numProd));
             trRec.get(8).getElementsByTag("td").get(1).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
             trRec.get(9).getElementsByTag("td").get(1).text(UCom.format(winc.weight, 2));
-            trRec.get(10).getElementsByTag("td").get(1).text(UCom.format(winc.cost2 * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));            
+            trRec.get(10).getElementsByTag("td").get(1).text(UCom.format(winc.cost1 * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));            
             trRec.get(11).getElementsByTag("td").get(1).text(UCom.format(numProd * winc.cost1, 9));
             trRec.get(12).getElementsByTag("td").get(1).text(UCom.format(numProd * (winc.cost2 - discWin * winc.cost2 / 100), 9)); //со скидкой менеджера
 
@@ -318,7 +318,7 @@ public class RSmeta {
                 tdRec.get(3).text(eColor.find(prjkitRec.colorID1).getStr(eColor.name));
                 tdRec.get(4).text(UCom.dimension(prjkitRec.width, prjkitRec.height, prjkitRec.unit));
                 tdRec.get(5).text(UCom.format(prjkitRec.quant2, 2));
-                tdRec.get(6).text(UCom.format(prjkitRec.price - discKit * prjkitRec.price / 100, 2));
+                tdRec.get(6).text(UCom.format(prjkitRec.price, 2));
                 tdRec.get(7).text(UCom.format(prjkitRec.cost2, 2));
             }
 
@@ -338,7 +338,7 @@ public class RSmeta {
                 Record prjprodRec = prjprodList.get(i);
                 Wincalc winc = wincList.get(i);
                 int numProd = prjprodRec.getInt(ePrjprod.num);
-                double priceMan = winc.cost2 - discWin * winc.cost2 / 100; //со скидкой менеджера
+                //double priceMan = winc.cost2 - discWin * winc.cost2 / 100; //со скидкой менеджера
                 Elements tdRec = trList.get(i).getElementsByTag("td");
                 
                 tdRec.get(0).text(String.valueOf(i + 1));
@@ -348,9 +348,9 @@ public class RSmeta {
                 tdRec.get(4).text(UCom.format(winc.height(), 2));
                 tdRec.get(5).text(String.valueOf(numProd));
                 tdRec.get(6).text(UCom.format(winc.cost2, 2));                
-                tdRec.get(7).text(UCom.format(numProd * priceMan, 2));
+                tdRec.get(7).text(UCom.format(numProd * winc.cost2, 2));
                 
-                total += numProd * priceMan;
+                total += numProd * winc.cost2;
             }
             Elements tdFoot = tabElem.getElementsByTag("tfoot").get(0).getElementsByTag("td");
             tdFoot.get(1).text(UCom.format(projectRec.getDbl(eProject.cost2_win), 2));
@@ -379,7 +379,7 @@ public class RSmeta {
                 tdRec.get(3).text(eColor.find(prjkitRec.colorID1).getStr(eColor.name));
                 tdRec.get(4).text(UCom.dimension(prjkitRec.width, prjkitRec.height, prjkitRec.unit));
                 tdRec.get(5).text(UCom.format(prjkitRec.quant2, 2));
-                tdRec.get(6).text(UCom.format(prjkitRec.price - discKit * prjkitRec.price / 100, 2));
+                tdRec.get(6).text(UCom.format(prjkitRec.price, 2));
                 tdRec.get(7).text(UCom.format(prjkitRec.cost2, 2));
                 
                 total += prjkitRec.cost2;

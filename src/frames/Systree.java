@@ -180,13 +180,17 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }
 
     public final void loadingModel() {
+        String str = eSystree.nameSysprof(135);
+        //setText(txt8, str);
+        System.out.println(str);
+        
         ((DefaultTreeCellEditor) sysTree.getCellEditor()).addCellEditorListener(new CellEditorListener() {
 
             public void editingStopped(ChangeEvent e) {
-                String str = ((DefaultTreeCellEditor) sysTree.getCellEditor()).getCellEditorValue().toString();
+                //String str = ((DefaultTreeCellEditor) sysTree.getCellEditor()).getCellEditorValue().toString(); 
+                //setText(txt8, str);
                 sysNode.rec().set(eSystree.name, str);
                 sysNode.setUserObject(str);
-                setText(txt8, str);
                 qSystree.update(sysNode.rec()); //сохраним в базе
             }
 
@@ -274,6 +278,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         });
 
+        //String str = eSystree.systemProfile(Systree.this.systreeID);
+        
         rsvSystree = new TableFieldFormat(sysTree) {
 
             public Set<JTextField> set = new HashSet<JTextField>();
@@ -300,7 +306,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 set.forEach(s -> s.setText(null));
             }
         };
-        rsvSystree.add(eSystree.name, txt8);
+        //rsvSystree.add(eSystree.name, txt8);
         rsvSystree.add(eSystree.glas, txt1);
         rsvSystree.add(eSystree.depth, txt2);
         rsvSystree.add(eSystree.col1, txt3);

@@ -129,7 +129,7 @@ public class ROffer {
 
                     trRec.get(0).getElementsByTag("td").get(0).text("Изделие № " + (i + 1));
                     imgList.get(i).attr("src", "C:\\Users\\All Users\\Avers\\Okna\\img" + (i + 1) + ".gif");
-                    trRec.get(2).getElementsByTag("td").get(1).text(eSystree.systemProfile(prjprodRec.getInt(ePrjprod.systree_id)));
+                    trRec.get(2).getElementsByTag("td").get(1).text(eSystree.nameSysprof(prjprodRec.getInt(ePrjprod.systree_id)));
                     trRec.get(3).getElementsByTag("td").get(1).text(fname);
                     trRec.get(4).getElementsByTag("td").get(1).text(gname);
                     trRec.get(5).getElementsByTag("td").get(1).text(eColor.find(winc.colorID1).getStr(eColor.name));
