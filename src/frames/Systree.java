@@ -304,7 +304,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 set.forEach(s -> s.setText(null));
             }
         };
-        //rsvSystree.add(eSystree.name, txt8);
         rsvSystree.add(eSystree.glas, txt1);
         rsvSystree.add(eSystree.depth, txt2);
         rsvSystree.add(eSystree.col1, txt3);
