@@ -107,8 +107,8 @@ public class RCheck {
                     trList.get(2).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.addr_phone));
                 } else {
                     trList.get(1).getElementsByTag("td").get(1)
-                            .text(prjpart1Rec.getStr(ePrjpart.addr_leve1) + " " + prjpart1Rec.getStr(ePrjpart.addr_leve2));
-                    trList.get(2).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.addr_phone));
+                            .text(prjpart1Rec.getStr(ePrjpart.org_leve1) + " " + prjpart1Rec.getStr(ePrjpart.org_leve2));
+                    trList.get(2).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.org_phone));
                 }
                 trList.get(4).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.bank_inn));
                 trList.get(5).getElementsByTag("td").get(1).text(prjpart1Rec.getStr(ePrjpart.bank_rs));
@@ -273,7 +273,7 @@ public class RCheck {
             //—≈ ÷»ﬂ π4
             {
                 Elements trList = doc.getElementById("tab5").getElementsByTag("tbody").get(0).getElementsByTag("tr");
-                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total + Kitcalc.cost2, 2));
+                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(total + Kitcalc.cost2, 9) + " Û·.");
                 trList.get(1).getElementsByTag("td").get(0).text(UMon.inwords(total + Kitcalc.cost2));
             }
 

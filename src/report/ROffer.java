@@ -41,10 +41,10 @@ public class ROffer {
             Document doc = Jsoup.parse(tempFile);
 
             Record prjprodRec = prjprodList.get(0);
-            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id)); 
-            
+            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
+
             //Заполним отчёт
-            loadDoc(projectRec, doc);       
+            loadDoc(projectRec, doc);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
@@ -149,8 +149,8 @@ public class ROffer {
                 trList.get(0).getElementsByTag("td").get(2).text(UCom.format(square / 1000000, 9) + " кв.м.");
                 trList.get(1).getElementsByTag("td").get(2).text(UCom.format(projectRec.getDbl(eProject.cost1_win), 9));
                 trList.get(2).getElementsByTag("td").get(2).text(UCom.format(projectRec.getDbl(eProject.cost2_win), 9));
-                trList.get(3).getElementsByTag("td").get(2).
-                        text(UCom.format(projectRec.getDbl(eProject.cost2_win) + projectRec.getDbl(eProject.cost2_kit), 9));
+                trList.get(3).getElementsByTag("td").get(2).text(UCom.format(projectRec.getDbl(eProject.cost2_win)
+                        + projectRec.getDbl(eProject.cost2_kit), 9));
             }
 
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");
