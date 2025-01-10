@@ -180,9 +180,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }
 
     public final void loadingModel() {
-        String str5 = eSystree.nameSysprof(135);
-        System.out.println(str5);
-        
+       
         ((DefaultTreeCellEditor) sysTree.getCellEditor()).addCellEditorListener(new CellEditorListener() {
 
             public void editingStopped(ChangeEvent e) {

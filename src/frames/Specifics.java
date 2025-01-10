@@ -89,9 +89,9 @@ public class Specifics extends javax.swing.JFrame {
         if (this.man == true) {
             int prjprodID = Integer.valueOf(eProp.prjprodID.read());
             Record prjprodRec = ePrjprod.find(prjprodID);
-            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
-
+            
             if (prjprodRec != null) {
+                Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
                 String script = prjprodRec.getStr(ePrjprod.script);
                 JsonElement je = new Gson().fromJson(script, JsonElement.class);
                 je.getAsJsonObject().addProperty("nuni", prjprodRec.getInt(ePrjprod.systree_id));

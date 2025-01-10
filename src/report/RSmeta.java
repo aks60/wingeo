@@ -15,6 +15,7 @@ import domain.eColor;
 import domain.ePrjpart;
 import domain.ePrjprod;
 import domain.eProject;
+import domain.eSystree;
 import domain.eSysuser;
 import enums.Type;
 import frames.UGui;
@@ -283,7 +284,7 @@ public class RSmeta {
             Elements trRec = tabList.get(indexProd).getElementsByTag("tbody").get(0).getElementsByTag("tr");
 
             trRec.get(1).getElementsByTag("td").get(1).text(prjprodRec.getStr(ePrjprod.name));
-            trRec.get(2).getElementsByTag("td").get(1).text(prjprodRec.getStr(ePrjprod.name));
+            trRec.get(2).getElementsByTag("td").get(1).text(eSystree.nameSysprof(prjprodRec.getInt(ePrjprod.systree_id)));
             trRec.get(3).getElementsByTag("td").get(1).text(UCom.format(winc.width() / 1000, 3) + " x " + UCom.format(winc.height() / 1000, 3));
             trRec.get(4).getElementsByTag("td").get(1).text(glassList.get(0).artiklRecAn.getStr(eArtikl.code));
             trRec.get(5).getElementsByTag("td").get(1).text("");

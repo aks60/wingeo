@@ -94,6 +94,7 @@ public enum eSystree implements Field {
             try {
 
                 Record systreeRec = find(ID);
+                systreeRec = find(systreeRec.getInt(parent_id));
                 while (systreeRec.getInt(id) != systreeRec.getInt(parent_id)) {
                     str = systreeRec.getStr(name) + "/" + str;
                     systreeRec = find(systreeRec.getInt(parent_id));
