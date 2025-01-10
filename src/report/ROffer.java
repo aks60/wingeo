@@ -70,7 +70,7 @@ public class ROffer {
             double discPrj = projectRec.getDbl(eProject.disc_all, 0);
             double price2a = projectRec.getDbl(eProject.cost2_win, 0) - discPrj * projectRec.getDbl(eProject.cost2_win, 0) / 100;
             double price2b = projectRec.getDbl(eProject.cost2_kit, 0) - discPrj * projectRec.getDbl(eProject.cost2_kit, 0) / 100;
-            
+
             doc.getElementById("h01").text("Коммерческое предложение от " + UGui.DateToStr(projectRec.get(eProject.date4)));
 
             //СЕКЦИЯ №1
@@ -115,31 +115,36 @@ public class ROffer {
 
                     Record prjprodRec = prjprodList.get(i);
                     int numProd = prjprodRec.getInt(ePrjprod.num);
-                    Elements trRec = tabList.get(i).getElementsByTag("tbody").get(0).getElementsByTag("tr");
+
+                    Elements trList = tabList.get(i).getElementsByTag("tr");
                     Wincalc winc = wincList.get(i);
                     square = square + winc.root.area.getGeometryN(0).getArea();
 
-                    AreaStvorka area5e = (AreaStvorka) UCom.filter(winc.listArea, Type.STVORKA).get(0);
-                    AreaStvorka stv = (area5e != null) ? ((AreaStvorka) area5e) : null;
-                    int furniture_id = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
-                    String fname = (furniture_id != -1) ? eFurniture.find(furniture_id).getStr(eFurniture.name) : "";
+                    String fname = "";
+                    List stvList = UCom.filter(winc.listArea, Type.STVORKA);
+                    if (stvList.isEmpty() == false) {
+                        AreaStvorka stv = ((AreaStvorka) stvList.get(0));
+                        int furniture_id = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
+                        fname = (furniture_id != -1) ? eFurniture.find(furniture_id).getStr(eFurniture.name) : "";
+                    }
                     ElemSimple elemGlass = (ElemSimple) UCom.filter(winc.listElem, Type.GLASS).get(0);
                     String gname = (elemGlass != null) ? elemGlass.artiklRec.getStr(eArtikl.code) + " - " + elemGlass.artiklRec.getStr(eArtikl.name) : "";
 
-                    trRec.get(0).getElementsByTag("td").get(0).text("Изделие № " + (i + 1));
                     imgList.get(i).attr("src", "C:\\Users\\All Users\\Avers\\Okna\\img" + (i + 1) + ".gif");
-                    trRec.get(2).getElementsByTag("td").get(1).text(eSystree.nameSysprof(prjprodRec.getInt(ePrjprod.systree_id)));
-                    trRec.get(3).getElementsByTag("td").get(1).text(fname);
-                    trRec.get(4).getElementsByTag("td").get(1).text(gname);
-                    trRec.get(5).getElementsByTag("td").get(1).text(eColor.find(winc.colorID1).getStr(eColor.name));
-                    trRec.get(6).getElementsByTag("td").get(1).text(eColor.find(winc.colorID2).getStr(eColor.name));
-                    trRec.get(7).getElementsByTag("td").get(1).text(eColor.find(winc.colorID3).getStr(eColor.name));
-                    trRec.get(8).getElementsByTag("td").get(1).text(winc.width() + "x" + winc.height());
-                    trRec.get(9).getElementsByTag("td").get(1).text(prjprodRec.getStr(ePrjprod.num));
-                    trRec.get(10).getElementsByTag("td").get(1).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
-                    trRec.get(11).getElementsByTag("td").get(1).text(UCom.format(winc.weight, 2));
-                    trRec.get(12).getElementsByTag("td").get(1).text(UCom.format(numProd * winc.cost1, 9));
-                    trRec.get(13).getElementsByTag("td").get(1).text(UCom.format(numProd * (winc.cost2 - (discWin + discPrj) * winc.cost2 / 100), 9));
+
+                    trList.get(0).getElementsByTag("td").get(0).text("Изделие № " + (i + 1));
+                    trList.get(2).getElementsByTag("td").get(1).text(eSystree.nameSysprof(prjprodRec.getInt(ePrjprod.systree_id)));
+                    trList.get(3).getElementsByTag("td").get(1).text(fname);
+                    trList.get(4).getElementsByTag("td").get(1).text(gname);
+                    trList.get(5).getElementsByTag("td").get(1).text(eColor.find(winc.colorID1).getStr(eColor.name));
+                    trList.get(6).getElementsByTag("td").get(1).text(eColor.find(winc.colorID2).getStr(eColor.name));
+                    trList.get(7).getElementsByTag("td").get(1).text(eColor.find(winc.colorID3).getStr(eColor.name));
+                    trList.get(8).getElementsByTag("td").get(1).text(winc.width() + "x" + winc.height());
+                    trList.get(9).getElementsByTag("td").get(1).text(prjprodRec.getStr(ePrjprod.num));
+                    trList.get(10).getElementsByTag("td").get(1).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
+                    trList.get(11).getElementsByTag("td").get(1).text(UCom.format(winc.weight, 2));
+                    trList.get(12).getElementsByTag("td").get(1).text(UCom.format(numProd * winc.cost1, 9));
+                    trList.get(13).getElementsByTag("td").get(1).text(UCom.format(numProd * (winc.cost2 - (discWin + discPrj) * winc.cost2 / 100), 9));
                 }
             }
             //СЕКЦИЯ №4

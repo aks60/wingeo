@@ -99,8 +99,9 @@ public enum eSystree implements Field {
                     str = systreeRec.getStr(name) + "/" + str;
                     systreeRec = find(systreeRec.getInt(parent_id));
                 }
-                return systreeRec.getStr(name) + "/" + str;
-                
+                str = systreeRec.getStr(name) + "/" + str;
+                return str.substring(0, str.length() - 1);
+
             } catch (Exception e) {
                 System.err.println(e);
                 return "";
