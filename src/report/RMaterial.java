@@ -87,7 +87,7 @@ public class RMaterial {
                 kitList.addAll(Kitcalc.tarifficProd(winc, prjprodRec, 0, true, true)); //добавим комплекты
             }
         }
-        double discKit = projectRec.getDbl(eProject.disc_kit) + projectRec.getDbl(eProject.disc_all);
+        double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);
 
         winList.forEach(rec -> spcList.add(new RRecord(rec)));
         kitList.forEach(rec -> spcList.add(new RRecord(rec)));
@@ -128,7 +128,7 @@ public class RMaterial {
                 winList.addAll(winc.listSpec);
             }
         }
-        double discKit = projectRec.getDbl(eProject.disc_kit) + projectRec.getDbl(eProject.disc_all);
+        double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);
         Kitcalc.tarifficProj(winc, projectRec, discKit, true, true); //добавим комплекты
 
         winList.forEach(rec -> spcList.add(new RRecord(rec)));

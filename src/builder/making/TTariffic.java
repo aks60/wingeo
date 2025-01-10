@@ -111,6 +111,7 @@ public class TTariffic extends Cal5e {
                         elem5e.spcRec.price = value + grpformN1 * value / 100; //цена за един.изм 
                         elem5e.spcRec.cost1 = elem5e.spcRec.price * elem5e.spcRec.quant2; //стоимость без скидки                     
                         elem5e.spcRec.cost2 = elem5e.spcRec.cost1; //стоимость со скидкой 
+                        //System.out.println(elem5e.spcRec.cost1 + " -1- " + elem5e.spcRec.cost2);
                     }
                     //Цикл по детализации
                     for (TRecord spcRec : elem5e.spcRec.spcList) {
@@ -136,7 +137,8 @@ public class TTariffic extends Cal5e {
                         double value = spcRec.costprice * artiklK * systreeK;
                         spcRec.price = value + grpformN1 * value / 100; //цена за един.изм 
                         spcRec.cost1 = spcRec.price * spcRec.quant2; //стоимость без скидки                     
-                        spcRec.cost2 = spcRec.cost1; //стоимость со скидкой                                   
+                        spcRec.cost2 = spcRec.cost1; //стоимость со скидкой  
+                        //System.out.println(spcRec.cost1 + " -2- " + spcRec.cost2);
                     }
                 }
             }

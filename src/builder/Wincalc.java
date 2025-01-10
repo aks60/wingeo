@@ -264,7 +264,7 @@ public class Wincalc {
                 Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
                 if (prjprodRec != null) {
                     //Скидка менеджера
-                    double disc = projectRec.getDbl(eProject.disc_all) + projectRec.getDbl(eProject.disc_win);
+                    double disc = projectRec.getDbl(eProject.disc_all, 0) + projectRec.getDbl(eProject.disc_win, 0);
                     for (TRecord tRecord : this.listSpec) {
                         tRecord.cost2 = tRecord.cost2 - disc * tRecord.cost2 / 100; //скидка менеджера
                     }

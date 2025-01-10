@@ -66,12 +66,11 @@ public class ROffer {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
             List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
-            double discWin = projectRec.getDbl(eProject.disc_win);
-            double discPrj = projectRec.getDbl(eProject.disc_all);
-            double price2a = projectRec.getDbl(eProject.cost2_win) - discPrj * projectRec.getDbl(eProject.cost2_win) / 100;
-            double price2b = projectRec.getDbl(eProject.cost2_kit) - discPrj * projectRec.getDbl(eProject.cost2_kit) / 100;
-            //double price2c = projectRec.getDbl(eProject.price2c) - discPrj * projectRec.getDbl(eProject.price2c) / 100;
-
+            double discWin = projectRec.getDbl(eProject.disc_win, 0);
+            double discPrj = projectRec.getDbl(eProject.disc_all, 0);
+            double price2a = projectRec.getDbl(eProject.cost2_win, 0) - discPrj * projectRec.getDbl(eProject.cost2_win, 0) / 100;
+            double price2b = projectRec.getDbl(eProject.cost2_kit, 0) - discPrj * projectRec.getDbl(eProject.cost2_kit, 0) / 100;
+            
             doc.getElementById("h01").text("Коммерческое предложение от " + UGui.DateToStr(projectRec.get(eProject.date4)));
 
             //СЕКЦИЯ №1
@@ -147,10 +146,10 @@ public class ROffer {
             {
                 Elements trList = doc.getElementById("tab5").getElementsByTag("tr");
                 trList.get(0).getElementsByTag("td").get(2).text(UCom.format(square / 1000000, 9) + " кв.м.");
-                trList.get(1).getElementsByTag("td").get(2).text(UCom.format(projectRec.getDbl(eProject.cost1_win), 9));
-                trList.get(2).getElementsByTag("td").get(2).text(UCom.format(projectRec.getDbl(eProject.cost2_win), 9));
-                trList.get(3).getElementsByTag("td").get(2).text(UCom.format(projectRec.getDbl(eProject.cost2_win)
-                        + projectRec.getDbl(eProject.cost2_kit), 9));
+                trList.get(1).getElementsByTag("td").get(2).text(UCom.format(projectRec.getDbl(eProject.cost1_win, 0), 9));
+                trList.get(2).getElementsByTag("td").get(2).text(UCom.format(projectRec.getDbl(eProject.cost2_win, 0), 9));
+                trList.get(3).getElementsByTag("td").get(2).text(UCom.format(projectRec.getDbl(eProject.cost2_win, 0)
+                        + projectRec.getDbl(eProject.cost2_kit, 0), 9));
             }
 
             Elements imgList = doc.getElementById("div2").getElementsByTag("img");
