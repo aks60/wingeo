@@ -77,7 +77,7 @@ public class RSpecific {
             List<RRecord> listSpc = new ArrayList<RRecord>();
             spcList.forEach(rec -> listSpc.add(new RRecord(rec)));
             String num = projectRec.getStr(eProject.num_ord);
-            String date = UGui.getDateAsStr(projectRec.get(eProject.date5));
+            String date = UGui.convert2Date(projectRec.get(eProject.date5));
 
             List<RRecord> listSpc1 = listSpc.stream().filter(rec -> rec.spc().artiklRec.getInt(eArtikl.level1) == 1).collect(toList());
             List<RRecord> listSpc2 = RRecord.groups4R(listSpc.stream().filter(rec -> rec.spc().artiklRec.getInt(eArtikl.level1) == 2).collect(toList()));

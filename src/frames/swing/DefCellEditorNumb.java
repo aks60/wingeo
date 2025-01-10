@@ -90,7 +90,7 @@ public class DefCellEditorNumb extends DefaultCellEditor {
             if (value instanceof Double || value instanceof Double) {
                  val = (df != null) ? df.format(value) : UCom.format(value, scale);
             } else if (field.meta().type() == Field.TYPE.DATE) {
-                 val = UGui.DateToStr(value);
+                 val = UGui.convert2Date(value);
             }
             return super.getTableCellEditorComponent(table, val, isSelected, row, column);
 

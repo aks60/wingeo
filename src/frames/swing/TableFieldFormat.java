@@ -160,7 +160,7 @@ public class TableFieldFormat {
                 jtxt.setText(o.toString());
 
             } else if (field.meta().type().equals(Field.TYPE.DATE)) {
-                jtxt.setText(UGui.DateToStr(val));
+                jtxt.setText(UGui.convert2Date(val));
 
             } else if (field.meta().type().equals(Field.TYPE.DBL)) {
                 val = String.valueOf(val).replace(',', '.');

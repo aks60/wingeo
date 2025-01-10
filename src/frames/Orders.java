@@ -211,7 +211,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
                 Field field = ((DefTableModel) table.getModel()).columns[column];
                 if (field.meta().type() == Field.TYPE.DATE) {
-                    value = UGui.DateToStr(value);
+                    value = UGui.convert2Date(value);
                 }
                 return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             }

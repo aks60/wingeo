@@ -106,7 +106,7 @@ public class DefCellEditorBtn extends DefaultCellEditor {
             ((JTextField) editorComponent).setEditable(field.meta().type() == Field.TYPE.STR); //разрешить редактирование стрингу
         }
         if (field.meta().type() == Field.TYPE.DATE) {
-            value = UGui.DateToStr(value);
+            value = UGui.convert2Date(value);
         }
         delegate.setValue(value);
         return panel;

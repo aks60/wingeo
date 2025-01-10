@@ -95,7 +95,7 @@ public class RSmeta {
             double discKit = projectRec.getDbl(eProject.disc_kit, 0) +  projectRec.getDbl(eProject.disc_all, 0);
             double discWin = projectRec.getDbl(eProject.disc_win, 0) +  projectRec.getDbl(eProject.disc_all, 0);
 
-            doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
+            doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.convert2Date(projectRec.get(eProject.date4)) + "'");
 
             //Заполним файл шаблонами заказов
             Element div2 = doc.getElementById("div2");
@@ -167,7 +167,7 @@ public class RSmeta {
             Query qSysuser = new Query(eSysuser.values()).sql(eSysuser.data(), eSysuser.login, prjpartRec.getStr(ePrjpart.login));
             qSysuser.add(eSysuser.up.newRecord("SEL")); //если qSysuser.size() == 0                       
             Record sysuserRec = qSysuser.get(0);
-            doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
+            doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.convert2Date(projectRec.get(eProject.date4)) + "'");
             Element div2 = doc.getElementById("div2");
             String template2 = div2.html();
             List<Wincalc> wincList = URep.wincList(prjprodList, 400);

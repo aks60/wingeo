@@ -67,7 +67,7 @@ public class RTarget {
 
             //СЕКЦИЯ №1
             {
-                doc.getElementById("h02").text("Заказ №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
+                doc.getElementById("h02").text("Заказ №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.convert2Date(projectRec.get(eProject.date4)) + "'");
 
                 //Таблица №1 ЗАКАЗЧИК
                 String ord = qPrjpart.get(0).getStr(ePrjpart.partner); //заказчик

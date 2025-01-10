@@ -162,7 +162,7 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
             if (field.meta().edit() == true) {
                 if (value != null && String.valueOf(value).isEmpty() == false) {
                     if (field.meta().type().equals(Field.TYPE.DATE)) {
-                        Date d = UGui.StrToDate(value.toString());
+                        Date d = UGui.convert1Date(value.toString());
                         if (d != null) {
                             GregorianCalendar d1 = new GregorianCalendar(1917, 01, 01);
                             GregorianCalendar d2 = new GregorianCalendar(2040, 01, 01);

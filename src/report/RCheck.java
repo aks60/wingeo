@@ -95,7 +95,7 @@ public class RCheck {
             List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Wincalc> wincList = wincList(prjprodList);
 
-            doc.getElementById("h01").text("—чЄт є" + projectRec.getStr(eProject.num_acc) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
+            doc.getElementById("h01").text("—чЄт є" + projectRec.getStr(eProject.num_acc) + " от '" + UGui.convert2Date(projectRec.get(eProject.date4)) + "'");
             //—≈ ÷»я є1
             {
                 Elements trList = doc.getElementById("tab1").getElementsByTag("tbody").get(0).getElementsByTag("tr");
@@ -190,7 +190,7 @@ public class RCheck {
             double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);
             double discWin = projectRec.getDbl(eProject.disc_win, 0) + projectRec.getDbl(eProject.disc_all, 0);
 
-            doc.getElementById("h01").text("—чЄт-фактура є" + projectRec.getStr(eProject.num_acc) + " от '" + UGui.DateToStr(projectRec.get(eProject.date4)) + "'");
+            doc.getElementById("h01").text("—чЄт-фактура є" + projectRec.getStr(eProject.num_acc) + " от '" + UGui.convert2Date(projectRec.get(eProject.date4)) + "'");
             //—≈ ÷»я є1
             {
                 Elements trList = doc.getElementById("tab1").getElementsByTag("tbody").get(0).getElementsByTag("tr");

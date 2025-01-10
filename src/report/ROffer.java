@@ -71,7 +71,7 @@ public class ROffer {
             double price2a = projectRec.getDbl(eProject.cost2_win, 0) - discPrj * projectRec.getDbl(eProject.cost2_win, 0) / 100;
             double price2b = projectRec.getDbl(eProject.cost2_kit, 0) - discPrj * projectRec.getDbl(eProject.cost2_kit, 0) / 100;
 
-            doc.getElementById("h01").text("Коммерческое предложение от " + UGui.DateToStr(projectRec.get(eProject.date4)));
+            doc.getElementById("h01").text("Коммерческое предложение от " + UGui.convert2Date(projectRec.get(eProject.date4)));
 
             //СЕКЦИЯ №1
             {

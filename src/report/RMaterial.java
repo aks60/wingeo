@@ -97,7 +97,7 @@ public class RMaterial {
         Elements templateRec = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
         groupList.forEach(act -> doc.getElementsByTag("tbody").append(templateRec.get(0).html()));
 
-        String date = UGui.simpleFormat.format(projectRec.get(eProject.date6));
+        String date = UGui.convert2Date(projectRec.get(eProject.date6));
         double total = groupList.stream().mapToDouble(rec -> rec.spc().cost1).sum();
 
         doc.getElementById("h01").text("Заказ №" + projectRec.getStr(eProject.num_ord));

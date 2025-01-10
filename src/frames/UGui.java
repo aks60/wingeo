@@ -86,13 +86,13 @@ public class UGui {
     public static SimpleDateFormat simpleFormat = new SimpleDateFormat("dd.MM.yyyy"); //"yyyy-MM-dd" формат для баз где даты utf8
     private static int mes = 0;
 
-    // <editor-fold defaultstate="collapsed" desc="Работа с датой..."> 
+    // <editor-fold defaultstate="collapsed" desc="РАБОТА С ДАТОЙ"> 
     public static DateFormat getDateFormat() {
         return dateFormat;
     }
 
     // Преобразование даты в строку
-    public static String getDateStr(Object obj) {
+    public static String getDateInWords(Object obj) {
         if (obj == null) {
             return dateFormat.format(appCalendar.getTime());
         }
@@ -126,7 +126,7 @@ public class UGui {
     }
 
     //Преобразование string в date
-    public static Date StrToDate(String str) {
+    public static Date convert1Date(String str) {
         try {
             return (Date) dateFormat.parse(str);
         } catch (ParseException e) {
@@ -135,20 +135,20 @@ public class UGui {
     }
 
     // Преобразование date в string
-    public static String DateToStr(Object date) {
-        return (date instanceof java.util.Date) ? simpleFormat.format(date) : "";
+    public static String convert2Date(Object value) {
+        return (value instanceof java.util.Date) ? simpleFormat.format(value) : "";
     }
 
-    //Преобразование date в string
-    public static String DateToSql(Object date) {
-        if (date == null) {
-            return simpleFormat.format(appCalendar.getTime());
-        }
-        if (date instanceof java.util.Date) {
-            return simpleFormat.format(date);
-        }
-        return "";
-    }
+//    //Преобразование date в string
+//    public static String convert3Date(Object value) {
+//        if (value == null) {
+//            return simpleFormat.format(appCalendar.getTime());
+//        }
+//        if (value instanceof java.util.Date) {
+//            return simpleFormat.format(value);
+//        }
+//        return "";
+//    }
 
     //Текущий год
     public static int getYearCur() {
@@ -162,10 +162,6 @@ public class UGui {
 
     public static Font getFont(int size, int bold) {
         return new Font(eProp.fontname.read(), bold, Integer.valueOf(eProp.fontsize.read()) + size);
-    }
-
-    public static String getDateAsStr(Object val) {
-        return (val == null) ? null : simpleFormat.format(val);
     }
 
     public static <T extends JComponent> List<T> findComponents(final Container container, final Class<T> componentType) {
