@@ -59,7 +59,7 @@ public class Wincalc {
     public double weight = 0; //масса конструкции  
     public BufferedImage bufferImg = null;  //образ рисунка
     public ImageIcon imageIcon = null; //рисунок конструкции
-    public Graphics2D gc2d = null; //графический котекст рисунка  
+    public Graphics2D gc2d = null; //графический контекст рисунка  
     public double scale = 1; //коэффициент сжатия
     public Canvas canvas = null;
     public GsonRoot gson = null; //объектная модель конструкции 1-го уровня

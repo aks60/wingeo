@@ -854,6 +854,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     @Override
     public Query reload(boolean b) {
+        System.out.println("vvv");
         try {
             Wincalc win = wincalc();
 
@@ -879,6 +880,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     @Override
     public void action() {
+        System.out.println("zzz");
         selectionTree1();
     }
 
