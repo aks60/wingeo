@@ -164,6 +164,10 @@ public class UGui {
         return new Font(eProp.fontname.read(), bold, Integer.valueOf(eProp.fontsize.read()) + size);
     }
 
+    public static String getDateAsStr(Object val) {
+        return (val == null) ? null : simpleFormat.format(val);
+    }
+
     public static <T extends JComponent> List<T> findComponents(final Container container, final Class<T> componentType) {
         return Stream.concat(
                 Arrays.stream(container.getComponents())

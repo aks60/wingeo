@@ -32,7 +32,7 @@ public class RSpecific {
 
     public void parseDoc(List<Record> prjprodList) {
         try {
-            npp = 0;
+            //npp = 0;
             InputStream in = getClass().getResourceAsStream("/resource/report/Specific.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
@@ -56,67 +56,71 @@ public class RSpecific {
     }
 
     private static void loadDoc(Record projectRec, List<Record> prjprodList, Document doc) {
+        try {
+            List<TRecord> spcList = new ArrayList<TRecord>();
+            List<RRecord> kitList = new ArrayList<RRecord>();
+            Wincalc winc = new Wincalc();
 
-        List<TRecord> spcList = new ArrayList<TRecord>();
-        List<RRecord> kitList = new ArrayList<RRecord>();
-        Wincalc winc = new Wincalc();
-
-        //Цикл по конструкциям заказа
-        for (Record prjprodRec : prjprodList) {
-            String script = prjprodRec.getStr(ePrjprod.script);
-            if (script.isEmpty() == false) {
-                winc.build(script);
-                winc.specific(true, true);
-                spcList.addAll(winc.listSpec); //добавим спецификацию
+            //Цикл по конструкциям заказа
+            for (Record prjprodRec : prjprodList) {
+                String script = prjprodRec.getStr(ePrjprod.script);
+                if (script.isEmpty() == false) {
+                    winc.build(script);
+                    winc.specific(true, true);
+                    spcList.addAll(winc.listSpec); //добавим спецификацию
+                }
+                double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);
+                List<TRecord> list = Kitcalc.tarifficProd(winc, prjprodRec, discKit, true, false); //добавим комплекты
+                list.forEach(rec -> kitList.add(new RRecord(rec)));
             }
-            double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);
-            List<TRecord> list = Kitcalc.tarifficProd(winc, prjprodRec, discKit, true, false); //добавим комплекты
-            list.forEach(rec -> kitList.add(new RRecord(rec)));
+
+            List<RRecord> listSpc = new ArrayList<RRecord>();
+            spcList.forEach(rec -> listSpc.add(new RRecord(rec)));
+            String num = projectRec.getStr(eProject.num_ord);
+            String date = UGui.getDateAsStr(projectRec.get(eProject.date5));
+
+            List<RRecord> listSpc1 = listSpc.stream().filter(rec -> rec.spc().artiklRec.getInt(eArtikl.level1) == 1).collect(toList());
+            List<RRecord> listSpc2 = RRecord.groups4R(listSpc.stream().filter(rec -> rec.spc().artiklRec.getInt(eArtikl.level1) == 2).collect(toList()));
+            List<RRecord> listSpc3 = RRecord.groups4R(listSpc.stream().filter(rec -> rec.spc().artiklRec.getInt(eArtikl.level1) == 3).collect(toList()));
+            List<RRecord> listSpc5 = listSpc.stream().filter(rec -> rec.spc().artiklRec.getInt(eArtikl.level1) == 5).collect(toList());
+
+            doc.getElementById("h01").text("Заказ №" + projectRec.getStr(eProject.num_ord));
+            doc.getElementsByTag("thead").get(0).getElementsByTag("tr").get(0).getElementsByTag("th").get(0).html("Дата: " + date + " г.");
+
+            Elements templateRec = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
+            doc.getElementsByTag("tbody").get(0).html("");
+
+            templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ПРОФИЛИ");
+            doc.getElementsByTag("tbody").append(templateRec.get(0).html());
+            listSpc1.forEach(rec -> recordAdd(templateRec, rec, doc));
+
+            templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("АКСЕССУАРЫ");
+            doc.getElementsByTag("tbody").append(templateRec.get(0).html());
+            listSpc2.forEach(rec -> recordAdd(templateRec, rec, doc));
+
+            templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("УПЛОТНЕНИЯ");
+            doc.getElementsByTag("tbody").append(templateRec.get(0).html());
+            listSpc3.forEach(rec -> recordAdd(templateRec, rec, doc));
+
+            templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ЗАПОЛНЕНИЯ");
+            doc.getElementsByTag("tbody").append(templateRec.get(0).html());
+            listSpc5.forEach(rec -> recordAdd(templateRec, rec, doc));
+
+            templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("КОМПЛЕКТЫ");
+            doc.getElementsByTag("tbody").append(templateRec.get(0).html());
+            kitList.forEach(rec -> recordAdd(templateRec, rec, doc));
+
+            double total = listSpc1.stream().mapToDouble(rec -> rec.spc().cost2).sum()
+                    + listSpc2.stream().mapToDouble(rec -> rec.spc().cost2).sum()
+                    + listSpc3.stream().mapToDouble(rec -> rec.spc().cost2).sum()
+                    + listSpc5.stream().mapToDouble(rec -> rec.spc().cost2).sum()
+                    + kitList.stream().mapToDouble(rec -> rec.spc().cost2).sum();
+            doc.getElementsByTag("tfoot").get(0).selectFirst("tr:eq(0)")
+                    .selectFirst("td:eq(1)").text(UCom.format(total, 9));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Неправильный формат даты RSpecific.loadDoc() : " + e, "ВНИМАНИЕ!", 1);
+            System.err.println("Ошибка:RSpecific.loadDoc() " + e);
         }
-
-        List<RRecord> listSpc = new ArrayList<RRecord>();
-        spcList.forEach(rec -> listSpc.add(new RRecord(rec)));
-        String num = projectRec.getStr(eProject.num_ord);
-        String date = UGui.simpleFormat.format(projectRec.get(eProject.date5));
-
-        List<RRecord> listSpc1 = listSpc.stream().filter(rec -> rec.spc().artiklRec.getInt(eArtikl.level1) == 1).collect(toList());
-        List<RRecord> listSpc2 = RRecord.groups4R(listSpc.stream().filter(rec -> rec.spc().artiklRec.getInt(eArtikl.level1) == 2).collect(toList()));
-        List<RRecord> listSpc3 = RRecord.groups4R(listSpc.stream().filter(rec -> rec.spc().artiklRec.getInt(eArtikl.level1) == 3).collect(toList()));
-        List<RRecord> listSpc5 = listSpc.stream().filter(rec -> rec.spc().artiklRec.getInt(eArtikl.level1) == 5).collect(toList());
-
-        doc.getElementById("h01").text("Заказ №" + projectRec.getStr(eProject.num_ord));
-        doc.getElementsByTag("thead").get(0).getElementsByTag("tr").get(0).getElementsByTag("th").get(0).html("Дата: " + date + " г.");
-
-        Elements templateRec = doc.getElementsByTag("tbody").get(0).getElementsByTag("tr");
-        doc.getElementsByTag("tbody").get(0).html("");
-
-        templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ПРОФИЛИ");
-        doc.getElementsByTag("tbody").append(templateRec.get(0).html());
-        listSpc1.forEach(rec -> recordAdd(templateRec, rec, doc));
-
-        templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("АКСЕССУАРЫ");
-        doc.getElementsByTag("tbody").append(templateRec.get(0).html());
-        listSpc2.forEach(rec -> recordAdd(templateRec, rec, doc));
-
-        templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("УПЛОТНЕНИЯ");
-        doc.getElementsByTag("tbody").append(templateRec.get(0).html());
-        listSpc3.forEach(rec -> recordAdd(templateRec, rec, doc));
-
-        templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ЗАПОЛНЕНИЯ");
-        doc.getElementsByTag("tbody").append(templateRec.get(0).html());
-        listSpc5.forEach(rec -> recordAdd(templateRec, rec, doc));
-
-        templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("КОМПЛЕКТЫ");
-        doc.getElementsByTag("tbody").append(templateRec.get(0).html());
-        kitList.forEach(rec -> recordAdd(templateRec, rec, doc));
-
-        double total = listSpc1.stream().mapToDouble(rec -> rec.spc().cost2).sum()
-                + listSpc2.stream().mapToDouble(rec -> rec.spc().cost2).sum()
-                + listSpc3.stream().mapToDouble(rec -> rec.spc().cost2).sum()
-                + listSpc5.stream().mapToDouble(rec -> rec.spc().cost2).sum()
-                + kitList.stream().mapToDouble(rec -> rec.spc().cost2).sum();
-        doc.getElementsByTag("tfoot").get(0).selectFirst("tr:eq(0)")
-                .selectFirst("td:eq(1)").text(UCom.format(total, 9));
     }
 
     private static void recordAdd(Elements templateRec, RRecord specificRec, Document doc) {
