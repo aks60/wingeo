@@ -112,12 +112,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     private ListenerRecord listenerArtikl, listenerModel, listenerFurn,
             listenerParam1, listenerParam2, listenerArt211, listenerArt212;
-    private ListenerKey keyPressed = (evt) -> {
-        System.out.println("ZZZ");
-    };    
-    private ListenerMouse mouseDragge = (evt) -> {
-        System.out.println("XXX");
-    };
 
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
     private Query qGroups = new Query(eGroups.values());
@@ -600,14 +594,21 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
             Object w = sysprodRec.get(eSysprod.values().length);
             if (w instanceof Wincalc) { //прорисовка окна               
-                Wincalc win = (Wincalc) w;
+                Wincalc winc = (Wincalc) w;
 
-                GsonElem.setMaxID(win); //установим генератор идентификаторов
+                winc.actionEvent = this.actionEvent;
+//                if (winc.keyboardPressed.contains(keyPressed) == false) {
+//                    winc.keyboardPressed.add(keyPressed);
+//                }
+//                if (winc.mouseDragged.contains(mouseDragge) == false) {
+//                    winc.mouseDragged.add(mouseDragge);
+//                }
+                GsonElem.setMaxID(winc); //установим генератор идентификаторов
 
-                loadingTree2(win);
+                loadingTree2(winc);
 
                 winTree.setSelectionInterval(0, 0);
-                scene.init(win);
+                scene.init(winc);
                 canvas.draw();
             }
         } else {
@@ -854,12 +855,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             Object win = sysprodRec.get(eSysprod.values().length);
             if (win instanceof Wincalc) {
                 Wincalc winc = (Wincalc) win;
-                if (winc.mouseDragged.contains(mouseDragge) == false) {
-                    winc.mouseDragged.add(mouseDragge);
-                }
-                if (winc.keyboardPressed.contains(keyPressed) == false) {
-                    winc.keyboardPressed.add(keyPressed);
-                }
+
+//                if (winc.keyboardPressed.contains(keyPressed) == false) {
+//                    winc.keyboardPressed.add(keyPressed);
+//                }                
+//                if (winc.mouseDragged.contains(mouseDragge) == false) {
+//                    winc.mouseDragged.add(mouseDragge);
+//                }
                 return winc;
             }
         }
@@ -4263,7 +4265,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_colorFromLock
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        Record sysprodRec = eSysprod.find(2);
+
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void colorFromGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromGlass
@@ -4926,6 +4928,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private javax.swing.JTree winTree;
     // End of variables declaration//GEN-END:variables
 // </editor-fold> 
+
+    private ListenerAction actionEvent = () -> {
+        Wincalc w = wincalc();
+        txt17.setText(UCom.format(w.width(), 1));
+        txt22.setText(UCom.format(w.height(), 1));      
+    };
 
     public final void initElements() {
 

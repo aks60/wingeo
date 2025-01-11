@@ -60,6 +60,8 @@ public class UCom {
                 df.applyPattern("#0.###");
             } else if (scale == 4) {
                 df.applyPattern("#0.####");
+            } else if (scale == 8) {
+                df.applyPattern("#,##0.#");
             } else if (scale == 9) {
                 df.applyPattern("#,##0.##");
             } else if (scale == -1) {
