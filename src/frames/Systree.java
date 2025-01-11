@@ -82,8 +82,6 @@ import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import common.listener.ListenerAction;
-import common.listener.ListenerKey;
-import common.listener.ListenerMouse;
 import domain.eJoinvar;
 import enums.TypeJoin;
 import domain.eElement;
@@ -276,7 +274,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         });
 
-        //String str = eSystree.systemProfile(Systree.this.systreeID);
         rsvSystree = new TableFieldFormat(sysTree) {
 
             public Set<JTextField> set = new HashSet<JTextField>();
@@ -327,8 +324,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         DefMutableTreeNode rootTree = new DefMutableTreeNode(recordRoot);
         ArrayList<DefMutableTreeNode> nodeList = new ArrayList<DefMutableTreeNode>();
 
-        //List<Record> rootList = qSystree.stream().filter(e -> e.getInt(eSystree.id) == e.getInt(eSystree.parent_id)).collect(toList());
-        //List<Record> rootList2 = rootList.stream().sorted((e1, e2) -> e1.getStr(eSystree.name).compareTo(e2.getStr(eSystree.name))).collect(toList());
         for (Record record : qSystree) { //первый уровень
             if (record.getInt(eSystree.parent_id) == record.getInt(eSystree.id)) {
                 DefMutableTreeNode node = new DefMutableTreeNode(record);
@@ -597,12 +592,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 Wincalc winc = (Wincalc) w;
 
                 winc.actionEvent = this.actionEvent;
-//                if (winc.keyboardPressed.contains(keyPressed) == false) {
-//                    winc.keyboardPressed.add(keyPressed);
-//                }
-//                if (winc.mouseDragged.contains(mouseDragge) == false) {
-//                    winc.mouseDragged.add(mouseDragge);
-//                }
+
                 GsonElem.setMaxID(winc); //установим генератор идентификаторов
 
                 loadingTree2(winc);
@@ -855,13 +845,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             Object win = sysprodRec.get(eSysprod.values().length);
             if (win instanceof Wincalc) {
                 Wincalc winc = (Wincalc) win;
-
-//                if (winc.keyboardPressed.contains(keyPressed) == false) {
-//                    winc.keyboardPressed.add(keyPressed);
-//                }                
-//                if (winc.mouseDragged.contains(mouseDragge) == false) {
-//                    winc.mouseDragged.add(mouseDragge);
-//                }
                 return winc;
             }
         }
@@ -4932,7 +4915,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private ListenerAction actionEvent = () -> {
         Wincalc w = wincalc();
         txt17.setText(UCom.format(w.width(), 1));
-        txt22.setText(UCom.format(w.height(), 1));      
+        txt22.setText(UCom.format(w.height(), 1));
     };
 
     public final void initElements() {
