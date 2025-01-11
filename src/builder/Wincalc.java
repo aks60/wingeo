@@ -45,6 +45,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.event.EventListenerList;
 import static startup.App.Top;
 
 // см. алгоритм git -> 804d27409d
@@ -65,6 +66,7 @@ public class Wincalc {
     public GsonRoot gson = null; //объектная модель конструкции 1-го уровня
     public AreaSimple root = null; //объектная модель конструкции 2-го уровня    
 
+    //public EventListenerList listenerList = new EventListenerList();
     public ArrayList<ListenerKey> keyboardPressed = new ArrayList<ListenerKey>();
     public ArrayList<ListenerMouse> mousePressed = new ArrayList<ListenerMouse>();
     public ArrayList<ListenerMouse> mouseDragged = new ArrayList<ListenerMouse>();

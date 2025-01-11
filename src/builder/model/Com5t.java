@@ -125,7 +125,7 @@ public class Com5t {
         //return UGeo.bufferPaddin(line, list, amend);
         //return GeoBuffer.buffer(line, list, amend);
     }
-
+    
     public boolean equals(Object obj) {
         return (this.id == ((Com5t) obj).id);
     }

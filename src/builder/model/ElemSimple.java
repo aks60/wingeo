@@ -11,7 +11,9 @@ import enums.Layout;
 import enums.Type;
 import frames.swing.Canvas;
 import java.awt.Color;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
@@ -307,7 +309,7 @@ public abstract class ElemSimple extends Com5t {
         gson.y2 = y2;
         // }
     }
-
+    
     @Override
     public String toString() {
         return super.toString() + ", anglHoriz=" + UGeo.anglHor(x1(), y1(), x2(), y2());

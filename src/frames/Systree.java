@@ -82,6 +82,8 @@ import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import common.listener.ListenerAction;
+import common.listener.ListenerKey;
+import common.listener.ListenerMouse;
 import domain.eJoinvar;
 import enums.TypeJoin;
 import domain.eElement;
@@ -101,7 +103,6 @@ import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import common.listener.ListenerReload;
-import java.util.Arrays;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 import javax.swing.JTree;
@@ -109,9 +110,16 @@ import org.locationtech.jts.geom.Envelope;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
-    private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
     private ListenerRecord listenerArtikl, listenerModel, listenerFurn,
             listenerParam1, listenerParam2, listenerArt211, listenerArt212;
+    private ListenerKey keyPressed = (evt) -> {
+        System.out.println("ZZZ");
+    };    
+    private ListenerMouse mouseDragge = (evt) -> {
+        System.out.println("XXX");
+    };
+
+    private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
     private Query qGroups = new Query(eGroups.values());
     private Query qParams = new Query(eParams.values());
     private Query qArtikl = new Query(eArtikl.id, eArtikl.code, eArtikl.name);
@@ -180,11 +188,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }
 
     public final void loadingModel() {
-       
+
         ((DefaultTreeCellEditor) sysTree.getCellEditor()).addCellEditorListener(new CellEditorListener() {
 
             public void editingStopped(ChangeEvent e) {
-                String str = ((DefaultTreeCellEditor) sysTree.getCellEditor()).getCellEditorValue().toString(); 
+                String str = ((DefaultTreeCellEditor) sysTree.getCellEditor()).getCellEditorValue().toString();
                 sysNode.rec().set(eSystree.name, str);
                 sysNode.setUserObject(str);
                 qSystree.update(sysNode.rec()); //сохраним в базе
@@ -275,7 +283,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
 
         //String str = eSystree.systemProfile(Systree.this.systreeID);
-        
         rsvSystree = new TableFieldFormat(sysTree) {
 
             public Set<JTextField> set = new HashSet<JTextField>();
@@ -846,7 +853,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             Record sysprodRec = qSysprod.table(eSysprod.up).get(index);
             Object win = sysprodRec.get(eSysprod.values().length);
             if (win instanceof Wincalc) {
-                return (Wincalc) win;
+                Wincalc winc = (Wincalc) win;
+                if (winc.mouseDragged.contains(mouseDragge) == false) {
+                    winc.mouseDragged.add(mouseDragge);
+                }
+                if (winc.keyboardPressed.contains(keyPressed) == false) {
+                    winc.keyboardPressed.add(keyPressed);
+                }
+                return winc;
             }
         }
         return null;
@@ -854,7 +868,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     @Override
     public Query reload(boolean b) {
-        System.out.println("vvv");
         try {
             Wincalc win = wincalc();
 
@@ -880,7 +893,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     @Override
     public void action() {
-        System.out.println("zzz");
         selectionTree1();
     }
 
@@ -1666,7 +1678,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     .addComponent(txt22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(pan21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(210, Short.MAX_VALUE))
+                .addContainerGap(207, Short.MAX_VALUE))
         );
 
         pan7.add(pan12, "card12");
@@ -1855,7 +1867,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     .addComponent(txt33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pan22, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 215, Short.MAX_VALUE))
+                .addGap(0, 212, Short.MAX_VALUE))
         );
 
         pan7.add(pan13, "card13");
@@ -2276,7 +2288,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     .addComponent(btn35, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lab4, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 27, Short.MAX_VALUE))
+                .addGap(0, 24, Short.MAX_VALUE))
         );
 
         txt19.getAccessibleContext().setAccessibleName("");
@@ -2633,7 +2645,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     .addComponent(txt47, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lab44, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         tabb2.addTab("Основн...", pan20);
@@ -3110,7 +3122,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 .addGroup(pan17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lab57, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt41, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 161, Short.MAX_VALUE))
+                .addGap(0, 158, Short.MAX_VALUE))
         );
 
         pan7.add(pan17, "card17");
@@ -3125,7 +3137,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         );
         pan18Layout.setVerticalGroup(
             pan18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 374, Short.MAX_VALUE)
+            .addGap(0, 371, Short.MAX_VALUE)
         );
 
         pan7.add(pan18, "card18");
@@ -3376,7 +3388,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         .addGroup(pan6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lab14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tabb1.addTab("   Основные   ", pan6);
