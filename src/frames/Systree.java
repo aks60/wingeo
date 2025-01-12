@@ -4580,7 +4580,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         Com5t owner = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t().owner;
         owner.gson.childs = owner.gson.childs.stream().filter(e -> e.type == enums.Type.FRAME_SIDE).collect(toList());
         owner.gson.addElem(new GsonElem(enums.Type.GLASS));
-        reload(false);
+        changeAndRedraw();
     }//GEN-LAST:event_removeImpostAction
 
     private void addStvorkaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStvorkaAction
@@ -4598,7 +4598,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }
             }
         }
-        reload(false);
+        changeAndRedraw();
     }//GEN-LAST:event_addStvorkaAction
 
     private void removeStvorkaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeStvorkaAction
@@ -4620,7 +4620,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }
             }
         }
-        reload(false);
+        changeAndRedraw();
     }//GEN-LAST:event_removeStvorkaAction
 
     private void addImpostHorAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImpostHorAction
@@ -4634,7 +4634,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 glass.owner.gson.childs.add(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
             }
         }
-        reload(false);
+        changeAndRedraw();
     }//GEN-LAST:event_addImpostHorAction
 
     private void addImpostVerAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImpostVerAction
@@ -4648,7 +4648,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 glass.owner.gson.childs.add(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
             }
         }
-        reload(false);
+        changeAndRedraw();
     }//GEN-LAST:event_addImpostVerAction
 
     private void removeMosquitAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMosquitAction
@@ -4658,7 +4658,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 mosq.owner.gson.childs.remove(i);
             }
         }
-        reload(false);
+        changeAndRedraw();
     }//GEN-LAST:event_removeMosquitAction
 
     private void btn30BlindsToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn30BlindsToStvorka
