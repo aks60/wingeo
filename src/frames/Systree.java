@@ -852,7 +852,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             if (index != -1) {
 
                 Record sysprodRow = qSysprod.get(index);
-                Record sysprodRec = new Query(eSysprod.values()).select(eSysprod.up, "where", id, "=", sysprodRow.getInt(eSysprod.id)).get(0);
+                Record sysprodRec = new Query(eSysprod.values()).select(eSysprod.up, "where", eSysprod.id, "=", sysprodRow.getInt(eSysprod.id)).get(0);
                 String script = sysprodRec.getStr(eSysprod.script);
 
                 Wincalc winc = wincalc();

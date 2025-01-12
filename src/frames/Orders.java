@@ -778,6 +778,43 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         }
     }
 
+    //Отменить все изменения
+    private void undoChanges() {
+        try {
+            int index = UGui.getIndexRec(tab5);
+            if (index != -1) {
+
+                Record sysprodRow = qPrjprod.get(index);
+                Record sysprodRec = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", sysprodRow.getInt(ePrjprod.id)).get(0);
+                String script = sysprodRec.getStr(ePrjprod.script);
+
+                Wincalc winc = wincalc();
+                winc.build(script);
+                sysprodRow.set(ePrjprod.up, Query.SEL);
+
+                //Запомним курсор
+                DefMutableTreeNode selectNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
+                double id = (selectNode != null) ? selectNode.com5t().id : -1;
+
+                //Перегрузим winTree
+                loadingTree(winc);
+
+                //Установим курсор
+                UGui.selectionPathWin(id, winTree);
+
+                //Перерисуем конструкцию
+                canvas.init(winc);
+                canvas.draw();
+
+                //Обновим поля форм
+                selectionTree();
+
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:Systree.undoChanges() " + e);
+        }
+    }
+    
     @Override
     public Query reload(boolean b) {
         Wincalc win = wincalc();
