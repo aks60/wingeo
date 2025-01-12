@@ -3,7 +3,6 @@ package frames;
 import builder.Kitcalc;
 import frames.swing.ProgressBar;
 import frames.swing.FrameToFile;
-import frames.dialog.DicCurrenc;
 import builder.model.Com5t;
 import builder.Wincalc;
 import builder.making.TFurniture;
@@ -93,18 +92,12 @@ import javax.swing.text.JTextComponent;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
-import report.RCheck;
-import report.RMaterial;
-import report.ROffer;
-import report.RSmeta;
-import report.RSpecific;
 import startup.App;
 import common.listener.ListenerReload;
 import static dataset.Query.INS;
 import frames.swing.MainMenu;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-import report.RTarget;
 
 public class Orders extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -373,7 +366,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             Object w = prjprodRec.get(ePrjprod.values().length);
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc winc = (Wincalc) w;
-                
+
                 winc.actionEvent = this.actionEvent;
 
                 GsonElem.setMaxID(winc); //установим генератор идентификаторов  
@@ -696,25 +689,13 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
     }
 
-    private Wincalc wincalc() {
-        int index = UGui.getIndexRec(tab2);
-        if (index != -1) {
-            Record sysprodRec = qPrjprod.table(ePrjprod.up).get(index);
-            Object v = sysprodRec.get(ePrjprod.values().length);
-            if (v instanceof Wincalc) { //прорисовка окна               
-                return (Wincalc) v;
-            }
-        }
-        return null;
-    }
-
     //Изменить скрипт в базе и перерисовать
     public void changeAndRedraw() {
         try {
             //Сохраним скрипт в базе
             String script = wincalc().gson.toJson();
-            Record sysprodRec = qPrjprod.get(UGui.getIndexRec(tab5));
-            sysprodRec.set(ePrjprod.script, script);
+            Record prjprodRec = qPrjprod.get(UGui.getIndexRec(tab2));
+            prjprodRec.set(ePrjprod.script, script);
             //qSysprod.update(sysprodRec);
 
             //Экземпляр нового скрипта
@@ -743,54 +724,21 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         } catch (Exception e) {
             System.err.println("Ошибка:Order.updateScript() " + e);
         }
-    }    
-    public void updateScript(double selectID) {
-        try {
-            //Сохраним скрипт в базе
-            String script = wincalc().gson.toJson();
-            Record prjprodRec = qPrjprod.get(UGui.getIndexRec(tab2));
-            prjprodRec.set(eSysprod.script, script);
-            qPrjprod.update(prjprodRec);
-
-            //Экземпляр нового скрипта
-            Wincalc iwin2 = new Wincalc(script);
-            iwin2.imageIcon = Canvas.createIcon(iwin2, 68);
-            prjprodRec.setNo(ePrjprod.values().length, iwin2);
-
-            //Запомним курсор
-            DefMutableTreeNode selectNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
-            double id = (selectNode != null) ? selectNode.com5t().id : -1;
-
-            //Перегрузим winTree
-            loadingTree(iwin2);
-
-            //Перерисуем конструкцию
-            canvas.draw();
-
-            //Обновим поля форм
-            selectionTree();
-
-            //Установим курсор
-            UGui.selectionPathWin(id, winTree);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Order.updateScript() " + e);
-        }
     }
 
     //Отменить все изменения
     private void undoChanges() {
         try {
-            int index = UGui.getIndexRec(tab5);
+            int index = UGui.getIndexRec(tab2);
             if (index != -1) {
 
-                Record sysprodRow = qPrjprod.get(index);
-                Record sysprodRec = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", sysprodRow.getInt(ePrjprod.id)).get(0);
-                String script = sysprodRec.getStr(ePrjprod.script);
+                Record prjprodRow = qPrjprod.get(index);
+                Record prjprodRec = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", prjprodRow.getInt(ePrjprod.id)).get(0);
+                String script = prjprodRec.getStr(ePrjprod.script);
 
                 Wincalc winc = wincalc();
                 winc.build(script);
-                sysprodRow.set(ePrjprod.up, Query.SEL);
+                prjprodRow.set(ePrjprod.up, Query.SEL);
 
                 //Запомним курсор
                 DefMutableTreeNode selectNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
@@ -814,33 +762,28 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             System.err.println("Ошибка:Systree.undoChanges() " + e);
         }
     }
+
+    private Wincalc wincalc() {
+        int index = UGui.getIndexRec(tab2);
+        if (index != -1) {
+            Record sysprodRec = qPrjprod.table(ePrjprod.up).get(index);
+            Object v = sysprodRec.get(ePrjprod.values().length);
+            if (v instanceof Wincalc) { //прорисовка окна               
+                return (Wincalc) v;
+            }
+        }
+        return null;
+    }
     
     @Override
     public Query reload(boolean b) {
-        Wincalc win = wincalc();
-        int index = UGui.getIndexRec(tab2);
-        if (index != -1) {
-            String script = win.gson.toJson();
-            win.build(script);
-            win.imageIcon = Canvas.createIcon(win, 68);
-            if (b == true) {
-                Record sysprodRec = qPrjprod.get(index);
-                sysprodRec.set(ePrjprod.script, script);
-                sysprodRec.set(ePrjprod.values().length, win);
-            }
-            canvas.draw();
-            selectionTree();
-        }
+        changeAndRedraw();
         return qPrjprod;
     }
 
     @Override
     public void action() {
-        //int index = UGui.getIndexRec(tab1);
-        //if (index != -1) {
-        loadingTab2();
-        // UGui.setSelectedIndex(tab1, index);
-        //}
+        undoChanges();
     }
 
     public void calculate() {
@@ -3223,7 +3166,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                             } else {
                                 wincalc().gson.color3 = colorRec.getInt(eColor.id);
                             }
-                            updateScript(selectID);
+                            changeAndRedraw();
                         }
                     }
                 };
@@ -3270,7 +3213,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         } else {
                             gsonRama.param.addProperty(PKjson.sysprofID, sysprofRec.getInt(eSysprof.id));
                         }
-                        updateScript(selectID);
+                        changeAndRedraw();
 
                     } else if (winNode.com5t().type == enums.Type.STVORKA_SIDE) { //рама створки
                         double stvId = winNode.com5t().owner.id;
@@ -3292,7 +3235,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         } else {
                             jso.addProperty(PKjson.sysprofID, sysprofRec.getStr(eSysprof.id));
                         }
-                        updateScript(selectID);
+                        changeAndRedraw();
 
                     } else {  //импост
                         double elemId = winNode.com5t().id;
@@ -3302,7 +3245,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         } else {
                             gsonElem.param.addProperty(PKjson.sysprofID, sysprofRec.getInt(eSysprof.id));
                         }
-                        updateScript(selectID);
+                        changeAndRedraw();
                     }
 
                 }, qSysprof2);
@@ -3349,7 +3292,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     } else {
                         jso.addProperty(colorID, colorRec.getStr(eColor.id));
                     }
-                    updateScript(selectID);
+                    changeAndRedraw();
 
                 } else if (winNode.com5t().type == enums.Type.FRAME_SIDE) {
                     for (GsonElem elem : parentArea.childs) {
@@ -3359,7 +3302,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                             } else {
                                 elem.param.addProperty(colorID, colorRec.getStr(eColor.id));
                             }
-                            updateScript(selectID);
+                            changeAndRedraw();
                         }
                     }
                 } else if (winNode.com5t().type == enums.Type.IMPOST
@@ -3372,7 +3315,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                             } else {
                                 elem.param.addProperty(colorID, colorRec.getStr(eColor.id));
                             }
-                            updateScript(selectID);
+                            changeAndRedraw();
                         }
                     }
                 }
@@ -3397,7 +3340,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 } else {
                     stvArea.param.addProperty(PKjson.sysfurnID, sysfurnRec.getStr(eSysfurn.id));
                 }
-                updateScript(windowsID);
+                changeAndRedraw();
 
             }, qSysfurn, eFurniture.name);
 
@@ -3417,7 +3360,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 } else {
                     stvArea.param.addProperty(PKjson.typeOpen, typeopenRec.getInt(0));
                 }
-                updateScript(elemID);
+                changeAndRedraw();
 
             }, TypeOpen1.LEFT, TypeOpen1.LEFTUP, TypeOpen1.LEFMOV,
                     TypeOpen1.RIGH, TypeOpen1.RIGHUP, TypeOpen1.RIGMOV, TypeOpen1.UPPER, TypeOpen1.EMPTY);
@@ -3439,7 +3382,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 } else {
                     stvArea.param.addProperty(PKjson.colorKnob, colorRec.getStr(eColor.id));
                 }
-                updateScript(selectID);
+                changeAndRedraw();
 
             }, colorSet, true, false);
 
@@ -3463,7 +3406,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 } else {
                     stvArea.param.addProperty(PKjson.artiklKnob, artiklRec.getStr(eArtikl.id));
                 }
-                updateScript(stvorkaID);
+                changeAndRedraw();
 
             }, qResult);
 
@@ -3499,7 +3442,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     jsonStv.param.addProperty(PKjson.heightKnob, record.getInt(1));
                     txt31.setEditable(true);
                 }
-                updateScript(selectID);
+                changeAndRedraw();
 
             } catch (Exception e) {
                 System.err.println("Ошибка: " + e);
@@ -3537,7 +3480,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 } else {
                     glassElem.param.addProperty(PKjson.artglasID, artiklRec.getStr(eArtikl.id));
                 }
-                updateScript(selectID);
+                changeAndRedraw();
 
             }, qArtikl);
 
@@ -3577,7 +3520,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 } else {
                     stvArea.param.addProperty(PKjson.artiklLoop, artiklRec.getStr(eArtikl.id));
                 }
-                updateScript(selectID);
+                changeAndRedraw();
 
             }, qResult);
 
@@ -3599,7 +3542,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 } else {
                     stvArea.param.addProperty(PKjson.colorLoop, colorRec.getStr(eColor.id));
                 }
-                updateScript(selectID);
+                changeAndRedraw();
 
             }, colorSet, true, false);
 
@@ -3623,7 +3566,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 } else {
                     stvArea.param.addProperty(PKjson.artiklLock, artiklRec.getStr(eArtikl.id));
                 }
-                updateScript(selectID);
+                changeAndRedraw();
 
             }, qResult);
 
@@ -3645,7 +3588,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 } else {
                     stvArea.param.addProperty(PKjson.colorLock, colorRec.getStr(eColor.id));
                 }
-                updateScript(selectID);
+                changeAndRedraw();
 
             }, colorSet, true, false);
 
@@ -3698,7 +3641,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 } else {
                     stvArea.param.addProperty(PKjson.colorGlass, colorRec.getStr(eColor.id));
                 }
-                updateScript(selectID);
+                changeAndRedraw();
 
             }, colorSet, false, false);
 
@@ -3732,7 +3675,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 } else {
                     gsonElem.param.addProperty(PKjson.artiklID, artiklRec.getStr(eArtikl.id));
                 }
-                updateScript(selectID);
+                changeAndRedraw();
 
             }, qArtikl);
 
@@ -3756,7 +3699,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     } else {
                         mosqElem.gson.param.addProperty(PKjson.colorID1, colorRec.getStr(eColor.id));
                     }
-                    updateScript(selectID);
+                    changeAndRedraw();
 
                 }, colorSet, true, false);
             }
@@ -3782,7 +3725,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     } else {
                         mosqElem.gson.param.addProperty(PKjson.elementID, elementRec.getStr(eElement.id));
                     }
-                    updateScript(selectID);
+                    changeAndRedraw();
 
                 }, qElements, eElement.name);
             }
@@ -4028,6 +3971,11 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     btnIns.setEnabled(true);
                     btnDel.setEnabled(true);
                     btnFind.setEnabled(true);
+                    btnFind.setEnabled(true);
+                    btnCalc.setEnabled(true);
+                    btnF1.setEnabled(true);
+                    btnF2.setEnabled(true);
+                    btnF3.setEnabled(true);
                 }
                 if (tabb1.getSelectedIndex() == 1) {
                     canvas.init(wincalc());  //т.к. при смене вклвдки терятся keyPressed(KeyEvent event)
@@ -4035,12 +3983,20 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     btnIns.setEnabled(false);
                     btnDel.setEnabled(false);
                     btnFind.setEnabled(false);
+                    btnCalc.setEnabled(false);
+                    btnF1.setEnabled(false);
+                    btnF2.setEnabled(false);
+                    btnF3.setEnabled(false);                    
 
                 } else if (tabb1.getSelectedIndex() == 2) {
                     btnSet.setEnabled(true);
                     btnIns.setEnabled(true);
                     btnDel.setEnabled(true);
                     btnFind.setEnabled(true);
+                    btnCalc.setEnabled(true);
+                    btnF1.setEnabled(true);
+                    btnF2.setEnabled(true);
+                    btnF3.setEnabled(true);                    
 
                 }
             }
