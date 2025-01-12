@@ -854,20 +854,20 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     @Override
     public Query reload(boolean b) {
         try {
-            Wincalc win = wincalc();
+            Wincalc winc = wincalc();
 
             int index = UGui.getIndexRec(tab5);
             if (index != -1) {
-                String script = win.gson.toJson();
-                win.build(script);
-                win.imageIcon = Canvas.createIcon(win, 68);
+                String script = winc.gson.toJson();
+                winc.build(script);
+                winc.imageIcon = Canvas.createIcon(winc, 68);
                 if (b == true) {
                     Record sysprodRec = qSysprod.get(index);
                     sysprodRec.set(eSysprod.script, script);
-                    sysprodRec.set(eSysprod.values().length, win);
+                    sysprodRec.set(eSysprod.values().length, winc);
                 }
                 canvas.draw();
-                loadingTree2(win);
+                loadingTree2(winc);
                 selectionTree2();
             }
         } catch (Exception e) {

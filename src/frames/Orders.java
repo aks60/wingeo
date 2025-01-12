@@ -362,6 +362,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         }
     }
 
+    //Выбор другой конструкции
     public void selectionTab2() {
         Arrays.asList(tab1, tab2, tab3, tab4).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
         int index = UGui.getIndexRec(tab2);
@@ -371,14 +372,16 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             //App.Top.frame.setTitle(UGui.designTitle());
             Object w = prjprodRec.get(ePrjprod.values().length);
             if (w instanceof Wincalc) { //прорисовка окна               
-                Wincalc win = (Wincalc) w;
+                Wincalc winc = (Wincalc) w;
+                
+                winc.actionEvent = this.actionEvent;
 
-                GsonElem.setMaxID(win); //установим генератор идентификаторов  
+                GsonElem.setMaxID(winc); //установим генератор идентификаторов  
 
-                scene.init(win);
+                scene.init(winc);
                 canvas.draw();
 
-                loadingTree(win);
+                loadingTree(winc);
 
                 winTree.setSelectionInterval(0, 0);
             }
@@ -3901,6 +3904,12 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private javax.swing.JTree winTree;
     // End of variables declaration//GEN-END:variables
 // </editor-fold> 
+
+    private ListenerAction actionEvent = () -> {
+        Wincalc w = wincalc();
+        txt17.setText(UCom.format(w.width(), 1));
+        txt22.setText(UCom.format(w.height(), 1));
+    };
 
     private void initElements() {
         new FrameToFile(this, btnClose);
