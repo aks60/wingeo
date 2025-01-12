@@ -708,6 +708,42 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         return null;
     }
 
+    //Изменить скрипт в базе и перерисовать
+    public void changeAndRedraw() {
+        try {
+            //Сохраним скрипт в базе
+            String script = wincalc().gson.toJson();
+            Record sysprodRec = qPrjprod.get(UGui.getIndexRec(tab5));
+            sysprodRec.set(ePrjprod.script, script);
+            //qSysprod.update(sysprodRec);
+
+            //Экземпляр нового скрипта
+            Wincalc winc = wincalc();
+            winc.build(script);
+            winc.imageIcon = Canvas.createIcon(winc, 68);
+            //sysprodRec.setNo(ePrjprod.values().length, winc);
+
+            //Запомним курсор
+            DefMutableTreeNode selectNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
+            double id = (selectNode != null) ? selectNode.com5t().id : -1;
+
+            //Перегрузим winTree
+            loadingTree(winc);
+
+            //Установим курсор
+            UGui.selectionPathWin(id, winTree);
+
+            //Перерисуем конструкцию
+            canvas.init(winc);
+            canvas.draw();
+
+            //Обновим поля форм
+            selectionTree();
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:Order.updateScript() " + e);
+        }
+    }    
     public void updateScript(double selectID) {
         try {
             //Сохраним скрипт в базе
