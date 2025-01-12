@@ -101,6 +101,9 @@ import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import common.listener.ListenerReload;
+import static domain.eSysprod.id;
+import static domain.eSysprod.up;
+import static domain.eSysprod.values;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 import javax.swing.JTree;
@@ -143,6 +146,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         tabb1.setSelectedIndex(4);
     }
 
+    //При открытии с поиском из конструктива 
+    //(составов и фурнитуры) см. btnFind2
     public Systree(int nuni, int mode) {
         initComponents();
         scene = new Scene(canvas, this);
@@ -361,9 +366,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         for (Record record : qSysprod.table(eSysprod.up)) {
             try {
                 String script = record.getStr(eSysprod.script);
-                Wincalc iwin2 = new Wincalc(script);
-                iwin2.imageIcon = Canvas.createIcon(iwin2, 68);
-                record.add(iwin2);
+                Wincalc iwinc = new Wincalc(script);
+                iwinc.imageIcon = Canvas.createIcon(iwinc, 68);
+                record.add(iwinc);
 
             } catch (Exception e) {
                 System.err.println("Ошибка:Systree.loadingTab5() " + e);
@@ -803,31 +808,32 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }
 
-    public void updateScript(double selectID) {
+    //Сохранить скрипт в базе и перерисовать
+    public void saveAndRedraw() {
         try {
             //Сохраним скрипт в базе
             String script = wincalc().gson.toJson();
             Record sysprodRec = qSysprod.get(UGui.getIndexRec(tab5));
-            sysprodRec.set(eSysprod.script, script);
-            qSysprod.update(sysprodRec);
+            sysprodRec.setNo(eSysprod.script, script);
+            //qSysprod.update(sysprodRec);
 
             //Экземпляр нового скрипта
-            Wincalc iwin = new Wincalc(script);
-            iwin.imageIcon = Canvas.createIcon(iwin, 68);
-            sysprodRec.setNo(eSysprod.values().length, iwin);
+            Wincalc winc = new Wincalc(script);
+            winc.imageIcon = Canvas.createIcon(winc, 68);
+            sysprodRec.setNo(eSysprod.values().length, winc);
 
             //Запомним курсор
             DefMutableTreeNode selectNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             double id = (selectNode != null) ? selectNode.com5t().id : -1;
 
             //Перегрузим winTree
-            loadingTree2(iwin);
+            loadingTree2(winc);
 
             //Установим курсор
             UGui.selectionPathWin(id, winTree);
 
             //Перерисуем конструкцию
-            canvas.init(iwin);
+            canvas.init(winc);
             canvas.draw();
 
             //Обновим поля форм
@@ -841,45 +847,54 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private Wincalc wincalc() {
         int index = UGui.getIndexRec(tab5);
         if (index != -1) {
-            Record sysprodRec = qSysprod.table(eSysprod.up).get(index);
-            Object win = sysprodRec.get(eSysprod.values().length);
-            if (win instanceof Wincalc) {
-                Wincalc winc = (Wincalc) win;
-                return winc;
+            Record sysprodRec = qSysprod.get(index);
+            Object winc = sysprodRec.get(eSysprod.values().length);
+            if (winc instanceof Wincalc) {
+                return (Wincalc) winc;
             }
         }
         return null;
     }
 
-    @Override
-    public Query reload(boolean b) {
+    //Отменить все изменения
+    private void undoChanges() {
         try {
-            Wincalc winc = wincalc();
-
             int index = UGui.getIndexRec(tab5);
             if (index != -1) {
-                String script = winc.gson.toJson();
+
+                String script = qSysprod.get(index).getStr(eSysprod.script);
+                Wincalc winc = wincalc();
                 winc.build(script);
-                winc.imageIcon = Canvas.createIcon(winc, 68);
-                if (b == true) {
-                    Record sysprodRec = qSysprod.get(index);
-                    sysprodRec.set(eSysprod.script, script);
-                    sysprodRec.set(eSysprod.values().length, winc);
-                }
-                canvas.draw();
-                loadingTree2(winc);
-                selectionTree2();
+                selectionTab5();
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.reload() " + e);
+            System.err.println("Ошибка:Systree.undoChanges() " + e);
         }
-        return qSysprod;
     }
 
-    @Override
-    public void action() {
-        selectionTree1();
-    }
+    //Сохранить скрипт в кэше и перерисовать
+//    private Query saveAndRedraw(boolean b) {
+//        try {
+//            Wincalc winc = wincalc();
+//            int index = UGui.getIndexRec(tab5);
+//            if (index != -1) {
+//                String script = winc.gson.toJson();
+//                winc.build(script);
+//                winc.imageIcon = Canvas.createIcon(winc, 68);
+//                if (b == true) {
+//                    Record sysprodRec = qSysprod.get(index);
+//                    sysprodRec.set(eSysprod.script, script);
+//                    //sysprodRec.set(eSysprod.values().length, winc);
+//                }
+//                canvas.draw();
+//                loadingTree2(winc);
+//                selectionTree2();
+//            }
+//        } catch (Exception e) {
+//            System.err.println("Ошибка:Systree.saveToCacheAndRedraw() " + e);
+//        }
+//        return qSysprod;
+//    }
 
     private void setText(JTextField comp, Object txt) {
         if (txt == null) {
@@ -897,6 +912,17 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             btn.setText("...");
             btn.setIcon(null);
         }
+    }
+
+    @Override
+    public Query reload(boolean b) {
+        saveAndRedraw();
+        return null;
+    }
+
+    @Override
+    public void action() {
+        undoChanges();
     }
 
     @SuppressWarnings("unchecked")
@@ -3835,7 +3861,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         } else {
                             gsonRama.param.addProperty(PKjson.sysprofID, sysprofRec.getInt(eSysprof.id));
                         }
-                        updateScript(selectID);
+                        saveAndRedraw();
 
                     } else if (winNode.com5t().type == enums.Type.STVORKA_SIDE) { //рама створки
                         double stvId = winNode.com5t().owner.id;
@@ -3857,7 +3883,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         } else {
                             jso.addProperty(PKjson.sysprofID, sysprofRec.getStr(eSysprof.id));
                         }
-                        updateScript(selectID);
+                        saveAndRedraw();
 
                     } else {  //импост
                         double elemId = winNode.com5t().id;
@@ -3867,7 +3893,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         } else {
                             gsonElem.param.addProperty(PKjson.sysprofID, sysprofRec.getInt(eSysprof.id));
                         }
-                        updateScript(selectID);
+                        saveAndRedraw();
                     }
                 }, qSysprofFilter);
             }
@@ -3911,7 +3937,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     } else {
                         jso.addProperty(colorKey, colorRec.getStr(eColor.id));
                     }
-                    updateScript(selectID);
+                    saveAndRedraw();
 
                 } else if (winNode.com5t().type == enums.Type.FRAME_SIDE) {
                     for (GsonElem elem : parentArea.childs) {
@@ -3921,7 +3947,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                             } else {
                                 elem.param.addProperty(colorKey, colorRec.getStr(eColor.id));
                             }
-                            updateScript(selectID);
+                            saveAndRedraw();
                         }
                     }
                 } else if (winNode.com5t().type == enums.Type.IMPOST
@@ -3934,7 +3960,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                             } else {
                                 elem.param.addProperty(colorKey, colorRec.getStr(eColor.id));
                             }
-                            updateScript(selectID);
+                            saveAndRedraw();
                         }
                     }
                 }
@@ -3964,7 +3990,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     } else {
                         winc.gson.color3 = colorRec.getInt(eColor.id);
                     }
-                    updateScript(selectID);
+                    saveAndRedraw();
                 }
             };
             if (colorArr.length == 0) {
@@ -4005,7 +4031,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 } else {
                     glassElem.param.addProperty(PKjson.artglasID, artiklRec.getStr(eArtikl.id));
                 }
-                updateScript(selectID);
+                saveAndRedraw();
 
             }, qArtikl);
 
@@ -4028,7 +4054,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 } else {
                     stvArea.param.addProperty(PKjson.sysfurnID, sysfurnRec.getStr(eSysfurn.id));
                 }
-                updateScript(windowsID);
+                saveAndRedraw();
 
             }, qSysfurn, eFurniture.name);
 
@@ -4048,7 +4074,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 } else {
                     stvArea.param.addProperty(PKjson.typeOpen, typeopenRec.getInt(0));
                 }
-                updateScript(elemID);
+                saveAndRedraw();
 
             }, TypeOpen1.REQUEST, TypeOpen1.LEFT, TypeOpen1.LEFTUP, TypeOpen1.LEFMOV,
                     TypeOpen1.RIGH, TypeOpen1.RIGHUP, TypeOpen1.RIGMOV, TypeOpen1.UPPER, TypeOpen1.EMPTY);
@@ -4072,7 +4098,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 } else {
                     stvArea.param.addProperty(PKjson.artiklKnob, artiklRec.getStr(eArtikl.id));
                 }
-                updateScript(stvorkaID);
+                saveAndRedraw();
 
             }, qResult);
 
@@ -4105,7 +4131,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         stvArea.param.addProperty(PKjson.positionKnob, LayoutKnob.VAR.id);
                         stvArea.param.addProperty(PKjson.heightKnob, record.getInt(1));
                     }
-                    updateScript(selectID);
+                    saveAndRedraw();
                 }
 
             } catch (Exception e) {
@@ -4128,7 +4154,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 } else {
                     stvArea.param.addProperty(PKjson.colorKnob, colorRec.getStr(eColor.id));
                 }
-                updateScript(selectID);
+                saveAndRedraw();
 
             }, colorSet, true, false);
 
@@ -4169,7 +4195,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 } else {
                     stvArea.param.addProperty(PKjson.artiklLoop, artiklRec.getStr(eArtikl.id));
                 }
-                updateScript(selectID);
+                saveAndRedraw();
 
             }, qResult);
 
@@ -4194,7 +4220,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 } else {
                     stvArea.param.addProperty(PKjson.artiklLock, artiklRec.getStr(eArtikl.id));
                 }
-                updateScript(selectID);
+                saveAndRedraw();
 
             }, qResult);
 
@@ -4216,7 +4242,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 } else {
                     stvArea.param.addProperty(PKjson.colorLoop, colorRec.getStr(eColor.id));
                 }
-                updateScript(selectID);
+                saveAndRedraw();
 
             }, colorSet, true, false);
 
@@ -4238,7 +4264,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 } else {
                     stvArea.param.addProperty(PKjson.colorLock, colorRec.getStr(eColor.id));
                 }
-                updateScript(selectID);
+                saveAndRedraw();
 
             }, colorSet, true, false);
 
@@ -4248,7 +4274,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_colorFromLock
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-
+        int index = UGui.getIndexRec(tab5);
+        if (index != -1) {
+            Record sysprodRow = qSysprod.get(index);
+            int m = 0;
+        }
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void colorFromGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromGlass
@@ -4264,7 +4294,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 } else {
                     stvArea.param.addProperty(PKjson.colorGlass, colorRec.getStr(eColor.id));
                 }
-                updateScript(selectID);
+                saveAndRedraw();
 
             }, colorSet, false, false);
 
@@ -4289,7 +4319,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 IntStream.range(0, qSysprof.size()).forEach(i -> qSysprof.set(i + 1, i, eSysprof.npp));
                 ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
                 UGui.setSelectedIndex(tab2, index2);
-                qSysprof.execsql();
+                //qSysprof.execsql();
 
             } else if (tab3.getBorder() != null) {
                 if (btn == btnMoveD && tab3.getSelectedRow() < tab3.getRowCount() - 1) {
@@ -4303,7 +4333,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 IntStream.range(0, qSysfurn.size()).forEach(i -> qSysfurn.set(i + 1, i, eSysfurn.npp));
                 ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
                 UGui.setSelectedIndex(tab3, index2);
-                qSysfurn.execsql();
+                //qSysfurn.execsql();
 
             } else if (tab5.getBorder() != null) {
                 if (btn == btnMoveD && tab5.getSelectedRow() < tab5.getRowCount() - 1) {
@@ -4315,7 +4345,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 IntStream.range(0, qSysprod.size()).forEach(i -> qSysprod.set(i + 1, i, eSysprod.npp));
                 ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
                 UGui.setSelectedIndex(tab5, index2);
-                qSysprod.execsql();
+                //qSysprod.execsql();
             }
         }
     }//GEN-LAST:event_btnMove
@@ -4350,7 +4380,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         }
                     }
                 }
-                updateScript(selectID);
+                saveAndRedraw();
 
             }, qArtikl);
 
@@ -4377,7 +4407,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     } else {
                         mosqElem.gson.param.addProperty(PKjson.elementID, elementRec.getStr(eElement.id));
                     }
-                    updateScript(selectID);
+                    saveAndRedraw();
 
                 }, qElements, eElement.name);
             }
@@ -4421,7 +4451,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     classElem.gson.param.remove(PKjson.horRasc);
                     classElem.gson.param.remove(PKjson.verRasc);
                 }
-                updateScript(selectID);
+                saveAndRedraw();
 
             }, qArtikl);
 
@@ -4443,7 +4473,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 } else {
                     glassElem.param.addProperty(PKjson.colorRasc, colorRec.getStr(eColor.id));
                 }
-                updateScript(selectID);
+                saveAndRedraw();
 
             }, colorSet, false, false);
 
@@ -4456,14 +4486,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         double selectID = winNode.com5t().id;
         GsonElem glassElem = UCom.gson(wincalc().listAll, selectID);
         glassElem.param.addProperty(PKjson.horRasc, spinHor.getValue().toString());
-        updateScript(selectID);
+        saveAndRedraw();
     }//GEN-LAST:event_spinHorStateChanged
 
     private void spinVertStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinVertStateChanged
         double selectID = winNode.com5t().id;
         GsonElem glassElem = UCom.gson(wincalc().listAll, selectID);
         glassElem.param.addProperty(PKjson.verRasc, spinVert.getValue().toString());
-        updateScript(selectID);
+        saveAndRedraw();
     }//GEN-LAST:event_spinVertStateChanged
 
     private void mosqToColor(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mosqToColor
@@ -4481,7 +4511,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     } else {
                         elemMosq.gson.param.addProperty(PKjson.colorID1, colorRec.getStr(eColor.id));
                     }
-                    updateScript(selectID);
+                    saveAndRedraw();
 
                 }, colorSet, true, false);
             }
@@ -4648,7 +4678,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 } else {
                     stvArea.param.addProperty(PKjson.artiklKnob, artiklRec.getStr(eArtikl.id));
                 }
-                updateScript(stvorkaID);
+                saveAndRedraw();
 
             }, qResult);
 
