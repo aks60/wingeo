@@ -470,7 +470,7 @@ public class Test {
             new Coordinate(0, 0, 1)};
         Polygon poly = gf.createPolygon(coord1);
         LineString line = gf.createLineString(new Coordinate[]{new Coordinate(1200, 0), new Coordinate(1300, 100)});
-        Geometry[] geom = UGeo.splitPolygon(poly, line);
+        Geometry[] geom = UGeo.splitPolygon2(poly, line);
 
         mpol = geom[0];
         mlin = geom[1];
