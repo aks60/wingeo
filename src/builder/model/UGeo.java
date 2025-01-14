@@ -190,13 +190,13 @@ public class UGeo {
         for (int i = 0; i < cooL.length; i++) {
             double d = cooL[i].z;
             if (d % 1 != 0) {
-                PRINT("UGeo.splitPolygon: ", cooL);
+                PRINT("Îøèáêà:UGeo.splitPolygon: ", cooL);
             }
         }
         for (int i = 0; i < cooR.length; i++) {
             double d = cooR[i].z;
             if (d % 1 != 0) {
-                PRINT("UGeo.splitPolygon: ", cooR);
+                PRINT("Îøèáêà:UGeo.splitPolygon: ", cooR);
             }
         }
         cooL[0].z = cooL[cooL.length - 1].z;
