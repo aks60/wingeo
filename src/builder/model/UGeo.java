@@ -125,8 +125,88 @@ public class UGeo {
         return null;
     }
 
+    //Новая реализация с использованием Envelope        
+    public static Geometry[] splitPolygon(Geometry poly, ElemCross impost) {
+        boolean f = true;
+        List<Coordinate> cooEnvL = new ArrayList<Coordinate>(), cooImp = new ArrayList<Coordinate>();
+        LineSegment imp = normalizeSegm(new LineSegment(new Coordinate(impost.x1(), impost.y1()), new Coordinate(impost.x2(), impost.y2())));
+        imp.normalize();
+        
+        Envelope env = poly.getEnvelopeInternal();
+        Coordinate cooEnv[] = {new Coordinate(env.getMinX(), env.getMinY()),
+            new Coordinate(env.getMinX(), env.getMaxY()), new Coordinate(env.getMaxX(), env.getMaxY()),
+            new Coordinate(env.getMaxX(), env.getMinY()), new Coordinate(env.getMinX(), env.getMinY()),};
+
+        //Координаты левого конверта
+        for (int i = 0; i < 4; i++) {
+            if (f) {
+                cooEnvL.add(cooEnv[i]);
+            }
+            Coordinate cross = Intersection.lineSegment(imp.p0, imp.p1, cooEnv[i], cooEnv[i + 1]);
+
+            if (cross != null) {
+                cooEnvL.add(cross);
+                f = !f;
+            }
+        }
+        cooEnvL.add(cooEnv[0]);
+
+        //Координаты импоста
+        Coordinate coo[] = poly.getCoordinates();
+        for (int i = 1; i < coo.length; i++) {
+            Coordinate crosP = Intersection.lineSegment(imp.p0, imp.p1, coo[i - 1], coo[i]); //точка пересечения сегмента и линии                
+            if (crosP != null) {
+                crosP.z = (cooImp.isEmpty()) ? impost.id : coo[i - 1].z;
+                cooImp.add(crosP);
+            }
+        }
+
+        //Левый, правый полигон
+        Geometry envelope = gf.createPolygon(cooEnvL.toArray(new Coordinate[0])); //левый конверт
+        Geometry polyL = poly.intersection(envelope); //левый полигон
+        Geometry polyR = poly.difference(envelope); //правый полигон
+        polyL.normalize();
+        polyR.normalize();
+
+        //Заполним z ключи
+        Coordinate cooL[] = polyL.getCoordinates();
+        Coordinate cooR[] = polyR.getCoordinates();
+        
+        for (int i = 0; i < cooL.length; i++) {
+            if (cooImp.get(0).equals(cooL[i])) {
+                cooL[i].z = cooImp.get(0).z;
+            } else if (cooImp.get(1).equals(cooL[i])) {
+                cooL[i].z = cooImp.get(1).z;
+            }
+        }
+        for (int i = 0; i < cooR.length; i++) {
+            if (cooImp.get(0).equals(cooR[i])) {
+                cooR[i].z = cooImp.get(0).z;
+            } else if (cooImp.get(1).equals(cooR[i])) {
+                cooR[i].z = cooImp.get(1).z;
+            }
+        }
+
+        for (int i = 0; i < cooL.length; i++) {
+            double d = cooL[i].z;
+            if (d % 1 != 0) {
+                PRINT("UGeo.splitPolygon: ", cooL);
+            }
+        }
+        for (int i = 0; i < cooR.length; i++) {
+            double d = cooR[i].z;
+            if (d % 1 != 0) {
+                PRINT("UGeo.splitPolygon: ", cooR);
+            }
+        }
+        cooL[0].z = cooL[cooL.length - 1].z;
+        cooR[0].z = cooR[cooR.length - 1].z;
+
+        return new Geometry[]{Com5t.gf.createLineString(cooImp.toArray(new Coordinate[0])), polyL, polyR};
+    }
+
     //Пилим многоугольник
-    public static Geometry[] splitPolygon(Geometry geom, ElemCross impost) {
+    public static Geometry[] splitPolygonOld(Geometry geom, ElemCross impost) {
         try {
             Geometry poly = geom.getGeometryN(0);
             HashSet<Coordinate> checkHs = new HashSet<Coordinate>();
@@ -197,56 +277,6 @@ public class UGeo {
             System.err.println("Ошибка:UGeo.splitPolygon()" + e);
             return null;
         }
-    }
-
-    //Новая реализация с использованием Envelope        
-    public static Geometry[] splitPolygon2(Geometry poly, ElemCross impost) {
-        boolean f = true;
-        LineSegment imp = normalizeSegm(new LineSegment(new Coordinate(impost.x1(), impost.y1()), new Coordinate(impost.x2(), impost.y2())));
-        List<Coordinate> list = new ArrayList<Coordinate>(), cros2 = new ArrayList<Coordinate>();
-
-        Envelope env = poly.getEnvelopeInternal();
-        Coordinate coo[] = {new Coordinate(env.getMinX(), env.getMinY()),
-            new Coordinate(env.getMinX(), env.getMaxY()), new Coordinate(env.getMaxX(), env.getMaxY()),
-            new Coordinate(env.getMaxX(), env.getMinY()), new Coordinate(env.getMinX(), env.getMinY()),};
-
-        for (int i = 0; i < 4; i++) {
-            if (f) {
-                list.add(coo[i]);
-            }
-            Coordinate cross = Intersection.lineSegment(imp.p0, imp.p1, coo[i], coo[i + 1]);
-
-            if (cross != null) {
-                list.add(cross);
-                f = !f;
-            }
-        }
-        list.add(coo[0]);
-        Geometry poly0 = gf.createPolygon(list.toArray(new Coordinate[0]));
-        Geometry poly1 = poly.intersection(poly0);
-        Geometry poly2 = poly.difference(poly0);
-        poly1.normalize();
-        poly2.normalize();
-        Coordinate coo1[] = poly1.getCoordinates();
-        Coordinate coo2[] = poly2.getCoordinates();
-
-        for (int i = 1; i < coo1.length; i++) {
-            for (int k = 1; k < coo2.length; k++) {
-                if (coo1[i].equals(coo2[k])) {
-                    cros2.add(coo1[i]);
-                    if ((f = !f) == false) {
-                        coo2[k].z = coo1[i - 1].z;
-                        coo1[i].z = impost.id;
-                    } else {
-                        coo1[i].z = coo2[k - 1].z;
-                        coo2[k].z = impost.id;
-                    }
-                }
-            }
-        }
-        coo1[0].z = coo1[coo1.length - 1].z;
-        coo2[0].z = coo2[coo2.length - 1].z;
-        return new Geometry[]{Com5t.gf.createLineString(cros2.toArray(new Coordinate[0])), poly1, poly2};
     }
 
     public static Polygon buffer(Geometry line, Map<Double, Double> hm) {
@@ -521,7 +551,7 @@ public class UGeo {
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">  
     //Новая реализация с использованием Envelope см. Test.draw8()
-    public static Geometry[] splitPolygon2(Geometry poly, LineString line) {
+    public static Geometry[] splitPolygon6(Geometry poly, LineString line) {
         double impID = 8;
         boolean f = true;
         List<Coordinate> ls = new ArrayList<Coordinate>();
