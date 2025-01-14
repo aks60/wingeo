@@ -130,7 +130,6 @@ public class UGeo {
         boolean f = true;
         List<Coordinate> cooEnvL = new ArrayList<Coordinate>(), cooImp = new ArrayList<Coordinate>();
         LineSegment imp = normalizeSegm(new LineSegment(new Coordinate(impost.x1(), impost.y1()), new Coordinate(impost.x2(), impost.y2())));
-        imp.normalize();
         
         Envelope env = poly.getEnvelopeInternal();
         Coordinate cooEnv[] = {new Coordinate(env.getMinX(), env.getMinY()),
