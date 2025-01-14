@@ -328,7 +328,7 @@ public class GsonScript {
         } else if (base_name.toLowerCase().contains("alutech3")) {
             //return Alutech3.script(prj);
 
-        } else if (base_name.toLowerCase().contains("bimax")) {
+        } else if (List.of("bimax", "binet").contains(base_name.toLowerCase())) {
             return Bimax.systemScript(prj);
 
         } else if (base_name.toLowerCase().contains("vidnal")) {

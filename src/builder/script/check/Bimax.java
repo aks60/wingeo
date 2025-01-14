@@ -21,6 +21,17 @@ public final class Bimax {
             rootGson.addArea(new GsonElem(Type.STVORKA))
                     .addElem(new GsonElem(Type.GLASS));
 
+        } else if (prj == 777001) {
+            rootGson = new GsonRoot(389458, prj, 1, 54, Type.RECTANGL, "KBE / KBE Эксперт / 1 ОКНА / Открывание внутрь (xxx)", 1009, 1009, 1009); 
+            rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 0.0))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 1100.0352526850427))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 1100.0352526850427))
+                    .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0));
+            
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 549.9916873352499, 900.0, 549.9916873352499));
+            rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
+            
         } else if (prj == 508852) { //PS перепутаны системы!
             rootGson = new GsonRoot(427640, prj, 1, 237, Type.RECTANGL, "Teplowin 500 / Estetic / 1 ОКНА.  PS перепутаны системы!", 1009, 1009, 1009);
             rootGson.addElem(new GsonElem(Type.FRAME_SIDE, 0.0, 0.0))

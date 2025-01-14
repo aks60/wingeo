@@ -3738,7 +3738,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             } else if (tab5.getBorder() != null) {
                 if (sysNode != null && sysNode.isLeaf()) {
                     if (evt.getSource() instanceof JMenuItem && eProp.dev == true) {
-                        testBimax();
+                        loadLocalScript();
                     } else {
                         ProgressBar.create(Systree.this, new ListenerFrame() {
                             public void actionRequest(Object obj) {
@@ -4995,7 +4995,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         filterTable.getTxt().grabFocus();
     }
 
-    private void testBimax() {
+    //Грузим тестовые скрипты
+    private void loadLocalScript() {
         try {
             Object prj = JOptionPane.showInputDialog(Systree.this, "Номер проекта", "Проект", JOptionPane.QUESTION_MESSAGE);
             if (prj != null) {
@@ -5014,7 +5015,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 UGui.scrollRectToIndex(qSysprod.size() - 1, tab5);
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.testBimax()");
+            System.err.println("Ошибка:Systree.loadLocalScript()");
         }
     }
 }
