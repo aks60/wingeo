@@ -249,7 +249,7 @@ public class UGeo {
         }
         coo1[0].z = coo1[coo1.length - 1].z;
         coo2[0].z = coo2[coo2.length - 1].z;
-        return new Geometry[]{Com5t.gf.createLineString(cros2.toArray(new Coordinate[0])),poly1, poly2};
+        return new Geometry[]{Com5t.gf.createLineString(cros2.toArray(new Coordinate[0])), poly1, poly2};
     }
 
     public static Geometry[] splitPolygon(Geometry poly, LineString imp) {
@@ -396,7 +396,7 @@ public class UGeo {
         }
         return result;
     }
-    
+
     public static Polygon ringToPolygon(Geometry line, Geometry geom) {
 
         Coordinate coo1[] = line.getGeometryN(0).getCoordinates();
@@ -760,7 +760,7 @@ public class UGeo {
         Geometry geo = vb.getResult();
         return ringToPolygon(line, geo);
     }
-    
+
     //Обводка полигона, работает быстро. При вырождении полигона теряются p.z
     public static Polygon bufferUnion(Geometry str, ArrayList<? extends Com5t> list, Map<Double, Double> hm) {
         try {
@@ -905,6 +905,14 @@ public class UGeo {
             list.add("{" + UCom.format(coo[i].x, 2) + " " + UCom.format(coo[i].y, 2) + " " + UCom.format(coo[i].z, 2) + "}");
         }
         System.out.println(s + " " + list);
+    }
+
+    public static void PRINT(Map<Integer, Coordinate> map) {
+        List<String> list = new ArrayList<String>();
+        for (Map.Entry<Integer, Coordinate> coo : map.entrySet()) {
+            list.add("{" + UCom.format(coo.getValue().x, 2) + " " + UCom.format(coo.getValue().y, 2) + " " + UCom.format(coo.getValue().z, 2) + "}");
+        }
+        System.out.println(list);
     }
 
     public static void PRINT(Coordinate... coo) {
