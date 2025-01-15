@@ -191,7 +191,9 @@ public class UGeo {
                 cooR[i].z = cooImpR.get(1).z;
             }
         }
-
+        //cooL[0].z = cooL[cooL.length - 1].z;
+        //cooR[0].z = cooR[cooR.length - 1].z;
+        
         //Test проверка
         for (int i = 0; i < cooL.length; i++) {
             if (cooL[i].z % 1 != 0) {
@@ -203,6 +205,7 @@ public class UGeo {
                 PRINT("Ошибка*:UGeo.splitPolygon: ", cooR);
             }
         }
+        
         return new Geometry[]{Com5t.gf.createLineString(cooImpL.toArray(new Coordinate[0])), polyL, polyR};
     }
 
