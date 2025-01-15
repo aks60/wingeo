@@ -29,7 +29,8 @@ public final class Bimax {
                     .addElem(new GsonElem(Type.FRAME_SIDE, 900.0, 0.0));
             
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 600.0, 900.0, 600.0));
+            //rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 600.0, 900.0, 600.0));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 450.0, 0.0, 450.0, 1200.0));
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             
         } else if (prj == 508852) { //PS перепутаны системы!
