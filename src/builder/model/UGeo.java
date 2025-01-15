@@ -126,11 +126,12 @@ public class UGeo {
     }
 
     //Новая реализация с использованием Envelope        
-    public static Geometry[] splitPolygon(Geometry poly, ElemCross impost) {
+    public static Geometry[] splitPolygonNew(Geometry poly, ElemCross impost) {
         boolean f = true;
-        List<Coordinate> cooEnvL = new ArrayList<Coordinate>(), cooImp = new ArrayList<Coordinate>();
+        List<Coordinate> cooEnvL = new ArrayList<Coordinate>(); //левый конверт
+        List<Coordinate> cooImpL = new ArrayList<Coordinate>(), cooImpR = new ArrayList<Coordinate>();;
+
         LineSegment imp = normalizeSegm(new LineSegment(new Coordinate(impost.x1(), impost.y1()), new Coordinate(impost.x2(), impost.y2())));
-        
         Envelope env = poly.getEnvelopeInternal();
         Coordinate cooEnv[] = {new Coordinate(env.getMinX(), env.getMinY()),
             new Coordinate(env.getMinX(), env.getMaxY()), new Coordinate(env.getMaxX(), env.getMaxY()),
@@ -155,8 +156,13 @@ public class UGeo {
         for (int i = 1; i < coo.length; i++) {
             Coordinate crosP = Intersection.lineSegment(imp.p0, imp.p1, coo[i - 1], coo[i]); //точка пересечения сегмента и линии                
             if (crosP != null) {
-                crosP.z = (cooImp.isEmpty()) ? impost.id : coo[i - 1].z;
-                cooImp.add(crosP);
+                if (cooImpL.isEmpty()) {
+                    cooImpL.add(new Coordinate(crosP.x, crosP.y, impost.id));
+                    cooImpR.add(new Coordinate(crosP.x, crosP.y, coo[i - 1].z));
+                } else {
+                    cooImpL.add(new Coordinate(crosP.x, crosP.y, coo[i - 1].z));
+                    cooImpR.add(new Coordinate(crosP.x, crosP.y, impost.id));
+                }
             }
         }
 
@@ -170,42 +176,38 @@ public class UGeo {
         //Заполним z ключи
         Coordinate cooL[] = polyL.getCoordinates();
         Coordinate cooR[] = polyR.getCoordinates();
-        
+
         for (int i = 0; i < cooL.length; i++) {
-            if (cooImp.get(0).equals(cooL[i])) {
-                cooL[i].z = cooImp.get(0).z;
-            } else if (cooImp.get(1).equals(cooL[i])) {
-                cooL[i].z = cooImp.get(1).z;
+            if (cooImpL.get(0).equals(cooL[i])) {
+                cooL[i].z = cooImpL.get(0).z;
+            } else if (cooImpL.get(1).equals(cooL[i])) {
+                cooL[i].z = cooImpL.get(1).z;
             }
         }
         for (int i = 0; i < cooR.length; i++) {
-            if (cooImp.get(0).equals(cooR[i])) {
-                cooR[i].z = cooImp.get(0).z;
-            } else if (cooImp.get(1).equals(cooR[i])) {
-                cooR[i].z = cooImp.get(1).z;
+            if (cooImpR.get(0).equals(cooR[i])) {
+                cooR[i].z = cooImpR.get(0).z;
+            } else if (cooImpR.get(1).equals(cooR[i])) {
+                cooR[i].z = cooImpR.get(1).z;
             }
         }
 
+        //Test проверка
         for (int i = 0; i < cooL.length; i++) {
-            double d = cooL[i].z;
-            if (d % 1 != 0) {
-                PRINT("Ошибка:UGeo.splitPolygon: ", cooL);
+            if (cooL[i].z % 1 != 0) {
+                PRINT("Ошибка*:UGeo.splitPolygon: ", cooL);
             }
         }
         for (int i = 0; i < cooR.length; i++) {
-            double d = cooR[i].z;
-            if (d % 1 != 0) {
-                PRINT("Ошибка:UGeo.splitPolygon: ", cooR);
+            if (cooR[i].z % 1 != 0) {
+                PRINT("Ошибка*:UGeo.splitPolygon: ", cooR);
             }
         }
-        cooL[0].z = cooL[cooL.length - 1].z;
-        cooR[0].z = cooR[cooR.length - 1].z;
-
-        return new Geometry[]{Com5t.gf.createLineString(cooImp.toArray(new Coordinate[0])), polyL, polyR};
+        return new Geometry[]{Com5t.gf.createLineString(cooImpL.toArray(new Coordinate[0])), polyL, polyR};
     }
 
     //Пилим многоугольник
-    public static Geometry[] splitPolygonOld(Geometry geom, ElemCross impost) {
+    public static Geometry[] splitPolygon(Geometry geom, ElemCross impost) {
         try {
             Geometry poly = geom.getGeometryN(0);
             HashSet<Coordinate> checkHs = new HashSet<Coordinate>();

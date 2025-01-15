@@ -205,7 +205,7 @@ public abstract class ElemSimple extends Com5t {
 
     private void moveXY(double x, double y) {
         
-        if (x > 0 && y > 0) {
+        if (x > 0 || y > 0) {
             if (List.of(Layout.BOTT, Layout.HORIZ).contains(layout())) {
                 if (passMask[0] == 0) {
                     this.y1(y);

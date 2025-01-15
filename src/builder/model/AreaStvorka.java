@@ -152,7 +152,7 @@ public class AreaStvorka extends AreaSimple {
 
             //Полигон створки с учётом нахлёста 
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            Polygon stvOuter = buffer(this.frameBox, winc.listElem, -dh); //полигон векторов сторон створки с учётом нахл. 
+            Polygon stvOuter = buffer(this.frameBox, winc.listElem, -dh); //полигон векторов сторон створки с учётом нахл.
 
             //Если стороны ств. ещё не созданы 
             if (this.frames.isEmpty()) {
