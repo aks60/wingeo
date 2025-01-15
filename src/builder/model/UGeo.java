@@ -129,10 +129,11 @@ public class UGeo {
     public static Geometry[] splitPolygonNew(Geometry poly, ElemCross impost) {
         boolean f = true;
         List<Coordinate> cooEnvL = new ArrayList<Coordinate>(); //левый конверт
-        List<Coordinate> cooImpL = new ArrayList<Coordinate>(), cooImpR = new ArrayList<Coordinate>();;
+        List<Coordinate> cooImp = new ArrayList<Coordinate>();
 
         LineSegment imp = normalizeSegm(new LineSegment(new Coordinate(impost.x1(), impost.y1()), new Coordinate(impost.x2(), impost.y2())));
         Envelope env = poly.getEnvelopeInternal();
+        Coordinate cooPoly[] = poly.getCoordinates();
         Coordinate cooEnv[] = {new Coordinate(env.getMinX(), env.getMinY()),
             new Coordinate(env.getMinX(), env.getMaxY()), new Coordinate(env.getMaxX(), env.getMaxY()),
             new Coordinate(env.getMaxX(), env.getMinY()), new Coordinate(env.getMinX(), env.getMinY()),};
@@ -151,21 +152,6 @@ public class UGeo {
         }
         cooEnvL.add(cooEnv[0]);
 
-        //Координаты импоста
-        Coordinate coo[] = poly.getCoordinates();
-        for (int i = 1; i < coo.length; i++) {
-            Coordinate crosP = Intersection.lineSegment(imp.p0, imp.p1, coo[i - 1], coo[i]); //точка пересечения сегмента и линии                
-            if (crosP != null) {
-                if (cooImpL.isEmpty()) {
-                    cooImpL.add(new Coordinate(crosP.x, crosP.y, impost.id));
-                    cooImpR.add(new Coordinate(crosP.x, crosP.y, coo[i - 1].z));
-                } else {
-                    cooImpL.add(new Coordinate(crosP.x, crosP.y, coo[i - 1].z));
-                    cooImpR.add(new Coordinate(crosP.x, crosP.y, impost.id));
-                }
-            }
-        }
-
         //Левый, правый полигон
         Geometry envelope = gf.createPolygon(cooEnvL.toArray(new Coordinate[0])); //левый конверт
         Geometry polyL = poly.intersection(envelope); //левый полигон
@@ -177,23 +163,23 @@ public class UGeo {
         Coordinate cooL[] = polyL.getCoordinates();
         Coordinate cooR[] = polyR.getCoordinates();
 
-        for (int i = 0; i < cooL.length; i++) {
-            if (cooImpL.get(0).equals(cooL[i])) {
-                cooL[i].z = cooImpL.get(0).z;
-            } else if (cooImpL.get(1).equals(cooL[i])) {
-                cooL[i].z = cooImpL.get(1).z;
+        for (int i = 1; i < cooL.length; i++) {
+            for (int k = 1; k < cooR.length; k++) {
+                if (cooL[i].equals(cooR[k])) {
+                    
+                    if (cooImp.isEmpty()) {
+                        cooImp.add(cooL[i]); //координаты импоста
+                        cooL[i].z = impost.id;
+                        cooR[k].z = cooL[i - 1].z; 
+                    } else {
+                        cooImp.add(cooL[i]); //координаты импоста
+                        cooL[i].z = cooPoly[k - 1].z;
+                        cooR[k].z = impost.id;
+                    }
+                }
             }
         }
-        for (int i = 0; i < cooR.length; i++) {
-            if (cooImpR.get(0).equals(cooR[i])) {
-                cooR[i].z = cooImpR.get(0).z;
-            } else if (cooImpR.get(1).equals(cooR[i])) {
-                cooR[i].z = cooImpR.get(1).z;
-            }
-        }
-        //cooL[0].z = cooL[cooL.length - 1].z;
-        //cooR[0].z = cooR[cooR.length - 1].z;
-        
+
         //Test проверка
         for (int i = 0; i < cooL.length; i++) {
             if (cooL[i].z % 1 != 0) {
@@ -205,8 +191,8 @@ public class UGeo {
                 PRINT("Ошибка*:UGeo.splitPolygon: ", cooR);
             }
         }
-        
-        return new Geometry[]{Com5t.gf.createLineString(cooImpL.toArray(new Coordinate[0])), polyL, polyR};
+
+        return new Geometry[]{Com5t.gf.createLineString(cooImp.toArray(new Coordinate[0])), polyL, polyR};
     }
 
     //Пилим многоугольник

@@ -374,10 +374,14 @@ public class Test {
             new Coordinate(900, 1400, 3), new Coordinate(900, 0, 4),
             new Coordinate(0, 0, 1)};
         Polygon poly = gf.createPolygon(coord1);
+        poly.setUserData(null);
         Coordinate[] coo = poly.copy().getCoordinates();
 
         LineString line = gf.createLineString(new Coordinate[]{new Coordinate(450, 0, 8), new Coordinate(450, 1400, 8)});
 
+        Point p0 = gf.createPoint(new Coordinate(0, 0, 1));
+        p0.setUserData(null);
+        
         Geometry geo = poly.union(line);
         System.out.println(geo);
 
