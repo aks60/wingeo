@@ -24,6 +24,7 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.GeometryFixer;
+import startup.Test;
 
 public class ElemCross extends ElemSimple {
 
@@ -72,7 +73,6 @@ public class ElemCross extends ElemSimple {
             owner.childs.get(2).area = (Polygon) geoSplit[2];
 
             //Новые координаты импоста
-            //Geometry lineImp = owner.area.getGeometryN(0).intersection(geoSplit[0]);
             Geometry lineImp = geoSplit[0];
             
             
