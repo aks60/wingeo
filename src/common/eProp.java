@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Properties;
 
-//java.util.prefs.Preferences
+//TODO Сделать java.util.prefs.Preferences.
 //https://docs.oracle.com/javase/8/docs/technotes/guides/preferences/overview.html
 //https://github.com/pgdurand/jGAF?tab=readme-ov-file
 /**

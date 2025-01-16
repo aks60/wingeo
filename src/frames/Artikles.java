@@ -47,6 +47,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
@@ -61,6 +62,7 @@ import report.sup.RTable;
  */
 public class Artikles extends javax.swing.JFrame {
 
+    private Preferences prefs = Preferences.userRoot().node("frames." + this.getName());
     private ListenerRecord listener = null;
     private Query qGroups = new Query(eGroups.values());
     private Query qSyssize = new Query(eSyssize.values());
@@ -2674,7 +2676,7 @@ public class Artikles extends javax.swing.JFrame {
             eArtikl.up.query().add(artiklClon);  //добавим запись в кэш
             qArtikl.add(++index, artiklClon);
             qArtikl.insert(artiklClon);
-            
+
             for (Record artdetRec : artdetList) {
                 Record artdetClon = (Record) artdetRec.clone();
                 artdetClon.setNo(eArtdet.up, Query.INS);
@@ -2979,5 +2981,12 @@ public class Artikles extends javax.swing.JFrame {
                 }
             }
         });
+
+//        prefs.addPreferenceChangeListener((ChangeEvent evt) -> {
+//            String key = evt.getKey();
+//            String newValue = prefs.get(key, "N/A");
+//            System.out.println("Preference change detected: " + key + " = " + newValue);
+//        });
     }
+
 }
