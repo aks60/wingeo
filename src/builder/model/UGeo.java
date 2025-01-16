@@ -37,7 +37,7 @@ import org.locationtech.jts.geom.util.LineStringExtracter;
 import org.locationtech.jts.operation.buffer.VariableBuffer;
 import org.locationtech.jts.operation.polygonize.Polygonizer;
 
-//TODO ВАЖНО!!! Если вставить в глухое окно импост и мышкой изменить форму окна выскакивает исключение
+//TODO ВАЖНО!!! При изменении слева прыгает импост
 /**
  * Утилиты JTS
  */

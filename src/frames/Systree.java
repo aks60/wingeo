@@ -4582,7 +4582,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         owner.gson.addElem(new GsonElem(enums.Type.GLASS));
         changeAndRedraw();
     }//GEN-LAST:event_removeImpostAction
-
+//TODO Невозможно вставить створку
     private void addStvorkaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStvorkaAction
         Com5t glass = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
         if (glass.owner.gson instanceof GsonRoot) {
