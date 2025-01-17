@@ -131,13 +131,15 @@ public class UGeo {
             boolean b = true;
             HashSet<Coordinate> checkHs = new HashSet<Coordinate>();
             Coordinate[] coo = geom.getGeometryN(0).copy().getCoordinates();
-            LineSegment lineImp = normalizeSegm(new LineSegment(new Coordinate(impost.x1(), impost.y1()), new Coordinate(impost.x2(), impost.y2())));
             List<Coordinate> cooL = new ArrayList<Coordinate>(), cooR = new ArrayList<Coordinate>();
             List<Coordinate> crosTwo = new ArrayList<Coordinate>(), listExt = new ArrayList<Coordinate>(List.of(coo[0]));
+            LineSegment segmImp = normalizeSegm(new LineSegment(
+                    new Coordinate(impost.x1(), impost.y1(), impost.id),
+                    new Coordinate(impost.x2(), impost.y2(), impost.id)));
 
             //Вставим точки пересечения в список коорд. см.exten
             for (int i = 1; i < coo.length; i++) {
-                Coordinate crosP = Intersection.lineSegment(lineImp.p0, lineImp.p1, coo[i - 1], coo[i]); //точка пересечения сегмента и линии                
+                Coordinate crosP = Intersection.lineSegment(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения сегмента и линии                
                 checkHs.add(coo[i]);
                 //Вставим точку в сегмент
                 if (crosP != null) {
@@ -148,7 +150,7 @@ public class UGeo {
                 }
                 listExt.add(coo[i]);
             }
-            
+
             //Обход сегментов до и после точек пересечения
             for (int i = 0; i < listExt.size(); ++i) {
                 Coordinate crd = listExt.get(i);
@@ -156,25 +158,25 @@ public class UGeo {
                 //Проход через точку пересечения
                 if (Double.isNaN(crd.z)) {
                     b = !b; //первая точка пройдена
-                    Coordinate cL = new Coordinate(crd.x, crd.y, impost.id);
+                    Coordinate cL = new Coordinate(crd.x, crd.y, segmImp.p0.z);
                     Coordinate cR = new Coordinate(crd.x, crd.y);
-                    
+
                     if (crosTwo.get(0).equals(crd)) {
-                        cL.z = impost.id;
+                        cL.z = segmImp.p0.z;
                         cR.z = listExt.get(i - 1).z;
                     } else {
                         cL.z = listExt.get(i - 1).z;
-                        cR.z = impost.id;
+                        cR.z = segmImp.p0.z;
                     }
                     cooL.add(cL);
                     cooR.add(cR);
-                   
+
                 } else { //Построение координат слева и справа от импоста
                     ((b == true) ? cooL : cooR).add(crd);
                 }
             }
             //Построение 'пятой' точки
-            if (impost.y1() != impost.y2()) {
+            if (segmImp.p0.y != segmImp.p1.y) {
                 Collections.rotate(cooR, 1);
                 cooR.add(cooR.get(0));
             } else {
@@ -182,10 +184,10 @@ public class UGeo {
             }
             return new Geometry[]{
                 Com5t.gf.createLineString(crosTwo.toArray(new Coordinate[0])),
-                normalizeGeo(Com5t.gf.createPolygon(cooL.toArray(new Coordinate[0]))),
-                normalizeGeo(Com5t.gf.createPolygon(cooR.toArray(new Coordinate[0])))
+                Com5t.gf.createPolygon(cooL.toArray(new Coordinate[0])),
+                Com5t.gf.createPolygon(cooR.toArray(new Coordinate[0]))
             };
-            
+
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.splitPolygon()" + e);
             return null;

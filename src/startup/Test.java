@@ -467,16 +467,16 @@ public class Test {
 
     private void draw8() {
 
-        Coordinate[] coord1 = new Coordinate[]{
-            new Coordinate(0, 0, 1), new Coordinate(0, 1400, 2),
-            new Coordinate(1250, 1350, 3), new Coordinate(1300, 0, 4),
-            new Coordinate(0, 0, 1)};
-        Polygon poly = gf.createPolygon(coord1);
-        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(1200, 0), new Coordinate(1300, 100)});
-        Geometry[] geom = UGeo.splitPolygon6(poly, line);
-
-        mpol = geom[0];
-        mlin = geom[1];
+//        Coordinate[] coord1 = new Coordinate[]{
+//            new Coordinate(0, 0, 1), new Coordinate(0, 1400, 2),
+//            new Coordinate(1250, 1350, 3), new Coordinate(1300, 0, 4),
+//            new Coordinate(0, 0, 1)};
+//        Polygon poly = gf.createPolygon(coord1);
+//        LineSegment line = new LineSegment(new Coordinate(1200, 0, 7), new Coordinate(1300, 100, 7));
+//        Geometry[] geom = UGeo.splitPolygon(poly, line);
+//
+//        mpol = geom[0];
+//        mlin = geom[1];
     }
 
     private void draw7() {
