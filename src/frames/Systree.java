@@ -4592,9 +4592,15 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }
             }
         } else {
+            Wincalc winc = wincalc();
             for (int i = 0; i < glass.owner.owner.gson.childs.size(); ++i) {
                 if (glass.owner.owner.gson.childs.get(i).id == glass.owner.id) {
-                    glass.owner.owner.gson.childs.set(i, new GsonElem(enums.Type.STVORKA).addElem(new GsonElem(enums.Type.GLASS)));
+                    GsonElem gsonStv = new GsonElem(enums.Type.STVORKA);
+                    gsonStv.owner = glass.owner.owner.gson.childs.get(i);
+                    gsonStv.addElem(new GsonElem(enums.Type.GLASS));
+                    glass.owner.owner.gson.childs.set(i, gsonStv);
+                    winc.gson.setOwner(winc);
+                    //glass.owner.owner.gson.childs.set(i, new GsonElem(enums.Type.STVORKA).addElem(new GsonElem(enums.Type.GLASS)));
                 }
             }
         }

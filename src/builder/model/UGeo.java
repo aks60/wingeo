@@ -37,7 +37,6 @@ import org.locationtech.jts.geom.util.LineStringExtracter;
 import org.locationtech.jts.operation.buffer.VariableBuffer;
 import org.locationtech.jts.operation.polygonize.Polygonizer;
 
-//TODO ВАЖНО!!! При изменении слева прыгает импост
 /**
  * Утилиты JTS
  */
@@ -404,38 +403,6 @@ public class UGeo {
         return segm;
     }
 
-    public static Geometry normalizeGeo(Geometry geo) {
-        geo.normalize();
-        return geo;
-    }
-
-    public static int normalizeElem(Com5t c) {
-
-        if (c.x2() < c.x1()) {
-            double x = c.x1(), y = c.y1();
-            c.x1(c.x2());
-            c.y1(c.y2());
-            c.x2(x);
-            c.y2(y);
-            return -1;
-        }
-        if (c.x2() > c.x1()) {
-            return 1;
-        }
-        if (c.y2() < c.y1()) {
-            double x = c.x1(), y = c.y1();
-            c.x1(c.x2());
-            c.y1(c.y2());
-            c.x2(x);
-            c.y2(y);
-            return -1;
-        }
-        if (c.y2() > c.y1()) {
-            return 1;
-        }
-        return 0;
-    }
-
     public static Coordinate offset(LineSegment s1, LineSegment s2, double d) {
         LineSegment s3 = s1.offset(d);
         LineSegment s4 = s2.offset(d);
@@ -466,6 +433,39 @@ public class UGeo {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">  
+
+    public static Geometry normalizeGeo(Geometry geo) {
+        geo.normalize();
+        return geo;
+    }
+
+    public static int normalizeElem(Com5t c) {
+
+        if (c.x2() < c.x1()) {
+            double x = c.x1(), y = c.y1();
+            c.x1(c.x2());
+            c.y1(c.y2());
+            c.x2(x);
+            c.y2(y);
+            return -1;
+        }
+        if (c.x2() > c.x1()) {
+            return 1;
+        }
+        if (c.y2() < c.y1()) {
+            double x = c.x1(), y = c.y1();
+            c.x1(c.x2());
+            c.y1(c.y2());
+            c.x2(x);
+            c.y2(y);
+            return -1;
+        }
+        if (c.y2() > c.y1()) {
+            return 1;
+        }
+        return 0;
+    }    
+    
     //Новая реализация с использованием Envelope но неработает!!!
     public static Geometry[] splitPolygon6(Geometry poly, LineString line) {
         double impID = 8;

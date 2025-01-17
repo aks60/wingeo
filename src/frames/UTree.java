@@ -69,46 +69,10 @@ public class UTree {
         }
     }
     
-    //Загрузка tree артикулов
-    public static void loadArtTree(DefaultMutableTreeNode root) {
-        DefaultMutableTreeNode node = null;
-        
-        for (TypeArt it : TypeArt.values()) {
-            if (it.id1 == 1 && it.id2 == 0) {
-                node = new DefaultMutableTreeNode(TypeArt.X100); //"Профили"
-
-            } else if (it.id1 == 2 && it.id2 == 0) {
-                root.add(node);
-                node = new DefaultMutableTreeNode(TypeArt.X200); //"Аксессуары"
-
-            } else if (it.id1 == 3 && it.id2 == 0) {
-                root.add(node);
-                node = new DefaultMutableTreeNode(TypeArt.X300); //"Погонаж"
-
-            } else if (it.id1 == 4 && it.id2 == 0) {
-                root.add(node);
-                node = new DefaultMutableTreeNode(TypeArt.X400); //"Инструмент"
-
-            } else if (it.id1 == 5 && it.id2 == 0) {
-                root.add(node);
-                node = new DefaultMutableTreeNode(TypeArt.X500); //"Заполнения"
-
-//            } else if (it.id1 == 6 && it.id2 == 0) {
-//                root.add(node);
-//                node = new DefaultMutableTreeNode(TypeArt.X600); //"Наборы"                
-
-            } else if (it.id2 > 0) {   //остальное       
-                root.add(node);
-                node.add(new javax.swing.tree.DefaultMutableTreeNode(it));
-            }
-        }
-        root.add(node);  
-    }
-    
     //Створка
     public static void loadStvorka(Com5t com) {
         try {
-            DefMutableTreeNode nodeStv = root.add(new DefMutableTreeNode(com)); //створка всегда на верху, нет створка в створке
+            DefMutableTreeNode nodeStv = root.add(new DefMutableTreeNode(com)); //створка всегда на верху, нет створки в створке
             AreaSimple stv = (AreaSimple) com;
 
             //Цыкл по стор. створки
@@ -151,5 +115,41 @@ public class UTree {
             System.err.println("Ошибка:UTree.loadStvorka() " + e);
         }
     }
+    
+    //Загрузка tree артикулов
+    public static void loadArtTree(DefaultMutableTreeNode root) {
+        DefaultMutableTreeNode node = null;
+        
+        for (TypeArt it : TypeArt.values()) {
+            if (it.id1 == 1 && it.id2 == 0) {
+                node = new DefaultMutableTreeNode(TypeArt.X100); //"Профили"
+
+            } else if (it.id1 == 2 && it.id2 == 0) {
+                root.add(node);
+                node = new DefaultMutableTreeNode(TypeArt.X200); //"Аксессуары"
+
+            } else if (it.id1 == 3 && it.id2 == 0) {
+                root.add(node);
+                node = new DefaultMutableTreeNode(TypeArt.X300); //"Погонаж"
+
+            } else if (it.id1 == 4 && it.id2 == 0) {
+                root.add(node);
+                node = new DefaultMutableTreeNode(TypeArt.X400); //"Инструмент"
+
+            } else if (it.id1 == 5 && it.id2 == 0) {
+                root.add(node);
+                node = new DefaultMutableTreeNode(TypeArt.X500); //"Заполнения"
+
+//            } else if (it.id1 == 6 && it.id2 == 0) {
+//                root.add(node);
+//                node = new DefaultMutableTreeNode(TypeArt.X600); //"Наборы"                
+
+            } else if (it.id2 > 0) {   //остальное       
+                root.add(node);
+                node.add(new javax.swing.tree.DefaultMutableTreeNode(it));
+            }
+        }
+        root.add(node);  
+    }    
 
 }
