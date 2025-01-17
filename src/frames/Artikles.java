@@ -62,7 +62,7 @@ import report.sup.RTable;
  */
 public class Artikles extends javax.swing.JFrame {
 
-    private Preferences prefs = Preferences.userRoot().node("frames." + this.getName());
+    private Preferences pref = Preferences.userRoot().node("frames." + this.getName());
     private ListenerRecord listener = null;
     private Query qGroups = new Query(eGroups.values());
     private Query qSyssize = new Query(eSyssize.values());
