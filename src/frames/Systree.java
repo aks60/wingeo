@@ -4584,26 +4584,30 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_removeImpostAction
 //TODO Невозможно вставить створку
     private void addStvorkaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStvorkaAction
+        Wincalc winc = wincalc();
         Com5t glass = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
-        if (glass.owner.gson instanceof GsonRoot) {
-            for (int i = 0; i < glass.owner.gson.childs.size(); ++i) {
-                if (glass.owner.gson.childs.get(i).id == glass.id) {
-                    glass.owner.gson.childs.set(i, new GsonElem(enums.Type.STVORKA).addElem(new GsonElem(enums.Type.GLASS)));
-                }
-            }
-        } else {
-            Wincalc winc = wincalc();
-            for (int i = 0; i < glass.owner.owner.gson.childs.size(); ++i) {
-                if (glass.owner.owner.gson.childs.get(i).id == glass.owner.id) {
-                    GsonElem gsonStv = new GsonElem(enums.Type.STVORKA);
-                    gsonStv.owner = glass.owner.owner.gson.childs.get(i);
-                    gsonStv.addElem(new GsonElem(enums.Type.GLASS));
-                    glass.owner.owner.gson.childs.set(i, gsonStv);
-                    winc.gson.setOwner(winc);
-                    //glass.owner.owner.gson.childs.set(i, new GsonElem(enums.Type.STVORKA).addElem(new GsonElem(enums.Type.GLASS)));
-                }
-            }
-        }
+        GsonElem gson = UTree.findID(winc.gson, glass.id);
+        System.out.println(gson);
+        
+//        if (glass.owner.gson instanceof GsonRoot) {
+//            for (int i = 0; i < glass.owner.gson.childs.size(); ++i) {
+//                if (glass.owner.gson.childs.get(i).id == glass.id) {
+//                    glass.owner.gson.childs.set(i, new GsonElem(enums.Type.STVORKA).addElem(new GsonElem(enums.Type.GLASS)));
+//                }
+//            }
+//        } else {
+//            Wincalc winc = wincalc();
+//            for (int i = 0; i < glass.owner.owner.gson.childs.size(); ++i) {
+//                if (glass.owner.owner.gson.childs.get(i).id == glass.owner.id) {
+//                    GsonElem gsonStv = new GsonElem(enums.Type.STVORKA);
+//                    gsonStv.owner = glass.owner.owner.gson.childs.get(i);
+//                    gsonStv.addElem(new GsonElem(enums.Type.GLASS));
+//                    glass.owner.owner.gson.childs.set(i, gsonStv);
+//                    winc.gson.setOwner(winc);
+//                    //glass.owner.owner.gson.childs.set(i, new GsonElem(enums.Type.STVORKA).addElem(new GsonElem(enums.Type.GLASS)));
+//                }
+//            }
+//        }
         changeAndRedraw();
     }//GEN-LAST:event_addStvorkaAction
 

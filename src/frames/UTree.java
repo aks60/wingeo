@@ -5,6 +5,7 @@ import builder.model.AreaSimple;
 import builder.model.Com5t;
 import builder.model.ElemFrame;
 import builder.model.ElemSimple;
+import builder.script.GsonElem;
 import common.UCom;
 import enums.Layout;
 import enums.Type;
@@ -68,7 +69,7 @@ public class UTree {
             System.err.println("Ошибка:UTree.loadWinTree(2) " + e);
         }
     }
-    
+
     //Створка
     public static void loadStvorka(Com5t com) {
         try {
@@ -115,11 +116,11 @@ public class UTree {
             System.err.println("Ошибка:UTree.loadStvorka() " + e);
         }
     }
-    
+
     //Загрузка tree артикулов
     public static void loadArtTree(DefaultMutableTreeNode root) {
         DefaultMutableTreeNode node = null;
-        
+
         for (TypeArt it : TypeArt.values()) {
             if (it.id1 == 1 && it.id2 == 0) {
                 node = new DefaultMutableTreeNode(TypeArt.X100); //"Профили"
@@ -143,14 +144,27 @@ public class UTree {
 //            } else if (it.id1 == 6 && it.id2 == 0) {
 //                root.add(node);
 //                node = new DefaultMutableTreeNode(TypeArt.X600); //"Наборы"                
-
             } else if (it.id2 > 0) {   //остальное       
                 root.add(node);
                 node.add(new javax.swing.tree.DefaultMutableTreeNode(it));
             }
         }
-        root.add(node);  
-    }    
+        root.add(node);
+    }
 
-    
+    //Поиск в дереве GsonElem по ID
+    public static GsonElem findID(GsonElem gson, double ID) {
+        if (ID == gson.id) {
+            return gson;
+        } else {
+            for (int i = 0; i < gson.childs.size(); ++i) {
+                GsonElem gson2 = gson.childs.get(i);
+                if (ID == gson2.id) {
+                    return gson2;
+                }
+            }
+            
+        }
+        return null;
+    }
 }
