@@ -44,8 +44,6 @@ import frames.swing.DefTableModel;
 import builder.Wincalc;
 import builder.making.TFurniture;
 import builder.script.GsonElem;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import common.UCom;
 import domain.eArtdet;
 import domain.eColor;
@@ -81,6 +79,9 @@ import builder.model.ElemSimple;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import common.listener.ListenerAction;
 import domain.eJoinvar;
 import enums.TypeJoin;
@@ -101,9 +102,6 @@ import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import common.listener.ListenerReload;
-import static domain.eSysprod.id;
-import static domain.eSysprod.up;
-import static domain.eSysprod.values;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 import javax.swing.JTree;
@@ -822,6 +820,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             winc.build(script);
             winc.imageIcon = Canvas.createIcon(winc, 68);
             //sysprodRec.setNo(eSysprod.values().length, winc);
+            System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(winc.gson.toJson())));
 
             //Запомним курсор
             DefMutableTreeNode selectNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
@@ -894,7 +893,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
         return null;
     }
-    
+
     private void setText(JTextField comp, Object txt) {
         if (txt == null) {
             comp.setText("");
@@ -4273,11 +4272,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_colorFromLock
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        int index = UGui.getIndexRec(tab5);
-        if (index != -1) {
-            Record sysprodRow = qSysprod.get(index);
-            int m = 0;
-        }
+        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(wincalc().gson.toJson())));
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void colorFromGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromGlass
@@ -4582,33 +4577,32 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         owner.gson.addElem(new GsonElem(enums.Type.GLASS));
         changeAndRedraw();
     }//GEN-LAST:event_removeImpostAction
-//TODO Невозможно вставить створку
+
     private void addStvorkaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStvorkaAction
-        Wincalc winc = wincalc();
-        Com5t glass = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
-        GsonElem gson = UTree.findID(winc.gson, glass.id);
-        System.out.println(gson);
-        
-//        if (glass.owner.gson instanceof GsonRoot) {
-//            for (int i = 0; i < glass.owner.gson.childs.size(); ++i) {
-//                if (glass.owner.gson.childs.get(i).id == glass.id) {
-//                    glass.owner.gson.childs.set(i, new GsonElem(enums.Type.STVORKA).addElem(new GsonElem(enums.Type.GLASS)));
-//                }
-//            }
-//        } else {
-//            Wincalc winc = wincalc();
-//            for (int i = 0; i < glass.owner.owner.gson.childs.size(); ++i) {
-//                if (glass.owner.owner.gson.childs.get(i).id == glass.owner.id) {
-//                    GsonElem gsonStv = new GsonElem(enums.Type.STVORKA);
-//                    gsonStv.owner = glass.owner.owner.gson.childs.get(i);
-//                    gsonStv.addElem(new GsonElem(enums.Type.GLASS));
-//                    glass.owner.owner.gson.childs.set(i, gsonStv);
-//                    winc.gson.setOwner(winc);
-//                    //glass.owner.owner.gson.childs.set(i, new GsonElem(enums.Type.STVORKA).addElem(new GsonElem(enums.Type.GLASS)));
-//                }
-//            }
-//        }
-        changeAndRedraw();
+        try {
+            GsonElem gsonGlass = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t().gson;
+            GsonElem gsonStvorka = new GsonElem(enums.Type.STVORKA);
+            gsonStvorka.addArea(new GsonElem(enums.Type.GLASS));
+            gsonStvorka.owner = gsonGlass.owner.owner;
+
+            if (gsonGlass.owner.owner instanceof GsonRoot) {
+                for (int i = 0; i < gsonGlass.owner.owner.childs.size(); ++i) {
+                    if (gsonGlass.owner.owner.childs.get(i).id == gsonGlass.owner.id) {
+                        gsonGlass.owner.owner.childs.set(i, gsonStvorka);
+                    }
+                }
+            } else {
+                for (int i = 0; i < gsonGlass.owner.owner.childs.size(); ++i) {
+                    if (gsonGlass.owner.owner.childs.get(i).id == gsonGlass.owner.id) {
+                        gsonGlass.owner.owner.childs.set(i, gsonStvorka);
+                    }
+                }
+            }
+            changeAndRedraw();
+
+        } catch (Exception e) {
+            System.err.println("Ошибка: Systree.addStvorkaAction()");
+        }
     }//GEN-LAST:event_addStvorkaAction
 
     private void removeStvorkaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeStvorkaAction

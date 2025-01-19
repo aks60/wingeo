@@ -152,19 +152,16 @@ public class UTree {
         root.add(node);
     }
 
-    //Поиск в дереве GsonElem по ID
-    public static GsonElem findID(GsonElem gson, double ID) {
-        if (ID == gson.id) {
-            return gson;
-        } else {
-            for (int i = 0; i < gson.childs.size(); ++i) {
-                GsonElem gson2 = gson.childs.get(i);
-                if (ID == gson2.id) {
-                    return gson2;
-                }
-            }
-            
-        }
-        return null;
-    }
+//    //Поиск в дереве GsonElem по ID
+//    public static GsonElem findTreeID(GsonElem gs, double ID) {
+//            for (GsonElem gson: gs.childs) {
+//                System.out.println("gson.id = " + gson.id);
+//                if (ID == gson.id) {
+//                    return gson;
+//                } else {
+//                   findTreeID(gson, ID); 
+//                }
+//            }
+//        return null;
+//    }
 }

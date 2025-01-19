@@ -13,7 +13,7 @@ public class GsonElem {
     public static transient double gsonId = 0;  //идентификатор    
     public double id = 0;  //идентификатор
     public transient GsonElem owner = null;  //владелец
-    public List<GsonElem> childs = new ArrayList<GsonElem>(); //список детей
+    public List<GsonElem> childs = null; //список детей
     public JsonObject param = new JsonObject(); //параметры элемента
     public Type type = null; //тип элемента
     public Double x1 = null, y1 = null, h = null, x2 = null, y2 = null;

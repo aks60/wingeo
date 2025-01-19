@@ -21,6 +21,7 @@ import builder.script.GsonRoot;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import common.UCom;
 import common.eProp;
 import common.listener.ListenerAction;
@@ -90,53 +91,58 @@ public class Wincalc {
     }
 
     public void build(String script) {
-        //System.out.println(new GsonBuilder().create().toJson(new com.google.gson.JsonParser().parse(script))); //для тестирования
-        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(script)));
+        try {
+            //System.out.println(new GsonBuilder().create().toJson(JsonParser.parseString(script))); //для тестирования
+            //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(script)));
 
-        //Инит свойств
-        nppID = 0;
-        mapPardef.clear();
-        List.of((List) listArea, (List) listElem, (List) listSpec, (List) listAll, (List) listJoin).forEach(el -> el.clear());
+            //Инит свойств
+            nppID = 0;
+            mapPardef.clear();
+            List.of((List) listArea, (List) listElem, (List) listSpec, (List) listAll, (List) listJoin).forEach(el -> el.clear());
 
-        //Создание Gson класса
-        gson = new GsonBuilder().create().fromJson(script, GsonRoot.class);
+            //Создание Gson класса
+            gson = new GsonBuilder().create().fromJson(script, GsonRoot.class);
 
-        JsonParser parser = new JsonParser();
-        JsonElement rootNode = parser.parse(script);
+            JsonParser parser = new JsonParser();
+            JsonElement rootNode = parser.parse(script);
 
-        gson.setOwner(this);
+            gson.setOwner(this);
 
-        //Инит конструктива
-        nuni = (gson.nuni == null) ? -3 : gson.nuni;
-        Record sysprofRec = eSysprof.find2(nuni, UseArtiklTo.FRAME); //первая.запись коробки
-        Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
-        syssizRec = eSyssize.find(artiklRec); //системные константы
-        colorID1 = (gson.color1 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1;
-        colorID2 = (gson.color2 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2;
-        colorID3 = (gson.color3 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3;
+            //Инит конструктива
+            nuni = (gson.nuni == null) ? -3 : gson.nuni;
+            Record sysprofRec = eSysprof.find2(nuni, UseArtiklTo.FRAME); //первая.запись коробки
+            Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
+            syssizRec = eSyssize.find(artiklRec); //системные константы
+            colorID1 = (gson.color1 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1;
+            colorID2 = (gson.color2 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2;
+            colorID3 = (gson.color3 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3;
 
-        //Параметры по умолчанию
-        eSyspar1.filter(nuni).forEach(syspar1Rec -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), syspar1Rec));
+            //Параметры по умолчанию
+            eSyspar1.filter(nuni).forEach(syspar1Rec -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), syspar1Rec));
 
-        //Главное окно
-        if (Type.RECTANGL == gson.type) {
-            root = new AreaRectangl(this, gson);
+            //Главное окно
+            if (Type.RECTANGL == gson.type) {
+                root = new AreaRectangl(this, gson);
 
-        } else if (Type.TRAPEZE == gson.type) {
-            root = new AreaTrapeze(this, gson);
+            } else if (Type.TRAPEZE == gson.type) {
+                root = new AreaTrapeze(this, gson);
 
-        } else if (Type.ARCH == gson.type) {
-            root = new AreaArch(this, gson);
+            } else if (Type.ARCH == gson.type) {
+                root = new AreaArch(this, gson);
 
-        } else if (Type.DOOR == gson.type) {
-            root = new AreaDoor(this, gson);
+            } else if (Type.DOOR == gson.type) {
+                root = new AreaDoor(this, gson);
+            }
+
+            //Элементы конструкции
+            creator(root, gson);
+
+            //Обновление конструкции
+            location();
+            
+        } catch (JsonSyntaxException e) {
+            System.out.println("Ошибка: Wincalc.build()");
         }
-
-        //Элементы конструкции
-        creator(root, gson);
-
-        //Обновление конструкции
-        location();
     }
 
     private void creator(AreaSimple owner, GsonElem gson) {
