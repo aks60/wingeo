@@ -16,6 +16,7 @@ public class Query extends Table {
 
     public static String conf = "NET"; //или "APP" - вкл. дл€ тестировани€ запросов
     private static String schema = "";
+    public static String VIR = "VIR"; //виртуальный
     public static String INS = "INS";
     public static String SEL = "SEL";
     public static String UPD = "UPD";
