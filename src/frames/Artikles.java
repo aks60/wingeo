@@ -160,6 +160,7 @@ public class Artikles extends javax.swing.JFrame {
 
                     if (color_fk >= 0) {
                         Record colorRec = qColor.find(eColor.data(), eColor.id, color_fk);
+                        System.out.println(colorRec);
                         if (col == 0) {
                             Record colgrpRec = qGroups.find(eGroups.data(), eGroups.id, colorRec.getInt(eColor.groups_id));
                             return colgrpRec.getStr(eGroups.name);
@@ -170,6 +171,7 @@ public class Artikles extends javax.swing.JFrame {
                     } else if (color_fk < 0) {
                         if (col == 0) {
                             Record colgrpRec = eGroups.data().stream().filter(rec -> rec.getInt(eGroups.id) == color_fk).findFirst().orElse(eGroups.up.newRecord(Query.SEL));
+                            //Record colgrpRec = eGroups.data().stream().filter(rec -> rec.getInt(eGroups.id) == color_fk).findFirst().orElse(eGroups.up.newRecord(Query.SEL));
                             return colgrpRec.getStr(eGroups.name);
                         } else {
                             return "Все текстуры группы";
