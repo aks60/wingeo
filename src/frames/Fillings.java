@@ -102,7 +102,7 @@ public class Fillings extends javax.swing.JFrame {
                 if (val != null) {
                     Field field = columns[col];
                     if (eGlasdet.color_fk == field) {
-                        int colorFk = Integer.valueOf(val.toString());
+                        int colorFk = Integer.valueOf(String.valueOf(val));
 
                         if (UseColor.automatic[0].equals(colorFk)) {
                             return UseColor.automatic[1];
@@ -116,7 +116,7 @@ public class Fillings extends javax.swing.JFrame {
                             return "# " + qGroups.find(eGroups.data(), eGroups.id, colorFk).get(eGroups.name);
                         }
                     } else if (eGlasdet.color_us == field) {
-                        int types = Integer.valueOf(val.toString());
+                        int types = Integer.valueOf(String.valueOf(val));
                         types = (col == 4) ? types & 0x0000000f : (col == 5) ? (types & 0x000000f0) >> 4 : (types & 0x00000f00) >> 8;
                         return UseColor.MANUAL.find(types).text();
                     }
@@ -131,7 +131,7 @@ public class Fillings extends javax.swing.JFrame {
                 if (val != null && eGlaspar1.groups_id == field) {
 
                     if (Integer.valueOf(String.valueOf(val)) < 0) {
-                        return qGroups.find(eGroups.data(), eGroups.id, val).getDev(eGroups.name, val);
+                        return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).getDev(eGroups.name, val);
                     } else {
                         Enam en = ParamList.find(val);
                         return Record.getDev(en.numb(), en.text());
@@ -147,7 +147,7 @@ public class Fillings extends javax.swing.JFrame {
                 if (val != null && field == eGlaspar2.groups_id) {
 
                     if (Integer.valueOf(String.valueOf(val)) < 0) {
-                        return qGroups.find(eGroups.data(), eGroups.id, val).getDev(eGroups.name, val);
+                        return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).getDev(eGroups.name, val);
                     } else {
                         Enam en = ParamList.find(val);
                         return Record.getDev(en.numb(), en.text());

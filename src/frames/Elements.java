@@ -127,7 +127,7 @@ public class Elements extends javax.swing.JFrame {
                     return List.of(TypeSet.values()).stream().filter(el -> el.id == typset).findFirst().orElse(TypeSet.P1).name;
 
                 } else if (val != null && columns[col] == eElement.groups1_id) {
-                    return qGroups.find(eGroups.data(), eGroups.id, val).get(eGroups.name);
+                    return qGroups.find2(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).get(eGroups.name);
                 }
                 return val;
             }
@@ -139,7 +139,7 @@ public class Elements extends javax.swing.JFrame {
                 if (val != null) {
                     Field field = columns[col];
                     if (eElemdet.color_fk == field) {
-                        int colorFk = Integer.valueOf(val.toString());
+                        int colorFk = Integer.valueOf(String.valueOf(val));
 
                         if (UseColor.automatic[0].equals(colorFk)) {
                             return UseColor.automatic[1];
@@ -154,7 +154,7 @@ public class Elements extends javax.swing.JFrame {
                         }
 
                     } else if (eElemdet.color_us == field) {
-                        int types = Integer.valueOf(val.toString());
+                        int types = Integer.valueOf(String.valueOf(val));
                         types = (col == 3) ? types & 0x0000000f : (col == 4) ? (types & 0x000000f0) >> 4 : (types & 0x00000f00) >> 8;
                         return UseColor.MANUAL.find(types).text();
                     }
@@ -169,7 +169,7 @@ public class Elements extends javax.swing.JFrame {
                 if (val != null && eElempar1.groups_id == field) {
 
                     if (Integer.valueOf(String.valueOf(val)) < 0) {
-                        return qGroups.find(eGroups.data(), eGroups.id, val).getDev(eGroups.name, val);
+                        return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).getDev(eGroups.name, val);
                     } else {
                         Enam en = ParamList.find(val);
                         return Record.getDev(en.numb(), en.text());
@@ -186,7 +186,7 @@ public class Elements extends javax.swing.JFrame {
                     if (field == eElempar2.groups_id) {
 
                         if (Integer.valueOf(String.valueOf(val)) < 0) {
-                            return qGroups.find(eGroups.data(), eGroups.id, val).getDev(eGroups.name, val);
+                            return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).getDev(eGroups.name, val);
                         } else {
                             Enam en = ParamList.find(val);
                             return Record.getDev(en.numb(), en.text());
@@ -1185,7 +1185,8 @@ public class Elements extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFind2
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-
+        Object o1 =qGroups.find2(eGroups.data(), eGroups.id, Integer.valueOf("-9675"));
+        System.out.println(o1);
     }//GEN-LAST:event_btnTest
 
     private void btnFind1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind1

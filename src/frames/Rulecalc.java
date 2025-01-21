@@ -61,11 +61,11 @@ public class Rulecalc extends javax.swing.JFrame {
                     if (val != null) {
                         Field field = columns[col];
                         if (eRulecalc.type == field) {
-                            int val2 = Integer.valueOf(val.toString());
+                            int val2 = Integer.valueOf(String.valueOf(val));
                             return TypeArt.find(val2 / 100, 0) + "." + TypeArt.find(val2 / 100, val2 % 10);
 
                         } else if (eRulecalc.form == field) {
-                            int val2 = (val.equals(0) == true) ? 1 : Integer.valueOf(val.toString());
+                            int val2 = (val.equals(0) == true) ? 1 : Integer.valueOf(String.valueOf(val));
                             return TypeForm.P00.find(val2).text();
                         }
                     }

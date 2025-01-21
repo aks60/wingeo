@@ -124,17 +124,17 @@ public class Furniturs extends javax.swing.JFrame {
 
                 Field field = columns[col];
                 if (val != null && eFurniture.view_open == field) {
-                    int fk = Integer.valueOf(val.toString());
+                    int fk = Integer.valueOf(String.valueOf(val));
                     if (UseFurn1.P1.find(fk) != null) {
                         return UseFurn1.P1.find(fk).text();
                     }
                 } else if (val != null && eFurniture.hand_side == field) {
-                    int fk = Integer.valueOf(val.toString());
+                    int fk = Integer.valueOf(String.valueOf(val));
                     if (LayoutFurn1.BOTT.find(fk) != null) {
                         return LayoutFurn1.BOTT.find(fk).text();
                     }
                 } else if (val != null && eFurniture.ways_use == field) {
-                    int fk = Integer.valueOf(val.toString());
+                    int fk = Integer.valueOf(String.valueOf(val));
                     if (UseFurn2.P1.find(fk) != null) {
                         return UseFurn2.P1.find(fk).text();
                     }
@@ -149,7 +149,7 @@ public class Furniturs extends javax.swing.JFrame {
 
                 //Текстура
                 if (val != null && eFurndet.color_fk == field) {
-                    int colorFk = Integer.valueOf(val.toString());
+                    int colorFk = Integer.valueOf(String.valueOf(val));
 
                     if (UseColor.automatic[0].equals(colorFk)) {
                         return UseColor.automatic[1];
@@ -165,7 +165,7 @@ public class Furniturs extends javax.swing.JFrame {
 
                     //Подбор текстуры
                 } else if (val != null && eFurndet.color_us == field) {
-                    int types = Integer.valueOf(val.toString());
+                    int types = Integer.valueOf(String.valueOf(val));
                     types = types & 0x0000000f;
                     return UseColor.MANUAL.find(types).text();
 
@@ -179,7 +179,7 @@ public class Furniturs extends javax.swing.JFrame {
 
                         //Артикул
                     } else if (val != null) {
-                        int artikl_id = Integer.valueOf(val.toString());
+                        int artikl_id = Integer.valueOf(String.valueOf(val));
                         Record recordArt = qArtikl.find(eArtikl.data(), eArtikl.id, artikl_id);
                         return (col == 0) ? recordArt.getStr(eArtikl.code) : recordArt.getStr(eArtikl.name);
                     }
@@ -194,7 +194,7 @@ public class Furniturs extends javax.swing.JFrame {
 
                 //Текстура
                 if (val != null && eFurndet.color_fk == field) {
-                    int colorFk = Integer.valueOf(val.toString());
+                    int colorFk = Integer.valueOf(String.valueOf(val));
 
                     if (UseColor.automatic[0].equals(colorFk)) {
                         return UseColor.automatic[1];
@@ -210,7 +210,7 @@ public class Furniturs extends javax.swing.JFrame {
 
                     //Подбор текстуры
                 } else if (val != null && eFurndet.color_us == field) {
-                    int types = Integer.valueOf(val.toString());
+                    int types = Integer.valueOf(String.valueOf(val));
                     types = types & 0x0000000f;
                     return UseColor.MANUAL.find(types).text();
 
@@ -224,7 +224,7 @@ public class Furniturs extends javax.swing.JFrame {
 
                         //Артикул    
                     } else if (val != null) {
-                        int artikl_id = Integer.valueOf(val.toString());
+                        int artikl_id = Integer.valueOf(String.valueOf(val));
                         Record recordArt = qArtikl.find(eArtikl.data(), eArtikl.id, artikl_id);
                         return (col == 0) ? recordArt.getStr(eArtikl.code) : recordArt.getStr(eArtikl.name);
                     }
@@ -239,7 +239,7 @@ public class Furniturs extends javax.swing.JFrame {
 
                 //Текстура
                 if (val != null && eFurndet.color_fk == field) {
-                    int colorFk = Integer.valueOf(val.toString());
+                    int colorFk = Integer.valueOf(String.valueOf(val));
 
                     if (UseColor.automatic[0].equals(colorFk)) {
                         return UseColor.automatic[1];
@@ -255,7 +255,7 @@ public class Furniturs extends javax.swing.JFrame {
 
                     //Подбор текстуры
                 } else if (val != null && eFurndet.color_us == field) {
-                    int types = Integer.valueOf(val.toString());
+                    int types = Integer.valueOf(String.valueOf(val));
                     types = types & 0x0000000f;
                     return UseColor.MANUAL.find(types).text();
 
@@ -268,7 +268,7 @@ public class Furniturs extends javax.swing.JFrame {
 
                         //Артикул 
                     } else if (val != null) {
-                        int artikl_id = Integer.valueOf(val.toString());
+                        int artikl_id = Integer.valueOf(String.valueOf(val));
                         Record recordArt = qArtikl.find(eArtikl.data(), eArtikl.id, artikl_id);
                         return (col == 0) ? recordArt.getStr(eArtikl.code) : recordArt.getStr(eArtikl.name);
                     }
@@ -281,12 +281,12 @@ public class Furniturs extends javax.swing.JFrame {
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
                 if (val != null && eFurnside1.side_num == field) {
-                    int v = Integer.valueOf(val.toString());
+                    int v = Integer.valueOf(String.valueOf(val));
                     if (v > 0 && v < 5) {
                         return LayoutFurn1.values()[v - 1].name;
                     }
                 } else if (val != null && eFurnside1.side_use == field) {
-                    int v = Integer.valueOf(val.toString());
+                    int v = Integer.valueOf(String.valueOf(val));
                     if (v > 0 && v < 4) {
                         return UseFurn3.values()[v - 1].name;
                     }
@@ -301,7 +301,7 @@ public class Furniturs extends javax.swing.JFrame {
                 if (field == eFurnpar1.groups_id && val != null) {
 
                     if (Integer.valueOf(String.valueOf(val)) < 0) {
-                        return qGroups.find(eGroups.data(), eGroups.id, val).getDev(eGroups.name, val);
+                        return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).getDev(eGroups.name, val);
                     } else {
                         Enam en = ParamList.find(val);
                         return Record.getDev(en.numb(), en.text());
@@ -315,7 +315,7 @@ public class Furniturs extends javax.swing.JFrame {
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
                 if (val != null && eFurnside2.side_num == field) {
-                    int v = Integer.valueOf(val.toString());
+                    int v = Integer.valueOf(String.valueOf(val));
                     if (v > -3 && v < 5) {
                         return Stream.of(LayoutFurn3.values()).filter(en -> en.id == v).findFirst().get().name;  //orElse(null).name;
                     }
@@ -330,7 +330,7 @@ public class Furniturs extends javax.swing.JFrame {
                 if (val != null && field == eFurnpar2.groups_id) {
 
                     if (Integer.valueOf(String.valueOf(val)) < 0) {
-                        return qGroups.find(eGroups.data(), eGroups.id, val).getDev(eGroups.name, val);
+                        return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).getDev(eGroups.name, val);
                     } else {
                         Enam en = ParamList.find(val);
                         return Record.getDev(en.numb(), en.text());
@@ -553,7 +553,7 @@ public class Furniturs extends javax.swing.JFrame {
 
         listenerArtikl = (record) -> {
             UGui.stopCellEditing(tab1, tab2a, tab2b, tab2c, tab3, tab4, tab5, tab6);
-            if (qArtikl.find(eArtikl.data(), eArtikl.id, record.get(eArtikl.id)).get(eArtikl.id) == null) {
+            if (qArtikl.find(eArtikl.data(), eArtikl.id, record.getInt(eArtikl.id)).get(eArtikl.id) == null) {
                 qArtikl.sql(eArtikl.data(), eArtikl.up);
             }
             JTable tab2x = (tab2a.getBorder() != null) ? tab2a : (tab2b.getBorder() != null) ? tab2b : tab2c;

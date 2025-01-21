@@ -243,7 +243,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 Field field = columns[col];
                 if (val != null && field == eSyspar1.groups_id) {
                     //Record paramsRec = qParams.find(val, eParams.id);
-                    return qGroups.find(eGroups.data(), eGroups.id, val).getDev(eGroups.name, val);
+                    return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).getDev(eGroups.name, val);
                 }
                 return val;
             }
@@ -253,7 +253,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
                 if (val != null && field == eSyspar1.groups_id) {
-                    return qGroups.find(eGroups.data(), eGroups.id, val).getDev(eGroups.name, val);
+                    return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).getDev(eGroups.name, val);
                 }
                 return val;
             }

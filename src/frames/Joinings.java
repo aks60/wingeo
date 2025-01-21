@@ -147,7 +147,7 @@ public class Joinings extends javax.swing.JFrame {
                 if (val != null && eJoinpar1.groups_id == field) {
 
                     if (Integer.valueOf(String.valueOf(val)) < 0) {
-                        return qGroups.find(eGroups.data(), eGroups.id, val).getDev(eGroups.name, val);
+                        return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).getDev(eGroups.name, val);
                     } else {
                         Enam en = ParamList.find(val);
                         return Record.getDev(en.numb(), en.text());
@@ -162,7 +162,7 @@ public class Joinings extends javax.swing.JFrame {
                 if (val != null) {
                     Field field = columns[col];
                     if (eJoindet.artikl_id == field) {
-                        int id = Integer.valueOf(val.toString());
+                        int id = Integer.valueOf(String.valueOf(val));
                         Record recordArt = qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == id).findFirst().orElse(eArtikl.up.newRecord(Query.SEL));
                         if (col == 0) {
                             return recordArt.getStr(eArtikl.code);
@@ -170,7 +170,7 @@ public class Joinings extends javax.swing.JFrame {
                             return recordArt.getStr(eArtikl.name);
                         }
                     } else if (eJoindet.color_fk == field) {
-                        int colorFk = Integer.valueOf(val.toString());
+                        int colorFk = Integer.valueOf(String.valueOf(val));
 
                         if (UseColor.automatic[0].equals(colorFk)) {
                             return UseColor.automatic[1];
@@ -184,7 +184,7 @@ public class Joinings extends javax.swing.JFrame {
                             return "# " + qGroups.stream().filter(rec -> rec.getInt(eGroups.id) == -1 * colorFk).findFirst().orElse(eGroups.up.newRecord(Query.SEL)).get(eGroups.name);
                         }
                     } else if (eJoindet.color_us == field) {
-                        int types = Integer.valueOf(val.toString());
+                        int types = Integer.valueOf(String.valueOf(val));
                         types = (col == 3) ? types & 0x0000000f : (col == 4) ? (types & 0x000000f0) >> 4 : (types & 0x00000f00) >> 8;
                         return UseColor.MANUAL.find(types).text();
                     }
@@ -206,7 +206,7 @@ public class Joinings extends javax.swing.JFrame {
                 if (val != null && eJoinpar2.groups_id == field) {
 
                     if (Integer.valueOf(String.valueOf(val)) < 0) {
-                        return qGroups.find(eGroups.data(), eGroups.id, val).getDev(eGroups.name, val);
+                        return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).getDev(eGroups.name, val);
                     } else {
                         Enam en = ParamList.find(val);
                         return Record.getDev(en.numb(), en.text());

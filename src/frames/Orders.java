@@ -167,7 +167,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
                 if (val != null && field == eSyspar1.groups_id) {
-                    return qGroups.find(eGroups.data(), eGroups.id, val).getDev(eGroups.name, val);
+                    return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).getDev(eGroups.name, val);
                 }
                 return val;
             }

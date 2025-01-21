@@ -62,10 +62,25 @@ public class Table extends ArrayList<Record> {
         return this.stream().filter(rec -> rec.get(field).equals(value) && rec.get(field2).equals(value2)).findFirst().orElse(field.newRecord(Query.SEL));
     } 
     
-    public Record find(List<Record> data, Field field, Object value) {
+    public Record find(List<Record> data, Field field, int value) { 
+        if(value == -1) {
+            return field.newRecord(Query.SEL);
+        }
         Record record = this.stream().filter(rec -> rec.get(field).equals(value)).findFirst().orElse(field.newRecord(Query.SEL));
-        if (record.getInt(1) == -3) {
-            System.out.println("Неудача: Узкий поиск 1");
+        if (record.get(1) == null) {
+            System.out.println("Неудача: Запись не найдена. value = " + value);
+            return data.stream().filter(rec -> rec.get(field).equals(value)).findFirst().orElse(field.newRecord(Query.SEL));
+        } else {
+            return record;
+        }
+    }
+    public Record find2(List<Record> data, Field field, int value) { 
+        if(value == -1) {
+            return field.newRecord(Query.SEL);
+        }
+        Record record = this.stream().filter(rec -> rec.get(field).equals(value)).findFirst().orElse(field.newRecord(Query.SEL));
+        if (record.get(1) == null) {
+            System.out.println("***********Неудача: Запись не найдена. value = " + value);
             return data.stream().filter(rec -> rec.get(field).equals(value)).findFirst().orElse(field.newRecord(Query.SEL));
         } else {
             return record;
@@ -73,15 +88,18 @@ public class Table extends ArrayList<Record> {
     }
 
     public Record find(List<Record> data, Field field, int value, Field field2, int value2) {
+        if(value == -1 || value2 == -1) {
+            return field.newRecord(Query.SEL);
+        }        
         Record record = this.stream().filter(rec -> rec.get(field).equals(value) && rec.get(field2).equals(value2)).findFirst().orElse(field.newRecord(Query.SEL));        
-        if (record.getInt(1)== -3) {
-            System.out.println("Неудача: Узкий поиск 2");
+        if (record.get(1) == null) {
+            System.out.println("Неудача: Запись не найдена. value = " + value);
              return data.stream().filter(rec -> rec.get(field).equals(value) && rec.get(field2).equals(value2)).findFirst().orElse(field.newRecord(Query.SEL));
         } else {
             return record;
         }    
     }
-
+    
     public List<Record> filter(Field field, Object value) {
         return this.stream().filter(rec -> rec.get(field).equals(value)).collect(toList());
     }

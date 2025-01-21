@@ -126,19 +126,19 @@ public class Artikles extends javax.swing.JFrame {
 
                 if (field == eArtikl.groups1_id) {
                     Record artiklRec = qArtikl.get(row);
-                    return qGroups.find(eGroups.data(), eGroups.id, artiklRec.get(eArtikl.groups1_id)).get(eGroups.name);
+                    return qGroups.find(eGroups.data(), eGroups.id, artiklRec.getInt(eArtikl.groups1_id)).get(eGroups.name);
 
                 } else if (field == eArtikl.groups2_id) {
                     Record artiklRec = qArtikl.get(row);
-                    return qGroups.find(eGroups.data(), eGroups.id, artiklRec.get(eArtikl.groups2_id)).get(eGroups.name);
+                    return qGroups.find(eGroups.data(), eGroups.id, artiklRec.getInt(eArtikl.groups2_id)).get(eGroups.name);
 
                 } else if (field == eArtikl.groups3_id) {
                     Record artiklRec = qArtikl.get(row);
-                    return qGroups.find(eGroups.data(), eGroups.id, artiklRec.get(eArtikl.groups3_id)).get(eGroups.name);
+                    return qGroups.find(eGroups.data(), eGroups.id, artiklRec.getInt(eArtikl.groups3_id)).get(eGroups.name);
 
                 } else if (field == eArtikl.groups4_id) {
                     Record artiklRec = qArtikl.get(row);
-                    return qGroups.find(eGroups.data(), eGroups.id, artiklRec.get(eArtikl.groups4_id)).get(eGroups.name);
+                    return qGroups.find(eGroups.data(), eGroups.id, artiklRec.getInt(eArtikl.groups4_id)).get(eGroups.name);
 
                 } else if (field == eArtikl.analog_id) {
                     int analogId = qArtikl.get(row).getInt(eArtikl.analog_id);
@@ -156,11 +156,11 @@ public class Artikles extends javax.swing.JFrame {
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
                 if (field == eArtdet.color_fk && val != null) {
-                    Integer color_fk = Integer.valueOf(val.toString());
+                    Integer color_fk = Integer.valueOf(String.valueOf(val));
 
                     if (color_fk >= 0) {
                         Record colorRec = qColor.find(eColor.data(), eColor.id, color_fk);
-                        System.out.println(colorRec);
+
                         if (col == 0) {
                             Record colgrpRec = qGroups.find(eGroups.data(), eGroups.id, colorRec.getInt(eColor.groups_id));
                             return colgrpRec.getStr(eGroups.name);
@@ -208,11 +208,11 @@ public class Artikles extends javax.swing.JFrame {
                 update = false;
                 Record artiklRec = qArtikl.get(UGui.getIndexRec(tab1));
                 Record seriesRec = qGroups.find(eGroups.data(), eGroups.id, artiklRec.getInt(eArtikl.groups4_id));
-                Record currenc1Rec = qCurrenc.find(eCurrenc.data(), eCurrenc.id, artiklRec.get(eArtikl.currenc1_id));
-                Record currenc2Rec = qCurrenc.find(eCurrenc.data(), eCurrenc.id, artiklRec.get(eArtikl.currenc2_id));
-                Record artgrp1Rec = qGroups.find(eGroups.data(), eGroups.id, artiklRec.get(eArtikl.groups1_id));
-                Record artgrp2Rec = qGroups.find(eGroups.data(), eGroups.id, artiklRec.get(eArtikl.groups2_id));
-                Record artgrp3Rec = qGroups.find(eGroups.data(), eGroups.id, artiklRec.get(eArtikl.groups3_id));
+                Record currenc1Rec = qCurrenc.find(eCurrenc.data(), eCurrenc.id, artiklRec.getInt(eArtikl.currenc1_id));
+                Record currenc2Rec = qCurrenc.find(eCurrenc.data(), eCurrenc.id, artiklRec.getInt(eArtikl.currenc2_id));
+                Record artgrp1Rec = qGroups.find(eGroups.data(), eGroups.id, artiklRec.getInt(eArtikl.groups1_id));
+                Record artgrp2Rec = qGroups.find(eGroups.data(), eGroups.id, artiklRec.getInt(eArtikl.groups2_id));
+                Record artgrp3Rec = qGroups.find(eGroups.data(), eGroups.id, artiklRec.getInt(eArtikl.groups3_id));
                 Record syssizeRec = qSyssize.find(eSyssize.data(), eSyssize.id, artiklRec.getInt(eArtikl.syssize_id));
 
                 setText(txt5, UseUnit.getName(artiklRec.getInt(eArtikl.unit)));
@@ -226,7 +226,7 @@ public class Artikles extends javax.swing.JFrame {
                 setText(txt40, UseUnit.getName(artiklRec.getInt(eArtikl.unit)));
 
                 if (artiklRec.getInt(eArtikl.analog_id) != -1) {
-                    Record analogRec = qArtikl.find(eArtikl.data(), eArtikl.id, artiklRec.get(eArtikl.analog_id));
+                    Record analogRec = qArtikl.find(eArtikl.data(), eArtikl.id, artiklRec.getInt(eArtikl.analog_id));
                     setText(txt11, analogRec.getStr(eArtikl.code));
                 } else {
                     setText(txt11, null);
