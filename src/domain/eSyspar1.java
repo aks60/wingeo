@@ -54,7 +54,7 @@ public enum eSyspar1 implements Field {
 
     public static Record find2(int _id) {
         if (Query.conf.equals("NET")) {
-            return data().find(_id, id);
+            return data().find(id, _id);
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);

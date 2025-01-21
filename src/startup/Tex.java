@@ -2,7 +2,6 @@ package startup;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import frames.UGui;
 import frames.swing.ProgressBar;
 import common.eProp;
 import dataset.Record;
@@ -15,18 +14,10 @@ import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import common.listener.ListenerFrame;
 import dataset.Conn;
-import domain.ePrjprod;
-import domain.eProject;
 import frames.swing.MainMenu;
 import java.awt.Dimension;
 import java.util.List;
-import java.util.Locale;
-import report.RCheck;
-import report.RMaterial;
-import report.ROffer;
-import report.RSmeta;
-import report.RSpecific;
-import report.RTarget;
+import javax.swing.JToggleButton;
 
 /**
  * <p>
@@ -516,6 +507,11 @@ public class Tex extends javax.swing.JFrame {
         btnT8.setFocusable(false);
         btnT8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnT8.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c062.gif"))); // NOI18N
+        btnT8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnT8MouseEntered(evt);
+            }
+        });
         btnT8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBase(evt);
@@ -1080,7 +1076,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
         this.setPreferredSize(new java.awt.Dimension(800, 80));
         this.setMinimumSize(new java.awt.Dimension(800, 80));
 
-       // this.setPreferredSize(new java.awt.Dimension(800, 80));
+        // this.setPreferredSize(new java.awt.Dimension(800, 80));
     }//GEN-LAST:event_btnTest
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -1131,6 +1127,10 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
             }
         });
     }//GEN-LAST:event_mn2Specif
+
+    private void btnT8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnT8MouseEntered
+        //System.out.println("xxxxx555");
+    }//GEN-LAST:event_btnT8MouseEntered
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1218,6 +1218,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
 // </editor-fold> 
 
     private void initElements() {
+        btnT8.setToolTipText("xxxxx777");
         //setTitle(UGui.designTitle());
         LookAndFeel lookAndFeel = UIManager.getLookAndFeel();
         for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
@@ -1237,8 +1238,8 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
             }
         }
 
-        MainMenu.init(mn08, this, common.eProp.locale);       
-        
+        MainMenu.init(mn08, this, common.eProp.locale);
+
         if ("Nimbus".equals(lookAndFeel.getName())) {
             tb6.setPreferredSize(new Dimension(97, 28));
         }
@@ -1252,5 +1253,13 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
             mn633.setSelected(true);
             btnT9.setSelected(true);
         }
+        List.of(btnT7, btnT8, btnT9).forEach(btn
+                -> btn.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseEntered(java.awt.event.MouseEvent evt) {
+                        JToggleButton b = (btn == btnT7) ? btnT7 : (btn == btnT8) ? btnT8 : btnT9;
+                        eProp p = (btn == btnT7) ? eProp.base1 : (btn == btnT8) ? eProp.base2 : eProp.base3;
+                        b.setToolTipText("Connect:  \"" + p.read() + "\"");
+                    }
+                }));
     }
 }

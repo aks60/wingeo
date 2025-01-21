@@ -167,7 +167,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
                 if (val != null && field == eSyspar1.groups_id) {
-                    return qGroups.find(val, eGroups.id).getDev(eGroups.name, val);
+                    return qGroups.find(eGroups.id, val).getDev(eGroups.name, val);
                 }
                 return val;
             }
@@ -409,8 +409,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     ((CardLayout) pan8.getLayout()).show(pan8, "card14");
                     qSyspar1.clear();
                     winc.mapPardef.forEach((pk, syspar1Rec) -> qSyspar1.add(syspar1Rec));
-                    Collections.sort(qSyspar1, (o1, o2) -> qGroups.find(o1.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)
-                            .compareTo(qGroups.find(o2.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)));
+                    Collections.sort(qSyspar1, (o1, o2) -> qGroups.find(eGroups.id, o1.getInt(eSyspar1.groups_id)).getStr(eGroups.name)
+                            .compareTo(qGroups.find(eGroups.id, o2.getInt(eSyspar1.groups_id)).getStr(eGroups.name)));
                     ((DefTableModel) tab3.getModel()).fireTableDataChanged();
 
                     //Рама, импост...

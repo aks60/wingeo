@@ -126,19 +126,19 @@ public class Artikles extends javax.swing.JFrame {
 
                 if (field == eArtikl.groups1_id) {
                     Record artiklRec = qArtikl.get(row);
-                    return qGroups.find(artiklRec.get(eArtikl.groups1_id), eGroups.id).get(eGroups.name);
+                    return qGroups.find(eGroups.id, artiklRec.get(eArtikl.groups1_id)).get(eGroups.name);
 
                 } else if (field == eArtikl.groups2_id) {
                     Record artiklRec = qArtikl.get(row);
-                    return qGroups.find(artiklRec.get(eArtikl.groups2_id), eGroups.id).get(eGroups.name);
+                    return qGroups.find(eGroups.id, artiklRec.get(eArtikl.groups2_id)).get(eGroups.name);
 
                 } else if (field == eArtikl.groups3_id) {
                     Record artiklRec = qArtikl.get(row);
-                    return qGroups.find(artiklRec.get(eArtikl.groups3_id), eGroups.id).get(eGroups.name);
+                    return qGroups.find(eGroups.id, artiklRec.get(eArtikl.groups3_id)).get(eGroups.name);
 
                 } else if (field == eArtikl.groups4_id) {
                     Record artiklRec = qArtikl.get(row);
-                    return qGroups.find(artiklRec.get(eArtikl.groups4_id), eGroups.id).get(eGroups.name);
+                    return qGroups.find(eGroups.id, artiklRec.get(eArtikl.groups4_id)).get(eGroups.name);
 
                 } else if (field == eArtikl.analog_id) {
                     int analogId = qArtikl.get(row).getInt(eArtikl.analog_id);
@@ -159,9 +159,9 @@ public class Artikles extends javax.swing.JFrame {
                     Integer color_fk = Integer.valueOf(val.toString());
 
                     if (color_fk >= 0) {
-                        Record colorRec = qColor.find(color_fk, eColor.id);
+                        Record colorRec = qColor.find(eColor.data(), eColor.id, color_fk);
                         if (col == 0) {
-                            Record colgrpRec = qGroups.find(colorRec.getInt(eColor.groups_id), eGroups.id);
+                            Record colgrpRec = qGroups.find(eGroups.data(), eGroups.id, colorRec.getInt(eColor.groups_id));
                             return colgrpRec.getStr(eGroups.name);
                         } else {
                             return colorRec.getStr(eColor.name);
@@ -169,7 +169,7 @@ public class Artikles extends javax.swing.JFrame {
 
                     } else if (color_fk < 0) {
                         if (col == 0) {
-                            Record colgrpRec = qGroups.stream().filter(rec -> rec.getInt(eGroups.id) == color_fk).findFirst().orElse(eGroups.up.newRecord(Query.SEL));
+                            Record colgrpRec = eGroups.data().stream().filter(rec -> rec.getInt(eGroups.id) == color_fk).findFirst().orElse(eGroups.up.newRecord(Query.SEL));
                             return colgrpRec.getStr(eGroups.name);
                         } else {
                             return "Все текстуры группы";
@@ -205,13 +205,13 @@ public class Artikles extends javax.swing.JFrame {
                 super.load(index);
                 update = false;
                 Record artiklRec = qArtikl.get(UGui.getIndexRec(tab1));
-                Record seriesRec = qGroups.find(artiklRec.getInt(eArtikl.groups4_id), eGroups.id);
-                Record currenc1Rec = qCurrenc.find(artiklRec.get(eArtikl.currenc1_id), eCurrenc.id);
-                Record currenc2Rec = qCurrenc.find(artiklRec.get(eArtikl.currenc2_id), eCurrenc.id);
-                Record artgrp1Rec = qGroups.find(artiklRec.get(eArtikl.groups1_id), eGroups.id);
-                Record artgrp2Rec = qGroups.find(artiklRec.get(eArtikl.groups2_id), eGroups.id);
-                Record artgrp3Rec = qGroups.find(artiklRec.get(eArtikl.groups3_id), eGroups.id);
-                Record syssizeRec = qSyssize.find(artiklRec.getInt(eArtikl.syssize_id), eSyssize.id);
+                Record seriesRec = qGroups.find(eGroups.id, artiklRec.getInt(eArtikl.groups4_id));
+                Record currenc1Rec = qCurrenc.find(eCurrenc.id, artiklRec.get(eArtikl.currenc1_id));
+                Record currenc2Rec = qCurrenc.find(eCurrenc.id, artiklRec.get(eArtikl.currenc2_id));
+                Record artgrp1Rec = qGroups.find(eGroups.id, artiklRec.get(eArtikl.groups1_id));
+                Record artgrp2Rec = qGroups.find(eGroups.id, artiklRec.get(eArtikl.groups2_id));
+                Record artgrp3Rec = qGroups.find(eGroups.id, artiklRec.get(eArtikl.groups3_id));
+                Record syssizeRec = qSyssize.find(eSyssize.id, artiklRec.getInt(eArtikl.syssize_id));
 
                 setText(txt5, UseUnit.getName(artiklRec.getInt(eArtikl.unit)));
                 setText(txt7, currenc1Rec.getStr(eCurrenc.name));
@@ -224,7 +224,7 @@ public class Artikles extends javax.swing.JFrame {
                 setText(txt40, UseUnit.getName(artiklRec.getInt(eArtikl.unit)));
 
                 if (artiklRec.getInt(eArtikl.analog_id) != -1) {
-                    Record analogRec = qArtikl.find(artiklRec.get(eArtikl.analog_id), eArtikl.id);
+                    Record analogRec = qArtikl.find(eArtikl.id, artiklRec.get(eArtikl.analog_id));
                     setText(txt11, analogRec.getStr(eArtikl.code));
                 } else {
                     setText(txt11, null);

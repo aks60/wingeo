@@ -243,7 +243,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 Field field = columns[col];
                 if (val != null && field == eSyspar1.groups_id) {
                     //Record paramsRec = qParams.find(val, eParams.id);
-                    return qGroups.find(val, eGroups.id).getDev(eGroups.name, val);
+                    return qGroups.find(eGroups.id, val).getDev(eGroups.name, val);
                 }
                 return val;
             }
@@ -253,7 +253,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
                 if (val != null && field == eSyspar1.groups_id) {
-                    return qGroups.find(val, eGroups.id).getDev(eGroups.name, val);
+                    return qGroups.find(eGroups.id, val).getDev(eGroups.name, val);
                 }
                 return val;
             }
@@ -392,8 +392,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
                 lab1.setText("Система ID = " + systreeID);
                 lab2.setText("Элемент ID = -1");
-                Collections.sort(qSyspar1a, (o1, o2) -> qGroups.find(o1.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)
-                        .compareTo(qGroups.find(o2.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)));
+                Collections.sort(qSyspar1a, (o1, o2) -> qGroups.find(eGroups.id, o1.getInt(eSyspar1.groups_id)).getStr(eGroups.name)
+                        .compareTo(qGroups.find(eGroups.id, o2.getInt(eSyspar1.groups_id)).getStr(eGroups.name)));
 
                 loadingTab5();
 
@@ -460,8 +460,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     ((CardLayout) pan7.getLayout()).show(pan7, "card11");
                     qSyspar1b.clear();
                     winc.mapPardef.forEach((pk, syspar1Rec) -> qSyspar1b.add(syspar1Rec));
-                    Collections.sort(qSyspar1b, (o1, o2) -> qGroups.find(o1.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)
-                            .compareTo(qGroups.find(o2.getInt(eSyspar1.groups_id), eGroups.id).getStr(eGroups.name)));
+                    Collections.sort(qSyspar1b, (o1, o2) -> qGroups.find(eGroups.id, o1.getInt(eSyspar1.groups_id)).getStr(eGroups.name)
+                            .compareTo(qGroups.find(eGroups.id, o2.getInt(eSyspar1.groups_id)).getStr(eGroups.name)));
                     ((DefTableModel) tab7.getModel()).fireTableDataChanged();
 
                     //Рама, импост...

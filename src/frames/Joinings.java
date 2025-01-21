@@ -147,7 +147,7 @@ public class Joinings extends javax.swing.JFrame {
                 if (val != null && eJoinpar1.groups_id == field) {
 
                     if (Integer.valueOf(String.valueOf(val)) < 0) {
-                        return qGroups.find(val, eGroups.id).getDev(eGroups.name, val);
+                        return qGroups.find(eGroups.id, val).getDev(eGroups.name, val);
                     } else {
                         Enam en = ParamList.find(val);
                         return Record.getDev(en.numb(), en.text());
@@ -206,7 +206,7 @@ public class Joinings extends javax.swing.JFrame {
                 if (val != null && eJoinpar2.groups_id == field) {
 
                     if (Integer.valueOf(String.valueOf(val)) < 0) {
-                        return qGroups.find(val, eGroups.id).getDev(eGroups.name, val);
+                        return qGroups.find(eGroups.id, val).getDev(eGroups.name, val);
                     } else {
                         Enam en = ParamList.find(val);
                         return Record.getDev(en.numb(), en.text());
@@ -414,7 +414,7 @@ public class Joinings extends javax.swing.JFrame {
 
         listenerArtikl = (record) -> {
             UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
-            if (qArtikl.find(record.get(eArtikl.id), eArtikl.id).get(eArtikl.id) == null) {
+            if (qArtikl.find(eArtikl.id, record.get(eArtikl.id)).get(eArtikl.id) == null) {
                 qArtikl.sql(eArtikl.data(), eArtikl.up);
             }
             if (tab1.getBorder() != null) {

@@ -111,7 +111,7 @@ public class Kits extends javax.swing.JFrame {
                     if (field == eKitpar2.groups_id) {
 
                         if (Integer.valueOf(String.valueOf(val)) < 0) {
-                            return qGroups.find(val, eGroups.id).getDev(eGroups.name, val);
+                            return qGroups.find(eGroups.id, val).getDev(eGroups.name, val);
                         } else {
                             Enam en = ParamList.find(val);
                             return Record.getDev(en.numb(), en.text());

@@ -80,17 +80,6 @@ public enum eColor implements Field {
         return (recordList.isEmpty() == true) ? virtualRec() : recordList.get(0);
     }
 
-//    public static Record find(int _id) {
-//        if (_id == -3) {
-//            return virtualRec();
-//        }
-//        if (Query.conf.equals("NET")) {
-//            return data().stream().filter(rec -> rec.getInt(id) == _id).findFirst().orElse(up.newRecord(Query.SEL));
-//        }
-//        Query recordList = new Query(values()).select(up, "where", id, "=", _id);
-//        return (recordList.isEmpty() == true) ? virtualRec() : recordList.get(0);
-//    }
-
     public static List<Record> filter(int _colgrp_id) {
 
         if (Query.conf.equals("NET")) {
