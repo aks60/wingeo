@@ -77,7 +77,7 @@ public class DicKits extends javax.swing.JDialog {
 
             public Object getValueAt(int col, int row, Object val) {
                 if (val != null && col == 0) {
-                    return qCateg.find(eGroups.id, val).getStr(eGroups.name);
+                    return qCateg.find(eGroups.data(), eGroups.id, val).getStr(eGroups.name);
                 }
                 return val;
             }
@@ -121,7 +121,7 @@ public class DicKits extends javax.swing.JDialog {
                     if (field == eKitpar2.groups_id) {
 
                         if (Integer.valueOf(String.valueOf(val)) < 0) {
-                            return qGroups.find(eGroups.id, val).getDev(eGroups.name, val);
+                            return qGroups.find(eGroups.data(), eGroups.id, val).getDev(eGroups.name, val);
                         } else {
                             Enam en = ParamList.find(val);
                             return Record.getDev(en.numb(), en.text());

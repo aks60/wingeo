@@ -56,7 +56,7 @@ public class DicArtikl2 extends javax.swing.JDialog {
         List<Integer> levList = Arrays.stream(level).boxed().collect(Collectors.toList());
         qArtiklAll.sql(eArtikl.data(), eArtikl.level1, levList).sort(eArtikl.level1, eArtikl.level2, eArtikl.code, eArtikl.name);
         if (id != -1) {
-            artiklRec = qArtiklAll.find(eArtikl.id, id);
+            artiklRec = qArtiklAll.find(eArtikl.data(), eArtikl.id, id);
         }
         this.listener = listenet;
         loadingModel();

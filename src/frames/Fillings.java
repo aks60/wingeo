@@ -111,9 +111,9 @@ public class Fillings extends javax.swing.JFrame {
                             return UseColor.precision[1];
                         }
                         if (colorFk > 0) {
-                            return qColor.find(eColor.id, colorFk).get(eColor.name);
+                            return qColor.find(eColor.data(), eColor.id, colorFk).get(eColor.name);
                         } else {
-                            return "# " + qGroups.find(eGroups.id, colorFk).get(eGroups.name);
+                            return "# " + qGroups.find(eGroups.data(), eGroups.id, colorFk).get(eGroups.name);
                         }
                     } else if (eGlasdet.color_us == field) {
                         int types = Integer.valueOf(val.toString());
@@ -131,7 +131,7 @@ public class Fillings extends javax.swing.JFrame {
                 if (val != null && eGlaspar1.groups_id == field) {
 
                     if (Integer.valueOf(String.valueOf(val)) < 0) {
-                        return qGroups.find(eGroups.id, val).getDev(eGroups.name, val);
+                        return qGroups.find(eGroups.data(), eGroups.id, val).getDev(eGroups.name, val);
                     } else {
                         Enam en = ParamList.find(val);
                         return Record.getDev(en.numb(), en.text());
@@ -147,7 +147,7 @@ public class Fillings extends javax.swing.JFrame {
                 if (val != null && field == eGlaspar2.groups_id) {
 
                     if (Integer.valueOf(String.valueOf(val)) < 0) {
-                        return qGroups.find(eGroups.id, val).getDev(eGroups.name, val);
+                        return qGroups.find(eGroups.data(), eGroups.id, val).getDev(eGroups.name, val);
                     } else {
                         Enam en = ParamList.find(val);
                         return Record.getDev(en.numb(), en.text());

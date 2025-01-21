@@ -158,9 +158,9 @@ public class Furniturs extends javax.swing.JFrame {
                         return UseColor.precision[1];
                     }
                     if (colorFk > 0) {
-                        return qColor.find(eColor.id, colorFk).get(eColor.name);
+                        return qColor.find(eColor.data(), eColor.id, colorFk).get(eColor.name);
                     } else {
-                        return "# " + qGroups.find(eGroups.id, colorFk).get(eGroups.name);
+                        return "# " + qGroups.find(eGroups.data(), eGroups.id, colorFk).get(eGroups.name);
                     }
 
                     //Подбор текстуры
@@ -174,13 +174,13 @@ public class Furniturs extends javax.swing.JFrame {
                     //Набор
                     if (qFurndet2a.get(row, eFurndet.furniture_id2) != null) {
                         int furniture_id2 = qFurndet2a.getAs(row, eFurndet.furniture_id2);
-                        String name = qFurnall.find(eFurniture.id, furniture_id2).getStr(eFurniture.name);
+                        String name = qFurnall.find(eFurniture.data(), eFurniture.id, furniture_id2).getStr(eFurniture.name);
                         return (col == 0) ? "Набор" : name;
 
                         //Артикул
                     } else if (val != null) {
                         int artikl_id = Integer.valueOf(val.toString());
-                        Record recordArt = qArtikl.find(eArtikl.id, artikl_id);
+                        Record recordArt = qArtikl.find(eArtikl.data(), eArtikl.id, artikl_id);
                         return (col == 0) ? recordArt.getStr(eArtikl.code) : recordArt.getStr(eArtikl.name);
                     }
                 }
@@ -203,9 +203,9 @@ public class Furniturs extends javax.swing.JFrame {
                         return UseColor.precision[1];
                     }
                     if (colorFk > 0) {
-                        return qColor.find(eColor.id, colorFk).get(eColor.name);
+                        return qColor.find(eColor.data(), eColor.id, colorFk).get(eColor.name);
                     } else {
-                        return "# " + qGroups.find(eGroups.id, colorFk).get(eGroups.name);
+                        return "# " + qGroups.find(eGroups.data(), eGroups.id, colorFk).get(eGroups.name);
                     }
 
                     //Подбор текстуры
@@ -219,13 +219,13 @@ public class Furniturs extends javax.swing.JFrame {
                     //Набор
                     if (qFurndet2b.get(row, eFurndet.furniture_id2) != null) {
                         int furniture_id2 = qFurndet2b.getAs(row, eFurndet.furniture_id2);
-                        String name = qFurnall.find(eFurniture.id, furniture_id2).getStr(eFurniture.name);
+                        String name = qFurnall.find(eFurniture.data(), eFurniture.id, furniture_id2).getStr(eFurniture.name);
                         return (col == 0) ? "Набор" : name;
 
                         //Артикул    
                     } else if (val != null) {
                         int artikl_id = Integer.valueOf(val.toString());
-                        Record recordArt = qArtikl.find(eArtikl.id, artikl_id);
+                        Record recordArt = qArtikl.find(eArtikl.data(), eArtikl.id, artikl_id);
                         return (col == 0) ? recordArt.getStr(eArtikl.code) : recordArt.getStr(eArtikl.name);
                     }
                 }
@@ -248,9 +248,9 @@ public class Furniturs extends javax.swing.JFrame {
                         return UseColor.precision[1];
                     }
                     if (colorFk > 0) {
-                        return qColor.find(eColor.id, colorFk).get(eColor.name);
+                        return qColor.find(eColor.data(), eColor.id, colorFk).get(eColor.name);
                     } else {
-                        return "# " + qGroups.find(eGroups.id, colorFk).get(eGroups.name);
+                        return "# " + qGroups.find(eGroups.data(), eGroups.id, colorFk).get(eGroups.name);
                     }
 
                     //Подбор текстуры
@@ -263,13 +263,13 @@ public class Furniturs extends javax.swing.JFrame {
                 } else if (eFurndet.artikl_id == field) {
                     if (qFurndet2c.get(row, eFurndet.furniture_id2) != null) {
                         int furniture_id2 = qFurndet2c.getAs(row, eFurndet.furniture_id2);
-                        String name = qFurnall.find(eFurniture.id, furniture_id2).getStr(eFurniture.name);
+                        String name = qFurnall.find(eFurniture.data(), eFurniture.id, furniture_id2).getStr(eFurniture.name);
                         return (col == 0) ? "Набор" : name;
 
                         //Артикул 
                     } else if (val != null) {
                         int artikl_id = Integer.valueOf(val.toString());
-                        Record recordArt = qArtikl.find(eArtikl.id, artikl_id);
+                        Record recordArt = qArtikl.find(eArtikl.data(), eArtikl.id, artikl_id);
                         return (col == 0) ? recordArt.getStr(eArtikl.code) : recordArt.getStr(eArtikl.name);
                     }
                 }
@@ -301,7 +301,7 @@ public class Furniturs extends javax.swing.JFrame {
                 if (field == eFurnpar1.groups_id && val != null) {
 
                     if (Integer.valueOf(String.valueOf(val)) < 0) {
-                        return qGroups.find(eGroups.id, val).getDev(eGroups.name, val);
+                        return qGroups.find(eGroups.data(), eGroups.id, val).getDev(eGroups.name, val);
                     } else {
                         Enam en = ParamList.find(val);
                         return Record.getDev(en.numb(), en.text());
@@ -330,7 +330,7 @@ public class Furniturs extends javax.swing.JFrame {
                 if (val != null && field == eFurnpar2.groups_id) {
 
                     if (Integer.valueOf(String.valueOf(val)) < 0) {
-                        return qGroups.find(eGroups.id, val).getDev(eGroups.name, val);
+                        return qGroups.find(eGroups.data(), eGroups.id, val).getDev(eGroups.name, val);
                     } else {
                         Enam en = ParamList.find(val);
                         return Record.getDev(en.numb(), en.text());
@@ -553,7 +553,7 @@ public class Furniturs extends javax.swing.JFrame {
 
         listenerArtikl = (record) -> {
             UGui.stopCellEditing(tab1, tab2a, tab2b, tab2c, tab3, tab4, tab5, tab6);
-            if (qArtikl.find(eArtikl.id, record.get(eArtikl.id)).get(eArtikl.id) == null) {
+            if (qArtikl.find(eArtikl.data(), eArtikl.id, record.get(eArtikl.id)).get(eArtikl.id) == null) {
                 qArtikl.sql(eArtikl.data(), eArtikl.up);
             }
             JTable tab2x = (tab2a.getBorder() != null) ? tab2a : (tab2b.getBorder() != null) ? tab2b : tab2c;

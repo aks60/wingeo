@@ -127,7 +127,7 @@ public class Elements extends javax.swing.JFrame {
                     return List.of(TypeSet.values()).stream().filter(el -> el.id == typset).findFirst().orElse(TypeSet.P1).name;
 
                 } else if (val != null && columns[col] == eElement.groups1_id) {
-                    return qGroups.find(eGroups.id, val).get(eGroups.name);
+                    return qGroups.find(eGroups.data(), eGroups.id, val).get(eGroups.name);
                 }
                 return val;
             }
@@ -148,9 +148,9 @@ public class Elements extends javax.swing.JFrame {
                             return UseColor.precision[1];
                         }
                         if (colorFk > 0) {
-                            return qColor.find(eColor.id, colorFk).get(eColor.name);
+                            return qColor.find(eColor.data(), eColor.id, colorFk).get(eColor.name);
                         } else {
-                            return "# " + qGroups.find(eGroups.id, colorFk).get(eGroups.name);
+                            return "# " + qGroups.find(eGroups.data(), eGroups.id, colorFk).get(eGroups.name);
                         }
 
                     } else if (eElemdet.color_us == field) {
@@ -169,7 +169,7 @@ public class Elements extends javax.swing.JFrame {
                 if (val != null && eElempar1.groups_id == field) {
 
                     if (Integer.valueOf(String.valueOf(val)) < 0) {
-                        return qGroups.find(eGroups.id, val).getDev(eGroups.name, val);
+                        return qGroups.find(eGroups.data(), eGroups.id, val).getDev(eGroups.name, val);
                     } else {
                         Enam en = ParamList.find(val);
                         return Record.getDev(en.numb(), en.text());
@@ -186,7 +186,7 @@ public class Elements extends javax.swing.JFrame {
                     if (field == eElempar2.groups_id) {
 
                         if (Integer.valueOf(String.valueOf(val)) < 0) {
-                            return qGroups.find(eGroups.id, val).getDev(eGroups.name, val);
+                            return qGroups.find(eGroups.data(), eGroups.id, val).getDev(eGroups.name, val);
                         } else {
                             Enam en = ParamList.find(val);
                             return Record.getDev(en.numb(), en.text());

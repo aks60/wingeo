@@ -64,7 +64,8 @@ public class Table extends ArrayList<Record> {
     
     public Record find(List<Record> data, Field field, Object value) {
         Record record = this.stream().filter(rec -> rec.get(field).equals(value)).findFirst().orElse(field.newRecord(Query.SEL));
-        if (record.get(1).equals(-3)) {
+        if (record.getInt(1) == -3) {
+            System.out.println("Неудача: Узкий поиск 1");
             return data.stream().filter(rec -> rec.get(field).equals(value)).findFirst().orElse(field.newRecord(Query.SEL));
         } else {
             return record;
@@ -73,7 +74,8 @@ public class Table extends ArrayList<Record> {
 
     public Record find(List<Record> data, Field field, int value, Field field2, int value2) {
         Record record = this.stream().filter(rec -> rec.get(field).equals(value) && rec.get(field2).equals(value2)).findFirst().orElse(field.newRecord(Query.SEL));        
-        if (record.get(1).equals(-3)) {
+        if (record.getInt(1)== -3) {
+            System.out.println("Неудача: Узкий поиск 2");
              return data.stream().filter(rec -> rec.get(field).equals(value) && rec.get(field2).equals(value2)).findFirst().orElse(field.newRecord(Query.SEL));
         } else {
             return record;
