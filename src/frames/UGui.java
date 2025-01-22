@@ -73,6 +73,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import javax.swing.JRootPane;
 import javax.swing.tree.DefaultMutableTreeNode;
+import org.locationtech.jts.geom.Geometry;
 import startup.App;
 
 /**
@@ -995,5 +996,13 @@ public class UGui {
             boolean b[] = {false, false, false, false, true};
             List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
         }
+    }
+    
+    public static void PRINT(Field field, Record record) {
+        List list = new ArrayList();
+        for (Field f : field.fields()) {
+            list.add(f.meta().fname + "=" + record.get(f));
+        }
+        System.out.println(list);
     }
 }

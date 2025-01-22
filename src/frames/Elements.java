@@ -209,10 +209,11 @@ public class Elements extends javax.swing.JFrame {
             Record record = qGrCateg.get(index);
             Integer id = record.getInt(eGroups.id);
 
-            if (id == -1 || id == -5) {
+            
+            if (id == -1 || id == -5) { //(-1) - ÏĞÎÔÈËÈ, (-5) - ÇÀÏÎËÍÅÍÈß
                 eElement.sql(qElement, qElement.table(eArtikl.up), id);
-
-            } else {
+                
+            } else { //Êàòåãîğèè
                 qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
                 qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
             }
