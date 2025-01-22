@@ -58,7 +58,7 @@ public enum eElement implements Field {
                 : eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.level1) != 5).collect(Collectors.toList());
         
         List<Record> groupsList = eGroups.data().stream().filter(rec
-                -> rec.getInt(eGroups.grup) == Math.abs(categID)).collect(Collectors.toList());
+                -> rec.getInt(eGroups.npp) == Math.abs(categID)).collect(Collectors.toList());
 
         for (Record recElem : data()) {
             for (Record recGrp : groupsList) {

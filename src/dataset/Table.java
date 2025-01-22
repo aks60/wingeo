@@ -1,5 +1,6 @@
 package dataset;
 
+import frames.UGui;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,8 +80,11 @@ public class Table extends ArrayList<Record> {
             return field.newRecord(Query.SEL);
         }
         Record record = this.stream().filter(rec -> rec.get(field).equals(value)).findFirst().orElse(field.newRecord(Query.SEL));
+        //Record record = data.stream().filter(rec -> rec.get(field).equals(value)).findFirst().orElse(field.newRecord(Query.SEL));
         if (record.get(1) == null) {
             System.out.println("***********Неудача: Запись не найдена. value = " + value);
+            UGui.PRINT(field, record);
+            
             return data.stream().filter(rec -> rec.get(field).equals(value)).findFirst().orElse(field.newRecord(Query.SEL));
         } else {
             return record;
