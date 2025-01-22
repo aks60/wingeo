@@ -124,6 +124,7 @@ public class Conn {
         PathToDb pathToDb = new PathToDb(App.Top.frame, num_base);
         FrameToFile.setFrameSize(pathToDb);
         pathToDb.setVisible(true);
+        pathToDb.connectToDb();
     }
 
     public static void autocommit(boolean autoCommit) {

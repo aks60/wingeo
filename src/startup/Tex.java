@@ -60,6 +60,7 @@ public class Tex extends javax.swing.JFrame {
 
     private void prepareConnectBaseNumb(String num_base) {
         Conn.prepareConnectBaseNumb(num_base);
+        
         if (eProp.base_num.read().equals("1")) {
             btnT7.setSelected(true);
             mn631.setSelected(true);

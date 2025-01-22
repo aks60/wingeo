@@ -36,7 +36,15 @@ public class PathToDb extends javax.swing.JDialog {
         edPort.setText(eProp.port(num_base));
         edUser.setText(eProp.user.read());
         edPass.setText(eProp.password);
+        
         onCaretUpdate(null);
+        
+        if (eProp.dev == false) {
+            edHost.setEditable(false);
+            edPath.setEditable(false);
+            edPort.setEditable(false);
+            btnFile.setEnabled(false);
+        }
     }
 
     //Соединение с БД.
