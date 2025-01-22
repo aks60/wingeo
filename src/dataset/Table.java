@@ -75,21 +75,6 @@ public class Table extends ArrayList<Record> {
             return record;
         }
     }
-    public Record find2(List<Record> data, Field field, int value) { 
-        if(value == -1) {
-            return field.newRecord(Query.SEL);
-        }
-        Record record = this.stream().filter(rec -> rec.get(field).equals(value)).findFirst().orElse(field.newRecord(Query.SEL));
-        //Record record = data.stream().filter(rec -> rec.get(field).equals(value)).findFirst().orElse(field.newRecord(Query.SEL));
-        if (record.get(1) == null) {
-            System.out.println("***********Неудача: Запись не найдена. value = " + value);
-            UGui.PRINT(field, record);
-            
-            return data.stream().filter(rec -> rec.get(field).equals(value)).findFirst().orElse(field.newRecord(Query.SEL));
-        } else {
-            return record;
-        }
-    }
 
     public Record find(List<Record> data, Field field, int value, Field field2, int value2) {
         if(value == -1 || value2 == -1) {

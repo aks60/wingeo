@@ -406,6 +406,18 @@ public class Query extends Table {
         return this;
     }
 
+    public Query sql(List<Record> data, Field field, int value2, int value3, int value4, int value5) {
+        clear();
+        if (Query.conf.equals("NET")) {
+            addAll(data.stream().filter(rec -> rec.getInt(field) == value2 
+                    || rec.getInt(field) == value3 || rec.getInt(field) == value4 || rec.getInt(field) == value5
+            ).collect(Collectors.toList()));
+        } else {
+            select(field.fields()[0], "where", field, "in (", value2, ",", value3, ",", value4, ",", value5 + ")");
+        }
+        return this;
+    }
+
     public Query sql(List<Record> data, Field field, int value, Field field2, int value2, int value3) {
         clear();
         if (Query.conf.equals("NET")) {

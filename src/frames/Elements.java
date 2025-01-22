@@ -94,9 +94,8 @@ public class Elements extends javax.swing.JFrame {
 
         qColor.sql(eColor.data(), eColor.up);
         qGrCateg.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id).sort(eGroups.npp, eGroups.name);
-        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.SERI_ELEM.id, TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id).sort(eGroups.npp, eGroups.name);
-
-        
+        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id, TypeGrup.SERI_ELEM.id, TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id).sort(eGroups.npp, eGroups.name);
+     
         Record groups1Rec = eGroups.up.newRecord(Query.SEL);
         groups1Rec.setNo(eGroups.id, -1);
         groups1Rec.setNo(eGroups.npp, 1);
@@ -129,7 +128,7 @@ public class Elements extends javax.swing.JFrame {
                     return List.of(TypeSet.values()).stream().filter(el -> el.id == typset).findFirst().orElse(TypeSet.P1).name;
 
                 } else if (val != null && columns[col] == eElement.groups1_id) {
-                    return qGroups.find2(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).get(eGroups.name);
+                    return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).get(eGroups.name);
                 }
                 return val;
             }
@@ -1189,8 +1188,6 @@ public class Elements extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFind2
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-        Object o1 =qGroups.find2(eGroups.data(), eGroups.id, Integer.valueOf("-9675"));
-        System.out.println(o1);
     }//GEN-LAST:event_btnTest
 
     private void btnFind1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind1
