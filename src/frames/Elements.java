@@ -96,19 +96,21 @@ public class Elements extends javax.swing.JFrame {
         qGrCateg.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id).sort(eGroups.npp, eGroups.name);
         qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.SERI_ELEM.id, TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id).sort(eGroups.npp, eGroups.name);
 
-        Record record = eGroups.up.newRecord(Query.SEL);
-        record.setNo(eGroups.id, -1);
-        record.setNo(eGroups.npp, 1);
-        record.setNo(eGroups.name, "<html><font size='3' color='red'>&nbsp;&nbsp;&nbsp;ПРОФИЛИ</font>");
-        qGrCateg.add(0, record);
-        for (int index = 0; index < qGrCateg.size(); ++index) {
-            int level = qGrCateg.getAs(index, eGroups.npp);
-            if (level == 5) {
-                Record record2 = eGroups.up.newRecord(Query.SEL);
-                record2.setNo(eGroups.id, -5);
-                record2.setNo(eGroups.npp, 5);
-                record2.setNo(eGroups.name, "<html><font size='3' color='red'>&nbsp;&nbsp;ЗАПОЛНЕНИЯ</font>");
-                qGrCateg.add(index, record2);
+        
+        Record groups1Rec = eGroups.up.newRecord(Query.SEL);
+        groups1Rec.setNo(eGroups.id, -1);
+        groups1Rec.setNo(eGroups.npp, 1);
+        groups1Rec.setNo(eGroups.name, "<html><font size='3' color='red'>&nbsp;&nbsp;&nbsp;ПРОФИЛИ</font>");
+        qGrCateg.add(0, groups1Rec); //ПРОФИЛИ
+        //Цыкл по категориям
+        for (int i = 0; i < qGrCateg.size(); ++i) {
+            Record groups2Rec = qGrCateg.get(i);
+            if (groups2Rec.getInt(eGroups.npp) == 5) {
+                Record groups3Rec = eGroups.up.newRecord(Query.SEL);
+                groups3Rec.setNo(eGroups.id, -5);
+                groups3Rec.setNo(eGroups.npp, 5);
+                groups3Rec.setNo(eGroups.name, "<html><font size='3' color='red'>&nbsp;&nbsp;ЗАПОЛНЕНИЯ</font>");
+                qGrCateg.add(i, groups3Rec); //ЗАПОЛНЕНИЯ
                 break;
             }
         }
@@ -207,13 +209,14 @@ public class Elements extends javax.swing.JFrame {
         int index = UGui.getIndexRec(tab1);
         if (index != -1) {
             Record record = qGrCateg.get(index);
-            Integer id = record.getInt(eGroups.id);
+            int id = record.getInt(eGroups.id);
 
             
-            if (id == -1 || id == -5) { //(-1) - ПРОФИЛИ, (-5) - ЗАПОЛНЕНИЯ
+            if (id == -1 || id == -5) { //(-1) - профили, (-5) - заполнения
                 eElement.sql(qElement, qElement.table(eArtikl.up), id);
-                
-            } else { //Категории
+                 //qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
+                 //qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);               
+            } else { //категории
                 qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
                 qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
             }

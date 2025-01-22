@@ -53,17 +53,18 @@ public enum eElement implements Field {
         qElament.clear();
         qArtikl.clear();
         
-        List<Record> artList = (categID == -5)
+        List<Record> artiklList = (categID == -5)
                 ? eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.level1) == 5).collect(Collectors.toList())
                 : eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.level1) != 5).collect(Collectors.toList());
-        List<Record> groupList = eGroups.data().stream().filter(rec
-                -> rec.getInt(eGroups.npp) == Math.abs(categID)).collect(Collectors.toList());
+        
+        List<Record> groupsList = eGroups.data().stream().filter(rec
+                -> rec.getInt(eGroups.grup) == Math.abs(categID)).collect(Collectors.toList());
 
         for (Record recElem : data()) {
-            for (Record recGrp : groupList) {
+            for (Record recGrp : groupsList) {
                 if (recElem.getInt(eElement.groups2_id) == recGrp.getInt(eGroups.id) && recGrp.getInt(eGroups.npp) == Math.abs(categID)) {
                     qElament.add(recElem);
-                    qArtikl.add(artList.stream().filter(rec
+                    qArtikl.add(artiklList.stream().filter(rec
                             -> recElem.getInt(eElement.artikl_id) == rec.getInt(eArtikl.id)).findFirst().get());
                 }
             }
