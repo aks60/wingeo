@@ -74,6 +74,14 @@ public enum eProp {
     }
 
     //Возвращает конкретное значение от выбранного экземпляра enum
+    public String read2() {
+        load();
+        if (prop.getProperty(this.name()) != null && prop.getProperty(this.name()).equals("")) { //свойство не записано           
+            return this.value; //по умолчанию
+        } else {
+            return prop.getProperty(this.name(), this.value); //читаем с диска
+        }
+    }
     public String read() {
         load();
         if (prop.getProperty(this.name()) != null && prop.getProperty(this.name()).equals("")) { //свойство не записано           

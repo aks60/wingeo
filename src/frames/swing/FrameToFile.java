@@ -17,7 +17,7 @@ public class FrameToFile extends javax.swing.Timer implements ActionListener {
     private static Dimension screenSize;
     private static Dimension frameSize;
     private static Window frameUp;
-    private boolean eventPerformed = false;
+    //private boolean eventPerformed = false;
     private static Window frame;
     private static AbstractButton btn;
     private static Window frame2;
