@@ -24,7 +24,7 @@ public class Par5s {
     protected final int TEXT = 2;   //Текст 
     protected Wincalc winc = null;
     public boolean shortPass = false;
-    protected String versionPs = eSetting.val(2);
+    protected String versionPs = eSetting.find(2);
     public HashMap<Integer, String> mapParamTmp = new HashMap<Integer, String>();
     public Record detailRec = null; //текущий элемент детализации
     protected ArrayList<ListenerAction> listenerList = null;

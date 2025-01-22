@@ -46,14 +46,6 @@ public enum eGlasprof implements Field {
     public Query query() {
         return query;
     }
-
-    public static Record find(int artiklId) {
-        if (Query.conf.equals("NET")) {
-            return data().stream().filter(rec -> rec.getInt(artikl_id) == artiklId).findFirst().orElse(up.newRecord(Query.SEL));
-        }
-        Query recordList = new Query(values()).select(up, "where", artikl_id, "=", artiklId);
-        return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
-    }
     
     public static List<Record> filter() {
         if (Query.conf.equals("NET")) {

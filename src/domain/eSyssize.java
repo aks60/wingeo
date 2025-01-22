@@ -55,15 +55,6 @@ public enum eSyssize implements Field {
         return (recordList.isEmpty() == true) ? virtualRec() : recordList.get(0);
     }
 
-    public static Query sql(Query q) {
-        if (Query.conf.equals("NET")) {
-            q.addAll(data().stream().sorted((o1, o2) -> o1.getStr(name)
-                    .compareTo(o2.getStr(name))).collect(Collectors.toList()));
-            return q;
-        }
-        return q.select(up, "order by", name);
-    }
-
     //Виртуал. системные переменные
     public static Record virtualRec() {
         Record record = up.newRecord(Query.SEL);

@@ -45,19 +45,19 @@ public enum eSyspar1 implements Field {
         return query;
     }
   
-    public static List<Record> filter(int _nuni) {
-        if (Query.conf.equals("NET")) {
-            return data().stream().filter(rec -> rec.getInt(systree_id) == _nuni).collect(toList());
-        }
-        return new Query(values()).select(up, "where", systree_id, "=", _nuni);
-    }
-
-    public static Record find2(int _id) {
+    public static Record find(int _id) {
         if (Query.conf.equals("NET")) {
             return query.find(data(), id, _id);
         }
         Query recordList = new Query(values()).select(up, "where", id, "=", _id);
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
+    }
+    
+    public static List<Record> filter(int _nuni) {
+        if (Query.conf.equals("NET")) {
+            return data().stream().filter(rec -> rec.getInt(systree_id) == _nuni).collect(toList());
+        }
+        return new Query(values()).select(up, "where", systree_id, "=", _nuni);
     }
 
     public String toString() {

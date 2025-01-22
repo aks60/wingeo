@@ -64,14 +64,6 @@ public enum eSysfurn implements Field {
         Query recordList = new Query(values()).select(up, "where", systree_id, "=", _nuni, "order by", npp, ",", id); //id - т.к. при ковертиров. наруш. порядок след.
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
-    
-    public static Record find4(int _nuni, int _side_open) {
-        if (Query.conf.equals("NET")) {
-            return data().stream().filter(rec -> rec.getInt(systree_id) == _nuni && rec.getInt(side_open) == _side_open).findFirst().orElse(up.newRecord(Query.SEL));
-        }
-        Query recordList = new Query(values()).select(up, "where", systree_id, "=", _nuni, "and", side_open, "=", _side_open, "order by", npp);
-        return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
-    }
   
     public static List<Record> filter(int _nuni) {
         if (Query.conf.equals("NET")) {

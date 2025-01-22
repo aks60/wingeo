@@ -36,7 +36,7 @@ public enum eSetting implements Field {
         return query;
     }
     
-    public static String val(int _id) {
+    public static String find(int _id) {
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL)).getStr(val);
         }

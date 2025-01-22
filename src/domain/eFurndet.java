@@ -72,11 +72,11 @@ public enum eFurndet implements Field {
         }
     }
 
-    public static List<Record> filter(int _id) {
+    public static List<Record> filter(int _furniture_id1) {
         if (Query.conf.equals("NET")) {
-            return data().stream().filter(rec -> rec.getInt(furniture_id1) == _id).collect(Collectors.toList());
+            return data().stream().filter(rec -> rec.getInt(furniture_id1) == _furniture_id1).collect(Collectors.toList());
         }
-        Query recordList = new Query(values()).select(up, "where", furniture_id1, "=", _id);
+        Query recordList = new Query(values()).select(up, "where", furniture_id1, "=", _furniture_id1);
         return (recordList.isEmpty() == true) ? new ArrayList<Record>() : recordList;
     }
 

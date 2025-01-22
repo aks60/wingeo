@@ -67,13 +67,6 @@ public enum eParmap implements Field {
         List<Record> list = new Query(values()).select(up, "where", groups_id, "=", groupsID);
         return list.stream().filter(rec -> name.equals(eColor.find(rec.getInt(eParmap.color_id1)).getStr(eColor.name))).findFirst().orElse(up.newRecord(Query.SEL));
     }
-        
-    public static List<Record> filter3(int groupsID) {
-        if (Query.conf.equals("NET")) {
-            return data().stream().filter(rec -> rec.getInt(groups_id) == groupsID).collect(toList());
-        }
-        return new Query(values()).select(up, "where", groups_id, "=", groupsID);
-    }    
 
     public static List<Record> filter(int colorID) {
 
@@ -90,7 +83,14 @@ public enum eParmap implements Field {
         }
         return new Query(values()).select(up, "where", color_id1, "=", colorID, "and", groups_id, "=", groupsID);
     }
-
+      
+    public static List<Record> filter3(int groupsID) {
+        if (Query.conf.equals("NET")) {
+            return data().stream().filter(rec -> rec.getInt(groups_id) == groupsID).collect(toList());
+        }
+        return new Query(values()).select(up, "where", groups_id, "=", groupsID);
+    }    
+    
     public String toString() {
         return meta.descr();
     }

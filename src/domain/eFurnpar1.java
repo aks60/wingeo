@@ -45,11 +45,11 @@ public enum eFurnpar1 implements Field {
         return query;
     }
     
-    public static List<Record> filter(int _id) {
+    public static List<Record> filter(int _furnside_id) {
         if (Query.conf.equals("NET")) {
-            return data().stream().filter(rec -> rec.getInt(furnside_id) == _id).collect(Collectors.toList());
+            return data().stream().filter(rec -> rec.getInt(furnside_id) == _furnside_id).collect(Collectors.toList());
         }
-        Query recordList = new Query(values()).select(up, "where", furnside_id, "=", _id);
+        Query recordList = new Query(values()).select(up, "where", furnside_id, "=", _furnside_id);
         return (recordList.isEmpty() == true) ? new ArrayList<Record>() : recordList;
     }
 

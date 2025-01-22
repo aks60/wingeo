@@ -575,7 +575,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         UGui.buttonCellEditor(tab3, 1).addActionListener(event -> {
             UGui.stopCellEditing(tab2, tab3, tab4, tab5);
             int id = qSyspar1.getAs(UGui.getIndexRec(tab3), eSyspar1.id);
-            int fixed = eSyspar1.find2(id).getInt(eSyspar1.fixed);
+            int fixed = eSyspar1.find(id).getInt(eSyspar1.fixed);
             if (fixed != 1) {
                 Integer grup = qSyspar1.getAs(UGui.getIndexRec(tab3), eSyspar1.groups_id);
                 new ParDefVal(this, record -> {

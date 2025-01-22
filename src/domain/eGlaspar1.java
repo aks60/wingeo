@@ -45,11 +45,11 @@ public enum eGlaspar1 implements Field {
         return query;
     }
     
-    public static List<Record> filter(int _id) {
+    public static List<Record> filter(int _glasgrp_id) {
         if (Query.conf.equals("NET")) {
-            return data().stream().filter(rec -> rec.getInt(glasgrp_id) == _id).collect(Collectors.toList());
+            return data().stream().filter(rec -> rec.getInt(glasgrp_id) == _glasgrp_id).collect(Collectors.toList());
         }
-        Query recordList = new Query(values()).select(up, "where", glasgrp_id, "=", _id);
+        Query recordList = new Query(values()).select(up, "where", glasgrp_id, "=", _glasgrp_id);
         return (recordList.isEmpty() == true) ? new ArrayList<Record>() : recordList;
     }
 

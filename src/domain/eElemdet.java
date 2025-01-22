@@ -31,13 +31,6 @@ public enum eElemdet implements Field {
         return values();
     }
 
-    public static List<Record> find(int _id) {
-        if (Query.conf.equals("NET")) {
-            return data().stream().filter(rec -> rec.getInt(element_id) == _id).collect(toList());
-        }
-        return new Query(values()).select(up, "where", element_id.name(), "=", _id);
-    }
-
     public static Query data() {
         if (query.size() == 0) {
             query.select(up, "order by", id);
@@ -48,6 +41,13 @@ public enum eElemdet implements Field {
 
     public Query query() {
         return query;
+    }
+
+    public static List<Record> find(int _id) {
+        if (Query.conf.equals("NET")) {
+            return data().stream().filter(rec -> rec.getInt(element_id) == _id).collect(toList());
+        }
+        return new Query(values()).select(up, "where", element_id.name(), "=", _id);
     }
 
     public String toString() {
