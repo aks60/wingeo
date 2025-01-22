@@ -2984,6 +2984,10 @@ public class Artikles extends javax.swing.JFrame {
             }
         });
 
+        //System.out.println(pref.absolutePath());
+        //System.out.println(pref.childrenNames());
+        //System.out.println(pref.name());
+        
 //        prefs.addPreferenceChangeListener((ChangeEvent evt) -> {
 //            String key = evt.getKey();
 //            String newValue = prefs.get(key, "N/A");
