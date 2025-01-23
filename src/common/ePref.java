@@ -13,6 +13,7 @@ import javax.swing.Timer;
 public enum ePref {
 
     //TODO установить значения по умолчанию в ePref
+    lookandfeel("Metal", "Windows"),
     url_src("http://localhost:8080/winweb/"),
     web_port("8080"),
     web_start("false"),
@@ -65,6 +66,16 @@ public enum ePref {
         this.value = os.equals("Linux") ? value1 : value2;
     }
 
+    public String read() {
+        Preferences pref = Preferences.userRoot().node(this.getClass().getSimpleName());
+        return pref.get(this.name(), this.value);
+    }
+    
+    public void write(String str) {
+        Preferences pref = Preferences.userRoot().node(this.getClass().getSimpleName());
+        pref.put(this.name(), str.trim());
+    }
+   
     public static void read(Window window, JButton btn, ActionListener listener, JComponent... comp) {
 
         addButtonMouseListener(btn, listener);
