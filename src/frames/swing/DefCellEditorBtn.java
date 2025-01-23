@@ -1,6 +1,6 @@
 package frames.swing;
 
-import common.eProp;
+import common.ePref;
 import dataset.Field;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
@@ -29,7 +29,7 @@ public class DefCellEditorBtn extends DefaultCellEditor {
         super(new JTextField());
         init(false);
         button(button);
-        this.getComponent().setLocale(eProp.locale);
+        this.getComponent().setLocale(ePref.locale);
     }
 
     public DefCellEditorBtn(ListenerObject listenerCell, JButton button) {
@@ -38,7 +38,7 @@ public class DefCellEditorBtn extends DefaultCellEditor {
         init(false);
         button(button);
         filter();
-        this.getComponent().setLocale(eProp.locale);
+        this.getComponent().setLocale(ePref.locale);
     }
 
     private void init(boolean editable) {

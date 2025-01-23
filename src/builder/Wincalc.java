@@ -23,7 +23,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import common.UCom;
-import common.eProp;
+import common.ePref;
 import common.listener.ListenerAction;
 import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
@@ -270,7 +270,7 @@ public class Wincalc {
             }
             //Если спецификация на продукт менеджера
             if (man == true) {
-                int prjprodID = Integer.valueOf(eProp.prjprodID.read());
+                int prjprodID = Integer.valueOf(ePref.prjprodID.read());
                 Record prjprodRec = ePrjprod.find(prjprodID);
                 Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
                 if (prjprodRec != null) {

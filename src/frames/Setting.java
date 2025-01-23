@@ -2,7 +2,7 @@ package frames;
 
 import common.ePref;
 import frames.swing.FrameToFile;
-import common.eProp;
+import common.ePref;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import javax.swing.DefaultComboBoxModel;
@@ -442,30 +442,30 @@ public class Setting extends javax.swing.JFrame {
     }//GEN-LAST:event_windowClosed
 
     private void btnProp2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProp2
-        eProp.fontname.write(fontName[comboBox.getSelectedIndex()]);
-        eProp.fontsize.write(String.valueOf(spinner2.getValue()));
-        eProp.save();
+        ePref.fontname.write(fontName[comboBox.getSelectedIndex()]);
+        ePref.fontsize.write(String.valueOf(spinner2.getValue()));
+        ePref.save();
     }//GEN-LAST:event_btnProp2
 
     private void btnProp3(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProp3
-        eProp.cmd_word.write(txtWord.getText());
-        eProp.cmd_excel.write(txtExcel.getText());
-        eProp.cmd_html.write(txtHtml.getText());
-        eProp.save();
+        ePref.cmd_word.write(txtWord.getText());
+        ePref.cmd_excel.write(txtExcel.getText());
+        ePref.cmd_html.write(txtHtml.getText());
+        ePref.save();
 }//GEN-LAST:event_btnProp3
 
     private void btnProp4(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProp4
-        eProp.url_src.write(txtURL.getText());
-        eProp.save();
+        ePref.url_src.write(txtURL.getText());
+        ePref.save();
     }//GEN-LAST:event_btnProp4
 
     private void checkBox1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_checkBox1StateChanged
         if(checkBox1.isSelected()) {
-            eProp.old.write("1");
+            ePref.old_version.write("1");
         } else {
-            eProp.old.write("0");
+            ePref.old_version.write("0");
         }
-        eProp.save();
+        ePref.save();
     }//GEN-LAST:event_checkBox1StateChanged
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">    
@@ -515,23 +515,23 @@ public class Setting extends javax.swing.JFrame {
 //        textPane3.setBackground(new java.awt.Color(212, 208, 200));
 //        textPane4.setBackground(new java.awt.Color(212, 208, 200));
         
-        txtWord.setText(eProp.cmd_word.read());
-        txtExcel.setText(eProp.cmd_excel.read());
-        txtHtml.setText(eProp.cmd_html.read());
+        txtWord.setText(ePref.cmd_word.read());
+        txtExcel.setText(ePref.cmd_excel.read());
+        txtHtml.setText(ePref.cmd_html.read());
 
-        txtURL.setText(eProp.url_src.read());
-        Integer num = Integer.valueOf(eProp.web_port.read());
-        boolean start = (eProp.web_start.read().equals("true") == true) ? true : false;
+        txtURL.setText(ePref.url_src.read());
+        Integer num = Integer.valueOf(ePref.web_port.read());
+        boolean start = (ePref.web_start.read().equals("true") == true) ? true : false;
 
         comboBox.setModel(new DefaultComboBoxModel(fontName));
-        String name = eProp.fontname.read();
-        Integer size = Integer.valueOf(eProp.fontsize.read());
+        String name = ePref.fontname.read();
+        Integer size = Integer.valueOf(ePref.fontsize.read());
         for (int i = 0; i < fontName.length; i++) {
             if (name.equals(fontName[i])) {
                 comboBox.setSelectedIndex(i);
             }
         }
         spinner2.setValue(size);       
-        checkBox1.setSelected(eProp.old.read().equals("1"));
+        checkBox1.setSelected(ePref.old_version.read().equals("1"));
     }
 }

@@ -19,7 +19,7 @@ import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import common.ePref;
-import common.eProp;
+import common.ePref;
 import common.listener.ListenerAction;
 import frames.swing.Canvas;
 import common.listener.ListenerRecord;
@@ -211,7 +211,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         });
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -527,7 +527,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             record.set(eSysmodel.npp, record.get(eSysmodel.id));
 
             //Для загрузки скрипта из программы  
-            if (eProp.dev == true) {
+            if (ePref.dev == true) {
                 Object prj = JOptionPane.showInputDialog(Models.this, "Номер проекта", "Проект", JOptionPane.QUESTION_MESSAGE);
                 if (prj != null) {
                     json = GsonScript.modelScript(Integer.valueOf(String.valueOf(prj)));

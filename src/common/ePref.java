@@ -30,6 +30,7 @@ public enum ePref {
     prjprodID("-1"), //выбранный продукт для клиента
     orderID("-1"), //выбранный заказ клиента
     base_num("1"),
+    old_version("0"), //переключение на пред. версию
     base1("C:\\Okna\\fbase\\BASE.FDB?encoding=win1251", "C:\\Okna\\fbase\\BASE.FDB?encoding=win1251"),
     base2("C:\\Okna\\fbase\\BASE.FDB?encoding=win1251", "C:\\Okna\\fbase\\BASE2.FDB?encoding=win1251"),
     base3("C:\\Okna\\fbase\\BASE.FDB?encoding=win1251", "C:\\Okna\\fbase\\BASE3.FDB?encoding=win1251"),

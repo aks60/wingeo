@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import common.eProp;
+import common.ePref;
 import dataset.Conn;
 import dataset.Field;
 import dataset.Query;
@@ -162,7 +162,7 @@ public class UGui {
 // </editor-fold> 
 
     public static Font getFont(int size, int bold) {
-        return new Font(eProp.fontname.read(), bold, Integer.valueOf(eProp.fontsize.read()) + size);
+        return new Font(ePref.fontname.read(), bold, Integer.valueOf(ePref.fontsize.read()) + size);
     }
 
     public static <T extends JComponent> List<T> findComponents(final Container container, final Class<T> componentType) {
@@ -280,7 +280,7 @@ public class UGui {
     public static String designTitle() {
         try {
             if (eProfile.profile == eProfile.P02) {
-                int productID = Integer.valueOf(eProp.sysprodID.read());
+                int productID = Integer.valueOf(ePref.sysprodID.read());
                 Record productRec = eSysprod.find(productID);
                 if (productRec != null) {
 
@@ -296,7 +296,7 @@ public class UGui {
                 }
 
             } else if (eProfile.profile == eProfile.P03) {
-                int productID = Integer.valueOf(eProp.prjprodID.read());
+                int productID = Integer.valueOf(ePref.prjprodID.read());
                 Record productRec = ePrjprod.find(productID);
                 if (productRec != null) {
 
@@ -322,7 +322,7 @@ public class UGui {
     public static String designProject() {
         try {
             if (eProfile.profile == eProfile.P02) {
-                int productID = Integer.valueOf(eProp.sysprodID.read());
+                int productID = Integer.valueOf(ePref.sysprodID.read());
                 Record productRec = eSysprod.find(productID);
                 if (productRec != null) {
 
@@ -338,7 +338,7 @@ public class UGui {
                 }
 
             } else if (eProfile.profile == eProfile.P03) {
-                int productID = Integer.valueOf(eProp.prjprodID.read());
+                int productID = Integer.valueOf(ePref.prjprodID.read());
                 Record productRec = ePrjprod.find(productID);
                 if (productRec != null) {
 

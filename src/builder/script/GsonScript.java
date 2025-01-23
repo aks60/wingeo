@@ -1,7 +1,7 @@
 package builder.script;
 
 import builder.script.check.Bimax;
-import common.eProp;
+import common.ePref;
 import enums.Type;
 import java.util.List;
 
@@ -242,8 +242,8 @@ public class GsonScript {
     }
 
     public static List<Integer> modelList(String scale) {
-        String base_name = (eProp.base_num.read().equals("1")) ? eProp.base1.read()
-                : (eProp.base_num.read().equals("2")) ? eProp.base2.read() : eProp.base3.read();
+        String base_name = (ePref.base_num.read().equals("1")) ? ePref.base1.read()
+                : (ePref.base_num.read().equals("2")) ? ePref.base2.read() : ePref.base3.read();
 
         if (base_name.toLowerCase().contains("sial3")) {
             return List.of(601001, 601002, 601003, 601004, 601007, 601008);
@@ -279,8 +279,8 @@ public class GsonScript {
     }
 
     public static List<Integer> systemList(String scale) {
-        String base_name = (eProp.base_num.read().equals("1")) ? eProp.base1.read()
-                : (eProp.base_num.read().equals("2")) ? eProp.base2.read() : eProp.base3.read();
+        String base_name = (ePref.base_num.read().equals("1")) ? ePref.base1.read()
+                : (ePref.base_num.read().equals("2")) ? ePref.base2.read() : ePref.base3.read();
 
         if (base_name.toLowerCase().contains("sial3")) {
             return List.of(601001, 601002, 601003, 601004, 601007, 601008);
@@ -316,8 +316,8 @@ public class GsonScript {
     }
 
     public static String scriptPath(Integer prj) {
-        String base_name = (eProp.base_num.read().equals("1")) ? eProp.base1.read()
-                : (eProp.base_num.read().equals("2")) ? eProp.base2.read() : eProp.base3.read();
+        String base_name = (ePref.base_num.read().equals("1")) ? ePref.base1.read()
+                : (ePref.base_num.read().equals("2")) ? ePref.base2.read() : ePref.base3.read();
 
         if (base_name.toLowerCase().contains("sial3")) {
             //return Sial3.script(prj);
@@ -347,8 +347,8 @@ public class GsonScript {
     }
 
     public static String filePath() {
-        String base_name = (eProp.base_num.read().equals("1")) ? eProp.base1.read()
-                : (eProp.base_num.read().equals("2")) ? eProp.base2.read() : eProp.base3.read();
+        String base_name = (ePref.base_num.read().equals("1")) ? ePref.base1.read()
+                : (ePref.base_num.read().equals("2")) ? ePref.base2.read() : ePref.base3.read();
 
         if (base_name.toLowerCase().contains("sial3.fdb")) {
             return "D:\\Okna\\Database\\ps3\\sial3b.fdb";

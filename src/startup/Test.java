@@ -12,7 +12,7 @@ import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import common.eProp;
+import common.ePref;
 import dataset.Conn;
 import dataset.Field;
 import dataset.Query;
@@ -51,14 +51,14 @@ public class Test {
     public Geometry mlin = null;
     public Geometry mpol = null;
 
-    public static Integer numDb = Integer.valueOf(eProp.base_num.read());
+    public static Integer numDb = Integer.valueOf(ePref.base_num.read());
     private static GeometryFactory gf = new GeometryFactory();
     AffineTransformation aff = new AffineTransformation();
 
     // <editor-fold defaultstate="collapsed" desc="Connection[] connect(int numDb)">
     public static Connection connect1() {
         try {
-            String db = (numDb == 1) ? eProp.base1.read() : (numDb == 2) ? eProp.base2.read() : eProp.base3.read();
+            String db = (numDb == 1) ? ePref.base1.read() : (numDb == 2) ? ePref.base2.read() : ePref.base3.read();
             if (db.toUpperCase().contains("BIMAX")) {
                 return java.sql.DriverManager.getConnection("jdbc:firebirdsql:localhost/3050:D:\\Okna\\Database\\ps4\\ITEST.FDB?encoding=win1251", "sysdba", "masterkey");
             } else if (db.toUpperCase().contains("SIAL3")) {
@@ -82,16 +82,16 @@ public class Test {
     }
 
     public static Connection connect2() {
-        eProp.user.write("sysdba");
-        eProp.password = String.valueOf("masterkey");
-        Conn.connection(eProp.server(numDb.toString()), eProp.port(numDb.toString()), eProp.base(numDb.toString()), eProp.user.read(), eProp.password.toCharArray(), null);
+        ePref.user.write("sysdba");
+        ePref.password = String.valueOf("masterkey");
+        Conn.connection(ePref.server(numDb.toString()), ePref.port(numDb.toString()), ePref.base(numDb.toString()), ePref.user.read(), ePref.password.toCharArray(), null);
         return Conn.getConnection();
     }
 
     // </editor-fold>     
     public static void main(String[] args) throws Exception {
 
-        eProp.dev = true;
+        ePref.dev = true;
         try {
             //clearDataDB();
             //PSConvert.exec();
@@ -393,7 +393,7 @@ public class Test {
 
     public static void clearDataDB() {
 
-        if (JOptionPane.showConfirmDialog(null, "”ƒ¿À≈Õ»≈ ƒ¿ÕÕ€’ ¬ ¡¿«≈ π " + eProp.base_num.read(), "”ƒ¿À≈Õ»≈",
+        if (JOptionPane.showConfirmDialog(null, "”ƒ¿À≈Õ»≈ ƒ¿ÕÕ€’ ¬ ¡¿«≈ π " + ePref.base_num.read(), "”ƒ¿À≈Õ»≈",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             for (Field field : App.db) {
                 if (field.tname().equals("GROUPS") == true) {

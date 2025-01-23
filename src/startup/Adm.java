@@ -4,7 +4,7 @@ import builder.script.GsonScript;
 import common.ePref;
 import frames.swing.FrameToFile;
 import common.eProfile;
-import common.eProp;
+import common.ePref;
 import frames.PSConvert;
 import dataset.Conn;
 import dataset.Field;
@@ -71,22 +71,22 @@ public class Adm extends javax.swing.JFrame {
 
     private void loadingPath() {
 
-        if (eProp.base_num.read().equals("1")) {
-            labPath2.setText(eProp.server1.read() + "/" + eProp.port1.read() + "\\" + eProp.base1.read());
+        if (ePref.base_num.read().equals("1")) {
+            labPath2.setText(ePref.server1.read() + "/" + ePref.port1.read() + "\\" + ePref.base1.read());
 
-        } else if (eProp.base_num.read().equals("2")) {
+        } else if (ePref.base_num.read().equals("2")) {
             //edPath.setText("D:\\Okna\\Database\\ps3\\sial3.fdb");
-            labPath2.setText(eProp.server2.read() + "/" + eProp.port2.read() + "\\" + eProp.base2.read());
+            labPath2.setText(ePref.server2.read() + "/" + ePref.port2.read() + "\\" + ePref.base2.read());
 
-        } else if (eProp.base_num.read().equals("3")) {
+        } else if (ePref.base_num.read().equals("3")) {
             //edPath.setText("D:\\Okna\\Database\\ps4\\krauss.fdb");
             //edPath.setText("D:\\Okna\\Database\\ps4\\vidnal.fdb");
-            labPath2.setText(eProp.server3.read() + "/" + eProp.port3.read() + "\\" + eProp.base3.read());
+            labPath2.setText(ePref.server3.read() + "/" + ePref.port3.read() + "\\" + ePref.base3.read());
 
         }
         edPath.setText(GsonScript.filePath());
-        if (eProp.dev == true) {
-            edPort.setText((eProp.base_num.read().equals("2") || eProp.base_num.read().equals("3")) ? "3055" : "3050");
+        if (ePref.dev == true) {
+            edPort.setText((ePref.base_num.read().equals("2") || ePref.base_num.read().equals("3")) ? "3055" : "3050");
         } else {
             edPort.setText("3050");
         }
@@ -217,15 +217,15 @@ public class Adm extends javax.swing.JFrame {
         FrameToFile.setFrameSize(frame);
         frame.setVisible(true);
 
-        if (eProp.base_num.read().equals("1")) {
+        if (ePref.base_num.read().equals("1")) {
             btnT7.setSelected(true);
             mn631.setSelected(true);
 
-        } else if (eProp.base_num.read().equals("2")) {
+        } else if (ePref.base_num.read().equals("2")) {
             btnT8.setSelected(true);
             mn632.setSelected(true);
 
-        } else if (eProp.base_num.read().equals("3")) {
+        } else if (ePref.base_num.read().equals("3")) {
             btnT9.setSelected(true);
             mn633.setSelected(true);
         }
@@ -235,8 +235,8 @@ public class Adm extends javax.swing.JFrame {
     private void mnLookAndFeel(ActionEvent evt) {
         for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
             if (((JCheckBoxMenuItem) evt.getSource()).getText().equals(laf.getName()) == true) {
-                eProp.lookandfeel.write(laf.getName());
-                eProp.save();
+                ePref.lookandfeel.write(laf.getName());
+                ePref.save();
             }
         }
     }
@@ -448,7 +448,7 @@ public class Adm extends javax.swing.JFrame {
         north.setPreferredSize(new java.awt.Dimension(900, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -1295,7 +1295,7 @@ public class Adm extends javax.swing.JFrame {
             int index2 = ("чтение-запись".equals(tab4.getValueAt(row, 2))) ? 0 : 1;
             box2.setSelectedIndex(index2);
             txt1.setText(String.valueOf(tab4.getValueAt(row, 1)));
-            txt2.setText(String.valueOf(eProp.password));
+            txt2.setText(String.valueOf(ePref.password));
             txt7.setText(String.valueOf(tab4.getValueAt(row, 6)));
             txt5.setText(String.valueOf(tab4.getValueAt(row, 5)));
             txt6.setText(String.valueOf(tab4.getValueAt(row, 4)));
@@ -1372,10 +1372,10 @@ public class Adm extends javax.swing.JFrame {
     private void btnStart(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStart
         try {
             Query.listOpenTable.clear();
-            eProp.user.write("sysdba");
-            eProp.password = String.valueOf("masterkey");
-            String num_base = eProp.base_num.read();
-            Conn.connection(eProp.server(num_base), eProp.port(num_base), eProp.base(num_base), eProp.user.read(), eProp.password.toCharArray(), null);
+            ePref.user.write("sysdba");
+            ePref.password = String.valueOf("masterkey");
+            String num_base = ePref.base_num.read();
+            Conn.connection(ePref.server(num_base), ePref.port(num_base), ePref.base(num_base), ePref.user.read(), ePref.password.toCharArray(), null);
             Connection c2 = Conn.getConnection();
 
             Conn con1 = new Conn();
@@ -1651,15 +1651,15 @@ public class Adm extends javax.swing.JFrame {
                 mnIt.setSelected(true);
             }
         }
-        if (eProp.base_num.read().equals("1")) {
+        if (ePref.base_num.read().equals("1")) {
             btnT7.setSelected(true);
             mn631.setSelected(true);
 
-        } else if (eProp.base_num.read().equals("2")) {
+        } else if (ePref.base_num.read().equals("2")) {
             btnT8.setSelected(true);
             mn632.setSelected(true);
 
-        } else if (eProp.base_num.read().equals("3")) {
+        } else if (ePref.base_num.read().equals("3")) {
             btnT9.setSelected(true);
             mn633.setSelected(true);
         }

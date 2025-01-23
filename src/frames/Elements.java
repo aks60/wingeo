@@ -26,7 +26,7 @@ import domain.eGroups;
 import domain.eJoindet;
 import builder.param.ParamList;
 import common.ePref;
-import common.eProp;
+import common.ePref;
 import enums.TypeGrup;
 import enums.TypeSet;
 import enums.UseColor;
@@ -577,7 +577,7 @@ public class Elements extends javax.swing.JFrame {
         north.setPreferredSize(new java.awt.Dimension(900, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -1015,7 +1015,7 @@ public class Elements extends javax.swing.JFrame {
         int level1 = (ppm == itCateg1) ? 1 : 5;
         String result = JOptionPane.showInputDialog(Elements.this, "Название", "Категория", JOptionPane.QUESTION_MESSAGE);
         int id = Conn.genId(eGroups.up);
-        if (result.isEmpty() && eProp.dev) {
+        if (result.isEmpty() && ePref.dev) {
             result = (ppm == itCateg1) ? "Катег.проф-" + id : "Катег.зап-" + id;
         }
         if (result.isEmpty() == false) {

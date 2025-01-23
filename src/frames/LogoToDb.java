@@ -3,7 +3,7 @@ package frames;
 import dataset.Conn;
 import dataset.eExcep;
 import common.eProfile;
-import common.eProp;
+import common.ePref;
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -21,14 +21,14 @@ public class LogoToDb extends javax.swing.JDialog {
         initComponents();
 
         //Автопароль при тестировании
-        if (eProp.dev == true) {
-            if ("adm".equals(eProp.profile)) {
+        if (ePref.dev == true) {
+            if ("adm".equals(ePref.profile)) {
                 edUser.setText("SYSDBA"); //user
                 edPass.setText("masterkey"); //pass
-            } else if ("tex".equals(eProp.profile)) {
+            } else if ("tex".equals(ePref.profile)) {
                 edUser.setText("TEXNOLOG"); //user
                 edPass.setText("masterkey"); //pass
-            } else if ("man".equals(eProp.profile)) {
+            } else if ("man".equals(ePref.profile)) {
                 edUser.setText("MANAGER"); //user
                 edPass.setText("masterkey"); //pass
             } else {
@@ -40,7 +40,7 @@ public class LogoToDb extends javax.swing.JDialog {
         } else {
             labMes.setForeground(Color.BLUE);
             labMes.setText("Введите логин и пароль");
-            edUser.setText(eProp.user.read());
+            edUser.setText(ePref.user.read());
             edPass.requestFocus();
             getRootPane().setDefaultButton(btnOk);
 
@@ -70,18 +70,18 @@ public class LogoToDb extends javax.swing.JDialog {
                 progressBar.setIndeterminate(true);
                 labMes.setForeground(Color.BLUE);
                 labMes.setText("Установка соединения с базой данных");
-                String num = eProp.base_num.read();
+                String num = ePref.base_num.read();
                 //JOptionPane.showMessageDialog(LogoToDb.this, " " + eProp.server(num) + " " +eProp.port(num) + " " +  eProp.base(num)
                 //+ " " + edUser.getText() + " " + edPass.getPassword(), "ВНИМАНИЕ!", 1);
-                eExcep pass = Conn.connection(eProp.server(num), eProp.port(num), eProp.base(num), edUser.getText(), edPass.getPassword(), null);
+                eExcep pass = Conn.connection(ePref.server(num), ePref.port(num), ePref.base(num), edUser.getText(), edPass.getPassword(), null);
                 //JOptionPane.showMessageDialog(LogoToDb.this, pass.mes, "ВНИМАНИЕ!", 1);
                 if (pass == eExcep.yesConn) {
 
                     if ("SYSDBA".equalsIgnoreCase(edUser.getText())) {
                         App.createApp(eProfile.P01);
-                        eProp.user.write(edUser.getText().trim());
-                        eProp.password = String.valueOf(edPass.getPassword()).trim();
-                        eProp.save();
+                        ePref.user.write(edUser.getText().trim());
+                        ePref.password = String.valueOf(edPass.getPassword()).trim();
+                        ePref.save();
                         dispose();
 
                     } else {
@@ -90,20 +90,20 @@ public class LogoToDb extends javax.swing.JDialog {
                         //ResultSet rs = st.executeQuery("SELECT DISTINCT a.rdb$role_name , b.rdb$user FROM rdb$roles a, rdb$user_privileges b WHERE a.rdb$role_name = b.rdb$relation_name AND b.rdb$user = '" + edUser.getText() + "'");
                         ResultSet rs = st.executeQuery("SELECT u.RDB$USER, u.RDB$RELATION_NAME FROM RDB$USER_PRIVILEGES u WHERE u.RDB$USER = '" + edUser.getText().toUpperCase() + "'");
                         if (rs.next()) {
-                            eProp.role = rs.getString("RDB$RELATION_NAME").trim();
+                            ePref.role = rs.getString("RDB$RELATION_NAME").trim();
                             Conn.getConnection().close();
                             //Соединение с новыми привелегиями
-                            pass = Conn.connection(eProp.server(num), eProp.port(num), eProp.base(num), edUser.getText(), edPass.getPassword(), eProp.role);
+                            pass = Conn.connection(ePref.server(num), ePref.port(num), ePref.base(num), edUser.getText(), edPass.getPassword(), ePref.role);
                             //По имени роли откроем нужное приложение
                             if (pass == eExcep.yesConn) {
-                                if (eProfile.P02.roleSet.contains(eProp.role)) {
+                                if (eProfile.P02.roleSet.contains(ePref.role)) {
                                     App.createApp(eProfile.P02);
-                                } else if (eProfile.P03.roleSet.contains(eProp.role)) {
+                                } else if (eProfile.P03.roleSet.contains(ePref.role)) {
                                     App.createApp(eProfile.P03);
                                 }
-                                eProp.user.write(edUser.getText().trim());
-                                eProp.password = String.valueOf(edPass.getPassword()).trim();
-                                eProp.save();
+                                ePref.user.write(edUser.getText().trim());
+                                ePref.password = String.valueOf(edPass.getPassword()).trim();
+                                ePref.save();
                                 dispose();
                             }
                         } else {
@@ -260,7 +260,7 @@ public class LogoToDb extends javax.swing.JDialog {
 
         btnOk.setFont(frames.UGui.getFont(0,0));
         btnOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b028.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
         btnOk.setText(bundle.getString("Меню.ОК")); // NOI18N
         btnOk.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnOk.setEnabled(false);

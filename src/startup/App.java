@@ -4,7 +4,7 @@ import builder.Wincalc;
 import builder.model.ElemJoining;
 import frames.swing.FrameToFile;
 import common.eProfile;
-import common.eProp;
+import common.ePref;
 import common.listener.ListenerRecord;
 import dataset.Conn;
 import dataset.Crypto;

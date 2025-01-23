@@ -1,6 +1,6 @@
 package dataset;
 
-import common.eProp;
+import common.ePref;
 import frames.PathToDb;
 import frames.UGui;
 import frames.swing.FrameToFile;

@@ -3,7 +3,7 @@ package frames;
 import frames.swing.ProgressBar;
 import frames.swing.FrameToFile;
 import builder.model.Com5t;
-import common.eProp;
+import common.ePref;
 import dataset.Conn;
 import dataset.Field;
 import dataset.Query;
@@ -163,8 +163,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     public final void loadingData() {
         //Получим сохранённую systreeID при выходе из программы
         Record sysprodRec = null; //при открытии указывает на конструкцию
-        if (this.systreeID == -1 && "-1".equals(eProp.sysprodID.read()) != true) {
-            sysprodRec = eSysprod.find(Integer.valueOf(eProp.sysprodID.read()));
+        if (this.systreeID == -1 && "-1".equals(ePref.sysprodID.read()) != true) {
+            sysprodRec = eSysprod.find(Integer.valueOf(ePref.sysprodID.read()));
         }
         if (sysprodRec != null) {
             this.systreeID = sysprodRec.getInt(eSysprod.systree_id);
@@ -408,7 +408,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 if (qSysprod.isEmpty() == false) {
 
                     int index = -1;
-                    int sysprodID = Integer.valueOf(eProp.sysprodID.read());
+                    int sysprodID = Integer.valueOf(ePref.sysprodID.read());
                     for (int i = 0; i < qSysprod.size(); ++i) {
                         if (qSysprod.get(i).getInt(eSysprod.id) == sysprodID) {
                             index = i;
@@ -587,7 +587,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         if (index != -1) {
             Record sysprodRec = qSysprod.table(eSysprod.up).get(index);
             if (writeNuni == true) {
-                eProp.sysprodID.write(sysprodRec.getStr(eSysprod.id)); //запишем текущий sysprodID в файл
+                ePref.sysprodID.write(sysprodRec.getStr(eSysprod.id)); //запишем текущий sysprodID в файл
             }
             App.Top.frame.setTitle(UGui.designTitle());
 
@@ -1240,7 +1240,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         tool.setPreferredSize(new java.awt.Dimension(800, 29));
 
         btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
         btnIns.setToolTipText(bundle.getString("Добавить")); // NOI18N
         btnIns.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnIns.setFocusable(false);
@@ -3737,7 +3737,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
             } else if (tab5.getBorder() != null) {
                 if (sysNode != null && sysNode.isLeaf()) {
-                    if (evt.getSource() instanceof JMenuItem && eProp.dev == true) {
+                    if (evt.getSource() instanceof JMenuItem && ePref.dev == true) {
                         loadLocalScript();
                     } else {
                         ProgressBar.create(Systree.this, new ListenerFrame() {

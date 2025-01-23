@@ -4,7 +4,7 @@ import builder.Wincalc;
 import common.ePref;
 import frames.swing.FrameToFile;
 import common.listener.ListenerRecord;
-import common.eProp;
+import common.ePref;
 import dataset.Query;
 import dataset.Record;
 import domain.eSysprod;
@@ -50,7 +50,7 @@ public class DicSyspod extends javax.swing.JDialog {
     public void loadingData() {
 
         //Получим сохр. ID системы при выходе из программы
-        Record sysprodRec = eSysprod.find(Integer.valueOf(eProp.sysprodID.read()));
+        Record sysprodRec = eSysprod.find(Integer.valueOf(ePref.sysprodID.read()));
         if (sysprodRec != null) {
             systreeID = sysprodRec.getInt(eSysprod.systree_id);
         }
@@ -133,7 +133,7 @@ public class DicSyspod extends javax.swing.JDialog {
 
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
             int index = -1;
-            int sysprodID = Integer.valueOf(eProp.sysprodID.read());
+            int sysprodID = Integer.valueOf(ePref.sysprodID.read());
             for (int i = 0; i < qSysprod.size(); ++i) {
                 if (qSysprod.get(i).getInt(eSysprod.id) == sysprodID) {
                     index = i;
@@ -193,7 +193,7 @@ public class DicSyspod extends javax.swing.JDialog {
         north.setPreferredSize(new java.awt.Dimension(600, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -354,7 +354,7 @@ public class DicSyspod extends javax.swing.JDialog {
         if (UGui.getIndexRec(tab2) != -1) {
             Record record = qSysprod.get(UGui.getIndexRec(tab2));
             listener.action(record);
-            eProp.sysprodID.write(record.getStr(eSysprod.id));
+            ePref.sysprodID.write(record.getStr(eSysprod.id));
         }
         this.dispose();
     }//GEN-LAST:event_btnChoice

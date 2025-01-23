@@ -5,7 +5,7 @@ import frames.swing.ProgressBar;
 import frames.swing.FrameToFile;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import common.eProp;
+import common.ePref;
 import dataset.Record;
 import domain.eElemdet;
 import domain.eFurndet;
@@ -88,7 +88,7 @@ public class Specifics extends javax.swing.JFrame {
 
         //Со скидкой менеджера и комплектов
         if (this.man == true) {
-            int prjprodID = Integer.valueOf(eProp.prjprodID.read());
+            int prjprodID = Integer.valueOf(ePref.prjprodID.read());
             Record prjprodRec = ePrjprod.find(prjprodID);
             
             if (prjprodRec != null) {
@@ -111,7 +111,7 @@ public class Specifics extends javax.swing.JFrame {
 
             //Без скидки менеджера и комплектов
         } else {
-            int sysprodID = Integer.valueOf(eProp.sysprodID.read());
+            int sysprodID = Integer.valueOf(ePref.sysprodID.read());
             Record sysprodRec = eSysprod.find(sysprodID);
             if (sysprodRec != null) {
                 String script = sysprodRec.getStr(eSysprod.script);
@@ -249,7 +249,7 @@ public class Specifics extends javax.swing.JFrame {
         north.setPreferredSize(new java.awt.Dimension(900, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -772,7 +772,7 @@ public class Specifics extends javax.swing.JFrame {
         tab1.getColumnModel().getColumn(21).setCellRenderer(new DefCellRendererSpc(9));
         tab1.getColumnModel().getColumn(22).setCellRenderer(new DefCellRendererSpc(9));
 
-        if ("Nimbus".equals(eProp.lookandfeel.read())) {
+        if ("Nimbus".equals(ePref.lookandfeel.read())) {
             for (int i = 15; i < 22; i++) {
                 tab1.getColumnModel().getColumn(i).setPreferredWidth(tab1.getColumnModel().getColumn(i).getPreferredWidth() + tab1.getColumnModel().getColumn(i).getPreferredWidth() / 3);
             }

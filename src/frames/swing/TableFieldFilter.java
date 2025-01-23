@@ -86,7 +86,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(428, 19));
 
         btn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c054.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
         btn1.setToolTipText(bundle.getString("Фильтр/Поиск")); // NOI18N
         btn1.setBorder(null);
         btn1.setMaximumSize(new java.awt.Dimension(30, 18));

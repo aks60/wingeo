@@ -2,7 +2,7 @@ package frames;
 
 import frames.swing.FrameToFile;
 import common.eProfile;
-import common.eProp;
+import common.ePref;
 import dataset.Conn;
 import java.io.File;
 import javax.swing.JFileChooser;
@@ -31,15 +31,15 @@ public class PathToDb extends javax.swing.JDialog {
 
         //Загрузка параметров входа
         labMes.setText("");
-        edHost.setText(eProp.server(num_base));
-        edPath.setText(eProp.base(num_base));
-        edPort.setText(eProp.port(num_base));
-        edUser.setText(eProp.user.read());
-        edPass.setText(eProp.password);
+        edHost.setText(ePref.server(num_base));
+        edPath.setText(ePref.base(num_base));
+        edPort.setText(ePref.port(num_base));
+        edUser.setText(ePref.user.read());
+        edPass.setText(ePref.password);
         
         onCaretUpdate(null);
         
-        if (eProp.dev == false) {
+        if (ePref.dev == false) {
             edHost.setEditable(false);
             edPath.setEditable(false);
             edPort.setEditable(false);
@@ -62,13 +62,13 @@ public class PathToDb extends javax.swing.JDialog {
                         if (App.Top.frame == null) {
                             App.createApp(eProfile.P01);
                         }
-                        eProp.user.write(edUser.getText().trim());
-                        eProp.password = String.valueOf(edPass.getPassword()).trim();
-                        eProp.base_num.write(num_base);
-                        eProp.port(num_base, edPort.getText().trim());
-                        eProp.server(num_base, edHost.getText().trim());
-                        eProp.base(num_base, edPath.getText().trim());
-                        eProp.save();
+                        ePref.user.write(edUser.getText().trim());
+                        ePref.password = String.valueOf(edPass.getPassword()).trim();
+                        ePref.base_num.write(num_base);
+                        ePref.port(num_base, edPort.getText().trim());
+                        ePref.server(num_base, edHost.getText().trim());
+                        ePref.base(num_base, edPath.getText().trim());
+                        ePref.save();
                         dispose();
 
                     } else {
@@ -77,23 +77,23 @@ public class PathToDb extends javax.swing.JDialog {
                         //ResultSet rs = st.executeQuery("SELECT DISTINCT a.rdb$role_name , b.rdb$user FROM rdb$roles a, rdb$user_privileges b WHERE a.rdb$role_name = b.rdb$relation_name AND b.rdb$user = '" + edUser.getText() + "'");
                         ResultSet rs = st.executeQuery("SELECT u.RDB$USER, u.RDB$RELATION_NAME FROM RDB$USER_PRIVILEGES u WHERE u.RDB$USER = '" + edUser.getText().toUpperCase() + "'");
                         while (rs.next()) {
-                            eProp.role = rs.getString("RDB$RELATION_NAME").trim();
+                            ePref.role = rs.getString("RDB$RELATION_NAME").trim();
                             Conn.getConnection().close();
                             //Соединение с новыми привелегиями
-                            pass = Conn.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), eProp.role);
+                            pass = Conn.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), ePref.role);
                             if (pass == eExcep.yesConn) {
                                 //По имени роли откроем нужное приложение
-                                if (App.Top.frame == null && eProfile.P02.roleSet.contains(eProp.role)) {
+                                if (App.Top.frame == null && eProfile.P02.roleSet.contains(ePref.role)) {
                                     App.createApp(eProfile.P02);
-                                } else if (App.Top.frame == null && eProfile.P03.roleSet.contains(eProp.role)) {
+                                } else if (App.Top.frame == null && eProfile.P03.roleSet.contains(ePref.role)) {
                                     App.createApp(eProfile.P03);
                                 }
-                                eProp.base_num.write(num_base);
-                                eProp.port(num_base, edPort.getText().trim());
-                                eProp.server(num_base, edHost.getText().trim());
-                                eProp.base(num_base, edPath.getText().trim());
-                                eProp.user.write(edUser.getText().trim());
-                                eProp.save();
+                                ePref.base_num.write(num_base);
+                                ePref.port(num_base, edPort.getText().trim());
+                                ePref.server(num_base, edHost.getText().trim());
+                                ePref.base(num_base, edPath.getText().trim());
+                                ePref.user.write(edUser.getText().trim());
+                                ePref.save();
                                 dispose();
                             }
                         }
@@ -111,7 +111,7 @@ public class PathToDb extends javax.swing.JDialog {
     }
 
     public static void pathToDb(Frame parent) {
-        String num_base = eProp.base_num.read();
+        String num_base = ePref.base_num.read();
         PathToDb pathToDb = new PathToDb(parent, num_base);
         FrameToFile.setFrameSize(pathToDb);
         pathToDb.setVisible(true);
@@ -192,7 +192,7 @@ public class PathToDb extends javax.swing.JDialog {
 
         btnFile.setFont(frames.UGui.getFont(0,0));
         btnFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b033.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
         btnFile.setToolTipText(bundle.getString("Выбрать файл")); // NOI18N
         btnFile.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnFile.setMaximumSize(new java.awt.Dimension(27, 16));

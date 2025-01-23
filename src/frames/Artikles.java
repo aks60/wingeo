@@ -4,7 +4,7 @@ import frames.swing.FrameToFile;
 import frames.dialog.DicCurrenc;
 import common.UCom;
 import common.ePref;
-import common.eProp;
+import common.ePref;
 import frames.dialog.DicColor;
 import dataset.Conn;
 import dataset.Field;
@@ -196,7 +196,7 @@ public class Artikles extends javax.swing.JFrame {
         rsvArtikl = new TableFieldFormat(tab1) {
 
             public Set<JTextField> set = new HashSet<JTextField>();
-            private DecimalFormat df = (DecimalFormat) NumberFormat.getNumberInstance(eProp.locale);
+            private DecimalFormat df = (DecimalFormat) NumberFormat.getNumberInstance(ePref.locale);
 
             public void setText(JTextField jtf, String val) {
                 set.add(jtf);
@@ -868,7 +868,7 @@ public class Artikles extends javax.swing.JFrame {
         north.setPreferredSize(new java.awt.Dimension(900, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);

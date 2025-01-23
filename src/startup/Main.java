@@ -3,7 +3,7 @@ package startup;
 import common.UCom;
 import frames.LogoToDb;
 import frames.swing.FrameToFile;
-import common.eProp;
+import common.ePref;
 import java.util.Locale;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -17,7 +17,7 @@ public class Main {
     
     //Конструктор
     public Main() {
-        Locale.setDefault(eProp.locale);
+        Locale.setDefault(ePref.locale);
         LogoToDb frame = new LogoToDb(null);
         FrameToFile.setFrameSize(frame);
         frame.setVisible(true);
@@ -28,16 +28,16 @@ public class Main {
 
         for (int index = 0; index < args.length; index++) {
             
-            eProp.dev = true;
+            ePref.dev = true;
             
             if (index == 0 && args[0].equals("adm")) {
-                eProp.profile = args[0];
+                ePref.profile = args[0];
 
             } else if (index == 0 && args[0].equals("tex")) {
-                eProp.profile = args[0];
+                ePref.profile = args[0];
 
             } else if (index == 0 && args[0].equals("man")) {
-                eProp.profile = args[0];
+                ePref.profile = args[0];
             }
         }
 
@@ -46,7 +46,7 @@ public class Main {
             public void run() {
                 try {
                     runRussifier();
-                    String lafname = eProp.lookandfeel.read();
+                    String lafname = ePref.lookandfeel.read();
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     for (LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
                         if (lafname.equals(laf.getName())) {
@@ -62,7 +62,7 @@ public class Main {
                     @Override
                     public void run() {
                         try {
-                            eProp.save();
+                            ePref.save();
                         } catch (Exception e) {
                             System.err.println(e);
                         }

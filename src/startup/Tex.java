@@ -3,7 +3,7 @@ package startup;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import frames.swing.ProgressBar;
-import common.eProp;
+import common.ePref;
 import dataset.Record;
 import builder.Wincalc;
 import domain.eSysprod;
@@ -37,7 +37,7 @@ public class Tex extends javax.swing.JFrame {
     }
 
     private void winc_build() {
-        int sysprodID = Integer.valueOf(eProp.sysprodID.read());
+        int sysprodID = Integer.valueOf(ePref.sysprodID.read());
         Record sysprodRec = eSysprod.find(sysprodID);
         if (sysprodRec != null) {
             String script = sysprodRec.getStr(eSysprod.script);
@@ -52,8 +52,8 @@ public class Tex extends javax.swing.JFrame {
     private void mnLookAndFeel(java.awt.event.ActionEvent evt) {
         for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
             if (((JCheckBoxMenuItem) evt.getSource()).getText().equals(laf.getName()) == true) {
-                eProp.lookandfeel.write(laf.getName());
-                eProp.save();
+                ePref.lookandfeel.write(laf.getName());
+                ePref.save();
             }
         }
     }
@@ -61,15 +61,15 @@ public class Tex extends javax.swing.JFrame {
     private void prepareConnectBaseNumb(String num_base) {
         Conn.prepareConnectBaseNumb(num_base);
         
-        if (eProp.base_num.read().equals("1")) {
+        if (ePref.base_num.read().equals("1")) {
             btnT7.setSelected(true);
             mn631.setSelected(true);
 
-        } else if (eProp.base_num.read().equals("2")) {
+        } else if (ePref.base_num.read().equals("2")) {
             btnT8.setSelected(true);
             mn632.setSelected(true);
 
-        } else if (eProp.base_num.read().equals("3")) {
+        } else if (ePref.base_num.read().equals("3")) {
             btnT9.setSelected(true);
             mn633.setSelected(true);
         }
@@ -162,7 +162,7 @@ public class Tex extends javax.swing.JFrame {
 
         spcSystem.setFont(frames.UGui.getFont(0,1));
         spcSystem.setText("Спецификация ситемы");
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
         spcSystem.setToolTipText(bundle.getString("Пересчитать")); // NOI18N
         spcSystem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1239,18 +1239,18 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
             }
         }
 
-        MainMenu.init(mn08, this, common.eProp.locale);
+        MainMenu.init(mn08, this, common.ePref.locale);
 
         if ("Nimbus".equals(lookAndFeel.getName())) {
             tb6.setPreferredSize(new Dimension(97, 28));
         }
-        if (eProp.base_num.read().equals("1")) {
+        if (ePref.base_num.read().equals("1")) {
             mn631.setSelected(true);
             btnT7.setSelected(true);
-        } else if (eProp.base_num.read().equals("2")) {
+        } else if (ePref.base_num.read().equals("2")) {
             mn632.setSelected(true);
             btnT8.setSelected(true);
-        } else if (eProp.base_num.read().equals("3")) {
+        } else if (ePref.base_num.read().equals("3")) {
             mn633.setSelected(true);
             btnT9.setSelected(true);
         }
@@ -1258,7 +1258,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
                 -> btn.addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
                         JToggleButton b = (btn == btnT7) ? btnT7 : (btn == btnT8) ? btnT8 : btnT9;
-                        eProp p = (btn == btnT7) ? eProp.base1 : (btn == btnT8) ? eProp.base2 : eProp.base3;
+                        ePref p = (btn == btnT7) ? ePref.base1 : (btn == btnT8) ? ePref.base2 : ePref.base3;
                         b.setToolTipText("Connect:  \"" + p.read() + "\"");
                     }
                 }));
