@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionListener;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.prefs.Preferences;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -159,4 +160,13 @@ public enum ePref {
         ePref p = (num.equals("1")) ? ePref.base1 : (num.equals("2")) ? ePref.base2 : ePref.base3;
         p.write(name);
     }    
+    
+    public static Properties load() {
+        System.out.println("common.ePref.load()");
+        return new Properties();
+    }
+    
+    public static void save() {
+        System.out.println("common.ePref.save()");
+    }
 }
