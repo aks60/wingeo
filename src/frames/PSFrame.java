@@ -1,5 +1,6 @@
 package frames;
 
+import common.ePref;
 import frames.swing.FrameToFile;
 import dataset.Query;
 import domain.eProject;
@@ -505,7 +506,10 @@ public class PSFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 // </editor-fold> 
     private void initElements() {
-        new FrameToFile(this, btnClose);
+        
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
         
         tab1.setAutoCreateRowSorter(true);
         tab2.setAutoCreateRowSorter(true);

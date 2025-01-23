@@ -4,6 +4,7 @@ import frames.swing.FrameToFile;
 import builder.Wincalc;
 import builder.making.TRecord;
 import common.UCom;
+import common.ePref;
 import common.listener.ListenerFrame;
 import dataset.Query;
 import dataset.Record;
@@ -1208,8 +1209,9 @@ public class PSCompare extends javax.swing.JFrame {
 
     private void initElements() {
 
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1);
         south.add(filterTable, 0);

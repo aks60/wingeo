@@ -6,7 +6,6 @@ import java.awt.Window;
 import java.awt.event.ActionListener;
 import java.util.Locale;
 import java.util.prefs.Preferences;
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.Timer;
@@ -71,12 +70,11 @@ public enum ePref {
         addButtonMouseListener(btn, listener);
 
         Preferences pref = Preferences.userRoot().node(window.getClass().getSimpleName());
-
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = window.getSize();
 
-        int dy = pref.getInt("_height", window.getHeight());
-        int dx = pref.getInt("_width", window.getWidth());
+        frameSize.height = pref.getInt("_height", window.getHeight());
+        frameSize.width  = pref.getInt("_width", window.getWidth());
 
         if (frameSize.height > screenSize.height) {
             frameSize.height = screenSize.height;
@@ -84,18 +82,21 @@ public enum ePref {
         if (frameSize.width > screenSize.width) {
             frameSize.width = screenSize.width;
         }
+            
         if (window.getName().equals("Setting")) {
             window.setLocation(20, 100);
         } else {
             window.setLocation((screenSize.width - frameSize.width) / 2,
                     (screenSize.height - frameSize.height - 48) / 2 + 48);
         }
+
         window.setPreferredSize(frameSize);
         window.pack();
     }
 
-    public static void write(Window window, JComponent... comp) {
+    public static void write(Window window, JButton btn, JComponent... comp) {
 
+        btn.setPressedIcon(new javax.swing.ImageIcon(window.getClass().getResource("/resource/img24/c036.gif")));
         Preferences pref = Preferences.userRoot().node(window.getClass().getSimpleName());
 
         pref.putInt("_height", window.getHeight());
@@ -106,7 +107,7 @@ public enum ePref {
 
         btn.addMouseListener(new java.awt.event.MouseAdapter() {
 
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+            public void mousePressed(java.awt.event.MouseEvent evt) {               
                 for (ActionListener al : timer.getActionListeners()) {
                     timer.removeActionListener(al);
                 }
@@ -114,7 +115,7 @@ public enum ePref {
                 timer.start();
             }
 
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {               
                 timer.stop();
                 btn.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif")));
             }

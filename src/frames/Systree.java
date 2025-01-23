@@ -82,6 +82,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import common.ePref;
 import common.listener.ListenerAction;
 import domain.eJoinvar;
 import enums.TypeJoin;
@@ -4953,7 +4954,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     public final void initElements() {
 
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
         new UColor();
 

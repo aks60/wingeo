@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import common.UCom;
+import common.ePref;
 import dataset.Field;
 import dataset.Query;
 import dataset.Record;
@@ -3927,7 +3928,10 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     };
 
     private void initElements() {
-        new FrameToFile(this, btnClose);
+        
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
         new UColor();
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1);

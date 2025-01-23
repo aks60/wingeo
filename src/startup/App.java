@@ -220,7 +220,7 @@ public enum App {
             //eProfile.appframe = frame;
             active = frame;
             frame.setName(this.name());
-            FrameToFile.setFrameSize(frame); //размеры окна
+            //FrameToFile.setFrameSize(frame); //размеры окна
             frame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowDeiconified(java.awt.event.WindowEvent evt) {
                     Top.frame.setExtendedState(JFrame.NORMAL);

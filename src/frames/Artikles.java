@@ -50,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
+import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.Timer;
@@ -2968,7 +2969,10 @@ public class Artikles extends javax.swing.JFrame {
 
     public void initElements() {
 
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {            
+            ePref.write(this, btnClose);
+        });
+
         filterTable = new TableFieldFilter(0, tab1);
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
@@ -2988,20 +2992,5 @@ public class Artikles extends javax.swing.JFrame {
                 }
             }
         });
-
-        Window w = (Window) this;
-        Preferences pref = Preferences.userRoot().node(w.getClass().getSimpleName());
-//        ePref.read(this, btnClose, () -> {
-//            
-//        }), tab1);
-        //System.out.println(pref.absolutePath());
-        //System.out.println(pref.name());
-        
-//        prefs.addPreferenceChangeListener((ChangeEvent evt) -> {
-//            String key = evt.getKey();
-//            String newValue = prefs.get(key, "N/A");
-//            System.out.println("Preference change detected: " + key + " = " + newValue);
-//        });
     }
-
 }

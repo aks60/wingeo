@@ -1,5 +1,6 @@
 package frames;
 
+import common.ePref;
 import frames.swing.FrameToFile;
 import dataset.Query;
 import dataset.Record;
@@ -100,7 +101,7 @@ public class Colors extends javax.swing.JFrame {
 
         UGui.setSelectedRow(tab1);
     }
-    
+
     public void selectionTab1(ListSelectionEvent event) {
 
         UGui.stopCellEditing(tab1, tab2);
@@ -484,7 +485,7 @@ public class Colors extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsert
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditingAndExecSql(getRootPane());  
+        UGui.stopCellEditingAndExecSql(getRootPane());
     }//GEN-LAST:event_windowClosed
 
     private void mousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mousePressed
@@ -548,7 +549,9 @@ public class Colors extends javax.swing.JFrame {
 
     public void initElements() {
 
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        });
 
         TableFieldFilter filterTable = new TableFieldFilter(1, tab2, tab1);
         south.add(filterTable, 0);

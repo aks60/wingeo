@@ -1,6 +1,7 @@
 package frames.dialog;
 
 import common.UCom;
+import common.ePref;
 import frames.swing.FrameToFile;
 import frames.UGui;
 import dataset.Query;
@@ -394,8 +395,9 @@ public class DicColor extends javax.swing.JDialog {
 
     private void initElements() {
 
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2);
         south.add(filterTable, 0);

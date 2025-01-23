@@ -18,6 +18,7 @@ import javax.swing.table.TableRowSorter;
 import builder.Wincalc;
 import builder.making.TRecord;
 import common.UCom;
+import common.ePref;
 import domain.eSysprod;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -736,7 +737,10 @@ public class Specifics extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 // </editor-fold> 
     public void initElements() {
-        new FrameToFile(this, btnClose);
+        
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
 
         filterTable = new TableFieldFilter(4, tab1);
         south.add(filterTable, 0);

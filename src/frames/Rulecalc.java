@@ -1,5 +1,6 @@
 package frames;
 
+import common.ePref;
 import frames.swing.ProgressBar;
 import frames.swing.FrameToFile;
 import common.listener.ListenerFrame;
@@ -458,8 +459,9 @@ public class Rulecalc extends javax.swing.JFrame {
 // </editor-fold> 
     public void initElements() {
 
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
 
         TableFieldFilter filterTable = new TableFieldFilter(2, tab2);
         south.add(filterTable, 0);

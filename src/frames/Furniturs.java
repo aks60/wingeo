@@ -28,6 +28,7 @@ import frames.dialog.ParUserVal;
 import domain.eParams;
 import enums.Enam;
 import builder.param.ParamList;
+import common.ePref;
 import common.eProp;
 import enums.LayoutFurn1;
 import enums.UseFurn3;
@@ -1940,7 +1941,9 @@ public class Furniturs extends javax.swing.JFrame {
 // </editor-fold> 
     private void initElements() {
 
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        });        
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2a, tab2b, tab2c, tab4, tab6);
         south.add(filterTable, 0);

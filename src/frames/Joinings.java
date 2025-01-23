@@ -22,6 +22,7 @@ import domain.eJoinpar2;
 import domain.eParams;
 import enums.Enam;
 import builder.param.ParamList;
+import common.ePref;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
@@ -1259,7 +1260,9 @@ public class Joinings extends javax.swing.JFrame {
 
     private void initElements() {
 
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
         new UColor();
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2, tab3, tab4, tab5);

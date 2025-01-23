@@ -25,6 +25,7 @@ import domain.eElempar2;
 import domain.eGroups;
 import domain.eJoindet;
 import builder.param.ParamList;
+import common.ePref;
 import common.eProp;
 import enums.TypeGrup;
 import enums.TypeSet;
@@ -1341,7 +1342,9 @@ public class Elements extends javax.swing.JFrame {
     // </editor-fold> 
     private void initElements() {
 
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        });        
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab2, tab3, tab4, tab5);
         south.add(filterTable, 0);

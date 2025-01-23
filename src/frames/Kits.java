@@ -3,6 +3,7 @@ package frames;
 import frames.swing.ProgressBar;
 import frames.swing.FrameToFile;
 import builder.param.ParamList;
+import common.ePref;
 import common.eProp;
 import common.listener.ListenerFrame;
 import common.listener.ListenerRecord;
@@ -694,7 +695,7 @@ public class Kits extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsert
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditingAndExecSql(getRootPane()); 
+        UGui.stopCellEditingAndExecSql(getRootPane());
     }//GEN-LAST:event_windowClosed
 
     private void mousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mousePressed
@@ -756,7 +757,10 @@ public class Kits extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 // </editor-fold> 
     public void initElements() {
-        new FrameToFile(this, btnClose);
+
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        });
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab2);
         south.add(filterTable, 0);

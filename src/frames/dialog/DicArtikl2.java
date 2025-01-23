@@ -1,5 +1,6 @@
 package frames.dialog;
 
+import common.ePref;
 import common.listener.ListenerFrame;
 import frames.swing.FrameToFile;
 import frames.UGui;
@@ -360,11 +361,11 @@ public class DicArtikl2 extends javax.swing.JDialog {
 // </editor-fold> 
 
     public void initElements() {
-
+        
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
         btnRemove.setVisible(false);
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
-
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1);
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();

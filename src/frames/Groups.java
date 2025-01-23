@@ -2,6 +2,7 @@ package frames;
 
 import frames.swing.FrameToFile;
 import common.UCom;
+import common.ePref;
 import common.listener.ListenerRecord;
 import dataset.Query;
 import dataset.Record;
@@ -923,8 +924,9 @@ public class Groups extends javax.swing.JFrame {
 
     public void initElements() {
 
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2, tab3, tab4, tab5, tab6, tab7);
         south.add(filterTable, 0);

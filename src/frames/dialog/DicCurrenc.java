@@ -1,5 +1,6 @@
 package frames.dialog;
 
+import common.ePref;
 import common.eProp;
 import dataset.Query;
 import domain.eCurrenc;
@@ -268,8 +269,9 @@ public class DicCurrenc extends javax.swing.JDialog {
 // </editor-fold>     
     public void initElements() {
 
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
         FocusListener listenerFocus = new FocusListener() {
 
             javax.swing.border.Border border = javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255));

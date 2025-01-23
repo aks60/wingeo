@@ -30,6 +30,7 @@ import domain.eGroups;
 import domain.eParams;
 import enums.Enam;
 import builder.param.ParamList;
+import common.ePref;
 import enums.TypeGrup;
 import enums.UseColor;
 import frames.dialog.DicName;
@@ -1049,7 +1050,10 @@ public class Fillings extends javax.swing.JFrame {
     // </editor-fold>
 
     private void initElements() {
-        new FrameToFile(this, btnClose);
+
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        });        
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2, tab3, tab4, tab5);
         south.add(filterTable, 0);

@@ -1,5 +1,6 @@
 package frames;
 
+import common.ePref;
 import frames.swing.FrameToFile;
 import common.eProp;
 import java.awt.GraphicsEnvironment;
@@ -505,7 +506,9 @@ public class Setting extends javax.swing.JFrame {
     
     public void initElements() {
 
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
         
 //        textPane1.setBackground(new java.awt.Color(212, 208, 200));
 //        textPane2.setBackground(new java.awt.Color(212, 208, 200));

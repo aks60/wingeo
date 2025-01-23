@@ -18,6 +18,7 @@ import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import common.ePref;
 import common.eProp;
 import common.listener.ListenerAction;
 import frames.swing.Canvas;
@@ -672,7 +673,9 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 // </editor-fold>
     private void initElements() {
 
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
         tab1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {

@@ -1,5 +1,6 @@
 package frames;
 
+import common.ePref;
 import frames.swing.FrameToFile;
 import common.eProp;
 import dataset.Query;
@@ -413,9 +414,10 @@ public class Syssize extends javax.swing.JFrame {
 // </editor-fold>    
 
     public void initElements() {
-
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
+        
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
         List.of(btnIns, btnDel).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab1)));
     }
 }

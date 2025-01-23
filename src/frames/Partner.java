@@ -1,5 +1,6 @@
 package frames;
 
+import common.ePref;
 import frames.swing.FrameToFile;
 import dataset.Query;
 import dataset.Record;
@@ -1173,7 +1174,10 @@ public class Partner extends javax.swing.JFrame {
    // </editor-fold> 
 
     public void initElements() {
-        new FrameToFile(this, btnClose);
+        
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
         FrameToFile.setFrameSize(this);
 
         TableFieldFilter filterTable = new TableFieldFilter(1, tab1);
