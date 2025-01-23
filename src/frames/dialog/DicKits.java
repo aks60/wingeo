@@ -4,6 +4,7 @@ import builder.model.UPar;
 import builder.param.KitDet;
 import builder.param.ParamList;
 import common.UCom;
+import common.ePref;
 import common.listener.ListenerObject;
 import dataset.Conn;
 import dataset.Field;
@@ -871,8 +872,9 @@ public class DicKits extends javax.swing.JDialog {
     // </editor-fold>
     private void initElements() {
 
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
         tab1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (event.getValueIsAdjusting() == false) {

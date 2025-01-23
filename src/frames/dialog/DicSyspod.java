@@ -1,6 +1,7 @@
 package frames.dialog;
 
 import builder.Wincalc;
+import common.ePref;
 import frames.swing.FrameToFile;
 import common.listener.ListenerRecord;
 import common.eProp;
@@ -388,8 +389,9 @@ public class DicSyspod extends javax.swing.JDialog {
 
     public void initElements() {
 
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
         DefaultTreeCellRenderer rnd = (DefaultTreeCellRenderer) tree1.getCellRenderer();
         rnd.setLeafIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b037.gif")));
         rnd.setOpenIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b007.gif")));

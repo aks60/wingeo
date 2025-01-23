@@ -1,5 +1,6 @@
 package frames.dialog;
 
+import common.ePref;
 import frames.swing.FrameToFile;
 import dataset.Record;
 import domain.eFurniture;
@@ -277,7 +278,8 @@ public class DicHandl extends javax.swing.JDialog {
     
     private void initElements() {
 
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
     }
 }

@@ -1,6 +1,7 @@
 package startup;
 
 import builder.script.GsonScript;
+import common.ePref;
 import frames.swing.FrameToFile;
 import common.eProfile;
 import common.eProp;
@@ -1622,8 +1623,10 @@ public class Adm extends javax.swing.JFrame {
 // </editor-fold> 
 
     private void initElements() {
-        setTitle(eProfile.profile.title);
-        new FrameToFile(this, btnClose);
+        
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
         appendToPane("\n", Color.GRAY);
         appendToPane("    Внимание!!! Перенос данных из ПрофСтрой-3 должен\n", Color.GRAY);
         appendToPane("    выполняться под управлением Firebird 2.1 НЕ ВЫШЕ.\n", Color.GRAY);

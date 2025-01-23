@@ -3,6 +3,7 @@ package frames.dialog;
 import frames.swing.FrameToFile;
 import enums.Enam;
 import builder.param.ParamList;
+import common.ePref;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
@@ -231,7 +232,8 @@ public class DicParlist extends javax.swing.JDialog implements ListenerFrame<Obj
     
     public void initElements() {
         
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
     }
 }

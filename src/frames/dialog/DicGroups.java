@@ -1,5 +1,6 @@
 package frames.dialog;
 
+import common.ePref;
 import common.listener.ListenerFrame;
 import frames.swing.FrameToFile;
 import frames.UGui;
@@ -599,8 +600,9 @@ public class DicGroups extends javax.swing.JDialog {
 
     public void initElements() {
 
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
         List.of(tab1, tab2, tab3, tab4).forEach(tab -> tab.setBorder(null));
     }
 }

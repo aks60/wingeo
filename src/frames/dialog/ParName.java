@@ -8,6 +8,7 @@ import dataset.Query;
 import dataset.Record;
 import domain.eParams;
 import builder.param.ParamList;
+import common.ePref;
 import common.listener.ListenerFrame;
 import java.awt.CardLayout;
 import java.awt.Frame;
@@ -486,8 +487,10 @@ public class ParName extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
     // </editor-fold>     
     public void initElements() {
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
+        
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
         btnParam.setVisible(false);
     }
 }

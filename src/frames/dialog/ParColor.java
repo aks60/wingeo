@@ -1,5 +1,6 @@
 package frames.dialog;
 
+import common.ePref;
 import frames.swing.FrameToFile;
 import frames.UGui;
 import dataset.Query;
@@ -412,8 +413,9 @@ public class ParColor extends javax.swing.JDialog {
 
     public void initElements() {
 
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        });         
         btnRemove.setVisible(false);
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
     }
 }

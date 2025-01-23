@@ -1,5 +1,6 @@
 package frames.dialog;
 
+import common.ePref;
 import frames.swing.FrameToFile;
 import frames.UGui;
 import dataset.Query;
@@ -259,7 +260,9 @@ public class ParDefVal extends javax.swing.JDialog {
     // </editor-fold>
 
     public void initElements() {
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
+        
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
     }
 }

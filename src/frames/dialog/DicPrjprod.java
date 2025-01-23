@@ -1,5 +1,6 @@
 package frames.dialog;
 
+import common.ePref;
 import frames.swing.FrameToFile;
 import dataset.Field;
 import dataset.Query;
@@ -227,7 +228,8 @@ public class DicPrjprod extends javax.swing.JDialog {
     
     public void initElements() {
 
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
     }
 }

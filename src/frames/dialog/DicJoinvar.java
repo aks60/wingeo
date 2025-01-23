@@ -1,6 +1,7 @@
 package frames.dialog;
 
 import builder.making.UColor;
+import common.ePref;
 import common.eProp;
 import dataset.Query;
 import frames.swing.FrameToFile;
@@ -283,8 +284,9 @@ public class DicJoinvar extends javax.swing.JDialog {
     
     public void initElements() {
 
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
         new UColor();
     }
 }

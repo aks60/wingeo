@@ -1,5 +1,6 @@
 package frames.dialog;
 
+import common.ePref;
 import frames.swing.FrameToFile;
 import frames.UGui;
 import dataset.Record;
@@ -222,7 +223,8 @@ public class DicTypset extends javax.swing.JDialog {
 
     public void initElements() {
 
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
     }
 }

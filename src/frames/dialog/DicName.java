@@ -1,5 +1,6 @@
 package frames.dialog;
 
+import common.ePref;
 import common.listener.ListenerFrame;
 import frames.swing.FrameToFile;
 import dataset.Field;
@@ -298,8 +299,9 @@ public class DicName extends javax.swing.JDialog {
     
     public void initElements() {
 
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
         //tab1.setRowSorter(new TableRowSorter(tab1.getModel()));
     }
 }

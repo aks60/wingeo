@@ -1,5 +1,6 @@
 package frames.dialog;
 
+import common.ePref;
 import frames.swing.FrameToFile;
 import frames.UGui;
 import dataset.Query;
@@ -226,7 +227,9 @@ public class ParUserVal extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 // </editor-fold> 
     public void initElements() {
-        FrameToFile.setFrameSize(this);
-        new FrameToFile(this, btnClose);
+        
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        }); 
     }
 }
