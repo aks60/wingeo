@@ -1,8 +1,12 @@
 package common;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.Window;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.prefs.Preferences;
+import javax.swing.AbstractButton;
+import javax.swing.JComponent;
 
 public enum ePref {
     
@@ -51,6 +55,7 @@ public enum ePref {
     public static boolean dev = false;      //признак разработки и тестирования
     public static boolean locate = true;    //координаты фрейма разработки и тестирования
     public static String profile = "";      //профиль разработки и тестирования
+    private static AbstractButton btn;
 
     //Значение по умолчанию
     ePref(String value) {
@@ -63,4 +68,62 @@ public enum ePref {
         this.value = os.equals("Linux") ? value1 : value2;
     }
     
+    public static void read(Preferences pref, Window window, JComponent... comp) {
+        
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension frameSize = window.getSize();
+
+        int dy = pref.getInt("window.height", window.getHeight());
+        int dx = pref.getInt("window.width", window.getWidth());
+
+        if (frameSize.height > screenSize.height) {
+            frameSize.height = screenSize.height;
+        }
+        if (frameSize.width > screenSize.width) {
+            frameSize.width = screenSize.width;
+        }
+        if (window.getName().equals("Setting")) {
+            window.setLocation(20, 100);
+        } else {
+            window.setLocation((screenSize.width - frameSize.width) / 2,
+                    (screenSize.height - frameSize.height - 48) / 2 + 48);
+        }
+        window.setPreferredSize(frameSize);
+        window.pack();       
+    }
+
+    public static void write(Preferences pref, Window frame, JComponent... comp) {
+       pref.putInt("window.height", frame.getHeight()); 
+       pref.putInt("window.width", frame.getWidth());
+    }
+    
+    public static void actionPerformed(java.awt.event.ActionEvent evt) {
+        System.out.println("common.ePref.actionPerformed()");
+//        Dimension frameSize = frame.getSize();
+        try {
+//            btn.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c036.gif")));
+//            String dy = String.valueOf(frame.getSize().height);
+//            String dx = String.valueOf(frame.getSize().width);
+//            eProp.load().setProperty(frame.getClass().getName() + "_height", dy);
+//            eProp.load().setProperty(frame.getClass().getName() + "_width", dx);
+//            eProp.save();
+        } finally {
+//            stop();
+        }
+    }
+
+    public static void initListener() {
+        //super.addActionListener(this);
+        btn.addMouseListener(new java.awt.event.MouseAdapter() {
+
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                //start();
+            }
+
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                //stop();
+                btn.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif")));
+            }
+        });
+    }
 }
