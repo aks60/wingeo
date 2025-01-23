@@ -3,6 +3,7 @@ package frames;
 import frames.swing.FrameToFile;
 import frames.dialog.DicCurrenc;
 import common.UCom;
+import common.ePref;
 import common.eProp;
 import frames.dialog.DicColor;
 import dataset.Conn;
@@ -51,6 +52,7 @@ import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
+import javax.swing.Timer;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 import report.sup.ExecuteCmd;
@@ -62,7 +64,10 @@ import report.sup.RTable;
  */
 public class Artikles extends javax.swing.JFrame {
 
-    private Preferences pref = Preferences.userRoot().node("frames." + this.getName());
+//    private Preferences pref = Preferences.userRoot().node(this.getName());
+    //Preferences prefs = Preferences.userRoot().node("oreilly/learningjava");
+//Preferences prefs = Preferences.userRoot().node("com/javaranch/prefs");
+//Preferences prefs = Preferences.systemRoot().node("com/javaranch/prefs");    
     private ListenerRecord listener = null;
     private Query qGroups = new Query(eGroups.values());
     private Query qSyssize = new Query(eSyssize.values());
@@ -2984,8 +2989,12 @@ public class Artikles extends javax.swing.JFrame {
             }
         });
 
+        Window w = (Window) this;
+        Preferences pref = Preferences.userRoot().node(w.getClass().getSimpleName());
+//        ePref.read(this, btnClose, () -> {
+//            
+//        }), tab1);
         //System.out.println(pref.absolutePath());
-        //System.out.println(pref.childrenNames());
         //System.out.println(pref.name());
         
 //        prefs.addPreferenceChangeListener((ChangeEvent evt) -> {

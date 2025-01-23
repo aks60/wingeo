@@ -34,10 +34,12 @@ public class FrameToFile extends javax.swing.Timer implements ActionListener {
         btn.addMouseListener(new java.awt.event.MouseAdapter() {
 
             public void mousePressed(java.awt.event.MouseEvent evt) {
+                System.out.println(".mousePressed()");
                 start();
             }
 
             public void mouseReleased(java.awt.event.MouseEvent evt) {
+                System.out.println(".mouseReleased()");
                 stop();
                 btn.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif")));
             }
@@ -45,7 +47,7 @@ public class FrameToFile extends javax.swing.Timer implements ActionListener {
     }
 
     public void actionPerformed(java.awt.event.ActionEvent evt) {
-
+        System.out.println("frames.swing.FrameToFile.actionPerformed()");
         Dimension frameSize = frame.getSize();
         try {
             btn.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c036.gif")));
