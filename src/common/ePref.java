@@ -132,4 +132,31 @@ public enum ePref {
             }
         });
     }
+    
+    public static String port(String num) {
+        return (num.equals("1")) ? ePref.port1.read() : (num.equals("2")) ? ePref.port2.read() : ePref.port3.read();
+    }
+
+    public static void port(String num, String name) {
+        ePref p = (num.equals("1")) ? ePref.port1 : (num.equals("2")) ? ePref.port2 : ePref.port3;
+        p.write(name);
+    }
+
+    public static String server(String num) {
+        return (num.equals("1")) ? ePref.server1.read() : (num.equals("2")) ? ePref.server2.read() : ePref.server3.read();
+    }
+
+    public static void server(String num, String name) {
+        ePref p = (num.equals("1")) ? ePref.server1 : (num.equals("2")) ? ePref.server2 : ePref.server3;
+        p.write(name);
+    }
+
+    public static String base(String num) {
+        return (num.equals("1")) ? ePref.base1.read() : (num.equals("2")) ? ePref.base2.read() : ePref.base3.read();
+    }
+
+    public static void base(String num, String name) {
+        ePref p = (num.equals("1")) ? ePref.base1 : (num.equals("2")) ? ePref.base2 : ePref.base3;
+        p.write(name);
+    }    
 }
