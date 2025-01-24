@@ -2964,8 +2964,8 @@ public class Artikles extends javax.swing.JFrame {
 
     public void initElements() {
 
-        ePref.read(this, btnClose, (e) -> {            
-            ePref.write(this, btnClose);
+        ePref.get(this, btnClose, (e) -> {            
+            ePref.put(this, btnClose);
         });
 
         filterTable = new TableFieldFilter(0, tab1);

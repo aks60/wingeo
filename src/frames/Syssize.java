@@ -411,8 +411,8 @@ public class Syssize extends javax.swing.JFrame {
 
     public void initElements() {
         
-        ePref.read(this, btnClose, (e) -> {
-            ePref.write(this, btnClose);
+        ePref.get(this, btnClose, (e) -> {
+            ePref.put(this, btnClose);
         }); 
         List.of(btnIns, btnDel).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab1)));
     }

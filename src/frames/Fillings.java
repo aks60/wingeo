@@ -1048,8 +1048,8 @@ public class Fillings extends javax.swing.JFrame {
 
     private void initElements() {
 
-        ePref.read(this, btnClose, (e) -> {
-            ePref.write(this, btnClose);
+        ePref.get(this, btnClose, (e) -> {
+            ePref.put(this, btnClose);
         });        
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2, tab3, tab4, tab5);

@@ -86,7 +86,7 @@ public class Specifics extends javax.swing.JFrame {
 
         //Со скидкой менеджера и комплектов
         if (this.man == true) {
-            int prjprodID = Integer.valueOf(ePref.prjprodID.read());
+            int prjprodID = Integer.valueOf(ePref.prjprodID.get());
             Record prjprodRec = ePrjprod.find(prjprodID);
             
             if (prjprodRec != null) {
@@ -109,7 +109,7 @@ public class Specifics extends javax.swing.JFrame {
 
             //Без скидки менеджера и комплектов
         } else {
-            int sysprodID = Integer.valueOf(ePref.sysprodID.read());
+            int sysprodID = Integer.valueOf(ePref.sysprodID.get());
             Record sysprodRec = eSysprod.find(sysprodID);
             if (sysprodRec != null) {
                 String script = sysprodRec.getStr(eSysprod.script);
@@ -736,8 +736,8 @@ public class Specifics extends javax.swing.JFrame {
 // </editor-fold> 
     public void initElements() {
         
-        ePref.read(this, btnClose, (e) -> {
-            ePref.write(this, btnClose);
+        ePref.get(this, btnClose, (e) -> {
+            ePref.put(this, btnClose);
         }); 
 
         filterTable = new TableFieldFilter(4, tab1);
@@ -770,7 +770,7 @@ public class Specifics extends javax.swing.JFrame {
         tab1.getColumnModel().getColumn(21).setCellRenderer(new DefCellRendererSpc(9));
         tab1.getColumnModel().getColumn(22).setCellRenderer(new DefCellRendererSpc(9));
 
-        if ("Nimbus".equals(ePref.lookandfeel.read())) {
+        if ("Nimbus".equals(ePref.lookandfeel.get())) {
             for (int i = 15; i < 22; i++) {
                 tab1.getColumnModel().getColumn(i).setPreferredWidth(tab1.getColumnModel().getColumn(i).getPreferredWidth() + tab1.getColumnModel().getColumn(i).getPreferredWidth() / 3);
             }

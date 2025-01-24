@@ -270,7 +270,7 @@ public class Wincalc {
             }
             //Если спецификация на продукт менеджера
             if (man == true) {
-                int prjprodID = Integer.valueOf(ePref.prjprodID.read());
+                int prjprodID = Integer.valueOf(ePref.prjprodID.get());
                 Record prjprodRec = ePrjprod.find(prjprodID);
                 Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
                 if (prjprodRec != null) {

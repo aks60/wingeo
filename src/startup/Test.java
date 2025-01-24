@@ -51,14 +51,14 @@ public class Test {
     public Geometry mlin = null;
     public Geometry mpol = null;
 
-    public static Integer numDb = Integer.valueOf(ePref.base_num.read());
+    public static Integer numDb = Integer.valueOf(ePref.base_num.get());
     private static GeometryFactory gf = new GeometryFactory();
     AffineTransformation aff = new AffineTransformation();
 
     // <editor-fold defaultstate="collapsed" desc="Connection[] connect(int numDb)">
     public static Connection connect1() {
         try {
-            String db = (numDb == 1) ? ePref.base1.read() : (numDb == 2) ? ePref.base2.read() : ePref.base3.read();
+            String db = (numDb == 1) ? ePref.base1.get() : (numDb == 2) ? ePref.base2.get() : ePref.base3.get();
             if (db.toUpperCase().contains("BIMAX")) {
                 return java.sql.DriverManager.getConnection("jdbc:firebirdsql:localhost/3050:D:\\Okna\\Database\\ps4\\ITEST.FDB?encoding=win1251", "sysdba", "masterkey");
             } else if (db.toUpperCase().contains("SIAL3")) {
@@ -82,9 +82,9 @@ public class Test {
     }
 
     public static Connection connect2() {
-        ePref.user.write("sysdba");
+        ePref.user.put("sysdba");
         ePref.password = String.valueOf("masterkey");
-        Conn.connection(ePref.server(numDb.toString()), ePref.port(numDb.toString()), ePref.base(numDb.toString()), ePref.user.read(), ePref.password.toCharArray(), null);
+        Conn.connection(ePref.getServer(numDb.toString()), ePref.getPort(numDb.toString()), ePref.getBase(numDb.toString()), ePref.user.get(), ePref.password.toCharArray(), null);
         return Conn.getConnection();
     }
 
@@ -393,7 +393,7 @@ public class Test {
 
     public static void clearDataDB() {
 
-        if (JOptionPane.showConfirmDialog(null, "”ƒ¿À≈Õ»≈ ƒ¿ÕÕ€’ ¬ ¡¿«≈ π " + ePref.base_num.read(), "”ƒ¿À≈Õ»≈",
+        if (JOptionPane.showConfirmDialog(null, "”ƒ¿À≈Õ»≈ ƒ¿ÕÕ€’ ¬ ¡¿«≈ π " + ePref.base_num.get(), "”ƒ¿À≈Õ»≈",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             for (Field field : App.db) {
                 if (field.tname().equals("GROUPS") == true) {

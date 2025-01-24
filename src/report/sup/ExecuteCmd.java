@@ -44,7 +44,7 @@ public class ExecuteCmd {
 
         Desktop desktop = Desktop.getDesktop();
         try {
-            URI url = new URI(ePref.url_src.read() + "/appdoc/help/director/" + file.replace('.', '/') + ".html");
+            URI url = new URI(ePref.url_src.get() + "/appdoc/help/director/" + file.replace('.', '/') + ".html");
 //            if ("192.168.33.4".equals(eProperty.server.read())) {
 //                url = new URI("http://89.107.28.10:8080/appdoc/help/director/" + file.replace('.', '/') + ".html");
 //            }
@@ -59,12 +59,12 @@ public class ExecuteCmd {
     //Запуск HTML
     public static void startHtml(String fileName) {
         try {
-            String fileExe = ePref.cmd_html.read();
+            String fileExe = ePref.cmd_html.get();
             if (System.getProperty("os.name").equals("Linux")) {
-                String path = ePref.path_prop.read();
+                String path = ePref.path_pref.get();
                 Runtime.getRuntime().exec(fileExe + " " + path + "/" + fileName);
             } else {
-                String path = replacePath(ePref.path_prop.read());
+                String path = replacePath(ePref.path_pref.get());
                 String[] cmd = arraysPath(fileExe, path, fileName);
                 Runtime.getRuntime().exec(cmd);
             }
@@ -76,12 +76,12 @@ public class ExecuteCmd {
     //Запуск Word
     public static void startWord(String fileName) {
         try {
-            String fileExe = ePref.cmd_word.read();
+            String fileExe = ePref.cmd_word.get();
             if (System.getProperty("os.name").equals("Linux")) {
-                String path = ePref.path_prop.read();
+                String path = ePref.path_pref.get();
                 Runtime.getRuntime().exec(fileExe + " " + path + "/" + fileName);
             } else {
-                String path = replacePath(ePref.path_prop.read());
+                String path = replacePath(ePref.path_pref.get());
                 String[] cmd = arraysPath(fileExe, path, fileName);
                 Runtime.getRuntime().exec(cmd);
             }
@@ -95,12 +95,12 @@ public class ExecuteCmd {
     //Запуск Excel
     public static void startExcel(String fileName) {
         try {
-            String fileExe = ePref.cmd_excel.read();
+            String fileExe = ePref.cmd_excel.get();
             if (System.getProperty("os.name").equals("Linux")) {
-                String path = ePref.path_prop.read();
+                String path = ePref.path_pref.get();
                 Runtime.getRuntime().exec(fileExe + " " + path + "/" + fileName);
             } else {
-                String path = replacePath(ePref.path_prop.read());
+                String path = replacePath(ePref.path_pref.get());
                 String[] cmd = arraysPath(fileExe, path, fileName);
                 Runtime.getRuntime().exec(cmd);
             }
@@ -121,7 +121,7 @@ public class ExecuteCmd {
                 File file = new File(entry.getName());
                 if (file.getName().equals(template)) {
                     out = new BufferedOutputStream(
-                            new FileOutputStream(new File(ePref.path_prop.read(), "report.html")));
+                            new FileOutputStream(new File(ePref.path_pref.get(), "report.html")));
                     byte[] buffer = new byte[8192];
                     int readed;
                     while ((readed = in.read(buffer)) > 0) {

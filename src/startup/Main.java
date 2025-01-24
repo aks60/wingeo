@@ -44,7 +44,7 @@ public class Main {
             public void run() {
                 try {
                     runRussifier();
-                    String lafname = ePref.lookandfeel.read();
+                    String lafname = ePref.lookandfeel.get();
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     for (LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
                         if (lafname.equals(laf.getName())) {

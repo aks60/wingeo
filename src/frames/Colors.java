@@ -547,8 +547,8 @@ public class Colors extends javax.swing.JFrame {
 
     public void initElements() {
 
-        ePref.read(this, btnClose, (e) -> {
-            ePref.write(this, btnClose);
+        ePref.get(this, btnClose, (e) -> {
+            ePref.put(this, btnClose);
         });
 
         TableFieldFilter filterTable = new TableFieldFilter(1, tab2, tab1);

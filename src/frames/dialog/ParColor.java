@@ -412,8 +412,8 @@ public class ParColor extends javax.swing.JDialog {
 
     public void initElements() {
 
-        ePref.read(this, btnClose, (e) -> {
-            ePref.write(this, btnClose);
+        ePref.get(this, btnClose, (e) -> {
+            ePref.put(this, btnClose);
         });         
         btnRemove.setVisible(false);
     }

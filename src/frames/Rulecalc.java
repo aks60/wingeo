@@ -456,8 +456,8 @@ public class Rulecalc extends javax.swing.JFrame {
 // </editor-fold> 
     public void initElements() {
 
-        ePref.read(this, btnClose, (e) -> {
-            ePref.write(this, btnClose);
+        ePref.get(this, btnClose, (e) -> {
+            ePref.put(this, btnClose);
         }); 
 
         TableFieldFilter filterTable = new TableFieldFilter(2, tab2);

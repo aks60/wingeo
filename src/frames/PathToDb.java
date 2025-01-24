@@ -31,10 +31,10 @@ public class PathToDb extends javax.swing.JDialog {
 
         //Загрузка параметров входа
         labMes.setText("");
-        edHost.setText(ePref.server(num_base));
-        edPath.setText(ePref.base(num_base));
-        edPort.setText(ePref.port(num_base));
-        edUser.setText(ePref.user.read());
+        edHost.setText(ePref.getServer(num_base));
+        edPath.setText(ePref.getBase(num_base));
+        edPort.setText(ePref.getPort(num_base));
+        edUser.setText(ePref.user.get());
         edPass.setText(ePref.password);
 
         onCaretUpdate(null);
@@ -57,17 +57,17 @@ public class PathToDb extends javax.swing.JDialog {
                 labMes.setText("Установка соединения с базой данных");
                 eExcep pass = Conn.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), null);
                 if (pass == eExcep.yesConn) {
-                    ePref.base_num.write(num_base);
-                    ePref.port(num_base, edPort.getText().trim());
-                    ePref.server(num_base, edHost.getText().trim());
-                    ePref.base(num_base, edPath.getText().trim());
+                    ePref.base_num.put(num_base);
+                    ePref.putPort(num_base, edPort.getText().trim());
+                    ePref.putServer(num_base, edHost.getText().trim());
+                    ePref.putBase(num_base, edPath.getText().trim());
 
                     if ("SYSDBA".equalsIgnoreCase(edUser.getText())) {
                         if (App.Top.frame == null) {
                             App.createApp(eProfile.P01);
                         }
                         ePref.password = String.valueOf(edPass.getPassword()).trim();
-                        ePref.user.write(edUser.getText().trim());
+                        ePref.user.put(edUser.getText().trim());
                         //ePref.base_num.write(num_base);
                         //ePref.port(num_base, edPort.getText().trim());
                         //ePref.server(num_base, edHost.getText().trim());
@@ -97,7 +97,7 @@ public class PathToDb extends javax.swing.JDialog {
 //                                ePref.server(num_base, edHost.getText().trim());
 //                                ePref.base(num_base, edPath.getText().trim());
                                 ePref.password = String.valueOf(edPass.getPassword()).trim();
-                                ePref.user.write(edUser.getText().trim());
+                                ePref.user.put(edUser.getText().trim());
                                 //ePref.save();
                                 dispose();
                             }
@@ -116,7 +116,7 @@ public class PathToDb extends javax.swing.JDialog {
     }
 
     public static void pathToDb(Frame parent) {
-        String num_base = ePref.base_num.read();
+        String num_base = ePref.base_num.get();
         PathToDb pathToDb = new PathToDb(parent, num_base);
         pathToDb.setVisible(true);
     }
@@ -446,7 +446,7 @@ public class PathToDb extends javax.swing.JDialog {
 // </editor-fold> 
 
     public void initElements() {
-        ePref.read(this, btnClose, (e) -> {
+        ePref.get(this, btnClose, (e) -> {
         });
     }
 }

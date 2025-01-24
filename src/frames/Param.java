@@ -791,8 +791,8 @@ public class Param extends javax.swing.JFrame {
 
     public void initElements() {
 
-        ePref.read(this, btnClose, (e) -> {
-            ePref.write(this, btnClose);
+        ePref.get(this, btnClose, (e) -> {
+            ePref.put(this, btnClose);
         }); 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2, tab3, tab4);
         south.add(filterTable, 0);

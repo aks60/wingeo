@@ -161,8 +161,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     public final void loadingData() {
         //Получим сохранённую systreeID при выходе из программы
         Record sysprodRec = null; //при открытии указывает на конструкцию
-        if (this.systreeID == -1 && "-1".equals(ePref.sysprodID.read()) != true) {
-            sysprodRec = eSysprod.find(Integer.valueOf(ePref.sysprodID.read()));
+        if (this.systreeID == -1 && "-1".equals(ePref.sysprodID.get()) != true) {
+            sysprodRec = eSysprod.find(Integer.valueOf(ePref.sysprodID.get()));
         }
         if (sysprodRec != null) {
             this.systreeID = sysprodRec.getInt(eSysprod.systree_id);
@@ -406,7 +406,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 if (qSysprod.isEmpty() == false) {
 
                     int index = -1;
-                    int sysprodID = Integer.valueOf(ePref.sysprodID.read());
+                    int sysprodID = Integer.valueOf(ePref.sysprodID.get());
                     for (int i = 0; i < qSysprod.size(); ++i) {
                         if (qSysprod.get(i).getInt(eSysprod.id) == sysprodID) {
                             index = i;
@@ -585,7 +585,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         if (index != -1) {
             Record sysprodRec = qSysprod.table(eSysprod.up).get(index);
             if (writeNuni == true) {
-                ePref.sysprodID.write(sysprodRec.getStr(eSysprod.id)); //запишем текущий sysprodID в файл
+                ePref.sysprodID.put(sysprodRec.getStr(eSysprod.id)); //запишем текущий sysprodID в файл
             }
             App.Top.frame.setTitle(UGui.designTitle());
 
@@ -4951,8 +4951,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     public final void initElements() {
 
-        ePref.read(this, btnClose, (e) -> {
-            ePref.write(this, btnClose);
+        ePref.get(this, btnClose, (e) -> {
+            ePref.put(this, btnClose);
         }); 
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
         new UColor();
