@@ -19,6 +19,7 @@ public class LogoToDb extends javax.swing.JDialog {
     public LogoToDb(java.awt.Window owner) {
         super(owner);
         initComponents();
+        initElements();
 
         //Автопароль при тестировании
         if (ePref.dev == true) {
@@ -71,17 +72,14 @@ public class LogoToDb extends javax.swing.JDialog {
                 labMes.setForeground(Color.BLUE);
                 labMes.setText("Установка соединения с базой данных");
                 String num = ePref.base_num.read();
-                //JOptionPane.showMessageDialog(LogoToDb.this, " " + eProp.server(num) + " " +eProp.port(num) + " " +  eProp.base(num)
-                //+ " " + edUser.getText() + " " + edPass.getPassword(), "ВНИМАНИЕ!", 1);
                 eExcep pass = Conn.connection(ePref.server(num), ePref.port(num), ePref.base(num), edUser.getText(), edPass.getPassword(), null);
-                //JOptionPane.showMessageDialog(LogoToDb.this, pass.mes, "ВНИМАНИЕ!", 1);
+
                 if (pass == eExcep.yesConn) {
 
                     if ("SYSDBA".equalsIgnoreCase(edUser.getText())) {
                         App.createApp(eProfile.P01);
                         ePref.user.write(edUser.getText().trim());
                         ePref.password = String.valueOf(edPass.getPassword()).trim();
-                        ePref.save();
                         dispose();
 
                     } else {
@@ -103,7 +101,6 @@ public class LogoToDb extends javax.swing.JDialog {
                                 }
                                 ePref.user.write(edUser.getText().trim());
                                 ePref.password = String.valueOf(edPass.getPassword()).trim();
-                                ePref.save();
                                 dispose();
                             }
                         } else {
@@ -340,5 +337,10 @@ public class LogoToDb extends javax.swing.JDialog {
     private javax.swing.JPanel pan5;
     private javax.swing.JProgressBar progressBar;
     // End of variables declaration//GEN-END:variables
-// </editor-fold> 
+// </editor-fold>
+    
+    public void initElements() {
+        ePref.read(this, btnClose, (e) -> {
+        });     
+    }    
 }

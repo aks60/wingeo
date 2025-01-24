@@ -19,7 +19,6 @@ public class Main {
     public Main() {
         Locale.setDefault(ePref.locale);
         LogoToDb frame = new LogoToDb(null);
-        FrameToFile.setFrameSize(frame);
         frame.setVisible(true);
     }
 
@@ -57,17 +56,17 @@ public class Main {
                     System.err.println(e);
                 }
                 new Main();
-                //закрываю и сохран€ю проперти
-                Runtime.getRuntime().addShutdownHook(new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            ePref.save();
-                        } catch (Exception e) {
-                            System.err.println(e);
-                        }
-                    }
-                });
+//                //закрываю и сохран€ю проперти
+//                Runtime.getRuntime().addShutdownHook(new Thread() {
+//                    @Override
+//                    public void run() {
+////                        try {
+////                            ePref.save();
+////                        } catch (Exception e) {
+////                            System.err.println(e);
+////                        }
+//                    }
+//                });
             }
         });
     }

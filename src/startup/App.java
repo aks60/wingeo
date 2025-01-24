@@ -275,9 +275,7 @@ public enum App {
                 }
             }
             Top.frame.setName(profile.name());
-            if (profile.equals(eProfile.P01)) {
-                FrameToFile.setFrameSize(Top.frame); //размеры окна
-            } else {
+            if (profile.equals(eProfile.P01) == false) {
                 Top.frame.setLocation(0, 0);
                 Top.frame.setSize(screenSize.width, Top.frame.getHeight()); //размеры гл. окна
             }
@@ -306,7 +304,7 @@ public enum App {
         eArtdet.up, eArtikl.up,
         eSyssize.up, eGroups.up, eCurrenc.up, eSysuser.up
     };
-    
+
 //    public static List<javax.swing.JFrame> listOpenFrane() {
 //        List<javax.swing.JFrame> list = new ArrayList();
 //        for (App app : App.values()) {

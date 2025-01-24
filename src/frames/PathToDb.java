@@ -28,6 +28,7 @@ public class PathToDb extends javax.swing.JDialog {
         this.num_base = num_base;
 
         initComponents();
+        initElements();
 
         //Загрузка параметров входа
         labMes.setText("");
@@ -36,9 +37,9 @@ public class PathToDb extends javax.swing.JDialog {
         edPort.setText(ePref.port(num_base));
         edUser.setText(ePref.user.read());
         edPass.setText(ePref.password);
-        
+
         onCaretUpdate(null);
-        
+
         if (ePref.dev == false) {
             edHost.setEditable(false);
             edPath.setEditable(false);
@@ -57,18 +58,22 @@ public class PathToDb extends javax.swing.JDialog {
                 labMes.setText("Установка соединения с базой данных");
                 eExcep pass = Conn.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), null);
                 if (pass == eExcep.yesConn) {
+                    ePref.base_num.write(num_base);
+                    ePref.port(num_base, edPort.getText().trim());
+                    ePref.server(num_base, edHost.getText().trim());
+                    ePref.base(num_base, edPath.getText().trim());
 
                     if ("SYSDBA".equalsIgnoreCase(edUser.getText())) {
                         if (App.Top.frame == null) {
                             App.createApp(eProfile.P01);
                         }
-                        ePref.user.write(edUser.getText().trim());
                         ePref.password = String.valueOf(edPass.getPassword()).trim();
-                        ePref.base_num.write(num_base);
-                        ePref.port(num_base, edPort.getText().trim());
-                        ePref.server(num_base, edHost.getText().trim());
-                        ePref.base(num_base, edPath.getText().trim());
-                        ePref.save();
+                        ePref.user.write(edUser.getText().trim());
+                        //ePref.base_num.write(num_base);
+                        //ePref.port(num_base, edPort.getText().trim());
+                        //ePref.server(num_base, edHost.getText().trim());
+                        //ePref.base(num_base, edPath.getText().trim());
+                        //ePref.save();
                         dispose();
 
                     } else {
@@ -88,12 +93,13 @@ public class PathToDb extends javax.swing.JDialog {
                                 } else if (App.Top.frame == null && eProfile.P03.roleSet.contains(ePref.role)) {
                                     App.createApp(eProfile.P03);
                                 }
-                                ePref.base_num.write(num_base);
-                                ePref.port(num_base, edPort.getText().trim());
-                                ePref.server(num_base, edHost.getText().trim());
-                                ePref.base(num_base, edPath.getText().trim());
+//                                ePref.base_num.write(num_base);
+//                                ePref.port(num_base, edPort.getText().trim());
+//                                ePref.server(num_base, edHost.getText().trim());
+//                                ePref.base(num_base, edPath.getText().trim());
+                                ePref.password = String.valueOf(edPass.getPassword()).trim();
                                 ePref.user.write(edUser.getText().trim());
-                                ePref.save();
+                                //ePref.save();
                                 dispose();
                             }
                         }
@@ -113,7 +119,6 @@ public class PathToDb extends javax.swing.JDialog {
     public static void pathToDb(Frame parent) {
         String num_base = ePref.base_num.read();
         PathToDb pathToDb = new PathToDb(parent, num_base);
-        FrameToFile.setFrameSize(pathToDb);
         pathToDb.setVisible(true);
     }
 
@@ -440,4 +445,9 @@ public class PathToDb extends javax.swing.JDialog {
     private javax.swing.JProgressBar progressBar;
     // End of variables declaration//GEN-END:variables
 // </editor-fold> 
+
+    public void initElements() {
+        ePref.read(this, btnClose, (e) -> {
+        });
+    }
 }

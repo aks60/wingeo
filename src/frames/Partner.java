@@ -1178,7 +1178,6 @@ public class Partner extends javax.swing.JFrame {
         ePref.read(this, btnClose, (e) -> {
             ePref.write(this, btnClose);
         }); 
-        FrameToFile.setFrameSize(this);
 
         TableFieldFilter filterTable = new TableFieldFilter(1, tab1);
         south.add(filterTable, 0);

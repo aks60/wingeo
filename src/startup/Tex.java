@@ -53,7 +53,6 @@ public class Tex extends javax.swing.JFrame {
         for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
             if (((JCheckBoxMenuItem) evt.getSource()).getText().equals(laf.getName()) == true) {
                 ePref.lookandfeel.write(laf.getName());
-                ePref.save();
             }
         }
     }

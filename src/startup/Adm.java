@@ -214,7 +214,6 @@ public class Adm extends javax.swing.JFrame {
 
     private void connectBaseNumb(String num_base) {
         PathToDb frame = new PathToDb(this, num_base);
-        FrameToFile.setFrameSize(frame);
         frame.setVisible(true);
 
         if (ePref.base_num.read().equals("1")) {
@@ -236,7 +235,6 @@ public class Adm extends javax.swing.JFrame {
         for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
             if (((JCheckBoxMenuItem) evt.getSource()).getText().equals(laf.getName()) == true) {
                 ePref.lookandfeel.write(laf.getName());
-                ePref.save();
             }
         }
     }

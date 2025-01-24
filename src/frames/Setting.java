@@ -444,19 +444,16 @@ public class Setting extends javax.swing.JFrame {
     private void btnProp2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProp2
         ePref.fontname.write(fontName[comboBox.getSelectedIndex()]);
         ePref.fontsize.write(String.valueOf(spinner2.getValue()));
-        ePref.save();
     }//GEN-LAST:event_btnProp2
 
     private void btnProp3(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProp3
         ePref.cmd_word.write(txtWord.getText());
         ePref.cmd_excel.write(txtExcel.getText());
         ePref.cmd_html.write(txtHtml.getText());
-        ePref.save();
 }//GEN-LAST:event_btnProp3
 
     private void btnProp4(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProp4
         ePref.url_src.write(txtURL.getText());
-        ePref.save();
     }//GEN-LAST:event_btnProp4
 
     private void checkBox1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_checkBox1StateChanged
@@ -465,7 +462,6 @@ public class Setting extends javax.swing.JFrame {
         } else {
             ePref.old_version.write("0");
         }
-        ePref.save();
     }//GEN-LAST:event_checkBox1StateChanged
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">    
@@ -521,7 +517,6 @@ public class Setting extends javax.swing.JFrame {
 
         txtURL.setText(ePref.url_src.read());
         Integer num = Integer.valueOf(ePref.web_port.read());
-        boolean start = (ePref.web_start.read().equals("true") == true) ? true : false;
 
         comboBox.setModel(new DefaultComboBoxModel(fontName));
         String name = ePref.fontname.read();

@@ -1,6 +1,6 @@
 package frames.dialog;
 
-import frames.swing.FrameToFile;
+import common.ePref;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -32,6 +32,7 @@ public class DicDate extends javax.swing.JDialog {
         super(owner, ModalityType.DOCUMENT_MODAL);
         this.listener = listener;
         initComponents();
+        initElements();
 
         //Диапазон выбора
         listYear.setModel(new javax.swing.AbstractListModel() {//диапазон выбора
@@ -51,8 +52,6 @@ public class DicDate extends javax.swing.JDialog {
 
         loadingTab();
         tabDay.requestFocus();
-
-        FrameToFile.setFrameSize(this);
         setVisible(true);
     }
 
@@ -133,7 +132,7 @@ public class DicDate extends javax.swing.JDialog {
         }
 
     }
-    
+
     private static String getServerHttpDate(String serverUrl) throws IOException {
         URL url = new URL(serverUrl);
         URLConnection connection = url.openConnection();
@@ -481,4 +480,11 @@ public class DicDate extends javax.swing.JDialog {
     private javax.swing.JPanel tool;
     // End of variables declaration//GEN-END:variables
     // </editor-fold>
+
+    public final void initElements() {
+
+        ePref.read(this, btnClose, (e) -> {
+            ePref.write(this, btnClose);
+        });
+    }
 }

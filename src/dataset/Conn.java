@@ -122,7 +122,6 @@ public class Conn {
         Query.listOpenTable.forEach(q -> q.clear());
 
         PathToDb pathToDb = new PathToDb(App.Top.frame, num_base);
-        FrameToFile.setFrameSize(pathToDb);
         pathToDb.setVisible(true);
         pathToDb.connectToDb();
     }

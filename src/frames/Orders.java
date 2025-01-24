@@ -3125,7 +3125,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
         UGui.stopCellEditingAndExecSql(getRootPane());
-        ePref.save(); //запишем текущий ordersId в файл  
     }//GEN-LAST:event_windowClosed
 
     private void mousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mousePressed

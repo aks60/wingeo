@@ -17,24 +17,22 @@ public enum ePref {
     lookandfeel("Metal", "Windows"),
     url_src("http://localhost:8080/winweb/"),
     web_port("8080"),
-    web_start("false"),
     typedb("fb"),
     user("sysdba"),
     port1("3050"),
     port2("3050"),
     port3("3050"),
-    server1("localhost"),
-    server2("localhost"),
-    server3("localhost"),
+    server1("31.172.66.46"),
+    server2("31.172.66.46"),
+    server3("31.172.66.46"),
     sysprodID("-1"), //выбранный системный шаблон продукта
     prjprodID("-1"), //выбранный продукт для клиента
-    orderID("-1"), //выбранный заказ клиента
+    orderID("-1"),   //выбранный заказ клиента
     base_num("1"),
     old_version("0"), //переключение на пред. версию
-    base1("C:\\Okna\\fbase\\BASE.FDB?encoding=win1251", "C:\\Okna\\fbase\\BASE.FDB?encoding=win1251"),
-    base2("C:\\Okna\\fbase\\BASE.FDB?encoding=win1251", "C:\\Okna\\fbase\\BASE2.FDB?encoding=win1251"),
-    base3("C:\\Okna\\fbase\\BASE.FDB?encoding=win1251", "C:\\Okna\\fbase\\BASE3.FDB?encoding=win1251"),
-    path_app(System.getProperty("user.home") + "/Avers/Okna", "C:\\Users\\aksenov\\Desktop\\winapp.jar"),
+    base1("/opt/database/fbase/bimax.fdb?encoding=win1251"),
+    base2("/opt/database/fbase/bimax.fdb?encoding=win1251"),
+    base3("/opt/database/fbase/bimax.fdb?encoding=win1251"),
     path_prop(System.getProperty("user.home") + "/Avers/Okna", "C:\\ProgramData\\Avers\\Okna"), //Аркаим или Arkaim
     cmd_def("I", "I"),
     cmd_word("/usr/bin/oowriter ", "cmd /c start winword.exe "),
@@ -165,9 +163,5 @@ public enum ePref {
     public static Properties load() {
         System.out.println("common.ePref.load()");
         return new Properties();
-    }
-    
-    public static void save() {
-        System.out.println("common.ePref.save()");
     }
 }
