@@ -59,7 +59,7 @@ import report.sup.RTable;
  * Материальные ценности
  */
 public class Artikles extends javax.swing.JFrame {
-   
+
     private ListenerRecord listener = null;
     private Query qGroups = new Query(eGroups.values());
     private Query qSyssize = new Query(eSyssize.values());
@@ -2607,23 +2607,9 @@ public class Artikles extends javax.swing.JFrame {
     }//GEN-LAST:event_btn37
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-        rsvArtikl.load();
-
-//        Query q = ((DefTableModel) tab1.getModel()).getQuery();
-//        Record record = (Record) q.get(UGui.getIndexRec(tab1)).clone();
-//        String nameCols = "", nameVals = "";
-//        for (int k = 1; k < q.fields().size(); k++) {
-//            Field field = q.fields().get(k);
-//            if (field.meta().type() != Field.TYPE.OBJ) {
-//                nameCols = nameCols + field.name() + ",";
-//                nameVals = nameVals + q.wrapper(record, field) + ",";
-//            }
-//        }
-//        nameCols = nameCols.substring(0, nameCols.length() - 1);
-//        nameVals = nameVals.substring(0, nameVals.length() - 1);
-//        String sql = "insert into " + q.fields().get(0).tname() + "(" + nameCols + ") values(" + nameVals + ")";
-//        JOptionPane.showInputDialog("РќРѕРјРµСЂ РїСЂРѕРµРєС‚Р°", sql);
-
+//        tab1.getColumnModel().getColumn(0).setMinWidth(400);
+//        tab1.getColumnModel().getColumn(0).setPreferredWidth(400);
+//        tab1.getColumnModel().getColumn(0).setMaxWidth(400);
     }//GEN-LAST:event_btnTest
 
     private void ppmClick(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppmClick
@@ -2960,10 +2946,10 @@ public class Artikles extends javax.swing.JFrame {
 
     public void initElements() {
 
-        ePrefs.getWin(this, btnClose, (e) -> {            
-            ePrefs.putWin(this, btnClose, tab1);
-        });
-
+        ePrefs.getWin(this, btnClose, (e) -> {
+            ePrefs.putWin(this, btnClose, tab1, tab2);
+        }, tab1, tab2);
+   
         filterTable = new TableFieldFilter(0, tab1);
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();

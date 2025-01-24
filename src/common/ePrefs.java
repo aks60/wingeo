@@ -15,7 +15,7 @@ public enum ePrefs {
 
     lookandfeel("Metal", "Windows"),
     genl(System.getProperty("user.home") + "/Avers/Okna",
-            "C:\\ProgramData\\Avers\\Okna"), //Аркаим или Arkaim
+            "C:\\ProgramData\\Avers\\Okna"),
     url_src("http://localhost:8080/winweb/"),
     web_port("8080"),
     typedb("fb"),
@@ -66,7 +66,6 @@ public enum ePrefs {
 
     public String getProp() {
         Preferences pref = Preferences.systemRoot().node(this.getClass().getName());
-        System.out.println(pref.absolutePath());
         return pref.get(this.name(), this.value);
     }
 
@@ -102,13 +101,15 @@ public enum ePrefs {
         }
         if (comp != null) {
             for (int i = 0; i < comp.length; ++i) {
+                
                 if (comp[i] instanceof JTable) {
                     JTable tab = (JTable) comp[i];
                     pref = pref.node(tab.getClass().getName());
-
-                    tab.getColumnModel().getColumn(0).setMinWidth(40);
-                    tab.getColumnModel().getColumn(0).setPreferredWidth(80);
-                    tab.getColumnModel().getColumn(0).setMaxWidth(800);
+                    
+                    for (int k = 0; k < tab.getColumnCount(); ++k) {
+                        tab.getColumnModel().getColumn(k).setPreferredWidth(
+                                pref.getInt("colWidth" + k, tab.getColumnModel().getColumn(k).getPreferredWidth()));
+                    }
                 }
             }
         }
@@ -120,10 +121,24 @@ public enum ePrefs {
     public static void putWin(Window window, JButton btn, JComponent... comp) {
 
         btn.setPressedIcon(new javax.swing.ImageIcon(window.getClass().getResource("/resource/img24/c036.gif")));
-        Preferences pref = Preferences.userRoot().node(window.getClass().getSimpleName());
+        Preferences pref = Preferences.userNodeForPackage(window.getClass()).node(window.getClass().getName());
 
         pref.putInt("_height", window.getHeight());
         pref.putInt("_width", window.getWidth());
+
+        if (comp != null) {
+            for (int i = 0; i < comp.length; ++i) {
+                
+                if (comp[i] instanceof JTable) {  
+                    JTable tab = (JTable) comp[i];
+                    pref = pref.node(tab.getClass().getName());
+                    
+                    for (int k = 0; k < tab.getColumnCount(); ++k) {
+                        pref.putInt("colWidth" + k, tab.getColumnModel().getColumn(k).getPreferredWidth());
+                    }
+                }
+            }
+        }
     }
 
     public static String getPort(String num) {
