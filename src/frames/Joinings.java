@@ -1260,8 +1260,8 @@ public class Joinings extends javax.swing.JFrame {
     private void initElements() {
 
         ePrefs.getWin(this, btnClose, (e) -> {
-            ePrefs.putWin(this, btnClose, tab1);
-        }, tab1); 
+            ePrefs.putWin(this, btnClose, tab1, tab2, tab3, tab4 , tab5);
+        }, tab1, tab2, tab3, tab4 , tab5); 
         new UColor();
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2, tab3, tab4, tab5);
