@@ -68,6 +68,11 @@ public enum ePref {
         Preferences pref = Preferences.userRoot().node(this.getClass().getSimpleName());
         return pref.get(this.name(), this.value);
     }
+     
+    public void putProp(String str) {
+        Preferences pref = Preferences.userRoot().node(this.getClass().getSimpleName());
+        pref.put(this.name(), str.trim());
+    }
    
     public static void getWin(Window window, JButton btn, ActionListener listener, JComponent... comp) {
 
@@ -97,23 +102,6 @@ public enum ePref {
         window.setPreferredSize(frameSize);
         window.pack();
     }
-    
-     public static String getPort(String num) {
-        return (num.equals("1")) ? ePref.port1.getProp() : (num.equals("2")) ? ePref.port2.getProp() : ePref.port3.getProp();
-    }   
- 
-    public static String getServer(String num) {
-        return (num.equals("1")) ? ePref.server1.getProp() : (num.equals("2")) ? ePref.server2.getProp() : ePref.server3.getProp();
-    }    
-
-    public static String getBase(String num) {
-        return (num.equals("1")) ? ePref.base1.getProp() : (num.equals("2")) ? ePref.base2.getProp() : ePref.base3.getProp();
-    }     
-     
-    public void putProp(String str) {
-        Preferences pref = Preferences.userRoot().node(this.getClass().getSimpleName());
-        pref.put(this.name(), str.trim());
-    }
 
     public static void putWin(Window window, JButton btn, JComponent... comp) {
 
@@ -123,16 +111,28 @@ public enum ePref {
         pref.putInt("_height", window.getHeight());
         pref.putInt("_width", window.getWidth());
     }
+    
+     public static String getPort(String num) {
+        return (num.equals("1")) ? ePref.port1.getProp() : (num.equals("2")) ? ePref.port2.getProp() : ePref.port3.getProp();
+    }   
 
     public static void putPort(String num, String name) {
         ePref p = (num.equals("1")) ? ePref.port1 : (num.equals("2")) ? ePref.port2 : ePref.port3;
         p.putProp(name);
     }
+ 
+    public static String getServer(String num) {
+        return (num.equals("1")) ? ePref.server1.getProp() : (num.equals("2")) ? ePref.server2.getProp() : ePref.server3.getProp();
+    }    
 
     public static void putServer(String num, String name) {
         ePref p = (num.equals("1")) ? ePref.server1 : (num.equals("2")) ? ePref.server2 : ePref.server3;
         p.putProp(name);
     }
+
+    public static String getBase(String num) {
+        return (num.equals("1")) ? ePref.base1.getProp() : (num.equals("2")) ? ePref.base2.getProp() : ePref.base3.getProp();
+    }     
 
     public static void putBase(String num, String name) {
         ePref p = (num.equals("1")) ? ePref.base1 : (num.equals("2")) ? ePref.base2 : ePref.base3;
