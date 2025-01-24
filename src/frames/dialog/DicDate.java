@@ -1,6 +1,6 @@
 package frames.dialog;
 
-import common.ePref;
+import common.ePrefs;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -483,8 +483,8 @@ public class DicDate extends javax.swing.JDialog {
 
     public final void initElements() {
 
-        ePref.getWin(this, btnClose, (e) -> {
-            ePref.putWin(this, btnClose);
+        ePrefs.getWin(this, btnClose, (e) -> {
+            ePrefs.putWin(this, btnClose);
         });
     }
 }

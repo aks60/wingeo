@@ -1,8 +1,8 @@
 package frames.dialog;
 
 import builder.making.UColor;
-import common.ePref;
-import common.ePref;
+import common.ePrefs;
+import common.ePrefs;
 import dataset.Query;
 import frames.UGui;
 import dataset.Record;
@@ -49,7 +49,7 @@ public class DicJoinvar extends javax.swing.JDialog {
         Object[][] rows = {{TypeJoin.FLAT.name, TypeJoin.FLAT.id}, {TypeJoin.ANGL.name, TypeJoin.ANGL.id}, {TypeJoin.ANG1.name, TypeJoin.ANG1.id},
         {TypeJoin.ANG2.name, TypeJoin.ANG2.id}, {TypeJoin.TIMP.name, TypeJoin.TIMP.id}, {TypeJoin.TCON.name, TypeJoin.TCON.id}};
         ((DefaultTableModel) tab1.getModel()).setDataVector(rows, titl);
-        if (ePref.dev == false) {
+        if (ePrefs.dev == false) {
             ((DefaultTableColumnModel) tab1.getColumnModel()).getColumn(1).setMinWidth(0);
             ((DefaultTableColumnModel) tab1.getColumnModel()).getColumn(1).setMaxWidth(0);
         }
@@ -122,7 +122,7 @@ public class DicJoinvar extends javax.swing.JDialog {
         north.setPreferredSize(new java.awt.Dimension(400, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePrefs.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -283,8 +283,8 @@ public class DicJoinvar extends javax.swing.JDialog {
     
     public void initElements() {
 
-        ePref.getWin(this, btnClose, (e) -> {
-            ePref.putWin(this, btnClose);
+        ePrefs.getWin(this, btnClose, (e) -> {
+            ePrefs.putWin(this, btnClose);
         }); 
         new UColor();
     }

@@ -5,16 +5,16 @@ import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionListener;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.prefs.Preferences;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JTable;
 import javax.swing.Timer;
 
-public enum ePref {
+public enum ePrefs {
 
     lookandfeel("Metal", "Windows"),
-    genl(System.getProperty("user.home") + "/Avers/Okna", 
+    genl(System.getProperty("user.home") + "/Avers/Okna",
             "C:\\ProgramData\\Avers\\Okna"), //Аркаим или Arkaim
     url_src("http://localhost:8080/winweb/"),
     web_port("8080"),
@@ -28,7 +28,7 @@ public enum ePref {
     server3("31.172.66.46"),
     sysprodID("-1"), //выбранный системный шаблон продукта
     prjprodID("-1"), //выбранный продукт для клиента
-    orderID("-1"),   //выбранный заказ клиента
+    orderID("-1"), //выбранный заказ клиента
     base_num("1"),
     old_version("0"), //переключение на пред. версию
     base1("/opt/database/fbase/bimax.fdb?encoding=win1251"),
@@ -54,36 +54,38 @@ public enum ePref {
     private static Timer timer = new Timer(1000, null);
 
     //Значение по умолчанию
-    ePref(String value) {
+    ePrefs(String value) {
         this.value = value;
     }
 
     //Значение по умолчанию для конкретной OS
-    ePref(String value1, String value2) {
+    ePrefs(String value1, String value2) {
         String os = System.getProperty("os.name");
         this.value = os.equals("Linux") ? value1 : value2;
     }
 
     public String getProp() {
-        Preferences pref = Preferences.userRoot().node(this.getClass().getSimpleName());
+        Preferences pref = Preferences.systemRoot().node(this.getClass().getName());
+        System.out.println(pref.absolutePath());
         return pref.get(this.name(), this.value);
     }
-     
+
     public void putProp(String str) {
-        Preferences pref = Preferences.userRoot().node(this.getClass().getSimpleName());
+        Preferences pref = Preferences.systemRoot().node(this.getClass().getName());
         pref.put(this.name(), str.trim());
     }
-   
+
     public static void getWin(Window window, JButton btn, ActionListener listener, JComponent... comp) {
 
         addButtonMouseListener(btn, listener);
 
-        Preferences pref = Preferences.userRoot().node(window.getClass().getSimpleName());
+        Preferences pref = Preferences.userNodeForPackage(window.getClass()).node(window.getClass().getName());
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = window.getSize();
 
         frameSize.height = pref.getInt("_height", window.getHeight());
-        frameSize.width  = pref.getInt("_width", window.getWidth());
+        frameSize.width = pref.getInt("_width", window.getWidth());
 
         if (frameSize.height > screenSize.height) {
             frameSize.height = screenSize.height;
@@ -91,12 +93,24 @@ public enum ePref {
         if (frameSize.width > screenSize.width) {
             frameSize.width = screenSize.width;
         }
-            
+
         if (window.getName().equals("Setting")) {
             window.setLocation(20, 100);
         } else {
             window.setLocation((screenSize.width - frameSize.width) / 2,
                     (screenSize.height - frameSize.height - 48) / 2 + 48);
+        }
+        if (comp != null) {
+            for (int i = 0; i < comp.length; ++i) {
+                if (comp[i] instanceof JTable) {
+                    JTable tab = (JTable) comp[i];
+                    pref = pref.node(tab.getClass().getName());
+
+                    tab.getColumnModel().getColumn(0).setMinWidth(40);
+                    tab.getColumnModel().getColumn(0).setPreferredWidth(80);
+                    tab.getColumnModel().getColumn(0).setMaxWidth(800);
+                }
+            }
         }
 
         window.setPreferredSize(frameSize);
@@ -111,39 +125,39 @@ public enum ePref {
         pref.putInt("_height", window.getHeight());
         pref.putInt("_width", window.getWidth());
     }
-    
-     public static String getPort(String num) {
-        return (num.equals("1")) ? ePref.port1.getProp() : (num.equals("2")) ? ePref.port2.getProp() : ePref.port3.getProp();
-    }   
+
+    public static String getPort(String num) {
+        return (num.equals("1")) ? ePrefs.port1.getProp() : (num.equals("2")) ? ePrefs.port2.getProp() : ePrefs.port3.getProp();
+    }
 
     public static void putPort(String num, String name) {
-        ePref p = (num.equals("1")) ? ePref.port1 : (num.equals("2")) ? ePref.port2 : ePref.port3;
+        ePrefs p = (num.equals("1")) ? ePrefs.port1 : (num.equals("2")) ? ePrefs.port2 : ePrefs.port3;
         p.putProp(name);
     }
- 
+
     public static String getServer(String num) {
-        return (num.equals("1")) ? ePref.server1.getProp() : (num.equals("2")) ? ePref.server2.getProp() : ePref.server3.getProp();
-    }    
+        return (num.equals("1")) ? ePrefs.server1.getProp() : (num.equals("2")) ? ePrefs.server2.getProp() : ePrefs.server3.getProp();
+    }
 
     public static void putServer(String num, String name) {
-        ePref p = (num.equals("1")) ? ePref.server1 : (num.equals("2")) ? ePref.server2 : ePref.server3;
+        ePrefs p = (num.equals("1")) ? ePrefs.server1 : (num.equals("2")) ? ePrefs.server2 : ePrefs.server3;
         p.putProp(name);
     }
 
     public static String getBase(String num) {
-        return (num.equals("1")) ? ePref.base1.getProp() : (num.equals("2")) ? ePref.base2.getProp() : ePref.base3.getProp();
-    }     
+        return (num.equals("1")) ? ePrefs.base1.getProp() : (num.equals("2")) ? ePrefs.base2.getProp() : ePrefs.base3.getProp();
+    }
 
     public static void putBase(String num, String name) {
-        ePref p = (num.equals("1")) ? ePref.base1 : (num.equals("2")) ? ePref.base2 : ePref.base3;
+        ePrefs p = (num.equals("1")) ? ePrefs.base1 : (num.equals("2")) ? ePrefs.base2 : ePrefs.base3;
         p.putProp(name);
-    }    
+    }
 
     public static void addButtonMouseListener(JButton btn, ActionListener listener) {
 
         btn.addMouseListener(new java.awt.event.MouseAdapter() {
 
-            public void mousePressed(java.awt.event.MouseEvent evt) {               
+            public void mousePressed(java.awt.event.MouseEvent evt) {
                 for (ActionListener al : timer.getActionListeners()) {
                     timer.removeActionListener(al);
                 }
@@ -151,10 +165,10 @@ public enum ePref {
                 timer.start();
             }
 
-            public void mouseReleased(java.awt.event.MouseEvent evt) {               
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
                 timer.stop();
                 btn.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif")));
             }
         });
-    }        
+    }
 }

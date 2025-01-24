@@ -29,7 +29,7 @@ import domain.eGroups;
 import domain.eParams;
 import enums.Enam;
 import builder.param.ParamList;
-import common.ePref;
+import common.ePrefs;
 import enums.TypeGrup;
 import enums.UseColor;
 import frames.dialog.DicName;
@@ -492,7 +492,7 @@ public class Fillings extends javax.swing.JFrame {
         north.setPreferredSize(new java.awt.Dimension(900, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePrefs.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -1048,8 +1048,8 @@ public class Fillings extends javax.swing.JFrame {
 
     private void initElements() {
 
-        ePref.getWin(this, btnClose, (e) -> {
-            ePref.putWin(this, btnClose);
+        ePrefs.getWin(this, btnClose, (e) -> {
+            ePrefs.putWin(this, btnClose);
         });        
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2, tab3, tab4, tab5);

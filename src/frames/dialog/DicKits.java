@@ -4,7 +4,7 @@ import builder.model.UPar;
 import builder.param.KitDet;
 import builder.param.ParamList;
 import common.UCom;
-import common.ePref;
+import common.ePrefs;
 import common.listener.ListenerObject;
 import dataset.Conn;
 import dataset.Field;
@@ -321,7 +321,7 @@ public class DicKits extends javax.swing.JDialog {
         north.setPreferredSize(new java.awt.Dimension(600, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePrefs.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -871,8 +871,8 @@ public class DicKits extends javax.swing.JDialog {
     // </editor-fold>
     private void initElements() {
 
-        ePref.getWin(this, btnClose, (e) -> {
-            ePref.putWin(this, btnClose);
+        ePrefs.getWin(this, btnClose, (e) -> {
+            ePrefs.putWin(this, btnClose);
         }); 
         tab1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {

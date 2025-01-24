@@ -1,6 +1,6 @@
 package frames.dialog;
 
-import common.ePref;
+import common.ePrefs;
 import frames.UGui;
 import dataset.Record;
 import enums.TypeSet;
@@ -57,7 +57,7 @@ public class DicTypset extends javax.swing.JDialog {
         north.setPreferredSize(new java.awt.Dimension(300, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePrefs.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -222,8 +222,8 @@ public class DicTypset extends javax.swing.JDialog {
 
     public void initElements() {
 
-        ePref.getWin(this, btnClose, (e) -> {
-            ePref.putWin(this, btnClose);
+        ePrefs.getWin(this, btnClose, (e) -> {
+            ePrefs.putWin(this, btnClose);
         }); 
     }
 }

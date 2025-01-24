@@ -3,7 +3,7 @@ package startup;
 import builder.Wincalc;
 import builder.model.ElemJoining;
 import common.eProfile;
-import common.ePref;
+import common.ePrefs;
 import common.listener.ListenerRecord;
 import dataset.Conn;
 import dataset.Crypto;

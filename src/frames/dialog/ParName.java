@@ -7,7 +7,7 @@ import dataset.Query;
 import dataset.Record;
 import domain.eParams;
 import builder.param.ParamList;
-import common.ePref;
+import common.ePrefs;
 import common.listener.ListenerFrame;
 import java.awt.CardLayout;
 import java.awt.Frame;
@@ -154,7 +154,7 @@ public class ParName extends javax.swing.JDialog {
         north.setPreferredSize(new java.awt.Dimension(350, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePrefs.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -487,8 +487,8 @@ public class ParName extends javax.swing.JDialog {
     // </editor-fold>     
     public void initElements() {
         
-        ePref.getWin(this, btnClose, (e) -> {
-            ePref.putWin(this, btnClose);
+        ePrefs.getWin(this, btnClose, (e) -> {
+            ePrefs.putWin(this, btnClose);
         }); 
         btnParam.setVisible(false);
     }

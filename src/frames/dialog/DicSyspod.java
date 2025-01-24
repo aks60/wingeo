@@ -1,9 +1,9 @@
 package frames.dialog;
 
 import builder.Wincalc;
-import common.ePref;
+import common.ePrefs;
 import common.listener.ListenerRecord;
-import common.ePref;
+import common.ePrefs;
 import dataset.Query;
 import dataset.Record;
 import domain.eSysprod;
@@ -49,7 +49,7 @@ public class DicSyspod extends javax.swing.JDialog {
     public void loadingData() {
 
         //Получим сохр. ID системы при выходе из программы
-        Record sysprodRec = eSysprod.find(Integer.valueOf(ePref.sysprodID.getProp()));
+        Record sysprodRec = eSysprod.find(Integer.valueOf(ePrefs.sysprodID.getProp()));
         if (sysprodRec != null) {
             systreeID = sysprodRec.getInt(eSysprod.systree_id);
         }
@@ -132,7 +132,7 @@ public class DicSyspod extends javax.swing.JDialog {
 
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
             int index = -1;
-            int sysprodID = Integer.valueOf(ePref.sysprodID.getProp());
+            int sysprodID = Integer.valueOf(ePrefs.sysprodID.getProp());
             for (int i = 0; i < qSysprod.size(); ++i) {
                 if (qSysprod.get(i).getInt(eSysprod.id) == sysprodID) {
                     index = i;
@@ -192,7 +192,7 @@ public class DicSyspod extends javax.swing.JDialog {
         north.setPreferredSize(new java.awt.Dimension(600, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePrefs.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -353,7 +353,7 @@ public class DicSyspod extends javax.swing.JDialog {
         if (UGui.getIndexRec(tab2) != -1) {
             Record record = qSysprod.get(UGui.getIndexRec(tab2));
             listener.action(record);
-            ePref.sysprodID.putProp(record.getStr(eSysprod.id));
+            ePrefs.sysprodID.putProp(record.getStr(eSysprod.id));
         }
         this.dispose();
     }//GEN-LAST:event_btnChoice
@@ -388,8 +388,8 @@ public class DicSyspod extends javax.swing.JDialog {
 
     public void initElements() {
 
-        ePref.getWin(this, btnClose, (e) -> {
-            ePref.putWin(this, btnClose);
+        ePrefs.getWin(this, btnClose, (e) -> {
+            ePrefs.putWin(this, btnClose);
         }); 
         DefaultTreeCellRenderer rnd = (DefaultTreeCellRenderer) tree1.getCellRenderer();
         rnd.setLeafIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b037.gif")));

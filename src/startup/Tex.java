@@ -3,7 +3,7 @@ package startup;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import frames.swing.ProgressBar;
-import common.ePref;
+import common.ePrefs;
 import dataset.Record;
 import builder.Wincalc;
 import domain.eSysprod;
@@ -37,7 +37,7 @@ public class Tex extends javax.swing.JFrame {
     }
 
     private void winc_build() {
-        int sysprodID = Integer.valueOf(ePref.sysprodID.getProp());
+        int sysprodID = Integer.valueOf(ePrefs.sysprodID.getProp());
         Record sysprodRec = eSysprod.find(sysprodID);
         if (sysprodRec != null) {
             String script = sysprodRec.getStr(eSysprod.script);
@@ -52,7 +52,7 @@ public class Tex extends javax.swing.JFrame {
     private void mnLookAndFeel(java.awt.event.ActionEvent evt) {
         for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
             if (((JCheckBoxMenuItem) evt.getSource()).getText().equals(laf.getName()) == true) {
-                ePref.lookandfeel.putProp(laf.getName());
+                ePrefs.lookandfeel.putProp(laf.getName());
             }
         }
     }
@@ -60,15 +60,15 @@ public class Tex extends javax.swing.JFrame {
     private void prepareConnectBaseNumb(String num_base) {
         Conn.prepareConnectBaseNumb(num_base);
         
-        if (ePref.base_num.getProp().equals("1")) {
+        if (ePrefs.base_num.getProp().equals("1")) {
             btnT7.setSelected(true);
             mn631.setSelected(true);
 
-        } else if (ePref.base_num.getProp().equals("2")) {
+        } else if (ePrefs.base_num.getProp().equals("2")) {
             btnT8.setSelected(true);
             mn632.setSelected(true);
 
-        } else if (ePref.base_num.getProp().equals("3")) {
+        } else if (ePrefs.base_num.getProp().equals("3")) {
             btnT9.setSelected(true);
             mn633.setSelected(true);
         }
@@ -161,7 +161,7 @@ public class Tex extends javax.swing.JFrame {
 
         spcSystem.setFont(frames.UGui.getFont(0,1));
         spcSystem.setText("Спецификация ситемы");
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePrefs.locale); // NOI18N
         spcSystem.setToolTipText(bundle.getString("Пересчитать")); // NOI18N
         spcSystem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1238,18 +1238,18 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
             }
         }
 
-        MainMenu.init(mn08, this, common.ePref.locale);
+        MainMenu.init(mn08, this, common.ePrefs.locale);
 
         if ("Nimbus".equals(lookAndFeel.getName())) {
             tb6.setPreferredSize(new Dimension(97, 28));
         }
-        if (ePref.base_num.getProp().equals("1")) {
+        if (ePrefs.base_num.getProp().equals("1")) {
             mn631.setSelected(true);
             btnT7.setSelected(true);
-        } else if (ePref.base_num.getProp().equals("2")) {
+        } else if (ePrefs.base_num.getProp().equals("2")) {
             mn632.setSelected(true);
             btnT8.setSelected(true);
-        } else if (ePref.base_num.getProp().equals("3")) {
+        } else if (ePrefs.base_num.getProp().equals("3")) {
             mn633.setSelected(true);
             btnT9.setSelected(true);
         }
@@ -1257,7 +1257,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
                 -> btn.addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
                         JToggleButton b = (btn == btnT7) ? btnT7 : (btn == btnT8) ? btnT8 : btnT9;
-                        ePref p = (btn == btnT7) ? ePref.base1 : (btn == btnT8) ? ePref.base2 : ePref.base3;
+                        ePrefs p = (btn == btnT7) ? ePrefs.base1 : (btn == btnT8) ? ePrefs.base2 : ePrefs.base3;
                         b.setToolTipText("Connect:  \"" + p.getProp() + "\"");
                     }
                 }));

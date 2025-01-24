@@ -1,7 +1,7 @@
 package frames.swing;
 
 import frames.UGui;
-import common.ePref;
+import common.ePrefs;
 import dataset.Field;
 import dataset.Query;
 import dataset.Table;
@@ -73,7 +73,7 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
         }
 
         for (int index = 0; index < columnModel.getColumnCount(); index++) {
-            if (ePref.dev == false && "ID".equals(table.getColumnName(index))
+            if (ePrefs.dev == false && "ID".equals(table.getColumnName(index))
                     || "id".equals(table.getColumnName(index))) { //id - Artikles фильтр
                 TableColumn col = columnModel.getColumn(index);
                 col.setMinWidth(0);
@@ -191,7 +191,7 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
     }
 
     private void eventMouseClick() {
-        if (ePref.dev == true) {
+        if (ePrefs.dev == true) {
             table.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     if (evt.getButton() == MouseEvent.BUTTON3) {

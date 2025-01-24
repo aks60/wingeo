@@ -1,9 +1,9 @@
 package startup;
 
 import builder.script.GsonScript;
-import common.ePref;
+import common.ePrefs;
 import common.eProfile;
-import common.ePref;
+import common.ePrefs;
 import frames.PSConvert;
 import dataset.Conn;
 import dataset.Field;
@@ -70,22 +70,22 @@ public class Adm extends javax.swing.JFrame {
 
     private void loadingPath() {
 
-        if (ePref.base_num.getProp().equals("1")) {
-            labPath2.setText(ePref.server1.getProp() + "/" + ePref.port1.getProp() + "\\" + ePref.base1.getProp());
+        if (ePrefs.base_num.getProp().equals("1")) {
+            labPath2.setText(ePrefs.server1.getProp() + "/" + ePrefs.port1.getProp() + "\\" + ePrefs.base1.getProp());
 
-        } else if (ePref.base_num.getProp().equals("2")) {
+        } else if (ePrefs.base_num.getProp().equals("2")) {
             //edPath.setText("D:\\Okna\\Database\\ps3\\sial3.fdb");
-            labPath2.setText(ePref.server2.getProp() + "/" + ePref.port2.getProp() + "\\" + ePref.base2.getProp());
+            labPath2.setText(ePrefs.server2.getProp() + "/" + ePrefs.port2.getProp() + "\\" + ePrefs.base2.getProp());
 
-        } else if (ePref.base_num.getProp().equals("3")) {
+        } else if (ePrefs.base_num.getProp().equals("3")) {
             //edPath.setText("D:\\Okna\\Database\\ps4\\krauss.fdb");
             //edPath.setText("D:\\Okna\\Database\\ps4\\vidnal.fdb");
-            labPath2.setText(ePref.server3.getProp() + "/" + ePref.port3.getProp() + "\\" + ePref.base3.getProp());
+            labPath2.setText(ePrefs.server3.getProp() + "/" + ePrefs.port3.getProp() + "\\" + ePrefs.base3.getProp());
 
         }
         edPath.setText(GsonScript.filePath());
-        if (ePref.dev == true) {
-            edPort.setText((ePref.base_num.getProp().equals("2") || ePref.base_num.getProp().equals("3")) ? "3055" : "3050");
+        if (ePrefs.dev == true) {
+            edPort.setText((ePrefs.base_num.getProp().equals("2") || ePrefs.base_num.getProp().equals("3")) ? "3055" : "3050");
         } else {
             edPort.setText("3050");
         }
@@ -215,15 +215,15 @@ public class Adm extends javax.swing.JFrame {
         PathToDb frame = new PathToDb(this, num_base);
         frame.setVisible(true);
 
-        if (ePref.base_num.getProp().equals("1")) {
+        if (ePrefs.base_num.getProp().equals("1")) {
             btnT7.setSelected(true);
             mn631.setSelected(true);
 
-        } else if (ePref.base_num.getProp().equals("2")) {
+        } else if (ePrefs.base_num.getProp().equals("2")) {
             btnT8.setSelected(true);
             mn632.setSelected(true);
 
-        } else if (ePref.base_num.getProp().equals("3")) {
+        } else if (ePrefs.base_num.getProp().equals("3")) {
             btnT9.setSelected(true);
             mn633.setSelected(true);
         }
@@ -233,7 +233,7 @@ public class Adm extends javax.swing.JFrame {
     private void mnLookAndFeel(ActionEvent evt) {
         for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
             if (((JCheckBoxMenuItem) evt.getSource()).getText().equals(laf.getName()) == true) {
-                ePref.lookandfeel.putProp(laf.getName());
+                ePrefs.lookandfeel.putProp(laf.getName());
             }
         }
     }
@@ -445,7 +445,7 @@ public class Adm extends javax.swing.JFrame {
         north.setPreferredSize(new java.awt.Dimension(900, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePref.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePrefs.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -1292,7 +1292,7 @@ public class Adm extends javax.swing.JFrame {
             int index2 = ("чтение-запись".equals(tab4.getValueAt(row, 2))) ? 0 : 1;
             box2.setSelectedIndex(index2);
             txt1.setText(String.valueOf(tab4.getValueAt(row, 1)));
-            txt2.setText(String.valueOf(ePref.password));
+            txt2.setText(String.valueOf(ePrefs.password));
             txt7.setText(String.valueOf(tab4.getValueAt(row, 6)));
             txt5.setText(String.valueOf(tab4.getValueAt(row, 5)));
             txt6.setText(String.valueOf(tab4.getValueAt(row, 4)));
@@ -1369,10 +1369,10 @@ public class Adm extends javax.swing.JFrame {
     private void btnStart(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStart
         try {
             Query.listOpenTable.clear();
-            ePref.user.putProp("sysdba");
-            ePref.password = String.valueOf("masterkey");
-            String num_base = ePref.base_num.getProp();
-            Conn.connection(ePref.getServer(num_base), ePref.getPort(num_base), ePref.getBase(num_base), ePref.user.getProp(), ePref.password.toCharArray(), null);
+            ePrefs.user.putProp("sysdba");
+            ePrefs.password = String.valueOf("masterkey");
+            String num_base = ePrefs.base_num.getProp();
+            Conn.connection(ePrefs.getServer(num_base), ePrefs.getPort(num_base), ePrefs.getBase(num_base), ePrefs.user.getProp(), ePrefs.password.toCharArray(), null);
             Connection c2 = Conn.getConnection();
 
             Conn con1 = new Conn();
@@ -1621,8 +1621,8 @@ public class Adm extends javax.swing.JFrame {
 
     private void initElements() {
         
-        ePref.getWin(this, btnClose, (e) -> {
-            ePref.putWin(this, btnClose);
+        ePrefs.getWin(this, btnClose, (e) -> {
+            ePrefs.putWin(this, btnClose);
         }); 
         appendToPane("\n", Color.GRAY);
         appendToPane("    Внимание!!! Перенос данных из ПрофСтрой-3 должен\n", Color.GRAY);
@@ -1648,15 +1648,15 @@ public class Adm extends javax.swing.JFrame {
                 mnIt.setSelected(true);
             }
         }
-        if (ePref.base_num.getProp().equals("1")) {
+        if (ePrefs.base_num.getProp().equals("1")) {
             btnT7.setSelected(true);
             mn631.setSelected(true);
 
-        } else if (ePref.base_num.getProp().equals("2")) {
+        } else if (ePrefs.base_num.getProp().equals("2")) {
             btnT8.setSelected(true);
             mn632.setSelected(true);
 
-        } else if (ePref.base_num.getProp().equals("3")) {
+        } else if (ePrefs.base_num.getProp().equals("3")) {
             btnT9.setSelected(true);
             mn633.setSelected(true);
         }
