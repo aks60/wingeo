@@ -2,10 +2,8 @@ package frames;
 
 import builder.Kitcalc;
 import frames.swing.ProgressBar;
-import frames.swing.FrameToFile;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import common.ePref;
 import dataset.Record;
 import domain.eElemdet;
 import domain.eFurndet;

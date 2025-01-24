@@ -8,7 +8,6 @@ import common.ePref;
 import common.listener.ListenerObject;
 import dataset.Conn;
 import dataset.Field;
-import frames.swing.FrameToFile;
 import frames.UGui;
 import dataset.Query;
 import dataset.Record;

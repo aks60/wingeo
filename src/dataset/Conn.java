@@ -3,7 +3,6 @@ package dataset;
 import common.ePref;
 import frames.PathToDb;
 import frames.UGui;
-import frames.swing.FrameToFile;
 import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.DriverManager;

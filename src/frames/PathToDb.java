@@ -1,6 +1,5 @@
 package frames;
 
-import frames.swing.FrameToFile;
 import common.eProfile;
 import common.ePref;
 import dataset.Conn;

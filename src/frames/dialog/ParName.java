@@ -1,6 +1,5 @@
 package frames.dialog;
 
-import frames.swing.FrameToFile;
 import frames.UGui;
 import enums.Enam;
 import dataset.Field;

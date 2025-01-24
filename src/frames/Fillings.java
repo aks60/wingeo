@@ -1,7 +1,6 @@
 package frames;
 
 import frames.swing.ProgressBar;
-import frames.swing.FrameToFile;
 import dataset.Query;
 import dataset.Record;
 import domain.eArtikl;
@@ -36,8 +35,6 @@ import enums.UseColor;
 import frames.dialog.DicName;
 import java.util.List;
 import frames.swing.DefCellRendererBool;
-import java.util.Set;
-import java.util.stream.Collectors;
 import startup.App;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;

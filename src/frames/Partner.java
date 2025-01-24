@@ -1,7 +1,6 @@
 package frames;
 
 import common.ePref;
-import frames.swing.FrameToFile;
 import dataset.Query;
 import dataset.Record;
 import domain.ePrjpart;
@@ -14,25 +13,18 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import common.listener.ListenerRecord;
 import dataset.Conn;
-import domain.eArtikl;
 import domain.eSysuser;
-import enums.TypeArt;
 import frames.swing.DefCellRendererBool;
 import frames.swing.TableFieldFilter;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.IntStream;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreePath;
 
 public class Partner extends javax.swing.JFrame {
 

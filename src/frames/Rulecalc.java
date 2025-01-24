@@ -2,9 +2,7 @@ package frames;
 
 import common.ePref;
 import frames.swing.ProgressBar;
-import frames.swing.FrameToFile;
 import common.listener.ListenerFrame;
-import dataset.Conn;
 import dataset.Field;
 import dataset.Query;
 import dataset.Record;
@@ -18,7 +16,6 @@ import frames.swing.DefTableModel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import common.listener.ListenerRecord;
-import domain.eElement;
 import frames.swing.DefCellEditorCheck;
 import frames.swing.DefCellEditorNumb;
 import frames.swing.DefCellRendererBool;

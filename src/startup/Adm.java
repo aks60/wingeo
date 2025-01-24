@@ -2,7 +2,6 @@ package startup;
 
 import builder.script.GsonScript;
 import common.ePref;
-import frames.swing.FrameToFile;
 import common.eProfile;
 import common.ePref;
 import frames.PSConvert;

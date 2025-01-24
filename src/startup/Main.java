@@ -2,7 +2,6 @@ package startup;
 
 import common.UCom;
 import frames.LogoToDb;
-import frames.swing.FrameToFile;
 import common.ePref;
 import java.util.Locale;
 import javax.swing.SwingUtilities;

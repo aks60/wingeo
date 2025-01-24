@@ -4,7 +4,6 @@ import builder.making.UColor;
 import common.ePref;
 import common.ePref;
 import dataset.Query;
-import frames.swing.FrameToFile;
 import frames.UGui;
 import dataset.Record;
 import domain.eJoinvar;

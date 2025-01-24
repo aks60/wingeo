@@ -2,7 +2,6 @@ package frames;
 
 import builder.Kitcalc;
 import frames.swing.ProgressBar;
-import frames.swing.FrameToFile;
 import builder.model.Com5t;
 import builder.Wincalc;
 import builder.making.TFurniture;
@@ -19,7 +18,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import common.UCom;
-import common.ePref;
 import dataset.Field;
 import dataset.Query;
 import dataset.Record;

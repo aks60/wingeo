@@ -1,9 +1,7 @@
 package frames;
 
-import frames.swing.FrameToFile;
 import frames.dialog.DicCurrenc;
 import common.UCom;
-import common.ePref;
 import common.ePref;
 import frames.dialog.DicColor;
 import dataset.Conn;
@@ -48,12 +46,9 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
-import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
-import javax.swing.Timer;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 import report.sup.ExecuteCmd;

@@ -1,6 +1,5 @@
 package frames;
 
-import frames.swing.FrameToFile;
 import common.UCom;
 import common.ePref;
 import common.listener.ListenerRecord;
@@ -22,9 +21,6 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import report.sup.ExecuteCmd;
-import report.sup.RTable;
-import static frames.UGui.getIndexFind;
 import static frames.UGui.getIndexRec;
 
 public class Groups extends javax.swing.JFrame {

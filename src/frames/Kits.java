@@ -1,9 +1,7 @@
 package frames;
 
 import frames.swing.ProgressBar;
-import frames.swing.FrameToFile;
 import builder.param.ParamList;
-import common.ePref;
 import common.ePref;
 import common.listener.ListenerFrame;
 import common.listener.ListenerRecord;

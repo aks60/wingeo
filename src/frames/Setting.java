@@ -1,10 +1,7 @@
 package frames;
 
 import common.ePref;
-import frames.swing.FrameToFile;
-import common.ePref;
 import java.awt.GraphicsEnvironment;
-import java.io.File;
 import javax.swing.DefaultComboBoxModel;
 
 public class Setting extends javax.swing.JFrame {

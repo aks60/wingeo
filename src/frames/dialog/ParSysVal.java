@@ -1,7 +1,6 @@
 package frames.dialog;
 
 import common.ePref;
-import frames.swing.FrameToFile;
 import frames.UGui;
 import dataset.Record;
 import java.util.List;

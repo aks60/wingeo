@@ -1,18 +1,14 @@
 package frames;
 
 import common.ePref;
-import frames.swing.FrameToFile;
-import common.ePref;
 import dataset.Query;
 import domain.eSyssize;
 import java.awt.Frame;
 import java.awt.Window;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import frames.swing.DefTableModel;
 import common.listener.ListenerRecord;
 import frames.swing.DefCellEditorNumb;
-import frames.swing.DefCellRendererNumb;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.table.TableColumn;

@@ -1,7 +1,6 @@
 package frames;
 
 import frames.swing.ProgressBar;
-import frames.swing.FrameToFile;
 import frames.dialog.DicArtikl;
 import dataset.Conn;
 import enums.Enam;
@@ -25,7 +24,6 @@ import domain.eElempar2;
 import domain.eGroups;
 import domain.eJoindet;
 import builder.param.ParamList;
-import common.ePref;
 import common.ePref;
 import enums.TypeGrup;
 import enums.TypeSet;

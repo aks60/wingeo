@@ -1,7 +1,6 @@
 package frames;
 
 import common.ePref;
-import frames.swing.FrameToFile;
 import dataset.Query;
 import dataset.Record;
 import domain.eArtdet;
@@ -30,7 +29,6 @@ import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import static java.util.stream.Collectors.toList;
 import javax.swing.JOptionPane;
 import report.sup.ExecuteCmd;
 import report.sup.RTable;

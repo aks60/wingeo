@@ -1,7 +1,6 @@
 package startup;
 
 import frames.swing.ProgressBar;
-import frames.swing.FrameToFile;
 import frames.UGui;
 import java.awt.Frame;
 import java.util.HashMap;
@@ -9,20 +8,15 @@ import javax.swing.JCheckBoxMenuItem;
 import common.listener.ListenerFrame;
 import common.ePref;
 import dataset.Conn;
-import dataset.Query;
 import dataset.Record;
 import domain.ePrjprod;
 import domain.eProject;
-import frames.Orders;
-import frames.PathToDb;
 import java.util.List;
-import javax.swing.JTable;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import report.RTarget;
 import report.RMaterial;
 import report.ROffer;
-import report.RSmeta;
 
 public class Man extends javax.swing.JFrame {
 

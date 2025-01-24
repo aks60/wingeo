@@ -1,6 +1,5 @@
 package frames;
 
-import frames.swing.FrameToFile;
 import dataset.Query;
 import dataset.Record;
 import domain.eSysmodel;
@@ -12,13 +11,11 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import builder.Wincalc;
-import builder.making.Cal5e;
 import builder.making.TJoining;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import common.ePref;
 import common.ePref;
 import common.listener.ListenerAction;
 import frames.swing.Canvas;

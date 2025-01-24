@@ -1,6 +1,5 @@
 package frames;
 
-import frames.swing.FrameToFile;
 import builder.Wincalc;
 import builder.making.TRecord;
 import common.UCom;

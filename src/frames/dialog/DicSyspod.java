@@ -2,7 +2,6 @@ package frames.dialog;
 
 import builder.Wincalc;
 import common.ePref;
-import frames.swing.FrameToFile;
 import common.listener.ListenerRecord;
 import common.ePref;
 import dataset.Query;

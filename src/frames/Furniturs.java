@@ -1,7 +1,6 @@
 package frames;
 
 import frames.swing.ProgressBar;
-import frames.swing.FrameToFile;
 import dataset.Query;
 import dataset.Record;
 import domain.eArtikl;
@@ -28,7 +27,6 @@ import frames.dialog.ParUserVal;
 import domain.eParams;
 import enums.Enam;
 import builder.param.ParamList;
-import common.ePref;
 import common.ePref;
 import enums.LayoutFurn1;
 import enums.UseFurn3;

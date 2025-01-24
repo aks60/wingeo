@@ -1,9 +1,7 @@
 package frames;
 
 import frames.swing.ProgressBar;
-import frames.swing.FrameToFile;
 import builder.model.Com5t;
-import common.ePref;
 import dataset.Conn;
 import dataset.Field;
 import dataset.Query;

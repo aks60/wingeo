@@ -1,6 +1,5 @@
 package frames.dialog;
 
-import frames.swing.FrameToFile;
 import enums.Enam;
 import builder.param.ParamList;
 import common.ePref;

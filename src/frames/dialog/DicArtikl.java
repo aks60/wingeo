@@ -2,7 +2,6 @@ package frames.dialog;
 
 import common.ePref;
 import common.listener.ListenerFrame;
-import frames.swing.FrameToFile;
 import frames.UGui;
 import dataset.Field;
 import dataset.Query;

@@ -1,7 +1,6 @@
 package frames;
 
 import common.ePref;
-import frames.swing.FrameToFile;
 import common.listener.ListenerRecord;
 import dataset.Conn;
 import dataset.Query;
@@ -14,7 +13,6 @@ import javax.swing.table.DefaultTableModel;
 import frames.swing.DefCellRendererBool;
 import frames.swing.DefTableModel;
 import dataset.Field;
-import domain.eArtdet;
 import domain.eParmap;
 import domain.eGroups;
 import enums.TypeGrup;
@@ -22,7 +20,6 @@ import frames.dialog.DicColor;
 import frames.swing.TableFieldFilter;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
