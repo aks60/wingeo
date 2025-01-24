@@ -268,8 +268,8 @@ public class DicCurrenc extends javax.swing.JDialog {
 // </editor-fold>     
     public void initElements() {
 
-        ePref.get(this, btnClose, (e) -> {
-            ePref.put(this, btnClose);
+        ePref.getWin(this, btnClose, (e) -> {
+            ePref.putWin(this, btnClose);
         }); 
         FocusListener listenerFocus = new FocusListener() {
 

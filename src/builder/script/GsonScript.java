@@ -242,8 +242,8 @@ public class GsonScript {
     }
 
     public static List<Integer> modelList(String scale) {
-        String base_name = (ePref.base_num.get().equals("1")) ? ePref.base1.get()
-                : (ePref.base_num.get().equals("2")) ? ePref.base2.get() : ePref.base3.get();
+        String base_name = (ePref.base_num.getProp().equals("1")) ? ePref.base1.getProp()
+                : (ePref.base_num.getProp().equals("2")) ? ePref.base2.getProp() : ePref.base3.getProp();
 
         if (base_name.toLowerCase().contains("sial3")) {
             return List.of(601001, 601002, 601003, 601004, 601007, 601008);
@@ -279,8 +279,8 @@ public class GsonScript {
     }
 
     public static List<Integer> systemList(String scale) {
-        String base_name = (ePref.base_num.get().equals("1")) ? ePref.base1.get()
-                : (ePref.base_num.get().equals("2")) ? ePref.base2.get() : ePref.base3.get();
+        String base_name = (ePref.base_num.getProp().equals("1")) ? ePref.base1.getProp()
+                : (ePref.base_num.getProp().equals("2")) ? ePref.base2.getProp() : ePref.base3.getProp();
 
         if (base_name.toLowerCase().contains("sial3")) {
             return List.of(601001, 601002, 601003, 601004, 601007, 601008);
@@ -316,8 +316,8 @@ public class GsonScript {
     }
 
     public static String scriptPath(Integer prj) {
-        String base_name = (ePref.base_num.get().equals("1")) ? ePref.base1.get()
-                : (ePref.base_num.get().equals("2")) ? ePref.base2.get() : ePref.base3.get();
+        String base_name = (ePref.base_num.getProp().equals("1")) ? ePref.base1.getProp()
+                : (ePref.base_num.getProp().equals("2")) ? ePref.base2.getProp() : ePref.base3.getProp();
 
         if (base_name.toLowerCase().contains("sial3")) {
             //return Sial3.script(prj);
@@ -347,8 +347,8 @@ public class GsonScript {
     }
 
     public static String filePath() {
-        String base_name = (ePref.base_num.get().equals("1")) ? ePref.base1.get()
-                : (ePref.base_num.get().equals("2")) ? ePref.base2.get() : ePref.base3.get();
+        String base_name = (ePref.base_num.getProp().equals("1")) ? ePref.base1.getProp()
+                : (ePref.base_num.getProp().equals("2")) ? ePref.base2.getProp() : ePref.base3.getProp();
 
         if (base_name.toLowerCase().contains("sial3.fdb")) {
             return "D:\\Okna\\Database\\ps3\\sial3b.fdb";

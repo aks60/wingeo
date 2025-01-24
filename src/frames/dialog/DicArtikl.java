@@ -318,8 +318,8 @@ public class DicArtikl extends javax.swing.JDialog {
 
     public void initElements() {
 
-        ePref.get(this, btnClose, (e) -> {
-            ePref.put(this, btnClose);
+        ePref.getWin(this, btnClose, (e) -> {
+            ePref.putWin(this, btnClose);
         }); 
 
         TableFieldFilter filterTable = new TableFieldFilter(1, tab2);

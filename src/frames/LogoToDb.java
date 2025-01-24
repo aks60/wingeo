@@ -41,7 +41,7 @@ public class LogoToDb extends javax.swing.JDialog {
         } else {
             labMes.setForeground(Color.BLUE);
             labMes.setText("¬ведите логин и пароль");
-            edUser.setText(ePref.user.get());
+            edUser.setText(ePref.user.getProp());
             edPass.requestFocus();
             getRootPane().setDefaultButton(btnOk);
 
@@ -71,14 +71,14 @@ public class LogoToDb extends javax.swing.JDialog {
                 progressBar.setIndeterminate(true);
                 labMes.setForeground(Color.BLUE);
                 labMes.setText("”становка соединени€ с базой данных");
-                String num = ePref.base_num.get();
+                String num = ePref.base_num.getProp();
                 eExcep pass = Conn.connection(ePref.getServer(num), ePref.getPort(num), ePref.getBase(num), edUser.getText(), edPass.getPassword(), null);
 
                 if (pass == eExcep.yesConn) {
 
                     if ("SYSDBA".equalsIgnoreCase(edUser.getText())) {
                         App.createApp(eProfile.P01);
-                        ePref.user.put(edUser.getText().trim());
+                        ePref.user.putProp(edUser.getText().trim());
                         ePref.password = String.valueOf(edPass.getPassword()).trim();
                         dispose();
 
@@ -99,7 +99,7 @@ public class LogoToDb extends javax.swing.JDialog {
                                 } else if (eProfile.P03.roleSet.contains(ePref.role)) {
                                     App.createApp(eProfile.P03);
                                 }
-                                ePref.user.put(edUser.getText().trim());
+                                ePref.user.putProp(edUser.getText().trim());
                                 ePref.password = String.valueOf(edPass.getPassword()).trim();
                                 dispose();
                             }
@@ -340,7 +340,7 @@ public class LogoToDb extends javax.swing.JDialog {
 // </editor-fold>
     
     public void initElements() {
-        ePref.get(this, btnClose, (e) -> {
+        ePref.getWin(this, btnClose, (e) -> {
         });     
     }    
 }

@@ -37,7 +37,7 @@ public class Tex extends javax.swing.JFrame {
     }
 
     private void winc_build() {
-        int sysprodID = Integer.valueOf(ePref.sysprodID.get());
+        int sysprodID = Integer.valueOf(ePref.sysprodID.getProp());
         Record sysprodRec = eSysprod.find(sysprodID);
         if (sysprodRec != null) {
             String script = sysprodRec.getStr(eSysprod.script);
@@ -52,7 +52,7 @@ public class Tex extends javax.swing.JFrame {
     private void mnLookAndFeel(java.awt.event.ActionEvent evt) {
         for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
             if (((JCheckBoxMenuItem) evt.getSource()).getText().equals(laf.getName()) == true) {
-                ePref.lookandfeel.put(laf.getName());
+                ePref.lookandfeel.putProp(laf.getName());
             }
         }
     }
@@ -60,15 +60,15 @@ public class Tex extends javax.swing.JFrame {
     private void prepareConnectBaseNumb(String num_base) {
         Conn.prepareConnectBaseNumb(num_base);
         
-        if (ePref.base_num.get().equals("1")) {
+        if (ePref.base_num.getProp().equals("1")) {
             btnT7.setSelected(true);
             mn631.setSelected(true);
 
-        } else if (ePref.base_num.get().equals("2")) {
+        } else if (ePref.base_num.getProp().equals("2")) {
             btnT8.setSelected(true);
             mn632.setSelected(true);
 
-        } else if (ePref.base_num.get().equals("3")) {
+        } else if (ePref.base_num.getProp().equals("3")) {
             btnT9.setSelected(true);
             mn633.setSelected(true);
         }
@@ -1243,13 +1243,13 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
         if ("Nimbus".equals(lookAndFeel.getName())) {
             tb6.setPreferredSize(new Dimension(97, 28));
         }
-        if (ePref.base_num.get().equals("1")) {
+        if (ePref.base_num.getProp().equals("1")) {
             mn631.setSelected(true);
             btnT7.setSelected(true);
-        } else if (ePref.base_num.get().equals("2")) {
+        } else if (ePref.base_num.getProp().equals("2")) {
             mn632.setSelected(true);
             btnT8.setSelected(true);
-        } else if (ePref.base_num.get().equals("3")) {
+        } else if (ePref.base_num.getProp().equals("3")) {
             mn633.setSelected(true);
             btnT9.setSelected(true);
         }
@@ -1258,7 +1258,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
                         JToggleButton b = (btn == btnT7) ? btnT7 : (btn == btnT8) ? btnT8 : btnT9;
                         ePref p = (btn == btnT7) ? ePref.base1 : (btn == btnT8) ? ePref.base2 : ePref.base3;
-                        b.setToolTipText("Connect:  \"" + p.get() + "\"");
+                        b.setToolTipText("Connect:  \"" + p.getProp() + "\"");
                     }
                 }));
     }

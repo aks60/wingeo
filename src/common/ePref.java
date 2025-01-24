@@ -14,6 +14,8 @@ import javax.swing.Timer;
 public enum ePref {
 
     lookandfeel("Metal", "Windows"),
+    genl(System.getProperty("user.home") + "/Avers/Okna", 
+            "C:\\ProgramData\\Avers\\Okna"), //Аркаим или Arkaim
     url_src("http://localhost:8080/winweb/"),
     web_port("8080"),
     typedb("fb"),
@@ -32,8 +34,6 @@ public enum ePref {
     base1("/opt/database/fbase/bimax.fdb?encoding=win1251"),
     base2("/opt/database/fbase/bimax.fdb?encoding=win1251"),
     base3("/opt/database/fbase/bimax.fdb?encoding=win1251"),
-    path_pref(System.getProperty("user.home") + "/Avers/Okna", "C:\\ProgramData\\Avers\\Okna"), //Аркаим или Arkaim
-    cmd_def("I", "I"),
     cmd_word("/usr/bin/oowriter ", "cmd /c start winword.exe "),
     cmd_excel("/usr/bin/oocalc ", "cmd /c start excel.exe "),
     cmd_html("/usr/bin/firefox ", "cmd /c start iexplore.exe "),
@@ -64,12 +64,12 @@ public enum ePref {
         this.value = os.equals("Linux") ? value1 : value2;
     }
 
-    public String get() {
+    public String getProp() {
         Preferences pref = Preferences.userRoot().node(this.getClass().getSimpleName());
         return pref.get(this.name(), this.value);
     }
    
-    public static void get(Window window, JButton btn, ActionListener listener, JComponent... comp) {
+    public static void getWin(Window window, JButton btn, ActionListener listener, JComponent... comp) {
 
         addButtonMouseListener(btn, listener);
 
@@ -99,23 +99,23 @@ public enum ePref {
     }
     
      public static String getPort(String num) {
-        return (num.equals("1")) ? ePref.port1.get() : (num.equals("2")) ? ePref.port2.get() : ePref.port3.get();
+        return (num.equals("1")) ? ePref.port1.getProp() : (num.equals("2")) ? ePref.port2.getProp() : ePref.port3.getProp();
     }   
  
     public static String getServer(String num) {
-        return (num.equals("1")) ? ePref.server1.get() : (num.equals("2")) ? ePref.server2.get() : ePref.server3.get();
+        return (num.equals("1")) ? ePref.server1.getProp() : (num.equals("2")) ? ePref.server2.getProp() : ePref.server3.getProp();
     }    
 
     public static String getBase(String num) {
-        return (num.equals("1")) ? ePref.base1.get() : (num.equals("2")) ? ePref.base2.get() : ePref.base3.get();
+        return (num.equals("1")) ? ePref.base1.getProp() : (num.equals("2")) ? ePref.base2.getProp() : ePref.base3.getProp();
     }     
      
-    public void put(String str) {
+    public void putProp(String str) {
         Preferences pref = Preferences.userRoot().node(this.getClass().getSimpleName());
         pref.put(this.name(), str.trim());
     }
 
-    public static void put(Window window, JButton btn, JComponent... comp) {
+    public static void putWin(Window window, JButton btn, JComponent... comp) {
 
         btn.setPressedIcon(new javax.swing.ImageIcon(window.getClass().getResource("/resource/img24/c036.gif")));
         Preferences pref = Preferences.userRoot().node(window.getClass().getSimpleName());
@@ -126,17 +126,17 @@ public enum ePref {
 
     public static void putPort(String num, String name) {
         ePref p = (num.equals("1")) ? ePref.port1 : (num.equals("2")) ? ePref.port2 : ePref.port3;
-        p.put(name);
+        p.putProp(name);
     }
 
     public static void putServer(String num, String name) {
         ePref p = (num.equals("1")) ? ePref.server1 : (num.equals("2")) ? ePref.server2 : ePref.server3;
-        p.put(name);
+        p.putProp(name);
     }
 
     public static void putBase(String num, String name) {
         ePref p = (num.equals("1")) ? ePref.base1 : (num.equals("2")) ? ePref.base2 : ePref.base3;
-        p.put(name);
+        p.putProp(name);
     }    
 
     public static void addButtonMouseListener(JButton btn, ActionListener listener) {

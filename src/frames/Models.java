@@ -670,8 +670,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 // </editor-fold>
     private void initElements() {
 
-        ePref.get(this, btnClose, (e) -> {
-            ePref.put(this, btnClose);
+        ePref.getWin(this, btnClose, (e) -> {
+            ePref.putWin(this, btnClose);
         }); 
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
         tab1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {

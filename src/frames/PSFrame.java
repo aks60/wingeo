@@ -506,8 +506,8 @@ public class PSFrame extends javax.swing.JFrame {
 // </editor-fold> 
     private void initElements() {
         
-        ePref.get(this, btnClose, (e) -> {
-            ePref.put(this, btnClose);
+        ePref.getWin(this, btnClose, (e) -> {
+            ePref.putWin(this, btnClose);
         }); 
         
         tab1.setAutoCreateRowSorter(true);

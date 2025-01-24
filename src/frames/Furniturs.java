@@ -1939,8 +1939,8 @@ public class Furniturs extends javax.swing.JFrame {
 // </editor-fold> 
     private void initElements() {
 
-        ePref.get(this, btnClose, (e) -> {
-            ePref.put(this, btnClose);
+        ePref.getWin(this, btnClose, (e) -> {
+            ePref.putWin(this, btnClose);
         });        
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2a, tab2b, tab2c, tab4, tab6);
@@ -1992,7 +1992,7 @@ public class Furniturs extends javax.swing.JFrame {
             }
         });
 
-        if ("Nimbus".equals(ePref.lookandfeel.get())) {
+        if ("Nimbus".equals(ePref.lookandfeel.getProp())) {
             lab1.setPreferredSize(new java.awt.Dimension(200, 34));
         }
     }

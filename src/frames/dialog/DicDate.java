@@ -483,8 +483,8 @@ public class DicDate extends javax.swing.JDialog {
 
     public final void initElements() {
 
-        ePref.get(this, btnClose, (e) -> {
-            ePref.put(this, btnClose);
+        ePref.getWin(this, btnClose, (e) -> {
+            ePref.putWin(this, btnClose);
         });
     }
 }

@@ -85,7 +85,7 @@ public class PSConvert {
     public static void exec() {
         cn1 = startup.Test.connect1(); //источник
         cn2 = startup.Test.connect2(); //приёмник
-        if (JOptionPane.showConfirmDialog(null, "КОНВЕРТАЦИЯ БАЗЫ ДАННЫХ № " + ePref.base_num.get(), "КОНВЕРТАЦИЯ",
+        if (JOptionPane.showConfirmDialog(null, "КОНВЕРТАЦИЯ БАЗЫ ДАННЫХ № " + ePref.base_num.getProp(), "КОНВЕРТАЦИЯ",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             script();
         }
@@ -551,7 +551,7 @@ public class PSConvert {
             updateSql(eProject.up, eProject.prjpart_id, "kname", ePrjpart.up, "partner");
             executeSql("update prjpart set org_leve2 = trim(org_leve2)");
             executeSql("update groups set npp = 0 where grup != " + TypeGrup.CATEG_VST.id);
-            String db = (numDb == 1) ? ePref.base1.get() : (numDb == 2) ? ePref.base2.get() : ePref.base3.get();
+            String db = (numDb == 1) ? ePref.base1.getProp() : (numDb == 2) ? ePref.base2.getProp() : ePref.base3.getProp();
             if (db.toUpperCase().contains("BIMAX.FDB")) {
                 executeSql("4", "update artikl set " + eArtikl.size_falz.name() + " = 20 where code = '336200'"); //поправка штульпа в bimax 
                 executeSql("delete from glaspar2 where groups_id = 15030 and text = '0,97'"); //предположительно параметр добавлен в самом конце

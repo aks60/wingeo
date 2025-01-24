@@ -34,7 +34,7 @@ public class PathToDb extends javax.swing.JDialog {
         edHost.setText(ePref.getServer(num_base));
         edPath.setText(ePref.getBase(num_base));
         edPort.setText(ePref.getPort(num_base));
-        edUser.setText(ePref.user.get());
+        edUser.setText(ePref.user.getProp());
         edPass.setText(ePref.password);
 
         onCaretUpdate(null);
@@ -57,7 +57,7 @@ public class PathToDb extends javax.swing.JDialog {
                 labMes.setText("Установка соединения с базой данных");
                 eExcep pass = Conn.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), null);
                 if (pass == eExcep.yesConn) {
-                    ePref.base_num.put(num_base);
+                    ePref.base_num.putProp(num_base);
                     ePref.putPort(num_base, edPort.getText().trim());
                     ePref.putServer(num_base, edHost.getText().trim());
                     ePref.putBase(num_base, edPath.getText().trim());
@@ -67,7 +67,7 @@ public class PathToDb extends javax.swing.JDialog {
                             App.createApp(eProfile.P01);
                         }
                         ePref.password = String.valueOf(edPass.getPassword()).trim();
-                        ePref.user.put(edUser.getText().trim());
+                        ePref.user.putProp(edUser.getText().trim());
                         //ePref.base_num.write(num_base);
                         //ePref.port(num_base, edPort.getText().trim());
                         //ePref.server(num_base, edHost.getText().trim());
@@ -97,7 +97,7 @@ public class PathToDb extends javax.swing.JDialog {
 //                                ePref.server(num_base, edHost.getText().trim());
 //                                ePref.base(num_base, edPath.getText().trim());
                                 ePref.password = String.valueOf(edPass.getPassword()).trim();
-                                ePref.user.put(edUser.getText().trim());
+                                ePref.user.putProp(edUser.getText().trim());
                                 //ePref.save();
                                 dispose();
                             }
@@ -116,7 +116,7 @@ public class PathToDb extends javax.swing.JDialog {
     }
 
     public static void pathToDb(Frame parent) {
-        String num_base = ePref.base_num.get();
+        String num_base = ePref.base_num.getProp();
         PathToDb pathToDb = new PathToDb(parent, num_base);
         pathToDb.setVisible(true);
     }
@@ -446,7 +446,7 @@ public class PathToDb extends javax.swing.JDialog {
 // </editor-fold> 
 
     public void initElements() {
-        ePref.get(this, btnClose, (e) -> {
+        ePref.getWin(this, btnClose, (e) -> {
         });
     }
 }

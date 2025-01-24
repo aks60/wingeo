@@ -394,8 +394,8 @@ public class DicColor extends javax.swing.JDialog {
 
     private void initElements() {
 
-        ePref.get(this, btnClose, (e) -> {
-            ePref.put(this, btnClose);
+        ePref.getWin(this, btnClose, (e) -> {
+            ePref.putWin(this, btnClose);
         }); 
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2);

@@ -162,7 +162,7 @@ public class UGui {
 // </editor-fold> 
 
     public static Font getFont(int size, int bold) {
-        return new Font(ePref.fontname.get(), bold, Integer.valueOf(ePref.fontsize.get()) + size);
+        return new Font(ePref.fontname.getProp(), bold, Integer.valueOf(ePref.fontsize.getProp()) + size);
     }
 
     public static <T extends JComponent> List<T> findComponents(final Container container, final Class<T> componentType) {
@@ -280,7 +280,7 @@ public class UGui {
     public static String designTitle() {
         try {
             if (eProfile.profile == eProfile.P02) {
-                int productID = Integer.valueOf(ePref.sysprodID.get());
+                int productID = Integer.valueOf(ePref.sysprodID.getProp());
                 Record productRec = eSysprod.find(productID);
                 if (productRec != null) {
 
@@ -296,7 +296,7 @@ public class UGui {
                 }
 
             } else if (eProfile.profile == eProfile.P03) {
-                int productID = Integer.valueOf(ePref.prjprodID.get());
+                int productID = Integer.valueOf(ePref.prjprodID.getProp());
                 Record productRec = ePrjprod.find(productID);
                 if (productRec != null) {
 
@@ -322,7 +322,7 @@ public class UGui {
     public static String designProject() {
         try {
             if (eProfile.profile == eProfile.P02) {
-                int productID = Integer.valueOf(ePref.sysprodID.get());
+                int productID = Integer.valueOf(ePref.sysprodID.getProp());
                 Record productRec = eSysprod.find(productID);
                 if (productRec != null) {
 
@@ -338,7 +338,7 @@ public class UGui {
                 }
 
             } else if (eProfile.profile == eProfile.P03) {
-                int productID = Integer.valueOf(ePref.prjprodID.get());
+                int productID = Integer.valueOf(ePref.prjprodID.getProp());
                 Record productRec = ePrjprod.find(productID);
                 if (productRec != null) {
 

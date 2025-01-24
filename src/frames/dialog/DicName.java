@@ -298,8 +298,8 @@ public class DicName extends javax.swing.JDialog {
     
     public void initElements() {
 
-        ePref.get(this, btnClose, (e) -> {
-            ePref.put(this, btnClose);
+        ePref.getWin(this, btnClose, (e) -> {
+            ePref.putWin(this, btnClose);
         }); 
         //tab1.setRowSorter(new TableRowSorter(tab1.getModel()));
     }

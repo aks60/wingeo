@@ -229,7 +229,7 @@ public class RTable {
     //Записать текст в файл
     public static void write(String text) {
         try {
-            PrintWriter out = new PrintWriter(new File(ePref.path_pref.get(), "report.html"));
+            PrintWriter out = new PrintWriter(new File(ePref.genl.getProp(), "report.html"));
             try {
                 out.print(text);
             } finally {

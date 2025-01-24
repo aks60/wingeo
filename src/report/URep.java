@@ -35,7 +35,7 @@ public class URep {
                 winc.scale = (length / width > length / height) ? length / (height + 80) : length / (width + 80);
                 winc.gc2d.scale(winc.scale, winc.scale);
                 winc.draw(); //рисую конструкцию
-                File outputfile = new File(ePref.path_pref.get(), "img" + (index + 1) + ".gif");
+                File outputfile = new File(ePref.genl.getProp(), "img" + (index + 1) + ".gif");
                 ImageIO.write(winc.bufferImg, "gif", outputfile);
                 list.add(winc);
             }

@@ -487,8 +487,8 @@ public class ParName extends javax.swing.JDialog {
     // </editor-fold>     
     public void initElements() {
         
-        ePref.get(this, btnClose, (e) -> {
-            ePref.put(this, btnClose);
+        ePref.getWin(this, btnClose, (e) -> {
+            ePref.putWin(this, btnClose);
         }); 
         btnParam.setVisible(false);
     }

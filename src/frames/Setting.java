@@ -439,25 +439,25 @@ public class Setting extends javax.swing.JFrame {
     }//GEN-LAST:event_windowClosed
 
     private void btnProp2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProp2
-        ePref.fontname.put(fontName[comboBox.getSelectedIndex()]);
-        ePref.fontsize.put(String.valueOf(spinner2.getValue()));
+        ePref.fontname.putProp(fontName[comboBox.getSelectedIndex()]);
+        ePref.fontsize.putProp(String.valueOf(spinner2.getValue()));
     }//GEN-LAST:event_btnProp2
 
     private void btnProp3(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProp3
-        ePref.cmd_word.put(txtWord.getText());
-        ePref.cmd_excel.put(txtExcel.getText());
-        ePref.cmd_html.put(txtHtml.getText());
+        ePref.cmd_word.putProp(txtWord.getText());
+        ePref.cmd_excel.putProp(txtExcel.getText());
+        ePref.cmd_html.putProp(txtHtml.getText());
 }//GEN-LAST:event_btnProp3
 
     private void btnProp4(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProp4
-        ePref.url_src.put(txtURL.getText());
+        ePref.url_src.putProp(txtURL.getText());
     }//GEN-LAST:event_btnProp4
 
     private void checkBox1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_checkBox1StateChanged
         if(checkBox1.isSelected()) {
-            ePref.old_version.put("1");
+            ePref.old_version.putProp("1");
         } else {
-            ePref.old_version.put("0");
+            ePref.old_version.putProp("0");
         }
     }//GEN-LAST:event_checkBox1StateChanged
 
@@ -499,8 +499,8 @@ public class Setting extends javax.swing.JFrame {
     
     public void initElements() {
 
-        ePref.get(this, btnClose, (e) -> {
-            ePref.put(this, btnClose);
+        ePref.getWin(this, btnClose, (e) -> {
+            ePref.putWin(this, btnClose);
         }); 
         
 //        textPane1.setBackground(new java.awt.Color(212, 208, 200));
@@ -508,22 +508,22 @@ public class Setting extends javax.swing.JFrame {
 //        textPane3.setBackground(new java.awt.Color(212, 208, 200));
 //        textPane4.setBackground(new java.awt.Color(212, 208, 200));
         
-        txtWord.setText(ePref.cmd_word.get());
-        txtExcel.setText(ePref.cmd_excel.get());
-        txtHtml.setText(ePref.cmd_html.get());
+        txtWord.setText(ePref.cmd_word.getProp());
+        txtExcel.setText(ePref.cmd_excel.getProp());
+        txtHtml.setText(ePref.cmd_html.getProp());
 
-        txtURL.setText(ePref.url_src.get());
-        Integer num = Integer.valueOf(ePref.web_port.get());
+        txtURL.setText(ePref.url_src.getProp());
+        Integer num = Integer.valueOf(ePref.web_port.getProp());
 
         comboBox.setModel(new DefaultComboBoxModel(fontName));
-        String name = ePref.fontname.get();
-        Integer size = Integer.valueOf(ePref.fontsize.get());
+        String name = ePref.fontname.getProp();
+        Integer size = Integer.valueOf(ePref.fontsize.getProp());
         for (int i = 0; i < fontName.length; i++) {
             if (name.equals(fontName[i])) {
                 comboBox.setSelectedIndex(i);
             }
         }
         spinner2.setValue(size);       
-        checkBox1.setSelected(ePref.old_version.get().equals("1"));
+        checkBox1.setSelected(ePref.old_version.getProp().equals("1"));
     }
 }

@@ -70,22 +70,22 @@ public class Adm extends javax.swing.JFrame {
 
     private void loadingPath() {
 
-        if (ePref.base_num.get().equals("1")) {
-            labPath2.setText(ePref.server1.get() + "/" + ePref.port1.get() + "\\" + ePref.base1.get());
+        if (ePref.base_num.getProp().equals("1")) {
+            labPath2.setText(ePref.server1.getProp() + "/" + ePref.port1.getProp() + "\\" + ePref.base1.getProp());
 
-        } else if (ePref.base_num.get().equals("2")) {
+        } else if (ePref.base_num.getProp().equals("2")) {
             //edPath.setText("D:\\Okna\\Database\\ps3\\sial3.fdb");
-            labPath2.setText(ePref.server2.get() + "/" + ePref.port2.get() + "\\" + ePref.base2.get());
+            labPath2.setText(ePref.server2.getProp() + "/" + ePref.port2.getProp() + "\\" + ePref.base2.getProp());
 
-        } else if (ePref.base_num.get().equals("3")) {
+        } else if (ePref.base_num.getProp().equals("3")) {
             //edPath.setText("D:\\Okna\\Database\\ps4\\krauss.fdb");
             //edPath.setText("D:\\Okna\\Database\\ps4\\vidnal.fdb");
-            labPath2.setText(ePref.server3.get() + "/" + ePref.port3.get() + "\\" + ePref.base3.get());
+            labPath2.setText(ePref.server3.getProp() + "/" + ePref.port3.getProp() + "\\" + ePref.base3.getProp());
 
         }
         edPath.setText(GsonScript.filePath());
         if (ePref.dev == true) {
-            edPort.setText((ePref.base_num.get().equals("2") || ePref.base_num.get().equals("3")) ? "3055" : "3050");
+            edPort.setText((ePref.base_num.getProp().equals("2") || ePref.base_num.getProp().equals("3")) ? "3055" : "3050");
         } else {
             edPort.setText("3050");
         }
@@ -215,15 +215,15 @@ public class Adm extends javax.swing.JFrame {
         PathToDb frame = new PathToDb(this, num_base);
         frame.setVisible(true);
 
-        if (ePref.base_num.get().equals("1")) {
+        if (ePref.base_num.getProp().equals("1")) {
             btnT7.setSelected(true);
             mn631.setSelected(true);
 
-        } else if (ePref.base_num.get().equals("2")) {
+        } else if (ePref.base_num.getProp().equals("2")) {
             btnT8.setSelected(true);
             mn632.setSelected(true);
 
-        } else if (ePref.base_num.get().equals("3")) {
+        } else if (ePref.base_num.getProp().equals("3")) {
             btnT9.setSelected(true);
             mn633.setSelected(true);
         }
@@ -233,7 +233,7 @@ public class Adm extends javax.swing.JFrame {
     private void mnLookAndFeel(ActionEvent evt) {
         for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
             if (((JCheckBoxMenuItem) evt.getSource()).getText().equals(laf.getName()) == true) {
-                ePref.lookandfeel.put(laf.getName());
+                ePref.lookandfeel.putProp(laf.getName());
             }
         }
     }
@@ -1369,10 +1369,10 @@ public class Adm extends javax.swing.JFrame {
     private void btnStart(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStart
         try {
             Query.listOpenTable.clear();
-            ePref.user.put("sysdba");
+            ePref.user.putProp("sysdba");
             ePref.password = String.valueOf("masterkey");
-            String num_base = ePref.base_num.get();
-            Conn.connection(ePref.getServer(num_base), ePref.getPort(num_base), ePref.getBase(num_base), ePref.user.get(), ePref.password.toCharArray(), null);
+            String num_base = ePref.base_num.getProp();
+            Conn.connection(ePref.getServer(num_base), ePref.getPort(num_base), ePref.getBase(num_base), ePref.user.getProp(), ePref.password.toCharArray(), null);
             Connection c2 = Conn.getConnection();
 
             Conn con1 = new Conn();
@@ -1621,8 +1621,8 @@ public class Adm extends javax.swing.JFrame {
 
     private void initElements() {
         
-        ePref.get(this, btnClose, (e) -> {
-            ePref.put(this, btnClose);
+        ePref.getWin(this, btnClose, (e) -> {
+            ePref.putWin(this, btnClose);
         }); 
         appendToPane("\n", Color.GRAY);
         appendToPane("    Внимание!!! Перенос данных из ПрофСтрой-3 должен\n", Color.GRAY);
@@ -1648,15 +1648,15 @@ public class Adm extends javax.swing.JFrame {
                 mnIt.setSelected(true);
             }
         }
-        if (ePref.base_num.get().equals("1")) {
+        if (ePref.base_num.getProp().equals("1")) {
             btnT7.setSelected(true);
             mn631.setSelected(true);
 
-        } else if (ePref.base_num.get().equals("2")) {
+        } else if (ePref.base_num.getProp().equals("2")) {
             btnT8.setSelected(true);
             mn632.setSelected(true);
 
-        } else if (ePref.base_num.get().equals("3")) {
+        } else if (ePref.base_num.getProp().equals("3")) {
             btnT9.setSelected(true);
             mn633.setSelected(true);
         }
