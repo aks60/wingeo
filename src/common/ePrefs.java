@@ -66,12 +66,12 @@ public enum ePrefs {
     }
 
     public String getProp() {
-        Preferences pref = Preferences.systemRoot().node(this.getClass().getName());
+        Preferences pref = Preferences.userRoot().node(this.getClass().getName());
         return pref.get(this.name(), this.value);
     }
 
     public void putProp(String str) {
-        Preferences pref = Preferences.systemRoot().node(this.getClass().getName());
+        Preferences pref = Preferences.userRoot().node(this.getClass().getName());
         pref.put(this.name(), str.trim());
     }
 
