@@ -105,8 +105,7 @@ public enum ePrefs {
                 
                 if (comp[i] instanceof JTable) {
                     JTable tab = (JTable) comp[i];
-                    pref = pref.node(tab.getName());
-                    
+                    pref = pref.node(tab.getName());                   
                     for (int k = 0; k < tab.getColumnCount(); ++k) {
                         tab.getColumnModel().getColumn(k).setPreferredWidth(
                                 pref.getInt("colWidth" + k, tab.getColumnModel().getColumn(k).getPreferredWidth()));
@@ -114,9 +113,8 @@ public enum ePrefs {
                 } else if(comp[i] instanceof JSplitPane) {
                     JSplitPane split = (JSplitPane) comp[i];
                     pref = pref.node(split.getName());  
-                    double v = pref.getDouble("resizeWeigh", split.getResizeWeight());
-                    split.setResizeWeight(v);
-                    System.out.println(v);
+                    int v = pref.getInt("dividerLocation", split.getDividerLocation());
+                    split.setDividerLocation(v);
                 }
             }
         }
@@ -138,8 +136,7 @@ public enum ePrefs {
                 
                 if (comp[i] instanceof JTable) {  
                     JTable tab = (JTable) comp[i];
-                    pref = pref.node(tab.getName());
-                    
+                    pref = pref.node(tab.getName());                   
                     for (int k = 0; k < tab.getColumnCount(); ++k) {
                         pref.putInt("colWidth" + k, tab.getColumnModel().getColumn(k).getPreferredWidth());
                     }
@@ -147,8 +144,7 @@ public enum ePrefs {
                 } else if(comp[i] instanceof JSplitPane) {
                     JSplitPane split = (JSplitPane) comp[i];
                     pref = pref.node(split.getName());  
-                    pref.putDouble("resizeWeigh", split.getResizeWeight());
-                    System.out.println(split.getResizeWeight());
+                    pref.putInt("dividerLocation", split.getDividerLocation());
                 }
             }
         }

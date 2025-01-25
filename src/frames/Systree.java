@@ -4272,10 +4272,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
 //        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(wincalc().gson.toJson())));
-        System.out.println(split1.getDividerSize()); //Устанавливает размер разделителя.
-        System.out.println(split1.getDividerLocation()); //Устанавливает расположение разделителя в процентах от JSplitPane размера.
+//        System.out.println(split1.getDividerSize()); //Устанавливает размер разделителя.
         System.out.println(split1.getDividerLocation()); //Устанавливает местоположение разделителя.
-        System.out.println(split1.getResizeWeight()); //Указывает, как распределять дополнительное пространство при изменении размера разделенной панели.
+//        System.out.println(split1.getResizeWeight()); //Указывает, как распределять дополнительное пространство при изменении размера разделенной панели.
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void colorFromGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromGlass
