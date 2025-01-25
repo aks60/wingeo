@@ -35,6 +35,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import common.listener.ListenerReload;
+import java.util.prefs.Preferences;
 
 public final class Models extends javax.swing.JFrame implements ListenerFrame<Object, Object>, ListenerReload, ListenerAction {
 
@@ -669,7 +670,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     // End of variables declaration//GEN-END:variables
 // </editor-fold>
     private void initElements() {
-
+        
         ePrefs.getWin(this, btnClose, (e) -> {
             ePrefs.putWin(this, btnClose);
         }); 

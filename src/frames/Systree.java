@@ -1454,6 +1454,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         split1.setDividerLocation(400);
         split1.setDividerSize(4);
         split1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        split1.setName("split1"); // NOI18N
 
         pan2.setPreferredSize(new java.awt.Dimension(540, 260));
         pan2.setLayout(new java.awt.GridLayout(1, 2));
@@ -4950,10 +4951,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     };
 
     public final void initElements() {
-
+        
         ePrefs.getWin(this, btnClose, (e) -> {
-            ePrefs.putWin(this, btnClose);
-        }); 
+            ePrefs.putWin(this, btnClose, split1);
+        }, split1);
+        
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
         new UColor();
 

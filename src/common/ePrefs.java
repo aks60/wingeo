@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.prefs.Preferences;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.Timer;
 
@@ -78,7 +79,7 @@ public enum ePrefs {
 
         addButtonMouseListener(btn, listener);
 
-        Preferences pref = Preferences.userNodeForPackage(window.getClass()).node(window.getClass().getName());
+        Preferences pref = Preferences.userNodeForPackage(window.getClass()).node(window.getClass().getSimpleName());
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = window.getSize();
@@ -93,7 +94,7 @@ public enum ePrefs {
             frameSize.width = screenSize.width;
         }
 
-        if (window.getName().equals("Setting")) {
+        if (window.getClass().getSimpleName().equals("Setting")) {
             window.setLocation(20, 100);
         } else {
             window.setLocation((screenSize.width - frameSize.width) / 2,
@@ -104,12 +105,18 @@ public enum ePrefs {
                 
                 if (comp[i] instanceof JTable) {
                     JTable tab = (JTable) comp[i];
-                    pref = pref.node(tab.getClass().getName());
+                    pref = pref.node(tab.getName());
                     
                     for (int k = 0; k < tab.getColumnCount(); ++k) {
                         tab.getColumnModel().getColumn(k).setPreferredWidth(
                                 pref.getInt("colWidth" + k, tab.getColumnModel().getColumn(k).getPreferredWidth()));
                     }
+                } else if(comp[i] instanceof JSplitPane) {
+                    JSplitPane split = (JSplitPane) comp[i];
+                    pref = pref.node(split.getName());  
+                    double v = pref.getDouble("resizeWeigh", split.getResizeWeight());
+                    split.setResizeWeight(v);
+                    System.out.println(v);
                 }
             }
         }
@@ -119,9 +126,9 @@ public enum ePrefs {
     }
 
     public static void putWin(Window window, JButton btn, JComponent... comp) {
-
+        timer.stop();
         btn.setPressedIcon(new javax.swing.ImageIcon(window.getClass().getResource("/resource/img24/c036.gif")));
-        Preferences pref = Preferences.userNodeForPackage(window.getClass()).node(window.getClass().getName());
+        Preferences pref = Preferences.userNodeForPackage(window.getClass()).node(window.getClass().getSimpleName());
 
         pref.putInt("_height", window.getHeight());
         pref.putInt("_width", window.getWidth());
@@ -131,11 +138,17 @@ public enum ePrefs {
                 
                 if (comp[i] instanceof JTable) {  
                     JTable tab = (JTable) comp[i];
-                    pref = pref.node(tab.getClass().getName());
+                    pref = pref.node(tab.getName());
                     
                     for (int k = 0; k < tab.getColumnCount(); ++k) {
                         pref.putInt("colWidth" + k, tab.getColumnModel().getColumn(k).getPreferredWidth());
                     }
+                                       
+                } else if(comp[i] instanceof JSplitPane) {
+                    JSplitPane split = (JSplitPane) comp[i];
+                    pref = pref.node(split.getName());  
+                    pref.putDouble("resizeWeigh", split.getResizeWeight());
+                    System.out.println(split.getResizeWeight());
                 }
             }
         }

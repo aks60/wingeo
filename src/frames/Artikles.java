@@ -46,6 +46,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
