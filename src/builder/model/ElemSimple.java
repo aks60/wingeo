@@ -51,7 +51,7 @@ public abstract class ElemSimple extends Com5t {
         winc.listAll.add(this);
     }
 
-    //Test
+    //Äëÿ TEST
     public ElemSimple(double id, GsonElem gson) {
         super(id, gson);
     }

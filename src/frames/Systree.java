@@ -490,12 +490,18 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     setText(txt51, colorRascl.getStr(eColor.name));
                     spinHor.setValue(((ElemGlass) winNode.com5t()).rascNumber[0]);
                     spinVert.setValue(((ElemGlass) winNode.com5t()).rascNumber[1]);
-                    if (elem.deltaDY != null) {
-                        ElemSimple el = winc.listElem.stream().filter(e -> e.type == enums.Type.IMPOST).findFirst().orElse(null);
-                        double s1 = el.artiklRec.getDbl(eArtikl.height), s2 = el.artiklRec.getDbl(eArtikl.size_centr), s3 = el.artiklRec.getDbl(eArtikl.size_falz);
-                        lab4.setText("DY: " + s1 + " - " + s2 + " - " + s3 + " + "
-                                + UCom.format(elem.deltaDY, 2) + " = " + UCom.format(s1 - s2 - s3 + elem.deltaDY, 2) + " мм.");
-                    }
+                    //Помощь менеджеру для коррекция импоста
+//                    if (elem.deltaDY != null) {  
+//                        ElemSimple el = winc.listElem.stream().filter(e -> e.type == enums.Type.IMPOST).findFirst().orElse(null);
+//                        double s1 = el.artiklRec.getDbl(eArtikl.height), 
+//                                s2 = el.artiklRec.getDbl(eArtikl.size_centr), 
+//                                s3 = el.artiklRec.getDbl(eArtikl.size_falz);                       
+//                        //имп.шир - имп.серед - имп.фальц + смещю.стор.точк.перес.арк.и.коробки
+//                        lab4.setText("DY: " + s1 + " - " + s2 + " - " + s3 + " + "
+//                                + UCom.format(elem.deltaDY, 2) + " = " 
+//                                + UCom.format(s1 - s2 - s3 + elem.deltaDY, 2) + " мм.");
+//                        System.out.println("frames.Systree.selectionTree2()");
+//                    }
 
                     //Створка
                 } else if (winNode.com5t().type == enums.Type.STVORKA) {
@@ -4271,10 +4277,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_colorFromLock
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-//        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(wincalc().gson.toJson())));
-//        System.out.println(split1.getDividerSize()); //Устанавливает размер разделителя.
-        System.out.println(split1.getDividerLocation()); //Устанавливает местоположение разделителя.
-//        System.out.println(split1.getResizeWeight()); //Указывает, как распределять дополнительное пространство при изменении размера разделенной панели.
+        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(wincalc().gson.toJson())));
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void colorFromGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromGlass

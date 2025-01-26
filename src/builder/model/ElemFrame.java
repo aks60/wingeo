@@ -23,6 +23,7 @@ import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Polygon;
+import startup.Test;
 
 public class ElemFrame extends ElemSimple {
 
@@ -92,6 +93,8 @@ public class ElemFrame extends ElemSimple {
             for (int i = 0; i < c1.length; i++) {
                 if (c1[i].z == this.id) {
                     if (this.h() != null) { //полигон арки
+                        
+                        //radiusArc = (Math.pow((this.x2() - this.x1()) / 2, 2) + Math.pow(this.h(), 2)) / (2 * this.h());  //R = (L2 + H2) / 2H - радиус арки
 
                         List<Coordinate> list = new ArrayList<Coordinate>();
                         List<Coordinate> c1a = UGeo.getSegmentArch(c1, this); //внешн.коорд.арки
@@ -105,7 +108,6 @@ public class ElemFrame extends ElemSimple {
 
                         Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0])); //полигон рамы арки
                         this.area = poly;
-                        //Coordinate coo[] = this.area.getCoordinates();                       
 
                     } else { //полигон рамы   
                         this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), c2[i + 1].x, c2[i + 1].y, c2[i].x, c2[i].y);

@@ -1258,7 +1258,8 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
                         JToggleButton b = (btn == btnT7) ? btnT7 : (btn == btnT8) ? btnT8 : btnT9;
                         ePrefs p = (btn == btnT7) ? ePrefs.base1 : (btn == btnT8) ? ePrefs.base2 : ePrefs.base3;
-                        b.setToolTipText("Connect:  \"" + p.getProp() + "\"");
+                        ePrefs s = (btn == btnT7) ? ePrefs.server1 : (btn == btnT8) ? ePrefs.server2 : ePrefs.server3;
+                        b.setToolTipText("Connect:  \"" +  s.getProp() + ":" + p.getProp() + "\"");
                     }
                 }));
     }

@@ -145,6 +145,7 @@ public class Wincalc {
         }
     }
 
+    //÷ыклическое заполнение root по содержимому gson 
     private void creator(AreaSimple owner, GsonElem gson) {
         try {
             if (gson.childs != null) {
