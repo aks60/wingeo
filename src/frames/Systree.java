@@ -512,8 +512,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     AreaStvorka stv = (AreaStvorka) winNode.com5t();
                     int id = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
                     AreaSimple own = winNode.com5t().owner;
-                    setText(txt24, own.width());
-                    setText(txt26, own.height());
+                    AreaSimple sta = (AreaSimple) winNode.com5t();
+                    setText(txt24, UCom.format(UCom.layout(sta.frames, Layout.BOTT).width(), 1));
+                    double h = (UCom.layout(sta.frames, Layout.RIGHT).height() > UCom.layout(sta.frames, Layout.LEFT).height()) ? UCom.layout(sta.frames, Layout.RIGHT).height() : UCom.layout(sta.frames, Layout.LEFT).height();
+                    setText(txt26, UCom.format(h, 1));                    
                     setText(txt20, eFurniture.find(id).getStr(eFurniture.name));
                     setIcon(btn10, stv.isJson(stv.gson.param, PKjson.sysfurnID));
                     setText(txt30, stv.typeOpen.name2);
