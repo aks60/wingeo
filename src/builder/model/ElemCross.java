@@ -140,6 +140,7 @@ public class ElemCross extends ElemSimple {
 
             if (type == Type.IMPOST) {
                 LineSegment ls = new LineSegment();
+                //Длина импоста - самый длинный сегмент
                 for (int i = 1; i < coo.length; i++) {
                     ls.setCoordinates(coo[i - 1], coo[i]);
                     spcRec.width = (spcRec.width < ls.getLength()) ? ls.getLength() : spcRec.width;
