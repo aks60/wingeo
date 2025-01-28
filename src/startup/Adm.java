@@ -13,7 +13,7 @@ import dataset.eExcep;
 import domain.eSysuser;
 import frames.PathToDb;
 import frames.UGui;
-import frames.swing.FileFilter;
+import frames.swing.cmp.FileFilter;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;

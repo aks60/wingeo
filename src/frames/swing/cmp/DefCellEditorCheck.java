@@ -1,4 +1,4 @@
-package frames.swing;
+package frames.swing.cmp;
 
 import common.UCom;
 import javax.swing.DefaultCellEditor;

@@ -8,7 +8,7 @@ import domain.eArtikl;
 import domain.eSysprof;
 import enums.UseSideTo;
 import frames.UGui;
-import frames.swing.DefTableModel;
+import frames.swing.cmp.DefTableModel;
 import common.listener.ListenerRecord;
 import domain.ePrjprod;
 import java.util.Arrays;

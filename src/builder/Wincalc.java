@@ -36,7 +36,7 @@ import domain.eSysprof;
 import domain.eSyssize;
 import enums.Type;
 import enums.UseArtiklTo;
-import frames.swing.Canvas;
+import frames.swing.cmp.Canvas;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;

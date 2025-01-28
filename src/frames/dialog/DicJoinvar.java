@@ -8,7 +8,7 @@ import frames.UGui;
 import dataset.Record;
 import domain.eJoinvar;
 import enums.TypeJoin;
-import frames.swing.DefTableModel;
+import frames.swing.cmp.DefTableModel;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JTable;

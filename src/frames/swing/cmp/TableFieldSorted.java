@@ -1,4 +1,4 @@
-package frames.swing;
+package frames.swing.cmp;
 
 import java.util.ArrayList;
 import java.util.Collections;

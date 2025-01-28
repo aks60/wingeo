@@ -1,4 +1,4 @@
-package frames.swing;
+package frames.swing.cmp;
 
 import frames.UGui;
 import common.ePrefs;

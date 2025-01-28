@@ -9,7 +9,7 @@ import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
 import enums.Layout;
 import enums.Type;
-import frames.swing.Canvas;
+import frames.swing.cmp.Canvas;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;

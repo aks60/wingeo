@@ -9,7 +9,7 @@ import domain.eColor;
 import java.awt.CardLayout;
 import javax.swing.JToggleButton;
 import javax.swing.table.DefaultTableModel;
-import frames.swing.DefTableModel;
+import frames.swing.cmp.DefTableModel;
 import domain.eGroups;
 import enums.TypeGrup;
 import enums.UseColor;

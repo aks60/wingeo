@@ -10,12 +10,12 @@ import domain.eArtikl;
 import domain.eFurndet;
 import enums.TypeArt;
 import java.util.Arrays;
-import frames.swing.DefTableModel;
+import frames.swing.cmp.DefTableModel;
 import java.util.List;
 import java.util.stream.Collectors;
 import common.listener.ListenerRecord;
-import frames.swing.ProgressBar;
-import frames.swing.TableFieldFilter;
+import frames.swing.cmp.ProgressBar;
+import frames.swing.cmp.TableFieldFilter;
 import java.util.ArrayList;
 import startup.App;
 

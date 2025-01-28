@@ -1,4 +1,4 @@
-package frames.swing;
+package frames.swing.cmp;
 
 //Фильтр, отбирающий файлы
 public class FileFilter extends javax.swing.filechooser.FileFilter {

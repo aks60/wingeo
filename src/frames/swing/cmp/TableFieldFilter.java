@@ -1,4 +1,4 @@
-package frames.swing;
+package frames.swing.cmp;
 
 import dataset.Field;
 import dataset.Query;

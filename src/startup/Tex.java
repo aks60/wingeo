@@ -2,7 +2,7 @@ package startup;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import frames.swing.ProgressBar;
+import frames.swing.cmp.ProgressBar;
 import common.ePrefs;
 import dataset.Record;
 import builder.Wincalc;
@@ -14,7 +14,7 @@ import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import common.listener.ListenerFrame;
 import dataset.Conn;
-import frames.swing.MainMenu;
+import frames.swing.cmp.MainMenu;
 import java.awt.Dimension;
 import java.util.List;
 import javax.swing.JToggleButton;
