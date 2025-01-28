@@ -87,6 +87,18 @@ public class UGeo {
         return Math.toDegrees(Math.asin(spcRec.height / gip));
     }
 
+    public static double lengthArc(double L, double R, double prip, double angCut1, double angCut2) {
+        
+        double angl = Math.toDegrees(Math.asin((L / 2) / R));
+        double lengthArc = ((2 * Math.PI * R) / 360 * angl * 2); //*2
+        
+        double prip0 = prip * Math.sin(Math.toRadians(45));
+        double prip1 = prip0 / Math.sin(Math.toRadians(angCut1));
+        double prip2 = prip0 / Math.sin(Math.toRadians(angCut2));
+        
+        return lengthArc + prip1 + prip2;
+    }
+
     //Угол неориентированный неомежду профилями
     public static double anglBetbeeem(ElemSimple e1, ElemSimple e2) {
 
@@ -433,7 +445,6 @@ public class UGeo {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">  
-
     public static Geometry normalizeGeo(Geometry geo) {
         geo.normalize();
         return geo;
@@ -464,8 +475,8 @@ public class UGeo {
             return 1;
         }
         return 0;
-    }    
-    
+    }
+
     //Новая реализация с использованием Envelope но неработает!!!
     public static Geometry[] splitPolygon6(Geometry poly, LineString line) {
         double impID = 8;

@@ -96,13 +96,44 @@ public class Test {
             //clearDataDB();
             //PSConvert.exec();
             //frame();
-            wincalc("min");
+            //wincalc("min");
             //param();
             //query();
             //json();
             //uid();
             //script();
             //geom(); 
+
+            //к = 854.167зы
+//            double dh = 63;
+//            double h = 300;
+//            double w = 1300;
+//            double r = (Math.pow(w / 2, 2) + Math.pow(h, 2)) / (2 * h);  //R = (L2 + H2) / 2H - радиус арки        
+//            double rad1 = Math.acos((w / 2) / r); // Math.toDegrees() Ч преобразование радианов в градусы ... Math.asin() Ч арксинус
+//            double rad2 = Math.acos((w - 2 * dh) / ((r - dh) * 2));
+//            double a1 = r * Math.sin(rad1);
+//            double a2 = (r - dh) * Math.sin(rad2);
+//            double ang3 = 90 - Math.toDegrees(Math.atan((a1 - a2) / dh)); //угол реза рамы
+//            double ang4 = 90 - (Math.toDegrees(rad1) - (90 - ang3)); //угол реза арки   
+//
+//            double angl = Math.toDegrees(Math.asin((h / 2) / r));
+//            double l = ((2 * Math.PI * r) * angl * 2 / 360);
+//            //double l = lengthArch + 2 * 3;
+//            //double l = 2 * Math.PI * r;
+//
+//            System.out.println(l);
+//            System.out.println(r);
+//            System.out.println(ang3);
+//            System.out.println(ang4);
+
+//            double a = 3 * Math.sin(Math.toRadians(45));//2.121320343559643
+//            System.out.println("a = " + a);
+//            double c = a / Math.sin(Math.toRadians(70.16)); //sa-2.2548805548756623 ps-2.5                   
+//            System.out.println("c = " + c);
+                
+              double length = UGeo.lengthArc(1300, 854.16, 3, 70.181, 70.181);  
+              System.out.println(length);
+
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
@@ -381,7 +412,7 @@ public class Test {
 
         Point p0 = gf.createPoint(new Coordinate(0, 0, 1));
         p0.setUserData(null);
-        
+
         Geometry geo = poly.union(line);
         System.out.println(geo);
 
