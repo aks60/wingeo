@@ -827,7 +827,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             winc.build(script);
             winc.imageIcon = Canvas.createIcon(winc, 68);
             //sysprodRec.setNo(eSysprod.values().length, winc);
-            System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(winc.gson.toJson())));
+            //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(winc.gson.toJson())));
 
             //Запомним курсор
             DefMutableTreeNode selectNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
