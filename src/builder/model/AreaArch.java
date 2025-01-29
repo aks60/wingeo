@@ -62,7 +62,7 @@ public class AreaArch extends AreaSimple {
             Polygon geo2 = buffer(geo1, this.frames, 0); 
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
-            //new Test().mpol = this.area;
+            new Test().mpol = this.area;
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
