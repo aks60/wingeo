@@ -296,6 +296,78 @@ public class UGeo {
         }
         return result;
     }
+    public static Polygon buffer2Cross(Geometry str, ArrayList<? extends Com5t> list, double amend) {
+        int i = 0;
+        Polygon result = gf.createPolygon();
+        Com5t e1 = null, e2 = null;
+        Deque<Coordinate> deqList = new ArrayDeque<Coordinate>();
+        List<Coordinate> cooList = new ArrayList<Coordinate>();
+        LineSegment segLShell = new LineSegm(), segLInner = null, segRShell = new LineSegm(), segRInner = null;
+        Coordinate[] coo = str.getCoordinates();
+        Coordinate cross = new Coordinate();
+        Map<Double, Double> hm = new HashMap();
+        try {
+            for (Com5t el : list) {
+                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+                hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
+            }
+            for (i = 1; i < coo.length; i++) {
+
+                //Перебор сегментов для вычисления точки пересечения
+                if (i > Com5t.MAXSIDE || (cross != null && i < Com5t.MAXSIDE)) {
+                    final double ID = coo[i - 1].z;
+                    e1 = list.stream().filter(e -> e.id == ID).findFirst().get();
+                    segLShell.setCoordinates(coo[i - 1], coo[i]);
+                    segLInner = segLShell.offset(-hm.get(e1.id));
+                }
+                if (i < Com5t.MAXSIDE || (cross != null && i > Com5t.MAXSIDE)) {
+                    int j = (i == coo.length - 1) ? 1 : i + 1;
+                    final double ID = coo[i].z;
+                    e2 = list.stream().filter(e -> e.id == ID).findFirst().get();
+                    segRShell.setCoordinates(coo[i], coo[j]);
+                    segRInner = segRShell.offset(-hm.get(e2.id));
+                }
+
+                //Точка пересечения сегментов
+                cross = segRInner.intersection(segLInner);
+
+                if (cross != null) { //заполнение очереди
+                    deqList.addLast(cross);
+                    cross.z = coo[i].z;
+
+                } else {
+                    if (e2.h() == null) { //обрезание хвоста слева
+                        List<Coordinate> loop = new ArrayList(deqList);
+                        for (int k = loop.size() - 1; k >= 0; --k) {
+
+                            segLInner = new LineSegm(loop.get(k), loop.get(k - 1), loop.get(k).z);
+                            cross = segRInner.intersection(segLInner);
+
+                            if (cross != null) {
+                                deqList.addLast(cross);
+                                cross.z = coo[i].z;
+                                break;
+                            } else {
+                                deqList.pollLast();
+                            }
+                        }
+                    }
+                }
+                while (deqList.size() > 200) {
+                    cooList.add(deqList.pollFirst());
+                }
+            }
+            while (deqList.isEmpty() == false) {
+                cooList.add(deqList.pollFirst());
+            }
+            cooList.add(0, cooList.get(cooList.size() - 1));
+            result = gf.createPolygon(cooList.toArray(new Coordinate[0]));
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.buffeCross() " + e);
+        }
+        return result;
+    }
 
     public static Polygon ringToPolygon(Geometry line, Geometry geom) {
 

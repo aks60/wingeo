@@ -31,7 +31,7 @@ public class Com5t {
     //public static GeometryFactory gf = new GeometryFactory(new PrecisionModel(1000));
     //public static GeometryFactory gf = new GeometryFactory(Co7eSequenceFactory.instance());
     //public static Co7eSequenceFactory sf = Co7eSequenceFactory.instance();    
-    public static GeometryFactory gf = new GeometryFactory(new PrecisionModel()); 
+    public static GeometryFactory gf = new GeometryFactory(new PrecisionModel());
     public static GeometricShapeFactory gsf = new GeometricShapeFactory(gf);
     public static AffineTransformation aff = new AffineTransformation();
 
@@ -121,11 +121,12 @@ public class Com5t {
 
     public Polygon buffer(Geometry line, ArrayList<? extends Com5t> list, double amend) {
         return UGeo.bufferCross(line, list, amend);
-        //return UGeo.bufferUnion(line, list, amend);
         //return UGeo.bufferPaddin(line, list, amend);
+        //
+        //return UGeo.bufferUnion(line, list, amend);        
         //return GeoBuffer.buffer(line, list, amend);
     }
-    
+
     public boolean equals(Object obj) {
         return (this.id == ((Com5t) obj).id);
     }

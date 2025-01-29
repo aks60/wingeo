@@ -14,6 +14,8 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.operation.buffer.BufferOp;
+import org.locationtech.jts.operation.buffer.BufferParameters;
 import startup.Test;
 
 public class AreaArch extends AreaSimple {
@@ -50,7 +52,7 @@ public class AreaArch extends AreaSimple {
                         arcB = aff.transform(arcA);
                     }
                     List.of(arcB.getCoordinates()).forEach(c -> c.setZ(frame.id));
-                    list.addAll(List.of(arcB.getCoordinates()));                                        
+                    list.addAll(List.of(arcB.getCoordinates()));
 
                 } else {
                     list.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
@@ -58,11 +60,20 @@ public class AreaArch extends AreaSimple {
             }
             list.add(list.get(0));
 
-            Polygon geo1 = gf.createPolygon(list.toArray(new Coordinate[0])); 
-            Polygon geo2 = buffer(geo1, this.frames, 0); 
-            this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
+            Polygon geoShell = gf.createPolygon(list.toArray(new Coordinate[0]));
+            //Polygon geoInner = UGeo.buffer2Cross(geoShell, this.frames, 0);
+            //this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
 
-            new Test().mpol = this.area;
+            //нужно назначить z
+            int nSegments = 100;
+            int cap = BufferParameters.CAP_FLAT;
+            int join = BufferParameters.JOIN_MITRE;
+            BufferParameters bufferParam = new BufferParameters(nSegments, cap, join, BufferParameters.DEFAULT_MITRE_LIMIT);
+            BufferOp ops = new BufferOp(geoShell, bufferParam);
+            Geometry geoInner = ops.getResultGeometry(-60);
+            this.area = gf.createMultiPolygon(new Polygon[]{geoShell, (Polygon) geoInner});
+
+            //new Test().mpol = this.area;
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
