@@ -34,6 +34,8 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.MultiLineString;
 import org.locationtech.jts.geom.util.LineStringExtracter;
+import org.locationtech.jts.operation.buffer.BufferOp;
+import org.locationtech.jts.operation.buffer.BufferParameters;
 import org.locationtech.jts.operation.buffer.VariableBuffer;
 import org.locationtech.jts.operation.polygonize.Polygonizer;
 
@@ -88,14 +90,14 @@ public class UGeo {
     }
 
     public static double lengthArc(double L, double R, double prip, double angCut1, double angCut2) {
-        
+
         double angl = Math.toDegrees(Math.asin((L / 2) / R));
         double lengthArc = ((2 * Math.PI * R) / 360 * angl * 2); //*2
-        
+
         double prip0 = prip * Math.sin(Math.toRadians(45));
         double prip1 = prip0 / Math.sin(Math.toRadians(angCut1));
         double prip2 = prip0 / Math.sin(Math.toRadians(angCut2));
-        
+
         return lengthArc + prip1 + prip2;
     }
 
@@ -223,6 +225,39 @@ public class UGeo {
         }
     }
 
+    public static Geometry bufferOp(Polygon geoShell, double offset) {
+
+        LineSegment segShell = new LineSegment(), segInner = new LineSegment();
+        int nSegments = Com5t.MAXPOINT;
+        int cap = BufferParameters.CAP_FLAT;
+        int join = BufferParameters.JOIN_MITRE;
+        BufferParameters bufferParam = new BufferParameters(nSegments, cap, join, BufferParameters.DEFAULT_MITRE_LIMIT);
+        BufferOp ops = new BufferOp(geoShell, bufferParam);
+        Geometry geoInner = ops.getResultGeometry(offset);
+
+        Coordinate cooInner[] = geoInner.getCoordinates();
+        Coordinate cooShell[] = geoShell.getCoordinates();
+        for (int i = 1; i < cooInner.length; i++) {
+            //System.out.println("i="+ i);
+            segInner.setCoordinates(cooInner[i - 1], cooInner[i]);
+            for (int j = 1; j < cooShell.length; j++) {
+                segShell.setCoordinates(cooShell[j - 1], cooShell[j]);
+                if (segInner.angle() == segShell.angle()) {
+                    //System.out.println("ПОПАЛ = " + j);
+                    cooInner[i - 1].z = cooShell[j - 1].z;
+                }
+            }
+        }
+        List.of(cooInner).forEach(c -> {
+            if (c.z == Double.NaN) {
+                c.z = 4.0;
+            }
+        });
+
+        Geometry areas = gf.createMultiPolygon(new Polygon[]{geoShell, (Polygon) geoInner});
+        return areas;
+    }
+
     //Обводка полигона, работает быстро. При вырождении полигона загибы на концах арки
     public static Polygon bufferCross(Geometry str, ArrayList<? extends Com5t> list, double amend) {
         int i = 0;
@@ -296,6 +331,7 @@ public class UGeo {
         }
         return result;
     }
+
     public static Polygon buffer2Cross(Geometry str, ArrayList<? extends Com5t> list, double amend) {
         int i = 0;
         Polygon result = gf.createPolygon();
@@ -406,10 +442,11 @@ public class UGeo {
             double R = (Math.pow((x2 - x1) / 2, 2) + Math.pow(h, 2)) / (2 * h);  //R = (L2 + H2) / 2H - радиус арки
             double angl = Math.PI / 2 - Math.asin((x2 - x1) / (R * 2));
             Com5t.gsf.setSize(2 * R);
-            Com5t.gsf.setNumPoints(1000);
+            Com5t.gsf.setNumPoints(Com5t.MAXPOINT);
             Com5t.gsf.setBase(new Coordinate(x1 + (x2 - x1) / 2 - R, y - h));
             LineString ls = Com5t.gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
-            Coordinate lm[] = Arrays.copyOf(ls.getCoordinates(), ls.getCoordinates().length);
+            Coordinate lm[] = Arrays.copyOf(ls.getCoordinates(), ls.getCoordinates().length - 1);
+            //Coordinate lm[] = Arrays.copyOf(ls.getCoordinates(), ls.getCoordinates().length);
             List.of(lm).forEach(c -> c.z = z);
             return gf.createLineString(lm);
 
@@ -550,7 +587,7 @@ public class UGeo {
     }
 
     //Новая реализация с использованием Envelope но неработает!!!
-    public static Geometry[] splitPolygon6(Geometry poly, LineString line) {
+    public static Geometry[] splitPolygon5(Geometry poly, LineString line) {
         double impID = 8;
         boolean f = true;
         List<Coordinate> ls = new ArrayList<Coordinate>();
@@ -602,7 +639,7 @@ public class UGeo {
     }
 
     //Новая реализация с использованием Envelope        
-    public static Geometry[] splitPolygonEnvelope(Geometry poly, ElemCross impost) {
+    public static Geometry[] splitPolygon4(Geometry poly, ElemCross impost) {
         boolean f = true;
         List<Coordinate> cooEnvL = new ArrayList<Coordinate>(); //левый конверт
         List<Coordinate> cooImp = new ArrayList<Coordinate>();
@@ -672,7 +709,7 @@ public class UGeo {
     }
 
     //Пилим многоугольник 
-    public static Geometry[] splitPolyImp7(Geometry geom, ElemCross impost) {
+    public static Geometry[] splitPolygon3(Geometry geom, ElemCross impost) {
         try {
             LineString lineImp = gf.createLineString(new Coordinate[]{
                 new Coordinate(impost.x1(), impost.y1()),
@@ -684,7 +721,7 @@ public class UGeo {
             line2.normalize();
 
             //Делим полигон линией
-            Geometry gm = UGeo.splitPolyLine7(geom, line2);
+            Geometry gm = UGeo.splitPolyLine2(geom, line2);
 
             gm.getGeometryN(0).normalize();
             gm.getGeometryN(1).normalize();
@@ -710,7 +747,7 @@ public class UGeo {
     }
 
     //см. https://gis.stackexchange.com/questions/189976/jts-split-arbitrary-polygon-by-a-line
-    public static Geometry splitPolyLine7(final Geometry poly, final Geometry line) {
+    public static Geometry splitPolyLine2(final Geometry poly, final Geometry line) {
 
         Geometry nodedLinework = poly.getBoundary().union(line);
         Geometry polys = polygonize7(nodedLinework);

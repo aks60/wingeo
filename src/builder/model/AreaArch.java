@@ -61,20 +61,16 @@ public class AreaArch extends AreaSimple {
             list.add(list.get(0));
 
             Polygon geoShell = gf.createPolygon(list.toArray(new Coordinate[0]));
-            //Polygon geoInner = UGeo.buffer2Cross(geoShell, this.frames, 0);
-            //this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
+            Polygon geoInner = UGeo.bufferCross(geoShell, this.frames, 0);
+            this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
 
-            //нужно назначить z
-            int nSegments = 100;
-            int cap = BufferParameters.CAP_FLAT;
-            int join = BufferParameters.JOIN_MITRE;
-            BufferParameters bufferParam = new BufferParameters(nSegments, cap, join, BufferParameters.DEFAULT_MITRE_LIMIT);
-            BufferOp ops = new BufferOp(geoShell, bufferParam);
-            Geometry geoInner = ops.getResultGeometry(-60);
-            this.area = gf.createMultiPolygon(new Polygon[]{geoShell, (Polygon) geoInner});
-
-            //new Test().mpol = this.area;
-
+            Record artiklRec = (this.frames.get(0).artiklRec == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRec;
+            double offset = artiklRec.getDbl(eArtikl.height);
+            //Geometry geoTest = UGeo.bufferOp(geoShell, offset);
+            //this.area = geoTest;
+            
+            //new Test().mpol = geoTest;
+            
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
         }
