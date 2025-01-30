@@ -226,36 +226,41 @@ public class UGeo {
     }
 
     public static Geometry bufferOp(Polygon geoShell, double offset) {
+        try {
+            LineSegment segShell = new LineSegment(), segInner = new LineSegment();
+            int nSegments = Com5t.MAXPOINT;
+            int cap = BufferParameters.CAP_FLAT;
+            int join = BufferParameters.JOIN_MITRE;
+            BufferParameters bufferParam = new BufferParameters(nSegments, cap, join, BufferParameters.DEFAULT_MITRE_LIMIT);
+            BufferOp ops = new BufferOp(geoShell, bufferParam);
+            Geometry geoInner = ops.getResultGeometry(offset);
 
-        LineSegment segShell = new LineSegment(), segInner = new LineSegment();
-        int nSegments = Com5t.MAXPOINT;
-        int cap = BufferParameters.CAP_FLAT;
-        int join = BufferParameters.JOIN_MITRE;
-        BufferParameters bufferParam = new BufferParameters(nSegments, cap, join, BufferParameters.DEFAULT_MITRE_LIMIT);
-        BufferOp ops = new BufferOp(geoShell, bufferParam);
-        Geometry geoInner = ops.getResultGeometry(offset);
-
-        Coordinate cooInner[] = geoInner.getCoordinates();
-        Coordinate cooShell[] = geoShell.getCoordinates();
-        for (int i = 1; i < cooInner.length; i++) {
-            //System.out.println("i="+ i);
-            segInner.setCoordinates(cooInner[i - 1], cooInner[i]);
-            for (int j = 1; j < cooShell.length; j++) {
-                segShell.setCoordinates(cooShell[j - 1], cooShell[j]);
-                if (segInner.angle() == segShell.angle()) {
-                    //System.out.println("ПОПАЛ = " + j);
-                    cooInner[i - 1].z = cooShell[j - 1].z;
+            Coordinate cooInner[] = geoInner.getCoordinates();
+            Coordinate cooShell[] = geoShell.getCoordinates();
+            for (int i = 1; i < cooInner.length; i++) {
+                //System.out.println("i="+ i);
+                segInner.setCoordinates(cooInner[i - 1], cooInner[i]);
+                for (int j = 1; j < cooShell.length; j++) {
+                    segShell.setCoordinates(cooShell[j - 1], cooShell[j]);
+                    if (segInner.angle() == segShell.angle()) {
+                        //System.out.println("ПОПАЛ = " + j);
+                        cooInner[i - 1].z = cooShell[j - 1].z;
+                    }
                 }
             }
-        }
-        List.of(cooInner).forEach(c -> {
-            if (c.z == Double.NaN) {
-                c.z = 4.0;
-            }
-        });
+            cooInner[cooInner.length - 1].z = cooShell[0].z;
+            List.of(cooInner).forEach(c -> {
+                if (Double.isNaN(c.z)) {
+                    c.z = 4.0;
+                }
+            });
 
-        Geometry areas = gf.createMultiPolygon(new Polygon[]{geoShell, (Polygon) geoInner});
-        return areas;
+            Geometry areas = gf.createMultiPolygon(new Polygon[]{geoShell, (Polygon) geoInner});
+            return areas;
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.bufferOp() " + e);
+            return null;
+        }
     }
 
     //Обводка полигона, работает быстро. При вырождении полигона загибы на концах арки
@@ -281,14 +286,18 @@ public class UGeo {
                     final double ID = coo[i - 1].z;
                     e1 = list.stream().filter(e -> e.id == ID).findFirst().get();
                     seg1a.setCoordinates(coo[i - 1], coo[i]);
-                    seg1b = seg1a.offset(-hm.get(e1.id));
+                    if(seg1a.getLength() != 0) {
+                        seg1b = seg1a.offset(-hm.get(e1.id));
+                    }                    
                 }
                 if (i < Com5t.MAXSIDE || (cross != null && i > Com5t.MAXSIDE)) {
                     int j = (i == coo.length - 1) ? 1 : i + 1;
                     final double ID = coo[i].z;
                     e2 = list.stream().filter(e -> e.id == ID).findFirst().get();
                     seg2a.setCoordinates(coo[i], coo[j]);
-                    seg2b = seg2a.offset(-hm.get(e2.id));
+                    if(seg2a.getLength() != 0) {
+                        seg2b = seg2a.offset(-hm.get(e2.id));
+                    }                    
                 }
 
                 //Точка пересечения сегментов
@@ -445,8 +454,8 @@ public class UGeo {
             Com5t.gsf.setNumPoints(Com5t.MAXPOINT);
             Com5t.gsf.setBase(new Coordinate(x1 + (x2 - x1) / 2 - R, y - h));
             LineString ls = Com5t.gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
-            Coordinate lm[] = Arrays.copyOf(ls.getCoordinates(), ls.getCoordinates().length - 1);
-            //Coordinate lm[] = Arrays.copyOf(ls.getCoordinates(), ls.getCoordinates().length);
+            //Coordinate lm[] = Arrays.copyOf(ls.getCoordinates(), ls.getCoordinates().length - 1);
+            Coordinate lm[] = Arrays.copyOf(ls.getCoordinates(), ls.getCoordinates().length);
             List.of(lm).forEach(c -> c.z = z);
             return gf.createLineString(lm);
 
