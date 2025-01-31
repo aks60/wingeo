@@ -64,12 +64,7 @@ public class AreaArch extends AreaSimple {
             Polygon geoInner = UGeo.bufferCross(geoShell, this.frames, 0);
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
 
-//            Record artiklRec = (this.frames.get(0).artiklRec == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRec;
-//            double offset = artiklRec.getDbl(eArtikl.height);
-//            Geometry geoTest = UGeo.bufferOp(geoShell, -offset);
-//            this.area = geoTest;
-
-            new Test().mpol = this.area;
+            //new Test().mpol = this.area;
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
         }
