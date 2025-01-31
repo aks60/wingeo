@@ -303,23 +303,23 @@ public class ElemFrame extends ElemSimple {
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
     @Override
-    public double x2() {
+    public Double x2() {
         for (int i = 0; i < owner.frames.size(); i++) {
             if (owner.frames.get(i).x1() == this.x1() && owner.frames.get(i).y1() == this.y1()) {
                 return owner.frames.get((i == owner.frames.size() - 1) ? 0 : i + 1).x1();
             }
         }
-        return -1;
+        return null;
     }
 
     @Override
-    public double y2() {
+    public Double y2() {
         for (int i = 0; i < owner.frames.size(); i++) {
             if (owner.frames.get(i).x1() == this.x1() && owner.frames.get(i).y1() == this.y1()) {
                 return owner.frames.get((i == owner.frames.size() - 1) ? 0 : i + 1).y1();
             }
         }
-        return -1;
+        return null;
     }
 
     @Override

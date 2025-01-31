@@ -96,7 +96,7 @@ public class Test {
             //clearDataDB();
             //PSConvert.exec();
             //frame();
-            //wincalc("min");
+            wincalc("min");
             //param();
             //query();
             //json();
@@ -131,8 +131,8 @@ public class Test {
 //            double c = a / Math.sin(Math.toRadians(70.16)); //sa-2.2548805548756623 ps-2.5                   
 //            System.out.println("c = " + c);
                 
-              double length = UGeo.lengthArc(1300, 854.16, 3, 70.181, 70.181);  
-              System.out.println(length);
+//              double length = UGeo.lengthArc(1300, 854.16, 3, 70.181, 70.181);  
+//              System.out.println(length);
 
 
         } catch (Exception e) {

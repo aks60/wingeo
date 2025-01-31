@@ -11,9 +11,7 @@ import enums.Layout;
 import enums.Type;
 import frames.swing.cmp.Canvas;
 import java.awt.Color;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
@@ -21,7 +19,6 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 import javax.swing.Timer;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.LineSegment;
 
 public abstract class ElemSimple extends Com5t {
@@ -101,10 +98,7 @@ public abstract class ElemSimple extends Com5t {
                 } else if (passMask[0] == 2) {
 
                     if (this.h() != null) {
-                        this.h(this.h() + dY / winc.scale);
-                        this.y1(this.h() + dY / winc.scale);
-                        this.y2(this.h() + dY / winc.scale);
-
+                        this.h(this.h() - dY / winc.scale);
                     } else {
                         X = dX / winc.scale + this.x2();
                         Y = dY / winc.scale + this.y2();
@@ -129,20 +123,21 @@ public abstract class ElemSimple extends Com5t {
         ListenerMouse mousePressed = (evt) -> {
             if (this.area != null) {
                 pointPress = evt.getPoint();
-                Coordinate wincPress = new Coordinate((evt.getX() - Canvas.translate[0]) / winc.scale, (evt.getY() - Canvas.translate[1]) / winc.scale);
+                Coordinate wincPress = new Coordinate((evt.getX() - Canvas.translate[0])
+                        / winc.scale, (evt.getY() - Canvas.translate[1]) / winc.scale);
                 boolean b = this.area.contains(gf.createPoint(wincPress));
 
                 //Если клик внутри контура
                 if (b == true) {
                     ++passMask[1];
                     LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
-                    double coef = segm.segmentFraction(wincPress); //доля расстояния (в [0,0, 1,0] ) вдоль этого отрезка.
+                    double coeff = segm.segmentFraction(wincPress); //доля расстояния (в [0,0, 1,0] ) вдоль этого отрезка.
 
-                    if (coef < .33) { //кликнул начало вектора
+                    if (coeff < .33) { //кликнул начало вектора
                         passMask[1] = (passMask[0] != 0) ? 1 : passMask[1];
                         passMask[0] = 0;
 
-                    } else if (coef > .67) {//кликнул конец вектора
+                    } else if (coeff > .67) {//кликнул конец вектора
                         passMask[1] = (passMask[0] != 1) ? 1 : passMask[1];
                         passMask[0] = 1;
 
@@ -183,12 +178,20 @@ public abstract class ElemSimple extends Com5t {
                         X = dX / winc.scale + x2();
                         Y = dY / winc.scale + y2();
                         if (Y > 0 && List.of(Layout.BOTT, Layout.TOP, Layout.HORIZ).contains(layout())) {
-                            this.y1(Y);
-                            this.y2(Y);
+                            if (this.h() != null) {
+                                this.h(this.h() - dY / winc.scale);
+                            } else {
+                                this.y1(Y);
+                                this.y2(Y);
+                            }
                         }
                         if (X > 0 && List.of(Layout.LEFT, Layout.RIGHT, Layout.VERT).contains(layout())) {
-                            this.x1(X);
-                            this.x2(X);
+                            if (this.h() != null) {
+                                this.h(this.h() - dX / winc.scale);
+                            } else {
+                                this.x1(X);
+                                this.x2(X);
+                            }
                         }
                     }
                     if (X < 0 || Y < 0) {
@@ -204,7 +207,7 @@ public abstract class ElemSimple extends Com5t {
     }
 
     private void moveXY(double x, double y) {
-        
+
         if (x > 0 || y > 0) {
             if (List.of(Layout.BOTT, Layout.HORIZ).contains(layout())) {
                 if (passMask[0] == 0) {
@@ -302,14 +305,12 @@ public abstract class ElemSimple extends Com5t {
     }
 
     public void setDimension(double x1, double y1, double x2, double y2) {
-        //if (passMask[1] > 1) {
         gson.x1 = x1;
         gson.y1 = y1;
         gson.x2 = x2;
         gson.y2 = y2;
-        // }
     }
-    
+
     @Override
     public String toString() {
         return super.toString() + ", anglHoriz=" + UGeo.anglHor(x1(), y1(), x2(), y2());

@@ -123,56 +123,35 @@ public class Com5t {
     }
 
     //public Polygon buffer(Geometry line, ArrayList<? extends Com5t> list, double amend) {
-        //return UGeo.bufferCross(line, list, amend);
-        //return UGeo.bufferPaddin(line, list, amend);
-        //
-        //return UGeo.bufferUnion(line, list, amend);        
-        //return GeoBuffer.buffer(line, list, amend);
+    //return UGeo.bufferCross(line, list, amend);
+    //return UGeo.bufferPaddin(line, list, amend);
+    //
+    //return UGeo.bufferUnion(line, list, amend);        
+    //return GeoBuffer.buffer(line, list, amend);
     //}
-
     public boolean equals(Object obj) {
         return (this.id == ((Com5t) obj).id);
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
-    public double x1() {
-        return (gson.x1 != null) ? gson.x1 : -1;
+    public Double x1() {
+        return gson.x1;
     }
 
-    public double y1() {
-        return (gson.y1 != null) ? gson.y1 : -1;
+    public Double y1() {
+        return gson.y1;
     }
 
     public Double h() {
-        return (gson.h != null) ? gson.h : null;
+        return gson.h;
     }
 
-    public double x2() {
-        if (gson.x2 != null) {
-            return gson.x2;
-        } else {
-//            Coordinate[] coordArr = this.geom.getCoordinates();
-//            for (int i = coordArr.length; i > 0; --i) {
-//                if (coordArr[i].x == x1()) {
-//                    return coordArr[i - 1].x;
-//                }
-//            }
-            return -1;
-        }
+    public Double x2() {
+        return gson.x2;
     }
 
-    public double y2() {
-        if (gson.y2 != null) {
-            return gson.y2;
-        } else {
-//            Coordinate[] coordArr = this.geom.getCoordinates();
-//            for (int i = coordArr.length; i > 0; --i) {
-//                if (coordArr[i].y == y1()) {
-//                    return coordArr[i - 1].y;
-//                }
-//            }
-            return -1;
-        }
+    public Double y2() {
+        return gson.y2;
     }
 
     public void x1(double v) {
