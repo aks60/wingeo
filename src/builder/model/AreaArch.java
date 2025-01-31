@@ -28,7 +28,7 @@ public class AreaArch extends AreaSimple {
     //Полигон рамы. Функ. выпоняется после создания рам конструкции
     @Override
     public void setLocation() {
-        ArrayList<Coordinate> list = new ArrayList<Coordinate>();
+        ArrayList<Coordinate> listShell = new ArrayList<Coordinate>();
         Geometry arcA = null, arcB = null;
         try {
             //Создадим вершины арки
@@ -52,24 +52,24 @@ public class AreaArch extends AreaSimple {
                         arcB = aff.transform(arcA);
                     }
                     List.of(arcB.getCoordinates()).forEach(c -> c.setZ(frame.id));
-                    list.addAll(List.of(arcB.getCoordinates()));
+                    listShell.addAll(List.of(arcB.getCoordinates()));
 
                 } else {
-                    list.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
+                    listShell.add(new Coordinate(frame.x1(), frame.y1(), frame.id));
                 }
             }
-            list.add(list.get(0));
+            listShell.add(listShell.get(0));
 
-            Polygon geoShell = gf.createPolygon(list.toArray(new Coordinate[0]));
+            Polygon geoShell = gf.createPolygon(listShell.toArray(new Coordinate[0]));
             Polygon geoInner = UGeo.bufferCross(geoShell, this.frames, 0);
-            //this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
+            this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
 
-            Record artiklRec = (this.frames.get(0).artiklRec == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRec;
-            double offset = artiklRec.getDbl(eArtikl.height);
-            Geometry geoTest = UGeo.bufferOp(geoShell, -offset);
-            this.area = geoTest;
+//            Record artiklRec = (this.frames.get(0).artiklRec == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRec;
+//            double offset = artiklRec.getDbl(eArtikl.height);
+//            Geometry geoTest = UGeo.bufferOp(geoShell, -offset);
+//            this.area = geoTest;
 
-            //new Test().mpol = geoTest;
+            new Test().mpol = this.area;
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
         }

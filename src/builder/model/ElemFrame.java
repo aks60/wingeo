@@ -87,15 +87,13 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void setLocation() {
         try {
-            //new Test().mpol = owner.area;
             Geometry geo1 = owner.area.getGeometryN(0), geo2 = owner.area.getGeometryN(1); //внешн. и внутр. ареа арки.
             Coordinate c1[] = geo1.getCoordinates(), c2[] = geo2.getCoordinates();
             for (int i = 0; i < c1.length; i++) {
                 if (c1[i].z == this.id) {
                     if (this.h() != null) { //полигон арки
-                        
-                        //radiusArc = (Math.pow((this.x2() - this.x1()) / 2, 2) + Math.pow(this.h(), 2)) / (2 * this.h());  //R = (L2 + H2) / 2H - радиус арки
 
+                        //radiusArc = (Math.pow((this.x2() - this.x1()) / 2, 2) + Math.pow(this.h(), 2)) / (2 * this.h());  //R = (L2 + H2) / 2H - радиус арки
                         List<Coordinate> list = new ArrayList<Coordinate>();
                         List<Coordinate> c1a = UGeo.getSegmentArch(c1, this); //внешн.коорд.арки
                         List<Coordinate> c2a = UGeo.getSegmentArch(c2, this); //внутр.коорд.арки
@@ -108,6 +106,9 @@ public class ElemFrame extends ElemSimple {
 
                         Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0])); //полигон рамы арки
                         this.area = poly;
+
+                        //new Test().mpol = owner.area.getGeometryN(0);
+                        //new Test().mlin = owner.area.getGeometryN(1);
 
                     } else { //полигон рамы   
                         this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), c2[i + 1].x, c2[i + 1].y, c2[i].x, c2[i].y);
@@ -137,10 +138,10 @@ public class ElemFrame extends ElemSimple {
 
             } else {
                 //new Test().mpol = this.area;
-                
+
                 double h = this.artiklRecAn.getDbl(eArtikl.height);
                 int index = IntStream.range(1, coo.length).filter(j -> coo[j - 1].distance(coo[j]) > h).findFirst().getAsInt();
-                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1])); 
+                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
                 spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[index - 2], coo[index - 1], coo[index]));
             }
             double delta = winc.syssizRec.getDbl(eSyssize.prip) * Math.sin(Math.toRadians(45));
@@ -158,9 +159,9 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void addSpecific(TRecord spcAdd) { //добавление спесификаций зависимых элементов
         try {
-            if(spcAdd.artiklRec.getStr(eArtikl.code).substring(0, 1).equals("@")) {
+            if (spcAdd.artiklRec.getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;
-            }            
+            }
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм
@@ -290,7 +291,7 @@ public class ElemFrame extends ElemSimple {
     public void paint() {
         if (this.area != null) {
 
-            super.paint();         
+            super.paint();
             winc.gc2d.setColor(this.color());
             Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(0));
             winc.gc2d.fill(shape);
