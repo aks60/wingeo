@@ -340,7 +340,7 @@ public class UGeo {
             Com5t.gsf.setNumPoints(Com5t.MAXPOINT);
             Com5t.gsf.setBase(new Coordinate(x1 + (x2 - x1) / 2 - R, y - h));
             LineString ls = Com5t.gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
-            Coordinate lm[] = Arrays.copyOf(ls.getCoordinates(), ls.getCoordinates().length - 1);
+            Coordinate lm[] = Arrays.copyOf(ls.getCoordinates(), ls.getCoordinates().length - 1); //т.к это не Geometry, а сторона коробки
             List.of(lm).forEach(c -> c.z = z);
             return gf.createLineString(lm);
 

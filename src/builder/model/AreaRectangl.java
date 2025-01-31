@@ -29,7 +29,7 @@ public class AreaRectangl extends AreaSimple {
 
             //Àrea ðàìû
             Polygon geo1 = gf.createPolygon(coo.toArray(new Coordinate[0]));                      
-            Polygon geo2 = buffer(geo1, this.frames, 0);                     
+            Polygon geo2 = UGeo.bufferCross(geo1, this.frames, 0);                     
             this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         } catch (Exception e) {

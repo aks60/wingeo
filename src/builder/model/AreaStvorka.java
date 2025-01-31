@@ -152,7 +152,7 @@ public class AreaStvorka extends AreaSimple {
 
             //Полигон створки с учётом нахлёста 
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            Polygon stvOuter = buffer(this.frameBox, winc.listElem, -dh); //полигон векторов сторон створки с учётом нахл.
+            Polygon stvOuter = UGeo.bufferCross(this.frameBox, winc.listElem, -dh); //полигон векторов сторон створки с учётом нахл.
 
             //Если стороны ств. ещё не созданы 
             if (this.frames.isEmpty()) {
@@ -181,7 +181,7 @@ public class AreaStvorka extends AreaSimple {
                 coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
             }
 
-            Polygon stvInner = buffer(stvOuter, this.frames, 0);
+            Polygon stvInner = UGeo.bufferCross(stvOuter, this.frames, 0);
             this.area = gf.createMultiPolygon(new Polygon[]{stvOuter, stvInner});
 
             //Высота ручки, линии открывания
