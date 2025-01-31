@@ -64,7 +64,7 @@ public abstract class ElemSimple extends Com5t {
 
     public abstract void addSpecific(TRecord spcAdd);
 
-    public void addEvents() {
+    public void addListenerEvents() {
         timer.setRepeats(false);
 
         ListenerKey keyPressed = (evt) -> {

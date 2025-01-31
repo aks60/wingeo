@@ -30,7 +30,7 @@ public class ElemCross extends ElemSimple {
 
     public ElemCross(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
-        this.addEvents();
+        this.addListenerEvents();
     }
 
     @Override
