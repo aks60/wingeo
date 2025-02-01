@@ -416,8 +416,8 @@ public class Test {
         Geometry geo = poly.union(line);
         System.out.println(geo);
 
-        Geometry polys = UGeo.polygonize7(geo);
-        System.out.println(polys);
+        //Geometry polys = UGeo.polygonize7(geo);
+        //System.out.println(polys);
 
 //        new Test().mpol = intersection;
     }
@@ -570,17 +570,17 @@ public class Test {
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
 
         LineString geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
-        Polygon geo2 = UGeo.buffer(geo1, frames, 0);
+        //Polygon geo2 = UGeo.buffer(geo1, frames, 0);
         Polygon geo3 = UGeo.bufferCross(geo1, frames, 0);
-        Polygon geo4 = UGeo.bufferUnion(geo1, frames, 0);
+        //Polygon geo4 = UGeo.bufferUnion(geo1, frames, 0);
 
         Coordinate coo1[] = geo1.getCoordinates();
-        Coordinate coo2[] = geo2.getCoordinates();
+        //Coordinate coo2[] = geo2.getCoordinates();
         Coordinate coo3[] = geo3.getCoordinates();
-        Coordinate coo4[] = geo4.getCoordinates();
+        //Coordinate coo4[] = geo4.getCoordinates();
 
         mlin = gf.createMultiLineString(new LineString[]{geo1});
-        mpol = geo4;
+        //mpol = geo4;
 
     }
 
@@ -614,7 +614,7 @@ public class Test {
         list.addAll(List.of(arr1));
 
         this.mpol = UGeo.newPolygon(list);
-        this.mlin = UGeo.bufferPaddin(this.mpol, frames, 20);
+        //this.mlin = UGeo.bufferPaddin(this.mpol, frames, 20);
 
     }
 
@@ -675,8 +675,8 @@ public class Test {
         list.addAll(List.of(arr2));
 
         Polygon geo1 = UGeo.newPolygon(list);
-        Polygon geo2 = UGeo.bufferPaddin(geo1, frames, 0);
-        this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
+        //Polygon geo2 = UGeo.bufferPaddin(geo1, frames, 0);
+        //this.mlin = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
 
         this.mpol = null;
     }

@@ -181,7 +181,7 @@ public class ElemGlass extends ElemSimple {
 
                 Coordinate coo[] = this.areaFalz.getCoordinates();
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
-                spcAdd.anglHoriz = UGeo.anglHor(frameglass); //угол к горизонту 
+                spcAdd.anglHoriz = UGeo.anglHor(frameglass.x1(), frameglass.y1(), frameglass.x2(), frameglass.y2()); //угол к горизонту 
 
                 //Арка
                 if (frameglass.h() != null) {
