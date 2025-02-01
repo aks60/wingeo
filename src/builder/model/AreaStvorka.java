@@ -152,11 +152,11 @@ public class AreaStvorka extends AreaSimple {
 
             //Полигон створки с учётом нахлёста 
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            Polygon stvOuter = UGeo.bufferCross(this.frameBox, winc.listElem, -dh); //полигон векторов сторон створки с учётом нахл.
+            Polygon stvShell = UGeo.bufferCross(this.frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл.
 
             //Если стороны ств. ещё не созданы 
             if (this.frames.isEmpty()) {
-                Coordinate[] coo = stvOuter.getGeometryN(0).getCoordinates();
+                Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
 
                     //Координаты рам створок
@@ -172,7 +172,7 @@ public class AreaStvorka extends AreaSimple {
                 coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
 
             } else { //Если стороны уже созданы
-                Coordinate[] coo = stvOuter.getGeometryN(0).getCoordinates();
+                Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
                 for (int i = 0; i < coo.length - 1; i++) {
                     ElemSimple elem = this.frames.get(i);
                     coo[i].z = elem.id;
@@ -181,8 +181,8 @@ public class AreaStvorka extends AreaSimple {
                 coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
             }
 
-            Polygon stvInner = UGeo.bufferCross(stvOuter, this.frames, 0);
-            this.area = gf.createMultiPolygon(new Polygon[]{stvOuter, stvInner});
+            Polygon stvInner = UGeo.bufferCross(stvShell, this.frames, 0, 0);
+            this.area = gf.createMultiPolygon(new Polygon[]{stvShell, stvInner});
 
             //Высота ручки, линии открывания
             if (this.typeOpen != TypeOpen1.EMPTY) {

@@ -61,7 +61,7 @@ public class AreaArch extends AreaSimple {
             listShell.add(listShell.get(0));
 
             Polygon geoShell = gf.createPolygon(listShell.toArray(new Coordinate[0]));
-            Polygon geoInner = UGeo.bufferCross(geoShell, this.frames, 0);
+            Polygon geoInner = UGeo.bufferCross(geoShell, this.frames, 0, 0);
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
 
             //new Test().mpol = this.area;

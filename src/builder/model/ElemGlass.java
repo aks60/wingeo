@@ -10,7 +10,6 @@ import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
 import domain.eSystree;
-import enums.Layout;
 import enums.PKjson;
 import enums.Type;
 import enums.TypeArt;
@@ -31,6 +30,7 @@ import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
+import startup.Test;
 
 public class ElemGlass extends ElemSimple {
 
@@ -107,8 +107,9 @@ public class ElemGlass extends ElemSimple {
                 hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - rec.getDbl(eArtikl.size_falz));
             }
 
-            this.areaFalz = UGeo.buffer(owner.area.getGeometryN(0), hm);  //полигон по фальцу для прорисовки и рассчёта штапик...
-    
+            //Полигон по фальцу для прорисовки и рассчёта штапик...
+            this.areaFalz = UGeo.bufferCross(owner.area.getGeometryN(0), list, 0, 1);
+
             Coordinate[] coo = this.areaFalz.getCoordinates();
             if (this.areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
                 coo[0].z = coo[1].z;
@@ -126,10 +127,9 @@ public class ElemGlass extends ElemSimple {
 //                    this.deltaDY = coo[coo.length - 2].y - co2[co2.length - 2].y;
 //                }
 //            }
-            
+
         } catch (Exception e) {
             System.err.println("Ошибка:ElemGlass.setLocation. " + e);
-            //new Test().mpol = this.areaFalz;
         }
     }
 
@@ -145,13 +145,18 @@ public class ElemGlass extends ElemSimple {
             new TFilling(winc, true).fill(this);
 
             ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
-            Map<Double, Double> hm = new HashMap();
-            for (Com5t el : list) {
-                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-                hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + gzazo);
-            }
-            this.area = UGeo.buffer(owner.area.getGeometryN(0), hm); //полигон стеклопакета
+//            Map<Double, Double> hm = new HashMap();
+//            for (Com5t el : list) {
+//                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+//                hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + gzazo);
+//            }
 
+            //Полигон стеклопакета
+            this.area = UGeo.bufferCross(owner.area.getGeometryN(0), list, gzazo, 1);
+
+            if (this.id == 6.00) {
+                //new Test().mpol= gf.createMultiPolygon(new Polygon[]{(Polygon) owner.area, (Polygon) this.area});
+            }
             Envelope env = this.area.getEnvelopeInternal();
             spcRec.width = env.getWidth();
             spcRec.height = env.getHeight();
@@ -163,8 +168,7 @@ public class ElemGlass extends ElemSimple {
 
     //Вложенная спецификация
     @Override
-    public void addSpecific(TRecord spcAdd
-    ) {
+    public void addSpecific(TRecord spcAdd) {
         try {
             if (spcAdd.artiklRec.getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;
@@ -265,12 +269,12 @@ public class ElemGlass extends ElemSimple {
     public void rascladkaPaint() {
         if (this.rascRec.isVirtual() == false) {
             ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
-            Map<Double, Double> hm = new HashMap();
-            for (Com5t el : list) {
-                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-                hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr));
-            }
-            Polygon areaProf = UGeo.buffer(owner.area.getGeometryN(0), hm);  //полигон внут. по ширине профиля для прорисовки раскладки
+//            Map<Double, Double> hm = new HashMap();
+//            for (Com5t el : list) {
+//                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+//                hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr));
+//            }
+            Polygon areaProf = UGeo.bufferCross(owner.area.getGeometryN(0), list, 0, 0);  //полигон внут. по ширине профиля для прорисовки раскладки
             Envelope envRasc = areaProf.getEnvelopeInternal();
 
             double artH = Math.round(this.rascRec.getDbl(eArtikl.height));

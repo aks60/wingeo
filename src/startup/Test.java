@@ -571,7 +571,7 @@ public class Test {
 
         LineString geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
         //Polygon geo2 = UGeo.buffer(geo1, frames, 0);
-        Polygon geo3 = UGeo.bufferCross(geo1, frames, 0);
+        Polygon geo3 = UGeo.bufferCross(geo1, frames, 0, 0);
         //Polygon geo4 = UGeo.bufferUnion(geo1, frames, 0);
 
         Coordinate coo1[] = geo1.getCoordinates();
@@ -637,9 +637,9 @@ public class Test {
 //        Geometry geo1 = UGeo.newLineStr(0, 300, 0, 1370, 68, 1370, 68, 300, 0, 300);
 //        Geometry geo2 = UGeo.newLineStr(0, 1370, 1300, 1370, 1300, 1302, 0, 1302, 0, 1370);
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
-        Geometry geo2 = UGeo.buffer(geo1, hm);
+        //Geometry geo2 = UGeo.buffer(geo1, hm);
 
-        mpol = geo1.union(geo2);
+       // mpol = geo1.union(geo2);
         // mlin = geo2;
     }
 

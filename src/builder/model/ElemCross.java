@@ -80,7 +80,7 @@ public class ElemCross extends ElemSimple {
                 lineImp = lineImp.getGeometryN(index);
             }
 
-            //Присваиваю нов. коорд.
+            //TODO Присваиваю нов. коорд.
             if (this.layout() == Layout.VERT) {
                 this.setDimension(lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y, lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y);
             } else {
@@ -88,8 +88,8 @@ public class ElemCross extends ElemSimple {
             }
 
             //Внутренняя ареа       
-            Geometry geo2 = UGeo.bufferCross(owner.area.getGeometryN(0), winc.listElem, .0);
-            if (owner.area.getGeometryN(1).isValid() == false) { //исправление коллизий
+            Geometry geo2 = UGeo.bufferCross(owner.area.getGeometryN(0), winc.listElem, 0, 0);
+            if (owner.area.getGeometryN(1).isValid() == false) { //TODO исправление коллизий
                 GeometryFixer fix = new GeometryFixer(owner.area.getGeometryN(1));
                 geo2 = (Polygon) fix.getResult().getGeometryN(0);
             }
