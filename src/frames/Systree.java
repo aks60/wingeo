@@ -515,7 +515,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     AreaSimple sta = (AreaSimple) winNode.com5t();
                     setText(txt24, UCom.format(UCom.layout(sta.frames, Layout.BOTT).width(), 1));
                     double h = (UCom.layout(sta.frames, Layout.RIGHT).height() > UCom.layout(sta.frames, Layout.LEFT).height()) ? UCom.layout(sta.frames, Layout.RIGHT).height() : UCom.layout(sta.frames, Layout.LEFT).height();
-                    setText(txt26, UCom.format(h, 1));                    
+                    setText(txt26, UCom.format(h, 1));
                     setText(txt20, eFurniture.find(id).getStr(eFurniture.name));
                     setIcon(btn10, stv.isJson(stv.gson.param, PKjson.sysfurnID));
                     setText(txt30, stv.typeOpen.name2);
@@ -4954,16 +4954,18 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     private ListenerAction actionEvent = () -> {
         Wincalc w = wincalc();
-        txt17.setText(UCom.format(w.width(), 1));
-        txt22.setText(UCom.format(w.height(), 1));
+        if (w != null) {
+            txt17.setText(UCom.format(w.width(), 1));
+            txt22.setText(UCom.format(w.height(), 1));
+        }
     };
 
     public final void initElements() {
-        
+
         ePrefs.getWin(this, btnClose, (e) -> {
             ePrefs.putWin(this, btnClose, split1);
         }, split1);
-        
+
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
         new UColor();
 
