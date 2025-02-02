@@ -143,13 +143,7 @@ public class ElemGlass extends ElemSimple {
 
             //Фича определения gzazo и gaxis на раннем этапе построения. 
             new TFilling(winc, true).fill(this);
-
             ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
-//            Map<Double, Double> hm = new HashMap();
-//            for (Com5t el : list) {
-//                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-//                hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + gzazo);
-//            }
 
             //Полигон стеклопакета
             this.area = UGeo.bufferCross(owner.area.getGeometryN(0), list, gzazo, 1);
@@ -204,7 +198,7 @@ public class ElemGlass extends ElemSimple {
                     Coordinate[] c1 = {coo[UGeo.getIndex(coo, sideglass - 1)], coo[sideglass], coo[UGeo.getIndex(coo, sideglass + 1)]};
                     Coordinate[] c2 = {coo[sideglass], coo[UGeo.getIndex(coo, sideglass + 1)], coo[UGeo.getIndex(coo, sideglass + 2)]};
                     double angBetween0 = Math.toDegrees(Angle.angleBetween(c1[0], c1[1], c1[2]));
-                    double angBetween1 = Math.toDegrees(Angle.angleBetween(c2[0], c2[1], c2[2]));
+                    double angBetween1 = Math.toDegrees(Angle.angleBetween(c2[0], c2[1], c2[2]));                    
                     spcAdd.anglCut0 = Math.abs(angBetween0 - UGeo.anglCut(spcAdd, this.areaFalz, UGeo.getIndex(coo, sideglass - 1), sideglass, '-'));
                     spcAdd.anglCut1 = Math.abs(angBetween1 - UGeo.anglCut(spcAdd, this.areaFalz, UGeo.getIndex(coo, sideglass), UGeo.getIndex(coo, sideglass + 1), '+'));
                     spcAdd.width += coo[sideglass].distance(coo[sideglass + 1]); //Тут надо учитывать наклон штапика
