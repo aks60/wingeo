@@ -29,6 +29,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.operation.buffer.BufferOp;
+import org.locationtech.jts.operation.buffer.BufferParameters;
 
 /**
  * Утилиты JTS
@@ -195,7 +197,40 @@ public class UGeo {
             return null;
         }
     }
+    //Не дописал
+    public static Geometry bufferOp(Polygon geoShell, double offset) {
+        try {
+            LineSegment segShell = new LineSegment(), segInner = new LineSegment();
+            int nSegments = Com5t.MAXPOINT;
+            int cap = BufferParameters.CAP_FLAT;
+            int join = BufferParameters.JOIN_MITRE;
+            BufferParameters bufferParam = new BufferParameters(nSegments, cap, join, BufferParameters.DEFAULT_MITRE_LIMIT);
+            BufferOp ops = new BufferOp(geoShell, bufferParam);
+            Geometry geoInner = ops.getResultGeometry(offset);
 
+            Coordinate cooInner[] = geoInner.getCoordinates();
+            Coordinate cooShell[] = geoShell.getCoordinates();
+            List.of(cooInner).forEach(c -> c.z = 4.0);
+            for (int i = 1; i < cooInner.length; i++) {
+                segInner.setCoordinates(cooInner[i - 1], cooInner[i]);
+                for (int j = 1; j < cooShell.length; j++) {
+                    segShell.setCoordinates(cooShell[j - 1], cooShell[j]);
+                    if (segInner.angle() == segShell.angle()) {
+                        cooInner[i - 1].z = cooShell[j - 1].z;
+                    }
+                }
+            }
+            cooInner[cooInner.length - 1].z = cooShell[0].z;
+
+            Geometry areas = geoInner;
+            return areas;
+            
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.bufferOp() " + e);
+            return null;
+        }
+    }
+    
     //Расчёт внутр. буфера. При вырождении полигона загибы на концах арки
     public static Polygon bufferCross(Geometry geoShell, ArrayList<? extends Com5t> frameList, double amend, int opt) {
 
@@ -702,40 +737,6 @@ public class UGeo {
 //        Collection polys = polygonizer.getPolygons();
 //        Polygon[] polyArray = GeometryFactory.toPolygonArray(polys);
 //        return geometry.getFactory().createGeometryCollection(polyArray);
-//    }
-//
-//    //Не дописал
-//    public static Geometry bufferOp(Polygon geoShell, double offset) {
-//        try {
-//            LineSegment segShell = new LineSegment(), segInner = new LineSegment();
-//            int nSegments = Com5t.MAXPOINT;
-//            int cap = BufferParameters.CAP_FLAT;
-//            int join = BufferParameters.JOIN_MITRE;
-//            BufferParameters bufferParam = new BufferParameters(nSegments, cap, join, BufferParameters.DEFAULT_MITRE_LIMIT);
-//            BufferOp ops = new BufferOp(geoShell, bufferParam);
-//            Geometry geoInner = ops.getResultGeometry(offset);
-//
-//            Coordinate cooInner[] = geoInner.getCoordinates();
-//            Coordinate cooShell[] = geoShell.getCoordinates();
-//            List.of(cooInner).forEach(c -> c.z = 4.0);
-//            for (int i = 1; i < cooInner.length; i++) {
-//                segInner.setCoordinates(cooInner[i - 1], cooInner[i]);
-//                for (int j = 1; j < cooShell.length; j++) {
-//                    segShell.setCoordinates(cooShell[j - 1], cooShell[j]);
-//                    if (segInner.angle() == segShell.angle()) {
-//                        cooInner[i - 1].z = cooShell[j - 1].z;
-//                    }
-//                }
-//            }
-//            cooInner[cooInner.length - 1].z = cooShell[0].z;
-//
-//            Geometry areas = gf.createMultiPolygon(new Polygon[]{geoShell, (Polygon) geoInner});
-//            return areas;
-//            
-//        } catch (Exception e) {
-//            System.err.println("Ошибка:UGeo.bufferOp() " + e);
-//            return null;
-//        }
 //    }
 //    
 //    //При вырождении полигона загибы на концах арки
