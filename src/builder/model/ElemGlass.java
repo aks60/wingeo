@@ -101,12 +101,6 @@ public class ElemGlass extends ElemSimple {
         try {
             ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
 
-            Map<Double, Double> hm = new HashMap();
-            for (Com5t el : list) {
-                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-                hm.put(el.id, (rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr)) - rec.getDbl(eArtikl.size_falz));
-            }
-
             //Полигон по фальцу для прорисовки и рассчёта штапик...
             this.areaFalz = UGeo.bufferCross(owner.area.getGeometryN(0), list, 0, 1);
 
@@ -263,11 +257,6 @@ public class ElemGlass extends ElemSimple {
     public void rascladkaPaint() {
         if (this.rascRec.isVirtual() == false) {
             ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
-//            Map<Double, Double> hm = new HashMap();
-//            for (Com5t el : list) {
-//                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-//                hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr));
-//            }
             Polygon areaProf = UGeo.bufferCross(owner.area.getGeometryN(0), list, 0, 0);  //полигон внут. по ширине профиля для прорисовки раскладки
             Envelope envRasc = areaProf.getEnvelopeInternal();
 

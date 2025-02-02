@@ -198,7 +198,7 @@ public class UGeo {
 
     //Расчёт внутр. буфера. При вырождении полигона загибы на концах арки
     public static Polygon bufferCross(Geometry geoShell, ArrayList<? extends Com5t> frameList, double amend, int opt) {
-        int i = 0;
+
         Polygon result = gf.createPolygon();
         Com5t elemRigh = null, elemLeft = null;
         Set<Coordinate> hsDuplication = new HashSet();
@@ -221,7 +221,7 @@ public class UGeo {
             }
 
             //Цыкл по оболочки
-            for (i = 1; i < cooShell.length; i++) {
+            for (int i = 1; i < cooShell.length; i++) {
 
                 //Перебор левого и правого сегмента от точки пересечения
                 if (i > Com5t.MAXSIDE || (cross != null && i < Com5t.MAXSIDE)) {
