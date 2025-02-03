@@ -6,6 +6,7 @@ import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
 import dataset.Record;
 import domain.eArtikl;
+import domain.eSyssize;
 import enums.TypeJoin;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +32,10 @@ public class AreaArch extends AreaSimple {
         ArrayList<Coordinate> listShell = new ArrayList<Coordinate>();
         Geometry arcA = null, arcB = null;
         try {
+            Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
             //Создадим вершины арки
             for (ElemSimple frame : this.frames) {
                 if (frame.h() != null) {
-                    Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
                     double dh = artiklRec.getDbl(eArtikl.height);
                     LineSegment segm = UGeo.normalizeSegm(new LineSegment(frame.x1(), frame.y1(), frame.x2(), frame.y2()));
                     double ANG = Math.toDegrees(segm.angle());
@@ -60,7 +61,7 @@ public class AreaArch extends AreaSimple {
             }
             listShell.add(listShell.get(0));
             Polygon geoShell = gf.createPolygon(listShell.toArray(new Coordinate[0]));
-            Polygon geoInner = (Polygon) UGeo.bufferOp((Polygon) geoShell, -63);            
+            Polygon geoInner = (Polygon) UGeo.bufferOp((Polygon) geoShell, -1 * artiklRec.getDbl(eArtikl.height));
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
 
             //new Test().mpol = this.area;

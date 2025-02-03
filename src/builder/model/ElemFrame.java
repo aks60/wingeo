@@ -87,31 +87,28 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void setLocation() {
         try {
-            Geometry geo1 = owner.area.getGeometryN(0), geo2 = owner.area.getGeometryN(1); //внешн. и внутр. ареа арки.
-            Coordinate coo1[] = geo1.getCoordinates(), coo2[] = geo2.getCoordinates();
-            for (int i = 0; i < coo1.length; i++) {
-                if (coo1[i].z == this.id) {
+            Geometry geoShell = owner.area.getGeometryN(0), geoInner = owner.area.getGeometryN(1); //внешн. и внутр. ареа арки.
+            Coordinate cooShell[] = geoShell.getCoordinates(), cooInner[] = geoInner.getCoordinates();
+            for (int i = 0; i < cooShell.length; i++) {
+                if (cooShell[i].z == this.id) {
                     if (this.h() != null) { //полигон арки
 
                         //radiusArc = (Math.pow((this.x2() - this.x1()) / 2, 2) + Math.pow(this.h(), 2)) / (2 * this.h());  //R = (L2 + H2) / 2H - радиус арки
-                        List<Coordinate> list = new ArrayList<Coordinate>();
-                        List<Coordinate> coo1List = UGeo.getSegmentArch(coo1, this); //внешн.коорд.арки
-                        List<Coordinate> coo2List = UGeo.getSegmentArch(coo2, this); //внутр.коорд.арки
-                        coo2List.add(geo2.getCoordinates()[0]); //посл.точка арки
-                        Collections.reverse(coo2List); //против час.стрелки
+                        List<Coordinate> listFrane = new ArrayList<Coordinate>();
+                        List<Coordinate> listShell = UGeo.getSegmentArch(cooShell, this); //внешн.коорд.арки
+                        List<Coordinate> listInner = UGeo.getSegmentArch(cooInner, this); //внутр.коорд.арки
+                        listInner.add(geoInner.getCoordinates()[0]); //посл.точка арки
+                        Collections.reverse(listInner); //против час.стрелки
 
-                        list.addAll(coo1List);
-                        list.addAll(coo2List);
-                        list.add(coo1List.get(0));
+                        listFrane.addAll(listShell);
+                        listFrane.addAll(listInner);
+                        listFrane.add(listShell.get(0));
 
-                        Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0])); //полигон рамы арки
-                        this.area = poly;
+                        this.area = gf.createPolygon(listFrane.toArray(new Coordinate[0])); //полигон рамы арки
 
                         //new Test().mpol = owner.area.getGeometryN(0);
-                        //new Test().mlin = owner.area.getGeometryN(1);
-
                     } else { //полигон рамы   
-                        this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), coo2[i + 1].x, coo2[i + 1].y, coo2[i].x, coo2[i].y);
+                        this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), cooInner[i + 1].x, cooInner[i + 1].y, cooInner[i].x, cooInner[i].y);
                     }
                     break;
                 }
@@ -137,8 +134,6 @@ public class ElemFrame extends ElemSimple {
                 spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 5], coo[coo.length - 4], coo[coo.length - 3]));
 
             } else {
-                //new Test().mpol = this.area;
-
                 double h = this.artiklRecAn.getDbl(eArtikl.height);
                 int index = IntStream.range(1, coo.length).filter(j -> coo[j - 1].distance(coo[j]) > h).findFirst().getAsInt();
                 spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
@@ -150,6 +145,7 @@ public class ElemFrame extends ElemSimple {
             spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;
             spcRec.height = artiklRec.getDbl(eArtikl.height);
 
+            //new Test().mpol = this.area;
         } catch (Exception e) {
             System.err.println("Ошибка:ElemFrame.setSpecific() " + e);
         }

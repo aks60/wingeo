@@ -8,6 +8,7 @@ import enums.TypeJoin;
 import java.util.ArrayList;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
+import startup.Test;
 
 public class AreaRectangl extends AreaSimple {
 
@@ -28,10 +29,12 @@ public class AreaRectangl extends AreaSimple {
             coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
 
             //Аrea рамы
-            Polygon geo1 = gf.createPolygon(coo.toArray(new Coordinate[0]));                      
-            Polygon geo2 = UGeo.bufferCross(geo1, this.frames, 0, 0);                     
-            this.area = gf.createMultiPolygon(new Polygon[]{geo1, geo2});
+            Polygon geoShell = gf.createPolygon(coo.toArray(new Coordinate[0]));             
+            Polygon geoInner = UGeo.bufferCross(geoShell, this.frames, 0, 0);                     
+            Polygon geoFalz = UGeo.bufferCross(geoShell, this.frames, 0, 1);                     
+            this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
 
+            //new Test().mpol = this.area;
         } catch (Exception e) {
             System.err.println("Ошибка:AreaRectangl.setLocation" + toString() + e);
         }

@@ -156,7 +156,7 @@ public class Test {
 
             @Override
             public java.awt.Dimension getPreferredSize() {
-                return new java.awt.Dimension(800, 600);
+                return new java.awt.Dimension(800, 800);
             }
         };
         frame.add(p);

@@ -64,20 +64,16 @@ public class ElemCross extends ElemSimple {
     @Override
     public void setLocation() {
         try {
-            Geometry geoInner = owner.area.getGeometryN(1);
-            
+            Geometry geoShell = owner.area.getGeometryN(0);
+            Geometry geoMidle = owner.area.getGeometryN(2);
             //Пилим полигон импостом
-            Geometry[] geoSplit = UGeo.splitPolygon(owner.area.copy(), this);
+            Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), this);
 
-            //new Test().mpol = geoSplit[0];
             owner.childs.get(0).area = (Polygon) geoSplit[1];
             owner.childs.get(2).area = (Polygon) geoSplit[2];
 
             //Новые координаты импоста
             Geometry lineImp = geoSplit[0];
-            
-
-            //TODO Присваиваю нов. коорд.
             if (this.layout() == Layout.VERT) {
                 this.setDimension(lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y, lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y);
             } else {
@@ -96,12 +92,9 @@ public class ElemCross extends ElemSimple {
 
             //Ареа импоста обрезаем areaPadding 
             Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
-            Polygon areaImp = (Polygon) areaExp.intersection(geoInner); //полигон элемента конструкции
-            //if (areaImp != null) {
-                this.area = areaImp;
-            //}
-            //new Test().mpol = this.area;
+            this.area = (Polygon) areaExp.intersection(geoMidle); //полигон элемента конструкции
 
+            //new Test().mpol = this.area;
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation " + e);
         }
@@ -118,25 +111,21 @@ public class ElemCross extends ElemSimple {
             spcRec.anglHoriz = UGeo.anglHor(x1(), y1(), x2(), y2());
             spcRec.height = artiklRec.getDbl(eArtikl.height);
 
-            Coordinate coo[] = this.area.getCoordinates();
-            spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
-            spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[0], coo[1], coo[2]));
+            Coordinate cooImp[] = this.area.getCoordinates();
+            spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(cooImp[cooImp.length - 2], cooImp[0], cooImp[1]));
+            spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(cooImp[0], cooImp[1], cooImp[2]));
             spcRec.anglCut0 = (spcRec.anglCut0 > 90) ? 180 - spcRec.anglCut0 : spcRec.anglCut0;
-            spcRec.anglCut1 = (spcRec.anglCut1 > 90) ? 180 - spcRec.anglCut1 : spcRec.anglCut1;
-
-            //На эскизе заход импоста не показываю, сразу пишу в спецификацию
-            double zax = (winc.syssizRec != null) ? winc.syssizRec.getDbl(eSyssize.zax) : 0;
-            zax = 2 * (zax + this.artiklRec.getDbl(eArtikl.size_falz));
 
             if (type == Type.IMPOST) {
                 LineSegment ls = new LineSegment();
                 //Длина импоста - самый длинный сегмент
-                for (int i = 1; i < coo.length; i++) {
-                    ls.setCoordinates(coo[i - 1], coo[i]);
+                for (int i = 1; i < cooImp.length; i++) {
+                    ls.setCoordinates(cooImp[i - 1], cooImp[i]);
                     spcRec.width = (spcRec.width < ls.getLength()) ? ls.getLength() : spcRec.width;
                 }
-                spcRec.width = spcRec.width + zax;
-                
+                spcRec.width = spcRec.width + 2 * winc.syssizRec.getDbl(eSyssize.zax, 0);
+
+                new Test().mpol = this.area;
             } else if (type == Type.SHTULP || type == Type.STOIKA) {
                 spcRec.width = length();
             }
@@ -150,7 +139,7 @@ public class ElemCross extends ElemSimple {
     @Override
     public void addSpecific(TRecord spcAdd) { //добавление спесификаций зависимых элементов
         try {
-            if(spcAdd.artiklRec.getStr(eArtikl.code).substring(0, 1).equals("@")) {
+            if (spcAdd.artiklRec.getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;
             }
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
