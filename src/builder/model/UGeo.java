@@ -197,6 +197,7 @@ public class UGeo {
             return null;
         }
     }
+
     //Не дописал
     public static Geometry bufferOp(Polygon geoShell, double offset) {
         try {
@@ -224,18 +225,18 @@ public class UGeo {
 
             Geometry areas = geoInner;
             return areas;
-            
+
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.bufferOp() " + e);
             return null;
         }
     }
-    
+
     //Расчёт внутр. буфера. При вырождении полигона загибы на концах арки
     public static Polygon bufferCross(Geometry geoShell, ArrayList<? extends Com5t> frameList, double amend, int opt) {
 
+        Com5t elemLeft = null;
         Polygon result = gf.createPolygon();
-        Com5t elemRigh = null, elemLeft = null;
         Set<Coordinate> hsDuplication = new HashSet();
         Deque<Coordinate> crosDeque = new ArrayDeque<Coordinate>();
         List<Coordinate> cooInner = new ArrayList<Coordinate>();
@@ -261,7 +262,6 @@ public class UGeo {
                 //Перебор левого и правого сегмента от точки пересечения
                 if (i > Com5t.MAXSIDE || (cross != null && i < Com5t.MAXSIDE)) {
                     final double ID = cooShell[i - 1].z;
-                    //elemRigh = frameList.stream().filter(e -> e.id == ID).findFirst().get();
                     segRighShell.setCoordinates(cooShell[i - 1], cooShell[i]);
                     segRighInner = segRighShell.offset(-hmOffset.get(ID));
                 }
@@ -275,27 +275,10 @@ public class UGeo {
 
                 //Точка пересечения сегментов
                 cross = segLeftInner.intersection(segRighInner);
-
                 if (cross != null) { //заполнение очереди
                     if (hsDuplication.add(cross)) {
                         cross.z = cooShell[i].z;
                         crosDeque.addLast(cross);
-                    }
-
-                } else if (elemLeft.h() == null) { //обрезание хвоста слева
-                    List<Coordinate> loop = new ArrayList(crosDeque);
-                    for (int k = loop.size() - 1; k >= 0; --k) {
-
-                        segRighInner = new LineSegm(loop.get(k), loop.get(k - 1), loop.get(k).z);
-                        cross = segLeftInner.intersection(segRighInner);
-
-                        if (cross != null) {
-                            crosDeque.addLast(cross);
-                            cross.z = cooShell[i].z;
-                            break;
-                        } else {
-                            crosDeque.pollLast();
-                        }
                     }
                 }
             }
@@ -737,6 +720,86 @@ public class UGeo {
 //        Collection polys = polygonizer.getPolygons();
 //        Polygon[] polyArray = GeometryFactory.toPolygonArray(polys);
 //        return geometry.getFactory().createGeometryCollection(polyArray);
+//    }
+// 
+//    //Расчёт внутр. буфера. При вырождении полигона загибы на концах арки
+//    public static Polygon buffer2Cross(Geometry geoShell, ArrayList<? extends Com5t> frameList, double amend, int opt) {
+//
+//        Polygon result = gf.createPolygon();
+//        Com5t elemRigh = null, elemLeft = null;
+//        Set<Coordinate> hsDuplication = new HashSet();
+//        Deque<Coordinate> crosDeque = new ArrayDeque<Coordinate>();
+//        List<Coordinate> cooInner = new ArrayList<Coordinate>();
+//        LineSegment segRighShell = new LineSegm(), segRighInner = null;
+//        LineSegment segLeftShell = new LineSegm(), segLeftInner = null;
+//        Coordinate[] cooShell = geoShell.getCoordinates();
+//        Coordinate cross = new Coordinate();
+//        Map<Double, Double> hmOffset = new HashMap();
+//        try {
+//            //Величина смещ. сегментов
+//            for (Com5t el : frameList) {
+//                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+//                if (opt == 0) {
+//                    hmOffset.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
+//                } else if (opt == 1) {
+//                    hmOffset.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + amend);
+//                }
+//            }
+//
+//            //Цыкл по оболочки
+//            for (int i = 1; i < cooShell.length; i++) {
+//
+//                //Перебор левого и правого сегмента от точки пересечения
+//                if (i > Com5t.MAXSIDE || (cross != null && i < Com5t.MAXSIDE)) {
+//                    final double ID = cooShell[i - 1].z;
+//                    //elemRigh = frameList.stream().filter(e -> e.id == ID).findFirst().get();
+//                    segRighShell.setCoordinates(cooShell[i - 1], cooShell[i]);
+//                    segRighInner = segRighShell.offset(-hmOffset.get(ID));
+//                }
+//                if (i < Com5t.MAXSIDE || (cross != null && i > Com5t.MAXSIDE)) {
+//                    int j = (i == cooShell.length - 1) ? 1 : i + 1;
+//                    final double ID = cooShell[i].z;
+//                    elemLeft = frameList.stream().filter(e -> e.id == ID).findFirst().get();
+//                    segLeftShell.setCoordinates(cooShell[i], cooShell[j]);
+//                    segLeftInner = segLeftShell.offset(-hmOffset.get(ID));
+//                }
+//
+//                //Точка пересечения сегментов
+//                cross = segLeftInner.intersection(segRighInner);
+//
+//                if (cross != null) { //заполнение очереди
+//                    if (hsDuplication.add(cross)) {
+//                        cross.z = cooShell[i].z;
+//                        crosDeque.addLast(cross);
+//                    }
+//
+//                } else if (elemLeft.h() == null) { //обрезание хвоста слева
+//                    List<Coordinate> loop = new ArrayList(crosDeque);
+//                    for (int k = loop.size() - 1; k >= 0; --k) {
+//
+//                        segRighInner = new LineSegm(loop.get(k), loop.get(k - 1), loop.get(k).z);
+//                        cross = segLeftInner.intersection(segRighInner);
+//
+//                        if (cross != null) {
+//                            crosDeque.addLast(cross);
+//                            cross.z = cooShell[i].z;
+//                            break;
+//                        } else {
+//                            crosDeque.pollLast();
+//                        }
+//                    }
+//                }
+//            }
+//            while (crosDeque.isEmpty() == false) {
+//                cooInner.add(crosDeque.pollFirst());
+//            }
+//            cooInner.add(0, cooInner.get(cooInner.size() - 1));
+//            result = gf.createPolygon(cooInner.toArray(new Coordinate[0]));
+//
+//        } catch (Exception e) {
+//            System.err.println("Ошибка:UGeo.buffeCross() " + e);
+//        }
+//        return result;
 //    }
 //    
 //    //При вырождении полигона загибы на концах арки

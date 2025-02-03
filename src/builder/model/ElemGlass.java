@@ -142,9 +142,9 @@ public class ElemGlass extends ElemSimple {
             //Полигон стеклопакета
             this.area = UGeo.bufferCross(owner.area.getGeometryN(0), list, gzazo, 1);
 
-            if (this.id == 6.00) {
+            //if (this.id == 6.00) {
                 //new Test().mpol= gf.createMultiPolygon(new Polygon[]{(Polygon) owner.area, (Polygon) this.area});
-            }
+            //}
             Envelope env = this.area.getEnvelopeInternal();
             spcRec.width = env.getWidth();
             spcRec.height = env.getHeight();
