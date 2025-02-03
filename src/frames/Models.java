@@ -37,6 +37,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import common.listener.ListenerReload;
 import java.util.prefs.Preferences;
 
+//TODO Не работает кнопка отменить
 public final class Models extends javax.swing.JFrame implements ListenerFrame<Object, Object>, ListenerReload, ListenerAction {
 
     private Icon ico = new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"));

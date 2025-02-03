@@ -64,8 +64,10 @@ public class ElemCross extends ElemSimple {
     @Override
     public void setLocation() {
         try {
+            Geometry geoInner = owner.area.getGeometryN(1);
+            
             //Пилим полигон импостом
-            Geometry[] geoSplit = UGeo.splitPolygon(owner.area.getGeometryN(0).copy(), this);
+            Geometry[] geoSplit = UGeo.splitPolygon(owner.area.copy(), this);
 
             //new Test().mpol = geoSplit[0];
             owner.childs.get(0).area = (Polygon) geoSplit[1];
@@ -74,24 +76,12 @@ public class ElemCross extends ElemSimple {
             //Новые координаты импоста
             Geometry lineImp = geoSplit[0];
             
-            
-            if (lineImp.getGeometryType().equals("MultiLineString")) { //исправление коллизий
-                int index = (lineImp.getGeometryN(0).getLength() > lineImp.getGeometryN(1).getLength()) ? 0 : 1;
-                lineImp = lineImp.getGeometryN(index);
-            }
 
             //TODO Присваиваю нов. коорд.
             if (this.layout() == Layout.VERT) {
                 this.setDimension(lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y, lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y);
             } else {
                 this.setDimension(lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y, lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y);
-            }
-
-            //Внутренняя ареа       
-            Geometry geo2 = UGeo.bufferCross(owner.area.getGeometryN(0), winc.listElem, 0, 0);
-            if (owner.area.getGeometryN(1).isValid() == false) { //TODO исправление коллизий
-                GeometryFixer fix = new GeometryFixer(owner.area.getGeometryN(1));
-                geo2 = (Polygon) fix.getResult().getGeometryN(0);
             }
 
             //Левый и правый сегмент вдоль импоста
@@ -106,10 +96,10 @@ public class ElemCross extends ElemSimple {
 
             //Ареа импоста обрезаем areaPadding 
             Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
-            Polygon areaImp = (Polygon) areaExp.intersection(geo2); //полигон элемента конструкции
-            if (areaImp != null) {
+            Polygon areaImp = (Polygon) areaExp.intersection(geoInner); //полигон элемента конструкции
+            //if (areaImp != null) {
                 this.area = areaImp;
-            }
+            //}
             //new Test().mpol = this.area;
 
         } catch (Exception e) {

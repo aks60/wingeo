@@ -88,21 +88,21 @@ public class ElemFrame extends ElemSimple {
     public void setLocation() {
         try {
             Geometry geo1 = owner.area.getGeometryN(0), geo2 = owner.area.getGeometryN(1); //внешн. и внутр. ареа арки.
-            Coordinate c1[] = geo1.getCoordinates(), c2[] = geo2.getCoordinates();
-            for (int i = 0; i < c1.length; i++) {
-                if (c1[i].z == this.id) {
+            Coordinate coo1[] = geo1.getCoordinates(), coo2[] = geo2.getCoordinates();
+            for (int i = 0; i < coo1.length; i++) {
+                if (coo1[i].z == this.id) {
                     if (this.h() != null) { //полигон арки
 
                         //radiusArc = (Math.pow((this.x2() - this.x1()) / 2, 2) + Math.pow(this.h(), 2)) / (2 * this.h());  //R = (L2 + H2) / 2H - радиус арки
                         List<Coordinate> list = new ArrayList<Coordinate>();
-                        List<Coordinate> c1a = UGeo.getSegmentArch(c1, this); //внешн.коорд.арки
-                        List<Coordinate> c2a = UGeo.getSegmentArch(c2, this); //внутр.коорд.арки
-                        c2a.add(geo2.getCoordinates()[0]); //посл.точка арки
-                        Collections.reverse(c2a); //против час.стрелки
+                        List<Coordinate> coo1List = UGeo.getSegmentArch(coo1, this); //внешн.коорд.арки
+                        List<Coordinate> coo2List = UGeo.getSegmentArch(coo2, this); //внутр.коорд.арки
+                        coo2List.add(geo2.getCoordinates()[0]); //посл.точка арки
+                        Collections.reverse(coo2List); //против час.стрелки
 
-                        list.addAll(c1a);
-                        list.addAll(c2a);
-                        list.add(c1a.get(0));
+                        list.addAll(coo1List);
+                        list.addAll(coo2List);
+                        list.add(coo1List.get(0));
 
                         Polygon poly = gf.createPolygon(list.toArray(new Coordinate[0])); //полигон рамы арки
                         this.area = poly;
@@ -111,7 +111,7 @@ public class ElemFrame extends ElemSimple {
                         //new Test().mlin = owner.area.getGeometryN(1);
 
                     } else { //полигон рамы   
-                        this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), c2[i + 1].x, c2[i + 1].y, c2[i].x, c2[i].y);
+                        this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), coo2[i + 1].x, coo2[i + 1].y, coo2[i].x, coo2[i].y);
                     }
                     break;
                 }

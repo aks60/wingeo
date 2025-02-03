@@ -59,14 +59,8 @@ public class AreaArch extends AreaSimple {
                 }
             }
             listShell.add(listShell.get(0));
-
             Polygon geoShell = gf.createPolygon(listShell.toArray(new Coordinate[0]));
-            
-            //Geometry geop = UGeo.bufferOp(geoShell, -63);
-            //new Test().mpol = geop;
-            
-            Polygon geoInner = (Polygon) UGeo.bufferOp(geoShell, -63);
-            //Polygon geoInner = UGeo.bufferCross(geoShell, this.frames, 0, 0);
+            Polygon geoInner = (Polygon) UGeo.bufferOp((Polygon) geoShell, -63);            
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
 
             //new Test().mpol = this.area;
