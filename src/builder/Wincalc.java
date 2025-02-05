@@ -197,36 +197,15 @@ public class Wincalc {
     //Кальк.коорд. элементов конструкции
     public void location() {
         try {
-            //Главное окно ограниченное сторонами рамы
-            root.setLocation();
-
-            //Инит. артикулов элементов конструкции
             listElem.forEach(e -> e.initArtikle());
-
-            //Создание и коррекция сторон створки
-            if (root.type == Type.DOOR) {
-                UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
-            }
-
-            //Пилим полигоны на ареа и рассчёт полигона импостов
-            UCom.filter(listElem, Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP).forEach(e -> e.setLocation());
-
-            //Создание и коррекция сторон створки
-            if (root.type != Type.DOOR) {
-                UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
-            }
-
-            //Инит. артикулов створки
+            UCom.filterNo(listElem, Type.GLASS).forEach(e -> e.initArtikle());
+            UCom.filterNo(listArea, Type.STVORKA).forEach(e -> e.setLocation());
+            UCom.filterNo(listElem, Type.GLASS).forEach(e -> e.setLocation());
+            
+            UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
             UCom.filter(listArea, Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
-
-            //Рассчёт полигонов сторон рамы
-            if (root.type == Type.DOOR) {
-                for (ElemSimple elemSimple : UCom.filter(listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS)) {
-                    elemSimple.setLocation();
-                }
-            } else {
-                UCom.filter(listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
-            }
+            
+            UCom.filter(listElem, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
 
             //Соединения рам, импостов и створок             
             root.addJoining();  //L и T соединения

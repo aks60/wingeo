@@ -189,22 +189,22 @@ public class UCom {
         }
     }
 
-    public static <E extends Com5t> ArrayList<E> filter(ArrayList<E> lst, Type... type) {
+    public static <E extends Com5t> ArrayList<E> filterNo(ArrayList<E> lst, Type... type) {
         List tp = List.of(type);
         ArrayList<E> list2 = new ArrayList<E>();
         for (E el : lst) {
-            if (tp.contains(el.type)) {
+            if (tp.contains(el.type) == false) {
                 list2.add(el);
             }
         }
         return list2;
     }
 
-    public static ArrayList<Com5t> filterNo(ArrayList<Com5t> lst, Type... type) {
+    public static <E extends Com5t> ArrayList<E> filter(ArrayList<E> lst, Type... type) {
         List tp = List.of(type);
-        ArrayList<Com5t> list2 = new ArrayList<Com5t>();
-        for (Com5t el : lst) {
-            if (tp.contains(el.type) == false) {
+        ArrayList<E> list2 = new ArrayList<E>();
+        for (E el : lst) {
+            if (tp.contains(el.type)) {
                 list2.add(el);
             }
         }
