@@ -153,7 +153,7 @@ public class Wincalc {
                 for (GsonElem js : gson.childs) {
 
                     if (Type.STVORKA == js.type) {
-                        AreaSimple area5e = new AreaStvorka(this, js, owner);
+                        AreaStvorka area5e = new AreaStvorka(this, js, owner);
                         owner.childs.add(area5e); //добавим ребёнка родителю
                         hm.put(area5e, js); //погружение ареа
 
@@ -162,7 +162,7 @@ public class Wincalc {
                         owner.childs.add(area5e); //добавим ребёнка родителю
                         hm.put(area5e, js); //погружение ареа
 
-                    } else if (Type.FRAME_SIDE == js.type) {
+                    } else if (Type.BOX_SIDE == js.type) {
                         ElemFrame elem5e = new ElemFrame(this, js.id, js, owner);
                         root.frames.add(elem5e);
 
@@ -190,7 +190,7 @@ public class Wincalc {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Wincalc.elements(*) " + e);
+            System.err.println("Ошибка:Wincalc.creator() " + e);
         }
     }
 
@@ -198,14 +198,15 @@ public class Wincalc {
     public void location() {
         try {
             listElem.forEach(e -> e.initArtikle());
-            UCom.filterNo(listElem, Type.GLASS).forEach(e -> e.initArtikle());
-            UCom.filterNo(listArea, Type.STVORKA).forEach(e -> e.setLocation());
+            root.setLocation();
             UCom.filterNo(listElem, Type.GLASS).forEach(e -> e.setLocation());
+            UCom.filterNo(listArea, Type.STVORKA).forEach(e -> e.setLocation());
             
-            UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
+            UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).newStvside());
             UCom.filter(listArea, Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
-            
-            UCom.filter(listElem, Type.STVORKA_SIDE, Type.GLASS).forEach(e -> e.setLocation());
+            UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
+    
+            UCom.filter(listElem, Type.STV_SIDE, Type.GLASS).forEach(e -> e.setLocation());
 
             //Соединения рам, импостов и створок             
             root.addJoining();  //L и T соединения
@@ -300,10 +301,10 @@ public class Wincalc {
             UCom.filter(this.listElem, Type.IMPOST, Type.SHTULP, Type.STOIKA).stream().forEach(el -> el.paint());
 
             //Прорисовка рам
-            UCom.filter(this.listElem, Type.FRAME_SIDE).stream().forEach(el -> el.paint());
+            UCom.filter(this.listElem, Type.BOX_SIDE).stream().forEach(el -> el.paint());
 
             //Прорисовка профилей створок
-            UCom.filter(this.listElem, Type.STVORKA_SIDE).stream().forEach(el -> el.paint());
+            UCom.filter(this.listElem, Type.STV_SIDE).stream().forEach(el -> el.paint());
 
             //Прорисока фурнитуры створок
             UCom.filter(this.listArea, Type.STVORKA).stream().forEach(el -> el.paint());

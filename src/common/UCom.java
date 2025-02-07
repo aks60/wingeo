@@ -552,7 +552,7 @@ public class UCom {
                     }
                     //Прил.соединение
                 } else if (side == 2 && join.type() == TypeJoin.FLAT) {
-                    if (elem.type == Type.STVORKA_SIDE && elem.equals(join.elem1)) {
+                    if (elem.type == Type.STV_SIDE && elem.equals(join.elem1)) {
                         return join;
                     } else if (elem.equals(join.elem2)) {
                         return join;
@@ -606,7 +606,7 @@ public class UCom {
                     }
                     //Прил.соединение
                 } else if (side == 2 && join.type() == TypeJoin.FLAT) {
-                    if (elem.type == Type.STVORKA_SIDE && elem.equals(join.elem1)) {
+                    if (elem.type == Type.STV_SIDE && elem.equals(join.elem1)) {
                         return join.elem2;
                     } else if (elem.equals(join.elem2)) {
                         return join.elem1;

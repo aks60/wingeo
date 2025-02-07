@@ -32,7 +32,7 @@ public class ElemFrame extends ElemSimple {
 
     public ElemFrame(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
         super(winc, id, gson, owner);
-        if (gson.type == Type.FRAME_SIDE) {
+        if (gson.type == Type.BOX_SIDE) {
             addListenerEvents();
         }
     }
@@ -40,7 +40,7 @@ public class ElemFrame extends ElemSimple {
     //Test
     public ElemFrame(double id, GsonElem gson) {
         super(id, gson);
-        if (gson.type == Type.FRAME_SIDE) {
+        if (gson.type == Type.BOX_SIDE) {
             addListenerEvents();
         }
     }

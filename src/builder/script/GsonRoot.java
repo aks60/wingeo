@@ -72,7 +72,7 @@ public class GsonRoot extends GsonElem {
                         gs.y1 += dY;
                         gs.y2 += dY;
                     }
-                } else if (List.of(Type.FRAME_SIDE, Type.STVORKA_SIDE).contains(gs.type)) {
+                } else if (List.of(Type.BOX_SIDE, Type.STV_SIDE).contains(gs.type)) {
                     if (dX != 0) {
                         gs.x1 += +dX;
                     }

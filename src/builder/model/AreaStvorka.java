@@ -35,6 +35,8 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 
 public class AreaStvorka extends AreaSimple {
 
+    private Polygon stvShell = null;
+
     public TRecord spcRec = null; //спецификация москитки
     public Record sysfurnRec = eSysfurn.up.newRecord(Query.SEL); //фурнитура
     public Record knobRec = eArtikl.virtualRec(); //ручка
@@ -62,13 +64,40 @@ public class AreaStvorka extends AreaSimple {
         initArtikle(gson.param);
     }
 
+    public void newStvside() {
+        if (this.frames.isEmpty()) {
+            //owner.area - если нет полигона створки в гл.окне 
+            //this.area  - получатется при распиле owner.area импостом
+            this.frameBox = (UCom.filter(winc.listElem, Type.IMPOST).isEmpty())
+                    || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
+            //Полигон створки с учётом нахлёста 
+            double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
+            this.stvShell = UGeo.bufferCross(this.frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
+            Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
+            for (int i = 0; i < coo.length - 1; i++) {
+
+                //Координаты рам створок
+                GsonElem gson = new GsonElem(Type.STV_SIDE, coo[i].x, coo[i].y);
+                //Впихнул параметры в gson
+                if (isJson(this.gson.param, PKjson.stvorkaSide[i])) {
+                    gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
+                }
+                ElemFrame sideStv = new ElemFrame(this.winc, this.id + (.1 + Double.valueOf(i) / 10), gson, this);
+                this.frames.add(sideStv);
+                coo[i].z = sideStv.id;
+            }
+            coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки  
+        }
+    }
+
     /**
      * Фурнитура выбирается вручную из списка системы либо первая в списке
      * системы.
      *
-     * Ручка по умолчанию из сист. фурнитуры либо если есть подбирается из детализации
-     * выбр. фурн. либо выбирается вручную из ручек фыбранной фурнитуры. Цвет
-     * первая запись из текстуры артикулов или подбор из текстур или вручную.
+     * Ручка по умолчанию из сист. фурнитуры либо если есть подбирается из
+     * детализации выбр. фурн. либо выбирается вручную из ручек фыбранной
+     * фурнитуры. Цвет первая запись из текстуры артикулов или подбор из текстур
+     * или вручную.
      *
      */
     public void initArtikle(JsonObject param) {
@@ -101,7 +130,7 @@ public class AreaStvorka extends AreaSimple {
             //Подвес (петли)
             if (isJson(param, PKjson.artiklLoop)) {
                 loopRec = eArtikl.find(param.get(PKjson.artiklLoop).getAsInt(), false);
-            } 
+            }
             //Текстура подвеса
             if (isJson(param, PKjson.colorLoop)) {
                 loopColor = param.get(PKjson.colorLoop).getAsInt();
@@ -147,39 +176,20 @@ public class AreaStvorka extends AreaSimple {
         try {
             //owner.area - если нет полигона створки в гл.окне 
             //this.area  - получатется при распиле owner.area импостом
-            this.frameBox = (UCom.filter(winc.listElem, Type.IMPOST).isEmpty())
-                    || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
+//            this.frameBox = (UCom.filter(winc.listElem, Type.IMPOST).isEmpty())
+//                    || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
+//
+//            //Полигон створки с учётом нахлёста 
+//            double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
+//            Polygon stvShell = UGeo.bufferCross(this.frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл.
 
-            //Полигон створки с учётом нахлёста 
-            double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            Polygon stvShell = UGeo.bufferCross(this.frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл.
-
-            //Если стороны ств. ещё не созданы 
-            if (this.frames.isEmpty()) {
-                Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
-                for (int i = 0; i < coo.length - 1; i++) {
-
-                    //Координаты рам створок
-                    GsonElem gson = new GsonElem(Type.STVORKA_SIDE, coo[i].x, coo[i].y);
-                    //Впихнул параметры в gson
-                    if (isJson(this.gson.param, PKjson.stvorkaSide[i])) {
-                        gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
-                    }
-                    ElemFrame sideStv = new ElemFrame(this.winc, this.id + (.1 + Double.valueOf(i) / 10), gson, this);
-                    this.frames.add(sideStv);
-                    coo[i].z = sideStv.id;
-                }
-                coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
-
-            } else { //Если стороны уже созданы
-                Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
-                for (int i = 0; i < coo.length - 1; i++) {
-                    ElemSimple elem = this.frames.get(i);
-                    coo[i].z = elem.id;
-                    elem.setDimension(coo[i].x, coo[i].y, coo[i + 1].x, coo[i + 1].y); //запишем координаты
-                }
-                coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
+            Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
+            for (int i = 0; i < coo.length - 1; i++) {
+                ElemSimple elem = this.frames.get(i);
+                coo[i].z = elem.id;
+                elem.setDimension(coo[i].x, coo[i].y, coo[i + 1].x, coo[i + 1].y); //запишем координаты
             }
+            coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
 
             Polygon stvInner = UGeo.bufferCross(stvShell, this.frames, 0, 0);
             this.area = gf.createMultiPolygon(new Polygon[]{stvShell, stvInner});
@@ -252,7 +262,7 @@ public class AreaStvorka extends AreaSimple {
     //L - соединения, прил.соед.
     @Override
     public void addJoining() {
-        ArrayList<ElemSimple> elemList = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.STOIKA, Type.SHTULP);
+        ArrayList<ElemSimple> elemList = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.STOIKA, Type.SHTULP);
         try {
             //L - соединения
             for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам створки
@@ -274,9 +284,9 @@ public class AreaStvorka extends AreaSimple {
             Coordinate coo2[] = this.frameBox.getGeometryN(0).getCoordinates(); //полигон векторов сторон рамы
 
             for (int j = 0; j < coo1.length - 1; j++) {
-               final double id1 = coo1[j].z;
+                final double id1 = coo1[j].z;
                 ElemSimple elemStv = elemList.stream().filter(e -> e.id == id1).findFirst().get();
-               final double id2 = coo2[j].z;
+                final double id2 = coo2[j].z;
                 ElemSimple elemFrm = elemList.stream().filter(e -> e.id == id2).findFirst().get();
                 if (elemStv != null && elemFrm != null) {
                     winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.FLAT, elemStv, elemFrm));
@@ -306,7 +316,7 @@ public class AreaStvorka extends AreaSimple {
             winc.gc2d.fill(shape);
 
             if (timer.isRunning() == true) {
-                this.frames.stream().filter(e -> e.type == Type.STVORKA_SIDE).forEach(e -> ((Com5t) e).timer.start());
+                this.frames.stream().filter(e -> e.type == Type.STV_SIDE).forEach(e -> ((Com5t) e).timer.start());
             }
             winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
             winc.gc2d.draw(shape);

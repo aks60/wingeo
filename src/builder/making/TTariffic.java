@@ -85,7 +85,7 @@ public class TTariffic extends Cal5e {
                             } else if (form == TypeForm.P12.id && Type.ARCH == elem5e.owner.type) {//не прямоугольное заполнение с арками
                                 rulecalcTarif(winc, rulecalcRec, elem5e.spcRec);
                             }
-                        } else if (form == TypeForm.P04.id && elem5e.type == Type.FRAME_SIDE
+                        } else if (form == TypeForm.P04.id && elem5e.type == Type.BOX_SIDE
                                 && elem5e.owner.type == Type.ARCH && elem5e.layout() == Layout.TOP) {  //профиль с радиусом  (фильтр для арки профиля AYPC.W62.0101)
                             rulecalcTarif(winc, rulecalcRec, elem5e.spcRec); //профиль с радиусом
 

@@ -464,7 +464,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     ((DefTableModel) tab7.getModel()).fireTableDataChanged();
 
                     //Рама, импост...
-                } else if (List.of(enums.Type.FRAME_SIDE, enums.Type.STVORKA_SIDE, enums.Type.IMPOST,
+                } else if (List.of(enums.Type.BOX_SIDE, enums.Type.STV_SIDE, enums.Type.IMPOST,
                         enums.Type.STOIKA, enums.Type.SHTULP).contains(winNode.com5t().type)) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card13");
                     ((TitledBorder) pan13.getBorder()).setTitle(winNode.toString());
@@ -3858,7 +3858,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
                 new DicSysprof(this, paramRec.getInt(eSysprof.id), (sysprofRec) -> {
                     Wincalc winc = wincalc();
-                    if (winNode.com5t().type == enums.Type.FRAME_SIDE) { //рама окна
+                    if (winNode.com5t().type == enums.Type.BOX_SIDE) { //рама окна
                         double elemId = winNode.com5t().id;
                         GsonElem gsonRama = UCom.gson(winc.listAll, elemId);
                         if (sysprofRec.get(1) == null) {
@@ -3868,7 +3868,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         }
                         changeAndRedraw();
 
-                    } else if (winNode.com5t().type == enums.Type.STVORKA_SIDE) { //рама створки
+                    } else if (winNode.com5t().type == enums.Type.STV_SIDE) { //рама створки
                         double stvId = winNode.com5t().owner.id;
                         GsonElem stvArea = UCom.gson(winc.listAll, stvId);
                         JsonObject paramObj = stvArea.param;
@@ -3923,7 +3923,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 double parentId = winNode.com5t().owner.id;
                 GsonElem parentArea = UCom.gson(wincalc().listAll, parentId);
 
-                if (winNode.com5t().type == enums.Type.STVORKA_SIDE) {
+                if (winNode.com5t().type == enums.Type.STV_SIDE) {
                     JsonObject paramObj = parentArea.param;
                     String stvKey = null;
                     if (winNode.com5t().layout() == Layout.BOTT) {
@@ -3944,7 +3944,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     }
                     changeAndRedraw();
 
-                } else if (winNode.com5t().type == enums.Type.FRAME_SIDE) {
+                } else if (winNode.com5t().type == enums.Type.BOX_SIDE) {
                     for (GsonElem elem : parentArea.childs) {
                         if (elem.id == ((DefMutableTreeNode) winNode).com5t().id) {
                             if (colorRec.get(1) == null) {
@@ -4580,7 +4580,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     private void removeImpostAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeImpostAction
         Com5t owner = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t().owner;
-        owner.gson.childs = owner.gson.childs.stream().filter(e -> e.type == enums.Type.FRAME_SIDE).collect(toList());
+        owner.gson.childs = owner.gson.childs.stream().filter(e -> e.type == enums.Type.BOX_SIDE).collect(toList());
         owner.gson.addElem(new GsonElem(enums.Type.GLASS));
         changeAndRedraw();
     }//GEN-LAST:event_removeImpostAction

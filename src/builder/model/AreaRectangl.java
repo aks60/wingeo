@@ -21,15 +21,15 @@ public class AreaRectangl extends AreaSimple {
     @Override
     public void setLocation() {
         try {
-            ArrayList<Coordinate> coo = new ArrayList<Coordinate>();
+            ArrayList<Coordinate> cooBox = new ArrayList<Coordinate>();
             Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
 
             //Вершины рамы
-            this.frames.forEach(frame -> coo.add(new Coordinate(frame.x1(), frame.y1(), frame.id)));
-            coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
+            this.frames.forEach(frame -> cooBox.add(new Coordinate(frame.x1(), frame.y1(), frame.id)));
+            cooBox.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
 
             //Аrea рамы
-            Polygon geoShell = gf.createPolygon(coo.toArray(new Coordinate[0]));             
+            Polygon geoShell = gf.createPolygon(cooBox.toArray(new Coordinate[0]));             
             Polygon geoInner = UGeo.bufferCross(geoShell, this.frames, 0, 0);                     
             Polygon geoFalz = UGeo.bufferCross(geoShell, this.frames, 0, 1);                     
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});

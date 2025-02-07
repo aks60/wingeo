@@ -156,7 +156,7 @@ public class JoiningVar extends Par5s {
                 case 1040:  //Размер, мм (Смещение осей рамы и створки. Наследие ps3)
                     //Параметр вычисляктся на раннем этапе см. конструктор AreaStvorka()
                     //Применяется если сист. константы отсутствуют
-                    if (elemJoin.elem1.type == Type.STVORKA_SIDE) {
+                    if (elemJoin.elem1.type == Type.STV_SIDE) {
                         listenerList.add(() -> {
                             AreaStvorka stv = (AreaStvorka) elemJoin.elem1.owner;
                             if (elemJoin.elem1.layout() == Layout.BOTT) {

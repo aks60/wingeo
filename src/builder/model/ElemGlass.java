@@ -99,7 +99,7 @@ public class ElemGlass extends ElemSimple {
     public void setLocation() {
 
         try {
-            ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
+            ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST);
 
             //Полигон по фальцу для прорисовки и рассчёта штапик...
             this.areaFalz = UGeo.bufferCross(owner.area.getGeometryN(0), list, 0, 1);
@@ -137,7 +137,7 @@ public class ElemGlass extends ElemSimple {
 
             //Фича определения gzazo и gaxis на раннем этапе построения. 
             new TFilling(winc, true).fill(this);
-            ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+            ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
 
             //Полигон стеклопакета
             this.area = UGeo.bufferCross(owner.area.getGeometryN(0), list, gzazo, 1);
@@ -256,7 +256,7 @@ public class ElemGlass extends ElemSimple {
 
     public void rascladkaPaint() {
         if (this.rascRec.isVirtual() == false) {
-            ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.STVORKA_SIDE, Type.IMPOST);
+            ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST);
             Polygon areaProf = UGeo.bufferCross(owner.area.getGeometryN(0), list, 0, 0);  //полигон внут. по ширине профиля для прорисовки раскладки
             Envelope envRasc = areaProf.getEnvelopeInternal();
 

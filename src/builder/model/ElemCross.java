@@ -65,7 +65,7 @@ public class ElemCross extends ElemSimple {
     public void setLocation() {
         try {
             Geometry geoShell = owner.area.getGeometryN(0);
-            Geometry geoMidle = owner.area.getGeometryN(2);
+            Geometry geoFalz = owner.area.getGeometryN(2);
             //Пилим полигон импостом
             Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), this);
 
@@ -92,7 +92,7 @@ public class ElemCross extends ElemSimple {
 
             //Ареа импоста обрезаем areaPadding 
             Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
-            this.area = (Polygon) areaExp.intersection(geoMidle); //полигон элемента конструкции
+            this.area = (Polygon) areaExp.intersection(geoFalz); //полигон элемента конструкции
 
             //new Test().mpol = this.area;
         } catch (Exception e) {
@@ -125,7 +125,7 @@ public class ElemCross extends ElemSimple {
                 }
                 spcRec.width = spcRec.width + 2 * winc.syssizRec.getDbl(eSyssize.zax, 0);
 
-                new Test().mpol = this.area;
+                //new Test().mpol = this.area;
             } else if (type == Type.SHTULP || type == Type.STOIKA) {
                 spcRec.width = length();
             }
@@ -179,7 +179,7 @@ public class ElemCross extends ElemSimple {
 
         if (this.type == Type.SHTULP) {
             for (ElemSimple elem : winc.listElem) {
-                if (elem.type == Type.STVORKA_SIDE) {
+                if (elem.type == Type.STV_SIDE) {
                     Coordinate coo[] = elem.area.getCoordinates();
                     LineSegment segm = UGeo.getSegment(area, 0);
                     boolean b = PointLocation.isInRing(segm.midPoint(), coo);

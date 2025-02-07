@@ -72,7 +72,7 @@ public class FurnitureVar extends Par5s {
                     break;
                 case 21004: //Артикул створки 
                 {
-                    ElemSimple stv = UCom.filter(winc.listElem, Type.STVORKA_SIDE).get(0);
+                    ElemSimple stv = UCom.filter(winc.listElem, Type.STV_SIDE).get(0);
                     if (stv.artiklRecAn.getStr(eArtikl.code).equals(rec.getStr(TEXT)) == false) {
                         return false;
                     }

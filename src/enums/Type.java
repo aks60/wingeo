@@ -8,12 +8,12 @@ public enum Type implements Enam {
 
     NONE(0, 0, "Не определено"),
     //== TypeElem ==
-    FRAME_SIDE(1, 1, "Сторона коробки"),
-    STVORKA_SIDE(2, 2, "Сторона створки"),
+    BOX_SIDE(1, 1, "Сторона коробки"),
+    STV_SIDE(2, 2, "Сторона створки"),
     IMPOST(3, 3, "Импост"),
     RIGEL_IMP(4, 777, "Ригель/импост"),
     STOIKA(5, 5, "Стойка"),
-    STOIKA_FRAME(6, 777, "Стойка/коробка"),
+    STRUT_BOX(6, 777, "Стойка/коробка"),
     ERKER(7, 7, "Эркер"),
     EDGE(8, 8, "Грань"),
     SHTULP(9, 9, "Штульп"),

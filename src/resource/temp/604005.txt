@@ -68,25 +68,25 @@ Prj=604005        PS=21819,14       SA=21740,03       dx=79,11
   "childs": [
     {
       "id": 1.0,
-      "type": "FRAME_SIDE",
+      "type": "BOX_SIDE",
       "x1": 0.0,
       "y1": 300.0
     },
     {
       "id": 2.0,
-      "type": "FRAME_SIDE",
+      "type": "BOX_SIDE",
       "x1": 0.0,
       "y1": 1500.0
     },
     {
       "id": 3.0,
-      "type": "FRAME_SIDE",
+      "type": "BOX_SIDE",
       "x1": 1300.0,
       "y1": 1500.0
     },
     {
       "id": 4.0,
-      "type": "FRAME_SIDE",
+      "type": "BOX_SIDE",
       "x1": 1300.0,
       "y1": 300.0,
       "h": 300.0

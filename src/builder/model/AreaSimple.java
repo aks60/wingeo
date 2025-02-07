@@ -1,12 +1,14 @@
 package builder.model;
 
 import builder.Wincalc;
+import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import common.UCom;
 import common.listener.ListenerPaint;
 import dataset.Record;
+import domain.eArtikl;
 import domain.eColor;
 import domain.eParams;
 import domain.eParmap;
@@ -27,6 +29,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.Polygon;
 
 public class AreaSimple extends Com5t {
 
@@ -97,13 +100,24 @@ public class AreaSimple extends Com5t {
     }
 
     public void setLocation() {
+        try {
+            //Аrea рамы
+            Polygon geoShell = (Polygon) this.area;             
+            Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);                     
+            Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);                     
+            this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
+
+            //new Test().mpol = this.area;
+        } catch (Exception e) {
+            System.err.println("Ошибка:AreaSimple.setLocation" + toString() + e);
+        }        
     }
 
     //Т - соединения
     public void addJoining() {
         //T - соединения
         ArrayList<ElemSimple> crosList = UCom.filter(winc.listElem, Type.IMPOST, Type.STOIKA);
-        ArrayList<ElemSimple> elemList = UCom.filter(winc.listElem, Type.FRAME_SIDE, Type.IMPOST);
+        ArrayList<ElemSimple> elemList = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.IMPOST);
 
         //Цикл по импостам
         for (ElemSimple imp : crosList) {
@@ -116,7 +130,7 @@ public class AreaSimple extends Com5t {
                 if (imp.id != frm.id) {
                     Geometry line = UGeo.newLineStr(frm.x1(), frm.y1(), frm.x2(), frm.y2());
 
-                    if (frm.type == enums.Type.FRAME_SIDE) {
+                    if (frm.type == enums.Type.BOX_SIDE) {
                         if (line.intersects(p1)) { //левая сторона
                             winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, frm, imp));
                         }
