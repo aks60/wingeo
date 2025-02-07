@@ -101,7 +101,6 @@ public class AreaSimple extends Com5t {
 
     public void setLocation() {
         try {
-            //Àrea ðàìû
             Polygon geoShell = (Polygon) this.area;             
             Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);                     
             Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);                     
