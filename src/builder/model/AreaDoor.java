@@ -27,9 +27,10 @@ public class AreaDoor extends AreaSimple {
             coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
 
             //Àrea ðàìû
-            Polygon areaShell = gf.createPolygon(coo.toArray(new Coordinate[0]));                      
-            Polygon areaInner = UGeo.bufferCross(areaShell, this.frames, 0, 0);                     
-            this.area = gf.createMultiPolygon(new Polygon[]{areaShell, areaInner});
+            Polygon geoShell = gf.createPolygon(coo.toArray(new Coordinate[0]));                      
+            Polygon geoInner = UGeo.bufferCross(geoShell, this.frames, 0, 0);    
+            Polygon geoFalz = UGeo.bufferCross(geoShell, this.frames, 0, 1);
+            this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
             
             splitLocation((Polygon) this.area.getGeometryN(0), this.childs);
 
