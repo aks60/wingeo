@@ -66,29 +66,16 @@ public class ElemCross extends ElemSimple {
         try {
             Geometry geoShell = owner.area.getGeometryN(0);
             Geometry geoFalz = owner.area.getGeometryN(2);
-            //Пилим полигон импостом
-            //Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), this);
-
-            //owner.childs.get(0).area = (Polygon) geoSplit[1];
-            //owner.childs.get(2).area = (Polygon) geoSplit[2];
-
-            //Новые координаты импоста
-//            Geometry lineImp = geoSplit[0];
-//            if (this.layout() == Layout.VERT) {
-//                this.setDimension(lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y, lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y);
-//            } else {
-//                this.setDimension(lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y, lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y);
-//            }
 
             //Левый и правый сегмент вдоль импоста
             double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr); //ширина
             LineSegment baseSegm = new LineSegment(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()));
-            LineSegment moveBaseSegment[] = {baseSegm.offset(+delta), baseSegm.offset(-delta)};
+            LineSegment offsetSegment[] = {baseSegm.offset(+delta), baseSegm.offset(-delta)};
 
             //Точки пересечения канвы сегментами импоста
             Polygon areaCanvas = UGeo.newPolygon(0, 0, 0, 10000, 10000, 10000, 10000, 0);
-            Coordinate C1[] = UGeo.geoCross(areaCanvas, moveBaseSegment[0]);
-            Coordinate C2[] = UGeo.geoCross(areaCanvas, moveBaseSegment[1]);
+            Coordinate C1[] = UGeo.geoCross(areaCanvas, offsetSegment[0]);
+            Coordinate C2[] = UGeo.geoCross(areaCanvas, offsetSegment[1]);
 
             //Ареа импоста обрезаем areaPadding 
             Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);

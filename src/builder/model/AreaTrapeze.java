@@ -11,28 +11,29 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
 
 public class AreaTrapeze extends AreaSimple {
-  
+
     public AreaTrapeze(Wincalc winc, GsonElem gson) {
         super(winc, gson, null);
-    }  
+    }
 
     //Полигон рамы. Функ. выпоняется после создания рам конструкции
     @Override
     public void setLocation() {
         try {
-            ArrayList<Coordinate> coo = new ArrayList<Coordinate>();
-            Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
-            double dh = artiklRec.getDbl(eArtikl.height);     
-            
             //Вершины рамы
+            ArrayList<Coordinate> coo = new ArrayList<Coordinate>();
             this.frames.forEach(line -> coo.add(new Coordinate(line.x1(), line.y1(), line.id)));
             coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
-            
-            //Аrea рамы
-            Polygon areaShell = gf.createPolygon(coo.toArray(new Coordinate[0]));   
-            Polygon areaInner = UGeo.bufferCross(areaShell, this.frames, 0, 0);                        
-            this.area = gf.createMultiPolygon(new Polygon[]{areaShell, areaInner});
 
+            //Аrea рамы
+            Polygon geoShell = gf.createPolygon(coo.toArray(new Coordinate[0]));
+            Polygon geoInner = UGeo.bufferCross(geoShell, this.frames, 0, 0);
+            Polygon geoFalz = UGeo.bufferCross(geoShell, this.frames, 0, 1);
+            this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
+
+            splitLocation((Polygon) this.area.getGeometryN(0), this.childs);
+
+            //new Test().mpol = this.area;
         } catch (Exception e) {
             System.err.println("Ошибка:AreaRectangl.setLocation" + toString() + e);
         }
@@ -43,12 +44,12 @@ public class AreaTrapeze extends AreaSimple {
     public void addJoining() {
         try {
             winc.listJoin.clear();
-            
+
             super.addJoining(); //T - соединения
 
             //L - соединения
             for (int i = 0; i < this.frames.size(); i++) { //цикл по сторонам рамы
-                ElemFrame nextFrame = (ElemFrame) this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1); 
+                ElemFrame nextFrame = (ElemFrame) this.frames.get((i == this.frames.size() - 1) ? 0 : i + 1);
                 winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.ANGL, this.frames.get(i), nextFrame));
             }
         } catch (Exception e) {
@@ -57,10 +58,10 @@ public class AreaTrapeze extends AreaSimple {
     }
 
     //Линии размерности
-    @Override    
+    @Override
     public void paint() {
         super.paint();
-        
+
 //        if (this.area != null) {
 //            Shape shape = new ShapeWriter().toShape(this.area);
 //
@@ -71,7 +72,7 @@ public class AreaTrapeze extends AreaSimple {
 //            winc.gc2d.draw(shape);
 //        }
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
     // </editor-fold>      
 }

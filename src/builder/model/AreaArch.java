@@ -29,11 +29,11 @@ public class AreaArch extends AreaSimple {
     //Полигон рамы. Функ. выпоняется после создания рам конструкции
     @Override
     public void setLocation() {
+        Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
         ArrayList<Coordinate> listShell = new ArrayList<Coordinate>();
         Geometry arcA = null, arcB = null;
         try {
-            Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
-            //Создадим вершины арки
+            //Вершины арки
             for (ElemSimple frame : this.frames) {
                 if (frame.h() != null) {
                     double dh = artiklRec.getDbl(eArtikl.height);
@@ -61,11 +61,14 @@ public class AreaArch extends AreaSimple {
             }
             listShell.add(listShell.get(0));
             
+            //Аrea рамы 
             double dh = artiklRec.getDbl(eArtikl.height) - artiklRec.getDbl(eArtikl.size_centr) - artiklRec.getDbl(eArtikl.size_falz);
             Polygon geoShell = gf.createPolygon(listShell.toArray(new Coordinate[0]));
             Polygon geoInner = (Polygon) UGeo.bufferOp((Polygon) geoShell, -artiklRec.getDbl(eArtikl.height));
             Polygon geoFalz = (Polygon) UGeo.bufferOp((Polygon) geoShell, -dh);
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
+            
+            splitLocation((Polygon) this.area.getGeometryN(0), this.childs);
 
             //new Test().mpol = this.area;
         } catch (Exception e) {

@@ -174,11 +174,6 @@ public class AreaStvorka extends AreaSimple {
     //Создание и коррекция сторон створки
     public void setLocation() {
         try {
-            //owner.area - если нет полигона створки в гл.окне 
-            //this.area  - получатется при распиле owner.area импостом
-//            this.frameBox = (UCom.filter(winc.listElem, Type.IMPOST).isEmpty())
-//                    || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
-
             //Полигон створки с учётом нахлёста 
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
             Polygon geoShell = (Polygon) this.area;

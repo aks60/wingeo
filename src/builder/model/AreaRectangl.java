@@ -32,7 +32,7 @@ public class AreaRectangl extends AreaSimple {
             Polygon geoFalz = UGeo.bufferCross(geoShell, this.frames, 0, 1);                     
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
             
-            splitPolygon((Polygon) this.area.getGeometryN(0), this.childs);
+            splitLocation((Polygon) this.area.getGeometryN(0), this.childs);
             
             //new Test().mpol = this.area;
         } catch (Exception e) {
