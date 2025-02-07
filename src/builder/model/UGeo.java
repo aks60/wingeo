@@ -130,7 +130,7 @@ public class UGeo {
     }
 
     //Пилим многоугольник
-    public static Geometry[] splitPolygon(Geometry geom, ElemCross impost) {
+    public static Geometry[] splitPolygon(Geometry geom, Com5t impost) {
         try {
             boolean b = true;
             HashSet<Coordinate> checkHs = new HashSet<Coordinate>();

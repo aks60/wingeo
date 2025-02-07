@@ -35,7 +35,7 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 
 public class AreaStvorka extends AreaSimple {
 
-    private Polygon stvShell = null;
+    //private Polygon stvShell = null;
 
     public TRecord spcRec = null; //спецификация москитки
     public Record sysfurnRec = eSysfurn.up.newRecord(Query.SEL); //фурнитура
@@ -72,7 +72,7 @@ public class AreaStvorka extends AreaSimple {
                     || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
             //Полигон створки с учётом нахлёста 
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            this.stvShell = UGeo.bufferCross(this.frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
+            Polygon stvShell = UGeo.bufferCross(this.frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
             Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
             for (int i = 0; i < coo.length - 1; i++) {
 
@@ -178,11 +178,11 @@ public class AreaStvorka extends AreaSimple {
             //this.area  - получатется при распиле owner.area импостом
 //            this.frameBox = (UCom.filter(winc.listElem, Type.IMPOST).isEmpty())
 //                    || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
-//
-//            //Полигон створки с учётом нахлёста 
-//            double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-//            Polygon stvShell = UGeo.bufferCross(this.frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл.
 
+            //Полигон створки с учётом нахлёста 
+            double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
+            Polygon geoShell = (Polygon) this.area;
+            Polygon stvShell = UGeo.bufferCross(geoShell, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл.
             Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
             for (int i = 0; i < coo.length - 1; i++) {
                 ElemSimple elem = this.frames.get(i);

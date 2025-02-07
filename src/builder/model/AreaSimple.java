@@ -54,7 +54,7 @@ public class AreaSimple extends Com5t {
     public void initConstructiv(JsonObject param) {
         if (isJson(param, PKjson.sysprofID)) {//профили через параметр
             sysprofRec = eSysprof.find3(param.get(PKjson.sysprofID).getAsInt());
-        } 
+        }
 //        else if(this.owner.id == 0) {
 //            sysprofRec = eSysprof.find4(this.winc.nuni, UseArtiklTo.FRAME.id, UseSideTo.ANY);
 //        }
@@ -101,15 +101,33 @@ public class AreaSimple extends Com5t {
 
     public void setLocation() {
         try {
-            Polygon geoShell = (Polygon) this.area;             
-            Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);                     
-            Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);                     
+            Polygon geoShell = (Polygon) this.area;
+            Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);
+            Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
 
+            splitPolygon(geoShell, this.childs);
+            
             //new Test().mpol = this.area;
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.setLocation" + toString() + e);
-        }        
+        }
+    }
+
+    public void splitPolygon(Polygon geoShell, ArrayList<Com5t> childs) {
+        if (childs.size() > 2 && childs.get(1).type == Type.IMPOST) {
+            ElemCross impost = (ElemCross) childs.get(1);
+            Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), impost);
+            childs.get(0).area = (Polygon) geoSplit[1];
+            childs.get(2).area = (Polygon) geoSplit[2];
+            Geometry lineImp = geoSplit[0];
+            //TODO Надо перейти на градусы
+            if (impost.layout() == Layout.VERT) {
+                impost.setDimension(lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y, lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y);
+            } else {
+                impost.setDimension(lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y, lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y);
+            }
+        }
     }
 
     //Т - соединения
@@ -163,7 +181,7 @@ public class AreaSimple extends Com5t {
             if (this.type != Type.DOOR) {
                 for (AreaSimple area5e : winc.listArea) {
                     Geometry frameBox = (area5e.type == Type.STVORKA)
-                            ? ((AreaStvorka) area5e).frameBox 
+                            ? ((AreaStvorka) area5e).frameBox
                             : area5e.area.getGeometryN(0);
                     Coordinate coo[] = frameBox.getCoordinates();
 

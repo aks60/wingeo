@@ -67,18 +67,18 @@ public class ElemCross extends ElemSimple {
             Geometry geoShell = owner.area.getGeometryN(0);
             Geometry geoFalz = owner.area.getGeometryN(2);
             //Пилим полигон импостом
-            Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), this);
+            //Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), this);
 
-            owner.childs.get(0).area = (Polygon) geoSplit[1];
-            owner.childs.get(2).area = (Polygon) geoSplit[2];
+            //owner.childs.get(0).area = (Polygon) geoSplit[1];
+            //owner.childs.get(2).area = (Polygon) geoSplit[2];
 
             //Новые координаты импоста
-            Geometry lineImp = geoSplit[0];
-            if (this.layout() == Layout.VERT) {
-                this.setDimension(lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y, lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y);
-            } else {
-                this.setDimension(lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y, lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y);
-            }
+//            Geometry lineImp = geoSplit[0];
+//            if (this.layout() == Layout.VERT) {
+//                this.setDimension(lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y, lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y);
+//            } else {
+//                this.setDimension(lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y, lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y);
+//            }
 
             //Левый и правый сегмент вдоль импоста
             double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr); //ширина
