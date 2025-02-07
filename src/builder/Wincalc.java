@@ -202,7 +202,7 @@ public class Wincalc {
             UCom.filterNo(listArea, Type.STVORKA).forEach(e -> e.setLocation());
             UCom.filterNo(listElem, Type.GLASS).forEach(e -> e.setLocation());
 
-            UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).newStvside());
+            UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).addStvorka());
             UCom.filter(listArea, Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
             UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
     

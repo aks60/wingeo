@@ -21,10 +21,8 @@ public class AreaDoor extends AreaSimple {
     @Override
     public void setLocation() {
         try {
-            ArrayList<Coordinate> coo = new ArrayList<Coordinate>();
-            Record artiklRec = (this.frames.get(0).artiklRecAn == null) ? eArtikl.virtualRec() : this.frames.get(0).artiklRecAn;
-
             //Вершины рамы
+            ArrayList<Coordinate> coo = new ArrayList<Coordinate>();
             this.frames.forEach(frame -> coo.add(new Coordinate(frame.x1(), frame.y1(), frame.id)));
             coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
 
@@ -32,6 +30,8 @@ public class AreaDoor extends AreaSimple {
             Polygon areaShell = gf.createPolygon(coo.toArray(new Coordinate[0]));                      
             Polygon areaInner = UGeo.bufferCross(areaShell, this.frames, 0, 0);                     
             this.area = gf.createMultiPolygon(new Polygon[]{areaShell, areaInner});
+            
+            splitLocation((Polygon) this.area.getGeometryN(0), this.childs);
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaDoor.setLocation" + toString() + e);
