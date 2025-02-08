@@ -107,7 +107,7 @@ public class AreaSimple extends Com5t {
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
 
             splitLocation(geoShell, this.childs);
-            
+
             //new Test().mpol = this.area;
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.setLocation" + toString() + e);
@@ -172,26 +172,41 @@ public class AreaSimple extends Com5t {
     @Override
     public void paint() {
         try {
-            if (listenerPassEdit != null) {
-                listenerPassEdit.paint();
-            }
-            winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
-            Envelope frameEnv = winc.root.area.getGeometryN(0).getEnvelopeInternal();
-            HashSet<Double> hsHor = new HashSet<Double>(), hsVer = new HashSet<Double>();
-            if (this.type != Type.DOOR) {
-                for (AreaSimple area5e : winc.listArea) {
-                    Geometry frameBox = (area5e.type == Type.STVORKA)
-                            ? ((AreaStvorka) area5e).frameBox
-                            : area5e.area.getGeometryN(0);
-                    Coordinate coo[] = frameBox.getCoordinates();
+            if (this.type != Type.STVORKA) {
+                if (listenerPassEdit != null) {
+                    listenerPassEdit.paint();
+                }
+                winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
+                Envelope frameEnvelope = winc.root.area.getGeometryN(0).getEnvelopeInternal();
+                HashSet<Double> hsHor = new HashSet<Double>(), hsVer = new HashSet<Double>();
+                if (this.type != Type.DOOR) {
+                    
+                    for (AreaSimple area5e : winc.listArea) {
+                        Geometry frameBox = (area5e.type == Type.STVORKA) ? area5e.area.getGeometryN(3) : area5e.area.getGeometryN(0);                       
+                        Coordinate coo[] = frameBox.getCoordinates();
 
-                    if (this instanceof AreaArch) {
-                        Geometry geo1 = this.area.getGeometryN(0);
-                        Envelope env = geo1.getEnvelopeInternal();
-                        hsVer.add(env.getMinY());
+                        if (this instanceof AreaArch) {
+                            Geometry geo1 = this.area.getGeometryN(0);
+                            Envelope env = geo1.getEnvelopeInternal();
+                            hsVer.add(env.getMinY());
+                        }
+                        for (int i = 1; i < coo.length; i++) {
+                            Coordinate c1 = coo[i - 1], c2 = coo[i];
+
+                            if (c2.z != c1.z && Math.abs(c2.x - c1.x) > 0.09) {
+                                hsHor.add(c2.x);
+                            }
+                            if (c2.z != c1.z && Math.abs(c2.y - c1.y) > 0.09) {
+                                hsVer.add(c2.y);
+                            }
+                        }
+
                     }
-                    for (int i = 1; i < coo.length; i++) {
-                        Coordinate c1 = coo[i - 1], c2 = coo[i];
+                } else {
+                    Geometry geoShell = this.area.getGeometryN(0);
+                    Coordinate cooShell[] = geoShell.getCoordinates();
+                    for (int i = 1; i < cooShell.length; i++) {
+                        Coordinate c1 = cooShell[i - 1], c2 = cooShell[i];
 
                         if (c2.z != c1.z && Math.abs(c2.x - c1.x) > 0.09) {
                             hsHor.add(c2.x);
@@ -200,99 +215,87 @@ public class AreaSimple extends Com5t {
                             hsVer.add(c2.y);
                         }
                     }
-
-                }
-            } else {
-                Geometry frameBox = this.area.getGeometryN(0);
-                Coordinate coo[] = frameBox.getCoordinates();
-                for (int i = 1; i < coo.length; i++) {
-                    Coordinate c1 = coo[i - 1], c2 = coo[i];
-
-                    if (c2.z != c1.z && Math.abs(c2.x - c1.x) > 0.09) {
-                        hsHor.add(c2.x);
-                    }
-                    if (c2.z != c1.z && Math.abs(c2.y - c1.y) > 0.09) {
-                        hsVer.add(c2.y);
+                    for (ElemSimple elem5e : UCom.filter(winc.listElem, Type.IMPOST)) {
+                        hsVer.add(elem5e.y1());
                     }
                 }
-                for (ElemSimple elem5e : UCom.filter(winc.listElem, Type.IMPOST)) {
-                    hsVer.add(elem5e.y1());
-                }
-            }
-            List<Double> listHor = new ArrayList<Double>(hsHor);
-            List<Double> listVer = new ArrayList<Double>(hsVer);
-            Collections.sort(listHor);
-            Collections.sort(listVer);
+                List<Double> listHor = new ArrayList<Double>(hsHor);
+                List<Double> listVer = new ArrayList<Double>(hsVer);
+                Collections.sort(listHor);
+                Collections.sort(listVer);
 
-            Font font = new Font("Dialog", 0, UCom.scaleFont(winc.scale)); //размер шрифта (см. canvas)
-            winc.gc2d.setFont(font);
-            AffineTransform orig = winc.gc2d.getTransform();
-            Rectangle2D txt2D = font.getStringBounds("999.99", winc.gc2d.getFontRenderContext());
+                //System.out.println("coo= " + listHor);
 
-            //По горизонтали
-            for (int i = 1; i < listHor.size(); ++i) {
-                double dx = listHor.get(i) - listHor.get(i - 1);
-                if (Math.abs(dx) > 0.04) {
+                Font font = new Font("Dialog", 0, UCom.scaleFont(winc.scale)); //размер шрифта (см. canvas)
+                winc.gc2d.setFont(font);
+                AffineTransform orig = winc.gc2d.getTransform();
+                Rectangle2D txt2D = font.getStringBounds("999.99", winc.gc2d.getFontRenderContext());
 
-                    String txt = UCom.format(dx, -1); //текст разм.линии
-                    Rectangle2D rec2D = font.getStringBounds(txt, winc.gc2d.getFontRenderContext()); //логические границы строки
-                    double tail[] = {listHor.get(i - 1), listHor.get(i)}; //x1, x2 хвост вращения вектора
-                    int len = (int) Math.ceil(((dx) - (rec2D.getWidth() + 10)) / 2); //длина до начала(конца) текста
-                    double length = Math.round(dx); //длина вектора
+                //По горизонтали
+                for (int i = 1; i < listHor.size(); ++i) {
+                    double dx = listHor.get(i) - listHor.get(i - 1);
+                    if (Math.abs(dx) > 0.04) {
 
-                    //Размерные линии
-                    Geometry lineTip1 = UGeo.lineTip((i == 1), tail[0], frameEnv.getMaxY() + rec2D.getHeight() / 2, 180, len);
-                    Shape shape = new ShapeWriter().toShape(lineTip1);
-                    winc.gc2d.draw(shape);
-                    Geometry lineTip2 = UGeo.lineTip((i == (listHor.size() - 1)), tail[1], frameEnv.getMaxY() + rec2D.getHeight() / 2, 0, len);
-                    shape = new ShapeWriter().toShape(lineTip2);
-                    winc.gc2d.draw(shape);
+                        String txt = UCom.format(dx, -1); //текст разм.линии
+                        Rectangle2D rec2D = font.getStringBounds(txt, winc.gc2d.getFontRenderContext()); //логические границы строки
+                        double tail[] = {listHor.get(i - 1), listHor.get(i)}; //x1, x2 хвост вращения вектора
+                        int len = (int) Math.ceil(((dx) - (rec2D.getWidth() + 10)) / 2); //длина до начала(конца) текста
+                        double length = Math.round(dx); //длина вектора
 
-                    //Текст на линии
-                    double pxy[] = {listHor.get(i - 1) + len + 8, frameEnv.getMaxY() + txt2D.getHeight() * .86}; //точка начала текста
-                    if (length < txt2D.getWidth()) {
-                        pxy[1] = pxy[1] + txt2D.getHeight() / 2;
-                        winc.gc2d.drawString(txt, (int) pxy[0], (int) (pxy[1]));
-                    } else {
-                        winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);
+                        //Размерные линии
+                        Geometry lineTip1 = UGeo.lineTip((i == 1), tail[0], frameEnvelope.getMaxY() + rec2D.getHeight() / 2, 180, len);
+                        Shape shape = new ShapeWriter().toShape(lineTip1);
+                        winc.gc2d.draw(shape);
+                        Geometry lineTip2 = UGeo.lineTip((i == (listHor.size() - 1)), tail[1], frameEnvelope.getMaxY() + rec2D.getHeight() / 2, 0, len);
+                        shape = new ShapeWriter().toShape(lineTip2);
+                        winc.gc2d.draw(shape);
+
+                        //Текст на линии
+                        double pxy[] = {listHor.get(i - 1) + len + 8, frameEnvelope.getMaxY() + txt2D.getHeight() * .86}; //точка начала текста
+                        if (length < txt2D.getWidth()) {
+                            pxy[1] = pxy[1] + txt2D.getHeight() / 2;
+                            winc.gc2d.drawString(txt, (int) pxy[0], (int) (pxy[1]));
+                        } else {
+                            winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);
+                        }
+                        winc.gc2d.setTransform(orig);
                     }
-                    winc.gc2d.setTransform(orig);
                 }
-            }
 
-            //По вертикали
-            for (int i = 1; i < listVer.size(); ++i) {
-                double dy = listVer.get(i) - listVer.get(i - 1);
-                if (Math.abs(dy) > 0.04) {
+                //По вертикали
+                for (int i = 1; i < listVer.size(); ++i) {
+                    double dy = listVer.get(i) - listVer.get(i - 1);
+                    if (Math.abs(dy) > 0.04) {
 
-                    String txt = UCom.format(dy, -1); //текст разм.линии
-                    Rectangle2D rec2D = font.getStringBounds(txt, winc.gc2d.getFontRenderContext()); //логические границы строки
-                    int tail[] = {(int) Math.ceil(listVer.get(i - 1)), (int) Math.ceil(listVer.get(i))};  //y1, y2 хвост вращения вектора
-                    int len = (int) Math.round((dy - rec2D.getWidth() - 10) / 2); //длина до начала(конца) текста
-                    double length = Math.round(dy); //длина вектора
+                        String txt = UCom.format(dy, -1); //текст разм.линии
+                        Rectangle2D rec2D = font.getStringBounds(txt, winc.gc2d.getFontRenderContext()); //логические границы строки
+                        int tail[] = {(int) Math.ceil(listVer.get(i - 1)), (int) Math.ceil(listVer.get(i))};  //y1, y2 хвост вращения вектора
+                        int len = (int) Math.round((dy - rec2D.getWidth() - 10) / 2); //длина до начала(конца) текста
+                        double length = Math.round(dy); //длина вектора
 
-                    //Размерные линии
-                    Geometry lineTip1 = UGeo.lineTip((i == 1), frameEnv.getMaxX() + rec2D.getHeight() / 2, tail[0], -90, len);
-                    Shape shape = new ShapeWriter().toShape(lineTip1);
-                    winc.gc2d.draw(shape);
-                    Geometry lineTip2 = UGeo.lineTip((i == (listVer.size() - 1)), frameEnv.getMaxX() + rec2D.getHeight() / 2, tail[1], 90, len);
-                    shape = new ShapeWriter().toShape(lineTip2);
-                    winc.gc2d.draw(shape);
+                        //Размерные линии
+                        Geometry lineTip1 = UGeo.lineTip((i == 1), frameEnvelope.getMaxX() + rec2D.getHeight() / 2, tail[0], -90, len);
+                        Shape shape = new ShapeWriter().toShape(lineTip1);
+                        winc.gc2d.draw(shape);
+                        Geometry lineTip2 = UGeo.lineTip((i == (listVer.size() - 1)), frameEnvelope.getMaxX() + rec2D.getHeight() / 2, tail[1], 90, len);
+                        shape = new ShapeWriter().toShape(lineTip2);
+                        winc.gc2d.draw(shape);
 
-                    //Текст на линии
-                    double pxy[] = {frameEnv.getMaxX() + txt2D.getHeight() - 6, listVer.get(i) - len}; //точка врашения и начала текста                    
-                    if (length < (txt2D.getWidth())) {
-                        winc.gc2d.drawString(txt, (int) (pxy[0] + 4), (int) (pxy[1] - txt2D.getHeight() / 2));
-                    } else {
-                        winc.gc2d.rotate(Math.toRadians(-90), pxy[0], pxy[1]);
-                        winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);
+                        //Текст на линии
+                        double pxy[] = {frameEnvelope.getMaxX() + txt2D.getHeight() - 6, listVer.get(i) - len}; //точка врашения и начала текста                    
+                        if (length < (txt2D.getWidth())) {
+                            winc.gc2d.drawString(txt, (int) (pxy[0] + 4), (int) (pxy[1] - txt2D.getHeight() / 2));
+                        } else {
+                            winc.gc2d.rotate(Math.toRadians(-90), pxy[0], pxy[1]);
+                            winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);
+                        }
+                        winc.gc2d.setTransform(orig);
                     }
-                    winc.gc2d.setTransform(orig);
                 }
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaSimple.paint()");
+            System.err.println("Ошибка:AreaSimple.paint() " + e);
         }
     }
 }
