@@ -3,8 +3,6 @@ package builder.model;
 import builder.Wincalc;
 import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
-import dataset.Record;
-import domain.eArtikl;
 import enums.TypeJoin;
 import java.util.ArrayList;
 import org.locationtech.jts.geom.Coordinate;

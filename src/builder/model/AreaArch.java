@@ -6,7 +6,6 @@ import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
 import dataset.Record;
 import domain.eArtikl;
-import domain.eSyssize;
 import enums.TypeJoin;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +14,6 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
-import org.locationtech.jts.operation.buffer.BufferOp;
-import org.locationtech.jts.operation.buffer.BufferParameters;
-import startup.Test;
 
 public class AreaArch extends AreaSimple {
 

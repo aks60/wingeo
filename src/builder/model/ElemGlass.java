@@ -34,7 +34,6 @@ import startup.Test;
 
 public class ElemGlass extends ElemSimple {
 
-    //public Geometry areaFalz = null;
     public double radius = 0; //радиус стекла
     public double gzazo = 0; //зазор между фальцем и стеклопакетом 
     public HashMap<Integer, Double> axisMap = new HashMap<Integer, Double>(); //размер от оси до стеклопакета

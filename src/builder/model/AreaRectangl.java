@@ -2,13 +2,10 @@ package builder.model;
 
 import builder.Wincalc;
 import builder.script.GsonElem;
-import dataset.Record;
-import domain.eArtikl;
 import enums.TypeJoin;
 import java.util.ArrayList;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
-import startup.Test;
 
 public class AreaRectangl extends AreaSimple {
 
