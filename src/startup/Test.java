@@ -1,6 +1,7 @@
 package startup;
 
 import builder.model.Com5t;
+import static builder.model.Com5t.gf;
 import builder.model.UGeo;
 import builder.param.check.ElementTest;
 import builder.param.check.FillingTest;
@@ -19,7 +20,6 @@ import dataset.Query;
 import dataset.Record;
 import domain.eColor;
 import enums.Type;
-import frames.PSConvert;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -42,6 +42,7 @@ import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.noding.NodedSegmentString;
 import org.locationtech.jts.noding.SegmentString;
+import org.locationtech.jts.operation.buffer.VariableBuffer;
 import org.locationtech.jts.operation.linemerge.LineMerger;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
@@ -179,7 +180,7 @@ public class Test {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Test().draw8();
+                new Test().draw4();
             }
         });
     }
@@ -624,6 +625,8 @@ public class Test {
 
         list.add(new Coordinate(0, 600, 1));
         list.add(new Coordinate(0, 1500, 2));
+        list.add(new Coordinate(0, 1500, 2));
+        list.add(new Coordinate(1300, 1500, 3));
         list.add(new Coordinate(1300, 1500, 3));
         list.add(new Coordinate(1300, 300, 4));
         list.add(new Coordinate(0, 600, 1));
@@ -634,13 +637,13 @@ public class Test {
         hm.put(3.0, 32.0);
         hm.put(4.0, 68.0);
 
-//        Geometry geo1 = UGeo.newLineStr(0, 300, 0, 1370, 68, 1370, 68, 300, 0, 300);
-//        Geometry geo2 = UGeo.newLineStr(0, 1370, 1300, 1370, 1300, 1302, 0, 1302, 0, 1370);
+        double dist[] = {32, 32, 68, 68, 32, 68, 68};
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
-        //Geometry geo2 = UGeo.buffer(geo1, hm);
+        //VariableBuffer vb = new  VariableBuffer(geo1, distance);
+        Geometry geo2 = VariableBuffer.buffer(geo1, dist);
 
-       // mpol = geo1.union(geo2);
-        // mlin = geo2;
+        //this.mpol = geo1;
+        this.mpol = geo2;
     }
 
     private void draw3() {

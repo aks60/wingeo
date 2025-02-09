@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import common.UCom;
 import common.listener.ListenerPaint;
 import dataset.Record;
+import domain.eArtikl;
 import domain.eColor;
 import domain.eParams;
 import domain.eParmap;
@@ -28,6 +29,7 @@ import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
+import startup.Test;
 
 public class AreaSimple extends Com5t {
 
@@ -100,13 +102,22 @@ public class AreaSimple extends Com5t {
     public void setLocation() {
         try {
             Polygon geoShell = (Polygon) this.area.getGeometryN(0);
-            Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);
-            Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);
-            this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
+            if (geoShell.getNumPoints() < Com5t.MAXSIDE) {
+                
+                Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);
+                Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);
+                this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
+            } else {
+                Record artiklRec = root.frames.get(0).artiklRec;
+                double offset = artiklRec.getDbl(eArtikl.height) - artiklRec.getDbl(eArtikl.size_centr);
+                Polygon geoInner = (Polygon) UGeo.bufferOp(geoShell, offset);
+                Polygon geoFalz = (Polygon) UGeo.bufferOp(geoShell, offset - artiklRec.getDbl(eArtikl.size_falz));
+                this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
+            }
 
             splitLocation(geoShell, this.childs); //опережающее разделение импостом
 
-            //new Test().mpol = this.area;
+            new Test().mpol = this.area;
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.setLocation" + toString() + e);
         }
