@@ -99,12 +99,12 @@ public class AreaSimple extends Com5t {
 
     public void setLocation() {
         try {
-            Polygon geoShell = (Polygon) this.area;
+            Polygon geoShell = (Polygon) this.area.getGeometryN(0);
             Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);
             Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
 
-            splitLocation(geoShell, this.childs);
+            splitLocation(geoShell, this.childs); //опережающее разделение импостом
 
             //new Test().mpol = this.area;
         } catch (Exception e) {

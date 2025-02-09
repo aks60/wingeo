@@ -30,7 +30,7 @@ public class AreaDoor extends AreaSimple {
             Polygon geoFalz = UGeo.bufferCross(geoShell, this.frames, 0, 1);
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
             
-            splitLocation((Polygon) this.area.getGeometryN(0), this.childs);
+            splitLocation((Polygon) this.area.getGeometryN(0), this.childs); //опережающее разделение импостом
 
         } catch (Exception e) {
             System.err.println("Ошибка:AreaDoor.setLocation" + toString() + e);

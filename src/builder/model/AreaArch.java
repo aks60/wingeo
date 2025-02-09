@@ -64,7 +64,7 @@ public class AreaArch extends AreaSimple {
             Polygon geoFalz = (Polygon) UGeo.bufferOp((Polygon) geoShell, -dh);
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
             
-            splitLocation((Polygon) this.area.getGeometryN(0), this.childs);
+            splitLocation((Polygon) this.area.getGeometryN(0), this.childs); //опережающее разделение импостом
 
             //new Test().mpol = this.area;
         } catch (Exception e) {
