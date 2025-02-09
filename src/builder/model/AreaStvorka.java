@@ -186,7 +186,7 @@ public class AreaStvorka extends AreaSimple {
             coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
 
             Polygon stvInner = UGeo.bufferCross(stvShell, this.frames, 0, 0);
-            Polygon stvFalz = UGeo.bufferCross(stvShell, this.frames, 0, 0);
+            Polygon stvFalz = UGeo.bufferCross(stvShell, this.frames, 0, 1);
             this.area = gf.createMultiPolygon(new Polygon[]{stvShell, stvInner, stvFalz, (Polygon) frameBox});
 
             //Высота ручки, линии открывания

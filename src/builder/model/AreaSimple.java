@@ -112,6 +112,7 @@ public class AreaSimple extends Com5t {
         }
     }
 
+    //Пилим детей импостом
     public void splitLocation(Polygon geoShell, ArrayList<Com5t> childs) {
         if (childs.size() > 2 && childs.get(1).type == Type.IMPOST) {
             ElemCross impost = (ElemCross) childs.get(1);
