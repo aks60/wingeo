@@ -28,9 +28,13 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import org.locationtech.jts.geom.CoordinateSequence;
 import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.MultiLineString;
+import static org.locationtech.jts.math.DD.copy;
 import org.locationtech.jts.operation.buffer.BufferOp;
 import org.locationtech.jts.operation.buffer.BufferParameters;
+import org.locationtech.jts.operation.buffer.VariableBuffer;
 
 /**
  * Утилиты JTS
@@ -721,6 +725,25 @@ public class UGeo {
 //        Polygon[] polyArray = GeometryFactory.toPolygonArray(polys);
 //        return geometry.getFactory().createGeometryCollection(polyArray);
 //    }
+//    
+//    public static Geometry bufferVar(Polygon poly, List<ElemSimple> list) {
+//        try {
+//            List<Double> l = new ArrayList();
+//            Coordinate[] coo = poly.getCoordinates(); // Arrays.copyOf(poly.getCoordinates(), poly.getCoordinates().length - 1);
+//            LineString line = gf.createLineString(coo);
+//            
+//            for (Coordinate c : coo) {
+//                //double d = list.stream().filter(e -> e.id == c.z).findFirst().get().artiklRec.getDbl(eArtikl.height);
+//                l.add(60.0);
+//            }
+//            double[] arr = l.stream().mapToDouble(v -> v).toArray();
+//            return VariableBuffer.buffer(line, arr);
+//
+//        } catch (Exception e) {
+//            System.err.println("Ошибка:UGeo.bufferVar() " + e);            
+//        }
+//        return null;
+//    }     
 // 
 //    //Расчёт внутр. буфера. При вырождении полигона загибы на концах арки
 //    public static Polygon buffer2Cross(Geometry geoShell, ArrayList<? extends Com5t> frameList, double amend, int opt) {
