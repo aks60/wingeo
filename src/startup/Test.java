@@ -188,10 +188,13 @@ public class Test {
     public void paincomp(Graphics g) {
 
         Graphics2D gc2d = (Graphics2D) g;
-        //gc2d.translate(-80, -1840);
-        gc2d.translate(100, 10);
-        //gc2d.scale(4, 4);
+        
+        gc2d.translate(100, 10); 
         gc2d.scale(.4, .4);
+        
+        //gc2d.translate(-80, -1000);
+        //gc2d.translate(-4080, -1000);
+        //gc2d.scale(4, 4);
 
         if (mlin != null) {
             gc2d.setColor(Color.BLUE);

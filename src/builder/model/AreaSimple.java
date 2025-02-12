@@ -103,23 +103,22 @@ public class AreaSimple extends Com5t {
     public void setLocation() {
         try {
             Polygon geoShell = (Polygon) this.area.getGeometryN(0);
-            if (geoShell.getNumPoints() > Com5t.MAXSIDE) {
-                
-                Record artiklRec = root.frames.get(0).artiklRec;
-                double offset = artiklRec.getDbl(eArtikl.height) - artiklRec.getDbl(eArtikl.size_centr);
-                Polygon geoInner = (Polygon) UGeo.bufferOp(geoShell, offset);
-                Polygon geoFalz = (Polygon) UGeo.bufferOp(geoShell, offset - artiklRec.getDbl(eArtikl.size_falz));
-                this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz}); 
-                
-                //Polygon geoTest = (Polygon) UGeo.bufferVar(geoShell, winc.listElem); 
-                //new Test().mpol = geoTest.convexHull();//getGeometryN(0); // gf.createMultiPolygon(new Polygon[]{geoShell, geoTest});
+//            if (geoShell.getNumPoints() > Com5t.MAXSIDE) {
+//                
+//                Record artiklRec = root.frames.get(0).artiklRec;
+//                double offset = artiklRec.getDbl(eArtikl.height) - artiklRec.getDbl(eArtikl.size_centr);
+//                Polygon geoInner = (Polygon) UGeo.bufferOp(geoShell, offset);
+//                Polygon geoFalz = (Polygon) UGeo.bufferOp(geoShell, offset - artiklRec.getDbl(eArtikl.size_falz));
+//                this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz}); 
+//
+//            } else {
+//                Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);
+//                Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);
+//                this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
+//            }
 
-            } else {
-                Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);
-                Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);
-                this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
-            }
-
+            this.area = UGeo.multiPolygon(geoShell, winc.listElem);
+            
             splitLocation(geoShell, this.childs); //опережающее разделение импостом
 
             //new Test().mpol = this.area;
