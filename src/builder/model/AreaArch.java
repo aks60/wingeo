@@ -14,6 +14,7 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
+import startup.Test;
 
 public class AreaArch extends AreaSimple {
 
@@ -69,6 +70,8 @@ public class AreaArch extends AreaSimple {
 
             splitLocation((Polygon) this.area.getGeometryN(0), this.childs); //опережающее разделение импостом
 
+            //UGeo.bufferVar(geoShell, winc.listElem, 0, 0);
+            
             //new Test().mpol = this.area;
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);

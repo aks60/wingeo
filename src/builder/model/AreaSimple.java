@@ -116,6 +116,8 @@ public class AreaSimple extends Com5t {
 //                Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);
 //                this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
 //            }
+        Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);
+        Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);
 
             this.area = UGeo.multiPolygon(geoShell, winc.listElem);
             
