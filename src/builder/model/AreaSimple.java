@@ -1,7 +1,6 @@
 package builder.model;
 
 import builder.Wincalc;
-import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -29,7 +28,6 @@ import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
-import org.locationtech.jts.operation.buffer.VariableBuffer;
 import startup.Test;
 
 public class AreaSimple extends Com5t {
@@ -103,27 +101,30 @@ public class AreaSimple extends Com5t {
     public void setLocation() {
         try {
             Polygon geoShell = (Polygon) this.area.getGeometryN(0);
-//            if (geoShell.getNumPoints() > Com5t.MAXSIDE) {
+            if (geoShell.getNumPoints() > Com5t.MAXSIDE) {
 //                
-//                Record artiklRec = root.frames.get(0).artiklRec;
-//                double offset = artiklRec.getDbl(eArtikl.height) - artiklRec.getDbl(eArtikl.size_centr);
-//                Polygon geoInner = (Polygon) UGeo.bufferOp(geoShell, offset);
-//                Polygon geoFalz = (Polygon) UGeo.bufferOp(geoShell, offset - artiklRec.getDbl(eArtikl.size_falz));
-//                this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz}); 
-//
-//            } else {
-//                Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);
-//                Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);
-//                this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
-//            }
-        Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);
-        Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);
+                Record artiklRec = root.frames.get(0).artiklRec;
+                double offset = artiklRec.getDbl(eArtikl.height) - artiklRec.getDbl(eArtikl.size_centr);
+                //Polygon geoInner = (Polygon) UGeo.bufferOp(geoShell, offset);
+                Polygon geoInner = (Polygon) UGeo.bufferVar(geoShell, winc.listElem);
+                Polygon geoFalz = (Polygon) UGeo.bufferOp(geoShell, offset - artiklRec.getDbl(eArtikl.size_falz));
+                this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz}); 
+
+                //new Test().mpol = this.area;
+           } else {
+                Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);
+                Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);
+                this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
+            }
+            //Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);
+            //Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);
 
             this.area = UGeo.multiPolygon(geoShell, winc.listElem);
-            
+
             splitLocation(geoShell, this.childs); //опережающее разделение импостом
 
-            //new Test().mpol = this.area;
+            
+            //new Test().mpol = this.area; //gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.setLocation" + toString() + e);
         }
@@ -196,9 +197,9 @@ public class AreaSimple extends Com5t {
                 Envelope frameEnvelope = winc.root.area.getGeometryN(0).getEnvelopeInternal();
                 HashSet<Double> hsHor = new HashSet<Double>(), hsVer = new HashSet<Double>();
                 if (this.type != Type.DOOR) {
-                    
+
                     for (AreaSimple area5e : winc.listArea) {
-                        Geometry frameBox = (area5e.type == Type.STVORKA) ? area5e.area.getGeometryN(3) : area5e.area.getGeometryN(0);                       
+                        Geometry frameBox = (area5e.type == Type.STVORKA) ? area5e.area.getGeometryN(3) : area5e.area.getGeometryN(0);
                         Coordinate coo[] = frameBox.getCoordinates();
 
                         if (this instanceof AreaArch) {
@@ -241,7 +242,6 @@ public class AreaSimple extends Com5t {
                 Collections.sort(listVer);
 
                 //System.out.println("coo= " + listHor);
-
                 Font font = new Font("Dialog", 0, UCom.scaleFont(winc.scale)); //размер шрифта (см. canvas)
                 winc.gc2d.setFont(font);
                 AffineTransform orig = winc.gc2d.getTransform();
