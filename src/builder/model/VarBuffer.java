@@ -123,7 +123,7 @@ public class VarBuffer {
                 hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + amend);
             }
         }
-        hm.put(2.0, 8.0);
+        //hm.put(2.0, 8.0);
         //hm.put(3.0, 280.0);
 
         //Array дистанций
