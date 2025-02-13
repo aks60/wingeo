@@ -104,8 +104,10 @@ public class AreaSimple extends Com5t {
             this.area = UGeo.multiPolygon(geoShell, winc.listElem);
 
             splitLocation(geoShell, this.childs); //опережающее разделение импостом
-
-            //new Test().mpol = this.area; //gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
+            
+            if (geoShell.getNumPoints() > Com5t.MAXSIDE) {
+                new Test().mpol = this.area; //gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
+            }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.setLocation" + toString() + e);
         }

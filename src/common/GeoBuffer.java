@@ -1,6 +1,7 @@
 package common;
 
 import builder.model.Com5t;
+import static builder.model.Com5t.gf;
 import dataset.Record;
 import domain.eArtikl;
 import java.util.ArrayList;
@@ -30,9 +31,28 @@ import org.locationtech.jts.operation.buffer.BufferParameters;
  * @author Martin Davis
  *
  */
-//26 сент. 2024?г., 23:44:30
+//
+// —м. VariableBuffer верси€ - 1.19. Ќовые версии работают иначе!
+//
 public class GeoBuffer {
 
+
+    /**
+     * Creates a generator for a variable-distance line buffer.
+     *
+     * @param line the linestring to buffer
+     * @param distance the buffer distance for each vertex of the line
+     */
+    public GeoBuffer(Geometry line, double[] distance) {
+        this.line = (LineString) line;
+        this.distance = distance;
+        geomFactory = line.getFactory();
+
+        if (distance.length != this.line.getNumPoints()) {
+            throw new IllegalArgumentException("Number of distances is not equal to number of vertices");
+        }
+    }
+    
     /**
      * Creates a buffer polygon along a line with the buffer distance
      * interpolated between a start distance and an end distance.
@@ -82,41 +102,29 @@ public class GeoBuffer {
      * @return the variable-distance buffer polygon
      */
     public static Polygon buffer(Geometry line, double[] distance) {
-        
+
         LineString ls = line.getFactory().createLineString(line.getCoordinates());
         GeoBuffer vb = new GeoBuffer(ls, distance);
         Geometry geom = vb.getResult();
         return vb.ringToPolygon(line, geom);
     }
 
-    public static Polygon buffer(Geometry line, Map<Double, Double> hm) {
-        
-        Coordinate coo[] = line.getCoordinates();
-        double distance[] = new double[coo.length];
-        for (int i = 0; i < coo.length; ++i) {
-            distance[i] = hm.get(coo[i].z);
-        }
-        LineString ls = line.getFactory().createLineString(line.getCoordinates());
-        GeoBuffer vb = new GeoBuffer(ls, distance);
-        Geometry geom = vb.getResult();
-        return vb.ringToPolygon(line, geom);
-    }
-
+    //Ё“ќ ћќя ‘”Ќ ÷»я
     public static Polygon buffer(Geometry line, ArrayList<? extends Com5t> list, double amend, int opt) {
-  
+
         //Map дистанций
         Map<Double, Double> hm = new HashMap();
         for (Com5t el : list) {
             Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-                if (opt == 0) {
-                    hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
-                } else if (opt == 1) {
-                    hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + amend);
-                }            
+            if (opt == 0) {
+                hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
+            } else if (opt == 1) {
+                hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + amend);
+            }
         }
         //hm.put(2.0, 8.0);
-        //hm.put(3.0, 8.0);
-        
+        //hm.put(3.0, 280.0);
+
         //Array дистанций
         Coordinate coo[] = line.getGeometryN(0).getCoordinates();
         double distance[] = new double[coo.length];
@@ -126,22 +134,23 @@ public class GeoBuffer {
         LineString ls = line.getFactory().createLineString(line.getCoordinates());
         GeoBuffer vb = new GeoBuffer(ls, distance);
         Geometry geo = vb.getResult();
-        return vb.ringToPolygon(line, geo);
+        return ringToPolygon(line, geo);
     }
 
-    public Polygon ringToPolygon(Geometry line, Geometry geom) {
-        
+    //Ё“ќ ћќя ‘”Ќ ÷»я
+    public static Polygon ringToPolygon(Geometry line, Geometry geom) {
+
         Coordinate coo[] = line.getGeometryN(0).getCoordinates();
         LinearRing ring = ((Polygon) geom).getInteriorRingN(0);
-        Polygon poly = (Polygon) geomFactory.createPolygon(ring).norm();
+        Polygon poly = (Polygon) gf.createPolygon(ring).norm();
         Coordinate cor[] = poly.getCoordinates();
         for (int i = 0; i < cor.length - 1; ++i) {
             cor[i].z = coo[i].z;
         }
         cor[cor.length - 1].z = cor[0].z;
-        return (Polygon) geomFactory.createPolygon(cor);        
+        return (Polygon) gf.createPolygon(cor);
     }
-    
+
     /**
      * Computes a list of values for the points along a line by interpolating
      * between values for the start and end point. The interpolation is based on
@@ -254,22 +263,6 @@ public class GeoBuffer {
     private int quadrantSegs = BufferParameters.DEFAULT_QUADRANT_SEGMENTS;
 
     /**
-     * Creates a generator for a variable-distance line buffer.
-     *
-     * @param line the linestring to buffer
-     * @param distance the buffer distance for each vertex of the line
-     */
-    public GeoBuffer(Geometry line, double[] distance) {
-        this.line = (LineString) line;
-        this.distance = distance;
-        geomFactory = line.getFactory();
-
-        if (distance.length != this.line.getNumPoints()) {
-            throw new IllegalArgumentException("Number of distances is not equal to number of vertices");
-        }
-    }
-
-    /**
      * Computes the variable buffer polygon.
      *
      * @return a buffer polygon
@@ -330,7 +323,6 @@ public class GeoBuffer {
         //if (dist0 > dist1) {
         //    return segmentBuffer(p1, p0, dist1, dist0);
         //}
-
         // forward tangent line
         LineSegment tangent = outerTangent(p0, dist0, p1, dist1);
 

@@ -169,8 +169,10 @@ public class Test {
 
         Graphics2D gc2d = (Graphics2D) g;
 
-        gc2d.translate(100, 10);
-        gc2d.scale(.4, .4);
+        //gc2d.translate(100, 10);
+        gc2d.translate(-4800, -810);
+        //gc2d.scale(.4, .4);
+        gc2d.scale(4, 4);
 
         //gc2d.translate(-80, -1000);
         //gc2d.translate(-4080, -1000);
