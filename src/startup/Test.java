@@ -13,6 +13,7 @@ import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import common.GeoBuffer;
 import common.ePrefs;
 import dataset.Conn;
 import dataset.Field;
@@ -96,8 +97,8 @@ public class Test {
         try {
             //clearDataDB();
             //PSConvert.exec();
-            //frame();
-             wincalc("min");
+            frame();
+            //wincalc("min");
             //param();
             //query();
             //json();
@@ -159,7 +160,7 @@ public class Test {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Test().draw4();
+                new Test().draw6();
             }
         });
     }
@@ -529,14 +530,14 @@ public class Test {
     private void draw6() {
         double M = 420;
         //double M = 1500;
-        GeometricShapeFactory gsf = new GeometricShapeFactory();
+        //GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayList<Com5t> frames = new ArrayList();
 
         frames.add(new Com5t(1, new GsonElem(Type.BOX_SIDE, 0.0, 300.0)));
         frames.add(new Com5t(2, new GsonElem(Type.BOX_SIDE, 0.0, M)));
         frames.add(new Com5t(3, new GsonElem(Type.BOX_SIDE, 1300.0, M)));
-        //frames.add(new Com5t(4, new GsonElem(Type.FRAME_SIDE, 1300.0, 300.0)));
+        //frames.add(new Com5t(4, new GsonElem(Type.BOX_SIDE, 1300.0, 300.0)));
         frames.add(new Com5t(4, new GsonElem(Type.BOX_SIDE, 1300.0, 300.0, 300.0)));
 
         LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
@@ -551,17 +552,17 @@ public class Test {
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
 
         LineString geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
-        //Polygon geo2 = UGeo.buffer(geo1, frames, 0);
+        Polygon geo2 = GeoBuffer.buffer(geo1, frames, 0);
         Polygon geo3 = UGeo.bufferCross(geo1, frames, 0, 0);
         //Polygon geo4 = UGeo.bufferUnion(geo1, frames, 0);
 
         Coordinate coo1[] = geo1.getCoordinates();
-        //Coordinate coo2[] = geo2.getCoordinates();
+        Coordinate coo2[] = geo2.getCoordinates();
         Coordinate coo3[] = geo3.getCoordinates();
         //Coordinate coo4[] = geo4.getCoordinates();
 
         mlin = gf.createMultiLineString(new LineString[]{geo1});
-        //mpol = geo4;
+        mpol = gf.createMultiPolygon(new Polygon[]{geo2});
 
     }
 
