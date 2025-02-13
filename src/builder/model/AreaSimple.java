@@ -119,7 +119,7 @@ public class AreaSimple extends Com5t {
                 
                 //System.out.println(shtap);
                 
-                new Test().mpol = this.area; //gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
+                //new Test().mpol = this.area; //gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
             }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.setLocation" + toString() + e);
