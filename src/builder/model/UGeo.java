@@ -38,8 +38,7 @@ import org.locationtech.jts.operation.buffer.VariableBuffer;
  */
 public class UGeo {
 
-    public static DecimalFormat df = new DecimalFormat("#.####");
-
+    //public static DecimalFormat df = new DecimalFormat("#.###");
     public static boolean isInRing(double x, double y, Geometry g) {
         try {
             Coordinate c = new Coordinate(x, y);
@@ -105,8 +104,8 @@ public class UGeo {
     }
 
     public static Coordinate prcDbl(Coordinate c) {
-        c.x = Double.valueOf(df.format(c.x));
-        c.y = Double.valueOf(df.format(c.y));
+        c.x = Math.round(c.x * 10000.0) / 10000.0;
+        c.y = Math.round(c.y * 10000.0) / 10000.0;
         return c;
     }
 
@@ -244,25 +243,26 @@ public class UGeo {
                         final double ID = cooShell[i - 1].z;
                         //elemRigh = frameList.stream().filter(e -> e.id == ID).findFirst().get();
                         segRighShell.setCoordinates(cooShell[i - 1], cooShell[i]);
-                        segRighInner = segRighShell.offset(-hmOffset.get(ID));                       
+                        segRighInner = segRighShell.offset(-hmOffset.get(ID));
                     }
                     if (i < Com5t.MAXSIDE || (cross != null && i > Com5t.MAXSIDE)) {
                         int j = (i == cooShell.length - 1) ? 1 : i + 1;
                         final double ID = cooShell[i].z;
                         elemLeft = frameList.stream().filter(e -> e.id == ID).findFirst().get();
                         segLeftShell.setCoordinates(cooShell[i], cooShell[j]);
-                        segLeftInner = segLeftShell.offset(-hmOffset.get(ID));                        
+                        segLeftInner = segLeftShell.offset(-hmOffset.get(ID));
                     }
+//                    segRighInner.setCoordinates(prcDbl(segRighInner.p0), prcDbl(segRighInner.p1));
+//                    segLeftInner.setCoordinates(prcDbl(segLeftInner.p0), prcDbl(segLeftInner.p1));
 
                     //Точка пересечения сегментов
                     cross = segLeftInner.intersection(segRighInner);
-                    
+
 //                    if (cross != null && i == 2) {
 //                        segRighInner.setCoordinates(prcDbl(segRighInner.p0), prcDbl(segRighInner.p1));
 //                        segLeftInner.setCoordinates(prcDbl(segLeftInner.p0), prcDbl(segLeftInner.p1));
 //                        cross = segLeftInner.intersection(segRighInner);
 //                    }
-
                     if (cross != null) { //заполнение очереди
                         cross.z = cooShell[i].z;
                         crosDeque.addLast(cross);
@@ -289,7 +289,7 @@ public class UGeo {
                         }
                     }
                 } catch (Exception e) {
-                    System.err.println("i = " + i);
+                    System.err.println("i = " + i + "   " + e);
                 }
             }
             while (crosDeque.isEmpty() == false) {
@@ -487,7 +487,6 @@ public class UGeo {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">  
- 
     //Не дописал
     public static Geometry bufferOp(Polygon geoShell, double offset) {
         try {
@@ -520,7 +519,7 @@ public class UGeo {
             System.err.println("Ошибка:UGeo.bufferOp() " + e);
             return null;
         }
-    } 
+    }
 
     public static Polygon bufferVar(Geometry geom, ArrayList<? extends Com5t> elems, double amend, int opt) {
         int k[] = {0, 0, 0, 0};
@@ -568,15 +567,14 @@ public class UGeo {
         }
 
         return result;
-    }    
-    
-    
+    }
+
     public static Geometry bufferVar(Polygon poly, List<ElemSimple> list) {
         try {
             List<Double> l = new ArrayList();
             Coordinate[] coo = poly.getCoordinates(); // Arrays.copyOf(poly.getCoordinates(), poly.getCoordinates().length - 1);
             LineString line = gf.createLineString(coo);
-            
+
             for (Coordinate c : coo) {
                 //double d = list.stream().filter(e -> e.id == c.z).findFirst().get().artiklRec.getDbl(eArtikl.height);
                 l.add(60.0);
@@ -587,12 +585,12 @@ public class UGeo {
             return gf.createPolygon(lin.getCoordinates());
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.bufferVar() " + e);            
+            System.err.println("Ошибка:UGeo.bufferVar() " + e);
         }
         return null;
-    }     
-     
- /*   
+    }
+
+    /*   
     //Угол ориентированный к горизонту. Угол нормируется в диапазоне [-Pi, Pi].
     public static double anglHor(ElemSimple e) {
         double ang = Math.toDegrees(Angle.angle(new Coordinate(e.x1(), e.y1()), new Coordinate(e.x2(), e.y2())));

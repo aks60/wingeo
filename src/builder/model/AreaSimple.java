@@ -102,22 +102,23 @@ public class AreaSimple extends Com5t {
         try {
             Polygon geoShell = (Polygon) this.area.getGeometryN(0);
             if (geoShell.getNumPoints() > Com5t.MAXSIDE) {
-//                
-                Record artiklRec = root.frames.get(0).artiklRec;
-                double offset = artiklRec.getDbl(eArtikl.height) - artiklRec.getDbl(eArtikl.size_centr);
-                //Polygon geoInner = (Polygon) UGeo.bufferOp(geoShell, offset);
-                Polygon geoInner = (Polygon) UGeo.bufferVar(geoShell, winc.listElem);
-                Polygon geoFalz = (Polygon) UGeo.bufferOp(geoShell, offset - artiklRec.getDbl(eArtikl.size_falz));
-                this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz}); 
-
-                //new Test().mpol = this.area;
-           } else {
-                Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);
-                Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);
-                this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
-            }
+                
             //Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);
             //Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);
+               
+//                Record artiklRec = root.frames.get(0).artiklRec;
+//                double offset = artiklRec.getDbl(eArtikl.height) - artiklRec.getDbl(eArtikl.size_centr);
+                Polygon geoInner = (Polygon) UGeo.bufferOp(geoShell, 63);
+//                Polygon geoInner = (Polygon) UGeo.bufferVar(geoShell, winc.listElem);
+//                Polygon geoFalz = (Polygon) UGeo.bufferOp(geoShell, offset - artiklRec.getDbl(eArtikl.size_falz));
+//                this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz}); 
+//
+                new Test().mpol = geoInner;
+//           } else {
+//                Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);
+//                Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);
+//                this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
+            }
 
             this.area = UGeo.multiPolygon(geoShell, winc.listElem);
 
