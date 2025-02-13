@@ -102,18 +102,20 @@ public class GeoBuffer {
         return vb.ringToPolygon(line, geom);
     }
 
-    public static Polygon buffer(Geometry line, ArrayList<? extends Com5t> list, double amend) {
+    public static Polygon buffer(Geometry line, ArrayList<? extends Com5t> list, double amend, int opt) {
   
-        ////Map дистанций
+        //Map дистанций
         Map<Double, Double> hm = new HashMap();
         for (Com5t el : list) {
             Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-            Double delta1 = rec.getDbl(eArtikl.height);
-            Double delta2 = rec.getDbl(eArtikl.size_centr);
-            hm.put(el.id, delta1 - delta2 + amend);
+                if (opt == 0) {
+                    hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
+                } else if (opt == 1) {
+                    hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + amend);
+                }            
         }
-        hm.put(2.0, 8.0);
-        hm.put(3.0, 8.0);
+        //hm.put(2.0, 8.0);
+        //hm.put(3.0, 8.0);
         
         //Array дистанций
         Coordinate coo[] = line.getGeometryN(0).getCoordinates();

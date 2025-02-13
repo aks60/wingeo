@@ -552,7 +552,7 @@ public class Test {
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
 
         LineString geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
-        Polygon geo2 = GeoBuffer.buffer(geo1, frames, 0);
+        Polygon geo2 = GeoBuffer.buffer(geo1, frames, 0, 0);
         Polygon geo3 = UGeo.bufferCross(geo1, frames, 0, 0);
         //Polygon geo4 = UGeo.bufferUnion(geo1, frames, 0);
 
