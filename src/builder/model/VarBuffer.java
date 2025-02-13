@@ -1,4 +1,4 @@
-package common;
+package builder.model;
 
 import builder.model.Com5t;
 import static builder.model.Com5t.gf;
@@ -134,7 +134,7 @@ public class VarBuffer {
         }
         LineString ls = line.getFactory().createLineString(line.getCoordinates());
         VarBuffer vb = new VarBuffer(ls, distance);
-        //VariableBuffer vb = new VariableBuffer(ls, distance); //v-1.20 не работает
+        //VariableBuffer vb = new VariableBuffer(ls, distance); //v-1.20 не работает так как надо
         Geometry geo = vb.getResult();
         return ringToPolygon(line, geo);
     }

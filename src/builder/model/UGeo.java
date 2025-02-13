@@ -2,7 +2,6 @@ package builder.model;
 
 import builder.making.TRecord;
 import static builder.model.Com5t.gf;
-import common.VarBuffer;
 import common.LineSegm;
 import common.UCom;
 import dataset.Record;

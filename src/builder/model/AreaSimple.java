@@ -4,7 +4,6 @@ import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import common.VarBuffer;
 import common.UCom;
 import common.listener.ListenerPaint;
 import dataset.Record;
