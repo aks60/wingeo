@@ -20,6 +20,7 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.operation.buffer.BufferParameters;
+import org.locationtech.jts.operation.buffer.VariableBuffer;
 
 /**
  * Creates a buffer polygon with a varying buffer distance at each vertex along
@@ -34,7 +35,7 @@ import org.locationtech.jts.operation.buffer.BufferParameters;
 //
 // См. VariableBuffer версия - 1.19. Новые версии работают иначе!
 //
-public class GeoBuffer {
+public class VarBuffer {
 
 
     /**
@@ -43,7 +44,7 @@ public class GeoBuffer {
      * @param line the linestring to buffer
      * @param distance the buffer distance for each vertex of the line
      */
-    public GeoBuffer(Geometry line, double[] distance) {
+    public VarBuffer(Geometry line, double[] distance) {
         this.line = (LineString) line;
         this.distance = distance;
         geomFactory = line.getFactory();
@@ -66,7 +67,7 @@ public class GeoBuffer {
             double endDistance) {
         double[] distance = interpolate((LineString) line,
                 startDistance, endDistance);
-        GeoBuffer vb = new GeoBuffer(line, distance);
+        VarBuffer vb = new VarBuffer(line, distance);
         return vb.getResult();
     }
 
@@ -89,7 +90,7 @@ public class GeoBuffer {
             double endDistance) {
         double[] distance = interpolate((LineString) line,
                 startDistance, midDistance, endDistance);
-        GeoBuffer vb = new GeoBuffer(line, distance);
+        VarBuffer vb = new VarBuffer(line, distance);
         return vb.getResult();
     }
 
@@ -104,7 +105,7 @@ public class GeoBuffer {
     public static Polygon buffer(Geometry line, double[] distance) {
 
         LineString ls = line.getFactory().createLineString(line.getCoordinates());
-        GeoBuffer vb = new GeoBuffer(ls, distance);
+        VarBuffer vb = new VarBuffer(ls, distance);
         Geometry geom = vb.getResult();
         return vb.ringToPolygon(line, geom);
     }
@@ -122,7 +123,7 @@ public class GeoBuffer {
                 hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + amend);
             }
         }
-        //hm.put(2.0, 8.0);
+        hm.put(2.0, 8.0);
         //hm.put(3.0, 280.0);
 
         //Array дистанций
@@ -132,7 +133,8 @@ public class GeoBuffer {
             distance[i] = hm.get(coo[i].z);
         }
         LineString ls = line.getFactory().createLineString(line.getCoordinates());
-        GeoBuffer vb = new GeoBuffer(ls, distance);
+        VarBuffer vb = new VarBuffer(ls, distance);
+        //VariableBuffer vb = new VariableBuffer(ls, distance); //v-1.20 не работает
         Geometry geo = vb.getResult();
         return ringToPolygon(line, geo);
     }

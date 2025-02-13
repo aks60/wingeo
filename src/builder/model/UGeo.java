@@ -2,7 +2,7 @@ package builder.model;
 
 import builder.making.TRecord;
 import static builder.model.Com5t.gf;
-import common.GeoBuffer;
+import common.VarBuffer;
 import common.LineSegm;
 import common.UCom;
 import dataset.Record;
@@ -208,8 +208,8 @@ public class UGeo {
     }
 
     public static Geometry multiPolygon(Polygon geoShell, ArrayList<? extends Com5t> listElem) {
-        Polygon geoInner = GeoBuffer.buffer(geoShell, listElem, 0, 0);
-        Polygon geoFalz = GeoBuffer.buffer(geoShell, listElem, 0, 1);
+        Polygon geoInner = VarBuffer.buffer(geoShell, listElem, 0, 0);
+        Polygon geoFalz = VarBuffer.buffer(geoShell, listElem, 0, 1);
         return gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
     }
 

@@ -4,7 +4,7 @@ import builder.Wincalc;
 import builder.script.GsonElem;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import common.GeoBuffer;
+import common.VarBuffer;
 import common.UCom;
 import common.listener.ListenerPaint;
 import dataset.Record;
@@ -105,9 +105,9 @@ public class AreaSimple extends Com5t {
 
             splitLocation(geoShell, this.childs); //опережающее разделение импостом
             
-            if (geoShell.getNumPoints() > Com5t.MAXSIDE) {
-                new Test().mpol = this.area; //gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
-            }
+//            if (geoShell.getNumPoints() > Com5t.MAXSIDE) {
+//                new Test().mpol = this.area; //gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
+//            }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.setLocation" + toString() + e);
         }
