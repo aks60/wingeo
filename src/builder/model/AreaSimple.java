@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import common.UCom;
 import common.listener.ListenerPaint;
 import dataset.Record;
+import domain.eArtikl;
 import domain.eColor;
 import domain.eParams;
 import domain.eParmap;
@@ -103,10 +104,23 @@ public class AreaSimple extends Com5t {
             this.area = UGeo.multiPolygon(geoShell, winc.listElem);
 
             splitLocation(geoShell, this.childs); //опережающее разделение импостом
-            
-//            if (geoShell.getNumPoints() > Com5t.MAXSIDE) {
-//                new Test().mpol = this.area; //gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
-//            }
+
+            if (geoShell.getNumPoints() > Com5t.MAXSIDE) {
+
+//                double shtap = 0;
+//                Geometry areaFalz = owner.area.getGeometryN(2);
+//                Coordinate coo[] = areaFalz.getCoordinates();
+//                for (int j = 1; j < coo.length; j++) {
+//                    if (coo[j - 1].z == 4.0) {
+//                        shtap += coo[j - 1].distance(coo[j]);
+//                    }
+//                }
+                //shtap += coo[j - 1].distance(coo[j]);
+                
+                //System.out.println(shtap);
+                
+                new Test().mpol = this.area; //gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
+            }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.setLocation" + toString() + e);
         }
