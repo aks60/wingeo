@@ -95,8 +95,8 @@ public class Test {
         try {
             //clearDataDB();
             //PSConvert.exec();
-            frame();
-            //wincalc("min");
+            //frame();
+            wincalc("601001");
             //param();
             //query();
             //json();
