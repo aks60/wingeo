@@ -180,11 +180,13 @@ public class ElemGlass extends ElemSimple {
                     spcAdd.anglCut0 = UGeo.anglCut(spcAdd, geoShtapik, coo.length - 2, 0, '-');
                     spcAdd.anglCut1 = UGeo.anglCut(spcAdd, geoShtapik, index - 1, index, '+');
 
-                    for (int j = 1; j < coo.length; j++) {
-                        if (coo[j - 1].z == frameglass.id) {
-                            spcAdd.width += coo[j - 1].distance(coo[j]);
-                        }
-                    }
+                    spcAdd.width = UGeo.lengthCurve(geoShtapik, frameglass.id);
+                    
+//                    for (int j = 1; j < coo.length; j++) {
+//                        if (coo[j - 1].z == frameglass.id) {
+//                            spcAdd.width += coo[j - 1].distance(coo[j]);
+//                        }
+//                    }
 
                     //Остальное
                 } else {

@@ -87,11 +87,7 @@ public class Com5t {
         if (this.h() == null) {
             return new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).getLength();
         } else {
-            List<Coordinate> all = List.of(owner.area.getGeometryN(0).getCoordinates());
-            List<Coordinate> list = all.stream().filter(c -> c.z == id).collect(toList());
-            list.add(all.get(0));
-            LineString line = gf.createLineString(list.toArray(new Coordinate[0]));
-            return line.getLength();
+            return UGeo.lengthCurve(owner.area.getGeometryN(0), this.id);
         }
     }
 

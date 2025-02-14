@@ -22,6 +22,7 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import java.util.Map;
+import static java.util.stream.Collectors.toList;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.operation.buffer.BufferOp;
 import org.locationtech.jts.operation.buffer.BufferParameters;
@@ -75,16 +76,17 @@ public class UGeo {
         return Math.toDegrees(Math.asin(spcRec.height / gip));
     }
 
-    public static double lengthArc(double L, double R, double prip, double angCut1, double angCut2) {
-
-        double angl = Math.toDegrees(Math.asin((L / 2) / R));
-        double lengthArc = ((2 * Math.PI * R) / 360 * angl * 2); //*2
-
-        double prip0 = prip * Math.sin(Math.toRadians(45));
-        double prip1 = prip0 / Math.sin(Math.toRadians(angCut1));
-        double prip2 = prip0 / Math.sin(Math.toRadians(angCut2));
-
-        return lengthArc + prip1 + prip2;
+    public static double lengthCurve(Geometry area, double id) {
+        List<Coordinate> all = List.of(area.getCoordinates());
+        List<Coordinate> list = all.stream().filter(c -> c.z == id).collect(toList());
+        list.add(all.get(0));
+        LineString line = gf.createLineString(list.toArray(new Coordinate[0]));
+        return line.getLength();
+//                    for (int j = 1; j < coo.length; j++) {
+//                        if (coo[j - 1].z == id) {
+//                            width += coo[j - 1].distance(coo[j]);
+//                        }
+//                    }        
     }
 
     //Угол неориентированный неомежду профилями
@@ -490,7 +492,7 @@ public class UGeo {
         }
         return null;
     }
-    
+
 //    public static Polygon buffer(Geometry line, ArrayList<? extends Com5t> list, double amend, int opt) {
 //
 //        //Map дистанций
@@ -1278,6 +1280,19 @@ public class UGeo {
         Coordinate c = s3.intersection(s4);
         return c;
     }
+    
+    public static double lengthArc(double L, double R, double prip, double angCut1, double angCut2) {
+
+        double angl = Math.toDegrees(Math.asin((L / 2) / R));
+        double lengthArc = ((2 * Math.PI * R) / 360 * angl * 2); //*2
+
+        double prip0 = prip * Math.sin(Math.toRadians(45));
+        double prip1 = prip0 / Math.sin(Math.toRadians(angCut1));
+        double prip2 = prip0 / Math.sin(Math.toRadians(angCut2));
+
+        return lengthArc + prip1 + prip2;
+    }
+    
      */
 // </editor-fold>    
 }
