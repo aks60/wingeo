@@ -132,7 +132,7 @@ public class ElemGlass extends ElemSimple {
 
             //Фича определения gzazo и gaxis на раннем этапе построения. 
             new TFilling(winc, true).fill(this);
-           // ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+            // ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
 
             //Полигон стеклопакета
             this.area = VBuffer.buffer(owner.area.getGeometryN(0), winc.listElem, gzazo, 1);
@@ -154,7 +154,7 @@ public class ElemGlass extends ElemSimple {
             if (spcAdd.artiklRec.getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;
             }
-                spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
+            spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм         
             if (TypeArt.X502.isType(spcAdd.artiklRec)) {
@@ -163,10 +163,10 @@ public class ElemGlass extends ElemSimple {
             //Ареа фальца
             Geometry geoFalz = owner.area.getGeometryN(2);
             //if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X108)) { //штапик
-            if (owner.area.getGeometryN(0).getNumPoints() > Com5t.MAXSIDE) { 
+            if (owner.area.getGeometryN(0).getNumPoints() > Com5t.MAXSIDE) {
                 geoFalz = VBuffer.buffer(owner.area.getGeometryN(0), winc.listElem, -1 * spcAdd.artiklRec.getDbl(eArtikl.height), 0);
-            } 
-            
+            }
+
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
