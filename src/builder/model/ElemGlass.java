@@ -179,14 +179,7 @@ public class ElemGlass extends ElemSimple {
                     int index = IntStream.range(1, coo.length).filter(j -> coo[j].z == frameglass.id).findFirst().getAsInt();
                     spcAdd.anglCut0 = UGeo.anglCut(spcAdd, geoShtapik, coo.length - 2, 0, '-');
                     spcAdd.anglCut1 = UGeo.anglCut(spcAdd, geoShtapik, index - 1, index, '+');
-
                     spcAdd.width = UGeo.lengthCurve(geoShtapik, frameglass.id);
-                    
-//                    for (int j = 1; j < coo.length; j++) {
-//                        if (coo[j - 1].z == frameglass.id) {
-//                            spcAdd.width += coo[j - 1].distance(coo[j]);
-//                        }
-//                    }
 
                     //Остальное
                 } else {

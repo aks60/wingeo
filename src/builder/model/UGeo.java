@@ -2,7 +2,6 @@ package builder.model;
 
 import builder.making.TRecord;
 import static builder.model.Com5t.gf;
-import common.LineSegm;
 import common.UCom;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,9 +22,6 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import java.util.Map;
 import static java.util.stream.Collectors.toList;
-import org.locationtech.jts.geom.LinearRing;
-import org.locationtech.jts.operation.buffer.BufferOp;
-import org.locationtech.jts.operation.buffer.BufferParameters;
 
 /**
  * Утилиты JTS
@@ -207,19 +203,6 @@ public class UGeo {
         return gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
     }
 
-    public static Polygon ringToPolygon(Geometry line, Geometry geom) {
-
-        Coordinate coo1[] = line.getGeometryN(0).getCoordinates();
-        LinearRing ring = ((Polygon) geom).getInteriorRingN(0);
-        Polygon geom2 = (Polygon) line.getFactory().createPolygon(ring).norm();
-        Coordinate coo2[] = geom2.getCoordinates();
-        for (int i = 0; i < coo2.length - 1; ++i) {
-            coo2[i].z = coo1[i].z;
-        }
-        coo2[coo2.length - 1].z = coo2[0].z;
-        return (Polygon) line.getFactory().createPolygon(coo2);
-    }
-
     //Список входн. параметров не замыкается начальной точкой как в jts!
     public static Coordinate[] arrCoord(double... d) {
         List<Coordinate> list = new ArrayList<Coordinate>();
@@ -390,6 +373,7 @@ public class UGeo {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">  
+    /* 
     //Не дописал
     public static Geometry bufferOp(Polygon geoShell, double offset) {
         try {
@@ -493,56 +477,56 @@ public class UGeo {
         return null;
     }
 
-//    public static Polygon buffer(Geometry line, ArrayList<? extends Com5t> list, double amend, int opt) {
-//
-//        //Map дистанций
-//        Map<Double, Double> hm = new HashMap();
-//        for (Com5t el : list) {
-//            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-//            if (opt == 0) {
-//                hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
-//            } else if (opt == 1) {
-//                hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + amend);
-//            }
-//        }
-//        //hm.put(2.0, 8.0);
-//        //hm.put(3.0, 280.0);
-//
-//        //Array дистанций
-//        Coordinate coo[] = line.getGeometryN(0).getCoordinates();
-//        double distance[] = new double[coo.length];
-//        for (int i = 0; i < coo.length; ++i) {
-//            distance[i] = hm.get(coo[i].z);
-//        }
-//        LineString ls = line.getFactory().createLineString(line.getCoordinates());
-//        //VarBuffer vb = new VarBuffer(ls, distance);
-//        VariableBuffer vb = new VariableBuffer(ls, distance); //v-1.20 не работает так как надо
-//        /////////////////////////////////////////////////
-//        List<Geometry> parts = new ArrayList<Geometry>();
-//        Coordinate[] pts = line.getCoordinates();
-//        // construct segment buffers
-//        for (int i = 1; i < pts.length; i++) {
-//            double dist0 = distance[i - 1];
-//            if (dist0 > 0) {
-//                Polygon poly = vb.segmentBuffer(pts[i - 1], pts[i], dist0, dist0);
-//                if (poly != null) {
-//                    parts.add(poly);
-//                }
-//            }
-//        }
-//
-//        GeometryCollection partsGeom = geomFactory
-//                .createGeometryCollection(GeometryFactory.toGeometryArray(parts));
-//        Geometry buffer = partsGeom.union();
-//
-//        //-- ensure an empty polygon is returned if needed
-//        if (buffer.isEmpty()) {
-//            return geomFactory.createPolygon();
-//        }
-//        return ringToPolygon(line, buffer);
-//    }
-    /* 
-    Расчёт внутр. буфера. При вырождении полигона загибы на концах арки
+    public static Polygon buffer(Geometry line, ArrayList<? extends Com5t> list, double amend, int opt) {
+
+        //Map дистанций
+        Map<Double, Double> hm = new HashMap();
+        for (Com5t el : list) {
+            Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+            if (opt == 0) {
+                hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
+            } else if (opt == 1) {
+                hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + amend);
+            }
+        }
+        //hm.put(2.0, 8.0);
+        //hm.put(3.0, 280.0);
+
+        //Array дистанций
+        Coordinate coo[] = line.getGeometryN(0).getCoordinates();
+        double distance[] = new double[coo.length];
+        for (int i = 0; i < coo.length; ++i) {
+            distance[i] = hm.get(coo[i].z);
+        }
+        LineString ls = line.getFactory().createLineString(line.getCoordinates());
+        //VarBuffer vb = new VarBuffer(ls, distance);
+        VariableBuffer vb = new VariableBuffer(ls, distance); //v-1.20 не работает так как надо
+        /////////////////////////////////////////////////
+        List<Geometry> parts = new ArrayList<Geometry>();
+        Coordinate[] pts = line.getCoordinates();
+        // construct segment buffers
+        for (int i = 1; i < pts.length; i++) {
+            double dist0 = distance[i - 1];
+            if (dist0 > 0) {
+                Polygon poly = vb.segmentBuffer(pts[i - 1], pts[i], dist0, dist0);
+                if (poly != null) {
+                    parts.add(poly);
+                }
+            }
+        }
+
+        GeometryCollection partsGeom = geomFactory
+                .createGeometryCollection(GeometryFactory.toGeometryArray(parts));
+        Geometry buffer = partsGeom.union();
+
+        //-- ensure an empty polygon is returned if needed
+        if (buffer.isEmpty()) {
+            return geomFactory.createPolygon();
+        }
+        return ringToPolygon(line, buffer);
+    }
+
+    //Расчёт внутр. буфера. При вырождении полигона загибы на концах арки
     public static Polygon bufferCross(Geometry geoShell, ArrayList<? extends Com5t> frameList, double amend, int opt) {
 
         Polygon result = gf.createPolygon();
@@ -1291,6 +1275,19 @@ public class UGeo {
         double prip2 = prip0 / Math.sin(Math.toRadians(angCut2));
 
         return lengthArc + prip1 + prip2;
+    }
+
+    public static Polygon ringToPolygon(Geometry line, Geometry geom) {
+
+        Coordinate coo1[] = line.getGeometryN(0).getCoordinates();
+        LinearRing ring = ((Polygon) geom).getInteriorRingN(0);
+        Polygon geom2 = (Polygon) line.getFactory().createPolygon(ring).norm();
+        Coordinate coo2[] = geom2.getCoordinates();
+        for (int i = 0; i < coo2.length - 1; ++i) {
+            coo2[i].z = coo1[i].z;
+        }
+        coo2[coo2.length - 1].z = coo2[0].z;
+        return (Polygon) line.getFactory().createPolygon(coo2);
     }
     
      */
