@@ -107,7 +107,7 @@ public class AreaSimple extends Com5t {
 
             if (geoShell.getNumPoints() > Com5t.MAXSIDE) {
 
-//                double shtap = 0;
+                double shtap = 0;
 //                Geometry areaFalz = owner.area.getGeometryN(2);
 //                Coordinate coo[] = areaFalz.getCoordinates();
 //                for (int j = 1; j < coo.length; j++) {

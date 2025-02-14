@@ -1,8 +1,8 @@
 package startup;
 
 import builder.model.Com5t;
-import static builder.model.Com5t.gf;
 import builder.model.UGeo;
+import builder.model.VBuffer;
 import builder.param.check.ElementTest;
 import builder.param.check.FillingTest;
 import builder.param.check.FurnitureTest;
@@ -13,7 +13,6 @@ import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import builder.model.VarBuffer;
 import common.ePrefs;
 import dataset.Conn;
 import dataset.Field;
@@ -43,7 +42,6 @@ import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.noding.NodedSegmentString;
 import org.locationtech.jts.noding.SegmentString;
-import org.locationtech.jts.operation.buffer.VariableBuffer;
 import org.locationtech.jts.operation.linemerge.LineMerger;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
@@ -169,10 +167,10 @@ public class Test {
 
         Graphics2D gc2d = (Graphics2D) g;
 
-        gc2d.translate(100, 10);
-        gc2d.scale(.4, .4);
-        //gc2d.translate(-4800, -810);
-        //gc2d.scale(4, 4);
+        //gc2d.translate(100, 10);
+        //gc2d.scale(.4, .4);
+        gc2d.translate(-4800, -810);
+        gc2d.scale(4, 4);
 
         //gc2d.translate(-80, -1000);
         //gc2d.translate(-4080, -1000);
@@ -554,7 +552,7 @@ public class Test {
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
 
         LineString geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
-        Polygon geo2 = VarBuffer.buffer(geo1, frames, 0, 0);
+        Polygon geo2 = VBuffer.buffer(geo1, frames, 0, 0);
         //Polygon geo3 = UGeo.bufferCross(geo1, frames, 0, 0);
         //Polygon geo4 = UGeo.bufferUnion(geo1, frames, 0);
 
@@ -623,7 +621,7 @@ public class Test {
         double dist[] = {32, 32, 68, 68, 32, 68, 68};
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
         //VariableBuffer vb = new  VariableBuffer(geo1, distance);
-        Geometry geo2 = VariableBuffer.buffer(geo1, dist);
+        Geometry geo2 = VBuffer.buffer(geo1, dist);
 
         //this.mpol = geo1;
         this.mpol = geo2;

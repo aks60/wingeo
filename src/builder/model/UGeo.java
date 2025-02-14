@@ -2,17 +2,11 @@ package builder.model;
 
 import builder.making.TRecord;
 import static builder.model.Com5t.gf;
-import static builder.model.VarBuffer.ringToPolygon;
 import common.LineSegm;
 import common.UCom;
-import dataset.Record;
-import domain.eArtikl;
-import java.text.DecimalFormat;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
@@ -27,14 +21,10 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.AffineTransformation;
-import java.util.HashMap;
 import java.util.Map;
-import org.locationtech.jts.geom.GeometryCollection;
-import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.operation.buffer.BufferOp;
 import org.locationtech.jts.operation.buffer.BufferParameters;
-import org.locationtech.jts.operation.buffer.VariableBuffer;
 
 /**
  * Утилиты JTS
@@ -210,8 +200,8 @@ public class UGeo {
     }
 
     public static Geometry multiPolygon(Polygon geoShell, ArrayList<? extends Com5t> listElem) {
-        Polygon geoInner = VarBuffer.buffer(geoShell, listElem, 0, 0);
-        Polygon geoFalz = VarBuffer.buffer(geoShell, listElem, 0, 1);
+        Polygon geoInner = VBuffer.buffer(geoShell, listElem, 0, 0);
+        Polygon geoFalz = VBuffer.buffer(geoShell, listElem, 0, 1);
         return gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
     }
 
@@ -491,7 +481,7 @@ public class UGeo {
                 l.add(60.0);
             }
             double[] arr = l.stream().mapToDouble(v -> v).toArray();
-            Polygon geo = (Polygon) VariableBuffer.buffer(line, arr);
+            Polygon geo = (Polygon) VBuffer.buffer(line, arr);
             LinearRing lin = geo.getInteriorRingN(0);
             return gf.createPolygon(lin.getCoordinates());
 
