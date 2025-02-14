@@ -9,7 +9,6 @@ import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
-import domain.eSyssize;
 import domain.eSystree;
 import enums.PKjson;
 import enums.Type;
@@ -20,7 +19,6 @@ import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import static java.util.stream.Collectors.toList;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -31,7 +29,6 @@ import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
-import startup.Test;
 
 public class ElemGlass extends ElemSimple {
 
@@ -135,10 +132,10 @@ public class ElemGlass extends ElemSimple {
 
             //Фича определения gzazo и gaxis на раннем этапе построения. 
             new TFilling(winc, true).fill(this);
-            ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+           // ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
 
             //Полигон стеклопакета
-            this.area = VBuffer.buffer(owner.area.getGeometryN(0), list, gzazo, 1);
+            this.area = VBuffer.buffer(owner.area.getGeometryN(0), winc.listElem, gzazo, 1);
 
             Envelope env = this.area.getEnvelopeInternal();
             spcRec.width = env.getWidth();
@@ -157,29 +154,33 @@ public class ElemGlass extends ElemSimple {
             if (spcAdd.artiklRec.getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;
             }
-            spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
+                spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам. 
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм         
             if (TypeArt.X502.isType(spcAdd.artiklRec)) {
                 return;  //если стеклопакет сразу выход
             }
-            //Ареа штапика
-            Geometry geoShell = owner.area.getGeometryN(0);
-            Polygon geoShtapik = VBuffer.buffer(geoShell, winc.listElem, -1 * spcAdd.artiklRec.getDbl(eArtikl.height), 0);
-
+            //Ареа фальца
+            Geometry geoFalz = owner.area.getGeometryN(2);
+            //if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X108)) { //штапик
+            if (owner.area.getGeometryN(0).getNumPoints() > Com5t.MAXSIDE) { 
+                geoFalz = VBuffer.buffer(owner.area.getGeometryN(0), winc.listElem, -1 * spcAdd.artiklRec.getDbl(eArtikl.height), 0);
+            } 
+            
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
-                Coordinate coo[] = geoShtapik.getCoordinates();
+                Coordinate coo[] = geoFalz.getCoordinates();
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
                 spcAdd.anglHoriz = UGeo.anglHor(frameglass.x1(), frameglass.y1(), frameglass.x2(), frameglass.y2()); //угол к горизонту 
 
                 //Арка
                 if (frameglass.h() != null) {
                     int index = IntStream.range(1, coo.length).filter(j -> coo[j].z == frameglass.id).findFirst().getAsInt();
-                    spcAdd.anglCut0 = UGeo.anglCut(spcAdd, geoShtapik, coo.length - 2, 0, '-');
-                    spcAdd.anglCut1 = UGeo.anglCut(spcAdd, geoShtapik, index - 1, index, '+');
-                    spcAdd.width = UGeo.lengthCurve(geoShtapik, frameglass.id);
+                    spcAdd.anglCut0 = UGeo.anglCut(spcAdd, geoFalz, coo.length - 2, 0, '-');
+                    spcAdd.anglCut1 = UGeo.anglCut(spcAdd, geoFalz, index - 1, index, '+');
+
+                    spcAdd.width = UGeo.lengthCurve(geoFalz, frameglass.id);
 
                     //Остальное
                 } else {
@@ -187,10 +188,10 @@ public class ElemGlass extends ElemSimple {
                     Coordinate[] c2 = {coo[sideglass], coo[UGeo.getIndex(coo, sideglass + 1)], coo[UGeo.getIndex(coo, sideglass + 2)]};
                     double angBetween0 = Math.toDegrees(Angle.angleBetween(c1[0], c1[1], c1[2]));
                     double angBetween1 = Math.toDegrees(Angle.angleBetween(c2[0], c2[1], c2[2]));
-                    spcAdd.anglCut0 = Math.abs(angBetween0 - UGeo.anglCut(spcAdd, geoShtapik, UGeo.getIndex(coo, sideglass - 1), sideglass, '-'));
-                    spcAdd.anglCut1 = Math.abs(angBetween1 - UGeo.anglCut(spcAdd, geoShtapik, UGeo.getIndex(coo, sideglass), UGeo.getIndex(coo, sideglass + 1), '+'));
-                    Envelope envShtap = geoShtapik.getEnvelopeInternal();
-                    spcAdd.width = envShtap.getWidth(); // += coo[sideglass].distance(coo[sideglass + 1]); //Тут надо учитывать наклон штапика
+                    spcAdd.anglCut0 = Math.abs(angBetween0 - UGeo.anglCut(spcAdd, geoFalz, UGeo.getIndex(coo, sideglass - 1), sideglass, '-'));
+                    spcAdd.anglCut1 = Math.abs(angBetween1 - UGeo.anglCut(spcAdd, geoFalz, UGeo.getIndex(coo, sideglass), UGeo.getIndex(coo, sideglass + 1), '+'));
+
+                    spcAdd.width += coo[sideglass].distance(coo[sideglass + 1]); //Тут надо учитывать наклон
                 }
 
                 spcRec.spcList.add(spcAdd);
@@ -233,7 +234,7 @@ public class ElemGlass extends ElemSimple {
             } else if (UseUnit.PIE.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
                 if (spcAdd.mapParam.get(13014) != null) {
-                    LineSegment s2 = UGeo.getSegment(geoShtapik, sideglass);
+                    LineSegment s2 = UGeo.getSegment(geoFalz, sideglass);
                     spcAdd.anglHoriz = UGeo.anglHor(s2.p0.x, s2.p0.y, s2.p1.x, s2.p1.y); //угол к горизонту                     
                     if (UCom.containsNumbJust(spcAdd.mapParam.get(13014), spcAdd.anglHoriz) == true) { //Углы ориентации стороны
                         spcRec.spcList.add(spcAdd);
