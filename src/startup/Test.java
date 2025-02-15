@@ -96,7 +96,7 @@ public class Test {
             //clearDataDB();
             //PSConvert.exec();
             //frame();
-            wincalc("min");
+            wincalc("604005");
             //param();
             //query();
             //json();
@@ -167,10 +167,11 @@ public class Test {
 
         Graphics2D gc2d = (Graphics2D) g;
 
-        //gc2d.translate(100, 10);
-        //gc2d.scale(.4, .4);
-        gc2d.translate(-4800, -810);
-        gc2d.scale(4, 4);
+        gc2d.translate(100, 10);
+        gc2d.scale(.4, .4);
+        //gc2d.translate(-4500, -810);
+        //gc2d.translate(80, -810);
+        //gc2d.scale(4, 4);
 
         //gc2d.translate(-80, -1000);
         //gc2d.translate(-4080, -1000);
@@ -537,7 +538,6 @@ public class Test {
         frames.add(new Com5t(1, new GsonElem(Type.BOX_SIDE, 0.0, 300.0)));
         frames.add(new Com5t(2, new GsonElem(Type.BOX_SIDE, 0.0, M)));
         frames.add(new Com5t(3, new GsonElem(Type.BOX_SIDE, 1300.0, M)));
-        //frames.add(new Com5t(4, new GsonElem(Type.BOX_SIDE, 1300.0, 300.0)));
         frames.add(new Com5t(4, new GsonElem(Type.BOX_SIDE, 1300.0, 300.0, 300.0)));
 
         LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());

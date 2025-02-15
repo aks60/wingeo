@@ -105,22 +105,10 @@ public class AreaSimple extends Com5t {
 
             splitLocation(geoShell, this.childs); //опережающее разделение импостом
 
-            if (geoShell.getNumPoints() > Com5t.MAXSIDE) {
-
-                double shtap = 0;
-//                Geometry areaFalz = owner.area.getGeometryN(2);
-//                Coordinate coo[] = areaFalz.getCoordinates();
-//                for (int j = 1; j < coo.length; j++) {
-//                    if (coo[j - 1].z == 4.0) {
-//                        shtap += coo[j - 1].distance(coo[j]);
-//                    }
-//                }
-                //shtap += coo[j - 1].distance(coo[j]);
-                
-                //System.out.println(shtap);
-                
-                //new Test().mpol = this.area; //gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
-            }
+//            if (geoShell.getNumPoints() > Com5t.MAXSIDE) {
+//                Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);     
+//                new Test().mpol = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
+//            }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.setLocation" + toString() + e);
         }
