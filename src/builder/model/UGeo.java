@@ -6,7 +6,6 @@ import dataset.Record;
 import common.LineSegm;
 import common.UCom;
 import domain.eArtikl;
-import frames.UGui;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -205,57 +204,57 @@ public class UGeo {
         }
     }
 
-    //Новая реализация с использованием Envelope но неработает!!!
-    public static Geometry[] split2Polygon(Geometry poly, LineString line) {
-        double impID = 8;
+    //В разработке!!!
+    public static Geometry split2Polygon(Geometry poly, Com5t impost) {
         boolean f = true;
-        List<Coordinate> ls = new ArrayList<Coordinate>();
-
+        List<Coordinate> line = new ArrayList<Coordinate>();
+        Coordinate[] coo = poly.getCoordinates();
         Envelope env = poly.getEnvelopeInternal();
-        Coordinate coo[] = UGeo.arrCoord(env.getMinX(), env.getMinY(), env.getMinX(), env.getMaxY(), 
-                env.getMaxX(), env.getMaxY(), env.getMaxX(), env.getMinY(), env.getMinX(), env.getMinY()); 
-
+        Coordinate cooEnv[] = UGeo.arrCoord(env.getMinX(), env.getMinY(), env.getMinX(), env.getMaxY(),
+                env.getMaxX(), env.getMaxY(), env.getMaxX(), env.getMinY(), env.getMinX(), env.getMinY());
         for (int i = 0; i < 4; i++) {
-            if (f) {
-                ls.add(coo[i]);
-            }
-            Coordinate cross = Intersection.lineSegment(line.getCoordinateN(0), line.getCoordinateN(1), coo[i], coo[i + 1]);
 
+            if (f) {
+                line.add(cooEnv[i]);
+            }
+            Coordinate cross = Intersection.lineSegment(new Coordinate(impost.x1(), impost.y1()),
+                    new Coordinate(impost.x2(), impost.y2()), cooEnv[i], cooEnv[i + 1]);
             if (cross != null) {
-                ls.add(cross);
+                line.add(cross);
                 f = !f;
             }
         }
-        ls.add(coo[0]);
-        Geometry poly0 = gf.createPolygon(ls.toArray(new Coordinate[0]));
+        line.add(cooEnv[0]);
+        Geometry poly0 = gf.createPolygon(line.toArray(new Coordinate[0]));
         Geometry poly1 = poly.intersection(poly0);
         Geometry poly2 = poly.difference(poly0);
-        poly1.normalize();
-        poly2.normalize();
+
         Coordinate coo1[] = poly1.getCoordinates();
         Coordinate coo2[] = poly2.getCoordinates();
-
+        if (poly.getNumPoints() > Com5t.MAXPOINT) {
+            final double ID = coo[poly.getNumPoints() / 2].z;
+            List.of(coo1).forEach(c -> c.z = ID);
+            List.of(coo2).forEach(c -> c.z = ID);
+        }
         for (int i = 1; i < coo1.length; i++) {
             for (int k = 1; k < coo2.length; k++) {
                 if (coo1[i].equals(coo2[k])) {
                     if ((f = !f) == false) {
                         coo2[k].z = coo1[i - 1].z;
-                        coo1[i].z = impID;
+                        coo1[i].z = impost.id;
                     } else {
                         coo1[i].z = coo2[k - 1].z;
-                        coo2[k].z = impID;
+                        coo2[k].z = impost.id;
                     }
                 }
             }
         }
-        coo1[0].z = coo1[coo1.length - 1].z;
-        coo2[0].z = coo2[coo2.length - 1].z;
 
-        //UGeo.PRINT("poly1 ", poly1);
-        //UGeo.PRINT("poly2 ", poly2);
-        return new Geometry[]{poly1, poly2};
+        UGeo.PRINT("poly1 ", poly1);
+        UGeo.PRINT("poly2 ", poly2);
+        return gf.createMultiPolygon(new Polygon[]{(Polygon) poly1, (Polygon) poly2});
     }
-    
+
     public static Geometry multiPolygon(Polygon geoShell, ArrayList<? extends Com5t> listElem) {
         Polygon geoInner = VBuffer.buffer(geoShell, listElem, 0, 0);
         Polygon geoFalz = VBuffer.buffer(geoShell, listElem, 0, 1);

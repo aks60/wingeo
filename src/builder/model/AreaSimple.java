@@ -117,11 +117,18 @@ public class AreaSimple extends Com5t {
     //Пилим детей импостом
     public void splitLocation(Polygon geoShell, ArrayList<Com5t> childs) {
         if (childs.size() > 2 && childs.get(1).type == Type.IMPOST) {
+            
             ElemCross impost = (ElemCross) childs.get(1);
+            
+            //Geometry geoTEST = UGeo.split2Polygon(geoShell.copy(), impost);
+            //new Test().mpol = geoTEST;
+            
             Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), impost);
+            
             childs.get(0).area = (Polygon) geoSplit[1];
             childs.get(2).area = (Polygon) geoSplit[2];
             Geometry lineImp = geoSplit[0];
+            
             //TODO Надо перейти на градусы
             if (impost.layout() == Layout.VERT) {
                 impost.setDimension(lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y, lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y);
