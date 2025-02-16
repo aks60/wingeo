@@ -178,6 +178,10 @@ public class Com5t {
         return (y2() > y1()) ? y2() - y1() : y1() - y2();
     }
 
+    public LineSegment segment() {
+        return UGeo.normalizeSegm(new LineSegment(new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id)));
+    }
+    
     @Override
     public String toString() {
         String art = (artiklRecAn == null) ? "null" : artiklRecAn.getStr(eArtikl.code);

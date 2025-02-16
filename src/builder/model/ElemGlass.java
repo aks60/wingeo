@@ -184,12 +184,12 @@ public class ElemGlass extends ElemSimple {
 
                     //Остальное
                 } else {
-                    Coordinate[] c1 = {coo[UGeo.getIndex(coo, sideglass - 1)], coo[sideglass], coo[UGeo.getIndex(coo, sideglass + 1)]};
-                    Coordinate[] c2 = {coo[sideglass], coo[UGeo.getIndex(coo, sideglass + 1)], coo[UGeo.getIndex(coo, sideglass + 2)]};
+                    Coordinate[] c1 = {coo[UGeo.getIndex(coo.length, sideglass - 1)], coo[sideglass], coo[UGeo.getIndex(coo.length, sideglass + 1)]};
+                    Coordinate[] c2 = {coo[sideglass], coo[UGeo.getIndex(coo.length, sideglass + 1)], coo[UGeo.getIndex(coo.length, sideglass + 2)]};
                     double angBetween0 = Math.toDegrees(Angle.angleBetween(c1[0], c1[1], c1[2]));
                     double angBetween1 = Math.toDegrees(Angle.angleBetween(c2[0], c2[1], c2[2]));
-                    spcAdd.anglCut0 = Math.abs(angBetween0 - UGeo.anglCut(spcAdd, geoFalz, UGeo.getIndex(coo, sideglass - 1), sideglass, '-'));
-                    spcAdd.anglCut1 = Math.abs(angBetween1 - UGeo.anglCut(spcAdd, geoFalz, UGeo.getIndex(coo, sideglass), UGeo.getIndex(coo, sideglass + 1), '+'));
+                    spcAdd.anglCut0 = Math.abs(angBetween0 - UGeo.anglCut(spcAdd, geoFalz, UGeo.getIndex(coo.length, sideglass - 1), sideglass, '-'));
+                    spcAdd.anglCut1 = Math.abs(angBetween1 - UGeo.anglCut(spcAdd, geoFalz, UGeo.getIndex(coo.length, sideglass), UGeo.getIndex(coo.length, sideglass + 1), '+'));
 
                     spcAdd.width += coo[sideglass].distance(coo[sideglass + 1]); //Тут надо учитывать наклон
                 }

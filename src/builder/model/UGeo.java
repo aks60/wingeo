@@ -136,7 +136,7 @@ public class UGeo {
     }
 
     //Пилим многоугольник
-    public static Geometry[] splitPolygon(Geometry geom, Com5t impost) {
+    public static Geometry[] splitPolygon(Geometry geom, LineSegment segment) {
         try {
             boolean b = true;
             HashSet<Coordinate> checkHs = new HashSet<Coordinate>();
@@ -144,8 +144,8 @@ public class UGeo {
             List<Coordinate> cooL = new ArrayList<Coordinate>(), cooR = new ArrayList<Coordinate>();
             List<Coordinate> crosTwo = new ArrayList<Coordinate>(), listExt = new ArrayList<Coordinate>(List.of(coo[0]));
             LineSegment segmImp = normalizeSegm(new LineSegment(
-                    new Coordinate(impost.x1(), impost.y1(), impost.id),
-                    new Coordinate(impost.x2(), impost.y2(), impost.id)));
+                    new Coordinate(segment.p0.x, segment.p0.y, segment.p0.z),
+                    new Coordinate(segment.p1.x, segment.p1.y, segment.p1.z)));
 
             //Вставим точки пересечения в список коорд. см.exten
             for (int i = 1; i < coo.length; i++) {
@@ -256,12 +256,19 @@ public class UGeo {
     }
 
     public static Geometry multiPolygon(Polygon geoShell, ArrayList<? extends Com5t> listElem) {
-        Polygon geoInner = VBuffer.buffer(geoShell, listElem, 0, 0);
-        Polygon geoFalz = VBuffer.buffer(geoShell, listElem, 0, 1);
-        return gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
+        
+        if (geoShell.getNumPoints() < Com5t.MAXPOINT) {
+            Polygon geoInner = VBuffer.buffer(geoShell, listElem, 0, 0);
+            Polygon geoFalz = VBuffer.buffer(geoShell, listElem, 0, 1);
+            return gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
+        } else {
+            Polygon geoInner = VBuffer.buffer(geoShell, listElem, 0, 0);
+            Polygon geoFalz = VBuffer.buffer(geoShell, listElem, 0, 1);
+            return gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
+        }
     }
 
-    //Список входн. параметров не замыкается начальной точкой как в jts!
+//Список входн. параметров не замыкается начальной точкой как в jts!
     public static Coordinate[] arrCoord(double... d) {
         List<Coordinate> list = new ArrayList<Coordinate>();
         for (int i = 1; i < d.length; i = i + 2) {
@@ -350,13 +357,13 @@ public class UGeo {
         return -1;
     }
 
-    public static int getIndex(Coordinate[] coo, int index) {
+    public static int getIndex(int count, int index) {
 
-        if (index > coo.length - 1) {
-            return index - coo.length;
+        if (index > count - 1) {
+            return index - count;
         }
         if (index < 0) {
-            return coo.length + index - 1;
+            return count + index - 1;
         }
         return index;
     }

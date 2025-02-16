@@ -59,14 +59,10 @@ public class AreaArch extends AreaSimple {
             listShell.add(listShell.get(0));
 
             //Аrea рамы 
-            double dh = artiklRec.getDbl(eArtikl.height) - artiklRec.getDbl(eArtikl.size_centr) - artiklRec.getDbl(eArtikl.size_falz);
             Polygon geoShell = gf.createPolygon(listShell.toArray(new Coordinate[0]));
-
             this.area = UGeo.multiPolygon(geoShell, winc.listElem);
 
             splitLocation((Polygon) this.area.getGeometryN(0), this.childs); //опережающее разделение импостом
-
-            //UGeo.bufferVar(geoShell, winc.listElem, 0, 0);
             
             //new Test().mpol = this.area;
         } catch (Exception e) {

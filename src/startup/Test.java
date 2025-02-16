@@ -96,23 +96,29 @@ public class Test {
             //clearDataDB();
             //PSConvert.exec();
             //frame();
-            wincalc("604005");
+            //wincalc("604005");
             //param();
             //query();
             //json();
             //uid();
             //script();
             //geom(); 
-
-//            int a[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30};
-//            int shift = 3;
-//            int length = a.length;
-//            int[] b = new int[length];
-//
-//            System.arraycopy(a, length - shift, b, 0, shift);
-//            System.arraycopy(a, 0, b, shift, length - shift);
-//
-//            System.out.println(b);
+            
+             double x1 = 1;
+             double y1 = 1;
+             double x2 = 9;
+             double y2 = -9;
+             
+                LineSegment ls = new LineSegment(0, 0, 1, 1);
+                //LineSegment segm = UGeo.normalizeSegm(ls);
+                double angHor = Math.toDegrees(ls.angle());  
+                double angHor2 = UGeo.anglHor(ls.p0.x, ls.p0.y, ls.p1.x, ls.p1.y);
+                System.out.println(angHor);
+                System.out.println(angHor2);
+                
+                double multiVec = x1 * y2 - x2 * y1;
+                System.out.println(multiVec);
+                System.out.println(multiVec < 0);
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
@@ -457,7 +463,9 @@ public class Test {
     }
 
     private void draw9() {
-//GEOMETRYCOLLECTION (POLYGON ((100 150, 100 340, 350 340, 350 150, 100 150)), LINESTRING (220 340, 220 150))
+//    WKTReader2 reader = new WKTReader2();
+//    String wkt = "Polygon ((578250.83733634161762893 -5529552.83186665736138821, 578250.83733634161762893 -5529552.83186665736138821, 610067.62374519626609981 -5530111.02110190037637949, 612579.47530379006639123 -5498294.23469304572790861, 651373.62715318310074508 -5496898.76160493772476912, 652646.66333545825909823 -5465547.4130439143627882, 655839.14103512768633664 -5429357.86414052732288837, 709983.49685370502993464 -5428520.58028766233474016, 709115.27472816628869623 -5461139.35142331290990114, 709445.62126647483091801 -5510588.09887696336954832, 706076.17220700345933437 -5551601.30665875878185034, 574064.41807201865594834 -5558299.57748167496174574, 578250.83733634161762893 -5529552.83186665736138821))";
+//    Polygon poly = (Polygon) reader.read(wkt);
 
         Coordinate[] coord = new Coordinate[]{
             new Coordinate(100, 150), new Coordinate(100, 340),

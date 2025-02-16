@@ -105,10 +105,6 @@ public class AreaSimple extends Com5t {
 
             splitLocation(geoShell, this.childs); //опережающее разделение импостом
 
-//            if (geoShell.getNumPoints() > Com5t.MAXSIDE) {
-//                Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);     
-//                new Test().mpol = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
-//            }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.setLocation" + toString() + e);
         }
@@ -116,14 +112,14 @@ public class AreaSimple extends Com5t {
 
     //Пилим детей импостом
     public void splitLocation(Polygon geoShell, ArrayList<Com5t> childs) {
-        if (childs.size() > 2 && childs.get(1).type == Type.IMPOST) {
-            
+        
+        if (childs.size() > 2 && childs.get(1).type == Type.IMPOST) {           
             ElemCross impost = (ElemCross) childs.get(1);
             
             //Geometry geoTEST = UGeo.split2Polygon(geoShell.copy(), impost);
             //new Test().mpol = geoTEST;
             
-            Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), impost);
+            Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), impost.segment());
             
             childs.get(0).area = (Polygon) geoSplit[1];
             childs.get(2).area = (Polygon) geoSplit[2];
