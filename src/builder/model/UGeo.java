@@ -204,68 +204,11 @@ public class UGeo {
         }
     }
 
-    //В разработке!!!
-    public static Geometry split2Polygon(Geometry poly, Com5t impost) {
-        boolean f = true;
-        List<Coordinate> line = new ArrayList<Coordinate>();
-        Coordinate[] coo = poly.getCoordinates();
-        Envelope env = poly.getEnvelopeInternal();
-        Coordinate cooEnv[] = UGeo.arrCoord(env.getMinX(), env.getMinY(), env.getMinX(), env.getMaxY(),
-                env.getMaxX(), env.getMaxY(), env.getMaxX(), env.getMinY(), env.getMinX(), env.getMinY());
-        for (int i = 0; i < 4; i++) {
-
-            if (f) {
-                line.add(cooEnv[i]);
-            }
-            Coordinate cross = Intersection.lineSegment(new Coordinate(impost.x1(), impost.y1()),
-                    new Coordinate(impost.x2(), impost.y2()), cooEnv[i], cooEnv[i + 1]);
-            if (cross != null) {
-                line.add(cross);
-                f = !f;
-            }
-        }
-        line.add(cooEnv[0]);
-        Geometry poly0 = gf.createPolygon(line.toArray(new Coordinate[0]));
-        Geometry poly1 = poly.intersection(poly0);
-        Geometry poly2 = poly.difference(poly0);
-
-        Coordinate coo1[] = poly1.getCoordinates();
-        Coordinate coo2[] = poly2.getCoordinates();
-        if (poly.getNumPoints() > Com5t.MAXPOINT) {
-            final double ID = coo[poly.getNumPoints() / 2].z;
-            List.of(coo1).forEach(c -> c.z = ID);
-            List.of(coo2).forEach(c -> c.z = ID);
-        }
-        for (int i = 1; i < coo1.length; i++) {
-            for (int k = 1; k < coo2.length; k++) {
-                if (coo1[i].equals(coo2[k])) {
-                    if ((f = !f) == false) {
-                        coo2[k].z = coo1[i - 1].z;
-                        coo1[i].z = impost.id;
-                    } else {
-                        coo1[i].z = coo2[k - 1].z;
-                        coo2[k].z = impost.id;
-                    }
-                }
-            }
-        }
-
-        UGeo.PRINT("poly1 ", poly1);
-        UGeo.PRINT("poly2 ", poly2);
-        return gf.createMultiPolygon(new Polygon[]{(Polygon) poly1, (Polygon) poly2});
-    }
-
     public static Geometry multiPolygon(Polygon geoShell, ArrayList<? extends Com5t> listElem) {
-        
-        if (geoShell.getNumPoints() < Com5t.MAXPOINT) {
-            Polygon geoInner = VBuffer.buffer(geoShell, listElem, 0, 0);
-            Polygon geoFalz = VBuffer.buffer(geoShell, listElem, 0, 1);
-            return gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
-        } else {
-            Polygon geoInner = VBuffer.buffer(geoShell, listElem, 0, 0);
-            Polygon geoFalz = VBuffer.buffer(geoShell, listElem, 0, 1);
-            return gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
-        }
+
+        Polygon geoInner = VBuffer.buffer(geoShell, listElem, 0, 0);
+        Polygon geoFalz = VBuffer.buffer(geoShell, listElem, 0, 1);
+        return gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
     }
 
 //Список входн. параметров не замыкается начальной точкой как в jts!
