@@ -13,6 +13,7 @@ package builder.model;
 
 import static builder.model.Com5t.gf;
 import domain.eArtikl;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,7 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.operation.buffer.BufferParameters;
+import startup.Test;
 
 /**
  * Creates a buffer polygon with a varying buffer distance at each vertex along
@@ -121,7 +123,6 @@ public class VBuffer {
         }
         LineString ls = line.getFactory().createLineString(line.getCoordinates());
         VBuffer vb = new VBuffer(ls, distance);
-        //VariableBuffer vb = new VariableBuffer(ls, distance); //v-1.20 не работает так как надо
         Geometry geo = vb.getResult();
         return ringToPolygon(line, geo);
     }
@@ -276,12 +277,41 @@ public class VBuffer {
     public Geometry getResult() {
         List<Geometry> parts = new ArrayList<Geometry>();
 
-        Coordinate[] pts = line.getCoordinates();
+        Coordinate[] cooShell = line.getCoordinates();
+//        if (cooShell.length > Com5t.MAXSIDE) {
+//            ArrayDeque<Coordinate> deq = new ArrayDeque<Coordinate>();
+//            Coordinate cross = new Coordinate();
+//            double ID = cooShell[cooShell.length / 2].z;
+//            double offset = distance[cooShell.length / 2];
+//            LineSegment segRighShell = new LineSegment(), segRighInner = null;
+//            LineSegment segLeftShell = new LineSegment(), segLeftInner = null;
+//            for (int i = 1; i < cooShell.length; i++) {
+//                if (cooShell[i].z == ID) {
+//                    segRighShell.setCoordinates(cooShell[i - 1], cooShell[i]);
+//                    segRighInner = segRighShell.offset(-offset);
+//
+//                    int j = (i == cooShell.length - 1) ? 1 : i + 1;
+//                    segLeftShell.setCoordinates(cooShell[i], cooShell[j]);
+//                    segLeftInner = segLeftShell.offset(-offset);
+//
+//                    //Точка пересечения сегментов
+//                    cross = segLeftInner.intersection(segRighInner);
+//                    if (cross != null) {
+//                        deq.addFirst(cooShell[i]);
+//                        deq.addLast(cross);
+//                    }
+//                }
+//            }
+//            Coordinate[] cooInner = deq.toArray(new Coordinate[0]);
+//            Polygon poly = gf.createPolygon(cooInner);
+//            new Test().mpol = poly;
+//        }
+
         // construct segment buffers
-        for (int i = 1; i < pts.length; i++) {
+        for (int i = 1; i < cooShell.length; i++) {
             double dist0 = distance[i - 1];
             if (dist0 > 0) {
-                Polygon poly = segmentBuffer(pts[i - 1], pts[i], dist0, dist0);
+                Polygon poly = segmentBuffer(cooShell[i - 1], cooShell[i], dist0, dist0);
                 if (poly != null) {
                     parts.add(poly);
                 }
@@ -329,7 +359,7 @@ public class VBuffer {
         return segmentBufferOriented(p0, p1, dist0, dist1);
     }
 
-    private Polygon segmentBufferOriented(Coordinate p0, Coordinate p1,  double dist0, double dist1) {
+    private Polygon segmentBufferOriented(Coordinate p0, Coordinate p1, double dist0, double dist1) {
         //-- Assert: dist0 <= dist1
 
         //-- forward tangent line
