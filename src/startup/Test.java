@@ -550,15 +550,19 @@ public class Test {
 
         LineString geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
         //Polygon geo2 = VBuffer.buffer(geo1, frames, 0, 0);
-        Polygon geo3 = UGeo.bufferCross(geo1, frames, 0, 0);
-        //Polygon geo4 = UGeo.bufferUnion(geo1, frames, 0);
+        //Polygon geo4 = UGeo.bufferDiff(geo1, frames, 0, 0);
+        //Polygon geo4 = UGeo.bufferCross(geo1, frames, 0, 0);
 
         //Coordinate coo1[] = geo1.getCoordinates();
         //Coordinate coo2[] = geo2.getCoordinates();
         //Coordinate coo3[] = geo3.getCoordinates();
         //Coordinate coo4[] = geo4.getCoordinates();
-        mlin = gf.createMultiLineString(new LineString[]{geo1});
-        mpol = gf.createMultiPolygon(new Polygon[]{geo3});
+        
+        //mlin = gf.createMultiLineString(new LineString[]{geo1});
+        //mpol = gf.createMultiPolygon(new Polygon[]{geo3});
+        Geometry geo5 = UGeo.bufferDiff(geo1, frames, 0, 0);
+        mlin = geo5.getGeometryN(0); 
+        mpol = geo5.getGeometryN(1);
 
     }
 
