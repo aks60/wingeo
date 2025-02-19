@@ -435,9 +435,9 @@ public class UGeo {
             Polygon geoShell = UGeo.newPolygon(List.of(new Coordinate(0, 300), new Coordinate(0, 364), new Coordinate(1300, 364),
                     new Coordinate(1300, 300), new Coordinate(1236, 300), new Coordinate(1236, p2), new Coordinate(64, p2),
                     new Coordinate(64, 300), new Coordinate(0, 300)));
-            
+
             Polygon geoInner = (Polygon) crosPoly.difference(geoShell);
-            
+
             return gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
 
         } catch (Exception e) {
@@ -509,11 +509,13 @@ public class UGeo {
                                     segLeftInner = segLeftShell.offset(-hmOffset.get(2.0));
                                     int orientation = segLeftInner.orientationIndex(cross);
                                     if (orientation == 1) {
+                                        crosDeque.pollLast();
                                         continue;
                                     } else {
 
                                         crosDeque.addLast(cross);
                                         cross.z = cooShell[i].z;
+                                        i = i + 1;
                                         break;
                                     }
                                 } else {
@@ -1251,5 +1253,17 @@ public class UGeo {
     }
     
      */
-// </editor-fold>    
+// </editor-fold>   
+    static boolean isInside(int circle_x, int circle_y,
+            int rad, int x, int y) {
+        // Compare radius of circle with
+        // distance of its center from
+        // given point
+        if ((x - circle_x) * (x - circle_x)
+                + (y - circle_y) * (y - circle_y) <= rad * rad) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

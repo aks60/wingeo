@@ -560,9 +560,8 @@ public class Test {
         
         //mlin = gf.createMultiLineString(new LineString[]{geo1});
         //mpol = gf.createMultiPolygon(new Polygon[]{geo3});
-        Geometry geo5 = UGeo.bufferDiff(geo1, frames, 0, 0);
-        mlin = geo5.getGeometryN(0); 
-        mpol = geo5.getGeometryN(1);
+        Geometry geo5 = UGeo.bufferCross(geo1, frames, 0, 0);
+        mpol = geo5;
 
     }
 
