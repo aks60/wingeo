@@ -473,7 +473,6 @@ public class UGeo {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">     
-    /* 
     //Расчёт внутр. буфера. При вырождении полигона загибы на концах арки
     public static Polygon bufferCross(Geometry geoShell, ArrayList<? extends Com5t> frameList, double amend, int opt) {
 
@@ -496,8 +495,9 @@ public class UGeo {
                     hmOffset.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + amend);
                 }
             }
+            hmOffset.put(2.0, 40.0);
 
-            //Цыкл по оболочки
+            //Цыкл по оболочке
             for (int i = 1; i < cooShell.length; i++) {
                 try {
                     //Перебор левого и правого сегмента от точки пересечения
@@ -530,16 +530,21 @@ public class UGeo {
                                 cross = segLeftInner.intersection(segRighInner);
 
                                 if (cross != null) {
-                                    LineString ls1 = UGeo.newLineStr(segLeftInner.p0.x, segLeftInner.p0.y, segLeftInner.p1.x, segLeftInner.p1.y);
-                                    LineString ls2 = UGeo.newLineStr(segRighInner.p0.x, segRighInner.p0.y, segRighInner.p1.x, segRighInner.p1.y);
-                                    //new Test().mpol = gf.createMultiLineString(new LineString[]{ls1, ls2});
-                                    
-                                    crosDeque.addLast(cross);
-                                    cross.z = cooShell[i].z;
-                                    break;
+
+                                    segLeftShell.setCoordinates(cooShell[1], cooShell[2]);
+                                    segLeftInner = segLeftShell.offset(-hmOffset.get(2.0));
+                                    int orientation = segLeftInner.orientationIndex(cross);
+                                    if (orientation == 1) {
+                                        continue;
+                                    } else {
+
+                                        crosDeque.addLast(cross);
+                                        cross.z = cooShell[i].z;
+                                        break;
+                                    }
                                 } else {
                                     crosDeque.pollLast();
-                                    
+
                                 }
                             }
                         }
@@ -559,6 +564,7 @@ public class UGeo {
         }
         return result;
     }
+    /*     
     //Не дописал
     public static Geometry bufferOp(Polygon geoShell, double offset) {
         try {
