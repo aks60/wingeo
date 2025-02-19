@@ -95,7 +95,7 @@ public class Test {
         try {
             //clearDataDB();
             //PSConvert.exec();
-            //frame();
+            frame();
             //wincalc("604005");
             //param();
             //query();
@@ -103,22 +103,11 @@ public class Test {
             //uid();
             //script();
             //geom(); 
-            
-             double x1 = 1;
-             double y1 = 1;
-             double x2 = 9;
-             double y2 = -9;
-             
-                LineSegment ls = new LineSegment(0, 0, 1, 1);
-                //LineSegment segm = UGeo.normalizeSegm(ls);
-                double angHor = Math.toDegrees(ls.angle());  
-                double angHor2 = UGeo.anglHor(ls.p0.x, ls.p0.y, ls.p1.x, ls.p1.y);
-                System.out.println(angHor);
-                System.out.println(angHor2);
-                
-                double multiVec = x1 * y2 - x2 * y1;
-                System.out.println(multiVec);
-                System.out.println(multiVec < 0);
+
+//            Coordinate p = new Coordinate(50, 100);
+//            LineSegment ls = new LineSegment(0, 100, 400, 100);
+//            int imd = ls.orientationIndex(p);
+//            System.out.println(imd);
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
@@ -173,11 +162,11 @@ public class Test {
 
         Graphics2D gc2d = (Graphics2D) g;
 
-        gc2d.translate(100, 10);
-        gc2d.scale(.4, .4);
-        //gc2d.translate(-4500, -810);
-        //gc2d.translate(80, -810);
-        //gc2d.scale(4, 4);
+        //gc2d.translate(100, 10);
+        //gc2d.scale(.4, .4);
+        //gc2d.translate(-4500, -900);
+        gc2d.translate(80, -900);
+        gc2d.scale(4, 4);
 
         //gc2d.translate(-80, -1000);
         //gc2d.translate(-4080, -1000);
@@ -537,8 +526,8 @@ public class Test {
     }
 
     private void draw6() {
-        double M = 420;
-        //double M = 1500;
+        //double M = 420;
+        double M = 360;
         //GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayList<Com5t> frames = new ArrayList();
@@ -560,17 +549,16 @@ public class Test {
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
 
         LineString geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
-        Polygon geo2 = VBuffer.buffer(geo1, frames, 0, 0);
-        //Polygon geo3 = UGeo.bufferCross(geo1, frames, 0, 0);
+        //Polygon geo2 = VBuffer.buffer(geo1, frames, 0, 0);
+        Polygon geo3 = UGeo.bufferCross(geo1, frames, 0, 0);
         //Polygon geo4 = UGeo.bufferUnion(geo1, frames, 0);
 
-        Coordinate coo1[] = geo1.getCoordinates();
-        Coordinate coo2[] = geo2.getCoordinates();
+        //Coordinate coo1[] = geo1.getCoordinates();
+        //Coordinate coo2[] = geo2.getCoordinates();
         //Coordinate coo3[] = geo3.getCoordinates();
         //Coordinate coo4[] = geo4.getCoordinates();
-
         mlin = gf.createMultiLineString(new LineString[]{geo1});
-        mpol = gf.createMultiPolygon(new Polygon[]{geo2});
+        mpol = gf.createMultiPolygon(new Polygon[]{geo3});
 
     }
 
