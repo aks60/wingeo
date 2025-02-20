@@ -168,9 +168,6 @@ public class Test {
         gc2d.translate(80, -900);
         gc2d.scale(4, 4);
 
-        //gc2d.translate(-80, -1000);
-        //gc2d.translate(-4080, -1000);
-        //gc2d.scale(4, 4);
         if (mlin != null) {
             gc2d.setColor(Color.BLUE);
             Shape shape = new ShapeWriter().toShape(mlin);
@@ -526,7 +523,6 @@ public class Test {
     }
 
     private void draw6() {
-        //double M = 420;
         double M = 360;
         //GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
@@ -551,7 +547,7 @@ public class Test {
         LineString geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
         //Polygon geo2 = VBuffer.buffer(geo1, frames, 0, 0);
         //Polygon geo4 = UGeo.bufferDiff(geo1, frames, 0, 0);
-        Polygon geo4 = UGeo.bufferCross(geo1, frames, 0, 0);
+        Geometry geo4 = UGeo.buffer(geo1, frames, 0, 0);
 
         //Coordinate coo1[] = geo1.getCoordinates();
         //Coordinate coo2[] = geo2.getCoordinates();
@@ -559,7 +555,7 @@ public class Test {
         //Coordinate coo4[] = geo4.getCoordinates();
         
         mlin = gf.createMultiLineString(new LineString[]{geo1});
-        mpol = gf.createMultiPolygon(new Polygon[]{geo4});
+        mpol = geo4; // gf.createMultiPolygon(new Polygon[]{geo2});
     }
 
     private void draw5() {

@@ -330,7 +330,13 @@ public class VBuffer {
         return segmentBufferOriented(p0, p1, dist0, dist1);
     }
 
+//›“Œ ÃŒﬂ ‘”Õ ÷»ﬂ    
     private Polygon segmentBufferOriented(Coordinate p0, Coordinate p1, double dist0, double dist1) {
+//        CoordinateList coords = new CoordinateList();
+//        LineSegment segm1 = new LineSegment(p0, p1);
+//        LineSegment segm2 = segm1.offset(-dist0);
+//        coords.addAll(List.of(segm1.p0, segm2.p0,segm2.p1, segm1.p1, segm1.p0));
+        
         //-- Assert: dist0 <= dist1
 
         //-- forward tangent line
@@ -360,7 +366,6 @@ public class VBuffer {
 
         Coordinate[] pts = coords.toCoordinateArray();
         Polygon polygon = geomFactory.createPolygon(pts);
-//System.out.println(polygon);
         return polygon;
     }
 

@@ -122,7 +122,7 @@ public class ElemGlass extends ElemSimple {
             // ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
 
             //Полигон стеклопакета
-            this.area = VBuffer.buffer(owner.area.getGeometryN(0), winc.listElem, gzazo, 1);
+            this.area = buffer(owner.area.getGeometryN(0), winc.listElem, gzazo, 1);
 
             Envelope env = this.area.getEnvelopeInternal();
             spcRec.width = env.getWidth();
@@ -151,7 +151,7 @@ public class ElemGlass extends ElemSimple {
             Geometry geoFalz = owner.area.getGeometryN(2);
             //if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X108)) { //штапик
             if (owner.area.getGeometryN(0).getNumPoints() > Com5t.MAXSIDE) {
-                geoFalz = VBuffer.buffer(owner.area.getGeometryN(0), winc.listElem, -1 * spcAdd.artiklRec.getDbl(eArtikl.height), 0);
+                geoFalz = buffer(owner.area.getGeometryN(0), winc.listElem, -1 * spcAdd.artiklRec.getDbl(eArtikl.height), 0);
             }
 
             //Погонные метры.
@@ -240,7 +240,7 @@ public class ElemGlass extends ElemSimple {
     public void rascladkaPaint() {
         if (this.rascRec.isVirtual() == false) {
             ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST);
-            Polygon areaProf = VBuffer.buffer(owner.area.getGeometryN(0), list, 0, 0);  //полигон внут. по ширине профиля для прорисовки раскладки
+            Polygon areaProf = buffer(owner.area.getGeometryN(0), list, 0, 0);  //полигон внут. по ширине профиля для прорисовки раскладки
             Envelope envRasc = areaProf.getEnvelopeInternal();
 
             double artH = Math.round(this.rascRec.getDbl(eArtikl.height));

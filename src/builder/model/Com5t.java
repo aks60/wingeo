@@ -118,13 +118,11 @@ public class Com5t {
         return true;
     }
 
-    //public Polygon buffer(Geometry line, ArrayList<? extends Com5t> list, double amend) {
-    //return UGeo.bufferCross(line, list, amend);
-    //return UGeo.bufferPaddin(line, list, amend);
-    //
-    //return UGeo.bufferUnion(line, list, amend);        
-    //return GeoBuffer.buffer(line, list, amend);
-    //}
+    public static Polygon buffer(Geometry poly, ArrayList<? extends Com5t> list, double amend, int op) {
+        //return VBuffer.buffer(line, list, amend, op);
+        return UGeo.buffer(poly, list, amend, op);        
+    }
+
     public boolean equals(Object obj) {
         return (this.id == ((Com5t) obj).id);
     }
@@ -181,7 +179,7 @@ public class Com5t {
     public LineSegment segment() {
         return UGeo.normalizeSegm(new LineSegment(new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id)));
     }
-    
+
     @Override
     public String toString() {
         String art = (artiklRecAn == null) ? "null" : artiklRecAn.getStr(eArtikl.code);
