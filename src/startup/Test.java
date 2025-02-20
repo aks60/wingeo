@@ -162,11 +162,11 @@ public class Test {
 
         Graphics2D gc2d = (Graphics2D) g;
 
-        //gc2d.translate(100, 10);
-        //gc2d.scale(.4, .4);
+        gc2d.translate(100, 10);
+        gc2d.scale(.4, .4);
         //gc2d.translate(-4500, -900);
-        gc2d.translate(80, -900);
-        gc2d.scale(4, 4);
+        //gc2d.translate(80, -900);
+        //gc2d.scale(4, 4);
 
         if (mlin != null) {
             gc2d.setColor(Color.BLUE);
@@ -546,7 +546,7 @@ public class Test {
 
         LineString geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
         //Polygon geo2 = VBuffer.buffer(geo1, frames, 0, 0);
-        //Polygon geo4 = UGeo.bufferDiff(geo1, frames, 0, 0);
+        //Polygon geo4 = UGeo.curveBuffer(geo1, 40.0);
         Geometry geo4 = UGeo.buffer(geo1, frames, 0, 0);
 
         //Coordinate coo1[] = geo1.getCoordinates();

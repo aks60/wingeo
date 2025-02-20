@@ -212,37 +212,124 @@ public class UGeo {
 
         List<Geometry> parts = new ArrayList<Geometry>();
         Coordinate[] cooShell = geom.getCoordinates();
+        List<Coordinate> coords = new ArrayList();
         Map<Double, Double> hm = new HashMap();
-
-        for (Com5t el : list) {
-            dataset.Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-            if (opt == 0) {
-                hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
-            } else if (opt == 1) {
-                hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + amend);
+        try {
+            //Смещения сегментов
+            for (Com5t el : list) {
+                dataset.Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+                if (opt == 0) {
+                    hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
+                } else if (opt == 1) {
+                    hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + amend);
+                }
             }
-        }        
-        for (int i = 1; i < cooShell.length; i++) {
-            double dist = hm.get(cooShell[i - 1].z);
-            Polygon poly = segmentBuffer(cooShell[i - 1], cooShell[i], dist);
-            if (poly != null) {
+            
+            //hm.put(2.0, 10.0); //test
+            
+            double ID = -1.0;
+            if (cooShell.length > Com5t.MAXSIDE) {
+                ID = cooShell[geom.getCoordinates().length / 2].z;
+                Polygon poly = curveBuffer(geom, hm.get(ID));
                 parts.add(poly);
             }
+
+            for (int i = 1; i < cooShell.length; i++) {
+                if (ID != cooShell[i - 1].z) {
+                    Polygon poly = segmentBuffer(cooShell[i - 1], cooShell[i], hm.get(cooShell[i - 1].z));
+                    parts.add(poly);
+                }
+            }
+            GeometryCollection partsGeom = gf.createGeometryCollection(GeometryFactory.toGeometryArray(parts));
+            Geometry geo = partsGeom.union();
+            return ringToPolygon(geom, geo);
+            
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.buffer() " + e);
         }
-        GeometryCollection partsGeom = gf.createGeometryCollection(GeometryFactory.toGeometryArray(parts));
-        Geometry geo =  partsGeom.union();        
-        return ringToPolygon(geom, geo);
+        return null;
     }
 
-    private static Polygon segmentBuffer(Coordinate p0, Coordinate p1, double dist) {
+    public static Polygon curveBuffer(Geometry geom, double dist) {
+
+        Polygon result = gf.createPolygon();
+        LineSegment segRighShell = new LineSegm(), segRighInner = null;
+        LineSegment segLeftShell = new LineSegm(), segLeftInner = null;
+        Coordinate cross = new Coordinate();
+        Coordinate[] cooShell = geom.getCoordinates();
+
+        double ID = cooShell[geom.getCoordinates().length / 2].z;
+        List<Coordinate> listShell = new ArrayList<Coordinate>();
+        List<Coordinate> listInner = new ArrayList<Coordinate>();
+
+        try {
+            for (int i = 1; i < cooShell.length; i++) {
+                if (cooShell[i - 1].z == ID) {
+
+                    //Коррекция первой и последней точки дуги
+                    if (listShell.isEmpty()) {
+                        listShell.add(cooShell[i - 1]);
+                    }
+                    listShell.add(cooShell[i]);
+
+                    //Перебор левого и правого сегмента от точки пересечения
+                    if (i > Com5t.MAXSIDE || (cross != null && i < Com5t.MAXSIDE)) {
+                        segRighShell.setCoordinates(cooShell[i - 1], cooShell[i]);
+                        segRighInner = segRighShell.offset(-dist);
+                    }
+                    if (i < Com5t.MAXSIDE || (cross != null && i > Com5t.MAXSIDE)) {
+                        int j = (i == cooShell.length - 1) ? 1 : i + 1;
+                        segLeftShell.setCoordinates(cooShell[i], cooShell[j]);
+                        segLeftInner = segLeftShell.offset(-dist);
+                    }
+                    //Точка пересечения сегментов
+                    cross = segLeftInner.intersection(segRighInner);
+
+                    if (cross != null) { //заполнение очереди
+                        cross.z = cooShell[i].z;
+                        listInner.add(cross);
+
+                    } else {
+                        if (cooShell[i].z != ID && cooShell[i - 1].z == ID) { //обрезание хвоста слева
+                            for (int k = i - 1; k >= 0; --k) {
+                                if (listInner.size() > 1) {
+                                    segRighShell.setCoordinates(cooShell[k - 1], cooShell[k]);
+                                    segRighInner = segRighShell.offset(-dist);
+                                }
+                                cross = segLeftInner.intersection(segRighInner);
+
+                                if (cross != null) {
+                                    listInner.add(cross);
+                                    cross.z = cooShell[i].z;
+                                    break;
+                                } else {
+                                    listInner.remove(listInner.size() - 1);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            Collections.reverse(listInner);
+            listInner.addAll(listShell);
+            listInner.add(0, listInner.get(listInner.size() - 1));
+            result = gf.createPolygon(listInner.toArray(new Coordinate[0]));
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.curveBuffer() " + e);
+        }
+        return result;
+    }
+
+    public static Polygon segmentBuffer(Coordinate p0, Coordinate p1, double dist) {
         List<Coordinate> coords = new ArrayList();
         LineSegment segm1 = new LineSegment(p0, p1);
         LineSegment segm2 = segm1.offset(-dist);
-        coords.addAll(List.of(segm1.p0, segm2.p0,segm2.p1, segm1.p1, segm1.p0));
+        coords.addAll(List.of(segm1.p0, segm2.p0, segm2.p1, segm1.p1, segm1.p0));
         Coordinate[] pts = coords.toArray(new Coordinate[0]);
-        return  gf.createPolygon(pts);
+        return gf.createPolygon(pts);
     }
-   
+
     public static Polygon ringToPolygon(Geometry line, Geometry geom) {
 
         Coordinate coo[] = line.getGeometryN(0).getCoordinates();
@@ -255,7 +342,7 @@ public class UGeo {
         cor[cor.length - 1].z = cor[0].z;
         return (Polygon) gf.createPolygon(cor);
     }
-    
+
     public static Geometry multiPolygon(Polygon geoShell, ArrayList<? extends Com5t> listElem) {
 
         Polygon geoInner = Com5t.buffer(geoShell, listElem, 0, 0);
