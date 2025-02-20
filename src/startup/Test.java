@@ -162,11 +162,11 @@ public class Test {
 
         Graphics2D gc2d = (Graphics2D) g;
 
-        gc2d.translate(100, 10);
-        gc2d.scale(.4, .4);
-        //gc2d.translate(-4500, -900);
+        //gc2d.translate(100, 10);
+        //gc2d.scale(.4, .4);
+        gc2d.translate(-4500, -900);
         //gc2d.translate(80, -900);
-        //gc2d.scale(4, 4);
+        gc2d.scale(4, 4);
 
         if (mlin != null) {
             gc2d.setColor(Color.BLUE);
