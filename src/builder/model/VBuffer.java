@@ -278,35 +278,6 @@ public class VBuffer {
         List<Geometry> parts = new ArrayList<Geometry>();
 
         Coordinate[] cooShell = line.getCoordinates();
-//        if (cooShell.length > Com5t.MAXSIDE) {
-//            ArrayDeque<Coordinate> deq = new ArrayDeque<Coordinate>();
-//            Coordinate cross = new Coordinate();
-//            double ID = cooShell[cooShell.length / 2].z;
-//            double offset = distance[cooShell.length / 2];
-//            LineSegment segRighShell = new LineSegment(), segRighInner = null;
-//            LineSegment segLeftShell = new LineSegment(), segLeftInner = null;
-//            for (int i = 1; i < cooShell.length; i++) {
-//                if (cooShell[i].z == ID) {
-//                    segRighShell.setCoordinates(cooShell[i - 1], cooShell[i]);
-//                    segRighInner = segRighShell.offset(-offset);
-//
-//                    int j = (i == cooShell.length - 1) ? 1 : i + 1;
-//                    segLeftShell.setCoordinates(cooShell[i], cooShell[j]);
-//                    segLeftInner = segLeftShell.offset(-offset);
-//
-//                    //Точка пересечения сегментов
-//                    cross = segLeftInner.intersection(segRighInner);
-//                    if (cross != null) {
-//                        deq.addFirst(cooShell[i]);
-//                        deq.addLast(cross);
-//                    }
-//                }
-//            }
-//            Coordinate[] cooInner = deq.toArray(new Coordinate[0]);
-//            Polygon poly = gf.createPolygon(cooInner);
-//            new Test().mpol = poly;
-//        }
-
         // construct segment buffers
         for (int i = 1; i < cooShell.length; i++) {
             double dist0 = distance[i - 1];
