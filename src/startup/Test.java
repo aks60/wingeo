@@ -40,6 +40,7 @@ import javax.swing.SwingUtilities;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
+import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.noding.NodedSegmentString;
 import org.locationtech.jts.noding.SegmentString;
 import org.locationtech.jts.operation.linemerge.LineMerger;
@@ -524,7 +525,10 @@ public class Test {
 
     private void draw6() {
         double M = 360;
-        //GeometricShapeFactory gsf = new GeometricShapeFactory();
+    WKTReader reader = new WKTReader();
+    String wkt = "POLYGON ((0 0, 0 1400, 218.37657479725863 1400, 1220 87.23202097634623, 1220 0, 0 0))";
+    Polygon poly = (Polygon) reader.read(wkt);
+    
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayList<Com5t> frames = new ArrayList();
 
@@ -544,6 +548,9 @@ public class Test {
         list.addAll(List.of(arr));
         list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
 
+        //POLYGON ((0 0, 0 1400, 218.37657479725863 1400, 1220 87.23202097634623, 1220 0, 0 0))
+        //POLYGON ((0 0, 0 1400, 218.4 1400, 1220 87.2, 1220 0, 0 0))
+        
         LineString geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
         //Polygon geo2 = VBuffer.buffer(geo1, frames, 0, 0);
         //Polygon geo4 = UGeo.curveBuffer(geo1, 40.0);
