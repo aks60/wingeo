@@ -109,7 +109,6 @@ public class Test {
 //            LineSegment ls = new LineSegment(0, 100, 400, 100);
 //            int imd = ls.orientationIndex(p);
 //            System.out.println(imd);
-
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
         }
@@ -154,7 +153,7 @@ public class Test {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Test().draw6();
+                new Test().draw();
             }
         });
     }
@@ -163,11 +162,11 @@ public class Test {
 
         Graphics2D gc2d = (Graphics2D) g;
 
-        //gc2d.translate(100, 10);
-        //gc2d.scale(.4, .4);
-        gc2d.translate(-4500, -900);
+        gc2d.translate(100, 10);
+        gc2d.scale(.4, .4);
+        //gc2d.translate(-4500, -900);
         //gc2d.translate(80, -900);
-        gc2d.scale(4, 4);
+        //gc2d.scale(4, 4);
 
         if (mlin != null) {
             gc2d.setColor(Color.BLUE);
@@ -421,32 +420,20 @@ public class Test {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">
-    public void draw10() {
-        //POLYGON ((0 0, 0 1400, 1300 1363.013698630137, 1300 0, 0 0))
-        //LINESTRING (650 1381.5068493150684, 650 0)
-        List<SegmentString> segmentStrings = new ArrayList<>();
-        segmentStrings.add(new NodedSegmentString(
-                new Coordinate[]{
-                    new Coordinate(0, 0),
-                    new Coordinate(0, 1400),
-                    new Coordinate(1300, 1363.013698630137),
-                    new Coordinate(1300, 0),
-                    new Coordinate(1, 0),
-                    new Coordinate(0, 0)
-                }, null));
+    public void draw() {
+        try {
+            WKTReader reader = new WKTReader();
+            String wkt1 = "POLYGON ((0 0, 0 1400, 308.2278481012648 1400, 1220 257.8191734498005, 1220 0, 0 0))";
+            Polygon poly1 = (Polygon) reader.read(wkt1);
 
-        segmentStrings.add(new NodedSegmentString(
-                new Coordinate[]{
-                    new Coordinate(650, 0),
-                    new Coordinate(650, 1381.5068493150684)
-                }, null));
+            String wkt2 = " POLYGON ((1220 43, 1220 0, 1177 0, 43 0, 0 0, 0 43, 0 1357, 0 1400, 43 1400, 308.2278481012648 1400, 1220 257.8191734498005, 1220 43), (43 43, 1177 43, 1177 257.8191734498005, 1189.930651845747 257.8191734498005, 308.2278481012648 1362.3320005363962, 308.2278481012648 1357, 43 1357, 43 43))";
+            Polygon poly2 = (Polygon) reader.read(wkt2);
 
-//        Collection<Polygon> polygons = getPolygons(segmentStrings);
-//        for (Polygon polygon : polygons) {
-//            System.out.println(polygon);
-//        }
-//        List<Polygon> lst = new ArrayList<Polygon>(polygons);
-//        this.mpol = lst.get(0);
+            mpol = gf.createMultiPolygon(new Polygon[]{poly1, poly2});
+
+        } catch (Exception e) {
+            System.err.println("startup.Test.draw6() " + e);
+        }
     }
 
     private void draw9() {
@@ -461,35 +448,31 @@ public class Test {
         Polygon poly = gf.createPolygon(coord);
         Coordinate[] coo = poly.copy().getCoordinates();
 
-        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(220, 340), new Coordinate(220, 150)});
-        //LineString[] lineStringArray = line.getLineStringArray();
+        LineSegment seg1 = new LineSegment(0, 0, 200, 200);
+        LineSegment seg2 = seg1.offset(-50);
 
-        LineMerger merge = new LineMerger();
-        Geometry nodedLinework = poly.getBoundary().union(line);
-//        merge.add(poly);
-//        merge.add(line);
-//        Collection<LineString> coll = merge.getMergedLineStrings();
-//        LineString[] larr = coll.toArray(new LineString[0]);
-//        MultiLineString mls = gf.createMultiLineString(larr);
-//        System.out.println(mls);
+        LineString line1 = gf.createLineString(new Coordinate[]{seg1.p0, seg1.p1});
+        LineString line2 = gf.createLineString(new Coordinate[]{seg2.p0, seg2.p1});
+
+        mlin = gf.createMultiLineString(new LineString[]{line1, line2});
     }
 
     private void draw8() {
 
-//        Coordinate[] coord1 = new Coordinate[]{
-//            new Coordinate(0, 0, 1), new Coordinate(0, 1400, 2),
-//            new Coordinate(1250, 1350, 3), new Coordinate(1300, 0, 4),
-//            new Coordinate(0, 0, 1)};
-//        Polygon poly = gf.createPolygon(coord1);
-//        LineSegment line = new LineSegment(new Coordinate(1200, 0, 7), new Coordinate(1300, 100, 7));
-//        Geometry[] geom = UGeo.splitPolygon(poly, line);
-//
-//        mpol = geom[0];
-//        mlin = geom[1];
+        Coordinate[] coo = new Coordinate[]{
+            new Coordinate(0, 0, 1), new Coordinate(0, 400, 2),
+            new Coordinate(1300, 400, 3), new Coordinate(1300, 0, 4),
+            new Coordinate(0, 0, 1)};
+        Polygon poly = gf.createPolygon(coo);
+        //LineSegment line = new LineSegment(new Coordinate(1200, 0, 7), new Coordinate(1300, 100, 7));
+        //Geometry[] geom = UGeo.splitPolygon(poly, line);
+
+        //mlin = geom[1];
+        mpol = poly;
     }
 
     private void draw7() {
-        double M = 1500;
+        double M = 600;
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayList<Com5t> frames = new ArrayList();
@@ -509,60 +492,57 @@ public class Test {
         list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
         list.addAll(List.of(arr));
 
-        Map<Double, Double[]> hm = new HashMap();
-        hm.put(1.0, new Double[]{68.0, .0, .0});
-        hm.put(2.0, new Double[]{68.0, .0, .0});
-        hm.put(3.0, new Double[]{68.0, .0, .0});
-        hm.put(4.0, new Double[]{68.0, .0, .0});
+        Map<Double, Double> hm = new HashMap();
+        hm.put(1.0, 68.0);
+        hm.put(2.0, 68.0);
+        hm.put(3.0, 68.0);
+        hm.put(4.0, 0.0);
 
-        Polygon geom = UGeo.newPolygon(list);
-        //Polygon geo2 = UGeo.bufferCross(geo1, hm, 0);
-        //Geometry geo2 = UGeo.splitPolyLine7(geo1, line1).getGeometryN(0);
+        Polygon geoShell = UGeo.newPolygon(list);
+        //Polygon geoInner = UGeo.buffer(geoShell, frames, 0, 0);
+        Polygon geoBuffer = UGeo.rectanglBuffer(geoShell, hm);
 
-        this.mpol = geom;
-        this.mlin = line1;
+        this.mlin = geoShell;
+        this.mpol = geoBuffer;
     }
 
     private void draw6() {
-        double M = 360;
-    WKTReader reader = new WKTReader();
-    String wkt = "POLYGON ((0 0, 0 1400, 218.37657479725863 1400, 1220 87.23202097634623, 1220 0, 0 0))";
-    Polygon poly = (Polygon) reader.read(wkt);
-    
-        ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
-        ArrayList<Com5t> frames = new ArrayList();
+        try {
+            double M = 360;
+            ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
+            ArrayList<Com5t> frames = new ArrayList();
+            frames.add(new Com5t(1, new GsonElem(Type.BOX_SIDE, 0.0, 300.0)));
+            frames.add(new Com5t(2, new GsonElem(Type.BOX_SIDE, 0.0, M)));
+            frames.add(new Com5t(3, new GsonElem(Type.BOX_SIDE, 1300.0, M)));
+            frames.add(new Com5t(4, new GsonElem(Type.BOX_SIDE, 1300.0, 300.0, 300.0)));
 
-        frames.add(new Com5t(1, new GsonElem(Type.BOX_SIDE, 0.0, 300.0)));
-        frames.add(new Com5t(2, new GsonElem(Type.BOX_SIDE, 0.0, M)));
-        frames.add(new Com5t(3, new GsonElem(Type.BOX_SIDE, 1300.0, M)));
-        frames.add(new Com5t(4, new GsonElem(Type.BOX_SIDE, 1300.0, 300.0, 300.0)));
+            LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
+            LineString arc1 = UGeo.newLineArch(s1.p1.x, s1.p0.x, s1.p0.y, 300, 4);
+            Coordinate arr[] = arc1.getCoordinates();
 
-        LineSegment s1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
-        LineString arc1 = UGeo.newLineArch(s1.p1.x, s1.p0.x, s1.p0.y, 300, 4);
-        Coordinate arr[] = arc1.getCoordinates();
+            list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
+            list.add(new Coordinate(frames.get(1).x1(), frames.get(1).y1(), frames.get(1).id));
+            list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
+            //list.add(new Coordinate(frames.get(3).x1(), frames.get(3).y1(), frames.get(3).id));
+            list.addAll(List.of(arr));
+            list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
 
-        list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
-        list.add(new Coordinate(frames.get(1).x1(), frames.get(1).y1(), frames.get(1).id));
-        list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
-        //list.add(new Coordinate(frames.get(3).x1(), frames.get(3).y1(), frames.get(3).id));
-        list.addAll(List.of(arr));
-        list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
+            //POLYGON ((0 0, 0 1400, 218.37657479725863 1400, 1220 87.23202097634623, 1220 0, 0 0))
+            //POLYGON ((0 0, 0 1400, 218.4 1400, 1220 87.2, 1220 0, 0 0))
+            LineString geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
+            //Polygon geo2 = VBuffer.buffer(geo1, frames, 0, 0);
+            //Polygon geo4 = UGeo.curveBuffer(geo1, 40.0);
+            Geometry geo4 = UGeo.buffer(geo1, frames, 0, 0);
 
-        //POLYGON ((0 0, 0 1400, 218.37657479725863 1400, 1220 87.23202097634623, 1220 0, 0 0))
-        //POLYGON ((0 0, 0 1400, 218.4 1400, 1220 87.2, 1220 0, 0 0))
-        
-        LineString geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
-        //Polygon geo2 = VBuffer.buffer(geo1, frames, 0, 0);
-        //Polygon geo4 = UGeo.curveBuffer(geo1, 40.0);
-        Geometry geo4 = UGeo.buffer(geo1, frames, 0, 0);
-
-        //Coordinate coo1[] = geo1.getCoordinates();
-        //Coordinate coo2[] = geo2.getCoordinates();
-        //Coordinate coo3[] = geo3.getCoordinates();
-        //Coordinate coo4[] = geo4.getCoordinates();
-        
-        mlin = gf.createMultiLineString(new LineString[]{geo1});
-        mpol = geo4; // gf.createMultiPolygon(new Polygon[]{geo2});
+            //Coordinate coo1[] = geo1.getCoordinates();
+            //Coordinate coo2[] = geo2.getCoordinates();
+            //Coordinate coo3[] = geo3.getCoordinates();
+            //Coordinate coo4[] = geo4.getCoordinates();
+            //mlin = gf.createMultiLineString(new LineString[]{geo1});
+            //mpol = gf.createMultiPolygon(new Polygon[]{poly1, poly2});
+        } catch (Exception e) {
+            System.err.println("startup.Test.draw6() " + e);
+        }
     }
 
     private void draw5() {

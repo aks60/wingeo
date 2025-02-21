@@ -224,9 +224,8 @@ public class UGeo {
                     hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + amend);
                 }
             }
-            
+
             //hm.put(2.0, 10.0); //test
-            
             double ID = -1.0;
             if (cooShell.length > Com5t.MAXSIDE) {
                 ID = cooShell[geom.getCoordinates().length / 2].z;
@@ -243,11 +242,54 @@ public class UGeo {
             GeometryCollection partsGeom = gf.createGeometryCollection(GeometryFactory.toGeometryArray(parts));
             Geometry geo = partsGeom.union();
             return ringToPolygon(geom, geo);
-            
+
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.buffer() " + e);
         }
         return null;
+    }
+
+    public static Polygon rectanglBuffer(Geometry geoShell, Map<Double, Double> hmDist) {
+
+        Polygon result = gf.createPolygon();
+        List<Coordinate> listBuffer = new ArrayList<Coordinate>();
+        LineSegment segRighShell = new LineSegm(), segRighInner = null;
+        LineSegment segLeftShell = new LineSegm(), segLeftInner = null;
+        Coordinate[] cooShell = geoShell.getCoordinates();
+        Coordinate cross = new Coordinate();
+        double ID = (cooShell.length > Com5t.MAXSIDE) ? cooShell[cooShell.length / 2].z : -1;
+        try {
+            for (int i = 1; i < cooShell.length; i++) {
+                if (ID != cooShell[i - 1].z) {
+                    
+                    //Перебор левого и правого сегмента от точки пересечения 
+                    final double id1 = cooShell[i - 1].z;
+                    segRighShell.setCoordinates(cooShell[i - 1], cooShell[i]);
+                    segRighInner = segRighShell.offset(-hmDist.get(id1));
+
+                    int j = (i == cooShell.length - 1) ? 1 : i + 1;
+                    final double id2 = cooShell[i].z;
+                    segLeftShell.setCoordinates(cooShell[i], cooShell[j]);
+                    segLeftInner = segLeftShell.offset(-hmDist.get(id2));
+
+                    //Точка пересечения сегментов
+                    cross = segLeftInner.intersection(segRighInner);
+
+                    if (cross != null) {
+                        cross.z = cooShell[i].z;
+                        listBuffer.add(cross);
+                    }
+                }
+            }
+            listBuffer.add(0, listBuffer.get(listBuffer.size() - 1));
+            Polygon geoBuffer = gf.createPolygon(listBuffer.toArray(new Coordinate[0]));
+
+            result = geoBuffer;
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.rectanglBuffer() " + e);
+        }
+        return result;
     }
 
     public static Polygon curveBuffer(Geometry geom, double dist) {
