@@ -498,12 +498,9 @@ public class Test {
         hm.put(4.0, 0.001);
 
         Polygon geoShell = UGeo.newPolygon(list);
-        Polygon geo1 = UGeo.bufferCurve(geoShell, 68);
-        Polygon geo2 = UGeo.bufferRectangl(geoShell, hm);
         Polygon geo3 = UGeo.bufferGeometry(geoShell, frames, 0, 0);
-        //Polygon geo4 = (Polygon) geo2.union(geo1);
                 
-        //this.mlin = geoShell;
+        this.mlin = geoShell;
         mpol = gf.createMultiPolygon(new Polygon[]{geo3});
     }
 
@@ -532,8 +529,8 @@ public class Test {
             //POLYGON ((0 0, 0 1400, 218.4 1400, 1220 87.2, 1220 0, 0 0))
             LineString geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
             //Polygon geo2 = VBuffer.buffer(geo1, frames, 0, 0);
-            Polygon geo4 = UGeo.bufferCurve(geo1, 40.0);
-            //Geometry geo4 = UGeo.bufferUnion(geo1, frames, 0, 0);
+            //Polygon geo4 = UGeo.bufferCurve(geo1, 40.0);
+            Polygon geo4 = UGeo.bufferGeometry(geo1, frames, 0, 0);
 
             //Coordinate coo1[] = geo1.getCoordinates();
             //Coordinate coo2[] = geo2.getCoordinates();

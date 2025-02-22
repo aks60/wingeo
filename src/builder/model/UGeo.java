@@ -35,6 +35,10 @@ import org.locationtech.jts.geom.LinearRing;
  */
 public class UGeo {
 
+    public static LineSegment segRighShell = new LineSegm(), segRighInner = null;
+    public static LineSegment segLeftShell = new LineSegm(), segLeftInner = null;
+    public static Coordinate cross = new Coordinate();
+
     //public static DecimalFormat df = new DecimalFormat("#.###");
     public static boolean isInRing(double x, double y, Geometry g) {
         try {
@@ -208,7 +212,6 @@ public class UGeo {
 
         List<Geometry> parts = new ArrayList<Geometry>();
         Coordinate[] cooShell = geoShell.getCoordinates();
-        List<Coordinate> coords = new ArrayList();
         Map<Double, Double> hm = new HashMap();
         try {
             //Смещения сегментов
@@ -222,13 +225,16 @@ public class UGeo {
             }
             if (cooShell.length > Com5t.MAXSIDE) {
                 double ID = cooShell[geoShell.getCoordinates().length / 2].z;
-                Polygon poly1 = bufferCurve(geoShell, hm.get(ID));                
+                Polygon poly1 = bufferCurve(geoShell, hm.get(ID));
                 Polygon poly2 = bufferRectangl(geoShell, hm);
                 Polygon poly3 = (Polygon) poly2.union(poly1);
                 LinearRing ring = poly3.getInteriorRingN(0);
-                Polygon Poly4 = gf.createPolygon(ring);
-                Poly4.normalize();
-                return Poly4;
+                Polygon poly4 = gf.createPolygon(ring);
+                poly4.normalize();
+                for (int i = 0; i < poly2.getCoordinates().length - 1; ++i) {
+                    poly4.getCoordinates()[i].z = poly2.getCoordinates()[i].z;
+                }
+                return poly4;
             } else {
                 Polygon poly1 = bufferPolygon(geoShell, hm);
                 return poly1;
@@ -239,16 +245,13 @@ public class UGeo {
         return null;
     }
 
-    public static Polygon bufferRectangl(Geometry geoShell, Map<Double, Double> hmDist) {
+    private static Polygon bufferRectangl(Geometry geoShell, Map<Double, Double> hmDist) {
 
         Polygon result = gf.createPolygon();
         Set<Double> set = new HashSet();
         List<Coordinate> listBuffer = new ArrayList<Coordinate>();
         List<Coordinate> listShell = new ArrayList<Coordinate>();
-        LineSegment segRighShell = new LineSegm(), segRighInner = null;
-        LineSegment segLeftShell = new LineSegm(), segLeftInner = null;
         Coordinate[] cooShell = geoShell.getCoordinates();
-        Coordinate cross = new Coordinate();
         try {
             for (int i = 0; i < cooShell.length; i++) {
                 if (set.add(cooShell[i].z)) {
@@ -256,7 +259,7 @@ public class UGeo {
                 }
             }
             hmDist.put(4.0, 0.001); //такая фича!
-            
+
             for (int i = 0; i < listShell.size(); i++) {
 
                 //Перебор левого и правого сегмента от точки пересечения 
@@ -292,14 +295,10 @@ public class UGeo {
         return result;
     }
 
-    public static Polygon bufferCurve(Geometry geom, double dist) {
+    private static Polygon bufferCurve(Geometry geom, double dist) {
 
         Polygon result = gf.createPolygon();
-        LineSegment segRighShell = new LineSegm(), segRighInner = null;
-        LineSegment segLeftShell = new LineSegm(), segLeftInner = null;
-        Coordinate cross = new Coordinate();
         Coordinate[] cooShell = geom.getCoordinates();
-
         double ID = cooShell[geom.getCoordinates().length / 2].z;
         List<Coordinate> listShell = new ArrayList<Coordinate>();
         List<Coordinate> listInner = new ArrayList<Coordinate>();
@@ -328,7 +327,7 @@ public class UGeo {
                     cross = segLeftInner.intersection(segRighInner);
 
                     if (cross != null) { //заполнение очереди
-                        cross.z = cooShell[i].z;
+                        cross.z = ID;
                         listInner.add(cross);
 
                     }
@@ -345,21 +344,16 @@ public class UGeo {
         return result;
     }
 
-    public static Polygon bufferPolygon(Geometry geoShell, Map<Double, Double> hmDist) {
+    private static Polygon bufferPolygon(Geometry geoShell, Map<Double, Double> hmDist) {
 
         Polygon result = gf.createPolygon();
-        Set<Double> set = new HashSet();
         List<Coordinate> listBuffer = new ArrayList<Coordinate>();
-        List<Coordinate> listShell = new ArrayList<Coordinate>();
-        LineSegment segRighShell = new LineSegm(), segRighInner = null;
-        LineSegment segLeftShell = new LineSegm(), segLeftInner = null;
-        Coordinate[] cooShell = geoShell.getCoordinates();
-        Coordinate cross = new Coordinate();
+        List<Coordinate> listShell = List.of(geoShell.getCoordinates());
         try {
-            for (int i = 0; i < listShell.size(); i++) {
+            for (int i = 0; i < listShell.size() - 1; i++) {
 
                 //Перебор левого и правого сегмента от точки пересечения 
-                int j = (i == 0) ? listShell.size() - 1 : i - 1;
+                int j = (i == 0) ? listShell.size() - 2 : i - 1;
                 final double id1 = listShell.get(j).z;
                 segRighShell.setCoordinates(listShell.get(j), listShell.get(i));
                 segRighInner = segRighShell.offset(-hmDist.get(id1));
@@ -377,11 +371,8 @@ public class UGeo {
                     listBuffer.add(cross);
                 }
             }
-            Collections.reverse(listBuffer);
-            List<Coordinate> listOut = new ArrayList(listShell);
-            listOut.addAll(listBuffer);
-            listOut.add(listOut.get(0));
-            Polygon geoBuffer = gf.createPolygon(listOut.toArray(new Coordinate[0]));
+            listBuffer.add(listBuffer.get(0));
+            Polygon geoBuffer = gf.createPolygon(listBuffer.toArray(new Coordinate[0]));
 
             result = geoBuffer;
 
