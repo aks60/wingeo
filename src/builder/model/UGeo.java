@@ -227,12 +227,27 @@ public class UGeo {
                 Polygon poly1 = bufferCurve(geoShell, hm.get(ID));
                 Polygon poly2 = bufferRectangl(geoShell, hm);
                 Polygon poly3 = (Polygon) poly2.union(poly1);
+
+                List df = List.of(1.0, 2.0, 3.0, 4.0, 7.0);
+                for (int i = 0; i < poly3.getCoordinates().length; i++) {
+                    if (df.contains(poly3.getCoordinates()[i].z) == false) {
+                        System.out.println("z = " + poly3.getCoordinates()[i].z);
+                    }
+                }
+                
+//                List.of(poly3.getCoordinates()).forEach(c -> {
+//                    if (c.y >= 300) {
+//                        c.z = 4.0;
+//                    }
+//                });  
+                
                 LinearRing ring = poly3.getInteriorRingN(0);
                 Polygon poly4 = gf.createPolygon(ring);
                 poly4.normalize();
                 for (int i = 0; i < 4; ++i) {
                     poly4.getCoordinates()[i].z = cooShell[i].z;
-                }            
+                }
+                
                 return poly4;
 
             } else {
