@@ -429,7 +429,7 @@ public class UColor {
                     return -1;
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Color.colorFromTypes() " + e);
+            System.err.println("Ошибка:Color.getID_colorUS() " + e);
             return -1;
         }
     }

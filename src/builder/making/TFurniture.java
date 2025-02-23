@@ -80,7 +80,7 @@ public class TFurniture extends Cal5e {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Furniture.calc() " + e);
+            System.err.println("Ошибка:Furniture.furn() " + e);
         } 
     }
 

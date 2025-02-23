@@ -61,7 +61,7 @@ public class TElement extends Cal5e {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:SpcElement.calc() " + e);
+            System.err.println("Ошибка:SpcElement.elem() " + e);
         }
     }
 

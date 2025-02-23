@@ -226,23 +226,20 @@ public class UGeo {
                 double ID = cooShell[geoShell.getCoordinates().length / 2].z;
                 Polygon poly1 = bufferCurve(geoShell, hm.get(ID));
                 Polygon poly2 = bufferRectangl(geoShell, hm);
-                
-                new Test().mpol(poly1, poly2);
-                
                 Polygon poly3 = (Polygon) poly2.union(poly1);
                 LinearRing ring = poly3.getInteriorRingN(0);
                 Polygon poly4 = gf.createPolygon(ring);
                 poly4.normalize();
                 for (int i = 0; i < 4; ++i) {
                     poly4.getCoordinates()[i].z = cooShell[i].z;
-                }
-                //new Test().mpol(poly1, poly2);               
+                }            
                 return poly4;
 
             } else {
                 Polygon poly1 = bufferPolygon(geoShell, hm);
                 return poly1;
             }
+            //new Test().mpol(poly1, poly2); 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.buffer() " + e);
         }
@@ -303,38 +300,40 @@ public class UGeo {
 
         Polygon result = gf.createPolygon();
         Coordinate[] cooShell = geom.getCoordinates();
-        double ID = cooShell[geom.getCoordinates().length / 2].z;
-        List<Coordinate> listShell = new ArrayList<Coordinate>();
+        double ID = cooShell[cooShell.length / 2].z;
+
         List<Coordinate> listInner = new ArrayList<Coordinate>();
+        List<Coordinate> listShell = List.of(cooShell).stream().filter(c -> c.z == ID).toList();
 
         try {
-            for (int i = 1; i < cooShell.length; i++) {
-                if (cooShell[i - 1].z == ID) {
+            for (int i = 1; i < listShell.size(); i++) {
 
-                    //Коррекция первой и последней точки дуги
-                    if (listShell.isEmpty()) {
-                        listShell.add(cooShell[i - 1]);
-                    }
-                    listShell.add(cooShell[i]);
+                //Перебор левого и правого сегмента от точки пересечения
+                if (i > Com5t.MAXSIDE || (cross != null && i < Com5t.MAXSIDE)) {
+                    segRighShell.setCoordinates(listShell.get(i - 1), listShell.get(i));
+                    segRighInner = segRighShell.offset(-dist);
+                }
+                if (i < Com5t.MAXSIDE || (cross != null && i > Com5t.MAXSIDE)) {
+                    int j = (i == listShell.size() - 1) ? 1 : i + 1;
+                    segLeftShell.setCoordinates(listShell.get(i), listShell.get(j));
+                    segLeftInner = segLeftShell.offset(-dist);
+                }
 
-                    //Перебор левого и правого сегмента от точки пересечения
-                    if (i > Com5t.MAXSIDE || (cross != null && i < Com5t.MAXSIDE)) {
-                        segRighShell.setCoordinates(cooShell[i - 1], cooShell[i]);
-                        segRighInner = segRighShell.offset(-dist);
-                    }
-                    if (i < Com5t.MAXSIDE || (cross != null && i > Com5t.MAXSIDE)) {
-                        int j = (i == cooShell.length - 1) ? 1 : i + 1;
-                        segLeftShell.setCoordinates(cooShell[i], cooShell[j]);
-                        segLeftInner = segLeftShell.offset(-dist);
-                    }
-                    //Точка пересечения сегментов
-                    cross = segLeftInner.intersection(segRighInner);
+                //Коррекция первой и последней точки дуги
+                if (i == 1) {
+                    segRighInner.p0.z = ID;
+                    listInner.add(segRighInner.p0);
+                }
+                //Точка пересечения сегментов
+                cross = segLeftInner.intersection(segRighInner);
 
-                    if (cross != null) { //заполнение очереди
-                        cross.z = ID;
-                        listInner.add(cross);
-
-                    }
+                if (cross != null) { //заполнение очереди
+                    cross.z = ID;
+                    listInner.add(cross);
+                }
+                if (i == listShell.size() - 2) {
+                    segLeftInner.p1.z = ID;
+                    listInner.add(segLeftInner.p1);
                 }
             }
             //new Test().mpol(gf.createLineString(listInner.toArray(new Coordinate[0]);

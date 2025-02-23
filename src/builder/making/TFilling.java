@@ -100,7 +100,7 @@ public class TFilling extends Cal5e {
             //((ElemGlass) elemGlass).frameGlass = null;
             
         } catch (Exception e) {
-            System.err.println("Ошибка:Filling.calc() " + e);
+            System.err.println("Ошибка:Filling.fill() " + e);
         } 
     }
 

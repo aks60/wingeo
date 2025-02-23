@@ -153,6 +153,10 @@ public class Test {
        mpol = gf.createMultiPolygon(p); 
     }
     
+    public void mlin(LineString... p) {
+       mlin = gf.createMultiLineString(p); 
+    }
+    
     public static void frame() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -507,7 +511,7 @@ public class Test {
         Polygon geo3 = UGeo.bufferGeometry(geoShell, frames, 0, 0);
 
         //this.mlin = geoShell;
-        mpol = gf.createMultiPolygon(new Polygon[]{geo3});
+        mpol(geo3);
     }
 
     private void draw6() {
