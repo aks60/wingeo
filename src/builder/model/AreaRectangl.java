@@ -29,7 +29,7 @@ public class AreaRectangl extends AreaSimple {
             
             splitLocation((Polygon) this.area.getGeometryN(0), this.childs); //опережающее разделение импостом
             
-            //new Test().mpol = this.area;
+            //new Test().mpol(this.area);
         } catch (Exception e) {
             System.err.println("Ошибка:AreaRectangl.setLocation" + toString() + e);
         }

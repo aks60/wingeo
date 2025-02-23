@@ -81,7 +81,7 @@ public class ElemCross extends ElemSimple {
             Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
             this.area = (Polygon) areaExp.intersection(geoFalz); //полигон элемента конструкции
 
-            //new Test().mpol = this.area;
+            //new Test().mpol(this.area);
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation " + e);
         }
@@ -112,7 +112,7 @@ public class ElemCross extends ElemSimple {
                 }
                 spcRec.width = spcRec.width + 2 * winc.syssizRec.getDbl(eSyssize.zax, 0);
 
-                //new Test().mpol = this.area;
+                //new Test().mpol(this.area);
             } else if (type == Type.SHTULP || type == Type.STOIKA) {
                 spcRec.width = length();
             }

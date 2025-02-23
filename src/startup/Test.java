@@ -149,6 +149,10 @@ public class Test {
         frame.setVisible(true);
     }
 
+    public void mpol(Polygon... p) {
+       mpol = gf.createMultiPolygon(p); 
+    }
+    
     public static void frame() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -162,10 +166,11 @@ public class Test {
 
         Graphics2D gc2d = (Graphics2D) g;
 
-        gc2d.translate(100, 10);
-        gc2d.scale(.4, .4);
+         gc2d.translate(10, 10);
+         gc2d.scale(.4, .4);
+        //
         //gc2d.translate(-4500, -900);
-        //gc2d.translate(80, -900);
+        //gc2d.translate(80, -940);
         //gc2d.scale(4, 4);
 
         if (mlin != null) {
@@ -394,7 +399,7 @@ public class Test {
 
         //Geometry polys = UGeo.polygonize7(geo);
         //System.out.println(polys);
-//        new Test().mpol = intersection;
+//        new Test().mpol(intersection);
     }
 
     public static void clearDataDB() {
@@ -472,17 +477,18 @@ public class Test {
     }
 
     private void draw() {
-        double M = 600.01;
+        double TOP = 650.0;
+        double BOT = 800.0;
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayList<Com5t> frames = new ArrayList();
-        frames.add(new Com5t(1, new GsonElem(Type.BOX_SIDE, 0.0, 300.0)));
-        frames.add(new Com5t(2, new GsonElem(Type.BOX_SIDE, 0.0, M)));
-        frames.add(new Com5t(3, new GsonElem(Type.BOX_SIDE, 1300.0, M)));
-        frames.add(new Com5t(4, new GsonElem(Type.BOX_SIDE, 1300.0, 300.0, 300.0)));
+        frames.add(new Com5t(1, new GsonElem(Type.BOX_SIDE, 0.0, TOP)));
+        frames.add(new Com5t(2, new GsonElem(Type.BOX_SIDE, 0.0, BOT)));
+        frames.add(new Com5t(3, new GsonElem(Type.BOX_SIDE, 1300.0, BOT)));
+        frames.add(new Com5t(4, new GsonElem(Type.BOX_SIDE, 1300.0, TOP, TOP)));
 
         LineSegment segm1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
-        LineString arc1 = UGeo.newLineArch(segm1.p1.x, segm1.p0.x, segm1.p0.y, 300, 4);
+        LineString arc1 = UGeo.newLineArch(segm1.p1.x, segm1.p0.x, segm1.p0.y, TOP, 4);
         Coordinate arr[] = arc1.getCoordinates();
         List.of(arr).forEach(c -> c.z = 4);
 
@@ -493,14 +499,14 @@ public class Test {
 
         Map<Double, Double> hm = new HashMap();
         hm.put(1.0, 68.0);
-        hm.put(2.0, 68.0);
+        hm.put(2.0, 40.0);
         hm.put(3.0, 68.0);
-        hm.put(4.0, 0.001);
+        hm.put(4.0, 68.0);
 
         Polygon geoShell = UGeo.newPolygon(list);
         Polygon geo3 = UGeo.bufferGeometry(geoShell, frames, 0, 0);
-                
-        this.mlin = geoShell;
+
+        //this.mlin = geoShell;
         mpol = gf.createMultiPolygon(new Polygon[]{geo3});
     }
 
@@ -538,7 +544,7 @@ public class Test {
             //Coordinate coo4[] = geo4.getCoordinates();
             //mlin = gf.createMultiLineString(new LineString[]{geo1});
             mpol = gf.createMultiPolygon(new Polygon[]{geo4});
-            
+
         } catch (Exception e) {
             System.err.println("startup.Test.draw6() " + e);
         }

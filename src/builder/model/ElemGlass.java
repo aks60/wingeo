@@ -128,7 +128,7 @@ public class ElemGlass extends ElemSimple {
             spcRec.width = env.getWidth();
             spcRec.height = env.getHeight();
 
-            //new Test().mpol= 
+            //new Test().mpol() 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemGlass.setSpecific() " + e);
         }

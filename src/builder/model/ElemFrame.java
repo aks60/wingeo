@@ -106,7 +106,7 @@ public class ElemFrame extends ElemSimple {
 
                         this.area = gf.createPolygon(listFrane.toArray(new Coordinate[0])); //полигон рамы арки
 
-                        //new Test().mpol = owner.area.getGeometryN(0);
+                        //new Test().mpol(owner.area.getGeometryN(0));
                     } else { //полигон рамы   
                         this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), cooInner[i + 1].x, cooInner[i + 1].y, cooInner[i].x, cooInner[i].y);
                     }
@@ -145,7 +145,7 @@ public class ElemFrame extends ElemSimple {
             spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;
             spcRec.height = artiklRec.getDbl(eArtikl.height);
 
-            //new Test().mpol = this.area;
+            //new Test().mpol(this.area);
         } catch (Exception e) {
             System.err.println("Ошибка:ElemFrame.setSpecific() " + e);
         }

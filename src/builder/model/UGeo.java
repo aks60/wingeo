@@ -26,9 +26,8 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 import java.util.Map;
 import java.util.Set;
 import static java.util.stream.Collectors.toList;
-import org.locationtech.jts.geom.GeometryCollection;
-import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LinearRing;
+import startup.Test;
 
 /**
  * Утилиты JTS
@@ -227,14 +226,19 @@ public class UGeo {
                 double ID = cooShell[geoShell.getCoordinates().length / 2].z;
                 Polygon poly1 = bufferCurve(geoShell, hm.get(ID));
                 Polygon poly2 = bufferRectangl(geoShell, hm);
+                
+                new Test().mpol(poly1, poly2);
+                
                 Polygon poly3 = (Polygon) poly2.union(poly1);
                 LinearRing ring = poly3.getInteriorRingN(0);
                 Polygon poly4 = gf.createPolygon(ring);
                 poly4.normalize();
-                for (int i = 0; i < poly2.getCoordinates().length - 1; ++i) {
-                    poly4.getCoordinates()[i].z = poly2.getCoordinates()[i].z;
+                for (int i = 0; i < 4; ++i) {
+                    poly4.getCoordinates()[i].z = cooShell[i].z;
                 }
+                //new Test().mpol(poly1, poly2);               
                 return poly4;
+
             } else {
                 Polygon poly1 = bufferPolygon(geoShell, hm);
                 return poly1;
@@ -258,7 +262,7 @@ public class UGeo {
                     listShell.add(cooShell[i]);
                 }
             }
-            hmDist.put(4.0, 0.001); //такая фича!
+            hmDist.put(4.0, 0.0); //такая фича!
 
             for (int i = 0; i < listShell.size(); i++) {
 
@@ -274,7 +278,7 @@ public class UGeo {
                 segLeftInner = segLeftShell.offset(-hmDist.get(id2));
 
                 //Точка пересечения сегментов
-                cross = segLeftInner.intersection(segRighInner);
+                cross = segLeftInner.lineIntersection(segRighInner);
 
                 if (cross != null) {
                     cross.z = listShell.get(i).z;
@@ -333,6 +337,7 @@ public class UGeo {
                     }
                 }
             }
+            //new Test().mpol(gf.createLineString(listInner.toArray(new Coordinate[0]);
             Collections.reverse(listInner);
             listInner.addAll(listShell);
             listInner.add(0, listInner.get(listInner.size() - 1));
@@ -414,9 +419,11 @@ public class UGeo {
             double angl = Math.PI / 2 - Math.asin((x2 - x1) / (R * 2));
             Com5t.gsf.setSize(2 * R);
             Com5t.gsf.setNumPoints(Com5t.MAXPOINT);
-            Com5t.gsf.setBase(new Coordinate(x1 + (x2 - x1) / 2 - R, y - h));
+            Coordinate coord = new Coordinate(x1 + (x2 - x1) / 2 - R, y - h);
+            Com5t.gsf.setBase(coord);
             LineString ls = Com5t.gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
-            Coordinate lm[] = Arrays.copyOf(ls.getCoordinates(), ls.getCoordinates().length - 1); //т.к это не Geometry, а сторона коробки
+            Coordinate lm[] = ls.getCoordinates();
+            //Coordinate lm[] = ls.copy().getCoordinates();
             List.of(lm).forEach(c -> c.z = z);
             return gf.createLineString(lm);
 
