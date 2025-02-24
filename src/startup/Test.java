@@ -37,13 +37,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import org.locationtech.jts.algorithm.locate.SimplePointInAreaLocator;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.io.WKTReader;
-import org.locationtech.jts.noding.NodedSegmentString;
-import org.locationtech.jts.noding.SegmentString;
-import org.locationtech.jts.operation.linemerge.LineMerger;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Test {
@@ -105,10 +103,12 @@ public class Test {
             //script();
             //geom(); 
 
-//            Coordinate p = new Coordinate(50, 100);
-//            LineSegment ls = new LineSegment(0, 100, 400, 100);
-//            int imd = ls.orientationIndex(p);
-//            System.out.println(imd);
+//            LineSegment segm = new LineSegment();
+//            segm.setCoordinates(new Coordinate(0, 0), new Coordinate(10, 10));
+//            int p = segm.orientationIndex(new Coordinate(1.00001, 1.0001));
+//            double x1 = 0, y1 = 0, x2 = 10, y2 = 10;
+//            System.out.println(p);
+
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
         }
@@ -150,13 +150,13 @@ public class Test {
     }
 
     public void mpol(Polygon... p) {
-       mpol = gf.createMultiPolygon(p); 
+        mpol = gf.createMultiPolygon(p);
     }
-    
+
     public void mlin(LineString... p) {
-       mlin = gf.createMultiLineString(p); 
+        mlin = gf.createMultiLineString(p);
     }
-    
+
     public static void frame() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -170,8 +170,8 @@ public class Test {
 
         Graphics2D gc2d = (Graphics2D) g;
 
-         gc2d.translate(10, 10);
-         gc2d.scale(.4, .4);
+        gc2d.translate(10, 10);
+        gc2d.scale(.4, .4);
         //
         //gc2d.translate(-4500, -900);
         //gc2d.translate(80, -940);
@@ -481,8 +481,8 @@ public class Test {
     }
 
     private void draw() {
-        double TOP = 650.0;
-        double BOT = 800.0;
+        double TOP = 300.0;
+        double BOT = 342.0;
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayList<Com5t> frames = new ArrayList();
@@ -502,14 +502,14 @@ public class Test {
         list.addAll(List.of(arr));
 
         Map<Double, Double> hm = new HashMap();
-        hm.put(1.0, 68.0);
-        hm.put(2.0, 40.0);
-        hm.put(3.0, 68.0);
-        hm.put(4.0, 68.0);
+        hm.put(1.0, 63.0 - 21.0);
+        hm.put(2.0, 42.0 - 21.0);
+        hm.put(3.0, 63.0 - 21.0);
+        hm.put(4.0, 63.0 - 21.0);
 
         Polygon geoShell = UGeo.newPolygon(list);
         Polygon geo3 = UGeo.bufferGeometry(geoShell, frames, 0, 0);
-
+        
         //this.mlin = geoShell;
         mpol(geo3);
     }

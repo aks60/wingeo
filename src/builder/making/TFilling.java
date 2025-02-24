@@ -8,7 +8,6 @@ import domain.eGlasprof;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
-import builder.model.Com5t;
 import builder.model.ElemGlass;
 import builder.param.ElementDet;
 import builder.param.FillingDet;
@@ -17,7 +16,7 @@ import builder.model.ElemSimple;
 import common.UCom;
 import enums.Type;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Set;
 import org.locationtech.jts.geom.Geometry;
 
@@ -57,26 +56,33 @@ public class TFilling extends Cal5e {
         try {
             Double depth = elemGlass.artiklRec.getDbl(eArtikl.depth); //толщина стекда           
             ArrayList<ElemSimple> listFrame = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
-            Set<Double> hs = new LinkedHashSet();
+            Set<Double> hs = new HashSet();
             Geometry areaFalz = elemGlass.owner.area.getGeometryN(2);
+            areaFalz.getCoordinates()[0].z = 1.0;
+            areaFalz.getCoordinates()[3].z = 4.0;
+            //areaFalz.getCoordinates()[5].z = 4.0;
+
             List.of(areaFalz.getCoordinates()).forEach(p -> hs.add(p.z));
 
             //Цикл по сторонам стеклопакета
             Double arr[] = hs.toArray(new Double[0]);
             for (int indexSegm = 0; indexSegm < arr.length; indexSegm++) {
-                try {
-                    ElemGlass elGlass = (ElemGlass) elemGlass;
-                    elGlass.sideglass = indexSegm; //индекс стороны стеклопакета 
-                    double ID = arr[indexSegm];
-                    elGlass.frameglass = listFrame.stream().filter(e -> e.id == ID).findFirst().get();
+               
+                ElemGlass elGlass = (ElemGlass) elemGlass;
+                elGlass.sideglass = indexSegm; //индекс стороны стеклопакета 
+                
+                double ID = arr[indexSegm];
+ try { 
+                elGlass.frameglass = listFrame.stream().filter(e -> e.id == ID).findFirst().orElse(null);
 
-                    //Цикл по группам заполнений
-                    for (Record glasgrpRec : eGlasgrp.filter()) {
-                        if (UCom.containsNumbJust(glasgrpRec.getStr(eGlasgrp.depth), depth) == true) { //доступные толщины 
-
+                //Цикл по группам заполнений
+                for (Record glasgrpRec : eGlasgrp.filter()) {
+                    if (UCom.containsNumbJust(glasgrpRec.getStr(eGlasgrp.depth), depth) == true) { //доступные толщины 
+                       
                             //Цикл по профилям в группах заполнений
                             List<Record> glasprofList = eGlasprof.filter2(glasgrpRec.getInt(eGlasgrp.id)); //список профилей в группе заполнений
                             for (Record glasprofRec : glasprofList) {
+
                                 if (elGlass.frameglass.artiklRecAn.getInt(eArtikl.id) == glasprofRec.getInt(eGlasprof.artikl_id)) { //если артикулы совпали
                                     if (List.of(1, 2, 3, 4).contains(glasprofRec.getInt(eGlasprof.inside))) {  //внутреннее заполнение допустимо
 
@@ -94,11 +100,11 @@ public class TFilling extends Cal5e {
                                     }
                                 }
                             }
-                        }
                     }
-                } catch (Exception e) {
-                    System.err.println("Ошибка:Filling.fill(111) " + e);
                 }
+                        } catch (Exception e) {
+                            System.err.println("Ошибка:Filling.fill(111) " + e);
+                        }                
             }
             //((ElemGlass) elemGlass).frameGlass = null;
 

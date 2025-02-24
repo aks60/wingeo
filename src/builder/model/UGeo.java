@@ -228,26 +228,14 @@ public class UGeo {
                 Polygon poly2 = bufferRectangl(geoShell, hm);
                 Polygon poly3 = (Polygon) poly2.union(poly1);
 
-                List df = List.of(1.0, 2.0, 3.0, 4.0, 7.0);
-                for (int i = 0; i < poly3.getCoordinates().length; i++) {
-                    if (df.contains(poly3.getCoordinates()[i].z) == false) {
-                        System.out.println("z = " + poly3.getCoordinates()[i].z);
-                    }
-                }
-                
-//                List.of(poly3.getCoordinates()).forEach(c -> {
-//                    if (c.y >= 300) {
-//                        c.z = 4.0;
-//                    }
-//                });  
-                
+               // new Test().mpol(poly1, poly2);
+                //prin(poly3);
+ 
                 LinearRing ring = poly3.getInteriorRingN(0);
                 Polygon poly4 = gf.createPolygon(ring);
                 poly4.normalize();
-                for (int i = 0; i < 4; ++i) {
-                    poly4.getCoordinates()[i].z = cooShell[i].z;
-                }
                 
+                prin(poly4);
                 return poly4;
 
             } else {
@@ -259,6 +247,22 @@ public class UGeo {
             System.err.println("Îøèáêà:UGeo.buffer() " + e);
         }
         return null;
+    }
+
+    public static void prin(Geometry g) {
+        Coordinate coo[] = g.getCoordinates();
+        List df = List.of(1.0, 2.0, 3.0, 4.0);
+        System.out.println(coo.length);
+        for (int i = 1; i < coo.length; i++) {
+            if (coo[i].z % 1 != 0) {
+                if(coo[i].x < 600) {
+                   coo[i].z = 1; 
+                } else if(coo[i].x > 600) {
+                   coo[i].z = 4; 
+                }
+                System.out.println("i = " + i + " y:=" + coo[i].y + " x:=" + coo[i].x+ " z:=" + coo[i].z);
+            }            
+        }
     }
 
     private static Polygon bufferRectangl(Geometry geoShell, Map<Double, Double> hmDist) {
@@ -311,10 +315,10 @@ public class UGeo {
         return result;
     }
 
-    private static Polygon bufferCurve(Geometry geom, double dist) {
+    private static Polygon bufferCurve(Geometry geoShell, double dist) {
 
         Polygon result = gf.createPolygon();
-        Coordinate[] cooShell = geom.getCoordinates();
+        Coordinate[] cooShell = geoShell.getCoordinates();
         double ID = cooShell[cooShell.length / 2].z;
 
         List<Coordinate> listInner = new ArrayList<Coordinate>();
