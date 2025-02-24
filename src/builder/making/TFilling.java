@@ -18,6 +18,7 @@ import enums.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 
 /**
@@ -57,8 +58,7 @@ public class TFilling extends Cal5e {
             Double depth = elemGlass.artiklRec.getDbl(eArtikl.depth); //толщина стекда           
             ArrayList<ElemSimple> listFrame = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             Set<Double> hs = new HashSet();
-            Geometry areaFalz = elemGlass.owner.area.getGeometryN(2);
-
+            Geometry areaFalz = elemGlass.owner.area.getGeometryN(2);     
             List.of(areaFalz.getCoordinates()).forEach(p -> hs.add(p.z));
 
             //Цикл по сторонам стеклопакета

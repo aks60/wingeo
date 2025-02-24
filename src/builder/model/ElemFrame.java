@@ -144,8 +144,10 @@ public class ElemFrame extends ElemSimple {
             double prip2 = delta / Math.sin(Math.toRadians(spcRec.anglCut1));
             spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;
             spcRec.height = artiklRec.getDbl(eArtikl.height);
-
-            //new Test().mpol(this.area);
+//            if (spcRec.width > 3000.0) {
+//                double ddd = spcRec.width;
+//                new Test().mpol(this.area);
+//            }
         } catch (Exception e) {
             System.err.println("Ошибка:ElemFrame.setSpecific() " + e);
         }

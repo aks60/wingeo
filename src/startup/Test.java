@@ -108,7 +108,6 @@ public class Test {
 //            int p = segm.orientationIndex(new Coordinate(1.00001, 1.0001));
 //            double x1 = 0, y1 = 0, x2 = 10, y2 = 10;
 //            System.out.println(p);
-
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
         }
@@ -149,12 +148,20 @@ public class Test {
         frame.setVisible(true);
     }
 
-    public void mpol(Polygon... p) {
-        mpol = gf.createMultiPolygon(p);
+    public void mpol(Geometry... p) {
+        Polygon poly[] = new Polygon[p.length];
+        for (int i = 0; i < p.length; ++i) {
+            poly[i] = (Polygon) p[i];
+        }
+        mpol = gf.createMultiPolygon(poly);
     }
 
     public void mlin(LineString... p) {
-        mlin = gf.createMultiLineString(p);
+        LineString line[] = new LineString[p.length];
+        for (int i = 0; i < p.length; ++i) {
+            line[i] = (LineString) p[i];
+        }
+        mpol = gf.createMultiLineString(line);
     }
 
     public static void frame() {
@@ -509,7 +516,7 @@ public class Test {
 
         Polygon geoShell = UGeo.newPolygon(list);
         Polygon geo3 = UGeo.bufferGeometry(geoShell, frames, 0, 0);
-        
+
         //this.mlin = geoShell;
         mpol(geo3);
     }
