@@ -5,11 +5,9 @@ import static builder.model.Com5t.gf;
 import common.LineSegm;
 import common.UCom;
 import domain.eArtikl;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -89,11 +87,17 @@ public class UGeo {
         list.add(all.get(0));
         LineString line = gf.createLineString(list.toArray(new Coordinate[0]));
         return line.getLength();
-//                    for (int j = 1; j < coo.length; j++) {
-//                        if (coo[j - 1].z == id) {
-//                            width += coo[j - 1].distance(coo[j]);
-//                        }
-//                    }        
+//        Coordinate[] coo = area.getCoordinates();
+//        double width = 0;
+//        for (int j = 1; j < coo.length; j++) {
+//            if (coo[j - 1].z == id) {
+//                width += coo[j - 1].distance(coo[j]);
+//            }
+//        }
+////        if (width > 3000) {
+////            new Test().mpol((Polygon) area);
+////        }
+//        return width;
     }
 
     //Угол неориентированный неомежду профилями
@@ -232,7 +236,7 @@ public class UGeo {
                 LinearRing ring = poly3.getInteriorRingN(0);
                 Polygon poly4 = gf.createPolygon(ring);
                 poly4.normalize();
-                
+
                 updateZet(poly4);
                 return poly4;
 
@@ -252,9 +256,9 @@ public class UGeo {
         Coordinate coo[] = g.getCoordinates();
         int midle = coo.length / 2;
         //System.out.println("------------" + coo.length + "-----------------");
-        for (int i = 1; i < coo.length; i++) {
+        for (int i = 0; i < coo.length; i++) {
             if (coo[i].z % 1 != 0) {
-                 //System.out.println("i = " + i + " y:=" + coo[i].y + " x:=" + coo[i].x + " z:=" + coo[i].z);
+                //System.out.println("i = " + i + " y:=" + coo[i].y + " x:=" + coo[i].x + " z:=" + coo[i].z);
                 if (coo[i].x < midle) {
                     coo[i].z = 1.0;
                 } else if (coo[i].x > midle) {
