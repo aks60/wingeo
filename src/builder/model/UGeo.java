@@ -5,9 +5,11 @@ import static builder.model.Com5t.gf;
 import common.LineSegm;
 import common.UCom;
 import domain.eArtikl;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -27,7 +29,6 @@ import java.util.Map;
 import java.util.Set;
 import static java.util.stream.Collectors.toList;
 import org.locationtech.jts.geom.LinearRing;
-import startup.Test;
 
 /**
  * Утилиты JTS
@@ -228,14 +229,11 @@ public class UGeo {
                 Polygon poly2 = bufferRectangl(geoShell, hm);
                 Polygon poly3 = (Polygon) poly2.union(poly1);
 
-               // new Test().mpol(poly1, poly2);
-                //prin(poly3);
- 
                 LinearRing ring = poly3.getInteriorRingN(0);
                 Polygon poly4 = gf.createPolygon(ring);
                 poly4.normalize();
                 
-                prin(poly4);
+                updateZet(poly4);
                 return poly4;
 
             } else {
@@ -249,19 +247,20 @@ public class UGeo {
         return null;
     }
 
-    public static void prin(Geometry g) {
+    // При слиянии двух полигонов появляются точки соединения с непонятным Z значением
+    public static void updateZet(Geometry g) {
         Coordinate coo[] = g.getCoordinates();
-        List df = List.of(1.0, 2.0, 3.0, 4.0);
-        System.out.println("------------" + coo.length + "-----------------");
+        int midle = coo.length / 2;
+        //System.out.println("------------" + coo.length + "-----------------");
         for (int i = 1; i < coo.length; i++) {
             if (coo[i].z % 1 != 0) {
-                if(coo[i].x < 600) {
-                   coo[i].z = 1; 
-                } else if(coo[i].x > 600) {
-                   coo[i].z = 4; 
+                 //System.out.println("i = " + i + " y:=" + coo[i].y + " x:=" + coo[i].x + " z:=" + coo[i].z);
+                if (coo[i].x < midle) {
+                    coo[i].z = 1.0;
+                } else if (coo[i].x > midle) {
+                    coo[i].z = 4.0;
                 }
-                System.out.println("i = " + i + " y:=" + coo[i].y + " x:=" + coo[i].x+ " z:=" + coo[i].z);
-            }            
+            }
         }
     }
 
