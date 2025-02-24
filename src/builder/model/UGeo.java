@@ -252,7 +252,7 @@ public class UGeo {
     public static void prin(Geometry g) {
         Coordinate coo[] = g.getCoordinates();
         List df = List.of(1.0, 2.0, 3.0, 4.0);
-        System.out.println(coo.length);
+        System.out.println("------------" + coo.length + "-----------------");
         for (int i = 1; i < coo.length; i++) {
             if (coo[i].z % 1 != 0) {
                 if(coo[i].x < 600) {
