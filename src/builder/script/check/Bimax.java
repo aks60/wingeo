@@ -347,11 +347,11 @@ public final class Bimax {
                     .addElem(new GsonElem(Type.BOX_SIDE, 1300.0, 650.0, 650.0));
 
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 680.0, 1300.0, 680.0, "{sysprofID:3246}"));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 689.0, 1300.0, 689.0, "{sysprofID:3246}"));
             GsonElem area = rootGson.addArea(new GsonElem(Type.AREA));
 
             area.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-            area.addElem(new GsonElem(Type.IMPOST, 650.0, 680.0, 650.0, 1700.0, "{sysprofID:3246}"));
+            area.addElem(new GsonElem(Type.IMPOST, 650.0, 689.0, 650.0, 1700.0, "{sysprofID:3246}"));
             area.addArea(new GsonElem(Type.STVORKA, "{typeOpen:4, sysfurnID:91}")).addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 604005) {

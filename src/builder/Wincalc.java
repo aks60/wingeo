@@ -198,7 +198,7 @@ public class Wincalc {
     public void location() {
         try {
             listElem.forEach(e -> e.initArtikle());
-            root.setLocation();
+
             UCom.filterNo(listArea, Type.STVORKA).forEach(e -> e.setLocation());
             UCom.filterNo(listElem, Type.GLASS).forEach(e -> e.setLocation());
 

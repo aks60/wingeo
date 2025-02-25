@@ -78,10 +78,10 @@ public class ElemCross extends ElemSimple {
             Coordinate C2[] = UGeo.geoCross(areaCanvas, offsetSegment[1]);
 
             //Ареа импоста обрезаем areaPadding 
-            Polygon areaExp = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
-            this.area = (Polygon) areaExp.intersection(geoFalz); //полигон элемента конструкции
+            Polygon areaEnvelope = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
+            this.area = (Polygon) areaEnvelope.intersection(geoFalz); //полигон элемента конструкции
 
-            //new Test().mpol(this.area);
+           // new Test().mpol(this.area);
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation " + e);
         }
@@ -99,11 +99,13 @@ public class ElemCross extends ElemSimple {
             spcRec.height = artiklRec.getDbl(eArtikl.height);
 
             Coordinate cooImp[] = this.area.getCoordinates();
-            spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(cooImp[cooImp.length - 2], cooImp[0], cooImp[1]));
-            spcRec.anglCut0 = (spcRec.anglCut0 > 90) ? 180 - spcRec.anglCut0 : spcRec.anglCut0;
+            spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(cooImp[cooImp.length - 2], cooImp[0], cooImp[1]));            
             spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(cooImp[0], cooImp[1], cooImp[2]));
             spcRec.anglCut0 = Math.round(spcRec.anglCut0 * 10.0) / 10.0;
-            spcRec.anglCut1 = Math.round(spcRec.anglCut1 * 10.0) / 10.0;            
+            spcRec.anglCut1 = Math.round(spcRec.anglCut1 * 10.0) / 10.0;
+            spcRec.anglCut0 = (spcRec.anglCut0 > 90) ? 180 - spcRec.anglCut0 : spcRec.anglCut0;
+            
+            
 
             if (type == Type.IMPOST) {
                 LineSegment ls = new LineSegment();
@@ -112,7 +114,8 @@ public class ElemCross extends ElemSimple {
                     ls.setCoordinates(cooImp[i - 1], cooImp[i]);
                     spcRec.width = (spcRec.width < ls.getLength()) ? ls.getLength() : spcRec.width;
                 }
-                //spcRec.width = spcRec.width + 2 * winc.syssizRec.getDbl(eSyssize.zax, 0);
+                double zax = winc.syssizRec.getDbl(eSyssize.zax, 0);
+                spcRec.width = spcRec.width + 2 * zax;
 
                 //new Test().mpol(this.area);
             } else if (type == Type.SHTULP || type == Type.STOIKA) {
