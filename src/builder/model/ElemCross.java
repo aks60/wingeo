@@ -104,6 +104,7 @@ public class ElemCross extends ElemSimple {
             spcRec.anglCut0 = Math.round(spcRec.anglCut0 * 10.0) / 10.0;
             spcRec.anglCut1 = Math.round(spcRec.anglCut1 * 10.0) / 10.0;
             spcRec.anglCut0 = (spcRec.anglCut0 > 90) ? 180 - spcRec.anglCut0 : spcRec.anglCut0;
+            spcRec.anglCut1 = (spcRec.anglCut1 > 90) ? 180 - spcRec.anglCut1 : spcRec.anglCut1;
             
             
 
