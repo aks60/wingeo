@@ -23,6 +23,7 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.util.GeometricShapeFactory;
+import startup.Test;
 
 public class Com5t {
 
@@ -82,12 +83,12 @@ public class Com5t {
     /**
      * Длина компонента
      */
-    public double length() {
-
+    public double length() {    
+        
         if (this.h() == null) {
             return new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).getLength();
         } else {
-            return UGeo.lengthCurve(owner.area.getGeometryN(0), this.id);
+            return UGeo.lengthCurve(owner.area.getGeometryN(0), this.id);  
         }
     }
 

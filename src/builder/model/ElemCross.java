@@ -100,8 +100,10 @@ public class ElemCross extends ElemSimple {
 
             Coordinate cooImp[] = this.area.getCoordinates();
             spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(cooImp[cooImp.length - 2], cooImp[0], cooImp[1]));
-            spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(cooImp[0], cooImp[1], cooImp[2]));
             spcRec.anglCut0 = (spcRec.anglCut0 > 90) ? 180 - spcRec.anglCut0 : spcRec.anglCut0;
+            spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(cooImp[0], cooImp[1], cooImp[2]));
+            spcRec.anglCut0 = Math.round(spcRec.anglCut0 * 10.0) / 10.0;
+            spcRec.anglCut1 = Math.round(spcRec.anglCut1 * 10.0) / 10.0;            
 
             if (type == Type.IMPOST) {
                 LineSegment ls = new LineSegment();
@@ -110,7 +112,7 @@ public class ElemCross extends ElemSimple {
                     ls.setCoordinates(cooImp[i - 1], cooImp[i]);
                     spcRec.width = (spcRec.width < ls.getLength()) ? ls.getLength() : spcRec.width;
                 }
-                spcRec.width = spcRec.width + 2 * winc.syssizRec.getDbl(eSyssize.zax, 0);
+                //spcRec.width = spcRec.width + 2 * winc.syssizRec.getDbl(eSyssize.zax, 0);
 
                 //new Test().mpol(this.area);
             } else if (type == Type.SHTULP || type == Type.STOIKA) {

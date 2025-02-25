@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Set;
 import static java.util.stream.Collectors.toList;
 import org.locationtech.jts.geom.LinearRing;
+import startup.Test;
 
 /**
  * Утилиты JTS
@@ -82,22 +83,21 @@ public class UGeo {
     }
 
     public static double lengthCurve(Geometry area, double id) {
-        List<Coordinate> all = List.of(area.getCoordinates());
-        List<Coordinate> list = all.stream().filter(c -> c.z == id).collect(toList());
-        list.add(all.get(0));
-        LineString line = gf.createLineString(list.toArray(new Coordinate[0]));
-        return line.getLength();
-//        Coordinate[] coo = area.getCoordinates();
-//        double width = 0;
-//        for (int j = 1; j < coo.length; j++) {
-//            if (coo[j - 1].z == id) {
-//                width += coo[j - 1].distance(coo[j]);
-//            }
-//        }
-////        if (width > 3000) {
-////            new Test().mpol((Polygon) area);
-////        }
-//        return width;
+//        new Test().mpol(area);
+//        List<Coordinate> all = List.of(area.getCoordinates());
+//        List<Coordinate> list = all.stream().filter(c -> c.z == id).collect(toList());
+//        list.add(all.get(0));
+//        LineString line = gf.createLineString(list.toArray(new Coordinate[0]));
+//        return line.getLength();
+        
+        Coordinate[] coo = area.getCoordinates();
+        double width = 0;
+        for (int j = 1; j < coo.length; j++) {
+            if (coo[j - 1].z == id) {
+                width += coo[j - 1].distance(coo[j]);
+            }
+        }
+        return width;
     }
 
     //Угол неориентированный неомежду профилями

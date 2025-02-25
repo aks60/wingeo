@@ -123,7 +123,7 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void setSpecific() {  //добавление основной спецификации
         try {
-            spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
+            this.spcRec.place = "ВСТ." + layout().name.substring(0, 1).toLowerCase();
             spcRec.artiklRec(artiklRec);
             spcRec.color(colorID1, colorID2, colorID3);
             Coordinate coo[] = this.area.getCoordinates();
@@ -139,15 +139,20 @@ public class ElemFrame extends ElemSimple {
                 spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
                 spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[index - 2], coo[index - 1], coo[index]));
             }
+            spcRec.anglCut0 = Math.round(spcRec.anglCut0 * 10.0) / 10.0;
+            spcRec.anglCut1 = Math.round(spcRec.anglCut1 * 10.0) / 10.0;
             double delta = winc.syssizRec.getDbl(eSyssize.prip) * Math.sin(Math.toRadians(45));
-            double prip1 = delta / Math.sin(Math.toRadians(spcRec.anglCut0));
-            double prip2 = delta / Math.sin(Math.toRadians(spcRec.anglCut1));
+            double prip1 = delta, prip2 = delta;
+            
+            if (spcRec.anglCut0 != 0 && spcRec.anglCut0 != 90) {
+                prip1 = delta / Math.sin(Math.toRadians(spcRec.anglCut0));
+            }
+            if (spcRec.anglCut1 != 0 && spcRec.anglCut1 != 90) {
+                prip2 = delta / Math.sin(Math.toRadians(spcRec.anglCut1));
+            }
             spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;
             spcRec.height = artiklRec.getDbl(eArtikl.height);
-//            if (spcRec.width > 3000.0) {
-//                double ddd = spcRec.width;
-//                new Test().mpol(this.area);
-//            }
+
         } catch (Exception e) {
             System.err.println("Ошибка:ElemFrame.setSpecific() " + e);
         }
