@@ -58,8 +58,9 @@ public class TFilling extends Cal5e {
             Double depth = elemGlass.artiklRec.getDbl(eArtikl.depth); //толщина стекда           
             ArrayList<ElemSimple> listFrame = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             Set<Double> hs = new HashSet();
-            Geometry areaFalz = elemGlass.owner.area.getGeometryN(2);     
-            List.of(areaFalz.getCoordinates()).forEach(p -> hs.add(p.z));
+            Geometry areaFalz = elemGlass.owner.area.getGeometryN(2); 
+            Coordinate cooFalz[] = areaFalz.getCoordinates(); 
+            List.of(cooFalz).forEach(p -> hs.add(p.z));
 
             //Цикл по сторонам стеклопакета
             Double arr[] = hs.toArray(new Double[0]);

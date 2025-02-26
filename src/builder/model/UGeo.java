@@ -89,7 +89,7 @@ public class UGeo {
 //        list.add(all.get(0));
 //        LineString line = gf.createLineString(list.toArray(new Coordinate[0]));
 //        return line.getLength();
-        
+
         Coordinate[] coo = area.getCoordinates();
         double width = 0;
         for (int j = 1; j < coo.length; j++) {
@@ -214,7 +214,6 @@ public class UGeo {
 
     public static Polygon bufferGeometry(Geometry geoShell, ArrayList<? extends Com5t> list, double amend, int opt) {
 
-        List<Geometry> parts = new ArrayList<Geometry>();
         Coordinate[] cooShell = geoShell.getCoordinates();
         Map<Double, Double> hm = new HashMap();
         try {
@@ -228,8 +227,8 @@ public class UGeo {
                 }
             }
             if (cooShell.length > Com5t.MAXSIDE) {
-                double ID = cooShell[geoShell.getCoordinates().length / 2].z;
-                Polygon poly1 = bufferCurve(geoShell, hm.get(ID));
+                double id = cooShell[geoShell.getCoordinates().length / 2].z;
+                Polygon poly1 = bufferCurve(geoShell, hm.get(id));
                 Polygon poly2 = bufferRectangl(geoShell, hm);
                 Polygon poly3 = (Polygon) poly2.union(poly1);
 
@@ -238,6 +237,7 @@ public class UGeo {
                 poly4.normalize();
 
                 updateZet(poly4);
+
                 return poly4;
 
             } else {
@@ -251,18 +251,31 @@ public class UGeo {
         return null;
     }
 
-    // При слиянии двух полигонов появляются точки соединения с непонятным Z значением
-    public static void updateZet(Geometry g) {
-        Coordinate coo[] = g.getCoordinates();
+    //TODO Гадкая функция. Надо переписать!
+    //При слиянии двух полигонов появляются точки соединения с непонятным Z значением
+    public static void updateZet(Geometry geoShell) {
+        Coordinate coo[] = geoShell.getCoordinates();
+        List<Coordinate> listRect = new ArrayList<Coordinate>();
+        Set<Coordinate> set = new HashSet<Coordinate>();
+        for (Coordinate c : coo) {
+            if (set.add(c)) {
+                listRect.add(c);
+            }
+        }
+        double id = coo[coo.length / 2].z;
         int midle = coo.length / 2;
         //System.out.println("------------" + coo.length + "-----------------");
         for (int i = 0; i < coo.length; i++) {
             if (coo[i].z % 1 != 0) {
                 //System.out.println("i = " + i + " y:=" + coo[i].y + " x:=" + coo[i].x + " z:=" + coo[i].z);
                 if (coo[i].x < midle) {
+                    if (listRect.size() == 1) {
+                        System.out.println("builder.model.UGeo.updateZet()++++++++++++++++++++");
+                    }
                     coo[i].z = 1.0;
+                    
                 } else if (coo[i].x > midle) {
-                    coo[i].z = 4.0;
+                    coo[i].z = id;
                 }
             }
         }
@@ -406,13 +419,6 @@ public class UGeo {
             System.err.println("Ошибка:UGeo.bufferPolygon() " + e);
         }
         return result;
-    }
-
-    public static Geometry multiPolygon(Polygon geoShell, ArrayList<? extends Com5t> listElem) {
-
-        Polygon geoInner = Com5t.buffer(geoShell, listElem, 0, 0);
-        Polygon geoFalz = Com5t.buffer(geoShell, listElem, 0, 1);
-        return gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
     }
 
     //Список входн. параметров не замыкается начальной точкой как в jts!

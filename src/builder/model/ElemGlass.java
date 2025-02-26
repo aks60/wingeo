@@ -161,7 +161,7 @@ public class ElemGlass extends ElemSimple {
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
                 spcAdd.anglHoriz = UGeo.anglHor(frameglass.x1(), frameglass.y1(), frameglass.x2(), frameglass.y2()); //угол к горизонту 
 
-                //Арка
+                //Арка 61, 66
                 if (frameglass.h() != null) {
                     int index = IntStream.range(1, coo.length).filter(j -> coo[j].z == frameglass.id).findFirst().getAsInt();
                     spcAdd.anglCut0 = UGeo.anglCut(spcAdd, geoFalz, coo.length - 2, 0, '-');

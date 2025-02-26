@@ -24,8 +24,10 @@ public class AreaRectangl extends AreaSimple {
             cooBox.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
 
             //Аrea рамы            
-            Polygon geoShell = gf.createPolygon(cooBox.toArray(new Coordinate[0]));             
-            this.area = UGeo.multiPolygon(geoShell, winc.listElem);
+            Polygon geoShell = gf.createPolygon(cooBox.toArray(new Coordinate[0]));  
+            Polygon geoInner = Com5t.buffer(geoShell, winc.listElem, 0, 0);
+            Polygon geoFalz = Com5t.buffer(geoShell, winc.listElem, 0, 1);
+            this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});            
             
             splitLocation((Polygon) this.area.getGeometryN(0), this.childs); //опережающее разделение импостом
             
