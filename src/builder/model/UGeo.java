@@ -228,17 +228,17 @@ public class UGeo {
             }
             if (cooShell.length > Com5t.MAXSIDE) {
                 double id = cooShell[geoShell.getCoordinates().length / 2].z;
-                Polygon poly1 = bufferCurve(geoShell, hm.get(id));
-                Polygon poly2 = bufferRectangl(geoShell, hm);
-                Polygon poly3 = (Polygon) poly2.union(poly1);
+                Polygon polyCurv = bufferCurve(geoShell, hm.get(id));
+                Polygon polyRect = bufferRectangl(geoShell, hm);
+                Polygon polyArch = (Polygon) polyRect.union(polyCurv);
 
-                LinearRing ring = poly3.getInteriorRingN(0);
-                Polygon poly4 = gf.createPolygon(ring);
-                poly4.normalize();
+                LinearRing ring = polyArch.getInteriorRingN(0);
+                Polygon poly = gf.createPolygon(ring);
+                poly.normalize();
+                updateZet(poly, polyRect);
 
-                updateZet(poly4);
-
-                return poly4;
+                //new Test().mpol(polyRect); 
+                return poly;
 
             } else {
                 Polygon poly1 = bufferPolygon(geoShell, hm);
@@ -253,29 +253,23 @@ public class UGeo {
 
     //TODO Гадкая функция. Надо переписать!
     //При слиянии двух полигонов появляются точки соединения с непонятным Z значением
-    public static void updateZet(Geometry geoShell) {
-        Coordinate coo[] = geoShell.getCoordinates();
-        List<Coordinate> listRect = new ArrayList<Coordinate>();
-        Set<Coordinate> set = new HashSet<Coordinate>();
-        for (Coordinate c : coo) {
-            if (set.add(c)) {
-                listRect.add(c);
-            }
-        }
-        double id = coo[coo.length / 2].z;
-        int midle = coo.length / 2;
-        //System.out.println("------------" + coo.length + "-----------------");
-        for (int i = 0; i < coo.length; i++) {
-            if (coo[i].z % 1 != 0) {
-                //System.out.println("i = " + i + " y:=" + coo[i].y + " x:=" + coo[i].x + " z:=" + coo[i].z);
-                if (coo[i].x < midle) {
-                    if (listRect.size() == 1) {
-                        System.out.println("builder.model.UGeo.updateZet()++++++++++++++++++++");
+    public static void updateZet(Polygon arc, Polygon rec) {
+        boolean dbl = false;
+        Coordinate cooArc[] = arc.getCoordinates();
+        Coordinate cooRec[] = rec.getCoordinates();
+        
+        for (int i = 0; i < cooArc.length; i++) {
+            if (cooArc[i].z % 1 != 0) {
+                for (int j = 1; j < cooRec.length; j++) {
+                    LineSegment segm = new LineSegment(cooRec[j - 1], cooRec[j]);
+                    if (segm.orientationIndex(cooArc[i]) == 0) {
+                        
+                        if (!dbl == true) {
+                            cooArc[i].z = cooRec[j].z;
+                        } else {
+                            cooArc[i].z = cooRec[j - 1].z;
+                        }
                     }
-                    coo[i].z = 1.0;
-                    
-                } else if (coo[i].x > midle) {
-                    coo[i].z = id;
                 }
             }
         }
@@ -294,7 +288,7 @@ public class UGeo {
                     listShell.add(cooShell[i]);
                 }
             }
-            hmDist.put(4.0, 0.0); //такая фича!
+            hmDist.put(4.0, 0.0); //такая вот фича!
 
             for (int i = 0; i < listShell.size(); i++) {
 
