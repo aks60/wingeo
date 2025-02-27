@@ -263,7 +263,7 @@ public class UGeo {
                 for (int j = 1; j < cooRec.length; j++) {
                     LineSegment segm = new LineSegment(cooRec[j - 1], cooRec[j]);
                     if (segm.orientationIndex(cooArc[i]) == 0) {
-                        
+
                         if (!dbl == true) {
                             cooArc[i].z = cooRec[j].z;
                         } else {
