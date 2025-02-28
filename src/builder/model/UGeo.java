@@ -261,10 +261,11 @@ public class UGeo {
         for (int i = 0; i < cooArc.length - 1; i++) {
             if (cooArc[i].z % 1 != 0) {
                 for (int j = 1; j < cooRec.length; j++) {
-                    LineString segm = gf.createLineString(new Coordinate[]{cooRec[j - 1], cooRec[j]});
-                    if (segm.contains(gf.createPoint(cooArc[i]))) {
+                    LineString line = gf.createLineString(new Coordinate[]{cooRec[j - 1], cooRec[j]});
+                    if (line.contains(gf.createPoint(cooArc[i])) || (cooArc[i].x == 
+                            line.getCoordinateN(0).x & cooArc[i].y == line.getCoordinateN(0).y)) {
 
-                        if ((pass) == false) {
+                        if (pass == false) {
                             cooArc[i].z = cooRec[j].z;
                         } else {
                             cooArc[i].z = cooRec[j - 1].z;
@@ -275,7 +276,6 @@ public class UGeo {
                 }
             }
         }
-        cooArc[cooArc.length -1] = cooArc[0];
     }
 
     private static Polygon bufferRectangl(Geometry geoShell, Map<Double, Double> hmDist) {
