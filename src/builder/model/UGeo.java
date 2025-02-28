@@ -278,7 +278,7 @@ public class UGeo {
         }
     }
 
-    private static Polygon bufferRectangl(Geometry geoShell, Map<Double, Double> hmDist) {
+    public static Polygon bufferRectangl(Geometry geoShell, Map<Double, Double> hmDist) {
 
         Polygon result = gf.createPolygon();
         Set<Double> set = new HashSet();
@@ -328,7 +328,7 @@ public class UGeo {
         return result;
     }
 
-    private static Polygon bufferCurve(Geometry geoShell, double dist) {
+    public static Polygon bufferCurve(Geometry geoShell, double dist) {
 
         Polygon result = gf.createPolygon();
         Coordinate[] cooShell = geoShell.getCoordinates();
@@ -380,7 +380,7 @@ public class UGeo {
         return result;
     }
 
-    private static Polygon bufferPolygon(Geometry geoShell, Map<Double, Double> hmDist) {
+    public static Polygon bufferPolygon(Geometry geoShell, Map<Double, Double> hmDist) {
 
         Polygon result = gf.createPolygon();
         List<Coordinate> listBuffer = new ArrayList<Coordinate>();

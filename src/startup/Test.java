@@ -37,7 +37,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import org.locationtech.jts.algorithm.locate.SimplePointInAreaLocator;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
@@ -493,8 +492,7 @@ public class Test {
 
     private void draw() {
         double TOP = 400.0;
-        double BOT = 444.0;
-        Map<Double, Double> hm = new HashMap();
+        double BOT = 400.1;
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayList<Com5t> frames = new ArrayList();
@@ -519,8 +517,17 @@ public class Test {
 
         Coordinate[] cooShell = geoShell.getCoordinates();
         Coordinate[] cooFalz = geoFalz.getCoordinates();
+        
+        Map<Double, Double> hm = new HashMap();
+        hm.put(1.0, 64.0 - 20.0);
+        hm.put(7.0, 64.0 - 20.0);
+        hm.put(3.0, 64.0 - 20.0);
+        hm.put(4.0, 64.0 - 20.0);        
+        Polygon polyRect = UGeo.bufferRectangl(geoShell, hm);
+        Coordinate[] coo7 = polyRect.getCoordinates();
 
-        mpol(geoShell, geoFalz);
+        mpol(geoShell, geoFalz, polyRect);
+        
         double length = UGeo.lengthCurve(geoFalz, 1);
         System.out.println(length);
     }
