@@ -95,10 +95,10 @@ public class ElemGlass extends ElemSimple {
     public void setLocation() {
         try {
             //Полигон по фальцу для прорисовки и рассчёта штапик...
-            Geometry areaFalz = owner.area.getGeometryN(2);
+            Geometry geoFalz = owner.area.getGeometryN(2);
 
-            Coordinate[] coo = areaFalz.getCoordinates();
-            if (areaFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
+            Coordinate[] coo = geoFalz.getCoordinates();
+            if (geoFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
                 coo[0].z = coo[1].z;
                 coo[1].z = coo[coo.length - 2].z;
                 coo[2].z = coo[coo.length - 2].z;
@@ -128,7 +128,7 @@ public class ElemGlass extends ElemSimple {
             spcRec.width = env.getWidth();
             spcRec.height = env.getHeight();
 
-            //new Test().mpol() 
+            //Test.init() 
         } catch (Exception e) {
             System.err.println("Ошибка:ElemGlass.setSpecific() " + e);
         }
@@ -169,6 +169,11 @@ public class ElemGlass extends ElemSimple {
 
                     spcAdd.width = UGeo.lengthCurve(geoFalz, frameglass.id);
 
+                    if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X108) && this.id == 6.0) { //штапик
+                        double h = UGeo.lengthCurve(geoFalz, frameglass.id);
+                        System.out.println(h);
+                    }
+
                     //Остальное
                 } else {
                     Coordinate[] c1 = {coo[UGeo.getIndex(coo.length, sideglass - 1)], coo[sideglass], coo[UGeo.getIndex(coo.length, sideglass + 1)]};
@@ -179,6 +184,7 @@ public class ElemGlass extends ElemSimple {
                     spcAdd.anglCut1 = Math.abs(angBetween1 - UGeo.anglCut(spcAdd, geoFalz, UGeo.getIndex(coo.length, sideglass), UGeo.getIndex(coo.length, sideglass + 1), '+'));
 
                     spcAdd.width += coo[sideglass].distance(coo[sideglass + 1]); //Тут надо учитывать наклон
+
                 }
 
                 spcRec.spcList.add(spcAdd);
@@ -280,10 +286,10 @@ public class ElemGlass extends ElemSimple {
     //Линии размерности
     @Override
     public void paint() {
-        Geometry areaFalz = owner.area.getGeometryN(2);
-        if (areaFalz != null) {
+        Geometry geoFalz = owner.area.getGeometryN(2);
+        if (geoFalz != null) {
             winc.gc2d.setColor(this.color());
-            Shape shape = new ShapeWriter().toShape(areaFalz);
+            Shape shape = new ShapeWriter().toShape(geoFalz);
             winc.gc2d.fill(shape);
         }
     }

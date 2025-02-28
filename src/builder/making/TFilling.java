@@ -15,11 +15,13 @@ import builder.param.FillingVar;
 import builder.model.ElemSimple;
 import common.UCom;
 import enums.Type;
+import enums.TypeArt;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
+import startup.Test;
 
 /**
  * Заполнения
@@ -58,8 +60,8 @@ public class TFilling extends Cal5e {
             Double depth = elemGlass.artiklRec.getDbl(eArtikl.depth); //толщина стекда           
             ArrayList<ElemSimple> listFrame = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             Set<Double> hs = new HashSet();
-            Geometry areaFalz = elemGlass.owner.area.getGeometryN(2); 
-            Coordinate cooFalz[] = areaFalz.getCoordinates(); 
+            Geometry geoFalz = elemGlass.owner.area.getGeometryN(2);
+            Coordinate cooFalz[] = geoFalz.getCoordinates();
             List.of(cooFalz).forEach(p -> hs.add(p.z));
 
             //Цикл по сторонам стеклопакета
@@ -120,6 +122,10 @@ public class TFilling extends Cal5e {
                     spcAdd.variantRec = glasgrpRec;
                     //Подбор текстуры
                     if (UColor.colorFromElemOrSeri(spcAdd)) {
+                        if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X108) && elemGlass.id == 6.0) {
+                            double idd = ((ElemGlass) elemGlass).frameglass.id;
+                            int mmm = 0;
+                        }                        
                         elemGlass.addSpecific(spcAdd);
                     }
                 }

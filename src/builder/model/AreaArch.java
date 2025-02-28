@@ -66,7 +66,7 @@ public class AreaArch extends AreaSimple {
 
             splitLocation((Polygon) this.area.getGeometryN(0), this.childs); //опережающее разделение импостом
 
-            //new Test().mpol(this.area.getGeometryN(0));
+            //Test.init(this.area.getGeometryN(0));
         } catch (Exception e) {
             System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
         }

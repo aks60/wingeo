@@ -110,7 +110,7 @@ public class AreaSimple extends Com5t {
 //            if (geoShell.getNumPoints() > Com5t.MAXSIDE) {
 //                Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);
 //                Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);
-//                new Test().mpol(geoShell, geoInner);
+//                Test.init(geoShell, geoInner);
 //            }
 
         } catch (Exception e) {
@@ -125,7 +125,7 @@ public class AreaSimple extends Com5t {
             ElemCross impost = (ElemCross) childs.get(1);
 
             //Geometry geoTEST = UGeo.split2Polygon(geoShell.copy(), impost);
-            //new Test().mpol(geoTEST);
+            //Test.init(geoTEST);
             Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), impost.segment());
 
             childs.get(0).area = (Polygon) geoSplit[1];

@@ -147,6 +147,15 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
     }
+    
+    public static void init(Geometry... p) {
+        Test t = new Test();
+        Polygon poly[] = new Polygon[p.length];
+        for (int i = 0; i < p.length; ++i) {
+            poly[i] = (Polygon) p[i];
+        }
+        t.mpol = gf.createMultiPolygon(poly);
+    }    
 
     public void mpol(Geometry... p) {
         Polygon poly[] = new Polygon[p.length];
@@ -410,7 +419,7 @@ public class Test {
 
         //Geometry polys = UGeo.polygonize7(geo);
         //System.out.println(polys);
-//        new Test().mpol(intersection);
+//        Test.init(intersection);
     }
 
     public static void clearDataDB() {
@@ -473,18 +482,46 @@ public class Test {
         mlin = gf.createMultiLineString(new LineString[]{line1, line2});
     }
 
-    private void draw8() {
+    private void draw() {
+        double TOP = 400.0;
+        double BOT = 419.0;
+        Map<Double, Double> hm = new HashMap();
+        GeometricShapeFactory gsf = new GeometricShapeFactory();
+        ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
+        ArrayList<Com5t> frames = new ArrayList();
 
-        Coordinate[] coo = new Coordinate[]{
-            new Coordinate(0, 0, 1), new Coordinate(0, 400, 2),
-            new Coordinate(1300, 400, 3), new Coordinate(1300, 0, 4),
-            new Coordinate(0, 0, 1)};
-        Polygon poly = gf.createPolygon(coo);
-        //LineSegment line = new LineSegment(new Coordinate(1200, 0, 7), new Coordinate(1300, 100, 7));
-        //Geometry[] geom = UGeo.splitPolygon(poly, line);
+        frames.add(new Com5t(1, new GsonElem(Type.BOX_SIDE, 0.0, TOP)));
+        frames.add(new Com5t(2, new GsonElem(Type.BOX_SIDE, 0.0, BOT)));
+        frames.add(new Com5t(3, new GsonElem(Type.BOX_SIDE, 800.0, BOT)));
+        frames.add(new Com5t(4, new GsonElem(Type.BOX_SIDE, 800.0, TOP, TOP)));
 
-        //mlin = geom[1];
-        mpol = poly;
+        LineSegment segm1 = new LineSegment(frames.get(3).x1(), frames.get(3).y1(), frames.get(0).x1(), frames.get(0).y1());
+        LineString arc1 = UGeo.newLineArch(segm1.p1.x, segm1.p0.x, segm1.p0.y, TOP, 4);
+        Coordinate arr[] = arc1.getCoordinates();
+        List.of(arr).forEach(c -> c.z = 4);
+
+        list.add(new Coordinate(frames.get(0).x1(), frames.get(0).y1(), frames.get(0).id));
+        list.add(new Coordinate(frames.get(1).x1(), frames.get(1).y1(), frames.get(1).id));
+        list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
+        list.addAll(List.of(arr));
+        Polygon geoShell = UGeo.newPolygon(list);
+
+        hm.put(1.0, 62.0);
+        hm.put(2.0, 75.0);
+        hm.put(3.0, 62.0);
+        hm.put(4.0, 62.0);
+        Polygon geoInner = Com5t.buffer(geoShell, frames, 0, 0);
+
+        hm.put(1.0, 62.0 - 18.0);
+        hm.put(2.0, 75.0 - 18.0);
+        hm.put(3.0, 62.0 - 18.0);
+        hm.put(4.0, 62.0 - 18.0);
+        Polygon geoGalz = Com5t.buffer(geoShell, frames, 0, 1);
+
+        //mpol(geoShell);
+        mpol(geoShell, geoInner, geoGalz);
+        
+        //double length = UGeo.lengthCurve(owner.area.getGeometryN(0), this.id); 
     }
 
     private void draw7() {
@@ -521,7 +558,7 @@ public class Test {
         mpol(geo3);
     }
 
-    private void draw() {
+    private void draw6() {
         try {
             double M = 360;
             ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();

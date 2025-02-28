@@ -83,7 +83,7 @@ public class UGeo {
     }
 
     public static double lengthCurve(Geometry area, double id) {
-//        new Test().mpol(area);
+//        Test.init(area);
 //        List<Coordinate> all = List.of(area.getCoordinates());
 //        List<Coordinate> list = all.stream().filter(c -> c.z == id).collect(toList());
 //        list.add(all.get(0));
@@ -237,14 +237,14 @@ public class UGeo {
                 poly.normalize();
                 updateZet(poly, polyRect);
 
-                //new Test().mpol(polyRect); 
+                //Test.init(polyRect); 
                 return poly;
 
             } else {
                 Polygon poly1 = bufferPolygon(geoShell, hm);
                 return poly1;
             }
-            //new Test().mpol(poly1, poly2); 
+            //Test.init(poly1, poly2); 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.buffer() " + e);
         }
@@ -365,7 +365,7 @@ public class UGeo {
                     listInner.add(segLeftInner.p1);
                 }
             }
-            //new Test().mpol(gf.createLineString(listInner.toArray(new Coordinate[0]);
+            //Test.init(gf.createLineString(listInner.toArray(new Coordinate[0]);
             Collections.reverse(listInner);
             listInner.addAll(listShell);
             listInner.add(0, listInner.get(listInner.size() - 1));
