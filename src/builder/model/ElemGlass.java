@@ -29,14 +29,15 @@ import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
+import startup.Test;
 
 public class ElemGlass extends ElemSimple {
 
     public double radius = 0; //радиус стекла
     public double gzazo = 0; //зазор между фальцем и стеклопакетом 
     public HashMap<Integer, Double> axisMap = new HashMap<Integer, Double>(); //размер от оси до стеклопакета
-    public ElemSimple frameglass = null;
-    public int sideglass = 0;
+    public ElemSimple side_frame = null;
+    public int side_index = 0;
 
     public Record rascRec = eArtikl.virtualRec(); //раскладка
     public int rascColor = -3; //цвет раскладки
@@ -149,41 +150,37 @@ public class ElemGlass extends ElemSimple {
             }
             //Ареа фальца
             Geometry geoFalz = owner.area.getGeometryN(2);
-            //if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X108)) { //штапик
-            if (owner.area.getGeometryN(0).getNumPoints() > Com5t.MAXSIDE) {
-                geoFalz = buffer(owner.area.getGeometryN(0), winc.listElem, -1 * spcAdd.artiklRec.getDbl(eArtikl.height), 0);
-            }
 
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
                 Coordinate coo[] = geoFalz.getCoordinates();
                 spcAdd.height = spcAdd.artiklRec.getDbl(eArtikl.height);
-                spcAdd.anglHoriz = UGeo.anglHor(frameglass.x1(), frameglass.y1(), frameglass.x2(), frameglass.y2()); //угол к горизонту 
+                spcAdd.anglHoriz = UGeo.anglHor(side_frame.x1(), side_frame.y1(), side_frame.x2(), side_frame.y2()); //угол к горизонту 
 
                 //Арка
-                if (frameglass.h() != null) {
-                    int index = IntStream.range(1, coo.length).filter(j -> coo[j].z == frameglass.id).findFirst().getAsInt();
+                if (side_frame.h() != null) {
+                    int index = IntStream.range(1, coo.length).filter(k -> coo[k].z == side_frame.id).findFirst().getAsInt();
                     spcAdd.anglCut0 = UGeo.anglCut(spcAdd, geoFalz, coo.length - 2, 0, '-');
                     spcAdd.anglCut1 = UGeo.anglCut(spcAdd, geoFalz, index - 1, index, '+');
 
-                    spcAdd.width = UGeo.lengthCurve(geoFalz, frameglass.id);
+                    spcAdd.width = UGeo.lengthCurve(geoFalz, side_frame.id);
 
-                    if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X108) && this.id == 6.0) { //штапик
-                        double h = UGeo.lengthCurve(geoFalz, frameglass.id);
-                        System.out.println(h);
-                    }
+//                    if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X108) && this.id == 6.0) { //штапик
+//                        double h = UGeo.lengthCurve(geoFalz, side_frame.id);
+//                        System.out.println(h);
+//                    }
 
                     //Остальное
                 } else {
-                    Coordinate[] c1 = {coo[UGeo.getIndex(coo.length, sideglass - 1)], coo[sideglass], coo[UGeo.getIndex(coo.length, sideglass + 1)]};
-                    Coordinate[] c2 = {coo[sideglass], coo[UGeo.getIndex(coo.length, sideglass + 1)], coo[UGeo.getIndex(coo.length, sideglass + 2)]};
+                    Coordinate[] c1 = {coo[UGeo.getIndex(coo.length, side_index - 1)], coo[side_index], coo[UGeo.getIndex(coo.length, side_index + 1)]};
+                    Coordinate[] c2 = {coo[side_index], coo[UGeo.getIndex(coo.length, side_index + 1)], coo[UGeo.getIndex(coo.length, side_index + 2)]};
                     double angBetween0 = Math.toDegrees(Angle.angleBetween(c1[0], c1[1], c1[2]));
                     double angBetween1 = Math.toDegrees(Angle.angleBetween(c2[0], c2[1], c2[2]));
-                    spcAdd.anglCut0 = Math.abs(angBetween0 - UGeo.anglCut(spcAdd, geoFalz, UGeo.getIndex(coo.length, sideglass - 1), sideglass, '-'));
-                    spcAdd.anglCut1 = Math.abs(angBetween1 - UGeo.anglCut(spcAdd, geoFalz, UGeo.getIndex(coo.length, sideglass), UGeo.getIndex(coo.length, sideglass + 1), '+'));
+                    spcAdd.anglCut0 = Math.abs(angBetween0 - UGeo.anglCut(spcAdd, geoFalz, UGeo.getIndex(coo.length, side_index - 1), side_index, '-'));
+                    spcAdd.anglCut1 = Math.abs(angBetween1 - UGeo.anglCut(spcAdd, geoFalz, UGeo.getIndex(coo.length, side_index), UGeo.getIndex(coo.length, side_index + 1), '+'));
 
-                    spcAdd.width += coo[sideglass].distance(coo[sideglass + 1]); //Тут надо учитывать наклон
+                    spcAdd.width += coo[side_index].distance(coo[side_index + 1]); //Тут надо учитывать наклон
 
                 }
 
@@ -227,7 +224,7 @@ public class ElemGlass extends ElemSimple {
             } else if (UseUnit.PIE.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
 
                 if (spcAdd.mapParam.get(13014) != null) {
-                    LineSegment s2 = UGeo.getSegment(geoFalz, sideglass);
+                    LineSegment s2 = UGeo.getSegment(geoFalz, side_index);
                     spcAdd.anglHoriz = UGeo.anglHor(s2.p0.x, s2.p0.y, s2.p1.x, s2.p1.y); //угол к горизонту                     
                     if (UCom.containsNumbJust(spcAdd.mapParam.get(13014), spcAdd.anglHoriz) == true) { //Углы ориентации стороны
                         spcRec.spcList.add(spcAdd);

@@ -25,7 +25,7 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import java.util.Map;
 import java.util.Set;
-import static java.util.stream.Collectors.toList;
+import org.locationtech.jts.geom.Coordinates;
 import org.locationtech.jts.geom.LinearRing;
 import startup.Test;
 
@@ -82,7 +82,7 @@ public class UGeo {
         return Math.toDegrees(Math.asin(spcRec.height / gip));
     }
 
-    public static double lengthCurve(Geometry area, double id) {
+    public static double lengthCurve(Geometry geoArea, double id) {
 //        Test.init(area);
 //        List<Coordinate> all = List.of(area.getCoordinates());
 //        List<Coordinate> list = all.stream().filter(c -> c.z == id).collect(toList());
@@ -90,11 +90,11 @@ public class UGeo {
 //        LineString line = gf.createLineString(list.toArray(new Coordinate[0]));
 //        return line.getLength();
 
-        Coordinate[] coo = area.getCoordinates();
+        Coordinate[] cooArea = geoArea.getCoordinates();
         double width = 0;
-        for (int j = 1; j < coo.length; j++) {
-            if (coo[j - 1].z == id) {
-                width += coo[j - 1].distance(coo[j]);
+        for (int j = 1; j < cooArea.length; j++) {
+            if (cooArea[j - 1].z == id) {
+                width += cooArea[j - 1].distance(cooArea[j]);
             }
         }
         return width;
@@ -254,25 +254,28 @@ public class UGeo {
     //TODO Гадкая функция. Надо переписать!
     //При слиянии двух полигонов появляются точки соединения с непонятным Z значением
     public static void updateZet(Polygon arc, Polygon rec) {
-        boolean dbl = false;
+        boolean pass = false;
         Coordinate cooArc[] = arc.getCoordinates();
         Coordinate cooRec[] = rec.getCoordinates();
         
-        for (int i = 0; i < cooArc.length; i++) {
+        for (int i = 0; i < cooArc.length - 1; i++) {
             if (cooArc[i].z % 1 != 0) {
                 for (int j = 1; j < cooRec.length; j++) {
-                    LineSegment segm = new LineSegment(cooRec[j - 1], cooRec[j]);
-                    if (segm.orientationIndex(cooArc[i]) == 0) {
+                    LineString segm = gf.createLineString(new Coordinate[]{cooRec[j - 1], cooRec[j]});
+                    if (segm.contains(gf.createPoint(cooArc[i]))) {
 
-                        if (!dbl == true) {
+                        if ((pass) == false) {
                             cooArc[i].z = cooRec[j].z;
                         } else {
                             cooArc[i].z = cooRec[j - 1].z;
                         }
+                        pass = true;
+                        break;
                     }
                 }
             }
         }
+        cooArc[cooArc.length -1] = cooArc[0];
     }
 
     private static Polygon bufferRectangl(Geometry geoShell, Map<Double, Double> hmDist) {

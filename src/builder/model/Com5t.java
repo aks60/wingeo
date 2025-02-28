@@ -120,8 +120,8 @@ public class Com5t {
     }
 
     public static Polygon buffer(Geometry poly, ArrayList<? extends Com5t> list, double amend, int op) {
-        return VBuffer.buffer(poly, list, amend, op);
-        //return UGeo.bufferGeometry(poly, list, amend, op);        
+        //return VBuffer.buffer(poly, list, amend, op);
+        return UGeo.bufferGeometry(poly, list, amend, op);        
     }
 
     public boolean equals(Object obj) {

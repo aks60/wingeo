@@ -101,7 +101,7 @@ public class Test {
             //json();
             //uid();
             //script();
-            //geom(); 
+            //geom();
 
 //            LineSegment segm = new LineSegment();
 //            segm.setCoordinates(new Coordinate(0, 0), new Coordinate(10, 10));
@@ -147,7 +147,7 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
     }
-    
+
     public static void init(Geometry... p) {
         Test t = new Test();
         Polygon poly[] = new Polygon[p.length];
@@ -155,7 +155,7 @@ public class Test {
             poly[i] = (Polygon) p[i];
         }
         t.mpol = gf.createMultiPolygon(poly);
-    }    
+    }
 
     public void mpol(Geometry... p) {
         Polygon poly[] = new Polygon[p.length];
@@ -410,12 +410,21 @@ public class Test {
         Coordinate[] coo = poly.copy().getCoordinates();
 
         LineString line = gf.createLineString(new Coordinate[]{new Coordinate(450, 0, 8), new Coordinate(450, 1400, 8)});
+        Coordinate c1 = new Coordinate(0.0, 0.0);
+        Coordinate c2 = new Coordinate(45.0, 45.0);
+        Coordinate c3 = new Coordinate(10.0, 10.0);
+
+        LineString line2 = gf.createLineString(new Coordinate[]{c1, c2});
 
         Point p0 = gf.createPoint(new Coordinate(0, 0, 1));
         p0.setUserData(null);
 
         Geometry geo = poly.union(line);
-        System.out.println(geo);
+        if (line2.contains(gf.createPoint(c3)) || (c1.x == c3.x && c1.y == c3.y)) {
+            System.out.println("OK");
+        } else {
+            System.out.println("NO");
+        }
 
         //Geometry polys = UGeo.polygonize7(geo);
         //System.out.println(polys);
@@ -484,14 +493,14 @@ public class Test {
 
     private void draw() {
         double TOP = 400.0;
-        double BOT = 419.0;
+        double BOT = 444.0;
         Map<Double, Double> hm = new HashMap();
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         ArrayList<Coordinate> list = new ArrayList<Coordinate>(), list2 = new ArrayList<Coordinate>();
         ArrayList<Com5t> frames = new ArrayList();
 
         frames.add(new Com5t(1, new GsonElem(Type.BOX_SIDE, 0.0, TOP)));
-        frames.add(new Com5t(2, new GsonElem(Type.BOX_SIDE, 0.0, BOT)));
+        frames.add(new Com5t(7, new GsonElem(Type.BOX_SIDE, 0.0, BOT)));
         frames.add(new Com5t(3, new GsonElem(Type.BOX_SIDE, 800.0, BOT)));
         frames.add(new Com5t(4, new GsonElem(Type.BOX_SIDE, 800.0, TOP, TOP)));
 
@@ -504,24 +513,16 @@ public class Test {
         list.add(new Coordinate(frames.get(1).x1(), frames.get(1).y1(), frames.get(1).id));
         list.add(new Coordinate(frames.get(2).x1(), frames.get(2).y1(), frames.get(2).id));
         list.addAll(List.of(arr));
+
         Polygon geoShell = UGeo.newPolygon(list);
+        Polygon geoFalz = Com5t.buffer(geoShell, frames, 0, 1);
 
-        hm.put(1.0, 62.0);
-        hm.put(2.0, 75.0);
-        hm.put(3.0, 62.0);
-        hm.put(4.0, 62.0);
-        Polygon geoInner = Com5t.buffer(geoShell, frames, 0, 0);
+        Coordinate[] cooShell = geoShell.getCoordinates();
+        Coordinate[] cooFalz = geoFalz.getCoordinates();
 
-        hm.put(1.0, 62.0 - 18.0);
-        hm.put(2.0, 75.0 - 18.0);
-        hm.put(3.0, 62.0 - 18.0);
-        hm.put(4.0, 62.0 - 18.0);
-        Polygon geoGalz = Com5t.buffer(geoShell, frames, 0, 1);
-
-        //mpol(geoShell);
-        mpol(geoShell, geoInner, geoGalz);
-        
-        //double length = UGeo.lengthCurve(owner.area.getGeometryN(0), this.id); 
+        mpol(geoShell, geoFalz);
+        double length = UGeo.lengthCurve(geoFalz, 1);
+        System.out.println(length);
     }
 
     private void draw7() {

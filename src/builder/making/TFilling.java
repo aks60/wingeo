@@ -66,12 +66,15 @@ public class TFilling extends Cal5e {
 
             //Цикл по сторонам стеклопакета
             Double arr[] = hs.toArray(new Double[0]);
+if (elemGlass.id == 6.0) {
+    System.out.println("");
+}            
             for (int indexSegm = 0; indexSegm < arr.length; indexSegm++) {
 
                 ElemGlass elGlass = (ElemGlass) elemGlass;
-                elGlass.sideglass = indexSegm; //индекс стороны стеклопакета                
+                elGlass.side_index = indexSegm; //индекс стороны стеклопакета                
                 double ID = arr[indexSegm];
-                elGlass.frameglass = listFrame.stream().filter(e -> e.id == ID).findFirst().orElse(null);
+                elGlass.side_frame = listFrame.stream().filter(e -> e.id == ID).findFirst().orElse(null);
 
                 //Цикл по группам заполнений
                 for (Record glasgrpRec : eGlasgrp.filter()) {
@@ -81,7 +84,7 @@ public class TFilling extends Cal5e {
                         List<Record> glasprofList = eGlasprof.filter2(glasgrpRec.getInt(eGlasgrp.id)); //список профилей в группе заполнений
                         for (Record glasprofRec : glasprofList) {
 
-                            if (elGlass.frameglass.artiklRecAn.getInt(eArtikl.id) == glasprofRec.getInt(eGlasprof.artikl_id)) { //если артикулы совпали
+                            if (elGlass.side_frame.artiklRecAn.getInt(eArtikl.id) == glasprofRec.getInt(eGlasprof.artikl_id)) { //если артикулы совпали
                                 if (List.of(1, 2, 3, 4).contains(glasprofRec.getInt(eGlasprof.inside))) {  //внутреннее заполнение допустимо
 
                                     //ФИЛЬТР вариантов, параметры накапливаются в спецификации элемента
@@ -123,9 +126,11 @@ public class TFilling extends Cal5e {
                     //Подбор текстуры
                     if (UColor.colorFromElemOrSeri(spcAdd)) {
                         if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X108) && elemGlass.id == 6.0) {
-                            double idd = ((ElemGlass) elemGlass).frameglass.id;
+                            double Z = ((ElemGlass) elemGlass).side_frame.id;
+                            Geometry geFalz = elemGlass.owner.area.getGeometryN(2);
+                            Coordinate coFalz[] = geFalz.getCoordinates();
                             int mmm = 0;
-                        }                        
+                        }
                         elemGlass.addSpecific(spcAdd);
                     }
                 }
