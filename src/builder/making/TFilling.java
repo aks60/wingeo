@@ -125,12 +125,12 @@ if (elemGlass.id == 6.0) {
                     spcAdd.variantRec = glasgrpRec;
                     //Подбор текстуры
                     if (UColor.colorFromElemOrSeri(spcAdd)) {
-                        if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X108) && elemGlass.id == 6.0) {
-                            double Z = ((ElemGlass) elemGlass).side_frame.id;
-                            Geometry geFalz = elemGlass.owner.area.getGeometryN(2);
-                            Coordinate coFalz[] = geFalz.getCoordinates();
-                            int mmm = 0;
-                        }
+//                        if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X108) && elemGlass.id == 6.0) {
+//                            double Z = ((ElemGlass) elemGlass).side_frame.id;
+//                            Geometry geFalz = elemGlass.owner.area.getGeometryN(2);
+//                            Coordinate coFalz[] = geFalz.getCoordinates();
+//                            int mmm = 0;
+//                        }
                         elemGlass.addSpecific(spcAdd);
                     }
                 }
