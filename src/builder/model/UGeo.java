@@ -236,7 +236,8 @@ public class UGeo {
                 Polygon poly = gf.createPolygon(ring);
                 poly.normalize();
                 //Test.init(polyRect); 
-                return updateZet(poly, polyRect);
+                updateZet(poly, polyRect);
+                return poly;
 
             } else {
                 Polygon poly1 = bufferPolygon(geoShell, hm);
@@ -251,7 +252,7 @@ public class UGeo {
 
     //TODO Гадкая функция. Надо переписать!
     //При слиянии двух полигонов появляются точки соединения с непонятным Z значением
-    public static Polygon updateZet(Polygon arc, Polygon rec) {
+    public static void updateZet(Polygon arc, Polygon rec) {
         boolean pass = false;
         Coordinate cooArc[] = arc.getCoordinates();
         Coordinate cooRec[] = rec.getCoordinates();
@@ -274,9 +275,7 @@ public class UGeo {
                 }
             }
         }
-        cooArc[cooArc.length -1] = cooArc[0];
-        
-        return gf.createPolygon(cooArc);
+        cooArc[cooArc.length -1].z = cooArc[0].z;
     }
 
     public static Polygon bufferRectangl(Geometry geoShell, Map<Double, Double> hmDist) {

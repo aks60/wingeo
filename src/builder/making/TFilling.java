@@ -15,13 +15,11 @@ import builder.param.FillingVar;
 import builder.model.ElemSimple;
 import common.UCom;
 import enums.Type;
-import enums.TypeArt;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
-import startup.Test;
 
 /**
  * Заполнения
@@ -59,13 +57,14 @@ public class TFilling extends Cal5e {
         try {
             Double depth = elemGlass.artiklRec.getDbl(eArtikl.depth); //толщина стекда           
             ArrayList<ElemSimple> listFrame = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
-            Set<Double> hs = new HashSet();
+            Set<Double> hs = new LinkedHashSet();
             Geometry geoFalz = elemGlass.owner.area.getGeometryN(2);
             Coordinate cooFalz[] = geoFalz.getCoordinates();
             List.of(cooFalz).forEach(p -> hs.add(p.z));
 
             //Цикл по сторонам стеклопакета
             Double arr[] = hs.toArray(new Double[0]);
+            
 if (elemGlass.id == 6.0) {
     System.out.println("");
 }            
@@ -125,12 +124,11 @@ if (elemGlass.id == 6.0) {
                     spcAdd.variantRec = glasgrpRec;
                     //Подбор текстуры
                     if (UColor.colorFromElemOrSeri(spcAdd)) {
-//                        if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X108) && elemGlass.id == 6.0) {
-//                            double Z = ((ElemGlass) elemGlass).side_frame.id;
-//                            Geometry geFalz = elemGlass.owner.area.getGeometryN(2);
-//                            Coordinate coFalz[] = geFalz.getCoordinates();
-//                            int mmm = 0;
-//                        }
+                        if (elemGlass.id == 6.0 && "420600".equals(spcAdd.artikl)) {
+                            Record record = spcAdd.artiklRec;
+                            int index = ((ElemGlass) elemGlass).side_index;
+                            int mmm = 0;
+                        }
                         elemGlass.addSpecific(spcAdd);
                     }
                 }
