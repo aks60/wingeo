@@ -164,7 +164,7 @@ public class ElemGlass extends ElemSimple {
                     spcAdd.anglCut0 = UGeo.anglCut(spcAdd, geoFalz, coo.length - 2, 0, '-');
                     spcAdd.anglCut1 = UGeo.anglCut(spcAdd, geoFalz, index - 1, index, '+');
 
-                    spcAdd.width = UGeo.lengthCurve(geoFalz, side_frame.id);
+                    spcAdd.width += UGeo.lengthCurve(geoFalz, side_frame.id);
 
 //                    if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X108) && this.id == 6.0) { //штапик
 //                        double h = UGeo.lengthCurve(geoFalz, side_frame.id);
@@ -180,7 +180,7 @@ public class ElemGlass extends ElemSimple {
                     spcAdd.anglCut0 = Math.abs(angBetween0 - UGeo.anglCut(spcAdd, geoFalz, UGeo.getIndex(coo.length, side_index - 1), side_index, '-'));
                     spcAdd.anglCut1 = Math.abs(angBetween1 - UGeo.anglCut(spcAdd, geoFalz, UGeo.getIndex(coo.length, side_index), UGeo.getIndex(coo.length, side_index + 1), '+'));
 
-                    spcAdd.width += coo[side_index].distance(coo[side_index + 1]); //Тут надо учитывать наклон
+                    spcAdd.width += coo[side_index].distance(coo[side_index + 1]);
 
                 }
 

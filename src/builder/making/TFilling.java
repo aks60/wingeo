@@ -53,8 +53,9 @@ public class TFilling extends Cal5e {
         }
     }
 
-    public void fill(ElemSimple elemGlass) {
+    public void fill(ElemSimple elem5e) {
         try {
+            ElemGlass elemGlass = (ElemGlass) elem5e;
             Double depth = elemGlass.artiklRec.getDbl(eArtikl.depth); //толщина стекда           
             ArrayList<ElemSimple> listFrame = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             Set<Double> hs = new LinkedHashSet();
@@ -64,16 +65,15 @@ public class TFilling extends Cal5e {
 
             //Цикл по сторонам стеклопакета
             Double arr[] = hs.toArray(new Double[0]);
-            
-if (elemGlass.id == 6.0) {
-    System.out.println("");
-}            
+
+            if (elemGlass.id == 6.0) {
+                System.out.println("");
+            }
             for (int indexSegm = 0; indexSegm < arr.length; indexSegm++) {
 
-                ElemGlass elGlass = (ElemGlass) elemGlass;
-                elGlass.side_index = indexSegm; //индекс стороны стеклопакета                
+                elemGlass.side_index = indexSegm; //индекс стороны стеклопакета                
                 double ID = arr[indexSegm];
-                elGlass.side_frame = listFrame.stream().filter(e -> e.id == ID).findFirst().orElse(null);
+                elemGlass.side_frame = listFrame.stream().filter(e -> e.id == ID).findFirst().orElse(null);
 
                 //Цикл по группам заполнений
                 for (Record glasgrpRec : eGlasgrp.filter()) {
@@ -83,17 +83,23 @@ if (elemGlass.id == 6.0) {
                         List<Record> glasprofList = eGlasprof.filter2(glasgrpRec.getInt(eGlasgrp.id)); //список профилей в группе заполнений
                         for (Record glasprofRec : glasprofList) {
 
-                            if (elGlass.side_frame.artiklRecAn.getInt(eArtikl.id) == glasprofRec.getInt(eGlasprof.artikl_id)) { //если артикулы совпали
+                            if (elemGlass.side_frame.artiklRecAn.getInt(eArtikl.id) == glasprofRec.getInt(eGlasprof.artikl_id)) { //если артикулы совпали
                                 if (List.of(1, 2, 3, 4).contains(glasprofRec.getInt(eGlasprof.inside))) {  //внутреннее заполнение допустимо
-
+//                                            if (elemGlass.id == 6.0 && glasgrpRec.getInt(1) == 46) {
+//                                                boolean bbb = elem5e.owner.area.getGeometryN(0).isRectangle();
+//                                                int index = elemGlass.side_index;
+//                                            }
                                     //ФИЛЬТР вариантов, параметры накапливаются в спецификации элемента
                                     if (fillingVar.filter(elemGlass, glasgrpRec) == true) {
 
-                                        elGlass.gzazo = glasgrpRec.getDbl(eGlasgrp.gap); //зазор между фальцем и стеклопакетом
-                                        elGlass.axisMap.put(indexSegm, glasprofRec.getDbl(eGlasprof.gsize)); //размер от оси до стеклопакета
+                                        elemGlass.gzazo = glasgrpRec.getDbl(eGlasgrp.gap); //зазор между фальцем и стеклопакетом
+                                        elemGlass.axisMap.put(indexSegm, glasprofRec.getDbl(eGlasprof.gsize)); //размер от оси до стеклопакета
 
                                         if (shortPass == false) {
                                             List<Record> glasdetList = eGlasdet.filter(glasgrpRec.getInt(eGlasgrp.id), elemGlass.artiklRec.getDbl(eArtikl.depth));
+                                            if (elemGlass.id == 6.0 && glasgrpRec.getInt(1) == 48) {
+                                                int index = elemGlass.side_index;
+                                            }
                                             detail(elemGlass, glasgrpRec, glasdetList);
                                         }
                                     }
@@ -110,7 +116,7 @@ if (elemGlass.id == 6.0) {
         }
     }
 
-    protected void detail(ElemSimple elemGlass, Record glasgrpRec, List<Record> glasdetList) {
+    protected void detail(ElemGlass elemGlass, Record glasgrpRec, List<Record> glasdetList) {
         try {
             //Цикл по списку детализации
             for (Record glasdetRec : glasdetList) {
@@ -124,11 +130,12 @@ if (elemGlass.id == 6.0) {
                     spcAdd.variantRec = glasgrpRec;
                     //Подбор текстуры
                     if (UColor.colorFromElemOrSeri(spcAdd)) {
-                        if (elemGlass.id == 6.0 && "420600".equals(spcAdd.artikl)) {
-                            Record record = spcAdd.artiklRec;
-                            int index = ((ElemGlass) elemGlass).side_index;
-                            int mmm = 0;
+
+                        if (elemGlass.id == 6.0 && "420610".equals(spcAdd.artikl)) { // && glasgrpRec.getInt(1) == 48) {
+                            int id = glasgrpRec.getInt(1);
+                            int index = elemGlass.side_index;
                         }
+                        
                         elemGlass.addSpecific(spcAdd);
                     }
                 }

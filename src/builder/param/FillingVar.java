@@ -13,6 +13,7 @@ import common.UCom;
 import domain.eArtikl;
 import java.util.Arrays;
 import java.util.Collections;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 
 //Заполнения
@@ -45,7 +46,7 @@ public class FillingVar extends Par5s {
         try {
             switch (grup) {
                 case 13001:  //Если признак состава 
-                    
+
                     if (UPar.is_11001_11002_12001_12002_13001_14001_15001_33001_34001(rec.getStr(TEXT), elem5e) == false) {
                         return false;
                     }
@@ -92,18 +93,29 @@ public class FillingVar extends Par5s {
                     }
                 }
                 break;
-                case 13015:  //Форма заполнения 
+                case 13015: //Форма заполнения 
+                {
+                    Geometry geometry = elem5e.owner.area.getGeometryN(0);
                     //"Прямоугольное", "Не прямоугольное", "Не арочное", "Арочное" (TypeElem.AREA - глухарь)
-                    if ("Прямоугольное".equals(rec.getStr(TEXT)) && elem5e.owner.area.isRectangle() == true) {
-                        return false;
-                    } else if ("Не прямоугольное".equals(rec.getStr(TEXT)) && elem5e.owner.area.isRectangle() == false) {
-                        return false;
-                    } else if ("Арочное".equals(rec.getStr(TEXT)) && elem5e.owner.area.getNumPoints() < Com5t.MAXSIDE) {
-                        return false;
-                    } else if ("Не арочное".equals(rec.getStr(TEXT)) && ((ElemGlass) elem5e).area.getNumPoints() > Com5t.MAXSIDE) {
-                        return false;
-                    }                    
+                    if ("Прямоугольное".equals(rec.getStr(TEXT))) {
+                        if (geometry.isRectangle() == false) {
+                            return false;
+                        }
+                    } else if ("Не прямоугольное".equals(rec.getStr(TEXT))) {
+                        if (geometry.isRectangle() == true || geometry.getNumPoints() > Com5t.MAXSIDE) {
+                            return false;
+                        }
+                    } else if ("Арочное".equals(rec.getStr(TEXT))) {
+                        if (geometry.getNumPoints() < Com5t.MAXSIDE) {
+                            return false;
+                        }
+                    } else if ("Не арочное".equals(rec.getStr(TEXT))) {
+                        if (geometry.getNumPoints() > Com5t.MAXSIDE) {
+                            return false;
+                        }
+                    }
                     break;
+                }
                 case 13017: //Код системы содержит строку 
                     if (UPar.is_13017_14017_24017_25017_31017_33017_34017_37017_38017(rec.getStr(TEXT), winc) == false) {
                         return false;
