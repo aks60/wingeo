@@ -16,13 +16,15 @@ import enums.UseSideTo;
 import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.Polygon;
 import startup.Test;
 
 public class ElemFrame extends ElemSimple {
@@ -84,29 +86,33 @@ public class ElemFrame extends ElemSimple {
     }
 
     //Рассчёт полигона стороны рамы
-    @Override
+    //@Override
     public void setLocation() {
         try {
             Geometry geoShell = owner.area.getGeometryN(0), geoInner = owner.area.getGeometryN(1); //внешн. и внутр. ареа арки.
             Coordinate cooShell[] = geoShell.getCoordinates(), cooInner[] = geoInner.getCoordinates();
+
             for (int i = 0; i < cooShell.length; i++) {
                 if (cooShell[i].z == this.id) {
                     if (this.h() != null) { //полигон арки
+                        List<Coordinate> listFrame = new ArrayList<Coordinate>();
 
-                        //radiusArc = (Math.pow((this.x2() - this.x1()) / 2, 2) + Math.pow(this.h(), 2)) / (2 * this.h());  //R = (L2 + H2) / 2H - радиус арки
-                        List<Coordinate> listFrane = new ArrayList<Coordinate>();
-                        List<Coordinate> listShell = UGeo.getSegmentArch(cooShell, this); //внешн.коорд.арки
-                        List<Coordinate> listInner = UGeo.getSegmentArch(cooInner, this); //внутр.коорд.арки
-                        listInner.add(geoInner.getCoordinates()[0]); //посл.точка арки
-                        Collections.reverse(listInner); //против час.стрелки
+                        for (int j = 0; j < cooShell.length; j++) {
+                            if (cooShell[j].z == this.id) {
+                                listFrame.add(cooShell[j]);
+                            }
+                        } 
+                        listFrame.add(cooInner[0]); //посл.точка арки
+                        for (int k = cooInner.length - 1; k >= 0; k--) {
+                            if (cooInner[k].z == this.id) {
+                                listFrame.add(cooInner[k]);
+                            }
+                        }
 
-                        listFrane.addAll(listShell);
-                        listFrane.addAll(listInner);
-                        listFrane.add(listShell.get(0));
+                        listFrame.add(listFrame.get(0));
+                        this.area = gf.createPolygon(listFrame.toArray(new Coordinate[0])); //полигон рамы арки
 
-                        this.area = gf.createPolygon(listFrane.toArray(new Coordinate[0])); //полигон рамы арки
-
-                        //Test.init(owner.area.getGeometryN(0));
+                        //Test.init(owner.area.getGeometryN(0), owner.area.getGeometryN(1));
                     } else { //полигон рамы   
                         this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), cooInner[i + 1].x, cooInner[i + 1].y, cooInner[i].x, cooInner[i].y);
                     }
@@ -115,7 +121,7 @@ public class ElemFrame extends ElemSimple {
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemFrame.setLocation" + toString() + e);
+            System.err.println("Ошибка:ElemFrame.setLocation " + e);
         }
     }
 
@@ -129,23 +135,24 @@ public class ElemFrame extends ElemSimple {
             Coordinate coo[] = this.area.getCoordinates();
 
             //Углы реза (у рамы всегда 4 вершины)
-            if (this.h() == null) {
-                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
-                spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 5], coo[coo.length - 4], coo[coo.length - 3]));
-
-            } else {
+            if (this.h() != null) {
                 double h = this.artiklRecAn.getDbl(eArtikl.height);
                 int index = IntStream.range(1, coo.length).filter(j -> coo[j - 1].distance(coo[j]) > h).findFirst().getAsInt();
                 spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
                 spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[index - 2], coo[index - 1], coo[index]));
+                //Test.init(this.area);
+
+            } else {
+                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
+                spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 5], coo[coo.length - 4], coo[coo.length - 3]));
             }
-            spcRec.anglCut0 = Math.round(spcRec.anglCut0 * 10.0) / 10.0;
-            spcRec.anglCut1 = Math.round(spcRec.anglCut1 * 10.0) / 10.0;
+            spcRec.anglCut0 = Math.round(spcRec.anglCut0 * 100.0) / 100.0;
+            spcRec.anglCut1 = Math.round(spcRec.anglCut1 * 100.0) / 100.0;
             spcRec.anglCut0 = (spcRec.anglCut0 > 90) ? 180 - spcRec.anglCut0 : spcRec.anglCut0;
-            spcRec.anglCut1 = (spcRec.anglCut1 > 90) ? 180 - spcRec.anglCut1 : spcRec.anglCut1;            
+            spcRec.anglCut1 = (spcRec.anglCut1 > 90) ? 180 - spcRec.anglCut1 : spcRec.anglCut1;
             double delta = winc.syssizRec.getDbl(eSyssize.prip) * Math.sin(Math.toRadians(45));
             double prip1 = delta, prip2 = delta;
-            
+
             if (spcRec.anglCut0 != 0 && spcRec.anglCut0 != 90) {
                 prip1 = delta / Math.sin(Math.toRadians(spcRec.anglCut0));
             }

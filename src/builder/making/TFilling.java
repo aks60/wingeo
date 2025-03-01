@@ -65,10 +65,6 @@ public class TFilling extends Cal5e {
 
             //Цикл по сторонам стеклопакета
             Double arr[] = hs.toArray(new Double[0]);
-
-            if (elemGlass.id == 6.0) {
-                System.out.println("");
-            }
             for (int indexSegm = 0; indexSegm < arr.length; indexSegm++) {
 
                 elemGlass.side_index = indexSegm; //индекс стороны стеклопакета                
@@ -85,10 +81,7 @@ public class TFilling extends Cal5e {
 
                             if (elemGlass.side_frame.artiklRecAn.getInt(eArtikl.id) == glasprofRec.getInt(eGlasprof.artikl_id)) { //если артикулы совпали
                                 if (List.of(1, 2, 3, 4).contains(glasprofRec.getInt(eGlasprof.inside))) {  //внутреннее заполнение допустимо
-//                                            if (elemGlass.id == 6.0 && glasgrpRec.getInt(1) == 46) {
-//                                                boolean bbb = elem5e.owner.area.getGeometryN(0).isRectangle();
-//                                                int index = elemGlass.side_index;
-//                                            }
+
                                     //ФИЛЬТР вариантов, параметры накапливаются в спецификации элемента
                                     if (fillingVar.filter(elemGlass, glasgrpRec) == true) {
 
@@ -97,9 +90,6 @@ public class TFilling extends Cal5e {
 
                                         if (shortPass == false) {
                                             List<Record> glasdetList = eGlasdet.filter(glasgrpRec.getInt(eGlasgrp.id), elemGlass.artiklRec.getDbl(eArtikl.depth));
-                                            if (elemGlass.id == 6.0 && glasgrpRec.getInt(1) == 48) {
-                                                int index = elemGlass.side_index;
-                                            }
                                             detail(elemGlass, glasgrpRec, glasdetList);
                                         }
                                     }
@@ -109,8 +99,6 @@ public class TFilling extends Cal5e {
                     }
                 }
             }
-            //((ElemGlass) elemGlass).frameGlass = null;
-
         } catch (Exception e) {
             System.err.println("Ошибка:Filling.fill() " + e);
         }
@@ -130,12 +118,6 @@ public class TFilling extends Cal5e {
                     spcAdd.variantRec = glasgrpRec;
                     //Подбор текстуры
                     if (UColor.colorFromElemOrSeri(spcAdd)) {
-
-                        if (elemGlass.id == 6.0 && "420610".equals(spcAdd.artikl)) { // && glasgrpRec.getInt(1) == 48) {
-                            int id = glasgrpRec.getInt(1);
-                            int index = elemGlass.side_index;
-                        }
-                        
                         elemGlass.addSpecific(spcAdd);
                     }
                 }

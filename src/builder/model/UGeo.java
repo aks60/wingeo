@@ -483,19 +483,6 @@ public class UGeo {
         return new LineSegment(coo[j], coo[k]);
     }
 
-    public static List<Coordinate> getSegmentArch(Coordinate coo[], ElemSimple elem) {
-        int index = 0;
-        List<Coordinate> list = new ArrayList<Coordinate>();
-        for (int i = 0; i < coo.length; i++) {
-            if (coo[i].z == elem.id) {
-                list.add(coo[i]);
-                index = i;
-            }
-        }
-        list.add(coo[++index]);
-        return list;
-    }
-
     public static int getIndex(Geometry geo, double id) {
         Coordinate coo[] = geo.getGeometryN(0).getCoordinates();
         for (int i = 0; i < coo.length - 1; i++) {

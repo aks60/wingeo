@@ -32,7 +32,6 @@ import startup.Test;
 
 public class AreaSimple extends Com5t {
 
-    private DecimalFormat df1 = new DecimalFormat("#0.#");
     public ArrayList<ElemSimple> frames = new ArrayList<ElemSimple>(); //список рам
     public ListenerPaint listenerPassEdit = null; //для прорисовки точек движения сегментов
     public ArrayList<Com5t> childs = new ArrayList<Com5t>(); //дети

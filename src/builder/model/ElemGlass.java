@@ -163,13 +163,7 @@ public class ElemGlass extends ElemSimple {
                     int index = IntStream.range(1, coo.length).filter(k -> coo[k].z == side_frame.id).findFirst().getAsInt();
                     spcAdd.anglCut0 = UGeo.anglCut(spcAdd, geoFalz, coo.length - 2, 0, '-');
                     spcAdd.anglCut1 = UGeo.anglCut(spcAdd, geoFalz, index - 1, index, '+');
-
                     spcAdd.width += UGeo.lengthCurve(geoFalz, side_frame.id);
-
-//                    if (TypeArt.isType(spcAdd.artiklRec, TypeArt.X108) && this.id == 6.0) { //штапик
-//                        double h = UGeo.lengthCurve(geoFalz, side_frame.id);
-//                        System.out.println(h);
-//                    }
 
                     //Остальное
                 } else {
