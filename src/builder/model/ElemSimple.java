@@ -7,10 +7,12 @@ import builder.script.GsonElem;
 import common.UCom;
 import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
+import domain.eColor;
 import enums.Layout;
 import enums.Type;
 import frames.swing.cmp.Canvas;
 import java.awt.Color;
+import java.awt.Shape;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Rectangle2D;
@@ -18,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 import javax.swing.Timer;
+import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineSegment;
 
@@ -302,6 +305,21 @@ public abstract class ElemSimple extends Com5t {
                 };
             }
         }
+//        if (this.area != null) {
+//            Shape shape1 = new ShapeWriter().toShape(this.area.getGeometryN(0));
+//            //Shape shape2 = new ShapeWriter().toShape(this.area.getGeometryN(1));
+//            //Shape shape3 = new ShapeWriter().toShape(this.area.getGeometryN(2));
+//
+//            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
+//            winc.gc2d.fill(shape1);
+//            //winc.gc2d.fill(shape2);
+//            //winc.gc2d.fill(shape3);
+//
+//            winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
+//            winc.gc2d.draw(shape1);
+//            //winc.gc2d.draw(shape2);
+//            //winc.gc2d.draw(shape3);
+//        }    
     }
 
     public void setDimension(double x1, double y1, double x2, double y2) {

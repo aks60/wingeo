@@ -6,15 +6,17 @@ import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
 import dataset.Record;
 import domain.eArtikl;
+import domain.eColor;
 import enums.TypeJoin;
+import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.List;
+import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
-import startup.Test;
 
 public class AreaArch extends AreaSimple {
 
@@ -95,13 +97,19 @@ public class AreaArch extends AreaSimple {
         super.paint();
 
 //        if (this.area != null) {
-//            Shape shape = new ShapeWriter().toShape(this.area);
+//            Shape shape1 = new ShapeWriter().toShape(this.area.getGeometryN(0));
+//            Shape shape2 = new ShapeWriter().toShape(this.area.getGeometryN(1));
+//            //Shape shape3 = new ShapeWriter().toShape(this.area.getGeometryN(2));
 //
 //            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-//            winc.gc2d.fill(shape);
+//            winc.gc2d.fill(shape1);
+//            winc.gc2d.fill(shape2);
+//            //winc.gc2d.fill(shape3);
 //
-//            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
-//            winc.gc2d.draw(shape);
+//            winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
+//            winc.gc2d.draw(shape1);
+//            winc.gc2d.draw(shape2);
+//            //winc.gc2d.draw(shape3);
 //        }
     }
 
