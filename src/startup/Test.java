@@ -37,6 +37,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import org.locationtech.jts.algorithm.PointLocation;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
@@ -407,7 +408,7 @@ public class Test {
         LineString line = gf.createLineString(new Coordinate[]{new Coordinate(450, 0, 8), new Coordinate(450, 1400, 8)});
         Coordinate c1 = new Coordinate(0.0, 0.0);
         Coordinate c2 = new Coordinate(45.0, 45.0);
-        Coordinate c3 = new Coordinate(10.0, 10.0);
+        Coordinate c3 = new Coordinate(45.0, 45.0);
 
         LineString line2 = gf.createLineString(new Coordinate[]{c1, c2});
 
@@ -415,7 +416,8 @@ public class Test {
         p0.setUserData(null);
 
         Geometry geo = poly.union(line);
-        if (line2.contains(gf.createPoint(c3)) || (c1.x == c3.x && c1.y == c3.y)) {
+        //if (line2.contains(gf.createPoint(c3)) || (c1.x == c3.x && c1.y == c3.y)) {
+        if(PointLocation.isOnSegment(c3, c1, c2)) {
             System.out.println("OK");
         } else {
             System.out.println("NO");

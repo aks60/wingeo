@@ -88,7 +88,7 @@ public class Specifics extends javax.swing.JFrame {
         if (this.man == true) {
             int prjprodID = Integer.valueOf(ePrefs.prjprodID.getProp());
             Record prjprodRec = ePrjprod.find(prjprodID);
-            
+
             if (prjprodRec != null) {
                 Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
                 String script = prjprodRec.getStr(ePrjprod.script);
@@ -139,10 +139,10 @@ public class Specifics extends javax.swing.JFrame {
 
         double total1 = (this.man == true) ? winc.cost1 + Kitcalc.cost1 : winc.cost1;
         double total2 = (this.man == true) ? winc.cost2 + Kitcalc.cost2 : winc.cost2;
-        
-        v.set(v.size() - 12, UCom.format(this.winc.weight, "#,##0.##"));           
-        v.set(v.size() - 2, UCom.format(total1, "#,##0.##"));           
-        v.set(v.size() - 1, UCom.format(total2, "#,##0.##"));           
+
+        v.set(v.size() - 12, UCom.format(this.winc.weight, "#,##0.##"));
+        v.set(v.size() - 2, UCom.format(total1, "#,##0.##"));
+        v.set(v.size() - 1, UCom.format(total2, "#,##0.##"));
         dtm.addRow(v);
         labSum.setText("Итого: " + UCom.format(total2, "#,##0.##"));
     }
@@ -434,7 +434,7 @@ public class Specifics extends javax.swing.JFrame {
                 .addComponent(btn23)
                 .addGap(18, 18, 18)
                 .addComponent(cbx2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 334, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 384, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -735,10 +735,10 @@ public class Specifics extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 // </editor-fold> 
     public void initElements() {
-        
+
         ePrefs.getWin(this, btnClose, (e) -> {
             ePrefs.putWin(this, btnClose);
-        }); 
+        });
 
         filterTable = new TableFieldFilter(4, tab1);
         south.add(filterTable, 0);

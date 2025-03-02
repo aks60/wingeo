@@ -70,6 +70,22 @@ public class TableFieldFilter extends javax.swing.JPanel {
         return txtFilter;
     }
 
+    public void fintPreName() {
+//        Set<String> set = new HashSet<String>();
+//        //Map<String, Integer> map = new HashMap<String, Integer>();
+//        for (TRecord rec : listTRec) {
+//            String s = rec.name.substring(0, 2);
+//            set.add(s);
+//            //int m = (map.get(s) == null) ?1 : map.get(s);
+//            //map.put(s, ++m);
+//        }
+//        ArrayList<String> list = new ArrayList<String>();
+//        list.addAll(set);
+//        Collections.sort(list, (a, b) -> a.compareToIgnoreCase(b));
+//        
+//        System.out.println(list);         
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

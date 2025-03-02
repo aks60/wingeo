@@ -163,8 +163,6 @@ public class ElemGlass extends ElemSimple {
                     spcAdd.anglCut0 = UGeo.anglCut(spcAdd, geoFalz, coo.length - 2, 0, '-');
                     spcAdd.anglCut1 = UGeo.anglCut(spcAdd, geoFalz, index - 1, index, '+');
                     spcAdd.width += UGeo.lengthCurve(geoFalz, side_frame.id);
-                    
-                    Test.init(owner.area.getGeometryN(0), owner.area.getGeometryN(1), owner.area.getGeometryN(2));
 
                     //ќстальное
                 } else {
@@ -230,6 +228,8 @@ public class ElemGlass extends ElemSimple {
             } else {
                 System.err.println("Ёлемент не обработан");
             }
+
+            //Test.init(owner.area.getGeometryN(0), owner.area.getGeometryN(1), owner.area.getGeometryN(2));
         } catch (Exception e) {
             System.err.println("ќшибка:ElemGlass.addSpecific()  " + e);
         }
