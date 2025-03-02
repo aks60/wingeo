@@ -149,11 +149,7 @@ public class Test {
 
     public static void init(Geometry... p) {
         Test t = new Test();
-        Polygon poly[] = new Polygon[p.length];
-        for (int i = 0; i < p.length; ++i) {
-            poly[i] = (Polygon) p[i];
-        }
-        t.mpol = gf.createMultiPolygon(poly);
+        t.mpol(p);
     }
 
     public void mpol(Geometry... p) {
@@ -185,12 +181,12 @@ public class Test {
 
         Graphics2D gc2d = (Graphics2D) g;
 
-        gc2d.translate(10, 10);
-        gc2d.scale(.4, .4);
+        //gc2d.translate(10, 10);
+        //gc2d.scale(.4, .4);
         //
         //gc2d.translate(-4500, -900);
-        //gc2d.translate(80, -940);
-        //gc2d.scale(4, 4);
+        gc2d.translate(80, -940);
+        gc2d.scale(4, 4);
 
         if (mlin != null) {
             gc2d.setColor(Color.BLUE);

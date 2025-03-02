@@ -149,7 +149,6 @@ public class ElemGlass extends ElemSimple {
             }
             //Ареа фальца
             Geometry geoFalz = owner.area.getGeometryN(2);
-            //Test.init(owner.areaa.getGeometryN(2));
 
             //Погонные метры.
             if (UseUnit.METR.id == spcAdd.artiklRec.getInt(eArtikl.unit)) {
@@ -164,6 +163,8 @@ public class ElemGlass extends ElemSimple {
                     spcAdd.anglCut0 = UGeo.anglCut(spcAdd, geoFalz, coo.length - 2, 0, '-');
                     spcAdd.anglCut1 = UGeo.anglCut(spcAdd, geoFalz, index - 1, index, '+');
                     spcAdd.width += UGeo.lengthCurve(geoFalz, side_frame.id);
+                    
+                    Test.init(owner.area.getGeometryN(0), owner.area.getGeometryN(1), owner.area.getGeometryN(2));
 
                     //Остальное
                 } else {
