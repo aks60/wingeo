@@ -81,7 +81,7 @@ public class ElemCross extends ElemSimple {
             Polygon areaEnvelope = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
             this.area = (Polygon) areaEnvelope.intersection(geoFalz); //полигон элемента конструкции
 
-           // Test.init(this.area);
+            // Test.init(this.area);
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation " + e);
         }
@@ -99,17 +99,12 @@ public class ElemCross extends ElemSimple {
             spcRec.height = artiklRec.getDbl(eArtikl.height);
 
             Coordinate cooImp[] = this.area.getCoordinates();
-            spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(cooImp[cooImp.length - 2], cooImp[0], cooImp[1]));            
-            spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(cooImp[0], cooImp[1], cooImp[2]));
-            spcRec.anglCut0 = Math.round(spcRec.anglCut0 * 10.0) / 10.0;
-            spcRec.anglCut1 = Math.round(spcRec.anglCut1 * 10.0) / 10.0;
-            spcRec.anglCut0 = (spcRec.anglCut0 > 90) ? 180 - spcRec.anglCut0 : spcRec.anglCut0;
-            spcRec.anglCut1 = (spcRec.anglCut1 > 90) ? 180 - spcRec.anglCut1 : spcRec.anglCut1;
-            
-            
+            spcRec.anglCut0 = UGeo.anglCut(cooImp[cooImp.length - 2], cooImp[0], cooImp[1]);
+            spcRec.anglCut1 = UGeo.anglCut(cooImp[0], cooImp[1], cooImp[2]);
 
             if (type == Type.IMPOST) {
                 LineSegment ls = new LineSegment();
+                
                 //Длина импоста - самый длинный сегмент
                 for (int i = 1; i < cooImp.length; i++) {
                     ls.setCoordinates(cooImp[i - 1], cooImp[i]);
@@ -118,11 +113,11 @@ public class ElemCross extends ElemSimple {
                 double zax = winc.syssizRec.getDbl(eSyssize.zax, 0);
                 spcRec.width = spcRec.width + 2 * zax;
 
-                //Test.init(this.area);
             } else if (type == Type.SHTULP || type == Type.STOIKA) {
                 spcRec.width = length();
             }
 
+            //Test.init(this.area);
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setSpecific() " + e);
         }

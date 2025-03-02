@@ -12,8 +12,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import org.locationtech.jts.algorithm.Angle;
-import static org.locationtech.jts.algorithm.Angle.angle;
-import static org.locationtech.jts.algorithm.Angle.diff;
 import org.locationtech.jts.algorithm.Intersection;
 import org.locationtech.jts.algorithm.PointLocation;
 import org.locationtech.jts.geom.Coordinate;
@@ -55,6 +53,14 @@ public class UGeo {
     }
 
     //”гол реза
+    public static double anglCut(Coordinate tip1, Coordinate tail, Coordinate tip2) {
+        double ang = Math.toDegrees(Angle.angleBetween(tip1, tail, tip2));
+        ang = (ang > 90) ? 180 - ang : ang;
+        ang = Math.round(ang * 100.0) / 100.0;
+        return ang;
+    }
+
+    //”гол реза
     public static double anglCut(TRecord spcRec, Geometry area, int index1, int index2, char direction) {
         LineSegment s1a = UGeo.getSegment(area, index1);
         LineSegment s2a = UGeo.getSegment(area, index2);
@@ -80,14 +86,8 @@ public class UGeo {
         return Math.toDegrees(Math.asin(spcRec.height / gip));
     }
 
-    public static double[] anglcutElem() {
-        double anglOut[] = {90, 90};
-
-        return anglOut;
-    }
-
     public static Geometry polyCurve(Geometry geoShell, Geometry geoInner, double ID) {
-        
+
         Coordinate cooShell[] = geoShell.getCoordinates();
         Coordinate cooInner[] = geoInner.getCoordinates();
         List<Coordinate> listFrame = new ArrayList<Coordinate>();
@@ -124,15 +124,6 @@ public class UGeo {
             }
         }
         return width;
-    }
-
-    //”гол неориентированный неомежду профил€ми
-    public static double anglBetbeeem(ElemSimple e1, ElemSimple e2) {
-
-        double c1 = angle(new Coordinate(e1.x2(), e1.y2()), new Coordinate(e1.x1(), e1.y1()));
-        double c2 = angle(new Coordinate(e2.x2(), e2.y2()), new Coordinate(e2.x1(), e2.y1()));
-
-        return Math.toDegrees(diff(c1, c2));
     }
 
     public static Coordinate prcDbl(Coordinate c) {

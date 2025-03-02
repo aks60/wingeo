@@ -120,7 +120,6 @@ public class ElemGlass extends ElemSimple {
 
             //Фича определения gzazo и gaxis на раннем этапе построения. 
             new TFilling(winc, true).fill(this);
-            // ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
 
             //Полигон стеклопакета
             this.area = buffer(owner.area.getGeometryN(0), winc.listElem, gzazo, 1);

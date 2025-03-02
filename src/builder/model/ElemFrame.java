@@ -119,22 +119,17 @@ public class ElemFrame extends ElemSimple {
             spcRec.color(colorID1, colorID2, colorID3);
             Coordinate coo[] = this.area.getCoordinates();
 
-            //”глы реза (у рамы всегда 4 вершины)
+            //”глы реза (у элем. рамы всегда 4 вершины)
             if (this.h() != null) {
                 double h = this.artiklRecAn.getDbl(eArtikl.height);
                 int index = IntStream.range(1, coo.length).filter(j -> coo[j - 1].distance(coo[j]) > h).findFirst().getAsInt();
-                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
-                spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[index - 2], coo[index - 1], coo[index]));
-                //Test.init(this.area);
+                spcRec.anglCut0 = UGeo.anglCut(coo[coo.length - 2], coo[0], coo[1]);
+                spcRec.anglCut1 = UGeo.anglCut(coo[index - 2], coo[index - 1], coo[index]);
 
             } else {
-                spcRec.anglCut0 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 2], coo[0], coo[1]));
-                spcRec.anglCut1 = Math.toDegrees(Angle.angleBetween(coo[coo.length - 5], coo[coo.length - 4], coo[coo.length - 3]));
+                spcRec.anglCut0 = UGeo.anglCut(coo[coo.length - 2], coo[0], coo[1]);
+                spcRec.anglCut1 = UGeo.anglCut(coo[coo.length - 5], coo[coo.length - 4], coo[coo.length - 3]);
             }
-            spcRec.anglCut0 = Math.round(spcRec.anglCut0 * 100.0) / 100.0;
-            spcRec.anglCut1 = Math.round(spcRec.anglCut1 * 100.0) / 100.0;
-            spcRec.anglCut0 = (spcRec.anglCut0 > 90) ? 180 - spcRec.anglCut0 : spcRec.anglCut0;
-            spcRec.anglCut1 = (spcRec.anglCut1 > 90) ? 180 - spcRec.anglCut1 : spcRec.anglCut1;
             double delta = winc.syssizRec.getDbl(eSyssize.prip) * Math.sin(Math.toRadians(45));
             double prip1 = delta, prip2 = delta;
 
@@ -147,6 +142,7 @@ public class ElemFrame extends ElemSimple {
             spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;
             spcRec.height = artiklRec.getDbl(eArtikl.height);
 
+            //Test.init(this.area);
         } catch (Exception e) {
             System.err.println("ќшибка:ElemFrame.setSpecific() " + e);
         }

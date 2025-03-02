@@ -10,6 +10,8 @@ import domain.eJoining;
 import domain.eJoinvar;
 import enums.Layout;
 import java.util.List;
+import static org.locationtech.jts.algorithm.Angle.angle;
+import static org.locationtech.jts.algorithm.Angle.diff;
 import org.locationtech.jts.geom.Coordinate;
 import startup.Test;
 
@@ -110,9 +112,11 @@ public class ElemJoining {
         this.type = v;
     }
 
-    //Угол между профилями
+    //Угол неориентированный неомежду профилями
     public Double angleBetween() {
-        return UGeo.anglBetbeeem(elem1, elem2);
+        double c1 = angle(new Coordinate(elem1.x2(), elem1.y2()), new Coordinate(elem1.x1(), elem1.y1()));
+        double c2 = angle(new Coordinate(elem2.x2(), elem2.y2()), new Coordinate(elem2.x1(), elem2.y1()));
+        return Math.toDegrees(diff(c1, c2));        
     }
 
     public String toString() {
