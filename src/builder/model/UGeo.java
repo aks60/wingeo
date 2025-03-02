@@ -25,9 +25,7 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import java.util.Map;
 import java.util.Set;
-import org.locationtech.jts.geom.Coordinates;
 import org.locationtech.jts.geom.LinearRing;
-import startup.Test;
 
 /**
  * Утилиты JTS
@@ -80,6 +78,34 @@ public class UGeo {
         }
         double gip = (direction == '-') ? s2a.p0.distance(cross) : s1a.p1.distance(cross);
         return Math.toDegrees(Math.asin(spcRec.height / gip));
+    }
+
+    public static double[] anglcutElem() {
+        double anglOut[] = {90, 90};
+
+        return anglOut;
+    }
+
+    public static Geometry polyCurve(Geometry geoShell, Geometry geoInner, double ID) {
+        
+        Coordinate cooShell[] = geoShell.getCoordinates();
+        Coordinate cooInner[] = geoInner.getCoordinates();
+        List<Coordinate> listFrame = new ArrayList<Coordinate>();
+
+        for (int j = 0; j < cooShell.length; j++) {
+            if (cooShell[j].z == ID) {
+                listFrame.add(cooShell[j]);
+            }
+        }
+        listFrame.add(cooInner[0]); //посл.точка арки
+        for (int k = cooInner.length - 1; k >= 0; k--) {
+            if (cooInner[k].z == ID) {
+                listFrame.add(cooInner[k]);
+            }
+        }
+
+        listFrame.add(listFrame.get(0));
+        return gf.createPolygon(listFrame.toArray(new Coordinate[0])); //полигон рамы арки
     }
 
     public static double lengthCurve(Geometry geoArea, double id) {
@@ -256,13 +282,13 @@ public class UGeo {
         boolean pass = false;
         Coordinate cooArc[] = arc.getCoordinates();
         Coordinate cooRec[] = rec.getCoordinates();
-        
+
         for (int i = 0; i < cooArc.length - 1; i++) {
             if (cooArc[i].z % 1 != 0) {
                 for (int j = 1; j < cooRec.length; j++) {
                     LineString line = gf.createLineString(new Coordinate[]{cooRec[j - 1], cooRec[j]});
-                    if (line.contains(gf.createPoint(cooArc[i])) || (cooArc[i].x == 
-                            line.getCoordinateN(0).x & cooArc[i].y == line.getCoordinateN(0).y)) {
+                    if (line.contains(gf.createPoint(cooArc[i])) || (cooArc[i].x
+                            == line.getCoordinateN(0).x & cooArc[i].y == line.getCoordinateN(0).y)) {
 
                         if (pass == false) {
                             cooArc[i].z = cooRec[j].z;
@@ -275,7 +301,7 @@ public class UGeo {
                 }
             }
         }
-        cooArc[cooArc.length -1].z = cooArc[0].z;
+        cooArc[cooArc.length - 1].z = cooArc[0].z;
     }
 
     public static Polygon bufferRectangl(Geometry geoShell, Map<Double, Double> hmDist) {

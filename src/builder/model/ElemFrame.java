@@ -95,24 +95,8 @@ public class ElemFrame extends ElemSimple {
             for (int i = 0; i < cooShell.length; i++) {
                 if (cooShell[i].z == this.id) {
                     if (this.h() != null) { //полигон арки
-                        List<Coordinate> listFrame = new ArrayList<Coordinate>();
 
-                        for (int j = 0; j < cooShell.length; j++) {
-                            if (cooShell[j].z == this.id) {
-                                listFrame.add(cooShell[j]);
-                            }
-                        } 
-                        listFrame.add(cooInner[0]); //посл.точка арки
-                        for (int k = cooInner.length - 1; k >= 0; k--) {
-                            if (cooInner[k].z == this.id) {
-                                listFrame.add(cooInner[k]);
-                            }
-                        }
-
-                        listFrame.add(listFrame.get(0));
-                        this.area = gf.createPolygon(listFrame.toArray(new Coordinate[0])); //полигон рамы арки
-
-                        //Test.init(owner.area.getGeometryN(0), owner.area.getGeometryN(1));
+                        this.area = UGeo.polyCurve(geoShell, geoInner, this.id);
                     } else { //полигон рамы   
                         this.area = UGeo.newPolygon(this.x1(), this.y1(), this.x2(), this.y2(), cooInner[i + 1].x, cooInner[i + 1].y, cooInner[i].x, cooInner[i].y);
                     }
@@ -120,6 +104,7 @@ public class ElemFrame extends ElemSimple {
                 }
             }
 
+            //Test.init(owner.area.getGeometryN(0), owner.area.getGeometryN(1));
         } catch (Exception e) {
             System.err.println("Ошибка:ElemFrame.setLocation " + e);
         }
