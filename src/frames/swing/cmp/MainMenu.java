@@ -283,7 +283,7 @@ public class MainMenu {
                     public void actionRequest(Object obj) {
                         int progectID = Integer.valueOf(ePrefs.orderID.getProp());
                         List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
-                        new RSmeta().parseDoc1(prjprodList);
+                        new RSmeta().parseDoc2(prjprodList);
                     }
                 });
             }

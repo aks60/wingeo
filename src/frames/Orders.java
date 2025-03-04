@@ -317,7 +317,6 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             {" Итого за заказ", projectRec.getDbl(eProject.disc_all, 0),
                 projectRec.getDbl(eProject.cost1_win, 0) + projectRec.getDbl(eProject.cost1_kit, 0),
                 projectRec.getDbl(eProject.cost2_win, 0) + projectRec.getDbl(eProject.cost2_kit, 0)}};
-
         ((DefaultTableModel) tab5.getModel()).setDataVector(data, column);
         tab5.getColumnModel().getColumn(2).setCellRenderer(defaultTableCellRenderer);
         tab5.getColumnModel().getColumn(3).setCellRenderer(defaultTableCellRenderer);

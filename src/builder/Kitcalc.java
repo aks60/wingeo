@@ -17,7 +17,7 @@ public class Kitcalc {
 
     public static ArrayList<TRecord> kitList = new ArrayList<TRecord>(); //список комплекта
     public static double cost1 = 0; //стоимость без скидки
-    public static double cost2 = 0; //стоимость с технологической и скидкой менеджера  
+    public static double cost2 = 0; //стоимость с технологической скидкой и скидкой менеджера  
 
     public static void init() {
         kitList.clear();
