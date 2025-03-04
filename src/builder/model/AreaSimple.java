@@ -104,7 +104,7 @@ public class AreaSimple extends Com5t {
             Polygon geoFalz = Com5t.buffer(geoShell, winc.listElem, 0, 1);
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
 
-            splitLocation(geoShell, this.childs); //опережающее разделение импостом
+            //splitLocation(geoShell, this.childs); //опережающее разделение импостом
 
 //            if (geoShell.getNumPoints() > Com5t.MAXSIDE) {
 //                Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);

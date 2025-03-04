@@ -67,6 +67,11 @@ public class ElemCross extends ElemSimple {
             Geometry geoShell = owner.area.getGeometryN(0);
             Geometry geoFalz = owner.area.getGeometryN(2);
 
+            //Пилим полигон импостом
+            Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), this.segment());
+            owner.childs.get(0).area = (Polygon) geoSplit[1];
+            owner.childs.get(2).area = (Polygon) geoSplit[2];            
+
             //Левый и правый сегмент вдоль импоста
             double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr); //ширина
             LineSegment baseSegm = new LineSegment(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()));

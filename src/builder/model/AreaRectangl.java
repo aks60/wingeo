@@ -29,7 +29,7 @@ public class AreaRectangl extends AreaSimple {
             Polygon geoFalz = Com5t.buffer(geoShell, winc.listElem, 0, 1);
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});            
             
-            splitLocation((Polygon) this.area.getGeometryN(0), this.childs); //опережающее разделение импостом
+            //splitLocation((Polygon) this.area.getGeometryN(0), this.childs); //опережающее разделение импостом
             
             //Test.init(this.area);
         } catch (Exception e) {
