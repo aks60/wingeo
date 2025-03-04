@@ -119,7 +119,7 @@ public class ElemMosquit extends ElemSimple {
     //Линии размерности
     @Override
     public void paint() {
-        if (this.artiklRec.isVirtual() == false) {
+        if (this.artiklRec.isVirtual() == false && winc.sceleton == false) {
             Envelope envMosq = owner.area.getGeometryN(1).getEnvelopeInternal();
             int z = (winc.scale < 0.1) ? 80 : 30;
             int h = 0, w = 0;

@@ -279,10 +279,14 @@ public class ElemGlass extends ElemSimple {
     @Override
     public void paint() {
         Geometry geoFalz = owner.area.getGeometryN(2);
-        if (geoFalz != null) {
+        if (geoFalz != null && winc.sceleton == false) {
+
             winc.gc2d.setColor(this.color());
             Shape shape = new ShapeWriter().toShape(geoFalz);
             winc.gc2d.fill(shape);
+
+        } else if (geoFalz != null) {
+            //
         }
     }
 

@@ -269,57 +269,58 @@ public abstract class ElemSimple extends Com5t {
     //Точка редактирования конструкции
     @Override
     public void paint() {
-        if (this.area != null) {
-            if (this.passMask[1] > 0) {
+        if (winc.sceleton == false) {
+            if (this.area != null) {
+                if (this.passMask[1] > 0) {
 
-                this.root.listenerPassEdit = () -> {  //вешаем глобальный обработчик!
-                    winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
+                    this.root.listenerPassEdit = () -> {  //вешаем глобальный обработчик!
+                        winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
 
-                    //Хвост вектора, точка круг
-                    if (this.passMask[0] == 0) {
-                        Arc2D arc = new Arc2D.Double(this.x1() - SIZE / 2, this.y1() - SIZE / 2, SIZE, SIZE, 0, 360, Arc2D.OPEN);
-                        winc.gc2d.draw(arc);
+                        //Хвост вектора, точка круг
+                        if (this.passMask[0] == 0) {
+                            Arc2D arc = new Arc2D.Double(this.x1() - SIZE / 2, this.y1() - SIZE / 2, SIZE, SIZE, 0, 360, Arc2D.OPEN);
+                            winc.gc2d.draw(arc);
 
-                        //Начало вектора. точка круг
-                    } else if (this.passMask[0] == 1) {
-                        Arc2D arc = new Arc2D.Double(this.x2() - SIZE / 2, this.y2() - SIZE / 2, SIZE, SIZE, 0, 360, Arc2D.OPEN);
-                        winc.gc2d.draw(arc);
+                            //Начало вектора. точка круг
+                        } else if (this.passMask[0] == 1) {
+                            Arc2D arc = new Arc2D.Double(this.x2() - SIZE / 2, this.y2() - SIZE / 2, SIZE, SIZE, 0, 360, Arc2D.OPEN);
+                            winc.gc2d.draw(arc);
 
-                        //Середина вектора. точка квадрат
-                    } else if (this.passMask[0] == 2) {
-                        if (this.h() != null) { //арка
-                            List<Coordinate> list = Arrays.asList(owner.area.getGeometryN(0).getCoordinates())
-                                    .stream().filter(c -> c.z == this.id).collect(toList());
-                            int i = list.size() / 2; //index середины дуги
-                            Coordinate c1 = list.get(i), c2 = list.get(i + 1);
-                            Coordinate smid = new LineSegment(c1.x, c1.y, c2.x, c2.y).midPoint();
-                            Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
-                            winc.gc2d.draw(rec);
+                            //Середина вектора. точка квадрат
+                        } else if (this.passMask[0] == 2) {
+                            if (this.h() != null) { //арка
+                                List<Coordinate> list = Arrays.asList(owner.area.getGeometryN(0).getCoordinates())
+                                        .stream().filter(c -> c.z == this.id).collect(toList());
+                                int i = list.size() / 2; //index середины дуги
+                                Coordinate c1 = list.get(i), c2 = list.get(i + 1);
+                                Coordinate smid = new LineSegment(c1.x, c1.y, c2.x, c2.y).midPoint();
+                                Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
+                                winc.gc2d.draw(rec);
 
-                        } else {
-                            Coordinate smid = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).midPoint();
-                            Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
-                            winc.gc2d.draw(rec);
+                            } else {
+                                Coordinate smid = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).midPoint();
+                                Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
+                                winc.gc2d.draw(rec);
+                            }
                         }
-                    }
-                };
+                    };
+                }
             }
+        }  else if (this.area != null) {
+            //Shape shape1 = new ShapeWriter().toShape(this.area.getGeometryN(0));
+            //Shape shape2 = new ShapeWriter().toShape(this.area.getGeometryN(1));
+            //Shape shape3 = new ShapeWriter().toShape(this.area.getGeometryN(2));
+
+            //winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
+            //winc.gc2d.fill(shape1);
+            //winc.gc2d.fill(shape2);
+            //winc.gc2d.fill(shape3);
+
+            //winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
+            //winc.gc2d.draw(shape1);
+            //winc.gc2d.draw(shape2);
+            //winc.gc2d.draw(shape3);            
         }
-//        if (this.area != null) {
-//            Shape shape1 = new ShapeWriter().toShape(this.area.getGeometryN(0));
-//            //Shape shape2 = new ShapeWriter().toShape(this.area.getGeometryN(1));
-//            //Shape shape3 = new ShapeWriter().toShape(this.area.getGeometryN(2));
-//
-//            winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-//            winc.gc2d.fill(shape1);
-//            //winc.gc2d.fill(shape2);
-//            //winc.gc2d.fill(shape3);
-//
-//            winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
-//            winc.gc2d.draw(shape1);
-//            //winc.gc2d.draw(shape2);
-//            //winc.gc2d.draw(shape3);
-//        }    
     }
 
     public void setDimension(double x1, double y1, double x2, double y2) {

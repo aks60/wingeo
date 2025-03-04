@@ -21,13 +21,15 @@ public class Scene extends javax.swing.JPanel {
         this.canvas = canvas;
         this.listenerReload = listenerReload;
         this.listenerAction = listenerAction;
+        this.pan2.setVisible(false);
         add(canvas, java.awt.BorderLayout.CENTER);
     }
-    
+
     public Scene(Canvas canvas, ListenerReload listenerReload) {
         initComponents();
         this.canvas = canvas;
         this.listenerReload = listenerReload;
+        this.pan2.setVisible(false);
         add(canvas, java.awt.BorderLayout.CENTER);
     }
 
@@ -39,6 +41,7 @@ public class Scene extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pan1 = new javax.swing.JPanel();
         Tooll = new javax.swing.JPanel();
         btnSave = new javax.swing.JButton();
         btnRevert = new javax.swing.JButton();
@@ -47,17 +50,19 @@ public class Scene extends javax.swing.JPanel {
         btnMovDo = new javax.swing.JButton();
         btnMovRi = new javax.swing.JButton();
         btnMovLe = new javax.swing.JButton();
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(10, 80), new java.awt.Dimension(0, 32767));
+        pan2 = new javax.swing.JPanel();
         btnScale1 = new javax.swing.JButton();
         btnScale2 = new javax.swing.JButton();
+        btnScelet = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 4, 0, 0));
         setName(""); // NOI18N
         setLayout(new java.awt.BorderLayout());
 
-        Tooll.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        Tooll.setAlignmentX(10.0F);
-        Tooll.setAlignmentY(10.0F);
+        pan1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        pan1.setPreferredSize(new java.awt.Dimension(22, 300));
+        pan1.setLayout(new java.awt.BorderLayout());
+
         Tooll.setMinimumSize(new java.awt.Dimension(20, 20));
         Tooll.setPreferredSize(new java.awt.Dimension(29, 300));
         Tooll.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 0));
@@ -165,9 +170,13 @@ public class Scene extends javax.swing.JPanel {
             }
         });
         Tooll.add(btnMovLe);
-        Tooll.add(filler2);
 
-        btnScale1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
+        pan1.add(Tooll, java.awt.BorderLayout.CENTER);
+
+        pan2.setPreferredSize(new java.awt.Dimension(29, 76));
+        pan2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 0));
+
+        btnScale1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c094.gif"))); // NOI18N
         btnScale1.setToolTipText(bundle.getString("Переместить влево")); // NOI18N
         btnScale1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnScale1.setFocusable(false);
@@ -182,9 +191,9 @@ public class Scene extends javax.swing.JPanel {
                 btnScale1btnMove(evt);
             }
         });
-        Tooll.add(btnScale1);
+        pan2.add(btnScale1);
 
-        btnScale2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
+        btnScale2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c095.gif"))); // NOI18N
         btnScale2.setToolTipText(bundle.getString("Переместить влево")); // NOI18N
         btnScale2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnScale2.setFocusable(false);
@@ -199,9 +208,28 @@ public class Scene extends javax.swing.JPanel {
                 btnScale2btnMove(evt);
             }
         });
-        Tooll.add(btnScale2);
+        pan2.add(btnScale2);
 
-        add(Tooll, java.awt.BorderLayout.WEST);
+        btnScelet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c096.gif"))); // NOI18N
+        btnScelet.setToolTipText(bundle.getString("Переместить влево")); // NOI18N
+        btnScelet.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnScelet.setFocusable(false);
+        btnScelet.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnScelet.setMaximumSize(new java.awt.Dimension(25, 25));
+        btnScelet.setMinimumSize(new java.awt.Dimension(25, 25));
+        btnScelet.setPreferredSize(new java.awt.Dimension(25, 25));
+        btnScelet.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btnScelet.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnScelet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSceletbtnMove(evt);
+            }
+        });
+        pan2.add(btnScelet);
+
+        pan1.add(pan2, java.awt.BorderLayout.SOUTH);
+
+        add(pan1, java.awt.BorderLayout.WEST);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMove
@@ -240,6 +268,11 @@ public class Scene extends javax.swing.JPanel {
         this.canvas.draw();
     }//GEN-LAST:event_btnScale2btnMove
 
+    private void btnSceletbtnMove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSceletbtnMove
+        winc.sceleton = !winc.sceleton;
+        this.canvas.draw();
+    }//GEN-LAST:event_btnSceletbtnMove
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Tooll;
@@ -251,7 +284,9 @@ public class Scene extends javax.swing.JPanel {
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnScale1;
     private javax.swing.JButton btnScale2;
+    private javax.swing.JButton btnScelet;
     private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler2;
+    private javax.swing.JPanel pan1;
+    private javax.swing.JPanel pan2;
     // End of variables declaration//GEN-END:variables
 }

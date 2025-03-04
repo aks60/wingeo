@@ -294,7 +294,7 @@ public class AreaStvorka extends AreaSimple {
     }
 
     public void paint() {
-        if (this.knobOpen != null) {
+        if (this.knobOpen != null && winc.sceleton == false) {
             winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
 
             if (this.lineOpenHor != null) { //линии горизонт. открывания

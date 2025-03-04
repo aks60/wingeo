@@ -24,10 +24,10 @@ public class AreaRectangl extends AreaSimple {
             cooBox.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
 
             //Àrea ðàìû            
-            Polygon geoShell = gf.createPolygon(cooBox.toArray(new Coordinate[0]));  
+            Polygon geoShell = gf.createPolygon(cooBox.toArray(new Coordinate[0]));
             Polygon geoInner = Com5t.buffer(geoShell, winc.listElem, 0, 0);
             Polygon geoFalz = Com5t.buffer(geoShell, winc.listElem, 0, 1);
-            this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});            
+            this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
 
             //Test.init(this.area);
         } catch (Exception e) {
@@ -55,8 +55,9 @@ public class AreaRectangl extends AreaSimple {
 
     @Override
     public void paint() {
-        super.paint();
-
+        if (winc.sceleton == false) {
+            super.paint();
+        } else {
 //        if (this.area != null) {
 //            Shape shape = new ShapeWriter().toShape(this.area);
 //
@@ -66,6 +67,7 @@ public class AreaRectangl extends AreaSimple {
 //            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
 //            winc.gc2d.draw(shape);
 //        }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">

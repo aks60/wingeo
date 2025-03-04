@@ -64,6 +64,7 @@ public class Wincalc {
     public Graphics2D gc2d = null; //графический контекст рисунка  
     public double scale = 1; //коэффициент сжатия
     public Canvas canvas = null;
+    public boolean sceleton = false;
     public GsonRoot gson = null; //объектная модель конструкции 1-го уровня
     public AreaSimple root = null; //объектная модель конструкции 2-го уровня    
 
@@ -139,7 +140,7 @@ public class Wincalc {
 
             //Обновление конструкции
             location();
-            
+
         } catch (JsonSyntaxException e) {
             System.out.println("Ошибка: Wincalc.build()");
         }
@@ -202,13 +203,13 @@ public class Wincalc {
             root.setLocation();
             UCom.filterNo(listElem, Type.GLASS).forEach(e -> e.setLocation());
             UCom.filterNo(listArea, Type.STVORKA).forEach(e -> e.setLocation());
-            
+
             UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).addStvorka());
             UCom.filter(listArea, Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
             UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
-    
+
             UCom.filter(listElem, Type.STV_SIDE, Type.GLASS).forEach(e -> e.setLocation());
-           
+
             root.addJoining();  //L и T соединения
             UCom.filter(listArea, Type.STVORKA).forEach(e -> e.addJoining()); //прил. соед.
 
@@ -288,30 +289,35 @@ public class Wincalc {
     public void draw() {
         try {
 
-            //Прорисовка стеклопакетов
-            UCom.filter(this.listElem, Type.GLASS).stream().forEach(el -> el.paint());
+            if (this.sceleton == false) {
+                //Прорисовка стеклопакетов
+                UCom.filter(this.listElem, Type.GLASS).stream().forEach(el -> el.paint());
 
-            //Прорисовка раскладок
-            UCom.filter(this.listElem, Type.GLASS).stream().forEach(el -> ((ElemGlass) el).rascladkaPaint());
+                //Прорисовка раскладок
+                UCom.filter(this.listElem, Type.GLASS).stream().forEach(el -> ((ElemGlass) el).rascladkaPaint());
 
-            //Прорисовка москиток
-            UCom.filter(this.listElem, Type.MOSQUIT).stream().forEach(el -> ((ElemMosquit) el).paint());
+                //Прорисовка москиток
+                UCom.filter(this.listElem, Type.MOSQUIT).stream().forEach(el -> ((ElemMosquit) el).paint());
 
-            //Прорисовка импостов
-            UCom.filter(this.listElem, Type.IMPOST, Type.SHTULP, Type.STOIKA).stream().forEach(el -> el.paint());
+                //Прорисовка импостов
+                UCom.filter(this.listElem, Type.IMPOST, Type.SHTULP, Type.STOIKA).stream().forEach(el -> el.paint());
 
-            //Прорисовка рам
-            UCom.filter(this.listElem, Type.BOX_SIDE).stream().forEach(el -> el.paint());
+                //Прорисовка рам
+                UCom.filter(this.listElem, Type.BOX_SIDE).stream().forEach(el -> el.paint());
 
-            //Прорисовка профилей створок
-            UCom.filter(this.listElem, Type.STV_SIDE).stream().forEach(el -> el.paint());
+                //Прорисовка профилей створок
+                UCom.filter(this.listElem, Type.STV_SIDE).stream().forEach(el -> el.paint());
 
-            //Прорисока фурнитуры створок
-            UCom.filter(this.listArea, Type.STVORKA).stream().forEach(el -> el.paint());
+                //Прорисока фурнитуры створок
+                UCom.filter(this.listArea, Type.STVORKA).stream().forEach(el -> el.paint());
 
-            //Размерные линии
-            if (this.scale > .1) {
-                this.root.paint();
+                //Размерные линии
+                if (this.scale > .1) {
+                    this.root.paint();
+                }
+            } else {
+                this.listArea.stream().forEach(el -> el.paint());
+                this.listElem.stream().forEach(el -> el.paint());
             }
 
 // <editor-fold defaultstate="collapsed" desc="Раскладка"> 

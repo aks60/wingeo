@@ -187,7 +187,7 @@ public class ElemCross extends ElemSimple {
     //Линии размерности
     @Override
     public void paint() {
-        if (this.area != null) {
+        if (this.area != null && winc.sceleton == false) {
             winc.gc2d.setColor(this.color());
 
             super.paint();
@@ -196,6 +196,9 @@ public class ElemCross extends ElemSimple {
             winc.gc2d.fill(shape);
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
             winc.gc2d.draw(shape);
+            
+        } else if(this.area != null ) {
+            //
         }
     }
 

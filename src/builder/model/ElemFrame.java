@@ -282,8 +282,8 @@ public class ElemFrame extends ElemSimple {
     //Линии размерности
     @Override
     public void paint() {
-        if (this.area != null) {
-
+        if (this.area != null && winc.sceleton == false) {
+            
             super.paint();
             winc.gc2d.setColor(this.color());
             Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(0));
@@ -291,6 +291,9 @@ public class ElemFrame extends ElemSimple {
 
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
             winc.gc2d.draw(shape);
+
+        } else if (this.area != null) {
+            //
         }
     }
 
