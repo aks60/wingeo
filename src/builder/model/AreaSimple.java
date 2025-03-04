@@ -104,38 +104,8 @@ public class AreaSimple extends Com5t {
             Polygon geoFalz = Com5t.buffer(geoShell, winc.listElem, 0, 1);
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
 
-            //splitLocation(geoShell, this.childs); //опережающее разделение импостом
-
-//            if (geoShell.getNumPoints() > Com5t.MAXSIDE) {
-//                Polygon geoInner = UGeo.bufferCross(geoShell, winc.listElem, 0, 0);
-//                Polygon geoFalz = UGeo.bufferCross(geoShell, winc.listElem, 0, 1);
-//                Test.init(geoShell, geoInner);
-//            }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.setLocation" + toString() + e);
-        }
-    }
-
-    //Пилим детей импостом
-    public void splitLocation(Polygon geoShell, ArrayList<Com5t> childs) {
-
-        if (childs.size() > 2 && childs.get(1).type == Type.IMPOST) {
-            ElemCross impost = (ElemCross) childs.get(1);
-
-            //Geometry geoTEST = UGeo.split2Polygon(geoShell.copy(), impost);
-            //Test.init(geoTEST);
-            Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), impost.segment());
-
-            childs.get(0).area = (Polygon) geoSplit[1];
-            childs.get(2).area = (Polygon) geoSplit[2];
-            Geometry lineImp = geoSplit[0];
-
-            //TODO Надо перейти на градусы
-            if (impost.layout() == Layout.VERT) {
-                impost.setDimension(lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y, lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y);
-            } else {
-                impost.setDimension(lineImp.getCoordinates()[0].x, lineImp.getCoordinates()[0].y, lineImp.getCoordinates()[1].x, lineImp.getCoordinates()[1].y);
-            }
         }
     }
 
