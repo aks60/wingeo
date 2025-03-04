@@ -35,6 +35,8 @@ import org.jsoup.select.Elements;
 //Счёт
 public class RCheck {
 
+    private static Record projectRec;
+    
     public void parseDoc1(List<Record> prjprodList) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Check1.html");
@@ -43,10 +45,10 @@ public class RCheck {
             Document doc = Jsoup.parse(tempFile);
 
             Record prjprodRec = prjprodList.get(0);
-            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
+            projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
 
             //Заполним отчёт
-            loadDoc1(projectRec, doc);
+            loadDoc1(prjprodList, doc);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
@@ -69,10 +71,10 @@ public class RCheck {
             Document doc = Jsoup.parse(tempFile);
 
             Record prjprodRec = prjprodList.get(0);
-            Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
+            projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
 
             //Заполним отчёт
-            loadDoc2(projectRec, doc);
+            loadDoc2(prjprodList, doc);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
@@ -87,12 +89,11 @@ public class RCheck {
         }
     }
 
-    private static void loadDoc1(Record projectRec, Document doc) {
+    private static void loadDoc1(List<Record> prjprodList, Document doc) {
         double total = 0f;
         try {
             Record prjpart1Rec = ePrjpart.find(projectRec.getInt(eProject.vendor_id));
             Record prjpart2Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
-            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Wincalc> wincList = wincList(prjprodList);
 
             doc.getElementById("h01").text("Счёт №" + projectRec.getStr(eProject.num_acc) + " от '" + UGui.convert2Date(projectRec.get(eProject.date4)) + "'");
@@ -180,12 +181,11 @@ public class RCheck {
         }
     }
 
-    private static void loadDoc2(Record projectRec, Document doc) {
+    private static void loadDoc2(List<Record> prjprodList, Document doc) {
         double total = 0f;
         try {
             Record prjpart1Rec = ePrjpart.find(projectRec.getInt(eProject.vendor_id));
             Record prjpart2Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
-            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             List<Wincalc> wincList = wincList(prjprodList);
             double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);
             double discWin = projectRec.getDbl(eProject.disc_win, 0) + projectRec.getDbl(eProject.disc_all, 0);

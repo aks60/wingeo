@@ -35,9 +35,8 @@ import static report.URep.wincList;
 public class RSmeta {
 
     private static Record projectRec;
-
+    
     public void parseDoc1(List<Record> prjprodList) {
-        System.out.println("111");
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Smeta1.html");
             File tempFile = File.createTempFile("report", "html");
@@ -64,7 +63,6 @@ public class RSmeta {
     }
 
     public void parseDoc2(List<Record> prjprodList) {
-        System.out.println("222");
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Smeta2.html");
             File tempFile = File.createTempFile("report", "html");
@@ -74,7 +72,7 @@ public class RSmeta {
             projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
 
             //Заполним отчёт
-            loadDoc2(projectRec, prjprodList, doc);
+            loadDoc2(prjprodList, doc);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"));
@@ -89,50 +87,63 @@ public class RSmeta {
         }
     }
 
-    private static void loadDoc1(List<Record> prjprodList, Document doc) {        
-        try {            
-            Record prjprodRec = prjprodList.get(0);
+    private static void loadDoc1(List<Record> prjprodList, Document doc) {
+        double square = 0f;
+        try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
-            double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);
-            double discWin = projectRec.getDbl(eProject.disc_win, 0) + projectRec.getDbl(eProject.disc_all, 0);
+            double discKit = projectRec.getDbl(eProject.disc_kit, 0) +  projectRec.getDbl(eProject.disc_all, 0);
+            double discWin = projectRec.getDbl(eProject.disc_win, 0) +  projectRec.getDbl(eProject.disc_all, 0);
 
             doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.convert2Date(projectRec.get(eProject.date4)) + "'");
 
             //Заполним файл шаблонами заказов
+            Element div2 = doc.getElementById("div2");
+            String template2 = div2.html();
+            List<Wincalc> wincList = wincList(prjprodList, 400);
+
             //СЕКЦИЯ №1
             {
+                for (int i = 1; i < prjprodList.size(); i++) {
+                    div2.append(template2);
+                }
                 Elements tabList = doc.getElementById("div2").getElementsByClass("tab2");
 
-                Wincalc winc = wincList(prjprodList, 400).get(0);
-                int numProd = prjprodRec.getInt(ePrjprod.num);
-                double square = numProd * winc.root.area.getGeometryN(0).getArea();
+                //Цикл по изделиям
+                for (int i = 0; i < prjprodList.size(); i++) {
 
-                Elements captions2 = tabList.get(0).getElementsByTag("caption");
-                captions2.get(0).text("Изделие № " + (1));
-                Elements trList = tabList.get(0).getElementsByTag("tr");
+                    Wincalc winc = wincList.get(i);
+                    Record prjprodRec = prjprodList.get(i);
 
-                trList.get(1).getElementsByTag("td").get(1).text(prjprodRec.getStr(ePrjprod.name));
-                trList.get(2).getElementsByTag("td").get(1).text(UCom.format(winc.width() / 1000, 2) + " x " + UCom.format(winc.height() / 1000, 2));
-                trList.get(3).getElementsByTag("td").get(1).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / " + eColor.find(winc.colorID2).getStr(eColor.name) + " / " + eColor.find(winc.colorID3).getStr(eColor.name));
-                trList.get(4).getElementsByTag("td").get(1).text(String.valueOf(numProd));
-                trList.get(5).getElementsByTag("td").get(1).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
-                trList.get(6).getElementsByTag("td").get(1).text(UCom.format(winc.weight, 2));
-                trList.get(7).getElementsByTag("td").get(1).text(UCom.format(numProd * winc.cost1, 9));
-                trList.get(8).getElementsByTag("td").get(1).text(UCom.format(numProd * (winc.cost2 - discWin * winc.cost2 / 100), 9));
-                
-                //СЕКЦИЯ №2
-                trList = doc.getElementById("tab6").getElementsByTag("tr");
-                
-                Kitcalc.tarifficProd(new Wincalc(), projectRec, discKit, true, true);
-                double cost2_win = numProd * winc.cost2 ;
-                double cost2_kit = Kitcalc.cost2;
+                    int numProd = prjprodRec.getInt(ePrjprod.num);
+                    square += numProd * winc.root.area.getGeometryN(0).getArea();
 
-                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(cost2_win, 9) + " руб."); //всего за изделия
-                trList.get(1).getElementsByTag("td").get(1).text(UCom.format(cost2_kit, 9) + " руб.+"); //всего за комплекты
-                trList.get(2).getElementsByTag("td").get(1).text(UCom.format(cost2_win + cost2_kit, 9) + " руб."); //ИТОГО ПО ЗАКАЗУ 
-                trList.get(3).getElementsByTag("td").get(0).text("Сумма прописью : " + UMon.inwords(cost2_win + cost2_kit));
-                trList.get(4).getElementsByTag("td").get(0).text("включая НДС 20% : " + UCom.format((cost2_win + cost2_kit) * 20 / 120, 9) + " руб.");
+                    Elements captions2 = tabList.get(i).getElementsByTag("caption");
+                    captions2.get(0).text("Изделие № " + (i + 1));
+                    Elements trList = tabList.get(i).getElementsByTag("tr");
+
+                    trList.get(1).getElementsByTag("td").get(1).text(prjprodRec.getStr(ePrjprod.name));
+                    trList.get(2).getElementsByTag("td").get(1).text(UCom.format(winc.width() / 1000, 2) + " x " + UCom.format(winc.height() / 1000, 2));
+                    trList.get(3).getElementsByTag("td").get(1).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / " + eColor.find(winc.colorID2).getStr(eColor.name) + " / " + eColor.find(winc.colorID3).getStr(eColor.name));
+                    trList.get(4).getElementsByTag("td").get(1).text(String.valueOf(numProd));
+                    trList.get(5).getElementsByTag("td").get(1).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
+                    trList.get(6).getElementsByTag("td").get(1).text(UCom.format(winc.weight, 2));
+                    trList.get(7).getElementsByTag("td").get(1).text(UCom.format(numProd * winc.cost1, 9));
+                    trList.get(8).getElementsByTag("td").get(1).text(UCom.format(numProd * (winc.cost2 - discWin * winc.cost2 / 100), 9));
+                }                
+            }
+            //СЕКЦИЯ №2
+            {
+                Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
+                Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true);
+                trList.get(0).getElementsByTag("td").get(1).text(UCom.format(projectRec.getDbl(eProject.cost2_win, 0), 9) + " руб."); //всего за изделия
+                trList.get(1).getElementsByTag("td").get(1).text(UCom.format(projectRec.getDbl(eProject.cost2_kit, 0), 9) + " руб.+"); //всего за комплекты
+                trList.get(2).getElementsByTag("td").get(1)
+                        .text(UCom.format(projectRec.getDbl(eProject.cost2_win, 0) + projectRec.getDbl(eProject.cost2_kit, 0), 9) + " руб."); //ИТОГО ПО ЗАКАЗУ 
+                trList.get(3).getElementsByTag("td").get(0)
+                        .text("Сумма прописью : " + UMon.inwords(projectRec.getDbl(eProject.cost2_win, 0) + projectRec.getDbl(eProject.cost2_kit, 0)));
+                trList.get(4).getElementsByTag("td").get(0)
+                        .text("включая НДС 20% : " + UCom.format((projectRec.getDbl(eProject.cost2_win, 0) + projectRec.getDbl(eProject.cost2_kit, 0)) * 20 / 120, 9) + " руб.");
                 trList.get(5).getElementsByTag("td").get(0).text("Площадь изделий в заказе : " + UCom.format(square / 1000000, 2) + " кв.м.");
 
                 Elements imgList = doc.getElementById("div2").getElementsByTag("img");
@@ -141,17 +152,17 @@ public class RSmeta {
                     get.attr("src", "C:\\Users\\All Users\\Avers\\Okna\\img" + (i + 1) + ".gif");
                 }
             }
-
+            
         } catch (Exception e) {
             System.err.println("Ошибка:HtmlOfSmeta.loadDoc1()" + e);
         }
     }
 
-    private static void loadDoc2(Record projectRec, List<Record> prjprodList, Document doc) {
+    private static void loadDoc2(List<Record> prjprodList, Document doc) {
         try {
             double totalTab4 = 0, totalTab5 = 0, square = 0f;
-            double discWin = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);
-            double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);
+            double discWin = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);            
+            double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);            
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Query qSysuser = new Query(eSysuser.values()).sql(eSysuser.data(), eSysuser.login, prjpartRec.getStr(ePrjpart.login));
             qSysuser.add(eSysuser.up.newRecord("SEL")); //если qSysuser.size() == 0                       
@@ -195,7 +206,7 @@ public class RSmeta {
 
                     Record prjprodRec = prjprodList.get(i);
                     Wincalc winc = wincList.get(i);
-                    int numProd = prjprodRec.getInt(ePrjprod.num);
+                    int numProd = prjprodRec.getInt(ePrjprod.num);                    
                     Kitcalc.tarifficProd(winc, prjprodRec, discKit, true, true);
 
                     //Изделие
@@ -242,7 +253,7 @@ public class RSmeta {
             {
                 Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
                 double totalDiscSum = (totalTab4 + totalTab5); //с общей скидкой менеджера 
-
+                
                 trList.get(0).getElementsByTag("td").get(1).text(UCom.format(totalDiscSum, 9) + " руб."); //ИТОГО ПО ЗАКАЗУ
                 trList.get(1).getElementsByTag("td").get(0).text("Сумма прописью : " + UMon.inwords(totalDiscSum));
                 trList.get(2).getElementsByTag("td").get(0).text("включая НДС 20% : " + UCom.format(totalDiscSum * 20 / 120, 9) + " руб.");
@@ -266,7 +277,7 @@ public class RSmeta {
             Record prjprodRec = prjprodList.get(indexProd);
             double discWin = projectRec.getDbl(eProject.disc_win, 0) + projectRec.getDbl(eProject.disc_all, 0);
             ArrayList<ElemSimple> glassList = UCom.filter(winc.listElem, Type.GLASS);
-            String color3Name = eColor.find(winc.colorID1).getStr(eColor.name)
+            String color3Name = eColor.find(winc.colorID1).getStr(eColor.name) 
                     + " / " + eColor.find(winc.colorID2).getStr(eColor.name) + " / " + eColor.find(winc.colorID3).getStr(eColor.name);
             Elements captions = tabList.get(indexProd).getElementsByTag("caption");
             captions.get(0).text("Изделие № " + (indexProd + 1));
@@ -281,7 +292,7 @@ public class RSmeta {
             trRec.get(7).getElementsByTag("td").get(1).text(String.valueOf(numProd));
             trRec.get(8).getElementsByTag("td").get(1).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
             trRec.get(9).getElementsByTag("td").get(1).text(UCom.format(winc.weight, 2));
-            trRec.get(10).getElementsByTag("td").get(1).text(UCom.format(winc.cost1 * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));
+            trRec.get(10).getElementsByTag("td").get(1).text(UCom.format(winc.cost1 * 1000000 / winc.root.area.getGeometryN(0).getArea(), 9));            
             trRec.get(11).getElementsByTag("td").get(1).text(UCom.format(numProd * winc.cost1, 9));
             trRec.get(12).getElementsByTag("td").get(1).text(UCom.format(numProd * (winc.cost2 - discWin * winc.cost2 / 100), 9)); //со скидкой менеджера
 
@@ -298,7 +309,7 @@ public class RSmeta {
             for (int k = 0; k < kitList.size(); k++) {
 
                 TRecord prjkitRec = kitList.get(k);
-                Record artiklRec = prjkitRec.artiklRec;
+                Record artiklRec = prjkitRec.artiklRec;                               
                 Elements trList = tabList.get(index).getElementsByTag("tr");
                 Elements tdRec = trList.get(k + 1).getElementsByTag("td");
 
@@ -324,22 +335,22 @@ public class RSmeta {
         try {
             Elements trList = tabElem.getElementsByTag("tbody").get(0).getElementsByTag("tr");
             for (int i = 0; i < prjprodList.size(); i++) {
-
+                
                 Record prjprodRec = prjprodList.get(i);
                 Wincalc winc = wincList.get(i);
                 int numProd = prjprodRec.getInt(ePrjprod.num);
                 //double priceMan = winc.cost2 - discWin * winc.cost2 / 100; //со скидкой менеджера
                 Elements tdRec = trList.get(i).getElementsByTag("td");
-
+                
                 tdRec.get(0).text(String.valueOf(i + 1));
                 tdRec.get(1).text(prjprodRec.getStr(ePrjprod.name));
                 tdRec.get(2).text(eColor.find(winc.colorID1).getStr(eColor.name));
                 tdRec.get(3).text(UCom.format(winc.width(), 2));
                 tdRec.get(4).text(UCom.format(winc.height(), 2));
                 tdRec.get(5).text(String.valueOf(numProd));
-                tdRec.get(6).text(UCom.format(winc.cost2, 2));
+                tdRec.get(6).text(UCom.format(winc.cost2, 2));                
                 tdRec.get(7).text(UCom.format(numProd * winc.cost2, 2));
-
+                
                 total += numProd * winc.cost2;
             }
             Elements tdFoot = tabElem.getElementsByTag("tfoot").get(0).getElementsByTag("td");
@@ -362,7 +373,7 @@ public class RSmeta {
                 TRecord prjkitRec = prjkitList.get(i);
                 Record artiklRec = prjkitRec.artiklRec;
                 Elements tdRec = trList.get(i).getElementsByTag("td");
-
+                
                 tdRec.get(0).text(String.valueOf(i + 1));
                 tdRec.get(1).text(artiklRec.getStr(eArtikl.code));
                 tdRec.get(2).text(artiklRec.getStr(eArtikl.name));
@@ -371,7 +382,7 @@ public class RSmeta {
                 tdRec.get(5).text(UCom.format(prjkitRec.quant2, 2));
                 tdRec.get(6).text(UCom.format(prjkitRec.price, 2));
                 tdRec.get(7).text(UCom.format(prjkitRec.cost2, 2));
-
+                
                 total += prjkitRec.cost2;
             }
             Elements tdFoot = tabElem.getElementsByTag("tfoot").get(0).getElementsByTag("td");
