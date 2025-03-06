@@ -67,7 +67,7 @@ public class AreaStvorka extends AreaSimple {
             //this.area  - получатется при распиле owner.area импостом
             Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST).isEmpty()) || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
             //Geometry frameBox = owner.area.getGeometryN(0);
-            
+
             //Полигон створки с учётом нахлёста 
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
             Polygon stvShell = buffer(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
@@ -192,7 +192,7 @@ public class AreaStvorka extends AreaSimple {
             //Высота ручки, линии открывания
             if (this.typeOpen != TypeOpen1.EMPTY) {
                 if (isJson(gson.param, PKjson.positionKnob) == false) {
-                    
+
                     if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.MIDL.id) { //по середине
                         knobLayout = LayoutKnob.MIDL;
                         knobHeight = this.area.getEnvelopeInternal().getHeight() / 2;
@@ -294,28 +294,32 @@ public class AreaStvorka extends AreaSimple {
     }
 
     public void paint() {
-        if (this.knobOpen != null && winc.sceleton == false) {
-            winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
+        if (winc.sceleton == false) {
+            if (this.knobOpen != null && winc.sceleton == false) {
+                winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
 
-            if (this.lineOpenHor != null) { //линии горизонт. открывания
-                Shape shape = new ShapeWriter().toShape(this.lineOpenHor);
+                if (this.lineOpenHor != null) { //линии горизонт. открывания
+                    Shape shape = new ShapeWriter().toShape(this.lineOpenHor);
+                    winc.gc2d.draw(shape);
+                }
+                if (this.lineOpenVer != null) { //линии вертик. открывания
+                    Shape shape = new ShapeWriter().toShape(this.lineOpenVer);
+                    winc.gc2d.draw(shape);
+                }
+                Shape shape = new ShapeWriter().toShape(this.knobOpen);
+                Record colorRec = eColor.find(knobColor);
+                int rgb = colorRec.getInt(eColor.rgb);
+                winc.gc2d.setColor(new java.awt.Color(rgb));
+                winc.gc2d.fill(shape);
+
+                if (timer.isRunning() == true) {
+                    this.frames.stream().filter(e -> e.type == Type.STV_SIDE).forEach(e -> ((Com5t) e).timer.start());
+                }
+                winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
                 winc.gc2d.draw(shape);
             }
-            if (this.lineOpenVer != null) { //линии вертик. открывания
-                Shape shape = new ShapeWriter().toShape(this.lineOpenVer);
-                winc.gc2d.draw(shape);
-            }
-            Shape shape = new ShapeWriter().toShape(this.knobOpen);
-            Record colorRec = eColor.find(knobColor);
-            int rgb = colorRec.getInt(eColor.rgb);
-            winc.gc2d.setColor(new java.awt.Color(rgb));
-            winc.gc2d.fill(shape);
-
-            if (timer.isRunning() == true) {
-                this.frames.stream().filter(e -> e.type == Type.STV_SIDE).forEach(e -> ((Com5t) e).timer.start());
-            }
-            winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
-            winc.gc2d.draw(shape);
+        } else {
+            paintSceleton();
         }
     }
 

@@ -1,0 +1,28 @@
+#########################################
+# CALC DIGEST
+# $ java -classpath getdown-core-1.8.7.jar com.threerings.getdown.tools.Digester ./
+# WINGEO CORE
+# $ pscp digest.txt digest2.txt getdown.txt wingeo.jar root@31.172.66.46:/opt/tomcat/webapps/dep/00/
+# WINGEO LIB
+# $ pscp lib/gson-2.10.1.jar lib/jaybird-5.0.5.java11.jar lib/jsoup-1.17.2.jar lib/jts-core-1.20.0.jar lib/rhino-1.7.15.jar root@31.172.66.46:/opt/tomcat/webapps/dep/00/lib
+#########################################
+
+# The URL from which the client is downloaded
+appbase = http://31.172.66.46:8080/dep/00/
+allow_offline = true
+
+# UI Configuration
+ui.name = SA-OKNA
+ui.min_show_seconds = 0
+ui.icon = d034.gif
+
+# Application jar files
+code = wingeo.jar
+code = lib/gson-2.10.1.jar 
+code = lib/jaybird-5.0.5.java11.jar 
+code = lib/jsoup-1.17.2.jar 
+code = lib/jts-core-1.20.0.jar 
+code = lib/rhino-1.7.15.jar
+
+# The main entry point for the application
+class = startup.Main
