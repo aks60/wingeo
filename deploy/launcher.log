@@ -1,0 +1,58 @@
+2025/03/06 13:23:58:198 INFO Using appdir from default (cwd): C:\Okna\deploy\wingeo
+2025/03/06 13:23:58:204 INFO ------------------ VM Info ------------------
+2025/03/06 13:23:58:204 INFO -- OS Name: Windows 7
+2025/03/06 13:23:58:204 INFO -- OS Arch: amd64
+2025/03/06 13:23:58:204 INFO -- OS Vers: 6.1
+2025/03/06 13:23:58:204 INFO -- Java Vers: 21.0.6
+2025/03/06 13:23:58:204 INFO -- Java Home: C:\Program Files\Java\jdk-21
+2025/03/06 13:23:58:205 INFO -- User Name: aksenov
+2025/03/06 13:23:58:205 INFO -- User Home: C:\Users\aksenov
+2025/03/06 13:23:58:205 INFO -- Cur dir: C:\Okna\deploy\wingeo
+2025/03/06 13:23:58:205 INFO ---------------------------------------------
+2025/03/06 13:23:58:238 INFO Getdown starting [version=1.8.7, built=2022-05-24 10:43]
+2025/03/06 13:23:58:239 INFO Checking whether we need to use a proxy...
+2025/03/06 13:23:58:251 INFO Failed to find proxy settings in Windows registry [error=java.lang.UnsatisfiedLinkError: no jRegistryKey in java.library.path: C:\Program Files\Java\jdk-21\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\BellSoft\LibericaJDK-17\bin\;C:\Program Files\BellSoft\LibericaJDK-11-Lite\bin\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\Borland\CBUILD~1\Bin;C:\Borland\CBUILD~1\Projects\Bpl;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files (x86)\AMD\ATI.ACE\Core-Static;C:\Java\apache-ant\bin;%CATALINA_HOME%\bin;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Qt\4.8.5\bin;C:\Java\apache-maven\bin;C:\ProgramData\chocolatey\bin;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Git\cmd;C:\Program Files\Java\graalvm-ce-java11-21.1.0\bin;C:\JGraal\bin;C:\Program Files\JetBrains\IntelliJ IDEA 2019.2.3\bin;;.]
+2025/03/06 13:23:58:336 INFO Attempting to fetch without proxy: http://31.172.66.46:8080/dep/00/getdown.txt
+2025/03/06 13:23:58:384 INFO No proxy appears to be needed.
+2025/03/06 13:23:58:390 INFO Able to lock for updates: true
+2025/03/06 13:23:58:390 INFO Verifying application: http://31.172.66.46:8080/dep/00/
+2025/03/06 13:23:58:391 INFO Version: -1
+2025/03/06 13:23:58:391 INFO Class: startup.Main
+2025/03/06 13:23:58:444 INFO Attempting to refetch 'digest.txt' from 'http://31.172.66.46:8080/dep/00/digest.txt'.
+2025/03/06 13:23:58:463 INFO No signing certs, not verifying digest.txt [path=digest.txt]
+2025/03/06 13:23:58:465 INFO Attempting to refetch 'digest2.txt' from 'http://31.172.66.46:8080/dep/00/digest2.txt'.
+2025/03/06 13:23:58:478 INFO No signing certs, not verifying digest.txt [path=digest2.txt]
+2025/03/06 13:23:58:496 INFO Resource failed digest check [rsrc=lib/gson-2.10.1.jar, error=java.nio.file.NoSuchFileException: C:\Okna\deploy\wingeo\lib\gson-2.10.1.jar]
+2025/03/06 13:23:58:497 INFO Resource failed digest check [rsrc=lib/jaybird-5.0.5.java11.jar, error=java.nio.file.NoSuchFileException: C:\Okna\deploy\wingeo\lib\jaybird-5.0.5.java11.jar]
+2025/03/06 13:23:58:499 INFO Resource failed digest check [rsrc=lib/jts-core-1.20.0.jar, error=java.nio.file.NoSuchFileException: C:\Okna\deploy\wingeo\lib\jts-core-1.20.0.jar]
+2025/03/06 13:23:58:500 INFO Resource failed digest check [rsrc=lib/rhino-1.7.15.jar, error=java.nio.file.NoSuchFileException: C:\Okna\deploy\wingeo\lib\rhino-1.7.15.jar]
+2025/03/06 13:23:58:501 INFO Resource failed digest check [rsrc=lib/jsoup-1.17.2.jar, error=java.nio.file.NoSuchFileException: C:\Okna\deploy\wingeo\lib\jsoup-1.17.2.jar]
+2025/03/06 13:23:58:502 INFO Verified resources [count=6, alreadyValid=1, size=9983k, duration=11ms]
+2025/03/06 13:23:58:502 INFO 5 of 6 rsrcs require update (1 assumed valid).
+2025/03/06 13:23:58:569 INFO Downloading 5 resources [totalBytes=4886198, maxConcurrent=3]
+2025/03/06 13:23:58:586 INFO Downloading resource [url=http://31.172.66.46:8080/dep/00/lib/gson-2.10.1.jar, size=283367]
+2025/03/06 13:23:58:612 INFO Downloading resource [url=http://31.172.66.46:8080/dep/00/lib/jsoup-1.17.2.jar, size=445706]
+2025/03/06 13:23:58:627 INFO Downloading resource [url=http://31.172.66.46:8080/dep/00/lib/rhino-1.7.15.jar, size=1403061]
+2025/03/06 13:23:58:957 INFO Downloading resource [url=http://31.172.66.46:8080/dep/00/lib/jaybird-5.0.5.java11.jar, size=1514086]
+2025/03/06 13:23:59:265 INFO Downloading resource [url=http://31.172.66.46:8080/dep/00/lib/jts-core-1.20.0.jar, size=1239978]
+2025/03/06 13:24:01:071 INFO Verifying application: http://31.172.66.46:8080/dep/00/
+2025/03/06 13:24:01:071 INFO Version: -1
+2025/03/06 13:24:01:071 INFO Class: startup.Main
+2025/03/06 13:24:01:072 INFO Attempting to refetch 'digest.txt' from 'http://31.172.66.46:8080/dep/00/digest.txt'.
+2025/03/06 13:24:01:085 INFO No signing certs, not verifying digest.txt [path=digest.txt]
+2025/03/06 13:24:01:087 INFO Attempting to refetch 'digest2.txt' from 'http://31.172.66.46:8080/dep/00/digest2.txt'.
+2025/03/06 13:24:01:152 INFO No signing certs, not verifying digest.txt [path=digest2.txt]
+2025/03/06 13:24:01:419 INFO Verified resources [count=6, alreadyValid=2, size=9983k, duration=264ms]
+2025/03/06 13:24:01:419 INFO Installing 5 downloaded resources:
+2025/03/06 13:24:01:420 INFO - C:\Okna\deploy\wingeo\lib\rhino-1.7.15.jar_new
+2025/03/06 13:24:01:420 INFO - C:\Okna\deploy\wingeo\lib\jsoup-1.17.2.jar_new
+2025/03/06 13:24:01:424 INFO - C:\Okna\deploy\wingeo\lib\gson-2.10.1.jar_new
+2025/03/06 13:24:01:425 INFO - C:\Okna\deploy\wingeo\lib\jaybird-5.0.5.java11.jar_new
+2025/03/06 13:24:01:426 INFO - C:\Okna\deploy\wingeo\lib\jts-core-1.20.0.jar_new
+2025/03/06 13:24:01:427 INFO Install completed.
+2025/03/06 13:24:01:431 INFO Didn't find any custom environment variables, not setting any.
+2025/03/06 13:24:01:431 INFO Running C:\Program Files\Java\jdk-21\bin\javaw.exe
+  -classpath
+  wingeo.jar;lib\gson-2.10.1.jar;lib\jaybird-5.0.5.java11.jar;lib\jsoup-1.17.2.jar;lib\jts-core-1.20.0.jar;lib\rhino-1.7.15.jar
+  -Dcom.threerings.getdown=true
+  startup.Main

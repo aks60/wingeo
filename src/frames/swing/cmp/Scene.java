@@ -21,7 +21,7 @@ public class Scene extends javax.swing.JPanel {
         this.canvas = canvas;
         this.listenerReload = listenerReload;
         this.listenerAction = listenerAction;
-        this.pan2.setVisible(false);
+        //this.pan2.setVisible(false);
         add(canvas, java.awt.BorderLayout.CENTER);
     }
 
@@ -29,7 +29,7 @@ public class Scene extends javax.swing.JPanel {
         initComponents();
         this.canvas = canvas;
         this.listenerReload = listenerReload;
-        this.pan2.setVisible(false);
+        //this.pan2.setVisible(false);
         add(canvas, java.awt.BorderLayout.CENTER);
     }
 

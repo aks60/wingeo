@@ -8,12 +8,14 @@ import domain.eArtikl;
 import domain.eColor;
 import enums.Layout;
 import enums.Type;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 import javax.swing.Timer;
+import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -83,12 +85,12 @@ public class Com5t {
     /**
      * Длина компонента
      */
-    public double length() {    
-        
+    public double length() {
+
         if (this.h() == null) {
             return new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).getLength();
         } else {
-            return UGeo.lengthCurve(owner.area.getGeometryN(0), this.id);  
+            return UGeo.lengthCurve(owner.area.getGeometryN(0), this.id);
         }
     }
 
@@ -119,9 +121,24 @@ public class Com5t {
         return true;
     }
 
+    public void paintSceleton() {
+        Shape shape1 = new ShapeWriter().toShape(this.area.getGeometryN(0));
+        Shape shape2 = new ShapeWriter().toShape(this.area.getGeometryN(1));
+        Shape shape3 = new ShapeWriter().toShape(this.area.getGeometryN(2));
+
+        //winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
+        //winc.gc2d.fill(shape1);
+        //winc.gc2d.fill(shape2);
+        //winc.gc2d.fill(shape3);
+        winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
+        winc.gc2d.draw(shape1);
+        winc.gc2d.draw(shape2);
+        winc.gc2d.draw(shape3);
+    }
+
     public static Polygon buffer(Geometry poly, ArrayList<? extends Com5t> list, double amend, int op) {
         //return VBuffer.buffer(poly, list, amend, op);
-        return UGeo.bufferGeometry(poly, list, amend, op);        
+        return UGeo.bufferGeometry(poly, list, amend, op);
     }
 
     public boolean equals(Object obj) {

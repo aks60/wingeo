@@ -316,6 +316,7 @@ public class Wincalc {
                     this.root.paint();
                 }
             } else {
+                //this.listArea.stream().forEach(el -> System.out.println("id=" + el.id));
                 this.listArea.stream().forEach(el -> el.paint());
                 this.listElem.stream().forEach(el -> el.paint());
             }

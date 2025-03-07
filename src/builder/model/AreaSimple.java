@@ -103,7 +103,7 @@ public class AreaSimple extends Com5t {
             Polygon geoInner = Com5t.buffer(geoShell, winc.listElem, 0, 0);
             Polygon geoFalz = Com5t.buffer(geoShell, winc.listElem, 0, 1);
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
-
+            
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.setLocation" + toString() + e);
         }
@@ -204,7 +204,6 @@ public class AreaSimple extends Com5t {
                     Collections.sort(listHor);
                     Collections.sort(listVer);
 
-                    //System.out.println("coo= " + listHor);
                     Font font = new Font("Dialog", 0, UCom.scaleFont(winc.scale)); //размер шрифта (см. canvas)
                     winc.gc2d.setFont(font);
                     AffineTransform orig = winc.gc2d.getTransform();
@@ -273,19 +272,7 @@ public class AreaSimple extends Com5t {
                     }
                 }
             } else if (this.area != null) {
-                Shape shape1 = new ShapeWriter().toShape(this.area.getGeometryN(0));
-                Shape shape2 = new ShapeWriter().toShape(this.area.getGeometryN(1));
-                Shape shape3 = new ShapeWriter().toShape(this.area.getGeometryN(2));
-
-                //winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-                //winc.gc2d.fill(shape1);
-                //winc.gc2d.fill(shape2);
-                //winc.gc2d.fill(shape3);
-
-                winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
-                winc.gc2d.draw(shape1);
-                winc.gc2d.draw(shape2);
-                winc.gc2d.draw(shape3);
+                paintSceleton();
             }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.paint() " + e);
