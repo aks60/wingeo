@@ -103,7 +103,7 @@ public class AreaSimple extends Com5t {
             Polygon geoInner = Com5t.buffer(geoShell, winc.listElem, 0, 0);
             Polygon geoFalz = Com5t.buffer(geoShell, winc.listElem, 0, 1);
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
-
+            
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.setLocation" + toString() + e);
         }

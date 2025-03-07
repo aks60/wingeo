@@ -60,8 +60,7 @@ public class TFilling extends Cal5e {
             ArrayList<ElemSimple> listFrame = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
             Set<Double> hs = new LinkedHashSet();
             Geometry geoFalz = elemGlass.owner.area.getGeometryN(2);
-            Coordinate cooFalz[] = geoFalz.getCoordinates();
-            List.of(cooFalz).forEach(p -> hs.add(p.z));
+            List.of(geoFalz.getCoordinates()).forEach(p -> hs.add(p.z));
 
             //Цикл по сторонам стеклопакета
             Double arr[] = hs.toArray(new Double[0]);
