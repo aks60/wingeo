@@ -7,7 +7,6 @@ import com.google.gson.JsonObject;
 import common.UCom;
 import common.listener.ListenerPaint;
 import dataset.Record;
-import domain.eArtikl;
 import domain.eColor;
 import domain.eParams;
 import domain.eParmap;
@@ -17,7 +16,6 @@ import java.awt.Font;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -28,7 +26,6 @@ import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
-import startup.Test;
 
 public class AreaSimple extends Com5t {
 
