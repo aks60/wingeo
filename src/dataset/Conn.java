@@ -25,8 +25,8 @@ import startup.App;
  */
 public class Conn {
 
-    private static boolean httpcheck = false;
-    private static boolean webapp = false;
+    public static boolean httpcheck = false; //проверка активации программы
+    public static boolean webapp = false;
     private static Connection connection = null;
     protected static Statement statement = null;
     protected static boolean autoCommit = false;
@@ -38,43 +38,35 @@ public class Conn {
         connection = connect;
     }
 
-    public static Connection getConnection() {
-        return connection;
-    }
+    public static Connection сonnection() {
+        if (webapp == false) {
+            return connection;
 
-    public static void setHttpcheck(boolean httpcheck) {
-        Conn.httpcheck = httpcheck;
-    }
+        } else {
+            try {
+                Context initContext = new InitialContext();
+                DataSource dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/winweb");
+                //DataSource dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/winnet");
+                Connection connection = dataSource.getConnection();
+                connection.setAutoCommit(true);
+                return connection;
 
-    public static boolean isWebapp() {
-        return webapp == true;
+            } catch (NamingException e) {
+                System.err.println("Ошибка:Conn.connection() №1 ");
+                e.printStackTrace();
+                return null;
+
+            } catch (SQLException e) {
+                System.err.println("Ошибка:Conn.connection() №2 ");
+                e.printStackTrace();
+                return null;
+            }
+        }
     }
 
     public static void close() throws SQLException {
         if (webapp == true) {
             connection.close();
-        }
-    }
-
-    public static Connection connection() {
-        try {
-            webapp = true;
-            Context initContext = new InitialContext();
-            DataSource dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/winweb");
-            //DataSource dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/winnet");
-            Connection connection = dataSource.getConnection();
-            connection.setAutoCommit(true);
-            return connection;
-
-        } catch (NamingException e) {
-            System.err.println("Ошибка:Conn.connection() №1 ");
-            e.printStackTrace();
-            return null;
-
-        } catch (SQLException e) {
-            System.err.println("Ошибка:Conn.connection() №2 ");
-            e.printStackTrace();
-            return null;
         }
     }
 
@@ -182,7 +174,7 @@ public class Conn {
     public static int genId(Field field) {
         try {
             int next_id = 0;
-            Connection conn = getConnection();
+            Connection conn = сonnection();
             Statement statement = conn.createStatement();
             String sql = "SELECT GEN_ID(gen_" + field.tname() + ", 1) FROM RDB$DATABASE";
             ResultSet rs = statement.executeQuery(sql);

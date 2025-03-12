@@ -145,7 +145,7 @@ public class Adm extends javax.swing.JFrame {
                     + " rdb$user_privileges b on a.rdb$role_name = b.rdb$relation_name AND "
                     + " b.rdb$user != 'SYSDBA' AND NOT EXISTS (SELECT * FROM rdb$roles c WHERE c.rdb$role_name = b.rdb$user) "
                     + " left join sysuser c on b.rdb$user = c.login where b.rdb$user is not null ORDER BY 1";
-            Statement statement = Conn.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            Statement statement = Conn.ñonnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = statement.executeQuery(sql);
             Query userList = new Query(eSysuser.values());
             int npp = 0;
@@ -1373,11 +1373,11 @@ public class Adm extends javax.swing.JFrame {
             ePrefs.password = String.valueOf("masterkey");
             String num_base = ePrefs.base_num.getProp();
             Conn.connection(ePrefs.getServer(num_base), ePrefs.getPort(num_base), ePrefs.getBase(num_base), ePrefs.user.getProp(), ePrefs.password.toCharArray(), null);
-            Connection c2 = Conn.getConnection();
+            Connection c2 = Conn.ñonnection();
 
             Conn con1 = new Conn();
             con1.connection(edServer.getText().trim(), edPort.getText().trim(), edPath.getText().trim(), edUser.getText().trim(), edPass.getText().toCharArray(), null);
-            Connection c1 = con1.getConnection();
+            Connection c1 = con1.ñonnection();
 
             txtPane.setText("");
             thread = new Thread(new Runnable() {

@@ -84,12 +84,12 @@ public class LogoToDb extends javax.swing.JDialog {
 
                     } else {
                         //Получим роль по имени логина
-                        Statement st = Conn.getConnection().createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+                        Statement st = Conn.сonnection().createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
                         //ResultSet rs = st.executeQuery("SELECT DISTINCT a.rdb$role_name , b.rdb$user FROM rdb$roles a, rdb$user_privileges b WHERE a.rdb$role_name = b.rdb$relation_name AND b.rdb$user = '" + edUser.getText() + "'");
                         ResultSet rs = st.executeQuery("SELECT u.RDB$USER, u.RDB$RELATION_NAME FROM RDB$USER_PRIVILEGES u WHERE u.RDB$USER = '" + edUser.getText().toUpperCase() + "'");
                         if (rs.next()) {
                             ePrefs.role = rs.getString("RDB$RELATION_NAME").trim();
-                            Conn.getConnection().close();
+                            Conn.сonnection().close();
                             //Соединение с новыми привелегиями
                             pass = Conn.connection(ePrefs.getServer(num), ePrefs.getPort(num), ePrefs.getBase(num), edUser.getText(), edPass.getPassword(), ePrefs.role);
                             //По имени роли откроем нужное приложение

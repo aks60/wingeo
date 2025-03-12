@@ -108,7 +108,7 @@ public enum eSystree implements Field {
             }
         }
         try {
-            Statement statement = Conn.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            Statement statement = Conn.ñonnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet recordset = statement.executeQuery("with recursive tree as (select * from systree where id = "
                     + ID + " union all select * from systree a join tree b on a.id = b.parent_id and b.id != b.parent_id) select * from tree");
             recordset.next();
