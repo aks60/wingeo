@@ -46,8 +46,8 @@ public class Conn {
             try {
                 Context initContext = new InitialContext();
                 DataSource dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/winweb");
-                //DataSource dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/winnet");
-                Connection connection = dataSource.getConnection();
+                //dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/winnet");
+                connection = dataSource.getConnection();
                 connection.setAutoCommit(true);
                 return connection;
 
