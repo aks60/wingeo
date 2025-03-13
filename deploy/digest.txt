@@ -1,8 +1,0 @@
-getdown.txt = 348f8fca06b9e6439c6dec21311d7d9e
-wingeo.jar = d5290ad85ecfe09cb320000957cf7209
-lib/gson-2.10.1.jar = 2ec086bbebd2c8e40be3d2b52a4c9d88
-lib/jaybird-5.0.5.java11.jar = c4d275b66521f4dec8c17c04d22f2b8c
-lib/jsoup-1.17.2.jar = a5f06342af1220dd68ec1fe58e8fa96c
-lib/jts-core-1.20.0.jar = 2263ab2cb7ec46fc2cf37c75ed136fa3
-lib/rhino-1.7.15.jar = f556a09168acea969ca5502a2cb9dbf5
-digest.txt = b30e0be900d5fbeed024f145313f86bc
