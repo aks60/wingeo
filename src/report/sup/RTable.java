@@ -1,7 +1,7 @@
 package report.sup;
 
 import report.sup.RColumn;
-import common.ePrefs;
+import common.eProp;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -229,7 +229,7 @@ public class RTable {
     //Записать текст в файл
     public static void write(String text) {
         try {
-            PrintWriter out = new PrintWriter(new File(ePrefs.genl.getProp(), "report.html"));
+            PrintWriter out = new PrintWriter(new File(eProp.genl.getProp(), "report.html"));
             try {
                 out.print(text);
             } finally {

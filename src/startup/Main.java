@@ -2,7 +2,7 @@ package startup;
 
 import common.UCom;
 import frames.LogoToDb;
-import common.ePrefs;
+import common.eProp;
 import java.util.Locale;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -16,7 +16,7 @@ public class Main {
     
     //Конструктор
     public Main() {
-        Locale.setDefault(ePrefs.locale);
+        Locale.setDefault(eProp.locale);
         LogoToDb frame = new LogoToDb(null);
         frame.setVisible(true);
     }
@@ -26,16 +26,16 @@ public class Main {
 
         for (int index = 0; index < args.length; index++) {
             
-            ePrefs.dev = true;
+            eProp.dev = true;
             
             if (index == 0 && args[0].equals("adm")) {
-                ePrefs.profile = args[0];
+                eProp.profile = args[0];
 
             } else if (index == 0 && args[0].equals("tex")) {
-                ePrefs.profile = args[0];
+                eProp.profile = args[0];
 
             } else if (index == 0 && args[0].equals("man")) {
-                ePrefs.profile = args[0];
+                eProp.profile = args[0];
             }
         }
 
@@ -44,7 +44,7 @@ public class Main {
             public void run() {
                 try {
                     runRussifier();
-                    String lafname = ePrefs.lookandfeel.getProp();
+                    String lafname = eProp.lookandfeel.getProp();
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     for (LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
                         if (lafname.equals(laf.getName())) {

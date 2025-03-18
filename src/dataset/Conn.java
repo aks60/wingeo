@@ -1,6 +1,6 @@
 package dataset;
 
-import common.ePrefs;
+import common.eProp;
 import frames.PathToDb;
 import frames.UGui;
 import java.awt.Frame;

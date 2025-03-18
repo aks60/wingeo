@@ -21,7 +21,7 @@ import domain.eJoinpar2;
 import domain.eParams;
 import enums.Enam;
 import builder.param.ParamList;
-import common.ePrefs;
+import common.eProp;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
@@ -605,7 +605,7 @@ public class Joinings extends javax.swing.JFrame {
         north.setPreferredSize(new java.awt.Dimension(800, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePrefs.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -1259,8 +1259,9 @@ public class Joinings extends javax.swing.JFrame {
 
     private void initElements() {
 
-        ePrefs.getWin(this, btnClose, (e) -> {
-            ePrefs.putWin(this, btnClose, tab1, tab2, tab3, tab4 , tab5);
+        btnTest.setVisible(eProp.dev);
+        eProp.getWin(this, btnClose, (e) -> {
+            eProp.putWin(this, btnClose, tab1, tab2, tab3, tab4 , tab5);
         }, tab1, tab2, tab3, tab4 , tab5); 
         new UColor();
 

@@ -1,6 +1,6 @@
 package frames;
 
-import common.ePrefs;
+import common.eProp;
 import dataset.Query;
 import domain.eSyssize;
 import java.awt.Frame;
@@ -113,7 +113,7 @@ public class Syssize extends javax.swing.JFrame {
         north.setPreferredSize(new java.awt.Dimension(700, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePrefs.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -411,8 +411,8 @@ public class Syssize extends javax.swing.JFrame {
 
     public void initElements() {
         
-        ePrefs.getWin(this, btnClose, (e) -> {
-            ePrefs.putWin(this, btnClose);
+        eProp.getWin(this, btnClose, (e) -> {
+            eProp.putWin(this, btnClose);
         }); 
         List.of(btnIns, btnDel).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab1)));
     }

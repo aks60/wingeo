@@ -31,7 +31,7 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import javax.swing.table.DefaultTableModel;
 import common.eProfile;
-import common.ePrefs;
+import common.eProp;
 import common.listener.ListenerAction;
 import common.listener.ListenerFrame;
 import common.listener.ListenerRecord;
@@ -242,7 +242,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             qProject.add(qProjectAll.get(i));
         }
         //Выделяем заказ если сохранён в Property
-        int orderID = Integer.valueOf(ePrefs.orderID.getProp());
+        int orderID = Integer.valueOf(eProp.orderID.getProp());
         ((DefTableModel) tab1.getModel()).fireTableDataChanged();
         int index = -1;
         for (int index2 = 0; index2 < qProject.size(); ++index2) {
@@ -282,7 +282,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
 
             //Выделяем конструкцию если сохранена в Property
-            int prjprodID = Integer.valueOf(ePrefs.prjprodID.getProp());
+            int prjprodID = Integer.valueOf(eProp.prjprodID.getProp());
             for (int i = 0; i < qPrjprod.size(); ++i) {
                 if (qPrjprod.get(i).getInt(ePrjprod.id) == prjprodID) {
                     index = i;
@@ -341,7 +341,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             Record projectRec = qProject.get(UGui.getIndexRec(tab1));
             //lab2.setText("Заказ № " + projectRec.getStr(eProject.num_ord));
             int orderID = qProject.getAs(UGui.getIndexRec(tab1), eProject.id);
-            ePrefs.orderID.putProp(String.valueOf(orderID));
+            eProp.orderID.putProp(String.valueOf(orderID));
 
             Record currencRec = qCurrenc.stream().filter(rec -> rec.get(eCurrenc.id).equals(projectRec.get(eProject.currenc_id))).findFirst().orElse(eCurrenc.up.newRecord(Query.SEL));
             txt7.setText(UCom.format(projectRec.getDbl(eProject.weight), 1));
@@ -359,7 +359,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         int index = UGui.getIndexRec(tab2);
         if (index != -1) {
             Record prjprodRec = qPrjprod.get(index);
-            ePrefs.prjprodID.putProp(prjprodRec.getStr(ePrjprod.id)); //запишем текущий prjprodID в файл
+            eProp.prjprodID.putProp(prjprodRec.getStr(ePrjprod.id)); //запишем текущий prjprodID в файл
             //App.Top.frame.setTitle(UGui.designTitle());
             Object w = prjprodRec.get(ePrjprod.values().length);
             if (w instanceof Wincalc) { //прорисовка окна               
@@ -1081,7 +1081,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         north.setPreferredSize(new java.awt.Dimension(800, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePrefs.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -3498,7 +3498,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }//GEN-LAST:event_btnFilter
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-        System.out.println(ePrefs.orderID.getProp());
+        System.out.println(eProp.orderID.getProp());
     }//GEN-LAST:event_btnTest
 
     private void loopToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loopToStvorka
@@ -3925,15 +3925,16 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
     private void initElements() {
         
-        ePrefs.getWin(this, btnClose, (e) -> {
-            ePrefs.putWin(this, btnClose);
+        btnTest.setVisible(eProp.dev);
+        eProp.getWin(this, btnClose, (e) -> {
+            eProp.putWin(this, btnClose);
         }); 
         new UColor();
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1);
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
-        MainMenu.init(ppReport, this, common.ePrefs.locale);
+        MainMenu.init(ppReport, this, common.eProp.locale);
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
 
         List.of(btnIns, btnDel).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab1)));

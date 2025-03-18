@@ -2,7 +2,7 @@ package frames;
 
 import builder.script.GsonRoot;
 import com.google.gson.Gson;
-import common.ePrefs;
+import common.eProp;
 import dataset.Conn;
 import dataset.Field;
 import dataset.Query;
@@ -85,7 +85,7 @@ public class PSConvert {
     public static void exec() {
         cn1 = startup.Test.connect1(); //источник
         cn2 = startup.Test.connect2(); //приёмник
-        if (JOptionPane.showConfirmDialog(null, "КОНВЕРТАЦИЯ БАЗЫ ДАННЫХ № " + ePrefs.base_num.getProp(), "КОНВЕРТАЦИЯ",
+        if (JOptionPane.showConfirmDialog(null, "КОНВЕРТАЦИЯ БАЗЫ ДАННЫХ № " + eProp.base_num.getProp(), "КОНВЕРТАЦИЯ",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             script();
         }
@@ -203,7 +203,7 @@ public class PSConvert {
             executeSql("GRANT SELECT ON " + eSetting.up.tname() + " TO TEXNOLOG_RO");
             executeSql("GRANT ALL ON " + eSetting.up.tname() + " TO TEXNOLOG_RW");
 
-            if (ePrefs.dev == true) { //при этом в firebird такие логины должны быть созданы
+            if (eProp.dev == true) { //при этом в firebird такие логины должны быть созданы
                 executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('MANAGER_RW','MANAGER','Менеджер М.И.','89031237833','asd@jmail.com',null,null)");
                 executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('RDB$ADMIN','ADMIN','Администратор М.Г.','89034327685','aks@jmail.com',null,null)");
                 executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('TEXNOLOG_RW','TEXNOLOG','Технолог Е.В.','89036782345','qsd@jmail.com',null,null)");
@@ -551,7 +551,7 @@ public class PSConvert {
             updateSql(eProject.up, eProject.prjpart_id, "kname", ePrjpart.up, "partner");
             executeSql("update prjpart set org_leve2 = trim(org_leve2)");
             executeSql("update groups set npp = 0 where grup != " + TypeGrup.CATEG_VST.id);
-            String db = (numDb == 1) ? ePrefs.base1.getProp() : (numDb == 2) ? ePrefs.base2.getProp() : ePrefs.base3.getProp();
+            String db = (numDb == 1) ? eProp.base1.getProp() : (numDb == 2) ? eProp.base2.getProp() : eProp.base3.getProp();
             if (db.toUpperCase().contains("BIMAX.FDB")) {
                 executeSql("4", "update artikl set " + eArtikl.size_falz.name() + " = 20 where code = '336200'"); //поправка штульпа в bimax 
                 executeSql("delete from glaspar2 where groups_id = 15030 and text = '0,97'"); //предположительно параметр добавлен в самом конце

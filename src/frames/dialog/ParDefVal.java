@@ -1,6 +1,6 @@
 package frames.dialog;
 
-import common.ePrefs;
+import common.eProp;
 import frames.UGui;
 import dataset.Query;
 import dataset.Record;
@@ -84,7 +84,7 @@ public class ParDefVal extends javax.swing.JDialog {
         pannorth.setPreferredSize(new java.awt.Dimension(300, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePrefs.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -260,8 +260,8 @@ public class ParDefVal extends javax.swing.JDialog {
 
     public void initElements() {
         
-        ePrefs.getWin(this, btnClose, (e) -> {
-            ePrefs.putWin(this, btnClose);
+        eProp.getWin(this, btnClose, (e) -> {
+            eProp.putWin(this, btnClose);
         }); 
     }
 }

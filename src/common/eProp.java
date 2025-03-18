@@ -12,7 +12,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.Timer;
 
-public enum ePrefs {
+public enum eProp {
 
     lookandfeel("Metal", "Windows"),
     genl(System.getProperty("user.home") + "/Avers/Okna",
@@ -55,12 +55,12 @@ public enum ePrefs {
     private static Timer timer = new Timer(1000, null);
 
     //Значение по умолчанию
-    ePrefs(String value) {
+    eProp(String value) {
         this.value = value;
     }
 
     //Значение по умолчанию для конкретной OS
-    ePrefs(String value1, String value2) {
+    eProp(String value1, String value2) {
         String os = System.getProperty("os.name");
         this.value = os.equals("Linux") ? value1 : value2;
     }
@@ -151,29 +151,29 @@ public enum ePrefs {
     }
 
     public static String getPort(String num) {
-        return (num.equals("1")) ? ePrefs.port1.getProp() : (num.equals("2")) ? ePrefs.port2.getProp() : ePrefs.port3.getProp();
+        return (num.equals("1")) ? eProp.port1.getProp() : (num.equals("2")) ? eProp.port2.getProp() : eProp.port3.getProp();
     }
 
     public static void putPort(String num, String name) {
-        ePrefs p = (num.equals("1")) ? ePrefs.port1 : (num.equals("2")) ? ePrefs.port2 : ePrefs.port3;
+        eProp p = (num.equals("1")) ? eProp.port1 : (num.equals("2")) ? eProp.port2 : eProp.port3;
         p.putProp(name);
     }
 
     public static String getServer(String num) {
-        return (num.equals("1")) ? ePrefs.server1.getProp() : (num.equals("2")) ? ePrefs.server2.getProp() : ePrefs.server3.getProp();
+        return (num.equals("1")) ? eProp.server1.getProp() : (num.equals("2")) ? eProp.server2.getProp() : eProp.server3.getProp();
     }
 
     public static void putServer(String num, String name) {
-        ePrefs p = (num.equals("1")) ? ePrefs.server1 : (num.equals("2")) ? ePrefs.server2 : ePrefs.server3;
+        eProp p = (num.equals("1")) ? eProp.server1 : (num.equals("2")) ? eProp.server2 : eProp.server3;
         p.putProp(name);
     }
 
     public static String getBase(String num) {
-        return (num.equals("1")) ? ePrefs.base1.getProp() : (num.equals("2")) ? ePrefs.base2.getProp() : ePrefs.base3.getProp();
+        return (num.equals("1")) ? eProp.base1.getProp() : (num.equals("2")) ? eProp.base2.getProp() : eProp.base3.getProp();
     }
 
     public static void putBase(String num, String name) {
-        ePrefs p = (num.equals("1")) ? ePrefs.base1 : (num.equals("2")) ? ePrefs.base2 : ePrefs.base3;
+        eProp p = (num.equals("1")) ? eProp.base1 : (num.equals("2")) ? eProp.base2 : eProp.base3;
         p.putProp(name);
     }
 

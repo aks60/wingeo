@@ -2,7 +2,7 @@ package frames;
 
 import frames.swing.cmp.ProgressBar;
 import builder.param.ParamList;
-import common.ePrefs;
+import common.eProp;
 import common.listener.ListenerFrame;
 import common.listener.ListenerRecord;
 import dataset.Conn;
@@ -343,7 +343,7 @@ public class Kits extends javax.swing.JFrame {
         north.setPreferredSize(new java.awt.Dimension(800, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePrefs.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -756,8 +756,8 @@ public class Kits extends javax.swing.JFrame {
 // </editor-fold> 
     public void initElements() {
 
-        ePrefs.getWin(this, btnClose, (e) -> {
-            ePrefs.putWin(this, btnClose);
+        eProp.getWin(this, btnClose, (e) -> {
+            eProp.putWin(this, btnClose);
         });
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab2);

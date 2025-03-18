@@ -1,7 +1,7 @@
 package dataset;
 
 import common.UCom;
-import common.ePrefs;
+import common.eProp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -70,7 +70,7 @@ public class Record {
     }
 
     public static Object getDev(Object num, Object val) {
-        if (ePrefs.dev == true) {
+        if (eProp.dev == true) {
             return num + " " + val;
             //String v = (Integer.parseInt(num.toString()) < 0) ? num.toString() : " #" + num;
             //return val + " " + v;

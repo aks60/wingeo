@@ -6,7 +6,7 @@ import java.awt.Frame;
 import java.util.HashMap;
 import javax.swing.JCheckBoxMenuItem;
 import common.listener.ListenerFrame;
-import common.ePrefs;
+import common.eProp;
 import dataset.Conn;
 import dataset.Record;
 import domain.ePrjprod;
@@ -32,7 +32,7 @@ public class Man extends javax.swing.JFrame {
     private void mnLookAndFeel(java.awt.event.ActionEvent evt) {
         for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
             if (((JCheckBoxMenuItem) evt.getSource()).getText().equals(laf.getName()) == true) {
-                ePrefs.lookandfeel.putProp(laf.getName());
+                eProp.lookandfeel.putProp(laf.getName());
             }
         }
     }
@@ -87,7 +87,7 @@ public class Man extends javax.swing.JFrame {
         ppmMain.setFont(frames.UGui.getFont(1,1));
 
         mn10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b031.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePrefs.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
         mn10.setText(bundle.getString("Меню.Установки")); // NOI18N
         mn10.setToolTipText("");
         mn10.setFont(frames.UGui.getFont(1,1));
@@ -589,18 +589,18 @@ public class Man extends javax.swing.JFrame {
     private void mnBase(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnBase
         String num_base = (mn61.isSelected()) ? "1" : (mn62.isSelected()) ? "2" : "3";
         Conn.prepareConnectBaseNumb(num_base);
-        if (ePrefs.base_num.getProp().equals("1")) {
+        if (eProp.base_num.getProp().equals("1")) {
             mn61.setSelected(true);
-        } else if (ePrefs.base_num.getProp().equals("2")) {
+        } else if (eProp.base_num.getProp().equals("2")) {
             mn62.setSelected(true);
-        } else if (ePrefs.base_num.getProp().equals("3")) {
+        } else if (eProp.base_num.getProp().equals("3")) {
             mn63.setSelected(true);
         }
     }//GEN-LAST:event_mnBase
 
     private void btn15(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn15
 
-        int orderID = Integer.valueOf(ePrefs.prjprodID.getProp());
+        int orderID = Integer.valueOf(eProp.prjprodID.getProp());
         Record projectRec = eProject.find(orderID);
         List<Record> prjprodList = List.of(projectRec);
 
@@ -613,7 +613,7 @@ public class Man extends javax.swing.JFrame {
     }//GEN-LAST:event_btn15
 
     private void btn16(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn16
-        int orderID = Integer.valueOf(ePrefs.orderID.getProp());
+        int orderID = Integer.valueOf(eProp.orderID.getProp());
         Record projectRec = eProject.find(orderID);
         List<Record> prjprodList = List.of(projectRec);
         ProgressBar.create(Man.this, new ListenerFrame() {
@@ -625,12 +625,12 @@ public class Man extends javax.swing.JFrame {
 
     private void btn17(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn17
 
-        int orderID = Integer.valueOf(ePrefs.orderID.getProp());
+        int orderID = Integer.valueOf(eProp.orderID.getProp());
         Record projectRec = eProject.find(orderID);
         ProgressBar.create(Man.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {
-                int prjprodID = Integer.valueOf(ePrefs.prjprodID.getProp());
+                int prjprodID = Integer.valueOf(eProp.prjprodID.getProp());
                 List<dataset.Record> prjprodList = List.of(ePrjprod.find(prjprodID));
                 new ROffer().parseDoc(prjprodList);
             }
@@ -720,11 +720,11 @@ public class Man extends javax.swing.JFrame {
                 mnIt.setSelected(true);
             }
         }
-        if (ePrefs.base_num.getProp().equals("1")) {
+        if (eProp.base_num.getProp().equals("1")) {
             mn61.setSelected(true);
-        } else if (ePrefs.base_num.getProp().equals("2")) {
+        } else if (eProp.base_num.getProp().equals("2")) {
             mn62.setSelected(true);
-        } else if (ePrefs.base_num.getProp().equals("3")) {
+        } else if (eProp.base_num.getProp().equals("3")) {
             mn63.setSelected(true);
         }
     }

@@ -80,7 +80,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import common.ePrefs;
+import common.eProp;
 import common.listener.ListenerAction;
 import domain.eJoinvar;
 import enums.TypeJoin;
@@ -161,8 +161,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     public final void loadingData() {
         //Получим сохранённую systreeID при выходе из программы
         Record sysprodRec = null; //при открытии указывает на конструкцию
-        if (this.systreeID == -1 && "-1".equals(ePrefs.sysprodID.getProp()) != true) {
-            sysprodRec = eSysprod.find(Integer.valueOf(ePrefs.sysprodID.getProp()));
+        if (this.systreeID == -1 && "-1".equals(eProp.sysprodID.getProp()) != true) {
+            sysprodRec = eSysprod.find(Integer.valueOf(eProp.sysprodID.getProp()));
         }
         if (sysprodRec != null) {
             this.systreeID = sysprodRec.getInt(eSysprod.systree_id);
@@ -406,7 +406,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 if (qSysprod.isEmpty() == false) {
 
                     int index = -1;
-                    int sysprodID = Integer.valueOf(ePrefs.sysprodID.getProp());
+                    int sysprodID = Integer.valueOf(eProp.sysprodID.getProp());
                     for (int i = 0; i < qSysprod.size(); ++i) {
                         if (qSysprod.get(i).getInt(eSysprod.id) == sysprodID) {
                             index = i;
@@ -593,7 +593,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         if (index != -1) {
             Record sysprodRec = qSysprod.table(eSysprod.up).get(index);
             if (writeNuni == true) {
-                ePrefs.sysprodID.putProp(sysprodRec.getStr(eSysprod.id)); //запишем текущий sysprodID в файл
+                eProp.sysprodID.putProp(sysprodRec.getStr(eSysprod.id)); //запишем текущий sysprodID в файл
             }
             App.Top.frame.setTitle(UGui.designTitle());
 
@@ -1246,7 +1246,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         tool.setPreferredSize(new java.awt.Dimension(800, 29));
 
         btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePrefs.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
         btnIns.setToolTipText(bundle.getString("Добавить")); // NOI18N
         btnIns.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnIns.setFocusable(false);
@@ -3744,7 +3744,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
             } else if (tab5.getBorder() != null) {
                 if (sysNode != null && sysNode.isLeaf()) {
-                    if (evt.getSource() instanceof JMenuItem && ePrefs.dev == true) {
+                    if (evt.getSource() instanceof JMenuItem && eProp.dev == true) {
                         loadLocalScript();
                     } else {
                         ProgressBar.create(Systree.this, new ListenerFrame() {
@@ -4962,8 +4962,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     public final void initElements() {
 
-        ePrefs.getWin(this, btnClose, (e) -> {
-            ePrefs.putWin(this, btnClose, split1);
+        btnTest.setVisible(eProp.dev);
+        eProp.getWin(this, btnClose, (e) -> {
+            eProp.putWin(this, btnClose, split1);
         }, split1);
 
         panDesign.add(scene, java.awt.BorderLayout.CENTER);

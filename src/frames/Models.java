@@ -16,7 +16,7 @@ import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import common.ePrefs;
+import common.eProp;
 import common.listener.ListenerAction;
 import frames.swing.cmp.Canvas;
 import common.listener.ListenerRecord;
@@ -210,7 +210,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         });
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePrefs.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -526,7 +526,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             record.set(eSysmodel.npp, record.get(eSysmodel.id));
 
             //Для загрузки скрипта из программы  
-            if (ePrefs.dev == true) {
+            if (eProp.dev == true) {
                 Object prj = JOptionPane.showInputDialog(Models.this, "Номер проекта", "Проект", JOptionPane.QUESTION_MESSAGE);
                 if (prj != null) {
                     json = GsonScript.modelScript(Integer.valueOf(String.valueOf(prj)));
@@ -672,8 +672,9 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 // </editor-fold>
     private void initElements() {
         
-        ePrefs.getWin(this, btnClose, (e) -> {
-            ePrefs.putWin(this, btnClose);
+        btnTest.setVisible(eProp.dev);
+        eProp.getWin(this, btnClose, (e) -> {
+            eProp.putWin(this, btnClose);
         }); 
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
         tab1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {

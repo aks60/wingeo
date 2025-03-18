@@ -16,7 +16,7 @@ import javax.swing.table.TableRowSorter;
 import builder.Wincalc;
 import builder.making.TRecord;
 import common.UCom;
-import common.ePrefs;
+import common.eProp;
 import domain.eSysprod;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -86,7 +86,7 @@ public class Specifics extends javax.swing.JFrame {
 
         //Со скидкой менеджера и комплектов
         if (this.man == true) {
-            int prjprodID = Integer.valueOf(ePrefs.prjprodID.getProp());
+            int prjprodID = Integer.valueOf(eProp.prjprodID.getProp());
             Record prjprodRec = ePrjprod.find(prjprodID);
 
             if (prjprodRec != null) {
@@ -109,7 +109,7 @@ public class Specifics extends javax.swing.JFrame {
 
             //Без скидки менеджера и комплектов
         } else {
-            int sysprodID = Integer.valueOf(ePrefs.sysprodID.getProp());
+            int sysprodID = Integer.valueOf(eProp.sysprodID.getProp());
             Record sysprodRec = eSysprod.find(sysprodID);
             if (sysprodRec != null) {
                 String script = sysprodRec.getStr(eSysprod.script);
@@ -247,7 +247,7 @@ public class Specifics extends javax.swing.JFrame {
         north.setPreferredSize(new java.awt.Dimension(900, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.ePrefs.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -736,8 +736,9 @@ public class Specifics extends javax.swing.JFrame {
 // </editor-fold> 
     public void initElements() {
 
-        ePrefs.getWin(this, btnClose, (e) -> {
-            ePrefs.putWin(this, btnClose);
+        btnTest.setVisible(eProp.dev);
+        eProp.getWin(this, btnClose, (e) -> {
+            eProp.putWin(this, btnClose);
         });
 
         filterTable = new TableFieldFilter(4, tab1);
@@ -770,7 +771,7 @@ public class Specifics extends javax.swing.JFrame {
         tab1.getColumnModel().getColumn(21).setCellRenderer(new DefCellRendererSpc(9));
         tab1.getColumnModel().getColumn(22).setCellRenderer(new DefCellRendererSpc(9));
 
-        if ("Nimbus".equals(ePrefs.lookandfeel.getProp())) {
+        if ("Nimbus".equals(eProp.lookandfeel.getProp())) {
             for (int i = 15; i < 22; i++) {
                 tab1.getColumnModel().getColumn(i).setPreferredWidth(tab1.getColumnModel().getColumn(i).getPreferredWidth() + tab1.getColumnModel().getColumn(i).getPreferredWidth() / 3);
             }
