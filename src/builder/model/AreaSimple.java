@@ -26,6 +26,7 @@ import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
+import startup.Test;
 
 public class AreaSimple extends Com5t {
 
@@ -101,6 +102,7 @@ public class AreaSimple extends Com5t {
             Polygon geoFalz = Com5t.buffer(geoShell, winc.listElem, 0, 1);
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
             
+            //Test.init(this.area.getGeometryN(0), this.area.getGeometryN(1), this.area.getGeometryN(2));
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.setLocation" + toString() + e);
         }

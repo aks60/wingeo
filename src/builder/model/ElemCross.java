@@ -86,7 +86,7 @@ public class ElemCross extends ElemSimple {
             Polygon areaEnvelope = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
             this.area = (Polygon) areaEnvelope.intersection(geoFalz); //полигон элемента конструкции
 
-            // Test.init(this.area);
+            //Test.init(this.area);
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation " + e);
         }
@@ -103,7 +103,7 @@ public class ElemCross extends ElemSimple {
             spcRec.anglHoriz = UGeo.anglHor(x1(), y1(), x2(), y2());
             spcRec.height = artiklRec.getDbl(eArtikl.height);
 
-            Coordinate cooImp[] = this.area.getCoordinates();
+            Coordinate cooImp[] = this.area.getGeometryN(0).getCoordinates();
             spcRec.anglCut0 = UGeo.anglCut(cooImp[cooImp.length - 2], cooImp[0], cooImp[1]);
             spcRec.anglCut1 = UGeo.anglCut(cooImp[0], cooImp[1], cooImp[2]);
 
@@ -173,7 +173,7 @@ public class ElemCross extends ElemSimple {
         if (this.type == Type.SHTULP) {
             for (ElemSimple elem : winc.listElem) {
                 if (elem.type == Type.STV_SIDE) {
-                    Coordinate coo[] = elem.area.getCoordinates();
+                    Coordinate coo[] = elem.area.getGeometryN(0).getCoordinates();
                     LineSegment segm = UGeo.getSegment(area, 0);
                     boolean b = PointLocation.isInRing(segm.midPoint(), coo);
                     if (b) {
@@ -192,7 +192,9 @@ public class ElemCross extends ElemSimple {
 
             super.paint();
 
-            Shape shape = new ShapeWriter().toShape(this.area);
+            Geometry geoInne = owner.area.getGeometryN(1);
+            Polygon geoPain = (Polygon) this.area.intersection(geoInne); //полигон для рисования
+            Shape shape = new ShapeWriter().toShape(geoPain);
             winc.gc2d.fill(shape);
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
             winc.gc2d.draw(shape);

@@ -182,12 +182,12 @@ public class Test {
 
         Graphics2D gc2d = (Graphics2D) g;
 
-        //gc2d.translate(10, 10);
-        //gc2d.scale(.4, .4);
+        gc2d.translate(10, 10);
+        gc2d.scale(.4, .4);
         //
         //gc2d.translate(-4500, -900);
-        gc2d.translate(80, -940);
-        gc2d.scale(4, 4);
+        //gc2d.translate(80, -940);
+        //gc2d.scale(4, 4);
 
         if (mlin != null) {
             gc2d.setColor(Color.BLUE);
@@ -417,7 +417,7 @@ public class Test {
 
         Geometry geo = poly.union(line);
         //if (line2.contains(gf.createPoint(c3)) || (c1.x == c3.x && c1.y == c3.y)) {
-        if(PointLocation.isOnSegment(c3, c1, c2)) {
+        if (PointLocation.isOnSegment(c3, c1, c2)) {
             System.out.println("OK");
         } else {
             System.out.println("NO");
@@ -515,17 +515,17 @@ public class Test {
 
         Coordinate[] cooShell = geoShell.getCoordinates();
         Coordinate[] cooFalz = geoFalz.getCoordinates();
-        
+
         Map<Double, Double> hm = new HashMap();
         hm.put(1.0, 64.0 - 20.0);
         hm.put(7.0, 64.0 - 20.0);
         hm.put(3.0, 64.0 - 20.0);
-        hm.put(4.0, 64.0 - 20.0);        
+        hm.put(4.0, 64.0 - 20.0);
         Polygon polyRect = UGeo.bufferRectangl(geoShell, hm);
         Coordinate[] coo7 = polyRect.getCoordinates();
 
         mpol(geoShell, geoFalz, polyRect);
-        
+
         double length = UGeo.lengthCurve(geoFalz, 1);
         System.out.println(length);
     }
