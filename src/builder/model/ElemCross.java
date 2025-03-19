@@ -82,7 +82,7 @@ public class ElemCross extends ElemSimple {
             Coordinate C1[] = UGeo.geoCross(areaCanvas, offsetSegment[0]);
             Coordinate C2[] = UGeo.geoCross(areaCanvas, offsetSegment[1]);
 
-            //Ареа импоста обрезаем areaPadding 
+            //Ареа импоста, обрезаем areaPadding 
             Polygon areaEnvelope = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
             this.area = (Polygon) areaEnvelope.intersection(geoFalz); //полигон элемента конструкции
 
