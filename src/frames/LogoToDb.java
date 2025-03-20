@@ -39,20 +39,14 @@ public class LogoToDb extends javax.swing.JDialog {
             connectToDb();
 
         } else {
-            labMes.setForeground(Color.BLUE);
-            labMes.setText("¬ведите логин и пароль");
+            if (eProp.demo == true) {
+                labMes.setText("ƒ≈ћќ ¬≈–—»я");
+            } else {
+                labMes.setText("¬ведите логин и пароль");
+            }
             edUser.setText(eProp.user.getProp());
             edPass.requestFocus();
             getRootPane().setDefaultButton(btnOk);
-
-//            if (List.of("SYSDBA", "TEXNOLOG", "MANAGER")
-//                    .contains(eProp.user.read().toUpperCase())) {
-//                //edPass.setText("masterkey");
-//                //connectToDb();
-//            } else {
-//                edPass.requestFocus();
-//                getRootPane().setDefaultButton(btnOk);
-//            }
         }
     }
 
@@ -159,7 +153,6 @@ public class LogoToDb extends javax.swing.JDialog {
         pan2.add(pan3, java.awt.BorderLayout.WEST);
 
         labMes.setFont(frames.UGui.getFont(0,0));
-        labMes.setForeground(new java.awt.Color(0, 0, 255));
         labMes.setText("<html>ќшибка соединени€ с базой данных!");
         labMes.setToolTipText("ќшибка соединени€ с базой данных!");
         labMes.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -313,7 +306,7 @@ public class LogoToDb extends javax.swing.JDialog {
     }//GEN-LAST:event_passonCaretUpdate
 
     private void useronCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_useronCaretUpdate
-        labMes.setText("");
+        //labMes.setText("");
         if (edPass.getPassword().length > 0 && !edUser.getText().isEmpty()) {
             btnOk.setEnabled(true);
         } else {
@@ -338,9 +331,9 @@ public class LogoToDb extends javax.swing.JDialog {
     private javax.swing.JProgressBar progressBar;
     // End of variables declaration//GEN-END:variables
 // </editor-fold>
-    
+
     public void initElements() {
         eProp.getWin(this, btnClose, (e) -> {
-        });     
-    }    
+        });
+    }
 }

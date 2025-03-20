@@ -47,12 +47,13 @@ public enum eProp {
     //Системные переменные
     public static String password = "*";
     public static String role = null;
-    public static Locale locale = Locale.of("ru", "RU");
-    public static String fb = "fb";
+    public final static Locale locale = Locale.of("ru", "RU");
+    public final static String fb = "fb";
     public static boolean dev = false;      //признак разработки и тестирования
-    public static boolean locate = true;    //координаты фрейма разработки и тестирования
+    public final static boolean demo = true;      //признак разработки и тестирования
+    public final static String versionApp = "2.0";
     public static String profile = "";      //профиль разработки и тестирования
-    private static Timer timer = new Timer(1000, null);
+    public static Timer timer = new Timer(1000, null);
 
     //Значение по умолчанию
     eProp(String value) {
@@ -66,6 +67,14 @@ public enum eProp {
     }
 
     public String getProp() {
+        if (demo == true) {
+            if (this == base1) {
+                return "/opt/database/fdemo/binet.fdb?encoding=win1251";
+            }
+            if (this == base2 || this == base3) {
+                return "/opt/database/fdemo/bimax.fdb?encoding=win1251";
+            }
+        }
         Preferences pref = Preferences.userRoot().node(this.getClass().getName());
         return pref.get(this.name(), this.value);
     }
@@ -102,17 +111,17 @@ public enum eProp {
         }
         if (comp != null) {
             for (int i = 0; i < comp.length; ++i) {
-                
+
                 if (comp[i] instanceof JTable) {
                     JTable tab = (JTable) comp[i];
-                    pref = pref.node(tab.getName());                   
+                    pref = pref.node(tab.getName());
                     for (int k = 0; k < tab.getColumnCount(); ++k) {
                         tab.getColumnModel().getColumn(k).setPreferredWidth(
                                 pref.getInt("colWidth" + k, tab.getColumnModel().getColumn(k).getPreferredWidth()));
                     }
-                } else if(comp[i] instanceof JSplitPane) {
+                } else if (comp[i] instanceof JSplitPane) {
                     JSplitPane split = (JSplitPane) comp[i];
-                    pref = pref.node(split.getName());  
+                    pref = pref.node(split.getName());
                     int v = pref.getInt("dividerLocation", split.getDividerLocation());
                     split.setDividerLocation(v);
                 }
@@ -133,17 +142,17 @@ public enum eProp {
 
         if (comp != null) {
             for (int i = 0; i < comp.length; ++i) {
-                
-                if (comp[i] instanceof JTable) {  
+
+                if (comp[i] instanceof JTable) {
                     JTable tab = (JTable) comp[i];
-                    pref = pref.node(tab.getName());                   
+                    pref = pref.node(tab.getName());
                     for (int k = 0; k < tab.getColumnCount(); ++k) {
                         pref.putInt("colWidth" + k, tab.getColumnModel().getColumn(k).getPreferredWidth());
                     }
-                                       
-                } else if(comp[i] instanceof JSplitPane) {
+
+                } else if (comp[i] instanceof JSplitPane) {
                     JSplitPane split = (JSplitPane) comp[i];
-                    pref = pref.node(split.getName());  
+                    pref = pref.node(split.getName());
                     pref.putInt("dividerLocation", split.getDividerLocation());
                 }
             }
