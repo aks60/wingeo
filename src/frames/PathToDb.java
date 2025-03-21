@@ -2,6 +2,7 @@ package frames;
 
 import common.eProfile;
 import common.eProp;
+import common.listener.ListenerAction;
 import dataset.Conn;
 import java.io.File;
 import javax.swing.JFileChooser;
@@ -20,20 +21,21 @@ import startup.App;
  */
 public class PathToDb extends javax.swing.JDialog {
 
-    private String num_base = null;
+    private String new_num_base = null;
+    private ListenerAction la = null;
 
-    public PathToDb(Frame parent, String num_base) {
+    public PathToDb(Frame parent, String new_num_base) {
         super(parent, true);
-        this.num_base = num_base;
+        this.new_num_base = new_num_base;
 
         initComponents();
         initElements();
 
         //Загрузка параметров входа
         labMes.setText("");
-        edHost.setText(eProp.getServer(num_base));
-        edPath.setText(eProp.getBase(num_base));
-        edPort.setText(eProp.getPort(num_base));
+        edHost.setText(eProp.getServer(new_num_base));
+        edPath.setText(eProp.getBase(new_num_base));
+        edPort.setText(eProp.getPort(new_num_base));
         edUser.setText(eProp.user.getProp());
         edPass.setText(eProp.password);
 
@@ -57,22 +59,13 @@ public class PathToDb extends javax.swing.JDialog {
                 labMes.setText("Установка соединения с базой данных");
                 eExcep pass = Conn.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), null);
                 if (pass == eExcep.yesConn) {
-                    eProp.base_num.putProp(num_base);
-                    eProp.putPort(num_base, edPort.getText().trim());
-                    eProp.putServer(num_base, edHost.getText().trim());
-                    eProp.putBase(num_base, edPath.getText().trim());
-
                     if ("SYSDBA".equalsIgnoreCase(edUser.getText())) {
                         if (App.Top.frame == null) {
                             App.createApp(eProfile.P01);
                         }
                         eProp.password = String.valueOf(edPass.getPassword()).trim();
                         eProp.user.putProp(edUser.getText().trim());
-                        //ePref.base_num.write(num_base);
-                        //ePref.port(num_base, edPort.getText().trim());
-                        //ePref.server(num_base, edHost.getText().trim());
-                        //ePref.base(num_base, edPath.getText().trim());
-                        //ePref.save();
+                        setPropertyBase(new_num_base);
                         dispose();
 
                     } else {
@@ -92,13 +85,10 @@ public class PathToDb extends javax.swing.JDialog {
                                 } else if (App.Top.frame == null && eProfile.P03.roleSet.contains(eProp.role)) {
                                     App.createApp(eProfile.P03);
                                 }
-//                                ePref.base_num.write(num_base);
-//                                ePref.port(num_base, edPort.getText().trim());
-//                                ePref.server(num_base, edHost.getText().trim());
-//                                ePref.base(num_base, edPath.getText().trim());
+                                setPropertyBase(new_num_base);
+                                
                                 eProp.password = String.valueOf(edPass.getPassword()).trim();
                                 eProp.user.putProp(edUser.getText().trim());
-                                //ePref.save();
                                 dispose();
                             }
                         }
@@ -113,6 +103,13 @@ public class PathToDb extends javax.swing.JDialog {
                 progressBar.setIndeterminate(false);
             }
         }.execute();
+    }
+
+    public void setPropertyBase(String num) {
+        eProp.base_num.putProp(num);
+        eProp.putPort(num, edPort.getText().trim());
+        eProp.putServer(num, edHost.getText().trim());
+        eProp.putBase(num, edPath.getText().trim());
     }
 
     public static void pathToDb(Frame parent) {
@@ -401,6 +398,9 @@ public class PathToDb extends javax.swing.JDialog {
 }//GEN-LAST:event_btnOk
     //Нажал кнопку "ОТМЕНА"
     private void btnClose(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClose
+        if (la != null) {
+            la.action();
+        }
         if (App.Top.frame == null) {
             System.exit(0);
         } else {
