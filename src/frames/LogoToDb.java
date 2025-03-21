@@ -21,6 +21,9 @@ public class LogoToDb extends javax.swing.JDialog {
         initComponents();
         initElements();
 
+        if (eProp.demo == true) {
+            labMes.setText("ƒ≈ћќ ¬≈–—»я");
+        } 
         //јвтопароль при тестировании
         if (eProp.dev == true) {
             if ("adm".equals(eProp.profile)) {
@@ -39,11 +42,6 @@ public class LogoToDb extends javax.swing.JDialog {
             connectToDb();
 
         } else {
-            if (eProp.demo == true) {
-                labMes.setText("ƒ≈ћќ ¬≈–—»я");
-            } else {
-                labMes.setText("¬ведите логин и пароль");
-            }
             edUser.setText(eProp.user.getProp());
             edPass.requestFocus();
             getRootPane().setDefaultButton(btnOk);
@@ -153,7 +151,7 @@ public class LogoToDb extends javax.swing.JDialog {
         pan2.add(pan3, java.awt.BorderLayout.WEST);
 
         labMes.setFont(frames.UGui.getFont(0,0));
-        labMes.setText("<html>ќшибка соединени€ с базой данных!");
+        labMes.setText("¬ведите логин и пароль");
         labMes.setToolTipText("ќшибка соединени€ с базой данных!");
         labMes.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         labMes.setPreferredSize(new java.awt.Dimension(240, 14));

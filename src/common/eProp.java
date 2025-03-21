@@ -50,7 +50,7 @@ public enum eProp {
     public final static Locale locale = Locale.of("ru", "RU");
     public final static String fb = "fb";
     public static boolean dev = false;      //признак разработки и тестирования
-    public final static boolean demo = false;      //признак разработки и тестирования
+    public final static boolean demo = true;      //признак разработки и тестирования
     public final static String versionApp = "2.0";
     public static String profile = "";      //профиль разработки и тестирования
     public static Timer timer = new Timer(1000, null);
@@ -68,6 +68,9 @@ public enum eProp {
 
     public String getProp() {
         if (demo == true) {
+            if(this == server1 || this == server2 || this == server3) {
+                return "31.172.66.46";
+            }
             if (this == base1) {
                 return "/opt/database/fdemo/binet.fdb?encoding=win1251";
             }

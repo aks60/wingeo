@@ -6,8 +6,6 @@
     </Component>
     <Component class="javax.swing.ButtonGroup" name="buttonBaseGroup1">
     </Component>
-    <Component class="javax.swing.ButtonGroup" name="buttonBaseGroup2">
-    </Component>
     <Component class="javax.swing.ButtonGroup" name="buttonMenuGroup">
     </Component>
     <Container class="javax.swing.JPopupMenu" name="ppmSpecif">
@@ -1270,7 +1268,6 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnT8MouseEntered"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBase"/>
           </Events>
         </Component>

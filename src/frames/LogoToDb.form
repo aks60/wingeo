@@ -147,7 +147,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="frames.UGui.getFont(0,0)" type="code"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;&#x41e;&#x448;&#x438;&#x431;&#x43a;&#x430; &#x441;&#x43e;&#x435;&#x434;&#x438;&#x43d;&#x435;&#x43d;&#x438;&#x44f; &#x441; &#x431;&#x430;&#x437;&#x43e;&#x439; &#x434;&#x430;&#x43d;&#x43d;&#x44b;&#x445;!"/>
+                <Property name="text" type="java.lang.String" value="&#x412;&#x432;&#x435;&#x434;&#x438;&#x442;&#x435; &#x43b;&#x43e;&#x433;&#x438;&#x43d; &#x438; &#x43f;&#x430;&#x440;&#x43e;&#x43b;&#x44c;"/>
                 <Property name="toolTipText" type="java.lang.String" value="&#x41e;&#x448;&#x438;&#x431;&#x43a;&#x430; &#x441;&#x43e;&#x435;&#x434;&#x438;&#x43d;&#x435;&#x43d;&#x438;&#x44f; &#x441; &#x431;&#x430;&#x437;&#x43e;&#x439; &#x434;&#x430;&#x43d;&#x43d;&#x44b;&#x445;!"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[2147483647, 2147483647]"/>

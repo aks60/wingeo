@@ -8,10 +8,13 @@ import javax.swing.JCheckBoxMenuItem;
 import common.listener.ListenerFrame;
 import common.eProp;
 import dataset.Conn;
+import dataset.Query;
 import dataset.Record;
 import domain.ePrjprod;
 import domain.eProject;
+import frames.PathToDb;
 import java.util.List;
+import javax.swing.JTable;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import report.RTarget;
@@ -587,8 +590,18 @@ public class Man extends javax.swing.JFrame {
     }//GEN-LAST:event_tabb1MouseClicked
 
     private void mnBase(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnBase
+        
         String num_base = (mn61.isSelected()) ? "1" : (mn62.isSelected()) ? "2" : "3";
-        Conn.prepareConnectBaseNumb(num_base);
+        List.of(App.values()).stream().filter(el -> el.frame != null && el != App.Top).forEach(el
+                -> UGui.findComponents(el.frame.getRootPane(), JTable.class
+                ).forEach(c -> UGui.stopCellEditing(c)));
+        List.of(App.values()).stream().filter(el -> el.frame != null && el != App.Top).forEach(el -> el.frame.dispose());
+        Query.listOpenTable.forEach(q -> q.execsql());
+        Query.listOpenTable.forEach(q -> q.clear());
+
+        PathToDb pathToDb = new PathToDb(App.Top.frame, num_base);
+        pathToDb.setVisible(true);
+
         if (eProp.base_num.getProp().equals("1")) {
             mn61.setSelected(true);
         } else if (eProp.base_num.getProp().equals("2")) {
