@@ -242,7 +242,7 @@ public enum App {
     public static void createApp(eProfile profile) {
 
         try {
-            ResultSet rs = Conn.сonnection().createStatement().executeQuery("select current_user from rdb$database");
+            ResultSet rs = Conn.getConnection().createStatement().executeQuery("select current_user from rdb$database");
             rs.next();
             eProfile.user = rs.getString(1);
             eProfile.profile = profile; //профиль приложения

@@ -26,7 +26,7 @@ import startup.App;
 public class Conn {
 
     public static boolean httpcheck = false; //проверка активации программы
-    public static boolean webapp = false;
+    public static boolean webapp = true;
     private static Connection connection = null;
     protected static Statement statement = null;
     protected static boolean autoCommit = false;
@@ -38,7 +38,7 @@ public class Conn {
         connection = connect;
     }
 
-    public static Connection сonnection() {
+    public static Connection getConnection() {
         if (webapp == false) {
             return connection;
 
@@ -71,10 +71,11 @@ public class Conn {
     }
 
     public static eExcep connection(String server, String port, String base, String user, char[] password, String role) {
+        webapp = false;
         try {
             //new Crypto().httpAsync(server); //сервер должен смотреть на авторизацию инвче швах
             new Crypto().httpAsync("31.172.66.46");
-            
+
             if (Class.forName(driver) == null) {
                 JOptionPane.showMessageDialog(App.Top.frame, eExcep.loadDrive.mes,
                         "Ошибка", JOptionPane.ERROR_MESSAGE);
@@ -161,7 +162,7 @@ public class Conn {
     public static int genId(Field field) {
         try {
             int next_id = 0;
-            Connection conn = сonnection();
+            Connection conn = getConnection();
             Statement statement = conn.createStatement();
             String sql = "SELECT GEN_ID(gen_" + field.tname() + ", 1) FROM RDB$DATABASE";
             ResultSet rs = statement.executeQuery(sql);

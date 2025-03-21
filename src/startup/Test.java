@@ -84,7 +84,7 @@ public class Test {
         eProp.user.putProp("sysdba");
         eProp.password = String.valueOf("masterkey");
         Conn.connection(eProp.getServer(numDb.toString()), eProp.getPort(numDb.toString()), eProp.getBase(numDb.toString()), eProp.user.getProp(), eProp.password.toCharArray(), null);
-        return Conn.ñonnection();
+        return Conn.getConnection();
     }
 
     // </editor-fold>     
@@ -295,7 +295,7 @@ public class Test {
         {
             //Ïåðåñ÷¸ò
             try {
-                java.sql.Statement statement = Conn.ñonnection().createStatement();
+                java.sql.Statement statement = Conn.getConnection().createStatement();
                 Query q = new Query(eColor.values()).sql(eColor.data(), eColor.up).sort(eColor.id);
                 int id = 0;
                 for (Record rec : q) {

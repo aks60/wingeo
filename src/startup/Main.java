@@ -1,6 +1,5 @@
 package startup;
 
-import common.UCom;
 import frames.LogoToDb;
 import common.eProp;
 import java.util.Locale;
@@ -9,10 +8,6 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 public class Main {
-    
-    ///////////////////////////////////////////
-    public final static String versionApp = "2.0";
-    ///////////////////////////////////////////
     
     //Конструктор
     public Main() {
@@ -23,9 +18,10 @@ public class Main {
 
     //java -jar C:\\Okna\\winapp\\dist\\winapp.jar tex
     public static void main(String[] args) {
-
+        
+        //Если продакшин то цыкла не будет
         for (int index = 0; index < args.length; index++) {
-            
+
             eProp.dev = true;
             
             if (index == 0 && args[0].equals("adm")) {

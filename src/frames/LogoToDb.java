@@ -39,20 +39,14 @@ public class LogoToDb extends javax.swing.JDialog {
             connectToDb();
 
         } else {
-            labMes.setForeground(Color.BLUE);
-            labMes.setText("Введите логин и пароль");
+            if (eProp.demo == true) {
+                labMes.setText("ДЕМО ВЕРСИЯ");
+            } else {
+                labMes.setText("Введите логин и пароль");
+            }
             edUser.setText(eProp.user.getProp());
             edPass.requestFocus();
             getRootPane().setDefaultButton(btnOk);
-
-//            if (List.of("SYSDBA", "TEXNOLOG", "MANAGER")
-//                    .contains(eProp.user.read().toUpperCase())) {
-//                //edPass.setText("masterkey");
-//                //connectToDb();
-//            } else {
-//                edPass.requestFocus();
-//                getRootPane().setDefaultButton(btnOk);
-//            }
         }
     }
 
@@ -84,12 +78,12 @@ public class LogoToDb extends javax.swing.JDialog {
 
                     } else {
                         //Получим роль по имени логина
-                        Statement st = Conn.сonnection().createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+                        Statement st = Conn.getConnection().createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
                         //ResultSet rs = st.executeQuery("SELECT DISTINCT a.rdb$role_name , b.rdb$user FROM rdb$roles a, rdb$user_privileges b WHERE a.rdb$role_name = b.rdb$relation_name AND b.rdb$user = '" + edUser.getText() + "'");
                         ResultSet rs = st.executeQuery("SELECT u.RDB$USER, u.RDB$RELATION_NAME FROM RDB$USER_PRIVILEGES u WHERE u.RDB$USER = '" + edUser.getText().toUpperCase() + "'");
                         if (rs.next()) {
                             eProp.role = rs.getString("RDB$RELATION_NAME").trim();
-                            Conn.сonnection().close();
+                            Conn.getConnection().close();
                             //Соединение с новыми привелегиями
                             pass = Conn.connection(eProp.getServer(num), eProp.getPort(num), eProp.getBase(num), edUser.getText(), edPass.getPassword(), eProp.role);
                             //По имени роли откроем нужное приложение
@@ -159,7 +153,6 @@ public class LogoToDb extends javax.swing.JDialog {
         pan2.add(pan3, java.awt.BorderLayout.WEST);
 
         labMes.setFont(frames.UGui.getFont(0,0));
-        labMes.setForeground(new java.awt.Color(0, 0, 255));
         labMes.setText("<html>Ошибка соединения с базой данных!");
         labMes.setToolTipText("Ошибка соединения с базой данных!");
         labMes.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -313,7 +306,7 @@ public class LogoToDb extends javax.swing.JDialog {
     }//GEN-LAST:event_passonCaretUpdate
 
     private void useronCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_useronCaretUpdate
-        labMes.setText("");
+        //labMes.setText("");
         if (edPass.getPassword().length > 0 && !edUser.getText().isEmpty()) {
             btnOk.setEnabled(true);
         } else {
@@ -338,9 +331,9 @@ public class LogoToDb extends javax.swing.JDialog {
     private javax.swing.JProgressBar progressBar;
     // End of variables declaration//GEN-END:variables
 // </editor-fold>
-    
+
     public void initElements() {
         eProp.getWin(this, btnClose, (e) -> {
-        });     
-    }    
+        });
+    }
 }
