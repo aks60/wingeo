@@ -45,7 +45,7 @@ public class RSpecific {
             loadDoc(projectRec, prjprodList, doc);
 
             String str = doc.html();
-            str = new String(str.getBytes("windows-1251"));
+            str = new String(str.getBytes("windows-1251"), "windows-1251");
             RTable.write(str);
             ExecuteCmd.documentType(null);
 

@@ -24,9 +24,9 @@ public enum eProp {
     port1("3050"),
     port2("3050"),
     port3("3050"),
-    server1("31.172.66.46"),
-    server2("31.172.66.46"),
-    server3("31.172.66.46"),
+    server1("sa-okna.ru"),
+    server2("sa-okna.ru"),
+    server3("sa-okna.ru"),
     sysprodID("-1"), //выбранный системный шаблон продукта
     prjprodID("-1"), //выбранный продукт для клиента
     orderID("-1"), //выбранный заказ клиента
@@ -69,7 +69,7 @@ public enum eProp {
     public String getProp() {
         if (demo == true) {
             if(this == server1 || this == server2 || this == server3) {
-                return "31.172.66.46";
+                return "sa-okna.ru";
             }
             if (this == base1) {
                 return "/opt/database/fdemo/binet.fdb?encoding=win1251";

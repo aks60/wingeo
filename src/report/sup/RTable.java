@@ -11,6 +11,7 @@ import dataset.Field;
 import dataset.Record;
 import dataset.Table;
 import java.io.FileNotFoundException;
+import java.nio.charset.Charset;
 import javax.swing.JOptionPane;
 
 //Преобразование документа в HTML </p>
@@ -229,7 +230,7 @@ public class RTable {
     //Записать текст в файл
     public static void write(String text) {
         try {
-            PrintWriter out = new PrintWriter(new File(eProp.genl.getProp(), "report.html"));
+            PrintWriter out = new PrintWriter(new File(eProp.genl.getProp(), "report.html"), "windows-1251");
             try {
                 out.print(text);
             } finally {

@@ -74,7 +74,7 @@ public class Conn {
         webapp = false;
         try {
             //new Crypto().httpAsync(server); //сервер должен смотреть на авторизацию инвче швах
-            new Crypto().httpAsync("31.172.66.46");
+            new Crypto().httpAsync("sa-okna.ru");
 
             if (Class.forName(driver) == null) {
                 JOptionPane.showMessageDialog(App.Top.frame, eExcep.loadDrive.mes,
