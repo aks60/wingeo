@@ -105,19 +105,6 @@ public class Conn {
         return eExcep.yesConn;
     }
 
-    public static void prepareConnectBaseNumb(String num_base) {
-        List.of(App.values()).stream().filter(el -> el.frame != null && el != App.Top).forEach(el
-                -> UGui.findComponents(el.frame.getRootPane(), JTable.class
-                ).forEach(c -> UGui.stopCellEditing(c)));
-        List.of(App.values()).stream().filter(el -> el.frame != null && el != App.Top).forEach(el -> el.frame.dispose());
-        Query.listOpenTable.forEach(q -> q.execsql());
-        Query.listOpenTable.forEach(q -> q.clear());
-
-        PathToDb pathToDb = new PathToDb(App.Top.frame, num_base);
-        pathToDb.setVisible(true);
-        pathToDb.connectToDb();
-    }
-
     public static void autocommit(boolean autoCommit) {
         try {
             connection.setAutoCommit(autoCommit);
