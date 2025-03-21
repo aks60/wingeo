@@ -6,6 +6,7 @@ import frames.swing.cmp.ProgressBar;
 import common.eProp;
 import dataset.Record;
 import builder.Wincalc;
+import common.listener.ListenerAction;
 import domain.eSysprod;
 import java.awt.Frame;
 import java.util.HashMap;
@@ -13,10 +14,13 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import common.listener.ListenerFrame;
-import dataset.Conn;
+import dataset.Query;
+import frames.PathToDb;
+import frames.UGui;
 import frames.swing.cmp.MainMenu;
 import java.awt.Dimension;
 import java.util.List;
+import javax.swing.JTable;
 import javax.swing.JToggleButton;
 
 /**
@@ -57,9 +61,19 @@ public class Tex extends javax.swing.JFrame {
         }
     }
 
-    private void prepareConnectBaseNumb(String num_base) {
-        Conn.prepareConnectBaseNumb(num_base);
-        
+    private void prepareConnectBaseNumb(String new_num_base) {
+
+        String old_num_base = eProp.base_num.getProp();
+        List.of(App.values()).stream().filter(el -> el.frame != null && el != App.Top).forEach(el
+                -> UGui.findComponents(el.frame.getRootPane(), JTable.class)
+                        .forEach(c -> UGui.stopCellEditing(c)));
+        List.of(App.values()).stream().filter(el -> el.frame != null && el != App.Top).forEach(el -> el.frame.dispose());
+        Query.listOpenTable.forEach(q -> q.execsql());
+        Query.listOpenTable.forEach(q -> q.clear());
+
+        PathToDb pathToDb = new PathToDb(App.Top.frame, new_num_base);
+        pathToDb.setVisible(true);
+
         if (eProp.base_num.getProp().equals("1")) {
             btnT7.setSelected(true);
             mn631.setSelected(true);
@@ -80,7 +94,6 @@ public class Tex extends javax.swing.JFrame {
 
         buttonLookAndFeelGroup = new javax.swing.ButtonGroup();
         buttonBaseGroup1 = new javax.swing.ButtonGroup();
-        buttonBaseGroup2 = new javax.swing.ButtonGroup();
         buttonMenuGroup = new javax.swing.ButtonGroup();
         ppmSpecif = new javax.swing.JPopupMenu();
         spcSystem = new javax.swing.JMenuItem();
@@ -507,11 +520,6 @@ public class Tex extends javax.swing.JFrame {
         btnT8.setFocusable(false);
         btnT8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnT8.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c062.gif"))); // NOI18N
-        btnT8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnT8MouseEntered(evt);
-            }
-        });
         btnT8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBase(evt);
@@ -1037,13 +1045,13 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     }//GEN-LAST:event_windowDeiconified
 
     private void mnBase(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnBase
-        String num_base = (mn631.isSelected()) ? "1" : (mn632.isSelected()) ? "2" : "3";
-        prepareConnectBaseNumb(num_base);
+        String new_num_base = (mn631.isSelected()) ? "1" : (mn632.isSelected()) ? "2" : "3";
+        prepareConnectBaseNumb(new_num_base);
     }//GEN-LAST:event_mnBase
 
     private void btnBase(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBase
-        String num_base = (btnT7.isSelected()) ? "1" : (btnT8.isSelected()) ? "2" : "3";
-        prepareConnectBaseNumb(num_base);
+        String new_num_base = (btnT7.isSelected()) ? "1" : (btnT8.isSelected()) ? "2" : "3";
+        prepareConnectBaseNumb(new_num_base);
     }//GEN-LAST:event_btnBase
 
     private void mnGroup2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnGroup2
@@ -1128,10 +1136,6 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
         });
     }//GEN-LAST:event_mn2Specif
 
-    private void btnT8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnT8MouseEntered
-        //System.out.println("xxxxx555");
-    }//GEN-LAST:event_btnT8MouseEntered
-
 // <editor-fold defaultstate="collapsed" desc="Generated Code">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn11;
@@ -1159,7 +1163,6 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     private javax.swing.JToggleButton btnT9;
     private javax.swing.JButton btnTest;
     private javax.swing.ButtonGroup buttonBaseGroup1;
-    private javax.swing.ButtonGroup buttonBaseGroup2;
     private javax.swing.ButtonGroup buttonLookAndFeelGroup;
     private javax.swing.ButtonGroup buttonMenuGroup;
     private javax.swing.JMenuBar mn0;
@@ -1218,6 +1221,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
 // </editor-fold> 
 
     private void initElements() {
+
         btnTest.setVisible(eProp.dev);
         LookAndFeel lookAndFeel = UIManager.getLookAndFeel();
         for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
@@ -1258,7 +1262,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
                         JToggleButton b = (btn == btnT7) ? btnT7 : (btn == btnT8) ? btnT8 : btnT9;
                         eProp p = (btn == btnT7) ? eProp.base1 : (btn == btnT8) ? eProp.base2 : eProp.base3;
                         eProp s = (btn == btnT7) ? eProp.server1 : (btn == btnT8) ? eProp.server2 : eProp.server3;
-                        b.setToolTipText("Connect:  \"" +  s.getProp() + ":" + p.getProp() + "\"");
+                        b.setToolTipText("Connect:  \"" + s.getProp() + ":" + p.getProp() + "\"");
                     }
                 }));
     }
