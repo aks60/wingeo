@@ -50,7 +50,7 @@ public enum eProp {
     public final static Locale locale = Locale.of("ru", "RU");
     public final static String fb = "fb";
     public static boolean dev = false;      //признак разработки и тестирования
-    public final static boolean demo = true;      //признак разработки и тестирования
+    public final static boolean demo = false;      //признак разработки и тестирования
     public final static String versionApp = "2.0";
     public static String profile = "";      //профиль разработки и тестирования
     public static Timer timer = new Timer(1000, null);
