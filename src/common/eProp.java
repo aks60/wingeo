@@ -72,10 +72,10 @@ public enum eProp {
                 return "sa-okna.ru";
             }
             if (this == base1) {
-                return "/opt/database/fdemo/binet.fdb?encoding=win1251";
+                return "/opt/database/fbase/00/binet.fdb?encoding=win1251";
             }
             if (this == base2 || this == base3) {
-                return "/opt/database/fdemo/bimax.fdb?encoding=win1251";
+                return "/opt/database/fbase/00/bimax.fdb?encoding=win1251";
             }
         }
         Preferences pref = Preferences.userRoot().node(this.getClass().getName());
