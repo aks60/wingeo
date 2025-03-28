@@ -17,8 +17,8 @@ public enum eProp {
     lookandfeel("Metal", "Windows"),
     genl(System.getProperty("user.home") + "/Avers/Okna",
             "C:\\ProgramData\\Avers\\Okna"),
-    url_src("http://localhost:8080/winweb/"),
-    web_port("8080"),
+    url_src("http://localhost/winweb/"),
+    web_port("80"),
     typedb("fb"),
     user("sysdba"),
     port1("3050"),
@@ -49,10 +49,10 @@ public enum eProp {
     public static String role = null;
     public final static Locale locale = Locale.of("ru", "RU");
     public final static String fb = "fb";
-    public static boolean dev = false;      //признак разработки и тестирования
-    public final static boolean demo = false;      //признак разработки и тестирования
+    public static boolean dev = false; //признак разработки и тестирования
+    public final static boolean demo = true; //признак demo базы
     public final static String versionApp = "2.0";
-    public static String profile = "";      //профиль разработки и тестирования
+    public static String profile = ""; //профиль разработки и тестирования
     public static Timer timer = new Timer(1000, null);
 
     //Значение по умолчанию

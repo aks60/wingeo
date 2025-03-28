@@ -143,7 +143,7 @@ public class Crypto {
 
             //Отправить на сервер закодированное случайное сообщениеtry 
             var request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://" + server + ":8080/winnet/Crypto?action=secret&message=" + encodeMesStr))
+                    .uri(URI.create("http://" + server + "/winnet/Crypto?action=secret&message=" + encodeMesStr))
                     .timeout(Duration.ofSeconds(16)).build();
             ExecutorService executor = Executors.newSingleThreadExecutor();
             HttpClient client = HttpClient.newBuilder().executor(executor).build();
@@ -211,7 +211,7 @@ public class Crypto {
             String encodeMesStr = Base64.getEncoder().encodeToString(encryptMesBytes);
 
             //Отправить на сервер закодированное случайное сообщение
-            var request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&message=" + encodeMesStr)).build();
+            var request = HttpRequest.newBuilder().uri(URI.create("http://localhost/winnet/Crypto?action=secret&message=" + encodeMesStr)).build();
             var client = HttpClient.newHttpClient();
             HttpResponse.BodyHandler<String> asString = HttpResponse.BodyHandlers.ofString();
             HttpResponse<String> response = client.send(request, asString);
@@ -232,7 +232,7 @@ public class Crypto {
     public static void httpAsync() throws ExecutionException, InterruptedException {
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/winnet/Crypto?action=secret&username=sysdba"))
+                .uri(URI.create("http://localhost/winnet/Crypto?action=secret&username=sysdba"))
                 //.uri(URI.create("https://postman-echo.com/post")) //тест запроса!!!
                 .header("Content-Type", "text/plain")
                 .POST(HttpRequest.BodyPublishers.ofString("Hi there!"))

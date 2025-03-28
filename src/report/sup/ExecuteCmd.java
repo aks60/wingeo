@@ -46,7 +46,7 @@ public class ExecuteCmd {
         try {
             URI url = new URI(eProp.url_src.getProp() + "/appdoc/help/director/" + file.replace('.', '/') + ".html");
 //            if ("192.168.33.4".equals(eProperty.server.read())) {
-//                url = new URI("http://89.107.28.10:8080/appdoc/help/director/" + file.replace('.', '/') + ".html");
+//                url = new URI("http://89.107.28.10/appdoc/help/director/" + file.replace('.', '/') + ".html");
 //            }
             desktop.browse(url);
         } catch (URISyntaxException e) {
