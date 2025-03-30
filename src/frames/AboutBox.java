@@ -14,7 +14,6 @@ public class AboutBox extends javax.swing.JFrame {
 
     private void init() {
         labApp.setText("Версия программы - " + eProp.version_app);
-        labBase.setText("Версия базы данных - " + eProp.version_db);
     }
 
     @SuppressWarnings("unchecked")
@@ -24,18 +23,12 @@ public class AboutBox extends javax.swing.JFrame {
         north = new javax.swing.JPanel();
         labTitle = new javax.swing.JLabel();
         pan2 = new javax.swing.JPanel();
-        labApp = new javax.swing.JLabel();
-        labBase = new javax.swing.JLabel();
-        labConfig = new javax.swing.JLabel();
         labImage = new javax.swing.JLabel();
-        centr = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        centr = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        labApp = new javax.swing.JLabel();
         south = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
 
@@ -52,7 +45,7 @@ public class AboutBox extends javax.swing.JFrame {
         north.setLayout(new java.awt.BorderLayout());
 
         labTitle.setBackground(new java.awt.Color(255, 255, 255));
-        labTitle.setFont(frames.UGui.getFont(0, 1));
+        labTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         labTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labTitle.setText("<<ГеоОкна>>");
         labTitle.setOpaque(true);
@@ -62,21 +55,15 @@ public class AboutBox extends javax.swing.JFrame {
         pan2.setBackground(new java.awt.Color(255, 255, 255));
         pan2.setPreferredSize(new java.awt.Dimension(200, 60));
 
-        labApp.setFont(frames.UGui.getFont(0, 1));
-        labApp.setText("Верcия программы - 1.0");
-
-        labBase.setFont(frames.UGui.getFont(0, 1));
-        labBase.setText("Версия базы данных - 1.0");
-
-        labConfig.setFont(frames.UGui.getFont(0, 1));
-        labConfig.setText("Конфигурация  - 2.0");
-
         labImage.setBackground(new java.awt.Color(255, 255, 255));
         labImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif"))); // NOI18N
         labImage.setMaximumSize(new java.awt.Dimension(300, 70));
         labImage.setOpaque(true);
         labImage.setPreferredSize(new java.awt.Dimension(80, 60));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel1.setText("<html>Программа для расчета\n<br>пластиковых окон и дврей.");
 
         javax.swing.GroupLayout pan2Layout = new javax.swing.GroupLayout(pan2);
         pan2.setLayout(pan2Layout);
@@ -86,24 +73,18 @@ public class AboutBox extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(labImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(labConfig, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labBase, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
-                    .addComponent(labApp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pan2Layout.setVerticalGroup(
             pan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(labImage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan2Layout.createSequentialGroup()
-                .addComponent(labApp, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(labBase, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(labConfig, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pan2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labImage, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        labConfig.getAccessibleContext().setAccessibleName("");
 
         north.add(pan2, java.awt.BorderLayout.CENTER);
 
@@ -112,62 +93,41 @@ public class AboutBox extends javax.swing.JFrame {
         centr.setBackground(new java.awt.Color(255, 255, 255));
         centr.setPreferredSize(new java.awt.Dimension(300, 160));
 
-        jLabel1.setFont(frames.UGui.getFont(0,0));
-        jLabel1.setText("Программа для расчета оконных конструкций");
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel5.setText("Сайт продукта: http:sa-okna.ru/winaks");
 
-        jLabel3.setFont(frames.UGui.getFont(0,0));
-        jLabel3.setText("из пластика, дерева и алюминия.");
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel6.setText("Телефон: +7(903)124 7833");
 
-        jLabel4.setFont(frames.UGui.getFont(0,0));
-        jLabel4.setText("Разработчик: Аксёнов Сергей Аркадьевич");
-
-        jLabel5.setFont(frames.UGui.getFont(0,0));
-        jLabel5.setText("Сайт разработчика: http: www.iicokna.ru");
-
-        jLabel6.setFont(frames.UGui.getFont(0,0));
-        jLabel6.setText("Телефон: +7(903)XXX-XX-XX");
-
-        jLabel7.setFont(frames.UGui.getFont(0,0));
-        jLabel7.setText("Релиз версии: 1.01");
-
-        jLabel8.setFont(frames.UGui.getFont(0,0));
-        jLabel8.setText("Выпуск первой версии 2021");
+        labApp.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        labApp.setText("Верcия программы - 1.0");
+        labApp.setMaximumSize(new java.awt.Dimension(86, 18));
+        labApp.setMinimumSize(new java.awt.Dimension(86, 18));
+        labApp.setPreferredSize(new java.awt.Dimension(86, 18));
 
         javax.swing.GroupLayout centrLayout = new javax.swing.GroupLayout(centr);
         centr.setLayout(centrLayout);
         centrLayout.setHorizontalGroup(
             centrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(centrLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(20, 20, 20)
                 .addGroup(centrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labApp, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(centrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         centrLayout.setVerticalGroup(
             centrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(centrLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
-                .addGap(8, 8, 8)
+                .addGap(20, 20, 20)
+                .addComponent(labApp, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         getContentPane().add(centr, java.awt.BorderLayout.CENTER);
@@ -196,7 +156,7 @@ public class AboutBox extends javax.swing.JFrame {
         southLayout.setVerticalGroup(
             southLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, southLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -218,15 +178,9 @@ public class AboutBox extends javax.swing.JFrame {
     private javax.swing.JButton btnClose;
     private javax.swing.JPanel centr;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel labApp;
-    private javax.swing.JLabel labBase;
-    private javax.swing.JLabel labConfig;
     private javax.swing.JLabel labImage;
     private javax.swing.JLabel labTitle;
     private javax.swing.JPanel north;
