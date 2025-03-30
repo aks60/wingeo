@@ -1,17 +1,21 @@
 package frames;
 
+import common.eProp;
 import frames.UGui;
+import java.util.List;
 
 public class AboutBox extends javax.swing.JFrame {
-    
+
     public AboutBox() {
         initComponents();
-
-//        labProjectVersion.setText("Версия программы - 1.0");
-//        labBase.setText("Версия базы данных - 1.0");
-//        labConfig.setText("Конфигурация  - 2.0");
+        initElements();
+        init();
     }
 
+    private void init() {
+        labApp.setText("Версия программы - " + eProp.version_app);
+        labBase.setText("Версия базы данных - " + eProp.version_db);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -50,7 +54,7 @@ public class AboutBox extends javax.swing.JFrame {
         labTitle.setBackground(new java.awt.Color(255, 255, 255));
         labTitle.setFont(frames.UGui.getFont(0, 1));
         labTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labTitle.setText("<<SA.OKNA>>");
+        labTitle.setText("<<ГеоОкна>>");
         labTitle.setOpaque(true);
         labTitle.setPreferredSize(new java.awt.Dimension(123, 30));
         north.add(labTitle, java.awt.BorderLayout.PAGE_START);
@@ -59,13 +63,13 @@ public class AboutBox extends javax.swing.JFrame {
         pan2.setPreferredSize(new java.awt.Dimension(200, 60));
 
         labApp.setFont(frames.UGui.getFont(0, 1));
-        labApp.setText("Р’РµСЂРёСЏ РїСЂРѕРіСЂР°РјРјС‹ - 1.0");
+        labApp.setText("Верcия программы - 1.0");
 
         labBase.setFont(frames.UGui.getFont(0, 1));
-        labBase.setText("Р’РµСЂСЃРёСЏ Р±Р°Р·С‹ РґР°РЅРЅС‹С… - 1.0");
+        labBase.setText("Версия базы данных - 1.0");
 
         labConfig.setFont(frames.UGui.getFont(0, 1));
-        labConfig.setText("РљРѕРЅС„РёРіСѓСЂР°С†РёСЏ  - 2.0");
+        labConfig.setText("Конфигурация  - 2.0");
 
         labImage.setBackground(new java.awt.Color(255, 255, 255));
         labImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -109,25 +113,25 @@ public class AboutBox extends javax.swing.JFrame {
         centr.setPreferredSize(new java.awt.Dimension(300, 160));
 
         jLabel1.setFont(frames.UGui.getFont(0,0));
-        jLabel1.setText("РџСЂРѕРіСЂР°РјРјР° РґР»СЏ СЂР°СЃС‡РµС‚Р° РѕРєРѕРЅРЅС‹С… РєРѕРЅСЃС‚СЂСѓРєС†РёР№");
+        jLabel1.setText("Программа для расчета оконных конструкций");
 
         jLabel3.setFont(frames.UGui.getFont(0,0));
-        jLabel3.setText("РёР· РїР»Р°СЃС‚РёРєР°, РґРµСЂРµРІР° Рё Р°Р»СЋРјРёРЅРёСЏ.");
+        jLabel3.setText("из пластика, дерева и алюминия.");
 
         jLabel4.setFont(frames.UGui.getFont(0,0));
-        jLabel4.setText("Р Р°Р·СЂР°Р±РѕС‚С‡РёРє: РђРєСЃС‘РЅРѕРІ РЎРµСЂРіРµР№ РђСЂРєР°РґСЊРµРІРёС‡");
+        jLabel4.setText("Разработчик: Аксёнов Сергей Аркадьевич");
 
         jLabel5.setFont(frames.UGui.getFont(0,0));
-        jLabel5.setText("РЎР°Р№С‚ СЂР°Р·СЂР°Р±РѕС‚С‡РёРєР°: http: www.iicokna.ru");
+        jLabel5.setText("Сайт разработчика: http: www.iicokna.ru");
 
         jLabel6.setFont(frames.UGui.getFont(0,0));
-        jLabel6.setText("РўРµР»РµС„РѕРЅ: +7(903)XXX-XX-XX");
+        jLabel6.setText("Телефон: +7(903)XXX-XX-XX");
 
         jLabel7.setFont(frames.UGui.getFont(0,0));
-        jLabel7.setText("Р РµР»РёР· РІРµСЂСЃРёРё: 1.01");
+        jLabel7.setText("Релиз версии: 1.01");
 
         jLabel8.setFont(frames.UGui.getFont(0,0));
-        jLabel8.setText("Р’С‹РїСѓСЃРє РїРµСЂРІРѕР№ РІРµСЂСЃРёРё 2021");
+        jLabel8.setText("Выпуск первой версии 2021");
 
         javax.swing.GroupLayout centrLayout = new javax.swing.GroupLayout(centr);
         centr.setLayout(centrLayout);
@@ -172,7 +176,7 @@ public class AboutBox extends javax.swing.JFrame {
 
         btnClose.setFont(frames.UGui.getFont(0, 1));
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b053.gif"))); // NOI18N
-        btnClose.setText("РћРљ");
+        btnClose.setText("ОК");
         btnClose.setPreferredSize(new java.awt.Dimension(69, 20));
         btnClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -229,4 +233,11 @@ public class AboutBox extends javax.swing.JFrame {
     private javax.swing.JPanel pan2;
     private javax.swing.JPanel south;
     // End of variables declaration//GEN-END:variables
+
+    public void initElements() {
+
+        eProp.getWin(this, btnClose, (e) -> {
+            eProp.putWin(this, btnClose);
+        });
+    }
 }

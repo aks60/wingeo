@@ -89,16 +89,13 @@ public enum App {
     Specification, Syssize, RuleCalc, PSFrame, PSCompare;
     public javax.swing.JFrame frame;
     public static javax.swing.JFrame active;
-    long startTime = 0, endTime;
+    //long startTime = 0, endTime;
 
     public void createFrame(java.awt.Window parent, Object... param) {
         if (frame != null) {
             frame.dispose();
         }
         try {
-//            if (eProp.dev == true) {
-//                startTime = System.currentTimeMillis();
-//            }
             switch (this) {
 
                 case PSFrame:
@@ -216,7 +213,6 @@ public enum App {
                     }
                     break;
             }
-            //eProfile.appframe = frame;
             active = frame;
             frame.setName(this.name());
             //FrameToFile.setFrameSize(frame); //размеры окна
@@ -227,14 +223,8 @@ public enum App {
             });
             frame.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage());
             frame.setVisible(true);
-//            if (eProp.dev == true) {
-//                endTime = System.currentTimeMillis();
-//                long elapsedTime = endTime - startTime;
-//                System.err.println(this.name() + " - " + elapsedTime + " мс");
-//            }
+
         } catch (Exception e) {
-            //frame.dispose();
-            //frame = null;
             System.err.println("ќЎ»Ѕ ј:startup.App.createFrame() " + e);
         }
     }

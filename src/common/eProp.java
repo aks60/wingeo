@@ -49,7 +49,8 @@ public enum eProp {
     public static String role = null;
     public final static Locale locale = Locale.of("ru", "RU");
     public static String devel = "99"; //"00"-demo, "01-98"-prod, "99"-developer
-    public final static String version = "2.0";
+    public final static String version_app = "2.0";
+    public final static String version_db = "2.0";
     public static String profile = ""; //профиль разработки и тестирования
     public static Timer timer = new Timer(1000, null);
 

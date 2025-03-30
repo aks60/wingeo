@@ -95,12 +95,13 @@ public class Test {
             //clearDataDB();
             //PSConvert.exec();
             //frame();
-            wincalc("604005");
+            //wincalc("604005");
             //param();
             //query();
             //json();
             //uid();
             //script();
+            //random();
             //geom();
 
 //            LineSegment segm = new LineSegment();
@@ -354,7 +355,7 @@ public class Test {
         String filterStr = "" + uid;
         str = filterStr.replaceAll("-", "");
 
-        //System.out.println(Integer.parseInt(str));
+        System.out.println(Integer.parseInt(str));
     }
 
     private static void script() throws Exception {
@@ -380,20 +381,17 @@ public class Test {
     }
 
     public static void random() {
-        double X1 = 862.743578 - 862.743567;
-        double X2 = Math.round(X1 * 1000);
-        double X3 = X2 / 1000;
-//        int a = 0; // Начальное значение диапазона - "от"
-//        int b = 10; // Конечное значение диапазона - "до"
-//
-//        int random_number1 = a + (int) (Math.random() * b); // Генерация 1-го числа
-//        System.out.println("1-ое случайное число: " + random_number1);
-//
-//        int random_number2 = a + (int) (Math.random() * b); // Генерация 2-го числа
-//        System.out.println("2-ое случайное число: " + random_number2);
-//
-//        int random_number3 = a + (int) (Math.random() * b); // Генерация 3-го числа
-//        System.out.println("3-е случайное число: " + random_number3);
+        int a = 0; // Начальное значение диапазона - "от"
+        int b = 10; // Конечное значение диапазона - "до"
+
+        int random_number1 = a + (int) (Math.random() * b); // Генерация 1-го числа
+        System.out.println("1-ое случайное число: " + random_number1);
+
+        int random_number2 = a + (int) (Math.random() * b); // Генерация 2-го числа
+        System.out.println("2-ое случайное число: " + random_number2);
+
+        int random_number3 = a + (int) (Math.random() * b); // Генерация 3-го числа
+        System.out.println("3-е случайное число: " + random_number3);
     }
 
     public static void geom() {

@@ -194,7 +194,7 @@ public class Tex extends javax.swing.JFrame {
         ppmSpecif.add(spcProduct);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("SA.OKNA   <АРМ Технолог>");
+        setTitle("ГеоОкна   <АРМ Технолог>");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -924,7 +924,11 @@ public class Tex extends javax.swing.JFrame {
 }//GEN-LAST:event_mnExit
 
 private void mnAboutBox(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnAboutBox
-
+//        ProgressBar.create(Tex.this, new ListenerFrame() {
+//            public void actionRequest(Object obj) {
+//                App.AboutBox.createFrame(Tex.this);
+//            }
+//        });
     App.AboutBox.createFrame(Tex.this);
 }//GEN-LAST:event_mnAboutBox
 
@@ -1224,7 +1228,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
 
         btnTest.setVisible(eProp.devel.equals("99"));
         btnT9.setEnabled(!eProp.devel.equals("00"));
-        
+
         LookAndFeel lookAndFeel = UIManager.getLookAndFeel();
         for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
             JCheckBoxMenuItem mnIt = new javax.swing.JCheckBoxMenuItem();
