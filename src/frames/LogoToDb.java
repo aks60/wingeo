@@ -21,7 +21,7 @@ public class LogoToDb extends javax.swing.JDialog {
         initComponents();
         initElements();
 
-        if (eProp.demo == true) {
+        if (eProp.node.equals("00") == true) {
             labMes.setText("делн бепяхъ");
             edUser.setText("SYSDBA"); //user
             edPass.setText("masterkey"); //pass

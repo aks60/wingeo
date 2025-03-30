@@ -50,8 +50,8 @@ public enum eProp {
     public final static Locale locale = Locale.of("ru", "RU");
     public final static String fb = "fb";
     public static boolean dev = false; //признак разработки и тестирования
-    public final static boolean demo = true; //признак demo базы
-    public final static String versionApp = "2.0";
+    public final static String node = "99"; //("00"-демо, "01-98"-продакшен, "99"-разаботка)
+    public final static String version = "2.0";
     public static String profile = ""; //профиль разработки и тестирования
     public static Timer timer = new Timer(1000, null);
 
@@ -67,16 +67,20 @@ public enum eProp {
     }
 
     public String getProp() {
-        if (demo == true) {
-            if(this == server1 || this == server2 || this == server3) {
+        if (node.equals("99") == false) {
+            
+            if (this == server1 || this == server2 || this == server3) {
                 return "sa-okna.ru";
             }
             if (this == base1) {
-                return "/opt/database/fbase/00/binet.fdb?encoding=win1251";
+                return "/opt/database/fbase/" + node + "/binet.fdb?encoding=win1251";
             }
-            if (this == base2 || this == base3) {
-                return "/opt/database/fbase/00/bimax.fdb?encoding=win1251";
+            if (this == base2) {
+                return "/opt/database/fbase/" + node + "/bimax.fdb?encoding=win1251";
             }
+            if (this == base3) {
+                return "/opt/database/fbase/" + node + "/binet.fdb?encoding=win1251";
+            }            
         }
         Preferences pref = Preferences.userRoot().node(this.getClass().getName());
         return pref.get(this.name(), this.value);
