@@ -1222,8 +1222,8 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
 
     private void initElements() {
 
-        btnTest.setVisible(eProp.dev);
-        btnT9.setEnabled(!eProp.node.equals("00"));
+        btnTest.setVisible(eProp.devel.equals("99"));
+        btnT9.setEnabled(!eProp.devel.equals("00"));
         
         LookAndFeel lookAndFeel = UIManager.getLookAndFeel();
         for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {

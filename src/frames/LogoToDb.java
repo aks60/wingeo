@@ -21,13 +21,13 @@ public class LogoToDb extends javax.swing.JDialog {
         initComponents();
         initElements();
 
-        if (eProp.node.equals("00") == true) {
+        if (eProp.devel.equals("00") == true) {
             labMes.setText("ДЕМО ВЕРСИЯ");
             edUser.setText("SYSDBA"); //user
             edPass.setText("masterkey"); //pass
         } 
         //Автопароль при тестировании
-        if (eProp.dev == true) {
+        if (eProp.devel.equals("99") == true) {
             if ("adm".equals(eProp.profile)) {
                 edUser.setText("SYSDBA"); //user
                 edPass.setText("masterkey"); //pass

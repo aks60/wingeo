@@ -8,7 +8,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 public class Main {
-    
+
     //Конструктор
     public Main() {
         Locale.setDefault(eProp.locale);
@@ -18,12 +18,14 @@ public class Main {
 
     //java -jar C:\\Okna\\winapp\\dist\\winapp.jar tex
     public static void main(String[] args) {
-        
+
         //Если продакшин то цыкла не будет
         for (int index = 0; index < args.length; index++) {
 
-            eProp.dev = true;
-            
+            if ("tex".equals(args[0]) || "man".equals(args[0])) {
+                eProp.devel = "99";
+            }
+
             if (index == 0 && args[0].equals("adm")) {
                 eProp.profile = args[0];
 
@@ -55,7 +57,11 @@ public class Main {
 //                Runtime.getRuntime().addShutdownHook(new Thread() {
 //                    @Override
 //                    public void run() {
-////                        try {
+            
+        
+    
+
+    ////                        try {
 ////                            ePref.save();
 ////                        } catch (Exception e) {
 ////                            System.err.println(e);

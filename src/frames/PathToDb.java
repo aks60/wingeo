@@ -41,7 +41,7 @@ public class PathToDb extends javax.swing.JDialog {
 
         onCaretUpdate(null);
 
-        if (eProp.dev == false) {
+        if (eProp.devel.equals("99") == false) {
             edHost.setEditable(false);
             edPath.setEditable(false);
             edPort.setEditable(false);

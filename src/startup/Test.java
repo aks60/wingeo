@@ -90,7 +90,7 @@ public class Test {
     // </editor-fold>     
     public static void main(String[] args) throws Exception {
 
-        eProp.dev = true;
+        eProp.devel = "99";
         try {
             //clearDataDB();
             //PSConvert.exec();

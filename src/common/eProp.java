@@ -48,9 +48,7 @@ public enum eProp {
     public static String password = "*";
     public static String role = null;
     public final static Locale locale = Locale.of("ru", "RU");
-    public final static String fb = "fb";
-    public static boolean dev = false; //признак разработки и тестирования
-    public final static String node = "99"; //("00"-демо, "01-98"-продакшен, "99"-разаботка)
+    public static String devel = "99"; //"00"-demo, "01-98"-prod, "99"-developer
     public final static String version = "2.0";
     public static String profile = ""; //профиль разработки и тестирования
     public static Timer timer = new Timer(1000, null);
@@ -67,19 +65,19 @@ public enum eProp {
     }
 
     public String getProp() {
-        if (node.equals("99") == false) {
+        if (devel.equals("99") == false) {
             
             if (this == server1 || this == server2 || this == server3) {
                 return "sa-okna.ru";
             }
             if (this == base1) {
-                return "/opt/database/fbase/" + node + "/binet.fdb?encoding=win1251";
+                return "/opt/database/fbase/" + devel + "/binet.fdb?encoding=win1251";
             }
             if (this == base2) {
-                return "/opt/database/fbase/" + node + "/bimax.fdb?encoding=win1251";
+                return "/opt/database/fbase/" + devel + "/bimax.fdb?encoding=win1251";
             }
             if (this == base3) {
-                return "/opt/database/fbase/" + node + "/binet.fdb?encoding=win1251";
+                return "/opt/database/fbase/" + devel + "/binet.fdb?encoding=win1251";
             }            
         }
         Preferences pref = Preferences.userRoot().node(this.getClass().getName());

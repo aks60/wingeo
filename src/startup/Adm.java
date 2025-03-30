@@ -84,7 +84,7 @@ public class Adm extends javax.swing.JFrame {
 
         }
         edPath.setText(GsonScript.filePath());
-        if (eProp.dev == true) {
+        if (eProp.devel.equals("99") == true) {
             edPort.setText((eProp.base_num.getProp().equals("2") || eProp.base_num.getProp().equals("3")) ? "3055" : "3050");
         } else {
             edPort.setText("3050");

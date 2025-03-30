@@ -526,7 +526,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             record.set(eSysmodel.npp, record.get(eSysmodel.id));
 
             //Для загрузки скрипта из программы  
-            if (eProp.dev == true) {
+            if (eProp.devel.equals("99") == true) {
                 Object prj = JOptionPane.showInputDialog(Models.this, "Номер проекта", "Проект", JOptionPane.QUESTION_MESSAGE);
                 if (prj != null) {
                     json = GsonScript.modelScript(Integer.valueOf(String.valueOf(prj)));
@@ -672,7 +672,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 // </editor-fold>
     private void initElements() {
         
-        btnTest.setVisible(eProp.dev);
+        btnTest.setVisible(eProp.devel.equals("99"));
         eProp.getWin(this, btnClose, (e) -> {
             eProp.putWin(this, btnClose);
         }); 

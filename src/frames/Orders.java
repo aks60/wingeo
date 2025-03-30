@@ -3925,7 +3925,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
     private void initElements() {
         
-        btnTest.setVisible(eProp.dev);
+        btnTest.setVisible(eProp.devel.equals("99"));
         eProp.getWin(this, btnClose, (e) -> {
             eProp.putWin(this, btnClose);
         }); 

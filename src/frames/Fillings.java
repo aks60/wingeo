@@ -1048,7 +1048,7 @@ public class Fillings extends javax.swing.JFrame {
 
     private void initElements() {
 
-        btnTest.setVisible(eProp.dev);
+        btnTest.setVisible(eProp.devel.equals("99"));
         eProp.getWin(this, btnClose, (e) -> {
             eProp.putWin(this, btnClose);
         });        
