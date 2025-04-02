@@ -839,6 +839,8 @@ public class Groups extends javax.swing.JFrame {
                 table = tab1;
             } else if (tabb.getSelectedIndex() == 4) {
                 table = tab5;
+                btnIns.setEnabled(false);
+                btnDel.setEnabled(false);                
             }
         } else {
             if (tabb.getSelectedIndex() == 0) {
@@ -860,8 +862,8 @@ public class Groups extends javax.swing.JFrame {
 
     private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
         if (evt.getButton() == MouseEvent.BUTTON3) {
-            JTable table = List.of(tab1, tab2, tab3, tab4, tab5, tab6).stream().filter(it -> it == evt.getSource()).findFirst().get();
-            List.of(tab1, tab2, tab3, tab4, tab5, tab6).forEach(tab -> tab.setBorder(null));
+            JTable table = List.of(tab1, tab2, tab3, tab4, tab6).stream().filter(it -> it == evt.getSource()).findFirst().get();
+            List.of(tab1, tab2, tab3, tab4, tab6).forEach(tab -> tab.setBorder(null));
             table.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
             ppmCrud.show(table, evt.getX(), evt.getY());
         }

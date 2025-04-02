@@ -2952,7 +2952,7 @@ public class Artikles extends javax.swing.JFrame {
             eProp.putWin(this, btnClose, tab1, tab2);
         }, tab1, tab2);
    
-        filterTable = new TableFieldFilter(0, tab1);
+        filterTable = new TableFieldFilter(0, tab1, tab2);
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
 

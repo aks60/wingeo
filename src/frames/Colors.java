@@ -429,19 +429,19 @@ public class Colors extends javax.swing.JFrame {
             }
         } else if (tab2.getBorder() != null) {
             int colorID = qColor.get(UGui.getIndexRec(tab2)).getInt(eColor.id);
-            String mes[] = {"РќРµР»СЊР·СЏ СѓРґР°Р»РёС‚СЊ Р·Р°РїРёСЃСЊ РЅР° РєРѕС‚РѕСЂСѓСЋ РёРјРµСЋС‚СЃСЏ СЃСЃС‹Р»РєРё РёР· РґСЂСѓРіРёС… С„РѕСЂРј, ", "SQL РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", ""};
+            String mes[] = {"Нельзя удалить запись на которую имеются ссылки из других форм, ", "SQL предупреждение", ""};
             if (!new Query(eKitdet.id).sql(eKitdet.data(), eKitdet.color1_id, colorID).isEmpty()) {
-                mes[2] = "СЃРј. С„РѕСЂРјСѓ РљРѕРёРїР»РµРєС‚С‹";
+                mes[2] = "см. форму Коиплекты‹";
             } else if (!new Query(eJoindet.id).sql(eJoindet.data(), eJoindet.color_fk, colorID).isEmpty()) {
-                mes[2] = "СЃРј. С„РѕСЂРјСѓ РЎРѕРµРґРёРЅРµРЅРёСЏ";
+                mes[2] = "см. форму Соединения";
             } else if (!new Query(eElemdet.id).sql(eElemdet.data(), eElemdet.color_fk, colorID).isEmpty()) {
-                mes[2] = "СЃРј. С„РѕСЂРјСѓ РЎРѕСЃС‚Р°РІС‹";
+                mes[2] = "см. форму Составы";
             } else if (!new Query(eGlasdet.id).sql(eGlasdet.data(), eGlasdet.color_fk, colorID).isEmpty()) {
-                mes[2] = "СЃРј. С„РѕСЂРјСѓ Р—Р°РїРѕР»РЅРµРЅРёСЏ";
+                mes[2] = "см. форму Заполнения";
             } else if (!new Query(eFurndet.id).sql(eFurndet.data(), eFurndet.color_fk, colorID).isEmpty()) {
-                mes[2] = "СЃРј. С„РѕСЂРјСѓ Р¤СѓСЂРЅРёС‚СѓСЂР°";
+                mes[2] = "см. форму Фурнитура";
             } else if (!new Query(eArtdet.id).sql(eArtdet.data(), eArtdet.color_fk, colorID).isEmpty()) {
-                mes[2] = "СЃРј. С„РѕСЂРјСѓ РђСЂС‚РёРєСѓР»С‹";
+                mes[2] = "см. форму Артикулы";
             }
             if (mes[2].isEmpty() == false) {
                 JOptionPane.showMessageDialog(this, mes[0] + mes[2], mes[1], JOptionPane.INFORMATION_MESSAGE);
@@ -471,7 +471,6 @@ public class Colors extends javax.swing.JFrame {
                 int index = Arrays.stream(groupArr).boxed().collect(Collectors.toList()).indexOf(groupRec.getInt(eGroups.id));
                 record.setNo(eColor.groups_id, groupRec.getInt(eGroups.id));
                 record.setNo(eColor.code, ++index * 1000 + max + 1);
-                //record.setDev(eColor.name, "Р¦РІРµС‚");
                 record.setNo(eColor.rgb, 0xCCCCCC);
                 record.setNo(eColor.coef1, 1);
                 record.setNo(eColor.coef2, 1);
@@ -499,7 +498,7 @@ public class Colors extends javax.swing.JFrame {
             tab = tab2;
         }
         if (tab != null) {
-            RTable.load("РўРµРєСЃС‚СѓСЂС‹", tab);
+            RTable.load("Текстуры", tab);
             ExecuteCmd.documentType(this);
         }
     }//GEN-LAST:event_btnRepActionPerformed
