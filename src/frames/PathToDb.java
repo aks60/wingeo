@@ -413,7 +413,7 @@ public class PathToDb extends javax.swing.JDialog {
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File("."));
         chooser.setFileFilter(filter);
-        int result = chooser.showDialog(this, "Р’С‹Р±СЂР°С‚СЊ");
+        int result = chooser.showDialog(this, "Выбрать");
         if (result == JFileChooser.APPROVE_OPTION) {
             edPath.setText(chooser.getSelectedFile().getPath());
         }

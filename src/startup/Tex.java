@@ -148,11 +148,11 @@ public class Tex extends javax.swing.JFrame {
         mn93 = new javax.swing.JPopupMenu.Separator();
         mn92 = new javax.swing.JMenuItem();
         mn03 = new javax.swing.JMenu();
-        mn31 = new javax.swing.JMenuItem();
         mn32 = new javax.swing.JMenuItem();
         mn34 = new javax.swing.JMenuItem();
         mn35 = new javax.swing.JMenuItem();
         mn36 = new javax.swing.JMenuItem();
+        mn31 = new javax.swing.JMenuItem();
         mn38 = new javax.swing.JPopupMenu.Separator();
         mn37 = new javax.swing.JMenuItem();
         mn10 = new javax.swing.JMenu();
@@ -709,16 +709,6 @@ public class Tex extends javax.swing.JFrame {
         mn03.setText(bundle.getString("Меню.Составы")); // NOI18N
         mn03.setFont(frames.UGui.getFont(1,1));
 
-        mn31.setFont(frames.UGui.getFont(0,1));
-        mn31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b056.gif"))); // NOI18N
-        mn31.setText(bundle.getString("Меню.Комплекты")); // NOI18N
-        mn31.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnKits(evt);
-            }
-        });
-        mn03.add(mn31);
-
         mn32.setFont(frames.UGui.getFont(0,1));
         mn32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b056.gif"))); // NOI18N
         mn32.setText(bundle.getString("Меню.Соединения")); // NOI18N
@@ -758,6 +748,16 @@ public class Tex extends javax.swing.JFrame {
             }
         });
         mn03.add(mn36);
+
+        mn31.setFont(frames.UGui.getFont(0,1));
+        mn31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b056.gif"))); // NOI18N
+        mn31.setText(bundle.getString("Меню.Комплекты")); // NOI18N
+        mn31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnKits(evt);
+            }
+        });
+        mn03.add(mn31);
         mn03.add(mn38);
 
         mn37.setFont(frames.UGui.getFont(0,1));

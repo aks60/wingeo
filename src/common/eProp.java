@@ -17,7 +17,7 @@ public enum eProp {
     lookandfeel("Metal", "Windows"),
     genl(System.getProperty("user.home") + "/Avers/Okna",
             "C:\\ProgramData\\Avers\\Okna"),
-    url_src("http://localhost/winweb/"),
+    url_src("http://sa-okna.ru/winweb/"),
     web_port("80"),
     typedb("fb"),
     user("sysdba"),

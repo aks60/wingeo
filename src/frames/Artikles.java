@@ -845,7 +845,7 @@ public class Artikles extends javax.swing.JFrame {
         ppmTab2.add(mDelit2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Материальные ценности");
+        setTitle("Артикулы");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 520));
         setPreferredSize(new java.awt.Dimension(900, 600));
