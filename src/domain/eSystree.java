@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public enum eSystree implements Field {
     up("0", "0", "0", "Дерево системы профилей", "SYSPROF"),
     id("4", "10", "0", "Идентиф.системы(NUNI)", "NUNI"),
+    npp("4", "10", "1", "Номер п/п", "TEXT"),
     name("12", "64", "1", "Наимен. ветки дерева", "TEXT"),
     glas("12", "32", "1", "Заполнение по умолчанию", "ANUMB"),
     depth("12", "128", "1", "Доступные толщины стеклопакетов", "ZSIZE"),

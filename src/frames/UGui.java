@@ -539,7 +539,7 @@ public class UGui {
 
     //Получить convertRowIndexToModel
     public static int getIndexRec(JTable table) {
-        if (table.getSelectedRow() != -1) {
+        if (table != null && table.getSelectedRow() != -1) {
             return table.convertRowIndexToModel(table.getSelectedRow());
         }
         return -1;
