@@ -6,7 +6,7 @@ import dataset.Query;
 import dataset.Record;
 
 public enum eSysprod implements Field {
-    up("0", "0", "0", "Системные типовые изделия", "EMPTY"),
+    up("0", "0", "0", "Типовые изделия системные", "EMPTY"),
     id("4", "10", "0", "Идентификатор", "id"),
     npp("4", "10", "0", "Номер п/п", "npp"),
     name("12", "128", "1", "Название изделия", "name"),

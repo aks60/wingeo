@@ -2330,7 +2330,6 @@ public class Artikles extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tab2.setColumnSelectionAllowed(true);
         tab2.setFillsViewportHeight(true);
         tab2.setName("tab2"); // NOI18N
         tab2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);

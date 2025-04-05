@@ -668,7 +668,7 @@ public class Param extends javax.swing.JFrame {
             UGui.insertRecordCur(tab3, eGroups.up, (record) -> {
                 record.setNo(eGroups.grup, TypeGrup.COLOR_MAP.id);
                 record.setNo(eGroups.name, "");
-                record.setDev(eGroups.name, "Пар.соотв...");
+                record.setDev(eGroups.name, "");
             });
         } else if (tab4.getBorder() != null) {
             UGui.insertRecordCur(tab4, eParmap.up, (record) -> {

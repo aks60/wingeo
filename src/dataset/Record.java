@@ -165,8 +165,8 @@ public class Record {
         return false;
     }
 
-    public Object clone() {
-        return this.clone();
+    public Record clone() {
+        return new Record(this.list);
     }
 
     public boolean equals(Object obj) {

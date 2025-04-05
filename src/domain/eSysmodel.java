@@ -6,7 +6,7 @@ import dataset.Query;
 import dataset.Record;
 
 public enum eSysmodel implements Field {
-    up("0", "0", "0", "Cписок типовых конструкций", "EMPTY"),
+    up("0", "0", "0", "Типовые изделия виртуальные", "EMPTY"),
     id("4", "10", "0", "Идентификатор", "id"),
     npp("4", "10", "0", "Номер п/п", "npp"),
     name("12", "128", "1", "Название типового изделия", "name"),
