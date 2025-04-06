@@ -42,12 +42,15 @@ public class Conn {
         if (webapp == false) {
             try {
                 if (connection.isClosed() == true) {
+                    reconnection();
+                }
+                if (connection.isClosed() == true) {
                     JOptionPane.showMessageDialog(null, "Соединение разорвано. Попробуйте "
                             + "\nглавное меню <Сервис->Возобновить соединение c БД \nили перезагрузите программу.", "НЕУДАЧА", 1);
                     return null;
+                } else {
+                    return connection;
                 }
-                return connection;
-
             } catch (SQLException e) {
                 System.err.println("Ошибка:getConnection() " + e);
                 return null;
@@ -83,10 +86,14 @@ public class Conn {
 
     //Возобновить соединение
     public static void reconnection() throws SQLException {
-        java.sql.Connection conn = Conn.getConnection();
-        if (conn.isClosed() == true) {
+        if (connection.isClosed() == true) {
             String num_base = eProp.base_num.getProp();
             Conn.connection(eProp.getServer(num_base), eProp.getPort(num_base), eProp.getBase(num_base), eProp.user.getProp(), eProp.password.toCharArray(), null);
+        }
+        if (connection.isClosed() == false) {
+            JOptionPane.showMessageDialog(null, "Соединение восстановлено.", "УСПЕХ", 1);
+        } else {
+            JOptionPane.showMessageDialog(null, "Соединение не восстановлено.", "НЕУДАЧА", 1);
         }
     }
 
@@ -194,11 +201,11 @@ public class Conn {
             rs.close();
             close();
             return next_id;
+
         } catch (SQLException e) {
-            System.err.println("Ошибка генерации ключа " + e);
-            JOptionPane.showMessageDialog(null, "Не удалось сгенерировать ключ записи. "
-                    + "Попробуйте \nглавное меню <Сервис->Возобновить соединение c БД \nили перезагрузите программу.", "НЕУДАЧА", 1);
-            return 0;
+            System.err.println("Ошибка:Conn.genId() " + e);
+            JOptionPane.showMessageDialog(null, "Не удалось сгенерировать ключ записи. Перезагрузите программу.", "НЕУДАЧА", 1);
+            return -1;
         }
     }
 

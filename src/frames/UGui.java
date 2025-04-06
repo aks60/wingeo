@@ -162,7 +162,7 @@ public class UGui {
 // </editor-fold> 
 
     public static Font getFont(int size, int bold) {
-        return new Font(eProp.fontname.getProp(), bold, Integer.valueOf(eProp.fontsize.getProp()) + size);
+        return new Font(eProp.fontname.getProp(), bold, Integer.valueOf(eProp.font_size.getProp()) + size);
     }
 
     public static <T extends JComponent> List<T> findComponents(final Container container, final Class<T> componentType) {

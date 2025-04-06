@@ -39,7 +39,8 @@ public enum eProp {
     cmd_excel("/usr/bin/oocalc ", "cmd /c start excel.exe "),
     cmd_html("/usr/bin/firefox ", "cmd /c start iexplore.exe "),
     fontname("Dialog"),
-    fontsize("11");
+    font_size("11"),
+    row_height("20");
 
     //Значения по умолчанию
     public String value;

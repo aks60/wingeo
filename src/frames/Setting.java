@@ -44,8 +44,10 @@ public class Setting extends javax.swing.JFrame {
         btnProp4 = new javax.swing.JButton();
         pan6 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        checkBox1 = new javax.swing.JCheckBox();
         textPane1 = new javax.swing.JTextPane();
+        jLabel10 = new javax.swing.JLabel();
+        spinner3 = new javax.swing.JSpinner();
+        btnProp5 = new javax.swing.JButton();
         panTool = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
 
@@ -324,7 +326,7 @@ public class Setting extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 76, Short.MAX_VALUE)
+            .addGap(0, 69, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addGap(4, 4, 4)
@@ -333,36 +335,51 @@ public class Setting extends javax.swing.JFrame {
                         .addComponent(txtURL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(btnProp4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(13, Short.MAX_VALUE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pan5.add(jPanel4, java.awt.BorderLayout.CENTER);
 
         panCentr.add(pan5);
 
-        pan6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "Версия программы "));
-        pan6.setPreferredSize(new java.awt.Dimension(480, 30));
+        pan6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "Высота строк в таблицах"));
+        pan6.setPreferredSize(new java.awt.Dimension(480, 40));
         pan6.setLayout(new java.awt.BorderLayout());
 
         jPanel3.setPreferredSize(new java.awt.Dimension(336, 40));
 
-        checkBox1.setFont(frames.UGui.getFont(0,0));
-        checkBox1.setText(" Откатить на предыдущую версию");
-        checkBox1.setMaximumSize(new java.awt.Dimension(213, 22));
-        checkBox1.setMinimumSize(new java.awt.Dimension(213, 22));
-        checkBox1.setPreferredSize(new java.awt.Dimension(280, 22));
-        checkBox1.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                checkBox1StateChanged(evt);
-            }
-        });
-
         textPane1.setEditable(false);
         textPane1.setBorder(null);
         textPane1.setFont(frames.UGui.getFont(0,0));
-        textPane1.setText("Откат на предыдущую версию программы");
+        textPane1.setText("Установка высоты строк талицы");
         textPane1.setMinimumSize(new java.awt.Dimension(65, 14));
         textPane1.setPreferredSize(new java.awt.Dimension(160, 40));
+
+        jLabel10.setFont(frames.UGui.getFont(0,0));
+        jLabel10.setText("Размер");
+        jLabel10.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jLabel10.setMaximumSize(new java.awt.Dimension(50, 22));
+        jLabel10.setMinimumSize(new java.awt.Dimension(50, 22));
+        jLabel10.setPreferredSize(new java.awt.Dimension(50, 22));
+
+        spinner3.setFont(frames.UGui.getFont(0,0));
+        spinner3.setMaximumSize(new java.awt.Dimension(80, 22));
+        spinner3.setMinimumSize(new java.awt.Dimension(80, 22));
+        spinner3.setPreferredSize(new java.awt.Dimension(80, 22));
+
+        btnProp5.setFont(frames.UGui.getFont(0,0));
+        btnProp5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b031.gif"))); // NOI18N
+        btnProp5.setText("Сохранить высоту строк в таблицах");
+        btnProp5.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnProp5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnProp5.setMaximumSize(new java.awt.Dimension(80, 25));
+        btnProp5.setMinimumSize(new java.awt.Dimension(0, 0));
+        btnProp5.setPreferredSize(new java.awt.Dimension(280, 25));
+        btnProp5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProp5(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -372,18 +389,27 @@ public class Setting extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(textPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(checkBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(spinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnProp5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(textPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(checkBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(textPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(spinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnProp5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
         );
 
         pan6.add(jPanel3, java.awt.BorderLayout.CENTER);
@@ -440,7 +466,7 @@ public class Setting extends javax.swing.JFrame {
 
     private void btnProp2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProp2
         eProp.fontname.putProp(fontName[comboBox.getSelectedIndex()]);
-        eProp.fontsize.putProp(String.valueOf(spinner2.getValue()));
+        eProp.font_size.putProp(String.valueOf(spinner2.getValue()));
     }//GEN-LAST:event_btnProp2
 
     private void btnProp3(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProp3
@@ -453,13 +479,9 @@ public class Setting extends javax.swing.JFrame {
         eProp.url_src.putProp(txtURL.getText());
     }//GEN-LAST:event_btnProp4
 
-    private void checkBox1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_checkBox1StateChanged
-        if(checkBox1.isSelected()) {
-            eProp.old_version.putProp("1");
-        } else {
-            eProp.old_version.putProp("0");
-        }
-    }//GEN-LAST:event_checkBox1StateChanged
+    private void btnProp5(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProp5
+        eProp.row_height.putProp(String.valueOf(spinner3.getValue()));
+    }//GEN-LAST:event_btnProp5
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">    
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -467,8 +489,9 @@ public class Setting extends javax.swing.JFrame {
     private javax.swing.JButton btnProp2;
     private javax.swing.JButton btnProp3;
     private javax.swing.JButton btnProp4;
-    private javax.swing.JCheckBox checkBox1;
+    private javax.swing.JButton btnProp5;
     private javax.swing.JComboBox comboBox;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -486,6 +509,7 @@ public class Setting extends javax.swing.JFrame {
     private javax.swing.JPanel panCentr;
     private javax.swing.JPanel panTool;
     private javax.swing.JSpinner spinner2;
+    private javax.swing.JSpinner spinner3;
     private javax.swing.JTextPane textPane1;
     private javax.swing.JTextPane textPane2;
     private javax.swing.JTextPane textPane3;
@@ -517,13 +541,15 @@ public class Setting extends javax.swing.JFrame {
 
         comboBox.setModel(new DefaultComboBoxModel(fontName));
         String name = eProp.fontname.getProp();
-        Integer size = Integer.valueOf(eProp.fontsize.getProp());
+        Integer font_size = Integer.valueOf(eProp.font_size.getProp());
+        Integer row_height = Integer.valueOf(eProp.row_height.getProp());
         for (int i = 0; i < fontName.length; i++) {
             if (name.equals(fontName[i])) {
                 comboBox.setSelectedIndex(i);
             }
         }
-        spinner2.setValue(size);       
-        checkBox1.setSelected(eProp.old_version.getProp().equals("1"));
+        spinner2.setValue(font_size);       
+        spinner3.setValue(row_height);       
+        //checkBox1.setSelected(eProp.old_version.getProp().equals("1"));
     }
 }
