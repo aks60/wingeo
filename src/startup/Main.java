@@ -22,9 +22,9 @@ public class Main {
         //Если продакшин то цыкла не будет
         for (int index = 0; index < args.length; index++) {
 
-            if ("tex".equals(args[0]) || "man".equals(args[0])) {
+            //if ("tex".equals(args[0]) || "man".equals(args[0])) {
                 eProp.devel = "99";
-            }
+            //}
 
             if (index == 0 && args[0].equals("adm")) {
                 eProp.profile = args[0];

@@ -13,7 +13,7 @@ public class AboutBox extends javax.swing.JFrame {
     }
 
     private void init() {
-        labApp.setText("Версия программы - " + eProp.version_app);
+        labApp.setText("Версия программы - " + eProp.version_ap);
     }
 
     @SuppressWarnings("unchecked")
