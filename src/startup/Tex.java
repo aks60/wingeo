@@ -15,6 +15,7 @@ import javax.swing.UIManager;
 import common.listener.ListenerFrame;
 import dataset.Conn;
 import dataset.Query;
+import domain.eParams;
 import frames.PathToDb;
 import frames.UGui;
 import frames.swing.cmp.MainMenu;
@@ -1095,7 +1096,8 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     }//GEN-LAST:event_mnGroup1
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-
+        Query qParams = new Query(eParams.up.values());
+        qParams.sq2(eParams.data(), eParams.groups_id, -9950, eParams.furn, 0).sort(eParams.text);
     }//GEN-LAST:event_btnTest
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
