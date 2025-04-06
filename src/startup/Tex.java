@@ -1095,16 +1095,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     }//GEN-LAST:event_mnGroup1
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-        ProgressBar.create(Tex.this, new ListenerFrame() {
-            public void actionRequest(Object obj) {
-                App.PSFrame.createFrame(Tex.this);
-            }
-        });
-//        this.setResizable(true);
-//        this.setPreferredSize(new java.awt.Dimension(800, 80));
-//        this.setMinimumSize(new java.awt.Dimension(800, 80));
 
-        // this.setPreferredSize(new java.awt.Dimension(800, 80));
     }//GEN-LAST:event_btnTest
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated

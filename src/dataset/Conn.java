@@ -40,7 +40,18 @@ public class Conn {
 
     public static Connection getConnection() {
         if (webapp == false) {
-            return connection;
+            try {
+                if (connection.isClosed() == true) {
+                    JOptionPane.showMessageDialog(null, "Соединение разорвано. Попробуйте "
+                            + "\nглавное меню <Сервис->Возобновить соединение c БД \nили перезагрузите программу.", "НЕУДАЧА", 1);
+                    return null;
+                }
+                return connection;
+
+            } catch (SQLException e) {
+                System.err.println("Ошибка:getConnection() " + e);
+                return null;
+            }
 
         } else {
             try {
@@ -175,8 +186,6 @@ public class Conn {
             Statement statement = conn.createStatement();
             String sql = "SELECT GEN_ID(gen_" + field.tname() + ", 1) FROM RDB$DATABASE";
             ResultSet rs = statement.executeQuery(sql);
-            /*String mySeqv = table_name + "_id_seq";
-            ResultSet rs = statement.executeQuery("SELECT nextval('" + mySeqv + "')");*/
             if (rs.next()) {
                 next_id = rs.getInt("GEN_ID");
             }
@@ -185,6 +194,8 @@ public class Conn {
             return next_id;
         } catch (SQLException e) {
             System.err.println("Ошибка генерации ключа " + e);
+            JOptionPane.showMessageDialog(null, "Не удалось сгенерировать ключ записи. "
+                    + "Попробуйте \nглавное меню <Сервис->Возобновить соединение c БД \nили перезагрузите программу.", "НЕУДАЧА", 1);
             return 0;
         }
     }
