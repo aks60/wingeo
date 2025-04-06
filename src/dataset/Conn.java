@@ -113,10 +113,12 @@ public class Conn {
             statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
         } catch (ClassNotFoundException e) {
-            System.err.println(e);
+            //System.err.println("Ошибка1:Conn.connection() " + e);
+            JOptionPane.showMessageDialog(null, eExcep.findDrive, "НЕУДАЧА", 1);
             return eExcep.findDrive;
         } catch (SQLException e) {
-            System.err.println(e);
+            //System.err.println("Ошибка2:Conn.connection() " + e);
+            JOptionPane.showMessageDialog(null, "Ошибка соединения SQLException", "НЕУДАЧА", 1);
             return eExcep.getError(e.getErrorCode());
         }
         if (httpcheck == false) {
