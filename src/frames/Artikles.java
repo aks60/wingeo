@@ -2175,7 +2175,7 @@ public class Artikles extends javax.swing.JFrame {
         txt32.setEditable(false);
         txt32.setFont(frames.UGui.getFont(0,0));
         txt32.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt32.setPreferredSize(new java.awt.Dimension(44, 18));
+        txt32.setPreferredSize(new java.awt.Dimension(80, 18));
         pan21.add(txt32);
 
         btn26.setText("...");
@@ -2196,7 +2196,7 @@ public class Artikles extends javax.swing.JFrame {
         txt33.setEditable(false);
         txt33.setFont(frames.UGui.getFont(0,0));
         txt33.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt33.setPreferredSize(new java.awt.Dimension(50, 18));
+        txt33.setPreferredSize(new java.awt.Dimension(82, 18));
         pan21.add(txt33);
 
         btn16.setText("...");
@@ -2486,14 +2486,19 @@ public class Artikles extends javax.swing.JFrame {
 
     private void btn7(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7
         JButton btn = (JButton) evt.getSource();
-        ListenerRecord listener = (btn == btn7 || btn == btn9 || btn == btn26) ? listenerCurrenc1 : listenerCurrenc2;
-        Field field = (listener == listenerCurrenc1) ? eArtikl.currenc1_id : eArtikl.currenc2_id;
-        int index = UGui.getIndexRec(tab1);
-        if (index != -1) {
-            int id = qArtikl.getAs(index, field);
-            DicCurrenc frame = new DicCurrenc(this, listener, id);
+        if ((btn == btn16 || btn == btn17 || btn == btn21) 
+                && (txt7.getText().isEmpty() && txt25.getText().isEmpty() && txt32.getText().isEmpty())) {
+                DicCurrenc frame = new DicCurrenc(this, listenerCurrenc1, listenerCurrenc2);
         } else {
-            DicCurrenc frame = new DicCurrenc(this, listener);
+            ListenerRecord listener = (btn == btn7 || btn == btn9 || btn == btn26) ? listenerCurrenc1 : listenerCurrenc2;
+            Field field = (listener == listenerCurrenc1) ? eArtikl.currenc1_id : eArtikl.currenc2_id;
+            int index = UGui.getIndexRec(tab1);
+            if (index != -1) {
+                int id = qArtikl.getAs(index, field);
+                DicCurrenc frame = new DicCurrenc(this, listener, id);
+            } else {
+                DicCurrenc frame = new DicCurrenc(this, listener);
+            }
         }
     }//GEN-LAST:event_btn7
 
@@ -2950,7 +2955,7 @@ public class Artikles extends javax.swing.JFrame {
         eProp.getWin(this, btnClose, (e) -> {
             eProp.putWin(this, btnClose, tab1, tab2);
         }, tab1, tab2);
-   
+
         filterTable = new TableFieldFilter(0, tab1, tab2);
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();

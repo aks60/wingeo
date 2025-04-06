@@ -22,7 +22,10 @@ import report.sup.RTable;
 
 public class DicCurrenc extends javax.swing.JDialog {
 
-    private ListenerRecord listener = null;
+    private ListenerRecord listener1 = (record) -> {
+    };
+    private ListenerRecord listener2 = (record) -> {
+    };
     private Query qCurrenc = new Query(eCurrenc.values());
     private int ID = -1;
 
@@ -33,7 +36,19 @@ public class DicCurrenc extends javax.swing.JDialog {
         loadingData();
         loadingModel();
         ((DefTableModel) tab1.getModel()).setCellEditable(false, eCurrenc.name, eCurrenc.par_case1, eCurrenc.par_case2, eCurrenc.cross_cour);
-        this.listener = listener;
+        this.listener1 = listener;
+        setVisible(true);
+    }
+    
+    public DicCurrenc(Frame parent, ListenerRecord listener1, ListenerRecord listener2) {
+        super(parent, true);
+        initComponents();
+        initElements();
+        loadingData();
+        loadingModel();
+        ((DefTableModel) tab1.getModel()).setCellEditable(false, eCurrenc.name, eCurrenc.par_case1, eCurrenc.par_case2, eCurrenc.cross_cour);
+        this.listener1 = listener1;
+        this.listener2 = listener2;
         setVisible(true);
     }
 
@@ -45,10 +60,10 @@ public class DicCurrenc extends javax.swing.JDialog {
         loadingData();
         loadingModel();
         ((DefTableModel) tab1.getModel()).setCellEditable(false, eCurrenc.name, eCurrenc.par_case1, eCurrenc.par_case2, eCurrenc.cross_cour);
-        this.listener = listener;
+        this.listener1 = listener;
         setVisible(true);
     }
-    
+
     public void loadingData() {
         qCurrenc.sql(eCurrenc.data(), eCurrenc.up).sort(eCurrenc.npp, eCurrenc.name);
     }
@@ -57,7 +72,7 @@ public class DicCurrenc extends javax.swing.JDialog {
         new DefTableModel(tab1, qCurrenc, eCurrenc.name, eCurrenc.par_case1, eCurrenc.par_case2, eCurrenc.cross_cour);
         tab1.getColumnModel().getColumn(3).setCellEditor(new DefCellEditorNumb(4));
         tab1.getColumnModel().getColumn(3).setCellRenderer(new DefCellRendererNumb(4));
-        UGui.setSelectedKey(tab1, ID); 
+        UGui.setSelectedKey(tab1, ID);
     }
 
     @SuppressWarnings("unchecked")
@@ -233,19 +248,20 @@ public class DicCurrenc extends javax.swing.JDialog {
     }//GEN-LAST:event_btnClose
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditingAndExecSql(getRootPane());  
+        UGui.stopCellEditingAndExecSql(getRootPane());
     }//GEN-LAST:event_windowClosed
 
     private void btnChoice(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice
         int index = UGui.getIndexRec(tab1);
         if (index != -1) {
-            listener.action(qCurrenc.get(index));
+            listener1.action(qCurrenc.get(index));
+            listener2.action(qCurrenc.get(index));
         }
         this.dispose();
     }//GEN-LAST:event_btnChoice
 
     private void btnRemove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemove
-        listener.action(eCurrenc.up.newRecord(Query.SEL));
+        listener1.action(eCurrenc.up.newRecord(Query.SEL));
         this.dispose();
     }//GEN-LAST:event_btnRemove
 
@@ -270,7 +286,7 @@ public class DicCurrenc extends javax.swing.JDialog {
 
         eProp.getWin(this, btnClose, (e) -> {
             eProp.putWin(this, btnClose);
-        }); 
+        });
         FocusListener listenerFocus = new FocusListener() {
 
             javax.swing.border.Border border = javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255));

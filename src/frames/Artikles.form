@@ -3747,7 +3747,7 @@
                               </Border>
                             </Property>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[44, 18]"/>
+                              <Dimension value="[80, 18]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -3805,7 +3805,7 @@
                               </Border>
                             </Property>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[50, 18]"/>
+                              <Dimension value="[82, 18]"/>
                             </Property>
                           </Properties>
                         </Component>

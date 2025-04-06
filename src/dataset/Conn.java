@@ -70,6 +70,15 @@ public class Conn {
         }
     }
 
+    //Возобновить соединение
+    public static void reconnection() throws SQLException {
+        java.sql.Connection conn = Conn.getConnection();
+        if (conn.isClosed() == true) {
+            String num_base = eProp.base_num.getProp();
+            Conn.connection(eProp.getServer(num_base), eProp.getPort(num_base), eProp.getBase(num_base), eProp.user.getProp(), eProp.password.toCharArray(), null);
+        }
+    }
+
     public static eExcep connection(String server, String port, String base, String user, char[] password, String role) {
         webapp = false;
         try {

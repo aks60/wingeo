@@ -6,7 +6,6 @@ import frames.swing.cmp.ProgressBar;
 import common.eProp;
 import dataset.Record;
 import builder.Wincalc;
-import common.listener.ListenerAction;
 import domain.eSysprod;
 import java.awt.Frame;
 import java.util.HashMap;
@@ -14,14 +13,19 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import common.listener.ListenerFrame;
+import dataset.Conn;
 import dataset.Query;
 import frames.PathToDb;
 import frames.UGui;
 import frames.swing.cmp.MainMenu;
 import java.awt.Dimension;
+import java.sql.SQLException;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JToggleButton;
+import javax.swing.plaf.OptionPaneUI;
+import org.jsoup.Connection;
 
 /**
  * <p>
@@ -166,6 +170,7 @@ public class Tex extends javax.swing.JFrame {
         mn631 = new javax.swing.JCheckBoxMenuItem();
         mn632 = new javax.swing.JCheckBoxMenuItem();
         mn633 = new javax.swing.JCheckBoxMenuItem();
+        mn65 = new javax.swing.JMenuItem();
         mn62 = new javax.swing.JMenu();
         mn05 = new javax.swing.JMenu();
         mn51 = new javax.swing.JMenuItem();
@@ -852,6 +857,17 @@ public class Tex extends javax.swing.JFrame {
 
         mn06.add(mn63);
 
+        mn65.setFont(frames.UGui.getFont(0,1));
+        mn65.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b028.gif"))); // NOI18N
+        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("resource/hints/okno"); // NOI18N
+        mn65.setText(bundle1.getString("Меню.Возобновить соединение")); // NOI18N
+        mn65.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mn65ActionPerformed(evt);
+            }
+        });
+        mn06.add(mn65);
+
         mn62.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b061.gif"))); // NOI18N
         mn62.setText(bundle.getString("Меню.Вид интерфейса")); // NOI18N
         mn62.setFont(frames.UGui.getFont(0,1));
@@ -1140,6 +1156,15 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
         });
     }//GEN-LAST:event_mn2Specif
 
+    private void mn65ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn65ActionPerformed
+        try {
+            Conn.close();
+            Conn.reconnection();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Не удалось возобновить соединение с базой  данных.", "ВНИМАНИЕ!", 1);
+        }
+    }//GEN-LAST:event_mn65ActionPerformed
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn11;
@@ -1203,6 +1228,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     private javax.swing.JCheckBoxMenuItem mn631;
     private javax.swing.JCheckBoxMenuItem mn632;
     private javax.swing.JCheckBoxMenuItem mn633;
+    private javax.swing.JMenuItem mn65;
     private javax.swing.JMenuItem mn71;
     private javax.swing.JMenuItem mn72;
     private javax.swing.JPopupMenu.Separator mn74;

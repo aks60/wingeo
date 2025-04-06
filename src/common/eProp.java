@@ -48,7 +48,7 @@ public enum eProp {
     public static String password = "*";
     public static String role = null;
     public final static Locale locale = Locale.of("ru", "RU");
-    public static String devel = "00"; //"00"-demo, "01-98"-prod, "99"-developer
+    public static String devel = "99"; //"00"-demo, "99"-developer, "01-98"-products
     public final static String version_ap = "2.0";
     public final static String version_db = "2.0";
     public static String profile = ""; //профиль разработки и тестирования
