@@ -666,11 +666,11 @@ public class Fillings extends javax.swing.JFrame {
         });
         scr1.setViewportView(tab1);
         if (tab1.getColumnModel().getColumnCount() > 0) {
-            tab1.getColumnModel().getColumn(0).setPreferredWidth(700);
+            tab1.getColumnModel().getColumn(0).setPreferredWidth(500);
             tab1.getColumnModel().getColumn(0).setMaxWidth(1600);
             tab1.getColumnModel().getColumn(1).setPreferredWidth(60);
             tab1.getColumnModel().getColumn(1).setMaxWidth(260);
-            tab1.getColumnModel().getColumn(2).setPreferredWidth(120);
+            tab1.getColumnModel().getColumn(2).setPreferredWidth(140);
             tab1.getColumnModel().getColumn(2).setMaxWidth(340);
             tab1.getColumnModel().getColumn(3).setPreferredWidth(40);
             tab1.getColumnModel().getColumn(3).setMaxWidth(60);
