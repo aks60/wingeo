@@ -595,6 +595,49 @@ public class UGui {
         UGui.scrollRectToIndex(query.size() - 1, table);
     }
 
+    //Клонировать запись    
+    public static Record cloneRecord(java.awt.Window windows, Query query, Field up, JTable table, ListenerRecord listener) {
+
+        int index = UGui.getIndexRec(table);
+        if (index != -1 && JOptionPane.showConfirmDialog(windows, "Вы действительно хотите клонировать текущую запись?",
+                "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+
+            Record recordClon = (Record) query.get(index).clone();
+            recordClon.setNo(up, Query.INS);
+            recordClon.setNo(up.fields()[1], Conntct.genId(up));
+            if (listener != null) {
+                listener.action(recordClon);
+            }
+            up.query().add(recordClon);  //добавим запись в кэш
+            query.add(++index, recordClon);
+            query.insert(recordClon);
+
+            ((DefaultTableModel) table.getModel()).fireTableRowsInserted(index, index);
+            UGui.setSelectedIndex(table, index);
+            UGui.scrollRectToIndex(index, table);
+            return recordClon;
+        }
+        return null;
+    }
+
+    //Клонировать запись
+    public static List<Record> cloneRecord(Query query, Field up, List<Record> dataList, JTable table, ListenerRecord listener) {
+
+        for (Record deteilRec : dataList) {
+            Record recordClon = (Record) deteilRec.clone();
+            recordClon.setNo(0, Query.INS);
+            recordClon.setNo(up.fields()[1], Conntct.genId(up));
+            if (listener != null) {
+                listener.action(recordClon);
+            }
+            up.query().add(recordClon);  //добавим запись в кэш
+            query.add(recordClon);
+            query.insert(recordClon);
+        }
+        UGui.setSelectedRow(table);
+        return query;
+    }
+
     //Изменить запись
     public static void updateRecord(JTable table, ListenerRecord listener) {
         Record record = ((DefTableModel) table.getModel()).getQuery().get(UGui.getIndexRec(table));
@@ -992,48 +1035,6 @@ public class UGui {
             boolean b[] = {false, false, false, false, true};
             List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
         }
-    }
-
-    public static Record cloneRecord(java.awt.Window windows, Query query, Field up, JTable table, ListenerRecord listener) {
-
-        int index = UGui.getIndexRec(table);
-        if (index != -1 && JOptionPane.showConfirmDialog(windows, "Вы действительно хотите клонировать текущую запись?",
-                "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-
-            Record recordClon = (Record) query.get(index).clone();
-            recordClon.setNo(up, Query.INS);
-            recordClon.setNo(up.fields()[1], Conntct.genId(up));
-            if (listener != null) {
-                listener.action(recordClon);
-            }
-            up.query().add(recordClon);  //добавим запись в кэш
-            query.add(++index, recordClon);
-            query.insert(recordClon);
-
-            ((DefaultTableModel) table.getModel()).fireTableRowsInserted(index, index);
-            UGui.setSelectedIndex(table, index);
-            UGui.scrollRectToIndex(index, table);
-            return recordClon;
-        }
-        return null;
-    }
-
-    public static List<Record> cloneRecord(Query query, Field up, List<Record> dataList, JTable table, ListenerRecord listener) {
-
-        for (Record deteilRec : dataList) {
-            Record recordClon = (Record) deteilRec.clone();
-            recordClon.setNo(0, Query.INS);
-            recordClon.setNo(up.fields()[1], Conntct.genId(up));
-            if (listener != null) {
-                listener.action(recordClon);
-            }
-            up.query().add(recordClon);  //добавим запись в кэш
-            query.add(recordClon);
-            query.insert(recordClon);
-        }
-        //query.execsql();
-        UGui.setSelectedRow(table);
-        return query;
     }
 
     public static void PRINT(Field field, Record record) {
