@@ -623,6 +623,7 @@ public class UGui {
     //Клонировать запись
     public static List<Record> cloneRecord(Query query, Field up, List<Record> dataList, JTable table, ListenerRecord listener) {
 
+        query.clear();
         for (Record deteilRec : dataList) {
             Record recordClon = (Record) deteilRec.clone();
             recordClon.setNo(0, Query.INS);
