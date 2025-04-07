@@ -35,7 +35,7 @@ import common.eProp;
 import common.listener.ListenerAction;
 import common.listener.ListenerFrame;
 import common.listener.ListenerRecord;
-import dataset.Conn;
+import dataset.Conntct;
 import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
@@ -3068,7 +3068,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             //¬ставка без UGui.insertRecordCur() т.к. рисунок добавл€етс€ в доп. поле
             new DicSyspod(this, (record) -> {
                 Record prjprodRec = ePrjprod.up.newRecord(INS);
-                prjprodRec.set(ePrjprod.id, Conn.genId(ePrjprod.up));
+                prjprodRec.set(ePrjprod.id, Conntct.genId(ePrjprod.up));
                 prjprodRec.set(ePrjprod.name, record.getStr(eSysprod.name));
                 prjprodRec.set(ePrjprod.num, 1);
                 prjprodRec.set(ePrjprod.script, record.getStr(eSysprod.script));

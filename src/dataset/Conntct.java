@@ -23,7 +23,7 @@ import startup.App;
 /**
  * Соединение через PostgresSQL
  */
-public class Conn {
+public class Conntct {
 
     public static boolean httpcheck = false; //проверка активации программы
     public static boolean webapp = true;
@@ -88,7 +88,7 @@ public class Conn {
     public static void reconnection() throws SQLException {
         if (connection.isClosed() == true) {
             String num_base = eProp.base_num.getProp();
-            Conn.connection(eProp.getServer(num_base), eProp.getPort(num_base), eProp.getBase(num_base), eProp.user.getProp(), eProp.password.toCharArray(), null);
+            Conntct.connection(eProp.getServer(num_base), eProp.getPort(num_base), eProp.getBase(num_base), eProp.user.getProp(), eProp.password.toCharArray(), null);
         }
         if (connection.isClosed() == false) {
             JOptionPane.showMessageDialog(null, "Соединение восстановлено.", "УСПЕХ", 1);

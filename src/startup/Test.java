@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.eProp;
-import dataset.Conn;
+import dataset.Conntct;
 import dataset.Field;
 import dataset.Query;
 import dataset.Record;
@@ -84,8 +84,8 @@ public class Test {
     public static Connection connect2() {
         eProp.user.putProp("sysdba");
         eProp.password = String.valueOf("masterkey");
-        Conn.connection(eProp.getServer(numDb.toString()), eProp.getPort(numDb.toString()), eProp.getBase(numDb.toString()), eProp.user.getProp(), eProp.password.toCharArray(), null);
-        return Conn.getConnection();
+        Conntct.connection(eProp.getServer(numDb.toString()), eProp.getPort(numDb.toString()), eProp.getBase(numDb.toString()), eProp.user.getProp(), eProp.password.toCharArray(), null);
+        return Conntct.getConnection();
     }
 
     // </editor-fold>     
@@ -205,7 +205,7 @@ public class Test {
 
     private static void wincalc(String _case) throws Exception {
 
-        Conn.setConnection(Test.connect2());
+        Conntct.setConnection(Test.connect2());
         builder.Wincalc winc = new builder.Wincalc();
 
         if (_case.equals("min")) {
@@ -252,7 +252,7 @@ public class Test {
 
     private static void param() {
 
-        Conn.setConnection(Test.connect2());
+        Conntct.setConnection(Test.connect2());
         WincalcTest.init(); //см. -601004,-604005,-700027
 
         ElementTest t1 = new ElementTest();
@@ -288,7 +288,7 @@ public class Test {
     private static void query() {
         {
             try {
-                Conn.setConnection(Test.connect2());
+                Conntct.setConnection(Test.connect2());
 
             } catch (Exception e) {
                 System.err.println("Ошибка:main.Test.query()");
@@ -297,7 +297,7 @@ public class Test {
         {
             //Пересчёт
             try {
-                java.sql.Statement statement = Conn.getConnection().createStatement();
+                java.sql.Statement statement = Conntct.getConnection().createStatement();
                 Query q = new Query(eColor.values()).sql(eColor.data(), eColor.up).sort(eColor.id);
                 int id = 0;
                 for (Record rec : q) {

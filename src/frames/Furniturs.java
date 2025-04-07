@@ -46,7 +46,7 @@ import startup.App;
 import javax.swing.JOptionPane;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
-import dataset.Conn;
+import dataset.Conntct;
 import domain.eArtdet;
 import domain.eParmap;
 import domain.eSysfurn;
@@ -1732,7 +1732,7 @@ public class Furniturs extends javax.swing.JFrame {
             Record furnside2Rec = it.getKey();
             Record furnside2Clon = (Record) furnside2Rec.clone();
             furnside2Clon.setNo(eFurnside2.up, Query.INS);
-            furnside2Clon.setNo(eFurnside2.id, Conn.genId(eFurnside2.up));
+            furnside2Clon.setNo(eFurnside2.id, Conntct.genId(eFurnside2.up));
             furnside2Clon.setNo(eFurnside2.furndet_id, it.getValue());
             qFurnside2.add(furnside2Clon);
         }
@@ -1740,7 +1740,7 @@ public class Furniturs extends javax.swing.JFrame {
             Record furnpar2Rec = it.getKey();
             Record furnpar2Clon = (Record) furnpar2Rec.clone();
             furnpar2Clon.setNo(eFurnpar2.up, Query.INS);
-            furnpar2Clon.setNo(eFurnpar2.id, Conn.genId(eFurnpar2.up));
+            furnpar2Clon.setNo(eFurnpar2.id, Conntct.genId(eFurnpar2.up));
             furnpar2Clon.setNo(eFurnpar2.furndet_id, it.getValue());
             qFurnpar2.add(furnpar2Clon);
         }
@@ -1767,7 +1767,7 @@ public class Furniturs extends javax.swing.JFrame {
             if (tab1.getBorder() != null) {
                 furnitureClon = (Record) furnitureRec.clone();
                 furnitureClon.setNo(eFurniture.up, Query.INS);
-                furnitureClon.setNo(eFurniture.id, Conn.genId(eFurniture.up));
+                furnitureClon.setNo(eFurniture.id, Conntct.genId(eFurniture.up));
                 furnitureClon.setNo(eFurniture.name, furnitureClon.getStr(eFurniture.name) + "-êëîí");
                 eFurniture.up.query().add(furnitureClon);  //äîáàâèì çàïèñü â êýø
                 qFurniture.add(indexTab1, furnitureClon);
@@ -1776,7 +1776,7 @@ public class Furniturs extends javax.swing.JFrame {
                     qFurnpar1.sql(eFurnpar1.data(), eFurnpar1.furnside_id, furnside1Rec.getInt(eFurnside1.id));
                     Record furnside1Clon = (Record) furnside1Rec.clone();
                     furnside1Clon.setNo(eFurnside1.up, Query.INS);
-                    furnside1Clon.setNo(eFurnside1.id, Conn.genId(eFurnside1.up));
+                    furnside1Clon.setNo(eFurnside1.id, Conntct.genId(eFurnside1.up));
                     furnside1Clon.setNo(eFurnside1.furniture_id, furnitureClon.getInt(eFurniture.id));
                     qFurnpar1.forEach(rec -> furnpar1Map.put(rec, furnside1Clon.getInt(eFurnside1.id)));
                     eFurnside1.up.query().add(furnside1Clon);  //äîáàâèì çàïèñü â êýø
@@ -1786,7 +1786,7 @@ public class Furniturs extends javax.swing.JFrame {
                     Record furnpar1Rec = it.getKey();
                     Record joinpar1Clon = (Record) furnpar1Rec.clone();
                     joinpar1Clon.setNo(eFurnpar1.up, Query.INS);
-                    joinpar1Clon.setNo(eFurnpar1.id, Conn.genId(eFurnpar1.up));
+                    joinpar1Clon.setNo(eFurnpar1.id, Conntct.genId(eFurnpar1.up));
                     joinpar1Clon.setNo(eFurnpar1.furnside_id, it.getValue());
                     eFurnpar1.up.query().add(joinpar1Clon);  //Ð´Ð¾Ð±Ð°Ð²Ð¸Ð¼ Ð·Ð°Ð¿Ð¸ÑÑŒ Ð² ÐºÑÑˆ
                     qFurnpar1.add(joinpar1Clon);
@@ -1804,7 +1804,7 @@ public class Furniturs extends javax.swing.JFrame {
                 qFurndet2b.sq2(eFurndet.data(), eFurndet.furndet_pk, furndet2aRec.getInt(eFurndet.pk), eFurndet.id, eFurndet.furndet_pk);
                 Record furndet2aClon = (Record) furndet2aRec.clone();
                 furndet2aClon.setNo(eFurndet.up, Query.INS);
-                furndet2aClon.setNo(eFurndet.id, Conn.genId(eFurndet.up));
+                furndet2aClon.setNo(eFurndet.id, Conntct.genId(eFurndet.up));
                 furndet2aClon.setNo(eFurndet.furniture_id1, furnitureClon.getInt(eFurniture.id));
                 furndet2aClon.setNo(eFurndet.furndet_pk, furndet2aClon.getInt(eFurndet.id));
                 qFurnside2.forEach(rec -> furnside2Map.put(rec, furndet2aClon.getInt(eFurndet.id)));
@@ -1824,7 +1824,7 @@ public class Furniturs extends javax.swing.JFrame {
                 qFurndet2c.sq2(eFurndet.data(), eFurndet.furndet_pk, furndet2bRec.getInt(eFurndet.pk), eFurndet.id, eFurndet.furndet_pk);
                 Record furndet2bClon = (Record) furndet2bRec.clone();
                 furndet2bClon.setNo(eFurndet.up, Query.INS);
-                furndet2bClon.setNo(eFurndet.id, Conn.genId(eFurndet.up));
+                furndet2bClon.setNo(eFurndet.id, Conntct.genId(eFurndet.up));
                 furndet2bClon.setNo(eFurndet.furniture_id1, furnitureClon.getInt(eFurniture.id));
                 furndet2bClon.setNo(eFurndet.furndet_pk, it.getValue());
                 qFurnside2.forEach(rec -> furnside2Map.put(rec, furndet2bClon.getInt(eFurndet.id)));
@@ -1842,7 +1842,7 @@ public class Furniturs extends javax.swing.JFrame {
                 qFurnpar2.sql(eFurnpar2.data(), eFurnpar2.furndet_id, furndet2ñRec.getInt(eFurndet.id));
                 Record furndet2cClon = (Record) furndet2ñRec.clone();
                 furndet2cClon.setNo(eFurndet.up, Query.INS);
-                furndet2cClon.setNo(eFurndet.id, Conn.genId(eFurndet.up));
+                furndet2cClon.setNo(eFurndet.id, Conntct.genId(eFurndet.up));
                 furndet2cClon.setNo(eFurndet.furniture_id1, furnitureClon.getInt(eFurniture.id));
                 furndet2cClon.setNo(eFurndet.furndet_pk, it.getValue());
                 qFurnside2.forEach(rec -> furnside2Map.put(rec, furndet2cClon.getInt(eFurndet.id)));

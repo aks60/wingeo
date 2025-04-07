@@ -7,7 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import common.eProp;
-import dataset.Conn;
+import dataset.Conntct;
 import dataset.Field;
 import dataset.Query;
 import dataset.Record;
@@ -566,7 +566,7 @@ public class UGui {
         index = (index == -1) ? 0 : index;
         Query query = ((DefTableModel) table.getModel()).getQuery();
         Record record = field.newRecord(Query.INS);
-        record.setNo(field.fields()[1], Conn.genId(field));
+        record.setNo(field.fields()[1], Conntct.genId(field));
 
         if (++index <= table.getRowCount()) {
             query.add(index, record);
@@ -587,7 +587,7 @@ public class UGui {
 
         Query query = ((DefTableModel) table.getModel()).getQuery();
         Record record = field.newRecord(Query.INS);
-        record.setNo(field.fields()[1], Conn.genId(field));
+        record.setNo(field.fields()[1], Conntct.genId(field));
 
         listener.action(record);
 

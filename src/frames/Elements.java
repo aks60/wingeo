@@ -2,7 +2,7 @@ package frames;
 
 import frames.swing.cmp.ProgressBar;
 import frames.dialog.DicArtikl;
-import dataset.Conn;
+import dataset.Conntct;
 import enums.Enam;
 import dataset.Field;
 import dataset.Query;
@@ -1011,7 +1011,7 @@ public class Elements extends javax.swing.JFrame {
         JMenuItem ppm = (JMenuItem) evt.getSource();
         int level1 = (ppm == itCateg1) ? 1 : 5;
         String result = JOptionPane.showInputDialog(Elements.this, "Название", "Категория", JOptionPane.QUESTION_MESSAGE);
-        int id = Conn.genId(eGroups.up);
+        int id = Conntct.genId(eGroups.up);
         if (result.isEmpty() && eProp.devel.equals("99")) {
             result = (ppm == itCateg1) ? "Катег.проф-" + id : "Катег.зап-" + id;
         }
@@ -1101,7 +1101,7 @@ public class Elements extends javax.swing.JFrame {
         Record elementClon = (Record) qElement.get(index).clone();
         Record artiklClon = (Record) qElement.table(eArtikl.up).get(index).clone();
         elementClon.setNo(eElement.up, Query.INS);
-        int elementID = Conn.genId(eElement.up);
+        int elementID = Conntct.genId(eElement.up);
         elementClon.setNo(eElement.id, elementID);
         elementClon.setNo(eElement.name, elementClon.getStr(eElement.name) + "-РєР»РѕРЅ");
         eElement.up.query().add(elementClon);  //добавим запись в кэш
@@ -1111,7 +1111,7 @@ public class Elements extends javax.swing.JFrame {
         for (Record elempar1Rec : elempar1List) {
             Record elempar1Clon = (Record) elempar1Rec.clone();
             elempar1Clon.setNo(eElempar1.up, Query.INS);
-            elempar1Clon.setNo(eElempar1.id, Conn.genId(eElempar1.up));
+            elempar1Clon.setNo(eElempar1.id, Conntct.genId(eElempar1.up));
             elempar1Clon.setNo(eElempar1.element_id, elementID);
             eElempar1.up.query().add(elempar1Clon);  //добавим запись в кэш
             qElempar1.add(elempar1Clon);
@@ -1119,7 +1119,7 @@ public class Elements extends javax.swing.JFrame {
         for (Record elemdetRec : elemdetList) {
             Record elemdetClon = (Record) elemdetRec.clone();
             elemdetClon.setNo(eElemdet.up, Query.INS);
-            elemdetClon.setNo(eElemdet.id, Conn.genId(eElemdet.up));
+            elemdetClon.setNo(eElemdet.id, Conntct.genId(eElemdet.up));
             elemdetClon.setNo(eElemdet.element_id, elementID);
             qElempar2.sql(eElempar2.data(), eElempar2.elemdet_id, elemdetRec.getInt(eElemdet.id));
             qElempar2.forEach(rec -> elempar2Map.put(rec, elemdetClon.getInt(eElemdet.id)));
@@ -1130,7 +1130,7 @@ public class Elements extends javax.swing.JFrame {
             Record elempar2Rec = it.getKey();
             Record elempar2Clon = (Record) elempar2Rec.clone();
             elempar2Clon.setNo(eElempar2.up, Query.INS);
-            elempar2Clon.setNo(eElempar2.id, Conn.genId(eElempar2.up));
+            elempar2Clon.setNo(eElempar2.id, Conntct.genId(eElempar2.up));
             elempar2Clon.setNo(eElempar2.elemdet_id, it.getValue());
             eElempar2.up.query().add(elempar2Clon);  //добавим запись в кэш
             qElempar2.add(elempar2Clon);

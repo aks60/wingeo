@@ -5,7 +5,7 @@ import builder.model.ElemJoining;
 import common.eProfile;
 import common.eProp;
 import common.listener.ListenerRecord;
-import dataset.Conn;
+import dataset.Conntct;
 import dataset.Crypto;
 import dataset.Field;
 import dataset.Record;
@@ -232,7 +232,7 @@ public enum App {
     public static void createApp(eProfile profile) {
 
         try {
-            ResultSet rs = Conn.getConnection().createStatement().executeQuery("select current_user from rdb$database");
+            ResultSet rs = Conntct.getConnection().createStatement().executeQuery("select current_user from rdb$database");
             rs.next();
             eProfile.user = rs.getString(1);
             eProfile.profile = profile; //профиль приложения

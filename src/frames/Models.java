@@ -21,7 +21,7 @@ import common.listener.ListenerAction;
 import frames.swing.cmp.Canvas;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
-import dataset.Conn;
+import dataset.Conntct;
 import frames.swing.cmp.DefTableModel;
 import frames.swing.cmp.Scene;
 import java.io.File;
@@ -522,7 +522,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         try {
             String json = null;
             Record record = eSysmodel.up.newRecord(Query.INS);
-            record.set(eSysmodel.id, Conn.genId(eSysmodel.up));
+            record.set(eSysmodel.id, Conntct.genId(eSysmodel.up));
             record.set(eSysmodel.npp, record.get(eSysmodel.id));
 
             //Для загрузки скрипта из программы  

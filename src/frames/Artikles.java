@@ -4,7 +4,7 @@ import frames.dialog.DicCurrenc;
 import common.UCom;
 import common.eProp;
 import frames.dialog.DicColor;
-import dataset.Conn;
+import dataset.Conntct;
 import dataset.Field;
 import dataset.Query;
 import dataset.Record;
@@ -2659,7 +2659,7 @@ public class Artikles extends javax.swing.JFrame {
 
             Record artiklClon = (Record) qArtikl.get(index).clone();
             artiklClon.setNo(eArtikl.up, Query.INS);
-            int artiklID = Conn.genId(eArtikl.up);
+            int artiklID = Conntct.genId(eArtikl.up);
             artiklClon.setNo(eArtikl.id, artiklID);
             artiklClon.setNo(eArtikl.code, artiklClon.getStr(eArtikl.code) + "-клон");
             artiklClon.setNo(eArtikl.name, artiklClon.getStr(eArtikl.name) + "-клон");
@@ -2670,7 +2670,7 @@ public class Artikles extends javax.swing.JFrame {
             for (Record artdetRec : artdetList) {
                 Record artdetClon = (Record) artdetRec.clone();
                 artdetClon.setNo(eArtdet.up, Query.INS);
-                artdetClon.setNo(eArtdet.id, Conn.genId(eArtdet.up));
+                artdetClon.setNo(eArtdet.id, Conntct.genId(eArtdet.up));
                 artdetClon.setNo(eArtdet.artikl_id, artiklID);
                 eArtdet.up.query().add(artdetClon);  //добавим запись в кэш
                 qArtdet.add(artdetClon);

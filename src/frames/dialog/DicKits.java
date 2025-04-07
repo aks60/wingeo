@@ -6,7 +6,7 @@ import builder.param.ParamList;
 import common.UCom;
 import common.eProp;
 import common.listener.ListenerObject;
-import dataset.Conn;
+import dataset.Conntct;
 import dataset.Field;
 import frames.UGui;
 import dataset.Query;
@@ -197,7 +197,7 @@ public class DicKits extends javax.swing.JDialog {
             if (kitDet.filter(mapParam, kitdetRec) == true) {
 
                 Record prjkitRec = ePrjkit.up.newRecord(Query.INS);
-                prjkitRec.set(ePrjkit.id, Conn.genId(ePrjkit.up));
+                prjkitRec.set(ePrjkit.id, Conntct.genId(ePrjkit.up));
                 prjkitRec.set(ePrjkit.project_id, projectID);
                 prjkitRec.set(ePrjkit.prjprod_id, prjprodID);
                 prjkitRec.set(ePrjkit.numb, 0);
