@@ -54,7 +54,6 @@ import javax.swing.tree.TreePath;
 import common.listener.ListenerObject;
 import common.eProfile;
 import common.listener.ListenerRecord;
-import dataset.Table;
 import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
@@ -65,7 +64,6 @@ import enums.PKjson;
 import enums.Type;
 import frames.swing.cmp.DefMutableTreeNode;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -73,7 +71,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import javax.swing.JRootPane;
 import javax.swing.tree.DefaultMutableTreeNode;
-import org.locationtech.jts.geom.Geometry;
 import startup.App;
 
 /**
@@ -150,7 +147,6 @@ public class UGui {
 //        }
 //        return "";
 //    }
-
     //Текущий год
     public static int getYearCur() {
         return appCalendar.get(Calendar.YEAR);
@@ -997,7 +993,49 @@ public class UGui {
             List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
         }
     }
-    
+
+    public static Record cloneRecord(java.awt.Window windows, Query query, Field up, JTable table, ListenerRecord listener) {
+
+        int index = UGui.getIndexRec(table);
+        if (index != -1 && JOptionPane.showConfirmDialog(windows, "Вы действительно хотите клонировать текущую запись?",
+                "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+
+            Record recordClon = (Record) query.get(index).clone();
+            recordClon.setNo(up, Query.INS);
+            recordClon.setNo(up.fields()[1], Conntct.genId(up));
+            if (listener != null) {
+                listener.action(recordClon);
+            }
+            up.query().add(recordClon);  //добавим запись в кэш
+            query.add(++index, recordClon);
+            query.insert(recordClon);
+
+            ((DefaultTableModel) table.getModel()).fireTableRowsInserted(index, index);
+            UGui.setSelectedIndex(table, index);
+            UGui.scrollRectToIndex(index, table);
+            return recordClon;
+        }
+        return null;
+    }
+
+    public static List<Record> cloneRecord(Query query, Field up, List<Record> dataList, JTable table, ListenerRecord listener) {
+
+        for (Record deteilRec : dataList) {
+            Record recordClon = (Record) deteilRec.clone();
+            recordClon.setNo(0, Query.INS);
+            recordClon.setNo(up.fields()[1], Conntct.genId(up));
+            if (listener != null) {
+                listener.action(recordClon);
+            }
+            up.query().add(recordClon);  //добавим запись в кэш
+            query.add(recordClon);
+            query.insert(recordClon);
+        }
+        //query.execsql();
+        UGui.setSelectedRow(table);
+        return query;
+    }
+
     public static void PRINT(Field field, Record record) {
         List list = new ArrayList();
         for (Field f : field.fields()) {

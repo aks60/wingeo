@@ -39,6 +39,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 import common.listener.ListenerRecord;
+import domain.eFurniture;
+import domain.eFurnside1;
 import frames.swing.cmp.DefCellEditorNumb;
 import frames.swing.cmp.TableFieldFilter;
 import java.awt.event.MouseEvent;
@@ -2486,9 +2488,9 @@ public class Artikles extends javax.swing.JFrame {
 
     private void btn7(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7
         JButton btn = (JButton) evt.getSource();
-        if ((btn == btn16 || btn == btn17 || btn == btn21) 
+        if ((btn == btn16 || btn == btn17 || btn == btn21)
                 && (txt7.getText().isEmpty() && txt25.getText().isEmpty() && txt32.getText().isEmpty())) {
-                DicCurrenc frame = new DicCurrenc(this, listenerCurrenc1, listenerCurrenc2);
+            DicCurrenc frame = new DicCurrenc(this, listenerCurrenc1, listenerCurrenc2);
         } else {
             ListenerRecord listener = (btn == btn7 || btn == btn9 || btn == btn26) ? listenerCurrenc1 : listenerCurrenc2;
             Field field = (listener == listenerCurrenc1) ? eArtikl.currenc1_id : eArtikl.currenc2_id;
@@ -2650,36 +2652,15 @@ public class Artikles extends javax.swing.JFrame {
     }//GEN-LAST:event_ppmClick
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
-        int index = UGui.getIndexRec(tab1);
-        if (index != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
-                "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-
-            List<Record> artdetList = new ArrayList<Record>();
-            qArtdet.forEach(rec -> artdetList.add(rec));
-
-            Record artiklClon = (Record) qArtikl.get(index).clone();
-            artiklClon.setNo(eArtikl.up, Query.INS);
-            int artiklID = Conntct.genId(eArtikl.up);
-            artiklClon.setNo(eArtikl.id, artiklID);
-            artiklClon.setNo(eArtikl.code, artiklClon.getStr(eArtikl.code) + "-клон");
-            artiklClon.setNo(eArtikl.name, artiklClon.getStr(eArtikl.name) + "-клон");
-            eArtikl.up.query().add(artiklClon);  //добавим запись в кэш
-            qArtikl.add(++index, artiklClon);
-            qArtikl.insert(artiklClon);
-
-            for (Record artdetRec : artdetList) {
-                Record artdetClon = (Record) artdetRec.clone();
-                artdetClon.setNo(eArtdet.up, Query.INS);
-                artdetClon.setNo(eArtdet.id, Conntct.genId(eArtdet.up));
-                artdetClon.setNo(eArtdet.artikl_id, artiklID);
-                eArtdet.up.query().add(artdetClon);  //добавим запись в кэш
-                qArtdet.add(artdetClon);
-            }
-            qArtdet.execsql();
-            ((DefaultTableModel) tab1.getModel()).fireTableRowsInserted(index, index);
-            UGui.setSelectedIndex(tab1, index);
-            UGui.scrollRectToIndex(index, tab1);
-            UGui.setSelectedRow(tab2);
+        List<Record> data = new ArrayList(qArtdet);
+        Record masterRec = UGui.cloneRecord(this, qArtikl, eArtikl.up, tab1, (clon) -> {
+            clon.setNo(eArtikl.code, clon.getStr(eArtikl.code) + "-клон");
+            clon.setNo(eArtikl.name, clon.getStr(eArtikl.name) + "-клон");
+        });
+        if (masterRec != null) {
+            UGui.cloneRecord(qArtdet, eArtdet.up, data, tab2, (clon) -> {                 
+                clon.setNo(eArtdet.artikl_id, masterRec.getInt(eArtikl.id));
+            });
         }
     }//GEN-LAST:event_btnClone
 

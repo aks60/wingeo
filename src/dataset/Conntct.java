@@ -41,9 +41,9 @@ public class Conntct {
     public static Connection getConnection() {
         if (webapp == false) {
             try {
-                if (connection.isClosed() == true) {
-                    reconnection();
-                }
+                //if (connection.isClosed() == true) {
+                //    reconnection();
+                //}
                 if (connection.isClosed() == true) {
                     JOptionPane.showMessageDialog(null, "Соединение разорвано. Попробуйте "
                             + "\nглавное меню <Сервис->Возобновить соединение c БД \nили перезагрузите программу.", "НЕУДАЧА", 1);

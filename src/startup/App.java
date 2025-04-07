@@ -3,10 +3,8 @@ package startup;
 import builder.Wincalc;
 import builder.model.ElemJoining;
 import common.eProfile;
-import common.eProp;
 import common.listener.ListenerRecord;
 import dataset.Conntct;
-import dataset.Crypto;
 import dataset.Field;
 import dataset.Record;
 import domain.eArtdet;
@@ -72,15 +70,11 @@ import frames.Specifics;
 import frames.Syssize;
 import frames.Systree;
 import frames.PSFrame;
-import frames.UGui;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import javax.swing.JFrame;
-import javax.swing.JTable;
 
 public enum App {
 
@@ -89,10 +83,16 @@ public enum App {
     Specification, Syssize, RuleCalc, PSFrame, PSCompare;
     public javax.swing.JFrame frame;
     public static javax.swing.JFrame active;
-    //long startTime = 0, endTime;
+
+    public static Dimension frameSize = null;
+    public static java.awt.Point framePoint = null;
 
     public void createFrame(java.awt.Window parent, Object... param) {
+        frameSize = null;
+        framePoint = null;
         if (frame != null) {
+            frameSize = frame.getSize();
+            framePoint = frame.getLocation();
             frame.dispose();
         }
         try {
@@ -215,13 +215,17 @@ public enum App {
             }
             active = frame;
             frame.setName(this.name());
-            //FrameToFile.setFrameSize(frame); //размеры окна
             frame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowDeiconified(java.awt.event.WindowEvent evt) {
                     Top.frame.setExtendedState(JFrame.NORMAL);
                 }
             });
             frame.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage());
+            //≈сли форма была открыта, ткроем с темиже координатами
+            if (frameSize != null) {
+                frame.setSize(frameSize);
+                frame.setLocation(framePoint);
+            }
             frame.setVisible(true);
 
         } catch (Exception e) {
@@ -280,7 +284,6 @@ public enum App {
 
     //—писок таблиц базы данных
     public static Field[] db = { //в пор€дке удалени€ при конвертировани€ из базы приЄмника
-        //eSetting.up, 
         eSyspar1.up, eSysprof.up, eSysfurn.up, eSysprod.up, eSysmodel.up,
         eKitpar2.up, eKitdet.up, eKits.up,
         eJoinpar2.up, eJoinpar1.up, eJoindet.up, eJoinvar.up, eJoining.up,
@@ -293,14 +296,4 @@ public enum App {
         eArtdet.up, eArtikl.up,
         eSyssize.up, eGroups.up, eCurrenc.up, eSysuser.up
     };
-
-//    public static List<javax.swing.JFrame> listOpenFrane() {
-//        List<javax.swing.JFrame> list = new ArrayList();
-//        for (App app : App.values()) {
-//            if (app.frame != null) {
-//                list.add(app.frame);
-//            }
-//        }  
-//        return list;
-//    }
 }

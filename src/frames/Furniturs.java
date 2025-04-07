@@ -1457,7 +1457,6 @@ public class Furniturs extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDelete
 
     private void btnInsert(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsert
-
         if (tab1.getBorder() != null) {
             UGui.insertRecordCur(tab1, eFurniture.up, (record) -> {
                 int types = (btnTab1.isSelected()) ? 0 : (btnTab2.isSelected()) ? 1 : -1;
@@ -1548,7 +1547,7 @@ public class Furniturs extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsert
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditingAndExecSql(getRootPane());  
+        UGui.stopCellEditingAndExecSql(getRootPane());
     }//GEN-LAST:event_windowClosed
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
@@ -1727,7 +1726,7 @@ public class Furniturs extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnFindSystree
 
-    private void clone2(Map<Record, Integer> furnside2Map, Map<Record, Integer> furnpar2Map) {
+    private void cloneRecord(Map<Record, Integer> furnside2Map, Map<Record, Integer> furnpar2Map) {
         for (Map.Entry<Record, Integer> it : furnside2Map.entrySet()) {
             Record furnside2Rec = it.getKey();
             Record furnside2Clon = (Record) furnside2Rec.clone();
@@ -1747,117 +1746,160 @@ public class Furniturs extends javax.swing.JFrame {
     }
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
-        int indexTab1 = UGui.getIndexRec(tab1);
-        int indexTab2a = UGui.getIndexRec(tab2a);
-        if (indexTab1 != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
-                "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 
-            List<Record> furnside1List = new ArrayList<Record>();
-            Map<Record, Integer> furnside2Map = new HashMap<Record, Integer>();
-            List<Record> furndet2aList = new ArrayList<Record>();
-            Map<Record, Integer> furndet2bMap = new HashMap<Record, Integer>();
-            Map<Record, Integer> furndet2cMap = new HashMap<Record, Integer>();
-            Map<Record, Integer> furnpar1Map = new HashMap<Record, Integer>();
-            Map<Record, Integer> furnpar2Map = new HashMap<Record, Integer>();
-
-            Record furnitureRec = qFurniture.get(indexTab1);
-            Record furnitureClon = furnitureRec;
-
-            //РљР»РѕРЅРёСЂСѓРµРј Р·Р°РїРёСЃСЊ tab1
-            if (tab1.getBorder() != null) {
-                furnitureClon = (Record) furnitureRec.clone();
-                furnitureClon.setNo(eFurniture.up, Query.INS);
-                furnitureClon.setNo(eFurniture.id, Conntct.genId(eFurniture.up));
-                furnitureClon.setNo(eFurniture.name, furnitureClon.getStr(eFurniture.name) + "-клон");
-                eFurniture.up.query().add(furnitureClon);  //добавим запись в кэш
-                qFurniture.add(indexTab1, furnitureClon);
-                qFurnside1.forEach(rec -> furnside1List.add(rec));
-                for (Record furnside1Rec : furnside1List) {
-                    qFurnpar1.sql(eFurnpar1.data(), eFurnpar1.furnside_id, furnside1Rec.getInt(eFurnside1.id));
-                    Record furnside1Clon = (Record) furnside1Rec.clone();
-                    furnside1Clon.setNo(eFurnside1.up, Query.INS);
-                    furnside1Clon.setNo(eFurnside1.id, Conntct.genId(eFurnside1.up));
-                    furnside1Clon.setNo(eFurnside1.furniture_id, furnitureClon.getInt(eFurniture.id));
-                    qFurnpar1.forEach(rec -> furnpar1Map.put(rec, furnside1Clon.getInt(eFurnside1.id)));
-                    eFurnside1.up.query().add(furnside1Clon);  //добавим запись в кэш
-                    qFurnside1.add(furnside1Clon);
-                }
-                for (Map.Entry<Record, Integer> it : furnpar1Map.entrySet()) {
-                    Record furnpar1Rec = it.getKey();
-                    Record joinpar1Clon = (Record) furnpar1Rec.clone();
-                    joinpar1Clon.setNo(eFurnpar1.up, Query.INS);
-                    joinpar1Clon.setNo(eFurnpar1.id, Conntct.genId(eFurnpar1.up));
-                    joinpar1Clon.setNo(eFurnpar1.furnside_id, it.getValue());
-                    eFurnpar1.up.query().add(joinpar1Clon);  //РґРѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РєСЌС€
-                    qFurnpar1.add(joinpar1Clon);
-                }
-                qFurndet2a.forEach(rec -> furndet2aList.add(rec));
-
-                //Клонируем запись tab2a
-            } else {
-                furndet2aList.add(qFurndet2a.get(UGui.getIndexRec(tab2a)));
+        if (tab1.getBorder() != null) {
+            int types = (btnTab1.isSelected()) ? 0 : (btnTab2.isSelected()) ? 1 : -1;
+            List<Record> dataDet2a = new ArrayList(qFurndet2a);
+            List<Record> dataSide1 = new ArrayList(qFurnside1);
+            List<Record> dataPar1 = new ArrayList(qFurnpar1);
+            Record masterRec = UGui.cloneRecord(this, qFurniture, eFurniture.up, tab1, (clon) -> {
+                clon.set(eFurniture.name, (btnTab1.isSelected()) ? "Осн.фурн.клон" : (btnTab2.isSelected()) ? "Доп.фурн.клон" : "Набор.фурн.клон");
+                clon.set(eFurniture.types, types);                
+            });
+            if (masterRec  != null) {
+                UGui.cloneRecord(qFurndet2a, eFurndet.up, dataDet2a, tab3, (clon) -> {
+                    clon.setNo(eFurndet.furniture_id1, masterRec.getInt(eFurniture.id));
+                });
+                UGui.cloneRecord(qFurnside1, eFurnside1.up, dataSide1, tab3, (clon) -> {
+                    clon.setNo(eFurnside1.furniture_id, masterRec.getInt(eFurniture.id));
+                });
+                UGui.cloneRecord(qFurnpar1, eFurnpar1.up, dataPar1, tab4, (clon) -> {
+                    clon.setNo(eFurnpar1.furnside_id, masterRec.getInt(eFurniture.id));
+                });
             }
-
-            for (Record furndet2aRec : furndet2aList) {
-                qFurnside2.sql(eFurnside2.data(), eFurnside2.furndet_id, furndet2aRec.getInt(eFurnside2.id));
-                qFurnpar2.sql(eFurnpar2.data(), eFurnpar2.furndet_id, furndet2aRec.getInt(eFurndet.id));
-                qFurndet2b.sq2(eFurndet.data(), eFurndet.furndet_pk, furndet2aRec.getInt(eFurndet.pk), eFurndet.id, eFurndet.furndet_pk);
-                Record furndet2aClon = (Record) furndet2aRec.clone();
-                furndet2aClon.setNo(eFurndet.up, Query.INS);
-                furndet2aClon.setNo(eFurndet.id, Conntct.genId(eFurndet.up));
-                furndet2aClon.setNo(eFurndet.furniture_id1, furnitureClon.getInt(eFurniture.id));
-                furndet2aClon.setNo(eFurndet.furndet_pk, furndet2aClon.getInt(eFurndet.id));
-                qFurnside2.forEach(rec -> furnside2Map.put(rec, furndet2aClon.getInt(eFurndet.id)));
-                qFurnpar2.forEach(rec -> furnpar2Map.put(rec, furndet2aClon.getInt(eFurndet.id)));
-                qFurndet2b.forEach(rec -> furndet2bMap.put(rec, furndet2aClon.getInt(eFurndet.id)));
-                eFurndet.up.query().add(furndet2aClon);  //добавим запись в кэш
-                qFurndet2a.add(furndet2aClon);
-            }
-
-            clone2(furnside2Map, furnpar2Map);
-            List.of(furnside2Map, furnpar2Map).forEach(it -> it.clear());
-            List.of(qFurniture, qFurndet2a, qFurndet2b, qFurndet2c, qFurnside1, qFurnside2, qFurnpar1, qFurnpar2).forEach(q -> q.execsql());
-            for (Map.Entry<Record, Integer> it : furndet2bMap.entrySet()) {
-                Record furndet2bRec = it.getKey();
-                qFurnside2.sql(eFurnside2.data(), eFurnside2.furndet_id, furndet2bRec.getInt(eFurnside2.id));
-                qFurnpar2.sql(eFurnpar2.data(), eFurnpar2.furndet_id, furndet2bRec.getInt(eFurndet.id));
-                qFurndet2c.sq2(eFurndet.data(), eFurndet.furndet_pk, furndet2bRec.getInt(eFurndet.pk), eFurndet.id, eFurndet.furndet_pk);
-                Record furndet2bClon = (Record) furndet2bRec.clone();
-                furndet2bClon.setNo(eFurndet.up, Query.INS);
-                furndet2bClon.setNo(eFurndet.id, Conntct.genId(eFurndet.up));
-                furndet2bClon.setNo(eFurndet.furniture_id1, furnitureClon.getInt(eFurniture.id));
-                furndet2bClon.setNo(eFurndet.furndet_pk, it.getValue());
-                qFurnside2.forEach(rec -> furnside2Map.put(rec, furndet2bClon.getInt(eFurndet.id)));
-                qFurnpar2.forEach(rec -> furnpar2Map.put(rec, furndet2bClon.getInt(eFurndet.id)));
-                qFurndet2c.forEach(rec -> furndet2cMap.put(rec, furndet2bClon.getInt(eFurndet.id)));
-                eFurndet.up.query().add(furndet2bClon);  //добавим запись в кэш
-                qFurndet2b.add(furndet2bClon);
-            }
-            clone2(furnside2Map, furnpar2Map);
-            List.of(furnside2Map, furnpar2Map).forEach(it -> it.clear());
-            List.of(qFurniture, qFurndet2a, qFurndet2b, qFurndet2c, qFurnside1, qFurnside2, qFurnpar1, qFurnpar2).forEach(q -> q.execsql());
-            for (Map.Entry<Record, Integer> it : furndet2cMap.entrySet()) {
-                Record furndet2сRec = it.getKey();
-                qFurnside2.sql(eFurnside2.data(), eFurnside2.furndet_id, furndet2сRec.getInt(eFurnside2.id));
-                qFurnpar2.sql(eFurnpar2.data(), eFurnpar2.furndet_id, furndet2сRec.getInt(eFurndet.id));
-                Record furndet2cClon = (Record) furndet2сRec.clone();
-                furndet2cClon.setNo(eFurndet.up, Query.INS);
-                furndet2cClon.setNo(eFurndet.id, Conntct.genId(eFurndet.up));
-                furndet2cClon.setNo(eFurndet.furniture_id1, furnitureClon.getInt(eFurniture.id));
-                furndet2cClon.setNo(eFurndet.furndet_pk, it.getValue());
-                qFurnside2.forEach(rec -> furnside2Map.put(rec, furndet2cClon.getInt(eFurndet.id)));
-                qFurnpar2.forEach(rec -> furnpar2Map.put(rec, furndet2cClon.getInt(eFurndet.id)));
-                eFurndet.up.query().add(furndet2cClon);  //добавим запись в кэш
-                qFurndet2c.add(furndet2cClon);
-            }
-            clone2(furnside2Map, furnpar2Map);
-            List.of(furnside2Map, furnpar2Map).forEach(it -> it.clear());
-            List.of(qFurniture, qFurndet2a, qFurndet2b, qFurndet2c, qFurnside1, qFurnside2, qFurnpar1, qFurnpar2).forEach(q -> q.execsql());
-
-            ((DefaultTableModel) tab1.getModel()).fireTableRowsInserted(indexTab1, indexTab1);
-            UGui.setSelectedIndex(tab1, indexTab1);
-            UGui.setSelectedIndex(tab2a, indexTab2a);
+            
+        } else if(tab2a.getBorder() != null) {
+            List<Record> dataSide2 = new ArrayList(qFurnside2);
+            List<Record> dataPar2 = new ArrayList(qFurnpar2);
+            List<Record> dataDet2b = new ArrayList(qFurndet2b);
+            Record masterRec = UGui.cloneRecord(this, qFurndet2a, eFurndet.up, tab2a, null);
+            if(masterRec != null) {
+                UGui.cloneRecord(qFurndet2b, eFurndet.up, dataDet2b, tab2b, (clon) -> {
+                    clon.setNo(eFurnside1.furniture_id, masterRec.getInt(eFurniture.id));
+                });
+                UGui.cloneRecord(qFurnside2, eFurnside2.up, dataSide2, tab2b, (clon) -> {
+                    clon.setNo(eFurnside2.furndet_id, masterRec.getInt(eFurniture.id));
+                });
+                UGui.cloneRecord(qFurnpar2, eFurnpar2.up, dataPar2, tab2b, (clon) -> {
+                    clon.setNo(eFurnpar2.furndet_id, masterRec.getInt(eFurniture.id));
+                });
+            }            
         }
+/*  
+        if (evt == null) {
+            int indexTab1 = UGui.getIndexRec(tab1);
+            int indexTab2a = UGui.getIndexRec(tab2a);
+            if (indexTab1 != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
+                    "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+
+                List<Record> furnside1List = new ArrayList<Record>();
+                Map<Record, Integer> furnside2Map = new HashMap<Record, Integer>();
+                List<Record> furndet2aList = new ArrayList<Record>();
+                Map<Record, Integer> furndet2bMap = new HashMap<Record, Integer>();
+                Map<Record, Integer> furndet2cMap = new HashMap<Record, Integer>();
+                Map<Record, Integer> furnpar1Map = new HashMap<Record, Integer>();
+                Map<Record, Integer> furnpar2Map = new HashMap<Record, Integer>();
+
+                Record furnitureRec = qFurniture.get(indexTab1);
+                Record furnitureClon = furnitureRec;
+
+                //Клонируем запись tab1
+                if (tab1.getBorder() != null) {
+                    furnitureClon = (Record) furnitureRec.clone();
+                    furnitureClon.setNo(eFurniture.up, Query.INS);
+                    furnitureClon.setNo(eFurniture.id, Conntct.genId(eFurniture.up));
+                    furnitureClon.setNo(eFurniture.name, furnitureClon.getStr(eFurniture.name) + "-клон");
+                    eFurniture.up.query().add(furnitureClon);  //добавим запись в кэш
+                    qFurniture.add(indexTab1, furnitureClon);
+                    qFurnside1.forEach(rec -> furnside1List.add(rec));
+                    for (Record furnside1Rec : furnside1List) {
+                        qFurnpar1.sql(eFurnpar1.data(), eFurnpar1.furnside_id, furnside1Rec.getInt(eFurnside1.id));
+                        Record furnside1Clon = (Record) furnside1Rec.clone();
+                        furnside1Clon.setNo(eFurnside1.up, Query.INS);
+                        furnside1Clon.setNo(eFurnside1.id, Conntct.genId(eFurnside1.up));
+                        furnside1Clon.setNo(eFurnside1.furniture_id, furnitureClon.getInt(eFurniture.id));
+                        qFurnpar1.forEach(rec -> furnpar1Map.put(rec, furnside1Clon.getInt(eFurnside1.id)));
+                        eFurnside1.up.query().add(furnside1Clon);  //добавим запись в кэш
+                        qFurnside1.add(furnside1Clon);
+                    }
+                    for (Map.Entry<Record, Integer> it : furnpar1Map.entrySet()) {
+                        Record furnpar1Rec = it.getKey();
+                        Record joinpar1Clon = (Record) furnpar1Rec.clone();
+                        joinpar1Clon.setNo(eFurnpar1.up, Query.INS);
+                        joinpar1Clon.setNo(eFurnpar1.id, Conntct.genId(eFurnpar1.up));
+                        joinpar1Clon.setNo(eFurnpar1.furnside_id, it.getValue());
+                        eFurnpar1.up.query().add(joinpar1Clon);
+                        qFurnpar1.add(joinpar1Clon);
+                    }
+                    qFurndet2a.forEach(rec -> furndet2aList.add(rec));
+
+                    //Клонируем запись tab2a
+                } else {
+                    furndet2aList.add(qFurndet2a.get(UGui.getIndexRec(tab2a)));
+                }
+
+                for (Record furndet2aRec : furndet2aList) {
+                    qFurnside2.sql(eFurnside2.data(), eFurnside2.furndet_id, furndet2aRec.getInt(eFurnside2.id));
+                    qFurnpar2.sql(eFurnpar2.data(), eFurnpar2.furndet_id, furndet2aRec.getInt(eFurndet.id));
+                    qFurndet2b.sq2(eFurndet.data(), eFurndet.furndet_pk, furndet2aRec.getInt(eFurndet.pk), eFurndet.id, eFurndet.furndet_pk);
+                    Record furndet2aClon = (Record) furndet2aRec.clone();
+                    furndet2aClon.setNo(eFurndet.up, Query.INS);
+                    furndet2aClon.setNo(eFurndet.id, Conntct.genId(eFurndet.up));
+                    furndet2aClon.setNo(eFurndet.furniture_id1, furnitureClon.getInt(eFurniture.id));
+                    furndet2aClon.setNo(eFurndet.furndet_pk, furndet2aClon.getInt(eFurndet.id));
+                    qFurnside2.forEach(rec -> furnside2Map.put(rec, furndet2aClon.getInt(eFurndet.id)));
+                    qFurnpar2.forEach(rec -> furnpar2Map.put(rec, furndet2aClon.getInt(eFurndet.id)));
+                    qFurndet2b.forEach(rec -> furndet2bMap.put(rec, furndet2aClon.getInt(eFurndet.id)));
+                    eFurndet.up.query().add(furndet2aClon);  //добавим запись в кэш
+                    qFurndet2a.add(furndet2aClon);
+                }
+
+                cloneRecord(furnside2Map, furnpar2Map);
+                List.of(furnside2Map, furnpar2Map).forEach(it -> it.clear());
+                List.of(qFurniture, qFurndet2a, qFurndet2b, qFurndet2c, qFurnside1, qFurnside2, qFurnpar1, qFurnpar2).forEach(q -> q.execsql());
+                for (Map.Entry<Record, Integer> it : furndet2bMap.entrySet()) {
+                    Record furndet2bRec = it.getKey();
+                    qFurnside2.sql(eFurnside2.data(), eFurnside2.furndet_id, furndet2bRec.getInt(eFurnside2.id));
+                    qFurnpar2.sql(eFurnpar2.data(), eFurnpar2.furndet_id, furndet2bRec.getInt(eFurndet.id));
+                    qFurndet2c.sq2(eFurndet.data(), eFurndet.furndet_pk, furndet2bRec.getInt(eFurndet.pk), eFurndet.id, eFurndet.furndet_pk);
+                    Record furndet2bClon = (Record) furndet2bRec.clone();
+                    furndet2bClon.setNo(eFurndet.up, Query.INS);
+                    furndet2bClon.setNo(eFurndet.id, Conntct.genId(eFurndet.up));
+                    furndet2bClon.setNo(eFurndet.furniture_id1, furnitureClon.getInt(eFurniture.id));
+                    furndet2bClon.setNo(eFurndet.furndet_pk, it.getValue());
+                    qFurnside2.forEach(rec -> furnside2Map.put(rec, furndet2bClon.getInt(eFurndet.id)));
+                    qFurnpar2.forEach(rec -> furnpar2Map.put(rec, furndet2bClon.getInt(eFurndet.id)));
+                    qFurndet2c.forEach(rec -> furndet2cMap.put(rec, furndet2bClon.getInt(eFurndet.id)));
+                    eFurndet.up.query().add(furndet2bClon);  //добавим запись в кэш
+                    qFurndet2b.add(furndet2bClon);
+                }
+                cloneRecord(furnside2Map, furnpar2Map);
+                List.of(furnside2Map, furnpar2Map).forEach(it -> it.clear());
+                List.of(qFurniture, qFurndet2a, qFurndet2b, qFurndet2c, qFurnside1, qFurnside2, qFurnpar1, qFurnpar2).forEach(q -> q.execsql());
+                for (Map.Entry<Record, Integer> it : furndet2cMap.entrySet()) {
+                    Record furndet2сRec = it.getKey();
+                    qFurnside2.sql(eFurnside2.data(), eFurnside2.furndet_id, furndet2сRec.getInt(eFurnside2.id));
+                    qFurnpar2.sql(eFurnpar2.data(), eFurnpar2.furndet_id, furndet2сRec.getInt(eFurndet.id));
+                    Record furndet2cClon = (Record) furndet2сRec.clone();
+                    furndet2cClon.setNo(eFurndet.up, Query.INS);
+                    furndet2cClon.setNo(eFurndet.id, Conntct.genId(eFurndet.up));
+                    furndet2cClon.setNo(eFurndet.furniture_id1, furnitureClon.getInt(eFurniture.id));
+                    furndet2cClon.setNo(eFurndet.furndet_pk, it.getValue());
+                    qFurnside2.forEach(rec -> furnside2Map.put(rec, furndet2cClon.getInt(eFurndet.id)));
+                    qFurnpar2.forEach(rec -> furnpar2Map.put(rec, furndet2cClon.getInt(eFurndet.id)));
+                    eFurndet.up.query().add(furndet2cClon);  //добавим запись в кэш
+                    qFurndet2c.add(furndet2cClon);
+                }
+                cloneRecord(furnside2Map, furnpar2Map);
+                List.of(furnside2Map, furnpar2Map).forEach(it -> it.clear());
+                List.of(qFurniture, qFurndet2a, qFurndet2b, qFurndet2c, qFurnside1, qFurnside2, qFurnpar1, qFurnpar2).forEach(q -> q.execsql());
+
+                ((DefaultTableModel) tab1.getModel()).fireTableRowsInserted(indexTab1, indexTab1);
+                UGui.setSelectedIndex(tab1, indexTab1);
+                UGui.setSelectedIndex(tab2a, indexTab2a);
+            }
+        }
+*/
     }//GEN-LAST:event_btnClone
 
     private void ppmActionItems(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppmActionItems
@@ -1942,7 +1984,7 @@ public class Furniturs extends javax.swing.JFrame {
         btnTest.setVisible(eProp.devel.equals("99"));
         eProp.getWin(this, btnClose, (e) -> {
             eProp.putWin(this, btnClose);
-        });        
+        });
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2a, tab2b, tab2c, tab4, tab6);
         south.add(filterTable, 0);
