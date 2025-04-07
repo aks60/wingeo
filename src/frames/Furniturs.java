@@ -1766,22 +1766,23 @@ public class Furniturs extends javax.swing.JFrame {
             }
 
         } else if (tab2a.getBorder() != null) {
+            List<Record> dataDet2b = new ArrayList(qFurndet2b);
             List<Record> dataSide2 = new ArrayList(qFurnside2);
             List<Record> dataPar2 = new ArrayList(qFurnpar2);
-            List<Record> dataDet2b = new ArrayList(qFurndet2b);
             Record masterRec = UGui.cloneRecord(this, qFurndet2a, eFurndet.up, tab2a, null);
-            if (masterRec != null) {               
-                UGui.cloneRecord(qFurndet2b, eFurndet.up, dataDet2b, tab2b, (clon) -> {
-                    clon.setNo(eFurnside1.furniture_id, masterRec.getInt(eFurniture.id));
-                    clon.setNo(eFurndet.furndet_pk, masterRec.getInt(eFurndet.id));
-                });
-                UGui.cloneRecord(qFurnside2, eFurnside2.up, dataSide2, tab2b, (clon) -> {
-                    clon.setNo(eFurnside2.furndet_id, masterRec.getInt(eFurniture.id));
-                });
-                UGui.cloneRecord(qFurnpar2, eFurnpar2.up, dataPar2, tab2b, (clon) -> {
-                    clon.setNo(eFurnpar2.furndet_id, masterRec.getInt(eFurniture.id));
-                });
-            }
+//            if (masterRec != null) {               
+//                UGui.cloneRecord(qFurndet2b, eFurndet.up, dataDet2b, tab2b, (clon) -> {
+//                    clon.setNo(eFurndet.furniture_id1, masterRec.getInt(eFurndet.furniture_id1));
+//                    clon.setNo(eFurndet.pk, clon.getInt(eFurndet.id));
+//                    clon.setNo(eFurndet.furndet_pk, masterRec.getInt(eFurndet.pk));
+//                });
+//                UGui.cloneRecord(qFurnside2, eFurnside2.up, dataSide2, tab2b, (clon) -> {
+//                    clon.setNo(eFurnside2.furndet_id, masterRec.getInt(eFurndet.id));
+//                });
+//                UGui.cloneRecord(qFurnpar2, eFurnpar2.up, dataPar2, tab2b, (clon) -> {
+//                    clon.setNo(eFurnpar2.furndet_id, masterRec.getInt(eFurndet.id));
+//                });
+//            }
         }
     }//GEN-LAST:event_btnClone
 
