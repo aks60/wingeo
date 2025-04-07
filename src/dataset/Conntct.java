@@ -66,12 +66,12 @@ public class Conntct {
                 return connection;
 
             } catch (NamingException e) {
-                System.err.println("Ошибка:Conn.connection() №1 ");
+                System.err.println("Ошибка:Connect.connection() №1 ");
                 e.printStackTrace();
                 return null;
 
             } catch (SQLException e) {
-                System.err.println("Ошибка:Conn.connection() №2 ");
+                System.err.println("Ошибка:Connect.connection() №2 ");
                 e.printStackTrace();
                 return null;
             }
@@ -93,7 +93,7 @@ public class Conntct {
         if (connection.isClosed() == false) {
             JOptionPane.showMessageDialog(null, "Соединение восстановлено.", "УСПЕХ", 1);
         } else {
-            JOptionPane.showMessageDialog(null, "Соединение не восстановлено.", "НЕУДАЧА", 1);
+            JOptionPane.showMessageDialog(null, eExcep.noConn, "НЕУДАЧА", 1);
         }
     }
 
@@ -120,16 +120,16 @@ public class Conntct {
             statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
         } catch (ClassNotFoundException e) {
-            //System.err.println("Ошибка1:Conn.connection() " + e);
+            //System.err.println("Ошибка1:Connect.connection() " + e);
             JOptionPane.showMessageDialog(null, eExcep.findDrive, "НЕУДАЧА", 1);
             return eExcep.findDrive;
         } catch (SQLException e) {
-            //System.err.println("Ошибка2:Conn.connection() " + e);
-            JOptionPane.showMessageDialog(null, "Ошибка соединения SQLException", "НЕУДАЧА", 1);
-            return eExcep.getError(e.getErrorCode());
+            System.err.println("Ошибка2:Connect.connection() " + e);
+            return eExcep.noConn;
+            //return eExcep.getError(e.getErrorCode());
         }
         if (httpcheck == false) {
-            //System.out.println("dataset.Conn.connection()");
+            //System.out.println("dataset.Connect.connection()");
             return eExcep.noActiv;
         }
         return eExcep.yesConn;
@@ -139,7 +139,7 @@ public class Conntct {
         try {
             connection.setAutoCommit(autoCommit);
         } catch (SQLException e) {
-            System.err.println("Ошибка:Conn.autocommit() " + e);
+            System.err.println("Ошибка:Connect.autocommit() " + e);
         }
     }
 
@@ -150,7 +150,7 @@ public class Conntct {
             connection.createStatement().executeUpdate("grant " + role + " to " + user);
 
         } catch (SQLException e) {
-            System.err.println("Ошибка:Conn.addUser() " + e);
+            System.err.println("Ошибка:Connect.addUser() " + e);
             JOptionPane.showMessageDialog(null, eExcep.getError(e.getErrorCode()).mes, "ВНИМАНИЕ!", 1);
         }
     }
@@ -165,7 +165,7 @@ public class Conntct {
             connection.createStatement().executeUpdate("DROP USER " + user);
 
         } catch (SQLException e) {
-            System.err.println("Ошибка:Conn.deleteUser() " + e);
+            System.err.println("Ошибка:Connect.deleteUser() " + e);
         }
     }
 
@@ -183,7 +183,7 @@ public class Conntct {
             String sql = "ALTER USER " + user + " PASSWORD '" + String.valueOf(password) + "'";
             connection.createStatement().executeUpdate(sql);
         } catch (Exception e) {
-            System.err.println("Ошибка:Conn.modifyPassword() " + e);
+            System.err.println("Ошибка:Connect.modifyPassword() " + e);
         }
     }
 
@@ -203,7 +203,7 @@ public class Conntct {
             return next_id;
 
         } catch (SQLException e) {
-            System.err.println("Ошибка:Conn.genId() " + e);
+            System.err.println("Ошибка:Connect.genId() " + e);
             JOptionPane.showMessageDialog(null, "Не удалось сгенерировать ключ записи. Перезагрузите программу.", "НЕУДАЧА", 1);
             return -1;
         }
