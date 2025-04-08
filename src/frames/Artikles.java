@@ -4,7 +4,7 @@ import frames.dialog.DicCurrenc;
 import common.UCom;
 import common.eProp;
 import frames.dialog.DicColor;
-import dataset.Conntct;
+import dataset.Connect;
 import dataset.Field;
 import dataset.Query;
 import dataset.Record;
@@ -2652,13 +2652,16 @@ public class Artikles extends javax.swing.JFrame {
     }//GEN-LAST:event_ppmClick
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
-        List<Record> data = new ArrayList(qArtdet);
-        Record masterRec = UGui.cloneRecord(this, qArtikl, eArtikl.up, tab1, (clon) -> {
-            clon.setNo(eArtikl.code, clon.getStr(eArtikl.code) + "-клон");
-            clon.setNo(eArtikl.name, clon.getStr(eArtikl.name) + "-клон");
-        });
-        if (masterRec != null) {
-            UGui.cloneRecord(qArtdet, eArtdet.up, data, tab2, (clon) -> {                 
+        if (UGui.getIndexRec(tab1) != -1 && JOptionPane.showConfirmDialog(this, 
+                "Вы действительно хотите клонировать текущую запись?",
+                "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+            
+            List<Record> data = new ArrayList(qArtdet);
+            Record masterRec = UGui.cloneRecord(qArtikl, tab1, eArtikl.up, (clon) -> {
+                clon.setNo(eArtikl.code, clon.getStr(eArtikl.code) + "-клон");
+                clon.setNo(eArtikl.name, clon.getStr(eArtikl.name) + "-клон");
+            });
+            UGui.cloneRecord(qArtdet, tab2, eArtdet.up, data, (clon) -> {
                 clon.setNo(eArtdet.artikl_id, masterRec.getInt(eArtikl.id));
             });
         }

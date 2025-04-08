@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import common.listener.ListenerRecord;
-import dataset.Conntct;
+import dataset.Connect;
 import domain.eSysuser;
 import frames.swing.cmp.DefCellRendererBool;
 import frames.swing.cmp.TableFieldFilter;
@@ -1009,7 +1009,7 @@ public class Partner extends javax.swing.JFrame {
 
             UGui.insertRecordCur(tab1, ePrjpart.up, (prjpartRec) -> {
                 try {
-                    ResultSet rs = Conntct.getConnection().createStatement()
+                    ResultSet rs = Connect.getConnection().createStatement()
                             .executeQuery("SELECT current_user FROM rdb$database"); //дёрнем текущего пользователя
                     rs.next();
                     String login = rs.getString(1).trim();

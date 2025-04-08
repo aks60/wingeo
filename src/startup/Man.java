@@ -7,7 +7,7 @@ import java.util.HashMap;
 import javax.swing.JCheckBoxMenuItem;
 import common.listener.ListenerFrame;
 import common.eProp;
-import dataset.Conntct;
+import dataset.Connect;
 import dataset.Query;
 import dataset.Record;
 import domain.ePrjprod;

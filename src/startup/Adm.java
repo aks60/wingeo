@@ -5,7 +5,7 @@ import common.eProp;
 import common.eProfile;
 import common.eProp;
 import frames.PSConvert;
-import dataset.Conntct;
+import dataset.Connect;
 import dataset.Field;
 import dataset.Query;
 import dataset.Record;
@@ -145,7 +145,7 @@ public class Adm extends javax.swing.JFrame {
                     + " rdb$user_privileges b on a.rdb$role_name = b.rdb$relation_name AND "
                     + " b.rdb$user != 'SYSDBA' AND NOT EXISTS (SELECT * FROM rdb$roles c WHERE c.rdb$role_name = b.rdb$user) "
                     + " left join sysuser c on b.rdb$user = c.login where b.rdb$user is not null ORDER BY 1";
-            Statement statement = Conntct.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            Statement statement = Connect.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = statement.executeQuery(sql);
             Query userList = new Query(eSysuser.values());
             int npp = 0;
@@ -168,7 +168,7 @@ public class Adm extends javax.swing.JFrame {
                 Vector vec = new Vector(rec);
                 dm.getDataVector().add(vec);
             }
-            userList.forEach(rec -> rec.setNo(eSysuser.id, Conntct.genId(eSysuser.up)));
+            userList.forEach(rec -> rec.setNo(eSysuser.id, Connect.genId(eSysuser.up)));
             userList.execsql();
             qSysuser.addAll(userList);
             ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
@@ -1259,7 +1259,7 @@ public class Adm extends javax.swing.JFrame {
             if (row != -1) {
                 try {
                     String login = String.valueOf(tab4.getValueAt(row, 1));
-                    Conntct.deleteUser2(login);
+                    Connect.deleteUser2(login);
 
                     Record rec = qSysuser.stream().filter(rec2 -> login.equals(rec2.get(eSysuser.login)) == true)
                             .findFirst().orElse(eSysuser.up.newRecord(Query.INS));
@@ -1372,10 +1372,10 @@ public class Adm extends javax.swing.JFrame {
             eProp.user.putProp("sysdba");
             eProp.password = String.valueOf("masterkey");
             String num_base = eProp.base_num.getProp();
-            Conntct.connection(eProp.getServer(num_base), eProp.getPort(num_base), eProp.getBase(num_base), eProp.user.getProp(), eProp.password.toCharArray(), null);
-            Connection c2 = Conntct.getConnection();
+            Connect.connection(eProp.getServer(num_base), eProp.getPort(num_base), eProp.getBase(num_base), eProp.user.getProp(), eProp.password.toCharArray(), null);
+            Connection c2 = Connect.getConnection();
 
-            Conntct con1 = new Conntct();
+            Connect con1 = new Connect();
             con1.connection(edServer.getText().trim(), edPort.getText().trim(), edPath.getText().trim(), edUser.getText().trim(), edPass.getText().toCharArray(), null);
             Connection c1 = con1.getConnection();
 
@@ -1394,7 +1394,7 @@ public class Adm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnStart
 
     private void btnTestBtnStartClick(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestBtnStartClick
-        Conntct Src = new Conntct();
+        Connect Src = new Connect();
         eExcep excep = Src.connection(edServer.getText().trim(), edPort.getText().trim(),
                 edPath.getText().trim(), edUser.getText().trim(), edPass.getText().toCharArray(), null);
         JOptionPane.showMessageDialog(this, edPath.getText().trim() + "  \n" + excep.mes, "Сообщение", JOptionPane.INFORMATION_MESSAGE);
@@ -1442,9 +1442,9 @@ public class Adm extends javax.swing.JFrame {
             if (validation() == true) {
                 String role = (box1.getSelectedIndex() == 1) ? "TEXNOLOG" : "MANAGER";
                 String role2 = (box2.getSelectedIndex() == 0) ? role + "_RW" : role + "_RO";
-                Conntct.addUser(login, txt2.getPassword(), role2);
+                Connect.addUser(login, txt2.getPassword(), role2);
                 if (sysuserRec.get(eSysuser.id) == null) {
-                    sysuserRec.set(eSysuser.id, Conntct.genId(eSysuser.up));
+                    sysuserRec.set(eSysuser.id, Connect.genId(eSysuser.up));
                     sysuserRec.set(eSysuser.login, login);
                     sysuserRec.set(eSysuser.role, role);
                     sysuserRec.set(eSysuser.fio, fio);
@@ -1463,7 +1463,7 @@ public class Adm extends javax.swing.JFrame {
                 sysuserRec.set(eSysuser.phone, phone);
                 sysuserRec.set(eSysuser.email, email);
                 qSysuser.execsql();
-                Conntct.modifyPassword(login, txt2.getPassword());
+                Connect.modifyPassword(login, txt2.getPassword());
                 loadingTab4();
                 ((CardLayout) pan3.getLayout()).show(pan3, "pan11");
             }
@@ -1513,7 +1513,7 @@ public class Adm extends javax.swing.JFrame {
         if (result == JOptionPane.OK_OPTION) {
             if (String.valueOf(pass1.getPassword()).equals(String.valueOf(pass2.getPassword()))) {
 
-                Conntct.modifyPassword("sysdba", pass2.getPassword());
+                Connect.modifyPassword("sysdba", pass2.getPassword());
                 JOptionPane.showMessageDialog(this, "Операция выполнена успешно!", "Изменение пароля SYSDBA", JOptionPane.NO_OPTION);
             } else {
                 JOptionPane.showMessageDialog(this, "Имена не совпали", "Неудача", JOptionPane.NO_OPTION);
@@ -1629,7 +1629,7 @@ public class Adm extends javax.swing.JFrame {
         appendToPane("    выполняться под управлением Firebird 2.1 НЕ ВЫШЕ.\n", Color.GRAY);
         appendToPane("    Если версия выше чем 2.1 переустановите Firebird.\n", Color.GRAY);
         appendToPane("\n", Color.GRAY);
-        appendToPane("    PS. У Вас установлена версия Firebird " + Conntct.version() + "\n", Color.GRAY);
+        appendToPane("    PS. У Вас установлена версия Firebird " + Connect.version() + "\n", Color.GRAY);
 
         LookAndFeel lookAndFeel = UIManager.getLookAndFeel();
         for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {

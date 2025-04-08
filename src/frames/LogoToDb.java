@@ -1,6 +1,6 @@
 package frames;
 
-import dataset.Conntct;
+import dataset.Connect;
 import dataset.eExcep;
 import common.eProfile;
 import common.eProp;
@@ -66,7 +66,7 @@ public class LogoToDb extends javax.swing.JDialog {
                 labMes.setForeground(Color.BLUE);
                 labMes.setText("Установка соединения с базой данных");
                 String num = eProp.base_num.getProp();
-                eExcep pass = Conntct.connection(eProp.getServer(num), eProp.getPort(num), eProp.getBase(num), edUser.getText(), edPass.getPassword(), null);
+                eExcep pass = Connect.connection(eProp.getServer(num), eProp.getPort(num), eProp.getBase(num), edUser.getText(), edPass.getPassword(), null);
 
                 if (pass == eExcep.yesConn) {
 
@@ -78,14 +78,14 @@ public class LogoToDb extends javax.swing.JDialog {
 
                     } else {
                         //Получим роль по имени логина
-                        Statement st = Conntct.getConnection().createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+                        Statement st = Connect.getConnection().createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
                         //ResultSet rs = st.executeQuery("SELECT DISTINCT a.rdb$role_name , b.rdb$user FROM rdb$roles a, rdb$user_privileges b WHERE a.rdb$role_name = b.rdb$relation_name AND b.rdb$user = '" + edUser.getText() + "'");
                         ResultSet rs = st.executeQuery("SELECT u.RDB$USER, u.RDB$RELATION_NAME FROM RDB$USER_PRIVILEGES u WHERE u.RDB$USER = '" + edUser.getText().toUpperCase() + "'");
                         if (rs.next()) {
                             eProp.role = rs.getString("RDB$RELATION_NAME").trim();
-                            Conntct.getConnection().close();
+                            Connect.getConnection().close();
                             //Соединение с новыми привелегиями
-                            pass = Conntct.connection(eProp.getServer(num), eProp.getPort(num), eProp.getBase(num), edUser.getText(), edPass.getPassword(), eProp.role);
+                            pass = Connect.connection(eProp.getServer(num), eProp.getPort(num), eProp.getBase(num), edUser.getText(), edPass.getPassword(), eProp.role);
                             //По имени роли откроем нужное приложение
                             if (pass == eExcep.yesConn) {
                                 if (eProfile.P02.roleSet.contains(eProp.role)) {

@@ -5,7 +5,7 @@ import builder.param.ParamList;
 import common.eProp;
 import common.listener.ListenerFrame;
 import common.listener.ListenerRecord;
-import dataset.Conntct;
+import dataset.Connect;
 import dataset.Field;
 import dataset.Query;
 import dataset.Record;
@@ -648,7 +648,7 @@ public class Kits extends javax.swing.JFrame {
             Object result = JOptionPane.showInputDialog(Kits.this, "Название", "Категория", JOptionPane.QUESTION_MESSAGE);
             if (result != null) {
                 Record groupsRec = eGroups.up.newRecord(Query.INS);
-                int id = Conntct.genId(eGroups.up);
+                int id = Connect.genId(eGroups.up);
                 groupsRec.setNo(eGroups.id, id);
                 groupsRec.setNo(eGroups.grup, TypeGrup.CATEG_KIT.id);
                 groupsRec.setNo(eGroups.name, result);

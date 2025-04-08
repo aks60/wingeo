@@ -151,7 +151,7 @@ public class Crypto {
 
                 //Проверка сервера
                 if (randomMes.equals(res.body().trim())) {
-                    Conntct.httpcheck = true;
+                    Connect.cryptoCheck = true;
                 }
                 return res;
             }).get();

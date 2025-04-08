@@ -2,7 +2,7 @@ package frames;
 
 import frames.swing.cmp.ProgressBar;
 import builder.model.Com5t;
-import dataset.Conntct;
+import dataset.Connect;
 import dataset.Field;
 import dataset.Query;
 import dataset.Record;
@@ -713,7 +713,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
             //Сохраним скрипт в базе
             Record sysprodRec = eSysprod.up.newRecord(Query.INS);
-            sysprodRec.setNo(eSysprod.id, Conntct.genId(eSysprod.id));
+            sysprodRec.setNo(eSysprod.id, Connect.genId(eSysprod.id));
             sysprodRec.setNo(eSysprod.npp, sysprodRec.get(eSysprod.id));
             sysprodRec.setNo(eSysprod.systree_id, systreeID);
             sysprodRec.setNo(eSysprod.name, record.get(1));
@@ -3702,7 +3702,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 if (JOptionPane.showConfirmDialog(this, "Вы действительно хотите добавить ветку в систему?", "Подтверждение",
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
                     Record record = eSystree.up.newRecord(Query.INS);
-                    int id = Conntct.genId(eSystree.id);
+                    int id = Connect.genId(eSystree.id);
                     record.setNo(eSystree.id, id);
                     int parent_id = (sysNode.rec().getInt(eSystree.id) == -1) ? id : sysNode.rec().getInt(eSystree.id);
                     record.setNo(eSystree.parent_id, parent_id);
@@ -5041,7 +5041,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             Object prj = JOptionPane.showInputDialog(Systree.this, "Номер проекта", "Проект", JOptionPane.QUESTION_MESSAGE);
             if (prj != null) {
                 Record record = eSysprod.up.newRecord(Query.INS);
-                record.set(eSysprod.id, Conntct.genId(eSysprod.up));
+                record.set(eSysprod.id, Connect.genId(eSysprod.up));
                 record.set(eSysprod.npp, record.get(eSysprod.id));
                 String json = GsonScript.scriptPath(Integer.valueOf(prj.toString()));
                 GsonRoot gsonRoot = new Gson().fromJson(json, GsonRoot.class);

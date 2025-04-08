@@ -13,7 +13,7 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import common.listener.ListenerFrame;
-import dataset.Conntct;
+import dataset.Connect;
 import dataset.Query;
 import domain.eParams;
 import frames.PathToDb;
@@ -1150,8 +1150,8 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
 
     private void mn65ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn65ActionPerformed
         try {
-            Conntct.close();
-            Conntct.reconnection();
+            Connect.close();
+            Connect.reconnection();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Не удалось возобновить соединение с базой  данных.", "ВНИМАНИЕ!", 1);
         }

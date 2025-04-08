@@ -23,9 +23,9 @@ import startup.App;
 /**
  * Соединение через PostgresSQL
  */
-public class Conntct {
+public class Connect {
 
-    public static boolean httpcheck = false; //проверка активации программы
+    public static boolean cryptoCheck = false; //проверка активации программы
     public static boolean webapp = true;
     private static Connection connection = null;
     protected static Statement statement = null;
@@ -41,9 +41,6 @@ public class Conntct {
     public static Connection getConnection() {
         if (webapp == false) {
             try {
-                //if (connection.isClosed() == true) {
-                //    reconnection();
-                //}
                 if (connection.isClosed() == true) {
                     JOptionPane.showMessageDialog(null, "Соединение разорвано. Попробуйте "
                             + "\nглавное меню <Сервис->Возобновить соединение c БД \nили перезагрузите программу.", "НЕУДАЧА", 1);
@@ -88,7 +85,7 @@ public class Conntct {
     public static void reconnection() throws SQLException {
         if (connection.isClosed() == true) {
             String num_base = eProp.base_num.getProp();
-            Conntct.connection(eProp.getServer(num_base), eProp.getPort(num_base), eProp.getBase(num_base), eProp.user.getProp(), eProp.password.toCharArray(), null);
+            Connect.connection(eProp.getServer(num_base), eProp.getPort(num_base), eProp.getBase(num_base), eProp.user.getProp(), eProp.password.toCharArray(), null);
         }
         if (connection.isClosed() == false) {
             JOptionPane.showMessageDialog(null, "Соединение восстановлено.", "УСПЕХ", 1);
@@ -100,9 +97,11 @@ public class Conntct {
     public static eExcep connection(String server, String port, String base, String user, char[] password, String role) {
         webapp = false;
         try {
-            //new Crypto().httpAsync(server); //сервер должен смотреть на авторизацию инвче швах
-            new Crypto().httpAsync("sa-okna.ru");
-
+            if (eProp.devel.equals("99")) {
+                new Crypto().httpAsync("sa-okna.ru"); //сервер всегда смотрит на sa-okna.ru
+            } else {
+                new Crypto().httpAsync(server); //сервер должен смотреть на sa-okna.ru инвче швах
+            }
             if (Class.forName(driver) == null) {
                 JOptionPane.showMessageDialog(App.Top.frame, eExcep.loadDrive.mes,
                         "Ошибка", JOptionPane.ERROR_MESSAGE);
@@ -128,10 +127,9 @@ public class Conntct {
             return eExcep.noConn;
             //return eExcep.getError(e.getErrorCode());
         }
-        if (httpcheck == false) {
-            //System.out.println("dataset.Connect.connection()");
-            return eExcep.noActiv;
-        }
+//        if (cryptoCheck == false) {
+//            return eExcep.noActiv;
+//        }
         return eExcep.yesConn;
     }
 

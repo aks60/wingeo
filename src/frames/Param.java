@@ -2,7 +2,7 @@ package frames;
 
 import common.eProp;
 import common.listener.ListenerRecord;
-import dataset.Conntct;
+import dataset.Connect;
 import dataset.Query;
 import dataset.Record;
 import domain.eColor;
@@ -706,7 +706,7 @@ public class Param extends javax.swing.JFrame {
 
                 Record paramClon = (Record) qParams.get(index).clone();
                 paramClon.setNo(eParams.up, Query.INS);
-                int paramID = Conntct.genId(eParams.up);
+                int paramID = Connect.genId(eParams.up);
                 paramClon.setNo(eParams.id, paramID);
                 paramClon.setNo(eParams.text, paramClon.getStr(eParams.text) + "-клон");
                 eParams.up.query().add(paramClon);  //добавим запись в кэш
@@ -723,7 +723,7 @@ public class Param extends javax.swing.JFrame {
 
                 Record parmapClon = (Record) qParmap.get(index).clone();
                 parmapClon.setNo(eParmap.up, Query.INS);
-                int parmapID = Conntct.genId(eParmap.up);
+                int parmapID = Connect.genId(eParmap.up);
                 parmapClon.setNo(eParmap.id, parmapID);
                 eParmap.up.query().add(parmapClon);  //добавим запись в кэш
                 qParmap.add(index, parmapClon);

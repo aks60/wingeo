@@ -3,7 +3,7 @@ package frames;
 import common.eProfile;
 import common.eProp;
 import common.listener.ListenerAction;
-import dataset.Conntct;
+import dataset.Connect;
 import java.io.File;
 import javax.swing.JFileChooser;
 import dataset.eExcep;
@@ -57,7 +57,7 @@ public class PathToDb extends javax.swing.JDialog {
                 progressBar.setIndeterminate(true);
                 labMes.setForeground(Color.BLUE);
                 labMes.setText("Установка соединения с базой данных");
-                eExcep pass = Conntct.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), null);
+                eExcep pass = Connect.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), null);
                 if (pass == eExcep.yesConn) {
                     if ("SYSDBA".equalsIgnoreCase(edUser.getText())) {
                         if (App.Top.frame == null) {
@@ -70,14 +70,14 @@ public class PathToDb extends javax.swing.JDialog {
 
                     } else {
                         //Получим роль по имени логина
-                        Statement st = Conntct.getConnection().createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+                        Statement st = Connect.getConnection().createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
                         //ResultSet rs = st.executeQuery("SELECT DISTINCT a.rdb$role_name , b.rdb$user FROM rdb$roles a, rdb$user_privileges b WHERE a.rdb$role_name = b.rdb$relation_name AND b.rdb$user = '" + edUser.getText() + "'");
                         ResultSet rs = st.executeQuery("SELECT u.RDB$USER, u.RDB$RELATION_NAME FROM RDB$USER_PRIVILEGES u WHERE u.RDB$USER = '" + edUser.getText().toUpperCase() + "'");
                         while (rs.next()) {
                             eProp.role = rs.getString("RDB$RELATION_NAME").trim();
-                            Conntct.getConnection().close();
+                            Connect.getConnection().close();
                             //Соединение с новыми привелегиями
-                            pass = Conntct.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), eProp.role);
+                            pass = Connect.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), eProp.role);
                             if (pass == eExcep.yesConn) {
                                 //По имени роли откроем нужное приложение
                                 if (App.Top.frame == null && eProfile.P02.roleSet.contains(eProp.role)) {

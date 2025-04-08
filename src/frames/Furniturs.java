@@ -46,7 +46,7 @@ import startup.App;
 import javax.swing.JOptionPane;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
-import dataset.Conntct;
+import dataset.Connect;
 import domain.eArtdet;
 import domain.eParmap;
 import domain.eSysfurn;
@@ -1638,7 +1638,7 @@ public class Furniturs extends javax.swing.JFrame {
                 }
             }
             Object result = JOptionPane.showInputDialog(Furniturs.this, "Выбор набора",
-                    "РќР°Р±РѕСЂС‹", JOptionPane.QUESTION_MESSAGE, null, list.toArray(), list.toArray()[0]);
+                    "Наборы", JOptionPane.QUESTION_MESSAGE, null, list.toArray(), list.toArray()[0]);
             if (result != null) {
                 for (Record record2 : qFurnall) {
                     if (result.equals(record2.get(eFurniture.name))) {
@@ -1731,7 +1731,7 @@ public class Furniturs extends javax.swing.JFrame {
             Record furnside2Rec = it.getKey();
             Record furnside2Clon = (Record) furnside2Rec.clone();
             furnside2Clon.setNo(eFurnside2.up, Query.INS);
-            furnside2Clon.setNo(eFurnside2.id, Conntct.genId(eFurnside2.up));
+            furnside2Clon.setNo(eFurnside2.id, Connect.genId(eFurnside2.up));
             furnside2Clon.setNo(eFurnside2.furndet_id, it.getValue());
             qFurnside2.add(furnside2Clon);
         }
@@ -1739,50 +1739,50 @@ public class Furniturs extends javax.swing.JFrame {
             Record furnpar2Rec = it.getKey();
             Record furnpar2Clon = (Record) furnpar2Rec.clone();
             furnpar2Clon.setNo(eFurnpar2.up, Query.INS);
-            furnpar2Clon.setNo(eFurnpar2.id, Conntct.genId(eFurnpar2.up));
+            furnpar2Clon.setNo(eFurnpar2.id, Connect.genId(eFurnpar2.up));
             furnpar2Clon.setNo(eFurnpar2.furndet_id, it.getValue());
             qFurnpar2.add(furnpar2Clon);
         }
     }
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
+        if (JOptionPane.showConfirmDialog(this,
+                "Вы действительно хотите клонировать текущую запись?",
+                "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 
-        if (tab1.getBorder() != null) {
-            int types = (btnTab1.isSelected()) ? 0 : (btnTab2.isSelected()) ? 1 : -1;
-            List<Record> dataDet2a = new ArrayList(qFurndet2a);
-            List<Record> dataSide1 = new ArrayList(qFurnside1);
-            Record masterRec = UGui.cloneRecord(this, qFurniture, eFurniture.up, tab1, (clon) -> {
-                clon.set(eFurniture.name, (btnTab1.isSelected()) ? "Осн.фурн.клон" : (btnTab2.isSelected()) ? "Доп.фурн.клон" : "Набор.фурн.клон");
-                clon.set(eFurniture.types, types);
-            });
-            if (masterRec != null) {
-                UGui.cloneRecord(qFurndet2a, eFurndet.up, dataDet2a, tab3, (clon) -> {
+            if (tab1.getBorder() != null) {
+                int types = (btnTab1.isSelected()) ? 0 : (btnTab2.isSelected()) ? 1 : -1;
+                List<Record> dataDet2a = new ArrayList(qFurndet2a);
+                List<Record> dataSide1 = new ArrayList(qFurnside1);
+                Record masterRec = UGui.cloneRecord(qFurniture, tab1, eFurniture.up, (clon) -> {
+                    clon.set(eFurniture.name, (btnTab1.isSelected()) ? "Осн.фурн.клон" : (btnTab2.isSelected()) ? "Доп.фурн.клон" : "Набор.фурн.клон");
+                    clon.set(eFurniture.types, types);
+                });
+                UGui.cloneRecord(qFurndet2a, tab3, eFurndet.up, dataDet2a, (clon) -> {
                     clon.setNo(eFurndet.furniture_id1, masterRec.getInt(eFurniture.id));
                     clon.setNo(eFurndet.furndet_pk, clon.getInt(eFurndet.id));
                 });
-                List<Record> list = UGui.cloneRecord(qFurnside1, eFurnside1.up, dataSide1, tab3, (clon) -> {
+                List<Record> list = UGui.cloneRecord(qFurnside1, tab3, eFurnside1.up, dataSide1, (clon) -> {
                     clon.setNo(eFurnside1.furniture_id, masterRec.getInt(eFurniture.id));
                 });
-            }
 
-        } else if (tab2a.getBorder() != null) {
-            List<Record> dataDet2b = new ArrayList(qFurndet2b);
-            List<Record> dataSide2 = new ArrayList(qFurnside2);
-            List<Record> dataPar2 = new ArrayList(qFurnpar2);
-            Record masterRec = UGui.cloneRecord(this, qFurndet2a, eFurndet.up, tab2a, null);
-//            if (masterRec != null) {               
-//                UGui.cloneRecord(qFurndet2b, eFurndet.up, dataDet2b, tab2b, (clon) -> {
-//                    clon.setNo(eFurndet.furniture_id1, masterRec.getInt(eFurndet.furniture_id1));
-//                    clon.setNo(eFurndet.pk, clon.getInt(eFurndet.id));
-//                    clon.setNo(eFurndet.furndet_pk, masterRec.getInt(eFurndet.pk));
-//                });
-//                UGui.cloneRecord(qFurnside2, eFurnside2.up, dataSide2, tab2b, (clon) -> {
-//                    clon.setNo(eFurnside2.furndet_id, masterRec.getInt(eFurndet.id));
-//                });
-//                UGui.cloneRecord(qFurnpar2, eFurnpar2.up, dataPar2, tab2b, (clon) -> {
-//                    clon.setNo(eFurnpar2.furndet_id, masterRec.getInt(eFurndet.id));
-//                });
-//            }
+            } else if (tab2a.getBorder() != null) {
+                List<Record> dataDet2b = new ArrayList(qFurndet2b);
+                List<Record> dataSide2 = new ArrayList(qFurnside2);
+                List<Record> dataPar2 = new ArrayList(qFurnpar2);
+                Record masterRec = UGui.cloneRecord(qFurndet2a, tab2a, eFurndet.up, null);
+                UGui.cloneRecord(qFurndet2b, tab2b, eFurndet.up, dataDet2b, (clon) -> {
+                    clon.setNo(eFurndet.furniture_id1, masterRec.getInt(eFurndet.furniture_id1));
+                    clon.setNo(eFurndet.pk, clon.getInt(eFurndet.id));
+                    clon.setNo(eFurndet.furndet_pk, masterRec.getInt(eFurndet.pk));
+                });
+                UGui.cloneRecord(qFurnside2, tab2b, eFurnside2.up, dataSide2, (clon) -> {
+                    clon.setNo(eFurnside2.furndet_id, masterRec.getInt(eFurndet.id));
+                });
+                UGui.cloneRecord(qFurnpar2, tab2b, eFurnpar2.up, dataPar2, (clon) -> {
+                    clon.setNo(eFurnpar2.furndet_id, masterRec.getInt(eFurndet.id));
+                });
+            }
         }
     }//GEN-LAST:event_btnClone
 

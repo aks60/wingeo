@@ -40,7 +40,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import startup.App;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
-import dataset.Conntct;
+import dataset.Connect;
 import domain.eArtdet;
 import domain.eParmap;
 import frames.dialog.DicArtikl2;
@@ -1128,7 +1128,7 @@ public class Joinings extends javax.swing.JFrame {
 
             Record joiningClon = (Record) qJoining.get(index).clone();
             joiningClon.setNo(eJoining.up, Query.INS);
-            joiningClon.setNo(eJoining.id, Conntct.genId(eJoining.up));
+            joiningClon.setNo(eJoining.id, Connect.genId(eJoining.up));
             joiningClon.setNo(eJoining.name, joiningClon.getStr(eJoining.name) + "-клон");
             eJoining.up.query().add(joiningClon);  //добавим запись в кэш
             qJoining.add(index, joiningClon);
@@ -1139,7 +1139,7 @@ public class Joinings extends javax.swing.JFrame {
                 qJoindet.sql(eJoindet.data(), eJoindet.joinvar_id, joinvarRec.getInt(eJoinvar.id)).sort(eJoindet.id);
                 Record joinvarClon = (Record) joinvarRec.clone();
                 joinvarClon.setNo(eJoinvar.up, Query.INS);
-                joinvarClon.setNo(eJoinvar.id, Conntct.genId(eJoinvar.up));
+                joinvarClon.setNo(eJoinvar.id, Connect.genId(eJoinvar.up));
                 joinvarClon.setNo(eJoinvar.joining_id, joiningClon.getInt(eJoining.id));
                 qJoinpar1.forEach(rec -> joinpar2Map.put(rec, joinvarClon.getInt(eJoinvar.id)));
                 qJoindet.forEach(rec -> joindetMap.put(rec, joinvarClon.getInt(eJoinvar.id)));
@@ -1150,7 +1150,7 @@ public class Joinings extends javax.swing.JFrame {
                 Record joinpar1Rec = it.getKey();
                 Record joinpar1Clon = (Record) joinpar1Rec.clone();
                 joinpar1Clon.setNo(eJoinpar1.up, Query.INS);
-                joinpar1Clon.setNo(eJoinpar1.id, Conntct.genId(eJoinpar1.up));
+                joinpar1Clon.setNo(eJoinpar1.id, Connect.genId(eJoinpar1.up));
                 joinpar1Clon.setNo(eJoinpar1.joinvar_id, it.getValue());
                 eJoinpar1.up.query().add(joinpar1Clon);  //добавим запись в кэш
                 qJoinpar1.add(joinpar1Clon);
@@ -1160,7 +1160,7 @@ public class Joinings extends javax.swing.JFrame {
                 qJoinpar2.sql(eJoinpar2.data(), eJoinpar2.joindet_id, joindetRec.getInt(eJoindet.id)).sort(eJoinpar2.id);
                 Record joindetClon = (Record) joindetRec.clone();
                 joindetClon.setNo(eJoindet.up, Query.INS);
-                joindetClon.setNo(eJoindet.id, Conntct.genId(eJoindet.up));
+                joindetClon.setNo(eJoindet.id, Connect.genId(eJoindet.up));
                 joindetClon.setNo(eJoindet.joinvar_id, it.getValue());
                 qJoinpar2.forEach(rec -> joinpar2Map.put(rec, joindetClon.getInt(eJoindet.id)));
                 eJoindet.up.query().add(joindetClon);  //добавим запись в кэш
@@ -1170,7 +1170,7 @@ public class Joinings extends javax.swing.JFrame {
                 Record joinpar2Rec = it.getKey();
                 Record joinpar2Clon = (Record) joinpar2Rec.clone();
                 joinpar2Clon.setNo(eJoinpar2.up, Query.INS);
-                joinpar2Clon.setNo(eJoinpar2.id, Conntct.genId(eJoinpar2.up));
+                joinpar2Clon.setNo(eJoinpar2.id, Connect.genId(eJoinpar2.up));
                 joinpar2Clon.setNo(eJoinpar2.joindet_id, it.getValue());
                 eJoinpar2.up.query().add(joinpar2Clon);  //добавим запись в кэш
                 qJoinpar2.add(joinpar2Clon);

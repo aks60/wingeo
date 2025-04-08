@@ -4,7 +4,7 @@ import builder.Wincalc;
 import builder.model.ElemJoining;
 import common.eProfile;
 import common.listener.ListenerRecord;
-import dataset.Conntct;
+import dataset.Connect;
 import dataset.Field;
 import dataset.Record;
 import domain.eArtdet;
@@ -236,7 +236,7 @@ public enum App {
     public static void createApp(eProfile profile) {
 
         try {
-            ResultSet rs = Conntct.getConnection().createStatement().executeQuery("select current_user from rdb$database");
+            ResultSet rs = Connect.getConnection().createStatement().executeQuery("select current_user from rdb$database");
             rs.next();
             eProfile.user = rs.getString(1);
             eProfile.profile = profile; //профиль приложения
