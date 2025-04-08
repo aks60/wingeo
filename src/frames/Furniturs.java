@@ -360,7 +360,7 @@ public class Furniturs extends javax.swing.JFrame {
             qFurnside1.sql(eFurnside1.data(), eFurnside1.furniture_id, id).sort(eFurnside1.side_num);
             ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab3);
-            qFurndet2a.sql(eFurndet.data(), eFurndet.furniture_id1, id, eFurndet.furndet_pk, eFurndet.id);
+            qFurndet2a.sql(eFurndet.data(), eFurndet.furniture_id1, id, eFurndet.furndet_id, eFurndet.id);
             ((DefaultTableModel) tab2a.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab2a);
         }
@@ -371,12 +371,11 @@ public class Furniturs extends javax.swing.JFrame {
         int index = UGui.getIndexRec(tab2a);
         if (index != -1) {
             Record record = qFurndet2a.get(index);
-            int pk = record.getInt(eFurndet.pk);
+            int id = record.getInt(eFurndet.id);
 
-            qFurndet2b.sq2(eFurndet.data(), eFurndet.furndet_pk, pk, eFurndet.id, eFurndet.furndet_pk);
+            qFurndet2b.sq2(eFurndet.data(), eFurndet.furndet_id, id, eFurndet.id, eFurndet.furndet_id);
             ((DefaultTableModel) tab2b.getModel()).fireTableDataChanged();
 
-            int id = record.getInt(eFurndet.id);
             qFurnside2.sql(eFurnside2.data(), eFurnside2.furndet_id, id).sort(eFurnside2.side_num);
             ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab5);
@@ -392,12 +391,11 @@ public class Furniturs extends javax.swing.JFrame {
         int index = UGui.getIndexRec(tab2b);
         if (index != -1) {
             Record record = qFurndet2b.get(index);
-            Integer pk = record.getInt(eFurndet.pk);
+            Integer id = record.getInt(eFurndet.id);
 
-            qFurndet2c.sql(eFurndet.data(), eFurndet.furndet_pk, pk);
+            qFurndet2c.sql(eFurndet.data(), eFurndet.furndet_id, id);
             ((DefaultTableModel) tab2c.getModel()).fireTableDataChanged();
 
-            Integer id = record.getInt(eFurndet.id);
             qFurnside2.sql(eFurnside2.data(), eFurnside2.furndet_id, id).sort(eFurnside2.side_num);
             ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab5);
@@ -520,7 +518,7 @@ public class Furniturs extends javax.swing.JFrame {
                 Integer[] part = {0, 25000, 24000, 25000, 24000, 0, 0};
 
                 //Record furnpar2Rec = qFurnpar2.get(UGui.getIndexRec(tab6));
-                if (furndetRec.get(eFurndet.furniture_id2) != null || furndetRec.getInt(eFurndet.pk) < 0) {
+                if (furndetRec.get(eFurndet.furniture_id2) != null) {
                     new ParName(this, listenerPar2, eParams.furn, 24000);
                 } else {
                     if (qFurnpar2.get(UGui.getIndexRec(tab6), eFurnpar2.groups_id) == null) {
@@ -560,11 +558,6 @@ public class Furniturs extends javax.swing.JFrame {
             if (tab2x.getBorder() != null) {
                 int index = UGui.getIndexRec(tab2x);
                 int artiklID = record.getInt(eArtikl.id);
-
-                if (record.getInt(eArtikl.level1) == 6) {
-                    query.set(artiklID, UGui.getIndexRec(tab2x), eFurndet.pk);
-                    query.filter(eFurndet.furndet_pk, query.get(index).getInt(eFurndet.pk)).forEach(rec -> rec.set(eFurndet.furndet_pk, artiklID));
-                }
                 List<Record> artdetList = eArtdet.filter2(artiklID);
                 if (artdetList.size() == 1) {
                     if (artdetList.get(0).getInt(eArtdet.color_fk) > 0) {
@@ -676,23 +669,23 @@ public class Furniturs extends javax.swing.JFrame {
                 for (int index1 = 0; index1 < qFurn.size(); index1++) {
 
                     int id = qFurn.get(index1).getInt(eFurniture.id);
-                    qDet2a.sql(eFurndet.data(), eFurndet.furniture_id1, id, eFurndet.furndet_pk, eFurndet.id);
+                    qDet2a.sql(eFurndet.data(), eFurndet.furniture_id1, id, eFurndet.furndet_id, eFurndet.id);
                     qDet2a.table(eArtikl.up).join(qDet2a, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);
                     for (int index2 = 0; index2 < qDet2a.size(); index2++) {
                         if (qDet2a.get(index2).getInt(eFurndet.id) == deteilID) {
                             selectionRows(qFurn, qDet2a, qDet2b, qDet2c, 0, index1, index2, 0, 0);
                             return;
                         } else {
-                            int pk = qDet2a.get(index2).getInt(eFurndet.pk);
-                            qDet2b.sql(eFurndet.data(), eFurndet.furndet_pk, pk, eFurndet.furndet_pk, eFurndet.id);
+                            int pk = qDet2a.get(index2).getInt(eFurndet.id);
+                            qDet2b.sql(eFurndet.data(), eFurndet.furndet_id, pk, eFurndet.furndet_id, eFurndet.id);
                             qDet2b.table(eArtikl.up).join(qDet2b, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);
                             for (int index3 = 0; index3 < qDet2b.size(); index3++) {
                                 if (qDet2b.get(index3).getInt(eFurndet.id) == deteilID) {
                                     selectionRows(qFurn, qDet2a, qDet2b, qDet2c, 1, index1, index2, index3, 0);
                                     return;
                                 } else {
-                                    pk = qDet2b.get(index3).getInt(eFurndet.pk);
-                                    qDet2c.sql(eFurndet.data(), eFurndet.furndet_pk, pk);
+                                    pk = qDet2b.get(index3).getInt(eFurndet.id);
+                                    qDet2c.sql(eFurndet.data(), eFurndet.furndet_id, pk);
                                     qDet2c.table(eArtikl.up).join(qDet2c, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);
                                     for (int index4 = 0; index4 < qDet2c.size(); index4++) {
                                         if (qDet2c.get(index4).getInt(eFurndet.id) == deteilID) {
@@ -1471,9 +1464,8 @@ public class Furniturs extends javax.swing.JFrame {
             if (UGui.getIndexRec(tab1) != -1) {
                 UGui.insertRecordCur(tab2a, eFurndet.up, (record) -> {
                     int id = qFurniture.getAs(UGui.getIndexRec(tab1), eFurniture.id);
-                    record.set(eFurndet.pk, record.get(eFurndet.id));
                     record.set(eFurndet.furniture_id1, id);
-                    record.set(eFurndet.furndet_pk, record.getInt(eFurndet.id));
+                    record.set(eFurndet.furndet_id, record.getInt(eFurndet.id));
                 });
             } else {
                 JOptionPane.showMessageDialog(this, "Сначала заполните основную таблицу", "Предупреждение", JOptionPane.NO_OPTION);
@@ -1482,11 +1474,10 @@ public class Furniturs extends javax.swing.JFrame {
         } else if (tab2b.getBorder() != null && tab5.getBorder() == null && tab6.getBorder() == null) {
             if (UGui.getIndexRec(tab1) != -1 && UGui.getIndexRec(tab2a) != -1) {
                 UGui.insertRecordCur(tab2b, eFurndet.up, (record) -> {
-                    record.set(eFurndet.pk, record.get(eFurndet.id));
                     int id = qFurniture.getAs(UGui.getIndexRec(tab1), eFurniture.id);
-                    int pk = qFurndet2a.getAs(UGui.getIndexRec(tab2a), eFurndet.pk);
+                    int pk = qFurndet2a.getAs(UGui.getIndexRec(tab2a), eFurndet.id);
                     record.set(eFurndet.furniture_id1, id);
-                    record.set(eFurndet.furndet_pk, pk);
+                    record.set(eFurndet.furndet_id, pk);
                 });
             } else {
                 JOptionPane.showMessageDialog(this, "Сначала заполните основную таблицу", "Предупреждение", JOptionPane.NO_OPTION);
@@ -1495,11 +1486,10 @@ public class Furniturs extends javax.swing.JFrame {
         } else if (tab2c.getBorder() != null && tab5.getBorder() == null && tab6.getBorder() == null) {
             if (UGui.getIndexRec(tab1) != -1 && UGui.getIndexRec(tab2b) != -1) {
                 UGui.insertRecordCur(tab2c, eFurndet.up, (record) -> {
-                    record.set(eFurndet.pk, record.get(eFurndet.id));
                     int id = qFurniture.getAs(UGui.getIndexRec(tab1), eFurniture.id);
-                    int pk = qFurndet2b.getAs(UGui.getIndexRec(tab2b), eFurndet.pk);
+                    int pk = qFurndet2b.getAs(UGui.getIndexRec(tab2b), eFurndet.id);
                     record.set(eFurndet.furniture_id1, id);
-                    record.set(eFurndet.furndet_pk, pk);
+                    record.set(eFurndet.furndet_id, pk);
                 });
             } else {
                 JOptionPane.showMessageDialog(this, "Сначала заполните основную таблицу", "Предупреждение", JOptionPane.NO_OPTION);
@@ -1646,10 +1636,9 @@ public class Furniturs extends javax.swing.JFrame {
                         if (tab2a.getBorder() != null && tab5.getBorder() == null && tab6.getBorder() == null) {
                             UGui.insertRecordCur(tab2a, eFurndet.up, (record) -> {
                                 int id = qFurniture.getAs(UGui.getIndexRec(tab1), eFurniture.id);
-                                record.set(eFurndet.pk, record.get(eFurndet.id));
                                 record.set(eFurndet.furniture_id1, id);
                                 record.set(eFurndet.furniture_id2, record2.getInt(eFurniture.id));
-                                record.set(eFurndet.furndet_pk, record.getInt(eFurndet.id));
+                                record.set(eFurndet.furndet_id, record.getInt(eFurndet.id));
                                 record.set(eFurndet.color_fk, null);
                                 record.set(eFurndet.color_us, null);
                             });
@@ -1657,11 +1646,10 @@ public class Furniturs extends javax.swing.JFrame {
                         } else if (tab2b.getBorder() != null && tab5.getBorder() == null && tab6.getBorder() == null) {
                             UGui.insertRecordCur(tab2b, eFurndet.up, (record) -> {
                                 int furnitureID = qFurniture.getAs(UGui.getIndexRec(tab1), eFurniture.id);
-                                int furndet2aPK = qFurndet2a.getAs(UGui.getIndexRec(tab2a), eFurndet.pk);
-                                record.set(eFurndet.pk, record.get(eFurndet.id));
+                                int furndet2aPK = qFurndet2a.getAs(UGui.getIndexRec(tab2a), eFurndet.id);
                                 record.set(eFurndet.furniture_id1, furnitureID);
                                 record.set(eFurndet.furniture_id2, record2.getInt(eFurniture.id));
-                                record.set(eFurndet.furndet_pk, furndet2aPK);
+                                record.set(eFurndet.furndet_id, furndet2aPK);
                                 record.set(eFurndet.color_fk, null);
                                 record.set(eFurndet.color_us, null);
                             });
@@ -1760,7 +1748,7 @@ public class Furniturs extends javax.swing.JFrame {
                 });
                 UGui.cloneRecord(qFurndet2a, tab3, eFurndet.up, dataDet2a, (clon) -> {
                     clon.setNo(eFurndet.furniture_id1, masterRec.getInt(eFurniture.id));
-                    clon.setNo(eFurndet.furndet_pk, clon.getInt(eFurndet.id));
+                    clon.setNo(eFurndet.furndet_id, clon.getInt(eFurndet.id));
                 });
                 List<Record> list = UGui.cloneRecord(qFurnside1, tab3, eFurnside1.up, dataSide1, (clon) -> {
                     clon.setNo(eFurnside1.furniture_id, masterRec.getInt(eFurniture.id));
@@ -1773,8 +1761,7 @@ public class Furniturs extends javax.swing.JFrame {
                 Record masterRec = UGui.cloneRecord(qFurndet2a, tab2a, eFurndet.up, null);
                 UGui.cloneRecord(qFurndet2b, tab2b, eFurndet.up, dataDet2b, (clon) -> {
                     clon.setNo(eFurndet.furniture_id1, masterRec.getInt(eFurndet.furniture_id1));
-                    clon.setNo(eFurndet.pk, clon.getInt(eFurndet.id));
-                    clon.setNo(eFurndet.furndet_pk, masterRec.getInt(eFurndet.pk));
+                    clon.setNo(eFurndet.furndet_id, masterRec.getInt(eFurndet.id));
                 });
                 UGui.cloneRecord(qFurnside2, tab2b, eFurnside2.up, dataSide2, (clon) -> {
                     clon.setNo(eFurnside2.furndet_id, masterRec.getInt(eFurndet.id));

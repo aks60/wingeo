@@ -21,8 +21,7 @@ public enum eFurndet implements Field {
     artikl_id("4", "10", "1", "Артикул", "artikl_id"),
     furniture_id1("4", "10", "1", "Фурнитура", "furniture_id1"),
     furniture_id2("4", "10", "1", "Набор", "furniture_id2"),
-    pk("4", "10", "0", "Идентификатор родителя", "FINCB"),
-    furndet_pk("4", "10", "0", "Ссылка на родителя", "FINCS");
+    furndet_id("4", "10", "0", "Ссылка на родителя", "FINCS");
 
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());

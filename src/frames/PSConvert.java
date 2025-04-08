@@ -524,7 +524,7 @@ public class PSConvert {
             executeSql("3", "update furndet set furniture_id2 = (CASE  WHEN (furndet.anumb = 'ÊÎÌÏËÅÊÒ') THEN color_fk ELSE  (null) END)");
             executeSql("4", "update furndet set furniture_id2 = (CASE  WHEN (furndet.anumb = 'ÍÀÁÎĞ') THEN color_fk ELSE  (null) END)");
             updateSql(eFurndet.up, eFurndet.furniture_id2, "furniture_id2", eFurniture.up, "funic");
-            executeSql("update furndet set furndet_pk = id where furndet_pk = 0");
+            executeSql("update furndet set furndet_id = id where furndet_id = 0");
             executeSql("update furndet set color_fk = null where furniture_id2 > 0"); //ññûëêà íà íàáîğ
             executeSql("set generator GEN_" + eFurndet.up.tname() + " to " + new Query(eFurndet.id).select("select max(id) as id from " + eFurndet.up.tname()).get(0, eFurndet.id));
             executeSql("update systree set parent_id = (select id from systree a where a.id = systree.npar and systree.npar != 0)");
