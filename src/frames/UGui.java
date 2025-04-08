@@ -600,6 +600,7 @@ public class UGui {
 
         int index = UGui.getIndexRec(table);
         Record recordClon = (Record) query.get(index).clone();
+        
         recordClon.setNo(up, Query.INS);
         recordClon.setNo(up.fields()[1], Connect.genId(up));
         if (listener != null) {
@@ -621,6 +622,7 @@ public class UGui {
         query.clear();
         for (Record deteilRec : dataList) {
             Record recordClon = (Record) deteilRec.clone();
+            
             recordClon.setNo(0, Query.INS);
             recordClon.setNo(up.fields()[1], Connect.genId(up));
             if (listener != null) {

@@ -1742,6 +1742,7 @@ public class Furniturs extends javax.swing.JFrame {
                 int types = (btnTab1.isSelected()) ? 0 : (btnTab2.isSelected()) ? 1 : -1;
                 List<Record> dataDet2a = new ArrayList(qFurndet2a);
                 List<Record> dataSide1 = new ArrayList(qFurnside1);
+                
                 Record masterRec = UGui.cloneRecord(qFurniture, tab1, eFurniture.up, (clon) -> {
                     clon.set(eFurniture.name, (btnTab1.isSelected()) ? "Осн.фурн.клон" : (btnTab2.isSelected()) ? "Доп.фурн.клон" : "Набор.фурн.клон");
                     clon.set(eFurniture.types, types);
@@ -1758,15 +1759,18 @@ public class Furniturs extends javax.swing.JFrame {
                 List<Record> dataDet2b = new ArrayList(qFurndet2b);
                 List<Record> dataSide2 = new ArrayList(qFurnside2);
                 List<Record> dataPar2 = new ArrayList(qFurnpar2);
-                Record masterRec = UGui.cloneRecord(qFurndet2a, tab2a, eFurndet.up, null);
+                
+                Record masterRec = UGui.cloneRecord(qFurndet2a, tab2a, eFurndet.up, (clon) -> {
+                    clon.setNo(eFurndet.furndet_id, clon.getInt(eFurndet.id));
+                });
                 UGui.cloneRecord(qFurndet2b, tab2b, eFurndet.up, dataDet2b, (clon) -> {
                     clon.setNo(eFurndet.furniture_id1, masterRec.getInt(eFurndet.furniture_id1));
                     clon.setNo(eFurndet.furndet_id, masterRec.getInt(eFurndet.id));
                 });
-                UGui.cloneRecord(qFurnside2, tab2b, eFurnside2.up, dataSide2, (clon) -> {
+                UGui.cloneRecord(qFurnside2, tab5, eFurnside2.up, dataSide2, (clon) -> {
                     clon.setNo(eFurnside2.furndet_id, masterRec.getInt(eFurndet.id));
                 });
-                UGui.cloneRecord(qFurnpar2, tab2b, eFurnpar2.up, dataPar2, (clon) -> {
+                UGui.cloneRecord(qFurnpar2, tab6, eFurnpar2.up, dataPar2, (clon) -> {
                     clon.setNo(eFurnpar2.furndet_id, masterRec.getInt(eFurndet.id));
                 });
             }
