@@ -95,6 +95,7 @@ public class Connect {
     }
 
     public static eExcep connection(String server, String port, String base, String user, char[] password, String role) {
+        //JOptionPane.showMessageDialog(null, server + "-" + base, "SERVER", JOptionPane.OK_OPTION);
         webapp = false;
         try {
             if (eProp.devel.equals("99")) {
@@ -127,9 +128,10 @@ public class Connect {
             return eExcep.noConn;
             //return eExcep.getError(e.getErrorCode());
         }
-//        if (cryptoCheck == false) {
-//            return eExcep.noActiv;
-//        }
+        if (cryptoCheck == false) {
+            //System.out.println("dataset.Connect.connection()");
+            return eExcep.noActiv;
+        }
         return eExcep.yesConn;
     }
 
