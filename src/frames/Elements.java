@@ -94,7 +94,7 @@ public class Elements extends javax.swing.JFrame {
         qColor.sql(eColor.data(), eColor.up);
         qGrCateg.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id).sort(eGroups.npp, eGroups.name);
         qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id, TypeGrup.SERI_ELEM.id, TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id).sort(eGroups.npp, eGroups.name);
-     
+
         Record groups1Rec = eGroups.up.newRecord(Query.SEL);
         groups1Rec.setNo(eGroups.id, -1);
         groups1Rec.setNo(eGroups.npp, 1);
@@ -201,43 +201,50 @@ public class Elements extends javax.swing.JFrame {
     }
 
     public void selectionTab1(ListSelectionEvent event) {
-        UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
-        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
-        UGui.clearTable(tab2, tab3, tab4, tab5);
-        int index = UGui.getIndexRec(tab1);
-        if (index != -1) {
-            Record record = qGrCateg.get(index);
-            int id = record.getInt(eGroups.id);
+        try {
+            UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
+            List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
+            UGui.clearTable(tab2, tab3, tab4, tab5);
+            int index = UGui.getIndexRec(tab1);
+            if (index != -1) {
+                Record record = qGrCateg.get(index);
+                int id = record.getInt(eGroups.id);
 
-            
-            if (id == -1 || id == -5) { //(-1) - профили, (-5) - заполнения
-                eElement.sql(qElement, qElement.table(eArtikl.up), id);
-                 //qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
-                 //qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);               
-            } else { //категории
-                qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
-                qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                if (id == -1 || id == -5) { //(-1) - профили, (-5) - заполнения
+                    eElement.sql(qElement, qElement.table(eArtikl.up), id);
+                    //qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
+                    //qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);               
+                } else { //категории
+                    qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
+                    qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                }
+                ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
+                UGui.setSelectedRow(tab2);
             }
-            ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
-            UGui.setSelectedRow(tab2);
+        } catch (Exception e) {
+            System.out.println("Ошиибка:Elements.selectionTab1() " + e);
         }
     }
 
     public void selectionTab2(ListSelectionEvent event) {
-        UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
-        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
-        UGui.clearTable(tab3, tab4, tab5);
-        int index = UGui.getIndexRec(tab2);
-        if (index != -1) {
-            Record record = qElement.table(eElement.up).get(index);
-            Integer p1 = record.getInt(eElement.id);
-            qElemdet.sql(eElemdet.data(), eElemdet.element_id, p1);
-            qElemdet.table(eArtikl.up).join(qElemdet, eArtikl.data(), eElemdet.artikl_id, eArtikl.id);
-            qElempar1.sql(eElempar1.data(), eElempar1.element_id, p1);
-            ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
-            ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
-            UGui.setSelectedRow(tab3);
-            UGui.setSelectedRow(tab4);
+        try {
+            UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
+            List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
+            UGui.clearTable(tab3, tab4, tab5);
+            int index = UGui.getIndexRec(tab2);
+            if (index != -1) {
+                Record record = qElement.table(eElement.up).get(index);
+                Integer p1 = record.getInt(eElement.id);
+                qElemdet.sql(eElemdet.data(), eElemdet.element_id, p1);
+                qElemdet.table(eArtikl.up).join(qElemdet, eArtikl.data(), eElemdet.artikl_id, eArtikl.id);
+                qElempar1.sql(eElempar1.data(), eElempar1.element_id, p1);
+                ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
+                ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
+                UGui.setSelectedRow(tab3);
+                UGui.setSelectedRow(tab4);
+            }
+        } catch (Exception e) {
+            System.out.println("Ошиибка:Elements.selectionTab2() " + e);
         }
     }
 
@@ -1003,7 +1010,7 @@ public class Elements extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditingAndExecSql(getRootPane());  
+        UGui.stopCellEditingAndExecSql(getRootPane());
     }//GEN-LAST:event_windowClosed
 
     private void ppmCategAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppmCategAction
@@ -1071,7 +1078,7 @@ public class Elements extends javax.swing.JFrame {
                 List list = new LinkedList();
                 qGrCateg.forEach(rec -> list.add(rec.getStr(eGroups.name)));
                 Object result = JOptionPane.showInputDialog(Elements.this, "Вставка: " + elementRec.getStr(eElement.name),
-                    "Изменение категории элемента втавки", JOptionPane.QUESTION_MESSAGE, null, list.toArray(), list.toArray()[0]);
+                        "Изменение категории элемента втавки", JOptionPane.QUESTION_MESSAGE, null, list.toArray(), list.toArray()[0]);
                 if (result != null) {
                     for (Record groupsRec : qGrCateg) {
                         if (result.equals(groupsRec.getStr(eGroups.name))) {
@@ -1088,59 +1095,35 @@ public class Elements extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMove
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
-        int index = UGui.getIndexRec(tab2);
-        if (index != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
-            "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+        if (JOptionPane.showConfirmDialog(this,
+                "Вы действительно хотите клонировать текущую запись?",
+                "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 
-        Map<Record, Integer> elempar2Map = new HashMap<Record, Integer>();
-        List<Record> elempar1List = new ArrayList<Record>();
-        List<Record> elemdetList = new ArrayList<Record>();
-        qElempar1.forEach(rec -> elempar1List.add(rec));
-        qElemdet.forEach(rec -> elemdetList.add(rec));
+            if (tab2.getBorder() != null) {
+                //List<Record> dataPar1 = new ArrayList(qElempar1);               
+                //List<Record> dataDet = new ArrayList(qElemdet);     
 
-        Record elementClon = (Record) qElement.get(index).clone();
-        Record artiklClon = (Record) qElement.table(eArtikl.up).get(index).clone();
-        elementClon.setNo(eElement.up, Query.INS);
-        int elementID = Connect.genId(eElement.up);
-        elementClon.setNo(eElement.id, elementID);
-        elementClon.setNo(eElement.name, elementClon.getStr(eElement.name) + "-РєР»РѕРЅ");
-        eElement.up.query().add(elementClon);  //добавим запись в кэш
-        qElement.add(index, elementClon);
-        qElement.table(eArtikl.up).add(index, artiklClon);
+                Record masterClon = UGui.cloneRecord(qElement, tab2, eElement.up, (clon) -> {
+                    clon.set(eElement.name, clon.getStr(eElement.name) + "-клон");
+                    int index = UGui.getIndexRec(tab2);
+                    Record artiklClon = (Record) qElement.table(eArtikl.up).get(++index).clone();
+                    qElement.table(eArtikl.up).add(index, artiklClon);
+                });
+//                UGui.cloneRecord(qElemdet, tab3, eElemdet.up, dataDet, (clon) -> {
+//                    clon.setNo(eElemdet.element_id, masterClon.getStr(eElement.id));
+//                });                
+//                UGui.cloneRecord(qElempar1, tab4, eElempar1.up, dataPar1, (clon) -> {
+//                    clon.setNo(eElempar1.element_id, masterClon.getStr(eElement.id));
+//                });                
 
-        for (Record elempar1Rec : elempar1List) {
-            Record elempar1Clon = (Record) elempar1Rec.clone();
-            elempar1Clon.setNo(eElempar1.up, Query.INS);
-            elempar1Clon.setNo(eElempar1.id, Connect.genId(eElempar1.up));
-            elempar1Clon.setNo(eElempar1.element_id, elementID);
-            eElempar1.up.query().add(elempar1Clon);  //добавим запись в кэш
-            qElempar1.add(elempar1Clon);
-        }
-        for (Record elemdetRec : elemdetList) {
-            Record elemdetClon = (Record) elemdetRec.clone();
-            elemdetClon.setNo(eElemdet.up, Query.INS);
-            elemdetClon.setNo(eElemdet.id, Connect.genId(eElemdet.up));
-            elemdetClon.setNo(eElemdet.element_id, elementID);
-            qElempar2.sql(eElempar2.data(), eElempar2.elemdet_id, elemdetRec.getInt(eElemdet.id));
-            qElempar2.forEach(rec -> elempar2Map.put(rec, elemdetClon.getInt(eElemdet.id)));
-            eElemdet.up.query().add(elemdetClon);  //добавим запись в кэш
-            qElemdet.add(elemdetClon);
-        }
-        for (Map.Entry<Record, Integer> it : elempar2Map.entrySet()) {
-            Record elempar2Rec = it.getKey();
-            Record elempar2Clon = (Record) elempar2Rec.clone();
-            elempar2Clon.setNo(eElempar2.up, Query.INS);
-            elempar2Clon.setNo(eElempar2.id, Connect.genId(eElempar2.up));
-            elempar2Clon.setNo(eElempar2.elemdet_id, it.getValue());
-            eElempar2.up.query().add(elempar2Clon);  //добавим запись в кэш
-            qElempar2.add(elempar2Clon);
-        }
-
-        List.of(qElement, qElemdet, qElempar1, qElempar2).forEach(q -> q.execsql());
-        ((DefaultTableModel) tab2.getModel()).fireTableRowsInserted(index, index);
-        UGui.setSelectedIndex(tab2, index);
-        UGui.scrollRectToIndex(index, tab2);
-        UGui.setSelectedRow(tab4);
+            }
+//            else if (tab4.getBorder() != null) {
+//                List<Record> dataPar2 = new ArrayList(qJoinpar2);               
+//                Record masterClon = UGui.cloneRecord(qJoindet, tab4, eJoindet.up, null);
+//                UGui.cloneRecord(qJoinpar2, tab5, eJoinpar2.up, dataPar2, (clon) -> {
+//                    clon.setNo(eJoinpar2.joindet_id, masterClon.getStr(eJoindet.id));
+//                });                
+//            }
         }
     }//GEN-LAST:event_btnClone
 
@@ -1167,7 +1150,7 @@ public class Elements extends javax.swing.JFrame {
                 pathList.add(null);
             }
             Object result = JOptionPane.showInputDialog(Elements.this, "Артикул в системе профилей", "Сообщение", JOptionPane.QUESTION_MESSAGE,
-                new ImageIcon(getClass().getResource("/resource/img24/c066.gif")), pathList.toArray(), pathList.toArray()[0]);
+                    new ImageIcon(getClass().getResource("/resource/img24/c066.gif")), pathList.toArray(), pathList.toArray()[0]);
             if (result != null || result instanceof Integer) {
                 for (int i = 0; i < pathList.size(); ++i) {
                     if (result.equals(pathList.get(i))) {
@@ -1342,7 +1325,7 @@ public class Elements extends javax.swing.JFrame {
         btnTest.setVisible(eProp.devel.equals("99"));
         eProp.getWin(this, btnClose, (e) -> {
             eProp.putWin(this, btnClose);
-        });        
+        });
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab2, tab3, tab4, tab5);
         south.add(filterTable, 0);

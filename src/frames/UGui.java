@@ -597,32 +597,38 @@ public class UGui {
 
     //Клонировать запись    
     public static Record cloneRecord(Query query, JTable table, Field up, ListenerRecord listener) {
+        try {
+            int index = UGui.getIndexRec(table);
+            Record recordClon = (Record) query.get(index).clone();
 
-        int index = UGui.getIndexRec(table);
-        Record recordClon = (Record) query.get(index).clone();
-        
-        recordClon.setNo(up, Query.INS);
-        recordClon.setNo(up.fields()[1], Connect.genId(up));
-        if (listener != null) {
-            listener.action(recordClon);
+            recordClon.setNo(up, Query.INS);
+            recordClon.setNo(up.fields()[1], Connect.genId(up));
+            if (listener != null) {
+                listener.action(recordClon);
+            }
+            up.query().add(recordClon);  //добавим запись в кэш
+            int i = (query.size() > index + 1) ? ++index : index;
+            query.add(i, recordClon);
+            query.insert(recordClon);
+
+            ((DefaultTableModel) table.getModel()).fireTableRowsInserted(index, index);
+            UGui.setSelectedIndex(table, index);
+            UGui.scrollRectToIndex(index, table);
+            return recordClon;
+            
+        } catch (Exception e) {
+            System.out.println("Ошибка:cloneRecord() " + e);
+            return null;
         }
-        up.query().add(recordClon);  //добавим запись в кэш
-        query.add(++index, recordClon);
-        query.insert(recordClon);
-
-        ((DefaultTableModel) table.getModel()).fireTableRowsInserted(index, index);
-        UGui.setSelectedIndex(table, index);
-        UGui.scrollRectToIndex(index, table);
-        return recordClon;
     }
 
     //Клонировать запись
     public static List<Record> cloneRecord(Query query, JTable table, Field up, List<Record> dataList, ListenerRecord listener) {
 
-        query.clear();
+        //query.clear();
         for (Record deteilRec : dataList) {
             Record recordClon = (Record) deteilRec.clone();
-            
+
             recordClon.setNo(0, Query.INS);
             recordClon.setNo(up.fields()[1], Connect.genId(up));
             if (listener != null) {

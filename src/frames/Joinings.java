@@ -1115,71 +1115,26 @@ public class Joinings extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTest
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
-        int index = UGui.getIndexRec(tab1);
-        if (index != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
+        if (JOptionPane.showConfirmDialog(this,
+                "Вы действительно хотите клонировать текущую запись?",
                 "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 
-            List<Record> joinvarList = new ArrayList<Record>();
-            List<Record> joindetList = new ArrayList<Record>();
-            Map<Record, Integer> joindetMap = new HashMap<Record, Integer>();
-            Map<Record, Integer> joinpar1Map = new HashMap<Record, Integer>();
-            Map<Record, Integer> joinpar2Map = new HashMap<Record, Integer>();
-            qJoinvar.forEach(rec -> joinvarList.add(rec));
+            if (tab1.getBorder() != null) {
+                List<Record> dataVar = new ArrayList(qJoinvar);               
+                Record masterClon = UGui.cloneRecord(qJoining, tab1, eJoining.up, (clon) -> {
+                    clon.set(eJoining.name, clon.getStr(eJoining.name) + "-клон");
+                });
+                UGui.cloneRecord(qJoinvar, tab2, eJoinvar.up, dataVar, (clon) -> {
+                    clon.setNo(eJoinvar.joining_id, masterClon.getStr(eJoining.id));
+                });                
 
-            Record joiningClon = (Record) qJoining.get(index).clone();
-            joiningClon.setNo(eJoining.up, Query.INS);
-            joiningClon.setNo(eJoining.id, Connect.genId(eJoining.up));
-            joiningClon.setNo(eJoining.name, joiningClon.getStr(eJoining.name) + "-клон");
-            eJoining.up.query().add(joiningClon);  //добавим запись в кэш
-            qJoining.add(index, joiningClon);
-            qJoining.insert(joiningClon);
-
-            for (Record joinvarRec : joinvarList) {
-                qJoinpar1.sql(eJoinpar1.data(), eJoinpar1.joinvar_id, joinvarRec.getInt(eJoinvar.id)).sort(eJoinpar1.id);
-                qJoindet.sql(eJoindet.data(), eJoindet.joinvar_id, joinvarRec.getInt(eJoinvar.id)).sort(eJoindet.id);
-                Record joinvarClon = (Record) joinvarRec.clone();
-                joinvarClon.setNo(eJoinvar.up, Query.INS);
-                joinvarClon.setNo(eJoinvar.id, Connect.genId(eJoinvar.up));
-                joinvarClon.setNo(eJoinvar.joining_id, joiningClon.getInt(eJoining.id));
-                qJoinpar1.forEach(rec -> joinpar2Map.put(rec, joinvarClon.getInt(eJoinvar.id)));
-                qJoindet.forEach(rec -> joindetMap.put(rec, joinvarClon.getInt(eJoinvar.id)));
-                eJoinvar.up.query().add(joinvarClon);  //добавим запись в кэш
-                qJoinvar.add(joinvarClon);
+            } else if (tab4.getBorder() != null) {
+                List<Record> dataPar2 = new ArrayList(qJoinpar2);               
+                Record masterClon = UGui.cloneRecord(qJoindet, tab4, eJoindet.up, null);
+                UGui.cloneRecord(qJoinpar2, tab5, eJoinpar2.up, dataPar2, (clon) -> {
+                    clon.setNo(eJoinpar2.joindet_id, masterClon.getStr(eJoindet.id));
+                });                
             }
-            for (Map.Entry<Record, Integer> it : joinpar2Map.entrySet()) {
-                Record joinpar1Rec = it.getKey();
-                Record joinpar1Clon = (Record) joinpar1Rec.clone();
-                joinpar1Clon.setNo(eJoinpar1.up, Query.INS);
-                joinpar1Clon.setNo(eJoinpar1.id, Connect.genId(eJoinpar1.up));
-                joinpar1Clon.setNo(eJoinpar1.joinvar_id, it.getValue());
-                eJoinpar1.up.query().add(joinpar1Clon);  //добавим запись в кэш
-                qJoinpar1.add(joinpar1Clon);
-            }
-            for (Map.Entry<Record, Integer> it : joindetMap.entrySet()) {
-                Record joindetRec = it.getKey();
-                qJoinpar2.sql(eJoinpar2.data(), eJoinpar2.joindet_id, joindetRec.getInt(eJoindet.id)).sort(eJoinpar2.id);
-                Record joindetClon = (Record) joindetRec.clone();
-                joindetClon.setNo(eJoindet.up, Query.INS);
-                joindetClon.setNo(eJoindet.id, Connect.genId(eJoindet.up));
-                joindetClon.setNo(eJoindet.joinvar_id, it.getValue());
-                qJoinpar2.forEach(rec -> joinpar2Map.put(rec, joindetClon.getInt(eJoindet.id)));
-                eJoindet.up.query().add(joindetClon);  //добавим запись в кэш
-                qJoindet.add(joindetClon);
-            }
-            for (Map.Entry<Record, Integer> it : joinpar2Map.entrySet()) {
-                Record joinpar2Rec = it.getKey();
-                Record joinpar2Clon = (Record) joinpar2Rec.clone();
-                joinpar2Clon.setNo(eJoinpar2.up, Query.INS);
-                joinpar2Clon.setNo(eJoinpar2.id, Connect.genId(eJoinpar2.up));
-                joinpar2Clon.setNo(eJoinpar2.joindet_id, it.getValue());
-                eJoinpar2.up.query().add(joinpar2Clon);  //добавим запись в кэш
-                qJoinpar2.add(joinpar2Clon);
-            }
-            List.of(qJoinvar, qJoindet, qJoinpar1, qJoinpar2).forEach(q -> q.execsql());
-            ((DefaultTableModel) tab1.getModel()).fireTableRowsInserted(index, index);
-            UGui.setSelectedIndex(tab1, index);
-            UGui.scrollRectToIndex(index, tab1);
-            UGui.setSelectedRow(tab2);
         }
     }//GEN-LAST:event_btnClone
 
@@ -1202,11 +1157,12 @@ public class Joinings extends javax.swing.JFrame {
         } else if (evt.getButton() == MouseEvent.BUTTON1) {
             JTable table = (JTable) evt.getSource();
             UGui.updateBorderAndSql(table, List.of(tab1, tab2, tab3, tab4, tab5));
-            List.of(btnFind1, btnFind2).forEach(btn -> btn.setEnabled(false));
+            List.of(btnClone, btnFind1, btnFind2).forEach(btn -> btn.setEnabled(false));
             if (tab1.getBorder() != null) {
-                List.of(btnFind1, btnFind2).forEach(btn -> btn.setEnabled(true));
+               List.of(btnClone, btnFind1, btnFind2).forEach(btn -> btn.setEnabled(true));
             } else if (tab4.getBorder() != null) {
                 btnFind1.setEnabled(true);
+                btnClone.setEnabled(true);
             }
         }
     }//GEN-LAST:event_tabMouseClicked

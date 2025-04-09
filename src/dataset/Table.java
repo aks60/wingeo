@@ -16,6 +16,11 @@ public class Table extends ArrayList<Record> {
     public Table() {
     }
 
+
+    public HashMap<String, Query> queryList(Field field) {
+        return mapQuery;
+    }
+    
     public List<Field> fields() {
         return fields;
     }
