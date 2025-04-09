@@ -1106,13 +1106,12 @@ public class Elements extends javax.swing.JFrame {
                 Record masterClon = UGui.cloneRecord(qElement, tab2, eElement.up, (clon) -> {
                     clon.set(eElement.name, clon.getStr(eElement.name) + "-клон");
                 });
-//                UGui.cloneRecord(qElemdet, tab3, eElemdet.up, dataDet, (clon) -> {
-//                    clon.setNo(eElemdet.element_id, masterClon.getStr(eElement.id));
-//                });                
+                UGui.cloneRecord(qElemdet, tab3, eElemdet.up, dataDet, (clon) -> {
+                    clon.setNo(eElemdet.element_id, masterClon.getStr(eElement.id));
+                });                
                 UGui.cloneRecord(qElempar1, tab4, eElempar1.up, dataPar1, (clon) -> {
                     clon.setNo(eElempar1.element_id, masterClon.getStr(eElement.id));
                 });                
-
             }
 //            else if (tab4.getBorder() != null) {
 //                List<Record> dataPar2 = new ArrayList(qJoinpar2);               

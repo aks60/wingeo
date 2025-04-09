@@ -610,6 +610,8 @@ public class UGui {
             }
             up.query().add(recordClon);  //добавим запись в кэш
             int index2 = (query.size() > index + 1) ? ++index : index;
+            query.add(index2, recordClon);
+            query.insert(recordClon);
 
             HashMap<String, Query> hm = query.mapQuery();
             for (Map.Entry<String, Query> it : hm.entrySet()) {
@@ -619,9 +621,6 @@ public class UGui {
                     q.add(index2, recClon);
                 }
             }
-            query.add(index2, recordClon);
-            query.insert(recordClon);
-
             ((DefaultTableModel) table.getModel()).fireTableRowsInserted(index2, index2);
             UGui.setSelectedIndex(table, index2);
             UGui.scrollRectToIndex(index2, table);
@@ -637,7 +636,8 @@ public class UGui {
     public static List<Record> cloneRecord(Query query, JTable table, Field up, List<Record> dataList, ListenerRecord listener) {
 
         //query.clear();
-        for (Record deteilRec : dataList) {
+        for (int i = 0; i < dataList.size(); ++i) {
+            Record deteilRec = dataList.get(i);
             Record recordClon = (Record) deteilRec.clone();
 
             recordClon.setNo(0, Query.INS);
@@ -648,6 +648,15 @@ public class UGui {
             up.query().add(recordClon);  //добавим запись в кэш
             query.add(recordClon);
             query.insert(recordClon);
+            
+            HashMap<String, Query> hm = query.mapQuery();
+            for (Map.Entry<String, Query> it : hm.entrySet()) {
+                Query q = it.getValue();
+                if (q != query) {
+                    Record recClon = (Record) q.get(i).clone();
+                    q.add(i, recClon);
+                }
+            }
         }
         UGui.setSelectedRow(table);
         return query;
