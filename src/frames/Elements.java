@@ -1105,9 +1105,6 @@ public class Elements extends javax.swing.JFrame {
 
                 Record masterClon = UGui.cloneRecord(qElement, tab2, eElement.up, (clon) -> {
                     clon.set(eElement.name, clon.getStr(eElement.name) + "-клон");
-                    int index = UGui.getIndexRec(tab2);
-                    Record artiklClon = (Record) qElement.table(eArtikl.up).get(++index).clone();
-                    qElement.table(eArtikl.up).add(index, artiklClon);
                 });
 //                UGui.cloneRecord(qElemdet, tab3, eElemdet.up, dataDet, (clon) -> {
 //                    clon.setNo(eElemdet.element_id, masterClon.getStr(eElement.id));

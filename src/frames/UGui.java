@@ -64,7 +64,9 @@ import enums.PKjson;
 import enums.Type;
 import frames.swing.cmp.DefMutableTreeNode;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.swing.ImageIcon;
@@ -600,7 +602,7 @@ public class UGui {
         try {
             int index = UGui.getIndexRec(table);
             Record recordClon = (Record) query.get(index).clone();
-
+       
             recordClon.setNo(up, Query.INS);
             recordClon.setNo(up.fields()[1], Connect.genId(up));
             if (listener != null) {
@@ -608,6 +610,13 @@ public class UGui {
             }
             up.query().add(recordClon);  //добавим запись в кэш
             int i = (query.size() > index + 1) ? ++index : index;
+            
+            HashMap<String, Query> hm = query.mapQuery();
+            for (Map.Entry<String, Query> it : hm.entrySet()) {
+                Query q = it.getValue();
+                Record recClon = (Record) q.get(i).clone();
+                q.add(i, recClon);
+            }            
             query.add(i, recordClon);
             query.insert(recordClon);
 
@@ -615,7 +624,7 @@ public class UGui {
             UGui.setSelectedIndex(table, index);
             UGui.scrollRectToIndex(index, table);
             return recordClon;
-            
+
         } catch (Exception e) {
             System.out.println("Ошибка:cloneRecord() " + e);
             return null;
