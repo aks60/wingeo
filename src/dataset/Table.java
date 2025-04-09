@@ -9,7 +9,6 @@ import static java.util.stream.Collectors.toList;
 
 public class Table extends ArrayList<Record> {
 
-    protected Query root = null;
     protected HashMap<String, Query> mapQuery = new HashMap<String, Query>();
     protected ArrayList<Field> fields = new ArrayList<Field>();
 

@@ -24,17 +24,15 @@ public class Query extends Table {
     private Object[] sql = null;
     public static LinkedHashSet<Query> listOpenTable = new LinkedHashSet<Query>();
 
-    public Query(Query query) {
-        this.root = query;
+    public Query() {
     }
 
     public Query(Field... fields) {
-        this.root = this;
         mapQuery.put(fields[0].tname(), this);
         for (Field field : fields) {
             if (!field.name().equals("up")) {
                 if (mapQuery.get(field.tname()) == null) {
-                    mapQuery.put(field.tname(), new Query(this));
+                    mapQuery.put(field.tname(), new Query());
                 }
                 mapQuery.get(field.tname()).fields.add(field);
             }
@@ -42,13 +40,12 @@ public class Query extends Table {
     }
 
     public Query(Field[]... fieldsArr) {
-        this.root = this;
         mapQuery.put(fieldsArr[0][0].tname(), this);
         for (Field[] fields : fieldsArr) {
             for (Field field : fields) {
                 if (!field.name().equals("up")) {
                     if (mapQuery.get(field.tname()) == null) {
-                        mapQuery.put(field.tname(), new Query(this));
+                        mapQuery.put(field.tname(), new Query());
                     }
                     mapQuery.get(field.tname()).fields.add(field);
                 }
@@ -57,7 +54,7 @@ public class Query extends Table {
     }
 
     public Query table(Field field) {
-        return root.mapQuery.get(field.tname());
+        return mapQuery.get(field.tname());
     }
 
     public Query select(Object... s) {
@@ -80,7 +77,7 @@ public class Query extends Table {
                 }
             }
             String str = "";
-            for (Map.Entry<String, Query> q : root.mapQuery.entrySet()) {
+            for (Map.Entry<String, Query> q : mapQuery.entrySet()) {
                 Query table = q.getValue();
 
                 table.clear(); //удаляем данные
@@ -100,7 +97,7 @@ public class Query extends Table {
             this.sql = s;
             while (recordset.next()) {
                 int selector = 0;
-                for (Map.Entry<String, Query> q : root.mapQuery.entrySet()) {
+                for (Map.Entry<String, Query> q : mapQuery.entrySet()) {
                     Query table = q.getValue();
                     Record record = table.fields.get(0).newRecord(SEL);
                     table.add(record);
