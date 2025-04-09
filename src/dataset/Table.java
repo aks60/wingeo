@@ -16,7 +16,7 @@ public class Table extends ArrayList<Record> {
     }
 
 
-    public HashMap<String, Query> queryList(Field field) {
+    public HashMap<String, Query> mapQuery() {
         return mapQuery;
     }
     
