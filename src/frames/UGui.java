@@ -648,15 +648,6 @@ public class UGui {
             up.query().add(recordClon);  //добавим запись в кэш
             query.add(recordClon);
             query.insert(recordClon);
-            
-            HashMap<String, Query> hm = query.mapQuery();
-            for (Map.Entry<String, Query> it : hm.entrySet()) {
-                Query q = it.getValue();
-                if (q != query) {
-                    Record recClon = (Record) q.get(i).clone();
-                    q.add(i, recClon);
-                }
-            }
         }
         UGui.setSelectedRow(table);
         return query;
