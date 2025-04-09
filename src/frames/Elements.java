@@ -1044,7 +1044,7 @@ public class Elements extends javax.swing.JFrame {
 
     private void mousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mousePressed
         UGui.updateBorderAndSql((JTable) evt.getSource(), List.of(tab1, tab2, tab3, tab4, tab5));
-        List.of(btnFind1, btnFind2).forEach(btn -> btn.setEnabled(false));
+        List.of(btnClone, btnFind1, btnFind2).forEach(btn -> btn.setEnabled(false));
     }//GEN-LAST:event_mousePressed
 
     private void ppmActionItems(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppmActionItems
@@ -1058,9 +1058,9 @@ public class Elements extends javax.swing.JFrame {
     private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
         if (evt.getButton() == MouseEvent.BUTTON1) {
             if (tab2.getBorder() != null) {
-                List.of(btnFind1, btnFind2).forEach(btn -> btn.setEnabled(true));
+                List.of(btnClone, btnFind1, btnFind2).forEach(btn -> btn.setEnabled(true));
             } else if (tab3.getBorder() != null) {
-                btnFind1.setEnabled(true);
+                List.of(btnClone, btnFind1).forEach(btn -> btn.setEnabled(true));
             }
         } else if (evt.getButton() == MouseEvent.BUTTON3) {
             JTable table = List.of(tab2, tab3, tab4, tab5).stream().filter(it -> it == evt.getSource()).findFirst().get();
@@ -1100,8 +1100,8 @@ public class Elements extends javax.swing.JFrame {
                 "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 
             if (tab2.getBorder() != null) {
-                //List<Record> dataPar1 = new ArrayList(qElempar1);               
-                //List<Record> dataDet = new ArrayList(qElemdet);     
+                List<Record> dataPar1 = new ArrayList(qElempar1);               
+                List<Record> dataDet = new ArrayList(qElemdet);     
 
                 Record masterClon = UGui.cloneRecord(qElement, tab2, eElement.up, (clon) -> {
                     clon.set(eElement.name, clon.getStr(eElement.name) + "-клон");
@@ -1109,9 +1109,9 @@ public class Elements extends javax.swing.JFrame {
 //                UGui.cloneRecord(qElemdet, tab3, eElemdet.up, dataDet, (clon) -> {
 //                    clon.setNo(eElemdet.element_id, masterClon.getStr(eElement.id));
 //                });                
-//                UGui.cloneRecord(qElempar1, tab4, eElempar1.up, dataPar1, (clon) -> {
-//                    clon.setNo(eElempar1.element_id, masterClon.getStr(eElement.id));
-//                });                
+                UGui.cloneRecord(qElempar1, tab4, eElempar1.up, dataPar1, (clon) -> {
+                    clon.setNo(eElempar1.element_id, masterClon.getStr(eElement.id));
+                });                
 
             }
 //            else if (tab4.getBorder() != null) {

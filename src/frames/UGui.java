@@ -602,27 +602,29 @@ public class UGui {
         try {
             int index = UGui.getIndexRec(table);
             Record recordClon = (Record) query.get(index).clone();
-       
+
             recordClon.setNo(up, Query.INS);
             recordClon.setNo(up.fields()[1], Connect.genId(up));
             if (listener != null) {
                 listener.action(recordClon);
             }
             up.query().add(recordClon);  //добавим запись в кэш
-            int i = (query.size() > index + 1) ? ++index : index;
-            
+            int index2 = (query.size() > index + 1) ? ++index : index;
+
             HashMap<String, Query> hm = query.mapQuery();
             for (Map.Entry<String, Query> it : hm.entrySet()) {
                 Query q = it.getValue();
-                Record recClon = (Record) q.get(i).clone();
-                q.add(i, recClon);
-            }            
-            query.add(i, recordClon);
+                if (q != query) {
+                    Record recClon = (Record) q.get(index2).clone();
+                    q.add(index2, recClon);
+                }
+            }
+            query.add(index2, recordClon);
             query.insert(recordClon);
 
-            ((DefaultTableModel) table.getModel()).fireTableRowsInserted(index, index);
-            UGui.setSelectedIndex(table, index);
-            UGui.scrollRectToIndex(index, table);
+            ((DefaultTableModel) table.getModel()).fireTableRowsInserted(index2, index2);
+            UGui.setSelectedIndex(table, index2);
+            UGui.scrollRectToIndex(index2, table);
             return recordClon;
 
         } catch (Exception e) {
