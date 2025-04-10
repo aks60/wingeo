@@ -610,7 +610,7 @@ public class UGui {
                 listener.action(recordClon);
             }
             up.query().add(recordClon);  //добавим запись в кэш
-            int index2 = (query.size() > index + 1) ? ++index : index;
+            int index2 = (query.size() > index) ? ++index : index;
             for (Map.Entry<String, Query> it : query.mapQuery().entrySet()) {
                 if (it.getValue() != query) {
                     Record recClon = (Record) it.getValue().get(index2).clone();
