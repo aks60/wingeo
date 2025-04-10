@@ -11,7 +11,6 @@ import domain.eGlaspar2;
 import domain.eGlasprof;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import frames.swing.cmp.DefTableModel;
 import dataset.Field;
@@ -45,6 +44,9 @@ import frames.swing.cmp.DefCellEditorBtn;
 import frames.swing.cmp.DefCellEditorNumb;
 import frames.swing.cmp.TableFieldFilter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionListener;
 import report.sup.ExecuteCmd;
 import report.sup.RTable;
 
@@ -439,6 +441,7 @@ public class Fillings extends javax.swing.JFrame {
         btnFind1 = new javax.swing.JButton();
         btnTest = new javax.swing.JButton();
         btnReport = new javax.swing.JButton();
+        btnClone = new javax.swing.JButton();
         centr = new javax.swing.JPanel();
         pan1 = new javax.swing.JPanel();
         scr1 = new javax.swing.JScrollPane();
@@ -582,6 +585,22 @@ public class Fillings extends javax.swing.JFrame {
             }
         });
 
+        btnClone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c065.gif"))); // NOI18N
+        btnClone.setToolTipText(bundle.getString("Клонировать запись")); // NOI18N
+        btnClone.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnClone.setFocusable(false);
+        btnClone.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnClone.setMaximumSize(new java.awt.Dimension(25, 25));
+        btnClone.setMinimumSize(new java.awt.Dimension(25, 25));
+        btnClone.setPreferredSize(new java.awt.Dimension(25, 25));
+        btnClone.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btnClone.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnClone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClone(evt);
+            }
+        });
+
         javax.swing.GroupLayout northLayout = new javax.swing.GroupLayout(north);
         north.setLayout(northLayout);
         northLayout.setHorizontalGroup(
@@ -592,8 +611,10 @@ public class Fillings extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(btnClone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnFind1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 577, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 546, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -615,7 +636,8 @@ public class Fillings extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(btnClose, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFind1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnReport, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnReport, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnClone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -953,7 +975,7 @@ public class Fillings extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsert
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditingAndExecSql(getRootPane());  
+        UGui.stopCellEditingAndExecSql(getRootPane());
     }//GEN-LAST:event_windowClosed
 
     private void btnFind1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind1
@@ -1004,19 +1026,54 @@ public class Fillings extends javax.swing.JFrame {
             JTable table = (JTable) evt.getSource();
             UGui.updateBorderAndSql(table, List.of(tab1, tab2, tab3, tab4, tab5));
 
-            btnFind1.setEnabled(false);
+            List.of(btnFind1, btnClone).forEach(btn -> btn.setEnabled(false));
             if (tab1.getBorder() != null) {
-                btnFind1.setEnabled(true);
+                List.of(btnFind1, btnClone).forEach(btn -> btn.setEnabled(true));
             } else if (tab2.getBorder() != null) {
-                btnFind1.setEnabled(true);
+                List.of(btnFind1, btnClone).forEach(btn -> btn.setEnabled(true));
             } else if (tab5.getBorder() != null) {
                 btnFind1.setEnabled(true);
             }
         }
 
     }//GEN-LAST:event_tabMouseClicked
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">
+
+    private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
+        int result = JOptionPane.showConfirmDialog(this, "Клонировать только основную запись?",
+                "Подтверждение", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (result != JOptionPane.CANCEL_OPTION) {
+            if (tab1.getBorder() != null) {
+                List<Record> dataPar1 = new ArrayList(qGlaspar1);
+                List<Record> dataDet = new ArrayList(qGlasdet);
+
+                Record masterClon = UGui.cloneMaster(qGlasgrp, tab2, eGlasgrp.up, (clon) -> {
+                    clon.set(eGlasgrp.name, clon.getStr(eGlasgrp.name) + "-клон");
+                });
+                if (result == JOptionPane.NO_OPTION) {
+                    UGui.cloneSlave(qGlasdet, tab2, eGlasdet.up, dataDet, (clon) -> {
+                        clon.setNo(eGlasdet.glasgrp_id, masterClon.getStr(eGlasgrp.id));
+                        Record tail = eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.id)
+                                == clon.getInt(eGlasdet.artikl_id)).findFirst().get();
+                        qGlasdet.query(eArtikl.up).add(tail);
+                    });
+                    UGui.cloneSlave(qGlaspar1, tab3, eGlaspar1.up, dataPar1, (clon) -> {
+                        clon.setNo(eGlaspar1.glasgrp_id, masterClon.getStr(eGlasgrp.id));
+                    });
+                }
+            } else if (tab2.getBorder() != null) {
+                List<Record> dataPar2 = new ArrayList(qGlaspar2);
+                Record masterClon = UGui.cloneMaster(qGlasdet, tab2, eElemdet.up, null);
+                if (result == JOptionPane.NO_OPTION) {
+                    UGui.cloneSlave(qGlaspar2, tab4, eGlaspar2.up, dataPar2, (clon) -> {
+                        clon.setNo(eGlaspar2.glasdet_id, masterClon.getStr(eGlasdet.id));
+                    });
+                }
+            }
+        }
+    }//GEN-LAST:event_btnClone
+// <editor-fold defaultstate="collapsed" desc="Generated Code">
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClone;
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnDel;
     private javax.swing.JButton btnFind1;
@@ -1051,7 +1108,7 @@ public class Fillings extends javax.swing.JFrame {
         btnTest.setVisible(eProp.devel.equals("99"));
         eProp.getWin(this, btnClose, (e) -> {
             eProp.putWin(this, btnClose);
-        });        
+        });
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2, tab3, tab4, tab5);
         south.add(filterTable, 0);

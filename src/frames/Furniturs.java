@@ -718,9 +718,9 @@ public class Furniturs extends javax.swing.JFrame {
         btnDel = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
         btnReport = new javax.swing.JButton();
-        btnConstructiv = new javax.swing.JButton();
+        btnFind1 = new javax.swing.JButton();
         btnTest = new javax.swing.JButton();
-        btnFindSystree = new javax.swing.JButton();
+        btnFind2 = new javax.swing.JButton();
         btnClone = new javax.swing.JButton();
         center = new javax.swing.JPanel();
         pan1 = new javax.swing.JPanel();
@@ -858,19 +858,19 @@ public class Furniturs extends javax.swing.JFrame {
             }
         });
 
-        btnConstructiv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c088.gif"))); // NOI18N
-        btnConstructiv.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
-        btnConstructiv.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btnConstructiv.setFocusable(false);
-        btnConstructiv.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnConstructiv.setMaximumSize(new java.awt.Dimension(25, 25));
-        btnConstructiv.setMinimumSize(new java.awt.Dimension(25, 25));
-        btnConstructiv.setPreferredSize(new java.awt.Dimension(25, 25));
-        btnConstructiv.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btnConstructiv.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnConstructiv.addActionListener(new java.awt.event.ActionListener() {
+        btnFind1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c088.gif"))); // NOI18N
+        btnFind1.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
+        btnFind1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnFind1.setFocusable(false);
+        btnFind1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnFind1.setMaximumSize(new java.awt.Dimension(25, 25));
+        btnFind1.setMinimumSize(new java.awt.Dimension(25, 25));
+        btnFind1.setPreferredSize(new java.awt.Dimension(25, 25));
+        btnFind1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btnFind1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnFind1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConstructiv(evt);
+                btnFind1(evt);
             }
         });
 
@@ -885,18 +885,18 @@ public class Furniturs extends javax.swing.JFrame {
             }
         });
 
-        btnFindSystree.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c089.gif"))); // NOI18N
-        btnFindSystree.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
-        btnFindSystree.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btnFindSystree.setFocusable(false);
-        btnFindSystree.setMaximumSize(new java.awt.Dimension(25, 25));
-        btnFindSystree.setMinimumSize(new java.awt.Dimension(25, 25));
-        btnFindSystree.setPreferredSize(new java.awt.Dimension(25, 25));
-        btnFindSystree.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
-        btnFindSystree.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnFindSystree.addActionListener(new java.awt.event.ActionListener() {
+        btnFind2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c089.gif"))); // NOI18N
+        btnFind2.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
+        btnFind2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnFind2.setFocusable(false);
+        btnFind2.setMaximumSize(new java.awt.Dimension(25, 25));
+        btnFind2.setMinimumSize(new java.awt.Dimension(25, 25));
+        btnFind2.setPreferredSize(new java.awt.Dimension(25, 25));
+        btnFind2.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btnFind2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnFind2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFindSystree(evt);
+                btnFind2(evt);
             }
         });
 
@@ -929,9 +929,9 @@ public class Furniturs extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnClone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConstructiv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnFind1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnFindSystree, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnFind2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 581, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -944,14 +944,14 @@ public class Furniturs extends javax.swing.JFrame {
             northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(northLayout.createSequentialGroup()
                 .addGroup(northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnConstructiv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnFind1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(northLayout.createSequentialGroup()
                         .addGroup(northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnDel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnIns, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnFindSystree, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnFind2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnClone, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -1569,7 +1569,7 @@ public class Furniturs extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mousePressed
 
-    private void btnConstructiv(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConstructiv
+    private void btnFind1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind1
         JTable table = (UGui.getIndexRec(tab2c) != -1) ? tab2c
                 : (UGui.getIndexRec(tab2b) != -1) ? tab2b : tab2a; //ВАЖНО! Поиск выделения строки снизу вверх.
         Record record = ((DefTableModel) table.getModel()).getQuery().get(UGui.getIndexRec(table));
@@ -1579,7 +1579,7 @@ public class Furniturs extends javax.swing.JFrame {
                 App.Artikles.createFrame(Furniturs.this, record2);
             }
         });
-    }//GEN-LAST:event_btnConstructiv
+    }//GEN-LAST:event_btnFind1
 
     private void tbtnAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnAction
         JTable table = null;
@@ -1669,7 +1669,7 @@ public class Furniturs extends javax.swing.JFrame {
         deteilFind(520);
     }//GEN-LAST:event_btnTest
 
-    private void btnFindSystree(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindSystree
+    private void btnFind2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind2
         List<String> pathList = new ArrayList<String>();
         List<Integer> keyList = new ArrayList<Integer>();
         StringBuffer bufferPath = new StringBuffer();
@@ -1712,7 +1712,7 @@ public class Furniturs extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(Furniturs.this, "В системе профилей фурнитура не найдена", "Сообщение", JOptionPane.NO_OPTION);
         }
-    }//GEN-LAST:event_btnFindSystree
+    }//GEN-LAST:event_btnFind2
 
     private void cloneRecord(Map<Record, Integer> furnside2Map, Map<Record, Integer> furnpar2Map) {
         for (Map.Entry<Record, Integer> it : furnside2Map.entrySet()) {
@@ -1734,45 +1734,48 @@ public class Furniturs extends javax.swing.JFrame {
     }
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
-        if (JOptionPane.showConfirmDialog(this,
-                "Вы действительно хотите клонировать текущую запись?",
-                "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+        int result = JOptionPane.showConfirmDialog(this, "Клонировать только основную запись?",
+                "Подтверждение", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (result != JOptionPane.CANCEL_OPTION) {
 
             if (tab1.getBorder() != null) {
                 int types = (btnTab1.isSelected()) ? 0 : (btnTab2.isSelected()) ? 1 : -1;
                 List<Record> dataDet2a = new ArrayList(qFurndet2a);
                 List<Record> dataSide1 = new ArrayList(qFurnside1);
-                
+
                 Record masterClon = UGui.cloneMaster(qFurniture, tab1, eFurniture.up, (clon) -> {
                     clon.set(eFurniture.name, (btnTab1.isSelected()) ? "Осн.фурн.клон" : (btnTab2.isSelected()) ? "Доп.фурн.клон" : "Набор.фурн.клон");
                     clon.set(eFurniture.types, types);
                 });
-                UGui.cloneSlave(qFurndet2a, tab3, eFurndet.up, dataDet2a, (clon) -> {
-                    clon.setNo(eFurndet.furniture_id1, masterClon.getInt(eFurniture.id));
-                    clon.setNo(eFurndet.furndet_id, clon.getInt(eFurndet.id));
-                });
-                UGui.cloneSlave(qFurnside1, tab3, eFurnside1.up, dataSide1, (clon) -> {
-                    clon.setNo(eFurnside1.furniture_id, masterClon.getInt(eFurniture.id));
-                });
-
+                if (result == JOptionPane.NO_OPTION) {
+                    UGui.cloneSlave(qFurndet2a, tab3, eFurndet.up, dataDet2a, (clon) -> {
+                        clon.setNo(eFurndet.furniture_id1, masterClon.getInt(eFurniture.id));
+                        clon.setNo(eFurndet.furndet_id, clon.getInt(eFurndet.id));
+                    });
+                    UGui.cloneSlave(qFurnside1, tab3, eFurnside1.up, dataSide1, (clon) -> {
+                        clon.setNo(eFurnside1.furniture_id, masterClon.getInt(eFurniture.id));
+                    });
+                }
             } else if (tab2a.getBorder() != null) {
                 List<Record> dataDet2b = new ArrayList(qFurndet2b);
                 List<Record> dataSide2 = new ArrayList(qFurnside2);
                 List<Record> dataPar2 = new ArrayList(qFurnpar2);
-                
+
                 Record masterClon = UGui.cloneMaster(qFurndet2a, tab2a, eFurndet.up, (clon) -> {
                     clon.setNo(eFurndet.furndet_id, clon.getInt(eFurndet.id));
                 });
-                UGui.cloneSlave(qFurndet2b, tab2b, eFurndet.up, dataDet2b, (clon) -> {
-                    clon.setNo(eFurndet.furniture_id1, masterClon.getInt(eFurndet.furniture_id1));
-                    clon.setNo(eFurndet.furndet_id, masterClon.getInt(eFurndet.id));
-                });
-                UGui.cloneSlave(qFurnside2, tab5, eFurnside2.up, dataSide2, (clon) -> {
-                    clon.setNo(eFurnside2.furndet_id, masterClon.getInt(eFurndet.id));
-                });
-                UGui.cloneSlave(qFurnpar2, tab6, eFurnpar2.up, dataPar2, (clon) -> {
-                    clon.setNo(eFurnpar2.furndet_id, masterClon.getInt(eFurndet.id));
-                });
+                if (result == JOptionPane.NO_OPTION) {
+                    UGui.cloneSlave(qFurndet2b, tab2b, eFurndet.up, dataDet2b, (clon) -> {
+                        clon.setNo(eFurndet.furniture_id1, masterClon.getInt(eFurndet.furniture_id1));
+                        clon.setNo(eFurndet.furndet_id, masterClon.getInt(eFurndet.id));
+                    });
+                    UGui.cloneSlave(qFurnside2, tab5, eFurnside2.up, dataSide2, (clon) -> {
+                        clon.setNo(eFurnside2.furndet_id, masterClon.getInt(eFurndet.id));
+                    });
+                    UGui.cloneSlave(qFurnpar2, tab6, eFurnpar2.up, dataPar2, (clon) -> {
+                        clon.setNo(eFurnpar2.furndet_id, masterClon.getInt(eFurndet.id));
+                    });
+                }
             }
         }
     }//GEN-LAST:event_btnClone
@@ -1786,11 +1789,20 @@ public class Furniturs extends javax.swing.JFrame {
     }//GEN-LAST:event_ppmActionItems
 
     private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
+        
         if (evt.getButton() == MouseEvent.BUTTON3) {
             JTable table = List.of(tab1, tab2a, tab2b, tab2c, tab3, tab4, tab5, tab6).stream().filter(it -> it == evt.getSource()).findFirst().get();
             List.of(tab1, tab2a, tab2b, tab2c, tab3, tab4, tab5, tab6).forEach(tab -> tab.setBorder(null));
             table.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
             ppmCrud.show(table, evt.getX(), evt.getY());
+            
+        } else if (evt.getButton() == MouseEvent.BUTTON1) {
+            List.of(btnFind1, btnFind2, btnClone).forEach(btn -> btn.setEnabled(false));
+            if (tab1.getBorder() != null) {
+                List.of(btnFind2, btnClone).forEach(btn -> btn.setEnabled(true));
+            } else if (tab2a.getBorder() != null) {
+                List.of(btnFind1, btnClone).forEach(btn -> btn.setEnabled(true));
+            } 
         }
     }//GEN-LAST:event_tabMouseClicked
 
@@ -1808,9 +1820,9 @@ public class Furniturs extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClone;
     private javax.swing.JButton btnClose;
-    private javax.swing.JButton btnConstructiv;
     private javax.swing.JButton btnDel;
-    private javax.swing.JButton btnFindSystree;
+    private javax.swing.JButton btnFind1;
+    private javax.swing.JButton btnFind2;
     private javax.swing.JButton btnIns;
     private javax.swing.JButton btnReport;
     private javax.swing.JButton btnSet;

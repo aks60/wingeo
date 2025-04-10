@@ -1095,9 +1095,9 @@ public class Elements extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMove
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
-        if (JOptionPane.showConfirmDialog(this,
-                "Вы действительно хотите клонировать текущую запись?",
-                "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+        int result = JOptionPane.showConfirmDialog(this, "Клонировать только основную запись?",
+                "Подтверждение", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (result != JOptionPane.CANCEL_OPTION) {
 
             if (tab2.getBorder() != null) {
                 List<Record> dataPar1 = new ArrayList(qElempar1);
@@ -1106,22 +1106,25 @@ public class Elements extends javax.swing.JFrame {
                 Record masterClon = UGui.cloneMaster(qElement, tab2, eElement.up, (clon) -> {
                     clon.set(eElement.name, clon.getStr(eElement.name) + "-клон");
                 });
-                UGui.cloneSlave(qElemdet, tab3, eElemdet.up, dataDet, (clon) -> {
-                    clon.setNo(eElemdet.element_id, masterClon.getStr(eElement.id));
-                    Record tail = eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.id)
-                            == clon.getInt(eElemdet.artikl_id)).findFirst().get();
-                    qElemdet.query(eArtikl.up).add(tail);
-                });
-                UGui.cloneSlave(qElempar1, tab4, eElempar1.up, dataPar1, (clon) -> {
-                    clon.setNo(eElempar1.element_id, masterClon.getStr(eElement.id));
-                });
-                
+                if (result == JOptionPane.NO_OPTION) {
+                    UGui.cloneSlave(qElemdet, tab3, eElemdet.up, dataDet, (clon) -> {
+                        clon.setNo(eElemdet.element_id, masterClon.getStr(eElement.id));
+                        Record tail = eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.id)
+                                == clon.getInt(eElemdet.artikl_id)).findFirst().get();
+                        qElemdet.query(eArtikl.up).add(tail);
+                    });
+                    UGui.cloneSlave(qElempar1, tab4, eElempar1.up, dataPar1, (clon) -> {
+                        clon.setNo(eElempar1.element_id, masterClon.getStr(eElement.id));
+                    });
+                }
             } else if (tab3.getBorder() != null) {
                 List<Record> dataPar2 = new ArrayList(qElempar2);
                 Record masterClon = UGui.cloneMaster(qElemdet, tab3, eElemdet.up, null);
-                UGui.cloneSlave(qElempar2, tab5, eElempar2.up, dataPar2, (clon) -> {
-                    clon.setNo(eElempar2.elemdet_id, masterClon.getStr(eElemdet.id));
-                });
+                if (result == JOptionPane.NO_OPTION) {
+                    UGui.cloneSlave(qElempar2, tab5, eElempar2.up, dataPar2, (clon) -> {
+                        clon.setNo(eElempar2.elemdet_id, masterClon.getStr(eElemdet.id));
+                    });
+                }
             }
         }
     }//GEN-LAST:event_btnClone

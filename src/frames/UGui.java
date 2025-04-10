@@ -634,7 +634,7 @@ public class UGui {
     //Клонировать запись
     public static List<Record> cloneSlave(Query query, JTable table, Field up, List<Record> dataList, ListenerRecord listener) {
 
-        //query.clear();
+        query.clear();
         for (int i = 0; i < dataList.size(); ++i) {
             Record detailRec = dataList.get(i);
             Record recordClon = (Record) detailRec.clone();

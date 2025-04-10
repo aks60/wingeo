@@ -2652,18 +2652,20 @@ public class Artikles extends javax.swing.JFrame {
     }//GEN-LAST:event_ppmClick
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
-        if (UGui.getIndexRec(tab1) != -1 && JOptionPane.showConfirmDialog(this, 
-                "Вы действительно хотите клонировать текущую запись?",
-                "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-            
+        int result = JOptionPane.showConfirmDialog(this, "Клонировать только основную запись?",
+                "Подтверждение", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (result != JOptionPane.CANCEL_OPTION) {
+
             List<Record> data = new ArrayList(qArtdet);
             Record masterClon = UGui.cloneMaster(qArtikl, tab1, eArtikl.up, (clon) -> {
                 clon.setNo(eArtikl.code, clon.getStr(eArtikl.code) + "-клон");
                 clon.setNo(eArtikl.name, clon.getStr(eArtikl.name) + "-клон");
             });
-            UGui.cloneSlave(qArtdet, tab2, eArtdet.up, data, (clon) -> {
-                clon.setNo(eArtdet.artikl_id, masterClon.getInt(eArtikl.id));
-            });
+            if (result == JOptionPane.NO_OPTION) {
+                UGui.cloneSlave(qArtdet, tab2, eArtdet.up, data, (clon) -> {
+                    clon.setNo(eArtdet.artikl_id, masterClon.getInt(eArtikl.id));
+                });
+            }
         }
     }//GEN-LAST:event_btnClone
 

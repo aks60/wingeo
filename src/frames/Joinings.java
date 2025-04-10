@@ -236,7 +236,7 @@ public class Joinings extends javax.swing.JFrame {
 
     public void selectionTab1(ListSelectionEvent event) {
         UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
-        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> UGui.getQuery(tab).execsql());        
+        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> UGui.getQuery(tab).execsql());
         UGui.clearTable(tab2, tab3, tab4, tab5);
         int index = UGui.getIndexRec(tab1);
         if (index != -1) {
@@ -250,7 +250,7 @@ public class Joinings extends javax.swing.JFrame {
 
     public void selectionTab2(ListSelectionEvent event) {
         UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
-        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> UGui.getQuery(tab).execsql());        
+        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> UGui.getQuery(tab).execsql());
         UGui.clearTable(tab3, tab4, tab5);
         int index = UGui.getIndexRec(tab2);
         if (index != -1) {
@@ -267,7 +267,7 @@ public class Joinings extends javax.swing.JFrame {
 
     public void selectionTab4(ListSelectionEvent event) {
         UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
-        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> UGui.getQuery(tab).execsql());        
+        List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> UGui.getQuery(tab).execsql());
         int index = UGui.getIndexRec(tab4);
         if (index != -1) {
             Record record = qJoindet.query(eJoindet.up).get(index);
@@ -1083,7 +1083,7 @@ public class Joinings extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsert
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditingAndExecSql(getRootPane());  
+        UGui.stopCellEditingAndExecSql(getRootPane());
     }//GEN-LAST:event_windowClosed
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
@@ -1115,25 +1115,28 @@ public class Joinings extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTest
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
-        if (JOptionPane.showConfirmDialog(this,
-                "Вы действительно хотите клонировать текущую запись?",
-                "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+        int result = JOptionPane.showConfirmDialog(this, "Клонировать только основную запись?",
+                "Подтверждение", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (result != JOptionPane.CANCEL_OPTION) {
 
             if (tab1.getBorder() != null) {
-                List<Record> dataVar = new ArrayList(qJoinvar);               
+                List<Record> dataVar = new ArrayList(qJoinvar);
                 Record masterClon = UGui.cloneMaster(qJoining, tab1, eJoining.up, (clon) -> {
                     clon.set(eJoining.name, clon.getStr(eJoining.name) + "-клон");
                 });
-                UGui.cloneSlave(qJoinvar, tab2, eJoinvar.up, dataVar, (clon) -> {
-                    clon.setNo(eJoinvar.joining_id, masterClon.getStr(eJoining.id));
-                });                
-
+                if (result == JOptionPane.NO_OPTION) {
+                    UGui.cloneSlave(qJoinvar, tab2, eJoinvar.up, dataVar, (clon) -> {
+                        clon.setNo(eJoinvar.joining_id, masterClon.getStr(eJoining.id));
+                    });
+                }
             } else if (tab4.getBorder() != null) {
-                List<Record> dataPar2 = new ArrayList(qJoinpar2);               
+                List<Record> dataPar2 = new ArrayList(qJoinpar2);
                 Record masterClon = UGui.cloneMaster(qJoindet, tab4, eJoindet.up, null);
-                UGui.cloneSlave(qJoinpar2, tab5, eJoinpar2.up, dataPar2, (clon) -> {
-                    clon.setNo(eJoinpar2.joindet_id, masterClon.getStr(eJoindet.id));
-                });                
+                if (result == JOptionPane.NO_OPTION) {
+                    UGui.cloneSlave(qJoinpar2, tab5, eJoinpar2.up, dataPar2, (clon) -> {
+                        clon.setNo(eJoinpar2.joindet_id, masterClon.getStr(eJoindet.id));
+                    });
+                }
             }
         }
     }//GEN-LAST:event_btnClone
@@ -1147,7 +1150,7 @@ public class Joinings extends javax.swing.JFrame {
     }//GEN-LAST:event_ppmActionItems
 
     private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
-       
+
         if (evt.getButton() == MouseEvent.BUTTON3) {
             JTable table = List.of(tab1, tab2, tab3, tab4, tab5).stream().filter(it -> it == evt.getSource()).findFirst().get();
             List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> tab.setBorder(null));
@@ -1159,7 +1162,7 @@ public class Joinings extends javax.swing.JFrame {
             UGui.updateBorderAndSql(table, List.of(tab1, tab2, tab3, tab4, tab5));
             List.of(btnClone, btnFind1, btnFind2).forEach(btn -> btn.setEnabled(false));
             if (tab1.getBorder() != null) {
-               List.of(btnClone, btnFind1, btnFind2).forEach(btn -> btn.setEnabled(true));
+                List.of(btnClone, btnFind1, btnFind2).forEach(btn -> btn.setEnabled(true));
             } else if (tab4.getBorder() != null) {
                 btnFind1.setEnabled(true);
                 btnClone.setEnabled(true);
@@ -1217,8 +1220,8 @@ public class Joinings extends javax.swing.JFrame {
 
         btnTest.setVisible(eProp.devel.equals("99"));
         eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose, tab1, tab2, tab3, tab4 , tab5);
-        }, tab1, tab2, tab3, tab4 , tab5); 
+            eProp.putWin(this, btnClose, tab1, tab2, tab3, tab4, tab5);
+        }, tab1, tab2, tab3, tab4, tab5);
         new UColor();
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2, tab3, tab4, tab5);
