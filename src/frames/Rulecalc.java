@@ -43,7 +43,7 @@ public class Rulecalc extends javax.swing.JFrame {
     public void loadingData() {
         try {
             qRulecalc.sql(eRulecalc.data(), eRulecalc.up).sort(eRulecalc.type);
-            qRulecalc.table(eArtikl.up).join(qRulecalc, eArtikl.data(), eRulecalc.artikl_id, eArtikl.id);
+            qRulecalc.query(eArtikl.up).join(qRulecalc, eArtikl.data(), eRulecalc.artikl_id, eArtikl.id);
         } catch (Exception e) {
             System.err.println("Ошибка:Rulecalc.loadingModel() " + e);
         }
@@ -120,11 +120,11 @@ public class Rulecalc extends javax.swing.JFrame {
         listenerArtikl = (arttiklRec) -> {
             int index = UGui.getIndexRec(tab2);
             UGui.stopCellEditing(tab2);
-            qRulecalc.table(eRulecalc.up).set(arttiklRec.getInt(eArtikl.id), index, eRulecalc.artikl_id);
-            qRulecalc.table(eArtikl.up).set(arttiklRec.get(eArtikl.code), index, eArtikl.code);
-            qRulecalc.table(eArtikl.up).set(arttiklRec.get(eArtikl.name), index, eArtikl.name);
+            qRulecalc.query(eRulecalc.up).set(arttiklRec.getInt(eArtikl.id), index, eRulecalc.artikl_id);
+            qRulecalc.query(eArtikl.up).set(arttiklRec.get(eArtikl.code), index, eArtikl.code);
+            qRulecalc.query(eArtikl.up).set(arttiklRec.get(eArtikl.name), index, eArtikl.name);
             if ("null".equals(qRulecalc.getAs(index, eRulecalc.name, "null"))) {
-                qRulecalc.table(eRulecalc.up).set(arttiklRec.getStr(eArtikl.name), index, eRulecalc.name);
+                qRulecalc.query(eRulecalc.up).set(arttiklRec.getStr(eArtikl.name), index, eRulecalc.name);
             }
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
         };
@@ -383,7 +383,7 @@ public class Rulecalc extends javax.swing.JFrame {
         UGui.insertRecordCur(tab2, eRulecalc.up, (record) -> {
             //record.setDev(eRulecalc.name, "Правило");
             record.set(eRulecalc.quant, 1);
-            qRulecalc.table(eArtikl.up).add(eArtikl.up.newRecord(Query.SEL));
+            qRulecalc.query(eArtikl.up).add(eArtikl.up.newRecord(Query.SEL));
         });
     }//GEN-LAST:event_btnInsert
 

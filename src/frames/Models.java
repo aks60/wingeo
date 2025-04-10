@@ -91,7 +91,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         qSysmodel.sq2(eSysmodel.data(), eSysmodel.form, form, eSysmodel.form, 2000, eSysmodel.id, 0).sort(eSysmodel.npp);
         DefaultTableModel dm = (DefaultTableModel) tab.getModel();
         dm.getDataVector().removeAllElements();
-        for (Record record : qSysmodel.table(eSysmodel.up)) {
+        for (Record record : qSysmodel.query(eSysmodel.up)) {
             try {
                 String script = record.getStr(eSysmodel.script);
                 Wincalc iwin2 = new Wincalc(script);
@@ -154,7 +154,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     private Wincalc wincalc() {
         int index = UGui.getIndexRec(tab1);
         if (index != -1) {
-            Record sysmodelRec = qSysmodel.table(eSysmodel.up).get(index);
+            Record sysmodelRec = qSysmodel.query(eSysmodel.up).get(index);
             Object v = sysmodelRec.get(eSysmodel.values().length);
             if (v instanceof Wincalc) {
                 return (Wincalc) v;

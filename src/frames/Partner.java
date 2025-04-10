@@ -70,7 +70,7 @@ public class Partner extends javax.swing.JFrame {
         if (Query.conf.equals("NET")) {
             qPrjpart.sql(eSysuser.data(), ePrjpart.data(), eSysuser.login, ePrjpart.login).sort(ePrjpart.npp);
             //qPrjpart.sql(ePrjpart.data(), ePrjpart.up);
-            qPrjpart.table(eSysuser.up).join(qPrjpart, eSysuser.data(), ePrjpart.login, eSysuser.login);
+            qPrjpart.query(eSysuser.up).join(qPrjpart, eSysuser.data(), ePrjpart.login, eSysuser.login);
         } else {
             qPrjpart.select(ePrjpart.up, "left join", eSysuser.up, "on", ePrjpart.login, "=", eSysuser.login,
                     "where", ePrjpart.login, "=", eSysuser.login, "order by", ePrjpart.npp);
@@ -1017,7 +1017,7 @@ public class Partner extends javax.swing.JFrame {
                     prjpartRec.setNo(ePrjpart.npp, prjpartRec.get(ePrjpart.id));
                     prjpartRec.setNo(ePrjpart.category, arrCateg[0]);
                     Record sysuserRec = new Query(eSysuser.values()).sql(eSysuser.data(), eSysuser.login, login).get(0);
-                    qPrjpart.table(eSysuser.up).add(sysuserRec);
+                    qPrjpart.query(eSysuser.up).add(sysuserRec);
                     qPrjpart.insert(prjpartRec);
 
                     //loadingData();

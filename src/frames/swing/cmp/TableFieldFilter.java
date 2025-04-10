@@ -191,7 +191,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
                         Field field = ((DefTableModel) table.getModel()).columns[indexColumn];
                         for (int index = 0; index < query.size(); ++index) {
 
-                            if (query.table(field).get(index).getStr(field).startsWith(txtFilter.getText())) {
+                            if (query.query(field).get(index).getStr(field).startsWith(txtFilter.getText())) {
                                 UGui.setSelectedIndex(table, index);
                                 UGui.scrollRectToIndex(index, table);
                                 return;

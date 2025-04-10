@@ -141,7 +141,7 @@ public class TableFieldFormat {
                     for (Map.Entry<JTextComponent, Field> me : mapTxt.entrySet()) {
                         JTextComponent jtxt = me.getKey();
                         Field field = me.getValue();
-                        Object val = query.table(field).get(index, field);
+                        Object val = query.query(field).get(index, field);
                         setText(jtxt, field, val);
                     }
                 }
@@ -221,7 +221,7 @@ public class TableFieldFormat {
                                 if (List.of(Field.TYPE.FLT, Field.TYPE.DBL).contains(field.meta().type())) {
                                     str = String.valueOf(str).replace(',', '.');
                                 }
-                                query.table(field).set(str, index, field);
+                                query.query(field).set(str, index, field);
                             }
                         }
                     } else if (comp instanceof JTree) {

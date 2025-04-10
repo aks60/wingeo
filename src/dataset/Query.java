@@ -53,7 +53,7 @@ public class Query extends Table {
         }
     }
 
-    public Query table(Field field) {
+    public Query query(Field field) {
         return mapQuery.get(field.tname());
     }
 

@@ -240,7 +240,7 @@ public class Joinings extends javax.swing.JFrame {
         UGui.clearTable(tab2, tab3, tab4, tab5);
         int index = UGui.getIndexRec(tab1);
         if (index != -1) {
-            Record record = qJoining.table(eJoining.up).get(index);
+            Record record = qJoining.query(eJoining.up).get(index);
             Integer id = record.getInt(eJoining.id);
             qJoinvar.sql(eJoinvar.data(), eJoinvar.joining_id, id).sort(eJoinvar.prio);
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
@@ -254,7 +254,7 @@ public class Joinings extends javax.swing.JFrame {
         UGui.clearTable(tab3, tab4, tab5);
         int index = UGui.getIndexRec(tab2);
         if (index != -1) {
-            Record record = qJoinvar.table(eJoinvar.up).get(index);
+            Record record = qJoinvar.query(eJoinvar.up).get(index);
             Integer id = record.getInt(eJoinvar.id);
             qJoindet.sql(eJoindet.data(), eJoindet.joinvar_id, id).sort(eJoindet.artikl_id);
             qJoinpar1.sql(eJoinpar1.data(), eJoinpar1.joinvar_id, id).sort(eJoinpar1.id);
@@ -270,7 +270,7 @@ public class Joinings extends javax.swing.JFrame {
         List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> UGui.getQuery(tab).execsql());        
         int index = UGui.getIndexRec(tab4);
         if (index != -1) {
-            Record record = qJoindet.table(eJoindet.up).get(index);
+            Record record = qJoindet.query(eJoindet.up).get(index);
             Integer id = record.getInt(eJoindet.id);
             qJoinpar2.sql(eJoinpar2.data(), eJoinpar2.joindet_id, id).sort(eJoinpar2.id);
             ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
@@ -514,7 +514,7 @@ public class Joinings extends javax.swing.JFrame {
                     int joinvar_id = qVar.get(index2).getInt(eJoining.id);
                     //qDet.selects(eJoindet.up, "left join", eArtikl.up, "on", eArtikl.id, "=", eJoindet.artikl_id, "where", eJoindet.joinvar_id, "=", joinvar_id, "order by", eJoindet.artikl_id);
                     qDet.sql(eJoindet.data(), eJoindet.joinvar_id, joinvar_id).sort(eJoindet.artikl_id);
-                    qDet.table(eArtikl.up).join(qDet, eArtikl.data(), eJoindet.artikl_id, eArtikl.id);
+                    qDet.query(eArtikl.up).join(qDet, eArtikl.data(), eJoindet.artikl_id, eArtikl.id);
                     //Цыкл по детализации соединений
                     for (int index3 = 0; index3 < qDet.size(); index3++) {
                         if (qDet.get(index3).getInt(eJoindet.id) == deteilID) {

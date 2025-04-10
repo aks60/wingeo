@@ -211,12 +211,12 @@ public class Elements extends javax.swing.JFrame {
                 int id = record.getInt(eGroups.id);
 
                 if (id == -1 || id == -5) { //(-1) - профили, (-5) - заполнения
-                    eElement.sql(qElement, qElement.table(eArtikl.up), id);
+                    eElement.sql(qElement, qElement.query(eArtikl.up), id);
                     //qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
                     //qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);               
                 } else { //категории
                     qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
-                    qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                    qElement.query(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
                 }
                 ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
                 UGui.setSelectedRow(tab2);
@@ -233,10 +233,10 @@ public class Elements extends javax.swing.JFrame {
             UGui.clearTable(tab3, tab4, tab5);
             int index = UGui.getIndexRec(tab2);
             if (index != -1) {
-                Record record = qElement.table(eElement.up).get(index);
+                Record record = qElement.query(eElement.up).get(index);
                 Integer ID = record.getInt(eElement.id);
                 qElemdet.sql(eElemdet.data(), eElemdet.element_id, ID);
-                qElemdet.table(eArtikl.up).join(qElemdet, eArtikl.data(), eElemdet.artikl_id, eArtikl.id);
+                qElemdet.query(eArtikl.up).join(qElemdet, eArtikl.data(), eElemdet.artikl_id, eArtikl.id);
                 qElempar1.sql(eElempar1.data(), eElempar1.element_id, ID);
                 ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
                 ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
@@ -255,7 +255,7 @@ public class Elements extends javax.swing.JFrame {
         if (index != -1) {
             //Util.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
             List.of(qElempar2).forEach(q -> q.execsql());
-            Record record = qElemdet.table(eElemdet.up).get(index);
+            Record record = qElemdet.query(eElemdet.up).get(index);
             Integer p1 = record.getInt(eElemdet.id);
             qElempar2.sql(eElempar2.data(), eElempar2.elemdet_id, p1);
             ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
@@ -415,14 +415,14 @@ public class Elements extends javax.swing.JFrame {
             UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
             if (tab2.getBorder() != null) {
                 qElement.set(record.getInt(eArtikl.id), UGui.getIndexRec(tab2), eElement.artikl_id);
-                qElement.table(eArtikl.up).set(record.get(eArtikl.name), UGui.getIndexRec(tab2), eArtikl.name);
-                qElement.table(eArtikl.up).set(record.get(eArtikl.code), UGui.getIndexRec(tab2), eArtikl.code);
+                qElement.query(eArtikl.up).set(record.get(eArtikl.name), UGui.getIndexRec(tab2), eArtikl.name);
+                qElement.query(eArtikl.up).set(record.get(eArtikl.code), UGui.getIndexRec(tab2), eArtikl.code);
                 UGui.fireTableRowUpdated(tab2);
 
             } else if (tab3.getBorder() != null) {
                 qElemdet.set(record.getInt(eArtikl.id), UGui.getIndexRec(tab3), eElemdet.artikl_id);
-                qElemdet.table(eArtikl.up).set(record.get(eArtikl.name), UGui.getIndexRec(tab3), eArtikl.name);
-                qElemdet.table(eArtikl.up).set(record.get(eArtikl.code), UGui.getIndexRec(tab3), eArtikl.code);
+                qElemdet.query(eArtikl.up).set(record.get(eArtikl.name), UGui.getIndexRec(tab3), eArtikl.name);
+                qElemdet.query(eArtikl.up).set(record.get(eArtikl.code), UGui.getIndexRec(tab3), eArtikl.code);
                 int artiklID = record.getInt(eArtikl.id);
                 List<Record> artdetList = eArtdet.filter2(artiklID);
 
@@ -1110,7 +1110,7 @@ public class Elements extends javax.swing.JFrame {
                     clon.setNo(eElemdet.element_id, masterClon.getStr(eElement.id));
                     Record tail = eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.id)
                             == clon.getInt(eElemdet.artikl_id)).findFirst().get();
-                    qElemdet.table(eArtikl.up).add(tail);
+                    qElemdet.query(eArtikl.up).add(tail);
                 });
                 UGui.cloneSlave(qElempar1, tab4, eElempar1.up, dataPar1, (clon) -> {
                     clon.setNo(eElempar1.element_id, masterClon.getStr(eElement.id));
@@ -1214,7 +1214,7 @@ public class Elements extends javax.swing.JFrame {
                         record.set(eElement.todef, 1);
                         record.set(eElement.markup, 0);
                         int index = UGui.getIndexFind(tab2, eElement.id, record.get(eElement.id));
-                        qElement.table(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
+                        qElement.query(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
                     });
                 }
             }
@@ -1223,7 +1223,7 @@ public class Elements extends javax.swing.JFrame {
                 UGui.insertRecordCur(tab3, eElemdet.up, (record) -> {
                     record.set(eElemdet.element_id, qElement.get(UGui.getIndexRec(tab2), eElement.id));
                     int index = UGui.getIndexFind(tab3, eElemdet.id, record.get(eElemdet.id));
-                    qElemdet.table(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
+                    qElemdet.query(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
                 });
             }
         } else if (tab4.getBorder() != null) {
