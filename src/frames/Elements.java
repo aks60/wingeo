@@ -234,10 +234,10 @@ public class Elements extends javax.swing.JFrame {
             int index = UGui.getIndexRec(tab2);
             if (index != -1) {
                 Record record = qElement.table(eElement.up).get(index);
-                Integer p1 = record.getInt(eElement.id);
-                qElemdet.sql(eElemdet.data(), eElemdet.element_id, p1);
+                Integer ID = record.getInt(eElement.id);
+                qElemdet.sql(eElemdet.data(), eElemdet.element_id, ID);
                 qElemdet.table(eArtikl.up).join(qElemdet, eArtikl.data(), eElemdet.artikl_id, eArtikl.id);
-                qElempar1.sql(eElempar1.data(), eElempar1.element_id, p1);
+                qElempar1.sql(eElempar1.data(), eElempar1.element_id, ID);
                 ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
                 ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
                 UGui.setSelectedRow(tab3);

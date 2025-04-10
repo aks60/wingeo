@@ -645,6 +645,10 @@ public class UGui {
             if (listener != null) {
                 listener.action(recordClon);
             }
+                //Integer ID = recordClon.getInt(1);
+                //qElemdet.sql(eElemdet.data(), eElemdet.element_id, ID);
+                //qElemdet.table(eArtikl.up).join(qElemdet, eArtikl.data(), eElemdet.artikl_id, eArtikl.id);
+                
             up.query().add(recordClon);  //добавим запись в кэш
             query.add(recordClon);
             query.insert(recordClon);
