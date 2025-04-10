@@ -657,7 +657,7 @@ public class Param extends javax.swing.JFrame {
             UGui.insertRecordCur(tab1, eGroups.up, (record) -> {
                 record.setNo(eGroups.grup, TypeGrup.PARAM_USER.id);
                 record.setNo(eGroups.name, "");
-                 //record.setDev(eGroups.name, "Пар...");
+                //record.setDev(eGroups.name, "Пар...");
             });
         } else if (tab2.getBorder() != null) {
             UGui.insertRecordCur(tab2, eParams.up, (record) -> {
@@ -679,7 +679,7 @@ public class Param extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsert
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditingAndExecSql(getRootPane()); 
+        UGui.stopCellEditingAndExecSql(getRootPane());
     }//GEN-LAST:event_windowClosed
 
     private void mousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mousePressed
@@ -699,38 +699,15 @@ public class Param extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
-        if (tab2.getBorder() != null) {
-            int index = UGui.getIndexRec(tab2);
-            if (index != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
-                    "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-
-                Record paramClon = (Record) qParams.get(index).clone();
-                paramClon.setNo(eParams.up, Query.INS);
-                int paramID = Connect.genId(eParams.up);
-                paramClon.setNo(eParams.id, paramID);
-                paramClon.setNo(eParams.text, paramClon.getStr(eParams.text) + "-клон");
-                eParams.up.query().add(paramClon);  //добавим запись в кэш
-                qParams.add(index, paramClon);
-                qParams.insert(paramClon);
-                ((DefaultTableModel) tab2.getModel()).fireTableRowsInserted(index, index);
-                UGui.setSelectedIndex(tab2, index);
-                UGui.scrollRectToIndex(index, tab2);
-            }
-        } else if (tab4.getBorder() != null) {
-            int index = UGui.getIndexRec(tab4);
-            if (index != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
-                    "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-
-                Record parmapClon = (Record) qParmap.get(index).clone();
-                parmapClon.setNo(eParmap.up, Query.INS);
-                int parmapID = Connect.genId(eParmap.up);
-                parmapClon.setNo(eParmap.id, parmapID);
-                eParmap.up.query().add(parmapClon);  //добавим запись в кэш
-                qParmap.add(index, parmapClon);
-                qParmap.insert(parmapClon);
-                ((DefaultTableModel) tab4.getModel()).fireTableRowsInserted(index, index);
-                UGui.setSelectedIndex(tab4, index);
-                UGui.scrollRectToIndex(index, tab4);
+        int index = UGui.getIndexRec(tab2);
+        if (index != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
+                "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+            if (tab2.getBorder() != null) {
+                Record masterClon = UGui.cloneMaster(qParams, tab2, eParams.up, (clon) -> {
+                    clon.set(eParams.text, clon.getStr(eParams.text) + "-clon");
+                });
+            } else if (tab4.getBorder() != null) {
+                Record masterClon = UGui.cloneMaster(qParmap, tab4, eParmap.up, null);
             }
         }
     }//GEN-LAST:event_btnClone
@@ -793,7 +770,7 @@ public class Param extends javax.swing.JFrame {
 
         eProp.getWin(this, btnClose, (e) -> {
             eProp.putWin(this, btnClose);
-        }); 
+        });
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2, tab3, tab4);
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();

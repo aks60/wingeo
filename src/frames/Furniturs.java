@@ -1744,7 +1744,8 @@ public class Furniturs extends javax.swing.JFrame {
                 List<Record> dataSide1 = new ArrayList(qFurnside1);
 
                 Record masterClon = UGui.cloneMaster(qFurniture, tab1, eFurniture.up, (clon) -> {
-                    clon.set(eFurniture.name, (btnTab1.isSelected()) ? "Осн.фурн.клон" : (btnTab2.isSelected()) ? "Доп.фурн.клон" : "Набор.фурн.клон");
+                    //clon.set(eFurniture.name, (btnTab1.isSelected()) ? "Осн.фурн.клон" : (btnTab2.isSelected()) ? "Доп.фурн.клон" : "Набор.фурн.клон");
+                    clon.set(eFurniture.name, clon.getStr(eFurniture.name) + "-clon");
                     clon.set(eFurniture.types, types);
                 });
                 if (result == JOptionPane.NO_OPTION) {
