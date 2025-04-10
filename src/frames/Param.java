@@ -702,6 +702,7 @@ public class Param extends javax.swing.JFrame {
         int index = UGui.getIndexRec(tab2);
         if (index != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
                 "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+            
             if (tab2.getBorder() != null) {
                 Record masterClon = UGui.cloneMaster(qParams, tab2, eParams.up, (clon) -> {
                     clon.set(eParams.text, clon.getStr(eParams.text) + "-clon");
