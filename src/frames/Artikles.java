@@ -2657,11 +2657,11 @@ public class Artikles extends javax.swing.JFrame {
                 "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             
             List<Record> data = new ArrayList(qArtdet);
-            Record masterClon = UGui.cloneRecord(qArtikl, tab1, eArtikl.up, (clon) -> {
+            Record masterClon = UGui.cloneMaster(qArtikl, tab1, eArtikl.up, (clon) -> {
                 clon.setNo(eArtikl.code, clon.getStr(eArtikl.code) + "-клон");
                 clon.setNo(eArtikl.name, clon.getStr(eArtikl.name) + "-клон");
             });
-            UGui.cloneRecord(qArtdet, tab2, eArtdet.up, data, (clon) -> {
+            UGui.cloneSlave(qArtdet, tab2, eArtdet.up, data, (clon) -> {
                 clon.setNo(eArtdet.artikl_id, masterClon.getInt(eArtikl.id));
             });
         }

@@ -1121,17 +1121,17 @@ public class Joinings extends javax.swing.JFrame {
 
             if (tab1.getBorder() != null) {
                 List<Record> dataVar = new ArrayList(qJoinvar);               
-                Record masterClon = UGui.cloneRecord(qJoining, tab1, eJoining.up, (clon) -> {
+                Record masterClon = UGui.cloneMaster(qJoining, tab1, eJoining.up, (clon) -> {
                     clon.set(eJoining.name, clon.getStr(eJoining.name) + "-клон");
                 });
-                UGui.cloneRecord(qJoinvar, tab2, eJoinvar.up, dataVar, (clon) -> {
+                UGui.cloneSlave(qJoinvar, tab2, eJoinvar.up, dataVar, (clon) -> {
                     clon.setNo(eJoinvar.joining_id, masterClon.getStr(eJoining.id));
                 });                
 
             } else if (tab4.getBorder() != null) {
                 List<Record> dataPar2 = new ArrayList(qJoinpar2);               
-                Record masterClon = UGui.cloneRecord(qJoindet, tab4, eJoindet.up, null);
-                UGui.cloneRecord(qJoinpar2, tab5, eJoinpar2.up, dataPar2, (clon) -> {
+                Record masterClon = UGui.cloneMaster(qJoindet, tab4, eJoindet.up, null);
+                UGui.cloneSlave(qJoinpar2, tab5, eJoinpar2.up, dataPar2, (clon) -> {
                     clon.setNo(eJoinpar2.joindet_id, masterClon.getStr(eJoindet.id));
                 });                
             }

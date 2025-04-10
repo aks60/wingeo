@@ -1743,15 +1743,15 @@ public class Furniturs extends javax.swing.JFrame {
                 List<Record> dataDet2a = new ArrayList(qFurndet2a);
                 List<Record> dataSide1 = new ArrayList(qFurnside1);
                 
-                Record masterClon = UGui.cloneRecord(qFurniture, tab1, eFurniture.up, (clon) -> {
+                Record masterClon = UGui.cloneMaster(qFurniture, tab1, eFurniture.up, (clon) -> {
                     clon.set(eFurniture.name, (btnTab1.isSelected()) ? "Осн.фурн.клон" : (btnTab2.isSelected()) ? "Доп.фурн.клон" : "Набор.фурн.клон");
                     clon.set(eFurniture.types, types);
                 });
-                UGui.cloneRecord(qFurndet2a, tab3, eFurndet.up, dataDet2a, (clon) -> {
+                UGui.cloneSlave(qFurndet2a, tab3, eFurndet.up, dataDet2a, (clon) -> {
                     clon.setNo(eFurndet.furniture_id1, masterClon.getInt(eFurniture.id));
                     clon.setNo(eFurndet.furndet_id, clon.getInt(eFurndet.id));
                 });
-                UGui.cloneRecord(qFurnside1, tab3, eFurnside1.up, dataSide1, (clon) -> {
+                UGui.cloneSlave(qFurnside1, tab3, eFurnside1.up, dataSide1, (clon) -> {
                     clon.setNo(eFurnside1.furniture_id, masterClon.getInt(eFurniture.id));
                 });
 
@@ -1760,17 +1760,17 @@ public class Furniturs extends javax.swing.JFrame {
                 List<Record> dataSide2 = new ArrayList(qFurnside2);
                 List<Record> dataPar2 = new ArrayList(qFurnpar2);
                 
-                Record masterClon = UGui.cloneRecord(qFurndet2a, tab2a, eFurndet.up, (clon) -> {
+                Record masterClon = UGui.cloneMaster(qFurndet2a, tab2a, eFurndet.up, (clon) -> {
                     clon.setNo(eFurndet.furndet_id, clon.getInt(eFurndet.id));
                 });
-                UGui.cloneRecord(qFurndet2b, tab2b, eFurndet.up, dataDet2b, (clon) -> {
+                UGui.cloneSlave(qFurndet2b, tab2b, eFurndet.up, dataDet2b, (clon) -> {
                     clon.setNo(eFurndet.furniture_id1, masterClon.getInt(eFurndet.furniture_id1));
                     clon.setNo(eFurndet.furndet_id, masterClon.getInt(eFurndet.id));
                 });
-                UGui.cloneRecord(qFurnside2, tab5, eFurnside2.up, dataSide2, (clon) -> {
+                UGui.cloneSlave(qFurnside2, tab5, eFurnside2.up, dataSide2, (clon) -> {
                     clon.setNo(eFurnside2.furndet_id, masterClon.getInt(eFurndet.id));
                 });
-                UGui.cloneRecord(qFurnpar2, tab6, eFurnpar2.up, dataPar2, (clon) -> {
+                UGui.cloneSlave(qFurnpar2, tab6, eFurnpar2.up, dataPar2, (clon) -> {
                     clon.setNo(eFurnpar2.furndet_id, masterClon.getInt(eFurndet.id));
                 });
             }

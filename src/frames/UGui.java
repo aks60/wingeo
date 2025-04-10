@@ -57,6 +57,7 @@ import common.listener.ListenerRecord;
 import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
+import domain.eElemdet;
 import domain.eFurndet;
 import domain.eParmap;
 import domain.ePrjprod;
@@ -598,7 +599,7 @@ public class UGui {
     }
 
     //Клонировать запись    
-    public static Record cloneRecord(Query query, JTable table, Field up, ListenerRecord listener) {
+    public static Record cloneMaster(Query query, JTable table, Field up, ListenerRecord listener) {
         try {
             int index = UGui.getIndexRec(table);
             Record recordClon = (Record) query.get(index).clone();
@@ -610,17 +611,15 @@ public class UGui {
             }
             up.query().add(recordClon);  //добавим запись в кэш
             int index2 = (query.size() > index + 1) ? ++index : index;
+            for (Map.Entry<String, Query> it : query.mapQuery().entrySet()) {
+                if (it.getValue() != query) {
+                    Record recClon = (Record) it.getValue().get(index2).clone();
+                    it.getValue().add(index2, recClon);
+                }
+            }                        
             query.add(index2, recordClon);
             query.insert(recordClon);
 
-            HashMap<String, Query> hm = query.mapQuery();
-            for (Map.Entry<String, Query> it : hm.entrySet()) {
-                Query q = it.getValue();
-                if (q != query) {
-                    Record recClon = (Record) q.get(index2).clone();
-                    q.add(index2, recClon);
-                }
-            }
             ((DefaultTableModel) table.getModel()).fireTableRowsInserted(index2, index2);
             UGui.setSelectedIndex(table, index2);
             UGui.scrollRectToIndex(index2, table);
@@ -633,24 +632,20 @@ public class UGui {
     }
 
     //Клонировать запись
-    public static List<Record> cloneRecord(Query query, JTable table, Field up, List<Record> dataList, ListenerRecord listener) {
+    public static List<Record> cloneSlave(Query query, JTable table, Field up, List<Record> dataList, ListenerRecord listener) {
 
         //query.clear();
         for (int i = 0; i < dataList.size(); ++i) {
-            Record deteilRec = dataList.get(i);
-            Record recordClon = (Record) deteilRec.clone();
+            Record detailRec = dataList.get(i);
+            Record recordClon = (Record) detailRec.clone();
 
             recordClon.setNo(0, Query.INS);
             recordClon.setNo(up.fields()[1], Connect.genId(up));
             if (listener != null) {
                 listener.action(recordClon);
-            }
-                //Integer ID = recordClon.getInt(1);
-                //qElemdet.sql(eElemdet.data(), eElemdet.element_id, ID);
-                //qElemdet.table(eArtikl.up).join(qElemdet, eArtikl.data(), eElemdet.artikl_id, eArtikl.id);
-                
+            }              
             up.query().add(recordClon);  //добавим запись в кэш
-            query.add(recordClon);
+            query.add(recordClon);                     
             query.insert(recordClon);
         }
         UGui.setSelectedRow(table);

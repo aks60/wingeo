@@ -1100,26 +1100,29 @@ public class Elements extends javax.swing.JFrame {
                 "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 
             if (tab2.getBorder() != null) {
-                List<Record> dataPar1 = new ArrayList(qElempar1);               
-                List<Record> dataDet = new ArrayList(qElemdet);     
+                List<Record> dataPar1 = new ArrayList(qElempar1);
+                List<Record> dataDet = new ArrayList(qElemdet);
 
-                Record masterClon = UGui.cloneRecord(qElement, tab2, eElement.up, (clon) -> {
+                Record masterClon = UGui.cloneMaster(qElement, tab2, eElement.up, (clon) -> {
                     clon.set(eElement.name, clon.getStr(eElement.name) + "-клон");
                 });
-                UGui.cloneRecord(qElemdet, tab3, eElemdet.up, dataDet, (clon) -> {
+                UGui.cloneSlave(qElemdet, tab3, eElemdet.up, dataDet, (clon) -> {
                     clon.setNo(eElemdet.element_id, masterClon.getStr(eElement.id));
-                });                
-//                UGui.cloneRecord(qElempar1, tab4, eElempar1.up, dataPar1, (clon) -> {
-//                    clon.setNo(eElempar1.element_id, masterClon.getStr(eElement.id));
-//                });                
+                    Record tail = eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.id)
+                            == clon.getInt(eElemdet.artikl_id)).findFirst().get();
+                    qElemdet.table(eArtikl.up).add(tail);
+                });
+                UGui.cloneSlave(qElempar1, tab4, eElempar1.up, dataPar1, (clon) -> {
+                    clon.setNo(eElempar1.element_id, masterClon.getStr(eElement.id));
+                });
+                
+            } else if (tab3.getBorder() != null) {
+                List<Record> dataPar2 = new ArrayList(qElempar2);
+                Record masterClon = UGui.cloneMaster(qElemdet, tab3, eElemdet.up, null);
+                UGui.cloneSlave(qElempar2, tab5, eElempar2.up, dataPar2, (clon) -> {
+                    clon.setNo(eElempar2.elemdet_id, masterClon.getStr(eElemdet.id));
+                });
             }
-//            else if (tab4.getBorder() != null) {
-//                List<Record> dataPar2 = new ArrayList(qJoinpar2);               
-//                Record masterClon = UGui.cloneRecord(qJoindet, tab4, eJoindet.up, null);
-//                UGui.cloneRecord(qJoinpar2, tab5, eJoinpar2.up, dataPar2, (clon) -> {
-//                    clon.setNo(eJoinpar2.joindet_id, masterClon.getStr(eJoindet.id));
-//                });                
-//            }
         }
     }//GEN-LAST:event_btnClone
 
