@@ -36,7 +36,6 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
         this.model = (DefaultTableModel) table.getModel();
         this.query = query;
 
-        //eventMouseClick();
         if (table.getRowHeight() < 30) {
             table.setRowHeight(Integer.valueOf(eProp.row_height.getProp()));
         }
