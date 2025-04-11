@@ -864,7 +864,7 @@ public class Tex extends javax.swing.JFrame {
         mn65.setText(bundle1.getString("Меню.Возобновить соединение")); // NOI18N
         mn65.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mn65ActionPerformed(evt);
+                mnReConnect(evt);
             }
         });
         mn06.add(mn65);
@@ -1148,14 +1148,19 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
         });
     }//GEN-LAST:event_mn2Specif
 
-    private void mn65ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn65ActionPerformed
+    private void mnReConnect(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnReConnect
         try {
+            for (Query q : Query.listOpenTable) {
+                if (q.size() == 0) {
+                    q.clear();
+                }
+            }
             Connect.close();
             Connect.reconnection();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Не удалось возобновить соединение с базой  данных.", "ВНИМАНИЕ!", 1);
         }
-    }//GEN-LAST:event_mn65ActionPerformed
+    }//GEN-LAST:event_mnReConnect
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -73,7 +73,7 @@ public class Table extends ArrayList<Record> {
         }
         Record record = this.stream().filter(rec -> rec.get(field).equals(value)).findFirst().orElse(field.newRecord(Query.SEL));
         if (record.get(1) == null) {
-            System.out.println("Неудача: Запись не найдена. value = " + value);
+            System.out.println("Неудача: Запись не найдена. value1 = " + value);
             return data.stream().filter(rec -> rec.get(field).equals(value)).findFirst().orElse(field.newRecord(Query.SEL));
         } else {
             return record;
@@ -86,7 +86,7 @@ public class Table extends ArrayList<Record> {
         }        
         Record record = this.stream().filter(rec -> rec.get(field).equals(value) && rec.get(field2).equals(value2)).findFirst().orElse(field.newRecord(Query.SEL));        
         if (record.get(1) == null) {
-            System.out.println("Неудача: Запись не найдена. value = " + value);
+            System.out.println("Неудача: Запись не найдена. value2 = " + value);
              return data.stream().filter(rec -> rec.get(field).equals(value) && rec.get(field2).equals(value2)).findFirst().orElse(field.newRecord(Query.SEL));
         } else {
             return record;

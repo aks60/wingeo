@@ -35,6 +35,8 @@ public class DicArtikl2 extends javax.swing.JDialog {
     private Query qArtiklAll = new Query(eArtikl.values());
     private Record artiklRec = null;
     private TreeNode[] selectedPath = null;
+    private DefaultMutableTreeNode nodeRoot = null;
+    private static Record recordOld = null; 
 
     public DicArtikl2(java.awt.Frame parent, ListenerRecord listenet, int... level) {
         super(parent, true);
@@ -70,9 +72,9 @@ public class DicArtikl2 extends javax.swing.JDialog {
     }
 
     public void loadingTree() {
-        DefaultMutableTreeNode treeNode1 = new DefaultMutableTreeNode("Мат. ценности");
-        UTree.loadArtTree(treeNode1);
-        tree.setModel(new DefaultTreeModel(treeNode1));
+        nodeRoot = new DefaultMutableTreeNode("Мат. ценности");
+        UTree.loadArtTree(nodeRoot);
+        tree.setModel(new DefaultTreeModel(nodeRoot));
         scrTree.setViewportView(tree);
         if (selectedPath != null) {
             tree.setSelectionPath(new TreePath(selectedPath));
@@ -81,7 +83,9 @@ public class DicArtikl2 extends javax.swing.JDialog {
             tree.setSelectionRow(0);
             UGui.setSelectedRow(tab1);
         }
-
+        if(recordOld != null) {
+            setSelectionPath(recordOld);
+        }
     }
 
     public void selectionTree() {
@@ -102,7 +106,29 @@ public class DicArtikl2 extends javax.swing.JDialog {
             ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
         }
     }
+    
+    public void setSelectionPath(Record artiklRec) {
+        DefaultMutableTreeNode node = nodeRoot;
+        node = node.getNextNode();
+        do {
+            TypeArt typeArt = (TypeArt) node.getUserObject();
+            if (typeArt.id1 == artiklRec.getInt(eArtikl.level1)
+                    && typeArt.id2 == artiklRec.getInt(eArtikl.level2)) {
+                TreePath path = new TreePath(node.getPath());
+                tree.setSelectionPath(path);
+                tree.scrollPathToVisible(path);
+            }
+            node = node.getNextNode();
+        } while (node != null);
 
+        for (int index = 0; index < qArtikl.size(); ++index) {
+            int id = qArtikl.getAs(index, eArtikl.id);
+            if (id == artiklRec.getInt(eArtikl.id)) {
+                UGui.setSelectedIndex(tab1, index);
+                UGui.scrollRectToRow(index, tab1);
+            }
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -315,6 +341,7 @@ public class DicArtikl2 extends javax.swing.JDialog {
 //            }
         }
         listener.action(record);
+        recordOld = record;
         this.dispose();
     }//GEN-LAST:event_btnChoice
 

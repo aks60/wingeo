@@ -1744,15 +1744,14 @@ public class Furniturs extends javax.swing.JFrame {
                 List<Record> dataSide1 = new ArrayList(qFurnside1);
 
                 Record masterClon = UGui.cloneMaster(qFurniture, tab1, eFurniture.up, (clon) -> {
-                    //clon.set(eFurniture.name, (btnTab1.isSelected()) ? "Осн.фурн.клон" : (btnTab2.isSelected()) ? "Доп.фурн.клон" : "Набор.фурн.клон");
                     clon.set(eFurniture.name, clon.getStr(eFurniture.name) + "-clon");
                     clon.set(eFurniture.types, types);
                 });
                 if (result == JOptionPane.NO_OPTION) {
-                    UGui.cloneSlave(qFurndet2a, tab3, eFurndet.up, dataDet2a, (clon) -> {
-                        clon.setNo(eFurndet.furniture_id1, masterClon.getInt(eFurniture.id));
-                        clon.setNo(eFurndet.furndet_id, clon.getInt(eFurndet.id));
-                    });
+                    //UGui.cloneSlave(qFurndet2a, tab3, eFurndet.up, dataDet2a, (clon) -> {
+                    //    clon.setNo(eFurndet.furniture_id1, masterClon.getInt(eFurniture.id));
+                    //    clon.setNo(eFurndet.furndet_id, clon.getInt(eFurndet.id));
+                    //});
                     UGui.cloneSlave(qFurnside1, tab3, eFurnside1.up, dataSide1, (clon) -> {
                         clon.setNo(eFurnside1.furniture_id, masterClon.getInt(eFurniture.id));
                     });
@@ -1801,7 +1800,8 @@ public class Furniturs extends javax.swing.JFrame {
             List.of(btnFind1, btnFind2, btnClone).forEach(btn -> btn.setEnabled(false));
             if (tab1.getBorder() != null) {
                 List.of(btnFind2, btnClone).forEach(btn -> btn.setEnabled(true));
-            } else if (tab2a.getBorder() != null) {
+            } else if (tab2a.getBorder() != null || 
+                    tab2b.getBorder() != null || tab2c.getBorder() != null) {
                 List.of(btnFind1, btnClone).forEach(btn -> btn.setEnabled(true));
             } 
         }
