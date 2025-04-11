@@ -362,8 +362,9 @@ public class Artikles extends javax.swing.JFrame {
         for (int index = 0; index < qArtikl.size(); ++index) {
             int id = qArtikl.getAs(index, eArtikl.id);
             if (id == artiklRec.getInt(eArtikl.id)) {
+                int row = tab1.convertRowIndexToView(index);
                 UGui.setSelectedIndex(tab1, index);
-                UGui.scrollRectToRow(index, tab1);
+                UGui.scrollRectToRow(row, tab1);
             }
         }
     }
@@ -2417,12 +2418,11 @@ public class Artikles extends javax.swing.JFrame {
                     record.setNo(eArtikl.level1, typeArtikl.id1);
                     record.setNo(eArtikl.level2, typeArtikl.id2);
                     record.setNo(eArtikl.otx_norm, 0);
-                    if (typeArtikl.id1 == 6) {
-                        record.set(eArtikl.id, -1 * record.getInt(eArtikl.id));
-                        int groupArr[] = qArtikl.stream().filter(rec -> rec.getInt(eArtikl.level1) == 6).mapToInt(rec -> rec.getInt(eArtikl.id)).sorted().toArray();
-                        int index = Arrays.stream(groupArr).boxed().collect(Collectors.toList()).indexOf(record.getInt(eArtikl.id));
-                        record.set(eArtikl.code, "НАБОР-" + (++index));
+                    if (record.getInt(eArtikl.level1) == 1 && List.of(1, 2, 3)
+                            .contains(record.getInt(eArtikl.level2))) {
+                        record.setNo(eArtikl.len_unit, 6500);
                     }
+
                     if (typeArtikl.id1 == 1 || typeArtikl.id1 == 3) {
                         record.setNo(eArtikl.unit, UseUnit.METR.id);
                     } else if (typeArtikl.id1 == 5) {
