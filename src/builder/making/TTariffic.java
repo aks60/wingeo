@@ -12,6 +12,8 @@ import enums.Layout;
 import enums.TypeForm;
 import enums.UseUnit;
 import builder.Wincalc;
+import builder.model.Com5t;
+import static builder.model.Com5t.MAXSIDE;
 import builder.model.ElemSimple;
 import common.UCom;
 import domain.eElemdet;
@@ -36,7 +38,7 @@ public class TTariffic extends Cal5e {
 
     //Рассчёт конструкции с учётом 
     //всех скидок и наценок
-    public void calculate() {
+    public void calculate2() {
         try {
             double grpformN1 = percentMarkup(winc); //процентная надбавка на изделия сложной формы
 
@@ -71,6 +73,9 @@ public class TTariffic extends Cal5e {
                     for (Record rulecalcRec : eRulecalc.filter()) {
                         //Всё обнуляется и рассчитывается по таблице правил расчёта
                         //Увеличение себестоимости/стоимости в coeff раз и на incr величину наценки.
+                        if (elem5e.id == 6.0 && rulecalcRec.getDbl(1) == 24.0) {
+                            System.out.println("builder.making.TTariffic.calculate()");
+                        }
 
                         //Фильтр по полю 'форма профиля', в заполнениях. В БиМакс используюеся только 1, 4, 10, 12 параметры
                         int form = (rulecalcRec.getInt(eRulecalc.form) == 0) ? 1 : rulecalcRec.getInt(eRulecalc.form);
@@ -79,10 +84,13 @@ public class TTariffic extends Cal5e {
                             if (form == TypeForm.P00.id) {//не проверять форму
                                 rulecalcTarif(winc, rulecalcRec, elem5e.spcRec);
 
+                            } else if (form == TypeForm.P04.id) {//профиль с радиусом
+                                rulecalcTarif(winc, rulecalcRec, elem5e.spcRec);
+
                             } else if (form == TypeForm.P10.id && Type.TRAPEZE == elem5e.owner.type) { //не прямоугольное, не арочное заполнение
                                 rulecalcTarif(winc, rulecalcRec, elem5e.spcRec);
 
-                            } else if (form == TypeForm.P12.id && Type.ARCH == elem5e.owner.type) {//не прямоугольное заполнение с арками
+                            } else if (form == TypeForm.P12.id && elem5e.area.getNumPoints() > Com5t.MAXSIDE) {//не прямоугольное заполнение с арками
                                 rulecalcTarif(winc, rulecalcRec, elem5e.spcRec);
                             }
                         } else if (form == TypeForm.P04.id && elem5e.type == Type.BOX_SIDE
@@ -158,6 +166,97 @@ public class TTariffic extends Cal5e {
         }
     }
 
+    public void calculate() {
+        try {
+            double grpformN1 = percentMarkup(winc); //процентная надбавка на изделия сложной формы
+
+            //Расчёт себес-сти и колич. материала
+            //сделано для подготовки данных для правил расчёта
+            for (ElemSimple elem5e : winc.listElem) {
+                if (filterPhantom(elem5e)) {
+
+                    //Record artgrp1Rec = eGroups.find(elem5e.spcRec.artiklRec.getInt(eArtikl.groups1_id));
+                    //double artiklS = artgrp2bRec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
+                    elem5e.spcRec.quant1 = formatAmount(elem5e.spcRec); //количество без отхода  
+                    elem5e.spcRec.quant2 = (norm_otx == true) ? elem5e.spcRec.quant1 + (elem5e.spcRec.quant1 * elem5e.spcRec.waste / 100) : elem5e.spcRec.quant1; //количество с отходом
+                    elem5e.spcRec.costprice = artdetCostprice(elem5e.spcRec); //себест. по табл. ARTDET и прав.расч.
+
+                    //Вложенная спецификация
+                    //цикл по детализации эдемента
+                    for (TRecord spcRec : elem5e.spcRec.spcList) {
+                        spcRec.quant1 = formatAmount(spcRec); //количество без отхода
+                        spcRec.quant2 = (norm_otx == true) ? spcRec.quant1 + (spcRec.quant1 * spcRec.waste / 100) : spcRec.quant1; //количество с отходом
+                        spcRec.costprice = artdetCostprice(spcRec); //себест. по табл. ARTDET и прав.расч.
+                    }
+                }
+            }
+
+            //Расчёт с учётом наценок и скидок
+            //цикл по эдементам конструкции
+            for (ElemSimple elem5e : winc.listElem) {
+                if (filterPhantom(elem5e)) {
+
+                    //Цикл по правилам расчёта.                 
+                    for (Record rulecalcRec : eRulecalc.filter()) {
+                        rulecalcTarif(winc, rulecalcRec, elem5e.spcRec); //увеличение себестоимости/стоимости в coeff раз и на incr величину наценки
+                    }
+
+                    Record systreeRec = eSystree.find(winc.nuni);
+                    {
+                        Record artgrp1Rec = eGroups.find(elem5e.spcRec.artiklRec.getInt(eArtikl.groups1_id));
+                        Record artgrp2Rec = eGroups.find(elem5e.spcRec.artiklRec.getInt(eArtikl.groups2_id));
+                        double artiklK = artgrp1Rec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
+                        double artiklS = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
+                        double systreeK = systreeRec.getDbl(eSystree.coef, 1); //коэф. рентабельности
+
+                        elem5e.spcRec.costprice = elem5e.spcRec.costprice - elem5e.spcRec.costprice * artiklS / 100; //себесстоимость со скидкой 
+                        elem5e.spcRec.price += elem5e.spcRec.costprice; //цена за един.изм 
+                        double value = elem5e.spcRec.price * artiklK * systreeK;
+                        elem5e.spcRec.price = value + grpformN1 * value / 100; //цена за един.изм 
+                        elem5e.spcRec.cost1 = elem5e.spcRec.price * elem5e.spcRec.quant2; //стоимость без скидки                     
+                        elem5e.spcRec.cost2 = elem5e.spcRec.cost1; //стоимость со скидкой 
+                        //System.out.println(elem5e.spcRec.cost1 + " -1- " + elem5e.spcRec.cost2);
+                    }
+                    //Цикл по детализации
+                    for (TRecord spcRec : elem5e.spcRec.spcList) {
+
+                        //Цикл по правилам расчёта.
+                        for (Record rulecalcRec : eRulecalc.filter()) {
+                            rulecalcTarif(winc, rulecalcRec, spcRec); //увеличение себестоимости/стоимости в coeff раз и на incr величину наценки
+                        }
+
+                        Record artgrp1Rec = eGroups.find(spcRec.artiklRec.getInt(eArtikl.groups1_id));
+                        Record artgrp2Rec = eGroups.find(spcRec.artiklRec.getInt(eArtikl.groups2_id));
+                        double artiklK = artgrp1Rec.getDbl(eGroups.val, 1);  //наценка группы мат.ценностей
+                        double artiklS = artgrp2Rec.getDbl(eGroups.val, 0);  //скидки группы мат.ценностей
+                        double systreeK = systreeRec.getDbl(eSystree.coef); //коэф. рентабельности
+
+                        spcRec.costprice = spcRec.costprice - spcRec.costprice * artiklS / 100; //себесстоимость со скидкой 
+                        spcRec.price += spcRec.costprice; //цена за един.изм                        
+                        double value = spcRec.costprice * artiklK * systreeK;
+                        spcRec.price = value + grpformN1 * value / 100; //цена за един.изм 
+                        spcRec.cost1 = spcRec.price * spcRec.quant2; //стоимость без скидки                     
+                        spcRec.cost2 = spcRec.cost1; //стоимость со скидкой  
+                        //System.out.println(spcRec.cost1 + " -2- " + spcRec.cost2);
+                    }
+                }
+            }
+
+            //Расчёт веса элемента конструкции
+            for (ElemSimple elem5e : winc.listElem) {
+                if (filterPhantom(elem5e)) {
+                    elem5e.spcRec.weight = elem5e.spcRec.quant1 * elem5e.spcRec.artiklRec.getDbl(eArtikl.density);
+
+                    for (TRecord spec : elem5e.spcRec.spcList) {
+                        spec.weight = spec.quant1 * spec.artiklRec.getDbl(eArtikl.density);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:Tariffic.calculate() " + e);
+        }
+    }
+
     //Себес-сть/стоимость. Рассчёт тарифа для заданного артикула, заданных цветов по таблице eArtdet
     public static double artdetCostprice(TRecord spcRec) {
 
@@ -200,7 +299,7 @@ public class TTariffic extends Cal5e {
                     double colorK1 = color1Rec.getDbl(eColor.coef2); //коэф.внутр. текст.
                     double grpcolorK1 = grpcolor1Rec.getDbl(eGroups.val); //коэф. группы текстур                                       
 
-                    costprice += (grpcolorK1 * colorK1 * artdetT1) / grpcursK2;                    
+                    costprice += (grpcolorK1 * colorK1 * artdetT1) / grpcursK2;
                 }
                 artdetUsed = true;
 
