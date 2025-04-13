@@ -67,11 +67,8 @@ public class Wincalc {
     public boolean sceleton = false;
     public GsonRoot gson = null; //объектная модель конструкции 1-го уровня
     public AreaSimple root = null; //объектная модель конструкции 2-го уровня    
-
-    public ListenerAction actionEvent = new ListenerAction() {
-        public void action() {
-        }
-    };
+    
+    public ListenerAction actionEvent = () -> {};
     public ArrayList<ListenerKey> keyboardPressed = new ArrayList<ListenerKey>();
     public ArrayList<ListenerMouse> mousePressed = new ArrayList<ListenerMouse>();
     public ArrayList<ListenerMouse> mouseDragged = new ArrayList<ListenerMouse>();

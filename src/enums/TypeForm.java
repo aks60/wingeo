@@ -36,45 +36,38 @@ public enum TypeForm implements Enam {
         return values();
     }
     
-    //Профиль
-    public static boolean isTypeformProf(Type tf) {
-        return List.of(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP, Type.BOX_SIDE, Type.STV_SIDE).contains(tf);
-    }
-
-    //Заполнения (cтекло, стеклопакет...)
-    public static boolean isTypeformFill(Type tf) {
-        return List.of(Type.GLASS, Type.MOSQUIT, Type.RASKL, Type.SAND, Type.BLINDS).contains(tf);
-    }
-
-    public static TypeForm typeform(Com5t elem) {
+    public static int typeform(Com5t elem) {
 
         //Профиль
-        if (isTypeformProf(elem.type)) {
+        if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP, Type.BOX_SIDE, Type.STV_SIDE).contains(elem.type)) {
             if (elem.h() == null) {
-                return P02; //профиль прямой
+                return P02.id; //профиль прямой
             } else if (elem.h() != null) {
-                return P04; //профиль с радиусом
+                return P04.id; //профиль с радиусом
             }
 
             //Заполнения (cтекло, стеклопакет...)
-        } else if (isTypeformFill(elem.type)) {
+        } else if (List.of(Type.GLASS, Type.MOSQUIT, Type.RASKL, Type.SAND, Type.BLINDS).contains(elem.type)) {
 
             if (elem.area.isRectangle() == true) {
-                return P06; //прямоугольное заполнение без арок
+                return P06.id; //прямоугольное заполнение без арок
 
             } else if (elem.area.isRectangle() == false) {
-                if (elem.area.getNumPoints() < Com5t.MAXPOINT) {
-                    return P10; //не прямоугольное, не арочное заполнение
+                
+                Object o1 = elem.area.getNumPoints();
+                
+                if (elem.area.getNumPoints() < Com5t.MAXSIDE) {
+                    return P10.id; //не прямоугольное, не арочное заполнение
 
-                } else if (elem.owner.area.isRectangle() == false && elem.area.getNumPoints() > Com5t.MAXPOINT) {
-                    return P12; //не прямоугольное заполнение с арками
+                } else if (elem.owner.area.isRectangle() == false && elem.area.getNumPoints() > Com5t.MAXSIDE) {
+                    return P12.id; //не прямоугольное заполнение с арками
 
-                } else if (elem.owner.area.isRectangle() == true && elem.area.getNumPoints() > Com5t.MAXPOINT) {
-                    return P14; //прямоугольное заполнение с арками
+                } else if (elem.owner.area.isRectangle() == true && elem.area.getNumPoints() > Com5t.MAXSIDE) {
+                    return P14.id; //прямоугольное заполнение с арками
                 }
             }
         }
 
-        return P00;  //не проверять форму
+        return P00.id;  //не проверять форму
     }
 }

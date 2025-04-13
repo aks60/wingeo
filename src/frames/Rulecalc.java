@@ -51,7 +51,7 @@ public class Rulecalc extends javax.swing.JFrame {
 
     public void loadingModel() {
         try {
-            new DefTableModel(tab2, qRulecalc, eRulecalc.name, eRulecalc.type, eArtikl.code, eArtikl.name, eRulecalc.quant, eRulecalc.size,
+            new DefTableModel(tab2, qRulecalc, eRulecalc.name, eRulecalc.type, eArtikl.code, eArtikl.name, eRulecalc.common, eRulecalc.quant, eRulecalc.size,
                     eRulecalc.coeff, eRulecalc.suppl, eRulecalc.color1, eRulecalc.color2, eRulecalc.color3, eRulecalc.sebes, eRulecalc.form) {
 
                 public Object getValueAt(int col, int row, Object val) {
@@ -71,14 +71,14 @@ public class Rulecalc extends javax.swing.JFrame {
                 }
             };
 
-            tab2.getColumnModel().getColumn(4).setCellEditor(new DefCellEditorCheck(6));
-            tab2.getColumnModel().getColumn(5).setCellEditor(new DefCellEditorCheck(5));
-            tab2.getColumnModel().getColumn(6).setCellEditor(new DefCellEditorNumb(3));
+            tab2.getColumnModel().getColumn(5).setCellEditor(new DefCellEditorCheck(6));
+            tab2.getColumnModel().getColumn(6).setCellEditor(new DefCellEditorCheck(5));
             tab2.getColumnModel().getColumn(7).setCellEditor(new DefCellEditorNumb(3));
-            tab2.getColumnModel().getColumn(8).setCellEditor(new DefCellEditorCheck(5));
+            tab2.getColumnModel().getColumn(8).setCellEditor(new DefCellEditorNumb(3));
             tab2.getColumnModel().getColumn(9).setCellEditor(new DefCellEditorCheck(5));
             tab2.getColumnModel().getColumn(10).setCellEditor(new DefCellEditorCheck(5));
-            tab2.getColumnModel().getColumn(11).setCellRenderer(new DefCellRendererBool());
+            tab2.getColumnModel().getColumn(11).setCellEditor(new DefCellEditorCheck(5));
+            tab2.getColumnModel().getColumn(12).setCellRenderer(new DefCellRendererBool());
 
             UGui.buttonCellEditor(tab2, 1).addActionListener(event -> {
                 DicArtikl2 frame = new DicArtikl2(this, (artiklRec) -> {
@@ -105,7 +105,7 @@ public class Rulecalc extends javax.swing.JFrame {
                 new DicArtikl2(this, id, listenerArtikl, arr);
             });
 
-            UGui.buttonCellEditor(tab2, 12).addActionListener(event -> {
+            UGui.buttonCellEditor(tab2, 13).addActionListener(event -> {
                 new DicEnums(this, (record) -> UGui.cellParamEnum(record, tab2, eRulecalc.form, tab2), TypeForm.values());
             });
 
@@ -309,14 +309,14 @@ public class Rulecalc extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Название правила", "Использование", "Артикул", "Название", "Количество", "Габариты", "Коэффициент", "Надбавка", "Базовая текстура", "Внутр. текстура", "Внешн. текстура", "Себест./Цена", "Форма позиции", "ID"
+                "Название правила", "Использование", "Артикул", "Название", "Общее", "Количество", "Габариты", "Коэффициент", "Надбавка", "Базовая текстура", "Внутр. текстура", "Внешн. текстура", "Себест./Цена", "Форма позиции", "ID"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, true, true, true, true, true, true, true, true, true, true, true, false
+                true, true, true, true, true, true, true, true, true, true, true, true, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -343,15 +343,15 @@ public class Rulecalc extends javax.swing.JFrame {
             tab2.getColumnModel().getColumn(0).setMinWidth(102);
             tab2.getColumnModel().getColumn(1).setPreferredWidth(160);
             tab2.getColumnModel().getColumn(3).setPreferredWidth(160);
-            tab2.getColumnModel().getColumn(6).setPreferredWidth(40);
-            tab2.getColumnModel().getColumn(7).setPreferredWidth(60);
-            tab2.getColumnModel().getColumn(8).setPreferredWidth(72);
+            tab2.getColumnModel().getColumn(7).setPreferredWidth(40);
+            tab2.getColumnModel().getColumn(8).setPreferredWidth(60);
             tab2.getColumnModel().getColumn(9).setPreferredWidth(72);
             tab2.getColumnModel().getColumn(10).setPreferredWidth(72);
-            tab2.getColumnModel().getColumn(11).setPreferredWidth(60);
-            tab2.getColumnModel().getColumn(12).setPreferredWidth(180);
-            tab2.getColumnModel().getColumn(13).setPreferredWidth(40);
-            tab2.getColumnModel().getColumn(13).setMaxWidth(60);
+            tab2.getColumnModel().getColumn(11).setPreferredWidth(72);
+            tab2.getColumnModel().getColumn(12).setPreferredWidth(60);
+            tab2.getColumnModel().getColumn(13).setPreferredWidth(180);
+            tab2.getColumnModel().getColumn(14).setPreferredWidth(40);
+            tab2.getColumnModel().getColumn(14).setMaxWidth(60);
         }
 
         pan1.add(scr2, java.awt.BorderLayout.CENTER);
