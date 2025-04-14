@@ -264,48 +264,48 @@ public class TTariffic extends Cal5e {
 
                             //Правило количеству в проекте
                         } else if (rulecalcRec.getInt(eRulecalc.common) == 1) { //по использованию c расчётом общего количества по артикулу, подтипу, типу
-//                            ArrayList<ElemSimple> elemList = winc.listElem;
-//                            double quantity3 = 0;
-//
-//                            //Фильтр по артикулу
-//                            if (rulecalcRec.get(eRulecalc.artikl_id) != null) {
-//                                for (ElemSimple elem5e : elemList) { //суммирую колич. всех элементов (например штапиков)
-//                                    if (filterPhantom(elem5e)) {
-//                                        if (elem5e.spcRec.artikl.equals(spcRec.artikl)) { //фильтр по артикулу
-//                                            quantity3 += elem5e.spcRec.quant1;
-//                                        }
-//                                        for (TRecord specifRec2 : elem5e.spcRec.spcList) {
-//                                            if (specifRec2.artikl.equals(spcRec.artikl)) { //фильтр по артикулу
-//                                                quantity3 += specifRec2.quant1;
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                                //Фильтр по подтипу, типу
-//                            } else {
-//                                for (ElemSimple elem5e : elemList) { //суммирую колич. всех элементов (например штапиков)
-//                                    if (filterPhantom(elem5e)) {
-//                                        TRecord specifRec2 = elem5e.spcRec;
-//                                        if (specifRec2.artiklRec.getInt(eArtikl.level1) * 100 + specifRec2.artiklRec.getInt(eArtikl.level2) == rulecalcRec.getInt(eRulecalc.type)) {
-//                                            quantity3 += elem5e.spcRec.quant1;
-//                                        }
-//                                        for (TRecord specifRec3 : specifRec2.spcList) {
-//                                            if (specifRec3.artiklRec.getInt(eArtikl.level1) * 100 + specifRec3.artiklRec.getInt(eArtikl.level2) == rulecalcRec.getInt(eRulecalc.type)) {
-//                                                quantity3 += specifRec3.quant1;
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                            //Фильтр по количеству всего проекта
-//                            if (UCom.containsNumbJust(rulecalcRec.getStr(eRulecalc.quant), quantity3) == true) {
-//                                //По себестоимости или стоимости
-//                                if (rulecalcRec.getInt(eRulecalc.sebes) == 1) {
-//                                    spcRec.costprice = spcRec.costprice * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение себестоимости в coeff раз и на incr величину надбавки
-//                                } else {
-//                                    spcRec.price = spcRec.price * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение стоимости в coeff раз и на incr величину надбавки                                   
-//                                }
-//                            }
+                            ArrayList<ElemSimple> elemList = winc.listElem;
+                            double quantity3 = 0;
+
+                            //Фильтр по артикулу
+                            if (rulecalcRec.get(eRulecalc.artikl_id) != null) {
+                                for (ElemSimple elem5e : elemList) { //суммирую колич. всех элементов (например штапиков)
+                                    if (filterPhantom(elem5e)) {
+                                        if (elem5e.spcRec.artikl.equals(spcRec.artikl)) { //фильтр по артикулу
+                                            quantity3 += elem5e.spcRec.quant1;
+                                        }
+                                        for (TRecord specifRec2 : elem5e.spcRec.spcList) {
+                                            if (specifRec2.artikl.equals(spcRec.artikl)) { //фильтр по артикулу
+                                                quantity3 += specifRec2.quant1;
+                                            }
+                                        }
+                                    }
+                                }
+                                //Фильтр по подтипу, типу
+                            } else {
+                                for (ElemSimple elem5e : elemList) { //суммирую колич. всех элементов (например штапиков)
+                                    if (filterPhantom(elem5e)) {
+                                        TRecord specifRec2 = elem5e.spcRec;
+                                        if (specifRec2.artiklRec.getInt(eArtikl.level1) * 100 + specifRec2.artiklRec.getInt(eArtikl.level2) == rulecalcRec.getInt(eRulecalc.type)) {
+                                            quantity3 += elem5e.spcRec.quant1;
+                                        }
+                                        for (TRecord specifRec3 : specifRec2.spcList) {
+                                            if (specifRec3.artiklRec.getInt(eArtikl.level1) * 100 + specifRec3.artiklRec.getInt(eArtikl.level2) == rulecalcRec.getInt(eRulecalc.type)) {
+                                                quantity3 += specifRec3.quant1;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            //Фильтр по количеству всего проекта
+                            if (UCom.containsNumbJust(rulecalcRec.getStr(eRulecalc.quant), quantity3) == true) {
+                                //По себестоимости или стоимости
+                                if (rulecalcRec.getInt(eRulecalc.sebes) == 1) {
+                                    spcRec.costprice = spcRec.costprice * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение себестоимости в coeff раз и на incr величину надбавки
+                                } else {
+                                    spcRec.price = spcRec.price * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение стоимости в coeff раз и на incr величину надбавки                                   
+                                }
+                            }
                         }
                     }
                 }
