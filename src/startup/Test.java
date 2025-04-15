@@ -105,11 +105,6 @@ public class Test {
             //random();
             //geom();
 
-//            LineSegment segm = new LineSegment();
-//            segm.setCoordinates(new Coordinate(0, 0), new Coordinate(10, 10));
-//            int p = segm.orientationIndex(new Coordinate(1.00001, 1.0001));
-//            double x1 = 0, y1 = 0, x2 = 10, y2 = 10;
-//            System.out.println(p);
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
         }
