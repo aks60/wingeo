@@ -249,10 +249,7 @@ public class TTariffic extends Cal5e {
                             if (UCom.containsNumbJust(rulecalcRec.getStr(eRulecalc.quant), spcRec.quant2) == true) {
                                 //По форме позиции
                                 int typeformID = (rulecalcRec.getInt(eRulecalc.form) == 0) ? 1 : rulecalcRec.getInt(eRulecalc.form);
-                                Object o1 = rulecalcRec.getInt(eRulecalc.id);
-                                Object o2 = TypeForm.typeform(spcRec.elem5e);
                                 if (TypeForm.typeform(spcRec.elem5e) == typeformID) {
-                                    Object o3 = rulecalcRec.getDbl(eRulecalc.coeff);
                                     //По себестоимости или стоимости
                                     if (rulecalcRec.getInt(eRulecalc.sebes) == 1) {
                                         spcRec.costprice = spcRec.costprice * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение себестоимости в coeff раз и на incr величину надбавки
