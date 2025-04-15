@@ -243,30 +243,14 @@ public class TTariffic extends Cal5e {
                             && UCom.containsColor(rulecalcRec.getStr(eRulecalc.color2), spcRec.colorID2) == true
                             && UCom.containsColor(rulecalcRec.getStr(eRulecalc.color3), spcRec.colorID3) == true) {
 
-                        //Правило по количеству в элементе
-                        if (rulecalcRec.getInt(eRulecalc.common) == 0) {
-                            //Фильтр по количеству отдельного элемента
-                            if (UCom.containsNumbJust(rulecalcRec.getStr(eRulecalc.quant), spcRec.quant2) == true) {
-                                //По форме позиции
-                                int typeformID = (rulecalcRec.getInt(eRulecalc.form) == 0) ? 1 : rulecalcRec.getInt(eRulecalc.form);
-                                if (TypeForm.typeform(spcRec.elem5e) == typeformID) {
-                                    //По себестоимости или стоимости
-                                    if (rulecalcRec.getInt(eRulecalc.sebes) == 1) {
-                                        spcRec.costprice = spcRec.costprice * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение себестоимости в coeff раз и на incr величину надбавки
-                                    } else {
-                                        spcRec.price = spcRec.price * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение стоимости в coeff раз и на incr величину надбавки                                   
-                                    }
-                                }
-                            }
+                        double quantity3 = spcRec.quant2; //по количеству в элементе
 
-                            //Правило количеству в проекте
-                        } else if (rulecalcRec.getInt(eRulecalc.common) == 1) { //по использованию c расчётом общего количества по артикулу, подтипу, типу
-                            ArrayList<ElemSimple> elemList = winc.listElem;
-                            double quantity3 = 0;
-
+                        //Общее количество в проекте (по артикулу или подтипу, типу)
+                        if (rulecalcRec.getInt(eRulecalc.common) == 1) {
+                            quantity3 = 0;
                             //Фильтр по артикулу
                             if (rulecalcRec.get(eRulecalc.artikl_id) != null) {
-                                for (ElemSimple elem5e : elemList) { //суммирую колич. всех элементов (например штапиков)
+                                for (ElemSimple elem5e : winc.listElem) { //суммирую колич. всех элементов (например штапиков)
                                     if (filterPhantom(elem5e)) {
                                         if (elem5e.spcRec.artikl.equals(spcRec.artikl)) { //фильтр по артикулу
                                             quantity3 += elem5e.spcRec.quant1;
@@ -280,7 +264,7 @@ public class TTariffic extends Cal5e {
                                 }
                                 //Фильтр по подтипу, типу
                             } else {
-                                for (ElemSimple elem5e : elemList) { //суммирую колич. всех элементов (например штапиков)
+                                for (ElemSimple elem5e : winc.listElem) { //суммирую колич. всех элементов (например штапиков)
                                     if (filterPhantom(elem5e)) {
                                         TRecord specifRec2 = elem5e.spcRec;
                                         if (specifRec2.artiklRec.getInt(eArtikl.level1) * 100 + specifRec2.artiklRec.getInt(eArtikl.level2) == rulecalcRec.getInt(eRulecalc.type)) {
@@ -294,8 +278,13 @@ public class TTariffic extends Cal5e {
                                     }
                                 }
                             }
-                            //Фильтр по количеству всего проекта
-                            if (UCom.containsNumbJust(rulecalcRec.getStr(eRulecalc.quant), quantity3) == true) {
+                        }
+                        //Фильтр по количеству элемента
+                        if (UCom.containsNumbJust(rulecalcRec.getStr(eRulecalc.quant), quantity3) == true) {
+                            //Правило по форме позиции
+                            int typeformID1 = TypeForm.typeform(spcRec.elem5e);
+                            int typeformID2 = (rulecalcRec.getInt(eRulecalc.form) == 0) ? 1 : rulecalcRec.getInt(eRulecalc.form);
+                            if (typeformID1 == typeformID2) {
                                 //По себестоимости или стоимости
                                 if (rulecalcRec.getInt(eRulecalc.sebes) == 1) {
                                     spcRec.costprice = spcRec.costprice * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение себестоимости в coeff раз и на incr величину надбавки

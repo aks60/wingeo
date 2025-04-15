@@ -21,7 +21,9 @@ import frames.swing.cmp.DefCellEditorNumb;
 import frames.swing.cmp.DefCellRendererBool;
 import frames.swing.cmp.TableFieldFilter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import report.sup.ExecuteCmd;
 import report.sup.RTable;
 import startup.App;
@@ -106,7 +108,10 @@ public class Rulecalc extends javax.swing.JFrame {
             });
 
             UGui.buttonCellEditor(tab2, 13).addActionListener(event -> {
-                new DicEnums(this, (record) -> UGui.cellParamEnum(record, tab2, eRulecalc.form, tab2), TypeForm.values());
+                Record rulecalcRec = qRulecalc.get(UGui.getIndexRec(tab2));
+                int ID = rulecalcRec.getInt(eRulecalc.form, -1);
+                ID = (ID == 0) ? 1 : ID;
+                new DicEnums(this, (record) -> UGui.cellParamEnum(record, tab2, eRulecalc.form, tab2), ID, TypeForm.values());
             });
 
             UGui.setSelectedRow(tab2);
@@ -143,6 +148,7 @@ public class Rulecalc extends javax.swing.JFrame {
         btnIns = new javax.swing.JButton();
         btnReport = new javax.swing.JButton();
         btnFindArtikl = new javax.swing.JButton();
+        btnClone = new javax.swing.JButton();
         centr = new javax.swing.JPanel();
         pan1 = new javax.swing.JPanel();
         scr2 = new javax.swing.JScrollPane();
@@ -263,6 +269,22 @@ public class Rulecalc extends javax.swing.JFrame {
             }
         });
 
+        btnClone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c065.gif"))); // NOI18N
+        btnClone.setToolTipText(bundle.getString("Клонировать запись")); // NOI18N
+        btnClone.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnClone.setFocusable(false);
+        btnClone.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnClone.setMaximumSize(new java.awt.Dimension(25, 25));
+        btnClone.setMinimumSize(new java.awt.Dimension(25, 25));
+        btnClone.setPreferredSize(new java.awt.Dimension(25, 25));
+        btnClone.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btnClone.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnClone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClone(evt);
+            }
+        });
+
         javax.swing.GroupLayout northLayout = new javax.swing.GroupLayout(north);
         north.setLayout(northLayout);
         northLayout.setHorizontalGroup(
@@ -273,8 +295,10 @@ public class Rulecalc extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(btnClone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnFindArtikl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 605, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 574, Short.MAX_VALUE)
                 .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -289,7 +313,8 @@ public class Rulecalc extends javax.swing.JFrame {
                         .addComponent(btnIns, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnReport, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnFindArtikl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnFindArtikl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnClone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -436,8 +461,21 @@ public class Rulecalc extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tabMouseClicked
 
+    private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
+        int index = UGui.getIndexRec(tab2);
+        if (index != -1 && JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
+                "Подтверждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+
+            List<Record> data = new ArrayList(qRulecalc);
+            Record masterClon = UGui.cloneMaster(qRulecalc, tab2, eRulecalc.up, (clon) -> {
+                clon.setNo(eRulecalc.name, clon.getStr(eRulecalc.name) + "-клон");
+            });
+        }
+    }//GEN-LAST:event_btnClone
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClone;
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnDel;
     private javax.swing.JButton btnFindArtikl;
@@ -458,7 +496,7 @@ public class Rulecalc extends javax.swing.JFrame {
 
         eProp.getWin(this, btnClose, (e) -> {
             eProp.putWin(this, btnClose);
-        }); 
+        });
 
         TableFieldFilter filterTable = new TableFieldFilter(2, tab2);
         south.add(filterTable, 0);

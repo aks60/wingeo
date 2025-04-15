@@ -1,7 +1,7 @@
 package enums;
 
 import builder.model.Com5t;
-import static builder.model.Com5t.gf;
+import builder.model.UGeo;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -41,46 +41,35 @@ public enum TypeForm implements Enam {
     public Enam[] fields() {
         return values();
     }
-    
+
     public static int typeform(Com5t elem) {
 
-        //Профиль
+        //ПРОФИЛЬ
         if (List.of(Type.IMPOST, Type.STOIKA, Type.ERKER, Type.SHTULP, Type.BOX_SIDE, Type.STV_SIDE).contains(elem.type)) {
-            if (elem.h() == null) {
-                return P02.id; //профиль прямой
-            } else if (elem.h() != null) {
-                return P04.id; //профиль с радиусом
-            }
+            //профиль прямой
+            //профиль с радиусом
+            return (elem.h() == null) ? P02.id : P04.id;
 
-            //Заполнения (cтекло, стеклопакет...)
+            //ЗАПОЛНЕНИЯ (cтекло, стеклопакет...)
         } else if (List.of(Type.GLASS, Type.MOSQUIT, Type.RASKL, Type.SAND, Type.BLINDS).contains(elem.type)) {
 
-            Coordinate coo1[] = elem.area.getGeometryN(0).copy().getCoordinates();
-            //List<Coordinate> lis = new ArrayList();
-            //Set<Integer> set = new HashSet();            
-            Coordinate coo2[] = elem.owner.area.getGeometryN(0).copy().getCoordinates();
-            for (int i = 0; i < coo1.length; i++) {
-                coo1[i] = new Coordinate(Math.ceil(coo1[i].x), Math.ceil(coo1[i].y));             
-            }
-            for (int i = 0; i < coo2.length; i++) {
-                coo2[i] = new Coordinate(Math.ceil(coo2[i].x), Math.ceil(coo2[i].y));
-            }
-            Geometry geo1 = gf.createPolygon(coo1);
-            Geometry geo2 = gf.createPolygon(coo2);
-
-            if (geo1.isRectangle() == true) {
-                return P06.id; //прямоугольное заполнение без арок
-
-            } else {
-                if (elem.area.getNumPoints() < Com5t.MAXSIDE) {
-                    return P10.id; //не прямоугольное, не арочное заполнение
-
-                } else if (geo2.isRectangle() == false && elem.area.getNumPoints() > Com5t.MAXSIDE) {
-                    return P12.id; //не прямоугольное заполнение с арками
-
-                } else if (geo2.isRectangle() == true && elem.area.getNumPoints() > Com5t.MAXSIDE) {
-                    return P14.id; //прямоугольное заполнение с арками
+            List<Coordinate> list = new ArrayList();
+            Set<Double> set = new HashSet();
+            Coordinate coo[] = elem.area.getGeometryN(0).copy().getCoordinates();
+            for (int i = 0; i < coo.length; i++) {
+                if (set.add(coo[i].z)) {
+                    list.add(new Coordinate(Math.ceil(coo[i].x), Math.ceil(coo[i].y)));
                 }
+            }
+            Geometry geo = UGeo.newPolygon(list);
+            if (elem.area.getNumPoints() < Com5t.MAXSIDE) {
+                //прямоугольное заполнение без арок
+                //не прямоугольное без арок
+                return (geo.isRectangle()) ? P06.id : P10.id;
+            } else {
+                //прямоугольное заполнение с арками
+                //не прямоугольное заполнение с арками
+                return (geo.isRectangle()) ? P14.id : P12.id;
             }
         }
 

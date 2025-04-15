@@ -14,6 +14,7 @@ public class DicEnums extends javax.swing.JDialog {
 
     private ListenerRecord listener = null;
     private Enam[] enam = null;
+    private int ID = -1;
 
     public DicEnums(java.awt.Frame parent, ListenerRecord listenet, Enam... enam) {
         super(parent, true);
@@ -25,12 +26,31 @@ public class DicEnums extends javax.swing.JDialog {
         setVisible(true);
     }
 
+    public DicEnums(java.awt.Frame parent, ListenerRecord listenet, int ID, Enam... enam) {
+        super(parent, true);
+        initComponents();
+        initElements();
+        this.listener = listenet;
+        this.enam = enam;
+        this.ID = ID;
+        loadingModel(enam);
+        setVisible(true);
+    }
+
     public void loadingModel(Enam... enam) {
         ((DefaultTableModel) tab1.getModel()).setRowCount(enam.length);
         for (int i = 0; i < enam.length; i++) {
             tab1.setValueAt(enam[i].text(), i, 0);
         }
-        UGui.setSelectedRow(tab1);
+        if (ID != -1) {
+            for (int i = 0; i < enam.length; i++) {
+                if (enam[i].numb() == ID) {
+                    UGui.setSelectedIndex(tab1, i);
+                }
+            }
+        } else {
+            UGui.setSelectedRow(tab1);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -217,6 +237,6 @@ public class DicEnums extends javax.swing.JDialog {
 
         eProp.getWin(this, btnClose, (e) -> {
             eProp.putWin(this, btnClose);
-        }); 
+        });
     }
 }
