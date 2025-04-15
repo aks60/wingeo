@@ -228,7 +228,7 @@ public class TTariffic extends Cal5e {
 
     //Себес-сть/стоимость по правилам расчёта
     public static void rulecalcTarif(Wincalc winc, Record rulecalcRec, TRecord spcRec) {
-
+/*
         try {
             Object artiklID = rulecalcRec.get(eRulecalc.artikl_id);
             //Фильтр артикул совпал
@@ -299,6 +299,7 @@ public class TTariffic extends Cal5e {
         } catch (Exception e) {
             System.err.println("Ошибка:Tariffic.rulecalcTarif() " + e);
         }
+*/
     }
 
     //Процентная надбавка на изделия сложной формы
