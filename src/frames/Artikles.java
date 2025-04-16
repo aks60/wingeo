@@ -2372,8 +2372,9 @@ public class Artikles extends javax.swing.JFrame {
         getContentPane().add(center, java.awt.BorderLayout.CENTER);
 
         south.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        south.setMinimumSize(new java.awt.Dimension(100, 20));
-        south.setPreferredSize(new java.awt.Dimension(900, 20));
+        south.setMaximumSize(new java.awt.Dimension(2902, 22));
+        south.setMinimumSize(new java.awt.Dimension(100, 22));
+        south.setPreferredSize(new java.awt.Dimension(900, 22));
         south.setLayout(new javax.swing.BoxLayout(south, javax.swing.BoxLayout.LINE_AXIS));
 
         filler1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -2946,7 +2947,7 @@ public class Artikles extends javax.swing.JFrame {
             eProp.putWin(this, btnClose, tab1, tab2);
         }, tab1, tab2);
 
-        filterTable = new TableFieldFilter(0, tab1, tab2);
+        filterTable = new TableFieldFilter(1, tab1, tab2);
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
 

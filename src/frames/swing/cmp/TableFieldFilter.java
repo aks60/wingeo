@@ -3,6 +3,7 @@ package frames.swing.cmp;
 import dataset.Field;
 import dataset.Query;
 import frames.UGui;
+import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -18,10 +19,6 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DocumentFilter;
-import javax.swing.text.PlainDocument;
 
 public class TableFieldFilter extends javax.swing.JPanel {
 
@@ -31,7 +28,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
     private int indexBegin = 0;
     private boolean search = false;
     //Toolkit.getDefaultToolkit().beep();
-    
+
     public TableFieldFilter() {
         initComponents();
         initElements();
@@ -85,21 +82,31 @@ public class TableFieldFilter extends javax.swing.JPanel {
 //        
 //        System.out.println(list);         
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        ppmCateg = new javax.swing.JPopupMenu();
+        itCateg1 = new javax.swing.JMenuItem();
+        itCateg2 = new javax.swing.JMenuItem();
         btn1 = new javax.swing.JButton();
         labFilter = new javax.swing.JLabel();
         txtFilter = new javax.swing.JTextField(){
             public JTable table = null;
         };
         btn2 = new javax.swing.JButton();
+        btn3 = new javax.swing.JButton();
         checkFilter = new javax.swing.JCheckBox();
 
-        setMaximumSize(new java.awt.Dimension(520, 19));
-        setPreferredSize(new java.awt.Dimension(428, 19));
+        itCateg1.setText("ПРОФИЛИ");
+        ppmCateg.add(itCateg1);
+
+        itCateg2.setText("ЗАПОЛНЕНИЯ");
+        ppmCateg.add(itCateg2);
+
+        setMaximumSize(new java.awt.Dimension(420, 19));
+        setPreferredSize(new java.awt.Dimension(420, 19));
 
         btn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c054.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
@@ -122,10 +129,10 @@ public class TableFieldFilter extends javax.swing.JPanel {
 
         txtFilter.setFont(frames.UGui.getFont(0,0));
         txtFilter.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txtFilter.setMaximumSize(new java.awt.Dimension(120, 17));
-        txtFilter.setMinimumSize(new java.awt.Dimension(120, 17));
+        txtFilter.setMaximumSize(new java.awt.Dimension(100, 19));
+        txtFilter.setMinimumSize(new java.awt.Dimension(100, 19));
         txtFilter.setName(""); // NOI18N
-        txtFilter.setPreferredSize(new java.awt.Dimension(120, 17));
+        txtFilter.setPreferredSize(new java.awt.Dimension(100, 19));
         txtFilter.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 txtCaretUpdate(evt);
@@ -144,6 +151,18 @@ public class TableFieldFilter extends javax.swing.JPanel {
             }
         });
 
+        btn3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c032.gif"))); // NOI18N
+        btn3.setToolTipText(bundle.getString("Вставить из буфера обмена / Удалить")); // NOI18N
+        btn3.setBorder(null);
+        btn3.setMaximumSize(new java.awt.Dimension(30, 18));
+        btn3.setMinimumSize(new java.awt.Dimension(30, 18));
+        btn3.setPreferredSize(new java.awt.Dimension(30, 18));
+        btn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn3ActiPerf(evt);
+            }
+        });
+
         checkFilter.setFont(frames.UGui.getFont(0,0));
         checkFilter.setText("в конце строки");
         checkFilter.setMaximumSize(new java.awt.Dimension(120, 18));
@@ -159,20 +178,28 @@ public class TableFieldFilter extends javax.swing.JPanel {
                 .addGap(0, 0, 0)
                 .addComponent(labFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(txtFilter, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                .addComponent(txtFilter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(checkFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(checkFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(labFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(checkFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -264,12 +291,20 @@ public class TableFieldFilter extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btn2ActiPerf
 
+    private void btn3ActiPerf(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActiPerf
+        ppmCateg.show(this, btn3.getX(), btn3.getY() - 60);
+    }//GEN-LAST:event_btn3ActiPerf
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn1;
     private javax.swing.JButton btn2;
+    private javax.swing.JButton btn3;
     private javax.swing.JCheckBox checkFilter;
+    private javax.swing.JMenuItem itCateg1;
+    private javax.swing.JMenuItem itCateg2;
     private javax.swing.JLabel labFilter;
+    private javax.swing.JPopupMenu ppmCateg;
     private javax.swing.JTextField txtFilter;
     // End of variables declaration//GEN-END:variables
 // </editor-fold>
@@ -289,11 +324,11 @@ public class TableFieldFilter extends javax.swing.JPanel {
 //            }
 //        });
     }
-    
-//    public String firstUpperCase(int offset, String word) {
-//        if (offset != 0 || word == null || word.isEmpty()) {
-//            return word;
-//        }
-//        return word.substring(0, 1).toUpperCase() + word.substring(1);
-//    }    
+
+    public String firstUpperCase(int offset, String word) {
+        if (offset != 0 || word == null || word.isEmpty()) {
+            return word;
+        }
+        return word.substring(0, 1).toUpperCase() + word.substring(1);
+    }
 }
