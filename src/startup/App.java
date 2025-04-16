@@ -128,8 +128,12 @@ public enum App {
                         frame = new Groups((int) param[0]);
                     }
                     break;
-                case Colors:
-                    frame = new Colors();
+                case Colors:                    
+                    if (param.length == 0) {
+                        frame = new Colors();
+                    } else {
+                        frame = new Colors((ListenerRecord) param[0]);
+                    }                    
                     break;
                 case Joining:
                     if (param.length == 0) {

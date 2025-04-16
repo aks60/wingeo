@@ -77,15 +77,21 @@ public class Connect {
 
     //Возобновить соединение
     public static void reconnection() throws SQLException {
-        if (connection.isClosed() == true) {
-            String num_base = eProp.base_num.getProp();
-            eExcep pass = Connect.connection(eProp.getServer(num_base), eProp.getPort(num_base), eProp.getBase(num_base), eProp.user.getProp(), eProp.password.toCharArray(), null);
-            if (pass == eExcep.yesConn) {
-                JOptionPane.showMessageDialog(null, "Соединение восстановлено.", "УСПЕХ", 1);
-            } else {
-                JOptionPane.showMessageDialog(null, pass, "НЕУДАЧА", 1);
+        eExcep pass = eExcep.noConn;
+        try {
+            if (connection.isClosed() == true) {
+                String num_base = eProp.base_num.getProp();
+                pass = Connect.connection(eProp.getServer(num_base), eProp.getPort(num_base), eProp.getBase(num_base), eProp.user.getProp(), eProp.password.toCharArray(), null);
+                if (pass == eExcep.yesConn) {
+                    JOptionPane.showMessageDialog(null, "Соединение восстановлено.", "УСПЕХ", 1);
+                } else {
+                    JOptionPane.showMessageDialog(null, pass.mes, "НЕУДАЧА", 1);
+                }
             }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, pass.mes + e, "НЕУДАЧА", 1);
         }
+
     }
 
     public static eExcep connection(String server, String port, String base, String user, char[] password, String role) {

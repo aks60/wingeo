@@ -1096,7 +1096,11 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     }//GEN-LAST:event_mnGroup1
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-
+        ProgressBar.create(Tex.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                App.PSCompare.createFrame(Tex.this);
+            }
+        });
     }//GEN-LAST:event_btnTest
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated

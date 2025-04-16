@@ -2656,15 +2656,19 @@ public class Artikles extends javax.swing.JFrame {
                 "Подтверждение", JOptionPane.YES_NO_CANCEL_OPTION);
         if (result != JOptionPane.CANCEL_OPTION) {
 
-            List<Record> data = new ArrayList(qArtdet);
-            Record masterClon = UGui.cloneMaster(qArtikl, tab1, eArtikl.up, (clon) -> {
-                clon.setNo(eArtikl.code, clon.getStr(eArtikl.code) + "-клон");
-                clon.setNo(eArtikl.name, clon.getStr(eArtikl.name) + "-клон");
-            });
-            if (result == JOptionPane.NO_OPTION) {
-                UGui.cloneSlave(qArtdet, tab2, eArtdet.up, data, (clon) -> {
-                    clon.setNo(eArtdet.artikl_id, masterClon.getInt(eArtikl.id));
+            if (tab1.getBorder() != null) {
+                List<Record> data = new ArrayList(qArtdet);
+                Record masterClon = UGui.cloneMaster(qArtikl, tab1, eArtikl.up, (clon) -> {
+                    clon.setNo(eArtikl.code, clon.getStr(eArtikl.code) + "-клон");
+                    clon.setNo(eArtikl.name, clon.getStr(eArtikl.name) + "-клон");
                 });
+                if (result == JOptionPane.NO_OPTION) {
+                    UGui.cloneSlave(qArtdet, tab2, eArtdet.up, data, (clon) -> {
+                        clon.setNo(eArtdet.artikl_id, masterClon.getInt(eArtikl.id));
+                    });
+                }
+            } else if (tab2.getBorder() != null) {
+                Record masterClon = UGui.cloneMaster(qArtdet, tab2, eArtdet.up, null);
             }
         }
     }//GEN-LAST:event_btnClone
