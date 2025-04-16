@@ -3,7 +3,6 @@ package frames.swing.cmp;
 import dataset.Field;
 import dataset.Query;
 import frames.UGui;
-import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -11,6 +10,10 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -48,8 +51,10 @@ public class TableFieldFilter extends javax.swing.JPanel {
                     try {
                         if (txtFilter.getText().length() == 0) {
                             table = (JTable) evt.getSource();
-                            labFilter.setText(table.getColumnName((table.getSelectedColumn() == -1 || table.getSelectedColumn() == 0) ? 0 : table.getSelectedColumn()));
+                            int indexColumn = (table.getSelectedColumn() == -1 || table.getSelectedColumn() == 0) ? 0 : table.getSelectedColumn();
+                            labFilter.setText(table.getColumnName(indexColumn));
                             txtFilter.setName(table.getName());
+                            //fintPreName(table, indexColumn);
                         }
                     } catch (Exception e) {
                         System.err.println("Œÿ»¡ ¿:swing.FilterTable.mousePressed() " + e);
@@ -67,20 +72,28 @@ public class TableFieldFilter extends javax.swing.JPanel {
         return txtFilter;
     }
 
-    public void fintPreName() {
-//        Set<String> set = new HashSet<String>();
-//        //Map<String, Integer> map = new HashMap<String, Integer>();
-//        for (TRecord rec : listTRec) {
-//            String s = rec.name.substring(0, 2);
-//            set.add(s);
-//            //int m = (map.get(s) == null) ?1 : map.get(s);
-//            //map.put(s, ++m);
-//        }
-//        ArrayList<String> list = new ArrayList<String>();
-//        list.addAll(set);
-//        Collections.sort(list, (a, b) -> a.compareToIgnoreCase(b));
-//        
-//        System.out.println(list);         
+    private void fintPreName(JTable table, int column) {
+        Set<String> set = new HashSet<String>();
+        for (int i = 0; i < table.getRowCount(); i++) {
+            String str = String.valueOf(table.getValueAt(i, column));
+            String sub = str.substring(0, 2);
+            set.add(sub);
+        }
+        ArrayList<String> list = new ArrayList<String>(set);
+        Collections.sort(list, (a, b) -> a.compareToIgnoreCase(b));
+        System.out.println(list);
+    }
+
+    public void fintPreName(Query query, Field field) {
+        Set<String> set = new HashSet<String>();
+        for (dataset.Record record : query) {
+            String str = record.getStr(field);
+            String sub = str.substring(0, 2);
+            set.add(sub);
+        }
+        ArrayList<String> list = new ArrayList<String>(set);
+        Collections.sort(list, (a, b) -> a.compareToIgnoreCase(b));
+        System.out.println(list);
     }
 
     @SuppressWarnings("unchecked")
@@ -292,6 +305,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
     }//GEN-LAST:event_btn2ActiPerf
 
     private void btn3ActiPerf(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActiPerf
+        // ((DefTableModel) table.getModel()).getQuery()
         ppmCateg.show(this, btn3.getX(), btn3.getY() - 60);
     }//GEN-LAST:event_btn3ActiPerf
 
