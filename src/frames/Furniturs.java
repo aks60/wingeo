@@ -1761,19 +1761,43 @@ public class Furniturs extends javax.swing.JFrame {
                 List<Record> dataSide2 = new ArrayList(qFurnside2);
                 List<Record> dataPar2 = new ArrayList(qFurnpar2);
 
-                Record masterClon = UGui.cloneMaster(qFurndet2a, tab2a, eFurndet.up, (clon) -> {
+                Record masterClon = qFurniture.get(UGui.getIndexRec(tab1));
+                Record masterClonA = UGui.cloneMaster(qFurndet2a, tab2a, eFurndet.up, (clon) -> {
                     clon.setNo(eFurndet.furndet_id, clon.getInt(eFurndet.id));
                 });
                 if (result == JOptionPane.NO_OPTION) {
                     UGui.cloneSlave(qFurndet2b, tab2b, eFurndet.up, dataDet2b, (clon) -> {
-                        clon.setNo(eFurndet.furniture_id1, masterClon.getInt(eFurndet.furniture_id1));
-                        clon.setNo(eFurndet.furndet_id, masterClon.getInt(eFurndet.id));
+                        clon.setNo(eFurndet.furniture_id1, masterClon.getInt(eFurniture.id));
+                        clon.setNo(eFurndet.furndet_id, masterClonA.getInt(eFurndet.id));
                     });
                     UGui.cloneSlave(qFurnside2, tab5, eFurnside2.up, dataSide2, (clon) -> {
-                        clon.setNo(eFurnside2.furndet_id, masterClon.getInt(eFurndet.id));
+                        clon.setNo(eFurnside2.furndet_id, masterClonA.getInt(eFurndet.id));
                     });
                     UGui.cloneSlave(qFurnpar2, tab6, eFurnpar2.up, dataPar2, (clon) -> {
-                        clon.setNo(eFurnpar2.furndet_id, masterClon.getInt(eFurndet.id));
+                        clon.setNo(eFurnpar2.furndet_id, masterClonA.getInt(eFurndet.id));
+                    });
+                }
+            } else if (tab2b.getBorder() != null) {
+                List<Record> dataDet2c = new ArrayList(qFurndet2c);
+                List<Record> dataSide2 = new ArrayList(qFurnside2);
+                List<Record> dataPar2 = new ArrayList(qFurnpar2);
+
+                Record masterClon = qFurniture.get(UGui.getIndexRec(tab1));
+                Record masterClonA = qFurndet2a.get(UGui.getIndexRec(tab2a));
+                Record masterClonB = UGui.cloneMaster(qFurndet2b, tab2b, eFurndet.up, (clon) -> {
+                    clon.setNo(eFurndet.furniture_id1, masterClon.getInt(eFurniture.id));
+                    clon.setNo(eFurndet.furndet_id, masterClonA.getInt(eFurndet.id));
+                });
+                if (result == JOptionPane.NO_OPTION) {
+                    UGui.cloneSlave(qFurndet2c, tab2c, eFurndet.up, dataDet2c, (clon) -> {
+                        clon.setNo(eFurndet.furniture_id1, masterClon.getInt(eFurniture.id));
+                        clon.setNo(eFurndet.furndet_id, masterClonB.getInt(eFurndet.id));
+                    });
+                    UGui.cloneSlave(qFurnside2, tab5, eFurnside2.up, dataSide2, (clon) -> {
+                        clon.setNo(eFurnside2.furndet_id, masterClonB.getInt(eFurndet.id));
+                    });
+                    UGui.cloneSlave(qFurnpar2, tab6, eFurnpar2.up, dataPar2, (clon) -> {
+                        clon.setNo(eFurnpar2.furndet_id, masterClonB.getInt(eFurndet.id));
                     });
                 }
             }
