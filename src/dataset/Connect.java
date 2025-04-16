@@ -1,23 +1,17 @@
 package dataset;
 
 import common.eProp;
-import frames.PathToDb;
-import frames.UGui;
-import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 import java.util.Properties;
-import java.util.concurrent.CompletableFuture;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import startup.App;
 
 /**
@@ -85,12 +79,12 @@ public class Connect {
     public static void reconnection() throws SQLException {
         if (connection.isClosed() == true) {
             String num_base = eProp.base_num.getProp();
-            Connect.connection(eProp.getServer(num_base), eProp.getPort(num_base), eProp.getBase(num_base), eProp.user.getProp(), eProp.password.toCharArray(), null);
-        }
-        if (connection.isClosed() == false) {
-            JOptionPane.showMessageDialog(null, "Соединение восстановлено.", "УСПЕХ", 1);
-        } else {
-            JOptionPane.showMessageDialog(null, eExcep.noConn, "НЕУДАЧА", 1);
+            eExcep pass = Connect.connection(eProp.getServer(num_base), eProp.getPort(num_base), eProp.getBase(num_base), eProp.user.getProp(), eProp.password.toCharArray(), null);
+            if (pass == eExcep.yesConn) {
+                JOptionPane.showMessageDialog(null, "Соединение восстановлено.", "УСПЕХ", 1);
+            } else {
+                JOptionPane.showMessageDialog(null, pass, "НЕУДАЧА", 1);
+            }
         }
     }
 

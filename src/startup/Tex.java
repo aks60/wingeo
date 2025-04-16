@@ -1152,7 +1152,8 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
         try {
             for (Query q : Query.listOpenTable) {
                 if (q.size() == 0) {
-                    q.clear();
+                    //q.clear();
+                    Query.listOpenTable.remove(q);
                 }
             }
             Connect.close();
