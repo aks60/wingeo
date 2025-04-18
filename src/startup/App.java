@@ -111,7 +111,9 @@ public enum App {
                     frame = new AboutBox();
                     break;
                 case Artikles:
-                    if (param.length == 1) {
+                    if (param.length == 2) {
+                        frame = new Artikles(parent, (Record) param[0], (ListenerRecord) param[1]);
+                    } else if (param.length == 1) {
                         if (param[0] instanceof Record) {
                             frame = new Artikles(parent, (Record) param[0]);
                         } else if (param[0] instanceof ListenerRecord) {
@@ -128,12 +130,12 @@ public enum App {
                         frame = new Groups((int) param[0]);
                     }
                     break;
-                case Colors:                    
+                case Colors:
                     if (param.length == 0) {
                         frame = new Colors();
                     } else {
                         frame = new Colors((ListenerRecord) param[0]);
-                    }                    
+                    }
                     break;
                 case Joining:
                     if (param.length == 0) {

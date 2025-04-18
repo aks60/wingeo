@@ -295,9 +295,11 @@ public class DicArtikl extends javax.swing.JDialog {
 
     private void btnArtmn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArtmn94
         dispose();
+        Record record = ((DefTableModel) tab2.getModel()).getQuery().get(UGui.getIndexRec(tab2));
+        Record record2 = eArtikl.find(record.getInt(eArtikl.id), false);        
         ProgressBar.create(DicArtikl.this.getOwner(), new ListenerFrame() {
             public void actionRequest(Object obj) {
-                App.Artikles.createFrame(DicArtikl.this.getOwner(), listener);
+                App.Artikles.createFrame(DicArtikl.this.getOwner(), record2, listener);
             }
         });
     }//GEN-LAST:event_btnArtmn94

@@ -58,10 +58,10 @@ import frames.swing.comp.DefCellRendererNumb;
 import frames.swing.comp.TableFieldFilter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import javax.swing.ImageIcon;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableColumnModel;
 import report.sup.ExecuteCmd;
 import report.sup.RTable;
@@ -1734,8 +1734,13 @@ public class Furniturs extends javax.swing.JFrame {
     }
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
+        UIManager.put("OptionPane.noButtonText", "Все");
         int result = JOptionPane.showConfirmDialog(this, "Клонировать только основную запись?",
                 "Подтверждение", JOptionPane.YES_NO_CANCEL_OPTION);
+        
+        //UIManager.put("OptionPane.cancelButtonText", "nope");
+        //UIManager.put("OptionPane.okButtonText", "yup");
+        
         if (result != JOptionPane.CANCEL_OPTION) {
 
             if (tab1.getBorder() != null) {
@@ -1813,21 +1818,21 @@ public class Furniturs extends javax.swing.JFrame {
     }//GEN-LAST:event_ppmActionItems
 
     private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
-        
+
         if (evt.getButton() == MouseEvent.BUTTON3) {
             JTable table = List.of(tab1, tab2a, tab2b, tab2c, tab3, tab4, tab5, tab6).stream().filter(it -> it == evt.getSource()).findFirst().get();
             List.of(tab1, tab2a, tab2b, tab2c, tab3, tab4, tab5, tab6).forEach(tab -> tab.setBorder(null));
             table.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
             ppmCrud.show(table, evt.getX(), evt.getY());
-            
+
         } else if (evt.getButton() == MouseEvent.BUTTON1) {
             List.of(btnFind1, btnFind2, btnClone).forEach(btn -> btn.setEnabled(false));
             if (tab1.getBorder() != null) {
                 List.of(btnFind2, btnClone).forEach(btn -> btn.setEnabled(true));
-            } else if (tab2a.getBorder() != null || 
-                    tab2b.getBorder() != null || tab2c.getBorder() != null) {
+            } else if (tab2a.getBorder() != null
+                    || tab2b.getBorder() != null || tab2c.getBorder() != null) {
                 List.of(btnFind1, btnClone).forEach(btn -> btn.setEnabled(true));
-            } 
+            }
         }
     }//GEN-LAST:event_tabMouseClicked
 

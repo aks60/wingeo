@@ -46,6 +46,7 @@ import frames.swing.comp.TableFieldFilter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.event.ListSelectionListener;
 import report.sup.ExecuteCmd;
 import report.sup.RTable;
@@ -1039,6 +1040,7 @@ public class Fillings extends javax.swing.JFrame {
     }//GEN-LAST:event_tabMouseClicked
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
+        UIManager.put("OptionPane.noButtonText", "Все");
         int result = JOptionPane.showConfirmDialog(this, "Клонировать только основную запись?",
                 "Подтверждение", JOptionPane.YES_NO_CANCEL_OPTION);
         if (result != JOptionPane.CANCEL_OPTION) {

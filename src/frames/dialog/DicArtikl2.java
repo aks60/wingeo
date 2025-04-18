@@ -17,6 +17,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import common.listener.ListenerRecord;
+import domain.eElemdet;
 import frames.UTree;
 import frames.swing.comp.ProgressBar;
 import frames.swing.comp.TableFieldFilter;
@@ -36,7 +37,7 @@ public class DicArtikl2 extends javax.swing.JDialog {
     private Record artiklRec = null;
     private TreeNode[] selectedPath = null;
     private DefaultMutableTreeNode nodeRoot = null;
-    private static Record recordOld = null; 
+    private static Record recordOld = null;
 
     public DicArtikl2(java.awt.Frame parent, ListenerRecord listenet, int... level) {
         super(parent, true);
@@ -83,7 +84,7 @@ public class DicArtikl2 extends javax.swing.JDialog {
             tree.setSelectionRow(0);
             UGui.setSelectedRow(tab1);
         }
-        if(recordOld != null) {
+        if (recordOld != null) {
             setSelectionPath(recordOld);
         }
     }
@@ -106,7 +107,7 @@ public class DicArtikl2 extends javax.swing.JDialog {
             ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
         }
     }
-    
+
     public void setSelectionPath(Record artiklRec) {
         DefaultMutableTreeNode node = nodeRoot;
         node = node.getNextNode();
@@ -129,6 +130,7 @@ public class DicArtikl2 extends javax.swing.JDialog {
             }
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -363,9 +365,11 @@ public class DicArtikl2 extends javax.swing.JDialog {
 
     private void btnArtmn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArtmn94
         dispose();
+        Record record = ((DefTableModel) tab1.getModel()).getQuery().get(UGui.getIndexRec(tab1));
+        Record record2 = eArtikl.find(record.getInt(eArtikl.id), false);
         ProgressBar.create(DicArtikl2.this.getOwner(), new ListenerFrame() {
             public void actionRequest(Object obj) {
-                App.Artikles.createFrame(DicArtikl2.this.getOwner(), listener);
+                App.Artikles.createFrame(DicArtikl2.this.getOwner(), record2, listener);
             }
         });
     }//GEN-LAST:event_btnArtmn94
@@ -387,10 +391,10 @@ public class DicArtikl2 extends javax.swing.JDialog {
 // </editor-fold> 
 
     public void initElements() {
-        
+
         eProp.getWin(this, btnClose, (e) -> {
             eProp.putWin(this, btnClose);
-        }); 
+        });
         btnRemove.setVisible(false);
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1);
         south.add(filterTable, 0);

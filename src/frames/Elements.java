@@ -56,6 +56,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import javax.swing.ImageIcon;
+import javax.swing.UIManager;
 import report.sup.ExecuteCmd;
 import report.sup.RTable;
 
@@ -1095,6 +1096,7 @@ public class Elements extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMove
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
+        UIManager.put("OptionPane.noButtonText", "Все");
         int result = JOptionPane.showConfirmDialog(this, "Клонировать только основную запись?",
                 "Подтверждение", JOptionPane.YES_NO_CANCEL_OPTION);
         if (result != JOptionPane.CANCEL_OPTION) {

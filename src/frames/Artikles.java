@@ -52,6 +52,7 @@ import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 import report.sup.ExecuteCmd;
@@ -97,6 +98,18 @@ public class Artikles extends javax.swing.JFrame {
         loadingData();
         loadingModel();
         loadingTree();
+    }
+    
+    public Artikles(java.awt.Window owner, Record artiklRec, ListenerRecord listener) {
+        initComponents();
+        initElements();
+        this.listener = listener;
+        btnChoice.setVisible(true);
+        listenerSet();
+        loadingData();
+        loadingModel();
+        loadingTree();
+        setSelectionPath(artiklRec);
     }
 
     public Artikles(java.awt.Window owner, Record artiklRec) {
@@ -2653,6 +2666,7 @@ public class Artikles extends javax.swing.JFrame {
     }//GEN-LAST:event_ppmClick
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
+        UIManager.put("OptionPane.noButtonText", "Все");
         int result = JOptionPane.showConfirmDialog(this, "Клонировать только основную запись?",
                 "Подтверждение", JOptionPane.YES_NO_CANCEL_OPTION);
         if (result != JOptionPane.CANCEL_OPTION) {

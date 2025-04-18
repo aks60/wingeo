@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import report.sup.ExecuteCmd;
 import report.sup.RTable;
 
@@ -1115,6 +1116,7 @@ public class Joinings extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTest
 
     private void btnClone(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClone
+        UIManager.put("OptionPane.noButtonText", "Все");
         int result = JOptionPane.showConfirmDialog(this, "Клонировать только основную запись?",
                 "Подтверждение", JOptionPane.YES_NO_CANCEL_OPTION);
         if (result != JOptionPane.CANCEL_OPTION) {
