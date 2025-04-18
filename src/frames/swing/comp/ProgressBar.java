@@ -1,4 +1,4 @@
-package frames.swing.cmp;
+package frames.swing.comp;
 
 import common.listener.ListenerFrame;
 import java.awt.Dimension;

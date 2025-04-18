@@ -7,7 +7,7 @@ import dataset.Connect;
 import java.io.File;
 import javax.swing.JFileChooser;
 import dataset.eExcep;
-import frames.swing.cmp.FileFilter;
+import frames.swing.comp.FileFilter;
 import java.awt.Color;
 import java.awt.Frame;
 import java.sql.ResultSet;

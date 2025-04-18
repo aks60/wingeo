@@ -5,7 +5,7 @@ import frames.UGui;
 import dataset.Query;
 import dataset.Record;
 import domain.eParams;
-import frames.swing.cmp.DefTableModel;
+import frames.swing.comp.DefTableModel;
 import common.listener.ListenerRecord;
 import domain.eParmap;
 import domain.eColor;

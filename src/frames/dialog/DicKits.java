@@ -15,7 +15,7 @@ import domain.eColor;
 import java.awt.Frame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import frames.swing.cmp.DefTableModel;
+import frames.swing.comp.DefTableModel;
 import java.util.HashSet;
 import java.util.stream.Stream;
 import javax.swing.JOptionPane;

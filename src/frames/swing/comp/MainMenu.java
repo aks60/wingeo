@@ -1,4 +1,4 @@
-package frames.swing.cmp;
+package frames.swing.comp;
 
 import common.eProp;
 import common.listener.ListenerFrame;

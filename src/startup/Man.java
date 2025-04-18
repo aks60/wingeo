@@ -1,6 +1,6 @@
 package startup;
 
-import frames.swing.cmp.ProgressBar;
+import frames.swing.comp.ProgressBar;
 import frames.UGui;
 import java.awt.Frame;
 import java.util.HashMap;

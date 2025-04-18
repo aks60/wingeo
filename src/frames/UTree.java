@@ -10,7 +10,7 @@ import common.UCom;
 import enums.Layout;
 import enums.Type;
 import enums.TypeArt;
-import frames.swing.cmp.DefMutableTreeNode;
+import frames.swing.comp.DefMutableTreeNode;
 import java.util.ArrayList;
 import javax.swing.tree.DefaultMutableTreeNode;
 

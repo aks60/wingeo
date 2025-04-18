@@ -2,7 +2,7 @@ package startup;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import frames.swing.cmp.ProgressBar;
+import frames.swing.comp.ProgressBar;
 import common.eProp;
 import dataset.Record;
 import builder.Wincalc;
@@ -18,7 +18,7 @@ import dataset.Query;
 import domain.eParams;
 import frames.PathToDb;
 import frames.UGui;
-import frames.swing.cmp.MainMenu;
+import frames.swing.comp.MainMenu;
 import java.awt.Dimension;
 import java.sql.SQLException;
 import java.util.List;

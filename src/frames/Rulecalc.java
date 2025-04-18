@@ -1,7 +1,7 @@
 package frames;
 
 import common.eProp;
-import frames.swing.cmp.ProgressBar;
+import frames.swing.comp.ProgressBar;
 import common.listener.ListenerFrame;
 import dataset.Field;
 import dataset.Query;
@@ -12,14 +12,14 @@ import enums.TypeArt;
 import enums.TypeForm;
 import frames.dialog.DicArtikl2;
 import frames.dialog.DicEnums;
-import frames.swing.cmp.DefTableModel;
+import frames.swing.comp.DefTableModel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import common.listener.ListenerRecord;
-import frames.swing.cmp.DefCellEditorCheck;
-import frames.swing.cmp.DefCellEditorNumb;
-import frames.swing.cmp.DefCellRendererBool;
-import frames.swing.cmp.TableFieldFilter;
+import frames.swing.comp.DefCellEditorCheck;
+import frames.swing.comp.DefCellEditorNumb;
+import frames.swing.comp.DefCellRendererBool;
+import frames.swing.comp.TableFieldFilter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;

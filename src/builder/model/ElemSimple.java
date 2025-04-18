@@ -10,7 +10,7 @@ import common.listener.ListenerMouse;
 import domain.eColor;
 import enums.Layout;
 import enums.Type;
-import frames.swing.cmp.Canvas;
+import frames.swing.comp.Canvas;
 import java.awt.Color;
 import java.awt.Shape;
 import java.awt.event.KeyEvent;

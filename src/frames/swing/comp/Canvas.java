@@ -1,4 +1,4 @@
-package frames.swing.cmp;
+package frames.swing.comp;
 
 import builder.Wincalc;
 import common.UCom;

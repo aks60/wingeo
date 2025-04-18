@@ -1,4 +1,4 @@
-package frames.swing.cmp;
+package frames.swing.comp;
 
 import builder.model.Com5t;
 import builder.model.AreaSimple;

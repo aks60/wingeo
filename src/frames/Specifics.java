@@ -1,7 +1,7 @@
 package frames;
 
 import builder.Kitcalc;
-import frames.swing.cmp.ProgressBar;
+import frames.swing.comp.ProgressBar;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import dataset.Record;
@@ -36,8 +36,8 @@ import domain.ePrjprod;
 import domain.eProject;
 import domain.eSystree;
 import enums.Scale;
-import frames.swing.cmp.DefCellRendererNumb;
-import frames.swing.cmp.TableFieldFilter;
+import frames.swing.comp.DefCellRendererNumb;
+import frames.swing.comp.TableFieldFilter;
 import frames.swing.col.ColumnGroup;
 import frames.swing.col.GroupableTableHeader;
 import java.awt.event.MouseEvent;

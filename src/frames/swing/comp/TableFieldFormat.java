@@ -1,7 +1,7 @@
 /*
  * Связывание и форматирование полей JTextField с моделью данных
  */
-package frames.swing.cmp;
+package frames.swing.comp;
 
 import common.UCom;
 import frames.UGui;

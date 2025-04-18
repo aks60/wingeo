@@ -1,4 +1,4 @@
-package frames.swing.cmp;
+package frames.swing.comp;
 
 import dataset.Field;
 import dataset.Query;
@@ -310,7 +310,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
     }//GEN-LAST:event_btn2ActiPerf
 
     private void btn3ActiPerf(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActiPerf
-        ppmCateg.show(this, btn3.getX(), btn3.getY() - 60);
+        ppmCateg.show(this, btn3.getX(), btn3.getY() - 20);
     }//GEN-LAST:event_btn3ActiPerf
 
     private void txtFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFilterActionPerformed
