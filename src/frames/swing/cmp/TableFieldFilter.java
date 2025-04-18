@@ -54,7 +54,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
                             int indexColumn = (table.getSelectedColumn() == -1 || table.getSelectedColumn() == 0) ? 0 : table.getSelectedColumn();
                             labFilter.setText(table.getColumnName(indexColumn));
                             txtFilter.setName(table.getName());
-                            //fintPreName(table, indexColumn);
+                            fintPreName(table, indexColumn);
                         }
                     } catch (Exception e) {
                         System.err.println("Œÿ»¡ ¿:swing.FilterTable.mousePressed() " + e);
@@ -75,12 +75,16 @@ public class TableFieldFilter extends javax.swing.JPanel {
     private void fintPreName(JTable table, int column) {
         Set<String> set = new HashSet<String>();
         for (int i = 0; i < table.getRowCount(); i++) {
-            String str = String.valueOf(table.getValueAt(i, column));
+            String str = String.valueOf(table.getValueAt(i, column)).toLowerCase();
             String sub = str.substring(0, 2);
             set.add(sub);
         }
         ArrayList<String> list = new ArrayList<String>(set);
         Collections.sort(list, (a, b) -> a.compareToIgnoreCase(b));
+        ppmCateg.removeAll();
+        for (String string : list) {
+            ppmCateg.add(string);
+        }
         System.out.println(list);
     }
 
@@ -306,6 +310,10 @@ public class TableFieldFilter extends javax.swing.JPanel {
 
     private void btn3ActiPerf(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActiPerf
         // ((DefTableModel) table.getModel()).getQuery()
+//        int indexColumn = (table.getSelectedColumn() == -1 || table.getSelectedColumn() == 0) ? 0 : table.getSelectedColumn();
+//        labFilter.setText(table.getColumnName(indexColumn));
+//        txtFilter.setName(table.getName());
+//        fintPreName(table, indexColumn);
         ppmCateg.show(this, btn3.getX(), btn3.getY() - 60);
     }//GEN-LAST:event_btn3ActiPerf
 
