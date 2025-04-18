@@ -540,6 +540,8 @@ public class Specifics extends javax.swing.JFrame {
         filler1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         south.add(filler1);
 
+        pan1.setMinimumSize(new java.awt.Dimension(200, 20));
+        pan1.setPreferredSize(new java.awt.Dimension(120, 20));
         pan1.setLayout(new java.awt.BorderLayout());
 
         labSum.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N

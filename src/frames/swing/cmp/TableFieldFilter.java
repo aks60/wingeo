@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
@@ -73,31 +74,26 @@ public class TableFieldFilter extends javax.swing.JPanel {
     }
 
     private void fintPreName(JTable table, int column) {
-        Set<String> set = new HashSet<String>();
+        Set<String> set1 = new HashSet<String>();
+        Set<String> set2 = new HashSet<String>();
+        Set<String> set3 = new HashSet<String>();
         for (int i = 0; i < table.getRowCount(); i++) {
-            String str = String.valueOf(table.getValueAt(i, column)).toLowerCase();
-            String sub = str.substring(0, 2);
-            set.add(sub);
+            set1.add(String.valueOf(table.getValueAt(i, column)).substring(0, 1));
+            set2.add(String.valueOf(table.getValueAt(i, column)).substring(0, 2));
+            set3.add(String.valueOf(table.getValueAt(i, column)).substring(0, 3));
         }
+        Set<String> set = (set3.size() < 64) ? set3 : (set2.size() < 64) ? set2 : set1;
         ArrayList<String> list = new ArrayList<String>(set);
         Collections.sort(list, (a, b) -> a.compareToIgnoreCase(b));
         ppmCateg.removeAll();
         for (String string : list) {
-            ppmCateg.add(string);
+            JMenuItem jmi = ppmCateg.add(string);
+            jmi.addActionListener((evt) -> {
+                JMenuItem mi = (JMenuItem) evt.getSource();
+                txtFilter.setText(mi.getText());
+            });
         }
-        System.out.println(list);
-    }
-
-    public void fintPreName(Query query, Field field) {
-        Set<String> set = new HashSet<String>();
-        for (dataset.Record record : query) {
-            String str = record.getStr(field);
-            String sub = str.substring(0, 2);
-            set.add(sub);
-        }
-        ArrayList<String> list = new ArrayList<String>(set);
-        Collections.sort(list, (a, b) -> a.compareToIgnoreCase(b));
-        System.out.println(list);
+        //System.out.println("AKS = " + list);
     }
 
     @SuppressWarnings("unchecked")
@@ -153,6 +149,11 @@ public class TableFieldFilter extends javax.swing.JPanel {
         txtFilter.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 txtCaretUpdate(evt);
+            }
+        });
+        txtFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFilterActionPerformed(evt);
             }
         });
 
@@ -309,13 +310,12 @@ public class TableFieldFilter extends javax.swing.JPanel {
     }//GEN-LAST:event_btn2ActiPerf
 
     private void btn3ActiPerf(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActiPerf
-        // ((DefTableModel) table.getModel()).getQuery()
-//        int indexColumn = (table.getSelectedColumn() == -1 || table.getSelectedColumn() == 0) ? 0 : table.getSelectedColumn();
-//        labFilter.setText(table.getColumnName(indexColumn));
-//        txtFilter.setName(table.getName());
-//        fintPreName(table, indexColumn);
         ppmCateg.show(this, btn3.getX(), btn3.getY() - 60);
     }//GEN-LAST:event_btn3ActiPerf
+
+    private void txtFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFilterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFilterActionPerformed
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables

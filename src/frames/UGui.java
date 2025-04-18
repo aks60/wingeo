@@ -914,7 +914,7 @@ public class UGui {
     }
 
     //Программный клик на компоненте
-    public static void componentClick(JComponent comp) {
+    public static void robotClick(JComponent comp) {
         try {
             Point p = comp.getLocationOnScreen();
             Robot r = new Robot();
