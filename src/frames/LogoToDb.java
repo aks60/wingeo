@@ -147,7 +147,7 @@ public class LogoToDb extends javax.swing.JDialog {
         pan3.setPreferredSize(new java.awt.Dimension(82, 66));
         pan3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 30));
 
-        labImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/imgXX/k002.gif"))); // NOI18N
+        labImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img64/k002.gif"))); // NOI18N
         pan3.add(labImg);
 
         pan2.add(pan3, java.awt.BorderLayout.WEST);
