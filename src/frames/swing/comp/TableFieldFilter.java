@@ -3,6 +3,7 @@ package frames.swing.comp;
 import dataset.Field;
 import dataset.Query;
 import frames.UGui;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -20,9 +21,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
-import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -84,16 +83,20 @@ public class TableFieldFilter extends javax.swing.JPanel {
             set2.add(String.valueOf(table.getValueAt(i, column)).substring(0, 2));
             set3.add(String.valueOf(table.getValueAt(i, column)).substring(0, 3));
         }
-        Set<String> set = (set3.size() < 64) ? set3 : (set2.size() < 64) ? set2 : set1;
+        Set<String> set = (set3.size() < 36) ? set3 : (set2.size() < 46) ? set2 : set1;
         ArrayList<String> list = new ArrayList<String>(set);
         Collections.sort(list, (a, b) -> a.compareToIgnoreCase(b));
         ppmCateg.removeAll();
         for (String string : list) {
             JMenuItem jmi = ppmCateg.add(string);
+            jmi.setMinimumSize(new Dimension(60, 20));
+            jmi.setPreferredSize(new Dimension(60, 20));
+            jmi.setFont(frames.UGui.getFont(1, 0));
             jmi.addActionListener((evt) -> {
                 JMenuItem mi = (JMenuItem) evt.getSource();
                 txtFilter.setText(mi.getText());
             });
+            UGui.scrollRectToRow(UGui.getIndexRec(table), table);
         }
     }
 
@@ -102,8 +105,6 @@ public class TableFieldFilter extends javax.swing.JPanel {
     private void initComponents() {
 
         ppmCateg = new javax.swing.JPopupMenu();
-        itCateg1 = new javax.swing.JMenuItem();
-        itCateg2 = new javax.swing.JMenuItem();
         btn1 = new javax.swing.JButton();
         labFilter = new javax.swing.JLabel();
         txtFilter = new javax.swing.JTextField(){
@@ -112,12 +113,6 @@ public class TableFieldFilter extends javax.swing.JPanel {
         btn2 = new javax.swing.JButton();
         btn3 = new javax.swing.JButton();
         checkFilter = new javax.swing.JCheckBox();
-
-        itCateg1.setText("œ–Œ‘»À»");
-        ppmCateg.add(itCateg1);
-
-        itCateg2.setText("«¿œŒÀÕ≈Õ»ﬂ");
-        ppmCateg.add(itCateg2);
 
         setMaximumSize(new java.awt.Dimension(420, 19));
         setPreferredSize(new java.awt.Dimension(420, 19));
@@ -170,7 +165,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
             }
         });
 
-        btn3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c032.gif"))); // NOI18N
+        btn3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b010.gif"))); // NOI18N
         btn3.setToolTipText(bundle.getString("¬ÒÚ‡‚ËÚ¸ ËÁ ·ÛÙÂ‡ Ó·ÏÂÌ‡ / ”‰‡ÎËÚ¸")); // NOI18N
         btn3.setBorder(null);
         btn3.setMaximumSize(new java.awt.Dimension(30, 18));
@@ -324,8 +319,6 @@ public class TableFieldFilter extends javax.swing.JPanel {
     private javax.swing.JButton btn2;
     private javax.swing.JButton btn3;
     private javax.swing.JCheckBox checkFilter;
-    private javax.swing.JMenuItem itCateg1;
-    private javax.swing.JMenuItem itCateg2;
     private javax.swing.JLabel labFilter;
     private javax.swing.JPopupMenu ppmCateg;
     private javax.swing.JTextField txtFilter;
