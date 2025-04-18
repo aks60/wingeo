@@ -20,7 +20,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -93,7 +95,6 @@ public class TableFieldFilter extends javax.swing.JPanel {
                 txtFilter.setText(mi.getText());
             });
         }
-        //System.out.println("AKS = " + list);
     }
 
     @SuppressWarnings("unchecked")
