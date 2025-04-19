@@ -24,6 +24,7 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
+import startup.App;
 
 public class Param extends javax.swing.JFrame {
 
@@ -769,8 +770,8 @@ public class Param extends javax.swing.JFrame {
 
     public void initElements() {
 
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         });
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2, tab3, tab4);
         south.add(filterTable, 0);

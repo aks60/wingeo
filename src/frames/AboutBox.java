@@ -1,8 +1,7 @@
 package frames;
 
 import common.eProp;
-import frames.UGui;
-import java.util.List;
+import startup.App;
 
 public class AboutBox extends javax.swing.JFrame {
 
@@ -190,8 +189,8 @@ public class AboutBox extends javax.swing.JFrame {
 
     public void initElements() {
 
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         });
     }
 }

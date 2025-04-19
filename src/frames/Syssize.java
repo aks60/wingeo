@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.table.TableColumn;
 import report.sup.ExecuteCmd;
 import report.sup.RTable;
+import startup.App;
 
 public class Syssize extends javax.swing.JFrame {
 
@@ -411,8 +412,8 @@ public class Syssize extends javax.swing.JFrame {
 
     public void initElements() {
         
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         }); 
         List.of(btnIns, btnDel).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab1)));
     }

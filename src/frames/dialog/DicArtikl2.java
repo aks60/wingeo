@@ -392,8 +392,8 @@ public class DicArtikl2 extends javax.swing.JDialog {
 
     public void initElements() {
 
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         });
         btnRemove.setVisible(false);
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1);

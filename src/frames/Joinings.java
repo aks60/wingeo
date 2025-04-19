@@ -1221,8 +1221,8 @@ public class Joinings extends javax.swing.JFrame {
     private void initElements() {
 
         btnTest.setVisible(eProp.devel.equals("99"));
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose, tab1, tab2, tab3, tab4, tab5);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose, tab1, tab2, tab3, tab4, tab5);
         }, tab1, tab2, tab3, tab4, tab5);
         new UColor();
 

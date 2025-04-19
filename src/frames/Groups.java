@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import static frames.UGui.getIndexRec;
+import startup.App;
 
 public class Groups extends javax.swing.JFrame {
 
@@ -791,11 +792,11 @@ public class Groups extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsert
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-         UGui.findComponents(getRootPane(), JTable.class).stream().forEach(System.out::println);    
+        UGui.findComponents(getRootPane(), JTable.class).stream().forEach(System.out::println);
     }//GEN-LAST:event_btnReport
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditingAndExecSql(getRootPane());        
+        UGui.stopCellEditingAndExecSql(getRootPane());
     }//GEN-LAST:event_windowClosed
 
     private void btnMove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMove
@@ -840,7 +841,7 @@ public class Groups extends javax.swing.JFrame {
             } else if (tabb.getSelectedIndex() == 4) {
                 table = tab5;
                 btnIns.setEnabled(false);
-                btnDel.setEnabled(false);                
+                btnDel.setEnabled(false);
             }
         } else {
             if (tabb.getSelectedIndex() == 0) {
@@ -922,9 +923,9 @@ public class Groups extends javax.swing.JFrame {
 
     public void initElements() {
 
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
-        }); 
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
+        });
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2, tab3, tab4, tab5, tab6, tab7);
         south.add(filterTable, 0);

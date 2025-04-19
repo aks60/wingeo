@@ -599,8 +599,8 @@ public class DicGroups extends javax.swing.JDialog {
 
     public void initElements() {
 
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         }); 
         List.of(tab1, tab2, tab3, tab4).forEach(tab -> tab.setBorder(null));
     }

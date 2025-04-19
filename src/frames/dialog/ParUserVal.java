@@ -8,6 +8,7 @@ import domain.eParams;
 import frames.swing.comp.DefTableModel;
 import common.listener.ListenerRecord;
 import dataset.Field;
+import startup.App;
 
 public class ParUserVal extends javax.swing.JDialog {
 
@@ -227,8 +228,8 @@ public class ParUserVal extends javax.swing.JDialog {
 // </editor-fold> 
     public void initElements() {
         
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         }); 
     }
 }

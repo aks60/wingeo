@@ -739,8 +739,8 @@ public class Specifics extends javax.swing.JFrame {
     public void initElements() {
 
         btnTest.setVisible(eProp.devel.equals("99"));
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         });
 
         filterTable = new TableFieldFilter(4, tab1);

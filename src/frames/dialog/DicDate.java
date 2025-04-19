@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import startup.App;
 
 /**
  * Календарь
@@ -483,8 +484,8 @@ public class DicDate extends javax.swing.JDialog {
 
     public final void initElements() {
 
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         });
     }
 }

@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import startup.App;
 
 public class ParColor extends javax.swing.JDialog {
 
@@ -412,8 +413,8 @@ public class ParColor extends javax.swing.JDialog {
 
     public void initElements() {
 
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         });         
         btnRemove.setVisible(false);
     }

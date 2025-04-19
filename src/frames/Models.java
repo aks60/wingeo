@@ -36,6 +36,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import common.listener.ListenerReload;
 import java.util.prefs.Preferences;
+import startup.App;
 
 //TODO Не работает кнопка отменить
 public final class Models extends javax.swing.JFrame implements ListenerFrame<Object, Object>, ListenerReload, ListenerAction {
@@ -673,8 +674,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     private void initElements() {
         
         btnTest.setVisible(eProp.devel.equals("99"));
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         }); 
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
         tab1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {

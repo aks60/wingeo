@@ -57,6 +57,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 import report.sup.ExecuteCmd;
 import report.sup.RTable;
+import startup.App;
 
 //TODO Если при открытом окне открыть Цвета и доьавить нов. цвет то его уже не втавить в детализ. артикулов
 /**
@@ -2957,8 +2958,8 @@ public class Artikles extends javax.swing.JFrame {
     public void initElements() {
 
         btnTest.setVisible(eProp.devel.equals("99"));
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose, tab1, tab2);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose, tab1, tab2);
         }, tab1, tab2);
 
         filterTable = new TableFieldFilter(1, tab1, tab2);

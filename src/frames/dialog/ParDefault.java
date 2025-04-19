@@ -23,6 +23,7 @@ import java.util.Vector;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import startup.App;
 
 //Текстура артикулов
 public class ParDefault extends javax.swing.JDialog {
@@ -290,8 +291,8 @@ public class ParDefault extends javax.swing.JDialog {
 
     private void initElements() {
 
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         }); 
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2);

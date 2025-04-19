@@ -1899,8 +1899,8 @@ public class Furniturs extends javax.swing.JFrame {
     private void initElements() {
 
         btnTest.setVisible(eProp.devel.equals("99"));
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         });
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2a, tab2b, tab2c, tab4, tab6);

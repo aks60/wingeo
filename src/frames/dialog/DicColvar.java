@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 import common.listener.ListenerRecord;
 import java.util.Arrays;
+import startup.App;
 
 //Варианты текстур
 public class DicColvar extends javax.swing.JDialog {
@@ -242,8 +243,8 @@ public class DicColvar extends javax.swing.JDialog {
 
     public void initElements() {
 
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         }); 
         btnRemove.setVisible(false);
     }

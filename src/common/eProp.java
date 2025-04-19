@@ -53,7 +53,7 @@ public enum eProp {
     public final static String version_ap = "2.0";
     public final static String version_db = "2.0";
     public static String profile = ""; //профиль разработки и тестирования
-    public static Timer timer = new Timer(1000, null);
+    //public static Timer timer = new Timer(1000, null);
 
     //Значение по умолчанию
     eProp(String value) {
@@ -91,81 +91,6 @@ public enum eProp {
         pref.put(this.name(), str.trim());
     }
 
-    public static void getWin(Window window, JButton btn, ActionListener listener, JComponent... comp) {
-
-        addButtonMouseListener(btn, listener);
-
-        Preferences pref = Preferences.userNodeForPackage(window.getClass()).node(window.getClass().getSimpleName());
-
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        Dimension frameSize = window.getSize();
-
-        frameSize.height = pref.getInt("_height", window.getHeight());
-        frameSize.width = pref.getInt("_width", window.getWidth());
-
-        if (frameSize.height > screenSize.height) {
-            frameSize.height = screenSize.height;
-        }
-        if (frameSize.width > screenSize.width) {
-            frameSize.width = screenSize.width;
-        }
-
-        if (window.getClass().getSimpleName().equals("Setting")) {
-            window.setLocation(20, 100);
-        } else {
-            window.setLocation((screenSize.width - frameSize.width) / 2,
-                    (screenSize.height - frameSize.height - 48) / 2 + 48);
-        }
-        if (comp != null) {
-            for (int i = 0; i < comp.length; ++i) {
-
-                if (comp[i] instanceof JTable) {
-                    JTable tab = (JTable) comp[i];
-                    pref = pref.node(tab.getName());
-                    for (int k = 0; k < tab.getColumnCount(); ++k) {
-                        tab.getColumnModel().getColumn(k).setPreferredWidth(
-                                pref.getInt("colWidth" + k, tab.getColumnModel().getColumn(k).getPreferredWidth()));
-                    }
-                } else if (comp[i] instanceof JSplitPane) {
-                    JSplitPane split = (JSplitPane) comp[i];
-                    pref = pref.node(split.getName());
-                    int v = pref.getInt("dividerLocation", split.getDividerLocation());
-                    split.setDividerLocation(v);
-                }
-            }
-        }
-
-        window.setPreferredSize(frameSize);
-        window.pack();
-    }
-
-    public static void putWin(Window window, JButton btn, JComponent... comp) {
-        timer.stop();
-        btn.setPressedIcon(new javax.swing.ImageIcon(window.getClass().getResource("/resource/img24/c036.gif")));
-        Preferences pref = Preferences.userNodeForPackage(window.getClass()).node(window.getClass().getSimpleName());
-
-        pref.putInt("_height", window.getHeight());
-        pref.putInt("_width", window.getWidth());
-
-        if (comp != null) {
-            for (int i = 0; i < comp.length; ++i) {
-
-                if (comp[i] instanceof JTable) {
-                    JTable tab = (JTable) comp[i];
-                    pref = pref.node(tab.getName());
-                    for (int k = 0; k < tab.getColumnCount(); ++k) {
-                        pref.putInt("colWidth" + k, tab.getColumnModel().getColumn(k).getPreferredWidth());
-                    }
-
-                } else if (comp[i] instanceof JSplitPane) {
-                    JSplitPane split = (JSplitPane) comp[i];
-                    pref = pref.node(split.getName());
-                    pref.putInt("dividerLocation", split.getDividerLocation());
-                }
-            }
-        }
-    }
-
     public static String getPort(String num) {
         return (num.equals("1")) ? eProp.port1.getProp() : (num.equals("2")) ? eProp.port2.getProp() : eProp.port3.getProp();
     }
@@ -191,24 +116,5 @@ public enum eProp {
     public static void putBase(String num, String name) {
         eProp p = (num.equals("1")) ? eProp.base1 : (num.equals("2")) ? eProp.base2 : eProp.base3;
         p.putProp(name);
-    }
-
-    public static void addButtonMouseListener(JButton btn, ActionListener listener) {
-
-        btn.addMouseListener(new java.awt.event.MouseAdapter() {
-
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                for (ActionListener al : timer.getActionListeners()) {
-                    timer.removeActionListener(al);
-                }
-                timer.addActionListener(listener);
-                timer.start();
-            }
-
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                timer.stop();
-                btn.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif")));
-            }
-        });
     }
 }

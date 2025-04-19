@@ -4985,8 +4985,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     public final void initElements() {
 
         btnTest.setVisible(eProp.devel.equals("99"));
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose, split1);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose, split1);
         }, split1);
 
         panDesign.add(scene, java.awt.BorderLayout.CENTER);

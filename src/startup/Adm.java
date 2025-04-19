@@ -1621,8 +1621,8 @@ public class Adm extends javax.swing.JFrame {
 
     private void initElements() {
         
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         }); 
         appendToPane("\n", Color.GRAY);
         appendToPane("    Внимание!!! Перенос данных из ПрофСтрой-3 должен\n", Color.GRAY);

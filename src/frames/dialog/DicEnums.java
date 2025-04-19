@@ -8,6 +8,7 @@ import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
 import common.listener.ListenerRecord;
 import javax.swing.table.TableRowSorter;
+import startup.App;
 
 //Справочник наборов Tnum
 public class DicEnums extends javax.swing.JDialog {
@@ -235,8 +236,8 @@ public class DicEnums extends javax.swing.JDialog {
 
     public void initElements() {
 
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         });
     }
 }

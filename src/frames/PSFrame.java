@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.Vector;
 import javax.swing.JTable;
+import startup.App;
 import startup.Test;
 
 public class PSFrame extends javax.swing.JFrame {
@@ -506,8 +507,8 @@ public class PSFrame extends javax.swing.JFrame {
 // </editor-fold> 
     private void initElements() {
         
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         }); 
         
         tab1.setAutoCreateRowSorter(true);

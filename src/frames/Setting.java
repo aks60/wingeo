@@ -3,6 +3,7 @@ package frames;
 import common.eProp;
 import java.awt.GraphicsEnvironment;
 import javax.swing.DefaultComboBoxModel;
+import startup.App;
 
 public class Setting extends javax.swing.JFrame {
 
@@ -523,8 +524,8 @@ public class Setting extends javax.swing.JFrame {
     
     public void initElements() {
 
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         }); 
         
 //        textPane1.setBackground(new java.awt.Color(212, 208, 200));

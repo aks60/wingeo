@@ -6,6 +6,7 @@ import domain.eFurniture;
 import java.util.ArrayList;
 import common.listener.ListenerRecord;
 import java.util.Arrays;
+import startup.App;
 
 //Справочник фурнитур
 public class DicHandl extends javax.swing.JDialog {
@@ -277,8 +278,8 @@ public class DicHandl extends javax.swing.JDialog {
     
     private void initElements() {
 
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         }); 
     }
 }

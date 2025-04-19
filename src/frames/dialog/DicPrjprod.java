@@ -12,6 +12,7 @@ import frames.swing.comp.DefTableModel;
 import common.listener.ListenerRecord;
 import domain.ePrjprod;
 import java.util.Arrays;
+import startup.App;
 
 public class DicPrjprod extends javax.swing.JDialog {
 
@@ -227,8 +228,8 @@ public class DicPrjprod extends javax.swing.JDialog {
     
     public void initElements() {
 
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         }); 
     }
 }

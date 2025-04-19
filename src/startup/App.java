@@ -71,10 +71,17 @@ import frames.Syssize;
 import frames.Systree;
 import frames.PSFrame;
 import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.Window;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
+import java.util.prefs.Preferences;
+import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JSplitPane;
+import javax.swing.JTable;
+import javax.swing.Timer;
 
 public enum App {
 
@@ -83,6 +90,8 @@ public enum App {
     Specification, Syssize, RuleCalc, PSFrame, PSCompare;
     public javax.swing.JFrame frame;
     public static javax.swing.JFrame active;
+    public static Timer timer = new Timer(1000, null);
+    
 
     public static Dimension frameSize = null;
     public static java.awt.Point framePoint = null;
@@ -287,6 +296,100 @@ public enum App {
             System.err.println("Ошибка: App.createApp()");
         }
     }
+
+    public static void loadLocationWin(Window window, JButton btn, ActionListener listener, JComponent... comp) {
+
+        addButtonMouseListener(btn, listener);
+
+        Preferences pref = Preferences.userNodeForPackage(window.getClass()).node(window.getClass().getSimpleName());
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension frameSize = window.getSize();
+
+        frameSize.height = pref.getInt("_height", window.getHeight());
+        frameSize.width = pref.getInt("_width", window.getWidth());
+
+        if (frameSize.height > screenSize.height) {
+            frameSize.height = screenSize.height;
+        }
+        if (frameSize.width > screenSize.width) {
+            frameSize.width = screenSize.width;
+        }
+
+        if (window.getClass().getSimpleName().equals("Setting")) {
+            window.setLocation(20, 100);
+        } else {
+            window.setLocation((screenSize.width - frameSize.width) / 2,
+                    (screenSize.height - frameSize.height - 48) / 2 + 48);
+        }
+        if (comp != null) {
+            for (int i = 0; i < comp.length; ++i) {
+
+                if (comp[i] instanceof JTable) {
+                    JTable tab = (JTable) comp[i];
+                    pref = pref.node(tab.getName());
+                    for (int k = 0; k < tab.getColumnCount(); ++k) {
+                        tab.getColumnModel().getColumn(k).setPreferredWidth(
+                                pref.getInt("colWidth" + k, tab.getColumnModel().getColumn(k).getPreferredWidth()));
+                    }
+                } else if (comp[i] instanceof JSplitPane) {
+                    JSplitPane split = (JSplitPane) comp[i];
+                    pref = pref.node(split.getName());
+                    int v = pref.getInt("dividerLocation", split.getDividerLocation());
+                    split.setDividerLocation(v);
+                }
+            }
+        }
+
+        window.setPreferredSize(frameSize);
+        window.pack();
+    }
+
+    public static void saveLocationWin(Window window, JButton btn, JComponent... comp) {
+        timer.stop();
+        btn.setPressedIcon(new javax.swing.ImageIcon(window.getClass().getResource("/resource/img24/c036.gif")));
+        Preferences pref = Preferences.userNodeForPackage(window.getClass()).node(window.getClass().getSimpleName());
+
+        pref.putInt("_height", window.getHeight());
+        pref.putInt("_width", window.getWidth());
+
+        if (comp != null) {
+            for (int i = 0; i < comp.length; ++i) {
+
+                if (comp[i] instanceof JTable) {
+                    JTable tab = (JTable) comp[i];
+                    pref = pref.node(tab.getName());
+                    for (int k = 0; k < tab.getColumnCount(); ++k) {
+                        pref.putInt("colWidth" + k, tab.getColumnModel().getColumn(k).getPreferredWidth());
+                    }
+
+                } else if (comp[i] instanceof JSplitPane) {
+                    JSplitPane split = (JSplitPane) comp[i];
+                    pref = pref.node(split.getName());
+                    pref.putInt("dividerLocation", split.getDividerLocation());
+                }
+            }
+        }
+    }    
+ 
+    public static void addButtonMouseListener(JButton btn, ActionListener listener) {
+
+        btn.addMouseListener(new java.awt.event.MouseAdapter() {
+
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                for (ActionListener al : timer.getActionListeners()) {
+                    timer.removeActionListener(al);
+                }
+                timer.addActionListener(listener);
+                timer.start();
+            }
+
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                timer.stop();
+                btn.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif")));
+            }
+        });
+    }   
 
     //Список таблиц базы данных
     public static Field[] db = { //в порядке удаления при конвертирования из базы приёмника

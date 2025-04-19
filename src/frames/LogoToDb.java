@@ -25,7 +25,7 @@ public class LogoToDb extends javax.swing.JDialog {
             labMes.setText("ДЕМО ВЕРСИЯ");
             edUser.setText("SYSDBA"); //user
             edPass.setText("masterkey"); //pass
-        } 
+        }
         //Автопароль при тестировании
         if (eProp.devel.equals("99") == true) {
             if ("adm".equals(eProp.profile)) {
@@ -333,7 +333,7 @@ public class LogoToDb extends javax.swing.JDialog {
 // </editor-fold>
 
     public void initElements() {
-        eProp.getWin(this, btnClose, (e) -> {
+        App.loadLocationWin(this, btnClose, (e) -> {
         });
     }
 }

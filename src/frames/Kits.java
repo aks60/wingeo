@@ -756,8 +756,8 @@ public class Kits extends javax.swing.JFrame {
 // </editor-fold> 
     public void initElements() {
 
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         });
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab2);

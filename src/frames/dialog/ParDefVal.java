@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
+import startup.App;
 
 public class ParDefVal extends javax.swing.JDialog {
 
@@ -260,8 +261,8 @@ public class ParDefVal extends javax.swing.JDialog {
 
     public void initElements() {
         
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         }); 
     }
 }

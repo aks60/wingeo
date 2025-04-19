@@ -8,6 +8,7 @@ import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
+import startup.App;
 
 public class DicParlist extends javax.swing.JDialog implements ListenerFrame<Object, Object> {
 
@@ -231,8 +232,8 @@ public class DicParlist extends javax.swing.JDialog implements ListenerFrame<Obj
     
     public void initElements() {
         
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         }); 
     }
 }

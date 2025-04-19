@@ -1208,8 +1208,8 @@ public class PSCompare extends javax.swing.JFrame {
 
     private void initElements() {
 
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         }); 
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1);

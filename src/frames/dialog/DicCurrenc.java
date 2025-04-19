@@ -19,6 +19,7 @@ import frames.swing.comp.DefCellRendererNumb;
 import java.util.List;
 import report.sup.ExecuteCmd;
 import report.sup.RTable;
+import startup.App;
 
 public class DicCurrenc extends javax.swing.JDialog {
 
@@ -284,8 +285,8 @@ public class DicCurrenc extends javax.swing.JDialog {
 // </editor-fold>     
     public void initElements() {
 
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         });
         FocusListener listenerFocus = new FocusListener() {
 

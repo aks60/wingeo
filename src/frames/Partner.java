@@ -25,6 +25,7 @@ import java.util.stream.IntStream;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionListener;
+import startup.App;
 
 public class Partner extends javax.swing.JFrame {
 
@@ -1167,8 +1168,8 @@ public class Partner extends javax.swing.JFrame {
 
     public void initElements() {
         
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         }); 
 
         TableFieldFilter filterTable = new TableFieldFilter(1, tab1);

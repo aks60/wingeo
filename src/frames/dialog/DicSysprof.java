@@ -12,6 +12,7 @@ import frames.swing.comp.DefTableModel;
 import java.util.List;
 import common.listener.ListenerRecord;
 import java.util.Arrays;
+import startup.App;
 
 public class DicSysprof extends javax.swing.JDialog {
 
@@ -250,8 +251,8 @@ public class DicSysprof extends javax.swing.JDialog {
     
     public void initElements() {
 
-        eProp.getWin(this, btnClose, (e) -> {
-            eProp.putWin(this, btnClose);
+        App.loadLocationWin(this, btnClose, (e) -> {
+            App.saveLocationWin(this, btnClose);
         }); 
     }
 }

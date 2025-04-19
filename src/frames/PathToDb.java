@@ -446,7 +446,7 @@ public class PathToDb extends javax.swing.JDialog {
 // </editor-fold> 
 
     public void initElements() {
-        eProp.getWin(this, btnClose, (e) -> {
+        App.loadLocationWin(this, btnClose, (e) -> {
         });
     }
 }
