@@ -78,8 +78,9 @@ public class Connect {
     //Возобновить соединение
     public static void reconnection() throws SQLException {
         eExcep pass = eExcep.noConn;
-        try {
+        try {            
             if (connection.isClosed() == true) {
+                connection.rollback();
                 String num_base = eProp.base_num.getProp();
                 pass = Connect.connection(eProp.getServer(num_base), eProp.getPort(num_base), eProp.getBase(num_base), eProp.user.getProp(), eProp.password.toCharArray(), null);
                 if (pass == eExcep.yesConn) {

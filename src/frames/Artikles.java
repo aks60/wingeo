@@ -100,7 +100,7 @@ public class Artikles extends javax.swing.JFrame {
         loadingModel();
         loadingTree();
     }
-    
+
     public Artikles(java.awt.Window owner, Record artiklRec, ListenerRecord listener) {
         initComponents();
         initElements();
@@ -293,11 +293,13 @@ public class Artikles extends javax.swing.JFrame {
         rsvArtikl.add(eArtikl.len_unit, txt48);
 
         UGui.buttonCellEditor(tab2, 0).addActionListener(event -> {
-            DicColor frame = new DicColor(this, listenerColor, true, false);
+            Record recordDet = qArtdet.get(UGui.getIndexRec(tab2));
+            DicColor frame = new DicColor(this, listenerColor, recordDet, true, false);
         });
 
         UGui.buttonCellEditor(tab2, 1).addActionListener(event -> {
-            DicColor frame = new DicColor(this, listenerColor, true, false);
+            Record recordDet = qArtdet.get(UGui.getIndexRec(tab2));
+            DicColor frame = new DicColor(this, listenerColor, recordDet, true, false);
         });
     }
 

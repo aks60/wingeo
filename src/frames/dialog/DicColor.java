@@ -42,7 +42,7 @@ public class DicColor extends javax.swing.JDialog {
     private boolean master = false;
     private Integer[] colorArr = null;
 
-    public DicColor(Frame parent, ListenerRecord listener, boolean master, boolean remove) {
+    public DicColor(Frame parent, ListenerRecord listener, boolean master, boolean btnRemove) {
         super(parent, true);
         this.master = master;
         initComponents();
@@ -51,11 +51,36 @@ public class DicColor extends javax.swing.JDialog {
         initElements();
         this.listener = listener;
         loadingModel();
-        btnRemove.setVisible(remove);
+        this.btnRemove.setVisible(btnRemove);
         setVisible(true);
     }
 
-    public DicColor(Frame parent, ListenerRecord listener, HashSet<Record> colorSet, boolean remove, boolean auto) {
+    public DicColor(Frame parent, ListenerRecord listener, Record colorDet, boolean master, boolean btnRemove) {
+        super(parent, true);
+        this.master = master;
+        initComponents();
+        qColgrp.sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_GRP.id).sort(eGroups.npp, eGroups.name);
+        qColorAll.sql(eColor.data(), eColor.up).sort(eColor.name);
+        initElements();
+        this.listener = listener;
+        loadingModel();
+        this.btnRemove.setVisible(btnRemove);
+        if (colorDet.get(eArtdet.color_fk) != null) {
+            if (colorDet.getInt(eArtdet.color_fk) < 0) {
+                UGui.setSelectedKey(tab1, colorDet.getInt(eArtdet.color_fk));
+            } else {
+                for (Record record : qColorAll) {
+                    if (record.getInt(eColor.id) == colorDet.getInt(eArtdet.color_fk)) {
+                        UGui.setSelectedKey(tab1, record.getInt(eColor.groups_id));
+                    }
+                }
+                UGui.setSelectedKey(tab2, colorDet.getInt(eArtdet.color_fk));
+            }
+        }
+        setVisible(true);
+    }
+
+    public DicColor(Frame parent, ListenerRecord listener, HashSet<Record> colorSet, boolean btnRemove, boolean auto) {
         super(parent, true);
         initComponents();
         initElements();
@@ -63,33 +88,10 @@ public class DicColor extends javax.swing.JDialog {
         qColorAll.addAll(colorSet);
         loadingData(colorSet, auto);
         loadingModel();
-        btnRemove.setVisible(remove);
+        this.btnRemove.setVisible(btnRemove);
         setVisible(true);
     }
 
-//    public DicColor(Frame parent, ListenerRecord listener, HashSet<Record> colorSet, String colorTxt, boolean remove, boolean auto) {
-//        super(parent, true);
-//        initComponents();
-//        initElements();
-//        this.listener = listener;
-//        this.colorArr = UCom.parserInt(colorTxt);
-//
-//        if (colorArr.length != 0) {
-//            for (Record rec : colorSet) {
-//                for (int i = 0; i < colorArr.length; i = i + 2) { //тестуры
-//                    if (rec.getInt(eColor.code) >= colorArr[i] && rec.getInt(eColor.code) <= colorArr[i + 1]) {
-//                        qColorAll.add(rec);
-//                    }
-//                }
-//            }
-//        } else {
-//            qColorAll.addAll(colorSet);
-//        }
-//        loadingData(colorSet, auto);
-//        loadingModel();
-//        btnRemove.setVisible(remove);
-//        setVisible(true);
-//    }
     private void loadingData(HashSet<Record> colorSet, boolean auto) {
 
         Query colgrpList = new Query(eGroups.values()).sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_GRP.id).sort(eGroups.npp, eGroups.name);
@@ -426,7 +428,7 @@ public class DicColor extends javax.swing.JDialog {
 
         App.loadLocationWin(this, btnClose, (e) -> {
             App.saveLocationWin(this, btnClose);
-        }); 
+        });
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1, tab2);
         south.add(filterTable, 0);
