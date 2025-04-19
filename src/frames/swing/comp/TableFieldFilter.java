@@ -59,7 +59,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
                             fintPreName(table, indexColumn);
                         }
                     } catch (Exception e) {
-                        System.err.println("Œÿ»¡ ¿:swing.FilterTable.mousePressed() " + e);
+                        System.err.println("Œ¯Ë·Í‡:FilterTable.mousePressed() " + e);
                     }
                 }
             });
@@ -75,28 +75,38 @@ public class TableFieldFilter extends javax.swing.JPanel {
     }
 
     private void fintPreName(JTable table, int column) {
-        Set<String> set1 = new HashSet<String>();
-        Set<String> set2 = new HashSet<String>();
-        Set<String> set3 = new HashSet<String>();
-        for (int i = 0; i < table.getRowCount(); i++) {
-            set1.add(String.valueOf(table.getValueAt(i, column)).substring(0, 1));
-            set2.add(String.valueOf(table.getValueAt(i, column)).substring(0, 2));
-            set3.add(String.valueOf(table.getValueAt(i, column)).substring(0, 3));
-        }
-        Set<String> set = (set3.size() < 36) ? set3 : (set2.size() < 46) ? set2 : set1;
-        ArrayList<String> list = new ArrayList<String>(set);
-        Collections.sort(list, (a, b) -> a.compareToIgnoreCase(b));
-        ppmCateg.removeAll();
-        for (String string : list) {
-            JMenuItem jmi = ppmCateg.add(string);
-            jmi.setMinimumSize(new Dimension(60, 20));
-            jmi.setPreferredSize(new Dimension(60, 20));
-            jmi.setFont(frames.UGui.getFont(1, 0));
-            jmi.addActionListener((evt) -> {
-                JMenuItem mi = (JMenuItem) evt.getSource();
-                txtFilter.setText(mi.getText());
-            });
-            UGui.scrollRectToRow(UGui.getIndexRec(table), table);
+        try {
+            Set<String> set1 = new HashSet<String>();
+            Set<String> set2 = new HashSet<String>();
+            Set<String> set3 = new HashSet<String>();
+            for (int i = 0; i < table.getRowCount(); i++) {
+                if (table.getValueAt(i, column) != null) {
+                    set1.add(String.valueOf(table.getValueAt(i, column)).substring(0, 1));
+                    String val = String.valueOf(table.getValueAt(i, column));
+                    
+                    if (val.length() > 1) {
+                        set2.add(val.substring(0, 2));
+                    }
+                    if (val.length() > 2) {
+                        set3.add(val.substring(0, 3));
+                    }
+                }
+            }
+            Set<String> set = (set3.size() < 40) ? set3 : (set2.size() < 50) ? set2 : set1;
+            ArrayList<String> list = new ArrayList<String>(set);
+            Collections.sort(list, (a, b) -> a.compareToIgnoreCase(b));
+            ppmCateg.removeAll();
+            for (String string : list) {
+                JMenuItem jmi = ppmCateg.add(string);
+                jmi.setPreferredSize(new Dimension(60, 16));
+                jmi.setFont(frames.UGui.getFont(1, 0));
+                jmi.addActionListener((evt) -> {
+                    JMenuItem mi = (JMenuItem) evt.getSource();
+                    txtFilter.setText(mi.getText());
+                });
+            }
+        } catch (Exception e) {
+            System.err.println("Œ¯Ë·Í‡:TableFieldFilter.fintPreName() " + e);
         }
     }
 
@@ -258,7 +268,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Œÿ»¡ ¿:swing.FilterTable.txtCaretUpdate() " + e);
+            System.err.println("Œ¯Ë·Í‡:FilterTable.txtCaretUpdate() " + e);
         }
     }//GEN-LAST:event_txtCaretUpdate
 
@@ -278,7 +288,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
             }
             UGui.scrollRectToRow(table.getSelectedRow() - 1, table);
         } catch (Exception e) {
-            System.err.println("ERROR");
+            System.err.println("Œ¯Ë·Í‡:FilterTable.btn1ActiPerf() " + e);
         }
     }//GEN-LAST:event_btn1ActiPerf
 
@@ -293,7 +303,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
                         txtFilter.setText(t.getTransferData(DataFlavor.stringFlavor).toString());
                     }
                 } catch (UnsupportedFlavorException | IOException ex) {
-                    System.err.println("frames.swing.TableFilter.btn2ActiPerf()");
+                    System.err.println("Œ¯Ë·Í‡:TableFilter.btn2ActiPerf()");
                 }
             } else {
                 btn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b041.gif")));
@@ -301,7 +311,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
                 txtFilter.setText("");
             }
         } catch (Exception e) {
-            System.err.println("ERROR");
+            System.err.println("Œ¯Ë·Í‡:TableFilter.btn2ActiPerf()");
         }
     }//GEN-LAST:event_btn2ActiPerf
 
