@@ -365,13 +365,22 @@ public class DicArtikl2 extends javax.swing.JDialog {
 
     private void btnArtmn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArtmn94
         dispose();
-        Record record = ((DefTableModel) tab1.getModel()).getQuery().get(UGui.getIndexRec(tab1));
-        Record record2 = eArtikl.find(record.getInt(eArtikl.id), false);
-        ProgressBar.create(DicArtikl2.this.getOwner(), new ListenerFrame() {
-            public void actionRequest(Object obj) {
-                App.Artikles.createFrame(DicArtikl2.this.getOwner(), record2, listener);
-            }
-        });
+        int index = UGui.getIndexRec(tab1);
+        if (index != -1) {
+            Record record = ((DefTableModel) tab1.getModel()).getQuery().get(UGui.getIndexRec(tab1));
+            Record record2 = eArtikl.find(record.getInt(eArtikl.id), false);
+            ProgressBar.create(DicArtikl2.this.getOwner(), new ListenerFrame() {
+                public void actionRequest(Object obj) {
+                    App.Artikles.createFrame(DicArtikl2.this.getOwner(), record2, listener);
+                }
+            });
+        } else {
+            ProgressBar.create(DicArtikl2.this.getOwner(), new ListenerFrame() {
+                public void actionRequest(Object obj) {
+                    App.Artikles.createFrame(DicArtikl2.this.getOwner(), listener);
+                }
+            });
+        }
     }//GEN-LAST:event_btnArtmn94
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 

@@ -610,15 +610,23 @@ public class UGui {
                 listener.action(recordClon);
             }
             up.query().add(recordClon);  //добавим запись в кэш
-            int index2 = (query.size() > index) ? ++index : index;
+            
+            //Создадим клоны ведомых qQuery если есть
+            int index2 = (query.size() > index) ? index + 1 : index;
             for (Map.Entry<String, Query> it : query.mapQuery().entrySet()) {
                 if (it.getValue() != query) {
-                    Record recClon = (Record) it.getValue().get(index2).clone();
-                    it.getValue().add(index2, recClon);
+                    Query que = it.getValue();
+                    Record recClon = (Record) que.get(index).clone();
+                    it.getValue().add(index, recClon);
                 }
             }                        
-            query.add(index2, recordClon);
+            if(query.size() > index) {
+               query.add(index2, recordClon); 
+            } else {
+               query.add(recordClon);  
+            }
             query.insert(recordClon);
+            
 
             ((DefaultTableModel) table.getModel()).fireTableRowsInserted(index2, index2);
             UGui.setSelectedIndex(table, index2);

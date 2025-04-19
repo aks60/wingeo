@@ -643,7 +643,7 @@ public class ParamList {
     };
 
     public static Dictionary dic_31002 = () -> {
-        return List.of("прямой", "кривой");
+        return List.of("прямой", "кривой", "арочный");
     };
 
     public static Dictionary dic_31051 = () -> {
