@@ -131,6 +131,7 @@ public class Tex extends javax.swing.JFrame {
         btnT7 = new javax.swing.JToggleButton();
         btnT8 = new javax.swing.JToggleButton();
         btnT9 = new javax.swing.JToggleButton();
+        btnSave = new javax.swing.JButton();
         tb4 = new javax.swing.JToolBar();
         btnTest = new javax.swing.JButton();
         btn42 = new javax.swing.JButton();
@@ -503,7 +504,7 @@ public class Tex extends javax.swing.JFrame {
         tb6.setRollover(true);
         tb6.setMaximumSize(new java.awt.Dimension(96, 28));
         tb6.setMinimumSize(new java.awt.Dimension(96, 28));
-        tb6.setPreferredSize(new java.awt.Dimension(94, 28));
+        tb6.setPreferredSize(new java.awt.Dimension(120, 28));
 
         buttonBaseGroup1.add(btnT7);
         btnT7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c057.gif"))); // NOI18N
@@ -546,6 +547,22 @@ public class Tex extends javax.swing.JFrame {
             }
         });
         tb6.add(btnT9);
+
+        btnSave.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c070.gif"))); // NOI18N
+        btnSave.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 204)));
+        btnSave.setFocusable(false);
+        btnSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSave.setMaximumSize(new java.awt.Dimension(26, 28));
+        btnSave.setMinimumSize(new java.awt.Dimension(26, 28));
+        btnSave.setPreferredSize(new java.awt.Dimension(26, 28));
+        btnSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSave(evt);
+            }
+        });
+        tb6.add(btnSave);
 
         getContentPane().add(tb6);
 
@@ -1167,6 +1184,10 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
         }
     }//GEN-LAST:event_mnReConnect
 
+    private void btnSave(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave
+        UGui.stopCellEditingAndExecSql();
+    }//GEN-LAST:event_btnSave
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn11;
@@ -1189,6 +1210,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     private javax.swing.JButton btn51;
     private javax.swing.JButton btn52;
     private javax.swing.JButton btn53;
+    private javax.swing.JButton btnSave;
     private javax.swing.JToggleButton btnT7;
     private javax.swing.JToggleButton btnT8;
     private javax.swing.JToggleButton btnT9;

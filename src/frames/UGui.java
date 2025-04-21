@@ -183,6 +183,22 @@ public class UGui {
         ).collect(Collectors.toList());
     }
 
+
+    //Выключить режим редактирования
+    public static void stopCellEditing(JComponent... compList) {
+        for (JComponent comp : compList) {
+            if (comp instanceof JTable) {
+                if (((JTable) comp).isEditing()) {
+                    ((JTable) comp).getCellEditor().stopCellEditing();
+                }
+            } else if (comp instanceof JTree) {
+                if (((JTree) comp).isEditing()) {
+                    ((JTree) comp).getCellEditor().stopCellEditing();
+                }
+            }
+        }
+    }
+    
     public static void stopCellEditingAndExecSql() {
         for (App app : App.values()) {
             if (app.frame != null) {
@@ -786,21 +802,6 @@ public class UGui {
         JButton btn = new JButton("...");
         table.getColumnModel().getColumn(column).setCellEditor(new DefCellEditorBtn(listenerCell, btn));
         return btn;
-    }
-
-    //Выключить режим редактирования
-    public static void stopCellEditing(JComponent... compList) {
-        for (JComponent comp : compList) {
-            if (comp instanceof JTable) {
-                if (((JTable) comp).isEditing()) {
-                    ((JTable) comp).getCellEditor().stopCellEditing();
-                }
-            } else if (comp instanceof JTree) {
-                if (((JTree) comp).isEditing()) {
-                    ((JTree) comp).getCellEditor().stopCellEditing();
-                }
-            }
-        }
     }
 
     //Редактирование параметров ячейки
