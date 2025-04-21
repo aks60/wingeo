@@ -68,7 +68,9 @@ public class ElementVar extends Par5s {
                 case 31002:  //Если профиль 
                     if ("арочный".equals(rec.getStr(TEXT)) == true && elem5e.area.getNumPoints() < Com5t.MAXSIDE) {
                         return false;
-                    } else if ("прямой".equals(rec.getStr(TEXT)) == true && elem5e.area.getNumPoints() > Com5t.MAXSIDE) {
+                    } else if ("прямой".equals(rec.getStr(TEXT)) == true && elem5e.area.getNumPoints() == 5) {
+                        return false;
+                    } else if ("кривой".equals(rec.getStr(TEXT)) == true && elem5e.area.getNumPoints() < 6) {
                         return false;
                     }
                     break;
