@@ -250,7 +250,7 @@ public class Kits extends javax.swing.JFrame {
             UGui.stopCellEditing(tab1, tab2, tab3, tab4);
             if (tab3.getBorder() != null) {
                 int index = UGui.getIndexRec(tab3);
-                qKitdet.set(record.getInt(eArtikl.id), UGui.getIndexRec(tab3), eKitdet.artikl_id);
+                qKitdet.set(record.getInt(eArtikl.id), index, eKitdet.artikl_id);
                 UGui.fireTableRowUpdated(tab3);
             }
         };

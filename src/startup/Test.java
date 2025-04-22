@@ -93,7 +93,7 @@ public class Test {
 
         eProp.devel = "99";
         try {
-            //clearDataDB();
+            //clearDB();
             //PSConvert.exec();
             //frame();
             //wincalc("min");
@@ -422,9 +422,9 @@ public class Test {
 //        Test.init(intersection);
     }
 
-    public static void clearDataDB() {
+    public static void clearDB() {
 
-        if (JOptionPane.showConfirmDialog(null, "сдюкемхе дюммшу б аюге ╧ " + eProp.base_num.getProp(), "сдюкемхе",
+        if (JOptionPane.showConfirmDialog(null, "янгдюмхе яйпхорю хг ад ╧ " + eProp.base_num.getProp(), "яйпхор сдюкемхъ дюммшу",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             for (Field field : App.db) {
                 if (field.tname().equals("GROUPS") == true) {

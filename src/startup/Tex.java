@@ -201,7 +201,7 @@ public class Tex extends javax.swing.JFrame {
         ppmSpecif.add(spcProduct);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("ГеоОкна   <АРМ Технолог>");
+        setTitle("SA-OKNA   <АРМ Технолог>");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
