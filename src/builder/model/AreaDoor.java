@@ -20,16 +20,17 @@ public class AreaDoor extends AreaSimple {
     public void setLocation() {
         try {
             //Вершины рамы
-            ArrayList<Coordinate> coo = new ArrayList<Coordinate>();
-            this.frames.forEach(frame -> coo.add(new Coordinate(frame.x1(), frame.y1(), frame.id)));
-            coo.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
+            ArrayList<Coordinate> cooBox = new ArrayList<Coordinate>();
+            this.frames.forEach(frame -> cooBox.add(new Coordinate(frame.x1(), frame.y1(), frame.id)));
+            cooBox.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
 
             //Аrea рамы
-            Polygon geoShell = gf.createPolygon(coo.toArray(new Coordinate[0]));  
+            Polygon geoShell = gf.createPolygon(cooBox.toArray(new Coordinate[0]));  
             Polygon geoInner = Com5t.buffer(geoShell, winc.listElem, 0, 0);
             Polygon geoFalz = Com5t.buffer(geoShell, winc.listElem, 0, 1);
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});            
 
+            //Test.init(this.area);
         } catch (Exception e) {
             System.err.println("Ошибка:AreaDoor.setLocation" + toString() + e);
         }
