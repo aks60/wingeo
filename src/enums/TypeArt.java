@@ -96,7 +96,7 @@ public enum TypeArt {
     X590(5, 90, "Специальный тип (!)"),
     X599(5, 99, "Фиксированный блок"),
     X600(6, 0, "Наборы"),
-    X601(6, 1, "Фурнитура"); 
+    X601(6, 1, "Фурнитура");
 
     public int id1 = 0;
     public int id2 = 0;
@@ -124,8 +124,10 @@ public enum TypeArt {
         return false;
     }
 
-    public static TypeArt find(Record record) {
-        return Arrays.stream(values()).filter(el -> (el.id1 == record.getInt(eArtikl.level1) && el.id2 == record.getInt(eArtikl.level2))).findFirst().orElse(X100);
+    public static String find(Record record) {
+        TypeArt typeArt1 = Arrays.stream(values()).filter(el -> (el.id1 == record.getInt(eArtikl.level1) && el.id2 == 0)).findFirst().orElse(X100);
+        TypeArt typeArt2 = Arrays.stream(values()).filter(el -> (el.id1 == record.getInt(eArtikl.level1) && el.id2 == record.getInt(eArtikl.level2))).findFirst().orElse(X100);
+        return  " " +  typeArt1.name +  " / " + typeArt2.name;
     }
 
     public static String find(int _id1, int _id2) {

@@ -355,6 +355,7 @@ public class Artikles extends javax.swing.JFrame {
             lab2.setText(" id: " + id);
             qArtdet.sql(eArtdet.data(), eArtdet.artikl_id, id);
             rsvArtikl.load();
+            lab12.setText(TypeArt.find(record));
             checkBox1.setSelected((record.getInt(eArtikl.with_seal) == 1));
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab2);
@@ -736,8 +737,8 @@ public class Artikles extends javax.swing.JFrame {
         scr2 = new javax.swing.JScrollPane();
         tab2 = new javax.swing.JTable();
         pan10 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lab11 = new javax.swing.JLabel();
+        lab12 = new javax.swing.JLabel();
         south = new javax.swing.JPanel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(4, 0), new java.awt.Dimension(4, 32767));
         lab1 = new javax.swing.JLabel();
@@ -2389,13 +2390,15 @@ public class Artikles extends javax.swing.JFrame {
         pan10.setPreferredSize(new java.awt.Dimension(981, 20));
         pan10.setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setText("                                                         Текстуры артикулов");
-        pan10.add(jLabel1, java.awt.BorderLayout.CENTER);
+        lab11.setFont(frames.UGui.getFont(0,0));
+        lab11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lab11.setText("                                                              " + java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale).getString("Title.Текстуры артикулов")); // NOI18N
+        lab11.setAlignmentX(200.0F);
+        pan10.add(lab11, java.awt.BorderLayout.CENTER);
 
-        jLabel2.setText("jLabel2/erterte/fgfghfgh");
-        jLabel2.setPreferredSize(pan4.getPreferredSize());
-        pan10.add(jLabel2, java.awt.BorderLayout.WEST);
+        lab12.setText("Мат. ценности/");
+        lab12.setPreferredSize(pan4.getPreferredSize());
+        pan10.add(lab12, java.awt.BorderLayout.WEST);
 
         pan3.add(pan10, java.awt.BorderLayout.NORTH);
 
@@ -2829,9 +2832,9 @@ public class Artikles extends javax.swing.JFrame {
     private javax.swing.JMenuItem groups3_id;
     private javax.swing.JMenuItem groups4_id;
     private javax.swing.JMenuItem height;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lab1;
+    private javax.swing.JLabel lab11;
+    private javax.swing.JLabel lab12;
     private javax.swing.JLabel lab13;
     private javax.swing.JLabel lab14;
     private javax.swing.JLabel lab15;
