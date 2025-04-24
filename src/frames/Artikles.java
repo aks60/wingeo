@@ -2389,10 +2389,11 @@ public class Artikles extends javax.swing.JFrame {
         pan10.setPreferredSize(new java.awt.Dimension(981, 20));
         pan10.setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setText("jLabel1");
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel1.setText("                                                         Текстуры артикулов");
         pan10.add(jLabel1, java.awt.BorderLayout.CENTER);
 
-        jLabel2.setText("jLabel2");
+        jLabel2.setText("jLabel2/erterte/fgfghfgh");
         jLabel2.setPreferredSize(pan4.getPreferredSize());
         pan10.add(jLabel2, java.awt.BorderLayout.WEST);
 

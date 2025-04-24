@@ -4200,7 +4200,8 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="jLabel1">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel1"/>
+                    <Property name="horizontalAlignment" type="int" value="2"/>
+                    <Property name="text" type="java.lang.String" value="                                                         &#x422;&#x435;&#x43a;&#x441;&#x442;&#x443;&#x440;&#x44b; &#x430;&#x440;&#x442;&#x438;&#x43a;&#x443;&#x43b;&#x43e;&#x432;"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
@@ -4210,7 +4211,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel2">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel2"/>
+                    <Property name="text" type="java.lang.String" value="jLabel2/erterte/fgfghfgh"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection component="pan4" name="preferredSize" type="property"/>
                     </Property>
