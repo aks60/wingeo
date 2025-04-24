@@ -735,6 +735,9 @@ public class Artikles extends javax.swing.JFrame {
         pan3 = new javax.swing.JPanel();
         scr2 = new javax.swing.JScrollPane();
         tab2 = new javax.swing.JTable();
+        pan10 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         south = new javax.swing.JPanel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(4, 0), new java.awt.Dimension(4, 32767));
         lab1 = new javax.swing.JLabel();
@@ -2323,7 +2326,7 @@ public class Artikles extends javax.swing.JFrame {
         pan3.setPreferredSize(new java.awt.Dimension(800, 300));
         pan3.setLayout(new java.awt.BorderLayout());
 
-        scr2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Текстуры артикулов", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr2.setBorder(null);
 
         tab2.setFont(frames.UGui.getFont(0,0));
         tab2.setModel(new javax.swing.table.DefaultTableModel(
@@ -2382,6 +2385,18 @@ public class Artikles extends javax.swing.JFrame {
         }
 
         pan3.add(scr2, java.awt.BorderLayout.CENTER);
+
+        pan10.setPreferredSize(new java.awt.Dimension(981, 20));
+        pan10.setLayout(new java.awt.BorderLayout());
+
+        jLabel1.setText("jLabel1");
+        pan10.add(jLabel1, java.awt.BorderLayout.CENTER);
+
+        jLabel2.setText("jLabel2");
+        jLabel2.setPreferredSize(pan4.getPreferredSize());
+        pan10.add(jLabel2, java.awt.BorderLayout.WEST);
+
+        pan3.add(pan10, java.awt.BorderLayout.NORTH);
 
         center.add(pan3);
 
@@ -2813,6 +2828,8 @@ public class Artikles extends javax.swing.JFrame {
     private javax.swing.JMenuItem groups3_id;
     private javax.swing.JMenuItem groups4_id;
     private javax.swing.JMenuItem height;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lab1;
     private javax.swing.JLabel lab13;
     private javax.swing.JLabel lab14;
@@ -2858,6 +2875,7 @@ public class Artikles extends javax.swing.JFrame {
     private javax.swing.JMenuItem mInsert;
     private javax.swing.JMenuItem mInsert2;
     private javax.swing.JPanel north;
+    private javax.swing.JPanel pan10;
     private javax.swing.JPanel pan100;
     private javax.swing.JPanel pan101;
     private javax.swing.JPanel pan102;
