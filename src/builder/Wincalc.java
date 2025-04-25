@@ -67,8 +67,9 @@ public class Wincalc {
     public boolean sceleton = false;
     public GsonRoot gson = null; //объектная модель конструкции 1-го уровня
     public AreaSimple root = null; //объектная модель конструкции 2-го уровня    
-    
-    public ListenerAction actionEvent = () -> {};
+
+    public ListenerAction actionEvent = () -> {
+    };
     public ArrayList<ListenerKey> keyboardPressed = new ArrayList<ListenerKey>();
     public ArrayList<ListenerMouse> mousePressed = new ArrayList<ListenerMouse>();
     public ArrayList<ListenerMouse> mouseDragged = new ArrayList<ListenerMouse>();
@@ -195,21 +196,45 @@ public class Wincalc {
     //Кальк.коорд. элементов конструкции
     public void location() {
         try {
-            listElem.forEach(e -> e.initArtikle());
+            if (root instanceof AreaDoor == false) {
+                listElem.forEach(e -> e.initArtikle());
 
-            root.setLocation();
-            UCom.filterNo(listElem, Type.GLASS).forEach(e -> e.setLocation());
-            UCom.filterNo(listArea, Type.STVORKA).forEach(e -> e.setLocation());
+                root.setLocation();
+                UCom.filterNo(listElem, Type.GLASS).forEach(e -> e.setLocation());
+                UCom.filterNo(listArea, Type.STVORKA).forEach(e -> e.setLocation());
 
-            UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).addStvorka());
-            UCom.filter(listArea, Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
-            UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
+                UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).addStvorka());
+                UCom.filter(listArea, Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
+                UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
+                UCom.filter(listElem, Type.STV_SIDE).forEach(e -> e.setLocation());
 
-            UCom.filter(listElem, Type.STV_SIDE, Type.GLASS).forEach(e -> e.setLocation());
+                UCom.filter(listElem,  Type.GLASS).forEach(e -> e.setLocation());
 
-            root.addJoining();  //L и T соединения
-            UCom.filter(listArea, Type.STVORKA).forEach(e -> e.addJoining()); //прил. соед.
+                root.addJoining();  //L и T соединения
+                UCom.filter(listArea, Type.STVORKA).forEach(e -> e.addJoining()); //прил. соед.
 
+            } else if (root instanceof AreaDoor == true) {
+                listElem.forEach(e -> e.initArtikle());
+
+                root.setLocation();
+                UCom.filterNo(listElem, Type.GLASS).forEach(e -> e.setLocation());
+//                for (AreaSimple areaSimple : listArea) {
+//                    if(areaSimple instanceof AreaStvorka == false) {
+//                        areaSimple.setLocation();
+//                    }
+//                }
+                UCom.filterNo(listArea, Type.STVORKA).forEach(e -> e.setLocation());
+
+                UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).addStvorka());
+                UCom.filter(listArea, Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
+                UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
+                UCom.filter(listElem, Type.STV_SIDE).forEach(e -> e.setLocation());
+
+                UCom.filter(listElem, Type.GLASS).forEach(e -> e.setLocation());
+
+                root.addJoining();  //L и T соединения
+                UCom.filter(listArea, Type.STVORKA).forEach(e -> e.addJoining()); //прил. соед.              
+            }
         } catch (Exception s) {
             System.err.println("Ошибка:Wincalc.location() " + s);
         }
