@@ -203,7 +203,7 @@ public class Wincalc {
                 UCom.filterNo(listElem, Type.GLASS).forEach(e -> e.setLocation());
                 UCom.filterNo(listArea, Type.STVORKA).forEach(e -> e.setLocation());
 
-                UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).addStvorka());
+                UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).addStvSide());
                 UCom.filter(listArea, Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
                 UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
                 UCom.filter(listElem, Type.STV_SIDE).forEach(e -> e.setLocation());
@@ -214,23 +214,25 @@ public class Wincalc {
                 UCom.filter(listArea, Type.STVORKA).forEach(e -> e.addJoining()); //прил. соед.
 
             } else if (root instanceof AreaDoor == true) {
+                
+                
                 listElem.forEach(e -> e.initArtikle());
 
                 root.setLocation();
-                UCom.filterNo(listElem, Type.GLASS).forEach(e -> e.setLocation());
-//                for (AreaSimple areaSimple : listArea) {
-//                    if(areaSimple instanceof AreaStvorka == false) {
-//                        areaSimple.setLocation();
-//                    }
-//                }
+
+                UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).addStvSide());
+                UCom.filter(listArea, Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
+                
+                UCom.filterNo(listElem, Type.IMPOST, Type.GLASS).forEach(e -> e.setLocation());
+ 
                 UCom.filterNo(listArea, Type.STVORKA).forEach(e -> e.setLocation());
 
-                UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).addStvorka());
-                UCom.filter(listArea, Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
+                //UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).addStvSide());
+               // UCom.filter(listArea, Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
                 UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
                 UCom.filter(listElem, Type.STV_SIDE).forEach(e -> e.setLocation());
 
-                UCom.filter(listElem, Type.GLASS).forEach(e -> e.setLocation());
+                UCom.filter(listElem,  Type.GLASS).forEach(e -> e.setLocation());
 
                 root.addJoining();  //L и T соединения
                 UCom.filter(listArea, Type.STVORKA).forEach(e -> e.addJoining()); //прил. соед.              

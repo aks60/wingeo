@@ -61,7 +61,7 @@ public class AreaStvorka extends AreaSimple {
         initArtikle(gson.param);
     }
 
-    public void addStvorka() {
+    public void addStvSide() {
         if (this.frames.isEmpty()) {
             //owner.area - если нет полигона створки в гл.окне 
             //this.area  - получатется при распиле owner.area импостом
