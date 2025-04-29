@@ -4612,12 +4612,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             GsonElem gsonGlass = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t().gson;
             GsonElem gsonStvorka = new GsonElem(enums.Type.STVORKA);
             gsonStvorka.addArea(new GsonElem(enums.Type.GLASS));
-            gsonStvorka.owner = gsonGlass.owner.owner;
+            gsonStvorka.owner = gsonGlass.owner;
 
-            if (gsonGlass.owner.owner instanceof GsonRoot) {
-                for (int i = 0; i < gsonGlass.owner.owner.childs.size(); ++i) {
-                    if (gsonGlass.owner.owner.childs.get(i).id == gsonGlass.owner.id) {
-                        gsonGlass.owner.owner.childs.set(i, gsonStvorka);
+            if (gsonGlass.owner instanceof GsonRoot) {
+                for (int i = 0; i < gsonGlass.owner.childs.size(); ++i) {
+                    if (gsonGlass.owner.childs.get(i).id == gsonGlass.id) {
+                        gsonGlass.owner.childs.set(i, gsonStvorka);
                     }
                 }
             } else {
