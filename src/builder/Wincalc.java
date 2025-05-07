@@ -199,6 +199,7 @@ public class Wincalc {
             listElem.forEach(e -> e.initArtikle());
             root.setLocation();
 
+            //Исключая импост створки т.к. ств. ещё не создана
             for (ElemSimple elem : listElem) {
                 if (elem instanceof ElemFrame) {
                     elem.setLocation();
@@ -206,6 +207,7 @@ public class Wincalc {
                     elem.setLocation();
                 }
             }
+            //Исключая створку т.к. она не создана
             for (AreaSimple area : listArea) {
                 if (area.id != 0.0) {
                     if (area instanceof AreaStvorka == false && area.owner instanceof AreaStvorka == false) {
@@ -214,6 +216,7 @@ public class Wincalc {
                 }
             }
 
+            //Создание створки
             UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).addStvSide());
             UCom.filter(listArea, Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
             UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
