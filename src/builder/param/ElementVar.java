@@ -68,12 +68,18 @@ public class ElementVar extends Par5s {
                 case 31002:  //Если профиль 
                     if ("арочный".equals(rec.getStr(TEXT)) == true && elem5e.area.getNumPoints() < Com5t.MAXSIDE) {
                         return false;
-                    } else if ("прямой".equals(rec.getStr(TEXT)) == true && elem5e.area.getNumPoints() == 5) {
-                        return false;
-                    } else if ("кривой".equals(rec.getStr(TEXT)) == true && elem5e.area.getNumPoints() < 6) {
+                    } else if ("прямой".equals(rec.getStr(TEXT)) == true && elem5e.area.getNumPoints() > Com5t.MAXSIDE) {
                         return false;
                     }
-                    break;
+                    break;                     
+//                    if ("арочный".equals(rec.getStr(TEXT)) == true && elem5e.area.getNumPoints() < Com5t.MAXSIDE) {
+//                        return false;
+//                    } else if ("прямой".equals(rec.getStr(TEXT)) == true && elem5e.area.getNumPoints() == 5) {
+//                        return false;
+//                    } else if ("кривой".equals(rec.getStr(TEXT)) == true && elem5e.area.getNumPoints() < 6) {
+//                        return false;
+//                    }
+//                    break;
                 case 31003:  //Если сосединенный артикул  T-обр.
                     if (rec.getStr(TEXT).equals(UCom.elem(winc.listJoin, elem5e, 0).artiklRecAn.getStr(eArtikl.code)) == true) {
                         if (UCom.join(winc.listJoin, elem5e, 0).type() != TypeJoin.TIMP && UCom.join(winc.listJoin, elem5e, 0).type() != TypeJoin.TCON) {
