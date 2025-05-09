@@ -18,9 +18,9 @@ import java.util.HashMap;
 
 public class WincalcTest {
 
-    public static Wincalc iwin2 = null; //601004
-    public static Wincalc iwin3 = null; //604005
-    public static Wincalc iwin4 = null; //700027
+    public static Wincalc iwin2 = null; //601004 //прямоугольное
+    public static Wincalc iwin3 = null; //604005 //арка
+    public static Wincalc iwin4 = null; //700027 //штульповое
 
     public static HashMap<Integer, String> hmParam = new HashMap<Integer, String>();
     public static int grup = -1;
