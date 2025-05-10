@@ -23,7 +23,7 @@ public class LogoToDb extends javax.swing.JDialog {
 
         if (eProp.devel.equals("00") == true) {
             labMes.setText("ДЕМО ВЕРСИЯ");
-            edUser.setText("SYSDBA"); //user
+            edUser.setText("TEXNOLOG"); //user
             edPass.setText("masterkey"); //pass
         }
         //Автопароль при тестировании
