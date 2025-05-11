@@ -12,6 +12,7 @@ import static builder.param.check.WincalcTest.furnitureVar3;
 import static builder.param.check.WincalcTest.furnitureDet3;
 
 import static builder.param.check.WincalcTest.furnitureDet4;
+import static builder.param.check.WincalcTest.frame2_left;
 import static builder.param.check.WincalcTest.frame3_left;
 import static builder.param.check.WincalcTest.iwin3;
 import static builder.param.check.WincalcTest.stv2_left_3;
@@ -29,10 +30,10 @@ public class FurnitureTest {
         try {
             //TODO Test - Форма контура
             grup = 21001; //Форма контура //eElement.find4(212)
-            //assert true == furnitureVar2.check(iwin3.root, param("прямоугольная", grup)) : grup;
-            assert false == furnitureVar3.check(null, param("прямоугольная", grup)) : grup;
-            assert true == furnitureVar3.check(null, param("арочная", grup)) : grup;
-            assert false == furnitureVar3.check(null, param("не арочная", grup)) : grup;
+            assert true == furnitureVar2.check(frame2_left, param("прямоугольная", grup)) : grup;
+            assert false == furnitureVar3.check(frame3_left, param("прямоугольная", grup)) : grup;
+            assert true == furnitureVar3.check(frame3_left, param("арочная", grup)) : grup;
+            assert false == furnitureVar3.check(frame3_left, param("не арочная", grup)) : grup;
 
             grup = 21004;  //Артикул створки 
             assert true == furnitureVar2.check(null, param("917", grup)) : grup;

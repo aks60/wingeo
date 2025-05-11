@@ -352,7 +352,7 @@ public class Setting extends javax.swing.JFrame {
         textPane1.setEditable(false);
         textPane1.setBorder(null);
         textPane1.setFont(frames.UGui.getFont(0,0));
-        textPane1.setText("Установка высоты строк талицы");
+        textPane1.setText("Установка высоты строк талиц");
         textPane1.setMinimumSize(new java.awt.Dimension(65, 14));
         textPane1.setPreferredSize(new java.awt.Dimension(160, 40));
 

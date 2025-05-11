@@ -776,7 +776,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="frames.UGui.getFont(0,0)" type="code"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="&#x423;&#x441;&#x442;&#x430;&#x43d;&#x43e;&#x432;&#x43a;&#x430; &#x432;&#x44b;&#x441;&#x43e;&#x442;&#x44b; &#x441;&#x442;&#x440;&#x43e;&#x43a; &#x442;&#x430;&#x43b;&#x438;&#x446;&#x44b;"/>
+                    <Property name="text" type="java.lang.String" value="&#x423;&#x441;&#x442;&#x430;&#x43d;&#x43e;&#x432;&#x43a;&#x430; &#x432;&#x44b;&#x441;&#x43e;&#x442;&#x44b; &#x441;&#x442;&#x440;&#x43e;&#x43a; &#x442;&#x430;&#x43b;&#x438;&#x446;"/>
                     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[65, 14]"/>
                     </Property>

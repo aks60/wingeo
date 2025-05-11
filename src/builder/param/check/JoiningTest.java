@@ -53,13 +53,13 @@ import static builder.param.check.WincalcTest.frame4_left;
 import static builder.param.check.WincalcTest.frame4_right;
 import static builder.param.check.WincalcTest.glass4_right;
 import static builder.param.check.WincalcTest.glass4_left;
-import static builder.param.check.WincalcTest.frame2_1;
-import static builder.param.check.WincalcTest.frame2_3;
 import static builder.param.check.WincalcTest.stv2_left_3;
 import static builder.param.check.WincalcTest.stv3_right_3;
 import static builder.param.check.WincalcTest.stv4_left_1;
 import static builder.param.check.WincalcTest.stv4_right_3;
 import common.UCom;
+import static builder.param.check.WincalcTest.frame2_left;
+import static builder.param.check.WincalcTest.frame2_right;
 
 public class JoiningTest {
 
@@ -70,12 +70,12 @@ public class JoiningTest {
     public void joiningVar() {
         try {
             grup = 1005; //2005, 3005, 4005 //Контейнер имеет тип Артикула1/Артикула2
-            assert true == joiningVar2.check(UCom.join(iwin2.listJoin, frame2_1, 0), param("1/1", grup)) : grup;
+            assert true == joiningVar2.check(UCom.join(iwin2.listJoin, frame2_left, 0), param("1/1", grup)) : grup;
             assert true == joiningVar2.check(UCom.join(iwin2.listJoin, imp2_horiz, 0), param("1/3", grup)) : grup;
 
             grup = 1008; //Эффективное заполнение изд., мм
-            assert true == joiningVar2.check(UCom.join(iwin2.listJoin, frame2_1, 1), param("30", grup)) : grup;
-            assert false == joiningVar2.check(UCom.join(iwin2.listJoin, frame2_1, 1), param("32", grup)) : grup;
+            assert true == joiningVar2.check(UCom.join(iwin2.listJoin, frame2_left, 1), param("30", grup)) : grup;
+            assert false == joiningVar2.check(UCom.join(iwin2.listJoin, frame2_left, 1), param("32", grup)) : grup;
 
             grup = 1010; //4010 //Внешнее соединение
             assert true == joiningVar4.check(UCom.join(iwin4.listJoin, frame4_left, 0), param("Да", grup)) : grup;
@@ -141,9 +141,9 @@ public class JoiningTest {
         try {
             grup = 11000; //12000 //Для технологического кода контейнера
             //Object o22 = iwin_2.listJoin.get(frame_right_2, 1);
-            assert true == joiningDet2.check(mapParam, UCom.join(iwin2.listJoin, frame2_3, 1), param("KBE 58;/KBE 58;", grup)) : grup;
-            assert true == joiningDet2.check(mapParam, UCom.join(iwin2.listJoin, frame2_3, 1), param("KBE 58;/KBE 58", grup)) : grup;
-            assert false == joiningDet2.check(mapParam, UCom.join(iwin2.listJoin, frame2_3, 1), param("KBE 58;/KBE 5", grup)) : grup;
+            assert true == joiningDet2.check(mapParam, UCom.join(iwin2.listJoin, frame2_right, 1), param("KBE 58;/KBE 58;", grup)) : grup;
+            assert true == joiningDet2.check(mapParam, UCom.join(iwin2.listJoin, frame2_right, 1), param("KBE 58;/KBE 58", grup)) : grup;
+            assert false == joiningDet2.check(mapParam, UCom.join(iwin2.listJoin, frame2_right, 1), param("KBE 58;/KBE 5", grup)) : grup;
 
 //        grup = 11001; //12001 //Если признак состава Арт.1 
 //        assert true == joiningDet2.check(mapParam, iwin_2.listJoin.get(frame_right_2, 1), param("KBE 58", grup)) : grup;
@@ -166,12 +166,12 @@ public class JoiningTest {
             assert false == joiningDet3.check(mapParam, UCom.join(iwin3.listJoin, frame3_right, 1), param("30;", grup)) : grup;
 
             grup = 11066; //Если текстура профиля Арт.1 
-            assert true == joiningDet2.check(mapParam, UCom.join(iwin2.listJoin, frame2_3, 1), param("1009-1010", grup)) : grup;
-            assert false == joiningDet2.check(mapParam, UCom.join(iwin2.listJoin, frame2_3, 1), param("1006", grup)) : grup;
+            assert true == joiningDet2.check(mapParam, UCom.join(iwin2.listJoin, frame2_right, 1), param("1009-1010", grup)) : grup;
+            assert false == joiningDet2.check(mapParam, UCom.join(iwin2.listJoin, frame2_right, 1), param("1006", grup)) : grup;
 
             grup = 11095; //12095 //Если признак системы конструкции
-            assert true == joiningDet2.check(mapParam, UCom.join(iwin2.listJoin, frame2_3, 1), param("1;5;4;", grup)) : grup;
-            assert false == joiningDet2.check(mapParam, UCom.join(iwin2.listJoin, frame2_3, 1), param("5;4;", grup)) : grup;
+            assert true == joiningDet2.check(mapParam, UCom.join(iwin2.listJoin, frame2_right, 1), param("1;5;4;", grup)) : grup;
+            assert false == joiningDet2.check(mapParam, UCom.join(iwin2.listJoin, frame2_right, 1), param("5;4;", grup)) : grup;
             
             System.err.println("builder.param.check.JoiningTest.joiningDet() - ВЫПОЛНЕНО");
         } catch (Exception e) {

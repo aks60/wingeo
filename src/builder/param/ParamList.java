@@ -28,7 +28,7 @@ public class ParamList {
     }
     
     public static enum Ps4 implements Enam {
-
+ 
         P1005(1005, "Контейнер имеет тип Артикула1/Артикула2", check_INT_LIST3), //dic_1005x6_2005x6_3005_4005_11005_12005_31050_33071_34071), 
         P1008(1008, "Эффективное заполнение изд., мм", check_FLOAT_LIST),
         P1010(1010, 0, "Внешнее соединение", dic_AUTO_OK_NO),

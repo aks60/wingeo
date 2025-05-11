@@ -50,12 +50,12 @@ import static builder.param.check.WincalcTest.frame4_left;
 import static builder.param.check.WincalcTest.frame4_right;
 import static builder.param.check.WincalcTest.glass4_right;
 import static builder.param.check.WincalcTest.glass4_left;
-import static builder.param.check.WincalcTest.frame2_1;
-import static builder.param.check.WincalcTest.frame2_3;
 import static builder.param.check.WincalcTest.stv2_left_3;
 import static builder.param.check.WincalcTest.stv3_right_3;
 import static builder.param.check.WincalcTest.stv4_left_1;
 import static builder.param.check.WincalcTest.stv4_right_3;
+import static builder.param.check.WincalcTest.frame2_left;
+import static builder.param.check.WincalcTest.frame2_right;
 
 public class FillingTest {
 

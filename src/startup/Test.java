@@ -96,8 +96,8 @@ public class Test {
             //clearDB();
             //PSConvert.exec();
             //frame();
-            //wincalc("min");
-            param();
+            wincalc("min");
+            //param();
             //query();
             //json();
             //uid();
@@ -250,17 +250,17 @@ public class Test {
         Connect.setConnection(Test.connect2());
         WincalcTest.init(); //см. -601004,-604005,-700027
 
-//        ElementTest t1 = new ElementTest();
-//        t1.elementVar();
-//        t1.elementDet();
-//
-//        JoiningTest t2 = new JoiningTest();
-//        t2.joiningVar();
-//        t2.joiningDet();
-//
-//        FillingTest t3 = new FillingTest();
-//        t3.fillingVar();
-//        t3.fillingDet();
+        ElementTest t1 = new ElementTest();
+        t1.elementVar();
+        t1.elementDet();
+
+        JoiningTest t2 = new JoiningTest();
+        t2.joiningVar();
+        t2.joiningDet();
+
+        FillingTest t3 = new FillingTest();
+        t3.fillingVar();
+        t3.fillingDet();
 
         FurnitureTest t4 = new FurnitureTest();
         t4.furnitureVar();

@@ -26,10 +26,10 @@ public class WincalcTest {
     public static int grup = -1;
     public static Record record = null;
 
-    public static ElemSimple frame2_1 = null;
-    public static ElemSimple frame2_2 = null;
-    public static ElemSimple frame2_3 = null;
-    public static ElemSimple frame2_4 = null;
+    public static ElemSimple frame2_left = null;
+    public static ElemSimple frame2_bot = null;
+    public static ElemSimple frame2_right = null;
+    public static ElemSimple frame2_top = null;
     public static ElemSimple stv2_left_3 = null;
     public static ElemSimple stv2_left_4 = null;
     public static ElemSimple imp2_horiz = null;
@@ -105,17 +105,17 @@ public class WincalcTest {
             furnitureVar2 = new FurnitureVar(iwin2);
             furnitureDet2 = new FurnitureDet(iwin2);
 
-            frame2_1 = getElem(iwin2.root, 1);
-            frame2_2 = getElem(iwin2.root, 2);
-            frame2_3 = getElem(iwin2.root, 3);
-            frame2_4 = getElem(iwin2.root, 4);
-            stv2_left_3 = getElem(iwin2.root, 9.3);
-            stv2_left_4 = getElem(iwin2.root, 9.4);
-            imp2_vert = getElem(iwin2.root, 11);
-            imp2_horiz = getElem(iwin2.root, 7);
-            glass2_top = (ElemSimple) getElem(iwin2.root, 6);
-            glass2_left = (ElemSimple) getElem(iwin2.root, 10);
-            glass2_right = (ElemSimple) getElem(iwin2.root, 13);
+            frame2_left = getElem(iwin2, 1);
+            frame2_bot = getElem(iwin2, 2);
+            frame2_right = getElem(iwin2, 3);
+            frame2_top = getElem(iwin2, 4);
+            stv2_left_3 = getElem(iwin2, 9.3);
+            stv2_left_4 = getElem(iwin2, 9.4);
+            imp2_vert = getElem(iwin2, 11);
+            imp2_horiz = getElem(iwin2, 7);
+            glass2_top = (ElemSimple) getElem(iwin2, 6);
+            glass2_left = (ElemSimple) getElem(iwin2, 10);
+            glass2_right = (ElemSimple) getElem(iwin2, 13);
         } catch (Exception e) {
             System.err.println("Ошибка: WinacalcTest.iwin2() " + e);
         }
@@ -138,13 +138,13 @@ public class WincalcTest {
             furnitureVar3 = new FurnitureVar(iwin3);
             furnitureDet3 = new FurnitureDet(iwin3);
 
-            frame3_left = getElem(iwin3.root, 1);
-            frame3_right = getElem(iwin3.root, 3);
-            frame3_top = getElem(iwin3.root, 4);
-            stv3_right_3 = getElem(iwin3.root, 12.3);
-            imp3_vert = getElem(iwin3.root, 11);
-            glass3_top = (ElemSimple) getElem(iwin3.root, 6);
-            glass3_left = (ElemSimple) getElem(iwin3.root, 10);
+            frame3_left = getElem(iwin3, 1);
+            frame3_right = getElem(iwin3, 3);
+            frame3_top = getElem(iwin3, 4);
+            stv3_right_3 = getElem(iwin3, 12.3);
+            imp3_vert = getElem(iwin3, 11);
+            glass3_top = (ElemSimple) getElem(iwin3, 6);
+            glass3_left = (ElemSimple) getElem(iwin3, 10);
         } catch (Exception e) {
             System.err.println("Ошибка: WinacalcTest.iwin3() " + e);
         }
@@ -167,81 +167,23 @@ public class WincalcTest {
             furnitureVar4 = new FurnitureVar(iwin4);
             furnitureDet4 = new FurnitureDet(iwin4);
 
-            frame4_left = getElem(iwin4.root, 1);
-            frame4_right = getElem(iwin4.root, 3);
-            frame4_top = getElem(iwin4.root, 4);
-            shtulp4_hor = getElem(iwin4.root, 7);
-            stv4_left_1 = getElem(iwin4.root, 5.1);
-            stv4_right_3 = getElem(iwin4.root, 8.3);
-            glass4_right = (ElemSimple) getElem(iwin4.root, 6);
-            glass4_left = (ElemSimple) getElem(iwin4.root, 9);
+            frame4_left = getElem(iwin4, 1);
+            frame4_right = getElem(iwin4, 3);
+            frame4_top = getElem(iwin4, 4);
+            shtulp4_hor = getElem(iwin4, 7);
+            stv4_left_1 = getElem(iwin4, 5.1);
+            stv4_right_3 = getElem(iwin4, 8.3);
+            glass4_right = (ElemSimple) getElem(iwin4, 6);
+            glass4_left = (ElemSimple) getElem(iwin4, 9);
         } catch (Exception e) {
             System.err.println("Ошибка: WinacalcTest.iwin4() " + e);
         }
     }
 
-    //Получить элемент по ключу
-    public static ElemSimple getElem(AreaSimple root, double id) {
+    //Получить элемент по ключу    
+    public static ElemSimple getElem(Wincalc winc, double id) {
         try {
-            for (ElemSimple frm : root.frames) {
-                if (frm.id == id) {
-                    return (ElemSimple) frm;
-                }
-            }
-            for (Com5t it1 : root.childs) {
-                if (it1.id == id) {
-                    return (ElemSimple) it1;
-                }
-                if (it1 instanceof AreaSimple) {
-                    for (ElemSimple frm : ((AreaSimple) it1).frames) {
-                        if (frm.id == id) {
-                            return (ElemSimple) frm;
-                        }
-                    }
-                }
-                if (it1 instanceof AreaSimple) {
-                    for (Com5t it2 : ((AreaSimple) it1).childs) {
-                        if (it2.id == id) {
-                            return (ElemSimple) it2;
-                        }
-                        if (it2 instanceof AreaSimple) {
-                            for (ElemSimple frm : ((AreaSimple) it2).frames) {
-                                if (frm.id == id) {
-                                    return frm;
-                                }
-                            }
-                        }
-                        if (it2 instanceof AreaSimple) {
-                            for (Com5t it3 : ((AreaSimple) it2).childs) {
-                                if (it3.id == id) {
-                                    return (ElemSimple) it3;
-                                }
-                                if (it3 instanceof AreaSimple) {
-                                    for (ElemSimple frm : ((AreaSimple) it3).frames) {
-                                        if (frm.id == id) {
-                                            return frm;
-                                        }
-                                    }
-                                }
-                                if (it3 instanceof AreaSimple) {
-                                    for (Com5t it4 : ((AreaSimple) it3).childs) {
-                                        if (it4.id == id) {
-                                            return (ElemSimple) it4;
-                                        }
-                                        if (it4 instanceof AreaSimple) {
-                                            for (ElemSimple frm : ((AreaSimple) it4).frames) {
-                                                if (frm.id == id) {
-                                                    return frm;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            return winc.listElem.stream().filter(e -> e.id == id).findFirst().get();
         } catch (Exception e) {
             System.err.println("ОШИБКА: WinacalcTest.getElem() " + e);
         }

@@ -50,8 +50,7 @@ public class FurnitureVar extends Par5s {
                     //Прямоугольником называется параллелограмм, у которого все углы прямые.
                     //Трапецией называется четырёхугольник, у которого две стороны параллельны, а две другие — не параллельны
                     //Арка это колич. рёбер > Com5t.MAXSIDE
-                    Com5t own5t = (elem5e.owner == null) ? elem5e : elem5e.owner;
-                    Geometry geom = own5t.area.getGeometryN(0);
+                    Geometry geom = elem5e.owner.area.getGeometryN(0);
                     Coordinate[] coo = geom.getCoordinates();
                     if ("прямоугольная".equals(rec.getStr(TEXT)) && geom.isRectangle() == false) {
                         return false;
@@ -65,9 +64,9 @@ public class FurnitureVar extends Par5s {
                         } else {
                             return false;
                         }
-                    } else if ("арочная".equals(rec.getStr(TEXT)) && coo.length > Com5t.MAXSIDE) {
+                    } else if ("арочная".equals(rec.getStr(TEXT)) && coo.length < Com5t.MAXSIDE) {
                         return false;
-                    } else if ("не арочная".equals(rec.getStr(TEXT)) && coo.length < Com5t.MAXSIDE) {
+                    } else if ("не арочная".equals(rec.getStr(TEXT)) && coo.length > Com5t.MAXSIDE) {
                         return false;
                     }
                     break;
