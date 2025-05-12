@@ -141,7 +141,9 @@ public class ParName extends javax.swing.JDialog {
                 JsonObject jsonObect = new GsonBuilder().create().fromJson(elem, JsonObject.class);
                 int id = jsonObect.get("id").getAsInt();
                 if (id == ID) {
-                    return jsonObect.get("desc").getAsString();
+                    String s1 = jsonObect.get("name").getAsString();
+                    String s2 = jsonObect.get("desc").getAsString();
+                    return s1 + " - " + s2.substring(0, 1).toLowerCase() + s2.substring(1);
                 }
             }
 
