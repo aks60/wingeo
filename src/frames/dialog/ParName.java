@@ -511,10 +511,11 @@ public class ParName extends javax.swing.JDialog {
         } else if (btn == btnCard4) {
             btnCard4.setSelected(true);
             btnChoice.setEnabled(false);
-            ((CardLayout) centr.getLayout()).show(centr, "card4");
-
+            
             String str = findHelp(ID);
-            jTextArea1.append(str);
+            jTextArea1.append(str);    
+            
+            ((CardLayout) centr.getLayout()).show(centr, "card4");
         }
     }//GEN-LAST:event_btnCard
 
