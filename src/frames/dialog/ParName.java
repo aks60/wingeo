@@ -439,6 +439,8 @@ public class ParName extends javax.swing.JDialog {
         pan4.setLayout(new java.awt.BorderLayout());
 
         jTextArea1.setColumns(20);
+        jTextArea1.setFont(frames.UGui.getFont(0,0));
+        jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
@@ -509,7 +511,7 @@ public class ParName extends javax.swing.JDialog {
             btnChoice.setEnabled(false);
             ((CardLayout) centr.getLayout()).show(centr, "card4");
 
-            String str = findHelp(3);
+            String str = findHelp(ID);
             jTextArea1.append(str);
         }
     }//GEN-LAST:event_btnCard
@@ -523,6 +525,7 @@ public class ParName extends javax.swing.JDialog {
             JTable tab = (JTable) evt.getSource();
             if (tab == tab1 || tab == tab3) {
                 ID = (Integer) tab1.getValueAt(tab.getSelectedRow(), 0);
+                ID = 42;
             }
         }
     }//GEN-LAST:event_tabMouseClicked
