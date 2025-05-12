@@ -107,16 +107,12 @@ public class Test {
             //wincalc("min");
             //param();
             //query();
-            json();
+            //json();
             //uid();
             //script();
             //random();
             //geom();
-
-//            Gson gson = new Gson();
-//            BufferedReader br = new BufferedReader(new FileReader("D:\\students.json"));
-//            GeneralStudents students = gson.fromJson(br, GeneralStudents.class);
-//          System.out.println("startup.Test.main()");
+            
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
         }
