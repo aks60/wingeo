@@ -10,9 +10,12 @@ import builder.param.check.JoiningTest;
 import builder.param.check.WincalcTest;
 import builder.script.GsonElem;
 import builder.script.GsonScript;
-import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import common.eProp;
 import dataset.Connect;
 import dataset.Field;
@@ -20,7 +23,6 @@ import dataset.Query;
 import dataset.Record;
 import domain.eColor;
 import enums.Type;
-import frames.PSConvert;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -28,6 +30,11 @@ import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.io.FileReader;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,6 +52,7 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
+///
 public class Test {
 
     private JFrame frame = null;
@@ -96,15 +104,19 @@ public class Test {
             //clearDB();
             //PSConvert.exec();
             //frame();
-            wincalc("min");
+            //wincalc("min");
             //param();
             //query();
-            //json();
+            json();
             //uid();
             //script();
             //random();
             //geom();
 
+//            Gson gson = new Gson();
+//            BufferedReader br = new BufferedReader(new FileReader("D:\\students.json"));
+//            GeneralStudents students = gson.fromJson(br, GeneralStudents.class);
+//          System.out.println("startup.Test.main()");
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
         }
@@ -306,32 +318,52 @@ public class Test {
     }
 
     private static void json() {
-        Gson gson = new Gson();
-        JsonParser parse = new JsonParser();
+        try {
 
-        String str1 = "{\"developers\": [{ \"firstName\":777 , \"lastName\":\"Torvalds\" }, "
-                + "{ \"firstName\":\"John\" , \"lastName\":\"von Neumann\"}]}";
+            URL url = Test.class.getResource("/resource/json/param_desc.json");
+            Path path = Paths.get(url.toURI());
+            FileReader fileReader = new FileReader(path.toFile());
+            
+            List<Record> list = new ArrayList<>();
+            JsonObject jsonObj = new GsonBuilder().create().fromJson(fileReader, JsonObject.class);
+            JsonArray jsonArr = jsonObj.getAsJsonArray("records");
+            
+            for (JsonElement elem : jsonArr) {
+                JsonObject jsonObect = new GsonBuilder().create().fromJson(elem, JsonObject.class);
+                int id = jsonObect.get("id").getAsInt();
+                String name = jsonObect.get("name").getAsString();
+                String desc = jsonObect.get("desc").getAsString();
+                Record record = new Record(List.of(id, name, desc));
+                list.add(record);
+            }            
+            System.out.println(jsonArr);
 
-        String str2 = "\"developers\": [ \"firstName\":\"Linus\" , \"lastName\":\"Torvalds\" }, "
-                + "{ \"firstName\":\"John\" , \"lastName\":\"von Neumann\" } ]}";
 
-        String str3 = null; //"{typeOpen:1, \"sysfurnID\":1634}";
-
-        JsonObject obj = gson.fromJson(str3, JsonObject.class);
-        Object out = obj.get("sysfurnID");
-        System.out.println(obj);
-
-        //boolean firstStringValid = JSONUtils.isJSONValid(str1); //true
-        //boolean secondStringValid = JSONUtils.isJSONValid(str2); //false
-        //Object obj = gson.fromJson(str1, Object.class);
-        //System.out.println(new GsonBuilder().create().toJson(parse.parse(str1)));
+//        Gson gson = new Gson();
+//        //JsonParser parse = new JsonParser();
+//
+//        String str1 = "{\"developers\": [{ \"firstName\":777 , \"lastName\":\"Torvalds\" }, "
+//                + "{ \"firstName\":\"John\" , \"lastName\":\"von Neumann\"}]}";
+//
+//        String str2 = "\"developers\": [ \"firstName\":\"Linus\" , \"lastName\":\"Torvalds\" }, "
+//                + "{ \"firstName\":\"John\" , \"lastName\":\"von Neumann\" } ]}";
+//
+//        String str3 = null; //"{typeOpen:1, \"sysfurnID\":1634}";
+//
+//        JsonObject obj = gson.fromJson(str3, JsonObject.class);
+//        Object out = obj.get("sysfurnID");
+//        System.out.println(obj);
+            //boolean firstStringValid = JSONUtils.isJSONValid(str1); //true
+            //boolean secondStringValid = JSONUtils.isJSONValid(str2); //false
+            //Object obj = gson.fromJson(str1, Object.class);
+            //System.out.println(new GsonBuilder().create().toJson(parse.parse(str1)));
 //        JSONObject output = new JSONObj;
 //        Object obj = gson.toJson(parse.parse(str3));
 //        System.out.println(obj);    
-        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(str1)));
-        //
-        //String p = gson.fromJson(str3, String.class);
-        //System.out.println(gson.fromJson(str3, String.class)); 
+            //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new com.google.gson.JsonParser().parse(str1)));
+            //
+            //String p = gson.fromJson(str3, String.class);
+            //System.out.println(gson.fromJson(str3, String.class)); 
 //        Conn.instanc().connection(Test.connect2());
 //        builder.Wincalc winc = new builder.Wincalc();
 //        String script = Winscript.test(601004, false);
@@ -341,6 +373,9 @@ public class Test {
 //        //builder.registerTypeAdapter(Element.class, new GsonDeserializer<Element>());
 //        //builder.setPrettyPrinting();
 //        GsonRoot root = builder.create().fromJson(script, GsonRoot.class);
+        } catch (Exception e) {
+            System.err.println("TEST-MAIN: " + e);
+        }
     }
 
     private static void uid() {
@@ -785,7 +820,7 @@ public class Test {
             0x1A1719, 0xA45729, 0x795038, 0x755847, 0x513A2A, 0x7F4031, 0xE9E0D2, 0xD6D5CB, 0xECECE7, 0x2B2B2C, 0x0E0E10, 0xA1A1A0, 0x868581, 0xF1EDE1,
             0x27292B, 0xF8F2E1, 0xF1F1EA, 0x29292A, 0xC8CBC4, 0x858583, 0x787B7A
         };
-*/
+         */
     }
 
 // </editor-fold> 
