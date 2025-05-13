@@ -7,6 +7,7 @@ import dataset.Query;
 import dataset.Record;
 import domain.eParams;
 import builder.param.ParamList;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -23,10 +24,10 @@ import common.listener.ListenerRecord;
 import domain.eGroups;
 import frames.swing.comp.ProgressBar;
 import java.awt.event.ActionEvent;
-import java.io.FileReader;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.JTable;
@@ -129,12 +130,11 @@ public class ParName extends javax.swing.JDialog {
     }
 
     public String findHelp(int ID) {
-        try {
 
-            URL url = ParName.class.getResource("/resource/json/param_desc.json");
-            Path path = Paths.get(url.toURI());
-            FileReader fileReader = new FileReader(path.toFile());
-            JsonObject jsonObj = new GsonBuilder().create().fromJson(fileReader, JsonObject.class);
+        try (Reader reader = new InputStreamReader(this.getClass()
+                .getResourceAsStream("/resource/json/param_desc.json"), "windows-1251")) {
+
+            JsonObject jsonObj = new Gson().fromJson(reader, JsonObject.class);
             JsonArray jsonArr = jsonObj.getAsJsonArray("records");
 
             for (JsonElement elem : jsonArr) {
@@ -146,8 +146,7 @@ public class ParName extends javax.swing.JDialog {
                     return s1 + " - " + s2.substring(0, 1).toLowerCase() + s2.substring(1);
                 }
             }
-
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("Ошибка:ParName.loadingHelp() " + e);
         }
         return null;
@@ -511,10 +510,10 @@ public class ParName extends javax.swing.JDialog {
         } else if (btn == btnCard4) {
             btnCard4.setSelected(true);
             btnChoice.setEnabled(false);
-            
+
             String str = findHelp(ID);
-            jTextArea1.append(str);    
-            
+            jTextArea1.append(str);
+
             ((CardLayout) centr.getLayout()).show(centr, "card4");
         }
     }//GEN-LAST:event_btnCard
