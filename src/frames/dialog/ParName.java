@@ -131,25 +131,27 @@ public class ParName extends javax.swing.JDialog {
 
     public String findHelp(int ID) {
 
-        try (Reader reader = new InputStreamReader(this.getClass()
-                .getResourceAsStream("/resource/json/param_desc.json"), "windows-1251")) {
+        if (ID != -1) {
+            try (Reader reader = new InputStreamReader(this.getClass()
+                    .getResourceAsStream("/resource/json/param_desc.json"), "windows-1251")) {
 
-            JsonObject jsonObj = new Gson().fromJson(reader, JsonObject.class);
-            JsonArray jsonArr = jsonObj.getAsJsonArray("records");
+                JsonObject jsonObj = new Gson().fromJson(reader, JsonObject.class);
+                JsonArray jsonArr = jsonObj.getAsJsonArray("records");
 
-            for (JsonElement elem : jsonArr) {
-                JsonObject jsonObect = new GsonBuilder().create().fromJson(elem, JsonObject.class);
-                int id = jsonObect.get("id").getAsInt();
-                if (id == ID) {
-                    String s1 = jsonObect.get("name").getAsString();
-                    String s2 = jsonObect.get("desc").getAsString();
-                    return s1 + " - " + s2.substring(0, 1).toLowerCase() + s2.substring(1);
+                for (JsonElement elem : jsonArr) {
+                    JsonObject jsonObect = new GsonBuilder().create().fromJson(elem, JsonObject.class);
+                    int id = jsonObect.get("id").getAsInt();
+                    if (id == ID) {
+                        String s1 = jsonObect.get("name").getAsString();
+                        String s2 = jsonObect.get("desc").getAsString();
+                        return s1 + " - " + s2.substring(0, 1).toLowerCase() + s2.substring(1);
+                    }
                 }
+            } catch (IOException e) {
+                System.out.println("Ошибка:ParName.loadingHelp() " + e);
             }
-        } catch (IOException e) {
-            System.out.println("Ошибка:ParName.loadingHelp() " + e);
         }
-        return null;
+        return "";
     }
 
     @SuppressWarnings("unchecked")
@@ -511,8 +513,8 @@ public class ParName extends javax.swing.JDialog {
             btnCard4.setSelected(true);
             btnChoice.setEnabled(false);
 
-            String str = findHelp(ID);
-            jTextArea1.append(str);
+            String str = findHelp(42);
+            jTextArea1.setText(str);
 
             ((CardLayout) centr.getLayout()).show(centr, "card4");
         }
@@ -525,10 +527,7 @@ public class ParName extends javax.swing.JDialog {
 
         } else {
             JTable tab = (JTable) evt.getSource();
-            if (tab == tab1 || tab == tab3) {
-                ID = (Integer) tab1.getValueAt(tab.getSelectedRow(), 0);
-                ID = 42;
-            }
+            ID = (tab == tab1 || tab == tab3) ? (Integer) tab1.getValueAt(tab.getSelectedRow(), 0): -1;
         }
     }//GEN-LAST:event_tabMouseClicked
 
