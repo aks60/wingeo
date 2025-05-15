@@ -3,6 +3,8 @@ package startup;
 import builder.model.Com5t;
 import builder.model.UGeo;
 import builder.model.VBuffer;
+import builder.param.ParamList;
+import builder.param.ParamList.Ps4;
 import builder.param.check.ElementTest;
 import builder.param.check.FillingTest;
 import builder.param.check.FurnitureTest;
@@ -14,8 +16,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
 import common.eProp;
 import dataset.Connect;
 import dataset.Field;
@@ -32,7 +32,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.FileReader;
 import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -112,6 +111,13 @@ public class Test {
             //script();
             //random();
             //geom();
+            Object str = "{";
+            for(Ps4 elem: ParamList.Ps4.values()) {
+                if(elem.pass() == 0) {
+                    str = str + "," + String.valueOf(elem.numb());
+                }
+            }
+            System.out.println(str + "}");
             
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);

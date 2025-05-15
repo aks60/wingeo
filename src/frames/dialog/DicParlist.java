@@ -28,7 +28,7 @@ public class DicParlist extends javax.swing.JDialog implements ListenerFrame<Obj
         dm.getDataVector().clear();
         List<List> list = new Vector();
         
-        for (Enam el : ParamList.values()) {
+        for(ParamList.Ps4 el: ParamList.Ps4.values()) {    
             for (int it : part) {
                 if (el.pass() == 1 && el.numb() >= it && el.numb() < it + 1000) {
                     

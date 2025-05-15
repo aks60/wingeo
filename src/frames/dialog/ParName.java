@@ -83,7 +83,7 @@ public class ParName extends javax.swing.JDialog {
         dm3.getDataVector().clear();
         List<List> recordList1 = new Vector();
         List<List> recordList3 = new Vector();
-        for (Enam el : ParamList.values()) {
+        for(ParamList.Ps4 el: ParamList.Ps4.values()) {    
             for (int it : part) {
                 if (el.pass() == 1 && el.numb() >= it && el.numb() < it + 100) {
                     List record = new Vector();
