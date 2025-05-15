@@ -85,13 +85,16 @@ public class ParName extends javax.swing.JDialog {
         List<List> recordList3 = new Vector();
         for(ParamList.Ps4 el: ParamList.Ps4.values()) {    
             for (int it : part) {
-                if (el.pass() == 1 && el.numb() >= it && el.numb() < it + 100) {
+                
+                boolean pass = ParamList.passList.contains(el.numb());
+                
+                if (pass == false && el.numb() >= it && el.numb() < it + 100) {
                     List record = new Vector();
                     record.add(el.numb());
                     record.add(el.text());
                     recordList1.add(record);
 
-                } else if (el.pass() == 0 && el.numb() >= it && el.numb() < it + 100) {
+                } else if (pass == true && el.numb() >= it && el.numb() < it + 100) {
                     List record = new Vector();
                     record.add(el.numb());
                     record.add(el.text());

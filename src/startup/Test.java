@@ -111,13 +111,13 @@ public class Test {
             //script();
             //random();
             //geom();
-            Object str = "{";
-            for(Ps4 elem: ParamList.Ps4.values()) {
-                if(elem.pass() == 0) {
-                    str = str + "," + String.valueOf(elem.numb());
-                }
-            }
-            System.out.println(str + "}");
+//            Object str = "{";
+//            for(Ps4 elem: ParamList.Ps4.values()) {
+//                if(elem.pass() == 0) {
+//                    str = str + "," + String.valueOf(elem.numb());
+//                }
+//            }
+//            System.out.println(str + "}");
             
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);

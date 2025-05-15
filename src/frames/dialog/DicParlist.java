@@ -30,7 +30,10 @@ public class DicParlist extends javax.swing.JDialog implements ListenerFrame<Obj
         
         for(ParamList.Ps4 el: ParamList.Ps4.values()) {    
             for (int it : part) {
-                if (el.pass() == 1 && el.numb() >= it && el.numb() < it + 1000) {
+                
+                boolean pass = ParamList.passList.contains(el.numb());
+                
+                if (pass == false && el.numb() >= it && el.numb() < it + 1000) {
                     
                     List rec = new Vector();
                     rec.add(el.numb());

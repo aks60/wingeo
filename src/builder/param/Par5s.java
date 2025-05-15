@@ -63,7 +63,8 @@ public class Par5s {
     //Необработанные параметры
     protected void message(HashMap<Integer, String> mapParam, int code) {
         if (code >= 0) {
-            if (ParamList.find(code).pass() != 0) {
+            boolean pass = ParamList.passList.contains(code);
+            if (pass == false) {
                 System.err.println("ВНИМАНИЕ! ПАРААМЕТР " + code + " VALUE " + mapParam.get(code) + " В РАЗРАБОТКЕ.");
             }
         }
@@ -72,7 +73,8 @@ public class Par5s {
     //Необработанные параметры
     protected void message(TRecord spc, int code) {
         if (code >= 0) {
-            if (ParamList.find(code).pass() != 0) {
+            boolean pass = ParamList.passList.contains(code);
+            if (pass == false) {
                 System.err.println("ВНИМАНИЕ! ID " + spc.id + " ПАРААМЕТР " + code + " VALUE " + spc.getParam("-1", code) + " В РАЗРАБОТКЕ.");
             }
         }
