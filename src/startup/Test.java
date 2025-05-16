@@ -111,14 +111,34 @@ public class Test {
             //script();
             //random();
             //geom();
-//            Object str = "{";
-//            for(Ps4 elem: ParamList.Ps4.values()) {
-//                if(elem.pass() == 0) {
-//                    str = str + "," + String.valueOf(elem.numb());
-//                }
-//            }
-//            System.out.println(str + "}");
-            
+
+            String str = "2 020\n" +
+"\n" +
+"3 020 \n" +
+"\n" +
+"4 020 \n" +
+"\n" +
+"14 065 \n" +
+"\n" +
+"15 055 \n" +
+"\n" +
+"21 040";
+        String s3 = "";    
+        String s[] = str.split("\n");
+        List<String> list =new ArrayList();
+            for (String s9 : s) {
+                if(s9.isEmpty() == false) {
+                   list.add(s9);
+                }
+            }
+        
+            for (String s1 : list) {
+                 String s2 = s1.replaceAll("\\s", "");  
+                 s3 = s3  + s2 + ",";
+            }
+           System.out.println(s3);
+        
+
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
         }
