@@ -1,7 +1,6 @@
 package frames.dialog;
 
 import frames.UGui;
-import enums.Enam;
 import dataset.Field;
 import dataset.Query;
 import dataset.Record;
@@ -27,7 +26,6 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.JTable;
@@ -40,7 +38,6 @@ public class ParName extends javax.swing.JDialog {
     private Query qGroups = new Query(eGroups.values());
     private Field filter = null;
     private Integer paramID = null;
-    private int ID = -1;
 
     public ParName(Frame parent, ListenerRecord listener, Field filter, int... part) {
         super(parent, true);
@@ -83,11 +80,11 @@ public class ParName extends javax.swing.JDialog {
         dm3.getDataVector().clear();
         List<List> recordList1 = new Vector();
         List<List> recordList3 = new Vector();
-        for(ParamList.Ps4 el: ParamList.Ps4.values()) {    
+        for (ParamList.Ps4 el : ParamList.Ps4.values()) {
             for (int it : part) {
-                
+
                 boolean pass = ParamList.passList.contains(el.numb());
-                
+
                 if (pass == false && el.numb() >= it && el.numb() < it + 100) {
                     List record = new Vector();
                     record.add(el.numb());
@@ -132,7 +129,7 @@ public class ParName extends javax.swing.JDialog {
         }
     }
 
-    public String findHelp(int ID) {
+    public String loadHelpParam(int ID) {
 
         if (ID != -1) {
             try (Reader reader = new InputStreamReader(this.getClass()
@@ -143,15 +140,19 @@ public class ParName extends javax.swing.JDialog {
 
                 for (JsonElement elem : jsonArr) {
                     JsonObject jsonObect = new GsonBuilder().create().fromJson(elem, JsonObject.class);
-                    int id = jsonObect.get("id").getAsInt();
-                    if (id == ID) {
-                        String s1 = jsonObect.get("name").getAsString();
-                        String s2 = jsonObect.get("desc").getAsString();
-                        return s1 + " - " + s2.substring(0, 1).toLowerCase() + s2.substring(1);
+                    JsonArray grup = jsonObect.get("grup").getAsJsonArray();
+                    for (JsonElement jsonElem : grup) {
+                        if (jsonElem.getAsInt() == ID) {
+                            String s1 = jsonObect.get("name").getAsString();
+                            String s2 = jsonObect.get("desc").getAsString();
+                            return s1 + " - " + s2.substring(0, 1).toLowerCase() + s2.substring(1);
+                        }
                     }
                 }
             } catch (IOException e) {
-                System.out.println("Îøèáêà:ParName.loadingHelp() " + e);
+                System.out.println("Îøèáêà-1:ParName.loadingHelp() " + e);
+            } catch (Exception ex) {
+                System.out.println("Îøèáêà-2:ParName.loadingHelp() " + ex);
             }
         }
         return "";
@@ -516,7 +517,11 @@ public class ParName extends javax.swing.JDialog {
             btnCard4.setSelected(true);
             btnChoice.setEnabled(false);
 
-            String str = findHelp(42);
+            int ID = (pan1.isVisible()) 
+                    ? Integer.valueOf(tab1.getValueAt(tab1.getSelectedRow(), 0).toString()) 
+                    : (pan3.isVisible()) 
+                    ? Integer.valueOf(tab3.getValueAt(tab3.getSelectedRow(), 0).toString()) : -1;
+            String str = loadHelpParam(ID);
             jTextArea1.setText(str);
 
             ((CardLayout) centr.getLayout()).show(centr, "card4");
@@ -524,14 +529,9 @@ public class ParName extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCard
 
     private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
-
         if (evt.getClickCount() == 2) {
             btnChoice(null);
-
-        } else {
-            JTable tab = (JTable) evt.getSource();
-            ID = (tab == tab1 || tab == tab3) ? (Integer) tab1.getValueAt(tab.getSelectedRow(), 0): -1;
-        }
+        } 
     }//GEN-LAST:event_tabMouseClicked
 
     private void btnParametr(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParametr
