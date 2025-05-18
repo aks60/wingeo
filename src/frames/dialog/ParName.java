@@ -145,6 +145,7 @@ public class ParName extends javax.swing.JDialog {
                         if (jsonElem.getAsInt() == ID) {
                             String s1 = jsonObect.get("name").getAsString();
                             String s2 = jsonObect.get("desc").getAsString();
+                            s2 = (s2.isEmpty() == true) ? "Нет данных" : s2;
                             return s1 + " - " + s2.substring(0, 1).toLowerCase() + s2.substring(1);
                         }
                     }
@@ -155,7 +156,7 @@ public class ParName extends javax.swing.JDialog {
                 System.out.println("Ошибка-2:ParName.loadingHelp() " + ex);
             }
         }
-        return "";
+        return "Нет данных";
     }
 
     @SuppressWarnings("unchecked")
@@ -517,9 +518,9 @@ public class ParName extends javax.swing.JDialog {
             btnCard4.setSelected(true);
             btnChoice.setEnabled(false);
 
-            int ID = (pan1.isVisible()) 
-                    ? Integer.valueOf(tab1.getValueAt(tab1.getSelectedRow(), 0).toString()) 
-                    : (pan3.isVisible()) 
+            int ID = (pan1.isVisible())
+                    ? Integer.valueOf(tab1.getValueAt(tab1.getSelectedRow(), 0).toString())
+                    : (pan3.isVisible())
                     ? Integer.valueOf(tab3.getValueAt(tab3.getSelectedRow(), 0).toString()) : -1;
             String str = loadHelpParam(ID);
             jTextArea1.setText(str);
@@ -531,7 +532,7 @@ public class ParName extends javax.swing.JDialog {
     private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
         if (evt.getClickCount() == 2) {
             btnChoice(null);
-        } 
+        }
     }//GEN-LAST:event_tabMouseClicked
 
     private void btnParametr(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParametr
