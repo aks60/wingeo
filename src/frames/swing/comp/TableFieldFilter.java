@@ -176,7 +176,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
         });
 
         btn3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b010.gif"))); // NOI18N
-        btn3.setToolTipText(bundle.getString("Вставить из буфера обмена / Удалить")); // NOI18N
+        btn3.setToolTipText(bundle.getString("Поиск")); // NOI18N
         btn3.setBorder(null);
         btn3.setMaximumSize(new java.awt.Dimension(30, 18));
         btn3.setMinimumSize(new java.awt.Dimension(30, 18));
