@@ -557,10 +557,9 @@ public class Tex extends javax.swing.JFrame {
         });
         tb6.add(btnT9);
 
-        btnSave.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c070.gif"))); // NOI18N
+        btnSave.setToolTipText(bundle.getString("Сохранить всё")); // NOI18N
         btnSave.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 204)));
-        btnSave.setFocusable(false);
         btnSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSave.setMaximumSize(new java.awt.Dimension(26, 28));
         btnSave.setMinimumSize(new java.awt.Dimension(26, 28));

@@ -694,6 +694,7 @@ public class PSConvert {
         }
     }
 
+    //Секция загрузки тестовых моделей"
     public static void loadModels() {
         try {
             println(Color.GREEN, "Секция загрузки тестовых моделей");
@@ -749,6 +750,7 @@ public class PSConvert {
         }
     }
 
+    //Загрузка груп
     public static void loadGroups(String mes) {
         println(Color.BLACK, mes);
         try {
