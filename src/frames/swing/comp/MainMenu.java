@@ -138,8 +138,8 @@ public class MainMenu {
             }
         });
         jmenu01.add(menuItem03);
-        jmenu01.add(sep4);
-/*
+/*        jmenu01.add(sep4);
+
         menuItem04.setFont(frames.UGui.getFont(0, 1));
         menuItem04.setIcon(icon);
         menuItem04.setText(bundle.getString("Меню.Смета"));

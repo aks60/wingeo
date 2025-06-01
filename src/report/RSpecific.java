@@ -50,7 +50,7 @@ public class RSpecific {
             ExecuteCmd.documentType(null);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERROR*2 " + e, "¬Õ»Ã¿Õ»≈!", 1);
+            //JOptionPane.showMessageDialog(null, "ERROR*2 " + e, "¬Õ»Ã¿Õ»≈!", 1);
             System.err.println("Œ¯Ë·Í‡:RSpecific.parseDoc1() " + e);
         }
     }

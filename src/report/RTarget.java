@@ -25,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -39,7 +40,7 @@ public class RTarget {
             InputStream in = getClass().getResourceAsStream("/resource/report/Target.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
-            Document doc = Jsoup.parse(tempFile);
+            Document doc = Jsoup.parse(tempFile, "windows-1251");
 
             Record prjprodRec = prjprodList.get(0);
             Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
@@ -48,14 +49,14 @@ public class RTarget {
             loadDoc(projectRec, prjprodList, doc);
 
             String str = doc.html();
-            str = new String(str.getBytes("windows-1251"));
+            str = new String(str.getBytes("windows-1251"), "windows-1251");
             RTable.write(str);
             ExecuteCmd.documentType(null);
 
         } catch (Exception e) {
             System.err.println("Ошибка:Target.parseDoc() " + e);
         }
-    }
+    }   
 
     private static void loadDoc(Record projectRec, List<Record> prjprodList, Document doc) {
         Double square = 0.0; //площадь

@@ -38,7 +38,7 @@ public class ROffer {
             InputStream in = getClass().getResourceAsStream("/resource/report/Offer.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
-            Document doc = Jsoup.parse(tempFile);
+            Document doc = Jsoup.parse(tempFile, "windows-1251");
 
             Record prjprodRec = prjprodList.get(0);
             Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
@@ -47,7 +47,7 @@ public class ROffer {
             loadDoc(projectRec, doc);
 
             String str = doc.html();
-            str = new String(str.getBytes("windows-1251"));
+            str = new String(str.getBytes("windows-1251"), "windows-1251");
             RTable.write(str);
             ExecuteCmd.documentType(null);
 

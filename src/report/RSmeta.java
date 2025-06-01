@@ -41,7 +41,7 @@ public class RSmeta {
             InputStream in = getClass().getResourceAsStream("/resource/report/Smeta1.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
-            Document doc = Jsoup.parse(tempFile);
+            Document doc = Jsoup.parse(tempFile, "windows-1251");
 
             Record prjprodRec = prjprodList.get(0);
             projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
@@ -50,7 +50,7 @@ public class RSmeta {
             loadDoc1(prjprodList, doc);
 
             String str = doc.html();
-            str = new String(str.getBytes("windows-1251"));
+            str = new String(str.getBytes("windows-1251"), "windows-1251");
             RTable.write(str);
             ExecuteCmd.documentType(null);
 
@@ -67,7 +67,7 @@ public class RSmeta {
             InputStream in = getClass().getResourceAsStream("/resource/report/Smeta2.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
-            Document doc = Jsoup.parse(tempFile);
+            Document doc = Jsoup.parse(tempFile, "windows-1251");
             Record prjprodRec = prjprodList.get(0);
             projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
 
@@ -75,7 +75,7 @@ public class RSmeta {
             loadDoc2(prjprodList, doc);
 
             String str = doc.html();
-            str = new String(str.getBytes("windows-1251"));
+            str = new String(str.getBytes("windows-1251"), "windows-1251");
             RTable.write(str);
             ExecuteCmd.documentType(null);
 
