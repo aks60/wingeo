@@ -230,17 +230,21 @@ public class RTable {
     //Записать текст в файл
     public static void write(String text) {
         try {
-            PrintWriter out = new PrintWriter(new File(eProp.genl.getProp(), "report.html"), "windows-1251");
+            File directory = new File(eProp.genl.getProp());
+            if (directory.exists() == false) {
+                directory.mkdirs();
+            }
+            File file = new File(directory, "report.html");
+            PrintWriter out = new PrintWriter(file, "windows-1251");
             try {
                 out.print(text);
             } finally {
                 out.close();
             }
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);          
+            JOptionPane.showMessageDialog(null, "*Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
         } catch (Exception e) {
             System.err.println(e);
-            //throw new RuntimeException(e);
         }
     }
 }
