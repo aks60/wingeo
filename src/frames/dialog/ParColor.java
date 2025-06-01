@@ -100,7 +100,7 @@ public class ParColor extends javax.swing.JDialog {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
                 JLabel lab = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
-                int rgb = (row > 1) ? qColor.getAs(row - 2, eColor.rgb, 16777215) : 15921906;
+                int rgb = (row > 1) ? qColor.getAs(row, eColor.rgb, 16777215) : 15921906;
                 lab.setBackground(new java.awt.Color(rgb));
                 return lab;
             }
