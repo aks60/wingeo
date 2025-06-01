@@ -4450,9 +4450,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 //            });
         } else if (tab3.getBorder() != null) {
             Record sysfurnRec = qSysfurn.get(UGui.getIndexRec(tab3));
+            int furnitureID = sysfurnRec.getInt(eSysfurn.furniture_id);
             ProgressBar.create(this, new ListenerFrame() {
                 public void actionRequest(Object obj) {
-                    App.Furniture.createFrame(Systree.this, sysfurnRec.getInt(eSysfurn.furniture_id));
+                    App.Furniture.createFrame(Systree.this, -1 * furnitureID);
                 }
             });
         }
@@ -4571,7 +4572,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 btnFind1.setEnabled(true);
 
             } else if ("tab3".equals(table.getName())) {
-                List.of(btnMoveU, btnMoveD).forEach(btn -> btn.setEnabled(true));
+                List.of(btnFind2, btnMoveU, btnMoveD).forEach(btn -> btn.setEnabled(true));
 
             } else if ("tab4".equals(table.getName())) {
                 //
@@ -4992,6 +4993,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
         new UColor();
 
+        List.of(btnFind1, btnFind2, btnMoveU, btnMoveD).forEach(btn -> btn.setEnabled(false));
         UGui.setDocumentFilter(3, txt17, txt22, txt24, txt26);
         List.of(btnIns, btnDel).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab2, tab3, tab4, tab5)));
         DefaultTreeCellRenderer rnd = (DefaultTreeCellRenderer) sysTree.getCellRenderer();

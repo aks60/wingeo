@@ -95,14 +95,18 @@ public class Furniturs extends javax.swing.JFrame {
         listenerSet();
     }
 
-    public Furniturs(int deteilID) {
+    public Furniturs(int recordID) {
         initComponents();
         initElements();
         loadingData();
         loadingModel();
         listenerAdd();
         listenerSet();
-        deteilFind(deteilID);
+        if (recordID < 0) {
+            variantFind(recordID);
+        } else {
+            deteilFind(recordID);
+        }
     }
 
     public void loadingData() {
@@ -655,6 +659,30 @@ public class Furniturs extends javax.swing.JFrame {
             UGui.scrollRectToRow(iDet2b, tab2b);
         } else {
             UGui.scrollRectToRow(iDet2c, tab2c);
+        }
+    }
+
+    public void variantFind(int variantID) {
+        variantID = -1 * variantID;
+        JTable table = null;
+        Query qFurn = new Query(eFurniture.values());
+        for (int index0 : List.of(0, 1, -1)) {
+            qFurn.sql(eFurniture.data(), eFurniture.types, index0).sort(eFurniture.name);
+            for (int index = 0; index < qFurn.size(); index++) {
+                int id = qFurn.get(index).getInt(eFurniture.id);
+                if (id == variantID) {
+                    if (index0 == 0) {
+                        btnTab1.setSelected(true);
+                    } else if (index0 == 1) {
+                        btnTab2.setSelected(true);
+                    } else if (index0 == -1) {
+                        btnTab3.setSelected(true);
+                    }
+                    tbtnAction(null);
+                    UGui.setSelectedIndex(tab1, index);
+                    UGui.scrollRectToRow(index, tab1);
+                }
+            }
         }
     }
 
@@ -1666,7 +1694,6 @@ public class Furniturs extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInser2
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-        deteilFind(520);
     }//GEN-LAST:event_btnTest
 
     private void btnFind2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind2
@@ -1737,10 +1764,9 @@ public class Furniturs extends javax.swing.JFrame {
         UIManager.put("OptionPane.noButtonText", "Все");
         int result = JOptionPane.showConfirmDialog(this, "Клонировать только основную запись?",
                 "Подтверждение", JOptionPane.YES_NO_CANCEL_OPTION);
-        
+
         //UIManager.put("OptionPane.cancelButtonText", "nope");
         //UIManager.put("OptionPane.okButtonText", "yup");
-        
         if (result != JOptionPane.CANCEL_OPTION) {
 
             if (tab1.getBorder() != null) {
