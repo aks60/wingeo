@@ -100,7 +100,7 @@ public class Test {
         eProp.devel = "99";
         try {
             //clearDB();
-            PSConvert.exec();
+            //PSConvert.exec();
             //frame();
             //wincalc("min");
             //param();
