@@ -10,9 +10,10 @@ public enum TypeGrup implements Enam {
     PRICE_DEC(5, "Скидки МЦ"),
     CATEG_ELEM(6, "Категогии МЦ"),
     COLOR_MAP(7, "Параметры соотв.цветов"),
-    CATEG_VST(8, "Категории вставок"),
+    CATEG_VST(8, "Категории составов"),
     SYS_DATA(9, "Расчётные данные"),
-    CATEG_KIT(10, "Категории комплектов");
+    CATEG_KIT(10, "Категории комплектов"),
+    GROUP_VST(10, "Группы составов");
 
     public int id = 0;
     public String name = "";

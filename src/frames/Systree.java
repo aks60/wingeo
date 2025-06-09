@@ -4389,7 +4389,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                             areaStv.gson.childs.remove(i);
                             break;
                         }
-                    } else {  //вставка
+                    } else {  //составы
                         if (mosq != null) {
                             mosq.gson.param.remove("artiklID");
                             mosq.gson.param.addProperty(PKjson.artiklID, artiklRec.getStr(eArtikl.id));

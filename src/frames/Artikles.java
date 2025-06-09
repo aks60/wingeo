@@ -2500,7 +2500,7 @@ public class Artikles extends javax.swing.JFrame {
 
             if (UGui.isDeleteRecord(tab1, this, tab2) == 0) {
                 if (JOptionPane.showConfirmDialog(owner, "ВНИМАНИЕ!\n  Если артикул используется в комплектах, "
-                        + "\n соединениях, вставках, заполнениях, фурнитуре, \n то записи этого артикула "
+                        + "\n соединениях, составах, заполнениях, фурнитуре, \n то записи этого артикула "
                         + "будут удалены. \n Вы уверены, что хотите удалить уртикул ?", "Предупреждение",
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
                     UGui.deleteRecord(tab1);

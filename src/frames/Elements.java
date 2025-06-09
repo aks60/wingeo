@@ -811,7 +811,7 @@ public class Elements extends javax.swing.JFrame {
 
         pan4.add(scr1, java.awt.BorderLayout.WEST);
 
-        scr2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Списки вставок", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Списки составов", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
         scr2.setPreferredSize(new java.awt.Dimension(454, 320));
 
         tab2.setFont(frames.UGui.getFont(0,0));
@@ -820,7 +820,7 @@ public class Elements extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Артикул", "Название", "Наименование вставок", "Тип вставки", "Признак вставки", "Серия", "Умолчание", "Обязательно", "Наценка%", "ID"
+                "Артикул", "Название", "Наименование составов", "Тип состава", "Признак состава", "Серия", "Умолчание", "Обязательно", "Наценка%", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -910,7 +910,7 @@ public class Elements extends javax.swing.JFrame {
         pan2.setPreferredSize(new java.awt.Dimension(800, 200));
         pan2.setLayout(new javax.swing.BoxLayout(pan2, javax.swing.BoxLayout.LINE_AXIS));
 
-        scr3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Детализация вставок", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Детализация составов", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
         scr3.setMaximumSize(new java.awt.Dimension(2000, 800));
         scr3.setPreferredSize(new java.awt.Dimension(500, 2044));
 

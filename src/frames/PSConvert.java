@@ -807,7 +807,7 @@ public class PSConvert {
                         + Connect.genId(eGroups.up) + "," + TypeGrup.COLOR_MAP.id + ",'" + rs.getString("PNAME") + "'," + rs.getInt("PNUMB") + ")";
                 st2.executeUpdate(sql);
             }
-            //Категории вставок
+            //Категории составов
             rs = st1.executeQuery("select distinct VPREF, ATYPM from VSTALST order by  ATYPM, VPREF");
             while (rs.next()) {
                 String sql = "insert into " + eGroups.up.tname() + "(ID, GRUP, NAME, NPP) values ("

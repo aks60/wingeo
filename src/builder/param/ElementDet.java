@@ -242,7 +242,7 @@ public class ElementDet extends Par5s {
                 case 34012:  //Для варианта соединения Т (*)
                     message(grup);
                     break;
-                case 34013:  //Подбор дистанционных вставок по пролетам 
+                case 34013:  //Подбор дистанционных составов по пролетам 
                     message(grup);
                     break;
                 case 34015:  //Расчет длины по 

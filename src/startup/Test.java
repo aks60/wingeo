@@ -3,8 +3,6 @@ package startup;
 import builder.model.Com5t;
 import builder.model.UGeo;
 import builder.model.VBuffer;
-import builder.param.ParamList;
-import builder.param.ParamList.Ps4;
 import builder.param.check.ElementTest;
 import builder.param.check.FillingTest;
 import builder.param.check.FurnitureTest;
@@ -23,6 +21,7 @@ import dataset.Query;
 import dataset.Record;
 import domain.eColor;
 import enums.Type;
+import frames.PSConvert;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -101,7 +100,7 @@ public class Test {
         eProp.devel = "99";
         try {
             //clearDB();
-            //PSConvert.exec();
+            PSConvert.exec();
             //frame();
             //wincalc("min");
             //param();

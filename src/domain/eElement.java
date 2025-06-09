@@ -20,7 +20,8 @@ public enum eElement implements Field {
     toset("16", "5", "1", "Установка обязательности", "toset"),
     artikl_id("4", "10", "1", "Артикул", "artikl_id"),
     groups1_id("4", "10", "1", "Серия", "groups1_id"),
-    groups2_id("4", "10", "0", "Категории", "groups2_id");
+    groups2_id("4", "10", "0", "Категории", "groups2_id"),
+    groups3_id("4", "10", "1", "Группы составов", "groups3_id");
 
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());
