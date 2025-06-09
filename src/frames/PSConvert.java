@@ -434,7 +434,7 @@ public class PSConvert {
             loadGroups("Функция loadGroups()");
             executeSql("3", "update " + eSetting.up.tname() + " set val = 'ps3' where id = 2");
             executeSql("insert into groups (grup, name) select distinct " + TypeGrup.SERI_ELEM.id + ", aseri from artikl");
-            executeSql("insert into groups (grup, name) select distinct " + TypeGrup.GROUP_VST.id + ", vgrup from vstalst");
+            executeSql("insert into groups (grup, name) select distinct " + TypeGrup.GROUP_VST.id + ", vgrup from element");
             updateSql(eRulecalc.up, eRulecalc.artikl_id, "anumb", eArtikl.up, "code");
             executeSql("update rulecalc set type = rulecalc.type * -1 where rulecalc.type < 0");
             executeSql("update color set rgb = bin_or(bin_shl(bin_and(rgb, 0xff), 16), bin_and(rgb, 0xff00), bin_shr(bin_and(rgb, 0xff0000), 16))");
@@ -449,7 +449,7 @@ public class PSConvert {
             executeSql("update artikl set groups3_id = (select a.id from groups a where apref = a.name and a.grup = 6)");
             executeSql("update color set groups_id = (select a.id from groups a where cgrup = a.npp and a.grup = 2)");
             executeSql("update parmap set groups_id = (select a.id from groups a where pnumb = a.npp and a.grup = 7)");
-            executeSql("update elementnt set groups3_id = (select a.id from groups a where pnumb = a.npp and a.grup = 11)");
+            executeSql("update element set groups3_id = (select a.id from groups a where vgrup = a.name and a.grup = 11)");
             executeSql("delete from parmap where color_id1 is null");
             executeSql("delete from params where groups_id is null");
             executeSql("update artdet set color_fk = (select first 1 id from color a where a.id = artdet.clcod or a.cnumb = artdet.clnum) where artdet.clnum >= 0");
