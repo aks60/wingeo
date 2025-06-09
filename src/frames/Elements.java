@@ -568,7 +568,7 @@ public class Elements extends javax.swing.JFrame {
         ppmCrud.add(mDelit);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Вставки");
+        setTitle("Составы");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 500));
         setPreferredSize(new java.awt.Dimension(900, 600));
@@ -1200,7 +1200,7 @@ public class Elements extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFind1
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        RTable.load("Вставки", tab2);
+        RTable.load("Составы", tab2);
         ExecuteCmd.documentType(this);
     }//GEN-LAST:event_btnReport
 

@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public enum eElement implements Field {
-    up("0", "0", "0", "Вставки", "VSTALST"),
+    up("0", "0", "0", "Составы", "VSTALST"),
     id("4", "10", "0", "Идентификатор", "id"),
     name("12", "96", "1", "Наименование", "VNAME"),
     typset("4", "10", "1", "Тип состава", "typset"),

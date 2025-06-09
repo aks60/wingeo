@@ -285,7 +285,7 @@ public class TTariffic extends Cal5e {
             {
                 //?
             }
-            //Вставки (проц. наценка)
+            //Составы (проц. наценка)
             if (artdetUsed == true) { //если было попадание
                 if ("ВСТ".equals(spcRec.place.substring(0, 3)) == true) {
                     if (spcRec.detailRec != null) {
