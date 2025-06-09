@@ -183,7 +183,6 @@ public class UGui {
         ).collect(Collectors.toList());
     }
 
-
     //Выключить режим редактирования
     public static void stopCellEditing(JComponent... compList) {
         for (JComponent comp : compList) {
@@ -198,7 +197,7 @@ public class UGui {
             }
         }
     }
-    
+
     public static void stopCellEditingAndExecSql() {
         for (App app : App.values()) {
             if (app.frame != null) {
@@ -266,9 +265,14 @@ public class UGui {
         Gson gson = new GsonBuilder().create();
         GsonRoot gsonRoot = gson.fromJson(script, GsonRoot.class);
         JsonObject jsonObj = gson.fromJson(gsonRoot.param, JsonObject.class);
-        JsonArray jsonArr = jsonObj.getAsJsonArray(PKjson.ioknaParam);
-        jsonArr = (jsonArr == null) ? new JsonArray() : jsonArr;
-
+        JsonArray jsonArr = null;
+        if (jsonObj == null) {
+            jsonObj = new JsonObject();
+            jsonArr = new JsonArray();
+        } else {
+            JsonArray jsonArr2 = jsonObj.getAsJsonArray(PKjson.ioknaParam);
+            jsonArr = (jsonArr == null) ? new JsonArray() : jsonArr2;
+        }
         int titleID, titleID2;
         if (ioknaID < 0) {
             titleID = eParams.find(ioknaID).getInt(eParams.groups_id);
@@ -626,7 +630,7 @@ public class UGui {
                 listener.action(recordClon);
             }
             up.query().add(recordClon);  //добавим запись в кэш
-            
+
             //Создадим клоны ведомых qQuery если есть
             int index2 = (query.size() > index) ? index + 1 : index;
             for (Map.Entry<String, Query> it : query.mapQuery().entrySet()) {
@@ -635,14 +639,13 @@ public class UGui {
                     Record recClon = (Record) que.get(index).clone();
                     it.getValue().add(index, recClon);
                 }
-            }                        
-            if(query.size() > index) {
-               query.add(index2, recordClon); 
+            }
+            if (query.size() > index) {
+                query.add(index2, recordClon);
             } else {
-               query.add(recordClon);  
+                query.add(recordClon);
             }
             query.insert(recordClon);
-            
 
             ((DefaultTableModel) table.getModel()).fireTableRowsInserted(index2, index2);
             UGui.setSelectedIndex(table, index2);
@@ -667,9 +670,9 @@ public class UGui {
             recordClon.setNo(up.fields()[1], Connect.genId(up));
             if (listener != null) {
                 listener.action(recordClon);
-            }              
+            }
             up.query().add(recordClon);  //добавим запись в кэш
-            query.add(recordClon);                     
+            query.add(recordClon);
             query.insert(recordClon);
         }
         UGui.setSelectedRow(table);
