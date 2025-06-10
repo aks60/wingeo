@@ -69,7 +69,7 @@ public class Elements extends javax.swing.JFrame {
     private Query qElemdet = new Query(eElemdet.values(), eArtikl.values());
     private Query qElempar1 = new Query(eElempar1.values());
     private Query qElempar2 = new Query(eElempar2.values());
-    private ListenerRecord listenerArtikl, listenerTypset, listenerSeries, listenerColor, listenerColvar1, listenerColvar2, listenerColvar3;
+    private ListenerRecord listenerArtikl, listenerTypset, listenerSeries, listenerGroups, listenerColor, listenerColvar1, listenerColvar2, listenerColvar3;
 
     public Elements() {
         initComponents();
@@ -94,7 +94,8 @@ public class Elements extends javax.swing.JFrame {
 
         qColor.sql(eColor.data(), eColor.up);
         qGrCateg.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id).sort(eGroups.npp, eGroups.name);
-        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id, TypeGrup.SERI_ELEM.id, TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id).sort(eGroups.npp, eGroups.name);
+        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id, TypeGrup.SERI_ELEM.id
+                , TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id, TypeGrup.GROUP_VST.id).sort(eGroups.npp, eGroups.name);
 
         Record groups1Rec = eGroups.up.newRecord(Query.SEL);
         groups1Rec.setNo(eGroups.id, -1);
@@ -119,7 +120,8 @@ public class Elements extends javax.swing.JFrame {
 
         tab1.getTableHeader().setEnabled(false);
         new DefTableModel(tab1, qGrCateg, eGroups.name);
-        new DefTableModel(tab2, qElement, eArtikl.code, eArtikl.name, eElement.name, eElement.typset, eElement.signset, eElement.groups1_id, eElement.todef, eElement.toset, eElement.markup) {
+        new DefTableModel(tab2, qElement, eArtikl.code, eArtikl.name, eElement.name, eElement.typset
+                , eElement.signset, eElement.groups1_id, eElement.groups3_id, eElement.todef, eElement.toset, eElement.markup) {
 
             public Object getValueAt(int col, int row, Object val) {
 
@@ -128,6 +130,9 @@ public class Elements extends javax.swing.JFrame {
                     return List.of(TypeSet.values()).stream().filter(el -> el.id == typset).findFirst().orElse(TypeSet.P1).name;
 
                 } else if (val != null && columns[col] == eElement.groups1_id) {
+                    return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).get(eGroups.name);
+
+                } else if (val != null && columns[col] == eElement.groups3_id) {
                     return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).get(eGroups.name);
                 }
                 return val;
@@ -197,7 +202,7 @@ public class Elements extends javax.swing.JFrame {
                 return val;
             }
         };
-        List.of(6, 7).forEach(index -> tab2.getColumnModel().getColumn(index).setCellRenderer(new DefCellRendererBool()));
+        List.of(7, 8).forEach(index -> tab2.getColumnModel().getColumn(index).setCellRenderer(new DefCellRendererBool()));
         UGui.setSelectedRow(tab1);
     }
 
@@ -284,6 +289,14 @@ public class Elements extends javax.swing.JFrame {
             if (index != -1) {
                 int id = qElement.getAs(index, eElement.groups1_id);
                 new DicGroups(this, listenerSeries, TypeGrup.SERI_ELEM, id, true);
+            }
+        });
+        
+        UGui.buttonCellEditor(tab2, 6).addActionListener(event -> {
+            int index = UGui.getIndexRec(tab2);
+            if (index != -1) {
+                int id = qElement.getAs(index, eElement.groups3_id);
+                new DicGroups(this, listenerGroups, TypeGrup.GROUP_VST, id, true);
             }
         });
 
@@ -442,6 +455,15 @@ public class Elements extends javax.swing.JFrame {
             if (tab2.getBorder() != null) {
                 int series_id = record.getInt(eGroups.id);
                 qElement.set(series_id, UGui.getIndexRec(tab2), eElement.groups1_id);
+                UGui.fireTableRowUpdated(tab2);
+            }
+        };
+
+        listenerGroups = (record) -> {
+            UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
+            if (tab2.getBorder() != null) {
+                int groups_id = record.getInt(eGroups.id);
+                qElement.set(groups_id, UGui.getIndexRec(tab2), eElement.groups3_id);
                 UGui.fireTableRowUpdated(tab2);
             }
         };
@@ -820,14 +842,14 @@ public class Elements extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Артикул", "Название", "Наименование составов", "Тип состава", "Признак состава", "Серия", "Умолчание", "Обязательно", "Наценка%", "ID"
+                "Артикул", "Название", "Наименование составов", "Тип состава", "Признак состава", "Серия", "Группа составов", "Умолчание", "Обязательно", "Наценка%", "ID"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Integer.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, true, true, true, true, true, true, true, false
+                true, true, true, true, true, true, true, true, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -857,11 +879,11 @@ public class Elements extends javax.swing.JFrame {
             tab2.getColumnModel().getColumn(3).setPreferredWidth(60);
             tab2.getColumnModel().getColumn(4).setPreferredWidth(40);
             tab2.getColumnModel().getColumn(5).setPreferredWidth(60);
-            tab2.getColumnModel().getColumn(6).setPreferredWidth(32);
             tab2.getColumnModel().getColumn(7).setPreferredWidth(32);
             tab2.getColumnModel().getColumn(8).setPreferredWidth(32);
-            tab2.getColumnModel().getColumn(9).setPreferredWidth(40);
-            tab2.getColumnModel().getColumn(9).setMaxWidth(60);
+            tab2.getColumnModel().getColumn(9).setPreferredWidth(32);
+            tab2.getColumnModel().getColumn(10).setPreferredWidth(40);
+            tab2.getColumnModel().getColumn(10).setMaxWidth(60);
         }
 
         pan4.add(scr2, java.awt.BorderLayout.CENTER);

@@ -58,6 +58,14 @@ public class DicGroups extends javax.swing.JDialog {
             ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
             UGui.setSelectedKey(tab1, ID);
             tab1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
+            
+        } else if (grup.numb() == TypeGrup.GROUP_VST.id) {
+            setTitle("Группы составов");
+            ((CardLayout) centr.getLayout()).show(centr, "pan1");
+            tab1.setModel(new DefTableModel(tab1, qGroups, eGroups.name));
+            ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
+            UGui.setSelectedKey(tab1, ID);
+            tab1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
 
         } else if (grup.numb() == TypeGrup.PRICE_INC.id) {
             setTitle("Группы наценок");
