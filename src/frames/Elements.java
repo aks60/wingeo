@@ -43,6 +43,8 @@ import startup.App;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
 import domain.eArtdet;
+import static domain.eArtikl.groups1_id;
+import static domain.eArtikl.groups2_id;
 import domain.eParmap;
 import domain.eSysprof;
 import domain.eSystree;
@@ -51,12 +53,11 @@ import frames.swing.comp.DefCellEditorBtn;
 import frames.swing.comp.TableFieldFilter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
+import javax.swing.table.TableColumn;
 import report.sup.ExecuteCmd;
 import report.sup.RTable;
 
@@ -94,8 +95,8 @@ public class Elements extends javax.swing.JFrame {
 
         qColor.sql(eColor.data(), eColor.up);
         qGrCateg.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id).sort(eGroups.npp, eGroups.name);
-        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id, TypeGrup.SERI_ELEM.id
-                , TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id, TypeGrup.GROUP_VST.id).sort(eGroups.npp, eGroups.name);
+        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id, TypeGrup.SERI_ELEM.id,
+                 TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id, TypeGrup.GROUP_VST.id).sort(eGroups.npp, eGroups.name);
 
         Record groups1Rec = eGroups.up.newRecord(Query.SEL);
         groups1Rec.setNo(eGroups.id, -1);
@@ -120,8 +121,8 @@ public class Elements extends javax.swing.JFrame {
 
         tab1.getTableHeader().setEnabled(false);
         new DefTableModel(tab1, qGrCateg, eGroups.name);
-        new DefTableModel(tab2, qElement, eArtikl.code, eArtikl.name, eElement.name, eElement.typset
-                , eElement.signset, eElement.groups1_id, eElement.groups3_id, eElement.todef, eElement.toset, eElement.markup) {
+        new DefTableModel(tab2, qElement, eArtikl.code, eArtikl.name, eElement.name, eElement.typset,
+                 eElement.signset, eElement.groups1_id, eElement.groups3_id, eElement.todef, eElement.toset, eElement.markup) {
 
             public Object getValueAt(int col, int row, Object val) {
 
@@ -291,7 +292,7 @@ public class Elements extends javax.swing.JFrame {
                 new DicGroups(this, listenerSeries, TypeGrup.SERI_ELEM, id, true);
             }
         });
-        
+
         UGui.buttonCellEditor(tab2, 6).addActionListener(event -> {
             int index = UGui.getIndexRec(tab2);
             if (index != -1) {
@@ -526,6 +527,9 @@ public class Elements extends javax.swing.JFrame {
         ppmCrud = new javax.swing.JPopupMenu();
         mInsert = new javax.swing.JMenuItem();
         mDelit = new javax.swing.JMenuItem();
+        separator1 = new javax.swing.JPopupMenu.Separator();
+        mDefault = new javax.swing.JMenuItem();
+        mType = new javax.swing.JMenuItem();
         north = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
         btnDel = new javax.swing.JButton();
@@ -571,7 +575,8 @@ public class Elements extends javax.swing.JFrame {
 
         mInsert.setFont(frames.UGui.getFont(1,0));
         mInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        mInsert.setText("Добавить");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
+        mInsert.setText(bundle.getString("Добавить")); // NOI18N
         mInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -581,13 +586,34 @@ public class Elements extends javax.swing.JFrame {
 
         mDelit.setFont(frames.UGui.getFont(1,0));
         mDelit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        mDelit.setText("Удалить");
+        mDelit.setText(bundle.getString("Удалить")); // NOI18N
         mDelit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
             }
         });
         ppmCrud.add(mDelit);
+        ppmCrud.add(separator1);
+
+        mDefault.setFont(frames.UGui.getFont(1,0));
+        mDefault.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c085.gif"))); // NOI18N
+        mDefault.setText("По умолчанию");
+        mDefault.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppmClick(evt);
+            }
+        });
+        ppmCrud.add(mDefault);
+
+        mType.setFont(frames.UGui.getFont(1,0));
+        mType.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c085.gif"))); // NOI18N
+        mType.setText("Тип состава");
+        mType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppmClick(evt);
+            }
+        });
+        ppmCrud.add(mType);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Составы");
@@ -605,7 +631,6 @@ public class Elements extends javax.swing.JFrame {
         north.setPreferredSize(new java.awt.Dimension(900, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -873,13 +898,18 @@ public class Elements extends javax.swing.JFrame {
         });
         scr2.setViewportView(tab2);
         if (tab2.getColumnModel().getColumnCount() > 0) {
-            tab2.getColumnModel().getColumn(0).setPreferredWidth(96);
-            tab2.getColumnModel().getColumn(1).setPreferredWidth(160);
-            tab2.getColumnModel().getColumn(2).setPreferredWidth(160);
-            tab2.getColumnModel().getColumn(3).setPreferredWidth(60);
-            tab2.getColumnModel().getColumn(4).setPreferredWidth(40);
+            tab2.getColumnModel().getColumn(0).setPreferredWidth(120);
+            tab2.getColumnModel().getColumn(1).setPreferredWidth(200);
+            tab2.getColumnModel().getColumn(2).setPreferredWidth(200);
+            tab2.getColumnModel().getColumn(3).setMinWidth(0);
+            tab2.getColumnModel().getColumn(3).setPreferredWidth(0);
+            tab2.getColumnModel().getColumn(3).setMaxWidth(0);
+            tab2.getColumnModel().getColumn(4).setPreferredWidth(32);
             tab2.getColumnModel().getColumn(5).setPreferredWidth(60);
-            tab2.getColumnModel().getColumn(7).setPreferredWidth(32);
+            tab2.getColumnModel().getColumn(6).setPreferredWidth(60);
+            tab2.getColumnModel().getColumn(7).setMinWidth(0);
+            tab2.getColumnModel().getColumn(7).setPreferredWidth(0);
+            tab2.getColumnModel().getColumn(7).setMaxWidth(0);
             tab2.getColumnModel().getColumn(8).setPreferredWidth(32);
             tab2.getColumnModel().getColumn(9).setPreferredWidth(32);
             tab2.getColumnModel().getColumn(10).setPreferredWidth(40);
@@ -1299,6 +1329,26 @@ public class Elements extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnClose
 
+    private void ppmClick(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppmClick
+        JMenuItem ppm = (JMenuItem) evt.getSource();
+        int index = 0;
+        if (ppm == mType) {
+            index = 3;
+        } else if (ppm == mDefault) {
+            index = 7;
+        }
+        TableColumn column = tab2.getColumnModel().getColumn(index);
+        if (column.getMaxWidth() == 0) {
+            column.setPreferredWidth(80);
+            column.setMaxWidth(220);
+            column.setMinWidth(60);
+        } else {
+            column.setMinWidth(0);
+            column.setPreferredWidth(0);
+            column.setMaxWidth(0);
+        }
+    }//GEN-LAST:event_ppmClick
+
     private void findPathSystree(Record record, StringBuffer path) {
         for (Record rec : eSystree.data()) {
             if (record.getInt(eSystree.parent_id) == rec.getInt(eSystree.id)) {
@@ -1324,8 +1374,10 @@ public class Elements extends javax.swing.JFrame {
     private javax.swing.JPanel centr;
     private javax.swing.JMenuItem itCateg1;
     private javax.swing.JMenuItem itCateg2;
+    private javax.swing.JMenuItem mDefault;
     private javax.swing.JMenuItem mDelit;
     private javax.swing.JMenuItem mInsert;
+    private javax.swing.JMenuItem mType;
     private javax.swing.JPanel north;
     private javax.swing.JPanel pan1;
     private javax.swing.JPanel pan2;
@@ -1338,6 +1390,7 @@ public class Elements extends javax.swing.JFrame {
     private javax.swing.JScrollPane scr3;
     private javax.swing.JScrollPane scr4;
     private javax.swing.JScrollPane scr5;
+    private javax.swing.JSeparator separator1;
     private javax.swing.JPanel south;
     private javax.swing.JTable tab1;
     private javax.swing.JTable tab2;

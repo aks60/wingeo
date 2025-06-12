@@ -799,7 +799,7 @@ public class PSConvert {
             rs = st1.executeQuery("select distinct APREF from ARTIKLS where APREF is not null");
             while (rs.next()) {
                 String sql = "insert into " + eGroups.up.tname() + "(ID, GRUP, NAME) values ("
-                        + Connect.genId(eGroups.up) + "," + TypeGrup.CATEG_ELEM.id + ",'" + rs.getString("APREF") + "')";
+                        + Connect.genId(eGroups.up) + "," + TypeGrup.GROUP_ELEM.id + ",'" + rs.getString("APREF") + "')";
                 st2.executeUpdate(sql);
             }
             //Параметры соотв. цветов

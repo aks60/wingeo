@@ -1005,7 +1005,7 @@
         <Component class="javax.swing.JButton" name="btn25">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/resource/img24/c025.gif"/>
+              <Image iconType="3" name="/resource/img24/c006.gif"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="resource/hints/okno.properties" key="&#x41c;&#x435;&#x43d;&#x44e;.&#x421;&#x43e;&#x441;&#x442;&#x430;&#x432;&#x44b;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;resource/hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41c;&#x435;&#x43d;&#x44e;.&#x421;&#x43e;&#x441;&#x442;&#x430;&#x432;&#x44b;&quot;)"/>

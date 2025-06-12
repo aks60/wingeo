@@ -8,7 +8,7 @@ public enum TypeGrup implements Enam {
     SERI_ELEM(3, "Серии МЦ"),
     PRICE_INC(4, "Наценки МЦ"),
     PRICE_DEC(5, "Скидки МЦ"),
-    CATEG_ELEM(6, "Категогии МЦ"),
+    GROUP_ELEM(6, "Группы МЦ"),
     COLOR_MAP(7, "Параметры соотв.цветов"),
     CATEG_VST(8, "Категории составов"),
     SYS_DATA(9, "Расчётные данные"),
