@@ -101,6 +101,7 @@ import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import common.listener.ListenerReload;
+import frames.dialog.DicElemvar;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 import javax.swing.JTree;
@@ -108,7 +109,7 @@ import org.locationtech.jts.geom.Envelope;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
-    private ListenerRecord listenerArtikl, listenerModel, listenerFurn,
+    private ListenerRecord listenerArtikl, listenerModel, listenerFurn, listenerElemvar,
             listenerParam1, listenerParam2, listenerArt211, listenerArt212;
 
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
@@ -437,6 +438,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 Wincalc winc = wincalc();
 
                 UGui.changePpmTree(winTree, ppmTree, winNode.com5t());
+                
                 //Таймер цвета
                 if (enums.Type.contains(winNode.com5t(), enums.Type.PARAM, enums.Type.FRAME, enums.Type.JOINING) == false) {
                     if (winc.canvas != null) {
@@ -945,6 +947,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         addStvorka = new javax.swing.JMenuItem();
         removeStvorka = new javax.swing.JMenuItem();
         removeMosquit = new javax.swing.JMenuItem();
+        elements = new javax.swing.JMenuItem();
         tool = new javax.swing.JPanel();
         btnIns = new javax.swing.JButton();
         btnDel = new javax.swing.JButton();
@@ -1231,6 +1234,15 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         });
         ppmTree.add(removeMosquit);
+
+        elements.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
+        elements.setText("Составы элементов");
+        elements.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                elementsView(evt);
+            }
+        });
+        ppmTree.add(elements);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Модели системных профилей");
@@ -4752,6 +4764,32 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }//GEN-LAST:event_blindsToElement
 
+    private void elementsView(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elementsView
+        try {
+            double elemsID = winNode.com5t().id;
+            //System.out.println(stvorkaID + " * " + winNode.com5t().type);
+            //int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
+            //Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, 11);
+            //Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
+            new DicElemvar(this, (elemvarRec) -> {
+
+                GsonElem stvArea = UCom.gson(wincalc().listAll, elemsID);
+                stvArea.param.remove(PKjson.colorKnob);
+                if (elemvarRec.get(1) == null) {
+                    stvArea.param.remove(PKjson.artiklKnob);
+                    stvArea.param.remove(PKjson.colorKnob);
+                } else {
+                    stvArea.param.addProperty(PKjson.artiklKnob, elemvarRec.getStr(eArtikl.id));
+                }
+                changeAndRedraw();
+
+            }, 0);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:Systree.handlToStvorka() " + e);
+        }
+    }//GEN-LAST:event_elementsView
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu addImpost;
@@ -4802,6 +4840,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private javax.swing.JButton btnTest;
     private javax.swing.JButton btnTree;
     private javax.swing.JPanel centr;
+    private javax.swing.JMenuItem elements;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;

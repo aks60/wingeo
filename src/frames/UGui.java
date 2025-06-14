@@ -1042,24 +1042,39 @@ public class UGui {
         winTree.setComponentPopupMenu(null);
 
         if (com5t.type == Type.GLASS && com5t.owner.type != Type.STVORKA) {
+            winTree.setComponentPopupMenu(ppm);       
+            if (Type.DOOR == com5t.winc.gson.type) {
+                boolean b[] = {true, false, false, false, false, true};
+                List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+            } else {
+                boolean b[] = {true, false, true, false, false, true};
+                List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+            }
+
+        } else if (com5t.type == Type.GLASS && com5t.owner.type == Type.STVORKA) {
             winTree.setComponentPopupMenu(ppm);
-            boolean b[] = {true, false, true, false, false};
-            List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+            boolean b[] = {false, false, false, false, false, true};
+            List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+
+        } else if (enums.Type.BOX_SIDE == com5t.type || enums.Type.STV_SIDE == com5t.type) {
+            winTree.setComponentPopupMenu(ppm);
+            boolean b[] = {false, false, false, false, false, true};
+            List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
 
         } else if (enums.Type.IMPOST == com5t.type) {
             winTree.setComponentPopupMenu(ppm);
-            boolean b[] = {false, true, false, false, false};
-            List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+            boolean b[] = {false, true, false, false, false, true};
+            List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
 
         } else if (enums.Type.STVORKA == com5t.type) {
             winTree.setComponentPopupMenu(ppm);
-            boolean b[] = {false, false, false, true, false};
-            List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+            boolean b[] = {false, false, false, true, false, false};
+            List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
 
         } else if (enums.Type.MOSQUIT == com5t.type) {
             winTree.setComponentPopupMenu(ppm);
-            boolean b[] = {false, false, false, false, true};
-            List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+            boolean b[] = {false, false, false, false, true, false};
+            List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
         }
     }
 
