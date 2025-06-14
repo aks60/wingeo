@@ -4773,15 +4773,15 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             //Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicElemvar(this, (elemvarRec) -> {
 
-                GsonElem stvArea = UCom.gson(wincalc().listAll, elemsID);
-                stvArea.param.remove(PKjson.colorKnob);
-                if (elemvarRec.get(1) == null) {
-                    stvArea.param.remove(PKjson.artiklKnob);
-                    stvArea.param.remove(PKjson.colorKnob);
-                } else {
-                    stvArea.param.addProperty(PKjson.artiklKnob, elemvarRec.getStr(eArtikl.id));
-                }
-                changeAndRedraw();
+//                GsonElem stvArea = UCom.gson(wincalc().listAll, elemsID);
+//                stvArea.param.remove(PKjson.colorKnob);
+//                if (elemvarRec.get(1) == null) {
+//                    stvArea.param.remove(PKjson.artiklKnob);
+//                    stvArea.param.remove(PKjson.colorKnob);
+//                } else {
+//                    stvArea.param.addProperty(PKjson.artiklKnob, elemvarRec.getStr(eArtikl.id));
+//                }
+//                changeAndRedraw();
 
             }, 0);
 
