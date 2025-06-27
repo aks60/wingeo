@@ -87,11 +87,19 @@ public enum eArtikl implements Field {
         return (rec == null) ? virtualRec() : rec;
     }
 
+    public static Record find2(int _id) {
+        if (_id == -3) {
+            return virtualRec();
+        }
+        Record rec = map.get(_id);
+        return (rec == null) ? up.newRecord(Query.SEL) : rec;
+    }
+
     public static Query sql(Query query, Field field, int value) {
         query.clear();
         HashSet hs = new HashSet();
         if (Query.conf.equals("NET")) {
-              query.addAll(data().stream().filter(rec -> rec.getInt(field) == value && hs.add(rec.getDbl(depth))).collect(Collectors.toList()));
+            query.addAll(data().stream().filter(rec -> rec.getInt(field) == value && hs.add(rec.getDbl(depth))).collect(Collectors.toList()));
         } else {
             query.select("select distinct " + depth.name()
                     + " from " + up.tname() + " where " + level1.name() + " = 5" + " order by " + depth.name());
