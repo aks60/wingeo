@@ -438,7 +438,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 Wincalc winc = wincalc();
 
                 UGui.changePpmTree(winTree, ppmTree, winNode.com5t());
-                
+
                 //Таймер цвета
                 if (enums.Type.contains(winNode.com5t(), enums.Type.PARAM, enums.Type.FRAME, enums.Type.JOINING) == false) {
                     if (winc.canvas != null) {
@@ -472,10 +472,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     ((TitledBorder) pan13.getBorder()).setTitle(winNode.toString());
                     setText(txt32, winNode.com5t().artiklRec.getStr(eArtikl.code));
                     setText(txt33, winNode.com5t().artiklRec.getStr(eArtikl.name));
+                    setText(txt52, eArtikl.find2(winNode.com5t().artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
                     setText(txt27, eColor.find(winNode.com5t().colorID1).getStr(eColor.name));
                     setText(txt28, eColor.find(winNode.com5t().colorID2).getStr(eColor.name));
                     setText(txt29, eColor.find(winNode.com5t().colorID3).getStr(eColor.name));
-                    setText(txt52, eArtikl.find2(winNode.com5t().artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
 
                     //Стеклопакет
                 } else if (winNode.com5t().type == enums.Type.GLASS) {
@@ -4803,7 +4803,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 //                    stvArea.param.addProperty(PKjson.artiklKnob, elemvarRec.getStr(eArtikl.id));
 //                }
 //                changeAndRedraw();
-
             }, 0);
 
         } catch (Exception e) {
