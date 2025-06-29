@@ -32,9 +32,9 @@ public class TElement extends Cal5e {
         elementDet = new ElementDet(winc);
     }
 
-    //Идем по списку профилей смотрим, есть аналог, работаем с ним.
+    //Идем по списку профилей, смотрим, есть аналог, работаем с ним.
     public void elem() {
-        ArrayList<ElemSimple> listElem = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, 
+        ArrayList<ElemSimple> listElem = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE,
                 Type.IMPOST, Type.SHTULP, Type.STOIKA, Type.GLASS, Type.MOSQUIT); //список элементов конструкции
         try {
             //Цикл по списку элементов конструкции
@@ -60,6 +60,22 @@ public class TElement extends Cal5e {
                     detail(elementList2, elem5e);
                 }
             }
+        } catch (Exception e) {
+            System.err.println("Ошибка:SpcElement.elem() " + e);
+        }
+    }
+
+    public void elem(ElemSimple elem5e) {
+        try {
+            //По artikl_id - артикула профилей
+            int artiklID = elem5e.artiklRecAn.getInt(eArtikl.id);
+            List<Record> elementList3 = eElement.filter2(artiklID);
+            detail(elementList3, elem5e);
+
+            //По groups1_id - серии профилей
+            List<Record> elementList2 = eElement.filter4(elem5e.artiklRecAn); //список элементов в серии
+            detail(elementList2, elem5e);
+
         } catch (Exception e) {
             System.err.println("Ошибка:SpcElement.elem() " + e);
         }

@@ -1390,7 +1390,7 @@ public class Elements extends javax.swing.JFrame {
     private javax.swing.JScrollPane scr3;
     private javax.swing.JScrollPane scr4;
     private javax.swing.JScrollPane scr5;
-    private javax.swing.JSeparator separator1;
+    private javax.swing.JPopupMenu.Separator separator1;
     private javax.swing.JPanel south;
     private javax.swing.JTable tab1;
     private javax.swing.JTable tab2;
