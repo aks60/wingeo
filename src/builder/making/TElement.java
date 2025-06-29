@@ -61,23 +61,18 @@ public class TElement extends Cal5e {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:SpcElement.elem() " + e);
+            System.err.println("Ошибка:TElement.elem() " + e);
         }
     }
 
-    public void elem(ElemSimple elem5e) {
+    public boolean elem(ElemSimple elem5e, Record elementRec) {
         try {
-            //По artikl_id - артикула профилей
-            int artiklID = elem5e.artiklRecAn.getInt(eArtikl.id);
-            List<Record> elementList3 = eElement.filter2(artiklID);
-            detail(elementList3, elem5e);
-
-            //По groups1_id - серии профилей
-            List<Record> elementList2 = eElement.filter4(elem5e.artiklRecAn); //список элементов в серии
-            detail(elementList2, elem5e);
+            //ФИЛЬТР вариантов
+            return elementVar.filter(elem5e, elementRec);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:SpcElement.elem() " + e);
+            System.err.println("Ошибка:TElement.elem() " + e);
+            return false;
         }
     }
 
@@ -137,7 +132,7 @@ public class TElement extends Cal5e {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Elements.detail() " + e);
+            System.err.println("Ошибка:TElement.detail() " + e);
         }
     }
 }

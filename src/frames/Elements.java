@@ -25,6 +25,7 @@ import domain.eGroups;
 import domain.eJoindet;
 import builder.param.ParamList;
 import common.eProp;
+import common.listener.ListenerAction;
 import enums.TypeGrup;
 import enums.TypeSet;
 import enums.UseColor;
@@ -43,8 +44,6 @@ import startup.App;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
 import domain.eArtdet;
-import static domain.eArtikl.groups1_id;
-import static domain.eArtikl.groups2_id;
 import domain.eParmap;
 import domain.eSysprof;
 import domain.eSystree;
@@ -70,9 +69,19 @@ public class Elements extends javax.swing.JFrame {
     private Query qElemdet = new Query(eElemdet.values(), eArtikl.values());
     private Query qElempar1 = new Query(eElempar1.values());
     private Query qElempar2 = new Query(eElempar2.values());
+    private ListenerAction listenerSelectionTab1;
     private ListenerRecord listenerArtikl, listenerTypset, listenerSeries, listenerGroups, listenerColor, listenerColvar1, listenerColvar2, listenerColvar3;
 
     public Elements() {
+        initComponents();
+        initElements();
+        listenerSet();
+        loadingData();
+        loadingModel();
+        listenerAdd();
+    }
+
+    public Elements(Record variantRec) {
         initComponents();
         initElements();
         listenerSet();
@@ -96,7 +105,7 @@ public class Elements extends javax.swing.JFrame {
         qColor.sql(eColor.data(), eColor.up);
         qGrCateg.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id).sort(eGroups.npp, eGroups.name);
         qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id, TypeGrup.SERI_ELEM.id,
-                 TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id, TypeGrup.GROUP_VST.id).sort(eGroups.npp, eGroups.name);
+                TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id, TypeGrup.GROUP_VST.id).sort(eGroups.npp, eGroups.name);
 
         Record groups1Rec = eGroups.up.newRecord(Query.SEL);
         groups1Rec.setNo(eGroups.id, -1);
@@ -122,7 +131,7 @@ public class Elements extends javax.swing.JFrame {
         tab1.getTableHeader().setEnabled(false);
         new DefTableModel(tab1, qGrCateg, eGroups.name);
         new DefTableModel(tab2, qElement, eArtikl.code, eArtikl.name, eElement.name, eElement.typset,
-                 eElement.signset, eElement.groups1_id, eElement.groups3_id, eElement.todef, eElement.toset, eElement.markup) {
+                eElement.signset, eElement.groups1_id, eElement.groups3_id, eElement.todef, eElement.toset, eElement.markup) {
 
             public Object getValueAt(int col, int row, Object val) {
 
@@ -209,25 +218,84 @@ public class Elements extends javax.swing.JFrame {
 
     public void selectionTab1(ListSelectionEvent event) {
         try {
-            UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
-            List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
-            UGui.clearTable(tab2, tab3, tab4, tab5);
-            int index = UGui.getIndexRec(tab1);
-            if (index != -1) {
-                Record record = qGrCateg.get(index);
-                int id = record.getInt(eGroups.id);
+                UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
+                List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
+                UGui.clearTable(tab2, tab3, tab4, tab5);
+                int index = UGui.getIndexRec(tab1);
+                if (index != -1) {
+                    Record record = qGrCateg.get(index);
+                    int id = record.getInt(eGroups.id);
 
-                if (id == -1 || id == -5) { //(-1) - профили, (-5) - заполнения
-                    eElement.sql(qElement, qElement.query(eArtikl.up), id);
-                    //qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
-                    //qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);               
-                } else { //категории
-                    qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
-                    qElement.query(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                    if (id == -1 || id == -5) { //(-1) - профили, (-5) - заполнения
+                        eElement.sql(qElement, qElement.query(eArtikl.up), id);
+                        //qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
+                        //qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);               
+                    } else { //категории
+                        qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
+                        qElement.query(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                    }
+                    ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
+                    UGui.setSelectedRow(tab2);
                 }
-                ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
-                UGui.setSelectedRow(tab2);
-            }
+        } catch (Exception e) {
+            System.out.println("Ошиибка:Elements.selectionTab1() " + e);
+        }
+    }
+
+    public void selection3Tab1(ListSelectionEvent event) {
+        try {
+            listenerSelectionTab1 = () -> {
+
+                UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
+                List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
+                UGui.clearTable(tab2, tab3, tab4, tab5);
+                int index = UGui.getIndexRec(tab1);
+                if (index != -1) {
+                    Record record = qGrCateg.get(index);
+                    int id = record.getInt(eGroups.id);
+
+                    if (id == -1 || id == -5) { //(-1) - профили, (-5) - заполнения
+                        eElement.sql(qElement, qElement.query(eArtikl.up), id);
+                        //qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
+                        //qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);               
+                    } else { //категории
+                        qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
+                        qElement.query(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                    }
+                    ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
+                    UGui.setSelectedRow(tab2);
+                }
+            };
+        } catch (Exception e) {
+            System.out.println("Ошиибка:Elements.selectionTab1() " + e);
+        }
+    }
+
+    public void selection2Tab1(ListSelectionEvent event) {
+        try {
+            listenerSelectionTab1 = () -> {
+
+                UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
+                List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
+                UGui.clearTable(tab2, tab3, tab4, tab5);
+                int index = UGui.getIndexRec(tab1);
+                if (index != -1) {
+                    Record record = qGrCateg.get(index);
+                    int id = record.getInt(eGroups.id);
+
+                    if (id == -1 || id == -5) { //(-1) - профили, (-5) - заполнения
+                        eElement.sql(qElement, qElement.query(eArtikl.up), id);
+                        //qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
+                        //qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);               
+                    } else { //категории
+                        qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
+                        qElement.query(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                    }
+                    ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
+                    UGui.setSelectedRow(tab2);
+                }
+            };
+
         } catch (Exception e) {
             System.out.println("Ошиибка:Elements.selectionTab1() " + e);
         }
@@ -1137,7 +1205,8 @@ public class Elements extends javax.swing.JFrame {
                         if (result.equals(groupsRec.getStr(eGroups.name))) {
                             elementRec.setNo(eElement.groups2_id, groupsRec.getInt(eGroups.id));
                             qElement.update(elementRec);
-                            selectionTab1(null);
+                            //selection1Tab1(null);
+                            listenerSelectionTab1.action();
                         }
                     }
                 }
@@ -1415,6 +1484,9 @@ public class Elements extends javax.swing.JFrame {
             public void valueChanged(ListSelectionEvent event) {
                 if (event.getValueIsAdjusting() == false) {
                     selectionTab1(event);
+                    //if (listenerSelectionTab1 != null) {
+                    //    listenerSelectionTab1.action();
+                    //}
                 }
             }
         });
