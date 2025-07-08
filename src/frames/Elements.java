@@ -224,14 +224,13 @@ public class Elements extends javax.swing.JFrame {
                 int index = UGui.getIndexRec(tab1);
                 if (index != -1) {
                     Record record = qGrCateg.get(index);
-                    int id = record.getInt(eGroups.id);
+                    int groupsID = record.getInt(eGroups.id);
 
-                    if (id == -1 || id == -5) { //(-1) - профили, (-5) - заполнения
-                        eElement.sql(qElement, qElement.query(eArtikl.up), id);
-                        //qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
-                        //qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);               
+                    if (groupsID == -1 || groupsID == -5) { //(-1) - профили, (-5) - заполнения
+                        eElement.sql(qElement, qElement.query(eArtikl.up), groupsID);
+              
                     } else { //категории
-                        qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
+                        qElement.sql(eElement.data(), eElement.groups2_id, groupsID).sort(eElement.name);
                         qElement.query(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
                     }
                     ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
