@@ -228,21 +228,22 @@ public class Elements extends javax.swing.JFrame {
                 Record groupRec = qGrCateg.get(index);
                 int groupID = groupRec.getInt(eGroups.id);
 
-//                Query artiklList = new Query(eArtikl.values());
-//                if (artiklRec == null) {
-//                    artiklList = qElement.query(eArtikl.up);
-//                    //Query artiklList = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.id, artiklRec.getInt(eArtikl.id));
-//                }
+                Query artiklList = new Query(eArtikl.values());
+                if (artiklRec == null) {
+                    artiklList = eArtikl.data();
+                } else {
+                    artiklList = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.id, artiklRec.getInt(eArtikl.id));
+                }
 
-                    if (groupID == -1 || groupID == -5) { //(-1) - профили, (-5) - заполнения
-                        //eElement.sql(qElement, artiklList, groupID);
-                        eElement.sql(qElement, qElement.query(eArtikl.up), groupID);
-             
-                    } else { //категории
-                        qElement.sql(eElement.data(), eElement.groups2_id, groupID).sort(eElement.name);
-                        //qElement.query(eArtikl.up).join(qElement, artiklList, eElement.artikl_id, eArtikl.id);
-                        qElement.query(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
-                    }
+                if (groupID == -1 || groupID == -5) { //(-1) - профили, (-5) - заполнения
+                    //eElement.sql(qElement, artiklList, groupID);
+                    eElement.sql(qElement, qElement.query(eArtikl.up), groupID);
+
+                } else { //категории
+                    qElement.sql(eElement.data(), eElement.groups2_id, groupID).sort(eElement.name);
+                    qElement.query(eArtikl.up).join(qElement, artiklList, eElement.artikl_id, eArtikl.id);
+                    //qElement.query(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                }
                 ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
                 UGui.setSelectedRow(tab2);
             }
