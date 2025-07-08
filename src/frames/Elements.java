@@ -69,6 +69,7 @@ public class Elements extends javax.swing.JFrame {
     private Query qElemdet = new Query(eElemdet.values(), eArtikl.values());
     private Query qElempar1 = new Query(eElempar1.values());
     private Query qElempar2 = new Query(eElempar2.values());
+    private Record artiklRec = null;
     private ListenerAction listenerSelectionTab1;
     private ListenerRecord listenerArtikl, listenerTypset, listenerSeries, listenerGroups, listenerColor, listenerColvar1, listenerColvar2, listenerColvar3;
 
@@ -81,10 +82,11 @@ public class Elements extends javax.swing.JFrame {
         listenerAdd();
     }
 
-    public Elements(Record variantRec) {
+    public Elements(Record artiklRec) {
         initComponents();
         initElements();
         listenerSet();
+        this.artiklRec = artiklRec;
         loadingData();
         loadingModel();
         listenerAdd();
@@ -218,24 +220,32 @@ public class Elements extends javax.swing.JFrame {
 
     public void selectionTab1(ListSelectionEvent event) {
         try {
-                UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
-                List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
-                UGui.clearTable(tab2, tab3, tab4, tab5);
-                int index = UGui.getIndexRec(tab1);
-                if (index != -1) {
-                    Record record = qGrCateg.get(index);
-                    int groupsID = record.getInt(eGroups.id);
+            UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
+            List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
+            UGui.clearTable(tab2, tab3, tab4, tab5);
+            int index = UGui.getIndexRec(tab1);
+            if (index != -1) {
+                Record groupRec = qGrCateg.get(index);
+                int groupID = groupRec.getInt(eGroups.id);
 
-                    if (groupsID == -1 || groupsID == -5) { //(-1) - профили, (-5) - заполнения
-                        eElement.sql(qElement, qElement.query(eArtikl.up), groupsID);
-              
+//                Query artiklList = new Query(eArtikl.values());
+//                if (artiklRec == null) {
+//                    artiklList = qElement.query(eArtikl.up);
+//                    //Query artiklList = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.id, artiklRec.getInt(eArtikl.id));
+//                }
+
+                    if (groupID == -1 || groupID == -5) { //(-1) - профили, (-5) - заполнения
+                        //eElement.sql(qElement, artiklList, groupID);
+                        eElement.sql(qElement, qElement.query(eArtikl.up), groupID);
+             
                     } else { //категории
-                        qElement.sql(eElement.data(), eElement.groups2_id, groupsID).sort(eElement.name);
+                        qElement.sql(eElement.data(), eElement.groups2_id, groupID).sort(eElement.name);
+                        //qElement.query(eArtikl.up).join(qElement, artiklList, eElement.artikl_id, eArtikl.id);
                         qElement.query(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
                     }
-                    ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
-                    UGui.setSelectedRow(tab2);
-                }
+                ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
+                UGui.setSelectedRow(tab2);
+            }
         } catch (Exception e) {
             System.out.println("Ошиибка:Elements.selectionTab1() " + e);
         }

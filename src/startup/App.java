@@ -91,7 +91,6 @@ public enum App {
     public javax.swing.JFrame frame;
     public static javax.swing.JFrame active;
     public static Timer timer = new Timer(1000, null);
-    
 
     public static Dimension frameSize = null;
     public static java.awt.Point framePoint = null;
@@ -161,7 +160,11 @@ public enum App {
                     if (param.length == 0) {
                         frame = new Elements();
                     } else if (param.length == 1) {
-                        frame = new Elements((int) param[0]);
+                        if (param[0] instanceof Record) {
+                            frame = new Elements((Record) param[0]);    
+                        } else {
+                            frame = new Elements((int) param[0]);
+                        }
                     }
                     break;
                 case Param:
@@ -370,8 +373,8 @@ public enum App {
                 }
             }
         }
-    }    
- 
+    }
+
     public static void addButtonMouseListener(JButton btn, ActionListener listener) {
 
         btn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -389,7 +392,7 @@ public enum App {
                 btn.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif")));
             }
         });
-    }   
+    }
 
     //Список таблиц базы данных
     public static Field[] db = { //в порядке удаления при конвертирования из базы приёмника

@@ -106,6 +106,7 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 import javax.swing.JTree;
 import org.locationtech.jts.geom.Envelope;
+import startup.Tex;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -4786,7 +4787,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_blindsToElement
 
     private void elementsView(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elementsView
-        try {
+/*        try {
             double elemsID = winNode.com5t().id;
             //System.out.println(stvorkaID + " * " + winNode.com5t().type);
             //int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
@@ -4808,6 +4809,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.handlToStvorka() " + e);
         }
+*/
+        ProgressBar.create(Systree.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                Com5t com5t = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
+                App.Element.createFrame(Systree.this, com5t.artiklRecAn);
+            }
+        });
     }//GEN-LAST:event_elementsView
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
