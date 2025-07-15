@@ -593,37 +593,6 @@ public class Query extends Table {
         return this;
     }
     
-    public Query join2(List<Record> data1, List<Record> data2, Field field1, Field field2) {
-        try {
-            clear();
-            Query q = new Query(field1.fields(), field2.fields());
-            if (field1.meta().type() == Field.TYPE.INT && field2.meta().type() == Field.TYPE.INT) {
-                for (Record rec1 : data1) {
-                    for (Record rec2 : data2) {
-                        if (rec1.getInt(field1) == rec2.getInt(field2)) {
-                            this.table(field1).add(rec1);
-                            this.table(field2).add(rec2);
-                        }
-                    }
-                }
-            } else if (field1.meta().type() == Field.TYPE.STR && field2.meta().type() == Field.TYPE.STR) {
-                for (Record rec1 : data1) {
-                    for (Record rec2 : data2) {
-                        if (rec1.getStr(field1).trim().equals(rec2.getStr(field2).trim())) {
-                            this.table(field1).add(rec1);
-                            this.table(field2).add(rec2);
-                        }
-                    }
-                }
-            }
-            return this;
-            
-        } catch (Exception e) {
-            System.err.println("Ошибка:Query.join()");
-        }
-        return this;
-    }
-
     public Query sort(Field... field) {
         try {
             if (field.length == 1 && field[0].meta().type() == Field.TYPE.INT) {

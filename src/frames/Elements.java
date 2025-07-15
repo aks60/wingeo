@@ -67,6 +67,7 @@ public class Elements extends javax.swing.JFrame {
     private Query qGrCateg = new Query(eGroups.values());
     private Query qColor = new Query(eColor.id, eColor.groups_id, eColor.name);
     private Query qElement = new Query(eElement.values(), eArtikl.values());
+    private Query qElement2 = new Query(eElement.values(), eArtikl.values());
     private Query qElemdet = new Query(eElemdet.values(), eArtikl.values());
     private Query qElempar1 = new Query(eElempar1.values());
     private Query qElempar2 = new Query(eElempar2.values());
@@ -82,7 +83,7 @@ public class Elements extends javax.swing.JFrame {
         loadingModel();
         listenerAdd();
     }
-    
+
     public Elements(Com5t com5t) {
         initComponents();
         initElements();
@@ -228,88 +229,25 @@ public class Elements extends javax.swing.JFrame {
             if (index != -1) {
                 Record groupRec = qGrCateg.get(index);
                 int groupID = groupRec.getInt(eGroups.id);
-
-                Query artiklList = new Query(eArtikl.values());
                 if (com5t == null) {
-                    artiklList = eArtikl.data();
+                    if (groupID == -1 || groupID == -5) { //все профили(-1) или заполнения(-5)
+                        eElement.sql(qElement, qElement.table(eArtikl.up), groupID);
+                    } else { //детализация по категориям
+                        qElement.sql(eElement.data(), eElement.groups2_id, groupID).sort(eElement.name);
+                        qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                    }
                 } else {
-                    artiklList.add(com5t.artiklRecAn);
-                }
-                
-                
-
-                if (groupID == -1 || groupID == -5) { //все профили(-1) или заполнения(-5)
-                    eElement.sql(qElement, qElement.table(eArtikl.up), groupID);
-                    int m = 0;
-
-                } else { //детализация по категориям
-                    qElement.sql(eElement.data(), eElement.groups2_id, groupID).sort(eElement.name);
-                    qElement.table(eArtikl.up).join2(qElement, artiklList, eElement.artikl_id, eArtikl.id);
-                    //qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
-                    int m = 0;
+                    if (groupID == -1 || groupID == -5) { //все профили(-1) или заполнения(-5)
+                        eElement.sql(qElement, qElement.table(eArtikl.up), groupID, com5t.artiklRecAn);
+                    } else { //детализация по категориям    
+                        qElement.sql(eElement.data(), eElement.groups2_id, groupID, eElement.artikl_id
+                                , com5t.artiklRecAn.getInt(eArtikl.id)).sort(eElement.name);
+                        qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                    }
                 }
                 ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
                 UGui.setSelectedRow(tab2);
             }
-        } catch (Exception e) {
-            System.out.println("Ошиибка:Elements.selectionTab1() " + e);
-        }
-    }
-
-    public void selection3Tab1(ListSelectionEvent event) {
-        try {
-            listenerSelectionTab1 = () -> {
-
-                UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
-                List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
-                UGui.clearTable(tab2, tab3, tab4, tab5);
-                int index = UGui.getIndexRec(tab1);
-                if (index != -1) {
-                    Record record = qGrCateg.get(index);
-                    int id = record.getInt(eGroups.id);
-
-                    if (id == -1 || id == -5) { //(-1) - профили, (-5) - заполнения
-                        eElement.sql(qElement, qElement.table(eArtikl.up), id);
-                        //qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
-                        //qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);               
-                    } else { //категории
-                        qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
-                        qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
-                    }
-                    ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
-                    UGui.setSelectedRow(tab2);
-                }
-            };
-        } catch (Exception e) {
-            System.out.println("Ошиибка:Elements.selectionTab1() " + e);
-        }
-    }
-
-    public void selection2Tab1(ListSelectionEvent event) {
-        try {
-            listenerSelectionTab1 = () -> {
-
-                UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
-                List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
-                UGui.clearTable(tab2, tab3, tab4, tab5);
-                int index = UGui.getIndexRec(tab1);
-                if (index != -1) {
-                    Record record = qGrCateg.get(index);
-                    int id = record.getInt(eGroups.id);
-
-                    if (id == -1 || id == -5) { //(-1) - профили, (-5) - заполнения
-                        eElement.sql(qElement, qElement.table(eArtikl.up), id);
-                        //qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
-                        //qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);               
-                    } else { //категории
-                        qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
-                        qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
-                    }
-                    ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
-                    UGui.setSelectedRow(tab2);
-                }
-            };
-
         } catch (Exception e) {
             System.out.println("Ошиибка:Elements.selectionTab1() " + e);
         }

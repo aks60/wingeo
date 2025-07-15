@@ -53,11 +53,13 @@ public enum eElement implements Field {
     public static void sql(Query qElament, Query qArtikl, int categID) {
         qElament.clear();
         qArtikl.clear();
+
+        List<Record> artiklList = eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.level1) == Math.abs(categID)).collect(Collectors.toList());
         
-        List<Record> artiklList = (categID == -5)
-                ? eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.level1) == 5).collect(Collectors.toList())
-                : eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.level1) != 5).collect(Collectors.toList());
-        
+//        List<Record> artiklList = (categID == -5)
+//                ? eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.level1) == 5).collect(Collectors.toList())
+//                : eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.level1) != 5).collect(Collectors.toList());
+
         List<Record> groupsList = eGroups.data().stream().filter(rec
                 -> rec.getInt(eGroups.npp) == Math.abs(categID)).collect(Collectors.toList());
 
@@ -72,6 +74,28 @@ public enum eElement implements Field {
         }
     }
 
+    public static void sql(Query qElament, Query qArtikl, int categID, Record artiklRec) {
+        qElament.clear();
+        qArtikl.clear();
+        try {
+            List<Record> groupsList = eGroups.data().stream().filter(rec
+                    -> rec.getInt(eGroups.npp) == Math.abs(categID)).collect(Collectors.toList());
+
+            for (Record recElem : data()) {
+                for (Record recGrp : groupsList) {
+                    if (recElem.getInt(eElement.groups2_id) == recGrp.getInt(eGroups.id) 
+                            && recGrp.getInt(eGroups.npp) == Math.abs(categID) 
+                            && recElem.getInt(eElement.artikl_id) == artiklRec.getInt(eArtikl.id)) {
+                        qElament.add(recElem);
+                        qArtikl.add(artiklRec);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Îøèáêà:eElement.sql() " + e);
+        }
+    }
+
     public static Record find(int _id) {
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
@@ -79,7 +103,7 @@ public enum eElement implements Field {
         Query recordList = new Query(values()).select(up, "where", _id, "= id");
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
     }
-    
+
     public static List<Record> filter(int seriesID) {
         if (seriesID == -1) {
             return new ArrayList<Record>();
