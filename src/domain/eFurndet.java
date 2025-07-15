@@ -60,7 +60,7 @@ public enum eFurndet implements Field {
                     for (Record recordArt : listArt) {
                         if (recordFurn.getInt(artikl_id) == recordArt.getInt(eArtikl.id)) {
                             q.add(recordFurn);
-                            q.query(eArtikl.up).add(recordArt);
+                            q.table(eArtikl.up).add(recordArt);
                         }
                     }
                 }

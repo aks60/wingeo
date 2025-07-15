@@ -89,7 +89,7 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
     }
 
     public Query getQuery(Field field) {
-        return query.query(field);
+        return query.table(field);
     }
 
     public TableRowSorter<DefTableModel> getSorter() {
@@ -134,7 +134,7 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
     public Object getValueAt(int rowIndex, int columnIndex) {
 
         if (columns != null) {
-            Table query2 = query.query(columns[columnIndex]);
+            Table query2 = query.table(columns[columnIndex]);
             Object val = query2.get(rowIndex, columns[columnIndex]);
             if (getColumnClass(columnIndex) == Boolean.class) {
                 return (val == null || val.equals(0)) ? false : true;
@@ -184,7 +184,7 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
                         value = (Boolean.valueOf(String.valueOf(value))) ? 1 : 0;
                     }
                 }
-                query.query(field).set(value, row, field);
+                query.table(field).set(value, row, field);
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(App.active, "Неверный формат ввода данных", "Предупреждение", JOptionPane.INFORMATION_MESSAGE);

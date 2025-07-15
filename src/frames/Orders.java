@@ -303,7 +303,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
 
         int id = projectRec.getInt(eProject.id);
         qPrjkit.sql(ePrjkit.data(), ePrjkit.project_id, id);
-        qPrjkit.query(eArtikl.up).join(qPrjkit, eArtikl.data(), ePrjkit.artikl_id, eArtikl.id);
+        qPrjkit.table(eArtikl.up).join(qPrjkit, eArtikl.data(), ePrjkit.artikl_id, eArtikl.id);
         ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
         UGui.setSelectedRow(tab4);
     }
@@ -623,8 +623,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     JOptionPane.showMessageDialog(this, "Поле артикул должно иметь значеение");
                 } else {
                     qPrjkit.set(record.getInt(eArtikl.id), UGui.getIndexRec(tab4), ePrjkit.artikl_id);
-                    qPrjkit.query(eArtikl.up).set(record.get(eArtikl.code), UGui.getIndexRec(tab4), eArtikl.code);
-                    qPrjkit.query(eArtikl.up).set(record.get(eArtikl.name), UGui.getIndexRec(tab4), eArtikl.name);
+                    qPrjkit.table(eArtikl.up).set(record.get(eArtikl.code), UGui.getIndexRec(tab4), eArtikl.code);
+                    qPrjkit.table(eArtikl.up).set(record.get(eArtikl.name), UGui.getIndexRec(tab4), eArtikl.name);
                     UGui.fireTableRowUpdated(tab4);
                 }
             }, 1, 2, 3, 4, 5);
@@ -639,8 +639,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     JOptionPane.showMessageDialog(this, "Поле артикул должно иметь значеение");
                 } else {
                     qPrjkit.set(record.getInt(eArtikl.id), UGui.getIndexRec(tab4), ePrjkit.artikl_id);
-                    qPrjkit.query(eArtikl.up).set(record.get(eArtikl.code), UGui.getIndexRec(tab4), eArtikl.code);
-                    qPrjkit.query(eArtikl.up).set(record.get(eArtikl.name), UGui.getIndexRec(tab4), eArtikl.name);
+                    qPrjkit.table(eArtikl.up).set(record.get(eArtikl.code), UGui.getIndexRec(tab4), eArtikl.code);
+                    qPrjkit.table(eArtikl.up).set(record.get(eArtikl.name), UGui.getIndexRec(tab4), eArtikl.name);
                     UGui.fireTableRowUpdated(tab4);
                 }
             }, 1, 2, 3, 4, 5);
@@ -764,7 +764,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     private Wincalc wincalc() {
         int index = UGui.getIndexRec(tab2);
         if (index != -1) {
-            Record sysprodRec = qPrjprod.query(ePrjprod.up).get(index);
+            Record sysprodRec = qPrjprod.table(ePrjprod.up).get(index);
             Object v = sysprodRec.get(ePrjprod.values().length);
             if (v instanceof Wincalc) { //прорисовка окна               
                 return (Wincalc) v;
@@ -3098,14 +3098,14 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                             record.set(ePrjkit.project_id, qProject.get(index1, eProject.id));
                             record.set(ePrjkit.numb, 0);
                             int index3 = UGui.getIndexFind(tab4, ePrjkit.id, record.get(ePrjkit.id));
-                            qPrjkit.query(eArtikl.up).add(index3, eArtikl.up.newRecord(Query.SEL));
+                            qPrjkit.table(eArtikl.up).add(index3, eArtikl.up.newRecord(Query.SEL));
                         });
                     } else { //вставляем запись в проект
                         UGui.insertRecordCur(tab4, ePrjkit.up, (record) -> {
                             record.set(ePrjkit.project_id, qProject.get(index1, eProject.id));
                             record.set(ePrjkit.numb, 0);
                             int index3 = UGui.getIndexFind(tab4, ePrjkit.id, record.get(ePrjkit.id));
-                            qPrjkit.query(eArtikl.up).add(index3, eArtikl.up.newRecord(Query.SEL));
+                            qPrjkit.table(eArtikl.up).add(index3, eArtikl.up.newRecord(Query.SEL));
                         });
                     }
                 } else if (((JButton) evt.getSource()) == btnSet) { //вставляем сразу несколько записей
@@ -3184,7 +3184,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 double selectID = winNode.com5t().id;
                 int systreeID = qPrjprod.getAs(UGui.getIndexRec(tab2), ePrjprod.systree_id);
                 Query qSysprof = new Query(eSysprof.values(), eArtikl.values()).sql(eSysprof.data(), eSysprof.systree_id, systreeID);
-                qSysprof.query(eArtikl.up).join(qSysprof, eArtikl.data(), eSysprof.artikl_id, eArtikl.id);
+                qSysprof.table(eArtikl.up).join(qSysprof, eArtikl.data(), eSysprof.artikl_id, eArtikl.id);
                 Query qSysprof2 = new Query(eSysprof.values(), eArtikl.values());
 
                 //Отфильтруем подходящие по параметрам
@@ -3195,7 +3195,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                                 || sysprofRec.getInt(eSysprof.use_side) == UseSideTo.ANY.id
                                 || sysprofRec.getInt(eSysprof.use_side) == UseSideTo.MANUAL.id) {
                             qSysprof2.add(sysprofRec);
-                            qSysprof2.query(eArtikl.up).add(qSysprof.query(eArtikl.up).get(index));
+                            qSysprof2.table(eArtikl.up).add(qSysprof.table(eArtikl.up).get(index));
                         }
                     }
                 }
@@ -3327,7 +3327,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             double windowsID = winNode.com5t().id;
             int systreeID = qPrjprod.getAs(UGui.getIndexRec(tab2), ePrjprod.systree_id);
             Query qSysfurn = new Query(eSysfurn.values(), eFurniture.values()).sql(eSysfurn.data(), eSysfurn.systree_id, systreeID);
-            qSysfurn.query(eFurniture.up).join(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);
+            qSysfurn.table(eFurniture.up).join(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);
             new DicName(this, (sysfurnRec) -> {
 
                 GsonElem stvArea = UCom.gson(wincalc().listAll, windowsID);

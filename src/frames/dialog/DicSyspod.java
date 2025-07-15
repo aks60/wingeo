@@ -109,7 +109,7 @@ public class DicSyspod extends javax.swing.JDialog {
         DefaultTableModel dm = (DefaultTableModel) tab2.getModel();
         dm.getDataVector().removeAllElements();
         ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
-        for (Record record : qSysprod.query(eSysprod.up)) {
+        for (Record record : qSysprod.table(eSysprod.up)) {
             try {
                 Object arrayRec[] = {record.get(eSysprod.name), null};
                 Object script = record.get(eSysprod.script);
