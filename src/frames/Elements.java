@@ -244,8 +244,9 @@ public class Elements extends javax.swing.JFrame {
 
                 } else { //детализация по категориям
                     qElement.sql(eElement.data(), eElement.groups2_id, groupID).sort(eElement.name);
-                    //qElement.query(eArtikl.up).join2(qElement, artiklList, eElement.artikl_id, eArtikl.id);
-                    qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                    qElement.table(eArtikl.up).join2(qElement, artiklList, eElement.artikl_id, eArtikl.id);
+                    //qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                    int m = 0;
                 }
                 ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
                 UGui.setSelectedRow(tab2);
