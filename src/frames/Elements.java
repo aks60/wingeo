@@ -927,9 +927,7 @@ public class Elements extends javax.swing.JFrame {
             tab2.getColumnModel().getColumn(4).setPreferredWidth(32);
             tab2.getColumnModel().getColumn(5).setPreferredWidth(60);
             tab2.getColumnModel().getColumn(6).setPreferredWidth(60);
-            tab2.getColumnModel().getColumn(7).setMinWidth(0);
-            tab2.getColumnModel().getColumn(7).setPreferredWidth(0);
-            tab2.getColumnModel().getColumn(7).setMaxWidth(0);
+            tab2.getColumnModel().getColumn(7).setPreferredWidth(32);
             tab2.getColumnModel().getColumn(8).setPreferredWidth(32);
             tab2.getColumnModel().getColumn(9).setPreferredWidth(32);
             tab2.getColumnModel().getColumn(10).setPreferredWidth(40);
