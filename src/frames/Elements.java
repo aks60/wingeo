@@ -1,6 +1,8 @@
 package frames;
 
+import builder.making.TElement;
 import builder.model.Com5t;
+import builder.model.ElemSimple;
 import frames.swing.comp.ProgressBar;
 import frames.dialog.DicArtikl;
 import dataset.Connect;
@@ -229,6 +231,8 @@ public class Elements extends javax.swing.JFrame {
             if (index != -1) {
                 Record groupRec = qGrCateg.get(index);
                 int groupID = groupRec.getInt(eGroups.id);
+                
+                //Полный список сставов
                 if (com5t == null) {
                     if (groupID == -1 || groupID == -5) { //все профили(-1) или заполнения(-5)
                         eElement.sql(qElement, qElement.table(eArtikl.up), groupID);
@@ -236,13 +240,24 @@ public class Elements extends javax.swing.JFrame {
                         qElement.sql(eElement.data(), eElement.groups2_id, groupID).sort(eElement.name);
                         qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
                     }
+                    
+                    //Состав выбранного элемента
                 } else {
                     if (groupID == -1 || groupID == -5) { //все профили(-1) или заполнения(-5)
-                        eElement.sql(qElement, qElement.table(eArtikl.up), groupID, com5t.artiklRecAn);
+                        eElement.sql(qElement2, qElement2.table(eArtikl.up), groupID, com5t.artiklRecAn);
                     } else { //детализация по категориям    
-                        qElement.sql(eElement.data(), eElement.groups2_id, groupID, eElement.artikl_id
-                                , com5t.artiklRecAn.getInt(eArtikl.id)).sort(eElement.name);
-                        qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                        qElement2.sql(eElement.data(), eElement.groups2_id, groupID, eElement.artikl_id,
+                                com5t.artiklRecAn.getInt(eArtikl.id)).sort(eElement.name);
+                        qElement2.table(eArtikl.up).join(qElement2, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                    }
+                    qElement.clear();
+                    qElement.table(eArtikl.up).clear();
+                    for (int i = 0; i < qElement2.size(); ++i) {
+                        TElement te = new TElement(com5t.winc);
+                        if (te.elem((ElemSimple) com5t, qElement2.get(i)) == true) {
+                            qElement.add(qElement2.get(i));
+                            qElement.table(eArtikl.up).add(qElement2.table(eArtikl.up).get(i));
+                        }
                     }
                 }
                 ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
