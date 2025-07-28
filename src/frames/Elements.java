@@ -88,9 +88,9 @@ public class Elements extends javax.swing.JFrame {
 
     public Elements(Com5t com5t) {
         initComponents();
+        this.com5t = com5t;
         initElements();
         listenerSet();
-        this.com5t = com5t;
         loadingData();
         loadingModel();
         listenerAdd();
@@ -137,11 +137,11 @@ public class Elements extends javax.swing.JFrame {
         tab1.getTableHeader().setEnabled(false);
         new DefTableModel(tab1, qGrCateg, eGroups.name);
         new DefTableModel(tab2, qElement, eArtikl.code, eArtikl.name, eElement.name, eElement.typset,
-                eElement.signset, eElement.groups1_id, eElement.groups3_id, eElement.todef, eElement.toset, eElement.markup) {
+                eElement.signset, eElement.groups1_id, eElement.groups3_id, eElement.todef, eElement.toset, eArtikl.noopt, eElement.markup) {
 
             public Object getValueAt(int col, int row, Object val) {
 
-                if (val != null && columns[col] == eElement.toset) {
+                if (val != null && columns[col] == eArtikl.noopt) {
                     System.out.println("++++++");
                 }
                 
@@ -224,6 +224,7 @@ public class Elements extends javax.swing.JFrame {
         };
         tab2.getColumnModel().getColumn(7).setCellRenderer(new DefCellRendererBool());
         tab2.getColumnModel().getColumn(8).setCellRenderer(new DefCellRendererBool());
+        //tab2.getColumnModel().getColumn(9).setCellRenderer(new DefCellRendererBool());
         UGui.setSelectedRow(tab1);
     }
 
@@ -907,14 +908,14 @@ public class Elements extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Артикул", "Название", "Наименование составов", "Тип состава", "Признак состава", "Серия", "Группа составов", "Умолчание", "Обязательно", "Наценка%", "ID"
+                "Артикул", "Название", "Наименование составов", "Тип состава", "Признак состава", "Серия", "Группа составов", "Умолчание", "Обязательно", "Состав", "Наценка%", "ID"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Integer.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, true, true, true, true, true, true, true, true, false
+                true, true, true, true, true, true, true, true, true, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -949,9 +950,9 @@ public class Elements extends javax.swing.JFrame {
             tab2.getColumnModel().getColumn(6).setPreferredWidth(60);
             tab2.getColumnModel().getColumn(7).setPreferredWidth(32);
             tab2.getColumnModel().getColumn(8).setPreferredWidth(32);
-            tab2.getColumnModel().getColumn(9).setPreferredWidth(32);
-            tab2.getColumnModel().getColumn(10).setPreferredWidth(40);
-            tab2.getColumnModel().getColumn(10).setMaxWidth(60);
+            tab2.getColumnModel().getColumn(10).setPreferredWidth(32);
+            tab2.getColumnModel().getColumn(11).setPreferredWidth(40);
+            tab2.getColumnModel().getColumn(11).setMaxWidth(60);
         }
 
         pan4.add(scr2, java.awt.BorderLayout.CENTER);
@@ -1445,6 +1446,16 @@ public class Elements extends javax.swing.JFrame {
             App.saveLocationWin(this, btnClose);
         });
 
+        TableColumn column = tab2.getColumnModel().getColumn(9);
+        if (this.com5t != null) {
+            column.setPreferredWidth(32);
+            column.setMaxWidth(75);
+            column.setMinWidth(75);
+        } else {
+            column.setMinWidth(0);
+            column.setPreferredWidth(0);
+            column.setMaxWidth(0);
+        }
         TableFieldFilter filterTable = new TableFieldFilter(0, tab2, tab3, tab4, tab5);
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
