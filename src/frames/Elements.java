@@ -141,6 +141,10 @@ public class Elements extends javax.swing.JFrame {
 
             public Object getValueAt(int col, int row, Object val) {
 
+                if (val != null && columns[col] == eElement.toset) {
+                    System.out.println("++++++");
+                }
+                
                 if (val != null && columns[col] == eElement.typset) {
                     int typset = Integer.valueOf(val.toString());
                     return List.of(TypeSet.values()).stream().filter(el -> el.id == typset).findFirst().orElse(TypeSet.P1).name;
@@ -218,7 +222,8 @@ public class Elements extends javax.swing.JFrame {
                 return val;
             }
         };
-        List.of(7, 8).forEach(index -> tab2.getColumnModel().getColumn(index).setCellRenderer(new DefCellRendererBool()));
+        tab2.getColumnModel().getColumn(7).setCellRenderer(new DefCellRendererBool());
+        tab2.getColumnModel().getColumn(8).setCellRenderer(new DefCellRendererBool());
         UGui.setSelectedRow(tab1);
     }
 
