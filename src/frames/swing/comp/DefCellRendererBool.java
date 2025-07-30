@@ -38,9 +38,10 @@ public class DefCellRendererBool extends JCheckBox implements TableCellRenderer,
             value = (Integer.valueOf(value.toString()) == 0) ? false : true;
         } else if (value instanceof Double) {
             value = (Double.valueOf(value.toString()) == 0) ? false : true;
-        } else if (value instanceof Double) {
-            value = (Double.valueOf(value.toString()) == 0) ? false : true;
-        }
+        } 
+//        else if (value instanceof Double) {
+//            value = (Double.valueOf(value.toString()) == 0) ? false : true;
+//        }
         setSelected(value.equals(true) || value.equals("true"));
         setIcon((value.equals(true) || value.equals("true")) ? ico : null);
 

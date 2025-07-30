@@ -47,6 +47,7 @@ import startup.App;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
 import domain.eArtdet;
+import domain.eJoinpar1;
 import domain.eParmap;
 import domain.eSysprof;
 import domain.eSystree;
@@ -59,6 +60,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import report.sup.ExecuteCmd;
 import report.sup.RTable;
@@ -141,13 +143,12 @@ public class Elements extends javax.swing.JFrame {
 
             public Object getValueAt(int col, int row, Object val) {
 
-                if (val != null && columns[col] == eArtikl.noopt) {
-                    System.out.println("++++++");
-                }
-                
                 if (val != null && columns[col] == eElement.typset) {
                     int typset = Integer.valueOf(val.toString());
                     return List.of(TypeSet.values()).stream().filter(el -> el.id == typset).findFirst().orElse(TypeSet.P1).name;
+
+                } else if (val != null && columns[col] == eArtikl.noopt) {
+                    return 0;
 
                 } else if (val != null && columns[col] == eElement.groups1_id) {
                     return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).get(eGroups.name);
@@ -157,6 +158,15 @@ public class Elements extends javax.swing.JFrame {
                 }
                 return val;
             }
+
+            public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+                if (Elements.this.com5t != null && columns[columnIndex] == eArtikl.noopt) {
+                    System.out.println("aks");
+                } else {
+                    super.setValueAt(aValue, rowIndex, columnIndex);
+                }
+            }
+
         };
         new DefTableModel(tab3, qElemdet, eArtikl.code, eArtikl.name, eElemdet.color_fk, eElemdet.color_us, eElemdet.color_us, eElemdet.color_us) {
 
@@ -224,7 +234,7 @@ public class Elements extends javax.swing.JFrame {
         };
         tab2.getColumnModel().getColumn(7).setCellRenderer(new DefCellRendererBool());
         tab2.getColumnModel().getColumn(8).setCellRenderer(new DefCellRendererBool());
-        //tab2.getColumnModel().getColumn(9).setCellRenderer(new DefCellRendererBool());
+        tab2.getColumnModel().getColumn(9).setCellRenderer(new DefCellRendererBool());
         UGui.setSelectedRow(tab1);
     }
 
@@ -237,16 +247,16 @@ public class Elements extends javax.swing.JFrame {
             if (index != -1) {
                 Record groupRec = qGrCateg.get(index);
                 int groupID = groupRec.getInt(eGroups.id);
-                
+
                 //Полный список сставов
-                if (com5t == null) {
+                if (Elements.this.com5t == null) {
                     if (groupID == -1 || groupID == -5) { //все профили(-1) или заполнения(-5)
                         eElement.sql(qElement, qElement.table(eArtikl.up), groupID);
                     } else { //детализация по категориям
                         qElement.sql(eElement.data(), eElement.groups2_id, groupID).sort(eElement.name);
                         qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
                     }
-                    
+
                     //Состав выбранного элемента
                 } else {
                     if (groupID == -1 || groupID == -5) { //все профили(-1) или заполнения(-5)

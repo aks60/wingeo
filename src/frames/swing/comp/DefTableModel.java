@@ -136,10 +136,11 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
         if (columns != null) {
             Table query2 = query.table(columns[columnIndex]);
             Object val = query2.get(rowIndex, columns[columnIndex]);
+            Object ret = getValueAt(columnIndex, rowIndex, val);
             if (getColumnClass(columnIndex) == Boolean.class) {
-                return (val == null || val.equals(0)) ? false : true;
+                return (ret == null || ret.equals(0)) ? false : true;
             }
-            return getValueAt(columnIndex, rowIndex, val);
+            return ret;
         }
         return null;
     }
