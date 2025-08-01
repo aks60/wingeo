@@ -27,6 +27,8 @@ import domain.eElempar2;
 import domain.eGroups;
 import domain.eJoindet;
 import builder.param.ParamList;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import common.eProp;
 import common.listener.ListenerAction;
 import enums.TypeGrup;
@@ -47,7 +49,6 @@ import startup.App;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
 import domain.eArtdet;
-import domain.eJoinpar1;
 import domain.eParmap;
 import domain.eSysprof;
 import domain.eSystree;
@@ -56,11 +57,11 @@ import frames.swing.comp.DefCellEditorBtn;
 import frames.swing.comp.TableFieldFilter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import report.sup.ExecuteCmd;
 import report.sup.RTable;
@@ -76,6 +77,7 @@ public class Elements extends javax.swing.JFrame {
     private Query qElempar1 = new Query(eElempar1.values());
     private Query qElempar2 = new Query(eElempar2.values());
     private Com5t com5t = null;
+    private List consistList = null;
     private ListenerAction listenerSelectionTab1;
     private ListenerRecord listenerArtikl, listenerTypset, listenerSeries, listenerGroups, listenerColor, listenerColvar1, listenerColvar2, listenerColvar3;
 
@@ -91,11 +93,16 @@ public class Elements extends javax.swing.JFrame {
     public Elements(Com5t com5t) {
         initComponents();
         this.com5t = com5t;
+        consistList = new ArrayList();
+        for (JsonElement jsonElement : com5t.gson.param.getAsJsonArray("consistList")) {
+            consistList.add(jsonElement.getAsInt());
+        }
         initElements();
         listenerSet();
         loadingData();
         loadingModel();
         listenerAdd();
+        //System.out.println(consistList);
     }
 
     public Elements(int deteilID) {
@@ -134,6 +141,24 @@ public class Elements extends javax.swing.JFrame {
         }
     }
 
+    public void TEST() {
+
+        JsonArray jsa = com5t.gson.param.getAsJsonArray("consistList");
+        for (JsonElement jsonElement : jsa) {
+            consistList.add(jsonElement.getAsInt());
+        }
+        System.out.println(jsa);
+
+        JsonArray arr = new JsonArray();
+        arr.add(9);
+        arr.add(8);
+        arr.add(7);
+        com5t.gson.param.add("consistList", arr);
+
+        JsonArray jsa2 = com5t.gson.param.getAsJsonArray("consistList");
+        System.out.println(jsa2);
+    }
+
     public void loadingModel() {
 
         tab1.getTableHeader().setEnabled(false);
@@ -147,8 +172,10 @@ public class Elements extends javax.swing.JFrame {
                     int typset = Integer.valueOf(val.toString());
                     return List.of(TypeSet.values()).stream().filter(el -> el.id == typset).findFirst().orElse(TypeSet.P1).name;
 
-                } else if (val != null && columns[col] == eArtikl.noopt) {
-                    return 0;
+                } else if (com5t != null && columns[col] == eArtikl.noopt) {
+                    int ID = qElement.getAs(tab2.convertRowIndexToModel(row), eElement.id);
+                    //System.out.println(ID);
+                    return consistList.contains(ID) ? 1 : 0;
 
                 } else if (val != null && columns[col] == eElement.groups1_id) {
                     return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).get(eGroups.name);
@@ -161,6 +188,7 @@ public class Elements extends javax.swing.JFrame {
 
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                 if (Elements.this.com5t != null && columns[columnIndex] == eArtikl.noopt) {
+                    
                     System.out.println("aks");
                 } else {
                     super.setValueAt(aValue, rowIndex, columnIndex);
@@ -767,7 +795,7 @@ public class Elements extends javax.swing.JFrame {
         btnTest.setPreferredSize(new java.awt.Dimension(25, 25));
         btnTest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTest(evt);
+                btnTestActionPerformed(evt);
             }
         });
 
@@ -1274,9 +1302,6 @@ public class Elements extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnFind2
 
-    private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-    }//GEN-LAST:event_btnTest
-
     private void btnFind1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind1
         if (tab2.getBorder() != null) {
             Record record = ((DefTableModel) tab2.getModel()).getQuery().get(UGui.getIndexRec(tab2));
@@ -1399,6 +1424,10 @@ public class Elements extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ppmClick
 
+    private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
+        TEST();
+    }//GEN-LAST:event_btnTestActionPerformed
+
     private void findPathSystree(Record record, StringBuffer path) {
         for (Record rec : eSystree.data()) {
             if (record.getInt(eSystree.parent_id) == rec.getInt(eSystree.id)) {
@@ -1460,7 +1489,7 @@ public class Elements extends javax.swing.JFrame {
         if (this.com5t != null) {
             column.setPreferredWidth(32);
             column.setMaxWidth(75);
-            column.setMinWidth(75);
+            column.setMinWidth(24);
         } else {
             column.setMinWidth(0);
             column.setPreferredWidth(0);
