@@ -4787,29 +4787,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_blindsToElement
 
     private void elementsView(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elementsView
-/*        try {
-            double elemsID = winNode.com5t().id;
-            //System.out.println(stvorkaID + " * " + winNode.com5t().type);
-            //int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
-            //Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, 11);
-            //Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
-            new DicElemvar(this, (elemvarRec) -> {
-
-//                GsonElem stvArea = UCom.gson(wincalc().listAll, elemsID);
-//                stvArea.param.remove(PKjson.colorKnob);
-//                if (elemvarRec.get(1) == null) {
-//                    stvArea.param.remove(PKjson.artiklKnob);
-//                    stvArea.param.remove(PKjson.colorKnob);
-//                } else {
-//                    stvArea.param.addProperty(PKjson.artiklKnob, elemvarRec.getStr(eArtikl.id));
-//                }
-//                changeAndRedraw();
-            }, 0);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.handlToStvorka() " + e);
-        }
-*/
         ProgressBar.create(Systree.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 Com5t com5t = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();

@@ -49,6 +49,7 @@ import startup.App;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
 import domain.eArtdet;
+import static domain.eElement.data;
 import domain.eParmap;
 import domain.eSysprof;
 import domain.eSystree;
@@ -77,7 +78,7 @@ public class Elements extends javax.swing.JFrame {
     private Query qElempar1 = new Query(eElempar1.values());
     private Query qElempar2 = new Query(eElempar2.values());
     private Com5t com5t = null;
-    private List consistList = null;
+    private List consistList = new ArrayList();
     private ListenerAction listenerSelectionTab1;
     private ListenerRecord listenerArtikl, listenerTypset, listenerSeries, listenerGroups, listenerColor, listenerColvar1, listenerColvar2, listenerColvar3;
 
@@ -93,9 +94,11 @@ public class Elements extends javax.swing.JFrame {
     public Elements(Com5t com5t) {
         initComponents();
         this.com5t = com5t;
-        consistList = new ArrayList();
-        for (JsonElement jsonElement : com5t.gson.param.getAsJsonArray("consistList")) {
-            consistList.add(jsonElement.getAsInt());
+        JsonArray arr = com5t.gson.param.getAsJsonArray("consistList");
+        if (arr != null) {
+            for (JsonElement jsonElement : arr) {
+                consistList.add(jsonElement.getAsInt());
+            }
         }
         initElements();
         listenerSet();
@@ -188,7 +191,7 @@ public class Elements extends javax.swing.JFrame {
 
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                 if (Elements.this.com5t != null && columns[columnIndex] == eArtikl.noopt) {
-                    
+
                     System.out.println("aks");
                 } else {
                     super.setValueAt(aValue, rowIndex, columnIndex);
@@ -279,7 +282,20 @@ public class Elements extends javax.swing.JFrame {
                 //Полный список сставов
                 if (Elements.this.com5t == null) {
                     if (groupID == -1 || groupID == -5) { //все профили(-1) или заполнения(-5)
-                        eElement.sql(qElement, qElement.table(eArtikl.up), groupID);
+                        qElement.clear();
+                        qElement.table(eArtikl.up).clear();
+                        List<Record> artiklList = eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.level1) == Math.abs(groupID)).collect(Collectors.toList());
+                        List<Record> groupsList = eGroups.data().stream().filter(rec
+                                -> rec.getInt(eGroups.npp) == Math.abs(groupID)).collect(Collectors.toList());
+                        for (Record recElem : data()) {
+                            for (Record recGrp : groupsList) {
+                                if (recElem.getInt(eElement.groups2_id) == recGrp.getInt(eGroups.id) && recGrp.getInt(eGroups.npp) == Math.abs(groupID)) {
+                                    qElement.add(recElem);
+                                    qElement.table(eArtikl.up).add(artiklList.stream().filter(rec
+                                            -> recElem.getInt(eElement.artikl_id) == rec.getInt(eArtikl.id)).findFirst().get());
+                                }
+                            }
+                        }
                     } else { //детализация по категориям
                         qElement.sql(eElement.data(), eElement.groups2_id, groupID).sort(eElement.name);
                         qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
@@ -287,11 +303,32 @@ public class Elements extends javax.swing.JFrame {
 
                     //Состав выбранного элемента
                 } else {
-                    if (groupID == -1 || groupID == -5) { //все профили(-1) или заполнения(-5)
-                        eElement.sql(qElement2, qElement2.table(eArtikl.up), groupID, com5t.artiklRecAn);
+                    if (groupID == -1 || groupID == -5) { //все профили(-1) или заполнения(-5)                    
+                        qElement2.clear();
+                        qElement2.table(eArtikl.up).clear();
+                        int artiklID = com5t.artiklRecAn.getInt(eArtikl.id);
+                        int seriID = com5t.artiklRecAn.getInt(eArtikl.groups4_id);
+                        List<Record> groupsList = eGroups.data().stream().filter(rec
+                                -> rec.getInt(eGroups.npp) == Math.abs(groupID)).collect(Collectors.toList());
+                        for (Record recElem : data()) {
+                            for (Record recGrp : groupsList) {
+                                if (recElem.getInt(eElement.groups2_id) == recGrp.getInt(eGroups.id) && recGrp.getInt(eGroups.npp) == Math.abs(groupID)
+                                        && (recElem.getInt(eElement.artikl_id) == artiklID || recElem.getInt(eElement.groups1_id) == seriID)) {
+                                    qElement2.add(recElem);
+                                    qElement2.table(eArtikl.up).add(com5t.artiklRecAn);
+                                }
+                            }
+                        }
                     } else { //детализация по категориям    
-                        qElement2.sql(eElement.data(), eElement.groups2_id, groupID, eElement.artikl_id,
-                                com5t.artiklRecAn.getInt(eArtikl.id)).sort(eElement.name);
+                        qElement2.clear();
+                        int artiklID = com5t.artiklRecAn.getInt(eArtikl.id);
+                        int seriID = com5t.artiklRecAn.getInt(eArtikl.groups4_id);
+                        for (Record elemRec : eElement.data()) {
+                            if (elemRec.getInt(eElement.groups2_id) == groupID
+                                    && (elemRec.getInt(eElement.artikl_id) == artiklID || elemRec.getInt(eElement.groups1_id) == seriID)) {
+                                qElement2.add(elemRec);
+                            }
+                        }
                         qElement2.table(eArtikl.up).join(qElement2, eArtikl.data(), eElement.artikl_id, eArtikl.id);
                     }
                     qElement.clear();
@@ -986,8 +1023,8 @@ public class Elements extends javax.swing.JFrame {
             tab2.getColumnModel().getColumn(4).setPreferredWidth(32);
             tab2.getColumnModel().getColumn(5).setPreferredWidth(60);
             tab2.getColumnModel().getColumn(6).setPreferredWidth(60);
-            tab2.getColumnModel().getColumn(7).setPreferredWidth(32);
-            tab2.getColumnModel().getColumn(8).setPreferredWidth(32);
+            tab2.getColumnModel().getColumn(7).setPreferredWidth(36);
+            tab2.getColumnModel().getColumn(8).setPreferredWidth(36);
             tab2.getColumnModel().getColumn(10).setPreferredWidth(32);
             tab2.getColumnModel().getColumn(11).setPreferredWidth(40);
             tab2.getColumnModel().getColumn(11).setMaxWidth(60);
@@ -1487,7 +1524,7 @@ public class Elements extends javax.swing.JFrame {
 
         TableColumn column = tab2.getColumnModel().getColumn(9);
         if (this.com5t != null) {
-            column.setPreferredWidth(32);
+            column.setPreferredWidth(36);
             column.setMaxWidth(75);
             column.setMinWidth(24);
         } else {

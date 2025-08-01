@@ -50,52 +50,6 @@ public enum eElement implements Field {
         return query;
     }
 
-    public static void sql(Query qElament, Query qArtikl, int categID) {
-        qElament.clear();
-        qArtikl.clear();
-
-        List<Record> artiklList = eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.level1) == Math.abs(categID)).collect(Collectors.toList());
-        
-//        List<Record> artiklList = (categID == -5)
-//                ? eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.level1) == 5).collect(Collectors.toList())
-//                : eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.level1) != 5).collect(Collectors.toList());
-
-        List<Record> groupsList = eGroups.data().stream().filter(rec
-                -> rec.getInt(eGroups.npp) == Math.abs(categID)).collect(Collectors.toList());
-
-        for (Record recElem : data()) {
-            for (Record recGrp : groupsList) {
-                if (recElem.getInt(eElement.groups2_id) == recGrp.getInt(eGroups.id) && recGrp.getInt(eGroups.npp) == Math.abs(categID)) {
-                    qElament.add(recElem);
-                    qArtikl.add(artiklList.stream().filter(rec
-                            -> recElem.getInt(eElement.artikl_id) == rec.getInt(eArtikl.id)).findFirst().get());
-                }
-            }
-        }
-    }
-
-    public static void sql(Query qElament, Query qArtikl, int categID, Record artiklRec) {
-        qElament.clear();
-        qArtikl.clear();
-        try {
-            List<Record> groupsList = eGroups.data().stream().filter(rec
-                    -> rec.getInt(eGroups.npp) == Math.abs(categID)).collect(Collectors.toList());
-
-            for (Record recElem : data()) {
-                for (Record recGrp : groupsList) {
-                    if (recElem.getInt(eElement.groups2_id) == recGrp.getInt(eGroups.id) 
-                            && recGrp.getInt(eGroups.npp) == Math.abs(categID) 
-                            && recElem.getInt(eElement.artikl_id) == artiklRec.getInt(eArtikl.id)) {
-                        qElament.add(recElem);
-                        qArtikl.add(artiklRec);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            System.err.println("Îøèáêà:eElement.sql() " + e);
-        }
-    }
-
     public static Record find(int _id) {
         if (Query.conf.equals("NET")) {
             return data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(up.newRecord(Query.SEL));
@@ -141,7 +95,7 @@ public enum eElement implements Field {
         }
         return new Query(values()).select(up, "where", groups1_id, "=", seriesID, "and", artiklID, "!= artikl_id and", todef, "> 0");
     }
-
+    
     public String toString() {
         return meta.descr();
     }
