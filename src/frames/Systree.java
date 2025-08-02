@@ -4790,7 +4790,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         ProgressBar.create(Systree.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 Com5t com5t = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
-                App.Element.createFrame(Systree.this, com5t);
+                int sysprodID = qSysprod.getAs(UGui.getIndexRec(tab5), eSysprod.id);
+                App.Element.createFrame(Systree.this, sysprodID, com5t);
             }
         });
     }//GEN-LAST:event_elementsView

@@ -161,11 +161,9 @@ public enum App {
                     if (param.length == 0) {
                         frame = new Elements();
                     } else if (param.length == 1) {
-                        if (param[0] instanceof Com5t) {
-                            frame = new Elements((Com5t) param[0]);    
-                        } else {
-                            frame = new Elements((int) param[0]);
-                        }
+                        frame = new Elements((int) param[0]);
+                    } else if (param.length == 2) {
+                        frame = new Elements((int) param[0], (Com5t) param[1]);
                     }
                     break;
                 case Param:

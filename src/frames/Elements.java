@@ -52,6 +52,7 @@ import common.listener.ListenerFrame;
 import domain.eArtdet;
 import static domain.eElement.data;
 import domain.eParmap;
+import domain.eSysprod;
 import domain.eSysprof;
 import domain.eSystree;
 import frames.dialog.DicArtikl2;
@@ -78,23 +79,13 @@ public class Elements extends javax.swing.JFrame {
     private Query qElempar1 = new Query(eElempar1.values());
     private Query qElempar2 = new Query(eElempar2.values());
     private Com5t com5t = null;
+    private int sysprodID = -1;
     private JsonArray consistList = null;
     private ListenerAction listenerSelectionTab1;
     private ListenerRecord listenerArtikl, listenerTypset, listenerSeries, listenerGroups, listenerColor, listenerColvar1, listenerColvar2, listenerColvar3;
 
     public Elements() {
         initComponents();
-        initElements();
-        listenerSet();
-        loadingData();
-        loadingModel();
-        listenerAdd();
-    }
-
-    public Elements(Com5t com5t) {
-        initComponents();
-        this.com5t = com5t;
-        consistList = com5t.gson.param.getAsJsonArray("consistList");
         initElements();
         listenerSet();
         loadingData();
@@ -110,6 +101,18 @@ public class Elements extends javax.swing.JFrame {
         loadingModel();
         listenerAdd();
         deteilFind(deteilID);
+    }
+
+    public Elements(int sysprodID, Com5t com5t) {
+        initComponents();
+        this.com5t = com5t;
+        this.sysprodID = sysprodID;
+        consistList = com5t.gson.param.getAsJsonArray("consistList");
+        initElements();
+        listenerSet();
+        loadingData();
+        loadingModel();
+        listenerAdd();
     }
 
     public void loadingData() {
@@ -136,24 +139,6 @@ public class Elements extends javax.swing.JFrame {
                 break;
             }
         }
-    }
-
-    public void TEST() {
-
-        JsonArray jsa = com5t.gson.param.getAsJsonArray("consistList");
-        for (JsonElement jsonElement : jsa) {
-            consistList.add(jsonElement.getAsInt());
-        }
-        System.out.println(jsa);
-
-        JsonArray arr = new JsonArray();
-        arr.add(9);
-        arr.add(8);
-        arr.add(7);
-        com5t.gson.param.add("consistList", arr);
-
-        JsonArray jsa2 = com5t.gson.param.getAsJsonArray("consistList");
-        System.out.println(jsa2);
     }
 
     public void loadingModel() {
@@ -185,16 +170,21 @@ public class Elements extends javax.swing.JFrame {
 
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                 if (Elements.this.com5t != null && columns[columnIndex] == eArtikl.noopt) {
-                    Set set = new HashSet();
-                    JsonArray arr = new JsonArray();
-                    arr.add(973);
-                    arr.add(-8);
-                    arr.add(-7);
-                    com5t.gson.param.add("consistList", arr);
-                    consistList = arr;
+                    Object seriID = qElement.getAs(rowIndex, eElement.groups1_id);
+                    if (seriID != null) {
+                        
+                        int elemID = qElement.getAs(rowIndex, eElement.id);
+                        JsonArray arr = com5t.gson.param.getAsJsonArray("consistList");
+                        arr.set(0, new JsonPrimitive(elemID));
+                        com5t.gson.param.add("consistList", arr);
+                        consistList = arr;
 
-                    System.out.println("row = " + rowIndex);
-                    System.out.println(consistList);
+                        String script = com5t.winc.gson.toJson();
+                        Record sysprodRec = eSysprod.find(sysprodID);
+                        sysprodRec.set(eSysprod.script, script);
+
+                        ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
+                    }
                 } else {
                     super.setValueAt(aValue, rowIndex, columnIndex);
                 }
@@ -317,7 +307,9 @@ public class Elements extends javax.swing.JFrame {
                                 if (recElem.getInt(eElement.groups2_id) == recGrp.getInt(eGroups.id) && recGrp.getInt(eGroups.npp) == Math.abs(groupID)
                                         && (recElem.getInt(eElement.artikl_id) == artiklID || recElem.getInt(eElement.groups1_id) == seriID)) {
                                     qElement2.add(recElem);
-                                    qElement2.table(eArtikl.up).add(com5t.artiklRecAn);
+                                    int id = recElem.getInt(eElement.artikl_id);
+                                    Record artiklRec = eArtikl.find(id);
+                                    qElement2.table(eArtikl.up).add(artiklRec);
                                 }
                             }
                         }
@@ -648,6 +640,7 @@ public class Elements extends javax.swing.JFrame {
         separator1 = new javax.swing.JPopupMenu.Separator();
         mDefault = new javax.swing.JMenuItem();
         mType = new javax.swing.JMenuItem();
+        mSign = new javax.swing.JMenuItem();
         north = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
         btnDel = new javax.swing.JButton();
@@ -732,6 +725,16 @@ public class Elements extends javax.swing.JFrame {
             }
         });
         ppmCrud.add(mType);
+
+        mSign.setFont(frames.UGui.getFont(1,0));
+        mSign.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c085.gif"))); // NOI18N
+        mSign.setText("Признак состава");
+        mSign.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppmClick(evt);
+            }
+        });
+        ppmCrud.add(mSign);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Составы");
@@ -1022,10 +1025,14 @@ public class Elements extends javax.swing.JFrame {
             tab2.getColumnModel().getColumn(3).setMinWidth(0);
             tab2.getColumnModel().getColumn(3).setPreferredWidth(0);
             tab2.getColumnModel().getColumn(3).setMaxWidth(0);
-            tab2.getColumnModel().getColumn(4).setPreferredWidth(32);
+            tab2.getColumnModel().getColumn(4).setMinWidth(0);
+            tab2.getColumnModel().getColumn(4).setPreferredWidth(0);
+            tab2.getColumnModel().getColumn(4).setMaxWidth(0);
             tab2.getColumnModel().getColumn(5).setPreferredWidth(60);
             tab2.getColumnModel().getColumn(6).setPreferredWidth(60);
-            tab2.getColumnModel().getColumn(7).setPreferredWidth(36);
+            tab2.getColumnModel().getColumn(7).setMinWidth(0);
+            tab2.getColumnModel().getColumn(7).setPreferredWidth(0);
+            tab2.getColumnModel().getColumn(7).setMaxWidth(0);
             tab2.getColumnModel().getColumn(8).setPreferredWidth(36);
             tab2.getColumnModel().getColumn(10).setPreferredWidth(32);
             tab2.getColumnModel().getColumn(11).setPreferredWidth(40);
@@ -1448,6 +1455,8 @@ public class Elements extends javax.swing.JFrame {
         int index = 0;
         if (ppm == mType) {
             index = 3;
+        } else if (ppm == mSign) {
+            index = 4;
         } else if (ppm == mDefault) {
             index = 7;
         }
@@ -1464,7 +1473,7 @@ public class Elements extends javax.swing.JFrame {
     }//GEN-LAST:event_ppmClick
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        TEST();
+        //TEST();
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void findPathSystree(Record record, StringBuffer path) {
@@ -1495,6 +1504,7 @@ public class Elements extends javax.swing.JFrame {
     private javax.swing.JMenuItem mDefault;
     private javax.swing.JMenuItem mDelit;
     private javax.swing.JMenuItem mInsert;
+    private javax.swing.JMenuItem mSign;
     private javax.swing.JMenuItem mType;
     private javax.swing.JPanel north;
     private javax.swing.JPanel pan1;
