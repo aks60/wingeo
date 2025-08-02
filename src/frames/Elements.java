@@ -29,6 +29,7 @@ import domain.eJoindet;
 import builder.param.ParamList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
 import common.eProp;
 import common.listener.ListenerAction;
 import enums.TypeGrup;
@@ -58,7 +59,6 @@ import frames.swing.comp.DefCellEditorBtn;
 import frames.swing.comp.TableFieldFilter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import javax.swing.ImageIcon;
@@ -78,7 +78,7 @@ public class Elements extends javax.swing.JFrame {
     private Query qElempar1 = new Query(eElempar1.values());
     private Query qElempar2 = new Query(eElempar2.values());
     private Com5t com5t = null;
-    private List consistList = new ArrayList();
+    private JsonArray consistList = null;
     private ListenerAction listenerSelectionTab1;
     private ListenerRecord listenerArtikl, listenerTypset, listenerSeries, listenerGroups, listenerColor, listenerColvar1, listenerColvar2, listenerColvar3;
 
@@ -94,18 +94,12 @@ public class Elements extends javax.swing.JFrame {
     public Elements(Com5t com5t) {
         initComponents();
         this.com5t = com5t;
-        JsonArray arr = com5t.gson.param.getAsJsonArray("consistList");
-        if (arr != null) {
-            for (JsonElement jsonElement : arr) {
-                consistList.add(jsonElement.getAsInt());
-            }
-        }
+        consistList = com5t.gson.param.getAsJsonArray("consistList");
         initElements();
         listenerSet();
         loadingData();
         loadingModel();
         listenerAdd();
-        //System.out.println(consistList);
     }
 
     public Elements(int deteilID) {
@@ -176,9 +170,9 @@ public class Elements extends javax.swing.JFrame {
                     return List.of(TypeSet.values()).stream().filter(el -> el.id == typset).findFirst().orElse(TypeSet.P1).name;
 
                 } else if (com5t != null && columns[col] == eArtikl.noopt) {
-                    int ID = qElement.getAs(tab2.convertRowIndexToModel(row), eElement.id);
-                    //System.out.println(ID);
-                    return consistList.contains(ID) ? 1 : 0;
+                    int elemID = qElement.getAs(row, eElement.id);
+                    JsonElement jp = new JsonPrimitive(elemID);
+                    return (consistList != null) ? consistList.contains(jp) : false;
 
                 } else if (val != null && columns[col] == eElement.groups1_id) {
                     return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).get(eGroups.name);
@@ -191,8 +185,16 @@ public class Elements extends javax.swing.JFrame {
 
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                 if (Elements.this.com5t != null && columns[columnIndex] == eArtikl.noopt) {
+                    Set set = new HashSet();
+                    JsonArray arr = new JsonArray();
+                    arr.add(973);
+                    arr.add(-8);
+                    arr.add(-7);
+                    com5t.gson.param.add("consistList", arr);
+                    consistList = arr;
 
-                    System.out.println("aks");
+                    System.out.println("row = " + rowIndex);
+                    System.out.println(consistList);
                 } else {
                     super.setValueAt(aValue, rowIndex, columnIndex);
                 }
