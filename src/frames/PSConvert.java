@@ -383,6 +383,8 @@ public class PSConvert {
             deleteSql(eParmap.up, "psss", eColor.up, "cnumb"); //color_id1 
             deleteSql(eArtdet.up, "anumb", eArtikl.up, "code");//artikl_id
             //цвет не должен вли€ть глобально, тер€ютс€ ссылки... ("delete from artdet where not exists (select id from color a where a.ccode = artdet.clcod and a.cnumb = artdet.clnum)");  //color_fk            
+            executeSql("update element set vlets = null where vlets = '-'");
+            executeSql("update element set vgrup = null where vgrup = '-'");
             deleteSql(eElement.up, "anumb", eArtikl.up, "code");//artikl_id  
             deleteSql(eElemdet.up, "anumb", eArtikl.up, "code");//artikl_id
             //цвет не должен вли€ть глобально на калькул€цию!!! executeSql("delete from elemdet where not exists (select id from color a where a.cnumb = elemdet.color_fk) and elemdet.color_fk > 0 and elemdet.color_fk != 100000"); //color_fk
@@ -891,7 +893,7 @@ public class PSConvert {
             while (rs.next()) {
                 ++recordCount;
                 Object val = rs.getObject(id1);
-                Object[] obj = set.stream().filter(el -> el[1].equals(val)).findFirst().orElse(null);
+                Object[] obj = set.stream().filter(el -> el[1] != null && el[1].equals(val)).findFirst().orElse(null);
                 if (obj != null) {
                     ++recordUpdate;
                     st2.addBatch("update " + table1.tname() + " set " + fk1.name() + " = " + obj[0] + " where id = " + rs.getObject("id"));

@@ -170,12 +170,19 @@ public class Elements extends javax.swing.JFrame {
 
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                 if (Elements.this.com5t != null && columns[columnIndex] == eArtikl.noopt) {
-                    Object seriID = qElement.getAs(rowIndex, eElement.groups1_id);
-                    if (seriID != null) {
-                        
+                    
+                    Record elementRec = qElement.get(rowIndex);
+                    Object grupID = elementRec.get(eElement.groups3_id);
+                    if (grupID != null) {
+
                         int elemID = qElement.getAs(rowIndex, eElement.id);
                         JsonArray arr = com5t.gson.param.getAsJsonArray("consistList");
-                        arr.set(0, new JsonPrimitive(elemID));
+                        if (arr == null) {
+                            arr = new JsonArray();
+                            arr.add(new JsonPrimitive(elemID));
+                        } else {
+                            arr.set(0, new JsonPrimitive(elemID));
+                        }
                         com5t.gson.param.add("consistList", arr);
                         consistList = arr;
 
