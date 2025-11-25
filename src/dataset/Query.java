@@ -1,6 +1,7 @@
 package dataset;
 
 import static dataset.Query.INS;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -92,7 +93,8 @@ public class Query extends Table {
         }
         //System.out.println("SQL-SELECT:" + tName + " - " + sql);
         try {
-            Statement statement = Connect.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            Connection connection = Connect.getConnection();
+            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet recordset = statement.executeQuery(sql);
             this.sql = s;
             while (recordset.next()) {
@@ -110,7 +112,7 @@ public class Query extends Table {
                 }
             }
             statement.close();
-            Connect.close();
+            Connect.close(connection);
             return this;
 
         } catch (SQLException e) {
@@ -121,7 +123,8 @@ public class Query extends Table {
 
     public void insert(Record record) {
         try {
-            Statement statement = Connect.getConnection().createStatement();
+            Connection connection = Connect.getConnection();
+            Statement statement = connection.createStatement();
             //если нет, генерю сам
             String nameCols = "", nameVals = "";
             //цикл по полям таблицы
@@ -140,7 +143,7 @@ public class Query extends Table {
                 statement.executeUpdate(sql);
                 record.setNo(0, SEL);
             }
-            Connect.close();
+            Connect.close(connection);
 
         } catch (SQLException e) {
             System.err.println("Ошибка:Query.insert() " + e);
@@ -148,7 +151,8 @@ public class Query extends Table {
     }
 
     public void insert2(Record record) throws SQLException {
-        Statement statement = Connect.getConnection().createStatement();
+        Connection connection = Connect.getConnection();
+        Statement statement = connection.createStatement();
         //если нет, генерю сам
         String nameCols = "", nameVals = "";
         //цикл по полям таблицы
@@ -167,13 +171,14 @@ public class Query extends Table {
             statement.executeUpdate(sql);
             record.setNo(0, SEL);
         }
-        Connect.close();
+        Connect.close(connection);
     }
 
     public void update(Record record) {
         try {
             String nameCols = "";
-            Statement statement = statement = Connect.getConnection().createStatement();
+            Connection connection = Connect.getConnection();
+            Statement statement = statement = connection.createStatement();
             //цикл по полям таблицы
             for (Field field : fields) {
                 if (field.meta().type() != Field.TYPE.OBJ) {
@@ -189,7 +194,7 @@ public class Query extends Table {
                 statement.executeUpdate(sql);
                 record.setNo(0, SEL);
             }
-            Connect.close();
+            Connect.close(connection);
 
         } catch (SQLException e) {
             System.err.println("Ошибка:Query.update() " + e);
@@ -198,7 +203,8 @@ public class Query extends Table {
 
     public void update2(Record record) throws SQLException {
         String nameCols = "";
-        Statement statement = Connect.getConnection().createStatement();
+        Connection connection = Connect.getConnection();
+        Statement statement = connection.createStatement();
         //цикл по полям таблицы
         for (Field field : fields) {
             if (field.meta().type() != Field.TYPE.OBJ) {
@@ -214,17 +220,18 @@ public class Query extends Table {
             statement.executeUpdate(sql);
             record.setNo(0, SEL);
         }
-        Connect.close();
+        Connect.close(connection);
     }
 
     public boolean delete(Record record) {
         try {
-            Statement statement = Connect.getConnection().createStatement();
+            Connection connection = Connect.getConnection();
+            Statement statement = connection.createStatement();
             Field[] f = fields.get(0).fields();
             String sql = "delete from " + schema + fields.get(0).tname() + " where " + f[1].name() + " = " + wrapper(record, f[1]);
             System.out.println("SQL-DELETE " + sql);
             statement.executeUpdate(sql);
-            Connect.close();
+            Connect.close(connection);
             return true;
 
         } catch (SQLException e) {
@@ -237,12 +244,13 @@ public class Query extends Table {
     }
 
     public int delete2(Record record) throws SQLException {
-        Statement statement = Connect.getConnection().createStatement();
+        Connection connection = Connect.getConnection();
+        Statement statement = connection.createStatement();
         Field[] f = fields.get(0).fields();
         String sql = "delete from " + schema + fields.get(0).tname() + " where " + f[1].name() + " = " + wrapper(record, f[1]);
         System.out.println("SQL-DELETE " + sql);
         int ret = statement.executeUpdate(sql);
-        Connect.close();
+        Connect.close(connection);
         return ret;
     }
 
