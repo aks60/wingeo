@@ -52,7 +52,7 @@ public class Connect {
                 Context initContext = new InitialContext();
                 DataSource dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/winweb");
                 //dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/winnet");
-                connection = dataSource.getConnection();
+                Connection connection = dataSource.getConnection();
                 connection.setAutoCommit(true);
                 return connection;
 
@@ -69,7 +69,7 @@ public class Connect {
         }
     }
 
-    public static void close() throws SQLException {
+    public static void close(Connection connection) throws SQLException {
         if (webapp == true) {
             connection.close();
         }
@@ -200,7 +200,7 @@ public class Connect {
                 next_id = rs.getInt("GEN_ID");
             }
             rs.close();
-            close();
+            close(conn);
             return next_id;
 
         } catch (SQLException e) {
