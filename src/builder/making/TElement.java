@@ -8,14 +8,15 @@ import enums.TypeArt;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
-import builder.model.Com5t;
 import builder.model.ElemMosquit;
 import builder.param.ElementDet;
 import builder.param.ElementVar;
 import builder.model.ElemSimple;
 import common.UCom;
+import dataset.Query;
 import enums.Type;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 //TODO Сделать составы для заполнений
 /**
@@ -32,9 +33,9 @@ public class TElement extends Cal5e {
         elementDet = new ElementDet(winc);
     }
 
-    //Идем по списку профилей смотрим, есть аналог, работаем с ним.
+    //Идем по списку профилей, смотрим, есть аналог, работаем с ним.
     public void elem() {
-        ArrayList<ElemSimple> listElem = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, 
+        ArrayList<ElemSimple> listElem = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE,
                 Type.IMPOST, Type.SHTULP, Type.STOIKA, Type.GLASS, Type.MOSQUIT); //список элементов конструкции
         try {
             //Цикл по списку элементов конструкции
@@ -52,7 +53,7 @@ public class TElement extends Cal5e {
                 } else {
                     //По artikl_id - артикула профилей
                     int artiklID = elem5e.artiklRecAn.getInt(eArtikl.id);
-                    List<Record> elementList3 = eElement.filter2(artiklID);
+                    List<Record> elementList3 = filterCheckMark(artiklID);
                     detail(elementList3, elem5e);
 
                     //По groups1_id - серии профилей
@@ -61,7 +62,18 @@ public class TElement extends Cal5e {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:SpcElement.elem() " + e);
+            System.err.println("Ошибка:TElement.elem() " + e);
+        }
+    }
+
+    public boolean elem(ElemSimple elem5e, Record elementRec) {
+        try {
+            //ФИЛЬТР вариантов
+            return elementVar.filter(elem5e, elementRec);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:TElement.elem() " + e);
+            return false;
         }
     }
 
@@ -121,7 +133,15 @@ public class TElement extends Cal5e {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Elements.detail() " + e);
+            System.err.println("Ошибка:TElement.detail() " + e);
         }
+    }
+
+    //Галочки по умолчанию, обязательно, состав
+    public List<Record> filterCheckMark(int artiklID) {
+        List<Record> list = eElement.data().stream().filter(rec -> artiklID == rec.getInt(eElement.artikl_id)
+                && rec.getInt(eElement.todef) > 0).collect(Collectors.toList());
+
+        return list;
     }
 }

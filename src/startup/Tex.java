@@ -400,8 +400,8 @@ public class Tex extends javax.swing.JFrame {
         });
         tb2.add(btn24);
 
-        btn25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c025.gif"))); // NOI18N
-        btn25.setToolTipText(bundle.getString("Меню.Вставки")); // NOI18N
+        btn25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c006.gif"))); // NOI18N
+        btn25.setToolTipText(bundle.getString("Меню.Составы")); // NOI18N
         btn25.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
         btn25.setFocusable(false);
         btn25.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -737,7 +737,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn0.add(mn09);
 
-        mn03.setText(bundle.getString("Меню.Составы")); // NOI18N
+        mn03.setText(bundle.getString("Меню.Конструктив")); // NOI18N
         mn03.setFont(frames.UGui.getFont(1,1));
 
         mn32.setFont(frames.UGui.getFont(0,1));
@@ -752,7 +752,7 @@ public class Tex extends javax.swing.JFrame {
 
         mn34.setFont(frames.UGui.getFont(0,1));
         mn34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b056.gif"))); // NOI18N
-        mn34.setText(bundle.getString("Меню.Вставки")); // NOI18N
+        mn34.setText(bundle.getString("Меню.Составы")); // NOI18N
         mn34.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnElement(evt);
@@ -1185,7 +1185,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
                     Query.listOpenTable.remove(q);
                 }
             }
-            Connect.close();
+            Connect.close(Connect.getConnection());
             Connect.reconnection();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Не удалось возобновить соединение с базой  данных.", "ВНИМАНИЕ!", 1);

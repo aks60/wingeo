@@ -122,7 +122,7 @@ public class Colors extends javax.swing.JFrame {
         List.of(qGroups, qColor).forEach(q -> q.execsql());
         int index = UGui.getIndexRec(tab1);
         if (index != -1) {
-            Record record = qGroups.query(eGroups.up).get(index);
+            Record record = qGroups.table(eGroups.up).get(index);
             Integer cgrup = record.getInt(eGroups.id);
             qColor.sql(eColor.data(), eColor.groups_id, cgrup).sort(eColor.code);
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();

@@ -747,7 +747,8 @@ public class Artikles extends javax.swing.JFrame {
 
         mInsert.setFont(frames.UGui.getFont(1,0));
         mInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        mInsert.setText("Добавить");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
+        mInsert.setText(bundle.getString("Добавить")); // NOI18N
         mInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -757,7 +758,7 @@ public class Artikles extends javax.swing.JFrame {
 
         mDelit.setFont(frames.UGui.getFont(1,0));
         mDelit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        mDelit.setText("Удалить");
+        mDelit.setText(bundle.getString("Удалить")); // NOI18N
         mDelit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -883,7 +884,6 @@ public class Artikles extends javax.swing.JFrame {
         north.setPreferredSize(new java.awt.Dimension(900, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -2500,7 +2500,7 @@ public class Artikles extends javax.swing.JFrame {
 
             if (UGui.isDeleteRecord(tab1, this, tab2) == 0) {
                 if (JOptionPane.showConfirmDialog(owner, "ВНИМАНИЕ!\n  Если артикул используется в комплектах, "
-                        + "\n соединениях, вставках, заполнениях, фурнитуре, \n то записи этого артикула "
+                        + "\n соединениях, составах, заполнениях, фурнитуре, \n то записи этого артикула "
                         + "будут удалены. \n Вы уверены, что хотите удалить уртикул ?", "Предупреждение",
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
                     UGui.deleteRecord(tab1);
@@ -2612,7 +2612,7 @@ public class Artikles extends javax.swing.JFrame {
         int index = UGui.getIndexRec(tab1);
         if (index != -1) {
             int id = qArtikl.getAs(index, eArtikl.groups3_id);
-            new DicGroups(this, listenerCateg, TypeGrup.CATEG_ELEM, id, true);
+            new DicGroups(this, listenerCateg, TypeGrup.GROUP_ELEM, id, true);
         }
     }//GEN-LAST:event_btn22
 

@@ -358,7 +358,7 @@ public class Furniturs extends javax.swing.JFrame {
         int index = UGui.getIndexRec(tab1);
         if (index != -1) {
             indexT1 = (btnTab1.isSelected()) ? index : indexT1;
-            Record record = qFurniture.query(eFurniture.up).get(index);
+            Record record = qFurniture.table(eFurniture.up).get(index);
             Integer id = record.getInt(eFurniture.id);
 
             qFurnside1.sql(eFurnside1.data(), eFurnside1.furniture_id, id).sort(eFurnside1.side_num);
@@ -431,7 +431,7 @@ public class Furniturs extends javax.swing.JFrame {
         UGui.clearTable(tab4);
         int index = UGui.getIndexRec(tab3);
         if (index != -1) {
-            Record record = qFurnside1.query(eFurnside1.up).get(index);
+            Record record = qFurnside1.table(eFurnside1.up).get(index);
             Integer id = record.getInt(eFurnside1.id);
             qFurnpar1.sql(eFurnpar1.data(), eFurnpar1.furnside_id, id).sort(eFurnpar1.id);
             ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
@@ -698,7 +698,7 @@ public class Furniturs extends javax.swing.JFrame {
 
                     int id = qFurn.get(index1).getInt(eFurniture.id);
                     qDet2a.sql(eFurndet.data(), eFurndet.furniture_id1, id, eFurndet.furndet_id, eFurndet.id);
-                    qDet2a.query(eArtikl.up).join(qDet2a, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);
+                    qDet2a.table(eArtikl.up).join(qDet2a, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);
                     for (int index2 = 0; index2 < qDet2a.size(); index2++) {
                         if (qDet2a.get(index2).getInt(eFurndet.id) == deteilID) {
                             selectionRows(qFurn, qDet2a, qDet2b, qDet2c, 0, index1, index2, 0, 0);
@@ -706,7 +706,7 @@ public class Furniturs extends javax.swing.JFrame {
                         } else {
                             int pk = qDet2a.get(index2).getInt(eFurndet.id);
                             qDet2b.sql(eFurndet.data(), eFurndet.furndet_id, pk, eFurndet.furndet_id, eFurndet.id);
-                            qDet2b.query(eArtikl.up).join(qDet2b, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);
+                            qDet2b.table(eArtikl.up).join(qDet2b, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);
                             for (int index3 = 0; index3 < qDet2b.size(); index3++) {
                                 if (qDet2b.get(index3).getInt(eFurndet.id) == deteilID) {
                                     selectionRows(qFurn, qDet2a, qDet2b, qDet2c, 1, index1, index2, index3, 0);
@@ -714,7 +714,7 @@ public class Furniturs extends javax.swing.JFrame {
                                 } else {
                                     pk = qDet2b.get(index3).getInt(eFurndet.id);
                                     qDet2c.sql(eFurndet.data(), eFurndet.furndet_id, pk);
-                                    qDet2c.query(eArtikl.up).join(qDet2c, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);
+                                    qDet2c.table(eArtikl.up).join(qDet2c, eArtikl.data(), eFurndet.artikl_id, eArtikl.id);
                                     for (int index4 = 0; index4 < qDet2c.size(); index4++) {
                                         if (qDet2c.get(index4).getInt(eFurndet.id) == deteilID) {
                                             selectionRows(qFurn, qDet2a, qDet2b, qDet2c, 2, index1, index2, index3, index4);
@@ -785,7 +785,8 @@ public class Furniturs extends javax.swing.JFrame {
 
         mInsert.setFont(frames.UGui.getFont(1,0));
         mInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        mInsert.setText("Добавить");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
+        mInsert.setText(bundle.getString("Добавить")); // NOI18N
         mInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -795,7 +796,7 @@ public class Furniturs extends javax.swing.JFrame {
 
         mDelit.setFont(frames.UGui.getFont(1,0));
         mDelit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        mDelit.setText("Удалить");
+        mDelit.setText(bundle.getString("Удалить")); // NOI18N
         mDelit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -823,7 +824,6 @@ public class Furniturs extends javax.swing.JFrame {
         north.setPreferredSize(new java.awt.Dimension(900, 29));
 
         btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
         btnIns.setToolTipText(bundle.getString("Добавить")); // NOI18N
         btnIns.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnIns.setFocusable(false);

@@ -253,7 +253,7 @@ public class Wincalc {
 
             //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
             new builder.making.TJoining(this).join(); //соединения
-            new builder.making.TElement(this).elem(); //вставки
+            new builder.making.TElement(this).elem(); //составы
             new builder.making.TFilling(this).fill(); //заполнения
             new builder.making.TFurniture(this).furn(); //фурнитура 
             new builder.making.TTariffic(this, norm_otx).calculate(); //тарификация

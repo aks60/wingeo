@@ -101,14 +101,16 @@ import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import common.listener.ListenerReload;
+import frames.dialog.DicElemvar;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 import javax.swing.JTree;
 import org.locationtech.jts.geom.Envelope;
+import startup.Tex;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
-    private ListenerRecord listenerArtikl, listenerModel, listenerFurn,
+    private ListenerRecord listenerArtikl, listenerModel, listenerFurn, listenerElemvar,
             listenerParam1, listenerParam2, listenerArt211, listenerArt212;
 
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
@@ -360,7 +362,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         qSysprod.sql(eSysprod.data(), eSysprod.systree_id, systreeID).sort(eSysprod.npp, eSysprod.id);
         DefaultTableModel dm = (DefaultTableModel) tab5.getModel();
         dm.getDataVector().removeAllElements();
-        for (Record record : qSysprod.query(eSysprod.up)) {
+        for (Record record : qSysprod.table(eSysprod.up)) {
             try {
                 String script = record.getStr(eSysprod.script);
                 Wincalc iwinc = new Wincalc(script);
@@ -384,9 +386,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 systreeID = sysNode.rec().getInt(eSystree.id);
                 rsvSystree.load();
                 qSysprof.sql(eSysprof.data(), eSysprof.systree_id, sysNode.rec().getInt(eSystree.id)).sort(eSysprof.npp);
-                qSysprof.query(eArtikl.up).join(qSysprof, eArtikl.data(), eSysprof.artikl_id, eArtikl.id);
+                qSysprof.table(eArtikl.up).join(qSysprof, eArtikl.data(), eSysprof.artikl_id, eArtikl.id);
                 qSysfurn.sql(eSysfurn.data(), eSysfurn.systree_id, sysNode.rec().getInt(eSystree.id)).sort(eSysfurn.npp);
-                qSysfurn.query(eFurniture.up).join(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);
+                qSysfurn.table(eFurniture.up).join(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);
                 qSyspar1a.sql(eSyspar1.data(), eSyspar1.systree_id, sysNode.rec().getInt(eSystree.id));
 
                 lab1.setText("Система ID = " + systreeID);
@@ -437,6 +439,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 Wincalc winc = wincalc();
 
                 UGui.changePpmTree(winTree, ppmTree, winNode.com5t());
+
                 //Таймер цвета
                 if (enums.Type.contains(winNode.com5t(), enums.Type.PARAM, enums.Type.FRAME, enums.Type.JOINING) == false) {
                     if (winc.canvas != null) {
@@ -470,6 +473,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     ((TitledBorder) pan13.getBorder()).setTitle(winNode.toString());
                     setText(txt32, winNode.com5t().artiklRec.getStr(eArtikl.code));
                     setText(txt33, winNode.com5t().artiklRec.getStr(eArtikl.name));
+                    setText(txt52, eArtikl.find2(winNode.com5t().artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
                     setText(txt27, eColor.find(winNode.com5t().colorID1).getStr(eColor.name));
                     setText(txt28, eColor.find(winNode.com5t().colorID2).getStr(eColor.name));
                     setText(txt29, eColor.find(winNode.com5t().colorID3).getStr(eColor.name));
@@ -591,7 +595,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     public void selectionTab5() {
         int index = UGui.getIndexRec(tab5);
         if (index != -1) {
-            Record sysprodRec = qSysprod.query(eSysprod.up).get(index);
+            Record sysprodRec = qSysprod.table(eSysprod.up).get(index);
             if (writeNuni == true) {
                 eProp.sysprodID.putProp(sysprodRec.getStr(eSysprod.id)); //запишем текущий sysprodID в файл
             }
@@ -695,8 +699,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             UGui.stopCellEditing(tab2, tab3, tab4, tab5);
             int index = UGui.getIndexRec(tab2);
             qSysprof.set(record.getInt(eArtikl.id), UGui.getIndexRec(tab2), eSysprof.artikl_id);
-            qSysprof.query(eArtikl.up).set(record.get(eArtikl.name), UGui.getIndexRec(tab2), eArtikl.name);
-            qSysprof.query(eArtikl.up).set(record.get(eArtikl.code), UGui.getIndexRec(tab2), eArtikl.code);
+            qSysprof.table(eArtikl.up).set(record.get(eArtikl.name), UGui.getIndexRec(tab2), eArtikl.name);
+            qSysprof.table(eArtikl.up).set(record.get(eArtikl.code), UGui.getIndexRec(tab2), eArtikl.code);
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
             UGui.setSelectedIndex(tab2, index);
         };
@@ -737,7 +741,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             UGui.stopCellEditing(tab2, tab3, tab4, tab5);
             int index = UGui.getIndexRec(tab3);
             qSysfurn.set(record.getInt(eFurniture.id), UGui.getIndexRec(tab3), eSysfurn.furniture_id);
-            qSysfurn.query(eFurniture.up).set(record.get(eFurniture.name), UGui.getIndexRec(tab3), eFurniture.name);
+            qSysfurn.table(eFurniture.up).set(record.get(eFurniture.name), UGui.getIndexRec(tab3), eFurniture.name);
             ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
             UGui.setSelectedIndex(tab3, index);
         };
@@ -945,6 +949,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         addStvorka = new javax.swing.JMenuItem();
         removeStvorka = new javax.swing.JMenuItem();
         removeMosquit = new javax.swing.JMenuItem();
+        elements = new javax.swing.JMenuItem();
         tool = new javax.swing.JPanel();
         btnIns = new javax.swing.JButton();
         btnDel = new javax.swing.JButton();
@@ -997,6 +1002,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btn19 = new javax.swing.JButton();
         txt29 = new javax.swing.JTextField();
         btn20 = new javax.swing.JButton();
+        lab76 = new javax.swing.JLabel();
+        txt52 = new javax.swing.JTextField();
         pan15 = new javax.swing.JPanel();
         lab29 = new javax.swing.JLabel();
         lab36 = new javax.swing.JLabel();
@@ -1231,6 +1238,15 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         });
         ppmTree.add(removeMosquit);
+
+        elements.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
+        elements.setText("Составы элементов");
+        elements.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                elementsView(evt);
+            }
+        });
+        ppmTree.add(elements);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Модели системных профилей");
@@ -1832,9 +1848,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 .addGap(9, 9, 9)
                 .addGroup(pan22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pan22Layout.createSequentialGroup()
-                        .addGroup(pan22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btn19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pan22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btn20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1845,11 +1859,23 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                             .addComponent(txt27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lab52, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(pan22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lab52, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lab53, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        lab76.setFont(frames.UGui.getFont(0,0));
+        lab76.setText("Аналог");
+        lab76.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        lab76.setPreferredSize(new java.awt.Dimension(80, 18));
+
+        txt52.setEditable(false);
+        txt52.setFont(frames.UGui.getFont(0,0));
+        txt52.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        txt52.setPreferredSize(new java.awt.Dimension(180, 18));
 
         javax.swing.GroupLayout pan13Layout = new javax.swing.GroupLayout(pan13);
         pan13.setLayout(pan13Layout);
@@ -1868,7 +1894,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     .addGroup(pan13Layout.createSequentialGroup()
                         .addComponent(lab34, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt33, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)))
+                        .addComponent(txt33, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan13Layout.createSequentialGroup()
+                        .addComponent(lab76, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt52, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pan13Layout.setVerticalGroup(
@@ -1882,9 +1912,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 .addGroup(pan13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lab34, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pan13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lab76, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt52, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pan22, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 212, Short.MAX_VALUE))
+                .addGap(0, 188, Short.MAX_VALUE))
         );
 
         pan7.add(pan13, "card13");
@@ -3724,7 +3758,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     int max = qSysprof.stream().mapToInt(rec -> rec.getInt(eSysprof.npp)).max().orElse(0); //.getAsInt();
                     record.set(eSysprof.npp, ++max);
                     int index = UGui.getIndexFind(tab2, eSysprof.id, record.get(eSysprof.id));
-                    qSysprof.query(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
+                    qSysprof.table(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
                 });
 
             } else if (tab3.getBorder() != null) {
@@ -3735,7 +3769,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     record.setNo(eSysfurn.side_open, TypeOpen2.REQ.id);
                     record.setNo(eSysfurn.hand_pos, LayoutKnob.MIDL.id);
                     int index = UGui.getIndexFind(tab3, eSysfurn.id, record.get(eSysfurn.id));
-                    qSysfurn.query(eFurniture.up).add(index, eFurniture.up.newRecord(Query.SEL));
+                    qSysfurn.table(eFurniture.up).add(index, eFurniture.up.newRecord(Query.SEL));
                 });
             } else if (tab4.getBorder() != null) {
                 UGui.insertRecordCur(tab4, eSyspar1.up, (record) -> {
@@ -3849,7 +3883,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                                 || useSideId == UseSideTo.ANY.id || useSideId == UseSideTo.MANUAL.id) {
 
                             qSysprofFilter.add(sysprofRec);
-                            qSysprofFilter.query(eArtikl.up).add(qSysprof.query(eArtikl.up).get(index));
+                            qSysprofFilter.table(eArtikl.up).add(qSysprof.table(eArtikl.up).get(index));
                         }
                     }
                 }
@@ -4050,7 +4084,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             double windowsID = winNode.com5t().id;
             int systreeID = sysNode.rec().getInt(eSystree.id);
             Query qSysfurn = new Query(eSysfurn.values(), eFurniture.values()).sql(eSysfurn.data(), eSysfurn.systree_id, systreeID);
-            qSysfurn.query(eFurniture.up).join(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);
+            qSysfurn.table(eFurniture.up).join(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);
             new DicName(this, (sysfurnRec) -> {
 
                 GsonElem stvArea = UCom.gson(wincalc().listAll, windowsID);
@@ -4335,11 +4369,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 if (tab2.getBorder() != null) {
                     if (btn == btnMoveD && tab2.getSelectedRow() < tab2.getRowCount() - 1) {
                         Collections.swap(qSysprof, index, ++index2);
-                        Collections.swap(qSysprof.query(eArtikl.up), index, index2);
+                        Collections.swap(qSysprof.table(eArtikl.up), index, index2);
 
                     } else if (btn == btnMoveU && tab2.getSelectedRow() > 0) {
                         Collections.swap(qSysprof, index, --index2);
-                        Collections.swap(qSysprof.query(eArtikl.up), index, index2);
+                        Collections.swap(qSysprof.table(eArtikl.up), index, index2);
                     }
                     IntStream.range(0, qSysprof.size()).forEach(i -> qSysprof.set(i + 1, i, eSysprof.npp));
                     ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
@@ -4348,11 +4382,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 } else if (tab3.getBorder() != null) {
                     if (btn == btnMoveD && tab3.getSelectedRow() < tab3.getRowCount() - 1) {
                         Collections.swap(qSysfurn, index, ++index2);
-                        Collections.swap(qSysfurn.query(eFurniture.up), index, index2);
+                        Collections.swap(qSysfurn.table(eFurniture.up), index, index2);
 
                     } else if (btn == btnMoveU && tab3.getSelectedRow() > 0) {
                         Collections.swap(qSysfurn, index, --index2);
-                        Collections.swap(qSysfurn.query(eFurniture.up), index, index2);
+                        Collections.swap(qSysfurn.table(eFurniture.up), index, index2);
                     }
                     IntStream.range(0, qSysfurn.size()).forEach(i -> qSysfurn.set(i + 1, i, eSysfurn.npp));
                     ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
@@ -4389,7 +4423,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                             areaStv.gson.childs.remove(i);
                             break;
                         }
-                    } else {  //вставка
+                    } else {  //составы
                         if (mosq != null) {
                             mosq.gson.param.remove("artiklID");
                             mosq.gson.param.addProperty(PKjson.artiklID, artiklRec.getStr(eArtikl.id));
@@ -4752,6 +4786,16 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }//GEN-LAST:event_blindsToElement
 
+    private void elementsView(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elementsView
+        ProgressBar.create(Systree.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                Com5t com5t = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
+                int sysprodID = qSysprod.getAs(UGui.getIndexRec(tab5), eSysprod.id);
+                App.Element.createFrame(Systree.this, sysprodID, com5t);
+            }
+        });
+    }//GEN-LAST:event_elementsView
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu addImpost;
@@ -4802,6 +4846,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private javax.swing.JButton btnTest;
     private javax.swing.JButton btnTree;
     private javax.swing.JPanel centr;
+    private javax.swing.JMenuItem elements;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
@@ -4867,6 +4912,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private javax.swing.JLabel lab73;
     private javax.swing.JLabel lab74;
     private javax.swing.JLabel lab75;
+    private javax.swing.JLabel lab76;
     private javax.swing.JMenuItem mDelit;
     private javax.swing.JMenuItem mInsert;
     private javax.swing.JPanel pan10;
@@ -4957,6 +5003,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private javax.swing.JTextField txt5;
     private javax.swing.JTextField txt50;
     private javax.swing.JTextField txt51;
+    private javax.swing.JTextField txt52;
     private javax.swing.JTextField txt54;
     private javax.swing.JTextField txt55;
     private javax.swing.JTextField txt56;

@@ -1,5 +1,8 @@
 package frames;
 
+import builder.making.TElement;
+import builder.model.Com5t;
+import builder.model.ElemSimple;
 import frames.swing.comp.ProgressBar;
 import frames.dialog.DicArtikl;
 import dataset.Connect;
@@ -24,7 +27,11 @@ import domain.eElempar2;
 import domain.eGroups;
 import domain.eJoindet;
 import builder.param.ParamList;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
 import common.eProp;
+import common.listener.ListenerAction;
 import enums.TypeGrup;
 import enums.TypeSet;
 import enums.UseColor;
@@ -43,7 +50,9 @@ import startup.App;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
 import domain.eArtdet;
+import static domain.eElement.data;
 import domain.eParmap;
+import domain.eSysprod;
 import domain.eSysprof;
 import domain.eSystree;
 import frames.dialog.DicArtikl2;
@@ -51,12 +60,11 @@ import frames.swing.comp.DefCellEditorBtn;
 import frames.swing.comp.TableFieldFilter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
+import javax.swing.table.TableColumn;
 import report.sup.ExecuteCmd;
 import report.sup.RTable;
 
@@ -66,10 +74,15 @@ public class Elements extends javax.swing.JFrame {
     private Query qGrCateg = new Query(eGroups.values());
     private Query qColor = new Query(eColor.id, eColor.groups_id, eColor.name);
     private Query qElement = new Query(eElement.values(), eArtikl.values());
+    private Query qElement2 = new Query(eElement.values(), eArtikl.values());
     private Query qElemdet = new Query(eElemdet.values(), eArtikl.values());
     private Query qElempar1 = new Query(eElempar1.values());
     private Query qElempar2 = new Query(eElempar2.values());
-    private ListenerRecord listenerArtikl, listenerTypset, listenerSeries, listenerColor, listenerColvar1, listenerColvar2, listenerColvar3;
+    private Com5t com5t = null;
+    private int sysprodID = -1;
+    private JsonArray consistList = null;
+    private ListenerAction listenerSelectionTab1;
+    private ListenerRecord listenerArtikl, listenerTypset, listenerSeries, listenerGroups, listenerColor, listenerColvar1, listenerColvar2, listenerColvar3;
 
     public Elements() {
         initComponents();
@@ -90,11 +103,24 @@ public class Elements extends javax.swing.JFrame {
         deteilFind(deteilID);
     }
 
+    public Elements(int sysprodID, Com5t com5t) {
+        initComponents();
+        this.com5t = com5t;
+        this.sysprodID = sysprodID;
+        consistList = com5t.gson.param.getAsJsonArray("consistList");
+        initElements();
+        listenerSet();
+        loadingData();
+        loadingModel();
+        listenerAdd();
+    }
+
     public void loadingData() {
 
         qColor.sql(eColor.data(), eColor.up);
         qGrCateg.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id).sort(eGroups.npp, eGroups.name);
-        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id, TypeGrup.SERI_ELEM.id, TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id).sort(eGroups.npp, eGroups.name);
+        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_VST.id, TypeGrup.SERI_ELEM.id,
+                TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id, TypeGrup.GROUP_VST.id).sort(eGroups.npp, eGroups.name);
 
         Record groups1Rec = eGroups.up.newRecord(Query.SEL);
         groups1Rec.setNo(eGroups.id, -1);
@@ -119,7 +145,8 @@ public class Elements extends javax.swing.JFrame {
 
         tab1.getTableHeader().setEnabled(false);
         new DefTableModel(tab1, qGrCateg, eGroups.name);
-        new DefTableModel(tab2, qElement, eArtikl.code, eArtikl.name, eElement.name, eElement.typset, eElement.signset, eElement.groups1_id, eElement.todef, eElement.toset, eElement.markup) {
+        new DefTableModel(tab2, qElement, eArtikl.code, eArtikl.name, eElement.name, eElement.typset,
+                eElement.signset, eElement.groups1_id, eElement.groups3_id, eElement.todef, eElement.toset, eArtikl.noopt, eElement.markup) {
 
             public Object getValueAt(int col, int row, Object val) {
 
@@ -127,11 +154,49 @@ public class Elements extends javax.swing.JFrame {
                     int typset = Integer.valueOf(val.toString());
                     return List.of(TypeSet.values()).stream().filter(el -> el.id == typset).findFirst().orElse(TypeSet.P1).name;
 
+                } else if (com5t != null && columns[col] == eArtikl.noopt) {
+                    int elemID = qElement.getAs(row, eElement.id);
+                    JsonElement jp = new JsonPrimitive(elemID);
+                    return (consistList != null) ? consistList.contains(jp) : false;
+
                 } else if (val != null && columns[col] == eElement.groups1_id) {
+                    return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).get(eGroups.name);
+
+                } else if (val != null && columns[col] == eElement.groups3_id) {
                     return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).get(eGroups.name);
                 }
                 return val;
             }
+
+            public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+                if (Elements.this.com5t != null && columns[columnIndex] == eArtikl.noopt) {
+                    
+                    Record elementRec = qElement.get(rowIndex);
+                    Object grupID = elementRec.get(eElement.groups3_id);
+                    if (grupID != null) {
+
+                        int elemID = qElement.getAs(rowIndex, eElement.id);
+                        JsonArray arr = com5t.gson.param.getAsJsonArray("consistList");
+                        if (arr == null) {
+                            arr = new JsonArray();
+                            arr.add(new JsonPrimitive(elemID));
+                        } else {
+                            arr.set(0, new JsonPrimitive(elemID));
+                        }
+                        com5t.gson.param.add("consistList", arr);
+                        consistList = arr;
+
+                        String script = com5t.winc.gson.toJson();
+                        Record sysprodRec = eSysprod.find(sysprodID);
+                        sysprodRec.set(eSysprod.script, script);
+
+                        ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
+                    }
+                } else {
+                    super.setValueAt(aValue, rowIndex, columnIndex);
+                }
+            }
+
         };
         new DefTableModel(tab3, qElemdet, eArtikl.code, eArtikl.name, eElemdet.color_fk, eElemdet.color_us, eElemdet.color_us, eElemdet.color_us) {
 
@@ -197,7 +262,9 @@ public class Elements extends javax.swing.JFrame {
                 return val;
             }
         };
-        List.of(6, 7).forEach(index -> tab2.getColumnModel().getColumn(index).setCellRenderer(new DefCellRendererBool()));
+        tab2.getColumnModel().getColumn(7).setCellRenderer(new DefCellRendererBool());
+        tab2.getColumnModel().getColumn(8).setCellRenderer(new DefCellRendererBool());
+        tab2.getColumnModel().getColumn(9).setCellRenderer(new DefCellRendererBool());
         UGui.setSelectedRow(tab1);
     }
 
@@ -208,16 +275,72 @@ public class Elements extends javax.swing.JFrame {
             UGui.clearTable(tab2, tab3, tab4, tab5);
             int index = UGui.getIndexRec(tab1);
             if (index != -1) {
-                Record record = qGrCateg.get(index);
-                int id = record.getInt(eGroups.id);
+                Record groupRec = qGrCateg.get(index);
+                int groupID = groupRec.getInt(eGroups.id);
 
-                if (id == -1 || id == -5) { //(-1) - профили, (-5) - заполнения
-                    eElement.sql(qElement, qElement.query(eArtikl.up), id);
-                    //qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
-                    //qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);               
-                } else { //категории
-                    qElement.sql(eElement.data(), eElement.groups2_id, id).sort(eElement.name);
-                    qElement.query(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                //Полный список сставов
+                if (Elements.this.com5t == null) {
+                    if (groupID == -1 || groupID == -5) { //все профили(-1) или заполнения(-5)
+                        qElement.clear();
+                        qElement.table(eArtikl.up).clear();
+                        List<Record> artiklList = eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.level1) == Math.abs(groupID)).collect(Collectors.toList());
+                        List<Record> groupsList = eGroups.data().stream().filter(rec
+                                -> rec.getInt(eGroups.npp) == Math.abs(groupID)).collect(Collectors.toList());
+                        for (Record recElem : data()) {
+                            for (Record recGrp : groupsList) {
+                                if (recElem.getInt(eElement.groups2_id) == recGrp.getInt(eGroups.id) && recGrp.getInt(eGroups.npp) == Math.abs(groupID)) {
+                                    qElement.add(recElem);
+                                    qElement.table(eArtikl.up).add(artiklList.stream().filter(rec
+                                            -> recElem.getInt(eElement.artikl_id) == rec.getInt(eArtikl.id)).findFirst().get());
+                                }
+                            }
+                        }
+                    } else { //детализация по категориям
+                        qElement.sql(eElement.data(), eElement.groups2_id, groupID).sort(eElement.name);
+                        qElement.table(eArtikl.up).join(qElement, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                    }
+
+                    //Состав выбранного элемента
+                } else {
+                    if (groupID == -1 || groupID == -5) { //все профили(-1) или заполнения(-5)                    
+                        qElement2.clear();
+                        qElement2.table(eArtikl.up).clear();
+                        int artiklID = com5t.artiklRecAn.getInt(eArtikl.id);
+                        int seriID = com5t.artiklRecAn.getInt(eArtikl.groups4_id);
+                        List<Record> groupsList = eGroups.data().stream().filter(rec
+                                -> rec.getInt(eGroups.npp) == Math.abs(groupID)).collect(Collectors.toList());
+                        for (Record recElem : data()) {
+                            for (Record recGrp : groupsList) {
+                                if (recElem.getInt(eElement.groups2_id) == recGrp.getInt(eGroups.id) && recGrp.getInt(eGroups.npp) == Math.abs(groupID)
+                                        && (recElem.getInt(eElement.artikl_id) == artiklID || recElem.getInt(eElement.groups1_id) == seriID)) {
+                                    qElement2.add(recElem);
+                                    int id = recElem.getInt(eElement.artikl_id);
+                                    Record artiklRec = eArtikl.find(id);
+                                    qElement2.table(eArtikl.up).add(artiklRec);
+                                }
+                            }
+                        }
+                    } else { //детализация по категориям    
+                        qElement2.clear();
+                        int artiklID = com5t.artiklRecAn.getInt(eArtikl.id);
+                        int seriID = com5t.artiklRecAn.getInt(eArtikl.groups4_id);
+                        for (Record elemRec : eElement.data()) {
+                            if (elemRec.getInt(eElement.groups2_id) == groupID
+                                    && (elemRec.getInt(eElement.artikl_id) == artiklID || elemRec.getInt(eElement.groups1_id) == seriID)) {
+                                qElement2.add(elemRec);
+                            }
+                        }
+                        qElement2.table(eArtikl.up).join(qElement2, eArtikl.data(), eElement.artikl_id, eArtikl.id);
+                    }
+                    qElement.clear();
+                    qElement.table(eArtikl.up).clear();
+                    for (int i = 0; i < qElement2.size(); ++i) {
+                        TElement te = new TElement(com5t.winc);
+                        if (te.elem((ElemSimple) com5t, qElement2.get(i)) == true) {
+                            qElement.add(qElement2.get(i));
+                            qElement.table(eArtikl.up).add(qElement2.table(eArtikl.up).get(i));
+                        }
+                    }
                 }
                 ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
                 UGui.setSelectedRow(tab2);
@@ -234,10 +357,10 @@ public class Elements extends javax.swing.JFrame {
             UGui.clearTable(tab3, tab4, tab5);
             int index = UGui.getIndexRec(tab2);
             if (index != -1) {
-                Record record = qElement.query(eElement.up).get(index);
+                Record record = qElement.table(eElement.up).get(index);
                 Integer ID = record.getInt(eElement.id);
                 qElemdet.sql(eElemdet.data(), eElemdet.element_id, ID);
-                qElemdet.query(eArtikl.up).join(qElemdet, eArtikl.data(), eElemdet.artikl_id, eArtikl.id);
+                qElemdet.table(eArtikl.up).join(qElemdet, eArtikl.data(), eElemdet.artikl_id, eArtikl.id);
                 qElempar1.sql(eElempar1.data(), eElempar1.element_id, ID);
                 ((DefaultTableModel) tab3.getModel()).fireTableDataChanged();
                 ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
@@ -256,7 +379,7 @@ public class Elements extends javax.swing.JFrame {
         if (index != -1) {
             //Util.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
             List.of(qElempar2).forEach(q -> q.execsql());
-            Record record = qElemdet.query(eElemdet.up).get(index);
+            Record record = qElemdet.table(eElemdet.up).get(index);
             Integer p1 = record.getInt(eElemdet.id);
             qElempar2.sql(eElempar2.data(), eElempar2.elemdet_id, p1);
             ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
@@ -284,6 +407,14 @@ public class Elements extends javax.swing.JFrame {
             if (index != -1) {
                 int id = qElement.getAs(index, eElement.groups1_id);
                 new DicGroups(this, listenerSeries, TypeGrup.SERI_ELEM, id, true);
+            }
+        });
+
+        UGui.buttonCellEditor(tab2, 6).addActionListener(event -> {
+            int index = UGui.getIndexRec(tab2);
+            if (index != -1) {
+                int id = qElement.getAs(index, eElement.groups3_id);
+                new DicGroups(this, listenerGroups, TypeGrup.GROUP_VST, id, true);
             }
         });
 
@@ -416,14 +547,14 @@ public class Elements extends javax.swing.JFrame {
             UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
             if (tab2.getBorder() != null) {
                 qElement.set(record.getInt(eArtikl.id), UGui.getIndexRec(tab2), eElement.artikl_id);
-                qElement.query(eArtikl.up).set(record.get(eArtikl.name), UGui.getIndexRec(tab2), eArtikl.name);
-                qElement.query(eArtikl.up).set(record.get(eArtikl.code), UGui.getIndexRec(tab2), eArtikl.code);
+                qElement.table(eArtikl.up).set(record.get(eArtikl.name), UGui.getIndexRec(tab2), eArtikl.name);
+                qElement.table(eArtikl.up).set(record.get(eArtikl.code), UGui.getIndexRec(tab2), eArtikl.code);
                 UGui.fireTableRowUpdated(tab2);
 
             } else if (tab3.getBorder() != null) {
                 qElemdet.set(record.getInt(eArtikl.id), UGui.getIndexRec(tab3), eElemdet.artikl_id);
-                qElemdet.query(eArtikl.up).set(record.get(eArtikl.name), UGui.getIndexRec(tab3), eArtikl.name);
-                qElemdet.query(eArtikl.up).set(record.get(eArtikl.code), UGui.getIndexRec(tab3), eArtikl.code);
+                qElemdet.table(eArtikl.up).set(record.get(eArtikl.name), UGui.getIndexRec(tab3), eArtikl.name);
+                qElemdet.table(eArtikl.up).set(record.get(eArtikl.code), UGui.getIndexRec(tab3), eArtikl.code);
                 int artiklID = record.getInt(eArtikl.id);
                 List<Record> artdetList = eArtdet.filter2(artiklID);
 
@@ -442,6 +573,15 @@ public class Elements extends javax.swing.JFrame {
             if (tab2.getBorder() != null) {
                 int series_id = record.getInt(eGroups.id);
                 qElement.set(series_id, UGui.getIndexRec(tab2), eElement.groups1_id);
+                UGui.fireTableRowUpdated(tab2);
+            }
+        };
+
+        listenerGroups = (record) -> {
+            UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
+            if (tab2.getBorder() != null) {
+                int groups_id = record.getInt(eGroups.id);
+                qElement.set(groups_id, UGui.getIndexRec(tab2), eElement.groups3_id);
                 UGui.fireTableRowUpdated(tab2);
             }
         };
@@ -504,6 +644,10 @@ public class Elements extends javax.swing.JFrame {
         ppmCrud = new javax.swing.JPopupMenu();
         mInsert = new javax.swing.JMenuItem();
         mDelit = new javax.swing.JMenuItem();
+        separator1 = new javax.swing.JPopupMenu.Separator();
+        mDefault = new javax.swing.JMenuItem();
+        mType = new javax.swing.JMenuItem();
+        mSign = new javax.swing.JMenuItem();
         north = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
         btnDel = new javax.swing.JButton();
@@ -549,7 +693,8 @@ public class Elements extends javax.swing.JFrame {
 
         mInsert.setFont(frames.UGui.getFont(1,0));
         mInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
-        mInsert.setText("Добавить");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
+        mInsert.setText(bundle.getString("Добавить")); // NOI18N
         mInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
@@ -559,16 +704,47 @@ public class Elements extends javax.swing.JFrame {
 
         mDelit.setFont(frames.UGui.getFont(1,0));
         mDelit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c034.gif"))); // NOI18N
-        mDelit.setText("Удалить");
+        mDelit.setText(bundle.getString("Удалить")); // NOI18N
         mDelit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmActionItems(evt);
             }
         });
         ppmCrud.add(mDelit);
+        ppmCrud.add(separator1);
+
+        mDefault.setFont(frames.UGui.getFont(1,0));
+        mDefault.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c085.gif"))); // NOI18N
+        mDefault.setText("По умолчанию");
+        mDefault.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppmClick(evt);
+            }
+        });
+        ppmCrud.add(mDefault);
+
+        mType.setFont(frames.UGui.getFont(1,0));
+        mType.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c085.gif"))); // NOI18N
+        mType.setText("Тип состава");
+        mType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppmClick(evt);
+            }
+        });
+        ppmCrud.add(mType);
+
+        mSign.setFont(frames.UGui.getFont(1,0));
+        mSign.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c085.gif"))); // NOI18N
+        mSign.setText("Признак состава");
+        mSign.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppmClick(evt);
+            }
+        });
+        ppmCrud.add(mSign);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Вставки");
+        setTitle("Составы");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 500));
         setPreferredSize(new java.awt.Dimension(900, 600));
@@ -583,7 +759,6 @@ public class Elements extends javax.swing.JFrame {
         north.setPreferredSize(new java.awt.Dimension(900, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resource/hints/okno", common.eProp.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);
@@ -669,7 +844,7 @@ public class Elements extends javax.swing.JFrame {
         btnTest.setPreferredSize(new java.awt.Dimension(25, 25));
         btnTest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTest(evt);
+                btnTestActionPerformed(evt);
             }
         });
 
@@ -811,7 +986,7 @@ public class Elements extends javax.swing.JFrame {
 
         pan4.add(scr1, java.awt.BorderLayout.WEST);
 
-        scr2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Списки вставок", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Списки составов", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
         scr2.setPreferredSize(new java.awt.Dimension(454, 320));
 
         tab2.setFont(frames.UGui.getFont(0,0));
@@ -820,14 +995,14 @@ public class Elements extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Артикул", "Название", "Наименование вставок", "Тип вставки", "Признак вставки", "Серия", "Умолчание", "Обязательно", "Наценка%", "ID"
+                "Артикул", "Название", "Наименование составов", "Тип состава", "Признак состава", "Серия", "Группа составов", "Умолчание", "Обязательно", "Состав", "Наценка%", "ID"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Integer.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, true, true, true, true, true, true, true, false
+                true, true, true, true, true, true, true, true, true, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -851,17 +1026,24 @@ public class Elements extends javax.swing.JFrame {
         });
         scr2.setViewportView(tab2);
         if (tab2.getColumnModel().getColumnCount() > 0) {
-            tab2.getColumnModel().getColumn(0).setPreferredWidth(96);
-            tab2.getColumnModel().getColumn(1).setPreferredWidth(160);
-            tab2.getColumnModel().getColumn(2).setPreferredWidth(160);
-            tab2.getColumnModel().getColumn(3).setPreferredWidth(60);
-            tab2.getColumnModel().getColumn(4).setPreferredWidth(40);
+            tab2.getColumnModel().getColumn(0).setPreferredWidth(120);
+            tab2.getColumnModel().getColumn(1).setPreferredWidth(200);
+            tab2.getColumnModel().getColumn(2).setPreferredWidth(200);
+            tab2.getColumnModel().getColumn(3).setMinWidth(0);
+            tab2.getColumnModel().getColumn(3).setPreferredWidth(0);
+            tab2.getColumnModel().getColumn(3).setMaxWidth(0);
+            tab2.getColumnModel().getColumn(4).setMinWidth(0);
+            tab2.getColumnModel().getColumn(4).setPreferredWidth(0);
+            tab2.getColumnModel().getColumn(4).setMaxWidth(0);
             tab2.getColumnModel().getColumn(5).setPreferredWidth(60);
-            tab2.getColumnModel().getColumn(6).setPreferredWidth(32);
-            tab2.getColumnModel().getColumn(7).setPreferredWidth(32);
-            tab2.getColumnModel().getColumn(8).setPreferredWidth(32);
-            tab2.getColumnModel().getColumn(9).setPreferredWidth(40);
-            tab2.getColumnModel().getColumn(9).setMaxWidth(60);
+            tab2.getColumnModel().getColumn(6).setPreferredWidth(60);
+            tab2.getColumnModel().getColumn(7).setMinWidth(0);
+            tab2.getColumnModel().getColumn(7).setPreferredWidth(0);
+            tab2.getColumnModel().getColumn(7).setMaxWidth(0);
+            tab2.getColumnModel().getColumn(8).setPreferredWidth(36);
+            tab2.getColumnModel().getColumn(10).setPreferredWidth(32);
+            tab2.getColumnModel().getColumn(11).setPreferredWidth(40);
+            tab2.getColumnModel().getColumn(11).setMaxWidth(60);
         }
 
         pan4.add(scr2, java.awt.BorderLayout.CENTER);
@@ -910,7 +1092,7 @@ public class Elements extends javax.swing.JFrame {
         pan2.setPreferredSize(new java.awt.Dimension(800, 200));
         pan2.setLayout(new javax.swing.BoxLayout(pan2, javax.swing.BoxLayout.LINE_AXIS));
 
-        scr3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Детализация вставок", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Детализация составов", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
         scr3.setMaximumSize(new java.awt.Dimension(2000, 800));
         scr3.setPreferredSize(new java.awt.Dimension(500, 2044));
 
@@ -1027,7 +1209,7 @@ public class Elements extends javax.swing.JFrame {
             Record elemgrpRec = eGroups.up.newRecord(Query.INS);
             elemgrpRec.setNo(eGroups.id, id);
             elemgrpRec.setNo(eGroups.grup, TypeGrup.CATEG_VST.id);
-            elemgrpRec.setNo(eGroups.npp, level1); //-1 -РџР РћР¤Р?Р›Р?, -5 -Р—РђРџРћР›РќР•РќР?РЇ
+            elemgrpRec.setNo(eGroups.npp, level1); //-1 -Катег.проф, -5 -Р—Катег.зап
             elemgrpRec.setNo(eGroups.name, result);
             qGrCateg.insert(elemgrpRec);
             eGroups.up.query().add(elemgrpRec);
@@ -1085,7 +1267,8 @@ public class Elements extends javax.swing.JFrame {
                         if (result.equals(groupsRec.getStr(eGroups.name))) {
                             elementRec.setNo(eElement.groups2_id, groupsRec.getInt(eGroups.id));
                             qElement.update(elementRec);
-                            selectionTab1(null);
+                            //selection1Tab1(null);
+                            listenerSelectionTab1.action();
                         }
                     }
                 }
@@ -1113,7 +1296,7 @@ public class Elements extends javax.swing.JFrame {
                         clon.setNo(eElemdet.element_id, masterClon.getStr(eElement.id));
                         Record tail = eArtikl.data().stream().filter(rec -> rec.getInt(eArtikl.id)
                                 == clon.getInt(eElemdet.artikl_id)).findFirst().get();
-                        qElemdet.query(eArtikl.up).add(tail);
+                        qElemdet.table(eArtikl.up).add(tail);
                     });
                     UGui.cloneSlave(qElempar1, tab4, eElempar1.up, dataPar1, (clon) -> {
                         clon.setNo(eElempar1.element_id, masterClon.getStr(eElement.id));
@@ -1172,9 +1355,6 @@ public class Elements extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnFind2
 
-    private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-    }//GEN-LAST:event_btnTest
-
     private void btnFind1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind1
         if (tab2.getBorder() != null) {
             Record record = ((DefTableModel) tab2.getModel()).getQuery().get(UGui.getIndexRec(tab2));
@@ -1200,7 +1380,7 @@ public class Elements extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFind1
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        RTable.load("Вставки", tab2);
+        RTable.load("Составы", tab2);
         ExecuteCmd.documentType(this);
     }//GEN-LAST:event_btnReport
 
@@ -1219,7 +1399,7 @@ public class Elements extends javax.swing.JFrame {
                         record.set(eElement.todef, 1);
                         record.set(eElement.markup, 0);
                         int index = UGui.getIndexFind(tab2, eElement.id, record.get(eElement.id));
-                        qElement.query(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
+                        qElement.table(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
                     });
                 }
             }
@@ -1228,7 +1408,7 @@ public class Elements extends javax.swing.JFrame {
                 UGui.insertRecordCur(tab3, eElemdet.up, (record) -> {
                     record.set(eElemdet.element_id, qElement.get(UGui.getIndexRec(tab2), eElement.id));
                     int index = UGui.getIndexFind(tab3, eElemdet.id, record.get(eElemdet.id));
-                    qElemdet.query(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
+                    qElemdet.table(eArtikl.up).add(index, eArtikl.up.newRecord(Query.SEL));
                 });
             }
         } else if (tab4.getBorder() != null) {
@@ -1277,6 +1457,32 @@ public class Elements extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnClose
 
+    private void ppmClick(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppmClick
+        JMenuItem ppm = (JMenuItem) evt.getSource();
+        int index = 0;
+        if (ppm == mType) {
+            index = 3;
+        } else if (ppm == mSign) {
+            index = 4;
+        } else if (ppm == mDefault) {
+            index = 7;
+        }
+        TableColumn column = tab2.getColumnModel().getColumn(index);
+        if (column.getMaxWidth() == 0) {
+            column.setPreferredWidth(80);
+            column.setMaxWidth(220);
+            column.setMinWidth(60);
+        } else {
+            column.setMinWidth(0);
+            column.setPreferredWidth(0);
+            column.setMaxWidth(0);
+        }
+    }//GEN-LAST:event_ppmClick
+
+    private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
+        //TEST();
+    }//GEN-LAST:event_btnTestActionPerformed
+
     private void findPathSystree(Record record, StringBuffer path) {
         for (Record rec : eSystree.data()) {
             if (record.getInt(eSystree.parent_id) == rec.getInt(eSystree.id)) {
@@ -1302,8 +1508,11 @@ public class Elements extends javax.swing.JFrame {
     private javax.swing.JPanel centr;
     private javax.swing.JMenuItem itCateg1;
     private javax.swing.JMenuItem itCateg2;
+    private javax.swing.JMenuItem mDefault;
     private javax.swing.JMenuItem mDelit;
     private javax.swing.JMenuItem mInsert;
+    private javax.swing.JMenuItem mSign;
+    private javax.swing.JMenuItem mType;
     private javax.swing.JPanel north;
     private javax.swing.JPanel pan1;
     private javax.swing.JPanel pan2;
@@ -1316,6 +1525,7 @@ public class Elements extends javax.swing.JFrame {
     private javax.swing.JScrollPane scr3;
     private javax.swing.JScrollPane scr4;
     private javax.swing.JScrollPane scr5;
+    private javax.swing.JPopupMenu.Separator separator1;
     private javax.swing.JPanel south;
     private javax.swing.JTable tab1;
     private javax.swing.JTable tab2;
@@ -1331,6 +1541,16 @@ public class Elements extends javax.swing.JFrame {
             App.saveLocationWin(this, btnClose);
         });
 
+        TableColumn column = tab2.getColumnModel().getColumn(9);
+        if (this.com5t != null) {
+            column.setPreferredWidth(36);
+            column.setMaxWidth(75);
+            column.setMinWidth(24);
+        } else {
+            column.setMinWidth(0);
+            column.setPreferredWidth(0);
+            column.setMaxWidth(0);
+        }
         TableFieldFilter filterTable = new TableFieldFilter(0, tab2, tab3, tab4, tab5);
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
@@ -1340,6 +1560,9 @@ public class Elements extends javax.swing.JFrame {
             public void valueChanged(ListSelectionEvent event) {
                 if (event.getValueIsAdjusting() == false) {
                     selectionTab1(event);
+                    //if (listenerSelectionTab1 != null) {
+                    //    listenerSelectionTab1.action();
+                    //}
                 }
             }
         });

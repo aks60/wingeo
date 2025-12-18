@@ -438,7 +438,7 @@ public class UColor {
     private static void colorFromMes(TRecord spc) {  //см. http://help.profsegment.ru/?id=1107        
         String place = "---";
         if ("ВСТ".equals(spc.place)) {
-            place = "Вставки";
+            place = "Составы";
         } else if ("СОЕД".equals(spc.place)) {
             place = "Соединения";
         } else if ("ФУРН".equals(spc.place)) {

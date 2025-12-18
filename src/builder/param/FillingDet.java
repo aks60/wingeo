@@ -164,7 +164,7 @@ public class FillingDet extends Par5s {
                 case 15011:  //Расчет реза штапика 
                     mapParam.put(grup, rec.getStr(TEXT));
                     break;
-                case 15013:  //Подбор дистанционных вставок пролета 
+                case 15013:  //Подбор дистанционных составов пролета 
                     message(rec.getInt(GRUP));
                     break;
                 case 15027:  //Рассчитывать для профиля 
