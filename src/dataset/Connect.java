@@ -21,7 +21,7 @@ public class Connect {
 
     public static boolean cryptoCheck = false; //проверка активации программы
     public static boolean webapp = true;
-    private static Connection connection = null;
+    private static Connection connectionApp = null;
     protected static Statement statement = null;
     protected static boolean autoCommit = false;
     public final static String driver = "org.firebirdsql.jdbc.FBDriver";
@@ -29,18 +29,18 @@ public class Connect {
     public String url = "";
 
     public static void setConnection(Connection connect) {
-        connection = connect;
+        connectionApp = connect;
     }
 
     public static Connection getConnection() {
         if (webapp == false) {
             try {
-                if (connection.isClosed() == true) {
+                if (connectionApp.isClosed() == true) {
                     JOptionPane.showMessageDialog(null, "Соединение разорвано. Попробуйте "
                             + "\nглавное меню <Сервис->Возобновить соединение c БД \nили перезагрузите программу.", "НЕУДАЧА", 1);
                     return null;
                 } else {
-                    return connection;
+                    return connectionApp;
                 }
             } catch (SQLException e) {
                 System.err.println("Ошибка:getConnection() " + e);
@@ -52,9 +52,9 @@ public class Connect {
                 Context initContext = new InitialContext();
                 DataSource dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/winweb");
                 //dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/winnet");
-                Connection connection = dataSource.getConnection();
-                connection.setAutoCommit(true);
-                return connection;
+                Connection connectionWeb = dataSource.getConnection();
+                connectionWeb.setAutoCommit(true);
+                return connectionWeb;
 
             } catch (NamingException e) {
                 System.err.println("Ошибка:Connect.connection() №1 ");
@@ -79,7 +79,7 @@ public class Connect {
     public static void reconnection() throws SQLException {
         eExcep pass = eExcep.noConn;
         try {            
-            if (connection.isClosed() == true) {
+            if (connectionApp.isClosed() == true) {
                 //connection.rollback();
                 String num_base = eProp.base_num.getProp();
                 pass = Connect.connection(eProp.getServer(num_base), eProp.getPort(num_base), eProp.getBase(num_base), eProp.user.getProp(), eProp.password.toCharArray(), eProp.role);
@@ -116,9 +116,9 @@ public class Connect {
                 props.setProperty("roleName", role);
             }
             props.setProperty("encoding", "win1251");
-            connection = DriverManager.getConnection(url, props);
-            connection.setAutoCommit(true);
-            statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            connectionApp = DriverManager.getConnection(url, props);
+            connectionApp.setAutoCommit(true);
+            statement = connectionApp.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
         } catch (ClassNotFoundException e) {
             //System.err.println("Ошибка1:Connect.connection() " + e);
@@ -136,19 +136,11 @@ public class Connect {
         return eExcep.yesConn;
     }
 
-    public static void autocommit(boolean autoCommit) {
-        try {
-            connection.setAutoCommit(autoCommit);
-        } catch (SQLException e) {
-            System.err.println("Ошибка:Connect.autocommit() " + e);
-        }
-    }
-
     //Добавление нового пользователя   
     public static void addUser(String user, char[] password, String role) {
         try {
-            connection.createStatement().executeUpdate("create user " + user + " password '" + String.valueOf(password) + "'");
-            connection.createStatement().executeUpdate("grant " + role + " to " + user);
+            connectionApp.createStatement().executeUpdate("create user " + user + " password '" + String.valueOf(password) + "'");
+            connectionApp.createStatement().executeUpdate("grant " + role + " to " + user);
 
         } catch (SQLException e) {
             System.err.println("Ошибка:Connect.addUser() " + e);
@@ -159,11 +151,11 @@ public class Connect {
     //Удаление пользователя   
     public static void deleteUser(String user) {
         try {
-            connection.createStatement().executeUpdate("REVOKE TEXNOLOG_RW FROM " + user);
-            connection.createStatement().executeUpdate("REVOKE MANAGER_RW FROM " + user);
-            connection.createStatement().executeUpdate("REVOKE TEXNOLOG_RO FROM " + user);
-            connection.createStatement().executeUpdate("REVOKE MANAGER_RO FROM " + user);
-            connection.createStatement().executeUpdate("DROP USER " + user);
+            connectionApp.createStatement().executeUpdate("REVOKE TEXNOLOG_RW FROM " + user);
+            connectionApp.createStatement().executeUpdate("REVOKE MANAGER_RW FROM " + user);
+            connectionApp.createStatement().executeUpdate("REVOKE TEXNOLOG_RO FROM " + user);
+            connectionApp.createStatement().executeUpdate("REVOKE MANAGER_RO FROM " + user);
+            connectionApp.createStatement().executeUpdate("DROP USER " + user);
 
         } catch (SQLException e) {
             System.err.println("Ошибка:Connect.deleteUser() " + e);
@@ -171,18 +163,18 @@ public class Connect {
     }
 
     public static void deleteUser2(String user) throws SQLException {
-        connection.createStatement().executeUpdate("REVOKE TEXNOLOG_RW FROM " + user);
-        connection.createStatement().executeUpdate("REVOKE MANAGER_RW FROM " + user);
-        connection.createStatement().executeUpdate("REVOKE TEXNOLOG_RO FROM " + user);
-        connection.createStatement().executeUpdate("REVOKE MANAGER_RO FROM " + user);
-        connection.createStatement().executeUpdate("DROP USER " + user);
+        connectionApp.createStatement().executeUpdate("REVOKE TEXNOLOG_RW FROM " + user);
+        connectionApp.createStatement().executeUpdate("REVOKE MANAGER_RW FROM " + user);
+        connectionApp.createStatement().executeUpdate("REVOKE TEXNOLOG_RO FROM " + user);
+        connectionApp.createStatement().executeUpdate("REVOKE MANAGER_RO FROM " + user);
+        connectionApp.createStatement().executeUpdate("DROP USER " + user);
     }
 
     //Изменение параметров пользователя
     public static void modifyPassword(String user, char[] password) {
         try {
             String sql = "ALTER USER " + user + " PASSWORD '" + String.valueOf(password) + "'";
-            connection.createStatement().executeUpdate(sql);
+            connectionApp.createStatement().executeUpdate(sql);
         } catch (Exception e) {
             System.err.println("Ошибка:Connect.modifyPassword() " + e);
         }
@@ -212,7 +204,7 @@ public class Connect {
 
     public static String version() {
         try {
-            Statement statement = connection.createStatement();
+            Statement statement = connectionApp.createStatement();
             String sql = "SELECT rdb$get_context('SYSTEM', 'ENGINE_VERSION') as version from rdb$database";
             ResultSet rs = statement.executeQuery(sql);
             rs.next();
