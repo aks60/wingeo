@@ -81,7 +81,7 @@ public class ElemFrame extends ElemSimple {
             artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true); //аналог 
 
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemFrame.initConstructiv() " + e);
+            System.err.println("Ошибка:ElemFrame.initArtikle() " + e);
         }
     }
 
