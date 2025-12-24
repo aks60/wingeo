@@ -34,17 +34,13 @@ public class ElemFrame extends ElemSimple {
 
     public ElemFrame(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
         super(winc, id, gson, owner);
-        if (gson.type == Type.BOX_SIDE) {
-            addListenerEvents();
-        }
+        addListenerEvents();
     }
 
     //Test
     public ElemFrame(double id, GsonElem gson) {
         super(id, gson);
-        if (gson.type == Type.BOX_SIDE) {
-            addListenerEvents();
-        }
+        addListenerEvents();
     }
 
     /**
@@ -283,7 +279,7 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void paint() {
         if (this.area != null && winc.sceleton == false) {
-            
+
             super.paint();
             winc.gc2d.setColor(this.color());
             Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(0));
