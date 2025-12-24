@@ -64,13 +64,13 @@ public class ElemFrame extends ElemSimple {
             } else if (owner.sysprofRec != null) { //профили через параметр рамы, створки
                 sysprofRec = owner.sysprofRec;
             } else {
-                if (Layout.BOTT.equals(layout())) {
+                if (Layout.BOT.equals(layout())) {
                     sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSideTo.BOT, UseSideTo.HORIZ);
-                } else if (Layout.RIGHT.equals(layout())) {
+                } else if (Layout.RIG.equals(layout())) {
                     sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSideTo.RIGHT, UseSideTo.VERT);
                 } else if (Layout.TOP.equals(layout())) {
                     sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSideTo.TOP, UseSideTo.HORIZ);
-                } else if (Layout.LEFT.equals(layout())) {
+                } else if (Layout.LEF.equals(layout())) {
                     sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSideTo.LEFT, UseSideTo.VERT);
                 } else {
                     sysprofRec = eSysprof.find5(winc.nuni, type.id2, UseSideTo.ANY, UseSideTo.ANY);

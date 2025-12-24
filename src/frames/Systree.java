@@ -517,8 +517,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     int id = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
                     AreaSimple own = winNode.com5t().owner;
                     AreaSimple sta = (AreaSimple) winNode.com5t();
-                    setText(txt24, UCom.format(UCom.layout(sta.frames, Layout.BOTT).width(), 1));
-                    double h = (UCom.layout(sta.frames, Layout.RIGHT).height() > UCom.layout(sta.frames, Layout.LEFT).height()) ? UCom.layout(sta.frames, Layout.RIGHT).height() : UCom.layout(sta.frames, Layout.LEFT).height();
+                    setText(txt24, UCom.format(UCom.layout(sta.frames, Layout.BOT).width(), 1));
+                    double h = (UCom.layout(sta.frames, Layout.RIG).height() > UCom.layout(sta.frames, Layout.LEF).height()) ? UCom.layout(sta.frames, Layout.RIG).height() : UCom.layout(sta.frames, Layout.LEF).height();
                     setText(txt26, UCom.format(h, 1));
                     setText(txt20, eFurniture.find(id).getStr(eFurniture.name));
                     setIcon(btn10, stv.isJson(stv.gson.param, PKjson.sysfurnID));
@@ -3878,8 +3878,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     if (winNode.com5t().type.id2 == sysprofRec.getInt(eSysprof.use_type)) {
                         int useSideId = sysprofRec.getInt(eSysprof.use_side);
                         if (useSideId == layout.id
-                                || ((layout == Layout.BOTT || layout == Layout.TOP) && useSideId == UseSideTo.HORIZ.id)
-                                || ((layout == Layout.RIGHT || layout == Layout.LEFT) && useSideId == UseSideTo.VERT.id)
+                                || ((layout == Layout.BOT || layout == Layout.TOP) && useSideId == UseSideTo.HORIZ.id)
+                                || ((layout == Layout.RIG || layout == Layout.LEF) && useSideId == UseSideTo.VERT.id)
                                 || useSideId == UseSideTo.ANY.id || useSideId == UseSideTo.MANUAL.id) {
 
                             qSysprofFilter.add(sysprofRec);
@@ -3907,13 +3907,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         GsonElem stvArea = UCom.gson(winc.listAll, stvId);
                         JsonObject paramObj = stvArea.param;
                         String stvKey = null;
-                        if (layout == Layout.BOTT) {
+                        if (layout == Layout.BOT) {
                             stvKey = PKjson.stvorkaBot;
-                        } else if (layout == Layout.RIGHT) {
+                        } else if (layout == Layout.RIG) {
                             stvKey = PKjson.stvorkaRig;
                         } else if (layout == Layout.TOP) {
                             stvKey = PKjson.stvorkaTop;
-                        } else if (layout == Layout.LEFT) {
+                        } else if (layout == Layout.LEF) {
                             stvKey = PKjson.stvorkaLef;
                         }
                         JsonObject jso = UGui.getAsJsonObject(paramObj, stvKey);
@@ -3960,13 +3960,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 if (winNode.com5t().type == enums.Type.STV_SIDE) {
                     JsonObject paramObj = parentArea.param;
                     String stvKey = null;
-                    if (winNode.com5t().layout() == Layout.BOTT) {
+                    if (winNode.com5t().layout() == Layout.BOT) {
                         stvKey = PKjson.stvorkaBot;
-                    } else if (winNode.com5t().layout() == Layout.RIGHT) {
+                    } else if (winNode.com5t().layout() == Layout.RIG) {
                         stvKey = PKjson.stvorkaRig;
                     } else if (winNode.com5t().layout() == Layout.TOP) {
                         stvKey = PKjson.stvorkaTop;
-                    } else if (winNode.com5t().layout() == Layout.LEFT) {
+                    } else if (winNode.com5t().layout() == Layout.LEF) {
                         stvKey = PKjson.stvorkaLef;
                     }
 

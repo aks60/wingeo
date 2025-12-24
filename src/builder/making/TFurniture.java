@@ -171,16 +171,16 @@ public class TFurniture extends Cal5e {
                     }
                 }
                 if (side == 1) {
-                    el = UCom.layout(areaStv.frames, Layout.BOTT);
+                    el = UCom.layout(areaStv.frames, Layout.BOT);
                     length = el.length() - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
                 } else if (side == 2) {
-                    el = UCom.layout(areaStv.frames, Layout.RIGHT);
+                    el = UCom.layout(areaStv.frames, Layout.RIG);
                     length = el.length() - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
                 } else if (side == 3) {
                     el = UCom.layout(areaStv.frames, Layout.TOP);
                     length = el.length() - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
                 } else if (side == 4) {
-                    el = UCom.layout(areaStv.frames, Layout.LEFT);
+                    el = UCom.layout(areaStv.frames, Layout.LEF);
                     length = el.length() - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
                 }
                 if (length >= furnside2Rec.getDbl(eFurnside2.len_max) || (length < furnside2Rec.getDbl(eFurnside2.len_min))) {
@@ -283,13 +283,13 @@ public class TFurniture extends Cal5e {
 
         //Через параметр
         if ("1".equals(mapParam.get(25010))) {
-            return UCom.layout(area5e.frames, Layout.BOTT);
+            return UCom.layout(area5e.frames, Layout.BOT);
         } else if ("2".equals(mapParam.get(25010))) {
-            return UCom.layout(area5e.frames, Layout.RIGHT);
+            return UCom.layout(area5e.frames, Layout.RIG);
         } else if ("3".equals(mapParam.get(25010))) {
             return UCom.layout(area5e.frames, Layout.TOP);
         } else if ("4".equals(mapParam.get(25010))) {
-            return UCom.layout(area5e.frames, Layout.LEFT);
+            return UCom.layout(area5e.frames, Layout.LEF);
         } else {
             //Там где крепится ручка
             return determOfSide(area5e);
@@ -301,11 +301,11 @@ public class TFurniture extends Cal5e {
         if (area5e instanceof AreaStvorka) {
             int id = ((AreaStvorka) area5e).typeOpen.id;
             if (List.of(1, 3, 11).contains(id)) {
-                return UCom.layout(area5e.frames, Layout.LEFT);
+                return UCom.layout(area5e.frames, Layout.LEF);
             } else if (List.of(2, 4, 12).contains(id)) {
-                return UCom.layout(area5e.frames, Layout.RIGHT);
+                return UCom.layout(area5e.frames, Layout.RIG);
             } else {
-                return UCom.layout(area5e.frames, Layout.BOTT);
+                return UCom.layout(area5e.frames, Layout.BOT);
             }
         }
         return area5e.frames.stream().findFirst().get();  //первая попавшаяся        

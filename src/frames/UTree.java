@@ -31,11 +31,11 @@ public class UTree {
             root.add(new DefMutableTreeNode(new Com5t(Type.PARAM)));
             //Рама
             frm = root.add(new DefMutableTreeNode(new Com5t(Type.FRAME)));
-            frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.LEFT)));
+            frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.LEF)));
             frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
-            frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.BOTT)));
+            frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.BOT)));
             frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
-            frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.RIGHT)));
+            frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.RIG)));
             frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
             frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.TOP)));
             frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));

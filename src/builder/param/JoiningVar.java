@@ -159,13 +159,13 @@ public class JoiningVar extends Par5s {
                     if (elemJoin.elem1.type == Type.STV_SIDE) {
                         listenerList.add(() -> {
                             AreaStvorka stv = (AreaStvorka) elemJoin.elem1.owner;
-                            if (elemJoin.elem1.layout() == Layout.BOTT) {
+                            if (elemJoin.elem1.layout() == Layout.BOT) {
                                 stv.offset[0] = rec.getDbl(TEXT);
-                            } else if (elemJoin.elem1.layout() == Layout.RIGHT) {
+                            } else if (elemJoin.elem1.layout() == Layout.RIG) {
                                 stv.offset[1] = rec.getDbl(TEXT);
                             } else if (elemJoin.elem1.layout() == Layout.TOP) {
                                 stv.offset[2] = rec.getDbl(TEXT);
-                            } else if (elemJoin.elem1.layout() == Layout.LEFT) {
+                            } else if (elemJoin.elem1.layout() == Layout.LEF) {
                                 stv.offset[3] = rec.getDbl(TEXT);
                             }
                         });

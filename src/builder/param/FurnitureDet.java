@@ -114,7 +114,7 @@ public class FurnitureDet extends Par5s {
                 case 24008: //Если серия створки 
                 case 25008: //Если серия створки   
                 {
-                    int series_id = UCom.layout(areaStv.frames, Layout.BOTT).artiklRec.getInt(eArtikl.groups4_id);
+                    int series_id = UCom.layout(areaStv.frames, Layout.BOT).artiklRec.getInt(eArtikl.groups4_id);
                     String name = eGroups.find(series_id).getStr(eGroups.name);
                     if (name.equals(rec.getStr(TEXT)) == false) {
                         return false;

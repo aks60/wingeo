@@ -31,7 +31,7 @@ class UPar {
         for (ElemSimple el : elem5e.winc.listElem) {
             if (el.type == Type.GLASS) {
 
-                if (elem5e.layout() == Layout.VERT) {
+                if (elem5e.layout() == Layout.VER) {
                     if (UGeo.isInRing(elem5e.x1() - 200, elem5e.y1() + elem5e.height() / 2, el.area)) {
                         glass1 = el;
                     }
@@ -39,7 +39,7 @@ class UPar {
                         glass2 = el;
                     }
                 }
-                if (elem5e.layout() == Layout.HORIZ) {
+                if (elem5e.layout() == Layout.HOR) {
                     if (UGeo.isInRing(elem5e.y1() - 200, elem5e.x1() + elem5e.width() / 2, el.area)) {
                         glass1 = el;
                     }
@@ -75,7 +75,7 @@ class UPar {
     static boolean is_STRING_XX000(String txt, ElemSimple elem5e) {
         Record sysprofRec = elem5e.sysprofRec;
         if (elem5e.type == Type.GLASS) {
-            sysprofRec = UCom.layout(elem5e.owner.frames, Layout.BOTT).sysprofRec;
+            sysprofRec = UCom.layout(elem5e.owner.frames, Layout.BOT).sysprofRec;
         }
         Record artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
         if (artiklRecAn.get(eArtikl.tech_code) == null) {
@@ -115,13 +115,13 @@ class UPar {
 
     //Если номер стороны в контуре
     static boolean is_INT_33066_34066(String txt, ElemSimple elem5e) {
-        if ("1".equals(txt) == true && Layout.BOTT != elem5e.layout()) {
+        if ("1".equals(txt) == true && Layout.BOT != elem5e.layout()) {
             return false;
-        } else if ("2".equals(txt) == true && Layout.RIGHT != elem5e.layout()) {
+        } else if ("2".equals(txt) == true && Layout.RIG != elem5e.layout()) {
             return false;
         } else if ("3".equals(txt) == true && Layout.TOP != elem5e.layout()) {
             return false;
-        } else if ("4".equals(txt) == true && Layout.LEFT != elem5e.layout()) {
+        } else if ("4".equals(txt) == true && Layout.LEF != elem5e.layout()) {
             return false;
         }
         return true;

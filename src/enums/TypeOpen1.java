@@ -53,25 +53,25 @@ public enum TypeOpen1 implements Enam {
 
     public Layout axisStv() {
         if (this == LEFT || this == LEFTUP || this == LEFMOV) {
-            return Layout.LEFT;
+            return Layout.LEF;
         } else if (this == RIGH || this == RIGHUP || this == RIGMOV) {
-            return Layout.RIGHT;
+            return Layout.RIG;
         } else if (this == UPPER) {
-            return Layout.BOTT;
+            return Layout.BOT;
         } else {
-            return Layout.LEFT;  //по умолчанию
+            return Layout.LEF;  //по умолчанию
         }
     }
 
     public static ElemSimple getKnob(AreaStvorka areaStv, TypeOpen1 typeOpen) {
         if (List.of(LEFT, LEFTUP, LEFMOV).contains(typeOpen)) {
-            return UCom.layout(areaStv.frames, Layout.RIGHT);
+            return UCom.layout(areaStv.frames, Layout.RIG);
         } else if (List.of(RIGH, RIGHUP, RIGMOV).contains(typeOpen)) {
-            return UCom.layout(areaStv.frames, Layout.LEFT);
+            return UCom.layout(areaStv.frames, Layout.LEF);
         } else if (UPPER == typeOpen) {
             return UCom.layout(areaStv.frames, Layout.TOP);
         } else {
-            return UCom.layout(areaStv.frames, Layout.LEFT);
+            return UCom.layout(areaStv.frames, Layout.LEF);
         }
     }
 }

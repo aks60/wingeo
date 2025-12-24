@@ -106,11 +106,11 @@ public abstract class ElemSimple extends Com5t {
                         X = dX / winc.scale + this.x2();
                         Y = dY / winc.scale + this.y2();
 
-                        if (Y > 0 && List.of(Layout.BOTT, Layout.TOP, Layout.HORIZ).contains(this.layout())) {
+                        if (Y > 0 && List.of(Layout.BOT, Layout.TOP, Layout.HOR).contains(this.layout())) {
                             this.y1(Y);
                             this.y2(Y);
                         }
-                        if (X > 0 && List.of(Layout.LEFT, Layout.RIGHT, Layout.VERT).contains(this.layout())) {
+                        if (X > 0 && List.of(Layout.LEF, Layout.RIG, Layout.VER).contains(this.layout())) {
                             this.x1(X);
                             this.x2(X);
                         }
@@ -180,7 +180,7 @@ public abstract class ElemSimple extends Com5t {
                     } else if (passMask[0] == 2) { //середина вектора
                         X = dX / winc.scale + x2();
                         Y = dY / winc.scale + y2();
-                        if (Y > 0 && List.of(Layout.BOTT, Layout.TOP, Layout.HORIZ).contains(layout())) {
+                        if (Y > 0 && List.of(Layout.BOT, Layout.TOP, Layout.HOR).contains(layout())) {
                             if (this.h() != null) {
                                 this.h(this.h() - dY / winc.scale);
                             } else {
@@ -188,7 +188,7 @@ public abstract class ElemSimple extends Com5t {
                                 this.y2(Y);
                             }
                         }
-                        if (X > 0 && List.of(Layout.LEFT, Layout.RIGHT, Layout.VERT).contains(layout())) {
+                        if (X > 0 && List.of(Layout.LEF, Layout.RIG, Layout.VER).contains(layout())) {
                             if (this.h() != null) {
                                 this.h(this.h() - dX / winc.scale);
                             } else {
@@ -212,13 +212,13 @@ public abstract class ElemSimple extends Com5t {
     private void moveXY(double x, double y) {
 
         if (x > 0 || y > 0) {
-            if (List.of(Layout.BOTT, Layout.HORIZ).contains(layout())) {
+            if (List.of(Layout.BOT, Layout.HOR).contains(layout())) {
                 if (passMask[0] == 0) {
                     this.y1(y);
                 } else if (passMask[0] == 1) {
                     this.y2(y);
                 }
-            } else if (List.of(Layout.RIGHT).contains(layout())) {
+            } else if (List.of(Layout.RIG).contains(layout())) {
                 if (passMask[0] == 0) {
                     this.x1(x);
                 } else if (passMask[0] == 1) {
@@ -230,7 +230,7 @@ public abstract class ElemSimple extends Com5t {
                 } else if (passMask[0] == 1) {
                     this.y2(y);
                 }
-            } else if (List.of(Layout.LEFT, Layout.VERT).contains(layout())) {
+            } else if (List.of(Layout.LEF, Layout.VER).contains(layout())) {
                 if (passMask[0] == 0) {
                     this.x1(x);
                 } else if (passMask[0] == 1) {
@@ -249,16 +249,16 @@ public abstract class ElemSimple extends Com5t {
             double anglHor = UGeo.anglHor(x1(), y1(), x2(), y2());
 
             if (anglHor > 315 && anglHor <= 360 || anglHor >= 0 && anglHor < 45) {
-                return (this.type == Type.IMPOST || this.type == Type.SHTULP) ? Layout.HORIZ : Layout.BOTT;
+                return (this.type == Type.IMPOST || this.type == Type.SHTULP) ? Layout.HOR : Layout.BOT;
 
             } else if (anglHor >= 45 && anglHor < 135) {
-                return Layout.RIGHT;
+                return Layout.RIG;
 
             } else if (anglHor >= 135 && anglHor < 225) {
                 return Layout.TOP;
 
             } else if (anglHor >= 225 && anglHor <= 315) {
-                return (this.type == Type.IMPOST || this.type == Type.SHTULP) ? Layout.VERT : Layout.LEFT;
+                return (this.type == Type.IMPOST || this.type == Type.SHTULP) ? Layout.VER : Layout.LEF;
             }
         } catch (Exception e) {
             System.err.println("Ошибка:ElemSimple.layout() " + e);

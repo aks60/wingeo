@@ -440,8 +440,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     AreaStvorka stv = (AreaStvorka) winNode.com5t();
                     AreaSimple sta = (AreaSimple) winNode.com5t();
                     int id = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
-                    setText(txt24, UCom.format(UCom.layout(sta.frames, Layout.BOTT).width(), 1));
-                    double h = (UCom.layout(sta.frames, Layout.RIGHT).height() > UCom.layout(sta.frames, Layout.LEFT).height()) ? UCom.layout(sta.frames, Layout.RIGHT).height() : UCom.layout(sta.frames, Layout.LEFT).height();
+                    setText(txt24, UCom.format(UCom.layout(sta.frames, Layout.BOT).width(), 1));
+                    double h = (UCom.layout(sta.frames, Layout.RIG).height() > UCom.layout(sta.frames, Layout.LEF).height()) ? UCom.layout(sta.frames, Layout.RIG).height() : UCom.layout(sta.frames, Layout.LEF).height();
                     setText(txt26, UCom.format(h, 1));
                     setText(txt20, eFurniture.find(id).getStr(eFurniture.name));
                     setIcon(btn10, stv.isJson(stv.gson.param, PKjson.sysfurnID));
@@ -3216,13 +3216,13 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         GsonElem stvArea = UCom.gson(wincalc().listAll, stvId);
                         JsonObject paramObj = stvArea.param;
                         String stvKey = null;
-                        if (layout == Layout.BOTT) {
+                        if (layout == Layout.BOT) {
                             stvKey = PKjson.stvorkaBot;
-                        } else if (layout == Layout.RIGHT) {
+                        } else if (layout == Layout.RIG) {
                             stvKey = PKjson.stvorkaRig;
                         } else if (layout == Layout.TOP) {
                             stvKey = PKjson.stvorkaTop;
-                        } else if (layout == Layout.LEFT) {
+                        } else if (layout == Layout.LEF) {
                             stvKey = PKjson.stvorkaLef;
                         }
                         JsonObject jso = UGui.getAsJsonObject(paramObj, stvKey);
@@ -3272,13 +3272,13 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 if (winNode.com5t().type == enums.Type.STV_SIDE) {
                     JsonObject paramObj = parentArea.param;
                     String stvKey = null;
-                    if (winNode.com5t().layout() == Layout.BOTT) {
+                    if (winNode.com5t().layout() == Layout.BOT) {
                         stvKey = PKjson.stvorkaBot;
-                    } else if (winNode.com5t().layout() == Layout.RIGHT) {
+                    } else if (winNode.com5t().layout() == Layout.RIG) {
                         stvKey = PKjson.stvorkaRig;
                     } else if (winNode.com5t().layout() == Layout.TOP) {
                         stvKey = PKjson.stvorkaTop;
-                    } else if (winNode.com5t().layout() == Layout.LEFT) {
+                    } else if (winNode.com5t().layout() == Layout.LEF) {
                         stvKey = PKjson.stvorkaLef;
                     }
 
