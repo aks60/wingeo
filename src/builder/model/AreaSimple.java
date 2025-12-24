@@ -91,7 +91,7 @@ public class AreaSimple extends Com5t {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaSimple.parametr() " + e);
+            System.err.println("Ошибка:AreaSimple.initParametr() " + e);
         }
     }
 

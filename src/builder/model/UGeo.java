@@ -2,7 +2,6 @@ package builder.model;
 
 import builder.making.TRecord;
 import static builder.model.Com5t.gf;
-import common.LineSegm;
 import common.UCom;
 import domain.eArtikl;
 import java.util.ArrayList;
@@ -30,8 +29,8 @@ import org.locationtech.jts.geom.LinearRing;
  */
 public class UGeo {
 
-    public static LineSegment segRighShell = new LineSegm(), segRighInner = null;
-    public static LineSegment segLeftShell = new LineSegm(), segLeftInner = null;
+    public static LineSegment segRighShell = new LineSegment(), segRighInner = null;
+    public static LineSegment segLeftShell = new LineSegment(), segLeftInner = null;
     public static Coordinate cross = new Coordinate();
 
     //public static DecimalFormat df = new DecimalFormat("#.###");
@@ -280,7 +279,7 @@ public class UGeo {
 
                     if (PointLocation.isOnSegment(cooArc[i], cooRec[j - 1], cooRec[j])) {
                         if (pass == false) {
-                            
+
                             cooArc[i].z = cooRec[j].z;
                         } else {
                             cooArc[i].z = cooRec[j - 1].z;
@@ -315,12 +314,15 @@ public class UGeo {
                 int j = (i == 0) ? listShell.size() - 1 : i - 1;
                 final double id1 = listShell.get(j).z;
                 segRighShell.setCoordinates(listShell.get(j), listShell.get(i));
-                segRighInner = segRighShell.offset(-hmDist.get(id1));
+                segRighInner = segmentOffset(segRighShell, -hmDist.get(id1));
+
+                segRighInner.p0.z = segRighShell.p0.z;
+                segRighInner.p1.z = segRighShell.p1.z;
 
                 int k = (i == listShell.size() - 1) ? 0 : i + 1;
                 final double id2 = listShell.get(i).z;
                 segLeftShell.setCoordinates(listShell.get(i), listShell.get(k));
-                segLeftInner = segLeftShell.offset(-hmDist.get(id2));
+                segLeftInner = segmentOffset(segLeftShell, -hmDist.get(id2));
 
                 //Точка пересечения сегментов
                 cross = segLeftInner.lineIntersection(segRighInner);
@@ -359,12 +361,12 @@ public class UGeo {
                 //Перебор левого и правого сегмента от точки пересечения
                 if (i > Com5t.MAXSIDE || (cross != null && i < Com5t.MAXSIDE)) {
                     segRighShell.setCoordinates(listShell.get(i - 1), listShell.get(i));
-                    segRighInner = segRighShell.offset(-dist);
+                    segRighInner = segmentOffset(segRighShell, -dist);
                 }
                 if (i < Com5t.MAXSIDE || (cross != null && i > Com5t.MAXSIDE)) {
                     int j = (i == listShell.size() - 1) ? 1 : i + 1;
                     segLeftShell.setCoordinates(listShell.get(i), listShell.get(j));
-                    segLeftInner = segLeftShell.offset(-dist);
+                    segLeftInner = segmentOffset(segLeftShell, -dist);
                 }
 
                 //Коррекция первой и последней точки дуги
@@ -408,12 +410,12 @@ public class UGeo {
                 int j = (i == 0) ? listShell.size() - 2 : i - 1;
                 final double id1 = listShell.get(j).z;
                 segRighShell.setCoordinates(listShell.get(j), listShell.get(i));
-                segRighInner = segRighShell.offset(-hmDist.get(id1));
+                segRighInner = segmentOffset(segRighShell, -hmDist.get(id1));
 
                 int k = (i == listShell.size() - 1) ? 0 : i + 1;
                 final double id2 = listShell.get(i).z;
                 segLeftShell.setCoordinates(listShell.get(i), listShell.get(k));
-                segLeftInner = segLeftShell.offset(-hmDist.get(id2));
+                segLeftInner = segmentOffset(segLeftShell, -hmDist.get(id2));
 
                 //Точка пересечения сегментов
                 cross = segLeftInner.intersection(segRighInner);
@@ -590,6 +592,13 @@ public class UGeo {
             list.add("{" + UCom.format(coo[i].x, 2) + " " + UCom.format(coo[i].y, 2) + " " + UCom.format(coo[i].z, 2) + "}");
         }
         System.out.println(s + " " + list);
+    }
+
+    public static LineSegment segmentOffset(LineSegment segShell, double dxy) {
+        LineSegment segInner = segShell.offset(dxy);
+        segInner.p0.z = segShell.p0.z;
+        segInner.p1.z = segShell.p1.z;
+        return segInner;
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">
