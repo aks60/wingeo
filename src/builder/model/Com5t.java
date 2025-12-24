@@ -82,9 +82,7 @@ public class Com5t {
     public void paint() {
     }
 
-    /**
-     * Длина компонента
-     */
+    //Длина компонента
     public double length() {
 
         if (this.h() == null) {

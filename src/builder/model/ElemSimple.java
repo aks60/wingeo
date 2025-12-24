@@ -35,7 +35,6 @@ public abstract class ElemSimple extends Com5t {
     public final double SIZE = 20;
     private Timer timer = new Timer(160, null);
     public TRecord spcRec = null; //спецификация элемента
-    public Color borderColor = Color.BLACK;
 
     public ElemSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson.id, gson, owner);
