@@ -5,7 +5,6 @@ import builder.making.TRecord;
 import builder.script.GsonElem;
 import common.UCom;
 import domain.eArtikl;
-import static domain.eArtikl.size_centr;
 import domain.eSysprof;
 import domain.eSyssize;
 import enums.Layout;
@@ -56,8 +55,8 @@ public class ElemCross extends ElemSimple {
 
         //Если импост виртуальный
         if (artiklRec.getInt(1) == -3) {
-            artiklRec.setNo(size_centr, 40);
-            artiklRecAn.setNo(size_centr, 40);
+            artiklRec.setNo(eArtikl.size_centr, 40);
+            artiklRecAn.setNo(eArtikl.size_centr, 40);
         }
     }
 

@@ -148,18 +148,18 @@ public class Wincalc {
     private void creator(AreaSimple owner, GsonElem gson) {
         try {
             if (gson.childs != null) {
-                LinkedHashMap<AreaSimple, GsonElem> hm = new LinkedHashMap();
+                LinkedHashMap<AreaSimple, GsonElem> hmDip = new LinkedHashMap();
                 for (GsonElem js : gson.childs) {
 
                     if (Type.STVORKA == js.type) {
                         AreaStvorka area5e = new AreaStvorka(this, js, owner);
                         owner.childs.add(area5e); //добавим ребёнка родителю
-                        hm.put(area5e, js); //погружение ареа
+                        hmDip.put(area5e, js); //погружение ареа
 
                     } else if (Type.AREA == js.type) {
                         AreaSimple area5e = new AreaSimple(this, js, owner);
                         owner.childs.add(area5e); //добавим ребёнка родителю
-                        hm.put(area5e, js); //погружение ареа
+                        hmDip.put(area5e, js); //погружение ареа
 
                     } else if (Type.BOX_SIDE == js.type) {
                         ElemFrame elem5e = new ElemFrame(this, js.id, js, owner);
@@ -184,7 +184,7 @@ public class Wincalc {
                     }
                 }
                 //Теперь вложенные элементы
-                for (Map.Entry<AreaSimple, GsonElem> entry : hm.entrySet()) {
+                for (Map.Entry<AreaSimple, GsonElem> entry : hmDip.entrySet()) {
                     creator(entry.getKey(), entry.getValue());
                 }
             }
