@@ -602,6 +602,36 @@ public class UGeo {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">
+//public static Coordinate findIntersection(Line line1, Line line2) {
+//	
+//        double det = line1.a * line2.b - line2.a * line1.b;
+//        if (Math.abs(det) < 1e-9) { // Прямые параллельны или совпадают
+//            return null;
+//        }
+//        double x = (line1.b * line2.c - line2.b * line1.c) / det;
+//        double y = (line2.a * line1.c - line1.a * line2.c) / det;
+//        return new Coordinate(x, y);
+//}
+//	
+// public static boolean isPointOnSegment(Coordinate a, Coordinate b, Coordinate p) {
+// 
+//        // 1. Проверка коллинеарности (смешанное произведение равно 0)
+//        // (Py - Ay) * (Bx - Ax) - (Px - Ax) * (By - Ay) == 0
+//        double crossProduct = (p.y - a.y) * (b.x - a.x) - (p.x - a.x) * (b.y - a.y);
+//		
+//        // Учитываем погрешность для double
+//        if (Math.abs(crossProduct) > 1e-9) {
+//            return false; // Не лежат на одной прямой
+//        }
+//
+//        // 2. Проверка, что точка p лежит между a и b (включая концы)
+//        // Для x-координаты
+//        boolean withinX = (p.x >= Math.min(a.x, b.x)) && (p.x <= Math.max(a.x, b.x));
+//        // Для y-координаты
+//        boolean withinY = (p.y >= Math.min(a.y, b.y)) && (p.y <= Math.max(a.y, b.y));
+//
+//        return withinX && withinY;
+//}   
     /* 
     public static Polygon ringToPolygon(Geometry line, Geometry geom) {
 

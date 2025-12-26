@@ -20,6 +20,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
+import startup.Test;
 
 public class ElemCross extends ElemSimple {
 
@@ -63,8 +64,9 @@ public class ElemCross extends ElemSimple {
             Geometry geoFalz = owner.area.getGeometryN(2);
 
             //Пилим полигон импостом
-            Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), UGeo.normalizeSegm(new LineSegment(
-                    new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id))));
+            Coordinate coo[] = {new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id)};
+            LineSegment lineCut = new LineSegment(new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id));
+            Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), UGeo.normalizeSegm(lineCut));
             owner.childs.get(0).area = (Polygon) geoSplit[1];
             owner.childs.get(2).area = (Polygon) geoSplit[2];
 
@@ -82,7 +84,7 @@ public class ElemCross extends ElemSimple {
             Polygon areaEnvelope = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
             this.area = (Polygon) areaEnvelope.intersection(geoFalz); //полигон элемента конструкции
 
-            //Test.init(this.area);
+            Test.init(geoShell, Com5t.gf.createLineString(coo));
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation " + e);
         }

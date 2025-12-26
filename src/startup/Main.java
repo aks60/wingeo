@@ -18,7 +18,6 @@ public class Main {
 
     //java -jar C:\\Okna\\winapp\\dist\\winapp.jar tex
     public static void main(String[] args) {
-
         //Если продакшин то цыкла не будет
         for (int index = 0; index < args.length; index++) {
 

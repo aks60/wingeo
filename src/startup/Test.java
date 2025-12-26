@@ -10,6 +10,9 @@ import builder.param.check.JoiningTest;
 import builder.param.check.WincalcTest;
 import builder.script.GsonElem;
 import builder.script.GsonScript;
+import com.esri.core.geometry.GeometryCursor;
+import com.esri.core.geometry.OperatorCut;
+import com.esri.core.geometry.Polyline;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -21,7 +24,6 @@ import dataset.Query;
 import dataset.Record;
 import domain.eColor;
 import enums.Type;
-import frames.PSConvert;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -56,6 +58,7 @@ public class Test {
     private JFrame frame = null;
     public Geometry mlin = null;
     public Geometry mpol = null;
+    public com.esri.core.geometry.Geometry esri = null;
 
     public static Integer numDb = Integer.valueOf(eProp.base_num.getProp());
     private static GeometryFactory gf = new GeometryFactory();
@@ -127,7 +130,7 @@ public class Test {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                paincomp(g);
+                paints(g);
             }
 
             @Override
@@ -153,7 +156,21 @@ public class Test {
 
     public static void init(Geometry... p) {
         Test t = new Test();
-        t.mpol(p);
+        t.esri(p);
+    }
+
+    public void esri(Geometry... p) {
+
+        OperatorCut opCut = OperatorCut.local();
+        Polyline line = new Polyline(new com.esri.core.geometry.Point(0.0, 0.0), new com.esri.core.geometry.Point(600.0, 600.0));
+        com.esri.core.geometry.Polygon poly = new com.esri.core.geometry.Polygon();
+        poly.startPath(0, 0);
+        poly.lineTo(0, 300);
+        poly.lineTo(300, 300);
+        poly.lineTo(300, 0);
+        GeometryCursor cur = opCut.execute(true, poly, line, null, null);
+        com.esri.core.geometry.Geometry geo = cur.next();
+        esri = geo;
     }
 
     public void mpol(Geometry... p) {
@@ -181,7 +198,7 @@ public class Test {
         });
     }
 
-    public void paincomp(Graphics g) {
+    public void paints(Graphics g) {
 
         Graphics2D gc2d = (Graphics2D) g;
 
@@ -317,11 +334,11 @@ public class Test {
             URL url = Test.class.getResource("/resource/json/param_desc.json");
             Path path = Paths.get(url.toURI());
             FileReader fileReader = new FileReader(path.toFile());
-            
+
             List<Record> list = new ArrayList<>();
             JsonObject jsonObj = new GsonBuilder().create().fromJson(fileReader, JsonObject.class);
             JsonArray jsonArr = jsonObj.getAsJsonArray("records");
-            
+
             for (JsonElement elem : jsonArr) {
                 JsonObject jsonObect = new GsonBuilder().create().fromJson(elem, JsonObject.class);
                 int id = jsonObect.get("id").getAsInt();
@@ -329,9 +346,8 @@ public class Test {
                 String desc = jsonObect.get("desc").getAsString();
                 Record record = new Record(List.of(id, name, desc));
                 list.add(record);
-            }            
+            }
             System.out.println(jsonArr);
-
 
 //        Gson gson = new Gson();
 //        //JsonParser parse = new JsonParser();
@@ -474,6 +490,10 @@ public class Test {
     }
 
 // <editor-fold defaultstate="collapsed" desc="TEMP">
+    public void draw() {
+
+    }
+
     public void draw10() {
         try {
             WKTReader reader = new WKTReader();
@@ -511,7 +531,7 @@ public class Test {
         mlin = gf.createMultiLineString(new LineString[]{line1, line2});
     }
 
-    private void draw() {
+    private void draw8() {
         double TOP = 400.0;
         double BOT = 400.1;
         GeometricShapeFactory gsf = new GeometricShapeFactory();
