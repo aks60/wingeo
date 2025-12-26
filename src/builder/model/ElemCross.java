@@ -7,7 +7,6 @@ import common.UCom;
 import domain.eArtikl;
 import domain.eSysprof;
 import domain.eSyssize;
-import enums.Layout;
 import enums.PKjson;
 import enums.Type;
 import enums.TypeArt;
@@ -15,15 +14,12 @@ import enums.TypeJoin;
 import enums.UseSideTo;
 import java.awt.Shape;
 import java.util.List;
-import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.algorithm.PointLocation;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Polygon;
-import org.locationtech.jts.geom.util.GeometryFixer;
-import startup.Test;
 
 public class ElemCross extends ElemSimple {
 
@@ -67,9 +63,10 @@ public class ElemCross extends ElemSimple {
             Geometry geoFalz = owner.area.getGeometryN(2);
 
             //Пилим полигон импостом
-            Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), this.segment());
+            Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), UGeo.normalizeSegm(new LineSegment(
+                    new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id))));
             owner.childs.get(0).area = (Polygon) geoSplit[1];
-            owner.childs.get(2).area = (Polygon) geoSplit[2];            
+            owner.childs.get(2).area = (Polygon) geoSplit[2];
 
             //Левый и правый сегмент вдоль импоста
             double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr); //ширина
@@ -108,7 +105,7 @@ public class ElemCross extends ElemSimple {
 
             if (type == Type.IMPOST) {
                 LineSegment ls = new LineSegment();
-                
+
                 //Длина импоста - самый длинный сегмент
                 for (int i = 1; i < cooImp.length; i++) {
                     ls.setCoordinates(cooImp[i - 1], cooImp[i]);
@@ -197,8 +194,8 @@ public class ElemCross extends ElemSimple {
             winc.gc2d.fill(shape);
             winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
             winc.gc2d.draw(shape);
-            
-        } else if(this.area != null ) {
+
+        } else if (this.area != null) {
             //
         }
     }
