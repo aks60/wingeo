@@ -19,10 +19,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import common.eProp;
 import dataset.Connect;
+import static dataset.Entity.printlnJSO;
 import dataset.Field;
 import dataset.Query;
 import dataset.Record;
 import domain.eColor;
+import domain.eSysuser;
 import enums.Type;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -112,7 +114,9 @@ public class Test {
             //uid();
             //script();
             //random();
-            //geom();       
+            //geom();  
+            
+            //printlnJSO(eSysuser.up);
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);

@@ -1,8 +1,8 @@
 package dataset;
 
-import java.io.FileNotFoundException;
+import domain.eArtdet;
+import domain.eArtikl;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
@@ -63,7 +62,7 @@ public enum Entity {
             writer.close();
 
         } catch (Exception e) {
-            System.err.println("");
+            System.err.println(e);
         }
     }
 
@@ -177,5 +176,19 @@ public enum Entity {
             column.add(null);
         }
         return column;
+    }
+
+    public static void printlnJSO(Field up) {
+        try {
+            //Field up = eArtdet.up;            
+            System.out.println(up.tname() + " = {");
+            for (int i = 0; i < up.fields().length; ++i) {
+                System.out.println(up.fields()[i].name() + ": " + i + ", //" + up.fields()[i].meta().descr());
+            }
+            System.out.println("};");
+
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }
 }
