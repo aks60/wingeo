@@ -178,7 +178,7 @@ public enum Entity {
         return column;
     }
 
-    public static void printlnJSO(Field up) {
+    public static void printJSO(Field up) {
         try {
             //Field up = eArtdet.up;            
             System.out.println(up.tname() + " = {");

@@ -19,7 +19,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import common.eProp;
 import dataset.Connect;
-import static dataset.Entity.printlnJSO;
 import dataset.Field;
 import dataset.Query;
 import dataset.Record;
@@ -53,6 +52,7 @@ import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.util.GeometricShapeFactory;
+import static dataset.Entity.printJSO;
 
 ///
 public class Test {
@@ -116,7 +116,7 @@ public class Test {
             //random();
             //geom();  
             
-            //printlnJSO(eSysuser.up);
+            printJSO(eColor.up);
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
