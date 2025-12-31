@@ -35,7 +35,7 @@ import domain.eSyspar1;
 import domain.eSysprof;
 import domain.eSyssize;
 import enums.Type;
-import enums.UseArtiklTo;
+import enums.UseType;
 import frames.swing.comp.Canvas;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -109,7 +109,7 @@ public class Wincalc {
 
             //Инит конструктива
             nuni = (gson.nuni == null) ? -3 : gson.nuni;
-            Record sysprofRec = eSysprof.find2(nuni, UseArtiklTo.FRAME); //первая.запись коробки
+            Record sysprofRec = eSysprof.find2(nuni, UseType.FRAME); //первая.запись коробки
             Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
             syssizRec = eSyssize.find(artiklRec); //системные константы
             colorID1 = (gson.color1 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1;

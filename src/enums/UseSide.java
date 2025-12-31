@@ -2,7 +2,7 @@ package enums;
 
 // Стороны для профилей (SYSPROA.ASETS)
 
-import static enums.UseArtiklTo.values;
+import static enums.UseType.values;
 import static enums.TypeOpen1.values;
 import java.util.stream.Stream;
 /**

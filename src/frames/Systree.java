@@ -22,7 +22,7 @@ import enums.LayoutKnob;
 import enums.TypeArt;
 import enums.UseSide;
 import enums.TypeOpen2;
-import enums.UseArtiklTo;
+import enums.UseType;
 import enums.TypeUse;
 import java.util.ArrayList;
 import java.util.stream.Stream;
@@ -208,7 +208,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         return en.text();
                     }
                 } else if (field == eSysprof.use_type && val != null) {
-                    UseArtiklTo en = UseArtiklTo.get(Integer.valueOf(val.toString()));
+                    UseType en = UseType.get(Integer.valueOf(val.toString()));
                     if (en != null) {
                         return en.text();
                     }
@@ -624,7 +624,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         UGui.buttonCellEditor(tab2, 1).addActionListener(event -> {
             new DicEnums(this, (record) -> {
                 UGui.cellParamEnum(record, tab2, eSysprof.use_type, tab2, tab3, tab4);
-            }, UseArtiklTo.values());
+            }, UseType.values());
         });
 
         UGui.buttonCellEditor(tab2, 2).addActionListener(event -> {

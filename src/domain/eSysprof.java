@@ -6,7 +6,7 @@ import dataset.Query;
 import dataset.Record;
 import static domain.ePrjkit.up;
 import enums.UseSide;
-import enums.UseArtiklTo;
+import enums.UseType;
 import frames.UGui;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +47,7 @@ public enum eSysprof implements Field {
         return query;
     }
 
-    public static Record find2(int _nuni, UseArtiklTo _type) {
+    public static Record find2(int _nuni, UseType _type) {
         if (_nuni == -3) {
             return virtualRec(_type.id);
         }

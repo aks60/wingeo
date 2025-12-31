@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 //Тип профиля в системе конструкций
 //Таблица SYSPROF поле USE_TYPE
-public enum UseArtiklTo implements Enam {
+public enum UseType implements Enam {
     ANY(0, "Любой тип"),
     FRAME(1, "Коробка"),//профиль первого контура изделия
     STVORKA(2, "Створка"),//профиль не первого контура. Всего может быть до 10 уровней створки в Проеме Изделия. Устанавливается в проем с установкой Фурнитуры
@@ -23,7 +23,7 @@ public enum UseArtiklTo implements Enam {
     //public Record sysprofRec;
     //public List<Record> sysprofList = new ArrayList<Record>();
 
-    UseArtiklTo(int id, String name) {
+    UseType(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -40,7 +40,7 @@ public enum UseArtiklTo implements Enam {
         return values();
     }
 
-    public static UseArtiklTo get(int id) {
+    public static UseType get(int id) {
         return Stream.of(values()).filter(en -> en.numb() == id).findFirst().orElse(null);
     }
     
