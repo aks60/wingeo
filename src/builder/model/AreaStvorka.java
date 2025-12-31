@@ -76,7 +76,7 @@ public class AreaStvorka extends AreaSimple {
                 //Координаты рам створок
                 GsonElem gson = new GsonElem(Type.STV_SIDE, coo[i].x, coo[i].y);
                 //Впихнул параметры в gson
-                if (isJson(this.gson.param, PKjson.stvorkaSide[i])) {
+                if (isFinite(this.gson.param, PKjson.stvorkaSide[i])) {
                     gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
                 }
                 ElemFrame sideStv = new ElemFrame(this.winc, this.id + (.1 + Double.valueOf(i) / 10), gson, this);
@@ -101,19 +101,19 @@ public class AreaStvorka extends AreaSimple {
         try {
             //Поиск по параметру или первая запись из списка...
             //Фурнитура
-            if (isJson(param, PKjson.sysfurnID)) {
+            if (isFinite(param, PKjson.sysfurnID)) {
                 sysfurnRec = eSysfurn.find2(param.get(PKjson.sysfurnID).getAsInt());
             } else { //по умолчанию
                 sysfurnRec = eSysfurn.find3(winc.nuni); //ищем первую в системе
             }
             //Ручка
-            if (isJson(param, PKjson.artiklKnob)) {
+            if (isFinite(param, PKjson.artiklKnob)) {
                 knobRec = eArtikl.find(param.get(PKjson.artiklKnob).getAsInt(), false);
             } else { //по умолчанию
                 knobRec = eArtikl.find(sysfurnRec.getInt(eSysfurn.artikl_id1), false);
             }
             //Текстура ручки
-            if (isJson(param, PKjson.colorKnob)) {
+            if (isFinite(param, PKjson.colorKnob)) {
                 knobColor = param.get(PKjson.colorKnob).getAsInt();
             } else if (knobColor == -3) { //по умолчанию (первая в списке)
                 knobColor = eArtdet.find(knobRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk);
@@ -125,36 +125,36 @@ public class AreaStvorka extends AreaSimple {
                 }
             }
             //Подвес (петли)
-            if (isJson(param, PKjson.artiklLoop)) {
+            if (isFinite(param, PKjson.artiklLoop)) {
                 loopRec = eArtikl.find(param.get(PKjson.artiklLoop).getAsInt(), false);
             }
             //Текстура подвеса
-            if (isJson(param, PKjson.colorLoop)) {
+            if (isFinite(param, PKjson.colorLoop)) {
                 loopColor = param.get(PKjson.colorLoop).getAsInt();
             }
             //Замок
-            if (isJson(param, PKjson.artiklLock)) {
+            if (isFinite(param, PKjson.artiklLock)) {
                 lockRec = eArtikl.find(param.get(PKjson.artiklLock).getAsInt(), false);
             }
             //Текстура замка
-            if (isJson(param, PKjson.colorLock)) {
+            if (isFinite(param, PKjson.colorLock)) {
                 lockColor = param.get(PKjson.colorLock).getAsInt();
             }
             //Сторона открывания
-            if (isJson(param, PKjson.typeOpen)) {
+            if (isFinite(param, PKjson.typeOpen)) {
                 typeOpen = TypeOpen1.get(param.get(PKjson.typeOpen).getAsInt());
             } else {
                 int index = sysfurnRec.getInt(eSysfurn.side_open);
                 typeOpen = (index == TypeOpen2.REQ.id) ? typeOpen : (index == TypeOpen2.LEF.id) ? TypeOpen1.RIGH : TypeOpen1.LEFT;
             }
             //Положение ручки на створке, ручка задана параметром
-            if (isJson(param, PKjson.positionKnob)) {
+            if (isFinite(param, PKjson.positionKnob)) {
                 int position = param.get(PKjson.positionKnob).getAsInt();
                 if (position == LayoutKnob.VAR.id) { //вариационная
                     knobLayout = LayoutKnob.VAR;
-                    if (isJson(param, PKjson.heightKnob)) {
+                    if (isFinite(param, PKjson.heightKnob)) {
                         knobHeight = param.get(PKjson.heightKnob).getAsInt();
-                        if (isJson(param, PKjson.heightKnob)) {
+                        if (isFinite(param, PKjson.heightKnob)) {
                             knobHeight = param.get(PKjson.heightKnob).getAsInt();
                         }
                     }
@@ -190,7 +190,7 @@ public class AreaStvorka extends AreaSimple {
 
             //Высота ручки, линии открывания
             if (this.typeOpen != TypeOpen1.EMPTY) {
-                if (isJson(gson.param, PKjson.positionKnob) == false) {
+                if (isFinite(gson.param, PKjson.positionKnob) == false) {
 
                     if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.MIDL.id) { //по середине
                         knobLayout = LayoutKnob.MIDL;

@@ -100,7 +100,7 @@ public class Com5t {
         return (timer.isRunning() == true) ? new java.awt.Color(255, 120, 0) : new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb));
     }
 
-    public boolean isJson(JsonObject jso, String key) {
+    public boolean isFinite(JsonObject jso, String key) {
         if (key == null) {
             if (jso == null || "".equals(jso)) {
                 return false;

@@ -235,42 +235,42 @@ public class TFurniture extends Cal5e {
         if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2) {
             //Ручка
             if (spcAdd.artiklRec.getInt(eArtikl.level2) == 11) {
-                if (stv.isJson(stv.gson.param, PKjson.artiklKnob)) {
+                if (stv.isFinite(stv.gson.param, PKjson.artiklKnob)) {
                     spcAdd.artiklRec(stv.knobRec); //выбр. вручную
                 } else {
                     stv.knobRec = spcAdd.artiklRec; //из детализации авто
                 }
                 //Цвет
                 spcAdd.color(stv.knobColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
-                if (stv.isJson(stv.gson.param, PKjson.colorKnob) == false) {
+                if (stv.isFinite(stv.gson.param, PKjson.colorKnob) == false) {
                     if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
                         stv.knobColor = spcAdd.colorID1;
                     }
                 }
                 //Подвес
             } else if (spcAdd.artiklRec.getInt(eArtikl.level2) == 12) {
-                if (stv.isJson(stv.gson.param, PKjson.artiklLoop)) {
+                if (stv.isFinite(stv.gson.param, PKjson.artiklLoop)) {
                     spcAdd.artiklRec(stv.loopRec); //выбр. вручную
                 } else {
                     stv.loopRec = spcAdd.artiklRec; //из детализации авто
                 }
                 //Цвет
                 spcAdd.color(stv.loopColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
-                if (stv.isJson(stv.gson.param, PKjson.colorLoop) == false) {
+                if (stv.isFinite(stv.gson.param, PKjson.colorLoop) == false) {
                     if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
                         stv.loopColor = spcAdd.colorID1;
                     }
                 }
                 //Замок  
             } else if (spcAdd.artiklRec.getInt(eArtikl.level2) == 9) {
-                if (stv.isJson(stv.gson.param, PKjson.artiklLock)) {
+                if (stv.isFinite(stv.gson.param, PKjson.artiklLock)) {
                     spcAdd.artiklRec(stv.lockRec); //выбр. вручную
                 } else {
                     //stv.lockRec = spcAdd.artiklRec; //из детализации авто
                 }
                 //Цвет
                 spcAdd.color(stv.lockColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
-                if (stv.isJson(stv.gson.param, PKjson.colorLock) == false) {
+                if (stv.isFinite(stv.gson.param, PKjson.colorLock) == false) {
                     if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
                         stv.lockColor = spcAdd.colorID1;
                     }

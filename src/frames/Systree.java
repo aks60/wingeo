@@ -521,26 +521,26 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     double h = (UCom.layout(sta.frames, Layout.RIG).height() > UCom.layout(sta.frames, Layout.LEF).height()) ? UCom.layout(sta.frames, Layout.RIG).height() : UCom.layout(sta.frames, Layout.LEF).height();
                     setText(txt26, UCom.format(h, 1));
                     setText(txt20, eFurniture.find(id).getStr(eFurniture.name));
-                    setIcon(btn10, stv.isJson(stv.gson.param, PKjson.sysfurnID));
+                    setIcon(btn10, stv.isFinite(stv.gson.param, PKjson.sysfurnID));
                     setText(txt30, stv.typeOpen.name2);
-                    setIcon(btn12, stv.isJson(stv.gson.param, PKjson.artiklKnob));
+                    setIcon(btn12, stv.isFinite(stv.gson.param, PKjson.artiklKnob));
                     setText(txt16, stv.knobLayout.name);
                     setText(txt31, (stv.knobLayout == LayoutKnob.VAR) ? UCom.format(stv.knobHeight, 1) : "");
                     setText(txt21, stv.knobRec.getStr(eArtikl.code));
                     setText(txt59, stv.knobRec.getStr(eArtikl.name));
-                    setIcon(btn21, stv.isJson(stv.gson.param, PKjson.typeOpen));
+                    setIcon(btn21, stv.isFinite(stv.gson.param, PKjson.typeOpen));
                     setText(txt25, eColor.find(stv.knobColor).getStr(eColor.name));
-                    setIcon(btn14, stv.isJson(stv.gson.param, PKjson.colorKnob));
+                    setIcon(btn14, stv.isFinite(stv.gson.param, PKjson.colorKnob));
                     setText(txt45, stv.loopRec.getStr(eArtikl.code));
                     setText(txt57, stv.loopRec.getStr(eArtikl.name));
-                    setIcon(btn15, stv.isJson(stv.gson.param, PKjson.artiklLoop));
+                    setIcon(btn15, stv.isFinite(stv.gson.param, PKjson.artiklLoop));
                     setText(txt47, eColor.find(stv.loopColor).getStr(eColor.name));
-                    setIcon(btn17, stv.isJson(stv.gson.param, PKjson.colorLoop));
+                    setIcon(btn17, stv.isFinite(stv.gson.param, PKjson.colorLoop));
                     setText(txt46, stv.lockRec.getStr(eArtikl.code));
                     setText(txt58, stv.lockRec.getStr(eArtikl.name));
-                    setIcon(btn23, stv.isJson(stv.gson.param, PKjson.artiklLock));
+                    setIcon(btn23, stv.isFinite(stv.gson.param, PKjson.artiklLock));
                     setText(txt48, eColor.find(stv.lockColor).getStr(eColor.name));
-                    setIcon(btn24, stv.isJson(stv.gson.param, PKjson.colorLock));
+                    setIcon(btn24, stv.isFinite(stv.gson.param, PKjson.colorLock));
                     List.of(txt54, txt55, txt60, txt56).forEach(e -> e.setText(null)); //москитка
                     Com5t mosquit = stv.childs.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
                     if (mosquit != null) {

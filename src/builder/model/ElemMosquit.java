@@ -27,7 +27,7 @@ public class ElemMosquit extends ElemSimple {
     @Override
     public void initArtikle() {
         //Артикл
-        if (isJson(gson.param, PKjson.artiklID)) {
+        if (isFinite(gson.param, PKjson.artiklID)) {
             this.artiklRec = eArtikl.find(gson.param.get(PKjson.artiklID).getAsInt(), false);
         } else {
             this.artiklRec = eArtikl.virtualRec();
@@ -35,14 +35,14 @@ public class ElemMosquit extends ElemSimple {
         this.artiklRecAn = artiklRec;
 
         //Цвет
-        if (isJson(gson.param, PKjson.colorID1)) {
+        if (isFinite(gson.param, PKjson.colorID1)) {
             this.colorID1 = gson.param.get(PKjson.colorID1).getAsInt();
         } else {
             this.colorID1 = -3;
         }
 
         //Состав москитки. ВНИМАЕИЕ! elementID подменён на sysprofRec
-        if (isJson(gson.param, PKjson.elementID)) {
+        if (isFinite(gson.param, PKjson.elementID)) {
             this.sysprofRec = eElement.find(gson.param.get(PKjson.elementID).getAsInt());
         } else {
             this.sysprofRec = eElement.up.newRecord(Query.SEL);

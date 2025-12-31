@@ -48,7 +48,7 @@ public class AreaSimple extends Com5t {
      * он сделан для тестирования с ps4. Делегируется детьми см. класс ElemFrame
      */
     public void initConstructiv(JsonObject param) {
-        if (isJson(param, PKjson.sysprofID)) {//профили через параметр
+        if (isFinite(param, PKjson.sysprofID)) {//профили через параметр
             sysprofRec = eSysprof.find3(param.get(PKjson.sysprofID).getAsInt());
         }
 //        else if(this.owner.id == 0) {
@@ -65,7 +65,7 @@ public class AreaSimple extends Com5t {
      */
     protected void initParametr(JsonObject param) {
         try {
-            if (isJson(param, null)) {
+            if (isFinite(param, null)) {
                 //Добавим к параметрам системы конструкции параметры конкретной конструкции
                 JsonArray ioknaParamArr = param.getAsJsonArray(PKjson.ioknaParam);
                 if (ioknaParamArr != null && !ioknaParamArr.isJsonNull() && ioknaParamArr.isJsonArray()) {

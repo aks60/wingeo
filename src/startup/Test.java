@@ -23,7 +23,6 @@ import dataset.Field;
 import dataset.Query;
 import dataset.Record;
 import domain.eColor;
-import domain.eSysuser;
 import enums.Type;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -53,6 +52,7 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.util.GeometricShapeFactory;
 import static dataset.Entity.printJSO;
+import domain.eElement;
 
 ///
 public class Test {
@@ -116,7 +116,7 @@ public class Test {
             //random();
             //geom();  
             
-            printJSO(eColor.up);
+            printJSO(eElement.up);
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);

@@ -32,11 +32,11 @@ public class ElemCross extends ElemSimple {
     @Override
     public void initArtikle() {
 
-        colorID1 = (isJson(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
-        colorID2 = (isJson(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
-        colorID3 = (isJson(gson.param, PKjson.colorID3)) ? gson.param.get(PKjson.colorID3).getAsInt() : winc.colorID3;
+        colorID1 = (isFinite(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
+        colorID2 = (isFinite(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
+        colorID3 = (isFinite(gson.param, PKjson.colorID3)) ? gson.param.get(PKjson.colorID3).getAsInt() : winc.colorID3;
 
-        if (isJson(gson.param, PKjson.sysprofID)) { //профили через параметр
+        if (isFinite(gson.param, PKjson.sysprofID)) { //профили через параметр
             sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());
         } else {
             sysprofRec = eSysprof.find4(winc.nuni, type.id2, UseSideTo.ANY);
@@ -84,7 +84,7 @@ public class ElemCross extends ElemSimple {
             Polygon areaEnvelope = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
             this.area = (Polygon) areaEnvelope.intersection(geoFalz); //полигон элемента конструкции
 
-            Test.init(geoShell, Com5t.gf.createLineString(coo));
+            //Test.init(geoShell, Com5t.gf.createLineString(coo));
         } catch (Exception e) {
             System.err.println("Ошибка:ElemCross.setLocation " + e);
         }

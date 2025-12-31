@@ -50,7 +50,7 @@ public class ElemGlass extends ElemSimple {
     @Override
     public void initArtikle() {
 
-        if (isJson(gson.param, PKjson.artglasID)) {
+        if (isFinite(gson.param, PKjson.artglasID)) {
             artiklRec = eArtikl.find(gson.param.get(PKjson.artglasID).getAsInt(), false);
         } else {
             Record sysreeRec = eSystree.find(winc.nuni); //по умолчанию стеклопакет
@@ -59,7 +59,7 @@ public class ElemGlass extends ElemSimple {
         artiklRecAn = artiklRec;
 
         //Цвет стекла
-        if (isJson(gson.param, PKjson.colorGlass)) {
+        if (isFinite(gson.param, PKjson.colorGlass)) {
             colorID1 = gson.param.get(PKjson.colorGlass).getAsInt();
             colorID2 = colorID1;
             colorID3 = colorID1;
@@ -72,20 +72,20 @@ public class ElemGlass extends ElemSimple {
         }
 
         //Раскладка
-        if (isJson(gson.param, PKjson.artiklRasc)) {
+        if (isFinite(gson.param, PKjson.artiklRasc)) {
             rascRec = eArtikl.find(gson.param.get(PKjson.artiklRasc).getAsInt(), false);
             //Текстура
-            if (isJson(gson.param, PKjson.colorRasc)) {
+            if (isFinite(gson.param, PKjson.colorRasc)) {
                 rascColor = eColor.find(gson.param.get(PKjson.colorRasc).getAsInt()).getInt(eColor.id);
             } else {
                 rascColor = eArtdet.find(rascRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk); //цвет по умолчанию
             }
             //Проёмы гориз.
-            if (isJson(gson.param, PKjson.horRasc)) {
+            if (isFinite(gson.param, PKjson.horRasc)) {
                 rascNumber[0] = gson.param.get(PKjson.horRasc).getAsInt();
             }
             //Проёмы вертик.
-            if (isJson(gson.param, PKjson.verRasc)) {
+            if (isFinite(gson.param, PKjson.verRasc)) {
                 rascNumber[1] = gson.param.get(PKjson.verRasc).getAsInt();
             }
         }
