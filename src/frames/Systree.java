@@ -20,7 +20,7 @@ import domain.eSystree;
 import enums.LayoutProd;
 import enums.LayoutKnob;
 import enums.TypeArt;
-import enums.UseSideTo;
+import enums.UseSide;
 import enums.TypeOpen2;
 import enums.UseArtiklTo;
 import enums.TypeUse;
@@ -203,7 +203,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
                 if (field == eSysprof.use_side && val != null) {
-                    UseSideTo en = UseSideTo.get(Integer.valueOf(val.toString()));
+                    UseSide en = UseSide.get(Integer.valueOf(val.toString()));
                     if (en != null) {
                         return en.text();
                     }
@@ -630,7 +630,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         UGui.buttonCellEditor(tab2, 2).addActionListener(event -> {
             new DicEnums(this, (record) -> {
                 UGui.cellParamEnum(record, tab2, eSysprof.use_side, tab2, tab3, tab4);
-            }, UseSideTo.values());
+            }, UseSide.values());
         });
 
         UGui.buttonCellEditor(tab2, 3).addActionListener(event -> {
@@ -3878,9 +3878,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     if (winNode.com5t().type.id2 == sysprofRec.getInt(eSysprof.use_type)) {
                         int useSideId = sysprofRec.getInt(eSysprof.use_side);
                         if (useSideId == layout.id
-                                || ((layout == Layout.BOT || layout == Layout.TOP) && useSideId == UseSideTo.HORIZ.id)
-                                || ((layout == Layout.RIG || layout == Layout.LEF) && useSideId == UseSideTo.VERT.id)
-                                || useSideId == UseSideTo.ANY.id || useSideId == UseSideTo.MANUAL.id) {
+                                || ((layout == Layout.BOT || layout == Layout.TOP) && useSideId == UseSide.HORIZ.id)
+                                || ((layout == Layout.RIG || layout == Layout.LEF) && useSideId == UseSide.VERT.id)
+                                || useSideId == UseSide.ANY.id || useSideId == UseSide.MANUAL.id) {
 
                             qSysprofFilter.add(sysprofRec);
                             qSysprofFilter.table(eArtikl.up).add(qSysprof.table(eArtikl.up).get(index));

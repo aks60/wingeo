@@ -11,7 +11,7 @@ import enums.PKjson;
 import enums.Type;
 import enums.TypeArt;
 import enums.TypeJoin;
-import enums.UseSideTo;
+import enums.UseSide;
 import java.awt.Shape;
 import java.util.List;
 import org.locationtech.jts.algorithm.PointLocation;
@@ -39,7 +39,7 @@ public class ElemCross extends ElemSimple {
         if (isFinite(gson.param, PKjson.sysprofID)) { //профили через параметр
             sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());
         } else {
-            sysprofRec = eSysprof.find4(winc.nuni, type.id2, UseSideTo.ANY);
+            sysprofRec = eSysprof.find4(winc.nuni, type.id2, UseSide.ANY);
         }
         artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
         artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true);

@@ -58,7 +58,7 @@ import enums.LayoutKnob;
 import enums.PKjson;
 import enums.TypeGrup;
 import enums.TypeOpen1;
-import enums.UseSideTo;
+import enums.UseSide;
 import frames.dialog.DicArtikl;
 import frames.dialog.DicArtikl2;
 import frames.dialog.DicColor;
@@ -3192,8 +3192,8 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     Record sysprofRec = qSysprof.get(index);
                     if (winNode.com5t().type.id2 == sysprofRec.getInt(eSysprof.use_type)) {
                         if (sysprofRec.getInt(eSysprof.use_side) == winNode.com5t().layout().id
-                                || sysprofRec.getInt(eSysprof.use_side) == UseSideTo.ANY.id
-                                || sysprofRec.getInt(eSysprof.use_side) == UseSideTo.MANUAL.id) {
+                                || sysprofRec.getInt(eSysprof.use_side) == UseSide.ANY.id
+                                || sysprofRec.getInt(eSysprof.use_side) == UseSide.MANUAL.id) {
                             qSysprof2.add(sysprofRec);
                             qSysprof2.table(eArtikl.up).add(qSysprof.table(eArtikl.up).get(index));
                         }

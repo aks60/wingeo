@@ -52,7 +52,7 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.util.GeometricShapeFactory;
 import static dataset.Entity.printJSO;
-import domain.eElement;
+import domain.eSyssize;
 
 ///
 public class Test {
@@ -116,7 +116,7 @@ public class Test {
             //random();
             //geom();  
             
-            printJSO(eElement.up);
+            printJSO(eSyssize.up);
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);

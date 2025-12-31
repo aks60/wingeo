@@ -21,7 +21,7 @@ import enums.Type;
 import enums.TypeJoin;
 import enums.TypeOpen1;
 import enums.TypeOpen2;
-import enums.UseSideTo;
+import enums.UseSide;
 import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +61,7 @@ public class AreaStvorka extends AreaSimple {
         initArtikle(gson.param);
     }
 
-    public void addStvSide() {
+    public void initStvorka() {
         if (this.frames.isEmpty()) {
             //owner.area - если нет полигона створки в гл.окне 
             //this.area  - получатется при распиле owner.area импостом
@@ -224,7 +224,7 @@ public class AreaStvorka extends AreaSimple {
                     LineSegment lineSegm = UGeo.getSegment(area, ind);
                     h = lineSegm.pointAlong((this.knobHeight / lineSegm.getLength())); //высота ручки на створке
                 }
-                Record sysprofRec = eSysprof.find5(winc.nuni, stvside.type.id2, UseSideTo.ANY, UseSideTo.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
+                Record sysprofRec = eSysprof.find5(winc.nuni, stvside.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
                 Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
                 double dx = artiklRec.getDbl(eArtikl.height) / 2;
                 if (typeOpen == TypeOpen1.UPPER) {

@@ -1,6 +1,6 @@
 package enums;
 
-import static enums.UseSideTo.values;
+import static enums.UseSide.values;
 import static enums.TypeOpen1.values;
 
 //Стороны конструкции. Против час. стрелки.

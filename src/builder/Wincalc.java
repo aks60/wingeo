@@ -217,7 +217,7 @@ public class Wincalc {
             }
 
             //Создание створки
-            UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).addStvSide());
+            UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).initStvorka());
             UCom.filter(listArea, Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
             UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
             UCom.filter(listElem, Type.STV_SIDE).forEach(e -> e.setLocation());
