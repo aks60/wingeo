@@ -58,7 +58,7 @@ public class AreaStvorka extends AreaSimple {
 
     public AreaStvorka(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
-        initArtikle(gson.param);
+        this.initArtikle(gson.param);
     }
 
     public void initStvorka() {
