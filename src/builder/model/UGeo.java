@@ -228,13 +228,13 @@ public class UGeo {
         }
     }
 
-    public static Polygon bufferGeometry(Geometry geoShell, ArrayList<? extends Com5t> list, double amend, int opt) {
+    public static Polygon bufferGeometry(Geometry geoShell, ArrayList<? extends Com5t> listElem, double amend, int opt) {
 
         Coordinate[] cooShell = geoShell.getCoordinates();
         Map<Double, Double> hmDist = new HashMap();
         try {
             //Смещения сегментов
-            for (Com5t el : list) {
+            for (Com5t el : listElem) {
                 dataset.Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
                 if (opt == 0) {
                     hmDist.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);

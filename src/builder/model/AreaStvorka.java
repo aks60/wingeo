@@ -69,7 +69,7 @@ public class AreaStvorka extends AreaSimple {
 
             //Полигон створки с учётом нахлёста 
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            Polygon stvShell = buffer(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
+            Polygon stvShell = UGeo.bufferGeometry(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
             Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
             for (int i = 0; i < coo.length - 1; i++) {
 
@@ -175,7 +175,7 @@ public class AreaStvorka extends AreaSimple {
         try {
             //Полигон створки с учётом нахлёста 
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            Polygon stvShell = buffer(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл.
+            Polygon stvShell = UGeo.bufferGeometry(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл.
             Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
             for (int i = 0; i < coo.length - 1; i++) {
                 ElemSimple elem = this.frames.get(i);
@@ -184,8 +184,8 @@ public class AreaStvorka extends AreaSimple {
             }
             coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
 
-            Polygon stvInner = buffer(stvShell, this.frames, 0, 0);
-            Polygon stvFalz = buffer(stvShell, this.frames, 0, 1);
+            Polygon stvInner = UGeo.bufferGeometry(stvShell, this.frames, 0, 0);
+            Polygon stvFalz = UGeo.bufferGeometry(stvShell, this.frames, 0, 1);
             this.area = gf.createMultiPolygon(new Polygon[]{stvShell, stvInner, stvFalz, (Polygon) frameBox});
 
             //Высота ручки, линии открывания
