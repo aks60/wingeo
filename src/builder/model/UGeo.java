@@ -231,21 +231,21 @@ public class UGeo {
     public static Polygon bufferGeometry(Geometry geoShell, ArrayList<? extends Com5t> list, double amend, int opt) {
 
         Coordinate[] cooShell = geoShell.getCoordinates();
-        Map<Double, Double> hm = new HashMap();
+        Map<Double, Double> hmDist = new HashMap();
         try {
             //Смещения сегментов
             for (Com5t el : list) {
                 dataset.Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
                 if (opt == 0) {
-                    hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
+                    hmDist.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
                 } else if (opt == 1) {
-                    hm.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + amend);
+                    hmDist.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + amend);
                 }
             }
             if (cooShell.length > Com5t.MAXSIDE) {
                 double id = cooShell[geoShell.getCoordinates().length / 2].z;
-                Polygon polyCurv = bufferCurve(geoShell, hm.get(id));
-                Polygon polyRect = bufferRectangl(geoShell, hm);
+                Polygon polyCurv = bufferCurve(geoShell, hmDist.get(id));
+                Polygon polyRect = bufferRectangl(geoShell, hmDist);
                 Polygon polyArch = (Polygon) polyRect.union(polyCurv);
 
                 LinearRing ring = polyArch.getInteriorRingN(0);
@@ -256,7 +256,7 @@ public class UGeo {
                 return poly;
 
             } else {
-                Polygon poly1 = bufferPolygon(geoShell, hm);
+                Polygon poly1 = bufferPolygon(geoShell, hmDist);
                 return poly1;
             }
             //Test.init(poly1, poly2); 
