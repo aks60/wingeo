@@ -134,11 +134,6 @@ public class Com5t {
         winc.gc2d.draw(shape3);
     }
 
-    public static Polygon buffer(Geometry poly, ArrayList<? extends Com5t> list, double amend, int op) {
-        //return VBuffer.buffer(poly, list, amend, op);
-        return UGeo.bufferGeometry(poly, list, amend, op);
-    }
-
     public boolean equals(Object obj) {
         return (this.id == ((Com5t) obj).id);
     }
