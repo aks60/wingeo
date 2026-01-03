@@ -508,8 +508,6 @@ public class UGeo {
                 return i;
             }
         }
-//        }
-        //throw new Exception("Ошибка:UGeo.getIndex()");
         System.err.println("Ошибка:UGeo.getIndex()");
         return -1;
     }
