@@ -558,7 +558,7 @@ public class Test {
         list.addAll(List.of(arr));
 
         Polygon geoShell = UGeo.newPolygon(list);
-        Polygon geoFalz = Com5t.buffer(geoShell, frames, 0, 1);
+        Polygon geoFalz = UGeo.bufferGeometry(geoShell, frames, 0, 1);
 
         Coordinate[] cooShell = geoShell.getCoordinates();
         Coordinate[] cooFalz = geoFalz.getCoordinates();
@@ -605,7 +605,7 @@ public class Test {
         hm.put(4.0, 63.0 - 21.0);
 
         Polygon geoShell = UGeo.newPolygon(list);
-        Polygon geo3 = Com5t.buffer(geoShell, frames, 0, 0);
+        Polygon geo3 = UGeo.bufferGeometry(geoShell, frames, 0, 0);
 
         //this.mlin = geoShell;
         mpol(geo3);
@@ -637,7 +637,7 @@ public class Test {
             LineString geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
             //Polygon geo2 = VBuffer.buffer(geo1, frames, 0, 0);
             //Polygon geo4 = UGeo.bufferCurve(geo1, 40.0);
-            Polygon geo4 = Com5t.buffer(geo1, frames, 0, 0);
+            Polygon geo4 = UGeo.bufferGeometry(geo1, frames, 0, 0);
 
             //Coordinate coo1[] = geo1.getCoordinates();
             //Coordinate coo2[] = geo2.getCoordinates();

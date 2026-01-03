@@ -25,8 +25,8 @@ public class AreaTrapeze extends AreaSimple {
 
             //Àrea ðàìû
             Polygon geoShell = gf.createPolygon(coo.toArray(new Coordinate[0]));
-            Polygon geoInner = Com5t.buffer(geoShell, winc.listElem, 0, 0);
-            Polygon geoFalz = Com5t.buffer(geoShell, winc.listElem, 0, 1);
+            Polygon geoInner = UGeo.bufferGeometry(geoShell, winc.listElem, 0, 0);
+            Polygon geoFalz = UGeo.bufferGeometry(geoShell, winc.listElem, 0, 1);
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});            
 
             //Test.init(this.area);
