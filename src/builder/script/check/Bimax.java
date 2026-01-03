@@ -487,7 +487,7 @@ public final class Bimax {
             rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 400.0, 1440.0, 400.0));
             GsonElem area = rootGson.addArea(new GsonElem(Type.AREA));
 
-            area.addArea(new GsonElem(Type.STVORKA, "{typeOpen:1, sysfurnID:1634, colorKnob: 1010}")).addElem(new GsonElem(Type.GLASS));
+            area.addArea(new GsonElem(Type.STVORKA, "{typeOpen:1, sysfurnID:1634, colorHand: 1010}")).addElem(new GsonElem(Type.GLASS));
             area.addElem(new GsonElem(Type.IMPOST, 720.0, 400.0, 720.0, 1700.0))
                     .addArea(new GsonElem(Type.STVORKA, "{typeOpen:4, sysfurnID:1633}")).addElem(new GsonElem(Type.GLASS));
             

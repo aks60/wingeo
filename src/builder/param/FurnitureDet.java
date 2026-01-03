@@ -16,7 +16,7 @@ import builder.model.ElemSimple;
 import common.UCom;
 import domain.eColor;
 import domain.eGroups;
-import enums.LayoutKnob;
+import enums.LayoutHand;
 import enums.Type;
 import java.util.Map;
 
@@ -89,7 +89,7 @@ public class FurnitureDet extends Par5s {
                     break;
                 case 24006:  //Установить текстуру
                     if ("по текстуре ручки".equals(rec.getStr(TEXT))) {
-                        if (elemStv.knobColor != detailRec.getInt(eFurndet.color_fk)) {
+                        if (elemStv.handColor != detailRec.getInt(eFurndet.color_fk)) {
                             return false;
                         }
                     } else if ("по текстуре подвеса".equals(rec.getStr(TEXT))) {
@@ -105,7 +105,7 @@ public class FurnitureDet extends Par5s {
                 case 24007: //Коды текстуры ручки 
                 case 25007: //Коды текстуры ручки                  
                 {
-                    String name = eColor.find(((AreaStvorka) areaStv).knobColor).getStr(eColor.name);
+                    String name = eColor.find(((AreaStvorka) areaStv).handColor).getStr(eColor.name);
                     if (name.equals(rec.getStr(TEXT)) == false) {
                         return false;
                     }
@@ -228,14 +228,14 @@ public class FurnitureDet extends Par5s {
                 break;
                 case 24064: //Ограничение высоты ручки, мм 
                 case 25064: //Ограничение высоты ручки, мм 
-                    if (elemStv.knobHeight > rec.getInt(TEXT)) {
+                    if (elemStv.handHeight > rec.getInt(TEXT)) {
                         return false;
                     }
                     break;
                 case 24065: //Максимальная высота ручки, мм 
                 {
                     double handl_max = UCom.getDbl(rec.getStr(TEXT));
-                    if (handl_max < elemStv.knobHeight) {
+                    if (handl_max < elemStv.handHeight) {
                         return false;
                     }
                 }
@@ -260,13 +260,13 @@ public class FurnitureDet extends Par5s {
                     break;
                 case 24070: //Если высота ручки "по середине", "константная", "не константная", "установлена"
                 case 25070: //Если высота ручки
-                    if (LayoutKnob.CONST != elemStv.knobLayout && rec.getStr(TEXT).equals("константная")) {
+                    if (LayoutHand.CONST != elemStv.handLayout && rec.getStr(TEXT).equals("константная")) {
                         return false;
-                    } else if (LayoutKnob.CONST == elemStv.knobLayout && rec.getStr(TEXT).equals("не константная")) {
+                    } else if (LayoutHand.CONST == elemStv.handLayout && rec.getStr(TEXT).equals("не константная")) {
                         return false;
-                    } else if (LayoutKnob.MIDL != elemStv.knobLayout && rec.getStr(TEXT).equals("по середине")) {
+                    } else if (LayoutHand.MIDL != elemStv.handLayout && rec.getStr(TEXT).equals("по середине")) {
                         return false;
-                    } else if (LayoutKnob.VAR != elemStv.knobLayout && rec.getStr(TEXT).equals("установлена")) {
+                    } else if (LayoutHand.VAR != elemStv.handLayout && rec.getStr(TEXT).equals("установлена")) {
                         return false;
                     }
                     break;

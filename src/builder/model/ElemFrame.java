@@ -189,7 +189,7 @@ public class ElemFrame extends ElemSimple {
                     AreaStvorka elemStv = ((AreaStvorka) owner);
                     AreaSimple areaStv = ((AreaSimple) owner);
                     if ("по текстуре ручки".equals(spcAdd.getParam("null", 24006))) {
-                        colorID = UColor.colorFromArtikl(spcAdd.artiklRec.getInt(eArtikl.id), 1, elemStv.knobColor);
+                        colorID = UColor.colorFromArtikl(spcAdd.artiklRec.getInt(eArtikl.id), 1, elemStv.handColor);
 
                     } else if ("по текстуре подвеса".equals(spcAdd.getParam("null", 24006))) {
                         for (ElemSimple elem : areaStv.frames) {
@@ -219,7 +219,7 @@ public class ElemFrame extends ElemSimple {
                 if (spcAdd.getParam("null", 24072, 25072).equals("null") == false) {
                     if (builder.making.TFurniture.determOfSide(owner) == this) {
                         AreaStvorka stv = (AreaStvorka) owner;
-                        stv.knobHeight = UCom.getDbl(spcAdd.getParam(stv.knobHeight, 24072, 25072));
+                        stv.handHeight = UCom.getDbl(spcAdd.getParam(stv.handHeight, 24072, 25072));
                     }
                 }
                 //”корочение от
@@ -229,11 +229,11 @@ public class ElemFrame extends ElemSimple {
 
                     } else if ("высоты ручки".equals(spcAdd.getParam("null", 25013))) {
                         AreaStvorka stv = (AreaStvorka) owner;
-                        spcAdd.width = stv.knobHeight - UCom.getDbl(spcAdd.getParam(0, 25030)); //укорочение, мм
+                        spcAdd.width = stv.handHeight - UCom.getDbl(spcAdd.getParam(0, 25030)); //укорочение, мм
 
                     } else if ("сторона - выс. ручки".equals(spcAdd.getParam("null", 25013))) {
                         AreaStvorka stv = (AreaStvorka) owner;
-                        spcAdd.width = lengthArc - stv.knobHeight - UCom.getDbl(spcAdd.getParam(0, 25030)); //укорочение, мм                        
+                        spcAdd.width = lengthArc - stv.handHeight - UCom.getDbl(spcAdd.getParam(0, 25030)); //укорочение, мм                        
 
                     } else if ("половины стороны".equals(spcAdd.getParam("null", 25013))) {
                         spcAdd.width = (lengthArc / 2) - UCom.getDbl(spcAdd.getParam(0, 25030)); //укорочение, мм 

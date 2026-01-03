@@ -2,7 +2,7 @@ package enums;
 
 import static enums.TypeOpen2.values;
 
-public enum LayoutKnob implements Enam {
+public enum LayoutHand implements Enam {
 
     MIDL(1, "По середине"),
     CONST(2, "Константная"),
@@ -12,7 +12,7 @@ public enum LayoutKnob implements Enam {
     public int id = 0;
     public String name = "";
 
-    LayoutKnob(int value, String name) {
+    LayoutHand(int value, String name) {
         this.id = value;
         this.name = name;
     }

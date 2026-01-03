@@ -12,7 +12,7 @@ import builder.model.ElemSimple;
 import builder.model.UGeo;
 import common.UCom;
 import domain.eSystree;
-import enums.LayoutKnob;
+import enums.LayoutHand;
 import enums.Type;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
@@ -94,7 +94,7 @@ public class FurnitureVar extends Par5s {
                 case 21011: //Ограничение длины ручка константа, мм 
                 {
                     AreaStvorka stv = (AreaStvorka) elem5e.owner;
-                    if (stv.knobLayout == LayoutKnob.CONST) {
+                    if (stv.handLayout == LayoutHand.CONST) {
                         if (UPar.is_21010_21011_21012_21013(rec.getStr(TEXT), elem5e) == false) {
                             return false;
                         }
@@ -104,7 +104,7 @@ public class FurnitureVar extends Par5s {
                 case 21012: //Ограничение длины ручка вариацион, мм 
                 {
                     AreaStvorka stv = (AreaStvorka) elem5e.owner;
-                    if (stv.knobLayout == LayoutKnob.VAR) {
+                    if (stv.handLayout == LayoutHand.VAR) {
                         if (UPar.is_21010_21011_21012_21013(rec.getStr(TEXT), elem5e) == false) {
                             return false;
                         }
@@ -114,7 +114,7 @@ public class FurnitureVar extends Par5s {
                 case 21013: //Ограничение длины ручка по середине, мм 
                 {
                     AreaStvorka stv = (AreaStvorka) elem5e.owner;
-                    if (stv.knobLayout == LayoutKnob.MIDL) {
+                    if (stv.handLayout == LayoutHand.MIDL) {
                         if (UPar.is_21010_21011_21012_21013(rec.getStr(TEXT), elem5e) == false) {
                             return false;
                         }
@@ -132,9 +132,9 @@ public class FurnitureVar extends Par5s {
                 case 21037: //Диапазон высоты вариационной ручки, мм 
                 {
                     AreaStvorka stv = (AreaStvorka) elem5e.owner;
-                    if (stv.knobLayout == LayoutKnob.VAR) {
+                    if (stv.handLayout == LayoutHand.VAR) {
                         String[] arr = rec.getStr(TEXT).split("-");
-                        if (UCom.getInt(arr[0]) > stv.knobHeight || UCom.getInt(arr[1]) < stv.knobHeight) {
+                        if (UCom.getInt(arr[0]) > stv.handHeight || UCom.getInt(arr[1]) < stv.handHeight) {
                             return false;
                         }
                     }

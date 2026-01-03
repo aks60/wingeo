@@ -63,7 +63,7 @@ public enum TypeOpen1 implements Enam {
         }
     }
 
-    public static ElemSimple getKnob(AreaStvorka areaStv, TypeOpen1 typeOpen) {
+    public static ElemSimple getHand(AreaStvorka areaStv, TypeOpen1 typeOpen) {
         if (List.of(LEFT, LEFTUP, LEFMOV).contains(typeOpen)) {
             return UCom.layout(areaStv.frames, Layout.RIG);
         } else if (List.of(RIGH, RIGHUP, RIGMOV).contains(typeOpen)) {

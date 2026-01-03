@@ -10,12 +10,12 @@ public class PKjson {
     public final static String elementID = "elementID"; //ID составов
     public final static String parentID = "parentID"; //ID родителя
 
-    public final static String artiklKnob = "artiklKnob"; //Ручка на створке
+    public final static String artiklHand = "artiklHand"; //Ручка на створке
     public final static String artiklLoop = "artiklLoop"; //Подвес на створке
     public final static String artiklLock = "artiklLock"; //Замок на створке
     public final static String artiklRasc = "artiklRasc"; //Раскладка
     
-    public final static String colorKnob = "colorKnob"; //Цвет ручки створки 
+    public final static String colorHand = "colorHand"; //Цвет ручки створки 
     public final static String colorLoop = "colorLoop"; //Цвет подвеса
     public final static String colorLock = "colorLock"; //Цвет замка
     public final static String colorGlass = "colorGlass"; //Цвет стекла
@@ -26,8 +26,8 @@ public class PKjson {
     public final static String colorID3 = "colorID3"; //Текстура   
     
     public final static String typeOpen = "typeOpen"; //Тип открывания    
-    public final static String positionKnob = "positionKnob"; //Положение ручки на створке      
-    public final static String heightKnob = "heightKnob"; //Высота ручки на створке 
+    public final static String positionHand = "positionHand"; //Положение ручки на створке      
+    public final static String heightHand = "heightHand"; //Высота ручки на створке 
     
     public final static String stvorkaBot = "stvorkaBot"; //Элемент    
     public final static String stvorkaRig = "stvorkaRig"; //Элемент    

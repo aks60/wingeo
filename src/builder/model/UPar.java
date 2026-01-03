@@ -28,11 +28,11 @@ public class UPar {
 
             } else if (list.get(1).equals(ps)) {
                 AreaStvorka stv = (AreaStvorka) spcAdd.elem5e.owner;
-                return stv.knobHeight - dx;
+                return stv.handHeight - dx;
 
             } else if (list.get(2).equals(ps)) {
                 AreaStvorka stv = (AreaStvorka) spcAdd.elem5e.owner;
-                return spcRec.width - stv.knobHeight - dx;
+                return spcRec.width - stv.handHeight - dx;
 
             } else if (list.get(3).equals(ps)) {
                 return spcRec.width / 2 - dx;

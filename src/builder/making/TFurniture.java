@@ -235,16 +235,16 @@ public class TFurniture extends Cal5e {
         if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2) {
             //Ручка
             if (spcAdd.artiklRec.getInt(eArtikl.level2) == 11) {
-                if (stv.isFinite(stv.gson.param, PKjson.artiklKnob)) {
-                    spcAdd.artiklRec(stv.knobRec); //выбр. вручную
+                if (stv.isFinite(stv.gson.param, PKjson.artiklHand)) {
+                    spcAdd.artiklRec(stv.handRec); //выбр. вручную
                 } else {
-                    stv.knobRec = spcAdd.artiklRec; //из детализации авто
+                    stv.handRec = spcAdd.artiklRec; //из детализации авто
                 }
                 //Цвет
-                spcAdd.color(stv.knobColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
-                if (stv.isFinite(stv.gson.param, PKjson.colorKnob) == false) {
+                spcAdd.color(stv.handColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
+                if (stv.isFinite(stv.gson.param, PKjson.colorHand) == false) {
                     if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
-                        stv.knobColor = spcAdd.colorID1;
+                        stv.handColor = spcAdd.colorID1;
                     }
                 }
                 //Подвес
