@@ -19,6 +19,7 @@ import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
 import startup.Test;
 
@@ -67,6 +68,12 @@ public class ElemCross extends ElemSimple {
             Coordinate coo[] = {new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id)};
             LineSegment lineCut = new LineSegment(new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id));
             Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), UGeo.normalizeSegm(lineCut));
+            
+//            LineString lineTest = gf.createLineString(new Coordinate[] {new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id)});
+//            Geometry geoTest = UGeo.split2Polygon(geoShell.copy(), lineTest);
+//            owner.childs.get(0).area = (Polygon) geoTest.getGeometryN(0);
+//            owner.childs.get(2).area = (Polygon) geoTest.getGeometryN(1);           
+            
             owner.childs.get(0).area = (Polygon) geoSplit[1];
             owner.childs.get(2).area = (Polygon) geoSplit[2];
 
