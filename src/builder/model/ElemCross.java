@@ -70,7 +70,14 @@ public class ElemCross extends ElemSimple {
             Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), UGeo.normalizeSegm(lineCut));
             
 //            LineString lineTest = gf.createLineString(new Coordinate[] {new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id)});
+//            lineTest.normalize();
 //            Geometry geoTest = UGeo.split2Polygon(geoShell.copy(), lineTest);
+//            geoTest.getGeometryN(0).normalize();
+//            geoTest.getGeometryN(1).normalize();
+//            UGeo.PRINT(geoSplit[1]);
+//            UGeo.PRINT(geoSplit[2]);
+//            UGeo.PRINT(geoTest.getGeometryN(0));
+//            UGeo.PRINT(geoTest.getGeometryN(1));
 //            owner.childs.get(0).area = (Polygon) geoTest.getGeometryN(0);
 //            owner.childs.get(2).area = (Polygon) geoTest.getGeometryN(1);           
             
