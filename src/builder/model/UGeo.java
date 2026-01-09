@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -27,8 +26,6 @@ import java.util.Set;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.util.LineStringExtracter;
-import org.locationtech.jts.io.Ordinate;
-import org.locationtech.jts.io.WKTWriter;
 import org.locationtech.jts.operation.polygonize.Polygonizer;
 
 /**
@@ -238,13 +235,23 @@ public class UGeo {
     public static List<Geometry> split2Polygon(Polygon geom, LineString edge) {
         ArrayList<Geometry> arrList = new ArrayList<Geometry>();
         try {
-            Geometry union = edge.union(geom.getExteriorRing());
+            Coordinate[] coo = geom.getCoordinates();
+            LinearRing linearRing = geom.getExteriorRing();
+            Geometry union = edge.union(linearRing);
             Polygonizer polygonizer = new Polygonizer();
             polygonizer.add(union);
             Collection<Polygon> geoms = polygonizer.getPolygons();
             geoms.stream().forEach(el -> arrList.add(el));
-            Geometry lineImp = arrList.get(0).intersection(arrList.get(1));
-            //lineImp.getCoordinates()[1].z = 4;
+            LineString lineImp = (LineString) arrList.get(0).intersection(arrList.get(1));
+
+            HashMap<Double, LineSegment> hm = new HashMap();          
+            for (int i = 1; i < coo.length; ++i) {
+                LineSegment lineSeg = new LineSegment(coo[i - 1], coo[i]);
+                Coordinate cross = lineSeg.intersection(getSegment(lineImp));
+                if(cross != null) {
+                   hm.put(lineImp.getCoordinateN(0).z, lineSeg);
+                }
+            }
             arrList.stream().forEach(el -> el.normalize());
             arrList.add(lineImp);
 
