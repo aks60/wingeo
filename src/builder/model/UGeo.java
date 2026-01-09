@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -26,6 +27,8 @@ import java.util.Set;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.util.LineStringExtracter;
+import org.locationtech.jts.io.Ordinate;
+import org.locationtech.jts.io.WKTWriter;
 import org.locationtech.jts.operation.polygonize.Polygonizer;
 
 /**
@@ -230,6 +233,25 @@ public class UGeo {
             System.err.println("Ошибка:UGeo.splitPolygon()" + e);
             return null;
         }
+    }
+
+    public static List<Geometry> split2Polygon(Polygon geom, LineString edge) {
+        ArrayList<Geometry> arrList = new ArrayList<Geometry>();
+        try {
+            Geometry union = edge.union(geom.getExteriorRing());
+            Polygonizer polygonizer = new Polygonizer();
+            polygonizer.add(union);
+            Collection<Polygon> geoms = polygonizer.getPolygons();
+            geoms.stream().forEach(el -> arrList.add(el));
+            Geometry lineImp = arrList.get(0).intersection(arrList.get(1));
+            //lineImp.getCoordinates()[1].z = 4;
+            arrList.stream().forEach(el -> el.normalize());
+            arrList.add(lineImp);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:UGeo.split2Polygon()" + e);
+        }
+        return arrList;
     }
 
     public static Polygon bufferGeometry(Geometry geoShell, ArrayList<? extends Com5t> listElem, double amend, int opt) {
@@ -612,7 +634,7 @@ public class UGeo {
         return geometry.getFactory().createGeometryCollection(polyArray);
     }
 
-    public static Geometry split2Polygon(Geometry poly, Geometry line) {
+    public static Geometry split3Polygon(Geometry poly, Geometry line) {
         Geometry nodedLinework = poly.getBoundary().union(line);
         Geometry polys = polygonize(nodedLinework);
 
