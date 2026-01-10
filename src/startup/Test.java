@@ -2,7 +2,6 @@ package startup;
 
 import builder.model.Com5t;
 import builder.model.UGeo;
-import builder.model.VBuffer;
 import builder.param.check.ElementTest;
 import builder.param.check.FillingTest;
 import builder.param.check.FurnitureTest;
@@ -51,8 +50,6 @@ import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.util.GeometricShapeFactory;
-import static dataset.Entity.printJSO;
-import domain.eSyssize;
 
 ///
 public class Test {
@@ -107,7 +104,7 @@ public class Test {
             //clearDB();
             //PSConvert.exec();
             //frame();
-            //wincalc("min");
+            wincalc("min");
             //param();
             //query();
             //json();
@@ -704,10 +701,10 @@ public class Test {
         double dist[] = {32, 32, 68, 68, 32, 68, 68};
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
         //VariableBuffer vb = new  VariableBuffer(geo1, distance);
-        Geometry geo2 = VBuffer.buffer(geo1, dist);
+        //Geometry geo2 = VBuffer.buffer(geo1, dist);
 
         //this.mpol = geo1;
-        this.mpol = geo2;
+        //this.mpol = geo2;
     }
 
     private void draw3() {
