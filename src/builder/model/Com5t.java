@@ -88,7 +88,7 @@ public class Com5t {
         if (this.h() == null) {
             return new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).getLength();
         } else {
-            return UGeo.lengthCurve(owner.area.getGeometryN(0), this.id);
+            return UGeo.lengthCurve(winc, owner.area.getGeometryN(0), this.id);
         }
     }
 

@@ -1,5 +1,6 @@
 package builder.model;
 
+import builder.Wincalc;
 import builder.making.TRecord;
 import static builder.model.Com5t.gf;
 import common.UCom;
@@ -111,19 +112,13 @@ public class UGeo {
         return gf.createPolygon(listFrame.toArray(new Coordinate[0])); //полигон рамы арки
     }
 
-    public static double lengthCurve(Geometry geoArea, double id) {
-//        Test.init(area);
-//        List<Coordinate> all = List.of(area.getCoordinates());
-//        List<Coordinate> list = all.stream().filter(c -> c.z == id).collect(toList());
-//        list.add(all.get(0));
-//        LineString line = gf.createLineString(list.toArray(new Coordinate[0]));
-//        return line.getLength();
+    public static double lengthCurve(Wincalc winc, Geometry geoArea, double id) {
 
-        Coordinate[] cooArea = geoArea.getCoordinates();
+        Coordinate[] coo = geoArea.getCoordinates();
         double width = 0;
-        for (int j = 1; j < cooArea.length; j++) {
-            if (cooArea[j - 1].z == id) {
-                width += cooArea[j - 1].distance(cooArea[j]);
+        for (int j = 1; j < coo.length; j++) {
+            if (UGeo.getID(winc, coo[j - 1]) == id) {
+                width += coo[j - 1].distance(coo[j]);
             }
         }
         return width;
@@ -232,7 +227,7 @@ public class UGeo {
         }
     }
 
-    public static List<Geometry> split2Polygon(Polygon geom, LineString edge) {
+    public static List<Geometry> split2Polygon(Wincalc winc, Polygon geom, LineString edge) {
         LineSegment lineSeg = new LineSegment();
         ArrayList<Geometry> outList = new ArrayList<Geometry>();
         try {
@@ -258,10 +253,10 @@ public class UGeo {
             }
             //Востонавление z координаты
             int trigger = 0;
-            Coordinate coo1[] = outList.get(0).getCoordinates();            
+            Coordinate coo1[] = outList.get(0).getCoordinates();
             for (int i = 0; i < coo1.length - 1; ++i) {
                 if (lineImp.getCoordinateN(0).z == coo1[i].z) {
-                    System.out.println("TRIGGER1");                    
+                    System.out.println("TRIGGER1");
                     if (trigger == 1) {
                         coo1[i].z = crosList.get(0).z;
                     }
@@ -271,7 +266,7 @@ public class UGeo {
             trigger = 0;
             Coordinate coo2[] = outList.get(1).getCoordinates();
             for (int i = 0; i < coo2.length - 1; ++i) {
-                if (lineImp.getCoordinateN(0).z == coo2[i].z) {                    
+                if (lineImp.getCoordinateN(0).z == coo2[i].z) {
                     if (trigger == 1) {
                         coo2[i].z = crosList.get(1).z;
                     }
@@ -582,6 +577,33 @@ public class UGeo {
         return index;
     }
 
+    public static ElemSimple getES(Wincalc winc, double x, double y) {
+        for (ElemSimple el : winc.listElem) {
+            if (el.x1() == x && el.y1() == y) {
+                return el;
+            }
+        }
+        throw new IllegalArgumentException("Возврат не может быть null");
+    }
+    
+    public static double getID(Wincalc winc, double x, double y) {
+        for (ElemSimple el : winc.listElem) {
+            if (el.x1() == x && el.y1() == y) {
+                return el.id;
+            }
+        }
+        throw new IllegalArgumentException("Возврат не может быть null");
+    }    
+    
+    public static double getID(Wincalc winc, Coordinate co) {
+        for (ElemSimple el : winc.listElem) {
+            if (el.x1() == co.x && el.y1() == co.y) {
+                return el.id;
+            }
+        }
+        throw new IllegalArgumentException("Возврат не может быть null");
+    }    
+
     public static LineSegment normalizeSegm(LineSegment segm) {
         segm.normalize();
         return segm;
@@ -625,7 +647,7 @@ public class UGeo {
         }
         System.out.println(list);
     }
-    
+
     public static void PRINT(Map<Integer, Coordinate> map) {
         List<String> list = new ArrayList<String>();
         for (Map.Entry<Integer, Coordinate> coo : map.entrySet()) {

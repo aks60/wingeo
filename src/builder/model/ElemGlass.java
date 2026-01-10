@@ -159,10 +159,10 @@ public class ElemGlass extends ElemSimple {
 
                 //Арка
                 if (side_frame.h() != null) {
-                    int index = IntStream.range(1, coo.length).filter(k -> coo[k].z == side_frame.id).findFirst().getAsInt();
+                    int index = IntStream.range(1, coo.length).filter(k -> UGeo.getID(winc, coo[k]) == side_frame.id).findFirst().getAsInt();
                     spcAdd.anglCut0 = UGeo.anglCut(spcAdd, geoFalz, coo.length - 2, 0, '-');
                     spcAdd.anglCut1 = UGeo.anglCut(spcAdd, geoFalz, index - 1, index, '+');
-                    spcAdd.width += UGeo.lengthCurve(geoFalz, side_frame.id);
+                    spcAdd.width += UGeo.lengthCurve(winc, geoFalz, side_frame.id);
 
                     //Остальное
                 } else {

@@ -305,7 +305,7 @@ public abstract class ElemSimple extends Com5t {
                     };
                 }
             }
-        }  else if (this.area != null) {
+        } else if (this.area != null) {
             //Shape shape1 = new ShapeWriter().toShape(this.area.getGeometryN(0));
             //Shape shape2 = new ShapeWriter().toShape(this.area.getGeometryN(1));
             //Shape shape3 = new ShapeWriter().toShape(this.area.getGeometryN(2));
@@ -314,7 +314,6 @@ public abstract class ElemSimple extends Com5t {
             //winc.gc2d.fill(shape1);
             //winc.gc2d.fill(shape2);
             //winc.gc2d.fill(shape3);
-
             //winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
             //winc.gc2d.draw(shape1);
             //winc.gc2d.draw(shape2);

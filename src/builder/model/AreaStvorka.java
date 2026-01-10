@@ -279,9 +279,9 @@ public class AreaStvorka extends AreaSimple {
             Coordinate coo2[] = frameBox.getGeometryN(0).getCoordinates(); //полигон векторов сторон рамы
 
             for (int j = 0; j < coo1.length - 1; j++) {
-                final double id1 = coo1[j].z;
+                final double id1 = UGeo.getID(winc, coo1[j]);
                 ElemSimple elemStv = elemList.stream().filter(e -> e.id == id1).findFirst().get();
-                final double id2 = coo2[j].z;
+                final double id2 = UGeo.getID(winc, coo2[j]);
                 ElemSimple elemFrm = elemList.stream().filter(e -> e.id == id2).findFirst().get();
                 if (elemStv != null && elemFrm != null) {
                     winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.FLAT, elemStv, elemFrm));

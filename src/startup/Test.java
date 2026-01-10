@@ -115,8 +115,6 @@ public class Test {
             //script();
             //random();
             //geom();  
-            
-            printJSO(eSyssize.up);
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
@@ -573,8 +571,8 @@ public class Test {
 
         mpol(geoShell, geoFalz, polyRect);
 
-        double length = UGeo.lengthCurve(geoFalz, 1);
-        System.out.println(length);
+        //double length = UGeo.lengthCurve(geoFalz, 1);
+        //System.out.println(length);
     }
 
     private void draw7() {
