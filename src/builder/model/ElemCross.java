@@ -74,7 +74,8 @@ public class ElemCross extends ElemSimple {
                     LineString lineImp = gf.createLineString(new Coordinate[]{new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id)});
                     List<Geometry> testSplit = UGeo.split2Polygon((Polygon) geoShell, lineImp);
 
-                    UGeo.PRINT(lineImp);
+                    //UGeo.PRINT(lineImp);
+                    //UGeo.PRINT(geoShell.getCoordinates());
 
                     UGeo.PRINT(geoSplit[1]);
                     UGeo.PRINT(testSplit.get(0));

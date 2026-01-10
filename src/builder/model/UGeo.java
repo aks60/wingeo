@@ -233,32 +233,58 @@ public class UGeo {
     }
 
     public static List<Geometry> split2Polygon(Polygon geom, LineString edge) {
-        ArrayList<Geometry> arrList = new ArrayList<Geometry>();
+        LineSegment lineSeg = new LineSegment();
+        ArrayList<Geometry> outList = new ArrayList<Geometry>();
         try {
             Coordinate[] coo = geom.getCoordinates();
             LinearRing linearRing = geom.getExteriorRing();
+            //Союз геометрий
             Geometry union = edge.union(linearRing);
+            //Сборка двух полигонов
             Polygonizer polygonizer = new Polygonizer();
             polygonizer.add(union);
             Collection<Polygon> geoms = polygonizer.getPolygons();
-            geoms.stream().forEach(el -> arrList.add(el));
-            LineString lineImp = (LineString) arrList.get(0).intersection(arrList.get(1));
-
-            HashMap<Double, LineSegment> hm = new HashMap();          
+            //Выходной список
+            geoms.stream().forEach(el -> outList.add(el));
+            //Получим array точек пересечения
+            LineString lineImp = (LineString) outList.get(0).intersection(outList.get(1));
+            ArrayList<Coordinate> crosList = new ArrayList();
             for (int i = 1; i < coo.length; ++i) {
-                LineSegment lineSeg = new LineSegment(coo[i - 1], coo[i]);
+                lineSeg.setCoordinates(coo[i - 1], coo[i]);
                 Coordinate cross = lineSeg.intersection(getSegment(lineImp));
-                if(cross != null) {
-                   hm.put(lineImp.getCoordinateN(0).z, lineSeg);
+                if (cross != null) {
+                    crosList.add(coo[i - 1]);
                 }
             }
-            arrList.stream().forEach(el -> el.normalize());
-            arrList.add(lineImp);
+            //Востонавление z координаты
+            int trigger = 0;
+            Coordinate coo1[] = outList.get(0).getCoordinates();            
+            for (int i = 0; i < coo1.length - 1; ++i) {
+                if (lineImp.getCoordinateN(0).z == coo1[i].z) {
+                    System.out.println("TRIGGER1");                    
+                    if (trigger == 1) {
+                        coo1[i].z = crosList.get(0).z;
+                    }
+                    ++trigger;
+                }
+            }
+            trigger = 0;
+            Coordinate coo2[] = outList.get(1).getCoordinates();
+            for (int i = 0; i < coo2.length - 1; ++i) {
+                if (lineImp.getCoordinateN(0).z == coo2[i].z) {                    
+                    if (trigger == 1) {
+                        coo2[i].z = crosList.get(1).z;
+                    }
+                    ++trigger;
+                }
+            }
+            outList.stream().forEach(el -> el.normalize());
+            outList.add(lineImp);
 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.split2Polygon()" + e);
         }
-        return arrList;
+        return outList;
     }
 
     public static Polygon bufferGeometry(Geometry geoShell, ArrayList<? extends Com5t> listElem, double amend, int opt) {
@@ -592,23 +618,6 @@ public class UGeo {
         System.out.println(list);
     }
 
-    public static void PRINT(String s, Geometry g) {
-        Coordinate coo[] = g.getCoordinates();
-        List<String> list = new ArrayList<String>();
-        for (int i = 0; i < coo.length; i++) {
-            list.add("{" + UCom.format(coo[i].x, 2) + " " + UCom.format(coo[i].y, 2) + " " + UCom.format(coo[i].z, 2) + "}");
-        }
-        System.out.println(s + " " + list);
-    }
-
-    public static void PRINT(Map<Integer, Coordinate> map) {
-        List<String> list = new ArrayList<String>();
-        for (Map.Entry<Integer, Coordinate> coo : map.entrySet()) {
-            list.add("{" + UCom.format(coo.getValue().x, 2) + " " + UCom.format(coo.getValue().y, 2) + " " + UCom.format(coo.getValue().z, 2) + "}");
-        }
-        System.out.println(list);
-    }
-
     public static void PRINT(Coordinate... coo) {
         List<String> list = new ArrayList<String>();
         for (int i = 0; i < coo.length; i++) {
@@ -616,13 +625,13 @@ public class UGeo {
         }
         System.out.println(list);
     }
-
-    public static void PRINT(String s, Coordinate... coo) {
+    
+    public static void PRINT(Map<Integer, Coordinate> map) {
         List<String> list = new ArrayList<String>();
-        for (int i = 0; i < coo.length; i++) {
-            list.add("{" + UCom.format(coo[i].x, 2) + " " + UCom.format(coo[i].y, 2) + " " + UCom.format(coo[i].z, 2) + "}");
+        for (Map.Entry<Integer, Coordinate> coo : map.entrySet()) {
+            list.add("{" + UCom.format(coo.getValue().x, 2) + " " + UCom.format(coo.getValue().y, 2) + " " + UCom.format(coo.getValue().z, 2) + "}");
         }
-        System.out.println(s + " " + list);
+        System.out.println(list);
     }
 
     public static LineSegment segmentOffset(LineSegment segShell, double dxy) {
