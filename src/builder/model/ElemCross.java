@@ -69,29 +69,26 @@ public class ElemCross extends ElemSimple {
             LineSegment lineCut = new LineSegment(new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id));
             Geometry[] geoSplit = UGeo.splitPolygon(geoShell.copy(), UGeo.normalizeSegm(lineCut));
 
-            {
-                try {
-                    //LineString lineImp = gf.createLineString(new Coordinate[]{new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id)});
-                    //List<Geometry> testSplit = UGeo.split2Polygon((Polygon) geoShell, lineImp);
+            try {
+                LineString lineImp = gf.createLineString(new Coordinate[]{new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id)});
+                List<Geometry> testSplit = UGeo.split2Polygon((Polygon) geoShell, lineImp);
+                //owner.childs.get(0).area = (Polygon) testSplit.get(0);
+                //owner.childs.get(2).area = (Polygon) testSplit.get(1);
 
-                    //UGeo.PRINT(lineImp);
-                    //UGeo.PRINT(geoShell.getCoordinates());
+                //UGeo.PRINT(lineImp);
+                //UGeo.PRINT(geoShell.getCoordinates());
+                UGeo.PRINT(geoSplit[1]);
+                UGeo.PRINT(testSplit.get(0));
 
-                    //UGeo.PRINT(geoSplit[1]);
-                    //UGeo.PRINT(testSplit.get(0));
+                UGeo.PRINT(geoSplit[2]);
+                UGeo.PRINT(testSplit.get(1));
 
-                    //UGeo.PRINT(geoSplit[2]);
-                    //UGeo.PRINT(testSplit.get(1));
-                    
-                } catch (Exception e) {
-                    System.err.println("Ошибка:ElemCross.split2Polygon() " + e);
-                }
-
+            } catch (Exception e) {
+                System.err.println("Ошибка:ElemCross.split2Polygon() " + e);
             }
 
             owner.childs.get(0).area = (Polygon) geoSplit[1];
             owner.childs.get(2).area = (Polygon) geoSplit[2];
-
             //Левый и правый сегмент вдоль импоста
             double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr); //ширина
             LineSegment baseSegm = new LineSegment(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()));
@@ -99,8 +96,8 @@ public class ElemCross extends ElemSimple {
 
             //Точки пересечения канвы сегментами импоста
             Polygon areaCanvas = UGeo.newPolygon(0, 0, 0, 10000, 10000, 10000, 10000, 0);
-            Coordinate C1[] = UGeo.geoCross(areaCanvas, offsetSegment[0]);
-            Coordinate C2[] = UGeo.geoCross(areaCanvas, offsetSegment[1]);
+            Coordinate C1[] = UGeo.crossGeoOfLine(areaCanvas, offsetSegment[0]);
+            Coordinate C2[] = UGeo.crossGeoOfLine(areaCanvas, offsetSegment[1]);
 
             //Ареа импоста, обрезаем areaPadding 
             Polygon areaEnvelope = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);

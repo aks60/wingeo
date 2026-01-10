@@ -44,7 +44,7 @@ public class AreaArch extends AreaSimple {
                     } else {
                         //Поворот на горизонталь
                         aff.setToRotation(Math.toRadians(-ANG), segm.p0.x, segm.p0.y);
-                        segm = UGeo.getSegment((LineString) aff.transform(segm.toGeometry(gf)));//трансформация линии в горизонт
+                        segm = UGeo.newSegment((LineString) aff.transform(segm.toGeometry(gf)));//трансформация линии в горизонт
                         arcA = UGeo.newLineArch(segm.p0.x, segm.p1.x, segm.p0.y, frame.h(), frame.id);  //созд. арки на горизонтали   
 
                         //Обратный поворот

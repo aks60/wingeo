@@ -116,14 +116,14 @@ public class AreaSimple extends Com5t {
 
         //Цикл по импостам
         for (ElemSimple imp : crosList) {
-            LineString impost = UGeo.newLineStr(imp.x1(), imp.y1(), imp.x2(), imp.y2());
+            LineString impost = UGeo.newLineString(imp.x1(), imp.y1(), imp.x2(), imp.y2());
             Geometry p1 = UGeo.newPoint(imp.x1(), imp.y1()).buffer(.0001);
             Geometry p2 = UGeo.newPoint(imp.x2(), imp.y2()).buffer(.0001);
 
             //Цикл по импостам и рамам
             for (ElemSimple frm : elemList) {
                 if (imp.id != frm.id) {
-                    Geometry line = UGeo.newLineStr(frm.x1(), frm.y1(), frm.x2(), frm.y2());
+                    Geometry line = UGeo.newLineString(frm.x1(), frm.y1(), frm.x2(), frm.y2());
 
                     if (frm.type == enums.Type.BOX_SIDE) {
                         if (line.intersects(p1)) { //левая сторона
