@@ -219,8 +219,8 @@ public class UGeo {
             }
             return new Geometry[]{
                 Com5t.gf.createLineString(crosTwo.toArray(new Coordinate[0])),
-                Com5t.gf.createPolygon(cooL.toArray(new Coordinate[0])),
-                Com5t.gf.createPolygon(cooR.toArray(new Coordinate[0]))
+                Com5t.gf.createPolygon(cooL.toArray(new Coordinate[0])).norm(),
+                Com5t.gf.createPolygon(cooR.toArray(new Coordinate[0])).norm()
             };
 
         } catch (Exception e) {
