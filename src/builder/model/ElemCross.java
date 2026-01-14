@@ -65,8 +65,9 @@ public class ElemCross extends ElemSimple {
             Geometry geoFalz = owner.area.getGeometryN(2);
 
             //Пилим полигон импостом
-            LineString baseImp = gf.createLineString(new Coordinate[]{new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id)});
-            List<Geometry> geoSplit = UGeo.splitPolygon((Polygon) geoShell.copy(), baseImp);
+            //LineSegment lineCut = new LineSegment(new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id));
+            LineString lineCut = gf.createLineString(new Coordinate[]{new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id)});
+            List<Geometry> geoSplit = UGeo.splitPolygon((Polygon) geoShell.copy(), lineCut);
             owner.childs.get(0).area = (Polygon) geoSplit.get(0);
             owner.childs.get(2).area = (Polygon) geoSplit.get(1);
 

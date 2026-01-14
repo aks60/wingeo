@@ -162,24 +162,27 @@ public class UGeo {
     public static List<Geometry> splitPolygon(Polygon geom, LineString edge) {
         double Z = edge.getCoordinateN(0).z, trigger = 0;
         LineSegment lineSeg = new LineSegment();
+        ArrayList<Coordinate> crosList = new ArrayList();
         ArrayList<Geometry> outList = new ArrayList<Geometry>();
         try {
             Coordinate[] coo = geom.getCoordinates();
             LinearRing linearRing = geom.getExteriorRing();
+
             //Союз геометрий
             Geometry union = edge.norm().union(linearRing);
+
             //Сборка двух полигонов
             Polygonizer polygonizer = new Polygonizer();
             polygonizer.add(union);
             Collection<Polygon> polygons = polygonizer.getPolygons();
+
             //Выходной список
             polygons.stream().forEach(el -> outList.add(el));
             outList.stream().forEach(el -> el.normalize());
 
             //Получим две точки пересечения полигона
-            LineString lineImp = (LineString) outList.get(0).intersection(outList.get(1));
-            LineSegment segmImp = newSegment(lineImp);
-            ArrayList<Coordinate> crosList = new ArrayList();
+            //LineString edge = (LineString) outList.get(0).intersection(outList.get(1));
+            LineSegment segmImp = newSegment(edge);
             for (int i = 1; i < coo.length; ++i) {
                 lineSeg.setCoordinates(coo[i - 1], coo[i]);
                 Coordinate crosTwo = lineSeg.intersection(segmImp);
@@ -187,34 +190,33 @@ public class UGeo {
                     crosList.add(coo[i - 1]);
                 }
             }
-            //Востонавление z координаты
-            Coordinate coo1[] = outList.get(0).getCoordinates();
-            for (int i = 0; i < coo1.length - 1; ++i) {
-                if (coo1[i].z == Z && trigger++ == 1) {
-                    coo1[i].z = crosList.get(1).z;
+            //Восстанавление z координаты
+            for (Coordinate c : outList.get(0).getCoordinates()) {
+                if (c.z == Z && trigger++ == 1) {
+                    c.z = crosList.get(1).z;
                 }
             }
-            Coordinate coo2[] = outList.get(1).getCoordinates();
-            for (int i = 0; i < coo2.length - 1; ++i) {
-                if (coo2[i].z == Z && trigger++ == 3) {
-                    coo2[i].z = crosList.get(0).z;
+            for (Coordinate c : outList.get(1).getCoordinates()) {
+                if (c.z == Z && trigger++ == 3) {
+                    c.z = crosList.get(0).z;
                 }
             }
-            outList.add(lineImp);
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.splitPolygon()" + e);
         }
         return outList;
     }
-    
+
     //Пилим многоугольник
-    public static Geometry[] splitPolygon(Geometry geom, LineSegment segment) {
+    public static List<Geometry> splitPolygon(Geometry geom, LineSegment segment) {
         boolean b = true;
+        ArrayList<Geometry> outList = new ArrayList<Geometry>();
         HashSet<Coordinate> checkHs = new HashSet<Coordinate>();
         Coordinate[] coo = geom.getGeometryN(0).copy().getCoordinates();
         List<Coordinate> cooL = new ArrayList<Coordinate>(), cooR = new ArrayList<Coordinate>();
         List<Coordinate> crosTwo = new ArrayList<Coordinate>(), listExt = new ArrayList<Coordinate>(List.of(coo[0]));
         try {
+            UGeo.normalizeSegm(segment);
             LineSegment segmImp = normalizeSegm(new LineSegment(
                     new Coordinate(segment.p0.x, segment.p0.y, segment.p0.z),
                     new Coordinate(segment.p1.x, segment.p1.y, segment.p1.z)));
@@ -264,14 +266,12 @@ public class UGeo {
             } else {
                 cooR.add(cooR.get(0));
             }
+            outList.add(Com5t.gf.createPolygon(cooL.toArray(new Coordinate[0])).norm());
+            outList.add(Com5t.gf.createPolygon(cooR.toArray(new Coordinate[0])).norm());
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.splitPolygon()" + e);
         }
-        return new Geometry[]{
-            Com5t.gf.createLineString(crosTwo.toArray(new Coordinate[0])),
-            Com5t.gf.createPolygon(cooL.toArray(new Coordinate[0])).norm(),
-            Com5t.gf.createPolygon(cooR.toArray(new Coordinate[0])).norm()
-        };
+        return outList;
     }
 
     public static Polygon bufferGeometry(Geometry geoShell, ArrayList<? extends Com5t> listElem, double amend, int opt) {
