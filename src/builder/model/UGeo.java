@@ -23,9 +23,7 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import java.util.Map;
 import java.util.Set;
-import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LinearRing;
-import org.locationtech.jts.geom.util.LineStringExtracter;
 import org.locationtech.jts.operation.polygonize.Polygonizer;
 
 /**
@@ -229,60 +227,50 @@ public class UGeo {
         }
     }
 
-    public static List<Geometry> split2Polygon(Polygon geom, LineString edge) {
-        Polygon geom2 = (Polygon) geom.copy();
+    public static List<Geometry> splitPolygon(Polygon geom, LineString edge) {
+        double Z = edge.getCoordinateN(0).z, trigger = 0;
         LineSegment lineSeg = new LineSegment();
         ArrayList<Geometry> outList = new ArrayList<Geometry>();
         try {
-            Coordinate[] coo = geom2.getCoordinates();
-            LinearRing linearRing = geom2.getExteriorRing();
+            Coordinate[] coo = geom.getCoordinates();
+            LinearRing linearRing = geom.getExteriorRing();
             //Союз геометрий
             Geometry union = edge.norm().union(linearRing);
             //Сборка двух полигонов
             Polygonizer polygonizer = new Polygonizer();
             polygonizer.add(union);
-            Collection<Polygon> geoms = polygonizer.getPolygons();
+            Collection<Polygon> polygons = polygonizer.getPolygons();
             //Выходной список
-            geoms.stream().forEach(el -> outList.add(el));
+            polygons.stream().forEach(el -> outList.add(el));
             outList.stream().forEach(el -> el.normalize());
+
             //Получим две точки пересечения полигона
             LineString lineImp = (LineString) outList.get(0).intersection(outList.get(1));
-            Coordinate coo1[] = outList.get(0).getCoordinates(); 
             LineSegment segmImp = newSegment(lineImp);
             ArrayList<Coordinate> crosList = new ArrayList();
             for (int i = 1; i < coo.length; ++i) {
-                lineSeg.setCoordinates(coo[i-1], coo[i]);
+                lineSeg.setCoordinates(coo[i - 1], coo[i]);
                 Coordinate crosTwo = lineSeg.intersection(segmImp);
                 if (crosTwo != null) {
                     crosList.add(coo[i - 1]);
                 }
             }
-
-//            //Востонавление z координаты
-//            int trigger = 0;
-//            Coordinate coo1[] = outList.get(0).getCoordinates();            
-//            for (int i = 0; i < coo1.length - 1; ++i) {
-//                if (lineImp.getCoordinateN(0).z == coo1[i].z || lineImp.getCoordinateN(1).z == coo1[i].z) {
-//                    System.out.println("TRIGGER1");                    
-//                    if (trigger == 1) {
-//                        coo1[i].z = crosList.get(1).z;
-//                    }
-//                    ++trigger;
-//                }
-//            }
-//            trigger = 0;
-//            Coordinate coo2[] = outList.get(1).getCoordinates();
-//            for (int i = 0; i < coo2.length - 1; ++i) {
-//                if (lineImp.getCoordinateN(0).z == coo2[i].z || lineImp.getCoordinateN(1).z == coo2[i].z) {                    
-//                    if (trigger == 0) {
-//                        coo2[i].z = crosList.get(0).z;
-//                    }
-//                    ++trigger;
-//                }
-//            }
-
+            //Востонавление z координаты
+            Coordinate coo1[] = outList.get(0).getCoordinates();
+            for (int i = 0; i < coo1.length - 1; ++i) {
+                if (coo1[i].z == Z && trigger++ == 1) {
+                    coo1[i].z = crosList.get(1).z;
+                }
+            }
+            Coordinate coo2[] = outList.get(1).getCoordinates();
+            for (int i = 0; i < coo2.length - 1; ++i) {
+                if (coo2[i].z == Z && trigger++ == 3) {
+                    coo2[i].z = crosList.get(0).z;
+                }
+            }
+            outList.add(lineImp);
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.split2Polygon()" + e);
+            System.err.println("Ошибка:UGeo.splitPolygon()" + e);
         }
         return outList;
     }
