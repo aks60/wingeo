@@ -159,55 +159,6 @@ public class UGeo {
     }
 
     //Пилим многоугольник
-    public static List<Geometry> splitPolygon(Polygon geom, LineString edge) {
-        double Z = edge.getCoordinateN(0).z, trigger = 0;
-        LineSegment lineSeg = new LineSegment();
-        ArrayList<Coordinate> crosList = new ArrayList();
-        ArrayList<Geometry> outList = new ArrayList<Geometry>();
-        try {
-            Coordinate[] coo = geom.getCoordinates();
-            LinearRing linearRing = geom.getExteriorRing();
-
-            //Союз геометрий
-            Geometry union = edge.norm().union(linearRing);
-
-            //Сборка двух полигонов
-            Polygonizer polygonizer = new Polygonizer();
-            polygonizer.add(union);
-            Collection<Polygon> polygons = polygonizer.getPolygons();
-
-            //Выходной список
-            polygons.stream().forEach(el -> outList.add(el));
-            outList.stream().forEach(el -> el.normalize());
-
-            //Получим две точки пересечения полигона
-            //LineString edge = (LineString) outList.get(0).intersection(outList.get(1));
-            LineSegment segmImp = newSegment(edge);
-            for (int i = 1; i < coo.length; ++i) {
-                lineSeg.setCoordinates(coo[i - 1], coo[i]);
-                Coordinate crosTwo = lineSeg.intersection(segmImp);
-                if (crosTwo != null) {
-                    crosList.add(coo[i - 1]);
-                }
-            }
-            //Восстанавление z координаты
-            for (Coordinate c : outList.get(0).getCoordinates()) {
-                if (c.z == Z && trigger++ == 1) {
-                    c.z = crosList.get(1).z;
-                }
-            }
-            for (Coordinate c : outList.get(1).getCoordinates()) {
-                if (c.z == Z && trigger++ == 3) {
-                    c.z = crosList.get(0).z;
-                }
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.splitPolygon()" + e);
-        }
-        return outList;
-    }
-
-    //Пилим многоугольник
     public static List<Geometry> splitPolygon(Geometry geom, LineSegment segment) {
         boolean b = true;
         ArrayList<Geometry> outList = new ArrayList<Geometry>();
@@ -216,7 +167,6 @@ public class UGeo {
         List<Coordinate> cooL = new ArrayList<Coordinate>(), cooR = new ArrayList<Coordinate>();
         List<Coordinate> crosTwo = new ArrayList<Coordinate>(), listExt = new ArrayList<Coordinate>(List.of(coo[0]));
         try {
-            UGeo.normalizeSegm(segment);
             LineSegment segmImp = normalizeSegm(new LineSegment(
                     new Coordinate(segment.p0.x, segment.p0.y, segment.p0.z),
                     new Coordinate(segment.p1.x, segment.p1.y, segment.p1.z)));
@@ -237,15 +187,15 @@ public class UGeo {
 
             //Обход сегментов до и после точек пересечения
             for (int i = 0; i < listExt.size(); ++i) {
-                Coordinate crd = listExt.get(i);
+                Coordinate co = listExt.get(i);
 
                 //Проход через точку пересечения
-                if (Double.isNaN(crd.z)) {
+                if (Double.isNaN(co.z)) {
                     b = !b; //первая точка пройдена
-                    Coordinate cL = new Coordinate(crd.x, crd.y, segmImp.p0.z);
-                    Coordinate cR = new Coordinate(crd.x, crd.y);
+                    Coordinate cL = new Coordinate(co.x, co.y, segmImp.p0.z);
+                    Coordinate cR = new Coordinate(co.x, co.y);
 
-                    if (crosTwo.get(0).equals(crd)) {
+                    if (crosTwo.get(0).equals(co)) {
                         cL.z = segmImp.p0.z;
                         cR.z = listExt.get(i - 1).z;
                     } else {
@@ -256,7 +206,7 @@ public class UGeo {
                     cooR.add(cR);
 
                 } else { //Построение координат слева и справа от импоста
-                    ((b == true) ? cooL : cooR).add(crd);
+                    ((b == true) ? cooL : cooR).add(co);
                 }
             }
             //Построение 'пятой' точки
@@ -268,6 +218,7 @@ public class UGeo {
             }
             outList.add(Com5t.gf.createPolygon(cooL.toArray(new Coordinate[0])).norm());
             outList.add(Com5t.gf.createPolygon(cooR.toArray(new Coordinate[0])).norm());
+            
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.splitPolygon()" + e);
         }
@@ -638,21 +589,55 @@ public class UGeo {
 //        Polygon[] polyArray = GeometryFactory.toPolygonArray(polys);
 //        return geometry.getFactory().createGeometryCollection(polyArray);
 //    }
+//        //Пилим многоугольник
+//    public static List<Geometry> splitPolygon(Polygon geom, LineString edge) {
+//        double Z = edge.getCoordinateN(0).z, trigger = 0;
+//        LineSegment lineSeg = new LineSegment();
+//        ArrayList<Coordinate> crosList = new ArrayList();
+//        ArrayList<Geometry> outList = new ArrayList<Geometry>();
+//        try {
+//            Coordinate[] coo = geom.getCoordinates();
+//            LinearRing linearRing = geom.getExteriorRing();
 //
-//    public static Geometry split3Polygon(Geometry poly, Geometry line) {
-//        Geometry nodedLinework = poly.getBoundary().union(line);
-//        Geometry polys = polygonize(nodedLinework);
+//            //Союз геометрий
+//            Geometry union = edge.norm().union(linearRing);
 //
-//        // Only keep polygons which are inside the input
-//        List output = new ArrayList();
-//        for (int i = 0; i < polys.getNumGeometries(); i++) {
-//            Polygon candpoly = (Polygon) polys.getGeometryN(i);
-//            if (poly.contains(candpoly.getInteriorPoint())) {
-//                output.add(candpoly);
+//            //Сборка двух полигонов
+//            Polygonizer polygonizer = new Polygonizer();
+//            polygonizer.add(union);
+//            Collection<Polygon> polygons = polygonizer.getPolygons();
+//
+//            //Выходной список
+//            polygons.stream().forEach(el -> outList.add(el));
+//            outList.stream().forEach(el -> el.normalize());
+//
+//            //Получим две точки пересечения полигона
+//            //LineString edge = (LineString) outList.get(0).intersection(outList.get(1));
+//            LineSegment segmImp = newSegment(edge);
+//            for (int i = 1; i < coo.length; ++i) {
+//                lineSeg.setCoordinates(coo[i - 1], coo[i]);
+//                Coordinate crosTwo = lineSeg.intersection(segmImp);
+//                if (crosTwo != null) {
+//                    crosList.add(coo[i - 1]);
+//                }
 //            }
+//            //Восстанавление z координаты
+//            for (Coordinate c : outList.get(0).getCoordinates()) {
+//                if (c.z == Z && trigger++ == 1) {
+//                    c.z = crosList.get(1).z;
+//                }
+//            }
+//            for (Coordinate c : outList.get(1).getCoordinates()) {
+//                if (c.z == Z && trigger++ == 3) {
+//                    c.z = crosList.get(0).z;
+//                }
+//            }
+//        } catch (Exception e) {
+//            System.err.println("Ошибка:UGeo.splitPolygon()" + e);
 //        }
-//        return poly.getFactory().createGeometryCollection(GeometryFactory.toGeometryArray(output));
+//        return outList;
 //    }
+//
 //public static Coordinate findIntersection(Line line1, Line line2) {
 //	
 //        double det = line1.a * line2.b - line2.a * line1.b;
