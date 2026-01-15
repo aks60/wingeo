@@ -162,7 +162,7 @@ public class UGeo {
     public static List<Geometry> splitPolygon(Geometry geom, LineSegment segment) {
         boolean b = true;
         ArrayList<Geometry> outList = new ArrayList<Geometry>();
-        HashSet<Coordinate> checkHs = new HashSet<Coordinate>();
+        HashSet<Coordinate> hsCheck = new HashSet<Coordinate>();
         Coordinate[] coo = geom.getGeometryN(0).copy().getCoordinates();
         List<Coordinate> cooL = new ArrayList<Coordinate>(), cooR = new ArrayList<Coordinate>();
         List<Coordinate> crosTwo = new ArrayList<Coordinate>(), listExt = new ArrayList<Coordinate>(List.of(coo[0]));
@@ -171,14 +171,14 @@ public class UGeo {
                     new Coordinate(segment.p0.x, segment.p0.y, segment.p0.z),
                     new Coordinate(segment.p1.x, segment.p1.y, segment.p1.z)));
 
-            //Вставим точки пересечения в список коорд. см.exten
+            //Вставим точки пересечения в список коорд.
             for (int i = 1; i < coo.length; i++) {
                 Coordinate crosP = Intersection.lineSegment(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения сегмента и линии                
-                checkHs.add(coo[i]);
+                hsCheck.add(coo[i]);
                 //Вставим точку в сегмент
                 if (crosP != null) {
                     crosTwo.add(crosP);
-                    if (checkHs.add(crosP)) {
+                    if (hsCheck.add(crosP)) {
                         listExt.add(crosP);
                     }
                 }
