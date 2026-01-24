@@ -114,9 +114,8 @@ public class Test {
             //uid();
             //script();
             //random();
-            //geom();  
-            
-            printJSO(eSyssize.up);
+            //geom();             
+            //printJSO(eSyssize.up);
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);

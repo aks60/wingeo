@@ -5,6 +5,7 @@ import common.eProp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 public class Record<E> extends ArrayList<E> {
 
@@ -56,7 +57,7 @@ public class Record<E> extends ArrayList<E> {
     public void setDev(Field field, String element) {
 //        if (eProp.dev == true) {
 //            String val = element + " " + super.get(1);            
-////            String val = element + " #" + super.get(1);
+        ////            String val = element + " #" + super.get(1);
 //            super.set(field.ordinal(), (E) val);
 //        } else {
         super.set(field.ordinal(), (E) element);
@@ -185,7 +186,7 @@ public class Record<E> extends ArrayList<E> {
             str += "  " + o;
         }
         return super.toString() + str;
-    }   
+    }
 }
 // <editor-fold defaultstate="collapsed" desc="class Record<E> extends ArrayList<E>">
 /*
@@ -378,5 +379,5 @@ public class Record {
         return super.toString() + str;
     }
 }
-*/
+ */
 // </editor-fold>  

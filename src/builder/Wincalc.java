@@ -19,7 +19,9 @@ import builder.model.ElemMosquit;
 import builder.script.GsonElem;
 import builder.script.GsonRoot;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import common.UCom;
@@ -29,11 +31,15 @@ import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
 import dataset.Record;
 import domain.eArtikl;
+import domain.eColor;
+import domain.eParams;
+import domain.eParmap;
 import domain.ePrjprod;
 import domain.eProject;
 import domain.eSyspar1;
 import domain.eSysprof;
 import domain.eSyssize;
+import enums.PKjson;
 import enums.Type;
 import enums.UseType;
 import frames.swing.comp.Canvas;
@@ -116,9 +122,6 @@ public class Wincalc {
             colorID2 = (gson.color2 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2;
             colorID3 = (gson.color3 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3;
 
-            //Параметры по умолчанию
-            eSyspar1.filter(nuni).forEach(syspar1Rec -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), syspar1Rec));
-
             //Главное окно
             if (Type.RECTANGL == gson.type) {
                 root = new AreaRectangl(this, gson);
@@ -133,6 +136,9 @@ public class Wincalc {
                 root = new AreaDoor(this, gson);
             }
 
+            //Параметры
+            parametr(gson.param);
+
             //Элементы конструкции
             creator(root, gson);
 
@@ -140,7 +146,50 @@ public class Wincalc {
             location();
 
         } catch (JsonSyntaxException e) {
-            System.out.println("Ошибка: Wincalc.build()");
+            System.err.println("Ошибка: Wincalc.build()");
+        }
+    }
+
+    /**
+     * Параметры системы(технолога) + параметры менеджера В таблице syspar1 для
+     * каждой системы лежат параметры по умолчанию от технолога. К параметрам от
+     * технолога замешиваем параметры от менеджера см. скрирт, например
+     * {"ioknaParam": [-8252]}. При этом в winc.mapPardef будут изменения с
+     * учётом менеджера.
+     */
+    protected void parametr(JsonObject paramWinc) {
+        try {
+            //Параметры системы конструкции
+            eSyspar1.filter(nuni).forEach(syspar1Rec
+                    -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), (Record) syspar1Rec.clone()));
+
+            if (root.isFinite(paramWinc, null)) {
+                //Добавим к параметрам системы конструкции параметры конкретной конструкции
+                JsonArray ioknaParamArr = paramWinc.getAsJsonArray(PKjson.ioknaParam);
+                if (ioknaParamArr != null && !ioknaParamArr.isJsonNull() && ioknaParamArr.isJsonArray()) {
+                    //Цикл по пааметрам менеджера
+                    for (JsonElement ioknaID : ioknaParamArr) {
+
+                        //Record paramsRec, syspar1Rec;   
+                        if (ioknaID.getAsInt() < 0) {
+                            Record paramsRec = eParams.find(ioknaID.getAsInt()); //параметр менеджера
+                            Record syspar1Rec = mapPardef.get(paramsRec.getInt(eParams.groups_id));
+                            if (syspar1Rec != null) { //ситуация если конструкция с nuni = -3, т.е. из списка модели
+                                syspar1Rec.setNo(eParams.text, paramsRec.getStr(eParams.text)); //накладываем параметр менеджера
+                            }
+                        } else {
+                            Record paramsRec = eParmap.find(ioknaID.getAsInt()); //параметр менеджера
+                            Record syspar1Rec = mapPardef.get(paramsRec.getInt(eParmap.groups_id));
+                            if (syspar1Rec != null) { //ситуация если конструкция с nuni = -3, т.е. из списка модели
+                                String text = eColor.find(paramsRec.getInt(eParmap.color_id1)).getStr(eColor.name);
+                                syspar1Rec.setNo(eParams.text, text); //накладываем параметр менеджера
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:Wincalce.parametr() " + e);
         }
     }
 
@@ -201,7 +250,7 @@ public class Wincalc {
 
             //Исключая импост створки т.к. ств. ещё не создана
             for (ElemSimple elem : listElem) {
-                
+
                 if (elem instanceof ElemFrame) {
                     elem.setLocation();
                 } else if (elem instanceof ElemCross && elem.owner instanceof AreaStvorka == false) {

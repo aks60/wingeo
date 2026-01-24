@@ -37,7 +37,6 @@ public class AreaSimple extends Com5t {
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson.id, gson, owner);
         initConstructiv(winc.gson.param);
-        initParametr(winc.gson.param);
         winc.listArea.add(this);
         winc.listAll.add(this);
     }
@@ -54,45 +53,6 @@ public class AreaSimple extends Com5t {
 //        else if(this.owner.id == 0) {
 //            sysprofRec = eSysprof.find4(this.winc.nuni, UseArtiklTo.FRAME.id, UseSideTo.ANY);
 //        }
-    }
-
-    /**
-     * Параметры системы(технолога) + параметры менеджера В таблице syspar1 для
-     * каждой системы лежат параметры по умолчанию от технолога. К параметрам от
-     * технолога замешиваем параметры от менеджера см. скрирт, например
-     * {"ioknaParam": [-8252]}. При этом в winc.mapPardef будут изменения с
-     * учётом менеджера.
-     */
-    protected void initParametr(JsonObject param) {
-        try {
-            if (isFinite(param, null)) {
-                //Добавим к параметрам системы конструкции параметры конкретной конструкции
-                JsonArray ioknaParamArr = param.getAsJsonArray(PKjson.ioknaParam);
-                if (ioknaParamArr != null && !ioknaParamArr.isJsonNull() && ioknaParamArr.isJsonArray()) {
-                    //Цикл по пааметрам менеджера
-                    ioknaParamArr.forEach(ioknaID -> {
-                        
-                        //Record paramsRec, syspar1Rec;   
-                        if (ioknaID.getAsInt() < 0) {
-                            Record paramsRec = eParams.find(ioknaID.getAsInt()); //параметр менеджера
-                            Record syspar1Rec = winc.mapPardef.get(paramsRec.getInt(eParams.groups_id));
-                            if (syspar1Rec != null) { //ситуация если конструкция с nuni = -3, т.е. модели
-                                syspar1Rec.setNo(eParams.text, paramsRec.getStr(eParams.text)); //накладываем параметр менеджера
-                            }
-                        } else {
-                            Record paramsRec = eParmap.find(ioknaID.getAsInt()); //параметр технолога
-                            Record syspar1Rec = winc.mapPardef.get(paramsRec.getInt(eParmap.groups_id));
-                            if (syspar1Rec != null) { //ситуация если конструкция с nuni = -3, т.е. модели
-                                String text = eColor.find(paramsRec.getInt(eParmap.color_id1)).getStr(eColor.name);
-                                syspar1Rec.setNo(eParams.text, text); //накладываем параметр менеджера
-                            }
-                        }
-                    });
-                }
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:AreaSimple.initParametr() " + e);
-        }
     }
 
     public void setLocation() {
