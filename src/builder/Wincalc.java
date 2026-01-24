@@ -238,7 +238,7 @@ public class Wincalc {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Wincalc.creator() " + e);
+            System.err.println("Ошибка:Wincalc.creator(*) " + e);
         }
     }
 
