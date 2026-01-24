@@ -71,7 +71,7 @@ public class AreaSimple extends Com5t {
                 if (ioknaParamArr != null && !ioknaParamArr.isJsonNull() && ioknaParamArr.isJsonArray()) {
                     //Цикл по пааметрам менеджера
                     ioknaParamArr.forEach(ioknaID -> {
-
+                        
                         //Record paramsRec, syspar1Rec;   
                         if (ioknaID.getAsInt() < 0) {
                             Record paramsRec = eParams.find(ioknaID.getAsInt()); //параметр менеджера
@@ -80,7 +80,7 @@ public class AreaSimple extends Com5t {
                                 syspar1Rec.setNo(eParams.text, paramsRec.getStr(eParams.text)); //накладываем параметр менеджера
                             }
                         } else {
-                            Record paramsRec = eParmap.find(ioknaID.getAsInt()); //параметр менеджера
+                            Record paramsRec = eParmap.find(ioknaID.getAsInt()); //параметр технолога
                             Record syspar1Rec = winc.mapPardef.get(paramsRec.getInt(eParmap.groups_id));
                             if (syspar1Rec != null) { //ситуация если конструкция с nuni = -3, т.е. модели
                                 String text = eColor.find(paramsRec.getInt(eParmap.color_id1)).getStr(eColor.name);
