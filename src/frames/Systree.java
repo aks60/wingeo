@@ -101,12 +101,10 @@ import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import common.listener.ListenerReload;
-import frames.dialog.DicElemvar;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 import javax.swing.JTree;
 import org.locationtech.jts.geom.Envelope;
-import startup.Tex;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -514,13 +512,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     //через сокр. тарификацию
                     ((CardLayout) pan7.getLayout()).show(pan7, "card16");
                     AreaStvorka stv = (AreaStvorka) winNode.com5t();
-                    int id = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
-                    AreaSimple own = winNode.com5t().owner;
-                    AreaSimple sta = (AreaSimple) winNode.com5t();
-                    setText(txt24, UCom.format(UCom.layout(sta.frames, Layout.BOT).width(), 1));
-                    double h = (UCom.layout(sta.frames, Layout.RIG).height() > UCom.layout(sta.frames, Layout.LEF).height()) ? UCom.layout(sta.frames, Layout.RIG).height() : UCom.layout(sta.frames, Layout.LEF).height();
-                    setText(txt26, UCom.format(h, 1));
-                    setText(txt20, eFurniture.find(id).getStr(eFurniture.name));
+                    Envelope env = stv.area.getGeometryN(0).getEnvelopeInternal();
+                    int sysfurnID = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
+                    setText(txt24, UCom.format(env.getWidth(), 1));
+                    setText(txt26, UCom.format(env.getHeight(), 1));
+                    setText(txt20, eFurniture.find(sysfurnID).getStr(eFurniture.name));
                     setIcon(btn10, stv.isFinite(stv.gson.param, PKjson.sysfurnID));
                     setText(txt30, stv.typeOpen.name2);
                     setIcon(btn12, stv.isFinite(stv.gson.param, PKjson.artiklHand));
