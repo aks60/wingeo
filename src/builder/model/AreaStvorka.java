@@ -318,7 +318,11 @@ public class AreaStvorka extends AreaSimple {
                 winc.gc2d.draw(shape);
             }
         } else {
-            paintSceleton();
+            winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
+            for (int i = 0; i < 3; ++i) {
+                Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(i));
+                winc.gc2d.draw(shape);
+            }
         }
     }
 

@@ -119,21 +119,6 @@ public class Com5t {
         return true;
     }
 
-    public void paintSceleton() {
-        Shape shape1 = new ShapeWriter().toShape(this.area.getGeometryN(0));
-        Shape shape2 = new ShapeWriter().toShape(this.area.getGeometryN(1));
-        Shape shape3 = new ShapeWriter().toShape(this.area.getGeometryN(2));
-
-        //winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-        //winc.gc2d.fill(shape1);
-        //winc.gc2d.fill(shape2);
-        //winc.gc2d.fill(shape3);
-        winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
-        winc.gc2d.draw(shape1);
-        winc.gc2d.draw(shape2);
-        winc.gc2d.draw(shape3);
-    }
-
     public boolean equals(Object obj) {
         return (this.id == ((Com5t) obj).id);
     }

@@ -61,7 +61,7 @@ public class AreaSimple extends Com5t {
             Polygon geoInner = UGeo.bufferGeometry(geoShell, winc.listElem, 0, 0);
             Polygon geoFalz = UGeo.bufferGeometry(geoShell, winc.listElem, 0, 1);
             this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
-            
+
             //Test.init(this.area.getGeometryN(0), this.area.getGeometryN(1), this.area.getGeometryN(2));
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.setLocation" + toString() + e);
@@ -231,7 +231,11 @@ public class AreaSimple extends Com5t {
                     }
                 }
             } else if (this.area != null) {
-                paintSceleton();
+                winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
+                for (int i = 0; i < 3; ++i) {
+                    Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(i));
+                    winc.gc2d.draw(shape);
+                }
             }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaSimple.paint() " + e);
