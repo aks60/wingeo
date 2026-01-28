@@ -166,7 +166,7 @@ public class AreaSimple extends Com5t {
                     Font font = new Font("Dialog", 0, UCom.scaleFont(winc.scale)); //размер шрифта (см. canvas)
                     winc.gc2d.setFont(font);
                     AffineTransform orig = winc.gc2d.getTransform();
-                    Rectangle2D txt2D = font.getStringBounds("999.99", winc.gc2d.getFontRenderContext());
+                    Rectangle2D metricTxt = font.getStringBounds("999.99", winc.gc2d.getFontRenderContext());
 
                     //По горизонтали
                     for (int i = 1; i < listHor.size(); ++i) {
@@ -174,23 +174,23 @@ public class AreaSimple extends Com5t {
                         if (Math.abs(dx) > 0.04) {
 
                             String txt = UCom.format(dx, -1); //текст разм.линии
-                            Rectangle2D rec2D = font.getStringBounds(txt, winc.gc2d.getFontRenderContext()); //логические границы строки
+                            Rectangle2D metricNumb = font.getStringBounds(txt, winc.gc2d.getFontRenderContext()); //логические границы строки
                             double tail[] = {listHor.get(i - 1), listHor.get(i)}; //x1, x2 хвост вращения вектора
-                            int len = (int) Math.ceil(((dx) - (rec2D.getWidth() + 10)) / 2); //длина до начала(конца) текста
+                            int len = (int) Math.ceil(((dx) - (metricNumb.getWidth() + 10)) / 2); //длина до начала(конца) текста
                             double length = Math.round(dx); //длина вектора
 
                             //Размерные линии
-                            Geometry lineTip1 = UGeo.lineTip((i == 1), tail[0], frameEnvelope.getMaxY() + rec2D.getHeight() / 2, 180, len);
+                            Geometry lineTip1 = UGeo.lineTip((i == 1), tail[0], frameEnvelope.getMaxY() + metricNumb.getHeight() / 2, 180, len);
                             Shape shape = new ShapeWriter().toShape(lineTip1);
                             winc.gc2d.draw(shape);
-                            Geometry lineTip2 = UGeo.lineTip((i == (listHor.size() - 1)), tail[1], frameEnvelope.getMaxY() + rec2D.getHeight() / 2, 0, len);
+                            Geometry lineTip2 = UGeo.lineTip((i == (listHor.size() - 1)), tail[1], frameEnvelope.getMaxY() + metricNumb.getHeight() / 2, 0, len);
                             shape = new ShapeWriter().toShape(lineTip2);
                             winc.gc2d.draw(shape);
 
                             //Текст на линии
-                            double pxy[] = {listHor.get(i - 1) + len + 8, frameEnvelope.getMaxY() + txt2D.getHeight() * .86}; //точка начала текста
-                            if (length < txt2D.getWidth()) {
-                                pxy[1] = pxy[1] + txt2D.getHeight() / 2;
+                            double pxy[] = {listHor.get(i - 1) + len + 8, frameEnvelope.getMaxY() + metricTxt.getHeight() * .86}; //точка начала текста
+                            if (length < metricTxt.getWidth()) {
+                                pxy[1] = pxy[1] + metricTxt.getHeight() / 2;
                                 winc.gc2d.drawString(txt, (int) pxy[0], (int) (pxy[1]));
                             } else {
                                 winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);
@@ -205,23 +205,23 @@ public class AreaSimple extends Com5t {
                         if (Math.abs(dy) > 0.04) {
 
                             String txt = UCom.format(dy, -1); //текст разм.линии
-                            Rectangle2D rec2D = font.getStringBounds(txt, winc.gc2d.getFontRenderContext()); //логические границы строки
+                            Rectangle2D metricNumb = font.getStringBounds(txt, winc.gc2d.getFontRenderContext()); //логические границы строки
                             int tail[] = {(int) Math.ceil(listVer.get(i - 1)), (int) Math.ceil(listVer.get(i))};  //y1, y2 хвост вращения вектора
-                            int len = (int) Math.round((dy - rec2D.getWidth() - 10) / 2); //длина до начала(конца) текста
+                            int len = (int) Math.round((dy - metricNumb.getWidth() - 10) / 2); //длина до начала(конца) текста
                             double length = Math.round(dy); //длина вектора
 
                             //Размерные линии
-                            Geometry lineTip1 = UGeo.lineTip((i == 1), frameEnvelope.getMaxX() + rec2D.getHeight() / 2, tail[0], -90, len);
+                            Geometry lineTip1 = UGeo.lineTip((i == 1), frameEnvelope.getMaxX() + metricNumb.getHeight() / 2, tail[0], -90, len);
                             Shape shape = new ShapeWriter().toShape(lineTip1);
                             winc.gc2d.draw(shape);
-                            Geometry lineTip2 = UGeo.lineTip((i == (listVer.size() - 1)), frameEnvelope.getMaxX() + rec2D.getHeight() / 2, tail[1], 90, len);
+                            Geometry lineTip2 = UGeo.lineTip((i == (listVer.size() - 1)), frameEnvelope.getMaxX() + metricNumb.getHeight() / 2, tail[1], 90, len);
                             shape = new ShapeWriter().toShape(lineTip2);
                             winc.gc2d.draw(shape);
 
                             //Текст на линии
-                            double pxy[] = {frameEnvelope.getMaxX() + txt2D.getHeight() - 6, listVer.get(i) - len}; //точка врашения и начала текста                    
-                            if (length < (txt2D.getWidth())) {
-                                winc.gc2d.drawString(txt, (int) (pxy[0] + 4), (int) (pxy[1] - txt2D.getHeight() / 2));
+                            double pxy[] = {frameEnvelope.getMaxX() + metricTxt.getHeight() - 6, listVer.get(i) - len}; //точка врашения и начала текста                    
+                            if (length < (metricTxt.getWidth())) {
+                                winc.gc2d.drawString(txt, (int) (pxy[0] + 4), (int) (pxy[1] - metricTxt.getHeight() / 2));
                             } else {
                                 winc.gc2d.rotate(Math.toRadians(-90), pxy[0], pxy[1]);
                                 winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);
