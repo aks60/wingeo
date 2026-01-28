@@ -705,10 +705,10 @@ public class Test {
         double dist[] = {32, 32, 68, 68, 32, 68, 68};
         Geometry geo1 = Com5t.gf.createLineString(list.toArray(new Coordinate[0]));
         //VariableBuffer vb = new  VariableBuffer(geo1, distance);
-        Geometry geo2 = VBuffer.buffer(geo1, dist);
+        //Geometry geo2 = VBuffer.buffer(geo1, dist);
 
         //this.mpol = geo1;
-        this.mpol = geo2;
+        //this.mpol = geo2;
     }
 
     private void draw3() {
