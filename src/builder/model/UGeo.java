@@ -4,9 +4,9 @@ import builder.making.TRecord;
 import static builder.model.Com5t.gf;
 import common.UCom;
 import domain.eArtikl;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,7 +24,6 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 import java.util.Map;
 import java.util.Set;
 import org.locationtech.jts.geom.LinearRing;
-import org.locationtech.jts.operation.polygonize.Polygonizer;
 
 /**
  * Утилиты JTS
@@ -578,7 +577,23 @@ public class UGeo {
         segInner.p1.z = segShell.p1.z;
         return segInner;
     }
+    
+    public static void drawVector(Graphics2D g2d, int x1, int y1, int x2, int y2) {
+        g2d.drawLine(x1, y1, x2, y2); // Линия вектора
 
+        // Расчет наконечника стрелки
+        double angle = Math.atan2(y2 - y1, x2 - x1);
+        int arrowLen = 15; // Длина наконечника
+        int arrowWidth = 10; // Угол раствора наконечника
+
+        g2d.drawLine(x2, y2, 
+            (int) (x2 - arrowLen * Math.cos(angle - Math.toRadians(30))),
+            (int) (y2 - arrowLen * Math.sin(angle - Math.toRadians(30))));
+        g2d.drawLine(x2, y2, 
+            (int) (x2 - arrowLen * Math.cos(angle + Math.toRadians(30))),
+            (int) (y2 - arrowLen * Math.sin(angle + Math.toRadians(30))));
+    }
+    
 // <editor-fold defaultstate="collapsed" desc="TEMP">    
 //
 //    public static Geometry polygonize(Geometry geometry) {
