@@ -57,36 +57,6 @@ public class GsonRoot extends GsonElem {
         }
     }
 
-    //Перемещение на канве
-    public void winresize(GsonElem gson, Double dx, Double dy, Double scale) {
-        if (gson.childs != null) {
-            Double dX = (dx == 0) ? 0 : dx / scale;
-            Double dY = (dy == 0) ? 0 : dy / scale;
-            for (GsonElem gs : gson.childs) {
-                if (List.of(Type.IMPOST, Type.STOIKA, Type.SHTULP).contains(gs.type)) {
-                    if (dX != 0) {
-                        gs.x1 += dX;
-                        gs.x2 += dX;
-                    }
-                    if (dY != 0) {
-                        gs.y1 += dY;
-                        gs.y2 += dY;
-                    }
-                } else if (List.of(Type.BOX_SIDE, Type.STV_SIDE).contains(gs.type)) {
-                    if (dX != 0) {
-                        gs.x1 += +dX;
-                    }
-                    if (dY != 0) {
-                        gs.y1 += dY;
-                    }
-                }
-                if (List.of(Type.AREA, Type.STVORKA).contains(gs.type)) {
-                    winresize(gs, dx, dy, scale);
-                }
-            }
-        }
-    }
-
     public String toJson() {
         this.serialize(this);
         return new GsonBuilder().create().toJson(this);

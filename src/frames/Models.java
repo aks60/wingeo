@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import builder.Wincalc;
 import builder.making.TJoining;
+import builder.model.UGeo;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -35,7 +36,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import common.listener.ListenerReload;
-import java.util.prefs.Preferences;
 import startup.App;
 
 //TODO Не работает кнопка отменить
@@ -643,7 +643,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
         Wincalc win = wincalc();
-        win.gson.winresize(win.gson, .0, .03, win.scale);
+        UGeo.winresize(win.gson, .0, .03, win.scale);
     }//GEN-LAST:event_btnTestActionPerformed
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">     

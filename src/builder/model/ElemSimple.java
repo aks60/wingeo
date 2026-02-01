@@ -66,7 +66,7 @@ public abstract class ElemSimple extends Com5t {
     public void addListenerEvents() {
         timer.setRepeats(false);
 
-        ListenerKey keyPressed = (evt) -> {
+        this.winc.keyboardPressed.add((evt) -> {
 
             if (this.area != null && passMask[1] > 0) {
                 LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
@@ -116,13 +116,13 @@ public abstract class ElemSimple extends Com5t {
                     }
                 }
                 if (X < 0 || Y < 0) {
-                    winc.gson.winresize(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
+                    UGeo.winresize(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
                 }
             }
             timer.stop();
             timer.start();
-        };
-        ListenerMouse mousePressed = (evt) -> {
+        });
+        this.winc.mousePressed.add((evt) -> {
             if (this.area != null) {
                 pointPress = evt.getPoint();
                 Coordinate wincPress = new Coordinate((evt.getX() - Canvas.translate[0])
@@ -154,8 +154,8 @@ public abstract class ElemSimple extends Com5t {
                 winc.canvas.requestFocusInWindow();
                 winc.canvas.repaint();
             }
-        };
-        ListenerMouse mouseDragge = (evt) -> {
+        });
+        this.winc.mouseDragged.add((evt) -> {
             if (this.area != null) {
                 double X = 0, Y = 0;
                 double W = winc.canvas.getWidth(), H = winc.canvas.getHeight();
@@ -197,15 +197,11 @@ public abstract class ElemSimple extends Com5t {
                         }
                     }
                     if (X < 0 || Y < 0) {
-                        winc.gson.winresize(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
+                        UGeo.winresize(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
                     }
                 }
             }
-        };
-
-        this.winc.keyboardPressed.add(keyPressed);
-        this.winc.mousePressed.add(mousePressed);
-        this.winc.mouseDragged.add(mouseDragge);
+        });
     }
 
     private void moveXY(double x, double y) {

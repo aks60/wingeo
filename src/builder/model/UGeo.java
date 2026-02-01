@@ -2,8 +2,10 @@ package builder.model;
 
 import builder.making.TRecord;
 import static builder.model.Com5t.gf;
+import builder.script.GsonElem;
 import common.UCom;
 import domain.eArtikl;
+import enums.Type;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -546,6 +548,36 @@ public class UGeo {
         return aff.transform(tip);
     }
 
+    //Перемещение точек на канве (изменение размеров окна)
+    public static void winresize(GsonElem gson, Double dx, Double dy, Double scale) {
+        if (gson.childs != null) {
+            Double dX = (dx == 0) ? 0 : dx / scale;
+            Double dY = (dy == 0) ? 0 : dy / scale;
+            for (GsonElem gs : gson.childs) {
+                if (List.of(Type.IMPOST, Type.STOIKA, Type.SHTULP).contains(gs.type)) {
+                    if (dX != 0) {
+                        gs.x1 += dX;
+                        gs.x2 += dX;
+                    }
+                    if (dY != 0) {
+                        gs.y1 += dY;
+                        gs.y2 += dY;
+                    }
+                } else if (List.of(Type.BOX_SIDE, Type.STV_SIDE).contains(gs.type)) {
+                    if (dX != 0) {
+                        gs.x1 += +dX;
+                    }
+                    if (dY != 0) {
+                        gs.y1 += dY;
+                    }
+                }
+                if (List.of(Type.AREA, Type.STVORKA).contains(gs.type)) {
+                    winresize(gs, dx, dy, scale);
+                }
+            }
+        }
+    }
+    
     public static void PRINT(Geometry g) {
         Coordinate coo[] = g.getCoordinates();
         List<String> list = new ArrayList<String>();
