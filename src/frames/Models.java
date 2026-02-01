@@ -643,7 +643,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
         Wincalc win = wincalc();
-        win.gson.translate(win.gson, .0, .03, win.scale);
+        win.gson.winresize(win.gson, .0, .03, win.scale);
     }//GEN-LAST:event_btnTestActionPerformed
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">     

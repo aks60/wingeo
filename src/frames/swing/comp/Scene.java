@@ -237,13 +237,13 @@ public class Scene extends javax.swing.JPanel {
         JButton btn = (JButton) evt.getSource();
         double dxy = (timer.isRunning() == true) ? 2 : 1;
         if (btn == btnMovDo) {
-            winc.gson.translate(winc.gson, .0, dxy, winc.scale);
+            winc.gson.winresize(winc.gson, .0, dxy, winc.scale);
         } else if (btn == btnMovUp) {
-            winc.gson.translate(winc.gson, .0, -dxy, winc.scale);
+            winc.gson.winresize(winc.gson, .0, -dxy, winc.scale);
         } else if (btn == btnMovLe) {
-            winc.gson.translate(winc.gson, -dxy, .0, winc.scale);
+            winc.gson.winresize(winc.gson, -dxy, .0, winc.scale);
         } else if (btn == btnMovRi) {
-            winc.gson.translate(winc.gson, dxy, .0, winc.scale);
+            winc.gson.winresize(winc.gson, dxy, .0, winc.scale);
         }
         timer.stop();
         timer.start();

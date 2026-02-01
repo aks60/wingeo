@@ -58,7 +58,7 @@ public class GsonRoot extends GsonElem {
     }
 
     //Перемещение на канве
-    public void translate(GsonElem gson, Double dx, Double dy, Double scale) {
+    public void winresize(GsonElem gson, Double dx, Double dy, Double scale) {
         if (gson.childs != null) {
             Double dX = (dx == 0) ? 0 : dx / scale;
             Double dY = (dy == 0) ? 0 : dy / scale;
@@ -81,7 +81,7 @@ public class GsonRoot extends GsonElem {
                     }
                 }
                 if (List.of(Type.AREA, Type.STVORKA).contains(gs.type)) {
-                    translate(gs, dx, dy, scale);
+                    winresize(gs, dx, dy, scale);
                 }
             }
         }

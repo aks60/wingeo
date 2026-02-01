@@ -116,7 +116,7 @@ public abstract class ElemSimple extends Com5t {
                     }
                 }
                 if (X < 0 || Y < 0) {
-                    winc.gson.translate(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
+                    winc.gson.winresize(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
                 }
             }
             timer.stop();
@@ -197,7 +197,7 @@ public abstract class ElemSimple extends Com5t {
                         }
                     }
                     if (X < 0 || Y < 0) {
-                        winc.gson.translate(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
+                        winc.gson.winresize(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
                     }
                 }
             }
