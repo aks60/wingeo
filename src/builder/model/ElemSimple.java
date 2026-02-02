@@ -133,7 +133,7 @@ public abstract class ElemSimple extends Com5t {
                 if (b == true) {
                     ++passMask[1];
                     LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
-                    double coeff = segm.segmentFraction(wincPress); //доля расстояния (в [0,0, 1,0] ) вдоль этого отрезка.
+                    double coeff = segm.segmentFraction(wincPress); //доля расстояния вдоль этого отрезка.
 
                     if (coeff < .33) { //кликнул начало вектора
                         passMask[1] = (passMask[0] != 0) ? 1 : passMask[1];
