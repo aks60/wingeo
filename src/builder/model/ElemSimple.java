@@ -125,8 +125,8 @@ public abstract class ElemSimple extends Com5t {
         this.winc.mousePressed.add((evt) -> {
             if (this.area != null) {
                 pointPress = evt.getPoint();
-                Coordinate wincPress = new Coordinate((evt.getX() - Canvas.translate[0])
-                        / winc.scale, (evt.getY() - Canvas.translate[1]) / winc.scale);
+                Coordinate wincPress = new Coordinate((evt.getX() - Canvas.translateXY[0])
+                        / winc.scale, (evt.getY() - Canvas.translateXY[1]) / winc.scale);
                 boolean b = this.area.contains(gf.createPoint(wincPress));
 
                 //Если клик внутри контура
