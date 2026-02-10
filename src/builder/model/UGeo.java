@@ -549,30 +549,30 @@ public class UGeo {
     }
 
     //Перемещение точек на канве (изменение размеров окна)
-    public static void winresize(GsonElem gson, Double dx, Double dy, Double scale) {
+    public static void resizeGson(GsonElem gson, Double dx, Double dy, Double scale) {
         if (gson.childs != null) {
             Double dX = (dx == 0) ? 0 : dx / scale;
             Double dY = (dy == 0) ? 0 : dy / scale;
-            for (GsonElem gs : gson.childs) {
-                if (List.of(Type.IMPOST, Type.STOIKA, Type.SHTULP).contains(gs.type)) {
+            for (GsonElem child : gson.childs) {
+                if (List.of(Type.IMPOST, Type.STOIKA, Type.SHTULP).contains(child.type)) {
                     if (dX != 0) {
-                        gs.x1 += dX;
-                        gs.x2 += dX;
+                        child.x1 += dX;
+                        child.x2 += dX;
                     }
                     if (dY != 0) {
-                        gs.y1 += dY;
-                        gs.y2 += dY;
+                        child.y1 += dY;
+                        child.y2 += dY;
                     }
-                } else if (List.of(Type.BOX_SIDE, Type.STV_SIDE).contains(gs.type)) {
+                } else if (List.of(Type.BOX_SIDE, Type.STV_SIDE).contains(child.type)) {
                     if (dX != 0) {
-                        gs.x1 += +dX;
+                        child.x1 += +dX;
                     }
                     if (dY != 0) {
-                        gs.y1 += dY;
+                        child.y1 += dY;
                     }
                 }
-                if (List.of(Type.AREA, Type.STVORKA).contains(gs.type)) {
-                    winresize(gs, dx, dy, scale);
+                if (List.of(Type.AREA, Type.STVORKA).contains(child.type)) {
+                    resizeGson(child, dx, dy, scale);
                 }
             }
         }

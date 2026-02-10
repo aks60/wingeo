@@ -116,7 +116,7 @@ public abstract class ElemSimple extends Com5t {
                     }
                 }
                 if (X < 0 || Y < 0) {
-                    UGeo.winresize(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
+                    UGeo.resizeGson(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
                 }
             }
             timer.stop();
@@ -197,14 +197,14 @@ public abstract class ElemSimple extends Com5t {
                         }
                     }
                     if (X < 0 || Y < 0) {
-                        UGeo.winresize(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
+                        UGeo.resizeGson(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
                     }
                 }
             }
         });
     }
 
-    private void moveXY(double x, double y) {
+    public void moveXY(double x, double y) {
 
         if (x > 0 || y > 0) {
             if (List.of(Layout.BOT, Layout.HOR).contains(layout())) {

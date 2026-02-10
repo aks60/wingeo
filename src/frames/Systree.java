@@ -70,6 +70,7 @@ import builder.making.TJoining;
 import builder.making.UColor;
 import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
+import builder.model.ElemFrame;
 import builder.model.ElemGlass;
 import builder.model.ElemJoining;
 import builder.model.ElemMosquit;
@@ -4309,7 +4310,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_colorFromLock
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(wincalc().gson.toJson())));
+        Wincalc winc = wincalc();
+        ElemFrame frm = (ElemFrame) winc.root.frames.get(0);
+        double x = frm.x1() + 8;
+        frm.moveXY(x, 0);
+        winc.canvas.requestFocusInWindow();
+        winc.canvas.repaint();
+
+        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(wincalc().gson.toJson())));
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void colorFromGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromGlass

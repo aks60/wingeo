@@ -236,13 +236,13 @@ public class Scene extends javax.swing.JPanel {
         JButton btn = (JButton) evt.getSource();
         double dxy = (timer.isRunning() == true) ? 2 : 1;
         if (btn == btnMovDo) {
-            UGeo.winresize(winc.gson, .0, dxy, winc.scale);
+            UGeo.resizeGson(winc.gson, .0, dxy, winc.scale);
         } else if (btn == btnMovUp) {
-            UGeo.winresize(winc.gson, .0, -dxy, winc.scale);
+            UGeo.resizeGson(winc.gson, .0, -dxy, winc.scale);
         } else if (btn == btnMovLe) {
-            UGeo.winresize(winc.gson, -dxy, .0, winc.scale);
+            UGeo.resizeGson(winc.gson, -dxy, .0, winc.scale);
         } else if (btn == btnMovRi) {
-            UGeo.winresize(winc.gson, dxy, .0, winc.scale);
+            UGeo.resizeGson(winc.gson, dxy, .0, winc.scale);
         }
         timer.stop();
         timer.start();
