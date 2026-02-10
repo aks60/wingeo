@@ -549,7 +549,7 @@ public class UGeo {
         return aff.transform(tip);
     }
 
-    //Перемещение gson (точек на канве)
+    //Перемещение окна (всех точек на канве)
     public static void moveGson(GsonElem gson, Double dx, Double dy, Double scale) {
         if (gson.childs != null) {
             Double dX = (dx == 0) ? 0 : dx / scale;
@@ -579,7 +579,7 @@ public class UGeo {
         }
     }
 
-    //Изменение размера окна
+    //Изменение размера окна (потянул точку)
     public static void moveXY(ElemSimple elem, double x, double y) {
 
         if (x > 0 || y > 0) {
