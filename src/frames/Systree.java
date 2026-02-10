@@ -75,12 +75,12 @@ import builder.model.ElemGlass;
 import builder.model.ElemJoining;
 import builder.model.ElemMosquit;
 import builder.model.ElemSimple;
+import builder.model.UGeo;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import common.eProp;
 import common.listener.ListenerAction;
 import domain.eJoinvar;
@@ -4313,7 +4313,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         Wincalc winc = wincalc();
         ElemFrame frm = (ElemFrame) winc.root.frames.get(0);
         double x = frm.x1() + 8;
-        frm.moveXY(x, 0);
+        UGeo.moveXY(frm, x, 0);
         winc.canvas.requestFocusInWindow();
         winc.canvas.repaint();
 

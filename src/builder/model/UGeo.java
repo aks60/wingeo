@@ -5,6 +5,7 @@ import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
 import common.UCom;
 import domain.eArtikl;
+import enums.Layout;
 import enums.Type;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -219,7 +220,7 @@ public class UGeo {
             }
             outList.add(Com5t.gf.createPolygon(cooL.toArray(new Coordinate[0])).norm());
             outList.add(Com5t.gf.createPolygon(cooR.toArray(new Coordinate[0])).norm());
-            
+
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.splitPolygon()" + e);
         }
@@ -548,8 +549,8 @@ public class UGeo {
         return aff.transform(tip);
     }
 
-    //Перемещение точек на канве (изменение размеров окна)
-    public static void resizeGson(GsonElem gson, Double dx, Double dy, Double scale) {
+    //Перемещение gson (точек на канве)
+    public static void moveGson(GsonElem gson, Double dx, Double dy, Double scale) {
         if (gson.childs != null) {
             Double dX = (dx == 0) ? 0 : dx / scale;
             Double dY = (dy == 0) ? 0 : dy / scale;
@@ -572,12 +573,44 @@ public class UGeo {
                     }
                 }
                 if (List.of(Type.AREA, Type.STVORKA).contains(child.type)) {
-                    resizeGson(child, dx, dy, scale);
+                    moveGson(child, dx, dy, scale);
                 }
             }
         }
     }
-    
+
+    //Изменение размера окна
+    public static void moveXY(ElemSimple elem, double x, double y) {
+
+        if (x > 0 || y > 0) {
+            if (List.of(Layout.BOT, Layout.HOR).contains(elem.layout())) {
+                if (elem.passMask[0] == 0) {
+                    elem.y1(y);
+                } else if (elem.passMask[0] == 1) {
+                    elem.y2(y);
+                }
+            } else if (List.of(Layout.RIG).contains(elem.layout())) {
+                if (elem.passMask[0] == 0) {
+                    elem.x1(x);
+                } else if (elem.passMask[0] == 1) {
+                    elem.x2(x);
+                }
+            } else if (List.of(Layout.TOP).contains(elem.layout())) {
+                if (elem.passMask[0] == 0) {
+                    elem.y1(y);
+                } else if (elem.passMask[0] == 1) {
+                    elem.y2(y);
+                }
+            } else if (List.of(Layout.LEF, Layout.VER).contains(elem.layout())) {
+                if (elem.passMask[0] == 0) {
+                    elem.x1(x);
+                } else if (elem.passMask[0] == 1) {
+                    elem.x2(x);
+                }
+            }
+        }
+    }
+
     public static void PRINT(Geometry g) {
         Coordinate coo[] = g.getCoordinates();
         List<String> list = new ArrayList<String>();
@@ -609,7 +642,7 @@ public class UGeo {
         segInner.p1.z = segShell.p1.z;
         return segInner;
     }
-    
+
     public static void drawVector(Graphics2D g2d, int x1, int y1, int x2, int y2) {
         g2d.drawLine(x1, y1, x2, y2); // Линия вектора
 
@@ -618,14 +651,14 @@ public class UGeo {
         int arrowLen = 15; // Длина наконечника
         int arrowWidth = 10; // Угол раствора наконечника
 
-        g2d.drawLine(x2, y2, 
-            (int) (x2 - arrowLen * Math.cos(angle - Math.toRadians(30))),
-            (int) (y2 - arrowLen * Math.sin(angle - Math.toRadians(30))));
-        g2d.drawLine(x2, y2, 
-            (int) (x2 - arrowLen * Math.cos(angle + Math.toRadians(30))),
-            (int) (y2 - arrowLen * Math.sin(angle + Math.toRadians(30))));
+        g2d.drawLine(x2, y2,
+                (int) (x2 - arrowLen * Math.cos(angle - Math.toRadians(30))),
+                (int) (y2 - arrowLen * Math.sin(angle - Math.toRadians(30))));
+        g2d.drawLine(x2, y2,
+                (int) (x2 - arrowLen * Math.cos(angle + Math.toRadians(30))),
+                (int) (y2 - arrowLen * Math.sin(angle + Math.toRadians(30))));
     }
-    
+
 // <editor-fold defaultstate="collapsed" desc="TEMP">    
 //
 //    public static Geometry polygonize(Geometry geometry) {

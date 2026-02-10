@@ -5,14 +5,9 @@ import builder.making.TRecord;
 import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
 import common.UCom;
-import common.listener.ListenerKey;
-import common.listener.ListenerMouse;
-import domain.eColor;
 import enums.Layout;
 import enums.Type;
 import frames.swing.comp.Canvas;
-import java.awt.Color;
-import java.awt.Shape;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Rectangle2D;
@@ -20,7 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 import javax.swing.Timer;
-import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineSegment;
 
@@ -88,13 +82,13 @@ public abstract class ElemSimple extends Com5t {
                 if (passMask[0] == 0) {
                     X = dX / winc.scale + this.x1();
                     Y = dY / winc.scale + this.y1();
-                    moveXY(X, Y);
+                    UGeo.moveXY(this, X, Y);
 
                     // ликнул конец вектора
                 } else if (passMask[0] == 1) {
                     X = dX / winc.scale + this.x2();
                     Y = dY / winc.scale + this.y2();
-                    moveXY(X, Y);
+                    UGeo.moveXY(this, X, Y);
 
                     // ликнул по середине вектора 
                 } else if (passMask[0] == 2) {
@@ -116,7 +110,7 @@ public abstract class ElemSimple extends Com5t {
                     }
                 }
                 if (X < 0 || Y < 0) {
-                    UGeo.resizeGson(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
+                    UGeo.moveGson(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
                 }
             }
             timer.stop();
@@ -169,12 +163,12 @@ public abstract class ElemSimple extends Com5t {
                     if (passMask[0] == 0) { //начало вектора
                         X = dX / winc.scale + x1();
                         Y = dY / winc.scale + y1();
-                        moveXY(X, Y);
+                        UGeo.moveXY(this, X, Y);
 
                     } else if (passMask[0] == 1) { //конец вектора
                         X = dX / winc.scale + x2();
                         Y = dY / winc.scale + y2();
-                        moveXY(X, Y);
+                        UGeo.moveXY(this, X, Y);
 
                     } else if (passMask[0] == 2) { //середина вектора
                         X = dX / winc.scale + x2();
@@ -197,45 +191,11 @@ public abstract class ElemSimple extends Com5t {
                         }
                     }
                     if (X < 0 || Y < 0) {
-                        UGeo.resizeGson(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
+                        UGeo.moveGson(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
                     }
                 }
             }
         });
-    }
-
-    public void moveXY(double x, double y) {
-
-        if (x > 0 || y > 0) {
-            if (List.of(Layout.BOT, Layout.HOR).contains(layout())) {
-                if (passMask[0] == 0) {
-                    this.y1(y);
-                } else if (passMask[0] == 1) {
-                    this.y2(y);
-                }
-            } else if (List.of(Layout.RIG).contains(layout())) {
-                if (passMask[0] == 0) {
-                    this.x1(x);
-                } else if (passMask[0] == 1) {
-                    this.x2(x);
-                }
-            } else if (List.of(Layout.TOP).contains(layout())) {
-                if (passMask[0] == 0) {
-                    this.y1(y);
-                } else if (passMask[0] == 1) {
-                    this.y2(y);
-                }
-            } else if (List.of(Layout.LEF, Layout.VER).contains(layout())) {
-                if (passMask[0] == 0) {
-                    this.x1(x);
-                } else if (passMask[0] == 1) {
-                    this.x2(x);
-                }
-            }
-        }
-//        if(this instanceof ElemCross) {
-//            UGeo.normalizeElem(this);
-//        }        
     }
 
     @Override
