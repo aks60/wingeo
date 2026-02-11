@@ -62,29 +62,35 @@ public class AreaStvorka extends AreaSimple {
     }
 
     public void initStvorka() {
-        if (this.frames.isEmpty()) {
-            //owner.area - если нет полигона створки в гл.окне 
-            //this.area  - получатется при распиле owner.area импостом
-            Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST).isEmpty()) || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
+        //Если нет полигона створки в гл.окне то 'owner.area', иначе 'this.area', получается при распиле owner.area импостом
+        Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST).isEmpty()) || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
 
-            //Полигон створки с учётом нахлёста 
-            double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            Polygon stvShell = UGeo.bufferGeometry(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
-            Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
-            for (int i = 0; i < coo.length - 1; i++) {
+        //Полигон створки с учётом нахлёста 
+        boolean isEmpty = this.frames.isEmpty();
+        double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
+        Polygon stvShell = UGeo.bufferGeometry(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
+        Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
+        for (int i = 0; i < coo.length - 1; i++) {
 
+            double ID = this.id + (.1 + Double.valueOf(i) / 10);
+            if (isEmpty == true) {
                 //Координаты рам створок
                 GsonElem gson = new GsonElem(Type.STV_SIDE, coo[i].x, coo[i].y);
                 //Впихнул параметры в gson
                 if (isFinite(this.gson.param, PKjson.stvorkaSide[i])) {
                     gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
                 }
-                ElemFrame sideStv = new ElemFrame(this.winc, this.id + (.1 + Double.valueOf(i) / 10), gson, this);
+                ElemFrame sideStv = new ElemFrame(this.winc, ID, gson, this);
                 this.frames.add(sideStv);
                 coo[i].z = sideStv.id;
+            } else {
+                ElemSimple sideStv = this.frames.stream().filter(e -> e.id == ID).findFirst().get();
+                sideStv.x1(coo[i].x);
+                sideStv.y1(coo[i].y);
+                coo[i].z = sideStv.id;
             }
-            coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки  
         }
+        coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки  
     }
 
     /**
