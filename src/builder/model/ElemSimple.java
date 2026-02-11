@@ -150,49 +150,46 @@ public abstract class ElemSimple extends Com5t {
             }
         });
         this.winc.mouseDragged.add((evt) -> {
-            if (this.area != null) {
+            //Фильтр движухи откл. когда passMask[1] > 1 
+            if (passMask[1] > 1 && this.area != null) {
+                
                 double X = 0, Y = 0;
-                double W = winc.canvas.getWidth(), H = winc.canvas.getHeight();
                 double dX = evt.getX() - pointPress.getX(); //прирощение по горизонтали
                 double dY = evt.getY() - pointPress.getY(); //прирощение по вертикали 
+                pointPress = evt.getPoint(); //новое положение клика точки
 
-                //Фильтр движухи вкл-ся когда passMask[1] > 1 !!! 
-                if (passMask[1] > 1) {
-                    pointPress = evt.getPoint();
+                if (passMask[0] == 0) { //начало вектора
+                    X = dX / winc.scale + x1();
+                    Y = dY / winc.scale + y1();
+                    UGeo.moveXY(this, X, Y);
 
-                    if (passMask[0] == 0) { //начало вектора
-                        X = dX / winc.scale + x1();
-                        Y = dY / winc.scale + y1();
-                        UGeo.moveXY(this, X, Y);
+                } else if (passMask[0] == 1) { //конец вектора
+                    X = dX / winc.scale + x2();
+                    Y = dY / winc.scale + y2();
+                    UGeo.moveXY(this, X, Y);
 
-                    } else if (passMask[0] == 1) { //конец вектора
-                        X = dX / winc.scale + x2();
-                        Y = dY / winc.scale + y2();
-                        UGeo.moveXY(this, X, Y);
-
-                    } else if (passMask[0] == 2) { //середина вектора
-                        X = dX / winc.scale + x2();
-                        Y = dY / winc.scale + y2();
-                        if (Y > 0 && List.of(Layout.BOT, Layout.TOP, Layout.HOR).contains(layout())) {
-                            if (this.h() != null) {
-                                this.h(this.h() - dY / winc.scale);
-                            } else {
-                                this.y1(Y);
-                                this.y2(Y);
-                            }
-                        }
-                        if (X > 0 && List.of(Layout.LEF, Layout.RIG, Layout.VER).contains(layout())) {
-                            if (this.h() != null) {
-                                this.h(this.h() - dX / winc.scale);
-                            } else {
-                                this.x1(X);
-                                this.x2(X);
-                            }
+                } else if (passMask[0] == 2) { //середина вектора
+                    X = dX / winc.scale + x2();
+                    Y = dY / winc.scale + y2();
+                    if (Y > 0 && List.of(Layout.BOT, Layout.TOP, Layout.HOR).contains(layout())) {
+                        if (this.h() != null) {
+                            this.h(this.h() - dY / winc.scale);
+                        } else {
+                            this.y1(Y);
+                            this.y2(Y);
                         }
                     }
-                    if (X < 0 || Y < 0) {
-                        UGeo.moveGson(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
+                    if (X > 0 && List.of(Layout.LEF, Layout.RIG, Layout.VER).contains(layout())) {
+                        if (this.h() != null) {
+                            this.h(this.h() - dX / winc.scale);
+                        } else {
+                            this.x1(X);
+                            this.x2(X);
+                        }
                     }
+                }
+                if (X < 0 || Y < 0) {
+                    UGeo.moveGson(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
                 }
             }
         });
@@ -261,7 +258,7 @@ public abstract class ElemSimple extends Com5t {
                     };
                 }
             }
-        }  else if (this.area != null) {
+        } else if (this.area != null) {
             //Shape shape1 = new ShapeWriter().toShape(this.area.getGeometryN(0));
             //Shape shape2 = new ShapeWriter().toShape(this.area.getGeometryN(1));
             //Shape shape3 = new ShapeWriter().toShape(this.area.getGeometryN(2));
@@ -270,7 +267,6 @@ public abstract class ElemSimple extends Com5t {
             //winc.gc2d.fill(shape1);
             //winc.gc2d.fill(shape2);
             //winc.gc2d.fill(shape3);
-
             //winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
             //winc.gc2d.draw(shape1);
             //winc.gc2d.draw(shape2);
