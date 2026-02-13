@@ -175,7 +175,7 @@ public class UGeo {
 
             //Вставим точки пересечения в список коорд.
             for (int i = 1; i < coo.length; i++) {
-                Coordinate crosP = Intersection.lineSegment(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения сегмента и линии                
+                Coordinate crosP = Intersection.lineSegment(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения прямой и отрезка                
                 hsCheck.add(coo[i]);
                 //Вставим точку в сегмент
                 if (crosP != null) {
