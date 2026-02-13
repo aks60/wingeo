@@ -23,10 +23,8 @@ public abstract class ElemSimple extends Com5t {
     //public double[] anglFlat = {0, 0, 0, 0}; //мин/мах внутренний и мин/мах внешний угол к плоскости   
     public double[] betweenHoriz = {0, 0}; //угол между векторами   
     private java.awt.Point pointPress = null;
-    public int passMask[] = {0, 0}; //маска редактир. [0]=0 -начало, [0]=1 -конец, 
-    //[0]=2 -середина вектора, [1] > 0 -вешаем обр. прорисовки кружка и разр. редактиров. x,y
+    public int passMask[] = {0, 0}; //маска [0]=0 -начало, [0]=1 -конец, [0]=2 -середина, [1]>0 -прорисовка кружка и разр. редакт. x,y
     public final double delta = 3;
-    public final double SIZE = 20;
     private Timer timer = new Timer(160, null);
     public TRecord spcRec = null; //спецификация элемента
 
@@ -143,7 +141,6 @@ public abstract class ElemSimple extends Com5t {
                     }
                 } else { //Промах, всё обнуляю
                     passMask = UCom.getArr(0, 0);
-                    root.listenerPassEdit = null;
                 }
                 winc.canvas.requestFocusInWindow();
                 winc.canvas.repaint();
@@ -152,7 +149,7 @@ public abstract class ElemSimple extends Com5t {
         this.winc.mouseDragged.add((evt) -> {
             //Фильтр движухи откл. когда passMask[1] > 1 
             if (passMask[1] > 1 && this.area != null) {
-                
+
                 double X = 0, Y = 0;
                 double dX = evt.getX() - pointPress.getX(); //прирощение по горизонтали
                 double dY = evt.getY() - pointPress.getY(); //прирощение по вертикали 
@@ -218,60 +215,8 @@ public abstract class ElemSimple extends Com5t {
         return Layout.ANY;
     }
 
-    //Точка редактирования конструкции
     @Override
     public void paint() {
-        if (winc.sceleton == false) {
-            if (this.area != null) {
-                if (this.passMask[1] > 0) {
-
-                    this.root.listenerPassEdit = () -> {  //вешаем глобальный обработчик!
-                        winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
-
-                        //Хвост вектора, точка круг
-                        if (this.passMask[0] == 0) {
-                            Arc2D arc = new Arc2D.Double(this.x1() - SIZE / 2, this.y1() - SIZE / 2, SIZE, SIZE, 0, 360, Arc2D.OPEN);
-                            winc.gc2d.draw(arc);
-
-                            //Начало вектора. точка круг
-                        } else if (this.passMask[0] == 1) {
-                            Arc2D arc = new Arc2D.Double(this.x2() - SIZE / 2, this.y2() - SIZE / 2, SIZE, SIZE, 0, 360, Arc2D.OPEN);
-                            winc.gc2d.draw(arc);
-
-                            //Середина вектора. точка квадрат
-                        } else if (this.passMask[0] == 2) {
-                            if (this.h() != null) { //арка
-                                List<Coordinate> list = Arrays.asList(owner.area.getGeometryN(0).getCoordinates())
-                                        .stream().filter(c -> c.z == this.id).collect(toList());
-                                int i = list.size() / 2; //index середины дуги
-                                Coordinate c1 = list.get(i), c2 = list.get(i + 1);
-                                Coordinate smid = new LineSegment(c1.x, c1.y, c2.x, c2.y).midPoint();
-                                Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
-                                winc.gc2d.draw(rec);
-
-                            } else {
-                                Coordinate smid = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2()).midPoint();
-                                Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
-                                winc.gc2d.draw(rec);
-                            }
-                        }
-                    };
-                }
-            }
-        } else if (this.area != null) {
-            //Shape shape1 = new ShapeWriter().toShape(this.area.getGeometryN(0));
-            //Shape shape2 = new ShapeWriter().toShape(this.area.getGeometryN(1));
-            //Shape shape3 = new ShapeWriter().toShape(this.area.getGeometryN(2));
-
-            //winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-            //winc.gc2d.fill(shape1);
-            //winc.gc2d.fill(shape2);
-            //winc.gc2d.fill(shape3);
-            //winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
-            //winc.gc2d.draw(shape1);
-            //winc.gc2d.draw(shape2);
-            //winc.gc2d.draw(shape3);            
-        }
     }
 
     public void setDimension(double x1, double y1, double x2, double y2) {

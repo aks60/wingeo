@@ -15,15 +15,19 @@ import enums.*;
 import java.awt.Font;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Arc2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import static java.util.stream.Collectors.toList;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
 import startup.Test;
@@ -31,7 +35,6 @@ import startup.Test;
 public class AreaSimple extends Com5t {
 
     public ArrayList<ElemSimple> frames = new ArrayList<ElemSimple>(); //список рам
-    public ListenerPaint listenerPassEdit = null; //дл€ прорисовки точек движени€ сегментов
     public ArrayList<Com5t> childs = new ArrayList<Com5t>(); //дети
 
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
@@ -112,8 +115,40 @@ public class AreaSimple extends Com5t {
         try {
             if (winc.sceleton == false) {
                 if (this.type != Type.STVORKA) {
-                    if (listenerPassEdit != null) {
-                        listenerPassEdit.paint();
+                    for (ElemSimple el : this.frames) {
+                        if (el.passMask[1] > 0) {
+
+                            double SIZE = 20;
+                            winc.gc2d.setColor(new java.awt.Color(255, 000, 000));
+
+                            //’вост вектора, точка круг
+                            if (el.passMask[0] == 0) {
+                                Arc2D arc = new Arc2D.Double(el.x1() - SIZE / 2, el.y1() - SIZE / 2, SIZE, SIZE, 0, 360, Arc2D.OPEN);
+                                winc.gc2d.draw(arc);
+
+                                //Ќачало вектора. точка круг
+                            } else if (el.passMask[0] == 1) {
+                                Arc2D arc = new Arc2D.Double(el.x2() - SIZE / 2, el.y2() - SIZE / 2, SIZE, SIZE, 0, 360, Arc2D.OPEN);
+                                winc.gc2d.draw(arc);
+
+                                //—ередина вектора. точка квадрат
+                            } else if (el.passMask[0] == 2) {
+                                if (el.h() != null) { //арка
+                                    List<Coordinate> list = Arrays.asList(owner.area.getGeometryN(0).getCoordinates())
+                                            .stream().filter(c -> c.z == el.id).collect(toList());
+                                    int i = list.size() / 2; //index середины дуги
+                                    Coordinate c1 = list.get(i), c2 = list.get(i + 1);
+                                    Coordinate smid = new LineSegment(c1.x, c1.y, c2.x, c2.y).midPoint();
+                                    Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
+                                    winc.gc2d.draw(rec);
+
+                                } else {
+                                    Coordinate smid = new LineSegment(el.x1(), el.y1(), el.x2(), el.y2()).midPoint();
+                                    Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
+                                    winc.gc2d.draw(rec);
+                                }
+                            }
+                        }
                     }
                     winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
                     Envelope frameEnvelope = winc.root.area.getGeometryN(0).getEnvelopeInternal();
