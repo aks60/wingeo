@@ -26,6 +26,7 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import java.util.Map;
 import java.util.Set;
+import org.locationtech.jts.algorithm.CGAlgorithmsDD;
 import org.locationtech.jts.geom.LinearRing;
 
 /**
@@ -416,8 +417,8 @@ public class UGeo {
                 segLeftShell.setCoordinates(listShell.get(i), listShell.get(k));
                 segLeftInner = segmentOffset(segLeftShell, -hmDist.get(id2));
 
-                //Точка пересечения сегментов
-                cross = segLeftInner.intersection(segRighInner);
+                //Точка пересечениялиний сегментов
+                cross = Intersection.intersection(segLeftInner.p0, segLeftInner.p1, segRighInner.p0, segRighInner.p1);
 
                 if (cross != null) {
                     cross.z = listShell.get(i).z;
