@@ -184,9 +184,13 @@ public class AreaStvorka extends AreaSimple {
             Polygon stvShell = UGeo.bufferGeometry(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учЄтом нахл.
             Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
             for (int i = 0; i < coo.length - 1; i++) {
+                //«апишем координаты
                 ElemSimple elem = this.frames.get(i);
                 coo[i].z = elem.id;
-                elem.setDimension(coo[i].x, coo[i].y, coo[i + 1].x, coo[i + 1].y); //запишем координаты
+                elem.gson.x1 = coo[i].x;
+                elem.gson.y1 = coo[i].y;
+                elem.gson.x2 = coo[i + 1].x;
+                elem.gson.y2 = coo[i + 1].y;
             }
             coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
 

@@ -4313,7 +4313,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         Wincalc winc = wincalc();
         ElemFrame frm = (ElemFrame) winc.root.frames.get(0);
         double x = frm.x1() + 8;
-        UGeo.moveXY(frm, x, 0);
+        UGeo.movePoint(frm, x, 0);
         winc.canvas.requestFocusInWindow();
         winc.canvas.repaint();
 
