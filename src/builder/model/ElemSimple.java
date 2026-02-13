@@ -121,10 +121,10 @@ public abstract class ElemSimple extends Com5t {
                 pointPress = evt.getPoint();
                 Coordinate wincPress = new Coordinate((evt.getX() - Canvas.translateXY[0])
                         / winc.scale, (evt.getY() - Canvas.translateXY[1]) / winc.scale);
-                boolean b = this.area.contains(gf.createPoint(wincPress));
+                boolean inside = this.area.contains(gf.createPoint(wincPress));
 
                 //Если клик внутри контура
-                if (b == true) {
+                if (inside == true) {
                     ++passMask[1];
                     LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                     double coeff = segm.segmentFraction(wincPress); //доля расстояния вдоль этого отрезка.
