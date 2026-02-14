@@ -80,13 +80,13 @@ public abstract class ElemSimple extends Com5t {
                 if (passMask[0] == 0) {
                     X = dX / winc.scale + this.x1();
                     Y = dY / winc.scale + this.y1();
-                    UGeo.moveXY(this, X, Y);
+                    UGeo.movePoint(this, X, Y);
 
                     // ликнул конец вектора
                 } else if (passMask[0] == 1) {
                     X = dX / winc.scale + this.x2();
                     Y = dY / winc.scale + this.y2();
-                    UGeo.moveXY(this, X, Y);
+                    UGeo.movePoint(this, X, Y);
 
                     // ликнул по середине вектора 
                 } else if (passMask[0] == 2) {
@@ -158,12 +158,12 @@ public abstract class ElemSimple extends Com5t {
                 if (passMask[0] == 0) { //начало вектора
                     X = dX / winc.scale + x1();
                     Y = dY / winc.scale + y1();
-                    UGeo.moveXY(this, X, Y);
+                    UGeo.movePoint(this, X, Y);
 
                 } else if (passMask[0] == 1) { //конец вектора
                     X = dX / winc.scale + x2();
                     Y = dY / winc.scale + y2();
-                    UGeo.moveXY(this, X, Y);
+                    UGeo.movePoint(this, X, Y);
 
                 } else if (passMask[0] == 2) { //середина вектора
                     X = dX / winc.scale + x2();
@@ -217,13 +217,6 @@ public abstract class ElemSimple extends Com5t {
 
     @Override
     public void paint() {
-    }
-
-    public void setDimension(double x1, double y1, double x2, double y2) {
-        gson.x1 = x1;
-        gson.y1 = y1;
-        gson.x2 = x2;
-        gson.y2 = y2;
     }
 
     @Override
