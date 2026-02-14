@@ -90,6 +90,7 @@ public class UGeo {
         return Math.toDegrees(Math.asin(spcRec.height / gip));
     }
 
+    //Арка полигона    
     public static Geometry polyCurve(Geometry geoShell, Geometry geoInner, double ID) {
 
         Coordinate cooShell[] = geoShell.getCoordinates();
@@ -112,13 +113,8 @@ public class UGeo {
         return gf.createPolygon(listFrame.toArray(new Coordinate[0])); //полигон рамы арки
     }
 
+    //Длина арки
     public static double lengthCurve(Geometry geoArea, double id) {
-//        Test.init(area);
-//        List<Coordinate> all = List.of(area.getCoordinates());
-//        List<Coordinate> list = all.stream().filter(c -> c.z == id).collect(toList());
-//        list.add(all.get(0));
-//        LineString line = gf.createLineString(list.toArray(new Coordinate[0]));
-//        return line.getLength();
 
         Coordinate[] cooArea = geoArea.getCoordinates();
         double width = 0;
@@ -156,7 +152,7 @@ public class UGeo {
             return out.toArray(new Coordinate[0]);
 
         } catch (Exception e) {
-            System.err.println("geoIntersect" + e);
+            System.err.println("Error: UGeo.crossGeoOfLine()" + e);
         }
         return null;
     }
