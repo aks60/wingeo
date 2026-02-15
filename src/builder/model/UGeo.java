@@ -483,10 +483,6 @@ public class UGeo {
         return Com5t.gf.createPolygon(list.toArray(new Coordinate[0]));
     }
 
-    public static LineSegment newSegment(LineString line) {
-        return new LineSegment(line.getCoordinateN(0), line.getCoordinateN(1));
-    }
-
     public static LineSegment getSegment(Geometry poly, int index) {
         poly = poly.getGeometryN(0);
         Coordinate[] coo = Arrays.copyOf(poly.getCoordinates(), poly.getNumPoints() - 1);

@@ -115,7 +115,9 @@ public class AreaSimple extends Com5t {
         try {
             if (winc.sceleton == false) {
                 if (this.type != Type.STVORKA) {
-                    for (ElemSimple el : this.frames) { //Точки движения сегментов
+                    ArrayList<ElemSimple> elems = UCom.filter(winc.listElem,
+                            Type.BOX_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA);
+                    for (ElemSimple el : elems) { //Точки движения сегментов
                         if (el.passMask[1] > 0) {
 
                             double SIZE = 20;
