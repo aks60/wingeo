@@ -66,28 +66,26 @@ public class AreaStvorka extends AreaSimple {
         Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST).isEmpty()) || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
 
         //Полигон створки с учётом нахлёста 
-        boolean isEmpty = this.frames.isEmpty();
         double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
         Polygon stvShell = UGeo.bufferGeometry(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
         Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
         for (int i = 0; i < coo.length - 1; i++) {
 
             double ID = this.id + (.1 + Double.valueOf(i) / 10);
-            if (isEmpty == true) {
-                //Координаты рам створок
-                GsonElem gson = new GsonElem(Type.STV_SIDE, coo[i].x, coo[i].y);
-                //Впихнул параметры в gson
-                if (isFinite(this.gson.param, PKjson.stvorkaSide[i])) {
-                    gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
-                }
-                ElemFrame sideStv = new ElemFrame(this.winc, ID, gson, this);
-                this.frames.add(sideStv);
-                coo[i].z = sideStv.id;
-            } else {
-                ElemSimple sideStv = this.frames.stream().filter(e -> e.id == ID).findFirst().get();
+            ElemSimple sideStv = this.frames.stream().filter(rec -> rec.id == ID).findFirst().orElse(null);
+
+            if (sideStv != null) {
                 sideStv.x1(coo[i].x);
                 sideStv.y1(coo[i].y);
                 coo[i].z = sideStv.id;
+            } else {
+                GsonElem gson = new GsonElem(Type.STV_SIDE, coo[i].x, coo[i].y);
+                if (isFinite(this.gson.param, PKjson.stvorkaSide[i])) { //впихнул параметры в gson
+                    gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
+                }
+                ElemFrame newStv = new ElemFrame(this.winc, ID, gson, this);
+                this.frames.add(newStv);
+                coo[i].z = newStv.id;
             }
         }
         coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки  
