@@ -332,9 +332,7 @@ public class UGeo {
             List<Coordinate> listOut = new ArrayList(listShell);
             listOut.addAll(listBuffer);
             listOut.add(listOut.get(0));
-            Polygon geoBuffer = gf.createPolygon(listOut.toArray(new Coordinate[0]));
-
-            result = geoBuffer;
+            result = gf.createPolygon(listOut.toArray(new Coordinate[0]));
 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.bufferRectangl() " + e);
