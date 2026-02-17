@@ -58,17 +58,17 @@ public abstract class ElemSimple extends Com5t {
 
     public abstract void addSpecific(TRecord spcAdd);
 
-    public void addListenerEvents() {        
+    public void addListenerEvents() {
 
-        this.winc.keyboardPressed.add((evt) -> {
+        this.winc.keyboardPressed.add((var evt) -> {
 
             if (this.area != null && passMask[1] > 0) {
-                
+
                 int key = evt.getKeyCode();
                 LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                 //При нажатой клавише timerKey.isRunning() всегда true
                 double dxy = (timerKey.isRunning() == true) ? 0.04 : 0.1 * winc.scale;
-                
+
                 double X = 0, Y = 0, dX = 0, dY = 0;
                 if (key == KeyEvent.VK_UP) {
                     dY = -dxy;
@@ -113,9 +113,9 @@ public abstract class ElemSimple extends Com5t {
                 if (X < 0 || Y < 0) {
                     UGeo.moveGson(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
                 }
+                timerKey.stop();
+                timerKey.start();
             }
-            timerKey.stop();
-            timerKey.start();
         });
         this.winc.mousePressed.add((evt) -> {
             if (this.area != null) {
