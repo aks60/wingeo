@@ -13,7 +13,7 @@ public class Scene extends javax.swing.JPanel {
     private ListenerReload listenerReload = null;
     private ListenerAction listenerAction = null;
     public Wincalc winc = null;
-    private Timer timer = new javax.swing.Timer(500, null); //залаёт инкриментную скорость коорд...
+    private Timer timer = new javax.swing.Timer(500, null); //инкриментная скорость коорд...
 
     public Scene(Canvas canvas, ListenerReload listenerReload, ListenerAction listenerAction) {
         initComponents();
@@ -21,6 +21,7 @@ public class Scene extends javax.swing.JPanel {
         this.listenerReload = listenerReload;
         this.listenerAction = listenerAction;
         //this.pan2.setVisible(false);
+        timer.setRepeats(false);
         add(canvas, java.awt.BorderLayout.CENTER);
     }
 
@@ -29,6 +30,7 @@ public class Scene extends javax.swing.JPanel {
         this.canvas = canvas;
         this.listenerReload = listenerReload;
         //this.pan2.setVisible(false);
+        timer.setRepeats(false);
         add(canvas, java.awt.BorderLayout.CENTER);
     }
 
@@ -232,7 +234,7 @@ public class Scene extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMove
-        timer.setRepeats(false);
+     
         JButton btn = (JButton) evt.getSource();
         double dxy = (timer.isRunning() == true) ? 2 : 1;
         if (btn == btnMovDo) {

@@ -25,7 +25,7 @@ public abstract class ElemSimple extends Com5t {
     private java.awt.Point pointPress = null;
     public int passMask[] = {0, 0}; //маска [0]=0 -начало, [0]=1 -конец, [0]=2 -середина, [1]>0 -прорисовка кружка и разр. редакт. x,y
     public final double delta = 3;
-    private Timer timer = new Timer(160, null);
+    private Timer timerKey = new Timer(160, null);
     public TRecord spcRec = null; //спецификация элемента
 
     public ElemSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
@@ -33,6 +33,7 @@ public abstract class ElemSimple extends Com5t {
         this.spcRec = new TRecord(id, this);
         winc.listElem.add(this);
         winc.listAll.add(this);
+        timerKey.setRepeats(false);
     }
 
     public ElemSimple(Wincalc winc, double id, GsonElem gson, AreaSimple owner) {
@@ -40,11 +41,13 @@ public abstract class ElemSimple extends Com5t {
         this.spcRec = new TRecord(id, this);
         winc.listElem.add(this);
         winc.listAll.add(this);
+        timerKey.setRepeats(false);
     }
 
     //Для TEST
     public ElemSimple(double id, GsonElem gson) {
         super(id, gson);
+        timerKey.setRepeats(false);
     }
 
     public abstract void initArtikle();
@@ -55,8 +58,7 @@ public abstract class ElemSimple extends Com5t {
 
     public abstract void addSpecific(TRecord spcAdd);
 
-    public void addListenerEvents() {
-        timer.setRepeats(false);
+    public void addListenerEvents() {        
 
         this.winc.keyboardPressed.add((evt) -> {
 
@@ -64,7 +66,7 @@ public abstract class ElemSimple extends Com5t {
                 LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                 int key = evt.getKeyCode();
                 //double dxy = (timer.isRunning() == true) ? 0.14 + winc.scale : 0.1 * winc.scale;
-                double dxy = (timer.isRunning() == true) ? 0.04 : 0.1 * winc.scale;
+                double dxy = (timerKey.isRunning() == true) ? 0.04 : 0.1 * winc.scale;
                 double X = 0, Y = 0, dX = 0, dY = 0;
 
                 if (key == KeyEvent.VK_UP) {
@@ -111,8 +113,8 @@ public abstract class ElemSimple extends Com5t {
                     UGeo.moveGson(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
                 }
             }
-            timer.stop();
-            timer.start();
+            timerKey.stop();
+            timerKey.start();
         });
         this.winc.mousePressed.add((evt) -> {
             if (this.area != null) {
