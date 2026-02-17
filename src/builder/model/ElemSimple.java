@@ -63,12 +63,13 @@ public abstract class ElemSimple extends Com5t {
         this.winc.keyboardPressed.add((evt) -> {
 
             if (this.area != null && passMask[1] > 0) {
-                LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
+                
                 int key = evt.getKeyCode();
-                //double dxy = (timer.isRunning() == true) ? 0.14 + winc.scale : 0.1 * winc.scale;
+                LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
+                //При нажатой клавише timerKey.isRunning() всегда true
                 double dxy = (timerKey.isRunning() == true) ? 0.04 : 0.1 * winc.scale;
+                
                 double X = 0, Y = 0, dX = 0, dY = 0;
-
                 if (key == KeyEvent.VK_UP) {
                     dY = -dxy;
                 } else if (key == KeyEvent.VK_DOWN) {
