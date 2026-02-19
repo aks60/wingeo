@@ -78,7 +78,7 @@ public class Connect {
     //Возобновить соединение
     public static void reconnection() throws SQLException {
         eExcep pass = eExcep.noConn;
-        try {            
+        try {
             if (connectionApp.isClosed() == true) {
                 //connection.rollback();
                 String num_base = eProp.base_num.getProp();
@@ -198,6 +198,25 @@ public class Connect {
         } catch (SQLException e) {
             System.err.println("Ошибка:Connect.genId() " + e);
             JOptionPane.showMessageDialog(null, "Не удалось сгенерировать ключ записи. Перезагрузите программу.", "НЕУДАЧА", 1);
+            return -1;
+        }
+    }
+
+    public static int genId(String tname) {
+        try {
+            int next_id = 0;
+            Connection conn = getConnection();
+            Statement statement = conn.createStatement();
+            String sql = "SELECT GEN_ID(gen_" + tname + ", 1) FROM RDB$DATABASE";
+            ResultSet rs = statement.executeQuery(sql);
+            if (rs.next()) {
+                next_id = rs.getInt("GEN_ID");
+            }
+            rs.close();
+            close(conn);
+            return next_id;
+
+        } catch (SQLException e) {
             return -1;
         }
     }
