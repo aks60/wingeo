@@ -112,7 +112,7 @@ public class Query extends Table {
                 }
             }
             statement.close();
-            Connect.close(connection);
+            Connect.close();
             return this;
 
         } catch (SQLException e) {
@@ -143,7 +143,7 @@ public class Query extends Table {
                 statement.executeUpdate(sql);
                 record.setNo(0, SEL);
             }
-            Connect.close(connection);
+            Connect.close();
 
         } catch (SQLException e) {
             System.err.println("Ошибка:Query.insert() " + e);
@@ -171,7 +171,7 @@ public class Query extends Table {
             statement.executeUpdate(sql);
             record.setNo(0, SEL);
         }
-        Connect.close(connection);
+        Connect.close();
     }
 
     public void update(Record record) {
@@ -194,7 +194,7 @@ public class Query extends Table {
                 statement.executeUpdate(sql);
                 record.setNo(0, SEL);
             }
-            Connect.close(connection);
+            Connect.close();
 
         } catch (SQLException e) {
             System.err.println("Ошибка:Query.update() " + e);
@@ -220,7 +220,7 @@ public class Query extends Table {
             statement.executeUpdate(sql);
             record.setNo(0, SEL);
         }
-        Connect.close(connection);
+        Connect.close();
     }
 
     public boolean delete(Record record) {
@@ -231,7 +231,7 @@ public class Query extends Table {
             String sql = "delete from " + schema + fields.get(0).tname() + " where " + f[1].name() + " = " + wrapper(record, f[1]);
             System.out.println("SQL-DELETE " + sql);
             statement.executeUpdate(sql);
-            Connect.close(connection);
+            Connect.close();
             return true;
 
         } catch (SQLException e) {
@@ -250,7 +250,7 @@ public class Query extends Table {
         String sql = "delete from " + schema + fields.get(0).tname() + " where " + f[1].name() + " = " + wrapper(record, f[1]);
         System.out.println("SQL-DELETE " + sql);
         int ret = statement.executeUpdate(sql);
-        Connect.close(connection);
+        Connect.close();
         return ret;
     }
 
