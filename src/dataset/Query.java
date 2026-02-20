@@ -112,7 +112,7 @@ public class Query extends Table {
                 }
             }
             statement.close();
-            Connect.close();
+            Connect.close(connection);
             return this;
 
         } catch (SQLException e) {
@@ -123,27 +123,7 @@ public class Query extends Table {
 
     public void insert(Record record) {
         try {
-            Connection connection = Connect.getConnection();
-            Statement statement = connection.createStatement();
-            //если нет, генерю сам
-            String nameCols = "", nameVals = "";
-            //цикл по полям таблицы
-            for (int k = 0; k < fields.size(); k++) {
-                Field field = fields.get(k);
-                if (field.meta().type() != Field.TYPE.OBJ) {
-                    nameCols = nameCols + field.name() + ",";
-                    nameVals = nameVals + wrapper(record, field) + ",";
-                }
-            }
-            if (nameCols != null && nameVals != null) {
-                nameCols = nameCols.substring(0, nameCols.length() - 1);
-                nameVals = nameVals.substring(0, nameVals.length() - 1);
-                String sql = "insert into " + schema + fields.get(0).tname() + "(" + nameCols + ") values(" + nameVals + ")";
-                System.out.println("SQL-INSERT " + sql);
-                statement.executeUpdate(sql);
-                record.setNo(0, SEL);
-            }
-            Connect.close();
+            insert2(record);
 
         } catch (SQLException e) {
             System.err.println("Ошибка:Query.insert() " + e);
@@ -171,30 +151,12 @@ public class Query extends Table {
             statement.executeUpdate(sql);
             record.setNo(0, SEL);
         }
-        Connect.close();
+        Connect.close(connection);
     }
 
     public void update(Record record) {
         try {
-            String nameCols = "";
-            Connection connection = Connect.getConnection();
-            Statement statement = statement = connection.createStatement();
-            //цикл по полям таблицы
-            for (Field field : fields) {
-                if (field.meta().type() != Field.TYPE.OBJ) {
-                    nameCols = nameCols + field.name() + " = " + wrapper(record, field) + ",";
-                }
-            }
-            Field[] f = fields.get(0).fields();
-            if (nameCols.isEmpty() == false) {
-                nameCols = nameCols.substring(0, nameCols.length() - 1);
-                String sql = "update " + schema + fields.get(0).tname() + " set "
-                        + nameCols + " where " + f[1].name() + " = " + wrapper(record, f[1]);
-                System.out.println("SQL-UPDATE " + sql);
-                statement.executeUpdate(sql);
-                record.setNo(0, SEL);
-            }
-            Connect.close();
+            update2(record);
 
         } catch (SQLException e) {
             System.err.println("Ошибка:Query.update() " + e);
@@ -220,19 +182,12 @@ public class Query extends Table {
             statement.executeUpdate(sql);
             record.setNo(0, SEL);
         }
-        Connect.close();
+        Connect.close(connection);
     }
 
     public boolean delete(Record record) {
         try {
-            Connection connection = Connect.getConnection();
-            Statement statement = connection.createStatement();
-            Field[] f = fields.get(0).fields();
-            String sql = "delete from " + schema + fields.get(0).tname() + " where " + f[1].name() + " = " + wrapper(record, f[1]);
-            System.out.println("SQL-DELETE " + sql);
-            statement.executeUpdate(sql);
-            Connect.close();
-            return true;
+            return delete2(record) == 0;
 
         } catch (SQLException e) {
             System.err.println("Ошибка:Query.delete() " + e);
@@ -250,7 +205,7 @@ public class Query extends Table {
         String sql = "delete from " + schema + fields.get(0).tname() + " where " + f[1].name() + " = " + wrapper(record, f[1]);
         System.out.println("SQL-DELETE " + sql);
         int ret = statement.executeUpdate(sql);
-        Connect.close();
+        Connect.close(connection);
         return ret;
     }
 

@@ -1185,7 +1185,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
                     Query.listOpenTable.remove(q);
                 }
             }
-            Connect.close();
+            Connect.close(Connect.getConnection());
             Connect.reconnection();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Не удалось возобновить соединение с базой  данных.", "ВНИМАНИЕ!", 1);
