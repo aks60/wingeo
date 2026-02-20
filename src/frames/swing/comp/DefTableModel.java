@@ -74,7 +74,7 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
         }
 
         for (int index = 0; index < columnModel.getColumnCount(); index++) {
-            if (eProp.devel.equals("99") == false && "ID".equals(table.getColumnName(index))
+            if (eProp.typuse.equals("99") == false && "ID".equals(table.getColumnName(index))
                     || "id".equals(table.getColumnName(index))) { //id - Artikles фильтр
                 TableColumn col = columnModel.getColumn(index);
                 col.setMinWidth(0);
@@ -193,7 +193,7 @@ public class DefTableModel extends DefaultTableModel implements ListenerFrame {
     }
 
     private void eventMouseClick() {
-        if (eProp.devel.equals("99") == true) {
+        if (eProp.typuse.equals("99") == true) {
             table.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     if (evt.getButton() == MouseEvent.BUTTON3) {

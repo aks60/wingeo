@@ -21,13 +21,13 @@ public class LogoToDb extends javax.swing.JDialog {
         initComponents();
         initElements();
 
-        if (eProp.devel.equals("00") == true) {
+        if (eProp.typuse.equals("00") == true) {
             labMes.setText("ДЕМО ВЕРСИЯ");
             edUser.setText("TEXNOLOG"); //user
             edPass.setText("masterkey"); //pass
         }
         //Автопароль при тестировании
-        if (eProp.devel.equals("99") == true) {
+        if (eProp.typuse.equals("99") == true) {
             if ("adm".equals(eProp.profile)) {
                 edUser.setText("SYSDBA"); //user
                 edPass.setText("masterkey"); //pass
@@ -66,7 +66,7 @@ public class LogoToDb extends javax.swing.JDialog {
                 labMes.setForeground(Color.BLUE);
                 labMes.setText("Установка соединения с базой данных");
                 String num = eProp.base_num.getProp();
-                eExcep pass = Connect.connection(eProp.getServer(num), eProp.getPort(num), eProp.getBase(num), edUser.getText(), edPass.getPassword(), null);
+                eExcep pass = Connect.connection(eProp.typuse, eProp.getServer(num), eProp.getPort(num), eProp.getBase(num), edUser.getText(), edPass.getPassword(), null);
 
                 if (pass == eExcep.yesConn) {
 
@@ -85,7 +85,7 @@ public class LogoToDb extends javax.swing.JDialog {
                             eProp.role = rs.getString("RDB$RELATION_NAME").trim();
                             Connect.getConnection().close();
                             //Соединение с новыми привелегиями
-                            pass = Connect.connection(eProp.getServer(num), eProp.getPort(num), eProp.getBase(num), edUser.getText(), edPass.getPassword(), eProp.role);
+                            pass = Connect.connection(eProp.typuse, eProp.getServer(num), eProp.getPort(num), eProp.getBase(num), edUser.getText(), edPass.getPassword(), eProp.role);
                             //По имени роли откроем нужное приложение
                             if (pass == eExcep.yesConn) {
                                 if (eProfile.P02.roleSet.contains(eProp.role)) {

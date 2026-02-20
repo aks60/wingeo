@@ -95,14 +95,14 @@ public class Test {
     public static Connection connect2() {
         eProp.user.putProp("sysdba");
         eProp.password = String.valueOf("masterkey");
-        Connect.connection(eProp.getServer(numDb.toString()), eProp.getPort(numDb.toString()), eProp.getBase(numDb.toString()), eProp.user.getProp(), eProp.password.toCharArray(), null);
+        Connect.connection(eProp.typuse, eProp.getServer(numDb.toString()), eProp.getPort(numDb.toString()), eProp.getBase(numDb.toString()), eProp.user.getProp(), eProp.password.toCharArray(), null);
         return Connect.getConnection();
     }
 
     // </editor-fold>     
     public static void main(String[] args) throws Exception {
 
-        eProp.devel = "99";
+        eProp.typuse = "99";
         try {
             //clearDB();
             //PSConvert.exec();

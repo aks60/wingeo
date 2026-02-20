@@ -23,7 +23,7 @@ public class Main {
 
             //Доп. защита
             if (args[0].equals("adm") || args[0].equals("tex") || args[0].equals("man")) {
-                eProp.devel = "99";
+                eProp.typuse = "99";
             }
 
             if (index == 0 && args[0].equals("adm")) {

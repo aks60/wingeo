@@ -638,7 +638,7 @@ public class Colors extends javax.swing.JFrame {
 
     public void initElements() {
 
-        btnTest.setVisible(eProp.devel.equals("99"));
+        btnTest.setVisible(eProp.typuse.equals("99"));
         App.loadLocationWin(this, btnClose, (e) -> {
             App.saveLocationWin(this, btnClose);
         });

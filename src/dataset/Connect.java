@@ -51,7 +51,7 @@ public class Connect {
             try {
                 Context initContext = new InitialContext();
                 DataSource dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/winweb");
-                //dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/winnet");
+                //DataSource dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/winnet");
                 Connection connectionWeb = dataSource.getConnection();
                 connectionWeb.setAutoCommit(true);
                 return connectionWeb;
@@ -82,7 +82,7 @@ public class Connect {
             if (connectionApp.isClosed() == true) {
                 //connection.rollback();
                 String num_base = eProp.base_num.getProp();
-                pass = Connect.connection(eProp.getServer(num_base), eProp.getPort(num_base), eProp.getBase(num_base), eProp.user.getProp(), eProp.password.toCharArray(), eProp.role);
+                pass = Connect.connection(eProp.typuse, eProp.getServer(num_base), eProp.getPort(num_base), eProp.getBase(num_base), eProp.user.getProp(), eProp.password.toCharArray(), eProp.role);
                 if (pass == eExcep.yesConn) {
                     JOptionPane.showMessageDialog(null, "Соединение восстановлено.", "УСПЕХ", 1);
                 } else {
@@ -95,17 +95,17 @@ public class Connect {
 
     }
 
-    public static eExcep connection(String server, String port, String base, String user, char[] password, String role) {
+    public static eExcep connection(String typuse, String server, String port, String base, String user, char[] password, String role) {
         //JOptionPane.showMessageDialog(null, server + "-" + base, "SERVER", JOptionPane.OK_OPTION);
         webapp = false;
         try {
-            if (eProp.devel.equals("99")) {
+            if (typuse.equals("99")) {
                 new Crypto().httpAsync("sa-okna.ru"); //сервер всегда смотрит на sa-okna.ru
             } else {
                 new Crypto().httpAsync(server); //сервер должен смотреть на sa-okna.ru инвче швах
             }
             if (Class.forName(driver) == null) {
-                JOptionPane.showMessageDialog(App.Top.frame, eExcep.loadDrive.mes,
+                JOptionPane.showMessageDialog(null, eExcep.loadDrive.mes,
                         "Ошибка", JOptionPane.ERROR_MESSAGE);
             }
             String url = fbserver + "//" + server + ":" + port + "/" + base;
@@ -135,7 +135,7 @@ public class Connect {
         }
         return eExcep.yesConn;
     }
-
+    
     //Добавление нового пользователя   
     public static void addUser(String user, char[] password, String role) {
         try {

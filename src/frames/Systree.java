@@ -3775,7 +3775,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
             } else if (tab5.getBorder() != null) {
                 if (sysNode != null && sysNode.isLeaf()) {
-                    if (evt.getSource() instanceof JMenuItem && eProp.devel.equals("99") == true) {
+                    if (evt.getSource() instanceof JMenuItem && eProp.typuse.equals("99") == true) {
                         loadLocalScript();
                     } else {
                         ProgressBar.create(Systree.this, new ListenerFrame() {
@@ -5036,7 +5036,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     public final void initElements() {
 
-        btnTest.setVisible(eProp.devel.equals("99"));
+        btnTest.setVisible(eProp.typuse.equals("99"));
         App.loadLocationWin(this, btnClose, (e) -> {
             App.saveLocationWin(this, btnClose, split1);
         }, split1);

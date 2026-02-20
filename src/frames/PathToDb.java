@@ -41,7 +41,7 @@ public class PathToDb extends javax.swing.JDialog {
 
         onCaretUpdate(null);
 
-        if (eProp.devel.equals("99") == false) {
+        if (eProp.typuse.equals("99") == false) {
             edHost.setEditable(false);
             edPath.setEditable(false);
             edPort.setEditable(false);
@@ -57,7 +57,7 @@ public class PathToDb extends javax.swing.JDialog {
                 progressBar.setIndeterminate(true);
                 labMes.setForeground(Color.BLUE);
                 labMes.setText("Установка соединения с базой данных");
-                eExcep pass = Connect.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), null);
+                eExcep pass = Connect.connection(eProp.typuse, edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), null);
                 if (pass == eExcep.yesConn) {
                     if ("SYSDBA".equalsIgnoreCase(edUser.getText())) {
                         if (App.Top.frame == null) {
@@ -77,7 +77,7 @@ public class PathToDb extends javax.swing.JDialog {
                             eProp.role = rs.getString("RDB$RELATION_NAME").trim();
                             Connect.getConnection().close();
                             //Соединение с новыми привелегиями
-                            pass = Connect.connection(edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), eProp.role);
+                            pass = Connect.connection(eProp.typuse, edHost.getText(), edPort.getText(), edPath.getText(), edUser.getText(), edPass.getPassword(), eProp.role);
                             if (pass == eExcep.yesConn) {
                                 //По имени роли откроем нужное приложение
                                 if (App.Top.frame == null && eProfile.P02.roleSet.contains(eProp.role)) {

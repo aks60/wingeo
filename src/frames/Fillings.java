@@ -1107,7 +1107,7 @@ public class Fillings extends javax.swing.JFrame {
 
     private void initElements() {
 
-        btnTest.setVisible(eProp.devel.equals("99"));
+        btnTest.setVisible(eProp.typuse.equals("99"));
         App.loadLocationWin(this, btnClose, (e) -> {
             App.saveLocationWin(this, btnClose);
         });

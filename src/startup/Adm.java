@@ -85,7 +85,7 @@ public class Adm extends javax.swing.JFrame {
 
         }
         edPath.setText(GsonScript.filePath());
-        if (eProp.devel.equals("99") == true) {
+        if (eProp.typuse.equals("99") == true) {
             edPort.setText((eProp.base_num.getProp().equals("2") || eProp.base_num.getProp().equals("3")) ? "3055" : "3050");
         } else {
             edPort.setText("3050");
@@ -1373,11 +1373,11 @@ public class Adm extends javax.swing.JFrame {
             eProp.user.putProp("sysdba");
             eProp.password = String.valueOf("masterkey");
             String num_base = eProp.base_num.getProp();
-            Connect.connection(eProp.getServer(num_base), eProp.getPort(num_base), eProp.getBase(num_base), eProp.user.getProp(), eProp.password.toCharArray(), null);
+            Connect.connection(eProp.typuse, eProp.getServer(num_base), eProp.getPort(num_base), eProp.getBase(num_base), eProp.user.getProp(), eProp.password.toCharArray(), null);
             Connection c2 = Connect.getConnection();
 
             Connect con1 = new Connect();
-            con1.connection(edServer.getText().trim(), edPort.getText().trim(), edPath.getText().trim(), edUser.getText().trim(), edPass.getText().toCharArray(), null);
+            con1.connection(eProp.typuse, edServer.getText().trim(), edPort.getText().trim(), edPath.getText().trim(), edUser.getText().trim(), edPass.getText().toCharArray(), null);
             Connection c1 = con1.getConnection();
 
             txtPane.setText("");
@@ -1396,7 +1396,7 @@ public class Adm extends javax.swing.JFrame {
 
     private void btnTestBtnStartClick(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestBtnStartClick
         Connect Src = new Connect();
-        eExcep excep = Src.connection(edServer.getText().trim(), edPort.getText().trim(),
+        eExcep excep = Src.connection(eProp.typuse, edServer.getText().trim(), edPort.getText().trim(),
                 edPath.getText().trim(), edUser.getText().trim(), edPass.getText().toCharArray(), null);
         JOptionPane.showMessageDialog(this, edPath.getText().trim() + "  \n" + excep.mes, "Сообщение", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnTestBtnStartClick

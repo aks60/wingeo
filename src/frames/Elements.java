@@ -1202,7 +1202,7 @@ public class Elements extends javax.swing.JFrame {
         int level1 = (ppm == itCateg1) ? 1 : 5;
         String result = JOptionPane.showInputDialog(Elements.this, "Название", "Категория", JOptionPane.QUESTION_MESSAGE);
         int id = Connect.genId(eGroups.up);
-        if (result.isEmpty() && eProp.devel.equals("99")) {
+        if (result.isEmpty() && eProp.typuse.equals("99")) {
             result = (ppm == itCateg1) ? "Катег.проф-" + id : "Катег.зап-" + id;
         }
         if (result.isEmpty() == false) {
@@ -1536,7 +1536,7 @@ public class Elements extends javax.swing.JFrame {
     // </editor-fold> 
     private void initElements() {
 
-        btnTest.setVisible(eProp.devel.equals("99"));
+        btnTest.setVisible(eProp.typuse.equals("99"));
         App.loadLocationWin(this, btnClose, (e) -> {
             App.saveLocationWin(this, btnClose);
         });

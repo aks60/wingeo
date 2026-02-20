@@ -75,7 +75,7 @@ public class Record<E> extends ArrayList<E> {
     }
 
     public static Object getDev(Object num, Object val) {
-        if (eProp.devel.equals("99")) {
+        if (eProp.typuse.equals("99")) {
             return num + " " + val;
             //String v = (Integer.parseInt(num.toString()) < 0) ? num.toString() : " #" + num;
             //return val + " " + v;

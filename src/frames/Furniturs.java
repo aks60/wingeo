@@ -1924,7 +1924,7 @@ public class Furniturs extends javax.swing.JFrame {
 // </editor-fold> 
     private void initElements() {
 
-        btnTest.setVisible(eProp.devel.equals("99"));
+        btnTest.setVisible(eProp.typuse.equals("99"));
         App.loadLocationWin(this, btnClose, (e) -> {
             App.saveLocationWin(this, btnClose);
         });

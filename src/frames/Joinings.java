@@ -1220,7 +1220,7 @@ public class Joinings extends javax.swing.JFrame {
 
     private void initElements() {
 
-        btnTest.setVisible(eProp.devel.equals("99"));
+        btnTest.setVisible(eProp.typuse.equals("99"));
         App.loadLocationWin(this, btnClose, (e) -> {
             App.saveLocationWin(this, btnClose, tab1, tab2, tab3, tab4, tab5);
         }, tab1, tab2, tab3, tab4, tab5);
