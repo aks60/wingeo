@@ -459,7 +459,7 @@ public class DicColor extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            System.err.println("–û—à–∏–±–∫–∞: DicColor.filterTxt() " + e);
+            System.err.println("Œ¯Ë·Í‡: DicColor.filterTxt() " + e);
         }
         return colorRet;
     }
