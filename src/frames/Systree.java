@@ -1473,7 +1473,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         centr.add(scr1, java.awt.BorderLayout.WEST);
 
         split1.setDividerLocation(400);
-        split1.setDividerSize(4);
+        split1.setDividerSize(2);
         split1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         split1.setName("split1"); // NOI18N
 

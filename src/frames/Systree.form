@@ -601,7 +601,7 @@
         <Container class="javax.swing.JSplitPane" name="split1">
           <Properties>
             <Property name="dividerLocation" type="int" value="400"/>
-            <Property name="dividerSize" type="int" value="4"/>
+            <Property name="dividerSize" type="int" value="2"/>
             <Property name="orientation" type="int" value="0"/>
             <Property name="name" type="java.lang.String" value="split1" noResource="true"/>
           </Properties>
