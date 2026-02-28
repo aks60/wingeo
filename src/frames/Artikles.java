@@ -540,7 +540,12 @@ public class Artikles extends javax.swing.JFrame {
         btnTest = new javax.swing.JButton();
         btnClone = new javax.swing.JButton();
         btnChoice = new javax.swing.JButton();
-        center = new javax.swing.JPanel();
+        south = new javax.swing.JPanel();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(4, 0), new java.awt.Dimension(4, 32767));
+        lab1 = new javax.swing.JLabel();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(4, 0), new java.awt.Dimension(4, 32767));
+        lab2 = new javax.swing.JLabel();
+        centr = new javax.swing.JSplitPane();
         pan9 = new javax.swing.JPanel();
         pan4 = new javax.swing.JPanel();
         scrTree = new javax.swing.JScrollPane();
@@ -739,11 +744,6 @@ public class Artikles extends javax.swing.JFrame {
         pan10 = new javax.swing.JPanel();
         lab11 = new javax.swing.JLabel();
         lab12 = new javax.swing.JLabel();
-        south = new javax.swing.JPanel();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(4, 0), new java.awt.Dimension(4, 32767));
-        lab1 = new javax.swing.JLabel();
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(4, 0), new java.awt.Dimension(4, 32767));
-        lab2 = new javax.swing.JLabel();
 
         mInsert.setFont(frames.UGui.getFont(1,0));
         mInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c033.gif"))); // NOI18N
@@ -1019,7 +1019,7 @@ public class Artikles extends javax.swing.JFrame {
                 .addComponent(btnClone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 681, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 689, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1050,12 +1050,45 @@ public class Artikles extends javax.swing.JFrame {
 
         getContentPane().add(north, java.awt.BorderLayout.NORTH);
 
-        center.setMinimumSize(new java.awt.Dimension(0, 0));
-        center.setPreferredSize(new java.awt.Dimension(900, 550));
-        center.setLayout(new javax.swing.BoxLayout(center, javax.swing.BoxLayout.PAGE_AXIS));
+        south.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        south.setMaximumSize(new java.awt.Dimension(2902, 20));
+        south.setMinimumSize(new java.awt.Dimension(100, 20));
+        south.setPreferredSize(new java.awt.Dimension(900, 20));
+        south.setLayout(new javax.swing.BoxLayout(south, javax.swing.BoxLayout.LINE_AXIS));
+
+        filler1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        south.add(filler1);
+
+        lab1.setFont(frames.UGui.getFont(0,0));
+        lab1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lab1.setText("___");
+        lab1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        lab1.setMaximumSize(new java.awt.Dimension(110, 14));
+        lab1.setPreferredSize(new java.awt.Dimension(110, 14));
+        lab1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        south.add(lab1);
+
+        filler2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        south.add(filler2);
+
+        lab2.setFont(frames.UGui.getFont(0,0));
+        lab2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lab2.setText("___");
+        lab2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        lab2.setMaximumSize(new java.awt.Dimension(80, 14));
+        lab2.setPreferredSize(new java.awt.Dimension(80, 14));
+        lab2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        south.add(lab2);
+
+        getContentPane().add(south, java.awt.BorderLayout.SOUTH);
+
+        centr.setDividerLocation(400);
+        centr.setDividerSize(2);
+        centr.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        centr.setResizeWeight(0.8);
 
         pan9.setMaximumSize(new java.awt.Dimension(2147483647, 900));
-        pan9.setMinimumSize(new java.awt.Dimension(800, 34));
+        pan9.setMinimumSize(new java.awt.Dimension(800, 320));
         pan9.setPreferredSize(new java.awt.Dimension(800, 900));
         pan9.setLayout(new java.awt.BorderLayout());
 
@@ -2321,7 +2354,7 @@ public class Artikles extends javax.swing.JFrame {
 
         pan9.add(pan6, java.awt.BorderLayout.EAST);
 
-        center.add(pan9);
+        centr.setTopComponent(pan9);
 
         pan3.setMaximumSize(new java.awt.Dimension(2147483647, 300));
         pan3.setPreferredSize(new java.awt.Dimension(800, 300));
@@ -2402,41 +2435,9 @@ public class Artikles extends javax.swing.JFrame {
 
         pan3.add(pan10, java.awt.BorderLayout.NORTH);
 
-        center.add(pan3);
+        centr.setBottomComponent(pan3);
 
-        getContentPane().add(center, java.awt.BorderLayout.CENTER);
-
-        south.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        south.setMaximumSize(new java.awt.Dimension(2902, 20));
-        south.setMinimumSize(new java.awt.Dimension(100, 20));
-        south.setPreferredSize(new java.awt.Dimension(900, 20));
-        south.setLayout(new javax.swing.BoxLayout(south, javax.swing.BoxLayout.LINE_AXIS));
-
-        filler1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        south.add(filler1);
-
-        lab1.setFont(frames.UGui.getFont(0,0));
-        lab1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lab1.setText("___");
-        lab1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        lab1.setMaximumSize(new java.awt.Dimension(110, 14));
-        lab1.setPreferredSize(new java.awt.Dimension(110, 14));
-        lab1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        south.add(lab1);
-
-        filler2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        south.add(filler2);
-
-        lab2.setFont(frames.UGui.getFont(0,0));
-        lab2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lab2.setText("___");
-        lab2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        lab2.setMaximumSize(new java.awt.Dimension(80, 14));
-        lab2.setPreferredSize(new java.awt.Dimension(80, 14));
-        lab2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        south.add(lab2);
-
-        getContentPane().add(south, java.awt.BorderLayout.SOUTH);
+        getContentPane().add(centr, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -2779,7 +2780,7 @@ public class Artikles extends javax.swing.JFrame {
     private javax.swing.JButton btnMove;
     private javax.swing.JButton btnReport;
     private javax.swing.JButton btnTest;
-    private javax.swing.JPanel center;
+    private javax.swing.JSplitPane centr;
     private javax.swing.JCheckBox checkBox1;
     private javax.swing.JMenuItem depth;
     private javax.swing.Box.Filler filler1;
