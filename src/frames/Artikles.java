@@ -555,7 +555,7 @@ public class Artikles extends javax.swing.JFrame {
         tab1 = new javax.swing.JTable();
         pan6 = new javax.swing.JPanel();
         pan2 = new javax.swing.JPanel();
-        pan106 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         pan91 = new javax.swing.JPanel();
         filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(2, 0), new java.awt.Dimension(12, 32767));
         lab13 = new javax.swing.JLabel();
@@ -644,7 +644,7 @@ public class Artikles extends javax.swing.JFrame {
         txt50 = new javax.swing.JTextField();
         btn20 = new javax.swing.JButton();
         pan7 = new javax.swing.JPanel();
-        pan107 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         pan18 = new javax.swing.JPanel();
         filler31 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(2, 0), new java.awt.Dimension(12, 32767));
         lab18 = new javax.swing.JLabel();
@@ -684,7 +684,7 @@ public class Artikles extends javax.swing.JFrame {
         txt52 = new javax.swing.JTextField();
         btn24 = new javax.swing.JButton();
         pan8 = new javax.swing.JPanel();
-        pan108 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         pan20 = new javax.swing.JPanel();
         filler35 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(2, 0), new java.awt.Dimension(12, 32767));
         lab54 = new javax.swing.JLabel();
@@ -872,7 +872,6 @@ public class Artikles extends javax.swing.JFrame {
         setTitle("Артикулы");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 520));
-        setPreferredSize(new java.awt.Dimension(900, 600));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 Artikles.this.windowClosed(evt);
@@ -1117,7 +1116,7 @@ public class Artikles extends javax.swing.JFrame {
         pan5.setPreferredSize(new java.awt.Dimension(280, 500));
         pan5.setLayout(new java.awt.BorderLayout());
 
-        scr1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Свойства артикулов", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Список артикулов", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
 
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
@@ -1201,20 +1200,9 @@ public class Artikles extends javax.swing.JFrame {
         pan2.setPreferredSize(new java.awt.Dimension(360, 24));
         pan2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 0));
 
-        pan106.setPreferredSize(new java.awt.Dimension(360, 12));
-
-        javax.swing.GroupLayout pan106Layout = new javax.swing.GroupLayout(pan106);
-        pan106.setLayout(pan106Layout);
-        pan106Layout.setHorizontalGroup(
-            pan106Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 360, Short.MAX_VALUE)
-        );
-        pan106Layout.setVerticalGroup(
-            pan106Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 12, Short.MAX_VALUE)
-        );
-
-        pan2.add(pan106);
+        jLabel1.setFont(frames.UGui.getFont(0,0));
+        jLabel1.setText("Свойства артикулов");
+        pan2.add(jLabel1);
 
         pan91.setPreferredSize(new java.awt.Dimension(360, 24));
         pan91.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
@@ -1743,20 +1731,9 @@ public class Artikles extends javax.swing.JFrame {
         pan7.setPreferredSize(new java.awt.Dimension(360, 24));
         pan7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 0));
 
-        pan107.setPreferredSize(new java.awt.Dimension(360, 12));
-
-        javax.swing.GroupLayout pan107Layout = new javax.swing.GroupLayout(pan107);
-        pan107.setLayout(pan107Layout);
-        pan107Layout.setHorizontalGroup(
-            pan107Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 360, Short.MAX_VALUE)
-        );
-        pan107Layout.setVerticalGroup(
-            pan107Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 12, Short.MAX_VALUE)
-        );
-
-        pan7.add(pan107);
+        jLabel2.setFont(frames.UGui.getFont(0,0));
+        jLabel2.setText("Свойства артикулов");
+        pan7.add(jLabel2);
 
         pan18.setPreferredSize(new java.awt.Dimension(360, 24));
         pan18.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
@@ -2013,20 +1990,9 @@ public class Artikles extends javax.swing.JFrame {
         pan8.setPreferredSize(new java.awt.Dimension(360, 24));
         pan8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 0));
 
-        pan108.setPreferredSize(new java.awt.Dimension(360, 12));
-
-        javax.swing.GroupLayout pan108Layout = new javax.swing.GroupLayout(pan108);
-        pan108.setLayout(pan108Layout);
-        pan108Layout.setHorizontalGroup(
-            pan108Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 360, Short.MAX_VALUE)
-        );
-        pan108Layout.setVerticalGroup(
-            pan108Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 12, Short.MAX_VALUE)
-        );
-
-        pan8.add(pan108);
+        jLabel3.setFont(frames.UGui.getFont(0,0));
+        jLabel3.setText("Свойства артикулов");
+        pan8.add(jLabel3);
 
         pan20.setPreferredSize(new java.awt.Dimension(360, 24));
         pan20.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
@@ -2833,6 +2799,9 @@ public class Artikles extends javax.swing.JFrame {
     private javax.swing.JMenuItem groups3_id;
     private javax.swing.JMenuItem groups4_id;
     private javax.swing.JMenuItem height;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel lab1;
     private javax.swing.JLabel lab11;
     private javax.swing.JLabel lab12;
@@ -2885,9 +2854,6 @@ public class Artikles extends javax.swing.JFrame {
     private javax.swing.JPanel pan101;
     private javax.swing.JPanel pan102;
     private javax.swing.JPanel pan103;
-    private javax.swing.JPanel pan106;
-    private javax.swing.JPanel pan107;
-    private javax.swing.JPanel pan108;
     private javax.swing.JPanel pan109;
     private javax.swing.JPanel pan11;
     private javax.swing.JPanel pan110;
