@@ -94,21 +94,21 @@ public class DicColor extends javax.swing.JDialog {
 
     private void loadingData(HashSet<Record> colorSet, boolean auto) {
 
-        Query colgrpList = new Query(eGroups.values()).sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_GRP.id).sort(eGroups.npp, eGroups.name);
+        Query groupsList = new Query(eGroups.values()).sql(eGroups.data(), eGroups.grup, TypeGrup.COLOR_GRP.id).sort(eGroups.npp, eGroups.name);
 
         if (auto == true) {
             Record autoRec = eGroups.up.newRecord(Query.SEL);
             autoRec.setNo(eGroups.id, -3);
             autoRec.setNo(eGroups.grup, -3);
             autoRec.setNo(eGroups.name, UseColor.automatic[1]);
-            colgrpList.add(autoRec);
+            groupsList.add(autoRec);
             Record autoRec2 = eColor.up.newRecord(Query.SEL);
             autoRec2.set(eColor.id, 0);
             autoRec2.set(eColor.groups_id, -3);
             autoRec2.set(eColor.name, UseColor.automatic[1]);
-            colgrpList.add(autoRec2);
+            groupsList.add(autoRec2);
         }
-        colgrpList.forEach(colgrpRec -> {
+        groupsList.forEach(colgrpRec -> {
             for (Record colorRec : colorSet) {
                 if (colorRec.getInt(eColor.groups_id) == colgrpRec.getInt(eGroups.id)) {
                     qColgrp.add(colgrpRec);
@@ -443,14 +443,13 @@ public class DicColor extends javax.swing.JDialog {
         });
     }
 
-    public static HashSet<Record> filterTxt(List<Record> colorSrc, String colorTxt) {
+    public static HashSet<Record> filterTxt(List<Record> colorList, String colorTxt) {
         HashSet<Record> colorRet = new HashSet<Record>();
         try {
             Integer[] colorArr = UCom.parserInt(colorTxt);
-            colorArr = UCom.parserInt(colorTxt);
 
             if (colorArr.length != 0) {
-                for (Record rec : colorSrc) {
+                for (Record rec : colorList) {
                     for (int i = 0; i < colorArr.length; i = i + 2) { //òåñòóðû
                         if (rec.getInt(eColor.code) >= colorArr[i] && rec.getInt(eColor.code) <= colorArr[i + 1]) {
                             colorRet.add(rec);
@@ -482,7 +481,7 @@ public class DicColor extends javax.swing.JDialog {
                 }
             });
         } catch (Exception e) {
-            System.err.println("ÐžÑˆÐ¸Ð±ÐºÐ°: DicColor.filterDet() " + e);
+            System.err.println("Îøèáêà: DicColor.filterDet() " + e);
         }
         return colorSet;
     }
