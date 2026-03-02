@@ -187,7 +187,8 @@ public class Query extends Table {
 
     public boolean delete(Record record) {
         try {
-            return delete2(record) == 1;
+            delete2(record);
+            return true;
 
         } catch (SQLException e) {
             System.err.println("Ошибка:Query.delete() " + e);
