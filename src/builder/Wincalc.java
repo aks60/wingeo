@@ -56,11 +56,13 @@ import javax.swing.JOptionPane;
 import static startup.App.Top;
 
 // см. алгоритм git -> 804d27409d
+//TODO сделать выбор цветов на всё окно с учётом 'первый артикул из сист. профилей'
 public class Wincalc {
 
     public Integer nuni = 0; //код системы  
     public double nppID = 0; //для генерации ключа в спецификации
     public int colorID1 = -1, colorID2 = 1, colorID3 = -1; //базовый,внутр,внещний 
+    public Record artiklRec = null; //первый артикул из сист. профилей
     public Record syssizRec = null; //система константт
     public double cost1 = 0; //стоимость без скидки
     public double cost2 = 0; //стоимость со скидкой
@@ -116,7 +118,7 @@ public class Wincalc {
             //Инит конструктива
             nuni = (gson.nuni == null) ? -3 : gson.nuni;
             Record sysprofRec = eSysprof.find2(nuni, UseType.FRAME); //первая.запись коробки
-            Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
+            artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
             syssizRec = eSyssize.find(artiklRec); //системные константы
             colorID1 = (gson.color1 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1;
             colorID2 = (gson.color2 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2;
