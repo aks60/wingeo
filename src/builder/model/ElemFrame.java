@@ -50,9 +50,9 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void initArtikle() {
         try {
-            colorID1 = (isFinite(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
-            colorID2 = (isFinite(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
-            colorID3 = (isFinite(gson.param, PKjson.colorID3)) ? gson.param.get(PKjson.colorID3).getAsInt() : winc.colorID3;
+            colorID1 = (isFinite(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : root.colorID1;
+            colorID2 = (isFinite(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : root.colorID2;
+            colorID3 = (isFinite(gson.param, PKjson.colorID3)) ? gson.param.get(PKjson.colorID3).getAsInt() : root.colorID3;
 
             if (isFinite(gson.param, PKjson.sysprofID)) { //профили через параметр
                 sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());
@@ -177,8 +177,8 @@ public class ElemFrame extends ElemSimple {
                 //Выбран авто расчет подвеса
                 if (spcAdd.getParam("null", 24013).equals("null") == false) {
                     if (spcAdd.getParam("null", 24013).equals("Да")) {
-                        int color = winc.colorID1;
-                        if (winc.colorID1 != spcAdd.colorID1) {
+                        int color = root.colorID1;
+                        if (root.colorID1 != spcAdd.colorID1) {
                             return;
                         }
                     }

@@ -393,9 +393,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 if (winNode.com5t().type == enums.Type.RECTANGL || winNode.com5t().type == enums.Type.DOOR || winNode.com5t().type == enums.Type.TRAPEZE || winNode.com5t().type == enums.Type.ARCH) {
                     ((CardLayout) pan8.getLayout()).show(pan8, "card12");
                     //((TitledBorder) pan12.getBorder()).setTitle(winc.root.type.name);
-                    setText(txt9, eColor.find(winc.colorID1).getStr(eColor.name));
-                    setText(txt13, eColor.find(winc.colorID2).getStr(eColor.name));
-                    setText(txt14, eColor.find(winc.colorID3).getStr(eColor.name));
+                    setText(txt9, eColor.find(winc.root.colorID1).getStr(eColor.name));
+                    setText(txt13, eColor.find(winc.root.colorID2).getStr(eColor.name));
+                    setText(txt14, eColor.find(winc.root.colorID3).getStr(eColor.name));
                     setText(txt17, UCom.format(winc.width(), 1));
                     setText(txt22, UCom.format(winc.height(), 1));
                     Record record = qPrjprod.get(UGui.getIndexRec(tab2));

@@ -242,19 +242,19 @@ public class FurnitureDet extends Par5s {
                 break;
                 case 24067:  //Коды основной текстуры изделия 
                 case 25067:  //Коды основной текстуры изделия 
-                    if (UCom.containsColor(rec.getStr(TEXT), winc.colorID1) == false) {
+                    if (UCom.containsColor(rec.getStr(TEXT), winc.root.colorID1) == false) {
                         return false;
                     }
                     break;
                 case 24068:  //Коды внутр. текстуры изделия 
                 case 25068:  //Коды внутр. текстуры изделия 
-                    if (UCom.containsColor(rec.getStr(TEXT), winc.colorID2) == false) {
+                    if (UCom.containsColor(rec.getStr(TEXT), winc.root.colorID2) == false) {
                         return false;
                     }
                     break;
                 case 24069:  //Коды внешн. текстуры изделия 
                 case 25069:  //Коды внешн. текстуры изделия     
-                    if (UCom.containsColor(rec.getStr(TEXT), winc.colorID3) == false) {
+                    if (UCom.containsColor(rec.getStr(TEXT), winc.root.colorID3) == false) {
                         return false;
                     }
                     break;

@@ -115,9 +115,9 @@ public class RTarget {
                     //“‡·ÎËˆ‡ π2 »«ƒ≈À»≈ –≈ ¬»«»“€  
                     square += winc.root.area.getGeometryN(0).getArea();
                     Record artiklRec = winc.root.frames.get(0).artiklRecAn;
-                    Record colorRec1 = new Query(eColor.values()).sql(eColor.data(), eColor.id, winc.colorID1).get(0);
-                    Record colorRec2 = new Query(eColor.values()).sql(eColor.data(), eColor.id, winc.colorID2).get(0);
-                    Record colorRec3 = new Query(eColor.values()).sql(eColor.data(), eColor.id, winc.colorID3).get(0);
+                    Record colorRec1 = new Query(eColor.values()).sql(eColor.data(), eColor.id, winc.root.colorID1).get(0);
+                    Record colorRec2 = new Query(eColor.values()).sql(eColor.data(), eColor.id, winc.root.colorID2).get(0);
+                    Record colorRec3 = new Query(eColor.values()).sql(eColor.data(), eColor.id, winc.root.colorID3).get(0);
                     AreaStvorka areaStvorka = (AreaStvorka) UCom.filter(winc.listArea, Type.STVORKA).get(0);
                     Record furnitureRec = new Query(eFurniture.values()).sql(eFurniture.data(), eFurniture.id, areaStvorka.sysfurnRec.getInt(eSysfurn.furniture_id)).get(0);
 

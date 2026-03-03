@@ -33,9 +33,9 @@ public class ElemCross extends ElemSimple {
     @Override
     public void initArtikle() {
 
-        colorID1 = (isFinite(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : winc.colorID1;
-        colorID2 = (isFinite(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : winc.colorID2;
-        colorID3 = (isFinite(gson.param, PKjson.colorID3)) ? gson.param.get(PKjson.colorID3).getAsInt() : winc.colorID3;
+        colorID1 = (isFinite(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : root.colorID1;
+        colorID2 = (isFinite(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : root.colorID2;
+        colorID3 = (isFinite(gson.param, PKjson.colorID3)) ? gson.param.get(PKjson.colorID3).getAsInt() : root.colorID3;
 
         if (isFinite(gson.param, PKjson.sysprofID)) { //профили через параметр
             sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());

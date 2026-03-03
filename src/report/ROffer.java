@@ -136,9 +136,9 @@ public class ROffer {
                     trList.get(2).getElementsByTag("td").get(1).text(eSystree.nameSysprof(prjprodRec.getInt(ePrjprod.systree_id)));
                     trList.get(3).getElementsByTag("td").get(1).text(fname);
                     trList.get(4).getElementsByTag("td").get(1).text(gname);
-                    trList.get(5).getElementsByTag("td").get(1).text(eColor.find(winc.colorID1).getStr(eColor.name));
-                    trList.get(6).getElementsByTag("td").get(1).text(eColor.find(winc.colorID2).getStr(eColor.name));
-                    trList.get(7).getElementsByTag("td").get(1).text(eColor.find(winc.colorID3).getStr(eColor.name));
+                    trList.get(5).getElementsByTag("td").get(1).text(eColor.find(winc.root.colorID1).getStr(eColor.name));
+                    trList.get(6).getElementsByTag("td").get(1).text(eColor.find(winc.root.colorID2).getStr(eColor.name));
+                    trList.get(7).getElementsByTag("td").get(1).text(eColor.find(winc.root.colorID3).getStr(eColor.name));
                     trList.get(8).getElementsByTag("td").get(1).text(winc.width() + "x" + winc.height());
                     trList.get(9).getElementsByTag("td").get(1).text(prjprodRec.getStr(ePrjprod.num));
                     trList.get(10).getElementsByTag("td").get(1).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));

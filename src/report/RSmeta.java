@@ -124,7 +124,9 @@ public class RSmeta {
 
                     trList.get(1).getElementsByTag("td").get(1).text(prjprodRec.getStr(ePrjprod.name));
                     trList.get(2).getElementsByTag("td").get(1).text(UCom.format(winc.width() / 1000, 2) + " x " + UCom.format(winc.height() / 1000, 2));
-                    trList.get(3).getElementsByTag("td").get(1).text(eColor.find(winc.colorID1).getStr(eColor.name) + " / " + eColor.find(winc.colorID2).getStr(eColor.name) + " / " + eColor.find(winc.colorID3).getStr(eColor.name));
+                    trList.get(3).getElementsByTag("td").get(1).text(eColor.find(winc.root.colorID1).getStr(eColor.name) 
+                            + " / " + eColor.find(winc.root.colorID2).getStr(eColor.name) 
+                            + " / " + eColor.find(winc.root.colorID3).getStr(eColor.name));
                     trList.get(4).getElementsByTag("td").get(1).text(String.valueOf(numProd));
                     trList.get(5).getElementsByTag("td").get(1).text(UCom.format(winc.root.area.getGeometryN(0).getArea() / 1000000, 2));
                     trList.get(6).getElementsByTag("td").get(1).text(UCom.format(winc.weight, 2));
@@ -167,7 +169,8 @@ public class RSmeta {
             Query qSysuser = new Query(eSysuser.values()).sql(eSysuser.data(), eSysuser.login, prjpartRec.getStr(ePrjpart.login));
             qSysuser.add(eSysuser.up.newRecord("SEL")); //если qSysuser.size() == 0                       
             Record sysuserRec = qSysuser.get(0);
-            doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.convert2Date(projectRec.get(eProject.date4)) + "'");
+            doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" 
+                    + UGui.convert2Date(projectRec.get(eProject.date4)) + "'");
             Element div2 = doc.getElementById("div2");
             String template2 = div2.html();
             List<Wincalc> wincList = URep.wincList(prjprodList, 400);
@@ -277,8 +280,8 @@ public class RSmeta {
             Record prjprodRec = prjprodList.get(indexProd);
             double discWin = projectRec.getDbl(eProject.disc_win, 0) + projectRec.getDbl(eProject.disc_all, 0);
             ArrayList<ElemSimple> glassList = UCom.filter(winc.listElem, Type.GLASS);
-            String color3Name = eColor.find(winc.colorID1).getStr(eColor.name) 
-                    + " / " + eColor.find(winc.colorID2).getStr(eColor.name) + " / " + eColor.find(winc.colorID3).getStr(eColor.name);
+            String color3Name = eColor.find(winc.root.colorID1).getStr(eColor.name) 
+                    + " / " + eColor.find(winc.root.colorID2).getStr(eColor.name) + " / " + eColor.find(winc.root.colorID3).getStr(eColor.name);
             Elements captions = tabList.get(indexProd).getElementsByTag("caption");
             captions.get(0).text("Изделие № " + (indexProd + 1));
             Elements trRec = tabList.get(indexProd).getElementsByTag("tbody").get(0).getElementsByTag("tr");
@@ -344,7 +347,7 @@ public class RSmeta {
                 
                 tdRec.get(0).text(String.valueOf(i + 1));
                 tdRec.get(1).text(prjprodRec.getStr(ePrjprod.name));
-                tdRec.get(2).text(eColor.find(winc.colorID1).getStr(eColor.name));
+                tdRec.get(2).text(eColor.find(winc.root.colorID1).getStr(eColor.name));
                 tdRec.get(3).text(UCom.format(winc.width(), 2));
                 tdRec.get(4).text(UCom.format(winc.height(), 2));
                 tdRec.get(5).text(String.valueOf(numProd));

@@ -61,8 +61,6 @@ public class Wincalc {
 
     public Integer nuni = 0; //код системы  
     public double nppID = 0; //для генерации ключа в спецификации
-    public int colorID1 = -1, colorID2 = 1, colorID3 = -1; //базовый,внутр,внещний 
-    public Record artiklRec = null; //первый артикул из сист. профилей
     public Record syssizRec = null; //система константт
     public double cost1 = 0; //стоимость без скидки
     public double cost2 = 0; //стоимость со скидкой
@@ -112,17 +110,7 @@ public class Wincalc {
 
             JsonParser parser = new JsonParser();
             JsonElement rootNode = parser.parse(script);
-
             gson.setOwner(this);
-
-            //Инит конструктива
-            nuni = (gson.nuni == null) ? -3 : gson.nuni;
-            Record sysprofRec = eSysprof.find2(nuni, UseType.FRAME); //первая.запись коробки
-            artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
-            syssizRec = eSyssize.find(artiklRec); //системные константы
-            colorID1 = (gson.color1 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1;
-            colorID2 = (gson.color2 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2;
-            colorID3 = (gson.color3 == -3) ? UColor.colorFromArtikl(sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3;
 
             //Главное окно
             if (Type.RECTANGL == gson.type) {
@@ -137,6 +125,16 @@ public class Wincalc {
             } else if (Type.DOOR == gson.type) {
                 root = new AreaDoor(this, gson);
             }
+            
+            //Инит конструктива
+            nuni = (gson.nuni == null) ? -3 : gson.nuni;
+            root.sysprofRec = eSysprof.find2(nuni, UseType.FRAME); //первая.запись коробки
+            root.artiklRec = eArtikl.find(root.sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей
+            syssizRec = eSyssize.find(root.artiklRec); //системные константы
+            root.colorID1 = (gson.color1 == -3) ? UColor.colorFromArtikl(root.sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1; //базовый
+            root.colorID2 = (gson.color2 == -3) ? UColor.colorFromArtikl(root.sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2; //внутр
+            root.colorID3 = (gson.color3 == -3) ? UColor.colorFromArtikl(root.sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3; //внещний           
+            
 
             //Параметры
             parametr(gson.param);

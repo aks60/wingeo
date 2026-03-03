@@ -131,19 +131,19 @@ public class JoiningDet extends Par5s {
                     break;
                 case 11067:  //Коды основной текстуры изделия 
                 case 12067:  //Коды основной текстуры изделия
-                    if (UCom.containsColor(rec.getStr(TEXT), winc.colorID1) == false) {
+                    if (UCom.containsColor(rec.getStr(TEXT), winc.root.colorID1) == false) {
                         return false;
                     }
                     break;
                 case 11068:  //Коды внутр. текстуры изделия 
                 case 12068:  //Коды внутр. текстуры изделия 
-                    if (UCom.containsColor(rec.getStr(TEXT), winc.colorID2) == false) {
+                    if (UCom.containsColor(rec.getStr(TEXT), winc.root.colorID2) == false) {
                         return false;
                     }
                     break;
                 case 11069:  //Коды внешн. текстуры изделия
                 case 12069:  //Коды внешн. текстуры изделия     
-                    if (UCom.containsColor(rec.getStr(TEXT), winc.colorID3) == false) {
+                    if (UCom.containsColor(rec.getStr(TEXT), winc.root.colorID3) == false) {
                         return false;
                     }
                     break;
