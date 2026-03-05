@@ -65,16 +65,16 @@ public class ElemCross extends ElemSimple {
             Geometry geoFalz = owner.area.getGeometryN(2);
 
             //Пилим полигон импостом
-            LineSegment lineCut = new LineSegment(new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id));
+            LineSegment lineImp = new LineSegment(new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id));
             //LineString lineCut = gf.createLineString(new Coordinate[]{new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id)});
-            List<Geometry> geoSplit = UGeo.splitPolygon((Polygon) geoShell.copy(), lineCut);
+            List<Geometry> geoSplit = UGeo.splitPolygon((Polygon) geoShell.copy(), lineImp);
             owner.childs.get(0).area = (Polygon) geoSplit.get(0);
             owner.childs.get(2).area = (Polygon) geoSplit.get(1);
 
             //Левый и правый сегмент вдоль импоста
             double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr); //ширина
-            LineSegment baseSegm = new LineSegment(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()));
-            LineSegment offsetSegment[] = {baseSegm.offset(+delta), baseSegm.offset(-delta)};
+            //LineSegment baseSegm = new LineSegment(new Coordinate(this.x1(), this.y1()), new Coordinate(this.x2(), this.y2()));
+            LineSegment offsetSegment[] = {lineImp.offset(+delta), lineImp.offset(-delta)};
 
             //Точки пересечения канвы сегментами импоста
             Polygon areaCanvas = UGeo.newPolygon(0, 0, 0, 10000, 10000, 10000, 10000, 0);
