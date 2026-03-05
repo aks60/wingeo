@@ -491,7 +491,7 @@ public class Tex extends javax.swing.JFrame {
         btn3.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
         btn3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnOrder(evt);
+                mnProject(evt);
             }
         });
         tb8.add(btn3);
@@ -821,7 +821,7 @@ public class Tex extends javax.swing.JFrame {
         mn72.setText(bundle.getString("Меню.Заказ")); // NOI18N
         mn72.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnOrder(evt);
+                mnProject(evt);
             }
         });
         mn10.add(mn72);
@@ -1145,13 +1145,13 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
         });
     }//GEN-LAST:event_mnPartn
 
-    private void mnOrder(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnOrder
+    private void mnProject(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnProject
         ProgressBar.create(Tex.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 App.Project.createFrame(Tex.this, false);
             }
         });
-    }//GEN-LAST:event_mnOrder
+    }//GEN-LAST:event_mnProject
 
     private void mnSetting(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnSetting
         ProgressBar.create(Tex.this, new ListenerFrame() {
