@@ -31,6 +31,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import startup.App;
 
+//TODO В gson пишет "colorHand": "61", должно "colorHand": 61 и остаются пустые "stvorkaLef": {}
 //Текстура артикулов
 //Устанавливать курсор на предыдущем выборе цвета см. Текстуры артикулов
 public class DicColor extends javax.swing.JDialog {
